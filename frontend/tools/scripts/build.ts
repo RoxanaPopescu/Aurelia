@@ -63,13 +63,9 @@ const compilerOptions: ICompilerOptions =
             ...
             commander.environment === "production" ?
             {
-                googleAnalytics:
-                {
-                    id: "TODO"
-                },
                 sentry:
                 {
-                    dsn: "TODO"
+                    dsn: "https://e1c6cac2640e4683b490730936816c46@sentry.io/1430333"
                 }
             } :
             {}
