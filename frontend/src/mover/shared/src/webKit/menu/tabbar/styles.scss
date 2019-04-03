@@ -1,0 +1,28 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-tabbar-outerContainer {
+  width: 100%;
+  height: 100%;
+  background-color: $colorNeutralExtraLight;
+  padding: 42px;
+}
+
+.c-tabbar-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-tabbar-buttonContainer {
+  width: 100%;
+  height: 42px;
+}
+
+.c-tabbar-contentContainer {
+  width: 100%;
+  height: calc(100% - 42px);
+  background: white;
+  border: solid 1px #d8e1ee;
+  overflow: auto;
+}

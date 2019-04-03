@@ -1,0 +1,261 @@
+@import "../constants.scss";
+
+.gridTable-container {
+  position: relative;
+  top: -15px;
+}
+
+.c-gridTable-totalRows {
+  padding: 12px 0;
+  border-bottom: 1px solid $colorNeutralLight;
+}
+
+.c-gridTable-loading {
+  opacity: .3;
+}
+
+.c-gridTable-headerSorting {
+  cursor: pointer;
+}
+
+.c-gridTable {
+  width: auto;
+  min-width: 800px;
+  display: grid;
+  grid-row-gap: 0;
+
+  * {
+    position: relative;
+  }
+
+  &.c-gridTable-blank {
+    padding-bottom: 300px !important;
+  }
+
+  .c-gridTable-header {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    height: 48px;
+    text-align: left;
+    align-self: center;
+    position: sticky;
+    z-index: 101;
+    top: 0;
+    background-color: white;
+    line-height: 48px;
+
+    transition: all 150ms;
+    font-size: 13px;
+    font-weight: 600;
+
+    &:hover {
+      .c-gridTable-header-text {
+        background-color: $colorHighlightWhite;
+      }
+    }
+
+    $arrowHeight: 4px;
+
+    .c-gridTable-header-text {
+      padding: 0 15px;
+    }
+
+    .c-gridTable-header-arrows {
+      padding-left: 5px;
+      height: 100%;
+      margin-left: 8px;
+
+      &:after,
+      &:before {
+        content: "";
+        position: absolute;
+        margin-top: -2px;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: $arrowHeight solid transparent;
+        border-right: $arrowHeight solid transparent;
+      }
+
+      &:before {
+        top: calc(50% - #{$arrowHeight});
+        border-bottom: $arrowHeight solid $colorBackgroundPrimary;
+      }
+
+      &:after {
+        top: calc(50% + #{$arrowHeight});
+        border-top: $arrowHeight solid $colorBackgroundPrimary;
+      }
+    }
+
+    &.Descending {
+      .c-gridTable-header-arrows {
+        &:before {
+          border-bottom: $arrowHeight solid $colorNeutralRegular;
+        }
+
+        &:after {
+          border-top: $arrowHeight solid $colorBackgroundPrimary;
+        }
+      }
+    }
+
+    &.Ascending {
+      .c-gridTable-header-arrows {
+        &:before {
+          border-bottom: $arrowHeight solid $colorBackgroundPrimary;
+        }
+
+        &:after {
+          border-top: $arrowHeight solid $colorNeutralRegular;
+        }
+      }
+    }
+  }
+
+  .c-gridTable-content-inner {
+    @include ellipsis;
+  }
+
+  .c-gridTable-content {
+    display: flex;
+    align-items: center;
+    background-color: $colorNeutralExtraLight;
+    text-align: left;
+    padding: 10px 15px 8px 15px;
+    transition: background-color 100ms;
+    color: $colorNeutralDark;
+    margin-bottom: 4px;
+
+    &.hovered {
+      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+    }
+
+    &.c-gridTable-skeleton {
+      height: 40px;
+      margin-bottom: 10px;
+      animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none running;
+    }
+
+    &.c-gridTable-lastColumn {
+      border-top-right-radius: $listItemBorderRadius;
+      border-bottom-right-radius: $listItemBorderRadius;
+    }
+
+    &.c-gridTable-firstColumn {
+      padding-left: 15px;
+      border-top-left-radius: $listItemBorderRadius;
+      border-bottom-left-radius: $listItemBorderRadius;
+    }
+
+    &.hovered {
+      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+      border-color: darken($colorNeutralExtraLight, $darkenOnHover);
+
+      &.c-gridTable-firstColumn:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: $colorBackgroundPrimary;
+        border-top-left-radius: $listItemBorderRadius;
+        border-bottom-left-radius: $listItemBorderRadius;
+      }
+    }
+
+    &.selectable {
+      cursor: pointer;
+    }
+  }
+}
+
+.c-gridTable-noResults {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  display: grid;
+  grid-row-gap: 0;
+  height: 100%;
+
+  .c-gridTable-noResults-headline {
+    padding-right: 40px;
+    align-self: center;
+    justify-self: center;
+    position: sticky;
+    top: 50%;
+  }
+}
+
+.c-gridTable-sortingLoadingOverlay {
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+  display: grid;
+  grid-row-gap: 0;
+  height: 100%;
+
+  .c-gridTable-sortingLoadingOverlay-indicator {
+    align-self: center;
+    justify-self: center;
+    position: sticky;
+    top: 50%;
+    margin-top: -50%;
+  }
+
+  .c-gridTable-sortingLoadingOverlay-headline {
+    padding-right: 40px;
+    align-self: center;
+    justify-self: center;
+    position: sticky;
+    top: 50%;
+    margin-top: -50%;
+    color: $colorNeutralDark;
+
+    &:after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -13px;
+      margin-left: -13px;
+      -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
+      animation: fade-in 300ms ease both, spin 600ms linear infinite;
+      height: 26px;
+      width: 26px;
+      border: 4px solid transparent;
+      border-radius: 50%;
+      border-top-color: $colorNeutralDark;
+    }
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    pointer-events: initial;
+  }
+}
+@keyframes animation-table-skeleton {
+  0% {
+    background-color: $colorNeutralExtraLight;
+  }
+
+  50% {
+    background-color: rgba($colorNeutralExtraLight, .7);
+  }
+
+  100% {
+    background-color: $colorNeutralExtraLight;
+  }
+}

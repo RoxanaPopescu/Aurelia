@@ -1,0 +1,46 @@
+.c-dynamicPriceContainer {
+  background-color: white;
+  width: 1100px;
+  height: 90vh;
+  padding: 40px;
+
+  .c-dynamicPriceContainer-description {
+    margin-bottom: 24px;
+  }
+
+  .c-dynamicPriceContainer-contentContainer {
+    margin-bottom: 70px;
+  }
+
+  .c-dynamicPriceContainer-priceButtonOuterContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    width: 100%;
+
+    .c-dynamicPriceContainer-priceButtonContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+
+      height: 100%;
+      width: 100%;
+
+      > * {
+        width: auto;
+        height: auto;
+
+        &:not(:last-child) {
+          margin-right: 12px;
+        }
+
+        &:last-child {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}

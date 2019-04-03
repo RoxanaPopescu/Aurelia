@@ -1,0 +1,93 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-login-outerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.c-login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100%;
+}
+
+.c-login-container-inputPassword {
+  margin-top: 21px;
+  margin-bottom: 22px;
+}
+
+.c-login-container-inputElement {
+  width: 100%;
+  border-radius: 4px;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.c-login-container-description {
+  margin-top: 13px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.c-login-container {
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 590px;
+  height: 444px;
+  background-color: $colorBackgroundPrimary;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 0 92px 0 92px;
+}
+
+.c-login-logo {
+  position: absolute;
+  bottom: 51px;
+  right: 65px;
+  width: auto;
+  height: 26px;
+}
+
+.c-login-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  filter: blur(6px);
+  object-fit: cover;
+}
+
+.c-login-backgroundOverlayDark {
+  background-color: $colorBackgroundSecondary;
+  opacity: 0.6;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+.c-login-backgroundOverlayLight {
+  background-color: $colorBackgroundPrimary;
+  opacity: 0.6;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-blend-mode: screen;
+}
+
+.c-login-poweredBy {
+  position: absolute;
+  bottom: 16px;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+  opacity: 0.5;
+  width: calc(100% - 186px);
+}

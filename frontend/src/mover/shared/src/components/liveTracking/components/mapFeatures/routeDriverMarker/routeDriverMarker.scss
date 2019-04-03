@@ -1,0 +1,71 @@
+@import "shared/src/webKit/constants.scss";
+
+@keyframes liveTracking-routeDriverMarker-pulse {
+  0% {
+    box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 0 rgba($colorOk, 0.4);
+  }
+  70% {
+      box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 5px rgba($colorOk, 0);
+  }
+  100% {
+      box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 0 rgba($colorOk, 0);
+  }
+}
+
+.c-liveTracking-routeDriverMarker {
+  padding: 5px;
+  pointer-events: none;
+}
+
+.c-liveTracking-routeDriverMarker-circle {
+  position: relative;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 12px;
+  line-height: 22px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: "gray";
+
+  &.c-liveTracking-routeDriverMarker--online {
+    // Disabled due to extremely high CPU usage.
+    //animation: liveTracking-routeDriverMarker-pulse 2s infinite;
+    border: 1px solid darken($colorOk, 2%);
+    background: $colorOk;
+  }
+
+  &.c-liveTracking-routeDriverMarker--offline {
+    box-shadow: 0 0 1px 1px rgba(white, .7);
+    border: 1px solid darken($colorAlert, 2%);
+    background: $colorAlert;
+  }
+
+  &.c-liveTracking-routeDriverMarker--completed {
+    opacity: .3;
+  }
+
+  &.c-liveTracking-routeDriverMarker--cancelled {
+    opacity: .3;
+  }
+}
+
+.c-liveTracking-routeDriverMarker-warning,
+.c-liveTracking-routeDriverMarker-alert {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 1px white;
+  border-radius: 4px;
+}
+
+.c-liveTracking-routeDriverMarker-warning {
+  background: $colorWarning;
+}
+
+.c-liveTracking-routeDriverMarker-alert {
+  background: $colorAlert;
+}

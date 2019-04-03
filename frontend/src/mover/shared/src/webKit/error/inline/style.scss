@@ -1,0 +1,40 @@
+@import "../../constants.scss";
+
+.error-component {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+
+  .text-container {
+    padding-bottom: 28px;
+
+    .text {
+      padding-top: 8px;
+    }
+  }
+
+  .buttons-container {
+    .buttonContainer {
+      margin: 0 20px;
+    }
+  }
+}
+
+.backOfficeContainer {
+  .error-component {
+    margin-left: $backofficeMenuBig/2;
+  }
+}
+@media (max-width: $mediaIpadH) {
+  .backOfficeContainer {
+    .error-component {
+      margin-left: 0;
+      max-width: 100%;
+      width: 600px;
+    }
+  }
+}

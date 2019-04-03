@@ -1,0 +1,27 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-filters {
+  width: 400px;
+  background-color: $colorNeutralExtraExtraLight;
+  border-right: 1px solid $colorNeutralLight;
+  height: 100%;
+  overflow-y: overlay;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-shadow: none;
+    border-radius: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 36px;
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}

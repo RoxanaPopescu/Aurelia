@@ -1,0 +1,18 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-worldMap {
+  position: relative;
+  height: 100%;
+  background: $colorNeutralExtraLight;
+
+  // Fix font inheritance.
+  .gm-style {
+    font-family: inherit;
+  }
+
+  // Fix excessively large font size in controls.
+  .gm-style-mtc * {
+    font-size: 14px !important;
+    color: #333 !important;
+  }
+}

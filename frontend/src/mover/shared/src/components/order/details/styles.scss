@@ -1,0 +1,254 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-order {
+  height: 100%;
+  overflow: auto;
+}
+
+.c-order-innerWrapper {
+  width: 100%;
+  display: flex;
+  min-height: 100%;
+}
+
+.c-orderDetails-meta {
+  width: 400px;
+  background-color: $colorNeutralExtraLight;
+  padding: 25px 32px;
+}
+
+.c-orderDetails-section {
+  padding: 0 0 22px;
+
+  &:not(:first-child) {
+    padding-top: 22px;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $colorNeutralLight;
+  }
+}
+
+.c-orderDetails-headline {
+  margin-bottom: 12px;
+}
+
+.c-orderDetails-colli {
+  max-height: 350px;
+  overflow: hidden;
+  border-bottom: 1px solid $colorNeutralLight;
+  padding-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+
+  .c-orderDetails-headline {
+    margin-top: 11px;
+  }
+
+  .c-orderDetails-tabs {
+    display: flex;
+    justify-content: flex-end;
+
+    .c-orderDetails-tab {
+      border-top: 1px solid $colorNeutralRegular;
+      border-bottom: 1px solid $colorNeutralRegular;
+      border-right: 1px solid $colorNeutralRegular;
+      height: 22px;
+      line-height: 20px;
+      padding: 0 12px;
+      font-size: 12px;
+      color: $colorBackgroundPrimary;
+      cursor: pointer;
+
+      &:hover {
+        color: $colorInteractivePrimaryActive;
+        background-color: rgba(255,255,255,.4);
+      }
+
+      &:first-child {
+        border-bottom-left-radius: $borderRadius;
+        border-top-left-radius: $borderRadius;
+        border-left: 1px solid $colorNeutralRegular;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: $borderRadius;
+        border-top-right-radius: $borderRadius;
+      }
+
+      &.active {
+        background-color: $colorNeutralRegular;
+        color: white;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.c-orderDetails-colliContainer {
+  overflow: auto;
+  flex: 1;
+  width: 100%;
+
+  .c-orderDetails-colliInnerContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .c-orderDetails-collo {
+    cursor: pointer;
+    transition: background-image 100ms, padding-left 100ms;
+    overflow: hidden;
+
+    span {
+      margin-left: 10px;
+
+      &.positive {
+        color: $colorOk;
+      }
+
+      &.negative {
+        color: $colorAlert;
+      }
+    }
+
+    &.active {
+      font-weight: $fontBold;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    &:not(.active) {
+      h4 {
+        font-weight: $fontRegular;
+      }
+    }
+  }
+}
+
+.c-orderDetails-row {
+  display: flex;
+  justify-content: space-between;
+
+  :first-child {
+    max-width: 50%;
+  }
+
+  :last-child {
+    max-width: 50%;
+    padding-left: 4px;
+    word-wrap: break-word;
+    text-align: right;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
+}
+
+.c-orderDetails-intervals {
+  margin-top: 22px;
+}
+
+.c-orderDetails-intervalsContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 4px;
+
+  .c-orderDetails-interval {
+    &:first-child {
+      padding-right: 46px;
+    }
+  }
+}
+
+.c-order-content {
+  flex: 1;
+}
+
+.c-orderDetails-actionBar {
+  padding: 0 30px 0 28px;
+  height: 62px;
+  width: 100%;
+  border-bottom: 1px solid $colorNeutralLight;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .c-orderDetails-actionBar-link {
+    margin-right: auto;
+  }
+
+  .moverButton {
+    justify-self: flex-end;
+  }
+}
+
+.c-colloDetails {
+  padding: 0 32px;
+  flex-grow: 1;
+}
+
+.c-colloDetails-details {
+  padding: 13px 0;
+  border-bottom: 1px solid $colorNeutralLight;
+}
+
+.c-colloDetails-info {
+  padding: 13px 0;
+  width: 50%;
+  border-right: 1px solid $colorNeutralLight;
+
+  > * {
+    &:first-child {
+      margin-bottom: 11px;
+    }
+  }
+}
+
+.c-orderDetails-instructions {
+  display: flex;
+  padding: 13px 0;
+  min-height: 128px;
+}
+
+.c-orderDetails-instruction {
+  padding: 13px 0;
+
+  &:first-child {
+    border-right: 1px solid $colorNeutralLight;
+  }
+
+  &:last-child {
+    padding-left: 32px;
+  }
+
+  > * {
+    &:first-child {
+      margin-bottom: 11px;
+    }
+  }
+}
+
+.c-orderDetails-pickupInstructions {
+  width: 50%;
+}
+
+.c-orderDetails-deliveryInstructions {
+  width: 50%;
+}
+
+.c-orderDetails-map {
+  height: 40vh;
+  min-height: 200px;
+  background: $colorNeutralExtraLight;
+  border: 1px solid #f2f2f2;
+  border-left: 1px solid darken($colorNeutralExtraLight, 3%);
+  border-right: none;
+}

@@ -1,0 +1,14 @@
+@import "../../webKit/constants.scss";
+
+// Surface theme
+:root
+{
+    --surface-color: white;
+    --surface-text-color: #{$textDarkPrimary};
+    --surface-subtle-color: #{$textDarkSecondary};
+    --surface-heading-color: var(--surface-subtle-color);
+
+    --surface-primary-text-color: #{$colorInteractivePrimary};
+    
+    --surface-mark-color: yellow;
+}

@@ -1,0 +1,21 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driver-tab {
+
+  > * {
+    &:not(:last-child) {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+.c-driver-form {
+
+  > * {
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: 25px;
+    }
+  }
+}

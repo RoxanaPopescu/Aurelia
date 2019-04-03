@@ -1,0 +1,57 @@
+@import "../../constants.scss";
+
+$speed: 250ms;
+
+.loadingOverlayContainer {
+  z-index: 999999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(white, 0.92);
+
+  &.loadingOverlayContainer--fade {
+    -webkit-animation: fadeInOverlay $speed ease-in-out; /* Safari 4+ */
+    -moz-animation: fadeInOverlay $speed ease-in-out; /* Fx 5+ */
+    -o-animation: fadeInOverlay $speed ease-in-out; /* Opera 12+ */
+    animation: fadeInOverlay $speed ease-in-out;
+  }
+
+  .image {
+    @include centered;
+  }
+}
+
+@-webkit-keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

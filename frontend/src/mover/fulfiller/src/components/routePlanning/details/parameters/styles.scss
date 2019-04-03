@@ -1,0 +1,57 @@
+@import "shared/src/webKit/constants.scss";
+
+.react-router-modal__modal {
+  top: 150px;
+  transform: translate(-50%, 0);
+}
+
+.c-routePlanning-parameters {
+  width: 780px;
+  z-index: 101;
+  background-color: white;
+  border-radius: $borderRadius;
+  padding: 20px 40px 32px;
+}
+
+.c-routePlanning-parameters-title {
+  margin-bottom: 24px;
+}
+
+.c-routePlanning-parameters-subtitle {
+  margin-bottom: 16px;
+  width: 540px;
+}
+
+.c-routePlanning-parameters-row {
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+.c-routePlanning-parameters-actions {
+  margin-top: 36px;
+  display: flex;
+  align-content: center;
+  justify-content: flex-end;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 8px;
+    }
+  }
+}
+
+.c-routePlanning-parameters-grid {
+  display: grid;
+  grid-row-gap: 0;
+  grid-template-columns: auto 1fr;
+  width: 50%;
+
+  > * {
+    margin-bottom: 20px;
+  }
+}
+
+.c-routePlanning-parameters-headline {
+  padding-right: 20px;
+}

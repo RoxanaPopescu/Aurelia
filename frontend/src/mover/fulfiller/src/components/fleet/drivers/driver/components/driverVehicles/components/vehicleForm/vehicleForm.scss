@@ -1,0 +1,7 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driver-vehicleForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 20px;
+}

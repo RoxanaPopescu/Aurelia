@@ -1,0 +1,416 @@
+@import "../../constants.scss";
+@import "../fix.scss";
+
+.dateWrapper {
+  &.inputSmall {
+    .middleWrapper {
+      .react-kronos {
+        .dateTimeInput {
+          height: $heightInputSmall;
+        }
+      }
+    }
+  }
+
+  .middleWrapper {
+    display: inline-block;
+    vertical-align: top;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+
+    &:first-child {
+      width: 100%;
+    }
+
+    &.disabled {
+      opacity: .5;
+
+      .react-kronos {
+        .dateTimeInput {
+          background-color: $colorNeutralLight;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .react-kronos {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      width: 100%;
+
+      .dateTimeInput {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        height: 40px;
+        padding-left: 18px;
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        transition: border 300ms;
+        background-color: white;
+        border-radius: $borderRadius;
+        cursor: pointer;
+        background-image: url("../../assets/images/icons/chevron.svg");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 12px) center;
+        background-size: 8px auto;
+
+        &.outside-range {
+          // border-color: $colorRed;
+        }
+
+        &.timeInput {
+          padding-left: 10px;
+        }
+
+        &:active,
+        &:focus,
+        &:hover {
+          border: solid 1px rgba(0, 0, 0, 0.8);
+        }
+      }
+
+      .dateTimeCalendar {
+        margin-top: 6px;
+        font-family: inherit;
+        min-width: 100%;
+        width: 260px;
+        padding: 20px 12px;
+        border-radius: $borderRadius;
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
+        z-index: 1000;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          right: 24px;
+          width: 0;
+          height: 0;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-bottom: 5px solid white;
+        }
+
+        * {
+          font-family: inherit;
+        }
+
+        > div[class^="nav-"] {
+          // Div's class name begins with "nav-"
+          width: 100%;
+          margin-bottom: 20px;
+
+          .arrow,
+          .title {
+            line-height: 20px;
+            height: 20px;
+            border: 0;
+            margin: 0;
+            font-size: 16px;
+            font-weight: $fontRegular;
+            color: black;
+            text-transform: capitalize;
+
+            &:hover {
+              background-color: $colorInteractivePrimary;
+              color: white;
+            }
+          }
+
+          .arrow {
+            font-size: 0;
+            line-height: 20px;
+
+            &:first-child {
+              &:before {
+                content: "◄";
+                font-size: 11px;
+              }
+            }
+
+            &:last-child {
+              &:before {
+                content: "►";
+                font-size: 11px;
+              }
+            }
+          }
+        }
+
+        .days,
+        .months,
+        .years {
+          width: 100%;
+
+          > div[class^="today-"] {
+            // Div's class name begins with "today-"
+            display: none;
+          }
+
+          .days,
+          .months,
+          .years {
+            width: calc(100% / 7 - 12px);
+            border-radius: 0;
+            display: inline-block;
+            border: 0;
+            border-radius: $borderRadius;
+            margin: 4px 6px;
+            height: auto;
+            font-size: 13px;
+            line-height: 24px;
+
+            &.base:not(.selected) {
+              &:hover {
+                background-color: $colorInteractivePrimary;
+                color: white;
+              }
+            }
+
+            &.future,
+            &.past {
+              background-color: $colorNeutralExtraLight;
+              color: $textDarkSecondary;
+            }
+
+            &:not(.header) {
+              color: $textDarkSecondary;
+              line-height: 16px;
+              padding: 6px 0;
+              font-weight: $fontRegular;
+            }
+
+            &.header {
+              color: $textDarkPrimary;
+              font-weight: $fontSemibold;
+              font-size: 13px;
+              margin: 4px 0;
+              width: calc(100% / 7);
+            }
+
+            &.today {
+              color: $colorInteractivePrimary;
+
+              &.selected {
+                color: white;
+              }
+            }
+
+            &.outside-range {
+              color: $textDarkInactive;
+              pointer-events: none;
+            }
+
+            &.selected {
+              background-color: $colorInteractiveSecondary;
+              color: white;
+              box-shadow: 0 2px 6px 0 rgba(171, 171, 171, 0.5);
+            }
+          }
+        }
+
+        .months,
+        .years {
+          width: 100%;
+
+          .months,
+          .years {
+            width: calc(100% / 4 - 12px);
+            text-transform: uppercase;
+            font-weight: $fontSemibold;
+            color: $textDarkPrimary;
+          }
+        }
+      }
+
+      .timeDropdown {
+        font-family: inherit;
+        min-width: 100%;
+        width: 80px;
+        height: 160px;
+        border-radius: 0;
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
+        padding: 0;
+
+        > .hours {
+          font-family: inherit;
+          width: 100%;
+          height: 100%;
+          padding-right: 0;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            box-shadow: none;
+            border-radius: 100px;
+            background-color: rgba(0, 0, 0, 0.1);
+            height: 36px;
+            width: 4px;
+          }
+
+          &::-webkit-scrollbar-track {
+            border-radius: 0;
+            box-shadow: none;
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+
+          > .hours {
+            font-family: inherit;
+            display: block;
+            border-radius: 0;
+            border: 0;
+            font-size: 13px;
+            line-height: 20px;
+            padding: 10px 18px;
+            text-align: left;
+            color: $textDarkPrimary;
+
+            &.outside-range {
+              display: none;
+            }
+
+            &:hover {
+              background-color: $colorNeutralLight;
+            }
+
+            &.selected {
+              background-color: $colorInteractivePrimary;
+              color: white;
+            }
+          }
+        }
+      }
+
+      ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        color: $textDarkInactive;
+      }
+
+      ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: $textDarkInactive;
+      }
+
+      :-ms-input-placeholder {
+        /* IE 10+ */
+        color: $textDarkInactive;
+      }
+
+      :-moz-placeholder {
+        /* Firefox 18- */
+        color: $textDarkInactive;
+      }
+    }
+  }
+
+  &.error {
+    .middleWrapper {
+      .react-kronos {
+        .dateTimeInput {
+          border: solid 1px rgba(255, 82, 82, 0.8);
+
+          &:active,
+          &:focus,
+          &:hover {
+            border: solid 1px rgba(255, 82, 82, 0.8);
+          }
+        }
+
+        .timeDropdown {
+          border: solid 1px rgba(255, 82, 82, 0.8);
+        }
+      }
+    }
+  }
+
+  &.inlineHeadline {
+    .middleWrapper {
+      width: calc(27% - 8px);
+
+      &:first-child {
+        width: 46%;
+      }
+
+      .dateTimeHeadline {
+        padding-left: 18px;
+        line-height: 16px;
+        color: $colorInteractiveSecondary;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+        position: absolute;
+        top: 12px;
+        left: 0;
+        z-index: 1;
+      }
+
+      .react-kronos {
+        .dateTimeInput {
+          height: 64px;
+          padding: 30px 18px 12px;
+        }
+      }
+
+      &:not(:first-child) {
+        .dateTimeHeadline {
+          padding: 0 8px;
+        }
+
+        .react-kronos {
+          .dateTimeInput {
+            padding: 30px 8px 12px;
+          }
+        }
+      }
+    }
+  }
+
+  &.inputSmall {
+    .middleWrapper {
+      .react-kronos {
+        .dateTimeInput {
+          padding-left: 12px;
+          height: $heightInputSmall;
+        }
+      }
+    }
+  }
+
+  &.inputMedium {
+    .middleWrapper {
+      .react-kronos {
+        .dateTimeInput {
+          padding-left: 12px;
+          height: $heightInputMedium;
+        }
+      }
+    }
+  }
+
+  &.error {
+    .middleWrapper {
+      .react-kronos {
+        .dateTimeInput {
+          border: solid 1px rgba(255, 82, 82, 0.8);
+
+          &:active,
+          &:focus,
+          &:hover {
+            border: solid 1px rgba(255, 82, 82, 0.8);
+          }
+        }
+      }
+    }
+  }
+}

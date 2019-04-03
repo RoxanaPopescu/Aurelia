@@ -1,0 +1,16 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-splitRoutePanel-filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid $colorNeutralLight;
+
+  > * {
+    flex-grow: 1;
+
+    &:not(:first-child) {
+      margin-left: 16px;
+    }
+  }
+}

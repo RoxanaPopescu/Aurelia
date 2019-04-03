@@ -1,0 +1,21 @@
+////
+/// @group settings/size
+////
+
+/// The base size and spacing settings.
+$__summary: comment;
+
+
+:root
+{
+    /// The base size unit on which all spacing values are based.
+    --size-unit: 4px;
+
+    /// The horizontal spacing to apply to an indented block element.
+    --size-indent-spacing: 5rem;
+
+    /// The horizontal spacing to apply between an inline element and its neighbor.
+    /// This is primarily intended for use with styled lists, checkboxes, etc.,
+    /// where spacing is needed between e.g. the bullet or input and the text.
+    --size-inline-spacing: .6em;
+}

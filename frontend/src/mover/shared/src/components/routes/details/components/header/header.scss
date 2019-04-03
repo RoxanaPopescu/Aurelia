@@ -1,0 +1,22 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routeDetails-header {
+  display: flex;
+  padding: 16px 24px 8px;
+  align-items: center;
+  border-bottom: solid 1px $colorNeutralLight;
+}
+
+.c-routeDetails-header-back {
+  margin-right: auto;
+}
+
+.c-routeDetails-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    margin-left: 8px;
+    margin-bottom: 8px;
+  }
+}

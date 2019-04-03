@@ -1,0 +1,56 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-role-outerContainer {
+  position: absolute;
+  z-index: 1000;
+  background-color: rgba(0,0,0,.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .c-role-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .c-role {
+    padding-bottom: 80px;
+    background-color: white;
+    border-radius: $borderRadius;
+
+    .c-role-headline {
+      display: flex;
+      align-items: center;
+      height: 52px;
+      background-color: $colorNeutralExtraLight;
+      margin-bottom: 70px;
+      border-bottom: 1px solid $colorNeutralLight;
+      padding: 0 35px;
+      border-top-left-radius: $borderRadius;
+      border-top-right-radius: $borderRadius;
+    }
+
+    .c-role-formContainer {
+      display: flex;
+      flex-direction: column;
+      padding: 0 150px;
+      width: 690px;
+
+      .inputContainer,
+      .multiSelectContainer {
+        margin-bottom: 20px;
+      }
+
+      .buttonContainer {
+        margin-top: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import "../../constants.scss";
+
+.globalTopMenu {
+  width: 260px;
+  height: $backofficeTopMenu;
+  padding: 48px 0 24px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+
+  .topMenuLogo {
+    height: 100%;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: left center;
+    display: flex;
+
+    img {
+      height: 28px;
+      width: auto;
+      align-self: center;
+    }
+
+    html:not(.sideMenu--collapsed) &.narrow ,
+    html.sideMenu--collapsed.sideMenu--hover &.narrow {
+      display: none;
+    }
+
+    html.sideMenu--collapsed:not(.sideMenu--hover) &.wide {
+      display: none;
+    }
+  }
+
+  .c-topMenu-action {
+    margin-left: auto;
+  }
+}
+
+html.sideMenu--collapsed
+{
+  &:not(.sideMenu--hover) .globalTopMenu
+  {
+    width: 80px;
+  }
+}
+
+html:not(.sideMenu--collapsed)
+{
+  .globalTopMenu img
+  {
+    margin-left: 24px !important;
+  }
+}

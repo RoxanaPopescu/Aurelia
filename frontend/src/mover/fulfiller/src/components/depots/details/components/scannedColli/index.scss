@@ -1,0 +1,45 @@
+.c-depots-scannedColli-Container {
+  height: 100%;
+
+  .c-depots-top {
+    display: flex;
+  }
+
+  .c-pageHeader-actionContainer {
+    justify-content: center !important;
+  }
+
+  .c-pageHeader .c-pageHeader-actionOuterContainer {
+    padding: 0 0 10px 0;
+  }
+
+  .c-pageHeader.withTabs {
+    padding: 0 40px 20px 0;
+  }
+
+  .c-pageHeader-tabs,
+  .c-pageHeader-actionContainer,
+  .c-depots-scannedColli-Container .c-pageHeader-actionContainer,
+  .c-depots-scannedColli-counts
+  {
+    justify-content: flex-start !important;
+  }
+}
+
+.c-depots-scannedColli-date {
+  margin: 0 0 8px;
+  width: 300px;
+  justify-self: center;
+}
+
+.c-depots-scannedColli-counts {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 7px;
+  margin-bottom: 20px;
+
+  > * {
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,65 @@
+.c-loginOuterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+
+  .c-loginOuterContainer-logo {
+    position: absolute;
+    top: 13px;
+    left: 19px;
+  }
+
+  .c-loginOuterContainer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 560px;
+    text-align: center;
+
+    .c-loginOuterContainer-title {
+      color: black;
+    }
+
+    .c-loginOuterContainer-description {
+      margin-top: 8px;
+      margin-bottom: 38px;
+    }
+
+    .c-loginContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: right;
+      width: calc(100% - 130px);
+
+      .c-loginContainer-inputElement {
+        width: 100%;
+
+        > * {
+          width: 100%;
+        }
+      }
+
+      .c-loginContainer-loginButton {
+        margin-left: auto;
+      }
+    }
+
+    .c-loginOuterContainer-inputPassword {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+  }
+
+  .c-loginOuterContainer-poweredBy {
+    position: absolute;
+    bottom: 19px;
+    left: 0;
+    width: 100%;
+    font-size: 11px;
+    font-weight: 100;
+    text-align: center;
+    color: black;
+  }
+}

@@ -1,0 +1,19 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routeSimulation-start-container {
+  width: $formWidthWide;
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    margin-bottom: 25px;
+  }
+
+  > p {
+    margin-bottom: 14px;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}

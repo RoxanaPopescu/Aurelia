@@ -1,0 +1,15 @@
+////
+/// @group framework/modifiers/display
+////
+
+/// Modifier classes affecting the display of elements.
+$__summary: comment;
+
+@import "base/resources/index";
+
+
+/// Modifier class that hides the element using `display: none`.
+.display-none
+{
+    display: none;
+}

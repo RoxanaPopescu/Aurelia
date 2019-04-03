@@ -1,0 +1,20 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-users-user {
+  width: $formWidth;
+  display: flex;
+  flex-direction: column;
+
+  .c-userManagement-roles {
+    margin-bottom: 21px;
+  }
+
+  .c-users-create-input {
+    margin-bottom: 21px;
+  }
+
+  .c-users-create-sendButton {
+    margin-top: 9px;
+    width: 245px;
+  }
+}

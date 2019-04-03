@@ -1,0 +1,30 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-routePanel-actions {
+  padding: 32px 16px;
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+  border-bottom: 1px solid $colorNeutralLight;
+
+  a {
+    display: flex;
+    align-items: center;
+    
+    .icon {
+      display: inline-block;
+      margin-left: 2px;
+      margin-right: 6px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.c-liveTracking-routePanel-actions-group {
+  display: flex;
+
+  > * {
+    margin-left: 30px;
+  }
+}

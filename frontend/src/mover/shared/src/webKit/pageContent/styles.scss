@@ -1,0 +1,38 @@
+@import "../constants.scss";
+
+.c-pageContent {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+
+  .c-pageContent-innerWrapper {
+    padding: 16px $backofficeSidePadding;
+    overflow: auto;
+    height: 100%;
+    overflow-y: overlay;
+  }
+
+  &.tablePage {
+    .c-pageContent-innerWrapper {
+      padding: 0 $backofficeSidePadding calc(#{$backofficeSidePadding} * 2);
+    }
+  }
+
+  &.tabPage {
+  }
+}
+@media (max-width: $mediaIpadV - 1) {
+  .c-pageContent {
+    .c-pageContent-innerWrapper {
+      padding: 16px $backofficeSidePaddingMobile;
+    }
+
+    &.tablePage {
+      .c-pageContent-innerWrapper {
+        padding: 0 $backofficeSidePaddingMobile;
+      }
+    }
+  }
+}

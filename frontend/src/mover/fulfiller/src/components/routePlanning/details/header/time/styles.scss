@@ -1,0 +1,51 @@
+.c-routePlanning-routes-list-headerContentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 30px;
+  height: 28px;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background-color: #ebebeb;
+}
+
+.c-routePlanning-routes-list-headerContent-background {
+  position: absolute;
+  background-color: #ebebeb;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.c-routePlanning-routes-list-headerContent {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+  background-color: #ebebeb;
+}
+
+.c-routePlanning-routes-list-headerContentTime {
+  padding-right: 55px;
+}
+
+.c-routePlanning-routes-list-headerContentTime {
+  z-index: 1000;
+  padding-right: 55px;
+}
+
+.c-routePlanning-routes-list-headerContentTime-marker {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 1px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.c-routePlanning-routes-list-headerContent-date {
+  transform: translateX(-50%);
+  display: inline-block;
+}

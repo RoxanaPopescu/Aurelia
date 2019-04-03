@@ -1,0 +1,37 @@
+////
+/// @group settings/border
+////
+
+/// The base border widths and radii.
+$__summary: comment;
+
+
+:root
+{
+    /// The thick border width,
+    /// used for e.g. an accent colored edge of a list item.
+    --border-width-thick: 4px;
+
+    /// The medium border width,
+    /// used for e.g. strong separator lines.
+    --border-width-medium: 2px;
+
+    /// The thin border width,
+    /// used for e.g. inputs and list items.
+    --border-width-thin: 1px;
+}
+
+:root
+{
+    /// The large border radius,
+    /// used for e.g. large call-to-action buttons.
+    --border-radius-large: 4px;
+
+    /// The base border radius,
+    /// used for e.g. inputs, cards and list items.
+    --border-radius-medium: 3px;
+
+    /// The small border radius,
+    /// used for e.g. badges or tags within an input component.
+    --border-radius-small: 2px;
+}

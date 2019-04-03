@@ -1,0 +1,127 @@
+.c-ruleContainer {
+  display: grid;
+  grid-template-rows: 1fr;
+
+  .c-ruleContainer-primary {
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    background-color: white;
+    z-index: 100;
+    padding: 1px;
+
+    .c-ruleContainer-input {
+      height: 100%;
+      width: 100%;
+    }
+
+    .c-ruleContainer-inputContainer {
+      &:hover,
+      &:active,
+      &:focus {
+        outline: 1px solid rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+
+  .c-ruleContainer-dotted {
+    border: 1px dashed rgba(0, 0, 0, 0.18);
+    background-color: #f7f7f7;
+    z-index: 1;
+  }
+
+  .c-ruleContainer-doubleItem {
+    grid-column: span 2;
+  }
+
+  .c-ruleContainer-item {
+    display: flex;
+    height: 54px;
+    margin-left: -1px;
+    margin-bottom: -1px;
+    align-items: center;
+
+    .c-ruleContainer-removeRule {
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        color: rgb(122, 122, 122);
+      }
+    }
+
+    &:first-of-type {
+      background-color: #f7f7f7;
+    }
+  }
+
+  .c-ruleTitleContainer {
+    .c-ruleTitleContainer-title {
+      width: calc(100% - 14px);
+      top: 8px;
+      left: 14px;
+      position: absolute;
+
+      .c-ruleTitleContainer-chevron {
+        padding-top: 5px;
+        top: 0;
+        right: 0;
+        padding-right: 25px;
+        padding-left: 15px;
+        padding-bottom: 5px;
+        position: absolute;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .c-ruleTitleContainer-info {
+      width: calc(100% - 14px);
+      bottom: 8px;
+      left: 14px;
+      position: absolute;
+    }
+
+    .c-ruleTitleContainer-estimatedActual {
+      width: 100%;
+      bottom: 3px;
+      left: 14px;
+      position: absolute;
+    }
+  }
+
+  .c-ruleContainer-horizontalSpace {
+    padding: 0 14px 0 18px;
+  }
+
+  .c-ruleContainer-header {
+    cursor: default;
+    height: 40px;
+
+    .c-ruleContainer-remove {
+      position: absolute;
+      right: 16px;
+      height: 100%;
+      top: 0;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+    }
+  }
+
+  .c-ruleContainer-removeVehicle {
+    > * {
+      display: block;
+    }
+  }
+}
+
+.c-ruleContainer-dynamicPricesLink {
+  color: #42a5f5;
+  cursor: pointer;
+
+  &:hover {
+    color: #1e70aa;
+  }
+}

@@ -1,0 +1,38 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routeDetails-info {
+  width: 400px;
+  background-color: $colorNeutralExtraLight;
+  padding: 25px 32px;
+}
+
+.c-routeDetails-info-section {
+  padding-bottom: 18px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $colorNeutralLight;
+  }
+
+  &:not(:first-child) {
+    padding-top: 22px;
+  }
+}
+
+.c-routeDetails-info-section-heading {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $textDarkSecondary;
+  text-transform: uppercase;
+}
+
+.c-routeDetails-info-section-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+
+  :last-child {
+    margin-left: 10px;
+    text-align: right;
+  }
+}

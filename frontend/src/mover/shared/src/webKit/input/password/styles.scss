@@ -1,0 +1,30 @@
+@import "../../constants.scss";
+
+.inputContainer {
+  .inputWrapper {
+    .passwordInput {
+      padding-right: 42px;
+    }
+    .passwordToggle {
+      position: absolute;
+      @include verticalMid;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      background-image: url("../../assets/images/icons/toggle.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: all 300ms;
+      opacity: .5;
+      cursor: pointer;
+
+      &:hover {
+        opacity: .6;
+      }
+
+      &.showPassword {
+        opacity: 0.38;
+      }
+    }
+  }
+}

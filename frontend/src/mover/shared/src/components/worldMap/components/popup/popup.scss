@@ -1,0 +1,139 @@
+@import "shared/src/webKit/constants.scss";
+
+@keyframes fade-in-popup {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.c-worldMap .gm-style-iw {
+  font-weight: 400;
+  opacity: 0;
+  animation: fade-in-popup .15s;
+  animation-fill-mode: forwards;
+
+  & > div {
+    overflow: visible !important;
+  }
+
+  & .c-worldMap-popup-content {
+    width: calc(100% + 23px);
+  }
+}
+
+.c-worldMap-popup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 11px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  color: $textDarkSecondary;
+  text-transform: uppercase;
+
+  &:not(:first-child) {
+    margin-top: 3px;
+  }
+
+  :first-child {
+    margin-right: 40px;
+  }
+}
+
+.c-worldMap-popup-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.c-worldMap-popup-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.c-worldMap-popup-section {
+
+  &:not(:first-child) {
+    margin-top: 10px;
+
+    &.c-worldMap-popup-section--border {
+      padding-top: 10px;
+      border-top: 1px solid #d8e1ee;
+    }
+  }
+}
+
+.c-worldMap-popup-section-title {
+  margin-bottom: 11px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  color: $textDarkSecondary;
+  text-transform: uppercase;
+}
+
+.c-worldMap-popup-section-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: normal;
+
+  &:not(:first-child) {
+    margin-top: 3px;
+  }
+
+  :first-child {
+    margin-right: 40px;
+  }
+}
+
+.c-worldMap-popup-close--hidden {
+  visibility: hidden !important;
+}
+
+
+// The following styles work with the fixInfoWindow function,
+// to reduce the size of the arrow at the bottom edge, and to
+// improve the animation when the popup appears. Note that 
+// while this generally works, it may fail if the popup takes
+// a very long time to show - so never rely on those classes
+// for anything critical.
+
+// The number of pixels to shift the content area down.
+$mapHoverOffsetTop: 5px;
+
+.c-worldMap-popup-window {
+  opacity: 0;
+  animation: fade-in-popup .15s;
+  animation-fill-mode: forwards;
+}
+
+.c-worldMap-popup,
+.c-worldMap-popup-close {
+  top: $mapHoverOffsetTop + 9px !important;
+}
+
+.c-worldMap-popup-window {
+  pointer-events: none;
+
+  & > div:nth-child(1) {
+    pointer-events: none;
+  }
+
+  & > div:nth-child(2) {
+    top: $mapHoverOffsetTop !important;
+  }
+
+  & > div:nth-child(4) {
+    top: $mapHoverOffsetTop + 1px !important;
+  }
+}
+
+.c-worldMap-popup-close.c-worldMap-popup-close--hidden {
+  display: none !important;
+}

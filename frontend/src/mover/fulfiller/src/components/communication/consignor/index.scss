@@ -1,0 +1,80 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-communication
+{
+    max-width: none;
+
+    .c-divider
+    {
+        position: relative;
+        left: -10rem;
+        right: 10rem;
+        width: calc(100% + 20rem);
+    }
+}
+
+.c-communication-consignor {
+  height: 100%;
+
+  .c-tabbar-contentContainer {
+    overflow-y: scroll;
+  }
+}
+
+.c-communication-tab {
+  max-width: $formWidthWide;
+  height: 100%;
+}
+
+.c-communication-section {
+  margin: 40px 0;
+}
+
+.c-communication-section-input {
+  width: $formWidth;
+}
+
+.c-communication-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.c-communication-event {
+  margin: 25px 0;
+  padding: 16px 19px;
+  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border-radius: 3px;
+  background: $colorNeutralExtraLight;
+  
+  h3 {
+    display: flex;
+  }
+}
+
+.c-communication-form {
+  margin-top: 16px;
+
+  > * {
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.c-communication-form-row {
+
+  .inputWrapper {
+    max-width: 150px;
+  }
+
+  > :not(:last-child) {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+}

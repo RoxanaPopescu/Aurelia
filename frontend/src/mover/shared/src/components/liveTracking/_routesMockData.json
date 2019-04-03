@@ -1,0 +1,200 @@
+[
+  {
+    "id": "e161311e-41fc-4249-9ba9-bb41c76db6fa",
+    "slug": "demo",
+    "status": "started",
+    "reference": "Fyn1",
+    "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
+    "criticality": "high",
+    "fulfiller": {
+      "id": "573f5f57-a580-4c40-99b0-8fbeb396ebe9",
+      "companyName": "Some Fulfiller",
+      "phone": {
+        "countryCode": "DK",
+        "number": "12 34 56 78",
+        "formatted": "+45 12 34 56 78"
+      }
+    },
+    "driver": {
+      "id": 4400,
+      "name": {
+        "first": "Some",
+        "last": "Driver"
+      },
+      "phone": {
+        "countryPrefix": "45",
+        "number": "53 58 58 11",
+        "formatted": "+45 53 58 58 11"
+      },
+      "pictureUrl": "https://cdn1.thehunt.com/assets/default_avatar-51c8ddf72a3f138adf9443a3be871aa4.png"
+    },
+    "driverVehicle": {
+      "id": 1183,
+      "licensePlate": "AB 12 234",
+      "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
+      "makeAndModel": "Ford Transporter",
+      "color": "Lilla"
+    },
+    "driverOnline": true,
+    "driverPosition": {
+      "latitude": 56.70,
+      "longitude": 9.50
+    },
+    "plannedTimeFrame": {
+      "from": "2017-11-01T08:00:00",
+      "to": "2018-11-01T11:45:00"
+    },
+    "completionTime": "2018-11-01T13:15:45",
+    "stops": [
+
+      {
+        "id": "51a0cfd1-807d-43c5-9ef2-fb8a39eae297",
+        "status": "completed",
+        "outfit": {
+          "companyName": "First Outfit",
+          "contactPerson": "First Person",
+          "phone": {
+            "countryCode": "DK",
+            "number": "11 11 11 11",
+            "formatted": "+45 11 11 11 11"
+          }
+        },
+        "location": {
+          "address": {
+            "primary": "First Street 1",
+            "secondary": "1000 First City"
+          },
+          "position": {
+            "latitude": 57.00,
+            "longitude": 10.05
+          }
+        },
+        "loadingTime": 60,
+        "arrivalTimeFrame": {
+          "from": "2018-11-01T08:00:00",
+          "to": "2018-11-01T09:00:00"
+        },
+        "arrivalTime": "2018-11-01T08:06:13",
+        "completionTime": "2018-11-01T08:14:32",
+        "isDelayed": false,
+        "orderIds": ["1001", "1002", "1003", "1004"]
+      },
+
+      {
+        "id": "3f60aaa1-20cc-46f8-9596-f92aa39db913",
+        "status": "completed",
+        "outfit": {
+          "companyName": "Second Outfit",
+          "contactPerson": "Second Person",
+          "phone": {
+            "countryCode": "DK",
+            "number": "22 22 22 22",
+            "formatted": "+45 22 22 22 22"
+          }
+        },
+        "location": {
+          "address": {
+            "primary": "Second Street 2",
+            "secondary": "2000 Second City"
+          },
+          "position": {
+            "latitude": 56.50,
+            "longitude": 10.00
+          }
+        },
+        "loadingTime": 120,
+        "arrivalTimeFrame": {
+          "from": "2018-11-01T11:00:00",
+          "to": "2018-11-01T12:00:00"
+        },
+        "arrivalTime": "2018-11-01T12:07:54",
+        "completionTime": "2018-11-01T12:09:54",
+        "isDelayed": true,
+        "orderIds": ["1002"]
+      },
+
+      {
+        "id": "383876fd-45e9-4647-9cc6-052824df413e",
+        "status": "not-visited",
+        "outfit": {
+          "companyName": "Third Outfit",
+          "contactPerson": "Third Person",
+          "phone": {
+            "countryCode": "DK",
+            "number": "33 33 33 33",
+            "formatted": "+45 33 33 33 33"
+          }
+        },
+        "location": {
+          "address": {
+            "primary": "Third Street 3",
+            "secondary": "3000 Third City"
+          },
+          "position": {
+            "latitude": 56.00,
+            "longitude": 9.50
+          }
+        },
+        "loadingTime": 180,
+        "arrivalTimeFrame": {
+          "from": "2018-11-01T11:00:00",
+          "to": "2018-11-01T16:00:00"
+        },
+        "arrivalTime": "2018-11-01T13:12:45",
+        "completionTime": "2018-11-01T13:15:45",
+        "isDelayed": false,
+        "orderIds": ["1003"]
+      },
+
+      {
+        "hidden": true,
+        "id": "b5731916-c3f1-40db-9747-a50c9d343149",
+        "status": "not-visited",
+        "location": {
+          "address": {
+            "primary": "",
+            "secondary": ""
+          },
+          "position": {
+            "latitude": 55.50,
+            "longitude": 9.00
+          }
+        }
+      },
+
+      {
+        "id": "6287cbe7-8077-4b56-97f0-81ec3be13f7e",
+        "status": "not-visited",
+        "outfit": {
+          "companyName": "Fifth Outfit",
+          "contactPerson": "Fifth Person",
+          "phone": {
+            "countryCode": "DK",
+            "number": "55 55 55 55",
+            "formatted": "+45 55 55 55 55"
+          }
+        },
+        "location": {
+          "address": {
+            "primary": "Fifth Street 5",
+            "secondary": "5000 Fifth City"
+          },
+          "position": {
+            "latitude": 55.00,
+            "longitude": 9.00
+          }
+        },
+        "loadingTime": 180,
+        "arrivalTimeFrame": {
+          "from": "2018-11-01T11:00:00",
+          "to": "2018-11-01T13:00:00"
+        },
+        "arrivalTime": "2018-11-01T13:12:45",
+        "completionTime": "2018-11-01T13:15:45",
+        "isDelayed": true,
+        "orderIds": ["1004"]
+      }
+
+    ]
+  }
+]

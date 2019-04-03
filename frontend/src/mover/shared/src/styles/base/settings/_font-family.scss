@@ -1,0 +1,27 @@
+////
+/// @group settings/font-family
+////
+
+/// The base font families.
+$__summary: comment;
+
+
+:root
+{
+    /// The sans-serif font family,
+    /// used for e.g. normal text.
+    --font-family-sans-serif:
+        "Nunito",
+        -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    /// The monospaced font family,
+    /// used for e.g identifiers, code examples and program input and output.
+    --font-family-monospaced:
+        "Menlo", "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", "Courier", monospace;
+
+    /// The icon font family,
+    /// providing the icons used throughout the app.
+    --font-family-icon: "Material Icons";
+}

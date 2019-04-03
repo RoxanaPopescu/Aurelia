@@ -1,0 +1,57 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking {
+  display: flex;
+  height: 100%;
+}
+
+.c-liveTracking-map {
+  flex-grow: 1;
+}
+
+.c-liveTracking-color-positive {
+  color: $colorOk !important;
+}
+
+.c-liveTracking-color-negative {
+  color: $colorAlert !important;
+}
+
+.c-liveTracking-box-clickable {
+  cursor: pointer;
+}
+
+.c-liveTracking-box-neutral {
+  background-color: $colorNeutralExtraLight !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: darken($colorNeutralExtraLight, $darkenOnHover) !important;
+  }
+}
+
+.c-liveTracking-box-positive {
+  color: white !important;
+  background-color: $colorOk !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: darken($colorOk, $darkenOnHover) !important;
+  }
+}
+
+.c-liveTracking-box-warning {
+  color: white !important;
+  background-color: $colorWarning !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: darken($colorWarning, $darkenOnHover) !important;
+  }
+}
+
+.c-liveTracking-box-negative {
+  color: white !important;
+  background-color: $colorAlert !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: darken($colorAlert, $darkenOnHover) !important;
+  }
+}

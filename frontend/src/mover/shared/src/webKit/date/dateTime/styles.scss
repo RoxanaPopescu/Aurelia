@@ -1,0 +1,14 @@
+@import "../../constants.scss";
+
+.c-dateTime {
+  display: flex;
+  align-items: flex-end;
+
+  .dateWrapper {
+    flex: 1;
+
+    &:last-child {
+      margin-left: 20px;
+    }
+  }
+}

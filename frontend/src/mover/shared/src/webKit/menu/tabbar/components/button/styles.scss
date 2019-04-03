@@ -1,0 +1,65 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-tabbar-button {
+  position: relative;
+  display: inline-block;
+  height: calc(100% + 1px);
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-right: 5px;
+  border: solid 1px #d8e1ee;
+  border-bottom: none;
+  user-select: none;
+
+  text-align: center;
+  line-height: 42px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  &:hover {
+    line-height: 42px;
+  }
+}
+
+.c-tabbar-buttonNotSelected {
+  z-index: 0;
+  top: 1px;
+  height: 100%;
+  color: #ffffff;
+  background-color: $colorBackgroundPrimary;
+  border-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $colorInteractivePrimaryActive;
+    color: #ffffff;
+  }
+}
+
+.c-tabbar-buttonDisabled {
+  z-index: 0;
+  top: 1px;
+  height: 100%;
+  color: #ffffff;
+  background-color: $colorBackgroundPrimary;
+  border-color: transparent;
+  opacity: $opacityDisabled;
+  cursor: default;
+  pointer-events: none;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.c-tabbar-buttonSelected {
+  z-index: 6;
+  background-color: white;
+  pointer-events: none;
+  color: $colorNeutralDark;
+  cursor: none;
+
+  &:hover {
+    background-color: white;
+  }
+}

@@ -1,0 +1,13 @@
+.icon {
+  width: 1em;
+  height: 1em;
+  max-width: none;
+
+  *[stroke] {
+    stroke: currentColor !important;
+  }
+
+  *[fill] {
+    fill: currentColor !important;
+  }
+}

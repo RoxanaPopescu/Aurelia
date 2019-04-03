@@ -1,0 +1,193 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routeDetails-stops-stop-header {
+  position: relative;
+  padding: 12px 35px;
+}
+
+.c-routeDetails-stops-stop-details {
+  padding: 27px 35px;
+}
+
+.c-routeDetails-stops-headers {
+  padding: 12px 35px 8px 35px;
+}
+
+.c-routeDetails-stops-headers,
+.c-routeDetails-stops-stop-header {
+  display: flex;
+
+  :nth-child(1) {
+    width: 5%;
+  }
+
+  :nth-child(2) {
+    width: 47%;
+  }
+
+  :nth-child(3) {
+    width: 13%;
+  }
+
+  :nth-child(4) {
+    width: 10%;
+  }
+
+  :nth-child(5) {
+    width: 14%;
+  }
+
+  :nth-child(6) {
+    width: 15%;
+  }
+}
+
+.c-routeDetails-stops-stop {
+  display: flex;
+}
+
+.c-routeDetails-stops-headers {
+  margin-left: 50px;
+  font-size: 12px;
+}
+
+.c-routeDetails-stops-stop-marker {
+  position: relative;
+  top: 25px;
+  left: 11px;
+  width: 0;
+  border-left: 2px solid $colorNeutralRegular;
+
+  .c-routeDetails-stops-stop:last-child & {
+    height: 0;
+  }
+
+  .c-routeDetails-stops-stop-marker-circle {
+    position: relative;
+    top: -11px;
+    left: -11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: $colorNeutralRegular;
+    border: 2px solid $colorNeutralRegular;
+  }
+
+  .c-routeDetails-stops-stop-marker-warning,
+  .c-routeDetails-stops-stop-marker-alert {
+    position: relative;
+    top: -18px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    box-shadow: 0 0 0 1px white;
+    border-radius: 4px;
+    pointer-events: all;
+  }
+
+  .c-routeDetails-stops-stop-marker-warning {
+    background: $colorWarning;
+  }
+
+  .c-routeDetails-stops-stop-marker-alert {
+    background: $colorAlert;
+  }
+}
+
+.c-routeDetails-stops-stop {
+
+  &.arrived {
+    .c-routeDetails-stops-stop-marker {
+      .c-routeDetails-stops-stop-marker-circle {
+        background: $colorNeutralRegular;
+        border-color: darken($colorOk, 2%);
+      }
+    }
+  }
+
+  &.completed {
+    .c-routeDetails-stops-stop-marker {
+      border-color: darken($colorOk, 2%);
+      .c-routeDetails-stops-stop-marker-circle {
+        background: $colorOk;
+        border-color: darken($colorOk, 2%);
+      }
+    }
+  }
+
+  &.delivery-not-possible {
+    .c-routeDetails-stops-stop-marker {
+      border-color: darken($colorOk, 2%);
+      .c-routeDetails-stops-stop-marker-circle {
+        background: $colorOk;
+        border-color: darken($colorOk, 2%);
+      }
+    }
+  }
+
+  &[class^="cancelled"], &[class*=" cancelled"] {
+    .c-routeDetails-stops-stop-marker {
+      border-color: darken($colorOk, 2%);
+      .c-routeDetails-stops-stop-marker-circle {
+        background: $colorNeutralRegular;
+        border-color: $colorNeutralRegular;
+        opacity: .5;
+      }
+    }
+  }
+
+  &.next-not-visited {
+    .c-routeDetails-stops-stop-marker {
+      border-left-style: dashed;
+    }
+  }
+
+  &.not-visited {
+    .c-routeDetails-stops-stop-marker {
+      border-left-style: dashed;
+    }
+  }
+}
+
+.c-routeDetails-stops-stop-container {
+  margin-left: 50px;
+  flex-grow: 1;
+}
+
+.c-routeDetails-stops-stop-header {
+  margin-top: 4px;
+  background: $colorNeutralExtraLight;
+  border-radius: $listItemBorderRadius;
+  cursor: pointer;
+
+  &:hover:not(.expanded) {
+    background: darken($colorNeutralExtraLight, $darkenOnHover);
+  }
+
+  &.expanded {
+    background: $colorNeutralLight;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover:first-child:before {
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &:hover:first-child:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: $colorBackgroundPrimary;
+    border-top-left-radius: $listItemBorderRadius;
+    border-bottom-left-radius: $listItemBorderRadius;
+  }
+}
+
+.c-routeDetails-stops-stop-details {
+  border: 1px solid $colorNeutralLight;
+  border-top: none;
+}

@@ -1,0 +1,58 @@
+@import "../../constants.scss";
+
+$height: 20px;
+
+.c-checkboxContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &.checked {
+    .c-checkbox {
+      background-color: $colorInteractivePrimary;
+      border: 1px solid $colorInteractivePrimary;
+    }
+  }
+
+  .c-checkbox {
+    height: $height;
+    width: $height;
+    border: 1px solid $inputBorderColor;
+    border-radius: $borderRadius;
+    background-color: white;
+    transition: border 150ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      border: 1px solid $colorNeutralSemiDark;
+    }
+
+    span {
+      position: relative;
+      top: -1px;
+      width: 7px;
+      height: 12px;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(35deg);
+    }
+  }
+
+  .c-checkboxContainer-content {
+    flex-grow: 1;
+    padding-left: 1.2ch;
+    user-select: none;
+  }
+
+  &.error {
+    .c-checkbox {
+      border-color: $colorAlert;
+    }
+  }
+
+  &.readOnly {
+    opacity: .6;
+  }
+}

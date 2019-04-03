@@ -1,0 +1,210 @@
+@import "../constants.scss";
+$smallButtonHeight: 32px;
+$mediumButtonHeight: 40px;
+$largeButtonHeight: 52px;
+
+.buttonContainer {
+  &.moverButton {
+    position: relative;
+    cursor: pointer;
+    min-height: $smallButtonHeight;
+    transition: all 180ms;
+    min-width: 124px;
+    border-radius: $borderRadius;
+    user-select: none;
+    display: flex;
+    align-items: center;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &.loading:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -13px;
+      margin-left: -13px;
+      -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
+      animation: fade-in 300ms ease both, spin 600ms linear infinite;
+      min-height: 26px;
+      width: 26px;
+      border: 4px solid transparent;
+      border-radius: 50%;
+      border-top-color: black;
+    }
+
+    .moverButtonText {
+      width: 100%;
+      display: block;
+      padding: calc((#{$smallButtonHeight} - 21px) / 2) 16px;
+      border-radius: $borderRadius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    &.buttonAction {
+      background-color: $colorInteractivePrimary;
+      color: white;
+
+      &:active,
+      &:hover {
+        .moverButtonText {
+          background-color: darken($colorInteractivePrimary, $darkenOnHover);
+        }
+      }
+    }
+
+    &.buttonNeutral {
+      background-color: $colorNeutralExtraLight;
+
+      &:active,
+      &:hover {
+        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+      }
+    }
+
+    &.buttonLight {
+      color: $colorInteractivePrimary;
+      border: 1px solid $buttonBorderColor;
+      background-color: white;
+
+      &:active,
+      &:hover {
+        border-color: darken($buttonBorderColor, $darkenOnHover);
+      }
+    }
+
+    &.disabled {
+      border: none;
+      color: $colorNeutralRegular;
+      pointer-events: none;
+      background-color: $colorNeutralExtraLight;
+      opacity: --opacity-disabled;
+    }
+
+    &.loading {
+      border: none;
+      color: $colorNeutralRegular;
+      pointer-events: none;
+      background-color: $colorNeutralExtraLight;
+    }
+
+    &.buttonBig {
+      min-height: $largeButtonHeight;
+      min-width: 173px;
+
+      &:active,
+      &:focus,
+      &:hover {
+        .moverButtonText {
+          padding: calc((#{$largeButtonHeight} - 27px) / 2) 16px;
+        }
+      }
+
+      .moverButtonText {
+        padding: calc((#{$largeButtonHeight} - 27px) / 2) 16px;
+      }
+    }
+
+    &.buttonMedium {
+      min-height: $mediumButtonHeight;
+      min-width: 148px;
+
+      &:active,
+      &:focus,
+      &:hover {
+        .moverButtonText {
+          padding: calc((#{$mediumButtonHeight} - 24px) / 2) 16px;
+        }
+      }
+
+      .moverButtonText {
+        padding: calc((#{$mediumButtonHeight} - 24px) / 2) 16px;
+      }
+    }
+  }
+}
+
+.dark {
+  .buttonContainer {
+    &.moverButton {
+      &.buttonAction {
+        background-color: white;
+        color: $colorInteractivePrimary;
+
+        &:active,
+        &:hover {
+          background-color: $colorInteractivePrimary;
+
+          .moverButtonText {
+            background-color: rgba(white, 0.75);
+          }
+        }
+
+        &.disabled {
+          background-color: $colorInteractivePrimary;
+          color: $textInteractivePrimary;
+
+          .moverButtonText {
+            background-color: rgba(white, 0.3);
+          }
+        }
+      }
+
+      &.buttonNeutral {
+        background-color: $colorInteractivePrimaryActive;
+        color: white;
+
+        &:active,
+        &:hover {
+          .moverButtonText {
+            background-color: rgba(black, 0.2);
+          }
+        }
+
+        &.disabled {
+          background-color: $colorInteractivePrimary;
+          color: $textInteractivePrimary;
+
+          .moverButtonText {
+            background-color: rgba(white, 0.3);
+          }
+        }
+      }
+
+      &.loading {
+        border: none;
+        pointer-events: none;
+        color: white;
+        background-color: $colorNeutralRegular;
+      }
+
+      &.loading:after {
+        border-top-color: white;
+      }
+
+      &.buttonLight {
+        color: white;
+        border: 1px solid white;
+        background-color: transparent;
+
+        &:active,
+        &:hover {
+          .moverButtonText {
+            background-color: $colorHighlightWhite;
+          }
+        }
+
+        &.disabled {
+          opacity: 0.5;
+          border: 1px solid white;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

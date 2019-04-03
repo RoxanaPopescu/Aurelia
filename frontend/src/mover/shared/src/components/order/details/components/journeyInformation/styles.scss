@@ -1,0 +1,211 @@
+@import "shared/src/webKit/constants.scss";
+
+// Journey overview
+.c-journeyOverview {
+  padding: 25px 32px;
+  flex-grow: 1;
+}
+
+.c-journeyOverview-headline {
+  padding-bottom: 10px;
+  border-bottom: 1px solid $colorNeutralLight;
+}
+
+.c-journeyOverview-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 19px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.c-journeyOverview-line-to {
+  height: 12.5px;
+  width: 1px;
+
+  &.active {
+    background-color: $colorNeutralRegular;
+  }
+}
+
+.c-journeyOverview-line-circle {
+  height: 19px;
+  width: 100%;
+  border-radius: 50%;
+  border: 1px solid $colorNeutralRegular;
+
+  &.visited {
+    background-color: $colorNeutralRegular;
+  }
+
+  &.active {
+    background-color: $colorOk;
+    border: 1px solid $colorOk;
+  }
+}
+
+.c-journeyOverview-line-from {
+  flex: 1;
+  width: 1px;
+
+  &.active {
+    background-color: $colorNeutralRegular;
+  }
+}
+
+$paddingLeft: 35px;
+
+.c-journeyOverview-passages {
+  width: 100%;
+}
+
+.c-journeyOverview-passages-header {
+  padding: 16px 0 16px 49px;
+}
+
+.c-journeyOverview-passage-header,
+.c-journeyOverview-passages-header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  > p {
+    padding-left: $paddingLeft;
+    word-wrap: break-word;
+    display: flex;
+
+    &:nth-child(1) {
+      width: 15%;
+    }
+
+    &:nth-child(2) {
+      width: 16%;
+    }
+
+    &:nth-child(3) {
+      width: 16%;
+    }
+
+    &:nth-child(4) {
+      width: 16%;
+    }
+
+    &:nth-child(5) {
+      width: 15%;
+    }
+
+    &:nth-child(6) {
+      width: 16%;
+    }
+
+    &:nth-child(7) {
+      flex: 1;
+    }
+  }
+}
+
+.c-journeyOverview-passage {
+  padding-left: 49px;
+  position: relative;
+
+  &:not(:last-child) {
+    padding-bottom: 4px;
+  }
+
+  &.active {
+    .c-journeyOverview-passage-details {
+      display: block;
+    }
+
+    .c-journeyOverview-passage-header {
+      background-color: $colorNeutralLight;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .accordionChevron {
+        transform: rotate(0);
+      }
+    }
+  }
+
+  .c-journeyOverview-passage-header {
+    position: relative;
+    height: 44px;
+    background-color: $colorNeutralExtraLight;
+    border-radius: $listItemBorderRadius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+
+      &:first-child {
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: $colorBackgroundPrimary;
+          border-top-left-radius: $listItemBorderRadius;
+          border-bottom-left-radius: $listItemBorderRadius;
+
+          .c-journeyOverview-passage.active & {
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+    }
+
+    .accordionChevron {
+      transform: rotate(-90deg);
+      transition: transform 100ms;
+      width: 14px;
+    }
+  }
+
+  .c-journeyOverview-passage-details {
+    padding: 27px $paddingLeft;
+    display: none;
+    border: 1px solid $colorNeutralLight;
+    border-top: 0;
+
+    .c-journeyOverview-passage-section {
+      width: 100%;
+
+      &:not(:last-child) {
+        margin-bottom: 27px;
+      }
+
+      .c-journeyOverview-passage-headline,
+      .c-journeyOverview-passage-values {
+        display: flex;
+
+        .c-journeyOverview-passage-column {
+          width: 47%;
+
+          &.positive {
+            color: $colorOk;
+          }
+
+          &.negative {
+            color: $colorAlert;
+          }
+
+          &:not(:first-child) {
+            padding-left: $paddingLeft;
+          }
+        }
+      }
+
+      .c-journeyOverview-passage-headline {
+        margin-bottom: 13px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid $colorNeutralLight;
+      }
+    }
+  }
+}

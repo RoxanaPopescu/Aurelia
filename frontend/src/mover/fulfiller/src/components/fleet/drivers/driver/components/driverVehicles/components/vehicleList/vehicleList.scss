@@ -1,0 +1,58 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driver-vehicleList-headers,
+.c-driver-vehicleList-vehicle {
+  display: flex;
+  padding: 0 20px;
+
+  & > :not(:last-child) {
+    width: 100%;
+  }
+
+  & > :last-child {
+    width: 18px;
+  }
+}
+
+.c-driver-vehicleList-headers {
+  margin-bottom: 16px;
+}
+
+.c-driver-vehicleList-vehicle {
+  position: relative;
+  padding: 16px 19px;
+  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border-radius: 3px;
+  background: $colorNeutralExtraLight;
+  
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
+
+  &:hover {
+    background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      bottom: -1px;
+      width: 4px;
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+      background-color: $colorBackgroundPrimary;
+    }
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin: -2px 0 -4px 0;
+  }
+}
+
+.c-driver-vehicleList-noVehiclesMessage {
+  padding: 18px 20px;
+  opacity: .6;
+}

@@ -1,0 +1,167 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-fulfillerKpi {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+
+  .c-fulfillerKpi-tableSkeleton-bone {
+    animation: animation-skeleton 2s ease-in-out 0s infinite normal none running;
+  }
+
+  .c-fulfillerKpi-actionContainer {
+    display: flex;
+    justify-content: center;
+
+    .c-fulfillerKpi-actionSkeletonBig {
+      height: 42px;
+      background-color: $colorNeutralExtraLight;
+      border-radius: $borderRadius;
+      width: 487px;
+      margin-right: 18px;
+    }
+
+    .c-fulfillerKpi-actionSkeletonSmall {
+      height: 42px;
+      background-color: $colorNeutralExtraLight;
+      border-radius: $borderRadius;
+      width: 173px;
+    }
+
+    .c-fulfillerKpi-formatToggle {
+      margin-right: 30px;
+      display: flex;
+
+      .c-fulfillerKpi-formatToggle-format {
+        height: 42px;
+        width: 42px;
+        background-color: white;
+        border: 1px solid $colorNeutralLight;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $borderRadius;
+        cursor: pointer;
+        transition: background-color 120ms, color 120ms, border-color 120ms;
+
+        &:not(:last-child) {
+          margin-right: 7px;
+        }
+
+        &:hover {
+          background-color: $colorNeutralRegular;
+          border-color: $colorNeutralRegular;
+          color: white;
+        }
+
+        &.active {
+          background-color: $colorNeutralSemiDark;
+          border-color: $colorNeutralSemiDark;
+          color: white;
+        }
+      }
+    }
+
+    .c-fulfillerKpi-dateComponent {
+      margin-right: 15px;
+      width: 280px;
+    }
+  }
+
+  .c-fulfillerKpi-tableOutercontainer {
+    padding: 40px 50px 0;
+
+    .c-fulfillerKpi-tableSkeleton {
+      display: flex;
+      justify-content: space-between;
+      flex-flow: wrap;
+
+      .c-fulfillerKpi-tableSkeleton-bone {
+        width: calc((100% - 3 * 40px) / 4);
+        margin-bottom: 20px;
+        height: 20px;
+        border-radius: $borderRadius;
+        background-color: $colorNeutralExtraLight;
+      }
+    }
+
+    .c-fulfillerKpi-table {
+      display: grid;
+      grid-template-columns: repeat(11, auto);
+      border-bottom: 1px solid $colorNeutralLight;
+      border-left: 1px solid $colorNeutralLight;
+      border-right: 1px solid $colorNeutralLight;
+
+      .c-fulfillerKpi-kpiColumn {
+        grid-row-gap: 0;
+        padding: 0 22px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        transition: background-color 150ms;
+
+        &:nth-last-child(-n + 11) {
+          height: 63px;
+          padding-bottom: 28px;
+        }
+
+        &:nth-child(11n + 3) {
+          padding-left: 45px;
+        }
+
+        &:nth-child(11n + 11) {
+          padding-right: 0;
+        }
+
+        &:not(.c-fulfillerKpi-kpiColumn-head) {
+          &:nth-child(11n + 2) {
+            background-color: $colorNeutralExtraLight;
+            border-left: 1px solid $colorNeutralLight;
+            border-right: 1px solid $colorNeutralLight;
+            text-align: center;
+            justify-content: center;
+          }
+
+          &:not(:nth-child(11n + 2)) {
+            &.hoveredX {
+              background-color: $colorNeutralExtraExtraLight;
+            }
+
+            &.hoveredY {
+              background-color: $colorNeutralLight;
+            }
+          }
+        }
+
+        &.c-fulfillerKpi-kpiColumn-head {
+          border-top: 1px solid $colorNeutralLight;
+          border-bottom: 1px solid $colorNeutralLight;
+          color: $colorNeutralRegular;
+        }
+
+        &.c-fulfillerKpi-kpiGroupHeadline,
+        &.c-fulfillerKpi-kpiRowHeadline {
+          justify-content: initial;
+        }
+
+        &.c-fulfillerKpi-kpiGroupHeadline {
+          height: 46px;
+          padding-top: 20px;
+        }
+      }
+    }
+  }
+}
+@keyframes animation-skeleton {
+  0% {
+    background-color: $colorNeutralExtraLight;
+  }
+
+  50% {
+    background-color: rgba($colorNeutralExtraLight, .7);
+  }
+
+  100% {
+    background-color: $colorNeutralExtraLight;
+  }
+}

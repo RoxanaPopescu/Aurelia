@@ -1,0 +1,11 @@
+@import "shared/src/webKit/constants.scss";
+
+.pageContent {
+  position: relative;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.pageContent-content {
+  margin: 10rem;
+}

@@ -1,0 +1,123 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-orderGroup {
+  height: 100%;
+  overflow: auto;
+  padding: 35px 30px;
+  background-color: $colorNeutralLight;
+  display: flex;
+  align-items: flex-start;
+
+  .c-orderGroup-settings {
+    flex: 1;
+
+    .content {
+      padding: 66px 200px 104px;
+
+      > * {
+        &:not(:last-child) {
+          margin-bottom: 23px;
+        }
+
+        &.moverButton {
+          margin-top: 17px;
+        }
+      }
+
+      .moverButton {
+        align-self: flex-start;
+      }
+    }
+  }
+
+  .c-orderGroup-timeSlotsContainer {
+    width: 40%;
+    margin-left: 10px;
+
+    .content {
+      .c-orderGroup-createTimeSlot-headline {
+        margin-bottom: 25px;
+      }
+
+      .c-orderGroup-timeSlotsOuter {
+        display: flex;
+        flex-direction: column;
+
+        .c-orderGroup-timeSlots {
+          .c-orderGroup-timeSlot,
+          .c-orderGroup-timeSlots-header {
+            display: flex;
+
+          }
+        }
+
+        .c-divider {
+          margin: 35px 0;
+        }
+      }
+
+      .c-orderGroup-createTimeSlot {
+        display: flex;
+        flex-direction: column;
+
+        > * {
+          &:not(:last-child) {
+            margin-bottom: 30px;
+          }
+        }
+
+        .c-orderGroup-createTimeSlot-interval {
+          display: flex;
+
+          .dateWrapper {
+            width: 50%;
+
+            &:first-child {
+              .dateTimeInput {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            }
+
+            &:last-child {
+              .dateTimeInput {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-left: 0;
+              }
+            }
+          }
+        }
+
+        .c-orderGroup-createTimeSlot-optimizationSettings {
+          display: flex;
+
+          > * {
+            flex: 1;
+          }
+
+          .dateWrapper {
+            margin-right: 36px;
+          }
+        }
+      }
+
+      .c-orderGroup-timeSlotsInfo {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .c-orderGroup-timeSlots-icon {
+          width: auto;
+          margin-bottom: 50px;
+        }
+
+        .c-orderGroup-timeSlots-createText {
+          color: $colorNeutralRegular;
+          text-align: center;
+          width: 300px;
+        }
+      }
+    }
+  }
+}

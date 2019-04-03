@@ -1,0 +1,23 @@
+.c-routePlanning-routes-route {
+  display: flex;
+  height: 48px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.c-routePlanning-routes-route-content {
+  flex: 1;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 8px 30px;
+  height: 100%;
+}
+
+.c-routePlanning-routes-routeFaded {
+  opacity: 0.3;
+}
+
+.c-routePlanning-routes-draggedOver {
+  background-color: rgba(240, 240, 240, 1);
+}

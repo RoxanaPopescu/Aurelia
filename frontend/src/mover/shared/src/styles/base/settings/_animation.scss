@@ -1,0 +1,22 @@
+////
+/// @group settings/animation
+////
+
+/// The base animation durations.
+$__summary: comment;
+
+
+:root
+{
+    /// The long animation duration,
+    /// used for e.g. annimations applied unexpectedly, such as when fading in lazy loaded content.
+    --animation-duration-long: 1.2s;
+
+    /// The medium animation duration,
+    /// used for e.g. animations applied in response to an interaction, such as a popup appearing.
+    --animation-duration-medium: .8s;
+
+    /// The short animation duration,
+    /// used for e.g. interaction effects, such as highlights on touch, click or hover.
+    --animation-duration-short: .3s;
+}

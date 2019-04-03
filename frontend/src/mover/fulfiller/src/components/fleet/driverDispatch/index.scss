@@ -1,0 +1,11 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-container {
+  display: flex;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.c-driverDispatch-main {
+  flex-grow: 1;
+}

@@ -1,0 +1,30 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-filters-slider {}
+
+.c-driverDispatch-filters-slider-header {
+  background-color: $colorNeutralExtraLight;
+  height: 44px;
+  display: flex;
+  color: $colorNeutralSemiDark;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.c-driverDispatch-filters-slider-main {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+
+  .buttonContainer.moverButton {
+    min-height: 24px;
+    margin-left: auto;
+    width: 100px;
+  }
+
+  > * {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}

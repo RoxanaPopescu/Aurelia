@@ -1,0 +1,48 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routeDetails-stops-stop-details-row:not(:last-child) {
+  margin-bottom: 27px;
+}
+
+.c-routeDetails-stops-stop-details-linkButton {
+  display: block;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.c-routeDetails-stops-stop-details-dataRow {
+  display: flex;
+  :first-child {
+    min-width: 55px;
+    margin-right: 20px;
+  }
+}
+
+.c-routeDetails-stops-stop-details-heading {
+  border-bottom: solid 1px $colorNeutralLight;
+  margin-bottom: 11px;
+  padding-bottom: 10px;
+}
+
+.c-routeDetails-stops-stop-details-collo {
+  display: flex;
+  background: $colorNeutralExtraLight;
+  padding: 4px 16px;
+  margin-bottom: 2px;
+
+  & a:nth-child(1) {
+    width: calc(52% - 58px);
+    margin-right: 40px;
+    word-wrap: break-word;
+  }
+
+  & a:nth-child(2) {
+    flex-grow: 1;
+    margin-right: 40px;
+    word-wrap: break-word;
+  }
+}
+
+.c-routeDetails-stops-stop-details-collo-origin {
+  margin-right: 20px;
+}

@@ -1,0 +1,28 @@
+@import "../../constants.scss";
+
+@keyframes loadingKeyframes {
+  0% {
+    transform: perspective(1px) translateY(-50%) translateX(-50%) scale(1);
+    -webkit-transform: perspective(1px) translateY(-50%) translateX(-50%)
+      scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1px) translateY(-50%) translateX(-50%) scale(0.75);
+    -webkit-transform: perspective(1px) translateY(-50%) translateX(-50%)
+      scale(0.75);
+    opacity: 0.6;
+  }
+}
+
+.loadingImage {
+  width: 120px;
+  height: auto;
+  pointer-events: none;
+  animation: loadingKeyframes 1.5s ease-in-out infinite alternate;
+  -webkit-animation: loadingKeyframes 1.5s ease-in-out infinite alternate;
+}
+
+.loadingImageSmall {
+  width: 40px !important;
+}

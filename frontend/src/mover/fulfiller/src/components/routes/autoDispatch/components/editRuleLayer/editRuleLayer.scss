@@ -1,0 +1,12 @@
+.c-autoDispatch-editRuleLayer-actions {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+
+  > * {
+    margin: 0 10px;
+  }
+}

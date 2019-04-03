@@ -1,0 +1,28 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-infoView {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+
+    h2 {
+      color: $textDarkSecondary;
+      width: 400px;
+      margin-top: 42px;
+      text-align: center;
+    }
+  }
+}

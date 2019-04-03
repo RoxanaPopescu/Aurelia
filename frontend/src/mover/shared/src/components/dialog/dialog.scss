@@ -1,0 +1,56 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-dialog-container {
+  z-index: 99999999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.c-dialog {
+  min-width: 600px;
+}
+
+.c-dialog--disabled {
+  pointer-events: none;
+}
+
+.c-dialog-header {
+  position: relative;
+  padding: 25px 105px 25px 70px;
+  background-color: $colorBackgroundPrimary;
+  color: white;
+
+  img {
+    width: auto;
+  }
+}
+
+.c-dialog-close {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.c-dialog-content {
+  background-color: white;
+  padding: 40px 70px;
+  max-height: 70vh;
+  overflow-y: auto;
+}

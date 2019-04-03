@@ -1,0 +1,86 @@
+@import "shared/src/webKit/constants.scss";
+
+.pageHeader {
+  padding: 10rem 10rem 0 10rem;
+  border-bottom: var(--border-width-thin) solid $colorNeutralLight;
+}
+
+.pageHeader-path {
+  display: flex;
+  margin-bottom: 7rem;
+}
+
+.pageHeader-path-segment {
+  display: flex;
+  align-items: center;
+
+  &:last-child {
+    font-weight: 600;
+  }
+
+  &:not(:last-child) {
+    cursor: pointer;
+  }
+
+  .icon {
+    margin: 0 5rem;
+    color: lightgray;
+  }
+}
+
+.pageHeader-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+
+  &:empty {
+    margin-bottom: 3rem;
+  }
+}
+
+.pageHeader-tabs {
+  display: flex;
+  border: var(--border-width-thin) solid $tabBorderColor;
+  border-radius: var(--border-radius-large);
+  overflow: hidden;
+}
+
+// HACK: We use important here to work around a bug that causes
+// CSS to be extracted in the wrong order when building for production.
+.pageHeader-tabs-tab {
+  min-width: 120px;
+  padding: 0 5rem;
+  line-height: calc(10rem - 2 * var(--border-width-thin));
+  text-align: center;
+  color: $colorInteractivePrimary;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    border-right: var(--border-width-thin) solid $tabBorderColor;
+  }
+
+  &.active {
+    background: $colorNeutralExtraLight;
+    color: $colorNeutralDark;
+  }
+}
+
+.pageHeader-actions {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-start;
+
+  &:not(:first-child) {
+    justify-content: flex-end;
+  }
+
+  > :not(:first-child) {
+    margin-left: 5rem;
+  }
+}
+
+.pageHeader-actions-separator {
+  flex-grow: 1;
+}

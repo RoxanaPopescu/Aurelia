@@ -3,6 +3,3 @@
 
 # Because this contains dependencies installed by NPM.
 /**/node_modules/
-
-/fulfiller
-/shared

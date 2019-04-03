@@ -1,0 +1,90 @@
+////
+/// @group resources/media
+////
+
+/// The media query constraints defining the supported viewport sizes.
+/// Note that each constraint must be surrounded by parenthesis when used in a query.
+$__summary: comment;
+
+/// @example
+///
+///  // Matches exactly the viewport class `medium`.
+///  @media ($media-medium) { }
+///
+///  // Matches viewport classes larger than or equal to `medium`.
+///  @media ($media-medium-min) { }
+///
+///  // Matches viewport classes smaller than or equal to `medium`.
+///  @media ($media-medium-max) { }
+///
+///  // Matches viewport classes larger than or equal to `medium` but smaller than or equal to `large`.
+///  @media ($media-medium-min) and ($media-large-max) { }
+///
+///  // Matches exactly the viewport classes `small` and `large`.
+///  @media ($media-small), ($media-large) { }
+///
+///  // Matches viewport classes larger than or equal to `medium` but smaller than or equal to `large`, or equal to `largest`
+///  @media ($media-medium-min) and ($media-large-max), ($media-largest) { }
+///
+$__example: comment;
+
+$_and: ") and (";
+
+/// The lower viewport size threshold, at which the
+/// user experience can no longer be guaranteed.
+/// Note that the smallest viewport size still matches,
+/// even beyond this threshold.
+$media-too-small-max: "max-width: 319px";
+$media-too-small: $media-too-small-max;
+
+/// The smallest viewport size, matching e.g.
+/// a standard phone in portrait orientation.
+$media-smallest-max: "max-width: 600px";
+$media-smallest: $media-smallest-max;
+
+/// The smaller viewport size, matching e.g.
+/// a standard phone in landscape orientation or
+/// a standard tablet in portrait orientation.
+$media-smaller-min: "min-width: 601px";
+$media-smaller-max: "max-width: 800px";
+$media-smaller: $media-smaller-min + $_and + $media-smaller-max;
+
+/// The small viewport size, matching e.g.
+/// a standard tablet in landscape orientation or
+/// a large tablet in portrait orientation.
+$media-small-min: "min-width: 801px";
+$media-small-max: "max-width: 1080px";
+$media-small: $media-small-min + $_and + $media-small-max;
+
+/// The medium viewport size, matching e.g.
+/// a large tablet in landscape orientation or
+/// a small notebook.
+$media-medium-min: "min-width: 1081px";
+$media-medium-max: "max-width: 1366px";
+$media-medium: $media-medium-min + $_and + $media-medium-max;
+
+/// The large viewport size, matching e.g.
+/// a standard notebook or
+/// a standard desktop.
+$media-large-min: "min-width: 1367px";
+$media-large-max: "max-width: 1680px";
+$media-large: $media-large-min + $_and + $media-large-max;
+
+/// The larger viewport size, matching e.g.
+/// a large desktop or
+/// a FHD screen.
+$media-larger-min: "min-width: 1681px";
+$media-larger-max: "max-width: 1920px";
+$media-larger: $media-larger-min + $_and + $media-larger-max;
+
+/// The largest viewport size, matching e.g.
+/// a large workstation.
+$media-largest-min: "min-width: 1921px";
+$media-largest: $media-largest-min;
+
+/// The upper viewport size threshold, at which the
+/// user experience can no longer be guaranteed.
+/// Note that the largest viewport size still matches,
+/// even beyond this threshold.
+$media-too-large-min: "min-width: 2561px";
+$media-too-large: $media-largest-min;
