@@ -7,7 +7,7 @@ import Component from "shared/src/components/liveTracking/index";
 
 @noView
 @autoinject
-export class ListCustomElement extends Wrapper
+export class LiveTrackingCustomElement extends Wrapper
 {
     /**
      * Creates a new instance of the type.

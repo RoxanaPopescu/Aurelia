@@ -67,6 +67,12 @@ export class AppModule
                 route: "account",
                 moduleId: PLATFORM.moduleName("./modules/user/account/account")
             },
+
+            {
+                name: "profile",
+                route: "profile",
+                moduleId: PLATFORM.moduleName("./modules/domain/profile/profile")
+            },
             {
                 name: "kpi",
                 route: "kpi",

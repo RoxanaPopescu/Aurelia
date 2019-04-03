@@ -1,0 +1,83 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <module name="list">
+
+        <module-content scroll>
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+                        <a translate>Routes</a>
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav value.bind="statusTab">
+
+                        <tab name="unassigned" translate>
+                            Unassigned
+                        </tab>
+
+                        <tab name="assigned" translate>
+                            Assigned
+                        </tab>
+
+                        <tab name="in-progress" translate>
+                            In progress
+                        </tab>
+
+                        <tab name="completed" translate>
+                            Completed
+                        </tab>
+
+                        <tab name="cancelled" translate>
+                            Cancelled
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                    <input type="search" placeholder="Find..." value.bind="statusTab">
+
+                </toolbar>
+
+                <data-table class="routes-list-table">
+
+                    <data-table-headers>
+                        <div translate>Id</div>
+                        <div translate>Reference</div>
+                        <div translate>Status</div>
+                        <div translate>Start date</div>
+                        <div translate>Start address</div>
+                        <div class="text-align-right" translate>Stops</div>
+                    </data-table-headers>
+
+                    <data-table-row repeat.for="route of routes" module-href="path.bind: '/routes/' + route.slug">
+                        <div class="font-monospaced">${route.slug}</div>
+                        <div class="font-monospaced">${route.reference}</div>
+                        <div>${route.status.name}</div>
+                        <div>${route.startDateTime | dateTime: 'narrow'}</div>
+                        <div>${route.startAddress}</div>
+                        <div class="text-align-right">${route.stopCount}</div>
+                    </data-table-row>
+
+                </data-table>
+
+            </section>
+
+        </module-content>
+
+    </module>
+
+</template>
