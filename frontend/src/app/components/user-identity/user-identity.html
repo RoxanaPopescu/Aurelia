@@ -1,0 +1,15 @@
+<template>
+
+    <require from="./user-identity.scss"></require>
+
+    <a href="/user" title="User profile">
+
+        <img src.bind="identityService.identity.pictureUrl">
+
+        <div if.bind="size != 'icon'">
+            ${identityService.identity.preferredName}
+        </div>
+
+    </a>
+
+</template>

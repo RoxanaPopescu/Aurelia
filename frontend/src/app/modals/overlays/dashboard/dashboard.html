@@ -1,0 +1,50 @@
+<template>
+
+    <require from="app/components/app-sidebar/app-sidebar"></require>
+
+    <require from="./dashboard.scss"></require>
+
+    <app-sidebar reduce-shadow.bind="true" disable-dashboard.bind="!allowClose">
+
+        <div slot="header">
+            <icon title="Add" name="add" modal-href="modal: confirm" tabindex="0"></icon>
+        </div>
+
+        <section>
+            <icon title="Guide" name="guide" modal-href="modal: guide" tabindex="0"></icon>
+            <icon title="History" name="md-history" modal-href="modal: history" tabindex="0"></icon>
+            <icon title="Settings" name="md-settings" modal-href="modal: settings" tabindex="0"></icon>
+            <icon title="Reports" name="md-bar-chart" modal-href="modal: reports" tabindex="0"></icon>
+        </section>
+
+    </app-sidebar>
+
+    <modal-overlay name="dashboard" close-button.bind="false" close-shortcut.bind="allowClose" theme-surface="primary" scroll>
+
+        <header>
+
+            <h1 class="font-largest focus-hidden" tabindex="-1" autofocus>
+                Dashboard
+            </h1>
+
+        </header>
+
+        <section>
+
+            SECTION
+
+            <a href="/organizations/momondo" style="display: block; padding: 80px; width: 400px; background: #ffffff55;">
+                Organizations / Momondo
+            </a>
+
+        </section>
+
+        <footer>
+
+            FOOTER
+
+        </footer>
+
+    </modal-overlay>
+
+</template>

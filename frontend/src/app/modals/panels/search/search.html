@@ -1,0 +1,67 @@
+<template>
+
+    <require from="./search.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-panel name="search" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <!--
+        <div slot="actions">
+            <button appearance="icon">
+                <icon name="menu"></icon>
+            </button>
+        </div>
+        -->
+
+        <header scroll-fade>
+
+            <h1 class="font-largest margin-bottom focus-hidden" tabindex="-1" autofocus>
+                Search
+            </h1>
+
+            <input type="text" placeholder="Type to search...">
+
+        </header>
+
+        <div>
+
+            <section>
+
+                <h2 class="font-large margin-bottom">Saved searches</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <a href="#">Show more</a>
+
+            </section>
+
+            <section class="margin-top">
+
+                <h2 class="font-large margin-bottom">Recent searches</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <a href="#">Show more</a>
+
+            </section>
+
+        </div>
+
+        <footer>
+
+            FOOTER
+
+        </footer>
+
+    </modal-panel>
+
+</template>

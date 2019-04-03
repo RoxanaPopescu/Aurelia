@@ -1,0 +1,22 @@
+@import "base/resources/index";
+
+[scroll]
+{
+    overflow-y: auto;
+
+    [scroll-fade]
+    {
+        transition: opacity 0.1s;
+    }
+
+    // Enable momentum-based scrolling.
+    -webkit-overflow-scrolling: touch;
+
+    // Prevent pull-to-refresh.
+    overscroll-behavior: contain;
+
+    &.disable-hover *
+    {
+        pointer-events: none !important;
+    }
+}

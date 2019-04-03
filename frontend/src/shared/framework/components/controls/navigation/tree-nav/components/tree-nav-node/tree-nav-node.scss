@@ -1,0 +1,85 @@
+@import "base/resources/index";
+
+tree-nav-node
+{
+    display: block;
+    line-height: 8rem;
+
+    nav-subtree &
+    {
+        padding-left: 4rem;
+    }
+
+    .tree-nav-node
+    {
+        display: flex;
+        padding: 1rem 3rem;
+        align-items: center;
+        border-radius: var(--border-radius-medium);
+        cursor: pointer;
+
+        &:not(.--active):hover,
+        .focus-visible &:not(.--active):focus
+        {
+            color: var(--color-surface-nav-link-surface-text--hover);
+            background: var(--color-surface-nav-link-surface--hover);
+
+            md-icon
+            {
+                color: var(--color-surface-nav-link-surface-icon--hover);
+            }
+        }
+
+        &.--active
+        {
+            color: var(--color-surface-nav-link-surface-text--active);
+            background: var(--color-surface-nav-link-surface--active);
+
+            md-icon
+            {
+                color: var(--color-surface-nav-link-surface-icon--active);
+            }
+        }
+    }
+
+    .tree-nav-node-title
+    {
+        white-space: nowrap;
+    }
+
+    $icon-size-folder: 5.5rem;
+    $icon-size-file: 4rem;
+
+    md-icon
+    {
+        margin-right: calc(#{($icon-size-folder - $icon-size-file) / 2} + #{$icon-size-folder / $icon-size-file} * var(--size-inline-spacing));
+        margin-left: ($icon-size-folder - $icon-size-file) / 2;
+        font-size: $icon-size-file;
+        vertical-align: middle;
+        font-weight: 700;
+        color: var(--color-surface-nav-link-surface-icon);
+    }
+
+    md-icon:last-child
+    {
+        opacity: 0;
+    }
+
+    .--folder md-icon
+    {
+        margin-left: 0;
+        margin-right: var(--size-inline-spacing);
+        font-size: $icon-size-folder;
+    }
+
+    .--active md-icon:first-child
+    {
+        opacity: 0.1;
+    }
+
+    .--active md-icon:last-child
+    {
+        color: var(--color-surface-nav-link-surface-icon--active);
+        opacity: 1;
+    }
+}

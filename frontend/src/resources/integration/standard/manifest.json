@@ -1,0 +1,24 @@
+{
+    "name": "Mover",
+    "short_name": "Mover",
+    "start_url": "/",
+    "display": "minimal-ui",
+    "background_color": "#0747a6",
+    "theme_color": "#0747a6",
+    "icons":
+    [
+        {
+            "src": "/resources/integration/standard/icon-small.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/resources/integration/standard/icon-large.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ],
+    "related_applications":
+    [
+    ]
+}

@@ -1,0 +1,30 @@
+<template>
+
+    <require from="./tree-nav-node.scss"></require>
+    <require from="../../tree-nav"></require>
+
+    <div
+        class="tree-nav-node ${active ? '--active' : ''} ${isFolder ? '--folder' : ''} ${model.expanded ? '--expanded' : ''}"
+        tabindex.bind="active ? 0 : -1"
+        click.trigger="onClick(false, $event)">
+
+        <md-icon-stack>
+            <md-icon name="folder" click.trigger="onClick(true, $event)"></md-icon>
+            <md-icon name.bind="active && (tree.selectChildren || (!model.expanded && tree.selectChildren == undefined)) ? 'folder' : 'folder_open'" click.trigger="onClick(true, $event)"></md-icon>
+        </md-icon-stack>
+
+        <span class="tree-nav-node-title">${model.name}</span>
+
+    </div>
+
+    <nav-subtree
+        as-element="tree-nav"
+        if.bind="expandable"
+        show.bind="model.expanded"
+        tree.bind="tree"
+        select-children.bind="tree.selectChildren"
+        model.bind="model.children"
+        tabindex="-1">
+    </nav-subtree>
+
+</template>

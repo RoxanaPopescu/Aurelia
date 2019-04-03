@@ -1,0 +1,47 @@
+<template>
+
+    <require from="./add.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-panel name="add" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <!--
+        <div slot="actions">
+            <button appearance="icon">
+                <icon name="menu"></icon>
+            </button>
+        </div>
+        -->
+
+        <header scroll-fade>
+
+            <h1 class="font-largest focus-hidden" tabindex="-1" autofocus>
+                Add
+            </h1>
+
+        </header>
+
+        <div>
+
+            <section>
+
+                <div style="background: #efefef; padding: 40px; margin-bottom: 40px;">Organization</div>
+                <div style="background: #efefef; padding: 40px; margin-bottom: 40px;">Project</div>
+                <div style="background: #efefef; padding: 40px; margin-bottom: 30px;">Locale</div>
+
+                <a href="#">Show more</a>
+
+            </section>
+
+        </div>
+
+        <footer>
+
+            FOOTER
+
+        </footer>
+
+    </modal-panel>
+
+</template>

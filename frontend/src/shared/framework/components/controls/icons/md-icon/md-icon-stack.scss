@@ -1,0 +1,21 @@
+md-icon-stack
+{
+    // Lay out the icons in a column.
+    display: inline-flex;
+    position: relative;
+    flex-direction: column;
+    line-height: 1;
+    vertical-align: bottom;
+
+    &:empty
+    {
+        display: none;
+    }
+
+    // Leave the first icon untouched.
+    > md-icon:not(:first-child)
+    {
+        // Pull the remaining icons up so they overlap with the first.
+        margin-top: -1em;
+    }
+}

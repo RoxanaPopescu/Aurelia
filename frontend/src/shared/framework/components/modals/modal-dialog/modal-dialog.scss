@@ -1,0 +1,201 @@
+@import "base/resources/index";
+
+modal-dialog
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Apply the z-index for modals.
+    z-index: var(--z-index-modal);
+
+    // Center the dialog.
+    margin: 0 auto;
+    align-self: center;
+
+    // Offset the dialog according to its margin.
+    top: calc(var(--modal-dialog-margin-top) - var(--modal-dialog-margin-bottom));
+    left: calc(var(--modal-dialog-margin-left) - var(--modal-dialog-margin-right));
+
+    // Limit the size of the dialog.
+    min-height: var(--modal-dialog-min-height);
+    max-height: var(--modal-dialog-max-height);
+    min-width: var(--modal-dialog-min-width);
+    max-width: var(--modal-dialog-max-width);
+
+    // Apply a border to the dialog.
+    border: 0 solid var(--color-surface-border);
+    border-radius: var(--border-radius-large);
+
+    // Apply a shadow to the dialog.
+    box-shadow: var(--modal-shadow);
+
+    // Apply surface style.
+    background: var(--color-surface);
+    color: var(--color-surface-text);
+
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    .modal-dialog-content
+    {
+        position: relative;
+
+        // Set the size of the content area.
+        width: 100%;
+        min-height: 100%;
+
+        // Provide defaults for sectioning elements.
+
+        > header,
+        > footer
+        {
+            // Apply padding to header and footer.
+            // Note that we use padding instead of margin,
+            // to enable sticky positioning.
+            padding: 7rem 7rem 7rem 8rem;
+
+            button[appearance="icon"]
+            {
+                // Provide default icon size.
+                font-size: 6rem;
+            }
+        }
+
+        > header
+        {
+            // Stick to the top.
+            position: sticky;
+            top: 0;
+
+            // Apply the surface color to the header and footer,
+            // so they cover any content scrolling under them.
+            background-color: var(--color-surface);
+
+            // Apply a mask to fade out the background.
+            mask-image: linear-gradient(
+                to bottom,
+                #ffffff 0%,
+                rgba(#ffffff, 0.95) 65%,
+                rgba(#ffffff, 0.8) 80%,
+                rgba(#ffffff, 0) 100%
+            );
+        }
+
+        > section
+        {
+            // Apply horizontal padding to sections.
+            padding: 0 7rem 0 8rem;
+        }
+
+        > footer
+        {
+            // TODO: Why do we need this?
+            clear: both;
+
+            // Stick to the bottom.
+            position: sticky;
+            bottom: 0;
+
+            // Apply the surface color to the header and footer,
+            // so they cover any content scrolling under them.
+            background-color: var(--color-surface);
+
+            // Apply a mask to fade out the background.
+            mask-image: linear-gradient(
+                to top,
+                #ffffff 0%,
+                rgba(#ffffff, 0.95) 65%,
+                rgba(#ffffff, 0.8) 80%,
+                rgba(#ffffff, 0) 100%
+            );
+
+            // Use horizontal flex layout.
+            display: flex;
+            justify-content: flex-end;
+
+            // Center items vertically.
+            align-items: center;
+
+
+            > *
+            {
+                // Provide default item spacing.
+                margin-left: 3rem;
+            }
+        }
+    }
+
+    .modal-dialog-actions
+    {
+        // Position at the top-right corner of the dialog.
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        float: right;
+
+        // Use horizontal flex layout.
+        display: flex;
+
+        // Center items vertically.
+        align-items: center;
+
+        // Apply padding.
+        padding: 5.5rem;
+
+        > *
+        {
+            // Provide default item spacing.
+            margin-left: 3rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 6rem;
+        }
+    }
+
+    // Classes that apply an edge with the specified accent color.
+
+    &.--accent-neutral
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-neutral-border);
+    }
+
+    &.--accent-primary
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-primary-border);
+    }
+
+    &.--accent-positive
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-positive-border);
+    }
+
+    &.--accent-attention
+    {
+        border-left-width: var(--border-width-thicker);
+        border-left-color: var(--color-surface-attention-border);
+    }
+
+    &.--accent-negative
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-negative-border);
+    }
+
+    &.--accent-info
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-info-border);
+    }
+
+    &.--accent-help
+    {
+        border-left-width: var(--border-width-thicker);
+        border-color: var(--color-surface-help-border);
+    }
+}

@@ -1,0 +1,64 @@
+@import "base/resources/index";
+
+nav-links
+{
+    line-height: size(8);
+
+    a
+    {
+        display: flex;
+        padding: size(1 3);
+        align-items: center;
+        border-width: var(--border-width-thin);
+        border-radius: var(--border-radius-medium);
+
+        &, &:link, &:active
+        {
+            color: var(--color-surface-nav-link-surface-text);
+            background-color: var(--color-surface-nav-link-surface);
+            border-color: var(--color-surface-nav-link-border);
+        }
+
+        icon
+        {
+            margin-right: size(2.5);
+            font-size: size(6);
+            color: var(--color-surface-nav-link-surface-icon);
+        }
+
+        &:hover
+        {
+            color: var(--color-surface-nav-link-surface-text--hover);
+            background-color: var(--color-surface-nav-link-surface--hover);
+            border-color: var(--color-surface-nav-link-border--hover);
+
+            icon
+            {
+                color: var(--color-surface-nav-link-surface-icon--hover);
+            }
+        }
+
+        &.--active
+        {
+            cursor: default;
+            color: var(--color-surface-nav-link-surface-text--active);
+            background-color: var(--color-surface-nav-link-surface--active);
+            border-color: var(--color-surface-nav-link-border--active);
+
+            icon
+            {
+                color: var(--color-surface-nav-link-surface-icon--active);
+            }
+
+            &.--nav-back-only
+            {
+                display: none;
+            }
+        }
+
+        &.--nav-default, &.--nav-back-only
+        {
+            margin-bottom: size(7);
+        }
+    }
+}

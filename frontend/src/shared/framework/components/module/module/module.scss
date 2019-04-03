@@ -1,0 +1,10 @@
+@import "base/resources/index";
+
+module
+{
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Use horizontal flex layout.
+    display: flex;
+}

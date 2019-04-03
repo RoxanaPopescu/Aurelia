@@ -1,0 +1,25 @@
+<template
+    class="focus-hidden"
+    keydown.trigger="onKeyDown($event)"
+    tabindex="-1"
+    trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
+
+    <require from="./modal-overlay.scss"></require>
+
+    <div class="modal-overlay-content">
+
+        <slot></slot>
+
+    </div>
+
+    <div class="modal-overlay-actions">
+
+        <button if.bind="closeButton" appearance="icon" click.delegate="onCloseClick()">
+            <icon name="close"></icon>
+        </button>
+
+        <slot name="actions"></slot>
+
+    </div>
+
+</template>

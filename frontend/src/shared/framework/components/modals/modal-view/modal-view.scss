@@ -1,0 +1,33 @@
+@import "base/resources/index";
+
+modal-view
+{
+    > compose
+    {
+        // Fill the viewport.
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        // Use horizontal flex layout.
+        display: flex;
+
+        // Allow clicks to pass through, as the `compose` element is just the presenter.
+        pointer-events: none;
+
+        // Hint that animation will be applied.
+        will-change: opacity;
+
+        // Style elements within the modal view.
+        > *
+        {
+            // Apply the z-index for modals.
+            z-index: var(--z-index-modal);
+
+            // Prevent clicks from passing through.
+            pointer-events: initial;
+        }
+    }
+}

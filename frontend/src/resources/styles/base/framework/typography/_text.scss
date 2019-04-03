@@ -1,0 +1,55 @@
+////
+/// @group framework/typography/text
+////
+
+/// Classes affecting the allignment and truncation of text content.
+$__summary: comment;
+
+@import "base/resources/index";
+
+
+/// Aligns the text horizontally, to the left within its container.
+.text-align-left
+{
+    text-align: left;
+}
+
+/// Aligns the text horizontally, to the right within its container.
+.text-align-right
+{
+    text-align: right;
+}
+
+/// Aligns the text horizontally, around the center of its container.
+.text-align-center
+{
+    text-align: center;
+}
+
+/// Transforms the text to upper-case.
+.text-transform-uppercase
+{
+    text-transform: uppercase;
+}
+
+/// Transforms the text to lower-case.
+.text-transform-lowercase
+{
+    text-transform: lowercase;
+}
+
+/// Transforms the text to title-case.
+.text-transform-titlecase
+{
+    text-transform: capitalize;
+}
+
+/// Truncates the text content of the element, adding an ellipsis at the end.
+/// Note that this only works for single-line text.
+.text-truncate
+{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

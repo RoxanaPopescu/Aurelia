@@ -1,0 +1,593 @@
+////
+/// @group foundation/typography
+////
+
+/// Foundational styles for the typographic elements defined in the HTML standard.
+$__summary: comment;
+
+@import "base/resources/index";
+
+
+// Sectioning
+// See: https://www.w3.org/TR/html51/sections.html
+// ====================================================================================================
+
+body
+{
+    // Set the base foreground color.
+    background: var(--color-surface);
+
+    // Set the base background color.
+    color: var(--color-surface-text);
+
+    // Set the base line height and font.
+    line-height: var(--font-base-line-height);
+    font-size: var(--font-base-font-size);
+    font-family: var(--font-family-sans-serif);
+    font-weight: var(--font-base-font-weight);
+
+    // Define the current text margins.
+    --font-current-margin-top: var(--font-base-margin-top);
+    --font-current-margin-bottom: var(--font-base-margin-bottom);
+}
+
+
+// Headings
+// ----------------------------------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure page breaks after headings are avoided.
+    page-break-after: avoid;
+}
+
+
+// Grouping
+// See: https://www.w3.org/TR/html51/grouping-content.html
+// ====================================================================================================
+
+
+// Paragraphs and breaks
+// ----------------------------------------------------------------------------------------------------
+
+p
+{
+    // Ensure consistent spacing.
+    margin-top: var(--font-current-margin-top);
+    margin-bottom: var(--font-current-margin-bottom);
+}
+
+hr
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Remove the default border.
+    border: 0;
+
+    // Ensure the height is determined by the content.
+    height: auto;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent text alignment.
+    text-align: center;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+
+    // Ensure consistent overflow.
+    overflow: hidden;
+}
+
+
+// Preformatted text blocks
+// ----------------------------------------------------------------------------------------------------
+
+pre
+{
+    // Ensure consistent spacing.
+    margin: 0;
+
+    // Preserve whitespace.
+    white-space: pre;
+}
+
+
+// Quoted text blocks
+// ----------------------------------------------------------------------------------------------------
+
+blockquote
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+
+    &::before
+    {
+        // Ensure consistent `:before` content.
+        content: none;
+    }
+
+    &::after
+    {
+        // Ensure consistent `:after` content.
+        content: none;
+    }
+}
+
+
+// Ordered and unordered lists
+// ----------------------------------------------------------------------------------------------------
+
+ul, ol
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent list style.
+    list-style: none;
+}
+
+li
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+}
+
+ul ol
+{
+    // Prevent margin on nested lists.
+    margin: 0;
+}
+
+
+// Definition lists
+// ----------------------------------------------------------------------------------------------------
+
+dl
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+}
+
+dt, dd
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+
+// Figures
+// ----------------------------------------------------------------------------------------------------
+
+figure
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+figcaption
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent text alignment.
+    text-align: left;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+
+// Text-level semantics
+// See: https://www.w3.org/TR/html51/textlevel-semantics.html
+// ====================================================================================================
+
+
+// Links
+// ----------------------------------------------------------------------------------------------------
+
+a
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: var(--color-surface-primary-text);
+
+    // Ensure consistent cursor.
+    cursor: pointer;
+}
+
+
+// Subscript and superscript
+// ----------------------------------------------------------------------------------------------------
+
+sub, sup
+{
+    // Ensure consistent alignment.
+    position: relative;
+    vertical-align: baseline;
+
+    // Ensure consistent text size.
+    font-size: 0.7em;
+
+    // Prevent the element from affecting the line height.
+    line-height: 0;
+}
+
+sup
+{
+    // Ensure consistent vertical offset.
+    top: -0.4em;
+}
+
+sub
+{
+    // Ensure consistent vertical offset.
+    bottom: -0.3em;
+}
+
+
+// Text semantics
+// ----------------------------------------------------------------------------------------------------
+
+i, em
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    font-style: italic;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+b, strong
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    font-weight: bolder;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+u
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: underline;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+s
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: line-through;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+small
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+time, data
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+abbr, dfn
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+
+    // Ensure consistent title indicator.
+    &[title]
+    {
+        text-decoration: dotted underline rgba(black, 0.2);
+    }
+}
+
+cite
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    font-style: italic;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+q
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+
+    // Ensure consistent quote marks.
+
+    quotes: '"' '"' "'" "'";
+
+    &::before
+    {
+        content: open-quote;
+    }
+
+    &::after
+    {
+        content: close-quote;
+    }
+}
+
+mark
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: var(--color-surface-mark);
+}
+
+
+// Code, variable, input and output.
+// ----------------------------------------------------------------------------------------------------
+
+code, var, kbd, samp
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    font-family: var(--font-family-monospaced);
+    text-decoration: none;
+
+    // Reduce the font size to compensate for the difference
+    // between normal and monospaced fonts.
+    font-size: var(--font-monospaced-font-size);
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+
+// Edits
+// See: https://www.w3.org/TR/html51/edits.html
+// ====================================================================================================
+
+ins
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+del
+{
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: line-through;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}
+
+
+// Embedded content
+// See: https://www.w3.org/TR/html51/semantics-embedded-content.html
+// ====================================================================================================
+
+img, svg, iframe, embed, object, video, audio
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent border.
+    border: none;
+
+    // Scale the content to fit the width of its container, while preserving its aspect ratio.
+    width: 100%;
+    height: auto;
+
+    // Prevent the content from scaling beyond the width of its container.
+    max-width: 100%;
+}
+
+a img
+{
+    // Prevent the border some browsers apply to images within an anchor.
+    border: none;
+}
+
+img:not([src])
+{
+    // Hide image if it has no source.
+    visibility: hidden;
+}
+
+
+// Tables
+// See: https://www.w3.org/TR/html51/tabular-data.html
+// ====================================================================================================
+
+table
+{
+    // Note: This should be styled by applying the appropiate classes.
+
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent border.
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th, td
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent border.
+    border: none;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+
+    // Ensure consistnt text alignment.
+    text-align: left;
+    vertical-align: middle;
+}
+
+caption
+{
+    // Ensure consistent spacing.
+    margin: 0;
+    padding: 0;
+
+    // Ensure consistent text size and appearance.
+    font: inherit;
+    text-decoration: none;
+
+    // Ensure consistent text alignment.
+    text-align: left;
+
+    // Ensure consistent foreground color.
+    color: inherit;
+
+    // Ensure consistent background color.
+    background: none;
+}

@@ -1,0 +1,16 @@
+modal-overlay[name="dashboard"]
+{
+}
+
+dashboard-modal
+{
+    // Fill the viewport.
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    // Use horizontal flex layout.
+    display: flex;
+}

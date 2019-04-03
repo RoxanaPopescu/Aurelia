@@ -1,0 +1,114 @@
+{
+  // Use IntelliSense to find out which attributes exist for node debugging
+  // Use hover for the description of the existing attributes
+  // For further information visit https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations":
+  [
+    /**
+     * Launches the specified script, with the debugger attached.
+     * Note that a picker will be shown, asking which script to debug.
+     */
+		{
+      "type": "node",
+      "request": "launch",
+      "name": "Debug script",
+      "runtimeArgs":
+      [
+          "-r",
+          "ts-node/register"
+      ],
+      "args":
+      [
+        "${workspaceRoot}/tools/scripts/${input:scriptName}.ts"
+      ],
+      "env":
+      {
+        "NODE_ENV": "development",
+        "TS_NODE_PROJECT": "${workspaceRoot}/tools/tsconfig.json"
+      },
+      "console": "integratedTerminal",
+      "skipFiles":
+      [
+        "<node_internals>/**",
+        "node_modules/ts-node/**"
+      ]
+    },
+
+    /**
+     * Launches the Chrome browser, with the debugger attached.
+     * Note that either the development or production server must already be running.
+     */
+    {
+      "name": "Debug",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceRoot}/src",
+      "userDataDir": "${workspaceRoot}/.chrome",
+      "sourceMapPathOverrides":
+      {
+        "webpack:///./src/*": "${webRoot}/*"
+      }
+    },
+
+    /**
+     * Launches the cloud app, with the debugger attached.
+     * Note that the package must already be build.
+     */
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug cloud app",
+      "cwd": "${workspaceFolder}/packages/cloud",
+      "runtimeExecutable": "${workspaceFolder}/packages/cloud/node_modules/.bin/nodemon",
+      "runtimeArgs":
+      [
+        "--exitcrash",
+        "--watch", "${workspaceFolder}/packages/cloud/artifacts/build/server"
+      ],
+      "program": "${workspaceFolder}/packages/cloud/artifacts/build/server/index.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles":
+      [
+        "<node_internals>/**"
+      ]
+    },
+
+    /**
+     * Launches the desktop app, with the debugger attached.
+     * Note that the package must already be build.
+     */
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug desktop app",
+      "cwd": "${workspaceFolder}/packages/desktop",
+      "runtimeExecutable": "${workspaceFolder}/packages/desktop/node_modules/.bin/electron",
+      "program": "${workspaceFolder}/packages/desktop/artifacts/build/index.js",
+      "console": "integratedTerminal",
+      "skipFiles":
+      [
+        "<node_internals>/**"
+      ]
+    }
+  ],
+  "inputs": [
+
+    /**
+     * Picker input for selecting the script to debug,
+     * using the `Debug script` configuration.
+     */
+    {
+      "type": "pickString",
+      "id": "scriptName",
+      "description": "Choose the script you want to debug",
+      "options": [
+        "develop",
+        "build"
+      ]
+    }
+  ]
+}

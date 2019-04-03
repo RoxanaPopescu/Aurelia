@@ -1,0 +1,93 @@
+<template>
+
+    <require from="./guide.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-panel name="guide" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <!--
+        <div slot="actions">
+            <button appearance="icon">
+                <icon name="menu"></icon>
+            </button>
+        </div>
+        -->
+
+        <header scroll-fade>
+
+            <h1 class="font-largest margin-bottom focus-hidden" tabindex="-1" autofocus>
+                Translation guide
+            </h1>
+
+            <tab-nav value.bind="scope">
+                <tab name="organization">Organization</tab>
+                <tab name="project">Project</tab>
+                <tab name="locale">Locale</tab>
+            <tab-nav>
+
+        </header>
+
+        <div>
+
+            <section class="margin-bottom">
+
+                SECTION
+
+                <panes pane.bind="scope">
+
+                    <pane name="organization">
+                        PANE
+                        <markdown content.bind="organization.guide"></markdown>
+                    </pane>
+
+                    <pane name="project">
+                        PANE
+                        <markdown content.bind="project.guide"></markdown>
+                    </pane>
+
+                    <pane name="locale">
+                        PANE
+                        <markdown content.bind="locale.guide"></markdown>
+                    </pane>
+
+                </panes>
+
+            </section>
+
+            <section>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+            </section>
+
+        </div>
+
+        <footer>
+
+            FOOTER
+
+        </footer>
+
+    </modal-panel>
+
+</template>

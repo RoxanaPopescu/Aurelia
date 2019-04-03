@@ -1,0 +1,64 @@
+<template>
+
+    <require from="app/components/app-sidebar/app-sidebar"></require>
+
+    <require from="../index.scss"></require>
+    <require from="./app.scss"></require>
+
+    <app-sidebar>
+
+        <div slot="header">
+            <icon title="Add" name="add" modal-href="modal: add" tabindex="0"></icon>
+        </div>
+
+        <section>
+
+            <a title="KPI" href="/kpi">
+                <icon name="m-kpi" tabindex="0"></icon>
+            </a>
+
+            <a title="Orders" href="/orders">
+                <icon name="m-orders" tabindex="0"></icon>
+            </a>
+
+            <a title="Routes" href="/routes">
+                <icon name="m-routes" tabindex="0"></icon>
+            </a>
+
+            <a title="Route planning" href="/route-planning">
+                <icon name="m-route-planning" tabindex="0"></icon>
+            </a>
+
+            <a title="Depots" href="/depots">
+                <icon name="m-depots" tabindex="0"></icon>
+            </a>
+
+            <a title="Fleet" href="/fleet-management">
+                <icon name="m-fleet" tabindex="0"></icon>
+            </a>
+
+            <a title="Communication" href="/communication">
+                <icon name="m-communication" tabindex="0"></icon>
+            </a>
+
+            <a title="Departments" href="/departments">
+                <icon name="m-departments" tabindex="0"></icon>
+            </a>
+
+            <a title="Users" href="/users">
+                <icon name="m-users" tabindex="0"></icon>
+            </a>
+
+            <a title="Agreements" href="/agreements">
+                <icon name="m-agreements" tabindex="0"></icon>
+            </a>
+
+        </section>
+
+    </app-sidebar>
+
+    <router-view class="app au-animate animation-fade-in-medium animation-fade-out-medium" swap-order="after"></router-view>
+
+    <modal-view></modal-view>
+
+</template>

@@ -1,0 +1,68 @@
+icon
+{
+    display: inline-flex;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    align-items: center;
+    justify-content: center;
+
+    // If placed inline with text, align to the bottom of the line box.
+    // Note that this will only align as intended if both the line height
+    // of the text and the height of the icon is equal to the font size.
+    vertical-align: bottom;
+
+    // If placed in a flex container, center on the cross axis.
+    align-self: center;
+
+    // Stack nested icons and let the outer-most icon control their size.
+    // When used in a stack, the size and offset of individual icons should
+    // be specified as percentages, so they scale together with the stack.
+    icon
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    &:empty
+    {
+        display: none;
+    }
+
+    svg
+    {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// Apply colors to Material Design icons.
+icon[name^="md-"]
+{
+    // Use the current foreground color for both stroke and fill.
+    // This means that the markup for each icon must specify the
+    // attributes `fill="none"` and `stroke="none"` as needed.
+
+    // Not used.
+    color: currentColor;
+
+    // Used as the primary icon color.
+    fill: currentColor;
+
+    // Not supported.
+    stroke: none;
+}
+
+// Apply colors to Atlassian icons.
+icon:not([name^="md-"])
+{
+    // Used as the primary icon color.
+    color: currentColor;
+
+    // Not supported.
+    stroke: none;
+
+    // Used for elements inside a filled icon to give the impression of transparency.
+    fill: var(--color-surface);
+}

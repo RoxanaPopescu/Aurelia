@@ -1,0 +1,37 @@
+@import "base/resources/index";
+
+path-nav
+{
+    display: flex;
+
+    a
+    {
+        display: block;
+        color: var(--color-surface-heading);
+
+        &[href]:hover, .focus-visible &[href]:focus
+        {
+            color: var(--color-surface-primary-text--hover);
+        }
+
+        &:not(:last-child)::after
+        {
+            content: "";
+            padding: 0 1.5em;
+            opacity: 0.3;
+            background: var(--color-surface-primary-icon);
+            mask-size: 1em;
+            mask-position: center;
+            mask-repeat: no-repeat;
+
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 18'>" +
+                    "<g fill='none' fill-rule='evenodd' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'>" +
+                        "<path d='M.75 8.6h18.39M12.25.75L20.1 8.6l-7.85 7.85'/>" +
+                    "</g>" +
+                "</svg>"
+            );
+        }
+    }
+}

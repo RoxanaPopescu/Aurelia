@@ -1,0 +1,17 @@
+design-column
+{
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 6rem;
+
+    &:not(:first-child)
+    {
+        padding-left: 6rem;
+        border-left: var(--border-width-thin) solid var(--color-surface-border);
+    }
+
+    .design-column-heading
+    {
+        margin-bottom: 6rem;
+    }
+}

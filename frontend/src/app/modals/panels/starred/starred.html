@@ -1,0 +1,67 @@
+<template>
+
+    <require from="./starred.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-panel name="starred" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <!--
+        <div slot="actions">
+            <button appearance="icon">
+                <icon name="menu"></icon>
+            </button>
+        </div>
+        -->
+
+        <header scroll-fade>
+
+            <h1 class="font-largest margin-bottom focus-hidden" tabindex="-1" autofocus>
+                Starred and recent
+            </h1>
+
+            <input type="text" placeholder="Type to filter...">
+
+        </header>
+
+        <div>
+
+            <section>
+
+                <h2 class="font-large margin-bottom">Starred items</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <a href="#">Show more</a>
+
+            </section>
+
+            <section>
+
+                <h2 class="font-large margin-bottom">Recent items</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <a href="#">Show more</a>
+
+            </section>
+
+        </div>
+
+        <footer>
+
+            FOOTER
+
+        </footer>
+
+    </modal-panel>
+
+</template>

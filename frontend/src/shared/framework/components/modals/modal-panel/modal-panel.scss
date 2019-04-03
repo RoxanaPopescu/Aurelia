@@ -1,0 +1,203 @@
+@import "base/resources/index";
+
+modal-panel
+{
+    // The transform to apply to the panel before it enters and after it leaves.
+    --modal-panel-origin-transform: translateX(calc(-1 * var(--size-app-sidebar-width)));
+
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Apply the z-index for modals.
+    z-index: var(--z-index-modal);
+
+    // Limit the size of the panel.
+    min-width: var(--modal-panel-min-width);
+    max-width: var(--modal-panel-max-width);
+
+    // Apply a border to the panel.
+    border: 0 solid var(--modal-panel-border-color);
+    border-top-width: var(--border-width-thin);
+    border-bottom-width: var(--border-width-thin);
+    border-top-right-radius: var(--border-radius-large);
+    border-bottom-right-radius: var(--border-radius-large);
+
+    // Apply surface style.
+    background: var(--color-surface);
+    color: var(--color-surface-text);
+
+    // Apply a shadow to the panel.
+    box-shadow: var(--modal-shadow);
+
+    .modal-panel-content
+    {
+        // Position at the top and allow content to
+        // be positioned relative to this element.
+        position: absolute;
+        top: 0;
+
+        // Set the size of the content area.
+        width: 100%;
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply horizontal padding.
+        padding-right: 9rem;
+        padding-left: var(--modal-panel-actions-width);
+
+        // Provide defaults for sectioning elements.
+
+        > header,
+        > footer
+        {
+            // Apply padding to header and footer.
+            // Note that we use padding instead of margin,
+            // to enable sticky positioning.
+            padding-top: calc(9rem - var(--border-width-thin));
+            padding-bottom: calc(9rem - var(--border-width-thin));
+
+            // Prevent shrinking.
+            flex-shrink: 0;
+        }
+
+        > footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+        }
+    }
+
+    .modal-panel-actions
+    {
+        // Keep the actions in place when panel is scrolled.
+        position: sticky;
+        top: 0;
+
+        // Set the size of the action area.
+        width: var(--modal-panel-actions-width);
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Center items horizontally.
+        align-items: center;
+
+        // Apply padding.
+        padding: 7.5rem 5rem;
+
+        > *
+        {
+            // Provide default item spacing.
+            margin-bottom: 3rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 6rem;
+        }
+    }
+
+    // Animate the panel.
+
+    // Hint that animation will be applied.
+    will-change: opacity, transform;
+
+    modal-view compose.au-enter &
+    {
+        transform: var(--modal-panel-origin-transform);
+        opacity: 0;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-panel-enter ease var(--animation-duration-short);
+    }
+
+    modal-view compose.au-leave &
+    {
+        // Replace the shadow with an afterglow to smoothe the edge and prevent ghosting.
+        box-shadow: var(--modal-panel-afterglow);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-panel-leave ease-in var(--animation-duration-short);
+    }
+
+    // Animate the content of the panel.
+
+    > *
+    {
+        // Hint that animation will be applied.
+        will-change: opacity;
+
+        modal-view compose.au-enter &
+        {
+            opacity: 0;
+        }
+
+        modal-view compose.au-enter-active &
+        {
+            animation: modal-panel-content-enter ease var(--animation-duration-short);
+        }
+
+        modal-view compose.au-leave-active &
+        {
+            animation: modal-panel-content-leave ease-in var(--animation-duration-short);
+        }
+    }
+}
+
+@keyframes modal-panel-enter
+{
+    30%
+    {
+        opacity: 0.5;
+    }
+
+    100%
+    {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes modal-panel-leave
+{
+    100%
+    {
+        transform: var(--modal-panel-origin-transform);
+    }
+}
+
+@keyframes modal-panel-content-enter
+{
+    30%
+    {
+        opacity: 0.2;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-panel-content-leave
+{
+    30%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}

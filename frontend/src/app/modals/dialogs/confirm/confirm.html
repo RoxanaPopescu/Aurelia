@@ -1,0 +1,40 @@
+<template>
+
+    <require from="./confirm.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="confirm" accent="negative" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <!--
+        <div slot="actions">
+            <button appearance="icon">
+                <icon name="menu"></icon>
+            </button>
+        </div>
+        -->
+
+        <header>
+
+            <h1 class="font-larger focus-hidden" tabindex="-1" autofocus>
+                Delete the project <b>Momondo</b>?
+            </h1>
+
+        </header>
+
+        <section>
+
+            This action cannot be undone.
+
+        </section>
+
+        <footer>
+
+            <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)">Delete</button>
+            <button appearance="solid" accent="neutral" click.delegate="onButtonClick(false)">Cancel</button>
+
+        </footer>
+
+    </modal-dialog>
+
+</template>

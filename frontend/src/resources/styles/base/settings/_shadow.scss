@@ -1,0 +1,22 @@
+////
+/// @group settings/shadow
+////
+
+/// The default shadows used to indicate the elevation of elements.
+$__summary: comment;
+
+
+:root
+{
+    /// The large shadow,
+    /// used for elements elevated high above the page, such as e.g. modals.
+    --shadow-large: 0 0 16px 0 rgba(black, 0.3);
+
+    /// The medium shadow,
+    /// used for elements elevated slightly above the page, such as e.g. dropdowns.
+    --shadow-medium: 0 0 8px 0 rgba(black, 0.2);
+
+    /// The small shadow,
+    /// used for elements elevated just above the page, such as e.g. tooltips.
+    --shadow-small: 0 0 4px 0 rgba(black, 0.1);
+}

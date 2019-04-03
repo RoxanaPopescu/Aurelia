@@ -1,0 +1,39 @@
+@import "base/resources/index";
+
+user-identity
+{
+    display: block;
+
+    a
+    {
+        display: flex;
+        align-items: center;
+        color: inherit;
+
+        // Animate the hover effect.
+        transition:
+            border-color var(--animation-duration-short),
+            filter var(--animation-duration-short);
+
+        &:hover img
+        {
+            // Highlight on hover.
+            filter: brightness(105%);
+            border-color: #ffffff;
+        }
+    }
+
+    img
+    {
+        width: 10rem;
+        height: 10rem;
+        border: var(--border-width-thin) solid;
+        border-radius: size(5);
+        border-color: var(--color-surface-icon);
+    }
+
+    div
+    {
+        margin-left: var(--size-inline-spacing-large);
+    }
+}

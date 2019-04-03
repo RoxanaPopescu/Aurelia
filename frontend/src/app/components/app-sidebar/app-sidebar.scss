@@ -1,0 +1,110 @@
+@import "base/resources/index";
+
+app-sidebar
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use vertical flex layout.
+    display: flex;
+    flex-direction: column;
+
+    // Set the width of the sidebar.
+    width: var(--size-app-sidebar-width);
+
+    // Don't shrink - we collapse it manually in small viewports.
+    flex-shrink: 0;
+
+    // Apply the surface style.
+    background: var(--color-surface);
+    color: var(--color-surface-text);
+
+    app-icon
+    {
+        // Size and position the app icon.
+        margin: 9rem 0 6rem 0;
+        width: 11rem;
+    }
+
+    user-identity
+    {
+        // Size and position the user icon.
+        margin: 4rem 0 6rem 0;
+        width: 10rem;
+    }
+
+    icon
+    {
+        // Size and space other icons.
+        margin: 2rem 0;
+        font-size: 6rem;
+
+        // Animate the hover effect.
+        transition: color var(--animation-duration-short);
+
+        &:hover
+        {
+            // Highlight on hover.
+            color: #ffffff;
+        }
+
+        &.--active
+        {
+            color: #ffffff;
+            cursor: default;
+        }
+    }
+
+    header,
+    section,
+    footer
+    {
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Don't shrink - we allow scrolling instead.
+        flex-shrink: 0;
+
+        // Center items horizontally.
+        align-items: center;
+    }
+
+    section
+    {
+        // Apply vertical spacing around sections.
+        margin: 4rem 0;
+    }
+
+    footer
+    {
+        // Push the footer to the bottom.
+        margin-top: auto;
+    }
+
+    .app-sidebar-shadow
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 5rem;
+        background: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.3) 0,
+            rgba(0, 0, 0, 0.3) 5%,
+            rgba(0, 0, 0, 0.15) 5%,
+            rgba(0, 0, 0, 0.1) 5%,
+            rgba(0, 0, 0, 0) 60%
+        );
+        pointer-events: none;
+        transition: opacity var(--animation-duration-short);
+
+        &.--reduce-opacity
+        {
+            // Reduce the visibility of the shadow while a modal overlay with
+            // the same surface color, such as the `dashboard`, is open.
+            opacity: 0.5;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks":
+  [
+    /**
+     * Build, watch and serve the project.
+     */
+    {
+      "type": "npm",
+      "script": "develop",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$tsc-watch",
+        "$node-sass"
+      ],
+      "isBackground": true
+    },
+
+    /**
+     * Lint the project.
+     */
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": [
+        "$tslint5"
+      ]
+    },
+
+    /**
+     * Build the project for production.
+     */
+    {
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": [
+        "$tsc",
+        "$node-sass"
+      ]
+    }
+  ]
+}

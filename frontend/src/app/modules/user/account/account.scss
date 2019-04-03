@@ -1,0 +1,42 @@
+@import "base/resources/index";
+
+.app-modules-account
+{
+    display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+}
+
+.app-modules-account-sidebar
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 32rem 8rem 32rem;
+    flex-basis: 62%;
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    app-name
+    {
+        position: absolute;
+        top: 8rem;
+        font-size: 8rem;
+        color: var(--color-surface-heading);
+    }
+
+    h2
+    {
+        max-width: 55%;
+    }
+}
+
+.app-modules-account-content
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 8rem 32rem 8rem 8rem;
+}

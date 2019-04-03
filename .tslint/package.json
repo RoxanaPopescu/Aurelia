@@ -1,0 +1,30 @@
+{
+  "name": "@mover/tslint-rules",
+  "author": "Thomas Darling",
+  "description": "Custom rules for TSLint.",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://thomas_darling@bitbucket.org/moversystems/platform.git"
+  },
+  "engines": {
+    "node": ">=10.13.0 <12.0.0",
+    "npm": ">=6.7.0 <7.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "tslib": "^1.9.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.20",
+    "tslib": "^1.9.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  }
+}

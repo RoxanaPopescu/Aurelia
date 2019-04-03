@@ -1,0 +1,8 @@
+# Because this is a log file that may be created by NPM.
+/**/npm-debug.log
+
+# Because this contains dependencies installed by NPM.
+/**/node_modules/
+
+/fulfiller
+/shared

@@ -1,0 +1,13 @@
+<template>
+
+    <require from="./modal-view.scss"></require>
+
+    <compose
+        repeat.for="$modal of modalService.modals"
+        view-model.one-time="$modal.viewModel"
+        view-model.ref="$compose"
+        model.one-time="getModel($modal, $compose)"
+        class="au-animate animation-fade-in-short animation-fade-out-short">
+    </compose>
+
+</template>

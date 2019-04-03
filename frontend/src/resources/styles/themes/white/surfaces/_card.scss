@@ -1,0 +1,51 @@
+@import "../palettes/color";
+
+// surface-card
+// The surface of a card on the card surface.
+// ====================================================================================================
+
+$surface-card--foreground-color: inherit;
+$surface-card--background-color: $color-neutral-lighter;
+$surface-card--border-color: $color-neutral;
+
+// hover
+$surface-card--foreground-color--hover: $surface-card--foreground-color;
+$surface-card--background-color--hover: scale-color($color-neutral-light, $lightness: 50%);
+$surface-card--border-color--hover: $surface-card--border-color;
+
+// active
+$surface-card--foreground-color--active: $surface-card--foreground-color;
+$surface-card--background-color--active: $color-neutral-light;
+$surface-card--border-color--active: $surface-card--border-color;
+
+
+// action, positive, negative
+// Any element that represents an action, such as a link or button.
+// ----------------------------------------------------------------------------------------------------
+
+$surface-card-primary--color: $color-primary;
+$surface-card-primary--icon-color: $surface-card-primary--color;
+$surface-card-primary--foreground-color: white;
+$surface-card-primary--background-color: $surface-card-primary--color;
+$surface-card-primary--border-color: $surface-card-primary--background-color;
+
+$surface-card-positive--color: $color-positive;
+$surface-card-positive--icon-color: $surface-card-positive--color;
+$surface-card-positive--foreground-color: $color-positive-lighter;
+$surface-card-positive--background-color: $surface-card-positive--color;
+$surface-card-positive--border-color: $surface-card-positive--background-color;
+
+$surface-card-negative--color: $color-negative;
+$surface-card-negative--icon-color: $surface-card-negative--color;
+$surface-card-negative--foreground-color: $color-negative-lighter;
+$surface-card-negative--background-color: $surface-card-negative--color;
+$surface-card-negative--border-color: $surface-card-negative--background-color;
+
+
+// input
+// Any input that has a surface, such as a text input.
+// ----------------------------------------------------------------------------------------------------
+
+$surface-card-input--foreground-color: inherit;
+$surface-card-input--background-color: white;
+$surface-card-input--border-color: $color-neutral;

@@ -1,0 +1,12 @@
+<template>
+
+    <require from="./nav-links.scss"></require>
+
+    <icon
+        repeat.for="navModel of router.navigation"
+        name.bind="navModel.config.icon"
+        class="${navModel.isActive ? '--active' : ''}"
+        module-href="path.bind: navModel.href">
+    </icon>
+
+</template>

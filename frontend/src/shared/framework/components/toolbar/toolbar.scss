@@ -1,0 +1,32 @@
+@import "base/resources/index";
+
+toolbar
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Center items vertically.
+    align-items: center;
+
+    > :not(:last-child)
+    {
+        // Apply margin to separate items.
+        margin-right: 6rem;
+    }
+
+    // Use a small default width for text inputs,
+    // and expand them when they receive focus.
+    input[type="text"],
+    input[type="search"]
+    {
+        width: 15vw;
+        min-width: 20rem;
+        transition: width 0.8s;
+        transition-delay: 0.1s;
+
+        &:focus
+        {
+            width: 22vw;
+        }
+    }
+}

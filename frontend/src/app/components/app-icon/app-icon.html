@@ -1,0 +1,13 @@
+<template>
+
+    <require from="./app-icon.scss"></require>
+
+    <a
+        title="Dashboard"
+        class="${disabled ? 'pointer-events-none' : ''}"
+        click.trigger="onClick($event)"
+        href.bind="disabled ? undefined : '/'">
+        <img src="https://moverstatic.azureedge.net/theme/mover/logo-narrow-white.svg">
+    </a>
+
+</template>

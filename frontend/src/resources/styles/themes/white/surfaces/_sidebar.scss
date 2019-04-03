@@ -1,0 +1,49 @@
+@import "../palettes/color";
+
+// surface-sidebar
+// The surface of a sidebar.
+// ====================================================================================================
+
+$surface-sidebar--foreground-color: $color-neutral-darker;
+$surface-sidebar--background-color: white;
+
+
+// action
+// Any element that represents an action, such as a link or button.
+// ----------------------------------------------------------------------------------------------------
+
+$surface-sidebar-primary--color: inherit;
+$surface-sidebar-primary--icon-color: $color-neutral;
+
+// hover
+$surface-sidebar-primary--color--hover: $surface-sidebar-primary--color;
+$surface-sidebar-primary--icon-color--hover: $color-neutral;
+$surface-sidebar-primary--foreground-color--hover: $color-primary;
+$surface-sidebar-primary--background-color--hover: transparent;
+$surface-sidebar-primary--border-color--hover: $surface-sidebar-primary--background-color--hover;
+
+// active
+$surface-sidebar-primary--color--active: $surface-sidebar-primary--color;
+$surface-sidebar-primary--icon-color--active: $color-neutral-dark;
+$surface-sidebar-primary--foreground-color--active: $surface-sidebar-primary--color;
+$surface-sidebar-primary--background-color--active: $color-neutral-light;
+$surface-sidebar-primary--border-color--active: $surface-sidebar-primary--background-color--active;
+
+
+// input
+// Any input that has a surface, such as a text input.
+// ----------------------------------------------------------------------------------------------------
+
+$surface-sidebar-input--foreground-color: inherit;
+$surface-sidebar-input--background-color: $color-neutral-light;
+$surface-sidebar-input--border-color: $color-neutral-light;
+
+
+// title
+// The page title, which may also act as navigation links.
+// ----------------------------------------------------------------------------------------------------
+
+$surface-sidebar-title--color: $color-neutral-darker;
+
+// hover
+$surface-sidebar-title--color--hover: $surface-sidebar-primary--color--hover;

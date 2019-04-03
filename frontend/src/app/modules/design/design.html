@@ -1,0 +1,27 @@
+<template>
+
+    <require from="./components/nav-links/nav-links"></require>
+
+    <require from="./design.scss"></require>
+
+    <div class="app-modules-design">
+
+        <div class="app-modules-design-sidebar" theme-surface="primary">
+
+            <h1 class="font-largest margin-bottom">
+                Design
+            </h1>
+
+            <nav-links></nav-links>
+
+        </div>
+
+        <div class="app-modules-design-content" scroll>
+
+            <router-view swap-order="after"></router-view>
+
+        </div>
+
+    </div>
+
+</template>

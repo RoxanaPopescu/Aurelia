@@ -1,0 +1,25 @@
+# Configuration for `electron-builder`.
+
+appId: com.mover
+productName: Mover
+
+directories:
+  app: "."
+  buildResources: "resources"
+  output: "artifacts/release"
+
+# Ensure that native binaries do not get packed in the `app.asar` archive.
+asarUnpack:
+  - "**/*.node"
+
+files:
+
+  - "artifacts/build"
+  - "artifacts/client"
+  - "resources"
+
+  # Exclude source maps.
+  - "!**/*.map"
+
+  # Exclude bundle analysis.
+  - "!bundle-analysis.html"

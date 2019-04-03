@@ -1,0 +1,43 @@
+<template theme-surface="primary" scroll>
+
+    <require from="app/components/app-icon/app-icon"></require>
+    <require from="app/components/user-identity/user-identity"></require>
+    <require from="./components/nav-links/nav-links"></require>
+
+    <require from="./app-sidebar.scss"></require>
+
+    <header>
+
+        <app-icon disabled.bind="disableDashboard"></app-icon>
+
+        <icon title="Starred and recent" name="starred" modal-href="modal: starred" tabindex="0"></icon>
+
+        <icon title="Search" name="search" modal-href="modal: search" tabindex="0"></icon>
+
+        <slot name="header"></slot>
+
+    </header>
+
+    <section>
+        <nav-links></nav-links>
+    </section>
+
+    <footer>
+
+        <slot name="footer"></slot>
+
+        <icon title="Notifications" name="notifications" modal-href="modal: notifications" tabindex="0">
+            <badge>1</badge>
+        </icon>
+
+        <icon title="Help and support" name="help" modal-href="modal: confirm" tabindex="0"></icon>
+
+        <icon title="Design" name="md-style" module-href="path: design" tabindex="0"></icon>
+
+        <user-identity size="icon"></user-identity>
+
+    </footer>
+
+    <div class="app-sidebar-shadow ${reduceShadow ? '--reduce-opacity' : ''}"></div>
+
+</template>

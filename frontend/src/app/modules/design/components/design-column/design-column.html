@@ -1,0 +1,13 @@
+<template>
+
+    <require from="./design-column.scss"></require>
+
+    <div if.bind="heading" class="design-column-heading font-large">
+        ${heading}
+    </div>
+
+    <div>
+        <slot></slot>
+    </div>
+
+</template>

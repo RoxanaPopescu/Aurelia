@@ -1,0 +1,20 @@
+@import "base/resources/index";
+
+module-sidebar
+{
+    // Don't shrink - we do that explicitly when needed.
+    flex-shrink: 0;
+
+    min-width: var(--size-module-sidebar-min-width);
+    max-width: var(--size-module-sidebar-max-width);
+    border-right: var(--border-width-thin) solid var(--color-border);
+    background: var(--color-surface);
+
+    header,
+    section,
+    footer
+    {
+        // Apply margin to content.
+        margin: 8rem 9rem;
+    }
+}

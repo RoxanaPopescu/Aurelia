@@ -1,0 +1,95 @@
+@import "base/resources/index";
+
+modal-overlay
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Apply the z-index for modals.
+    z-index: var(--z-index-modal);
+
+    // Apply surface style.
+    border-color: var(--color-surface-border);
+    background: var(--color-surface);
+    color: var(--color-surface-text);
+
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    .modal-overlay-content
+    {
+        // Position at the top and allow content to
+        // be positioned relative to this element.
+        position: absolute;
+        top: 0;
+
+        // Set the size of the content area.
+        width: 100%;
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply horizontal padding.
+        padding-right: 9rem;
+        padding-left: var(--modal-overlay-actions-width);
+
+        // Provide defaults for sectioning elements.
+
+        > header,
+        > footer
+        {
+            // Apply padding to header and footer.
+            // Note that we use padding instead of margin,
+            // to enable sticky positioning.
+            padding-top: 10rem;
+            padding-bottom: 10rem;
+
+            // Prevent shrinking.
+            flex-shrink: 0;
+        }
+
+        > footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+        }
+    }
+
+    .modal-overlay-actions
+    {
+        // Keep the actions in place when overlay is scrolled.
+        position: sticky;
+        top: 0;
+
+        // Set the size of the action area.
+        width: var(--modal-overlay-actions-width);
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Center items horizontally.
+        align-items: center;
+
+        // Apply padding.
+        padding: 8.75rem 5rem;
+
+        > *
+        {
+            // Provide default item spacing.
+            margin-bottom: 3rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 6rem;
+        }
+    }
+}

@@ -1,0 +1,176 @@
+////
+/// @group framework/typography/lists
+////
+
+/// Classes representing styles for the otherwise unstyled
+/// `ul`, `ol` and `dl` elements.
+$__summary: comment;
+
+@import "base/resources/index";
+
+
+/// List style that renders the unordered items as an indented list,
+/// where each item is preceded by a solid circle.
+/// If inside a content context, text margin is applied.
+ul.ul-disc
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: disc outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a number and period.
+/// If inside a content context, text margin is applied.
+ol.ol-decimal
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: decimal outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a number and period, and for
+/// single-digit numbers, a leading zero.
+/// If inside a content context, text margin is applied.
+ol.ol-decimal-leading-zero
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: decimal-leading-zero outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a lower-case roman numeral and period.
+/// If inside a content context, text margin is applied.
+ol.ol-lower-roman
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: lower-alpha outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a upper-case roman numeral and period.
+/// If inside a content context, text margin is applied.
+ol.ol-upper-roman
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: upper-alpha outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a lower-case latin letter and period.
+/// If inside a content context, text margin is applied.
+ol.ol-lower-alpha
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: lower-alpha outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the ordered items as an indented list,
+/// where each item is preceded by a upper-case latin letter and period.
+/// If inside a content context, text margin is applied.
+ol.ol-upper-alpha
+{
+    padding-left: calc(2 * var(--size-indent-spacing));
+    list-style: upper-alpha outside;
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    li
+    {
+        padding-left: var(--size-inline-spacing);
+    }
+}
+
+/// List style that renders the definition items as an indented list,
+/// where the term is bold and placed above the definition.
+/// If inside a content context, text margin is applied.
+dl.dl-normal
+{
+    padding-left: var(--size-indent-spacing);
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    dt
+    {
+        margin-top: var(--font-current-margin-top);
+        font-weight: bolder;
+    }
+
+    dd
+    {
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+}

@@ -1,0 +1,71 @@
+# Package: `frontend-cloud`
+
+### This represents the frontend, packaged as a cloud service
+
+---
+
+# Getting started
+
+> Note that the steps for the repository must be completed first.
+
+## Build and debug
+
+1. **Build the `frontend` package for each locale, with the `cloud` platform as target**
+
+   See the readme in that package for instructions.
+
+   > Note that you cannot use the `develop` task here, as that does not write the artifacts to storage.
+
+2. **Build this package**
+
+   > Note that this automatically removes any existing `build` artifacts.
+
+   In a terminal in this package folder, execute the command:
+
+     ```
+     npm run build
+     ```
+
+   > Note that you must manually rebuild after making any changes.
+
+3. **Start debugging in `Visual Studio Code`, using the `Debug cloud app` configuration**
+
+   > Note that the app is automatically restarted after each build.
+
+4. **The app should now be available on http://localhost:8080**
+
+   Use `Google Chrome` to test and debug the client, and `Visual Studio Code` to debug the server.
+
+## Additional tasks
+
+* **Lint the project**
+
+  In a terminal in this package folder, execute the command:
+
+  ```
+  npm run lint
+  ```
+
+  This will log any lint errors or warnings to the terminal.
+
+* **Build for production**
+
+  First, build the `frontend` package for each locale, with the `cloud` platform and `production` environment as target.
+
+  Then, in a terminal in this package folder, execute the command:
+
+  ```
+  npm run build
+  ```
+
+  This will produce a `build` artifact.
+
+* **Start the production build**
+
+  In a terminal in this package folder, execute the command:
+
+  ```
+  npm run start
+  ```
+
+  This will start the server on the port specified by the environment variable `PORT`, or default to `8080`.

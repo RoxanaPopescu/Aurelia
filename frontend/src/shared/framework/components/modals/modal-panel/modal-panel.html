@@ -1,0 +1,25 @@
+<template
+    class="focus-hidden"
+    keydown.trigger="onKeyDown($event)"
+    tabindex="-1"
+    trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
+
+    <require from="./modal-panel.scss"></require>
+
+    <div class="modal-panel-content">
+
+        <slot></slot>
+
+    </div>
+
+    <div class="modal-panel-actions">
+
+        <button if.bind="closeButton" appearance="icon" click.delegate="onCloseClick()">
+            <icon name="back"></icon>
+        </button>
+
+        <slot name="actions"></slot>
+
+    </div>
+
+</template>

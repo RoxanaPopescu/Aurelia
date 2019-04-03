@@ -1,0 +1,12 @@
+{
+  "recommendations":
+  [
+    "AureliaEffect.aurelia",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "eg2.vscode-npm-script",
+    "msjsdiag.debugger-for-chrome",
+    "yzhang.markdown-all-in-one",
+    "bierner.github-markdown-preview",
+    "jock.svg"
+  ]
+}

@@ -1,0 +1,35 @@
+@import "base/resources/index";
+
+.app-modules-design
+{
+    display: flex;
+
+    // Ensure the element fills the viewport.
+    height: 100%;
+    width: 100%;
+}
+
+.app-modules-design-sidebar
+{
+    flex-shrink: 0;
+    padding: 9rem;
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+}
+
+.app-modules-design-content
+{
+    flex-grow: 1;
+    padding: 9rem;
+}
+
+.app-modules-design-toolbar
+{
+    display: flex;
+    margin-bottom: 9rem;
+
+    > *:not(:last-child)
+    {
+        margin-right: 9rem;
+    }
+}

@@ -1,0 +1,31 @@
+////
+/// @group themes/blue/settings/font
+////
+
+/// Theme specific overrides to the base settings.
+$__summary: comment;
+
+
+[theme-context="marketing"]
+{
+    /// The font weight of the largest text.
+    --font-largest-font-weight: 500;
+
+    /// The font weight of the larger text.
+    --font-larger-font-weight: 300;
+
+    /// The font weight of the large text.
+    --font-large-font-weight: 500;
+}
+
+[theme-context="app"]
+{
+    /// The font weight of the largest text.
+    --font-largest-font-weight: 500;
+
+    /// The font weight of the larger text.
+    --font-larger-font-weight: 500;
+
+    /// The font weight of the large text.
+    --font-large-font-weight: 500;
+}

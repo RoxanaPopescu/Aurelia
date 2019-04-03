@@ -1,0 +1,43 @@
+////
+/// @group settings/border
+////
+
+/// The base border widths and radii.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+:root
+{
+    /// The thick border width,
+    /// used for e.g. an accent colored edge of a dialog.
+    --border-width-thicker: 2rem;
+
+    /// The thick border width,
+    /// used for e.g. an accent colored edge of a list item.
+    --border-width-thick: 1rem;
+
+    /// The medium border width,
+    /// used for e.g. button outlines and separator lines.
+    --border-width-medium: 0.5rem;
+
+    /// The thin border width,
+    /// used for e.g. inputs and list items.
+    --border-width-thin: 0.25rem;
+}
+
+:root
+{
+    /// The large border radius,
+    /// used for e.g. large call-to-action buttons.
+    --border-radius-large: 1rem;
+
+    /// The base border radius,
+    /// used for e.g. inputs, cards and list items.
+    --border-radius-medium: 0.75rem;
+
+    /// The small border radius,
+    /// used for e.g. badges or tags within an input component.
+    --border-radius-small: 0.5rem;
+}

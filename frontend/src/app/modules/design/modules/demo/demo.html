@@ -1,0 +1,527 @@
+<template>
+
+    <require from="../../components/design-item/design-item"></require>
+    <require from="../../components/design-row/design-row"></require>
+    <require from="../../components/design-column/design-column"></require>
+
+    <div class="app-modules-design-modules-demo">
+
+        <div class="app-modules-design-toolbar">
+
+            <label>Surface
+                <select value.bind="surface">
+                    <option value="base" default>base</option>
+                    <option value="card">card</option>
+                    <option value="primary">primary</option>
+                </select>
+            </label>
+
+            <label>Font size
+                <select value.bind="fontSize">
+                    <option value="small" default>small</option>
+                    <option value="base">base</option>
+                    <option value="large">large</option>
+                    <option value="larger">larger</option>
+                    <option value="largest">largest</option>
+                </select>
+            </label>
+
+        </div>
+
+        <div theme-surface="${surface}" class="font-${fontSize}">
+
+            <design-item heading="md-icon (deprecated)">
+
+                <design-row heading="Icon inline with text">
+
+                    <div class="line-height-1">
+                        X <md-icon name="add"></md-icon> X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon centered using flexbox">
+
+                    <div class="line-height-1" style="display: flex;">
+                        <div>X</div>
+                        <md-icon name="add"></md-icon>
+                        <div>X</div>
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon stack inline with text">
+
+                    <div class="line-height-1">
+                        X
+                        <md-icon-stack>
+                            <md-icon name="clear"></md-icon>
+                            <md-icon name="add"></md-icon>
+                        </md-icon-stack>
+                        X
+                    </div>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="icon">
+
+                <design-row heading="Icon inline icon with text">
+
+                    <div class="line-height-1">
+                        X <icon name="add"></icon> X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon centered using flexbox">
+
+                    <div class="line-height-1" style="display: flex; align-items: center;">
+                        <div>X</div>
+                        <icon name="add"></icon>
+                        <div>X</div>
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon stack inline with text">
+
+                    <div class="line-height-1">
+                        X
+                        <icon>
+                            <icon name="watch"></icon>
+                            <icon name="add"></icon>
+                        </icon>
+                        X
+                    </div>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="badge">
+
+                <design-row heading="Icon with badge inline with text">
+
+                    <div class="line-height-1">
+
+                        <design-column>
+                            X
+                            <icon name="notifications">
+                                <badge></badge>
+                            </icon>
+                            X
+                        </design-column>
+
+                        <design-column>
+                            X
+                            <icon name="notifications">
+                                <badge>0</badge>
+                            </icon>
+                            X
+                        </design-column>
+
+                        <design-column>
+                            X
+                            <icon name="notifications">
+                                <badge>00</badge>
+                            </icon>
+                            X
+                        </design-column>
+
+                        <design-column>
+                            X
+                            <icon name="notifications">
+                                <badge>000</badge>
+                            </icon>
+                            X
+                        </design-column>
+
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Text with badge">
+
+                    <div class="line-height-1">
+
+                        <design-column>
+                            <span style="display: inline-block; position: relative;">
+                                Xxx
+                                <badge></badge>
+                            </span>
+                        </design-column>
+
+                        <design-column>
+                            <span style="display: inline-block; position: relative;">
+                                Xxx
+                                <badge>0</badge>
+                            </span>
+                        </design-column>
+
+                        <design-column>
+                            <span style="display: inline-block; position: relative;">
+                                Xxx
+                                <badge>00</badge>
+                            </span>
+                        </design-column>
+
+                        <design-column>
+                            <span style="display: inline-block; position: relative;">
+                                Xxx
+                                <badge>000</badge>
+                            </span>
+                        </design-column>
+
+                    </div>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="anchor">
+
+                <design-column heading="default, enabled">
+                    <a href="#">X</a>
+                </design-column>
+
+                <design-column heading="default, disabled">
+                    <a href="#" disabled>X</a>
+                </design-column>
+
+                <design-column heading="neutral">
+                    <a href="#" accent="neutral">X</a>
+                </design-column>
+
+                <design-column heading="primary">
+                    <a href="#" accent="primary">X</a>
+                </design-column>
+
+                <design-column heading="positive">
+                    <a href="#" accent="positive">X</a>
+                </design-column>
+
+                <design-column heading="attention">
+                    <a href="#" accent="attention">X</a>
+                </design-column>
+
+                <design-column heading="negative">
+                    <a href="#" accent="negative">X</a>
+                </design-column>
+
+            </design-item>
+
+            <design-item heading="button">
+
+                <design-row heading="Button with 'text' appearance (default)">
+
+                    <design-column heading="default, enabled">
+                        <button>X</button>
+                    </design-column>
+
+                    <design-column heading="default, disabled">
+                        <button disabled>X</button>
+                    </design-column>
+
+                    <design-column heading="neutral">
+                        <button accent="neutral">X</button>
+                    </design-column>
+
+                    <design-column heading="primary">
+                        <button accent="primary">X</button>
+                    </design-column>
+
+                    <design-column heading="positive">
+                        <button accent="positive">X</button>
+                    </design-column>
+
+                    <design-column heading="attention">
+                        <button accent="attention">X</button>
+                    </design-column>
+
+                    <design-column heading="negative">
+                        <button accent="negative">X</button>
+                    </design-column>
+
+                </design-row>
+
+                <design-row heading="Button with 'outline' appearance">
+
+                    <design-column heading="default, enabled">
+                        <button appearance="outline">X</button>
+                    </design-column>
+
+                    <design-column heading="default, disabled">
+                        <button appearance="outline" disabled>X</button>
+                    </design-column>
+
+                    <design-column heading="neutral">
+                        <button appearance="outline" accent="neutral">X</button>
+                    </design-column>
+
+                    <design-column heading="primary">
+                        <button appearance="outline" accent="primary">X</button>
+                    </design-column>
+
+                    <design-column heading="positive">
+                        <button appearance="outline" accent="positive">X</button>
+                    </design-column>
+
+                    <design-column heading="attention">
+                        <button appearance="outline" accent="attention">X</button>
+                    </design-column>
+
+                    <design-column heading="negative">
+                        <button appearance="outline" accent="negative">X</button>
+                    </design-column>
+
+                </design-row>
+
+                <design-row heading="Button with 'solid' appearance">
+
+                    <design-column heading="default, enabled">
+                        <button appearance="solid">X</button>
+                    </design-column>
+
+                    <design-column heading="default, disabled">
+                        <button appearance="solid" disabled>X</button>
+                    </design-column>
+
+                    <design-column heading="neutral">
+                        <button appearance="solid" accent="neutral">X</button>
+                    </design-column>
+
+                    <design-column heading="primary">
+                        <button appearance="solid" accent="primary">X</button>
+                    </design-column>
+
+                    <design-column heading="positive">
+                            <button appearance="solid" accent="positive">X</button>
+                        </design-column>
+
+                    <design-column heading="attention">
+                        <button appearance="solid"accent="attention">X</button>
+                    </design-column>
+
+                    <design-column heading="negative">
+                        <button appearance="solid" accent="negative">X</button>
+                    </design-column>
+
+                </design-row>
+
+                <design-row heading="Button with 'icon' appearance">
+
+                    <design-column heading="default, enabled">
+                        <button appearance="icon"><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="default, disabled">
+                        <button appearance="icon" disabled><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="neutral">
+                        <button appearance="icon" accent="neutral"><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="primary">
+                        <button appearance="icon" accent="primary"><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="positive">
+                        <button appearance="icon" accent="positive"><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="attention">
+                        <button appearance="icon" accent="attention"><icon name="close"></icon></button>
+                    </design-column>
+
+                    <design-column heading="negative">
+                        <button appearance="icon" accent="negative"><icon name="close"></icon></button>
+                    </design-column>
+
+                </design-row>
+
+                <design-row heading="Button with 'none' appearance">
+
+                    <button appearance="none">X</button>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input (checkbox)">
+
+                <design-row heading="Checkbox input within label">
+
+                    <design-column heading="enabled">
+                        <label class="margin">
+                            <input type="checkbox" checked>
+                            X
+                        </label>
+                        <label class="margin">
+                            <input type="checkbox">
+                            X
+                        </label>
+                    </design-column heading="disabled">
+
+                    <design-column heading="disabled">
+                        <label class="margin" disabled>
+                            <input type="checkbox" checked>
+                            X
+                        </label>
+                        <label class="margin" disabled>
+                            <input type="checkbox">
+                            X
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input (radio)">
+
+                <design-row heading="Radio input within label">
+
+                    <design-column heading="enabled">
+                        <radiogroup>
+                            <label class="margin">
+                                <input name="radio-1" type="radio" checked>
+                                X
+                            </label>
+                            <label class="margin">
+                                <input name="radio-1" type="radio">
+                                X
+                            </label>
+                        </radiogroup>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <radiogroup>
+                            <label class="margin" disabled>
+                                <input name="radio-2" type="radio" checked>
+                                X
+                            </label>
+                            <label class="margin" disabled>
+                                <input name="radio-2" type="radio">
+                                X
+                            </label>
+                        </radiogroup>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input (text)">
+
+                <design-row heading="Text input within label">
+
+                    <design-column heading="enabled">
+                        <label>
+                            X
+                            <input placeholder="Placeholder" type="text" autocomplete="off">
+                        </label>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <label disabled>
+                            X
+                            <input placeholder="Placeholder" type="text" autocomplete="off">
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input (password)">
+
+                <design-row heading="Password input within label">
+
+                    <design-column heading="enabled">
+                        <label>
+                            X
+                            <input placeholder="Placeholder" type="password" autocomplete="new-password">
+                        </label>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <label disabled>
+                            X
+                            <input placeholder="Placeholder" type="password" autocomplete="new-password">
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input (search)">
+
+                <design-row heading="Search input within label">
+
+                    <design-column heading="enabled">
+                        <label>
+                            X
+                            <input placeholder="Placeholder" type="search">
+                        </label>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <label disabled>
+                            X
+                            <input placeholder="Placeholder" type="search">
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="select">
+
+                <design-row heading="Select within label">
+
+                    <design-column heading="enabled">
+                        <label>
+                            X
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle)">
+                                <option value="" disabled selected hidden>Placeholder</option>
+                                <option>X</option>
+                                <option>X</option>
+                                <option>X</option>
+                                <optgroup label="X">
+                                    <option>X</option>
+                                    <option>X</option>
+                                </optgroup>
+                            </select>
+                        </label>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <label disabled>
+                            X
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle)">
+                                <option value="" disabled selected hidden>Placeholder</option>
+                                <option>X</option>
+                                <option>X</option>
+                                <option>X</option>
+                                <optgroup label="X">
+                                    <option>X</option>
+                                    <option>X</option>
+                                </optgroup>
+                            </select>
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+        </div>
+
+    </div>
+
+</template>

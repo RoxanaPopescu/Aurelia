@@ -1,0 +1,28 @@
+////
+/// @group resources/mark
+////
+
+/// Mixins used to mark style rules, for easier development.
+$__summary: comment;
+
+
+/// Include this in blocks that are intentionally empty, to suppress the linting warnings.
+/// Always document the use of this mixin with a /**/ comment explaining the reasoning.
+@mixin mark-empty
+{
+    // Empty block.
+}
+
+/// Include this at the top of any block that rely on experimental technology, which may
+/// not be supported by all target browsers. This adds a warning comment to the output.
+@mixin mark-experimental
+{
+    /* WARNING: Using experimental technology. */
+}
+
+/// Include this at the top of any block that rely on deprecated technology, which may
+/// not be supported by all target browsers. This adds a warning comment to the output.
+@mixin mark-deprecated
+{
+    /* WARNING: Using experimental technology. */
+}

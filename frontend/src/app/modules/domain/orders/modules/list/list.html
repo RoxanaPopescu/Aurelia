@@ -1,0 +1,80 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <module name="list">
+
+        <module-sidebar scroll>
+
+            <header scroll-fade>
+                MODULE SIDEBAR HEADER
+            </header>
+
+            <section>
+                MODULE SIDEBAR SECTION
+            </section>
+
+            <footer>
+                MODULE SIDEBAR FOOTER
+            </footer>
+
+        </module-sidebar>
+
+        <module-content scroll>
+
+            <header scroll-fade>
+
+                <h1 class="font-larger margin-bottom">
+                    <path-nav>
+                        <a>Orders</a>
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <toolbar-group>
+                        <input type="search" placeholder="Find...">
+                    </toolbar-group>
+
+                    <toolbar-group>
+
+                        <label>
+                            <input type="checkbox">
+                            FILTER
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            FILTER
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            FILTER
+                        </label>
+
+                    </toolbar-group>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <h2 class="font-large margin-bottom">
+                    MODULE CONTENT SECTION TITLE
+                </h2>
+
+                MODULE CONTENT SECTION
+
+            </section>
+
+            <footer>
+                MODULE CONTENT FOOTER
+            </footer>
+
+        </module-content>
+
+    </module>
+
+</template>

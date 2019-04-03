@@ -1,0 +1,23 @@
+@import "base/resources/index";
+
+modal-backdrop
+{
+    // Fill the viewport.
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    // Apply the z-index for backdrops.
+    z-index: var(--z-index-backdrop);
+
+    // Apply the background for backdrops.
+    background: var(--modal-backdrop-color);
+
+    // Prevent clicks from passing through.
+    pointer-events: initial;
+
+    // Hint that animation will be applied.
+    will-change: opacity;
+}

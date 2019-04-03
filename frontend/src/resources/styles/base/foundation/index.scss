@@ -1,0 +1,15 @@
+////
+/// @group foundation
+////
+
+/// Public interface for the style foundation.
+/// Foundation styles target the standard elements of the HTML specification,
+/// normalizing browser differences and providing reasonable default styling.
+$__summary: comment;
+
+
+// Export everything that should be public.
+@import "./document";
+@import "./forms";
+@import "./interactive";
+@import "./typography";

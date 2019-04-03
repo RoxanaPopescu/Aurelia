@@ -1,0 +1,22 @@
+@import "base/resources/index";
+
+toolbar-group
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Center items vertically.
+    align-items: center;
+
+    &:not(:last-child)
+    {
+        // Apply margin to separate groups.
+        margin-right: 6rem;
+    }
+
+    > :not(:last-child)
+    {
+        // Apply margin to separate items.
+        margin-right: 6rem;
+    }
+}
