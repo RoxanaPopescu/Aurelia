@@ -53,8 +53,6 @@ jobs:
             -t ${DOCKER_REGISTRY}/${PROJECT_NAME}-client:${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}
             -f dockerfile frontend/packages/cloud
 
-      - run:
-
   deploy-production:
     <<: *container_config
     steps:
