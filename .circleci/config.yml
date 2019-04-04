@@ -36,9 +36,24 @@ jobs:
             --parameters environment="test" serviceName=${PROJECT_NAME} dockerRegistryURL=${DOCKER_REGISTRY} dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD} dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
 
   build:
-    <<: *container_config
+    executor: azure-cli/azure-docker
     steps:
-      - run: cd frontend && npm test
+      - checkout
+      - azure-cli/login-with-service-principal
+      - run:
+          name: Setup azure CLI for test subscription
+          command: az account set -s "Test"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${AZURE_TEST_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
+      - run:
+          name: Build docker image
+          command: az acr build
+            -t ${DOCKER_REGISTRY}/${PROJECT_NAME}-client:${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}
+            -f dockerfile frontend/packages/cloud
+
+      - run:
 
   deploy-production:
     <<: *container_config
