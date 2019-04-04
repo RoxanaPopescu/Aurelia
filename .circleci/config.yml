@@ -10,8 +10,11 @@ jobs:
       - azure-cli/login-with-service-principal
 
       - run:
-          name: List resources of tenant stored as `AZURE_SP_TENANT` env var
+          name: Setup azure CLI for test subscription
           command: az account set --subscription "Test"
+
+      - run:
+          name: List test
           command: az resource list
 
   build:
