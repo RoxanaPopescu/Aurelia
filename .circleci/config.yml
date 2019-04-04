@@ -20,3 +20,8 @@ jobs:
     steps:
       - checkout
       - run: cd frontend && npm test
+
+workflows:
+  example-workflow:
+    jobs:
+      - login-to-azure
