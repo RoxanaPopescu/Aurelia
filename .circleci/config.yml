@@ -37,7 +37,7 @@ jobs:
     steps:
       - run: cd frontend && npm test
 
-  deploy-test:
+  deploy-production:
     docker:
       - image: circleci/node:10.15.3
     steps:
