@@ -1,0 +1,181 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "type": "string",
+      "defaultValue": "test",
+      "allowedValues": ["test", "prod"],
+      "metadata": {
+        "description": "The environment where the infrastructure is deployed"
+      }
+    },
+    "serviceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the service"
+      }
+    },
+    "dockerImage": {
+      "type": "string",
+      "metadata": {
+        "description": "The image used when updating the resources"
+      }
+    },
+    "dockerRegistryURL": {
+      "type": "string",
+      "metadata": {
+        "description": "The registry for docker"
+      }
+    },
+    "dockerRegistryPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "The registry for docker"
+      }
+    },
+    "dockerRegistryUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "The registry for docker"
+      }
+    }
+  },
+  "variables": {
+    "webappName": "[concat('client-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
+    "slotNameStaging": "staging",
+    "slotNamePreview": "preview",
+    "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('webappName')]",
+      "apiVersion": "2018-02-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "name": "[variables('webappName')]",
+        "httpsOnly": true,
+        "serverFarmId": "[resourceId(concat(parameters('environment'), 'linux'), 'Microsoft.Web/serverfarms/', variables('servicePlanName'))]",
+        "siteConfig": {
+          "alwaysOn": true,
+          "appCommandLine": "",
+          "http20Enabled": true,
+          "minTlsVersion": "1.2",
+          "ftpsState": "FtpsOnly",
+          "linuxFxVersion": "[parameters('dockerImage')]"
+        }
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2018-02-01",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', variables('webappName'))]"
+          ],
+          "properties": {
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
+            "WEBSITES_PORT": 5000,
+            "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+            "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
+          }
+        },
+        {
+          "apiVersion": "2018-02-01",
+          "name": "[variables('slotNameStaging')]",
+          "type": "slots",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('webappName'))]"
+          ],
+          "properties": {
+            "clientAffinityEnabled": false,
+            "httpsOnly": true,
+            "siteConfig": {
+              "alwaysOn": true,
+              "http20Enabled": true,
+              "minTlsVersion": "1.2",
+              "ftpsState": "FtpsOnly"
+            }
+          },
+          "resources": [
+            {
+              "name": "appsettings",
+              "type": "config",
+              "apiVersion": "2018-02-01",
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNameStaging'))]"
+              ],
+              "properties": {
+                "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
+                "WEBSITES_PORT": 5000,
+                "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+                "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
+                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
+              }
+            }
+          ]
+        },
+        {
+          "apiVersion": "2018-02-01",
+          "name": "[variables('slotNamePreview')]",
+          "condition": "[equals(parameters('environment'), 'prod')]",
+          "type": "slots",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('webappName'))]"
+          ],
+          "properties": {
+            "clientAffinityEnabled": false,
+            "httpsOnly": true,
+            "siteConfig": {
+              "alwaysOn": true,
+              "http20Enabled": true,
+              "minTlsVersion": "1.2",
+              "ftpsState": "FtpsOnly"
+            }
+          },
+          "resources": [
+            {
+              "name": "appsettings",
+              "type": "config",
+              "condition": "[equals(parameters('environment'), 'prod')]",
+              "apiVersion": "2018-02-01",
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNamePreview'))]"
+              ],
+              "properties": {
+                "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
+                "WEBSITES_PORT": 5000,
+                "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+                "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
+                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "resourceGroupName": {
+      "type": "string",
+      "value": "[resourceGroup().name]"
+    },
+    "webappName": {
+      "type": "string",
+      "value": "[variables('webappName')]"
+    },
+    "slotNameStaging": {
+      "type": "string",
+      "value": "[variables('slotNameStaging')]"
+    },
+    "slotNamePreview": {
+      "type": "string",
+      "value": "[variables('slotNamePreview')]"
+    }
+  }
+}

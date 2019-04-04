@@ -12,8 +12,11 @@ jobs:
           name: Setup azure CLI for test subscription
           command: az account set -s "Test"
       - run:
-          name: List test
-          command: az resource list
+          name: Create resource group
+          command: az group create -n ${AZURE_TEST_RESOURCE_GROUP} --location westeurope
+      - run:
+          name: Set defaults
+          command: az configure --defaults group=${AZURE_TEST_RESOURCE_GROUP}
 
   build:
     docker:
