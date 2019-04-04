@@ -47,16 +47,12 @@ workflows:
   setup-test:
     jobs:
       - checkout_code
-      - setup-test-azure:
-        requires:
-          - checkout_code
+      - setup-test-azure
 
   production:
     jobs:
       - checkout_code
-      - build:
-        requires:
-          - checkout_code
+      - build
       - request-testing:
           type: approval
           requires:
