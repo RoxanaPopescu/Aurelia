@@ -1,12 +1,16 @@
 version: 2.1
 
+references:
+  container_config: &container_config
+    docker:
+      - image: circleci/node:10.15.3
+
 orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
-  checkout_code:
-    docker:
-      - image: circleci/node:10.15.3
+  checkout-code:
+    <<: *container_config
     steps:
       - checkout
 
@@ -25,33 +29,31 @@ jobs:
           name: Set defaults
           command: az configure --defaults group=${AZURE_TEST_RESOURCE_GROUP}
       - run:
-          name: Set defaults
+          name: Create resources
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters environment="test" serviceName=${PROJECT_NAME} dockerRegistryURL=${DOCKER_REGISTRY} dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD} dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
 
   build:
-    docker:
-      - image: circleci/node:10.15.3
+    <<: *container_config
     steps:
       - run: cd frontend && npm test
 
   deploy-production:
-    docker:
-      - image: circleci/node:10.15.3
+    <<: *container_config
     steps:
       - run: echo "Deploying production..."
 
 workflows:
   setup-test:
     jobs:
-      - checkout_code
+      - checkout-code
       - setup-test-azure
 
   production:
     jobs:
-      - checkout_code
+      - checkout-code
       - build
       - request-testing:
           type: approval
