@@ -41,8 +41,8 @@ jobs:
       - checkout
       - azure-cli/login-with-service-principal
       - run:
-          name: Setup azure CLI for test subscription
-          command: az account set -s "Test"
+          name: Setup azure CLI for prod subscription
+          command: az account set -s "Prod"
       - run:
           name: Set defaults
           command: az configure
@@ -58,11 +58,11 @@ jobs:
     steps:
       - run: echo "Deploying production..."
 
-workflows:
-  setup-test:
-    jobs:
-      - checkout-code
-      - setup-test-azure
+  # workflows:
+  #   setup-test:
+  #     jobs:
+  #       - checkout-code
+  #       - setup-test-azure
 
   production:
     jobs:
