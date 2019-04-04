@@ -4,13 +4,14 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
-  login-to-azure:
+  setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
       - azure-cli/login-with-service-principal
 
       - run:
           name: List resources of tenant stored as `AZURE_SP_TENANT` env var
+          command: az account set --subscription "Test"
           command: az resource list
 
   build:
@@ -22,6 +23,6 @@ jobs:
       - run: cd frontend && npm test
 
 workflows:
-  example-workflow:
+  setup-test:
     jobs:
-      - login-to-azure
+      - setup-test-azure
