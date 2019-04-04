@@ -53,7 +53,7 @@ workflows:
 
   production:
     jobs:
-      - build
+      - build:
         requires:
             - checkout-code
             - setup-test-azure
