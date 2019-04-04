@@ -8,11 +8,9 @@ jobs:
     executor: azure-cli/azure-docker
     steps:
       - azure-cli/login-with-service-principal
-
       - run:
           name: Setup azure CLI for test subscription
-          command: az account set --subscription "Test"
-
+          command: az account set -s "Test"
       - run:
           name: List test
           command: az resource list
@@ -20,12 +18,28 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.15.3
-
     steps:
       - checkout
       - run: cd frontend && npm test
 
+  deploy-production:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - run: echo "Deploying production..."
+
 workflows:
-  setup-test:
+  setup-test-workflow:
     jobs:
       - setup-test-azure
+
+  release-production-workflow:
+    jobs:
+      - build
+      - request-testing:
+          type: approval
+          requires:
+            - build
+      - deploy-production:
+          requires:
+            - request-testing
