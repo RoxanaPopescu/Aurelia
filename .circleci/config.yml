@@ -58,7 +58,6 @@ workflows:
       - build:
         requires:
           - checkout-code
-          - setup-test-azure
       - request-testing:
           type: approval
           requires:
