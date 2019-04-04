@@ -1,5 +1,5 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
-import { Router, RouterConfiguration } from "aurelia-router";
+import { RouterConfiguration, Router } from "aurelia-router";
 
 /**
  * Represents the module.
@@ -31,7 +31,7 @@ export class RoutesModule
             },
             {
                 name: "details",
-                route: ":routeSlug",
+                route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
                 title: "Details"
             },
@@ -41,6 +41,22 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/live-tracking/live-tracking"),
                 nav: true,
                 title: "Live tracking",
+                icon: "business"
+            },
+            {
+                name: "driver-tracking",
+                route: "driver-tracking",
+                moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
+                nav: true,
+                title: "Driver tracking",
+                icon: "business"
+            },
+            {
+                name: "auto-dispatch",
+                route: "auto-dispatch",
+                moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
+                nav: true,
+                title: "Auto dispatch",
                 icon: "business"
             }
         ]);

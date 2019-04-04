@@ -35,9 +35,15 @@ export class UsersModule
             },
             {
                 name: "details",
-                route: "management/users/:id",
+                route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
                 title: "Details"
+            },
+            {
+                name: "create",
+                route: "create",
+                moduleId: PLATFORM.moduleName("./modules/create/create"),
+                title: "Create"
             }
         ]);
     }

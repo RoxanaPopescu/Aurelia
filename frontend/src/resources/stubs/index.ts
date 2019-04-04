@@ -1,10 +1,10 @@
 import { IResponseStubs } from "shared/infrastructure";
 import account from "./responses/account";
 import vehicleTypes from "./responses/vehicle-types";
-import routes from "./responses/routes";
-import route from "./responses/route";
-import orders from "./responses/orders";
-import order from "./responses/order";
+// import routes from "./responses/routes";
+// import route from "./responses/route";
+// import orders from "./responses/orders";
+// import order from "./responses/order";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -21,8 +21,8 @@ export const stubs: IResponseStubs =
 {
     ...account,
     ...vehicleTypes,
-    ...routes,
-    ...route,
-    ...orders,
-    ...order
+    // ...routes,
+    // ...route,
+    // ...orders,
+    // ...order
 };

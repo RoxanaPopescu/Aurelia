@@ -10,6 +10,7 @@ const history =
     push: async (path: string, state?: any) => Container.instance.get(Router).navigate(path),
     location: window.location,
     listen: (...args) => () => undefined,
+    replace: (...args) => { throw new Error("router.history.replace is not implemented") },
     createHref: (l: { pathname: string, search: any }) => l.pathname + (l.search ? "?" + l.search : "")
 
 } as any;
@@ -36,6 +37,7 @@ export class Wrapper
     {
         ReactDom.render(React.createElement(ReactRouter, { history }, React.createElement(component,
         {
+            location: window.location,
             history,
             match:
             {

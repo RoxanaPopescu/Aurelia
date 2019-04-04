@@ -1,5 +1,5 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
-import { Router, RouterConfiguration } from "aurelia-router";
+import { RouterConfiguration, Router } from "aurelia-router";
 
 /**
  * Represents the module.
@@ -23,17 +23,27 @@ export class OrdersModule
             },
             {
                 name: "list",
-                route: "",
+                route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                nav: true,
-                title: "Orders",
-                icon: "business"
+                title: "List"
             },
             {
                 name: "details",
-                route: ":orderSlug",
+                route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
                 title: "Details"
+            },
+            {
+                name: "edit",
+                route: "edit/:id",
+                moduleId: PLATFORM.moduleName("./modules/edit/edit"),
+                title: "Edit"
+            },
+            {
+                name: "create",
+                route: "create",
+                moduleId: PLATFORM.moduleName("./modules/create/create"),
+                title: "Create"
             }
         ]);
     }

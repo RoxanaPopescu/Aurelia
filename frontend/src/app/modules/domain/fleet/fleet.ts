@@ -32,6 +32,12 @@ export class FleetModule
                 route: "drivers/edit/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
                 title: "Details"
+            },
+            {
+                name: "create",
+                route: "drivers/create",
+                moduleId: PLATFORM.moduleName("./modules/create/create"),
+                title: "Create"
             }
         ]);
     }
