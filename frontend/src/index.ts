@@ -11,9 +11,9 @@ import { IdentityService } from "app/services/user/identity";
 import settings from "resources/settings/settings";
 
 // Legacy Mover services that need to be configured.
-import { Session } from "shared/src/model/session";
 import Localization from "shared/src/localization";
 import { LoginService } from "shared/src/components/login/service";
+import { Profile } from "shared/src/model/profile";
 
 /**
  * The entry point of the app, called by the Aurelia bootstrapper.
@@ -70,8 +70,8 @@ export async function configure(aurelia: Aurelia): Promise<any>
 
         // Configure legacy Mover services.
         Localization.configure(localeService.locale.code, localeService.locale.code);
-        await LoginService.login("Fulfiller", "connie@cooplogistik.dk", "mover1234!");
-        await Session.start();
+        const loginResponse = await LoginService.login("Fulfiller", "connie@cooplogistik.dk", "mover1234!");
+        await Profile.login(loginResponse.accessToken, loginResponse.refreshToken);
     });
 
     // Start the framework.
