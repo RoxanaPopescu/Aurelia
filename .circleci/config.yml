@@ -58,7 +58,7 @@ jobs:
     steps:
       - run: echo "Deploying production..."
 
-  # workflows:
+workflows:
   #   setup-test:
   #     jobs:
   #       - checkout-code
