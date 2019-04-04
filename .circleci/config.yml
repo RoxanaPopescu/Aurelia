@@ -35,7 +35,6 @@ jobs:
     docker:
       - image: circleci/node:10.15.3
     steps:
-      - checkout
       - run: cd frontend && npm test
 
   deploy-test:
@@ -47,14 +46,14 @@ jobs:
 workflows:
   setup-test:
     jobs:
-      - checkout-code:
+      - checkout-code
       - setup-test-azure:
         requires:
           - checkout-code
 
   production:
     jobs:
-      - checkout-code:
+      - checkout-code
       - build:
         requires:
           - checkout-code
