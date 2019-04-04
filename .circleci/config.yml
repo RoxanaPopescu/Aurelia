@@ -46,12 +46,12 @@ jobs:
       - run:
           name: Set defaults
           command: az configure
-            --defaults group=${AZURE_TEST_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
+            --defaults group=${DOCKER_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
       - run:
           name: Build docker image
           command: az acr build
             -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
-            -f dockerfile .
+            -f dockerfile frontend/packages/cloud
 
   deploy-production:
     <<: *container_config
