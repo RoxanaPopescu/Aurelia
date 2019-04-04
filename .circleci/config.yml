@@ -4,6 +4,12 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
+  checkout_code:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - checkout
+
   setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
@@ -32,20 +38,25 @@ jobs:
       - checkout
       - run: cd frontend && npm test
 
-  deploy-production:
+  deploy-test:
     docker:
       - image: circleci/node:10.15.3
     steps:
       - run: echo "Deploying production..."
 
 workflows:
-  setup-test-workflow:
+  setup-test:
     jobs:
       - setup-test-azure
+      requires:
+            - checkout_code
 
-  release-production-workflow:
+  production:
     jobs:
       - build
+        requires:
+            - checkout_code
+            - setup-test-azure
       - request-testing:
           type: approval
           requires:
