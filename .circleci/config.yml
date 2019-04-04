@@ -4,7 +4,7 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
-  checkout_code:
+  checkout-code:
     docker:
       - image: circleci/node:10.15.3
     steps:
@@ -48,14 +48,14 @@ workflows:
   setup-test:
     jobs:
       - setup-test-azure
-      requires:
-            - checkout_code
+        requires:
+            - checkout-code
 
   production:
     jobs:
       - build
         requires:
-            - checkout_code
+            - checkout-code
             - setup-test-azure
       - request-testing:
           type: approval
