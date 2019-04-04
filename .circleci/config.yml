@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build docker image
           command: az acr build
-            -t ${DOCKER_REGISTRY}/${PROJECT_NAME}-client:${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}
+            -t ${DOCKER_REGISTRY}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile frontend/packages/cloud
 
   deploy-production:
