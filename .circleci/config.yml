@@ -17,6 +17,13 @@ jobs:
       - run:
           name: Set defaults
           command: az configure --defaults group=${AZURE_TEST_RESOURCE_GROUP}
+      - run:
+          name: Set defaults
+          command: az group deployment create -n ${IDENTIFIER} --template-file ${TEMPLATE_FILE} --parameters ${PARAMETERS}
+          environment:
+            IDENTIFIER: ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            TEMPLATE_FILE: frontend/packages/cloud/azure-arm-template.json
+            PARAMETERS: environment="test" serviceName=${PROJECT_NAME} dockerRegistryURL=${DOCKER_REGISTRY} dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD} dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
 
   build:
     docker:
