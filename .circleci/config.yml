@@ -42,18 +42,18 @@ jobs:
     steps:
       - checkout
       - azure-cli/login-with-service-principal
-      # - run:
-      #     name: Setup azure CLI for prod subscription
-      #     command: az account set -s "Production"
-      # - run:
-      #     name: Set defaults
-      #     command: az configure
-      #       --defaults group=${DOCKER_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
-      # - run:
-      #     name: Build docker image
-      #     command: az acr build
-      #       -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
-      #       -f dockerfile .
+      - run:
+          name: Setup azure CLI for prod subscription
+          command: az account set -s "Production"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${DOCKER_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
+      - run:
+          name: Build docker image
+          command: az acr build
+            -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -f dockerfile .
 
       - run: mkdir -p workspace
       - run: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
