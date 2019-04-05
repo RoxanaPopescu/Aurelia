@@ -102,11 +102,11 @@ workflows:
   deploy-test:
     jobs:
       - build:
-        context: org-global
+        context: test-context
       - deploy-test:
           requires:
             - build
-          context: org-global
+          context: test-context
   # production:
   #   jobs:
   #     - build
