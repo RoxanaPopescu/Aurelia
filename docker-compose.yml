@@ -1,12 +1,11 @@
-version: '2.1'
+version: "2.1"
 
 services:
-
   frontend-cloud:
     environment:
       NODE_ENV: production
     build:
-      context: ../../../
-      dockerfile: ./frontend/packages/cloud/dockerfile
+      context: .
+      dockerfile: ./dockerfile
     ports:
       - "8080:8080"

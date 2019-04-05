@@ -17,6 +17,17 @@ COPY ["/frontend/package-lock.json", "./"]
 RUN npm ci
 
 ## Set the working directory.
+WORKDIR /usr/app/frontend/src/mover
+
+## Copy the `package.json` and `package-lock.json` files first,
+## in order to take advantage of cached Docker layers.
+COPY ["/frontend/src/mover/package.json", "./"]
+COPY ["/frontend/src/mover/package-lock.json", "./"]
+
+## Install the dependencies, only when they have changed.
+RUN npm ci
+
+## Set the working directory.
 WORKDIR /usr/app
 
 ## Copy the `tsconfig.json` files.
