@@ -33,7 +33,13 @@ jobs:
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file frontend/packages/cloud/azure-arm-template.json
-            --parameters environment="test" serviceName=${PROJECT_NAME} dockerRegistryURL=${DOCKER_REGISTRY} dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD} dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            --parameters 
+            dockerImage="empty"
+            environment="test" 
+            serviceName=${PROJECT_NAME} 
+            dockerRegistryURL=${DOCKER_REGISTRY} 
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD} 
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
 
   build:
     executor: azure-cli/azure-docker
@@ -95,7 +101,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
+      - setup-test-azure
       - build
+        requires:
+            - setup-test-azure
       - deploy-test:
           requires:
             - build
