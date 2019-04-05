@@ -9,11 +9,6 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
-  checkout-code:
-    <<: *container_config
-    steps:
-      - checkout
-
   setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
@@ -60,10 +55,18 @@ jobs:
             -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
 
+      - run: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - docker-image
+
   deploy-test:
     executor: azure-cli/azure-docker
 
     steps:
+      - attach_workspace:
+          at: ~/workspace
       - azure-cli/login-with-service-principal
       - run:
           name: Setup azure CLI for prod subscription
@@ -79,7 +82,7 @@ jobs:
             -p ${DOCKER_REGISTRY_PASSWORD}
             -r ${DOCKER_REGISTRY_URL}
             -s staging
-            -i ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -i $(cat /tmp/workspace/docker-image)
       - run:
           name: Start staging slot
           command: az webapp start -s staging
@@ -101,7 +104,7 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - setup-test-azure
+      # - setup-test-azure
       - build:
           requires:
             - setup-test-azure
