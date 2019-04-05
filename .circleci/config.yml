@@ -59,20 +59,20 @@ jobs:
     executor: azure-cli/azure-docker
 
     steps:
-      - run: echo ${DOCKER_IMAGE}
       - azure-cli/login-with-service-principal
       - run:
           name: Setup azure CLI for prod subscription
           command: az account set -s "Test"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${AZURE_TEST_RESOURCE_GROUP}
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
             -r ${DOCKER_REGISTRY_URL}
             -s staging
             -i ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
-      - run:
-          name: Start staging slot
-          command: az webapp start -s staging
       - run:
           name: Start staging slot
           command: az webapp start -s staging
@@ -92,24 +92,16 @@ jobs:
       - run: echo "Deploying production..."
 
 workflows:
-  #   setup-test:
-  #     jobs:
-  #       - checkout-code
-  #       - setup-test-azure
-
-  deploy-test:
+  build-and-deploy:
     jobs:
       - build
       - deploy-test:
           requires:
             - build
-  # production:
-  #   jobs:
-  #     - build
-  #     - request-testing:
-  #         type: approval
-  #         requires:
-  #           - build
-  #     - deploy-production:
-  #         requires:
-  #           - request-testing
+      - production-approval:
+          type: approval
+          requires:
+            - build
+      - deploy-production:
+          requires:
+            - production-approval
