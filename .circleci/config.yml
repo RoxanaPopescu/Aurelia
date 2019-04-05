@@ -49,7 +49,7 @@ jobs:
             --defaults group=${DOCKER_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
       - run:
           name: Build docker image
-          command: cd frontend/packages/cloud && az acr build
+          command: az acr build
             -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
 
