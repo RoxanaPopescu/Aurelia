@@ -1,5 +1,11 @@
 @import "base/resources/index";
 
+main
+{
+    height: 100%;
+    display: flex;
+}
+
 .app
 {
     // Use column layout.
