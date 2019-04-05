@@ -37,6 +37,10 @@ jobs:
 
   build:
     executor: azure-cli/azure-docker
+
+    environment:
+      DOCKER_IMAGE: ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+
     steps:
       - checkout
       - azure-cli/login-with-service-principal
@@ -50,8 +54,37 @@ jobs:
       - run:
           name: Build docker image
           command: az acr build
-            -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -t ${DOCKER_IMAGE}
             -f dockerfile .
+            
+  deploy-test:
+    executor: azure-cli/azure-docker
+    steps:
+      - azure-cli/login-with-service-principal
+      - run:
+          name: Setup azure CLI for prod subscription
+          command: az account set -s "Test"
+      - run:
+          name: Add docker image to webapp
+          command: az webapp config container set
+            -r ${DOCKER_REGISTRY_URL}
+            -s staging
+            -i ${DOCKER_IMAGE}
+      - run:
+          name: Start staging slot
+          command: az webapp start -s staging
+      - run:
+          name: Start staging slot
+          command: az webapp start -s staging
+      - run:
+          name: Swap slot with production
+          command: az webapp deployment slot swap 
+          -n client-platform-test-mover
+          -s staging
+          --action swap
+      - run:
+          name: Stop staging slot
+          command: az webapp stop -s staging
 
   deploy-production:
     <<: *container_config
@@ -64,13 +97,22 @@ workflows:
   #       - checkout-code
   #       - setup-test-azure
 
-  production:
+  deploy-test:
     jobs:
-      - build
-      - request-testing:
-          type: approval
+      - build:
+        context: org-global
+      - deploy-test:
           requires:
             - build
-      - deploy-production:
-          requires:
-            - request-testing
+          context: org-global
+
+  # production:
+  #   jobs:
+  #     - build
+  #     - request-testing:
+  #         type: approval
+  #         requires:
+  #           - build
+  #     - deploy-production:
+  #         requires:
+  #           - request-testing
