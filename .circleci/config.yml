@@ -69,6 +69,8 @@ jobs:
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
+            -u ${DOCKER_REGISTRY_USERNAME}
+            -p ${DOCKER_REGISTRY_PASSWORD}
             -r ${DOCKER_REGISTRY_URL}
             -s staging
             -i ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
