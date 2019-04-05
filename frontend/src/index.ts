@@ -77,8 +77,10 @@ export async function configure(aurelia: Aurelia): Promise<any>
     // Start the framework.
     const startPromise = aurelia.start();
 
-    // Import the theme that should be used.
-    const themePromise = import(`resources/styles/themes/${getThemeName()}/index.scss`);
+    // Import the base and theme styles.
+    const themePromise =
+        import("resources/styles/base/index.scss" as any).then(() =>
+        import(`resources/styles/themes/${getThemeName()}/index.scss`));
 
     // Import the icons in the icons folder.
     const iconsPromise = import("resources/icons");
