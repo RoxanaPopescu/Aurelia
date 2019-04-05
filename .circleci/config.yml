@@ -56,9 +56,10 @@ jobs:
           command: az acr build
             -t ${DOCKER_IMAGE}
             -f dockerfile .
-            
+
   deploy-test:
     executor: azure-cli/azure-docker
+
     steps:
       - azure-cli/login-with-service-principal
       - run:
@@ -78,10 +79,10 @@ jobs:
           command: az webapp start -s staging
       - run:
           name: Swap slot with production
-          command: az webapp deployment slot swap 
-          -n client-platform-test-mover
-          -s staging
-          --action swap
+          command: az webapp deployment slot swap
+            -n client-platform-test-mover
+            -s staging
+            --action swap
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
@@ -105,7 +106,6 @@ workflows:
           requires:
             - build
           context: org-global
-
   # production:
   #   jobs:
   #     - build
