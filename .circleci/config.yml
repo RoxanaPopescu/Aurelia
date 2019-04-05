@@ -57,7 +57,7 @@ jobs:
 
       - run: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
-          root: workspace
+          root: /workspace
           paths:
             - docker-image
 
@@ -66,7 +66,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: ~/workspace
+          at: /workspace
       - azure-cli/login-with-service-principal
       - run:
           name: Setup azure CLI for prod subscription
@@ -82,7 +82,7 @@ jobs:
             -p ${DOCKER_REGISTRY_PASSWORD}
             -r ${DOCKER_REGISTRY_URL}
             -s staging
-            -i $(cat /tmp/workspace/docker-image)
+            -i $(cat /workspace/docker-image)
       - run:
           name: Start staging slot
           command: az webapp start -s staging
