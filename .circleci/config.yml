@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Set defaults
           command: az configure
-            --defaults group=${AZURE_TEST_RESOURCE_GROUP}
+            --defaults group=${AZURE_TEST_RESOURCE_GROUP} web=client-platform-test-mover
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
@@ -79,7 +79,6 @@ jobs:
       - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
-            -n client-platform-test-mover
             -s staging
             --action swap
       - run:
