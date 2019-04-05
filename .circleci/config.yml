@@ -101,12 +101,10 @@ workflows:
 
   deploy-test:
     jobs:
-      - build:
-        context: test-context
+      - build
       - deploy-test:
           requires:
             - build
-          context: test-context
   # production:
   #   jobs:
   #     - build
