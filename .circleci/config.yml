@@ -103,8 +103,8 @@ workflows:
     jobs:
       - setup-test-azure
       - build:
-        requires:
-          - setup-test-azure
+          requires:
+            - setup-test-azure
       - deploy-test:
           requires:
             - build
