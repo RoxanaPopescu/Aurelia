@@ -90,7 +90,7 @@ jobs:
   deploy-production:
     <<: *container_config
     steps:
-      - run: echo "Deploying production..."
+      - run: echo "Deploying production"
 
 workflows:
   build-and-deploy:
