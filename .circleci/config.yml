@@ -34,7 +34,7 @@ jobs:
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters
-            dockerImage="empty"
+            dockerImage="DOCKER|empty"
             environment="test"
             serviceName=${PROJECT_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY}
