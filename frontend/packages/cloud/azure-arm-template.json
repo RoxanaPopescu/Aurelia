@@ -51,12 +51,14 @@
   "resources": [
     {
       "type": "Microsoft.Web/sites",
+      "kind": "app,linux,container",
       "name": "[variables('webappName')]",
       "apiVersion": "2018-02-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "name": "[variables('webappName')]",
         "httpsOnly": true,
+        "kind": "app,linux,container",
         "serverFarmId": "[resourceId(concat(parameters('environment'), 'linux'), 'Microsoft.Web/serverfarms/', variables('servicePlanName'))]",
         "siteConfig": {
           "alwaysOn": true,
@@ -94,6 +96,7 @@
           "properties": {
             "clientAffinityEnabled": false,
             "httpsOnly": true,
+            "kind": "app,linux,container",
             "siteConfig": {
               "alwaysOn": true,
               "http20Enabled": true,
@@ -131,6 +134,7 @@
           "properties": {
             "clientAffinityEnabled": false,
             "httpsOnly": true,
+            "kind": "app,linux,container",
             "siteConfig": {
               "alwaysOn": true,
               "http20Enabled": true,
