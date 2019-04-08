@@ -30,12 +30,12 @@ modal-backdrop
 
     compose.au-enter-active &
     {
-        animation: modal-backdrop-enter cubic-bezier(0.3, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-backdrop-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
     }
 
     compose.au-leave-active &
     {
-        animation: modal-backdrop-leave cubic-bezier(0, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-backdrop-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
     }
 }
 

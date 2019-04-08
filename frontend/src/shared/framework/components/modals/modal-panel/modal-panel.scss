@@ -115,7 +115,7 @@ modal-panel
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-panel-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1) var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave &
@@ -126,7 +126,7 @@ modal-panel
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-panel-leave cubic-bezier(0.4, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-panel-leave cubic-bezier(0.2, 0, 0.2, 0.5) var(--animation-duration-medium);
     }
 
     // Animate the content of the panel.
@@ -155,6 +155,11 @@ modal-panel
 
 @keyframes modal-panel-enter
 {
+    20%
+    {
+        opacity: 1;
+    }
+
     100%
     {
         transform: none;
@@ -164,7 +169,7 @@ modal-panel
 
 @keyframes modal-panel-leave
 {
-    10%
+    40%
     {
         opacity: 1;
     }
@@ -186,7 +191,7 @@ modal-panel
 
 @keyframes modal-panel-content-leave
 {
-    20%
+    50%
     {
         opacity: 0.1;
     }
