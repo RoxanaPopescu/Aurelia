@@ -2,9 +2,6 @@
 
 modal-panel
 {
-    // The transform to apply to the panel before it enters and after it leaves.
-    --modal-panel-origin-transform: translateX(calc(-1 * var(--size-app-sidebar-width)));
-
     // Allow content to be positioned relative to this element.
     position: relative;
 
@@ -17,10 +14,8 @@ modal-panel
 
     // Apply a border to the panel.
     border: 0 solid var(--modal-panel-border-color);
-    border-top-width: var(--border-width-thin);
-    border-bottom-width: var(--border-width-thin);
-    border-top-right-radius: var(--border-radius-large);
-    border-bottom-right-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-large);
+    margin: 1rem;
 
     // Apply surface style.
     background: var(--color-surface);
@@ -105,6 +100,9 @@ modal-panel
 
     // Animate the panel.
 
+    // The transform to apply to the panel before it enters and after it leaves.
+    --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
+
     // Hint that animation will be applied.
     will-change: opacity, transform;
 
@@ -112,22 +110,23 @@ modal-panel
     {
         transform: var(--modal-panel-origin-transform);
         opacity: 0;
+        overflow: hidden;
     }
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-panel-enter ease var(--animation-duration-short);
+        animation: modal-panel-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave &
     {
-        // Replace the shadow with an afterglow to smoothe the edge and prevent ghosting.
+        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
         box-shadow: var(--modal-panel-afterglow);
     }
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-panel-leave ease-in var(--animation-duration-short);
+        animation: modal-panel-leave cubic-bezier(0.4, 0, 0, 1) var(--animation-duration-medium);
     }
 
     // Animate the content of the panel.
@@ -144,23 +143,18 @@ modal-panel
 
         modal-view compose.au-enter-active &
         {
-            animation: modal-panel-content-enter ease var(--animation-duration-short);
+            animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
         }
 
         modal-view compose.au-leave-active &
         {
-            animation: modal-panel-content-leave ease-in var(--animation-duration-short);
+            animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
         }
     }
 }
 
 @keyframes modal-panel-enter
 {
-    30%
-    {
-        opacity: 0.5;
-    }
-
     100%
     {
         transform: none;
@@ -170,19 +164,20 @@ modal-panel
 
 @keyframes modal-panel-leave
 {
+    10%
+    {
+        opacity: 1;
+    }
+
     100%
     {
         transform: var(--modal-panel-origin-transform);
+        opacity: 0;
     }
 }
 
 @keyframes modal-panel-content-enter
 {
-    30%
-    {
-        opacity: 0.2;
-    }
-
     100%
     {
         opacity: 1;
@@ -191,9 +186,9 @@ modal-panel
 
 @keyframes modal-panel-content-leave
 {
-    30%
+    20%
     {
-        opacity: 0;
+        opacity: 0.1;
     }
 
     100%

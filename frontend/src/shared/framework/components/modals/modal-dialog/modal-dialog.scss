@@ -198,4 +198,61 @@ modal-dialog
         border-left-width: var(--border-width-thicker);
         border-color: var(--color-surface-help-border);
     }
+
+    // Animate the dialog.
+
+    modal-view &
+    {
+        // Hint that animation will be applied.
+        will-change: opacity;
+    }
+
+    modal-view compose.au-enter &
+    {
+        transform: var(--modal-dialog-origin-transform);
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-dialog-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave &
+    {
+        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
+        box-shadow: var(--modal-dialog-afterglow);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-dialog-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-dialog-enter
+{
+    5%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-dialog-leave
+{
+    50%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
 }

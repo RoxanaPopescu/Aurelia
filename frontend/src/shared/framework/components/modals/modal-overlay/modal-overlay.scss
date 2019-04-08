@@ -93,3 +93,106 @@ modal-overlay
         }
     }
 }
+
+modal-overlay,
+app-sidebar
+{
+    // Animate the overlay and app-sidebar.
+
+    modal-view &
+    {
+        // Hint that animation will be applied.
+        will-change: opacity;
+    }
+
+    modal-view compose.au-enter &
+    {
+        transform: var(--modal-overlay-origin-transform);
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-overlay-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave &
+    {
+        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
+        box-shadow: var(--modal-overlay-afterglow);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-overlay-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+}
+
+modal-overlay
+{
+    // Animate the content of the panel.
+
+    > *
+    {
+        // Hint that animation will be applied.
+        will-change: opacity;
+
+        modal-view compose.au-enter &
+        {
+            opacity: 0;
+        }
+
+        modal-view compose.au-enter-active &
+        {
+            animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        }
+
+        modal-view compose.au-leave-active &
+        {
+            animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        }
+    }
+}
+
+@keyframes modal-overlay-enter
+{
+    50%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-overlay-leave
+{
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+@keyframes modal-panel-content-enter
+{
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-panel-content-leave
+{
+    25%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}
