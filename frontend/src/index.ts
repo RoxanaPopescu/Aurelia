@@ -21,6 +21,10 @@ import { Profile } from "shared/src/model/profile";
  */
 export async function configure(aurelia: Aurelia): Promise<any>
 {
+    // Create the visitor.
+    aurelia.container.get(Visitor);
+
+    // Configure the framework.
     aurelia.use
         .standardConfiguration()
         .developmentLogging(ENVIRONMENT.debug ? "debug" : "warn");
@@ -61,8 +65,12 @@ export async function configure(aurelia: Aurelia): Promise<any>
         currencyService.configure(settings.app.currencies, setCurrencyCode);
         await currencyService.setCurrency(getCurrencyCode());
 
-        // Create the visitor.
-        aurelia.container.get(Visitor);
+        // Import the base styles and theme.
+        await import("resources/styles/base/index.scss" as any);
+        await import(`resources/styles/themes/${getThemeName()}/index.scss`);
+
+        // Import the icons in the icons folder.
+        await import("resources/icons");
 
         // Attempt to reauthenticate using a token stored on the device.
         const identityService = aurelia.container.get(IdentityService) as IdentityService;
@@ -75,18 +83,7 @@ export async function configure(aurelia: Aurelia): Promise<any>
     });
 
     // Start the framework.
-    const startPromise = aurelia.start();
-
-    // Import the base and theme styles.
-    const themePromise =
-        import("resources/styles/base/index.scss" as any).then(() =>
-        import(`resources/styles/themes/${getThemeName()}/index.scss`));
-
-    // Import the icons in the icons folder.
-    const iconsPromise = import("resources/icons");
-
-    // Wait for start and imports to finish before composing the app.
-    await Promise.all([startPromise, themePromise, iconsPromise]);
+    await aurelia.start();
 
     // Set the root module and compose the app.
     await aurelia.setRoot(PLATFORM.moduleName("app/app"));

@@ -1,5 +1,5 @@
 ////
-/// @group themes/blue/palettes/color
+/// @group themes/gray/palettes/color
 ////
 
 /// Theme specific color palette.
@@ -17,19 +17,19 @@ $__summary: comment;
     --palette-color-neutral-light: hsl(230, 14%, 96%);
     --palette-color-neutral: hsl(220, 14%, 87%);
     --palette-color-neutral-dark: #{hsl(210, 6%, 43%)};
-    --palette-color-neutral-darker: #172b4d; //#{hsl(0, 0%, 13%)};
+    --palette-color-neutral-darker: #{hsl(0, 0%, 13%)};
     --palette-color-blackpoint: black;
 }
 
 /// The primary color and its variations.
 :root
 {
-    --palette-color-primary-lighter: #{hsl(216, 100%, 94%)};
-    --palette-color-primary-light: #{hsl(218, 47%, 65%)};
-    --palette-color-primary: #{hsl(216, 92%, 34%)};
-    --palette-color-primary-dark: #{hsl(217, 86%, 28%)};
-    --palette-color-primary-HOVER: rgba(10, 57, 133, 0.6);
-    --palette-color-primary-darker: #{hsl(218, 54%, 20%)};
+    --palette-color-primary-lighter: #{hsl(0, 0%, 94%)};
+    --palette-color-primary-light: #{hsl(0, 0%, 65%)};
+    --palette-color-primary: #{hsl(0, 0%, 18%)};
+    --palette-color-primary-dark: #{hsl(0, 0%, 15%)};
+    --palette-color-primary-HOVER: hsla(0, 0%, 15%, 0.6);
+    --palette-color-primary-darker: #{hsl(0, 0%, 10%)};
 }
 
 /// The accent color indicating information.

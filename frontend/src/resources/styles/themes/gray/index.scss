@@ -1,0 +1,23 @@
+////
+/// @group resources/themes/blue
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+
+
+// Export the themes.
+// Themes define the values to use within different areas of the app.
+@import "./surfaces/base";
+@import "./surfaces/card";
+@import "./surfaces/primary";

@@ -2,6 +2,11 @@ modal-overlay[name="dashboard"]
 {
 }
 
+.dashboard-sidebar app-icon a:hover
+{
+    transition: none;
+}
+
 dashboard-modal
 {
     // Fill the viewport.

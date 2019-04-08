@@ -25,6 +25,7 @@ export class AppModule
         modalService.register("search", PLATFORM.moduleName("app/modals/panels/search/search"));
         modalService.register("starred", PLATFORM.moduleName("app/modals/panels/starred/starred"));
         modalService.register("add", PLATFORM.moduleName("app/modals/panels/add/add"));
+        modalService.register("notifications", PLATFORM.moduleName("app/modals/panels/notifications/notifications"));
 
         // Dialogs.
         modalService.register("confirm", PLATFORM.moduleName("app/modals/dialogs/confirm/confirm"));

@@ -6,13 +6,11 @@
 
     <modal-panel name="search" close-button.bind="true" close-shortcut.bind="true" scroll>
 
-        <!--
         <div slot="actions">
-            <button appearance="icon">
-                <icon name="menu"></icon>
+            <button appearance="icon" title="Save search">
+                <icon name="md-save"></icon>
             </button>
         </div>
-        -->
 
         <header scroll-fade>
 
@@ -26,7 +24,7 @@
 
         <div>
 
-            <section>
+            <section class="margin-bottom">
 
                 <h2 class="font-large margin-bottom">Saved searches</h2>
 
@@ -40,7 +38,7 @@
 
             </section>
 
-            <section class="margin-top">
+            <section class="margin-bottom">
 
                 <h2 class="font-large margin-bottom">Recent searches</h2>
 
@@ -55,12 +53,6 @@
             </section>
 
         </div>
-
-        <footer>
-
-            FOOTER
-
-        </footer>
 
     </modal-panel>
 
