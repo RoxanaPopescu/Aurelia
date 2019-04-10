@@ -50,7 +50,9 @@
     }
   },
   "variables": {
-    "webappName": "[concat(if(equals(parameters('type'), 'proxy'), 'client-proxy-', 'client-'), parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappNameProxy": "[concat('client-proxy-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappNameClient": "[concat('client-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappName": "[if(equals(parameters('type'), 'proxy'), variables('webappNameProxy'), variables('webappNameClient'))]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNamePreview": "preview",
