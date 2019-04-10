@@ -57,7 +57,7 @@
     "slotNameStaging": "staging",
     "slotNamePreview": "preview",
     "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]",
-    "proxyWebappURL": "[concat('https://', parameters('webappNameClient'), 'azurewebsits.net']",
+    "proxyWebappURL": "[concat('https://', parameters('webappNameClient'), 'azurewebsits.net')]",
     "proxyWebappAPI": "[if(equals(parameters('environment'), 'test'), 'https://consignor-bff.mover.systems/api', 'https://consignor-bff.mover.dk/api)"
   },
   "resources": [
