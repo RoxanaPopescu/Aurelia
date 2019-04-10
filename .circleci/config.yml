@@ -9,6 +9,33 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
+  setup-test-nginx:
+    executor: azure-cli/azure-docker
+    steps:
+      - checkout
+      - azure-cli/login-with-service-principal
+      - run:
+          name: Setup azure CLI for test subscription
+          command: az account set -s "Test"
+      - run:
+          name: Create resource group
+          command: az group create -n ${AZURE_TEST_RESOURCE_GROUP} --location westeurope
+      - run:
+          name: Set defaults
+          command: az configure --defaults group=${AZURE_TEST_RESOURCE_GROUP}
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file frontend/packages/cloud/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="test"
+            serviceName=${PROJECT_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+
   setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
@@ -54,9 +81,12 @@ jobs:
           command: az acr build
             -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
-
-      - run: mkdir -p workspace
-      - run: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+      - run:
+        name: Create workspace folder
+        command: mkdir -p workspace
+      - run:
+        name: Prepare docker image file for workspace
+        command: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
           root: workspace
           paths:
@@ -103,6 +133,20 @@ jobs:
       - run: echo "Deploying production"
 
 workflows:
+  setup-nginx:
+    - approval:
+        type: approval
+    - setup-test-nginx:
+        requires:
+          - approval
+
+  setup-webapp:
+    - approval:
+        type: approval
+    - setup-test-azure:
+        requires:
+          - approval
+
   build-and-deploy:
     jobs:
       # - setup-test-azure

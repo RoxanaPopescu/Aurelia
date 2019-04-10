@@ -3,7 +3,8 @@ version: "2.1"
 services:
   frontend-cloud:
     environment:
-      NODE_ENV: production
+      NODE_ENV: build
+      TARGET_ENV: production
     build:
       context: .
       dockerfile: ./dockerfile
