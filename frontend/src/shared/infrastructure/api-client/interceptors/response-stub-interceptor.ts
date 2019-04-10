@@ -60,10 +60,21 @@ export class ResponseStubInterceptor implements Interceptor
 
             const stub = this.stubs[key];
 
-            const headers = { "content-type": "application/json", ...stub.headers } as MapObject<string>;
-            const body = stub.body != null ? stub.body : (stub.data != null ? json(stub.data) : "");
             const status = stub.status != null ? stub.status : 200;
-            const statusText = stub.statusText != null ? stub.statusText : status === 200 ? "ok" : "";
+            const statusText = stub.statusText;
+
+            const body = stub.body != null
+                ? stub.body
+                : (stub.data != null
+                    ? json(stub.data)
+                    : undefined);
+
+            const headers =
+            {
+                "content-type": body ? "application/json" : undefined,
+                ...stub.headers
+
+            } as MapObject<string>;
 
             return new Response(body,
             {

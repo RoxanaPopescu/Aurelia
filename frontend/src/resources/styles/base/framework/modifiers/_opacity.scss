@@ -14,6 +14,12 @@ $__summary: comment;
     opacity: var(--opacity-faded);
 }
 
+/// Modifier class that de-emphasizes the element by reducing its opacity, so it is just barely visible.
+.opacity-faded-more
+{
+    opacity: var(--opacity-faded-more);
+}
+
 /// Modifier class that makes the element appear disabled by reducing its opacity.
 .opacity-disabled
 {

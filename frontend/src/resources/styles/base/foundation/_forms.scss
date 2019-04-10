@@ -403,6 +403,10 @@ input[type="week"]
 
         // Ensure proper spacing between the label and the control.
         margin-left: var(--size-inline-spacing);
+
+        // Ensure consistent default layout of forms.
+        margin-left: auto;
+        flex-basis: 60%;
     }
 }
 

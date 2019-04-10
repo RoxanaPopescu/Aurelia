@@ -6,27 +6,19 @@
 
     <modal-panel name="starred" close-button.bind="true" close-shortcut.bind="true" scroll>
 
-        <!--
-        <div slot="actions">
-            <button appearance="icon">
-                <icon name="menu"></icon>
-            </button>
-        </div>
-        -->
-
         <header scroll-fade>
 
-            <h1 class="font-largest margin-bottom focus-hidden" tabindex="-1" autofocus>
+            <h1 class="font-largest margin-bottom">
                 Starred and recent
             </h1>
 
-            <input type="text" placeholder="Type to filter...">
+            <input type="text" placeholder="Type to find..." autofocus>
 
         </header>
 
         <div>
 
-            <section>
+            <section class="margin-bottom">
 
                 <h2 class="font-large margin-bottom">Starred items</h2>
 
@@ -40,7 +32,7 @@
 
             </section>
 
-            <section>
+            <section class="margin-bottom">
 
                 <h2 class="font-large margin-bottom">Recent items</h2>
 
@@ -55,12 +47,6 @@
             </section>
 
         </div>
-
-        <footer>
-
-            FOOTER
-
-        </footer>
 
     </modal-panel>
 

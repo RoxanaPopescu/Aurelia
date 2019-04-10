@@ -15,13 +15,13 @@ export class Visitor
      */
     public constructor(cookies: Cookies)
     {
-        let visitorId = cookies.get("visitor-id");
+        let visitorId = cookies.get("visitor");
 
         if (!visitorId)
         {
             visitorId = Id.uuid(1);
 
-            cookies.set("visitor-id", visitorId,
+            cookies.set("visitor", visitorId,
             {
                 expires: DateTime.utc().plus({ years: 10 })
             });

@@ -1,0 +1,71 @@
+<template>
+
+    <require from="./notifications.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-panel name="notifications" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <div slot="actions">
+            <button appearance="icon" title="Clear all">
+                <icon name="md-clear-all"></icon>
+            </button>
+        </div>
+
+        <header scroll-fade>
+
+            <h1 class="font-largest focus-hidden" tabindex="-1" autofocus>
+                Notifications
+            </h1>
+
+        </header>
+
+        <div>
+
+            <section class="margin-bottom">
+
+                <h2 class="font-large margin-bottom">Today</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <h2 class="font-large margin-bottom">Yesterday</h2>
+
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+                <div style="background: #efefef; height: 40px;" class="margin"></div>
+
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+
+                <h2 class="font-large margin-bottom">Two days ago</h2>
+
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+
+                <h2 class="font-large margin-bottom">Last week</h2>
+
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+                <div style="background: #f8f8f8; height: 40px;" class="margin"></div>
+
+                <div class="opacity-faded">Loading more...</div>
+
+            </section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

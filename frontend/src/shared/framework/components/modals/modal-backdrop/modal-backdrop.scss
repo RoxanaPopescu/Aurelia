@@ -20,4 +20,37 @@ modal-backdrop
 
     // Hint that animation will be applied.
     will-change: opacity;
+
+    // Animate the backdrop.
+
+    compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    compose.au-enter-active &
+    {
+        animation: modal-backdrop-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+
+    compose.au-leave-active &
+    {
+        animation: modal-backdrop-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-backdrop-enter
+{
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-backdrop-leave
+{
+    100%
+    {
+        opacity: 0;
+    }
 }

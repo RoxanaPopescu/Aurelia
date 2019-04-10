@@ -90,7 +90,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         {
             rules:
             [
-                // Loader for `.scss` files defining themes, one of which will be loaded.
+                // Loader for `.scss` files defining themes, one of which will be loaded during app start.
                 // Note that we need `style-loader` to inject the these.
                 {
                     test: /\/themes\/.+\.scss$/,
