@@ -35,7 +35,7 @@ jobs:
             dockerRegistryURL=${DOCKER_REGISTRY}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
             dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            proxy=true
+            type="proxy"
 
   setup-test-azure:
     executor: azure-cli/azure-docker

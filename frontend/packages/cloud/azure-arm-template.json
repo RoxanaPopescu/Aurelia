@@ -40,16 +40,17 @@
         "description": "The registry for docker"
       }
     },
-    "proxy": {
-      "type": "bool",
-      "defaultValue": false,
+    "type": {
+      "type": "string",
+      "defaultValue": "client",
+      "allowedValues": ["proxy", "client"],
       "metadata": {
         "description": "Is this used for nginx proxy"
       }
     }
   },
   "variables": {
-    "webappName": "[concat(if(parameters('proxy'), 'client-proxy', 'client-'), parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappName": "[concat(if(equals(parameters('type'), 'proxy', 'client-proxy', 'client-'), parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNamePreview": "preview",
