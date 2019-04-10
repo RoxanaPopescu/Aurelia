@@ -9,7 +9,7 @@ orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
 jobs:
-  setup-test-nginx:
+  setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
       - checkout
@@ -134,11 +134,11 @@ jobs:
       - run: echo "Deploying production"
 
 workflows:
-  setup-nginx:
+  setup-proxy:
     jobs:
       - approve:
           type: approval
-      - setup-test-nginx:
+      - setup-test-proxy:
           requires:
             - approve
 
