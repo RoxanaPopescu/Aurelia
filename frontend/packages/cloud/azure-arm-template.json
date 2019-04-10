@@ -57,7 +57,7 @@
     "slotNameStaging": "staging",
     "slotNamePreview": "preview",
     "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]",
-    "proxyWebappURL": "[concat('https://', variables('webappNameClient'), '.azurewebsits.net')]",
+    "proxyWebappURL": "[concat('https://', variables('webappNameClient'), '.azurewebsites.net')]",
     "proxyWebappAPI": "[if(equals(parameters('environment'), 'test'), 'https://consignor-bff.mover.systems/api', 'https://consignor-bff.mover.dk/api')]"
   },
   "resources": [
@@ -77,7 +77,7 @@
           "appCommandLine": "",
           "http20Enabled": true,
           "minTlsVersion": "1.2",
-          "ftpsState": "FtpsOnly",
+          "ftpsState": "Disabled",
           "linuxFxVersion": "[parameters('dockerImage')]"
         }
       },
@@ -115,7 +115,7 @@
               "alwaysOn": true,
               "http20Enabled": true,
               "minTlsVersion": "1.2",
-              "ftpsState": "FtpsOnly"
+              "ftpsState": "Disabled"
             }
           },
           "resources": [
@@ -155,7 +155,7 @@
               "alwaysOn": true,
               "http20Enabled": true,
               "minTlsVersion": "1.2",
-              "ftpsState": "FtpsOnly"
+              "ftpsState": "Disabled"
             }
           },
           "resources": [
