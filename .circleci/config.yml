@@ -135,26 +135,23 @@ jobs:
 workflows:
   setup-nginx:
     jobs:
-      - approval:
+      - approve:
           type: approval
       - setup-test-nginx:
           requires:
-            - approval
+            - approve
 
   setup-webapp:
     jobs:
-      - approval:
+      - approve:
           type: approval
       - setup-test-azure:
           requires:
-            - approval
+            - approve
 
   build-and-deploy:
     jobs:
-      # - setup-test-azure
       - build
-      #     requires:
-      #      - setup-test-azure
       - deploy-test:
           requires:
             - build
