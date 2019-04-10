@@ -31,7 +31,7 @@ jobs:
             --parameters
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
-            serviceName="client-proxy-platform-test-mover"
+            serviceName=${PROJECT_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
             dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
