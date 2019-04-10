@@ -45,12 +45,12 @@
       "defaultValue": "client",
       "allowedValues": ["proxy", "client"],
       "metadata": {
-        "description": "Is this used for nginx proxy"
+        "description": "What type is this"
       }
     }
   },
   "variables": {
-    "webappName": "[concat(if(equals(parameters('type'), 'proxy', 'client-proxy', 'client-'), parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappName": "[concat(if(equals(parameters('type'), 'proxy'), 'client-proxy', 'client-'), parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNamePreview": "preview",
