@@ -133,6 +133,22 @@ jobs:
       - run: echo "Deploying production"
 
 workflows:
+  setup-nginx:
+    jobs:
+      - approve:
+          type: approval
+      - setup-test-nginx:
+          requires:
+            - approve
+
+  setup-webapp:
+    jobs:
+      - approve:
+          type: approval
+      - setup-test-azure:
+          requires:
+            - approve
+
   build-and-deploy:
     jobs:
       - build
