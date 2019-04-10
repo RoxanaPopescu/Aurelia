@@ -29,7 +29,7 @@ jobs:
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|client-nginx:latest"
+            dockerImage="dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
             serviceName="client-proxy-platform-test-mover"
             dockerRegistryURL=${DOCKER_REGISTRY}
