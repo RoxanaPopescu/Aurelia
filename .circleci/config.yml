@@ -29,12 +29,13 @@ jobs:
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|empty"
+            dockerImage="DOCKER|client-nginx:latest"
             environment="test"
-            serviceName=${PROJECT_NAME}
+            serviceName="client-proxy-platform-test-mover"
             dockerRegistryURL=${DOCKER_REGISTRY}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
             dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            proxy="true"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
