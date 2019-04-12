@@ -8,13 +8,13 @@ jobs:
           account: "Test"
           environment: "test"
           type: "client"
-          resource-group: ${AZURE_TEST_RESOURCE_GROUP}
+          resource-group: "${AZURE_TEST_RESOURCE_GROUP}"
           docker-image: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
-          build-num: ${CIRCLE_BUILD_NUM}
-          project-name: ${PROJECT_NAME}
-          docker-registry: ${DOCKER_REGISTRY}
-          docker-registry-username: ${DOCKER_REGISTRY_USERNAME}
-          docker-registry-password: ${DOCKER_REGISTRY_PASSWORD}
+          build-num: "${CIRCLE_BUILD_NUM}"
+          project-name: "${PROJECT_NAME}"
+          docker-registry: "${DOCKER_REGISTRY}"
+          docker-registry-username: "${DOCKER_REGISTRY_USERNAME}"
+          docker-registry-password: "${DOCKER_REGISTRY_PASSWORD}"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
