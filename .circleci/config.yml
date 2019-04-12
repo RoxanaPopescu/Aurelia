@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  setup-azure:
+  setup-azure-command:
     description: "Deploy to azure"
     parameters:
       account:
@@ -50,7 +50,7 @@ jobs:
     steps:
       - checkout
       - azure-cli/login-with-service-principal
-      - setup-azure:
+      - setup-azure-command:
         account: "Test"
         environment: "test"
         type: "client"
