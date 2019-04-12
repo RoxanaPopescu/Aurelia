@@ -55,7 +55,7 @@
     "webappName": "[if(equals(parameters('type'), 'proxy'), variables('webappNameProxy'), variables('webappNameClient'))]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
-    "slotNamePreview": "preview",
+    "slotNameBuild": "build",
     "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]",
     "proxyWebappURL": "[concat('https://', variables('webappNameClient'), '.azurewebsites.net')]",
     "proxyWebappAPI": "[if(equals(parameters('environment'), 'test'), 'https://consignor-bff.mover.systems/api', 'https://consignor-bff.mover.dk/api')]"
@@ -140,7 +140,7 @@
         },
         {
           "apiVersion": "2018-02-01",
-          "name": "[variables('slotNamePreview')]",
+          "name": "[variables('slotNameBuild')]",
           "condition": "[equals(parameters('environment'), 'prod')]",
           "type": "slots",
           "location": "[resourceGroup().location]",
@@ -165,7 +165,7 @@
               "condition": "[equals(parameters('environment'), 'prod')]",
               "apiVersion": "2018-02-01",
               "dependsOn": [
-                "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNamePreview'))]"
+                "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNameBuild'))]"
               ],
               "properties": {
                 "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
@@ -195,9 +195,9 @@
       "type": "string",
       "value": "[variables('slotNameStaging')]"
     },
-    "slotNamePreview": {
+    "slotNameBuild": {
       "type": "string",
-      "value": "[variables('slotNamePreview')]"
+      "value": "[variables('slotNameBuild')]"
     }
   }
 }

@@ -1,10 +1,5 @@
 version: 2.1
 
-references:
-  container_config: &container_config
-    docker:
-      - image: circleci/node:10.15.3
-
 orbs:
   azure-cli: circleci/azure-cli@1.0.3
 
@@ -129,26 +124,25 @@ jobs:
           command: az webapp stop -s staging
 
   deploy-production:
-    <<: *container_config
+    executor: azure-cli/azure-docker
+
     steps:
       - run: echo "Deploying production"
 
 workflows:
-  setup-proxy:
+  setup-azure:
     jobs:
-      - approve:
-          type: approval
-      - setup-test-proxy:
-          requires:
-            - approve
-
-  setup-webapp:
-    jobs:
-      - approve:
+      - approve-test:
           type: approval
       - setup-test-azure:
           requires:
-            - approve
+            - approve-test
+
+      - approve-proxy-test:
+          type: approval
+      - setup-test-proxy:
+          requires:
+            - approve-proxy-test
 
   build-and-deploy:
     jobs:
