@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  setupazurecommand:
+  setup-azure-command:
     description: "Deploy to azure"
     parameters:
       account:
@@ -13,9 +13,9 @@ commands:
       type:
         description: "proxy or client"
         type: string
-      dockerimage:
+      docker-image:
         type: string
-      resourcegroup:
+      resource-group:
         type: string
     steps:
       - checkout
@@ -50,12 +50,12 @@ jobs:
   setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
-      - setupazurecommand:
+      - setup-azure-command:
           account: "Test"
           environment: "test"
           type: "client"
-          resourcegroup: "${AZURE_TEST_RESOURCE_GROUP}"
-          dockerimage: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
+          resource-group: "${AZURE_TEST_RESOURCE_GROUP}"
+          docker-image: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
