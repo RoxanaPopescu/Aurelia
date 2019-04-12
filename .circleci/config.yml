@@ -51,11 +51,11 @@ jobs:
     executor: azure-cli/azure-docker
     steps:
       - setupazurecommand:
-        account: "Test"
-        environment: "test"
-        type: "client"
-        resourcegroup: "${AZURE_TEST_RESOURCE_GROUP}"
-        dockerimage: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
+          account: "Test"
+          environment: "test"
+          type: "client"
+          resourcegroup: "${AZURE_TEST_RESOURCE_GROUP}"
+          dockerimage: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
