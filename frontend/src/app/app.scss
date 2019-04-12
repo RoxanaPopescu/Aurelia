@@ -27,7 +27,7 @@ main
     react-module
     {
         // Ensure react modules fill the content area of the viewport.
-        // We must use relative positioning to do this, due to the legacy styles.
+        // We must use absoliute positioning to do this, due to the legacy styles.
         position: absolute;
         height: 100vh;
 
