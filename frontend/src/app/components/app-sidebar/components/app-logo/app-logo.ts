@@ -2,10 +2,10 @@ import { autoinject, bindable } from "aurelia-framework";
 import { ModalService } from "shared/framework";
 
 /**
- * Represents the icon for the app, which opens the `dashboard` overlay when clicked.
+ * Represents the logo for the app, which opens the `dashboard` overlay when clicked.
  */
 @autoinject
-export class AppIconCustomElement
+export class AppLogoCustomElement
 {
     /**
      * Creates a new instance of the type.
@@ -24,6 +24,12 @@ export class AppIconCustomElement
      */
     @bindable({ defaultValue: false })
     public disabled: boolean;
+
+    /**
+     * The size of the logo to show.
+     */
+    @bindable({ defaultValue: "icon" })
+    public size: "icon" | "wide";
 
     /**
      * Called when the element is clicked.

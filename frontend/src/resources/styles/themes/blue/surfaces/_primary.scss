@@ -19,16 +19,6 @@ $__summary: comment;
     --color-surface-icon: var(--palette-color-primary-lighter);
     --color-surface-border: var(--palette-color-primary-dark);
 
-    // Edge of the sidebar, used for resizing and toggling.
-    &
-    {
-        // State: normal
-        --color-surface-edge: var(--palette-color-primary);
-
-        // State: hover
-        --color-surface-edge--hover: var(--palette-color-primary-dark);
-    }
-
     // Navigation links on the surface.
     &
     {
@@ -44,17 +34,35 @@ $__summary: comment;
         --color-surface-nav-link-surface-text--hover: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--hover: var(--palette-color-primary-lighter);
 
-        // State: focus
-        --color-surface-nav-link-border--focus: var(--palette-color-primary-HOVER);
-        --color-surface-nav-link-surface--focus: var(--palette-color-primary-HOVER);
-        --color-surface-nav-link-surface-text--focus: var(--palette-color-primary-lighter);
-        --color-surface-nav-link-surface-icon--focus: var(--palette-color-primary-lighter);
-
         // State: active
         --color-surface-nav-link-border--active: var(--palette-color-primary-dark);
         --color-surface-nav-link-surface--active: var(--palette-color-primary-dark);
         --color-surface-nav-link-surface-text--active: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--active: var(--palette-color-primary-lighter);
+    }
+
+    // Navigation child links on the surface.
+    &
+    {
+        --color-surface-nav-child-surface: var(--palette-color-primary-darker);
+
+        // State: normal
+        --color-surface-nav-child-link-border: transparent;
+        --color-surface-nav-child-link-surface: transparent;
+        --color-surface-nav-child-link-surface-text: var(--palette-color-primary-lighter);
+        --color-surface-nav-child-link-surface-icon: var(--palette-color-primary-lighter);
+
+        // State: hover
+        --color-surface-nav-child-link-border--hover: var(--palette-color-primary-HOVER);
+        --color-surface-nav-child-link-surface--hover: var(--palette-color-primary-HOVER);
+        --color-surface-nav-child-link-surface-text--hover: var(--palette-color-primary-lighter);
+        --color-surface-nav-child-link-surface-icon--hover: var(--palette-color-primary-lighter);
+
+        // State: active
+        --color-surface-nav-child-link-border--active: transparent;
+        --color-surface-nav-child-link-surface--active: transparent;
+        --color-surface-nav-child-link-surface-text--active: var(--palette-color-primary-lighter);
+        --color-surface-nav-child-link-surface-icon--active: var(--palette-color-neutral-lighter);
     }
 
     // Neutral elements on the surface.

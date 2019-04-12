@@ -24,8 +24,11 @@ $__summary: comment;
     /// such as e.g. a picture and the text that follows.
     --size-inline-spacing-large: 0.8em;
 
-    /// The width of the app sidebar.
+    /// The width of the collapsed app sidebar.
     --size-app-sidebar-width: 20rem;
+
+    /// The width of the expanded app sidebar.
+    --size-app-sidebar-width-expanded: 65rem;
 
     /// The min-width of the module sidebar.
     --size-module-sidebar-min-width: 78rem;

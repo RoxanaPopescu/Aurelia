@@ -1,12 +1,14 @@
 @import "base/resources/index";
 
-app-icon
+app-logo
 {
     display: block;
 
     a
     {
-        // Lighten the icon to increase contrast.
+        height: 100%;
+
+        // Lighten the logo to increase contrast.
         filter: brightness(90%);
 
         // Animate the hover effect.
@@ -16,6 +18,12 @@ app-icon
         {
             // Highlight on hover.
             filter: brightness(100%);
+        }
+
+        img
+        {
+            height: 100%;
+            width: auto;
         }
     }
 }

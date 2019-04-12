@@ -7,6 +7,9 @@ md-icon-stack
     line-height: 1;
     vertical-align: bottom;
 
+    // Prevent shrinking when placed in a flex layout.
+    flex-shrink: 0;
+
     &:empty
     {
         display: none;
