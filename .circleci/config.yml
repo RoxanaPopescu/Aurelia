@@ -160,7 +160,7 @@ commands:
       resource-group:
         type: string
       build-num:
-        type: string
+        type: integer
       project-name:
         type: string
       docker-registry:
@@ -184,7 +184,7 @@ commands:
       - run:
           name: Create resources
           command: az group deployment create
-            -n << parameters.resource-group >>-<< build-num >>
+            -n << parameters.resource-group >>-<< parameters.build-num >>
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters
             dockerImage=<< parameters.docker-image >>
