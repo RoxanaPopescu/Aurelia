@@ -160,7 +160,7 @@ commands:
       resource-group:
         type: string
       build-num:
-        type: integer
+        type: string
       project-name:
         type: string
       docker-registry:
