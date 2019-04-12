@@ -8,8 +8,13 @@ jobs:
           account: "Test"
           environment: "test"
           type: "client"
-          resource-group: "${AZURE_TEST_RESOURCE_GROUP}"
+          resource-group: ${AZURE_TEST_RESOURCE_GROUP}
           docker-image: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
+          build-num: ${CIRCLE_BUILD_NUM}
+          project-name: ${PROJECT_NAME}
+          docker-registry: ${DOCKER_REGISTRY}
+          docker-registry-username: ${DOCKER_REGISTRY_USERNAME}
+          docker-registry-password: ${DOCKER_REGISTRY_PASSWORD}
 
   setup-test-azure:
     executor: azure-cli/azure-docker
@@ -154,6 +159,16 @@ commands:
         type: string
       resource-group:
         type: string
+      build-num:
+        type: integer
+      project-name:
+        type: string
+      docker-registry:
+        type: string
+      docker-registry-username:
+        type: string
+      docker-registry-password:
+        type: string
     steps:
       - checkout
       - azure-cli/login-with-service-principal
@@ -169,15 +184,15 @@ commands:
       - run:
           name: Create resources
           command: az group deployment create
-            -n << parameters.resource-group >>-${CIRCLE_BUILD_NUM}
+            -n << parameters.resource-group >>-<< build-num >>
             --template-file frontend/packages/cloud/azure-arm-template.json
             --parameters
             dockerImage=<< parameters.docker-image >>
             environment=<< parameters.environment >>
-            serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            serviceName=<< parameters.project-name >>
+            dockerRegistryURL=<< parameters.docker-registry >>
+            dockerRegistryUsername=<< parameters.docker-registry-username >>
+            dockerRegistryPassword=<< parameters.docker-registry-password >>
             type=<< parameters.type >>
 
 orbs:
