@@ -1,51 +1,5 @@
 version: 2.1
 
-commands:
-  setup-azure-command:
-    description: "Deploy to azure"
-    parameters:
-      account:
-        description: "Test or production"
-        type: string
-      environment:
-        description: "test, prod or preview"
-        type: string
-      type:
-        description: "proxy or client"
-        type: string
-      docker-image:
-        type: string
-      resource-group:
-        type: string
-    steps:
-      - checkout
-      - azure-cli/login-with-service-principal
-      - run:
-          name: Setup azure CLI for test subscription
-          command: az account set -s << parameters.account >>
-      - run:
-          name: Create resource group
-          command: az group create -n << parameters.resource-group >> --location westeurope
-      - run:
-          name: Set defaults
-          command: az configure --defaults group=<< parameters.resource-group >>
-      - run:
-          name: Create resources
-          command: az group deployment create
-            -n << parameters.resource-group >>-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
-            --parameters
-            dockerImage=<< parameters.docker-image >>
-            environment=<< parameters.environment >>
-            serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            type=<< parameters.type >>
-
-orbs:
-  azure-cli: circleci/azure-cli@1.0.3
-
 jobs:
   setup-test-proxy:
     executor: azure-cli/azure-docker
@@ -182,3 +136,49 @@ workflows:
       - deploy-production:
           requires:
             - production-approval
+
+commands:
+  setup-azure-command:
+    description: "Deploy to azure"
+    parameters:
+      account:
+        description: "Test or production"
+        type: string
+      environment:
+        description: "test, prod or preview"
+        type: string
+      type:
+        description: "proxy or client"
+        type: string
+      docker-image:
+        type: string
+      resource-group:
+        type: string
+    steps:
+      - checkout
+      - azure-cli/login-with-service-principal
+      - run:
+          name: Setup azure CLI for test subscription
+          command: az account set -s << parameters.account >>
+      - run:
+          name: Create resource group
+          command: az group create -n << parameters.resource-group >> --location westeurope
+      - run:
+          name: Set defaults
+          command: az configure --defaults group=<< parameters.resource-group >>
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n << parameters.resource-group >>-${CIRCLE_BUILD_NUM}
+            --template-file frontend/packages/cloud/azure-arm-template.json
+            --parameters
+            dockerImage=<< parameters.docker-image >>
+            environment=<< parameters.environment >>
+            serviceName=${PROJECT_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            type=<< parameters.type >>
+
+orbs:
+  azure-cli: circleci/azure-cli@1.0.3
