@@ -172,7 +172,7 @@ commands:
     steps:
       - checkout
       - azure-cli/login-with-service-principal
-      - run echo << parameters.project-name >>
+      - run: echo << parameters.project-name >>
       - run:
           name: Setup azure CLI for test subscription
           command: az account set -s << parameters.account >>
