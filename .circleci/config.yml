@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  setup-azure-command:
+  setupazurecommand:
     description: "Deploy to azure"
     parameters:
       account:
@@ -50,7 +50,7 @@ jobs:
   setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
-      - setup-azure-command:
+      - setupazurecommand:
         account: "Test"
         environment: "test"
         type: "client"
