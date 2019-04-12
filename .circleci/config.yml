@@ -8,7 +8,7 @@ jobs:
           account: "Test"
           environment: "test"
           type: "client"
-          resource-group: "${AZURE_TEST_RESOURCE_GROUP}""
+          resource-group: "${AZURE_TEST_RESOURCE_GROUP}"
           docker-image: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
 
   setup-test-azure:
