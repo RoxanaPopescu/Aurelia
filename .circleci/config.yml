@@ -143,6 +143,18 @@ jobs:
           name: Stop staging slot
           command: az webapp stop -s staging
 
+  build-production:
+    executor: azure-cli/azure-docker
+
+    steps:
+      - run: echo "build production"
+
+  deploy-build-production:
+    executor: azure-cli/azure-docker
+
+    steps:
+      - run: echo "Deploy build of production"
+
   deploy-production:
     executor: azure-cli/azure-docker
 
