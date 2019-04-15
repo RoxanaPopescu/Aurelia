@@ -1,5 +1,5 @@
 [
-    { "code": "en-US", "name": "English (United States)" },
-    { "code": "x-pseudo", "name": "Pseudo translation" },
-    { "code": "da-DK", "name": "Dansk" }
+  { "code": "en-US", "name": "English (United States)" },
+  { "code": "x-pseudo", "name": "Pseudo translation" },
+  { "code": "da", "name": "Dansk" }
 ]
