@@ -12,12 +12,12 @@
     "jsx": "react",
     "noImplicitAny": false,
     "paths": {
-      "shared/*": ["shared/*", "mover/shared/*"],
-      "fulfiller/*": ["mover/fulfiller/*"]
+      "shared/*": ["shared/*", "legacy/shared/*"],
+      "fulfiller/*": ["legacy/fulfiller/*"]
     },
     "typeRoots": [
       "node_modules/@types",
-      "src/mover/node_modules/@types",
+      "src/legacy/node_modules/@types",
     ],
   },
   "include": [

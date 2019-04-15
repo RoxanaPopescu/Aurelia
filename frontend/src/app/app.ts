@@ -72,12 +72,12 @@ export class AppModule
             {
                 name: "profile",
                 route: "profile",
-                moduleId: PLATFORM.moduleName("./modules/domain/profile/profile")
+                moduleId: PLATFORM.moduleName("./modules/profile/profile")
             },
             {
                 name: "kpi",
                 route: "kpi",
-                moduleId: PLATFORM.moduleName("./modules/domain/kpi/kpi"),
+                moduleId: PLATFORM.moduleName("./modules/kpi/kpi"),
                 settings:
                 {
                     outfit: "fulfiller",
@@ -91,7 +91,7 @@ export class AppModule
             {
                 name: "orders",
                 route: "orders",
-                moduleId: PLATFORM.moduleName("./modules/domain/orders/orders"),
+                moduleId: PLATFORM.moduleName("./modules/orders/orders"),
                 settings:
                 {
                     roles: ["user"]
@@ -104,7 +104,7 @@ export class AppModule
             {
                 name: "routes",
                 route: "routes",
-                moduleId: PLATFORM.moduleName("./modules/domain/routes/routes"),
+                moduleId: PLATFORM.moduleName("./modules/routes/routes"),
                 settings:
                 {
                     roles: ["user"]
@@ -117,7 +117,7 @@ export class AppModule
             {
                 name: "route-planning",
                 route: "route-planning",
-                moduleId: PLATFORM.moduleName("./modules/domain/route-planning/route-planning"),
+                moduleId: PLATFORM.moduleName("./modules/route-planning/route-planning"),
                 settings:
                 {
                     roles: ["user"]
@@ -130,7 +130,7 @@ export class AppModule
             {
                 name: "depots",
                 route: "depots",
-                moduleId: PLATFORM.moduleName("./modules/domain/depots/depots"),
+                moduleId: PLATFORM.moduleName("./modules/depots/depots"),
                 settings:
                 {
                     roles: ["user"]
@@ -143,7 +143,7 @@ export class AppModule
             {
                 name: "fleet",
                 route: "fleet-management",
-                moduleId: PLATFORM.moduleName("./modules/domain/fleet/fleet"),
+                moduleId: PLATFORM.moduleName("./modules/fleet/fleet"),
                 settings:
                 {
                     roles: ["user"]
@@ -156,7 +156,7 @@ export class AppModule
             {
                 name: "communication",
                 route: "communication",
-                moduleId: PLATFORM.moduleName("./modules/domain/communication/communication"),
+                moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
                     roles: ["user"]
@@ -169,7 +169,7 @@ export class AppModule
             {
                 name: "departments",
                 route: "departments",
-                moduleId: PLATFORM.moduleName("./modules/domain/departments/departments"),
+                moduleId: PLATFORM.moduleName("./modules/departments/departments"),
                 settings:
                 {
                     roles: ["user"]
@@ -182,7 +182,7 @@ export class AppModule
             {
                 name: "users",
                 route: "users",
-                moduleId: PLATFORM.moduleName("./modules/domain/users/users"),
+                moduleId: PLATFORM.moduleName("./modules/users/users"),
                 settings:
                 {
                     roles: ["user"]
@@ -195,7 +195,7 @@ export class AppModule
             {
                 name: "agreements",
                 route: "agreements",
-                moduleId: PLATFORM.moduleName("./modules/domain/agreements/agreements"),
+                moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
                 settings:
                 {
                     roles: ["user"]
@@ -212,7 +212,7 @@ export class AppModule
                 {
                     name: "design",
                     route: "design",
-                    moduleId: PLATFORM.moduleName("./modules/design/design")
+                    moduleId: PLATFORM.moduleName("./modules/_design/design")
                 }
             ] : []
 
