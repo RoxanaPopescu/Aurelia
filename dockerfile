@@ -51,7 +51,9 @@ RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=x-pseudo
 
+
 # Stage 2: Build the `frontend-cloud` package.
+
 FROM node:10-alpine as build-frontend-cloud-stage
 
 ## Add additional packages.
