@@ -47,7 +47,7 @@ WORKDIR /usr/app/frontend
 ## Start the build.
 RUN npm run translate-export
 RUN npm run translate-pseudo
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da-DK
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=x-pseudo
 
 # Stage 2: Build the `frontend-cloud` package.
