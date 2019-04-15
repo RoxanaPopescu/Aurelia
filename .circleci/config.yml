@@ -16,9 +16,9 @@ jobs:
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
             serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryURL=${DOCKER_REGISTRY_TEST}
+            dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="proxy"
 
   setup-test-azure:
@@ -36,9 +36,9 @@ jobs:
             dockerImage="DOCKER|empty"
             environment="test"
             serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryURL=${DOCKER_REGISTRY_TEST}
+            dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="client"
 
   setup-production-proxy:
@@ -56,9 +56,9 @@ jobs:
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="prod"
             serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
   setup-production-azure:
@@ -76,35 +76,33 @@ jobs:
             dockerImage="DOCKER|empty"
             environment="prod"
             serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="client"
 
-  build:
+  build-test:
     executor: azure-cli/azure-docker
 
     steps:
-      - checkout
-      - azure-cli/login-with-service-principal
-      - run:
-          name: Setup azure CLI for prod subscription
-          command: az account set -s "Production"
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-client-platform"
       - run:
           name: Set defaults
           command: az configure
-            --defaults group=${DOCKER_RESOURCE_GROUP} acr=${DOCKER_REGISTRY}
+            --defaults group=${DOCKER_RESOURCE_GROUP_PRODUCTION} acr=${DOCKER_REGISTRY_PRODUCTION}
       - run:
           name: Build docker image
           command: az acr build
-            -t ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
       - run:
           name: Prepare docker image file for workspace
-          command: echo ${DOCKER_REGISTRY_URL}/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
           root: workspace
           paths:
@@ -127,9 +125,9 @@ jobs:
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
-            -u ${DOCKER_REGISTRY_USERNAME}
-            -p ${DOCKER_REGISTRY_PASSWORD}
-            -r ${DOCKER_REGISTRY_URL}
+            -u ${DOCKER_REGISTRY_TEST}
+            -p ${DOCKER_REGISTRY_PASSWORD_TEST}
+            -r ${DOCKER_REGISTRY_TEST}.azurecr.io
             -s staging
             -i $(cat /tmp/workspace/docker-image)
       - run:
@@ -180,14 +178,18 @@ workflows:
 
   build-and-deploy:
     jobs:
-      - build
+      - build-test
       - deploy-test:
           requires:
-            - build
+            - build-test
+      - build-production
+      - deploy-build-production:
+          requires:
+            - build-production
       - production-approval:
           type: approval
           requires:
-            - build
+            - build-production
       - deploy-production:
           requires:
             - production-approval
