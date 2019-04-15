@@ -91,7 +91,7 @@ jobs:
       - run:
           name: Set defaults
           command: az configure
-            --defaults group=${DOCKER_RESOURCE_GROUP_PRODUCTION} acr=${DOCKER_REGISTRY_PRODUCTION}
+            --defaults group=${DOCKER_RESOURCE_GROUP_TEST} acr=${DOCKER_REGISTRY_TEST}
       - run:
           name: Build docker image
           command: az acr build
