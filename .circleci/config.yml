@@ -6,15 +6,20 @@ jobs:
     steps:
       - setup-azure-command:
           account: "Test"
-          environment: "test"
-          type: "client"
-          resource-group: ${AZURE_TEST_RESOURCE_GROUP}
-          docker-image: "DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
-          build-num: ${CIRCLE_BUILD_NUM}
-          project-name: ${PROJECT_NAME}
-          docker-registry: ${DOCKER_REGISTRY}
-          docker-registry-username: ${DOCKER_REGISTRY_USERNAME}
-          docker-registry-password: ${DOCKER_REGISTRY_PASSWORD}
+          resource-group: "test-client-platform"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file frontend/packages/cloud/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
+            environment="test"
+            serviceName=${PROJECT_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY}
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            type="client"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
@@ -149,30 +154,11 @@ commands:
       account:
         description: "Test or production"
         type: string
-      environment:
-        description: "test, prod or preview"
-        type: string
-      type:
-        description: "proxy or client"
-        type: string
-      docker-image:
-        type: string
       resource-group:
-        type: string
-      build-num:
-        type: string
-      project-name:
-        type: string
-      docker-registry:
-        type: string
-      docker-registry-username:
-        type: string
-      docker-registry-password:
         type: string
     steps:
       - checkout
       - azure-cli/login-with-service-principal
-      - run: echo << parameters.project-name >>
       - run:
           name: Setup azure CLI for test subscription
           command: az account set -s << parameters.account >>
@@ -182,19 +168,5 @@ commands:
       - run:
           name: Set defaults
           command: az configure --defaults group=<< parameters.resource-group >>
-      - run:
-          name: Create resources
-          command: az group deployment create
-            -n << parameters.resource-group >>-<< parameters.build-num >>
-            --template-file frontend/packages/cloud/azure-arm-template.json
-            --parameters
-            dockerImage=<< parameters.docker-image >>
-            environment=<< parameters.environment >>
-            serviceName=<< parameters.project-name >>
-            dockerRegistryURL=<< parameters.docker-registry >>
-            dockerRegistryUsername=<< parameters.docker-registry-username >>
-            dockerRegistryPassword=<< parameters.docker-registry-password >>
-            type=<< parameters.type >>
-
 orbs:
   azure-cli: circleci/azure-cli@1.0.3
