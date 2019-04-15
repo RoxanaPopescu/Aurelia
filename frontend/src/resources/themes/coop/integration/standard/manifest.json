@@ -8,13 +8,8 @@
     "icons":
     [
         {
-            "src": "/resources/integration/standard/icon-small.png",
-            "sizes": "32x32",
-            "type": "image/png"
-        },
-        {
-            "src": "/resources/integration/standard/icon-large.png",
-            "sizes": "1024x1024",
+            "src": "/resources/themes/coop/integration/standard/icon.png",
+            "sizes": "192x192",
             "type": "image/png"
         }
     ],

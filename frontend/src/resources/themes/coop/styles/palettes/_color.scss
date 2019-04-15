@@ -1,5 +1,5 @@
 ////
-/// @group themes/gray/palettes/color
+/// @group themes/default/palettes/color
 ////
 
 /// Theme specific color palette.
@@ -17,19 +17,19 @@ $__summary: comment;
     --palette-color-neutral-light: hsl(230, 14%, 96%);
     --palette-color-neutral: hsl(220, 14%, 87%);
     --palette-color-neutral-dark: #{hsl(210, 6%, 43%)};
-    --palette-color-neutral-darker: #{hsl(0, 0%, 13%)};
+    --palette-color-neutral-darker: hsl(353, 15%, 20%);
     --palette-color-blackpoint: black;
 }
 
 /// The primary color and its variations.
 :root
 {
-    --palette-color-primary-lighter: #{hsl(0, 0%, 94%)};
-    --palette-color-primary-light: #{hsl(0, 0%, 65%)};
-    --palette-color-primary: #{hsl(0, 0%, 18%)};
-    --palette-color-primary-dark: #{hsl(0, 0%, 15%)};
-    --palette-color-primary-HOVER: hsla(0, 0%, 15%, 0.6);
-    --palette-color-primary-darker: #{hsl(0, 0%, 10%)};
+    --palette-color-primary-lighter: #{hsl(353, 100%, 94%)};
+    --palette-color-primary-light: #{hsl(353, 47%, 65%)};
+    --palette-color-primary: #{hsl(353, 100%, 39%)};
+    --palette-color-primary-dark: #{hsl(353, 86%, 28%)};
+    --palette-color-primary-HOVER: hsla(353, 86%, 28%, 0.6);
+    --palette-color-primary-darker: #{hsl(353, 54%, 20%)};
 }
 
 /// The accent color indicating information.

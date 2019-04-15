@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { ITheme } from "./theme";
 import { once } from "shared/utilities";
 
@@ -24,6 +24,7 @@ export class ThemeService
     /**
      * Gets the supported themes.
      */
+    @computedFrom("_themes")
     public get themes(): ReadonlyArray<ITheme>
     {
         return this._themes;
@@ -32,6 +33,7 @@ export class ThemeService
     /**
      * Gets the current theme.
      */
+    @computedFrom("_theme")
     public get theme(): ITheme
     {
         return this._theme;
