@@ -41,6 +41,46 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
             type="client"
 
+  setup-production-proxy:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-client-platform"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file frontend/packages/cloud/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
+            environment="prod"
+            serviceName=${PROJECT_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY}
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            type="proxy"
+
+  setup-production-azure:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-client-platform"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file frontend/packages/cloud/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="prod"
+            serviceName=${PROJECT_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY}
+            dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            type="client"
+
   build:
     executor: azure-cli/azure-docker
 
@@ -125,6 +165,18 @@ workflows:
       - setup-test-proxy:
           requires:
             - approve-proxy-test
+
+      - approve-production:
+          type: approval
+      - setup-production-azure:
+          requires:
+            - approve-production
+
+      - approve-proxy-production:
+          type: approval
+      - setup-production-proxy:
+          requires:
+            - approve-proxy-production
 
   build-and-deploy:
     jobs:
