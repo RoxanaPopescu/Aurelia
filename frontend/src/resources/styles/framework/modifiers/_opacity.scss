@@ -1,0 +1,27 @@
+////
+/// @group framework/modifiers/opacity
+////
+
+/// Modifier classes affecting the opacity of elements.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that de-emphasizes the element by reducing its opacity.
+.opacity-faded
+{
+    opacity: var(--opacity-faded);
+}
+
+/// Modifier class that de-emphasizes the element by reducing its opacity, so it is just barely visible.
+.opacity-faded-more
+{
+    opacity: var(--opacity-faded-more);
+}
+
+/// Modifier class that makes the element appear disabled by reducing its opacity.
+.opacity-disabled
+{
+    opacity: var(--opacity-disabled);
+}

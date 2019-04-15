@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ModalService } from "shared/framework";
+import { ModalService, ThemeService } from "shared/framework";
 
 /**
  * Represents the logo for the app, which opens the `dashboard` overlay when clicked.
@@ -10,13 +10,20 @@ export class AppLogoCustomElement
     /**
      * Creates a new instance of the type.
      * @param modalService The `ModalService` instance.
+     * @param themeService The `ThemeService` instance.
      */
-    public constructor(modalService: ModalService)
+    public constructor(modalService: ModalService, themeService: ThemeService)
     {
         this._modalService = modalService;
+        this.themeService = themeService;
     }
 
     private readonly _modalService: ModalService;
+
+    /**
+     * The `ThemeService` instance.
+     */
+    protected readonly themeService: ThemeService;
 
     /**
      * True to disable toggling of the dashboard, otherwise false.

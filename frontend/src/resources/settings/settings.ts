@@ -2,6 +2,8 @@ import { IApiClientSettings, ICookieOptions } from "shared/infrastructure";
 import { jsonReviver } from "shared/utilities";
 import locales from "./locales.json";
 import currencies from "./currencies.json";
+import themes from "./themes.json";
+
 
 /**
  * Represents the settings related to infrastructure, framework and environment.
@@ -21,7 +23,12 @@ export default
         /**
          * The currencies supported by the app.
          */
-        currencies
+        currencies,
+
+        /**
+         * The themes supported by the app.
+         */
+        themes
     },
 
     /**

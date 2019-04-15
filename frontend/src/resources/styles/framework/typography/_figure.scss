@@ -1,0 +1,75 @@
+////
+/// @group framework/typography/figure
+////
+
+/// Classes representing styles for the otherwise unstyled
+/// `blockquote` element.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Figure style for blockquotes, which renders the text indented,
+/// with a thick, neutral edge and end-aligned caption.
+/// If inside a content context, text margin is applied.
+figure.figure-quote
+{
+    padding-left: calc(var(--size-indent-spacing) - var(--border-width-thick));
+    border-left: var(--border-width-thick) solid var(--palette-color-neutral);
+
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    > figcaption
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+        text-align: end;
+
+        &::before
+        {
+            content: "— ";
+        }
+    }
+}
+
+/// Figure style for tables, which renders the table
+/// with a start-aligned caption.
+/// If inside a content context, text margin is applied.
+figure.figure-table
+{
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    > figcaption
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+        text-align: start;
+    }
+}
+
+/// Figure style for images, which renders the image
+/// with a start-aligned caption.
+/// If inside a content context, text margin is applied.
+figure.figure-image
+{
+    .margin-within &
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    > figcaption
+    {
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+        text-align: start;
+    }
+}

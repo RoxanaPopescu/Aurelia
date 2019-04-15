@@ -1,0 +1,21 @@
+////
+/// @group framework/modifiers/pointer-events
+////
+
+/// Modifier classes affecting pointer interaction.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that disables pointer interaction with the element.
+.pointer-events-none
+{
+    pointer-events: none;
+}
+
+/// Modifier class that enables pointer interaction with the element.
+.pointer-events-auto
+{
+    pointer-events: auto;
+}

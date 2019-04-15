@@ -1,0 +1,48 @@
+////
+/// @group framework/animations/fade-out
+////
+
+/// Animates the `opacity` of the element linearly from its current value to 0.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Animates the `opacity` of the element linearly from its current value to 0.
+@keyframes fade-out
+{
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+/// Animates the `opacity` of the element linearly from its current value to 0,
+/// using the long animation duration.
+.animation-fade-out-long
+{
+    &.au-leave-active
+    {
+        animation: fade-out ease var(--animation-duration-long);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from its current value to 0,
+/// using the medium animation duration.
+.animation-fade-out-medium
+{
+    &.au-leave-active
+    {
+        animation: fade-out ease var(--animation-duration-medium);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from its current value to 0,
+/// using the short animation duration.
+.animation-fade-out-short
+{
+    &.au-leave-active
+    {
+        animation: fade-out ease var(--animation-duration-short);
+    }
+}

@@ -8,9 +8,9 @@
         click.trigger="onClick($event)"
         href.bind="disabled ? undefined : '/'">
 
-        <img if.bind="size == 'icon'" src="https://moverstatic.azureedge.net/theme/mover/logo-narrow-white.svg">
+        <img if.bind="size == 'icon'" src="/resources/themes/${themeService.theme.slug}/images/logo-icon.svg">
 
-        <img if.bind="size == 'wide'" src="https://moverstatic.azureedge.net/theme/mover/logo-wide-white.svg">
+        <img if.bind="size == 'wide'" src="/resources/themes/${themeService.theme.slug}/images/logo-wide.svg">
 
     </a>
 

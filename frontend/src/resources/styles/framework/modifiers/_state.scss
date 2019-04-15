@@ -1,0 +1,36 @@
+////
+/// @group framework/modifiers/state
+////
+
+/// Reserved modifier classes, with no default style, indicating the
+/// state of an element. The actual styles should be defined in, and
+/// scoped to, the individual components.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Reserved modifier class indicating that the element is active.
+.--active
+{
+    @include mark-empty;
+}
+
+/// Reserved modifier class indicating that the element is selected.
+.--selected
+{
+    @include mark-empty;
+}
+
+/// Reserved modifier class indicating that the element is expanded.
+.--expanded
+{
+    @include mark-empty;
+}
+
+/// Reserved modifier class indicating that the element is collapsed.
+.--collapsed
+{
+    @include mark-empty;
+}
+

@@ -1,0 +1,43 @@
+////
+/// @group framework/typography/white-space
+////
+
+/// Classes affecting the preservation of white space in text content.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Text style that collapses white space.
+.white-space-normal
+{
+    white-space: normal;
+}
+
+/// Text style that suppresses line breaks.
+.white-space-nowrap
+{
+    white-space: nowrap;
+}
+
+/// Text style that enables white space preservation without text wrapping.
+/// Use e.g. together with `text-monospaced` to present preformatted code.
+.white-space-pre
+{
+    white-space: pre;
+}
+
+/// Text style that enables white space preservation with text wrapping.
+/// Use e.g. together with `text-monospaced` to present preformatted code,
+/// while minimizing the risk of horizontal overflow.
+.white-space-pre-wrap
+{
+    white-space: pre-wrap;
+}
+
+/// Text style that enables line break preservation.
+/// Use e.g. for street addresses that may contain line breaks.
+.white-space-pre-line
+{
+    white-space: pre-line;
+}

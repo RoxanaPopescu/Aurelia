@@ -1,0 +1,28 @@
+////
+/// @group framework/typography/table
+////
+
+/// Classes representing styles for the otherwise unstyled
+/// `table` element.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Table style that renders the table with reasonable cell
+/// padding and thin, neutral borders.
+/// If inside a content context, text margin is applied.
+table.table-normal
+{
+    // Ensure consistent `border`.
+    border: 1px solid var(--palette-color-neutral);
+
+    th, td
+    {
+        // Ensure consistent `padding`.
+        padding: 3px 8px 4px 8px;
+
+        // Ensure consistent `border`.
+        border: 1px solid var(--palette-color-neutral);
+    }
+}
