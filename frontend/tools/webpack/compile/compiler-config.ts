@@ -47,7 +47,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         resolve:
         {
             extensions: [".ts", ".js", ".jsx", ".tsx"],
-            modules: [paths.srcFolder, path.join(paths.srcFolder, "mover"), paths.nodeModulesFolder, path.join(paths.srcFolder, "mover/node_modules")]
+            modules: [paths.srcFolder, path.join(paths.srcFolder, "legacy"), paths.nodeModulesFolder, path.join(paths.srcFolder, "legacy/node_modules")]
         },
         entry:
         {

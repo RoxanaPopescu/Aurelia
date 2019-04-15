@@ -100,9 +100,34 @@ export async function configure(aurelia: Aurelia): Promise<any>
  */
 function getThemeName(): string
 {
-    const cookies = Container.instance.get(Cookies) as Cookies;
+    let theme: string | undefined;
 
-    return cookies.get("theme") || "blue";
+    // Try to get the theme from the URL.
+    // This is intended as an override to be used for testing.
+
+    const url = new URL(location.href);
+    theme = url.searchParams.get("theme") || undefined;
+
+    if (theme)
+    {
+        return theme;
+    }
+
+    // Try to get the theme from the cookie.
+    // This should be set by the server based on the domain,
+    // or by the client if the theme is changed by the user.
+
+    const cookies = Container.instance.get(Cookies) as Cookies;
+    theme = cookies.get("theme");
+
+    if (theme)
+    {
+        return theme;
+    }
+
+    // If no theme was specified, use the default.
+
+    return "blue";
 }
 
 /**
