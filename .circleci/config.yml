@@ -19,22 +19,14 @@ jobs:
             dockerRegistryURL=${DOCKER_REGISTRY}
             dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
-            type="client"
+            type="proxy"
 
   setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
-      - checkout
-      - azure-cli/login-with-service-principal
-      - run:
-          name: Setup azure CLI for test subscription
-          command: az account set -s "Test"
-      - run:
-          name: Create resource group
-          command: az group create -n ${AZURE_TEST_RESOURCE_GROUP} --location westeurope
-      - run:
-          name: Set defaults
-          command: az configure --defaults group=${AZURE_TEST_RESOURCE_GROUP}
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-client-platform"
       - run:
           name: Create resources
           command: az group deployment create
@@ -45,8 +37,9 @@ jobs:
             environment="test"
             serviceName=${PROJECT_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
             dockerRegistryUsername=${DOCKER_REGISTRY_USERNAME}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD}
+            type="client"
 
   build:
     executor: azure-cli/azure-docker
