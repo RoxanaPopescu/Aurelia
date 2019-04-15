@@ -6,6 +6,7 @@ import "shared/patches";
 import { Aurelia, Container, PLATFORM } from "aurelia-framework";
 import { Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
 import { LocaleService, ILocale, CurrencyService, ICurrency } from "shared/localization";
+import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
 import { IdentityService } from "app/services/user/identity";
 import settings from "resources/settings/settings";
@@ -65,9 +66,13 @@ export async function configure(aurelia: Aurelia): Promise<any>
         currencyService.configure(settings.app.currencies, setCurrencyCode);
         await currencyService.setCurrency(getCurrencyCode());
 
+        const themeService = aurelia.container.get(ThemeService) as ThemeService;
+        themeService.configure(settings.app.themes, setThemeName);
+        await themeService.setTheme(getThemeName());
+
         // Import the base styles and theme.
-        await import("resources/styles/base/index.scss" as any);
-        await import(`resources/styles/themes/${getThemeName()}/index.scss`);
+        await import("resources/styles/index.scss" as any);
+        await import(`resources/themes/${getThemeName()}/styles/index.scss`);
 
         // Import the icons in the icons folder.
         await import("resources/icons");
@@ -90,14 +95,35 @@ export async function configure(aurelia: Aurelia): Promise<any>
 }
 
 /**
- * Gets the name of the theme to use.
- * @return The name of the theme.
+ * Gets the name of the theme to use, or the default.
+ * @return The name of the theme to use.
  */
 function getThemeName(): string
 {
     const cookies = Container.instance.get(Cookies) as Cookies;
 
     return cookies.get("theme") || "blue";
+}
+
+/**
+ * Called when the theme changes.
+ * This stores the theme slug in a cookie and reloads the app.
+ * @param newTheme The new theme being set.
+ * @param oldTheme The old theme, or undefined if not previously set.
+ * @returns A promise that never resolves, as the page is about to reload.
+ */
+async function setThemeName(newTheme: ITheme, oldTheme: ITheme): Promise<void>
+{
+    if (oldTheme != null)
+    {
+        const cookies = Container.instance.get(Cookies) as Cookies;
+
+        cookies.set("theme", newTheme.slug);
+
+        location.reload();
+
+        return new Promise(() => undefined);
+    }
 }
 
 /**

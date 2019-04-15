@@ -43,7 +43,7 @@ export const paths =
     styleFolders:
     [
         resolve("src/"),
-        resolve("src/resources/styles/")
+        resolve("src/resources/")
     ],
 
     /**
@@ -57,7 +57,8 @@ export const paths =
         includeGlobs:
         [
             resolve("src/resources/integration/**"),
-            resolve("src/**/resources/images/**")
+            resolve("src/**/resources/images/**"),
+            resolve("src/**/resources/themes/images/**")
         ],
 
         /**

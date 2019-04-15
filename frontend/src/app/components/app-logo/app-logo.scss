@@ -1,0 +1,29 @@
+@import "styles/resources/index";
+
+app-logo
+{
+    display: block;
+
+    a
+    {
+        height: 100%;
+
+        // Lighten the logo to increase contrast.
+        filter: brightness(90%);
+
+        // Animate the hover effect.
+        transition: filter var(--animation-duration-short);
+
+        &:hover
+        {
+            // Highlight on hover.
+            filter: brightness(100%);
+        }
+
+        img
+        {
+            height: 100%;
+            width: auto;
+        }
+    }
+}

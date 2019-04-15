@@ -1,0 +1,68 @@
+////
+/// @group framework/animations/fade-in
+////
+
+/// Animates the `opacity` of the element linearly from 0 to 1.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Animates the `opacity` of the element linearly from 0 to 1.
+@keyframes fade-in
+{
+    0%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+/// Animates the `opacity` of the element linearly from 0 to 1,
+/// using the long animation duration.
+.animation-fade-in-long
+{
+    &.au-enter
+    {
+        opacity: 0;
+    }
+
+    &.au-enter-active
+    {
+        animation: fade-in ease var(--animation-duration-long);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from 0 to 1,
+/// using the medium animation duration.
+.animation-fade-in-medium
+{
+    &.au-enter
+    {
+        opacity: 0;
+    }
+
+    &.au-enter-active
+    {
+        animation: fade-in ease var(--animation-duration-medium);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from 0 to 1,
+/// using the short animation duration.
+.animation-fade-in-short
+{
+    &.au-enter
+    {
+        opacity: 0;
+    }
+
+    &.au-enter-active
+    {
+        animation: fade-in ease var(--animation-duration-short);
+    }
+}

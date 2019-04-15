@@ -1,0 +1,40 @@
+////
+/// @group framework/modifiers/user-select
+////
+
+/// Modifier classes affecting content selection.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that prevents user selection starting within the element.
+.user-select-none
+{
+    user-select: none;
+}
+
+/// Modifier class that allows user selection with no constraints.
+.user-select-text
+{
+    user-select: text;
+}
+
+/// Modifier class that allows user selection starting within the element,
+/// but prevents it from being extended outside the element.
+.user-select-contain
+{
+    @include mark-experimental;
+
+    // Fallback for browsers that do not support `contain`.
+    user-select: text;
+
+    user-select: contain;
+}
+
+/// Modifier class that allows user selection starting within the element,
+/// but enforces that the content must all be selected atomically.
+.user-select-all
+{
+    user-select: all;
+}

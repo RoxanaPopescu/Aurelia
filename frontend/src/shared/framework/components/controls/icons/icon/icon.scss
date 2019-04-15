@@ -7,6 +7,9 @@ icon
     align-items: center;
     justify-content: center;
 
+    // Prevent shrinking when placed in a flex layout.
+    flex-shrink: 0;
+
     // If placed inline with text, align to the bottom of the line box.
     // Note that this will only align as intended if both the line height
     // of the text and the height of the icon is equal to the font size.

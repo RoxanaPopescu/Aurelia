@@ -1,0 +1,34 @@
+////
+/// @group framework/modifiers/visibility
+////
+
+/// Modifier classes affecting the visibility of elements.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that makes the element invisible using `visibility: hidden`.
+.visibility-hidden
+{
+    visibility: hidden;
+}
+
+/// Modifier class that makes the element invisible using `visibility: collapse`.
+.visibility-collapse
+{
+    visibility: collapse;
+}
+
+/// Modifier class that visually hides the element, but keeps it accessible to screen readers.
+.visibility-screen-reader-only
+{
+    position: absolute;
+    margin: -1px;
+    height: 1px;
+    width: 1px;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}

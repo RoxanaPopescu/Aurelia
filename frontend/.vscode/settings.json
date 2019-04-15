@@ -70,4 +70,6 @@
   "stylelint.config": {
     "extends": "./stylelint.json"
   },
+  "editor.formatOnSave": false,
+  "editor.defaultFormatter": null
 }

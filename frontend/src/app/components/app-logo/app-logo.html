@@ -1,0 +1,17 @@
+<template>
+
+    <require from="./app-logo.scss"></require>
+
+    <a
+        title="Dashboard"
+        class="${disabled ? 'pointer-events-none' : ''}"
+        click.trigger="onClick($event)"
+        href.bind="disabled ? undefined : '/'">
+
+        <img if.bind="size == 'icon'" src="/resources/themes/${themeService.theme.slug}/images/logo-icon.svg">
+
+        <img if.bind="size == 'wide'" src="/resources/themes/${themeService.theme.slug}/images/logo-wide.svg">
+
+    </a>
+
+</template>

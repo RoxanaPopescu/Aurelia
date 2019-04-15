@@ -1,4 +1,4 @@
-@import "base/resources/index";
+@import "styles/resources/index";
 
 main
 {
@@ -27,11 +27,18 @@ main
     react-module
     {
         // Ensure react modules fill the content area of the viewport.
-        // We must use relative positioning to do this, due to the legacy styles.
+        // We must use absoliute positioning to do this, due to the legacy styles.
         position: absolute;
         height: 100vh;
-        width: calc(100vw - var(--size-app-sidebar-width));
-        left: var(--size-app-sidebar-width);
+
+        width: calc(100vw - var(--size-app-sidebar-width-expanded));
+        left: var(--size-app-sidebar-width-expanded);
+
+        .sideMenu--collapsed &
+        {
+            width: calc(100vw - var(--size-app-sidebar-width));
+            left: var(--size-app-sidebar-width);
+        }
 
         // Use vertical flex layout.
         display: flex;

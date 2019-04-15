@@ -92,3 +92,4 @@ export * from "./converters/skip/skip";
 // Services
 export * from "./services/focus";
 export * from "./services/modal";
+export * from "./services/theme";

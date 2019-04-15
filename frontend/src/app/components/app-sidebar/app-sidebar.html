@@ -1,38 +1,88 @@
-<template theme-surface="primary" scroll>
+<template theme-surface="primary" scroll class="${expanded ? '--expanded' : ''}">
 
-    <require from="app/components/app-icon/app-icon"></require>
     <require from="app/components/user-identity/user-identity"></require>
-    <require from="./components/nav-links/nav-links"></require>
+    <require from="app/components/app-logo/app-logo"></require>
 
     <require from="./app-sidebar.scss"></require>
 
     <header>
 
-        <app-icon disabled.bind="disableDashboard"></app-icon>
+        <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
 
-        <icon title="Starred and recent" name="starred" modal-href="modal: starred" tabindex="0"></icon>
+        <a class="sidebar-link" modal-href="modal: starred">
+            <icon name="starred"></icon>
+            <span>Starred and recent</span>
+        </a>
 
-        <icon title="Search" name="search" modal-href="modal: search" tabindex="0"></icon>
+        <a class="sidebar-link" modal-href="modal: search">
+            <icon name="search"></icon>
+            <span>Search</span>
+        </a>
 
         <slot name="header"></slot>
 
     </header>
 
     <section>
-        <nav-links></nav-links>
+
+        <div
+            repeat.for="navModel of navModels"
+            class="${navModel.isActive ? '--active' : ''}">
+
+            <a
+                class="sidebar-link ${navModel.isActive ? '--active' : ''}"
+                module-href="path.bind: navModel.href">
+
+                <icon name.bind="navModel.config.icon"></icon>
+
+                <span>${navModel.config.title}</span>
+
+            </a>
+
+            <div
+                if.bind="navModel.isActive && childNavModels != null"
+                class="sidebar-child-link-container">
+
+                <a
+                    repeat.for="navModel of childNavModels"
+                    class="sidebar-child-link ${navModel.isActive ? '--active' : ''}"
+                    module-href="path.bind: navModel.href">
+
+                    <span>${navModel.config.title}</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
     </section>
 
     <footer>
 
         <slot name="footer"></slot>
 
-        <icon title="Notifications" name="notifications" modal-href="modal: notifications" tabindex="0">
-            <badge>5</badge>
-        </icon>
+        <a class="sidebar-link" modal-href="modal: notifications">
+            <icon name="notifications">
+                <badge>5</badge>
+            </icon>
+            <span>Notifications</span>
+        </a>
 
-        <icon title="Help and support" name="help" modal-href="modal: confirm" tabindex="0"></icon>
+        <a class="sidebar-link" modal-href="modal: confirm">
+            <icon name="help"></icon>
+            <span>Help and support</span>
+        </a>
 
-        <icon title="Design" name="md-style" module-href="path: design" tabindex="0"></icon>
+        <a class="sidebar-link" module-href="path: design">
+            <icon name="md-style"></icon>
+            <span>Design</span>
+        </a>
+
+        <a class="sidebar-link" click.trigger="toggleWidth()">
+            <icon name="md-menu"></icon>
+            <span>Toggle</span>
+        </a>
 
         <user-identity size="icon"></user-identity>
 

@@ -1,0 +1,38 @@
+////
+/// @group settings/size
+////
+
+/// The base size and spacing settings.
+$__summary: comment;
+
+
+:root
+{
+    /// The base size unit on which all spacing values are based.
+    --size-unit: 4px;
+
+    /// The horizontal spacing to apply to an indented block element.
+    --size-indent-spacing: 5rem;
+
+    /// The horizontal spacing to apply between an inline element and its neighbor.
+    /// Use this to apply spacing between a small object and its related text,
+    /// such as e.g. bullet points or checkboxes and the text that folows.
+    --size-inline-spacing: 0.6em;
+
+    /// The horizontal spacing to apply between an inline element and its neighbor.
+    /// Use this to apply spacing between a large object and its related text,
+    /// such as e.g. a picture and the text that follows.
+    --size-inline-spacing-large: 0.8em;
+
+    /// The width of the collapsed app sidebar.
+    --size-app-sidebar-width: 20rem;
+
+    /// The width of the expanded app sidebar.
+    --size-app-sidebar-width-expanded: 65rem;
+
+    /// The min-width of the module sidebar.
+    --size-module-sidebar-min-width: 78rem;
+
+    /// The max-width of the module sidebar.
+    --size-module-sidebar-max-width: 50%;
+}

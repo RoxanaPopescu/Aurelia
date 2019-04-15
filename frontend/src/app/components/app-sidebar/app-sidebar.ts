@@ -1,17 +1,49 @@
-import { bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
+import { Router, NavModel } from "aurelia-router";
 
 /**
  * Represents the sidebar of the app, which acts as the global navigation hub for authenticated users.
- * This provides access to the `dashboard` overlay, `search` panel, `pinned` panel, `notifications` panel,
- * `profile` module, help and support, as well as any modals specific to the current view.
- *
- * ### How to use:
- * Place this directly within the root `router-view` element.
- * Note that a few modules, such as `account/sign-in` and `account/sign-up`, do not use this component,
- * as it's only relevant for authenticated users.
  */
+@autoinject
 export class AppSidebarCustomElement
 {
+    public constructor(router: Router)
+    {
+        this._router = router;
+    }
+
+    private readonly _router: Router;
+
+    @computedFrom("router.navigation")
+    protected get navModels(): NavModel[]
+    {
+        return this._router.navigation;
+    }
+
+    @computedFrom("router.currentInstruction")
+    protected get childNavModels(): NavModel[] | undefined
+    {
+        if (this._router.currentInstruction == null)
+        {
+            return undefined;
+        }
+
+        const instructions = this._router.currentInstruction.getAllInstructions();
+        const childRouter = instructions[instructions.length - 1].router;
+
+        if (childRouter === this._router || childRouter.navigation.length === 0)
+        {
+            return undefined;
+        }
+
+        return childRouter.navigation;
+    }
+
+    /**
+     * True if the sidebar is expanded, otherwise false.
+     */
+    protected expanded = false;
+
     /**
      * True to reduce the visibility of the shadow, otherwise false.
      * This should only be true when presented together with a modal overlay with the same surface color.
@@ -25,4 +57,18 @@ export class AppSidebarCustomElement
      */
     @bindable({ defaultValue: false })
     public disableDashboard: boolean;
+
+    protected toggleWidth()
+    {
+        this.expanded = !this.expanded;
+
+        if (this.expanded)
+        {
+            document.documentElement.classList.remove("sideMenu--collapsed");
+        }
+        else
+        {
+            document.documentElement.classList.add("sideMenu--collapsed");
+        }
+    }
 }

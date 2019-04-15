@@ -1,0 +1,16 @@
+////
+/// @group framework/modifiers/clip
+////
+
+/// Modifier classes affecting the clipping of elements.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that clips the element,
+/// making it appear as a circle or oval shape.
+.clip-circle
+{
+    border-radius: 50%;
+}
