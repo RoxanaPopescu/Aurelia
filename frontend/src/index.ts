@@ -127,7 +127,7 @@ function getThemeName(): string
 
     // If no theme was specified, use the default.
 
-    return "blue";
+    return "default";
 }
 
 /**
