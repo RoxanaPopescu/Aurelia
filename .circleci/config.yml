@@ -114,14 +114,13 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - azure-cli/login-with-service-principal
-      - run:
-          name: Setup azure CLI for prod subscription
-          command: az account set -s "Test"
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-client-platform"
       - run:
           name: Set defaults
           command: az configure
-            --defaults group=${AZURE_TEST_RESOURCE_GROUP} web="client-platform-test-mover"
+            --defaults web="client-platform-test-mover"
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
@@ -147,19 +146,84 @@ jobs:
     executor: azure-cli/azure-docker
 
     steps:
-      - run: echo "build production"
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-client-platform"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${DOCKER_RESOURCE_GROUP_PRODUCTION} acr=${DOCKER_REGISTRY_PRODUCTION}
+      - run:
+          name: Build docker image
+          command: az acr build
+            -t ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -f dockerfile .
+      - run:
+          name: Create workspace folder
+          command: mkdir -p workspace
+      - run:
+          name: Prepare docker image file for workspace
+          command: echo ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - docker-image
 
   deploy-build-production:
     executor: azure-cli/azure-docker
 
     steps:
-      - run: echo "Deploy build of production"
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-client-platform"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults web="client-platform-prod-mover"
+      - run:
+          name: Add docker image to build slot
+          command: az webapp config container set
+            -u ${DOCKER_REGISTRY_PRODUCTION}
+            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTIONT}
+            -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
+            -s build
+            -i $(cat /tmp/workspace/docker-image)
 
   deploy-production:
     executor: azure-cli/azure-docker
 
     steps:
-      - run: echo "Deploying production"
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-client-platform"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults web="client-platform-prod-mover"
+      - run:
+          name: Add docker image to staging slot
+          command: az webapp config container set
+            -u ${DOCKER_REGISTRY_PRODUCTION}
+            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTIONT}
+            -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
+            -s staging
+            -i $(cat /tmp/workspace/docker-image)
+      - run:
+          name: Start staging slot
+          command: az webapp start -s staging
+      - run:
+          name: Swap slot with production
+          command: az webapp deployment slot swap
+            -n client-platform-prod-mover
+            -s staging
+            --action swap
+      - run:
+          name: Stop staging slot
+          command: az webapp stop -s staging
 
 workflows:
   setup-azure:
@@ -204,6 +268,7 @@ workflows:
             - build-production
       - deploy-production:
           requires:
+            - build-production
             - production-approval
 
 commands:
