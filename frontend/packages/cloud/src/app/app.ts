@@ -1,15 +1,12 @@
+// tslint:disable: no-string-literal
+
 import path from "path";
 import pkgDir from "pkg-dir";
 import express from "express";
 import compression from "compression";
 import cookieParser from "cookie-parser";
+import settings from "../resources/settings";
 import { environment } from "../env";
-
-// The locale code identifying the build to serve, if not specified in the request.
-const defaultLocaleCode = "da";
-
-// The theme slug identifying the theme to serve, if not specified in the request.
-const defaultThemeSlug = "mover";
 
 // The secret debug token, which if present in the `x-debug-token` header,
 // enables serving of otherwise protected content, such as source maps.
@@ -76,69 +73,57 @@ export class App
                         }
                     });
             });
-
-            // Rewrite the request based on the `locale` cookie, to serve the correct build.
-            this._app.get("*", (request, response, next) =>
-            {
-                // tslint:disable-next-line: no-string-literal
-                response.locals.localeCode = request.cookies["locale"] || defaultLocaleCode;
-
-                request.url = `/${response.locals.localeCode}${request.url}`;
-
-                next();
-            });
-
-            // Rewrite the request based on the `theme` cookie, to serve the correct resources.
-            this._app.get("*", (request, response, next) =>
-            {
-                // tslint:disable-next-line: no-string-literal
-                response.locals.themeSlug = request.cookies["theme"] || defaultThemeSlug;
-
-                request.url = request.url.replace(
-                    /^\/resources\/themes\/default\//,
-                    `/resources/themes/${response.locals.themeSlug}/`);
-
-                next();
-            });
-
-            // Serve build artifacts.
-            this._app.use(express.static(clientFolderPath));
-
-            // Serve static assets.
-            this._app.use(express.static(staticFolderPath));
-
-            // Serve the localized `index.html` for any page request.
-            // We ignore requests where the last path segment contains a `.`, as those are requests for files that do not exist.
-            this._app.get(/(^|\/)[^/.]*$/i, (request, response) =>
-            {
-                const indexFilePath = path.join(clientFolderPath, response.locals.localeCode, "index.html");
-
-                response.sendFile(indexFilePath);
-            });
         }
 
-        // Handle requests for debug info.
-        this._app.get(/^[/]debug$/i, (request, response) =>
-        {
-            response.json(
-            {
-                environment: environment.name,
-                request:
-                {
-                    method: request.method,
-                    url: request.originalUrl,
-                    headers: request.headers
-                }
-            });
-        });
-
-        // Rewrite the request based on the `locale-code` cookie, to serve from the localized build.
+        // Resolve host settings, set cookies, and rewrite the request.
         this._app.get("*", (request, response, next) =>
         {
-            // tslint:disable-next-line: no-string-literal
-            response.locals.localeCode = request.cookies["locale"] || defaultLocaleCode;
+            // Get the settings for the hostname specified in the request.
+
+            const hostSettings = settings.hosts.find(s => s.hostname.test(request.hostname));
+
+            if (hostSettings == null)
+            {
+                throw new Error(`No settings found for the hostname '${request.hostname}'.`);
+            }
+
+            // Resolve the locale to use, ensure the cookie is set,
+            // and rewrite the request so we serve the correct build.
+
+            const localeCodeFromCookie = request.cookies["locale"];
+            response.locals.localeCode = localeCodeFromCookie || hostSettings.localeCode;
+
+            if (!localeCodeFromCookie)
+            {
+                response.cookie("locale", response.locals.localeCode);
+            }
 
             request.url = `/${response.locals.localeCode}${request.url}`;
+
+            // Resolve the theme to use, ensure the cookie is set,
+            // and rewrite the request to serve the correct resources.
+
+            const themeSlugFromCookie = request.cookies["theme"];
+            response.locals.themeSlug = themeSlugFromCookie || hostSettings.themeSlug;
+
+            if (!themeSlugFromCookie)
+            {
+                response.cookie("theme", response.locals.themeSlug);
+            }
+
+            request.url = request.url.replace(
+                /^\/resources\/themes\/default\//,
+                `/resources/themes/${response.locals.themeSlug}/`);
+
+            // Resolve the currency to use and ensure the cookie is set.
+
+            const currencyCodeFromCookie = request.cookies["currency"];
+            response.locals.currencyCode = currencyCodeFromCookie || hostSettings.currencyCode;
+
+            if (!currencyCodeFromCookie)
+            {
+                response.cookie("currency", response.locals.currencyCode);
+            }
 
             next();
         });
@@ -150,7 +135,7 @@ export class App
         this._app.use(express.static(staticFolderPath));
 
         // Serve the localized `index.html` for any page request.
-        // We ignore requests where the last path segment contains a `.`, as those are requests for files that do not exist.
+        // We ignore requests where the last path segment contains a `.`, as those are for files that do not exist.
         this._app.get(/(^|\/)[^/.]*$/i, (request, response) =>
         {
             const indexFilePath = path.join(clientFolderPath, response.locals.localeCode, "index.html");
