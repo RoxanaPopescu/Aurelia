@@ -158,6 +158,7 @@ jobs:
           command: az acr build
             -t ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
+            --build-arg ENVIRONMENT=production
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
@@ -186,7 +187,7 @@ jobs:
           name: Add docker image to build slot
           command: az webapp config container set
             -u ${DOCKER_REGISTRY_PRODUCTION}
-            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTIONT}
+            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
             -s build
             -i $(cat /tmp/workspace/docker-image)
