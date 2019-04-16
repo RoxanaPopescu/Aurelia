@@ -300,7 +300,7 @@ workflows:
     jobs:
       - approval:
         type: approval
-      - rollback
+      - rollback:
         requires:
           - approval
 
