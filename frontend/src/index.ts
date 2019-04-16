@@ -9,7 +9,7 @@ import { LocaleService, ILocale, CurrencyService, ICurrency } from "shared/local
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
 import { IdentityService } from "app/services/user/identity";
-import settings from "resources/settings/settings";
+import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
 import Localization from "shared/src/localization";

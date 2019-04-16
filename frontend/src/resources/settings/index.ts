@@ -4,9 +4,8 @@ import locales from "./locales.json";
 import currencies from "./currencies.json";
 import themes from "./themes.json";
 
-
 /**
- * Represents the settings related to infrastructure, framework and environment.
+ * Represents the settings for the app, infrastructure, and framework.
  */
 export default
 {
