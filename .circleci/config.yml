@@ -209,7 +209,7 @@ jobs:
           name: Add docker image to staging slot
           command: az webapp config container set
             -u ${DOCKER_REGISTRY_PRODUCTION}
-            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTIONT}
+            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
             -s staging
             -i $(cat /tmp/workspace/docker-image)
