@@ -299,10 +299,10 @@ workflows:
   rollback:
     jobs:
       - approval:
-        type: approval
+          type: approval
       - rollback:
-        requires:
-          - approval
+          requires:
+            - approval
 
 
 commands:
