@@ -50,7 +50,8 @@ main
         // Import legacy styles.
         @import "../legacy/shared/src/webKit/LEGACY";
 
-        .c-login-outerContainer
+        .c-login-outerContainer,
+        .c-activation-outerContainer
         {
             position: fixed;
             left: 0;

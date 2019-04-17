@@ -62,10 +62,16 @@ export class AppModule
                 redirect: "routes"
             },
             {
-                name: "login",
+                name: "account/sign-in",
                 route: "account/sign-in",
                 moduleId: PLATFORM.moduleName("./modules/account/modules/sign-in/sign-in"),
-                title: "Login"
+                title: "Sign in"
+            },
+            {
+                name: "account/activate",
+                route: "account/activate",
+                moduleId: PLATFORM.moduleName("./modules/account/modules/activate/activate"),
+                title: "Activate account"
             },
             {
                 name: "profile",
