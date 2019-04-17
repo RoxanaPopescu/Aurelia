@@ -16,7 +16,7 @@ export class Identity
         this.preferredName = data.preferredName;
         this.pictureUrl = data.pictureUrl;
         this.outfit = new Outfit(data.outfit);
-        this.roles = new Set<string>(data.roles);
+        this.claims = new Set<string>(data.claims);
     }
 
     /**
@@ -45,7 +45,7 @@ export class Identity
     public readonly outfit: Outfit;
 
     /**
-     * The roles assigned to the user.
+     * The claims assigned to the user.
      */
-    public readonly roles: ReadonlySet<string>;
+    public readonly claims: ReadonlySet<string>;
 }

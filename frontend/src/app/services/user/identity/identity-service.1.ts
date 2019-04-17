@@ -1,8 +1,6 @@
 import { autoinject } from "aurelia-framework";
+import { ApiClient } from "shared/infrastructure";
 import { Identity } from "./identity";
-import { Profile } from "shared/src/model/profile";
-import { Session } from "shared/src/model/session";
-import { getUserClaims } from "legacy/helpers/identity-helper";
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -10,6 +8,16 @@ import { getUserClaims } from "legacy/helpers/identity-helper";
 @autoinject
 export class IdentityService
 {
+    /**
+     * Creates a new instance of the type.
+     * @param apiClient The `ApiClient` instance.
+     */
+    public constructor(apiClient: ApiClient)
+    {
+        this.apiClient = apiClient;
+    }
+
+    private readonly apiClient: ApiClient;
     private _identity: Identity | undefined;
 
     /**
@@ -17,22 +25,7 @@ export class IdentityService
      */
     public get identity(): Identity | undefined
     {
-        if (!Profile.isAuthenticated)
-        {
-            this._identity = undefined;
-
-            return undefined;
-        }
-
-        return this._identity || new Identity(
-        {
-            username: Session.userInfo.username,
-            fullName: Session.userInfo.fullName,
-            preferredName: Session.userInfo.firstName,
-            pictureUrl: undefined,
-            outfit: Session.outfit,
-            claims: getUserClaims()
-        });
+        return this._identity;
     }
 
     /**
@@ -44,7 +37,23 @@ export class IdentityService
      */
     public async authenticate(email: string, password: string, remember = false): Promise<boolean>
     {
-        return Promise.resolve(true);
+        try
+        {
+            const response = await this.apiClient.post("identity/sign-in",
+            {
+                body: { email, password, remember }
+            });
+
+            this._identity = new Identity(response.data);
+
+            return true;
+        }
+        catch (error)
+        {
+            this._identity = undefined;
+
+            return false;
+        }
     }
 
     /**
@@ -53,7 +62,20 @@ export class IdentityService
      */
     public async reauthenticate(): Promise<boolean>
     {
-        return Promise.resolve(true);
+        try
+        {
+            const response = await this.apiClient.post("identity/sign-in");
+
+            this._identity = new Identity(response.data);
+
+            return true;
+        }
+        catch (error)
+        {
+            this._identity = undefined;
+
+            return false;
+        }
     }
 
     /**
@@ -62,6 +84,13 @@ export class IdentityService
      */
     public async unauthenticate(): Promise<boolean>
     {
-        return Promise.resolve(true);
+        this._identity = undefined;
+
+        await this.apiClient.post("identity/sign-out");
+
+        // TODO: Call this if any request fails with a 401 status code?
+        // TODO: Dispose the workspace in the container.
+
+        return true;
     }
 }

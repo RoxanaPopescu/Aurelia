@@ -49,5 +49,12 @@ main
 
         // Import legacy styles.
         @import "../legacy/shared/src/webKit/LEGACY";
+
+        .c-login-outerContainer
+        {
+            position: fixed;
+            left: 0;
+            right: 0;
+        }
     }
 }

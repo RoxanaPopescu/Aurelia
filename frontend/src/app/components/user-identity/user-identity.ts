@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject } from "aurelia-framework";
 import { IdentityService } from "app/services/user/identity";
 
 /**
@@ -18,12 +18,4 @@ export class UserIdentityCustomElement
     }
 
     protected readonly identityService: IdentityService;
-
-    /**
-     * The size of the component, where `icon` presents
-     * only the picture, and `normal` presents both the
-     * picture and the preferred name.
-     */
-    @bindable({ defaultValue: "normal" })
-    public size: "icon" | "normal";
 }

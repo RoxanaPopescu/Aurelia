@@ -4,10 +4,23 @@
 
     <a href="/profile" title="Profile">
 
-        <img src.bind="identityService.identity.pictureUrl">
+        <div class="user-identity-column-1">
 
-        <div>
-            ${identityService.identity.preferredName}
+            <div class="user-identity-initials font-large line-height-1 text-transform-uppercase filter-lighten">
+                ${identityService.identity.fullName[0]}
+            </div>
+
+            <div
+                if.bind="identityService.identity.pictureUrl"
+                class="user-identity-picture"
+                css="background-image: url(${identityService.identity.pictureUrl});">
+            </div>
+
+        </div>
+
+        <div class="user-identity-column-2">
+            <div class="user-identity-name">${identityService.identity.preferredName}</div>
+            <div class="font-small">${identityService.identity.outfit.primaryName}</div>
         </div>
 
     </a>

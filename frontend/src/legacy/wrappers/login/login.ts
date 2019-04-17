@@ -3,12 +3,13 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "shared/src/components/profile/index";
+import Component from "shared/src/components/login/index";
+import Localization from "shared/src/localization";
 import { Profile } from "shared/src/model/profile";
 
 @noView
 @autoinject
-export class ProfileCustomElement extends Wrapper
+export class LoginCustomElement extends Wrapper
 {
     /**
      * Creates a new instance of the type.
@@ -32,7 +33,7 @@ export class ProfileCustomElement extends Wrapper
     {
         super.attached(Component,
         {
-            page: "users"
+            description: Localization.operationsValue("Login_Info_Description")
         });
 
         this._isAuthenticatedObserver = this._observerLocator.getObserver(Profile, "isAuthenticated");
@@ -62,4 +63,3 @@ export class ProfileCustomElement extends Wrapper
         }
     }
 }
-

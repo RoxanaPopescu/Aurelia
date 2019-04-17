@@ -1,7 +1,7 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
-import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep, RouteConfig } from "aurelia-router";
-import { IdentityService } from "./services/user/identity";
+import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep } from "aurelia-router";
 import { ModalService } from "shared/framework";
+import { AuthorizationService } from "./services/user/authorization";
 
 /**
  * Represents the app module.
@@ -13,10 +13,11 @@ export class AppModule
      * Creates a new instance of the type.
      * @param identityService The `IdentityService` instance.
      * @param modalService The `ModalService` instance.
+     * @param authorizationService The `AuthorizationService` instance.
      */
-    public constructor(identityService: IdentityService, modalService: ModalService)
+    public constructor(modalService: ModalService, authorizationService: AuthorizationService)
     {
-        this.identityService = identityService;
+        this._authorizationService = authorizationService;
 
         // Register global modals.
 
@@ -31,7 +32,7 @@ export class AppModule
         modalService.register("confirm", PLATFORM.moduleName("app/modals/dialogs/confirm/confirm"));
     }
 
-    private readonly identityService: IdentityService;
+    private readonly _authorizationService: AuthorizationService;
 
     /**
      * Called to configure the router for the module.
@@ -50,13 +51,10 @@ export class AppModule
         router.transformTitle = title => ["Projects", "Locales", "Strings"].includes(title) ? "" : title;
 
         // Add the authorization step.
-        if (false)
-        {
-            config.addPipelineStep("authorize", AuthorizePipelineStep);
-        }
+        config.addPipelineStep("authorize", AuthorizePipelineStep);
 
         // Configure the routes.
-        config.map(this.filterRoutesByOutfit(
+        config.map(this._authorizationService.filterRoutes(
         [
             {
                 name: "default",
@@ -64,15 +62,19 @@ export class AppModule
                 redirect: "routes"
             },
             {
-                name: "account",
-                route: "account",
-                moduleId: PLATFORM.moduleName("./modules/user/account/account")
+                name: "login",
+                route: "account/sign-in",
+                moduleId: PLATFORM.moduleName("./modules/account/modules/sign-in/sign-in"),
+                title: "Login"
             },
-
             {
                 name: "profile",
                 route: "profile",
-                moduleId: PLATFORM.moduleName("./modules/profile/profile")
+                moduleId: PLATFORM.moduleName("./modules/profile/profile"),
+                settings:
+                {
+                    auth: true
+                }
             },
             {
                 name: "kpi",
@@ -81,7 +83,7 @@ export class AppModule
                 settings:
                 {
                     outfit: "fulfiller",
-                    roles: ["user"]
+                    claims: ["view-orders"]
                 },
                 nav: true,
                 title: "KPI",
@@ -94,7 +96,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/orders/orders"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Orders",
@@ -107,7 +109,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/routes/routes"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Routes",
@@ -120,7 +122,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/route-planning/route-planning"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Route planning",
@@ -133,7 +135,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/depots/depots"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Depots",
@@ -146,7 +148,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/fleet/fleet"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Fleet",
@@ -159,7 +161,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Communication",
@@ -172,7 +174,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/departments/departments"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Departments",
@@ -185,7 +187,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Users",
@@ -198,7 +200,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
                 settings:
                 {
-                    roles: ["user"]
+                    auth: true
                 },
                 nav: true,
                 title: "Agreements",
@@ -218,19 +220,6 @@ export class AppModule
 
         ]));
     }
-
-    /**
-     * Filters the specified routes to include only those available to
-     * the type of outfit to which the user belongs.
-     * @param routes The routes to filter.
-     * @returns The filtered routes.
-     */
-    private filterRoutesByOutfit(routes: RouteConfig[]): RouteConfig[]
-    {
-        return routes.filter(r =>
-            r.settings == null || r.settings.outfit == null ||
-            (this.identityService.identity != null && this.identityService.identity.outfit.type === r.settings.outfit));
-    }
 }
 
 /**
@@ -243,14 +232,14 @@ class AuthorizePipelineStep implements PipelineStep
 {
     /**
      * Creates a new instance of the type.
-     * @param identityService The `IdentityService` instance.
+     * @param authorizationService The `AuthorizationService` instance.
      */
-    public constructor(identityService: IdentityService)
+    public constructor(authorizationService: AuthorizationService)
     {
-        this.identityService = identityService;
+        this._authorizationService = authorizationService;
     }
 
-    private readonly identityService: IdentityService;
+    private readonly _authorizationService: AuthorizationService;
 
     /**
      * Called by the router when this step should execute.
@@ -260,17 +249,23 @@ class AuthorizePipelineStep implements PipelineStep
      */
     public async run(navigationInstruction: NavigationInstruction, next: Next): Promise<any>
     {
-        const requiredRoles = navigationInstruction.getAllInstructions()
-            .reduce((r, i) => i.config.settings.roles ? r.concat(i.config.settings.roles) : r, [] as string[]);
-
-        if (requiredRoles.length > 0)
+        const resolvedRouteSettings =
         {
-            const identity = this.identityService.identity;
+            auth: navigationInstruction.getAllInstructions()
+                .some(i => i.config.settings.auth),
 
-            if (identity == null || !requiredRoles.every(r => identity.roles.has(r)))
-            {
-                return next.cancel(new Redirect("account/sign-in"));
-            }
+            outfits: navigationInstruction.getAllInstructions()
+                .reduce((outfits, i) => i.config.settings.outfit ? outfits.concat(i.config.settings.outfit) : outfits, [] as string[]),
+
+            claims: navigationInstruction.getAllInstructions()
+                .reduce((claims, i) => i.config.settings.claims ? claims.concat(i.config.settings.claims) : claims, [] as string[])
+        }
+
+        const authorized = this._authorizationService.isAuthorizedForRoute(resolvedRouteSettings);
+
+        if (!authorized)
+        {
+            return next.cancel(new Redirect("account/sign-in"));
         }
 
         return next();

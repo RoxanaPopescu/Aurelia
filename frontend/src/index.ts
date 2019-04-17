@@ -13,7 +13,6 @@ import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
 import Localization from "shared/src/localization";
-import { LoginService } from "shared/src/components/login/service";
 import { Profile } from "shared/src/model/profile";
 
 /**
@@ -83,8 +82,9 @@ export async function configure(aurelia: Aurelia): Promise<any>
 
         // Configure legacy Mover services.
         Localization.configure(localeService.locale.code, localeService.locale.code);
-        const loginResponse = await LoginService.login("Fulfiller", "connie@cooplogistik.dk", "mover1234!");
-        await Profile.login(loginResponse.accessToken, loginResponse.refreshToken);
+        await Profile.autoLogin();
+        // const loginResponse = await LoginService.login("Fulfiller", "connie@cooplogistik.dk", "mover1234!");
+        // await Profile.login(loginResponse.accessToken, loginResponse.refreshToken);
     });
 
     // Start the framework.

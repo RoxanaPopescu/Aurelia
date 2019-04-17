@@ -17,6 +17,7 @@
       "env",
       "app",
       "shared",
+      "legacy",
       "resources"
     ]
   }

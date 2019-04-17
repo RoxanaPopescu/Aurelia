@@ -7,16 +7,25 @@ user-identity
     a
     {
         display: flex;
-        height: 100%;
         align-items: center;
         color: inherit;
 
-        // Animate the hover effect.
-        transition:
-            border-color var(--animation-duration-short),
-            filter var(--animation-duration-short);
+        .user-identity-picture-placeholder,
+        .user-identity-picture-image
+        {
+            // Animate the hover effect.
+            transition:
+                border-color var(--animation-duration-short),
+                filter var(--animation-duration-short);
+        }
 
-        &:hover img
+        &:hover
+        {
+            color: #ffffff;
+        }
+
+        &:hover .user-identity-picture-placeholder,
+        &:hover .user-identity-picture-image,
         {
             // Highlight on hover.
             filter: brightness(105%);
@@ -24,24 +33,52 @@ user-identity
         }
     }
 
-    img
+    .user-identity-column-1
     {
-        width: auto;
-        height: 100%;
+        position: relative;
+        width: 13rem;
+        height: 13rem;
         border: var(--border-width-thin) solid;
         border-radius: 50%;
         border-color: var(--color-surface-icon);
+        overflow: hidden;
+
+        div
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
     }
 
-    div
+    .user-identity-initials
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-surface-primary-surface);
+        color: var(--color-surface-primary-surface-text);
+        font-weight: 600;
+    }
+
+    .user-identity-picture
+    {
+        background-size: cover;
+    }
+
+    .user-identity-column-2
     {
         display: none;
-        margin-left: var(--size-inline-spacing-large);
 
         app-sidebar.--expanded &
         {
             display: block;
-            margin-left: var(--size-inline-spacing);
+            margin-left: var(--size-inline-spacing-large);
         }
+    }
+
+    .user-identity-name
+    {
+        margin-bottom: 0.5rem;
     }
 }

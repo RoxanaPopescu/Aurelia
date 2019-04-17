@@ -12,7 +12,7 @@ export class Outfit
 {
     public constructor(data: any)
     {
-        this.type = data.type;
+        this.type = data.typeName.toLowerCase();
         this.id = data.id;
         this.slug = data.publicId;
         this.companyName = data.companyName;
