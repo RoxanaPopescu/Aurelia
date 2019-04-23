@@ -13,12 +13,9 @@ export class AppModule
      * Creates a new instance of the type.
      * @param identityService The `IdentityService` instance.
      * @param modalService The `ModalService` instance.
-     * @param authorizationService The `AuthorizationService` instance.
      */
-    public constructor(modalService: ModalService, authorizationService: AuthorizationService)
+    public constructor(modalService: ModalService)
     {
-        this._authorizationService = authorizationService;
-
         // Register global modals.
 
         // Panels.
@@ -31,8 +28,6 @@ export class AppModule
         // Dialogs.
         modalService.register("confirm", PLATFORM.moduleName("app/modals/dialogs/confirm/confirm"));
     }
-
-    private readonly _authorizationService: AuthorizationService;
 
     /**
      * Called to configure the router for the module.
@@ -51,7 +46,7 @@ export class AppModule
         config.addPipelineStep("authorize", AuthorizePipelineStep);
 
         // Configure the routes.
-        config.map(this._authorizationService.filterRoutes(
+        config.map(
         [
             {
                 name: "default",
@@ -85,7 +80,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/kpi/kpi"),
                 settings:
                 {
-                    outfit: "fulfiller",
+                    outfits: ["fulfiller"],
                     claims: ["view-orders"]
                 },
                 nav: true,
@@ -221,7 +216,7 @@ export class AppModule
                 }
             ] : []
 
-        ]));
+        ]);
     }
 }
 
@@ -262,7 +257,7 @@ class AuthorizePipelineStep implements PipelineStep
 
             claims: navigationInstruction.getAllInstructions()
                 .reduce((claims, i) => i.config.settings.claims ? claims.concat(i.config.settings.claims) : claims, [] as string[])
-        }
+        };
 
         const authorized = this._authorizationService.isAuthorizedForRoute(resolvedRouteSettings);
 

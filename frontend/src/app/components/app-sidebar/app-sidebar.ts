@@ -1,5 +1,6 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Router, NavModel } from "aurelia-router";
+import { AuthorizationService } from "app/services/user/authorization";
 
 /**
  * Represents the sidebar of the app, which acts as the global navigation hub for authenticated users.
@@ -7,17 +8,20 @@ import { Router, NavModel } from "aurelia-router";
 @autoinject
 export class AppSidebarCustomElement
 {
-    public constructor(router: Router)
+    public constructor(router: Router, authorizationService: AuthorizationService)
     {
         this._router = router;
+        this._authorizationService = authorizationService;
     }
 
     private readonly _router: Router;
+    private readonly _authorizationService: AuthorizationService;
 
     @computedFrom("router.navigation")
     protected get navModels(): NavModel[]
     {
-        return this._router.navigation;
+        return this._router.navigation
+            .filter(m => this._authorizationService.isAuthorizedForRoute(m.config.settings));
     }
 
     @computedFrom("router.currentInstruction")
@@ -36,7 +40,8 @@ export class AppSidebarCustomElement
             return undefined;
         }
 
-        return childRouter.navigation;
+        return childRouter.navigation
+            .filter(m => this._authorizationService.isAuthorizedForRoute(m.config.settings));
     }
 
     /**
@@ -58,7 +63,7 @@ export class AppSidebarCustomElement
     @bindable({ defaultValue: false })
     public disableDashboard: boolean;
 
-    protected toggleWidth()
+    protected toggleWidth(): void
     {
         this.expanded = !this.expanded;
 

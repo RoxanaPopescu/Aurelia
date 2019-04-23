@@ -1,5 +1,4 @@
 import { autoinject } from "aurelia-framework";
-import { RouteConfig } from "aurelia-router";
 import { IdentityService } from "../identity";
 
 /**
@@ -13,9 +12,9 @@ interface IRouteSettings
     auth?: boolean;
 
     /**
-     * The type of outfit the user must be associated with, if any.
+     * The types of outfits the user must be associated with, if any.
      */
-    outfit?: string;
+    outfits?: string[];
 
     /**
      * The claims the user must have, if any.
@@ -41,16 +40,6 @@ export class AuthorizationService
     private readonly _identityService: IdentityService;
 
     /**
-     * Filters the specified routes to include only those available to the current visitor.
-     * @param routes The routes to filter.
-     * @returns The filtered routes.
-     */
-    public filterRoutes(routes: RouteConfig[]): RouteConfig[]
-    {
-        return routes.filter(route => this.isAuthorizedForRoute(route.settings));
-    }
-
-    /**
      * Determines whether the visitor is authorized to access the route with the specified settings.
      * @param routeSettings The settings for the route to test.
      * @returns True if authorized, otherwise false.
@@ -72,15 +61,15 @@ export class AuthorizationService
             }
         }
 
-        if (routeSettings.outfit != null)
+        if (routeSettings.outfits != null && routeSettings.outfits.length > 0)
         {
-            if (identity == null || identity.outfit.type !== routeSettings.outfit)
+            if (identity == null || !routeSettings.outfits.every(outfitType => identity.outfit.type === outfitType))
             {
                 return false;
             }
         }
 
-        if (routeSettings.claims != null)
+        if (routeSettings.claims != null && routeSettings.claims.length > 0)
         {
             if (identity == null || !routeSettings.claims.every(role => identity.claims.has(role)))
             {
