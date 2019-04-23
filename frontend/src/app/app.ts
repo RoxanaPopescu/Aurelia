@@ -74,7 +74,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/profile/profile"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller", "consignor"]
                 }
             },
             {
@@ -83,8 +83,8 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/kpi/kpi"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
-                    claims: ["view-orders"]
+                    outfits: ["fulfiller", "consignor"],
+                    claims: ["view-kpis"]
                 },
                 nav: true,
                 title: "KPI",
@@ -97,7 +97,13 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/orders/orders"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller", "consignor"],
+                    claims:
+                    [
+                        "create-order",
+                        "edit-order",
+                        "view-orders"
+                    ]
                 },
                 nav: true,
                 title: "Orders",
@@ -110,7 +116,12 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/routes/routes"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller", "consignor"],
+                    claims:
+                    [
+                        "edit-routes",
+                        "view-routes"
+                    ]
                 },
                 nav: true,
                 title: "Routes",
@@ -123,7 +134,16 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/route-planning/route-planning"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "edit-routeplan",
+                        "edit-routeplan-settings",
+                        "view-routeplans",
+                        "view-routeplan-settings",
+                        "create-routeplan",
+                        "create-routeplan-settings"
+                    ]
                 },
                 nav: true,
                 title: "Route planning",
@@ -136,7 +156,13 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/depots/depots"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "create-depot",
+                        "view-depot",
+                        "edit-depot"
+                    ]
                 },
                 nav: true,
                 title: "Depots",
@@ -149,7 +175,15 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/fleet/fleet"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "Invite driver",
+                        "view-drivers",
+                        "edit-vehicle",
+                        "create-vehicle",
+                        "view-vehicles"
+                    ]
                 },
                 nav: true,
                 title: "Fleet",
@@ -162,7 +196,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller"]
                 },
                 nav: true,
                 title: "Communication",
@@ -175,7 +209,13 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/departments/departments"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller", "consignor"],
+                    claims:
+                    [
+                        "create-departments",
+                        "edit-departments",
+                        "view-departments"
+                    ]
                 },
                 nav: true,
                 title: "Departments",
@@ -188,7 +228,13 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller", "consignor"],
+                    claims:
+                    [
+                        "create-user",
+                        "edit-user",
+                        "view-users"
+                    ]
                 },
                 nav: true,
                 title: "Users",
@@ -201,7 +247,7 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
                 settings:
                 {
-                    auth: true
+                    outfits: ["fulfiller"]
                 },
                 nav: true,
                 title: "Agreements",
@@ -252,9 +298,6 @@ class AuthorizePipelineStep implements PipelineStep
     {
         const resolvedRouteSettings =
         {
-            auth: navigationInstruction.getAllInstructions()
-                .some(i => i.config.settings.auth),
-
             outfits: navigationInstruction.getAllInstructions()
                 .reduce((outfits, i) => i.config.settings.outfit ? outfits.concat(i.config.settings.outfit) : outfits, [] as string[]),
 
