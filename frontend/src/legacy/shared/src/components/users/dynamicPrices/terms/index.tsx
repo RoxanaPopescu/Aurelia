@@ -35,7 +35,7 @@ export default class Templates extends React.Component<Props> {
                 { value: "", headline: "Uanset antal stop" },
                 { value: "", headline: "Hvis turen har" }
               ]}
-              checkedIndex={store.stops === DynamicPriceTermsStops.All ? 0 : 1}
+              //checkedIndex={store.stops === DynamicPriceTermsStops.All ? 0 : 1}
               onChange={index => {
                 store.stops =
                   index === 0
