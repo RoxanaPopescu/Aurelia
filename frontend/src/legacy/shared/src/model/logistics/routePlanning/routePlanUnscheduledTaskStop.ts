@@ -1,4 +1,5 @@
-import { RoutePlanStopBase, RoutePlanUnscheduledTask } from ".";
+import { RoutePlanStopBase } from "./routePlanStopBase";
+import { RoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
 /**

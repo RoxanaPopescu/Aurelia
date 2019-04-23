@@ -1,4 +1,4 @@
-import { Parameters } from ".";
+import { Parameters } from "./parameters";
 import { observable } from "mobx";
 
 /**

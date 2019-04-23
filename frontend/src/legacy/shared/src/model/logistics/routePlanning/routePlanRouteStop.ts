@@ -1,8 +1,6 @@
-import {
-  RoutePlanRoute,
-  RoutePlanStopBase,
-  RoutePlanRouteStopEstimates
-} from ".";
+import { RoutePlanRoute } from "./routePlanRoute";
+import { RoutePlanStopBase } from "./routePlanStopBase";
+import { RoutePlanRouteStopEstimates } from "./routePlanRouteStopEstimates";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
 /**

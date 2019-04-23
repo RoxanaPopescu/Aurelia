@@ -56,7 +56,9 @@ export const paths =
          */
         includeGlobs:
         [
+            resolve("src/**/resources/fonts/**"),
             resolve("src/**/resources/images/**"),
+            resolve("src/resources/themes/*/fonts/**"),
             resolve("src/resources/themes/*/images/**"),
             resolve("src/resources/themes/*/integration/**")
         ],

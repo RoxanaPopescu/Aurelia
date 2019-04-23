@@ -1,4 +1,6 @@
-import { RoutePlanRoute, RoutePlanMeta, RoutePlanUnscheduledTask } from ".";
+import { RoutePlanRoute } from "./routePlanRoute";
+import { RoutePlanMeta } from "./routePlanMeta";
+import { RoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
 export type RoutePlanStatus =

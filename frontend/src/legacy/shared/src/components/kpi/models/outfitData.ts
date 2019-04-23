@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { KpiTemplate } from ".";
+import { KpiTemplate } from "./kpiTemplate";
 import { Outfit } from "shared/src/model/logistics/outfit";
 import { KpiFormat } from "./kpiFormat";
 

@@ -1,4 +1,4 @@
-import { Availability } from ".";
+import { Availability } from "./availability";
 import { Location } from "../../general/location";
 import { observable } from "mobx";
 
