@@ -47,9 +47,6 @@ export class AppModule
         // Set the title separator.
         router.titleSeparator = " — ";
 
-        // Remove titles for the 'home' modules.
-        router.transformTitle = title => ["Projects", "Locales", "Strings"].includes(title) ? "" : title;
-
         // Add the authorization step.
         config.addPipelineStep("authorize", AuthorizePipelineStep);
 
@@ -94,7 +91,7 @@ export class AppModule
                 nav: true,
                 title: "KPI",
                 href: "/kpi",
-                icon: "m-kpi"
+                icon: "kpi"
             },
             {
                 name: "orders",
@@ -107,7 +104,7 @@ export class AppModule
                 nav: true,
                 title: "Orders",
                 href: "/orders",
-                icon: "m-orders"
+                icon: "orders"
             },
             {
                 name: "routes",
@@ -120,7 +117,7 @@ export class AppModule
                 nav: true,
                 title: "Routes",
                 href: "/routes",
-                icon: "m-routes"
+                icon: "routes"
             },
             {
                 name: "route-planning",
@@ -133,7 +130,7 @@ export class AppModule
                 nav: true,
                 title: "Route planning",
                 href: "/route-planning",
-                icon: "m-route-planning"
+                icon: "route-planning"
             },
             {
                 name: "depots",
@@ -146,7 +143,7 @@ export class AppModule
                 nav: true,
                 title: "Depots",
                 href: "/depots",
-                icon: "m-depots"
+                icon: "depots"
             },
             {
                 name: "fleet",
@@ -159,7 +156,7 @@ export class AppModule
                 nav: true,
                 title: "Fleet",
                 href: "/fleet-management",
-                icon: "m-fleet"
+                icon: "fleet"
             },
             {
                 name: "communication",
@@ -172,7 +169,7 @@ export class AppModule
                 nav: true,
                 title: "Communication",
                 href: "/communication",
-                icon: "m-communication"
+                icon: "communication"
             },
             {
                 name: "departments",
@@ -185,7 +182,7 @@ export class AppModule
                 nav: true,
                 title: "Departments",
                 href: "/departments",
-                icon: "m-departments"
+                icon: "departments"
             },
             {
                 name: "users",
@@ -198,7 +195,7 @@ export class AppModule
                 nav: true,
                 title: "Users",
                 href: "/users",
-                icon: "m-users"
+                icon: "users"
             },
             {
                 name: "agreements",
@@ -211,7 +208,7 @@ export class AppModule
                 nav: true,
                 title: "Agreements",
                 href: "/agreements",
-                icon: "m-agreements"
+                icon: "agreements"
             },
 
             ...
