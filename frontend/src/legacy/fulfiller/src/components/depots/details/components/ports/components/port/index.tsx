@@ -21,7 +21,7 @@ export class PortComponent extends React.Component<Props> {
           this.props.selected ? "c-depotsPort-rule--selected" : ""
         }`}
       >
-        {this.props.port.numberOfPorts} Porte
+        {this.props.port.numberOfGates} Porte
         <br />
         Åben fra{" "}
         {Localization.formatTime(

@@ -24,7 +24,7 @@ export class ActivationService {
       if (response.ok) {
         let responseJson = await response.json();
 
-        if (userType && userType !== responseJson.outfitType) {
+        if (userType !== responseJson.outfitType) {
           throw new Error(
             Localization.sharedValue("Error_LoginIncorrectType")
               .replace("{login_type}", responseJson.outfitType)

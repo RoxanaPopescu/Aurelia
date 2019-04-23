@@ -21,7 +21,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.availability = this.props.store.activePort!;
+    this.availability = this.props.store.activeGate!;
   }
 
   formatWeekdays(): OptionValue[] | undefined {
@@ -41,7 +41,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
       !this.availability.openingTime ||
       !this.availability.closingTime ||
       !this.availability.daysOfWeek ||
-      !this.availability.numberOfPorts
+      !this.availability.numberOfGates
     ) {
       this.validate = true;
       return;
@@ -79,10 +79,10 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
           headline="Antal porte"
           valueDescription="porte"
           onChange={numberOfPorts => {
-            this.availability.numberOfPorts = numberOfPorts;
+            this.availability.numberOfGates = numberOfPorts;
           }}
-          error={this.validate && !this.availability.numberOfPorts}
-          value={this.availability.numberOfPorts}
+          error={this.validate && !this.availability.numberOfGates}
+          value={this.availability.numberOfGates}
         />
         <TimeComponent
           headline="Åbningstid"

@@ -5,7 +5,7 @@
 /// Classes representing the fonts that may be applied to
 /// elements containing text.
 $__summary: comment;
-@import "styles/resources/index";
+@import "base/resources/index";
 @mixin font($variant) {
   line-height: var(--font-#{$variant}-line-height);
   font-size: var(--font-#{$variant}-font-size);
@@ -52,7 +52,7 @@ $__summary: comment;
 }
 
 /// Text style for large headings.
-/// Use for headings above sections that present data.
+/// Use for headings above sections that present data. 
 .font-heading-large {
   @include font("heading-large");
   text-transform: uppercase;
@@ -60,7 +60,7 @@ $__summary: comment;
 }
 
 /// Text style for headings.
-/// Use for headings above sections that present data.
+/// Use for headings above sections that present data. 
 .font-heading {
   @include font("heading");
   text-transform: uppercase;

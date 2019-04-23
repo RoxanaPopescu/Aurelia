@@ -57,7 +57,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
 
   public render() {
     if (this.service.routes == null) {
-      return <LoadingInline/>;
+      return <LoadingInline />;
     }
 
     return (
@@ -121,7 +121,9 @@ export default class DepotActivityComponent extends React.Component<Props> {
                 onChange={value => (this.openRoute!.note = value)}
               />
 
-              <div className="inputHeadline font-heading">Årsag til forsinkelse</div>
+              <div className="inputHeadline font-heading">
+                Årsag til forsinkelse
+              </div>
 
               {this.service.remarks.map(i => (
                 <InputCheckbox
@@ -166,7 +168,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
         >
           {route.slug}
         </a>,
-        route.port ? route.port : "--",
+        route.gate ? route.gate : "--",
         route.fulfillerName,
         Localization.formatTime(route.plannedArrival),
         // tslint:disable-next-line:jsx-wrap-multiline

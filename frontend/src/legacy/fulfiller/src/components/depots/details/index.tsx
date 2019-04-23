@@ -29,7 +29,9 @@ interface Props {
 }
 
 @observer
-export default class RoutePlanningDepotsDetailsComponent extends React.Component<Props> {
+export default class RoutePlanningDepotsDetailsComponent extends React.Component<
+  Props
+> {
   private store = new DepotStore();
 
   @observable
@@ -52,17 +54,17 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
   }
 
   render() {
-
-    const title = this.store.depot != null 
-      ? this.store.depot.id != null
-        ? this.store.depot.name
-        : "Ny terminal"
-      : "Henter terminal...";
+    const title =
+      this.store.depot != null
+        ? this.store.depot.id != null
+          ? this.store.depot.name
+          : "Ny terminal"
+        : "Henter terminal...";
 
     document.title = `${title} | Terminaler`;
 
     if (this.store.loading) {
-      return <LoadingInline/>;
+      return <LoadingInline />;
     }
 
     if (this.store.error) {
@@ -80,19 +82,22 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
 
     return (
       <>
-
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Terminaler", href: FulfillerSubPage.path(FulfillerSubPage.DepotList) },
+            {
+              title: "Terminaler",
+              href: FulfillerSubPage.path(FulfillerSubPage.DepotList)
+            },
             { title: title }
           ]}
           tabs={[
-
-            ...this.store.depot.id ? [
-              { name: "activity", title: "Rute aktivitet" },
-              { name: "scanned", title: "Manglende colli" }
-            ] : [],
+            ...(this.store.depot.id
+              ? [
+                  { name: "activity", title: "Rute aktivitet" },
+                  { name: "scanned", title: "Manglende colli" }
+                ]
+              : []),
 
             { name: "settings", title: "Indstillinger" },
             { name: "ports", title: "Porte" }
@@ -104,33 +109,33 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
         />
 
         <PageContentComponent>
+          {this.tab === "activity" && (
+            <DepotActivityComponent depotId={this.props.match.params.id} />
+          )}
 
-          {this.tab === "activity" &&
-          <DepotActivityComponent depotId={this.props.match.params.id} />}
+          {this.tab === "scanned" && (
+            <DepotScannedColliComponent depotId={this.props.match.params.id} />
+          )}
 
-          {this.tab === "scanned" &&
-          <DepotScannedColliComponent depotId={this.props.match.params.id} />}
+          {this.tab === "settings" && (
+            <DepotGeneralComponent store={this.store} />
+          )}
 
-          {this.tab === "settings" &&
-          <DepotGeneralComponent store={this.store} />}
-
-          {this.tab === "ports" &&
-          <DepotPortsComponent store={this.store} />}
-            
+          {this.tab === "ports" && <DepotPortsComponent store={this.store} />}
         </PageContentComponent>
 
-        {this.store.activePort &&
-        <Dialog
-          title={
-            this.store.activePort.created ? "Rediger porte" : "Tilføj porte"
-          }
-          onClose={() => {
-            this.store.activePort = undefined;
-          }}
-        >
-          <DepotPortsEditComponent store={this.store} />
-        </Dialog>}
-        
+        {this.store.activeGate && (
+          <Dialog
+            title={
+              this.store.activeGate.created ? "Rediger porte" : "Tilføj porte"
+            }
+            onClose={() => {
+              this.store.activeGate = undefined;
+            }}
+          >
+            <DepotPortsEditComponent store={this.store} />
+          </Dialog>
+        )}
       </>
     );
   }

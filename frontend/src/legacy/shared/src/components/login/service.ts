@@ -18,7 +18,7 @@ export class LoginService {
       if (response.ok) {
         let responseJson = await response.json();
 
-        if (type && type !== responseJson.outfitType) {
+        if (type !== responseJson.outfitType) {
           throw new Error(
             Localization.sharedValue("Error_LoginIncorrectType")
               .replace("{login_type}", responseJson.outfitType)

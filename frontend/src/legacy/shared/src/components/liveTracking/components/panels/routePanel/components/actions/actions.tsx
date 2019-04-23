@@ -6,6 +6,7 @@ import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Route } from "shared/src/model/logistics/routes/tracking";
 import { Icon } from "shared/src/webKit";
 import "./actions.scss";
+import { RouteStop } from "shared/src/model/logistics/routes";
 
 export interface ActionsProps {
   route: Route;
@@ -21,16 +22,11 @@ export class Actions extends React.Component<ActionsProps> {
   public render() {
     // tslint:disable-next-line:no-any
 
-    // FIXME: Outcomment when split route works again
-    /*
     const selectedStops = this.props.route.stops.filter(
       s => (s as RouteStop).selected
     );
 
     const canSplitRoute = selectedStops.length > 1;
-    */
-
-    const canSplitRoute = false;
 
     return (
       <div className="c-liveTracking-routePanel-actions">

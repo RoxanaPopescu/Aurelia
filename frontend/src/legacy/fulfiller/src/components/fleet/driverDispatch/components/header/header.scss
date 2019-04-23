@@ -1,0 +1,22 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-infoBoxes {
+  display: flex;
+  justify-items: space-between;
+  flex-grow: 1;
+}
+
+.c-driverDispatch-infoBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 88px;
+  background-color: $colorNeutralExtraExtraLight;
+  border: 1px solid $colorNeutralLight;
+  padding: 20px 0 10px;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}

@@ -5,7 +5,7 @@ import Localization from "shared/src/localization";
 
 export class DepotStore {
   @observable
-  activePort?: Availability;
+  activeGate?: Availability;
 
   @observable
   loading: boolean = true;
@@ -44,7 +44,7 @@ export class DepotStore {
   async updateDepot() {
     // If no ports we require them to be created
     if (this.depot.availabilities.length <= 0) {
-      this.activePort = new Availability();
+      this.activeGate = new Availability();
       return;
     }
 
@@ -75,7 +75,7 @@ export class DepotStore {
       }
     }
 
-    this.activePort = undefined;
+    this.activeGate = undefined;
     this.saving = false;
   }
 }

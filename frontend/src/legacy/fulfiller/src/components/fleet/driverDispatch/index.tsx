@@ -2,8 +2,9 @@ import React from "react";
 import "./index.scss";
 import Localization from "shared/src/localization";
 import { observer } from "mobx-react";
-import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import Filters from "./components/filters/filters";
+import Table from "./components/table/table";
+import Header from "./components/header/header";
 
 @observer
 export default class DriverDispatchComponent extends React.Component {
@@ -18,7 +19,8 @@ export default class DriverDispatchComponent extends React.Component {
       <div className="c-driverDispatch-container">
         <Filters />
         <div className="c-driverDispatch-main">
-          <PageHeaderComponent path={[{ title: "Chaufførdisponering" }]} />
+          <Header />
+          <Table />
         </div>
       </div>
     );

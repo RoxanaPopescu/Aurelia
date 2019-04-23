@@ -12,7 +12,7 @@
 }
 
 .c-driverDispatch-filters-slider-main {
-  padding: 20px 40px;
+  padding: 20px 40px 40px;
   display: flex;
   flex-direction: column;
 
@@ -20,6 +20,7 @@
     min-height: 24px;
     margin-left: auto;
     width: 100px;
+    min-width: 100px;
   }
 
   > * {

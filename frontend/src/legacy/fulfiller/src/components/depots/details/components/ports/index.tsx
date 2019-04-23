@@ -27,14 +27,14 @@ export default class DepotPortsComponent extends React.Component<Props> {
             key={GUID.generate()}
             port={port}
             onEdit={() => {
-              this.props.store.activePort = port;
+              this.props.store.activeGate = port;
             }}
           />
         ))}
         <Button
           className="c-depotPort-add"
           size={ButtonSize.Medium}
-          onClick={() => (this.props.store.activePort = new Availability())}
+          onClick={() => (this.props.store.activeGate = new Availability())}
           type={ButtonType.Action}
         >
           + Tilføj porte

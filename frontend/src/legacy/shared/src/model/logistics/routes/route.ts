@@ -15,11 +15,10 @@ import { RouteCriticality } from "./routeCriticality";
 /**
  * Represents the live status of a route.
  */
-export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements RouteReference {
-  
+export abstract class Route<TRouteStop extends RouteStop = RouteStop>
+  implements RouteReference {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, stops: (TRouteStop | RouteStopBase)[]) {
-
     this.id = data.id;
     this.slug = data.slug;
     this.reference = data.reference;
@@ -28,6 +27,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
     this.fulfiller = new Fulfiller(data.fulfiller);
     this.driverOnline = data.driverOnline;
     this.stops = stops;
+    this.complexity = data.complexity;
 
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
 
@@ -48,11 +48,15 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
     }
 
     if (data.plannedTimeFrame != null) {
-      this.plannedTimeFrame = new DateTimeRange(data.plannedTimeFrame, { setZone: true });
+      this.plannedTimeFrame = new DateTimeRange(data.plannedTimeFrame, {
+        setZone: true
+      });
     }
 
     if (data.completionTime != null) {
-      this.completionTime = DateTime.fromISO(data.completionTime, { setZone: true });
+      this.completionTime = DateTime.fromISO(data.completionTime, {
+        setZone: true
+      });
     }
   }
 
@@ -78,6 +82,11 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
   public readonly criticality: RouteCriticality;
 
   /**
+   * The complexity of the route ranging from 0 to 1.
+   */
+  public readonly complexity: number;
+
+  /**
    * The status of the route.
    */
   public status: RouteStatus;
@@ -97,16 +106,14 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
   /**
    * The fulfiller responsible for the shipment.
    */
-  @observable
-  public fulfiller: Fulfiller;
+  @observable public fulfiller: Fulfiller;
 
   /**
    * The driver assigned to the route,
-   * or undefined if none has been assigned, or if the 
+   * or undefined if none has been assigned, or if the
    * user does not have permission to see the driver.
    */
-  @observable
-  public driver?: Driver;
+  @observable public driver?: Driver;
 
   /**
    * The vehicle assiged to the route,
@@ -127,7 +134,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
   public readonly driverPosition?: Position;
 
   /**
-   * The planned timeframe for the route, from arrival at the first stop, to 
+   * The planned timeframe for the route, from arrival at the first stop, to
    * completion of the last, or undefined if the planned time frame is not yet known.
    */
   public readonly plannedTimeFrame?: DateTimeRange;
@@ -141,26 +148,22 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
   /**
    * The stops at which the driver must either pick up or deliver colli.
    */
-  @observable
-  public stops: (RouteStop | RouteStopBase)[];
+  @observable public stops: (RouteStop | RouteStopBase)[];
 
   /**
-   * The references identifying any related routes, such as routes 
+   * The references identifying any related routes, such as routes
    * that were created by splitting this route.
    */
-  @observable
-  public relatedRoutes: RouteReference[] = [];
+  @observable public relatedRoutes: RouteReference[] = [];
 
   /**
    * The total number of non-cancelled stops on the route,
    * excluding stops the user is not allowed to see.
    */
   public get totalStopCount(): number {
-    return this.stops
-      .filter(s => 
-        s instanceof RouteStop &&
-        !s.status.slug.startsWith("cancelled"))
-      .length;
+    return this.stops.filter(
+      s => s instanceof RouteStop && !s.status.slug.startsWith("cancelled")
+    ).length;
   }
 
   /**
@@ -168,12 +171,12 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
    * excluding stops the user is not allowed to see.
    */
   public get visitedStopCount(): number {
-    return this.stops
-      .filter(s =>
+    return this.stops.filter(
+      s =>
         s instanceof RouteStop &&
         !s.status.slug.startsWith("cancelled") &&
-        s.status.slug !== "not-visited")
-      .length;
+        s.status.slug !== "not-visited"
+    ).length;
   }
 
   /**
@@ -181,10 +184,10 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
    * excluding stops the user is not allowed to see.
    */
   public get cancelledStopCount(): number {
-    return this.stops
-      .filter(s => 
-        s instanceof RouteStop)
-      .length - this.totalStopCount;
+    return (
+      this.stops.filter(s => s instanceof RouteStop).length -
+      this.totalStopCount
+    );
   }
 
   /**
@@ -193,22 +196,22 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
    */
   public get currentOrNextStop(): TRouteStop | undefined {
     return this.stops
-      .filter(s => 
-        s instanceof RouteStop &&
-        !s.status.slug.startsWith("cancelled"))
-      .find(s =>
-        s.status.slug === "arrived" || s.status.slug === "not-visited")  as TRouteStop;
+      .filter(
+        s => s instanceof RouteStop && !s.status.slug.startsWith("cancelled")
+      )
+      .find(
+        s => s.status.slug === "arrived" || s.status.slug === "not-visited"
+      ) as TRouteStop;
   }
 
   /**
    * The future stops at which delays are expected.
    */
   public get expectedDelays(): TRouteStop[] {
-    return this.stops
-      .filter(s => 
-        s instanceof RouteStop &&
-        s.status.slug === "not-visited" &&
-        s.isDelayed) as TRouteStop[];
+    return this.stops.filter(
+      s =>
+        s instanceof RouteStop && s.status.slug === "not-visited" && s.isDelayed
+    ) as TRouteStop[];
   }
 
   // TODO: We should find a more efficient way to do free-text search.
@@ -223,8 +226,11 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
     }
 
     const q = text.toLowerCase();
-    
-    return new RegExp(`^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`, "m").test(this.json);
+
+    return new RegExp(
+      `^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`,
+      "m"
+    ).test(this.json);
   }
 
   /**
@@ -232,7 +238,6 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop> implements
    * @param targetRoute The route to which client-side state should be migrated.
    */
   public migrateState(targetRoute: Route) {
-
     // Migrate the slugs identifying split routes created from this route.
     targetRoute.relatedRoutes = this.relatedRoutes;
 

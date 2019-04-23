@@ -34,10 +34,9 @@ export default class TimeComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-
     let date: Moment.Moment | undefined;
     if (props.seconds) {
-      let luxonDate = DateTime.fromMillis(0)
+      let luxonDate = DateTime.fromObject({})
         .startOf("day")
         .plus(
           Duration.fromObject({
@@ -59,9 +58,11 @@ export default class TimeComponent extends React.Component<Props, State> {
     });
 
     let date = DateTime.fromISO(value.format());
-    let difference = date.startOf("minute").diff(DateTime.fromMillis(0).startOf("day"));
+    let difference = date
+      .startOf("minute")
+      .diff(DateTime.fromObject({}).startOf("day"));
     let seconds = difference.as("seconds");
-    this.props.onChange(Math.abs(seconds));
+    this.props.onChange(Math.floor(Math.abs(seconds)));
   }
 
   getContainerClassNames() {
@@ -102,9 +103,11 @@ export default class TimeComponent extends React.Component<Props, State> {
     // HACK: We don't handle an empty input correctly, so for now, just disable editing.
     setTimeout(() => {
       try {
-        const element = ReactDOM.findDOMNode(this) as (HTMLElement | null);
+        const element = ReactDOM.findDOMNode(this) as HTMLElement | null;
         if (element != null) {
-          const inputElement = element.getElementsByTagName("input")[0] as (HTMLInputElement | null);
+          const inputElement = element.getElementsByTagName(
+            "input"
+          )[0] as HTMLInputElement | null;
           if (inputElement != null) {
             inputElement.readOnly = true;
           }
@@ -119,7 +122,9 @@ export default class TimeComponent extends React.Component<Props, State> {
           className={"middleWrapper" + (this.props.disabled ? " disabled" : "")}
         >
           {this.props.headline && (
-            <div className="inputHeadline font-heading">{this.props.headline}</div>
+            <div className="inputHeadline font-heading">
+              {this.props.headline}
+            </div>
           )}
           <DatePicker
             onChangeRaw={e => e.preventDefault()} // EXTRA HACK, in case the above hack fails.

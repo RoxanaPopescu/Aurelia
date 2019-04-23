@@ -3,24 +3,30 @@ import { DepotRouteRemark } from "./depotRouteRemark";
 import { remarks } from "./data/depotRouteRemarks";
 
 export class DepotRoute {
-
   // tslint:disable-next-line:no-any
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.port = data.port;
+    this.gate = data.gate;
     this.driverId = data.driverId;
     this.fulfillerName = data.fulfillerName;
-    this.plannedArrival = DateTime.fromISO(data.plannedArrival, { setZone: true });
-    this.plannedDeparture = DateTime.fromISO(data.plannedDeparture, { setZone: true });
+    this.plannedArrival = DateTime.fromISO(data.plannedArrival, {
+      setZone: true
+    });
+    this.plannedDeparture = DateTime.fromISO(data.plannedDeparture, {
+      setZone: true
+    });
     this.colliScanned = data.colliScanned;
     this.colliTotal = data.colliTotal;
     this.driverListReady = data.driverListReady;
     this.driverListUrl = data.driverListUrl;
 
     if (data.remarks != null) {
-      this.remarks = data.remarks.remarkCodes.map(rc =>
-        remarks.find(r => r.code === rc) || new DepotRouteRemark({ code: rc, name: "Unknown" }));
+      this.remarks = data.remarks.remarkCodes.map(
+        rc =>
+          remarks.find(r => r.code === rc) ||
+          new DepotRouteRemark({ code: rc, name: "Unknown" })
+      );
 
       this.note = data.remarks.note;
     } else {
@@ -28,17 +34,21 @@ export class DepotRoute {
     }
 
     if (data.actualArrival != null) {
-      this.actualArrival = DateTime.fromISO(data.actualArrival, { setZone: true });
+      this.actualArrival = DateTime.fromISO(data.actualArrival, {
+        setZone: true
+      });
     }
 
     if (data.actualDeparture != null) {
-      this.actualDeparture = DateTime.fromISO(data.actualDeparture, { setZone: true });
+      this.actualDeparture = DateTime.fromISO(data.actualDeparture, {
+        setZone: true
+      });
     }
   }
 
   public readonly id: string;
   public readonly slug: string;
-  public readonly port: string;
+  public readonly gate: string;
   public readonly driverId: string;
   public readonly fulfillerName: string;
   public readonly plannedArrival: DateTime;

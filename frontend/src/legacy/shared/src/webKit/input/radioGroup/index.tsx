@@ -4,18 +4,22 @@ import "./styles.scss";
 export interface InputRadioGroupProps {
   // tslint:disable-next-line:no-any
   radioButtons: { value: any; headline: string }[];
-  checkedIndex: number;
+  // tslint:disable-next-line:no-any
+  checkedValue: any;
   name?: string;
   id?: string;
   small?: boolean;
   className?: string;
   required?: boolean;
-  disabledIndexes?: number[];
-  onChange(index: number);
+  // tslint:disable-next-line:no-any
+  disabledValues?: any[];
+  // tslint:disable-next-line:no-any
+  onChange(value: any);
 }
 
 export interface InputRadioGroupState {
-  checkedIndex: number;
+  // tslint:disable-next-line:no-any
+  checkedValue: any;
 }
 
 interface RadioProps {
@@ -89,20 +93,21 @@ export default class InputRadioGroup extends React.Component<
   constructor(props: InputRadioGroupProps) {
     super(props);
     this.state = {
-      checkedIndex: this.props.checkedIndex
+      checkedValue: this.props.checkedValue
     };
   }
 
   componentWillReceiveProps(nextProps: InputRadioGroupProps) {
-    this.setState({ checkedIndex: nextProps.checkedIndex });
+    this.setState({ checkedValue: nextProps.checkedValue });
   }
 
-  onChange(index: number) {
+  // tslint:disable-next-line:no-any
+  onChange(value: any) {
     this.setState({
-      checkedIndex: index
+      checkedValue: value
     });
 
-    this.props.onChange(index);
+    this.props.onChange(value);
   }
 
   render() {
@@ -118,22 +123,22 @@ export default class InputRadioGroup extends React.Component<
 
     return (
       <div className={containerClassnames} id={this.props.id}>
-        {this.props.radioButtons.map((radioButton, index) => {
+        {this.props.radioButtons.map(radioButton => {
           let disabled = false;
-          if (this.props.disabledIndexes) {
-            disabled = this.props.disabledIndexes.indexOf(index) > -1;
+          if (this.props.disabledValues) {
+            disabled = radioButton.value === this.state.checkedValue;
           }
 
           return (
             <Radio
-              id={"radio" + index}
-              key={index}
+              id={"radio-" + radioButton.value}
+              key={radioButton.value}
               headline={radioButton.headline}
               required={this.props.required}
               name={this.props.name}
               value={radioButton.value}
-              checked={index === this.state.checkedIndex}
-              toggle={() => this.onChange(index)}
+              checked={radioButton.value === this.state.checkedValue}
+              toggle={() => this.onChange(radioButton.value)}
               disabled={disabled}
             />
           );

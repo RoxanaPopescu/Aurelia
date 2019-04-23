@@ -6,7 +6,7 @@ export class Availability {
     if (json) {
       this.openingTime = json.openingTime;
       this.closingTime = json.closingTime;
-      this.numberOfPorts = json.numberOfPorts;
+      this.numberOfGates = json.numberOfPorts;
       this.daysOfWeek = json.daysOfWeek;
       this.created = true;
     } else {
@@ -25,9 +25,9 @@ export class Availability {
   @observable public closingTime?: number;
 
   /**
-   * How many ports exist
+   * How many gates exist
    */
-  @observable public numberOfPorts?: number;
+  @observable public numberOfGates?: number;
 
   /**
    * Day of week (ISO standard)

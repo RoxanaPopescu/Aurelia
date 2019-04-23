@@ -1,13 +1,11 @@
 import React from "react";
 import "./slider.scss";
-import { observer } from "mobx-react";
 
 interface Props {
   headline: string;
   collapsible?: boolean;
 }
 
-@observer
 export default class extends React.Component<Props> {
   constructor(props: Props) {
     super(props);

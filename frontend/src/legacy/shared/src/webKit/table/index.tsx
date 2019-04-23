@@ -5,6 +5,7 @@ import Localization from "../../localization";
 import { SortingDirection } from "shared/src/model/general/sorting";
 import { Link } from "react-router-dom";
 import LoadingOverlay from "../loading/overlay";
+import { GUID } from "..";
 
 export interface Header {
   text: string;
@@ -18,6 +19,7 @@ export interface TableProps {
   data: { headers: Header[]; rows: Row[][] };
   generateURL?(index: number): string | undefined;
   totalRowsText?: string;
+  highlightedRowIndexes?: number[];
   canSelectRow?: boolean | ((index: number) => boolean);
   loading: boolean;
   pagination?: {
@@ -147,27 +149,27 @@ export class TableComponent extends React.Component<TableProps, TableState> {
   }
 
   renderTableData(rows?: Row[][]) {
-    let array: JSX.Element[] = [];
+    let rowsArray: JSX.Element[] = [];
     if (rows) {
       if (this.props.data.rows.length === 0 && this.props.loading) {
         for (var i = 0; i < 10; i++) {
           this.props.data.headers.map((header, index) => {
             if (index === 0) {
-              array.push(
+              rowsArray.push(
                 <div
                   key={`skeleton-row_${i}-column_${index}`}
                   className="c-gridTable-content c-gridTable-skeleton c-gridTable-firstColumn"
                 />
               );
             } else if (index === this.props.data.headers.length - 1) {
-              array.push(
+              rowsArray.push(
                 <div
                   key={`skeleton-row_${i}-column_${index}`}
                   className="c-gridTable-content c-gridTable-skeleton c-gridTable-lastColumn"
                 />
               );
             } else {
-              array.push(
+              rowsArray.push(
                 <div
                   key={`skeleton-row_${i}-column_${index}`}
                   className="c-gridTable-content c-gridTable-skeleton"
@@ -178,6 +180,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
         }
       } else {
         rows.map((row, index) => {
+          let rowArray: JSX.Element[] = [];
           row.map((column, columnIndex) => {
             let columnElement: JSX.Element | undefined;
 
@@ -194,12 +197,6 @@ export class TableComponent extends React.Component<TableProps, TableState> {
             }
             if (columnIndex === row.length - 1) {
               classNames += " c-gridTable-lastColumn";
-            }
-            if (index === this.state.hoveredRowIndex) {
-              classNames += " hovered";
-            }
-            if (columnIndex === 0 && index === this.state.hoveredRowIndex) {
-              classNames += " hoveredBorder";
             }
 
             if (
@@ -225,17 +222,22 @@ export class TableComponent extends React.Component<TableProps, TableState> {
               url = this.props.generateURL(index);
             }
 
+            let rowKey = row
+              // tslint:disable-next-line: no-any
+              .map((c: any) => (c && c.key ? c.key : c))
+              .toString();
+
+            let key =
+              (rowKey && rowKey.length > 2 ? rowKey : GUID.generate()) +
+              column +
+              this.props.data!.headers[columnIndex].key;
+
             if (url) {
-              array.push(
+              rowArray.push(
                 <Link
-                  key={
-                    // tslint:disable-next-line:no-any
-                    row.map((c: any) => c && c.key ? c.key : c).toString() +
-                    column +
-                    this.props.data!.headers[columnIndex].key
-                  }
+                  key={key}
                   to={url}
-                  className={"c-gridTable-row-" + index + classNames}
+                  className={classNames}
                   onMouseEnter={() => this.setState({ hoveredRowIndex: index })}
                   onMouseLeave={() =>
                     this.setState({ hoveredRowIndex: undefined })
@@ -253,15 +255,10 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                 </Link>
               );
             } else {
-              array.push(
+              rowArray.push(
                 <div
-                  key={
-                    // tslint:disable-next-line:no-any
-                    row.map((c: any) => c && c.key ? c.key : c).toString() +
-                    column +
-                    this.props.data!.headers[columnIndex].key
-                  }
-                  className={"c-gridTable-row-" + index + classNames}
+                  key={key}
+                  className={classNames}
                   onMouseEnter={() => this.setState({ hoveredRowIndex: index })}
                   onMouseLeave={() =>
                     this.setState({ hoveredRowIndex: undefined })
@@ -280,11 +277,25 @@ export class TableComponent extends React.Component<TableProps, TableState> {
               );
             }
           });
+
+          let rowClassName = "c-gridTable-row";
+          if (
+            this.props.highlightedRowIndexes &&
+            this.props.highlightedRowIndexes.filter(hi => hi === index)
+          ) {
+            rowClassName += " highlighted";
+          }
+
+          rowsArray.push(
+            <div key={row.toString()} className={rowClassName}>
+              {rowArray}
+            </div>
+          );
         });
       }
     }
 
-    return array;
+    return rowsArray;
   }
 
   renderNoResults() {
@@ -306,7 +317,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
     return (
       <div className={className}>
         <h4 className="font-larger c-gridTable-sortingLoadingOverlay-indicator">
-          <LoadingOverlay/>
+          <LoadingOverlay />
         </h4>
         {/* <h4 className="font-larger c-gridTable-sortingLoadingOverlay-headline">
           {Localization.sharedValue("General_Loading")}

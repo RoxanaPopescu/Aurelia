@@ -11,7 +11,7 @@
 }
 
 .c-gridTable-loading {
-  opacity: .3;
+  opacity: 0.3;
 }
 
 .c-gridTable-headerSorting {
@@ -30,6 +30,36 @@
 
   &.c-gridTable-blank {
     padding-bottom: 300px !important;
+  }
+
+  .c-gridTable-row {
+    display: contents;
+
+    &:hover {
+      .c-gridTable-content {
+        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+        border-color: darken($colorNeutralExtraLight, $darkenOnHover);
+
+        &.c-gridTable-firstColumn:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: $colorBackgroundPrimary;
+          border-top-left-radius: $listItemBorderRadius;
+          border-bottom-left-radius: $listItemBorderRadius;
+        }
+      }
+    }
+
+    &.highlighted {
+      .c-gridTable-content {
+        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+        border-color: darken($colorNeutralExtraLight, $darkenOnHover);
+      }
+    }
   }
 
   .c-gridTable-header {
@@ -121,21 +151,18 @@
   .c-gridTable-content {
     display: flex;
     align-items: center;
-    background-color: $colorNeutralExtraLight;
     text-align: left;
-    padding: 10px 15px 8px 15px;
-    transition: background-color 100ms;
+    padding: 10px 15px 8px;
     color: $colorNeutralDark;
+    background-color: $colorNeutralExtraLight;
+    transition: background-color 100ms;
     margin-bottom: 4px;
-
-    &.hovered {
-      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
-    }
 
     &.c-gridTable-skeleton {
       height: 40px;
       margin-bottom: 10px;
-      animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none running;
+      animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none
+        running;
     }
 
     &.c-gridTable-lastColumn {
@@ -147,23 +174,6 @@
       padding-left: 15px;
       border-top-left-radius: $listItemBorderRadius;
       border-bottom-left-radius: $listItemBorderRadius;
-    }
-
-    &.hovered {
-      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
-      border-color: darken($colorNeutralExtraLight, $darkenOnHover);
-
-      &.c-gridTable-firstColumn:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background-color: $colorBackgroundPrimary;
-        border-top-left-radius: $listItemBorderRadius;
-        border-bottom-left-radius: $listItemBorderRadius;
-      }
     }
 
     &.selectable {
@@ -252,7 +262,7 @@
   }
 
   50% {
-    background-color: rgba($colorNeutralExtraLight, .7);
+    background-color: rgba($colorNeutralExtraLight, 0.7);
   }
 
   100% {

@@ -219,19 +219,19 @@ export class KpiService {
         new KpiGroup(Localization.sharedValue("Kpi_GroupHeadline:Stops"), [
           new Kpi(
             Localization.sharedValue("Kpi_Single:EstimatedStops"),
-            Localization.formatNumber(json.estimatedStops)
+            Localization.formatNumber(json.estimatedStops, 2)
           ),
           new Kpi(
             Localization.sharedValue("Kpi_Single:EstimatedDeliveries"),
-            Localization.formatNumber(json.estimatedDeliveries)
+            Localization.formatNumber(json.estimatedDeliveries, 2)
           ),
           new Kpi(
             Localization.sharedValue("Kpi_Single:ActualStops"),
-            Localization.formatNumber(json.actualStops)
+            Localization.formatNumber(json.actualStops, 2)
           ),
           new Kpi(
             Localization.sharedValue("Kpi_Single:ActualDeliveries"),
-            Localization.formatNumber(json.actualDeliveries)
+            Localization.formatNumber(json.actualDeliveries, 2)
           )
         ])
       );

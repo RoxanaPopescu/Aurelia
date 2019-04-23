@@ -13,4 +13,8 @@ export class Driver {
     this.lastName = json.name.last;
     this.phoneNumber = new Phone(json.phone);
   }
+
+  get formattedName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }
