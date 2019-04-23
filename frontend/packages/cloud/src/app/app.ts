@@ -58,22 +58,22 @@ export class App
                     response.status(403).send("Forbidden");
                 }
             });
-
-            // Handle requests for debug info.
-            this._app.get(/^[/]debug$/i, (request, response) =>
-            {
-                response.json(
-                    {
-                        "environment": environment.name,
-                        "request":
-                        {
-                            "method": request.method,
-                            "url": request.originalUrl,
-                            "headers": request.headers
-                        }
-                    });
-            });
         }
+
+        // Handle requests for debug info.
+        this._app.get(/^[/]debug$/i, (request, response) =>
+        {
+            response.json(
+                {
+                    "environment": environment.name,
+                    "request":
+                    {
+                        "method": request.method,
+                        "url": request.originalUrl,
+                        "headers": request.headers
+                    }
+                });
+        });
 
         // Resolve host settings, set cookies, and rewrite the request.
         this._app.get("*", (request, response, next) =>
