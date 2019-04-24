@@ -26,7 +26,10 @@ WORKDIR /usr/app/frontend/src/legacy
 ## in order to take advantage of cached Docker layers.
 COPY ["/frontend/src/legacy/package.json", "./"]
 COPY ["/frontend/src/legacy/package-lock.json", "./"]
-COPY ["/frontend/src/legacy/patches/react-selectize+3.0.1.patch", "./patches/"]
+COPY ["/frontend/src/legacy/patches", "./"]
+
+## Setup npm to use patches
+RUN npm set unsafe-perm true
 
 ## Install the dependencies, only when they have changed.
 RUN npm install
