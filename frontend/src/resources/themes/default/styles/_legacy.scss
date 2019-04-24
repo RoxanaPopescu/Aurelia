@@ -2,18 +2,31 @@
 {
     //Colors
     --colorBackgroundPrimary: #1a6bc6;
+    --colorBackgroundPrimaryDarken: #1968c2;
     --colorBackgroundSecondary: #00162e;
     --colorInteractivePrimary: #1a6bc6;
+    --colorInteractivePrimaryAlpha0:rgba(26, 107, 198, 0);
+    --colorInteractivePrimaryAlpha15: rgba(26, 107, 198, 0.15);
+    --colorInteractivePrimaryAlpha50: rgba(26, 107, 198, 0.5);
+    --colorInteractivePrimaryAlpha80: rgba(26, 107, 198, 0.8);
+    --colorInteractivePrimaryAlpha97: rgba(26, 107, 198, 0.97);
+    --colorInteractivePrimaryDarken: #1968c2;
+    --colorInteractivePrimaryLighten: #80b4ee;
     --colorInteractivePrimaryActive: #034894;
     --colorInteractivePrimaryInactive: #abbec7;
     --colorInteractiveSecondary: #fff;
     --colorOk: #52ad1a;
+    --colorOkDarken: #50a919;
     --colorWarning: #ff8906;
+    --colorWarningDarken: #ff8600;
     --colorAlert: #e6310d;
-    --colorNeutralExtraExtraLight: #f6f9fe;
+    --colorAlertDarken: #e1300c;
     --colorNeutralExtraLight: #edf2f9;
+    --colorNeutralExtraLightDarken: #e5ecf6;
+    --colorNeutralExtraLightAlpha70: rgba(237,242,249,0.7);
     --colorNeutralLight: #d8e1ee;
     --colorNeutralRegular: #abbec7;
+    --colorNeutralRegularDarken: #a6bac4;
     --colorNeutralSemiDark: #7b8e97;
     --colorNeutralDark: #00162e;
 
@@ -23,3 +36,5 @@
     --textDarkInactive: #abbec7;
     --textLightPrimary: white;
 }
+
+
