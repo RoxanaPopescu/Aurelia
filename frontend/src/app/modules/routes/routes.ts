@@ -26,7 +26,7 @@ export class RoutesModule
                 route: "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
-                title: "List",
+                title: "All routes",
                 icon: "business"
             },
             {

@@ -9,15 +9,24 @@
 
         <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
 
-        <a class="sidebar-link" modal-href="modal: starred">
-            <icon name="starred"></icon>
-            <span>Starred and recent</span>
-        </a>
+        <template if.bind="environment == 'development'">
 
-        <a class="sidebar-link" modal-href="modal: search">
-            <icon name="search"></icon>
-            <span>Search</span>
-        </a>
+            <a class="sidebar-link" modal-href="modal: starred">
+                <icon name="starred"></icon>
+                <span translate>Starred and recent</span>
+            </a>
+
+            <a class="sidebar-link" modal-href="modal: search">
+                <icon name="search"></icon>
+                <span translate>Search</span>
+            </a>
+
+            <a class="sidebar-link" modal-href="modal: add">
+                <icon title="Add" name="add"></icon>
+                <span translate>Add</span>
+            </a>
+
+        </template>
 
         <slot name="header"></slot>
 
@@ -62,26 +71,30 @@
 
         <slot name="footer"></slot>
 
-        <a class="sidebar-link" modal-href="modal: notifications">
-            <icon name="notifications">
-                <badge>5</badge>
-            </icon>
-            <span>Notifications</span>
-        </a>
+        <template if.bind="environment == 'development'">
 
-        <a class="sidebar-link" modal-href="modal: confirm">
-            <icon name="help"></icon>
-            <span>Help and support</span>
-        </a>
+            <a class="sidebar-link" modal-href="modal: notifications">
+                <icon name="notifications">
+                    <badge>5</badge>
+                </icon>
+                <span translate>Notifications</span>
+            </a>
 
-        <a class="sidebar-link" module-href="path: design">
-            <icon name="md-style"></icon>
-            <span>Design</span>
-        </a>
+            <a class="sidebar-link" modal-href="modal: confirm">
+                <icon name="help"></icon>
+                <span translate>Help and support</span>
+            </a>
+
+            <a class="sidebar-link" module-href="path: design">
+                <icon name="md-style"></icon>
+                <span translate>Design</span>
+            </a>
+
+        </template>
 
         <a class="sidebar-link" click.trigger="toggleWidth()">
             <icon name="md-menu"></icon>
-            <span>Toggle</span>
+            <span translate>Collapse menu</span>
         </a>
 
         <user-identity size="icon"></user-identity>

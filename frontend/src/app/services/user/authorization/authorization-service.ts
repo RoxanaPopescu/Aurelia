@@ -7,11 +7,6 @@ import { IdentityService } from "../identity";
 interface IRouteSettings
 {
     /**
-     * True if the user must be authenticated, otherwise false.
-     */
-    auth?: boolean;
-
-    /**
      * The types of outfits the user must be associated with, if any.
      */
     outfits?: string[];
@@ -53,17 +48,9 @@ export class AuthorizationService
             return true;
         }
 
-        if (routeSettings.auth)
-        {
-            if (identity == null)
-            {
-                return false;
-            }
-        }
-
         if (routeSettings.outfits != null && routeSettings.outfits.length > 0)
         {
-            if (identity == null || !routeSettings.outfits.every(outfitType => identity.outfit.type === outfitType))
+            if (identity == null || !routeSettings.outfits.some(outfitType => identity.outfit.type === outfitType))
             {
                 return false;
             }

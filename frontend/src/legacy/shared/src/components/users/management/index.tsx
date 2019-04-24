@@ -32,6 +32,7 @@ export default class UserManagementComponent extends React.Component<Props> {
     document.title = Localization.operationsValue(
       "UserManagment_UserList_Title"
     );
+    this.componentDidUpdate();
   }
 
   componentDidUpdate() {

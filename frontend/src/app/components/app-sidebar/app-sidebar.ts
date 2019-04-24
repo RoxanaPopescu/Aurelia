@@ -17,6 +17,8 @@ export class AppSidebarCustomElement
     private readonly _router: Router;
     private readonly _authorizationService: AuthorizationService;
 
+    protected readonly environment = ENVIRONMENT.name;
+
     @computedFrom("router.navigation")
     protected get navModels(): NavModel[]
     {
