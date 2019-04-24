@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
+import routeTitles from "./resources/strings/route-titles.json";
 
 /**
  * Represents the module.
@@ -25,49 +26,49 @@ export class RoutePlanningModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                title: "List"
+                title: routeTitles.list
             },
             {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
-                title: "Details"
+                title: routeTitles.details
             },
             {
                 name: "settings list",
                 route: "settings/list",
                 moduleId: PLATFORM.moduleName("./modules/settings/list/list"),
-                title: "Settings list"
+                title: routeTitles.settingsList
             },
             {
                 name: "settings details",
                 route: "settings/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/settings/details/details"),
-                title: "Settings details"
+                title: routeTitles.settingsDetails
             },
             {
                 name: "order-groups-list",
                 route: "order-groups/list",
                 moduleId: PLATFORM.moduleName("./modules/order-groups/list/list"),
-                title: "Order group list"
+                title: routeTitles.orderGroupList
             },
             {
                 name: "order-groups-details",
                 route: "order-groups/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/order-groups/details/details"),
-                title: "Order group details"
+                title: routeTitles.orderGroupDetails
             },
             {
                 name: "simulations list",
                 route: "simulations/list",
                 moduleId: PLATFORM.moduleName("./modules/simulations/list/list"),
-                title: "Simulations list"
+                title: routeTitles.simulationsList
             },
             {
                 name: "simulations details",
                 route: "simulations/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/simulations/details/details"),
-                title: "Simulations details"
+                title: routeTitles.simulationsDetails
             },
         ]);
     }

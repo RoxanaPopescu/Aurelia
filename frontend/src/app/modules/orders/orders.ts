@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
+import routeTitles from "./resources/strings/route-titles.json";
 
 /**
  * Represents the module.
@@ -25,25 +26,25 @@ export class OrdersModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                title: "List"
+                title: routeTitles.list
             },
             {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
-                title: "Details"
+                title: routeTitles.details
             },
             {
                 name: "edit",
                 route: "edit/:id",
                 moduleId: PLATFORM.moduleName("./modules/edit/edit"),
-                title: "Edit"
+                title: routeTitles.edit
             },
             {
                 name: "create",
                 route: "create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
-                title: "Create"
+                title: routeTitles.create
             }
         ]);
     }

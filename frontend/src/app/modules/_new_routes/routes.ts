@@ -36,9 +36,9 @@ export class RoutesModule
                 title: "Details"
             },
             {
-                name: "live-tracking",
-                route: "live-tracking",
-                moduleId: PLATFORM.moduleName("./modules/live-tracking/live-tracking"),
+                name: "route-tracking",
+                route: "route-tracking",
+                moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
                 nav: true,
                 title: "Live tracking",
                 icon: "business"

@@ -2,6 +2,7 @@ import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep } from "aurelia-router";
 import { ModalService } from "shared/framework";
 import { AuthorizationService } from "./services/user/authorization";
+import routeTitles from "./resources/strings/route-titles.json";
 
 /**
  * Represents the app module.
@@ -60,13 +61,13 @@ export class AppModule
                 name: "account/sign-in",
                 route: "account/sign-in",
                 moduleId: PLATFORM.moduleName("./modules/account/modules/sign-in/sign-in"),
-                title: "Sign in"
+                title: routeTitles.signIn
             },
             {
                 name: "account/activate",
                 route: "account/activate",
                 moduleId: PLATFORM.moduleName("./modules/account/modules/activate/activate"),
-                title: "Activate account"
+                title: routeTitles.activateAccount
             },
             {
                 name: "profile",
@@ -87,7 +88,7 @@ export class AppModule
                     claims: ["view-kpis"]
                 },
                 nav: true,
-                title: "KPI",
+                title: routeTitles.kpi,
                 href: "/kpi",
                 icon: "kpi"
             },
@@ -106,7 +107,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Orders",
+                title: routeTitles.orders,
                 href: "/orders",
                 icon: "orders"
             },
@@ -124,7 +125,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Routes",
+                title: routeTitles.routes,
                 href: "/routes",
                 icon: "routes"
             },
@@ -146,7 +147,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Route planning",
+                title: routeTitles.routePlanning,
                 href: "/route-planning",
                 icon: "route-planning"
             },
@@ -165,7 +166,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Depots",
+                title: routeTitles.depots,
                 href: "/depots",
                 icon: "depots"
             },
@@ -178,7 +179,7 @@ export class AppModule
                     outfits: ["fulfiller"],
                     claims:
                     [
-                        "Invite driver",
+                        "invite-driver",
                         "view-drivers",
                         "edit-vehicle",
                         "create-vehicle",
@@ -186,7 +187,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Fleet",
+                title: routeTitles.fleet,
                 href: "/fleet-management",
                 icon: "fleet"
             },
@@ -199,7 +200,7 @@ export class AppModule
                     outfits: ["fulfiller"]
                 },
                 nav: true,
-                title: "Communication",
+                title: routeTitles.communication,
                 href: "/communication",
                 icon: "communication"
             },
@@ -218,7 +219,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Departments",
+                title: routeTitles.departments,
                 href: "/departments",
                 icon: "departments"
             },
@@ -237,7 +238,7 @@ export class AppModule
                     ]
                 },
                 nav: true,
-                title: "Users",
+                title: routeTitles.users,
                 href: "/users",
                 icon: "users"
             },
@@ -250,7 +251,7 @@ export class AppModule
                     outfits: ["fulfiller"]
                 },
                 nav: true,
-                title: "Agreements",
+                title: routeTitles.agreements,
                 href: "/agreements",
                 icon: "agreements"
             },
@@ -261,7 +262,8 @@ export class AppModule
                 {
                     name: "design",
                     route: "design",
-                    moduleId: PLATFORM.moduleName("./modules/_design/design")
+                    moduleId: PLATFORM.moduleName("./modules/_design/design"),
+                    title: routeTitles.design
                 }
             ] : []
 

@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
+import routeTitles from "./resources/strings/route-titles.json";
 
 /**
  * Represents the module.
@@ -26,21 +27,21 @@ export class RoutesModule
                 route: "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
-                title: "All routes",
+                title: routeTitles.list,
                 icon: "business"
             },
             {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
-                title: "Details"
+                title: routeTitles.details
             },
             {
-                name: "live-tracking",
-                route: "live-tracking",
-                moduleId: PLATFORM.moduleName("./modules/live-tracking/live-tracking"),
+                name: "route-tracking",
+                route: "route-tracking",
+                moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
                 nav: true,
-                title: "Live tracking",
+                title: routeTitles.routeTracking,
                 icon: "business"
             },
             {
@@ -48,7 +49,7 @@ export class RoutesModule
                 route: "driver-tracking",
                 moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
                 nav: true,
-                title: "Driver tracking",
+                title: routeTitles.driverTracking,
                 icon: "business"
             },
             {
@@ -56,7 +57,7 @@ export class RoutesModule
                 route: "auto-dispatch",
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
                 nav: true,
-                title: "Auto dispatch",
+                title: routeTitles.autoDispatch,
                 icon: "business"
             }
         ]);
