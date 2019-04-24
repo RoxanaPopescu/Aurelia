@@ -28,7 +28,7 @@ COPY ["/frontend/src/legacy/package.json", "./"]
 COPY ["/frontend/src/legacy/package-lock.json", "./"]
 
 ## Install the dependencies, only when they have changed.
-RUN npm ci
+RUN npm install
 
 ## Set the working directory.
 WORKDIR /usr/app
