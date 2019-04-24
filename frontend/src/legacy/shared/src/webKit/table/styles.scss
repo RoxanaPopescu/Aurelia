@@ -178,7 +178,7 @@
 }
 
 .c-gridTable-sortingLoadingOverlay {
-  position: sticky;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -187,25 +187,16 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 150ms;
-  display: grid;
-  grid-row-gap: 0;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 
   .c-gridTable-sortingLoadingOverlay-indicator {
-    align-self: center;
-    justify-self: center;
-    position: sticky;
-    top: 50%;
-    margin-top: -50%;
+    position: absolute;
   }
 
   .c-gridTable-sortingLoadingOverlay-headline {
-    padding-right: 40px;
-    align-self: center;
-    justify-self: center;
-    position: sticky;
-    top: 50%;
-    margin-top: -50%;
+    position: absolute;
     color: var(--colorNeutralDark);
 
     &:after {

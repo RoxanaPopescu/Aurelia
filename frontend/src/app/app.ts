@@ -65,7 +65,7 @@ export class AppModule
             },
             {
                 name: "account/activate",
-                route: "account/activate",
+                route: "activation",
                 moduleId: PLATFORM.moduleName("./modules/account/modules/activate/activate"),
                 title: routeTitles.activateAccount
             },

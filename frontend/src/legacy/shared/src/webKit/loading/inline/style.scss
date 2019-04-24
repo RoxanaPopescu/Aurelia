@@ -4,11 +4,17 @@
   pointer-events: none;
   user-select: none;
   position: fixed;
-  height: calc(100vh - #{$websiteTopMenu} - #{$websiteFooter});
-  width: 100%;
-  left: 0;
-  top: $websiteTopMenu;
+  height: 100vh;
+  width: calc(100% - var(--size-app-sidebar-width-expanded));
+  left: var(--size-app-sidebar-width-expanded);
+  top: 0;
   z-index: 99999;
+
+  .sideMenu--collapsed &
+  {
+    left: var(--size-app-sidebar-width);
+    width: calc(100% - var(--size-app-sidebar-width));
+  }
 
   .loadingContainer {
     position: absolute;

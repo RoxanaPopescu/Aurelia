@@ -5,6 +5,18 @@ import { EventManager } from "shared/utilities";
 const focusVisibleClassName = "focus-visible";
 
 /**
+ * Represents the extended options that may be passed to the standard `focus` method,
+ * to control how focus visibility is affected.
+ */
+export interface IExtendedFocusOptions extends FocusOptions
+{
+    /**
+     * True to prevent the focus visibility from changing, otherwise false.
+     */
+    preventFocusVisible?: boolean;
+}
+
+/**
  * Represents a service that manages the visibility of focus, by adding a
  * class to the `body` element when keyboard navigation occurs, and removing
  * it when any mouse, touch or pointer interaction occurs.
@@ -38,9 +50,12 @@ export class FocusService
         // tslint:disable: no-invalid-this no-unbound-method no-this-assignment
         const focusService = this;
         const focusFunc = HTMLElement.prototype.focus;
-        HTMLElement.prototype.focus = function(): void
+        HTMLElement.prototype.focus = function(options: IExtendedFocusOptions): void
         {
-            focusService.setFocusVisible(true);
+            if (options == null || !options.preventFocusVisible)
+            {
+                focusService.setFocusVisible(true);
+            }
 
             focusFunc.apply(this, arguments as any);
         };

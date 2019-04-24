@@ -198,7 +198,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     options: { symbolId: "icon-[name]" }
                 },
 
-                // Loaders that embed small files as Data URLs and larger ones as files.
+                // Loaders that embed small files as Data URLs and fetches larger files separately.
                 {
                     test: /\.(png|gif|jpg|cur|svg)$/i,
                     exclude: paths.iconFolders,
@@ -206,19 +206,19 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     options: { limit: 10000 }
                 },
                 {
-                    test: /\.woff2(\?v=[^&]*)?$/i,
+                    test: /\.woff2$/i,
                     loader: "url-loader",
                     options: { limit: 10000, mimetype: "application/font-woff2" }
                 },
                 {
-                    test: /\.woff(\?v=[^&]*)?$/i,
+                    test: /\.woff$/i,
                     loader: "url-loader",
                     options: { limit: 10000, mimetype: "application/font-woff" }
                 },
 
                 // Loader for files that should be fetched separately.
                 {
-                    test: /\.(ttf|eot|svg|otf)(\?v=[^&]*)?$/i,
+                    test: /\.(ttf|eot|otf)$/i,
                     exclude: paths.iconFolders,
                     loader: "file-loader"
                 }
