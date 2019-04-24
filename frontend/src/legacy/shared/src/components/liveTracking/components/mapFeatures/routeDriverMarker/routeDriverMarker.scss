@@ -1,17 +1,5 @@
 @import "shared/src/webKit/constants.scss";
 
-@keyframes liveTracking-routeDriverMarker-pulse {
-  0% {
-    box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 0 rgba($colorOk, 0.4);
-  }
-  70% {
-      box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 5px rgba($colorOk, 0);
-  }
-  100% {
-      box-shadow: 0 0 1px 1px rgba(white, .6), 0 0 0 0 rgba($colorOk, 0);
-  }
-}
-
 .c-liveTracking-routeDriverMarker {
   padding: 5px;
   pointer-events: none;
@@ -32,14 +20,14 @@
   &.c-liveTracking-routeDriverMarker--online {
     // Disabled due to extremely high CPU usage.
     //animation: liveTracking-routeDriverMarker-pulse 2s infinite;
-    border: 1px solid darken($colorOk, 2%);
-    background: $colorOk;
+    border: 1px solid var(--colorOkDarken);
+    background: var(--colorOk);
   }
 
   &.c-liveTracking-routeDriverMarker--offline {
     box-shadow: 0 0 1px 1px rgba(white, .7);
-    border: 1px solid darken($colorAlert, 2%);
-    background: $colorAlert;
+    border: 1px solid var(--colorAlertDarken);
+    background: var(--colorOk);
   }
 
   &.c-liveTracking-routeDriverMarker--completed {
@@ -63,9 +51,9 @@
 }
 
 .c-liveTracking-routeDriverMarker-warning {
-  background: $colorWarning;
+  background: var(--colorWarning);
 }
 
 .c-liveTracking-routeDriverMarker-alert {
-  background: $colorAlert;
+  background: var(--colorAlert);
 }

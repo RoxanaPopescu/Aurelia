@@ -3,7 +3,7 @@
 .c-worldMap {
   position: relative;
   height: 100%;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
 
   // Fix font inheritance.
   .gm-style {

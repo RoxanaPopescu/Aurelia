@@ -2,11 +2,11 @@
 
 .c-driverDispatch-container {
   display: flex;
-  align-items: stretch;
-  min-height: 100%;
+  height: 100%;
 }
 
 .c-driverDispatch-main {
   flex-grow: 1;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }

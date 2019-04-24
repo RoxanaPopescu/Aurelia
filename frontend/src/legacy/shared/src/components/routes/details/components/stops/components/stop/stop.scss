@@ -19,14 +19,14 @@
 }
 
 .c-routeDetails-stops-stop-details-heading {
-  border-bottom: solid 1px $colorNeutralLight;
+  border-bottom: solid 1px var(--colorNeutralLight);
   margin-bottom: 11px;
   padding-bottom: 10px;
 }
 
 .c-routeDetails-stops-stop-details-collo {
   display: flex;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
   padding: 4px 16px;
   margin-bottom: 2px;
 

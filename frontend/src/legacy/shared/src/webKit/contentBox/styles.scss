@@ -8,7 +8,7 @@
   .title {
     height: 52px;
     display: flex;
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
     align-items: center;
     padding: 0 30px;
   }
@@ -20,11 +20,14 @@
   }
 }
 @media (min-width: $mediaBig) {
-  .c-contentBox {}
+  .c-contentBox {
+  }
 }
 @media (min-width: $mediaIpadV) and (max-width: $mediaIpadH) {
-  .c-contentBox {}
+  .c-contentBox {
+  }
 }
 @media (max-width: $mediaIpadV - 1) {
-  .c-contentBox {}
+  .c-contentBox {
+  }
 }

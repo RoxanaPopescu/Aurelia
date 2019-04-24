@@ -36,7 +36,7 @@ export default class Rule extends React.Component<Props> {
     return (
       <div
         key={rule.id}
-        className="c-ruleContainer-item c-ruleContainer-primary
+        className="c-ruleContainer-item c-ruleContainer-primary 
                 c-ruleTitleContainer c-ruleContainer-horizontalSpace"
       >
         <div className="c-ruleTitleContainer-title">{rule.title}</div>
@@ -237,7 +237,7 @@ export default class Rule extends React.Component<Props> {
       return (
         <div
           key={vehicle.type + "_header"}
-          className="c-ruleContainer-itemc-ruleContainer-primary c-ruleContainer-header body
+          className="c-ruleContainer-itemc-ruleContainer-primary c-ruleContainer-header body 
                     c-ruleContainer-horizontalSpace c-ruleContainer-inputDefault c-ruleContainer-doubleItem"
         >
           {vehicle.title}
@@ -255,7 +255,7 @@ export default class Rule extends React.Component<Props> {
       <div
         key={vehicle.type + "_header"}
         onClick={() => this.ruleStore.enableVehicle(vehicle)}
-        className="c-ruleContainer-item c-ruleContainer-dotted c-ruleContainer-header
+        className="c-ruleContainer-item c-ruleContainer-dotted c-ruleContainer-header 
                 c-ruleContainer-horizontalSpace c-ruleContainer-doubleItem"
       >
         <div className="cta3 c-ruleContainer-dynamicPricesLink">
@@ -278,7 +278,7 @@ export default class Rule extends React.Component<Props> {
         <div className="singlePrice">
           <div className="c-ruleContainer" style={gridStyle}>
             <div
-              className="c-ruleContainer-item c-ruleContainer-primary body
+              className="c-ruleContainer-item c-ruleContainer-primary body 
                             c-ruleContainer-header cta1 c-ruleContainer-horizontalSpace"
             >
               Regler

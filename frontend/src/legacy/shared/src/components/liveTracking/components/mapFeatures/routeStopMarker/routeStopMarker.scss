@@ -1,17 +1,5 @@
 @import "shared/src/webKit/constants.scss";
 
-@keyframes liveTracking-routeStopMarker-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba($colorOk, 0.4);
-  }
-  70% {
-      box-shadow: 0 0 0 10px rgba($colorOk, 0);
-  }
-  100% {
-      box-shadow: 0 0 0 0 rgba($colorOk, 0);
-  }
-}
-
 .c-liveTracking-routeStopMarker {
   padding: 5px;
   pointer-events: none;
@@ -39,13 +27,13 @@
 
   &.c-liveTracking-routeStopMarker--arrived {
     background: #7d887c;
-    border-color: darken($colorOk, 2%);
+    border-color: var(--colorOkDarken);
     box-shadow: inset 0 0 0 1px lighten(#7d887c, 2%), 0 0 1px 1px white;
   }
 
   &.c-liveTracking-routeStopMarker--done {
-    background: $colorOk;
-    border-color: darken($colorOk, 2%);
+    background: var(--colorOk);
+    border-color: var(--colorOkDarken);
   }
 
   &.c-liveTracking-routeStopMarker--cancelled {
@@ -57,7 +45,7 @@
   &.c-liveTracking-routeStopMarker--selected {
     box-shadow:
       0 0 1px 1px rgba(white, .3),
-      0 0 0px 3px $colorBackgroundPrimary,
+      0 0 0px 3px var(--colorBackgroundPrimary),
       0 0 2px 5px white;
   }
 }
@@ -75,9 +63,9 @@
 }
 
 .c-liveTracking-routeStopMarker-warning {
-  background: $colorWarning;
+  background: var(--colorWarning);
 }
 
 .c-liveTracking-routeStopMarker-alert {
-  background: $colorAlert;
+  background: var(--colorAlert);
 }

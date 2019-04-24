@@ -1,12 +1,13 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-driverDispatch-filters-slider {}
+.c-driverDispatch-filters-slider {
+}
 
 .c-driverDispatch-filters-slider-header {
-  background-color: $colorNeutralExtraLight;
+  background-color: var(--colorNeutralExtraLight);
   height: 44px;
   display: flex;
-  color: $colorNeutralSemiDark;
+  color: var(--colorNeutralSemiDark);
   align-items: center;
   padding: 0 40px;
 }

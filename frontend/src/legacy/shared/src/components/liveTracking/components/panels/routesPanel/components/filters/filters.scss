@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
 }
 
 .c-liveTracking-routesPanel-filters-badge {
@@ -16,20 +16,20 @@
   line-height: 1.33;
   font-size: 12px;
   text-align: center;
-  background: $colorNeutralRegular;
+  background: var(--colorNeutralRegular);
   color: white;
 }
 
 .c-liveTracking-routesPanel-filters-criticality:hover {
   .c-liveTracking-routesPanel-filters-badge {
     &.c-liveTracking-box-positive {
-      background-color: darken($colorOk, $darkenOnHover) !important;
+      background-color: var(--colorOkDarken) !important;
     }
     &.c-liveTracking-box-warning {
-      background-color: darken($colorWarning, $darkenOnHover) !important;
+      background-color: var(--colorWarningDarken) !important;
     }
     &.c-liveTracking-box-negative {
-      background-color: darken($colorAlert, $darkenOnHover) !important;
+      background-color: var(--colorAlertDarken) !important;
     }
   }
 }

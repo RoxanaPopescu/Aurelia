@@ -3,7 +3,7 @@
 .c-role-outerContainer {
   position: absolute;
   z-index: 1000;
-  background-color: rgba(0,0,0,.8);
+  background-color: rgba(0, 0, 0, 0.8);
   top: 0;
   left: 0;
   right: 0;
@@ -29,9 +29,9 @@
       display: flex;
       align-items: center;
       height: 52px;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
       margin-bottom: 70px;
-      border-bottom: 1px solid $colorNeutralLight;
+      border-bottom: 1px solid var(--colorNeutralLight);
       padding: 0 35px;
       border-top-left-radius: $borderRadius;
       border-top-right-radius: $borderRadius;

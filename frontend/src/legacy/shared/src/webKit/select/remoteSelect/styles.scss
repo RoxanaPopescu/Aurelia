@@ -49,9 +49,10 @@
       .option-wrapper {
         &.highlight,
         &:hover {
-          background-color: $colorNeutralExtraLight;
+          background-color: var(--colorNeutralExtraLight);
 
-          .simple-option.option {}
+          .simple-option.option {
+          }
         }
 
         .optionHeader {
@@ -82,9 +83,11 @@
         }
 
         .text-container {
-          .main-text {}
+          .main-text {
+          }
 
-          .secondary-text {}
+          .secondary-text {
+          }
         }
       }
     }

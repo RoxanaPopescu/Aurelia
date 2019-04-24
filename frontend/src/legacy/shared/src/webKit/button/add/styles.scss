@@ -13,7 +13,7 @@
       }
 
       span {
-        background-color: $colorBackgroundPrimary;
+        background-color: var(--colorBackgroundPrimary);
         position: absolute;
         transition: background-color 120ms;
 

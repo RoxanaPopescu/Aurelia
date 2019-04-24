@@ -5,13 +5,13 @@
   display: flex;
   margin-bottom: 4px;
   padding: 16px 20px;
-  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: $listItemBorderRadius;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
   cursor: pointer;
 
   &:hover {
-    background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+    background-color: var(--colorNeutralExtraLightDarken);
 
     &:before {
       content: "";
@@ -22,7 +22,7 @@
       width: 4px;
       border-top-left-radius: 2px;
       border-bottom-left-radius: 2px;
-      background-color: $colorBackgroundPrimary;
+      background-color: var(--colorBackgroundPrimary);
     }
   }
 
@@ -35,7 +35,7 @@
 
 .c-autoDispatch-rule--selected,
 .c-autoDispatch-rule--selected:hover {
-  background-color: $colorNeutralLight;
+  background-color: var(--colorNeutralLight);
 }
 
 .c-autoDispatch-rule-actions {

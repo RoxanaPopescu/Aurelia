@@ -5,14 +5,14 @@
   display: flex;
   margin: 4px;
   padding: 16px 20px;
-  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: $listItemBorderRadius;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
   cursor: pointer;
 
   &.c-liveTracking-splitRoutePanel-driver--selected,
   &:hover {
-    background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+    background-color: var(--colorNeutralExtraLightDarken);
 
     &:before {
       content: "";
@@ -23,18 +23,18 @@
       width: 4px;
       border-top-right-radius: 2px;
       border-bottom-right-radius: 2px;
-      background-color: $colorBackgroundPrimary;
+      background-color: var(--colorBackgroundPrimary);
     }
   }
 
   &.c-liveTracking-splitRoutePanel-driver--selected {
-    border-color: $colorBackgroundPrimary;
+    border-color: var(--colorBackgroundPrimary);
   }
 }
 
 .c-liveTracking-splitRoutePanel-driver-id {
   margin-right: 20px;
-  color: $textInteractivePrimary;
+  color: var(--colorInteractivePrimary);
 }
 
 .c-liveTracking-splitRoutePanel-driver-name {
@@ -43,5 +43,5 @@
 }
 
 .c-liveTracking-splitRoutePanel-driver-vehicleTypes {
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
 }

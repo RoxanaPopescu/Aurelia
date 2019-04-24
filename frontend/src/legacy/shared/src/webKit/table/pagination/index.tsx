@@ -1,21 +1,22 @@
 import React from "react";
 import "./styles.scss";
 import DetectMobile from "../../utillity/detectMobile";
-import Localization from "../../../localization";
 
 export type PaginationDisplayMode = "fixed" | "sticky";
 
 export interface TablePaginationProps {
   pages: number;
   currentPageIndex: number;
-  resultsPerPage: number;
   displayMode?: PaginationDisplayMode;
   onPageChange(nextPage: number, previousPage?: number);
+  onResultsPerPageChanged?(value: number);
 }
 export interface TablePaginationState {
   currentPageIndex: number;
   previousPageIndex: number;
   pagesArray: number[];
+  resultsPerPage: number;
+  dropdownOpen: boolean;
 }
 
 export class TablePaginationComponent extends React.Component<
@@ -35,7 +36,9 @@ export class TablePaginationComponent extends React.Component<
     this.state = {
       currentPageIndex: props.currentPageIndex ? props.currentPageIndex : 0,
       previousPageIndex: props.currentPageIndex ? props.currentPageIndex : 0,
-      pagesArray: this.getPagesArray()
+      pagesArray: this.getPagesArray(),
+      resultsPerPage: 40,
+      dropdownOpen: false
     };
   }
 
@@ -142,33 +145,47 @@ export class TablePaginationComponent extends React.Component<
     );
   }
 
-  renderPages() {
+  private renderResultsPerPage() {
     let array: JSX.Element[] = [];
 
-    if (this.props.pages <= this.pagesToShow) {
-      // 10 or less pages
-      if (this.props.pages === 0) {
-        // 0 pages fallback
-        for (let i = 0; i < 5; i++) {
-          array.push(this.renderPage(i, true));
-        }
-      } else {
-        for (let i = 0; i < this.props.pages; i++) {
-          array.push(this.renderPage(i));
-        }
-      }
-    } else {
-      // More than 10 pages
-      this.state.pagesArray.map(pageIndex => {
-        array.push(this.renderPage(pageIndex));
-      });
-    }
+    [20, 30, 40, 50].forEach(value => {
+      array.push(
+        <div
+          key={`${value}-resultsPerPage`}
+          className="c-pagination-dropdown-value"
+          onClick={() => {
+            this.setState({ resultsPerPage: value });
+            if (this.props.onResultsPerPageChanged) {
+              this.props.onResultsPerPageChanged(value);
+            }
+          }}
+        >
+          {value}
+        </div>
+      );
+    });
 
-    return array;
+    return (
+      <div
+        className={`c-pagination-resultsPerPage${
+          this.state.dropdownOpen ? " open" : ""
+        }`}
+        onClick={() =>
+          this.setState({ dropdownOpen: !this.state.dropdownOpen })
+        }
+      >
+        {this.state.resultsPerPage}
+        {this.props.onResultsPerPageChanged && (
+          <div className="c-pagination-dropdown">{array}</div>
+        )}
+      </div>
+    );
   }
 
   renderPagination() {
     let array: JSX.Element[] = [];
+
+    array.push(this.renderResultsPerPage());
 
     array.push(
       <div
@@ -183,13 +200,7 @@ export class TablePaginationComponent extends React.Component<
           this.changePage(this.state.currentPageIndex - 1)
         }
       >
-        {Localization.sharedValue("Pagination_PreviousPage")}
-      </div>
-    );
-
-    array.push(
-      <div key="pagesContainer" className="c-pagination-pages">
-        {this.renderPages()}
+        <span />
       </div>
     );
 
@@ -208,16 +219,7 @@ export class TablePaginationComponent extends React.Component<
           this.changePage(this.state.currentPageIndex + 1)
         }
       >
-        {Localization.sharedValue("Pagination_NextPage")}
-      </div>
-    );
-
-    array.push(
-      <div className="c-pagination-resultsPerPage" key="resultsPerPage">
-        {Localization.sharedValue("Table_ResultsPerPage").replace(
-          "{number}",
-          String(this.props.resultsPerPage)
-        )}
+        <span />
       </div>
     );
 

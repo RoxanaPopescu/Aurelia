@@ -14,13 +14,13 @@
     width: 28px;
     height: 19px;
     border-radius: $borderRadius;
-    background-color: $colorBackgroundPrimary;
+    background-color: var(--colorBackgroundPrimary);
   }
 
   .c-marker-line {
     height: 6px;
     width: 3px;
-    background-color: $colorBackgroundPrimary;
+    background-color: var(--colorBackgroundPrimary);
   }
 
   .c-marker-bottom {
@@ -28,7 +28,7 @@
     width: 10px;
     border-radius: 50%;
     background-color: white;
-    border: 3.5px solid $colorBackgroundPrimary;
+    border: 3.5px solid var(--colorBackgroundPrimary);
   }
 }
 
@@ -38,7 +38,7 @@
 
   .c-infoWindow-top {
     height: 28px;
-    background-color: $colorAlert;
+    background-color: var(--colorAlert);
   }
 
   .c-infoWindow-content {

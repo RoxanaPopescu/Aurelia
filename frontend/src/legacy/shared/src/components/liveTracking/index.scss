@@ -10,11 +10,11 @@
 }
 
 .c-liveTracking-color-positive {
-  color: $colorOk !important;
+  color: var(--colorOk) !important;
 }
 
 .c-liveTracking-color-negative {
-  color: $colorAlert !important;
+  color: var(--colorAlert) !important;
 }
 
 .c-liveTracking-box-clickable {
@@ -22,36 +22,36 @@
 }
 
 .c-liveTracking-box-neutral {
-  background-color: $colorNeutralExtraLight !important;
+  background-color: var(--colorNeutralExtraLight) !important;
 
   &.c-liveTracking-box-clickable:hover {
-    background-color: darken($colorNeutralExtraLight, $darkenOnHover) !important;
+    background-color: var(--colorNeutralExtraLightDarken) !important;
   }
 }
 
 .c-liveTracking-box-positive {
   color: white !important;
-  background-color: $colorOk !important;
+  background-color: var(--colorOk) !important;
 
   &.c-liveTracking-box-clickable:hover {
-    background-color: darken($colorOk, $darkenOnHover) !important;
+    background-color: var(--colorOkDarken) !important;
   }
 }
 
 .c-liveTracking-box-warning {
   color: white !important;
-  background-color: $colorWarning !important;
+  background-color: var(--colorWarning) !important;
 
   &.c-liveTracking-box-clickable:hover {
-    background-color: darken($colorWarning, $darkenOnHover) !important;
+    background-color: var(--colorWarningDarken) !important;
   }
 }
 
 .c-liveTracking-box-negative {
   color: white !important;
-  background-color: $colorAlert !important;
+  background-color: var(--colorAlert) !important;
 
   &.c-liveTracking-box-clickable:hover {
-    background-color: darken($colorAlert, $darkenOnHover) !important;
+    background-color: var(--colorAlertDarken) !important;
   }
 }

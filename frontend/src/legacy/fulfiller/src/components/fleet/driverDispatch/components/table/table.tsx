@@ -4,6 +4,7 @@ import { TableComponent } from "shared/src/webKit";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { driverDispatchService } from "../../driverDispatchService";
+import { PageContentComponent } from "../../../../../../../shared/src/components/pageContent/index";
 
 @observer
 export default class extends React.Component {
@@ -87,15 +88,24 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div className="c-driverDispatch-table-container">
+      <PageContentComponent>
         <TableComponent
           canSelectRow={() => false}
           data={{
             headers: this.getHeaders(),
             rows: this.getRows()
           }}
+          pagination={{
+            pages: 3,
+            currentPageIndex: 1,
+            resultsPerPage: 40,
+            onPageChange: () => {
+              /* */
+            }
+          }}
+          highlightedRowIndexes={[1]}
         />
-      </div>
+      </PageContentComponent>
     );
   }
 }

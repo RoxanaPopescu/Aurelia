@@ -9,15 +9,15 @@ $height: 20px;
 
   &.checked {
     .c-checkbox {
-      background-color: $colorInteractivePrimary;
-      border: 1px solid $colorInteractivePrimary;
+      background-color: var(--colorInteractivePrimary);
+      border: 1px solid var(--colorInteractivePrimary);
     }
   }
 
   .c-checkbox {
     height: $height;
     width: $height;
-    border: 1px solid $inputBorderColor;
+    border: 1px solid var(--colorNeutralRegular);
     border-radius: $borderRadius;
     background-color: white;
     transition: border 150ms;
@@ -26,7 +26,7 @@ $height: 20px;
     justify-content: center;
 
     &:hover {
-      border: 1px solid $colorNeutralSemiDark;
+      border: 1px solid var(--colorNeutralSemiDark);
     }
 
     span {
@@ -48,7 +48,7 @@ $height: 20px;
 
   &.error {
     .c-checkbox {
-      border-color: $colorAlert;
+      border-color: var(--colorAlert);
     }
   }
 

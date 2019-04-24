@@ -3,7 +3,7 @@
 $menuIconLeft: 26px;
 $menuTextLeft: 70px;
 $menuTextColor: rgba(white, 0.9);
-$subMenuTextColor: lighten($colorInteractivePrimary, 50%);
+$subMenuTextColor: var(--colorInteractivePrimaryLighten);
 $menuTextActiveColor: rgba(white, 1);
 $menuHoverDarken: 0.05%;
 
@@ -52,7 +52,7 @@ $menuHoverDarken: 0.05%;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: $colorInteractivePrimary;
+    background-color: var(--colorInteractivePrimary);
     z-index: 10000;
     transition: left 300ms, right 300ms, width 300ms;
     
@@ -69,7 +69,7 @@ $menuHoverDarken: 0.05%;
       
       &::-webkit-scrollbar-thumb {
         background: rgba(black, .15);
-        border-left: 1px solid rgba($colorInteractivePrimary, .15);
+        border-left: 1px solid var(--colorInteractivePrimaryAlpha15);
       }
     }
 
@@ -82,9 +82,9 @@ $menuHoverDarken: 0.05%;
       z-index: 1;
       background: linear-gradient(
         to bottom,
-        rgba($colorInteractivePrimary,1) 0%,
-        rgba($colorInteractivePrimary,0.97) 80%,
-        rgba($colorInteractivePrimary,0) 100%
+        var(--colorInteractivePrimary) 0%,
+        var(--colorInteractivePrimaryAlpha97) 80%,
+        var(--colorInteractivePrimaryAlpha0) 100%
       );
     }
 
@@ -200,7 +200,7 @@ $menuHoverDarken: 0.05%;
           max-height: 0;
           overflow: hidden;
           transition: all 150ms ease-in-out;
-          background-color: $colorInteractivePrimaryActive;
+          background-color: var(--colorInteractivePrimaryActive);
 
           a {
             margin: 0 20px;

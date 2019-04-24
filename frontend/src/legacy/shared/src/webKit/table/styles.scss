@@ -1,13 +1,11 @@
 @import "../constants.scss";
 
 .gridTable-container {
-  position: relative;
-  top: -15px;
 }
 
 .c-gridTable-totalRows {
-  padding: 12px 0;
-  border-bottom: 1px solid $colorNeutralLight;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--colorNeutralLight);
 }
 
 .c-gridTable-loading {
@@ -23,6 +21,7 @@
   min-width: 800px;
   display: grid;
   grid-row-gap: 0;
+  padding: 0 8rem;
 
   * {
     position: relative;
@@ -35,29 +34,21 @@
   .c-gridTable-row {
     display: contents;
 
-    &:hover {
+    &:hover,
+    &.highlighted {
       .c-gridTable-content {
-        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
-        border-color: darken($colorNeutralExtraLight, $darkenOnHover);
-
-        &.c-gridTable-firstColumn:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          background-color: $colorBackgroundPrimary;
-          border-top-left-radius: $listItemBorderRadius;
-          border-bottom-left-radius: $listItemBorderRadius;
-        }
+        background-color: var(--colorNeutralExtraLightDarken);
+      }
+    }
+    &.highlighted {
+      .c-gridTable-content {
+        z-index: 1;
       }
     }
 
-    &.highlighted {
+    &.disabled {
       .c-gridTable-content {
-        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
-        border-color: darken($colorNeutralExtraLight, $darkenOnHover);
+        color: var(--colorNeutralExtraLightDarken);
       }
     }
   }
@@ -65,43 +56,40 @@
   .c-gridTable-header {
     display: flex;
     align-items: center;
-    user-select: none;
-    height: 48px;
+    height: 10rem;
     text-align: left;
-    align-self: center;
     position: sticky;
-    z-index: 101;
+    z-index: 2;
+    border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
+    border-top: var(--border-width-thin) solid var(--colorNeutralLight);
     top: 0;
-    background-color: white;
-    line-height: 48px;
-
+    background-color: var(--colorNeutralExtraExtraLight);
+    padding: 0 5rem;
     transition: all 150ms;
-    font-size: 13px;
-    font-weight: 600;
-
-    &:hover {
-      .c-gridTable-header-text {
-        background-color: $colorHighlightWhite;
-      }
-    }
 
     $arrowHeight: 4px;
 
-    .c-gridTable-header-text {
-      padding: 0 15px;
+    &:first-child {
+      border-left: var(--border-width-thin) solid var(--colorNeutralLight);
+      border-top-left-radius: var(--border-radius-medium);
+      border-bottom-left-radius: var(--border-radius-medium);
+    }
+    &:last-child {
+      border-right: var(--border-width-thin) solid var(--colorNeutralLight);
+      border-top-right-radius: var(--border-radius-medium);
+      border-bottom-right-radius: var(--border-radius-medium);
     }
 
     .c-gridTable-header-arrows {
-      padding-left: 5px;
       height: 100%;
-      margin-left: 8px;
+      margin-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       &:after,
       &:before {
         content: "";
-        position: absolute;
-        margin-top: -2px;
-        left: 0;
         width: 0;
         height: 0;
         border-left: $arrowHeight solid transparent;
@@ -109,24 +97,24 @@
       }
 
       &:before {
-        top: calc(50% - #{$arrowHeight});
-        border-bottom: $arrowHeight solid $colorBackgroundPrimary;
+        border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
+        margin-bottom: 0.5rem;
       }
 
       &:after {
-        top: calc(50% + #{$arrowHeight});
-        border-top: $arrowHeight solid $colorBackgroundPrimary;
+        border-top: $arrowHeight solid var(--colorBackgroundPrimary);
+        margin-top: 0.5rem;
       }
     }
 
     &.Descending {
       .c-gridTable-header-arrows {
         &:before {
-          border-bottom: $arrowHeight solid $colorNeutralRegular;
+          border-bottom: $arrowHeight solid var(--colorNeutralRegular);
         }
 
         &:after {
-          border-top: $arrowHeight solid $colorBackgroundPrimary;
+          border-top: $arrowHeight solid var(--colorBackgroundPrimary);
         }
       }
     }
@@ -134,11 +122,11 @@
     &.Ascending {
       .c-gridTable-header-arrows {
         &:before {
-          border-bottom: $arrowHeight solid $colorBackgroundPrimary;
+          border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
         }
 
         &:after {
-          border-top: $arrowHeight solid $colorNeutralRegular;
+          border-top: $arrowHeight solid var(--colorNeutralRegular);
         }
       }
     }
@@ -151,29 +139,16 @@
   .c-gridTable-content {
     display: flex;
     align-items: center;
-    text-align: left;
-    padding: 10px 15px 8px;
-    color: $colorNeutralDark;
-    background-color: $colorNeutralExtraLight;
+    height: 10rem;
+    padding: 0 5rem;
+    border-bottom: 1px solid var(--colorNeutralLight);
     transition: background-color 100ms;
-    margin-bottom: 4px;
 
     &.c-gridTable-skeleton {
-      height: 40px;
-      margin-bottom: 10px;
+      height: 10rem;
+      margin-bottom: 2rem;
       animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none
         running;
-    }
-
-    &.c-gridTable-lastColumn {
-      border-top-right-radius: $listItemBorderRadius;
-      border-bottom-right-radius: $listItemBorderRadius;
-    }
-
-    &.c-gridTable-firstColumn {
-      padding-left: 15px;
-      border-top-left-radius: $listItemBorderRadius;
-      border-bottom-left-radius: $listItemBorderRadius;
     }
 
     &.selectable {
@@ -194,7 +169,7 @@
   height: 100%;
 
   .c-gridTable-noResults-headline {
-    padding-right: 40px;
+    padding-right: 10rem;
     align-self: center;
     justify-self: center;
     position: sticky;
@@ -231,7 +206,7 @@
     position: sticky;
     top: 50%;
     margin-top: -50%;
-    color: $colorNeutralDark;
+    color: var(--colorNeutralDark);
 
     &:after {
       content: "";
@@ -246,7 +221,7 @@
       width: 26px;
       border: 4px solid transparent;
       border-radius: 50%;
-      border-top-color: $colorNeutralDark;
+      border-top-color: var(--colorNeutralDark);
     }
   }
 
@@ -258,14 +233,14 @@
 }
 @keyframes animation-table-skeleton {
   0% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 
   50% {
-    background-color: rgba($colorNeutralExtraLight, 0.7);
+    background-color: rgba(var(--colorNeutralExtraLight), 0.7);
   }
 
   100% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 }

@@ -36,7 +36,7 @@
 .c-profilePage-avatar {
   height: 100%;
   width: 100%;
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -64,9 +64,9 @@
 
 .c-profilePage-headline {
   text-transform: uppercase;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   padding-bottom: 6px;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
   margin-bottom: 16px;
 }
 

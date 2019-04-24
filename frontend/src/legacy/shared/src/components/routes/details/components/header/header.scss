@@ -4,7 +4,7 @@
   display: flex;
   padding: 16px 24px 8px;
   align-items: center;
-  border-bottom: solid 1px $colorNeutralLight;
+  border-bottom: solid 1px var(--colorNeutralLight);
 }
 
 .c-routeDetails-header-back {

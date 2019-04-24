@@ -42,7 +42,7 @@
   align-items: center;
   width: 590px;
   height: 444px;
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 0 92px 0 92px;
@@ -65,7 +65,7 @@
 }
 
 .c-login-backgroundOverlayDark {
-  background-color: $colorBackgroundSecondary;
+  background-color: var(--colorBackgroundSecondary);
   opacity: 0.6;
   position: absolute;
   width: 100vw;
@@ -73,7 +73,7 @@
 }
 
 .c-login-backgroundOverlayLight {
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   opacity: 0.6;
   position: absolute;
   width: 100vw;

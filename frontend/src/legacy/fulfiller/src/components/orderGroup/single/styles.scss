@@ -4,7 +4,7 @@
   height: 100%;
   overflow: auto;
   padding: 35px 30px;
-  background-color: $colorNeutralLight;
+  background-color: var(--colorNeutralLight);
   display: flex;
   align-items: flex-start;
 
@@ -113,7 +113,7 @@
         }
 
         .c-orderGroup-timeSlots-createText {
-          color: $colorNeutralRegular;
+          color: var(--colorNeutralRegular);
           text-align: center;
           width: 300px;
         }

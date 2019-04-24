@@ -47,50 +47,50 @@ $largeButtonHeight: 52px;
     }
 
     &.buttonAction {
-      background-color: $colorInteractivePrimary;
+      background-color: var(--colorInteractivePrimary);
       color: white;
 
       &:active,
       &:hover {
         .moverButtonText {
-          background-color: darken($colorInteractivePrimary, $darkenOnHover);
+          background-color: var(--colorInteractivePrimaryDarken);
         }
       }
     }
 
     &.buttonNeutral {
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
 
       &:active,
       &:hover {
-        background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+        background-color: var(--colorNeutralExtraLightDarken);
       }
     }
 
     &.buttonLight {
-      color: $colorInteractivePrimary;
-      border: 1px solid $buttonBorderColor;
+      color: var(--colorInteractivePrimary);
+      border: 1px solid var(--colorNeutralRegular);
       background-color: white;
 
       &:active,
       &:hover {
-        border-color: darken($buttonBorderColor, $darkenOnHover);
+        border-color: var(--colorNeutralRegularDarken);
       }
     }
 
     &.disabled {
       border: none;
-      color: $colorNeutralRegular;
+      color: var(--colorNeutralRegular);
       pointer-events: none;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
       opacity: --opacity-disabled;
     }
 
     &.loading {
       border: none;
-      color: $colorNeutralRegular;
+      color: var(--colorNeutralRegular);
       pointer-events: none;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
     }
 
     &.buttonBig {
@@ -134,11 +134,11 @@ $largeButtonHeight: 52px;
     &.moverButton {
       &.buttonAction {
         background-color: white;
-        color: $colorInteractivePrimary;
+        color: var(--colorInteractivePrimary);
 
         &:active,
         &:hover {
-          background-color: $colorInteractivePrimary;
+          background-color: var(--colorInteractivePrimary);
 
           .moverButtonText {
             background-color: rgba(white, 0.75);
@@ -146,8 +146,8 @@ $largeButtonHeight: 52px;
         }
 
         &.disabled {
-          background-color: $colorInteractivePrimary;
-          color: $textInteractivePrimary;
+          background-color: var(--colorInteractivePrimary);
+          color: var(--colorInteractivePrimary);
 
           .moverButtonText {
             background-color: rgba(white, 0.3);
@@ -156,7 +156,7 @@ $largeButtonHeight: 52px;
       }
 
       &.buttonNeutral {
-        background-color: $colorInteractivePrimaryActive;
+        background-color: var(--colorInteractivePrimaryActive);
         color: white;
 
         &:active,
@@ -167,8 +167,8 @@ $largeButtonHeight: 52px;
         }
 
         &.disabled {
-          background-color: $colorInteractivePrimary;
-          color: $textInteractivePrimary;
+          background-color: var(--colorInteractivePrimary);
+          color: var(--colorInteractivePrimary);
 
           .moverButtonText {
             background-color: rgba(white, 0.3);
@@ -180,7 +180,7 @@ $largeButtonHeight: 52px;
         border: none;
         pointer-events: none;
         color: white;
-        background-color: $colorNeutralRegular;
+        background-color: var(--colorNeutralRegular);
       }
 
       &.loading:after {

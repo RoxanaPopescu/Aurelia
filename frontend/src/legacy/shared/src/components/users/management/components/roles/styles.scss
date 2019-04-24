@@ -42,18 +42,18 @@
 
     .c-users-role-head {
       display: flex;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
       padding: 14px 30px;
       cursor: pointer;
       transition: background-color 100ms, color 100ms;
 
       &:hover {
-        border-left: 4px solid $colorBackgroundPrimary;
+        border-left: 4px solid var(--colorBackgroundPrimary);
         padding-left: 26px;
       }
 
       &.active {
-        background-color: $colorNeutralLight;
+        background-color: var(--colorNeutralLight);
 
         > div {
           .c-users-role-chevron {
@@ -72,8 +72,8 @@
         }
 
         .c-users-role-chevron {
-          border-right: 2px solid $colorBackgroundPrimary;
-          border-bottom: 2px solid $colorBackgroundPrimary;
+          border-right: 2px solid var(--colorBackgroundPrimary);
+          border-bottom: 2px solid var(--colorBackgroundPrimary);
           height: 10px;
           width: 10px;
           margin-left: 70px;
@@ -86,13 +86,13 @@
     .c-users-role-details {
       border-bottom-right-radius: $borderRadius;
       border-bottom-left-radius: $borderRadius;
-      border: 1px solid $colorNeutralLight;
+      border: 1px solid var(--colorNeutralLight);
       border-top: none;
       padding: 30px 30px 50px;
 
       .c-users-role-title {
         padding-bottom: 4px;
-        border-bottom: 1px solid $colorNeutralLight;
+        border-bottom: 1px solid var(--colorNeutralLight);
         margin-bottom: 2px;
       }
 
@@ -104,14 +104,14 @@
 }
 @keyframes animation-roles-skeleton {
   0% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 
   50% {
-    background-color: rgba($colorNeutralExtraLight, .7);
+    background-color: var(--colorNeutralExtraLightAlpha70);
   }
 
   100% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 }

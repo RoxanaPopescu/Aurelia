@@ -1,21 +1,14 @@
-@import "./assets/themes/default/constants.scss";
-
 $listItemBorderRadius: 3px;
 $opacityDisabled: .3;
 $formWidth: 500px;
 $formWidthWide: 850px;
-$tabBorderColor: $colorNeutralLight;
-$inputBorderColor: $colorNeutralRegular;
-$buttonBorderColor: $colorNeutralRegular;
-$dropdownBorderColor: $colorNeutralRegular;
+
 $dropdownShadow: 0 0 20px 0 rgba(0, 0, 0, .2);
 
 //Colors
 $colorHighlightWhite: rgba(white, 0.2);
 $colorHighlightDark: rgba(black, 0.1);
-//Text color
-$textInteractivePrimary: $colorInteractivePrimary;
-$textInteractiveSecondary: $colorInteractiveSecondary;
+
 //Font weights
 $fontExtraLight: 200;
 $fontLight: 300;

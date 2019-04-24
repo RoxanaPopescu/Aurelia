@@ -8,7 +8,7 @@
 
 .c-journeyOverview-headline {
   padding-bottom: 10px;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
 }
 
 .c-journeyOverview-line {
@@ -27,7 +27,7 @@
   width: 1px;
 
   &.active {
-    background-color: $colorNeutralRegular;
+    background-color: var(--colorNeutralRegular);
   }
 }
 
@@ -35,15 +35,15 @@
   height: 19px;
   width: 100%;
   border-radius: 50%;
-  border: 1px solid $colorNeutralRegular;
+  border: 1px solid var(--colorNeutralRegular);
 
   &.visited {
-    background-color: $colorNeutralRegular;
+    background-color: var(--colorNeutralRegular);
   }
 
   &.active {
-    background-color: $colorOk;
-    border: 1px solid $colorOk;
+    background-color: var(--colorOk);
+    border: 1px solid var(--colorOk);
   }
 }
 
@@ -52,7 +52,7 @@
   width: 1px;
 
   &.active {
-    background-color: $colorNeutralRegular;
+    background-color: var(--colorNeutralRegular);
   }
 }
 
@@ -121,7 +121,7 @@ $paddingLeft: 35px;
     }
 
     .c-journeyOverview-passage-header {
-      background-color: $colorNeutralLight;
+      background-color: var(--colorNeutralLight);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
 
@@ -134,12 +134,12 @@ $paddingLeft: 35px;
   .c-journeyOverview-passage-header {
     position: relative;
     height: 44px;
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
     border-radius: $listItemBorderRadius;
     cursor: pointer;
 
     &:hover {
-      background-color: darken($colorNeutralExtraLight, $darkenOnHover);
+      background-color: var(--colorNeutralExtraLightDarken);
 
       &:first-child {
         &:before {
@@ -149,7 +149,7 @@ $paddingLeft: 35px;
           top: 0;
           bottom: 0;
           width: 4px;
-          background-color: $colorBackgroundPrimary;
+          background-color: var(--colorBackgroundPrimary);
           border-top-left-radius: $listItemBorderRadius;
           border-bottom-left-radius: $listItemBorderRadius;
 
@@ -170,7 +170,7 @@ $paddingLeft: 35px;
   .c-journeyOverview-passage-details {
     padding: 27px $paddingLeft;
     display: none;
-    border: 1px solid $colorNeutralLight;
+    border: 1px solid var(--colorNeutralLight);
     border-top: 0;
 
     .c-journeyOverview-passage-section {
@@ -188,11 +188,11 @@ $paddingLeft: 35px;
           width: 47%;
 
           &.positive {
-            color: $colorOk;
+            color: var(--colorOk);
           }
 
           &.negative {
-            color: $colorAlert;
+            color: var(--colorAlert);
           }
 
           &:not(:first-child) {
@@ -204,7 +204,7 @@ $paddingLeft: 35px;
       .c-journeyOverview-passage-headline {
         margin-bottom: 13px;
         padding-bottom: 5px;
-        border-bottom: 1px solid $colorNeutralLight;
+        border-bottom: 1px solid var(--colorNeutralLight);
       }
     }
   }

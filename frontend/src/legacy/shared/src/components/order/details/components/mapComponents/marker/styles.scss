@@ -18,7 +18,7 @@
   height: 10px;
   border: 2px solid #eee;
   border-radius: 6px;
-  background: $colorWarning;
+  background: var(--colorWarning);
   pointer-events: all;
 }
 
@@ -30,6 +30,6 @@
   height: 10px;
   border: 2px solid #eee;
   border-radius: 6px;
-  background: $colorAlert;
+  background: var(--colorAlert);
   pointer-events: all;
 }

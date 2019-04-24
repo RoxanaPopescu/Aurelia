@@ -2,7 +2,7 @@
 
 .c-routeDetails-info {
   width: 400px;
-  background-color: $colorNeutralExtraLight;
+  background-color: var(--colorNeutralExtraLight);
   padding: 25px 32px;
 }
 
@@ -10,7 +10,7 @@
   padding-bottom: 18px;
 
   &:not(:last-child) {
-    border-bottom: 1px solid $colorNeutralLight;
+    border-bottom: 1px solid var(--colorNeutralLight);
   }
 
   &:not(:first-child) {
@@ -22,7 +22,7 @@
   margin-bottom: 12px;
   font-size: 12px;
   font-weight: bold;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   text-transform: uppercase;
 }
 

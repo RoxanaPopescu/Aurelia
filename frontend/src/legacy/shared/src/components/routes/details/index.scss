@@ -20,26 +20,14 @@
 }
 
 .c-routeDetails-section-heading {
-  border-bottom: solid 1px $colorNeutralLight;
+  border-bottom: solid 1px var(--colorNeutralLight);
   padding-bottom: 11px;
 }
 
 .c-routeDetails-color-positive {
-  color: $colorOk;
+  color: var(--colorOk);
 }
 
 .c-routeDetails-color-negative {
-  color: $colorAlert;
-}
-
-@keyframes routeDetails-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba($colorOk, 0.4);
-  }
-  70% {
-      box-shadow: 0 0 0 10px rgba($colorOk, 0);
-  }
-  100% {
-      box-shadow: 0 0 0 0 rgba($colorOk, 0);
-  }
+  color: var(--colorAlert);
 }

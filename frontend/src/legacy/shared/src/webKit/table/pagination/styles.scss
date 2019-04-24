@@ -2,17 +2,14 @@
 
 .c-pagination {
   z-index: 102;
-  height: calc(#{$backofficeSidePadding} * 2);
+  padding: 0 8rem;
+  height: 19rem;
   background-color: white;
   text-align: center;
 }
 
 .c-pagination-fixed {
-  position: fixed;
-  bottom: 0;
-  left: $backofficeMenuBig;
-  width: calc(100% - #{$backofficeMenuBig} - #{$backofficeSidePadding} * 2);
-  margin: 0 $backofficeSidePadding;
+  width: 100%;
 }
 
 .c-pagination-sticky {
@@ -26,19 +23,62 @@
 .c-pagination-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100%;
   line-height: $backofficeSidePadding;
   user-select: none;
-  color: $colorBackgroundPrimary;
+  color: var(--colorBackgroundPrimary);
+
+  .c-pagination-resultsPerPage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 9rem;
+    width: 15rem;
+    border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
+    border-radius: var(--border-radius-medium);
+    margin-right: 3rem;
+
+    &.open {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      .c-pagination-dropdown {
+        display: flex;
+      }
+    }
+
+    .c-pagination-dropdown {
+      position: absolute;
+      display: none;
+      margin-right: -1px;
+      bottom: 100%;
+      right: 0;
+      width: calc(100% + 2px);
+      flex-direction: column-reverse;
+      background-color: white;
+      border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
+      border-top-left-radius: var(--border-radius-medium);
+      border-top-right-radius: var(--border-radius-medium);
+      overflow: hidden;
+
+      .c-pagination-dropdown-value {
+        &:hover {
+          background-color: va(--colorNeutralExtraExtraLight);
+        }
+      }
+    }
+  }
 
   .c-pagination-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    height: 32px;
-    padding: 0 26px;
-    border: 1px solid $colorBackgroundPrimary;
-    line-height: 30px;
-    border-radius: $borderRadius;
+    height: 9rem;
+    width: 9rem;
+    border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
 
     &.inactive {
       pointer-events: none;
@@ -46,33 +86,29 @@
     }
 
     &.previousPage {
-      margin-right: 19px;
-
-      &:before {
-        content: "";
-        display: inline-block;
-        margin-right: 8px;
-        width: 0;
-        height: 0;
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        border-right: 6px solid $colorBackgroundPrimary;
+      border-top-left-radius: var(--border-radius-medium);
+      border-bottom-left-radius: var(--border-radius-medium);
+      border-right: 0;
+      span {
+        transform: rotate(45deg);
+        margin-right: -6px;
       }
     }
 
     &.nextPage {
-      margin-left: 19px;
-
-      &:after {
-        content: "";
-        display: inline-block;
-        margin-left: 8px;
-        width: 0;
-        height: 0;
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        border-left: 6px solid $colorBackgroundPrimary;
+      border-top-right-radius: var(--border-radius-medium);
+      border-bottom-right-radius: var(--border-radius-medium);
+      span {
+        transform: rotate(225deg);
+        margin-left: -6px;
       }
+    }
+    span {
+      width: 11px;
+      height: 11px;
+      border-bottom: var(--border-width-thin) solid
+        var(--colorBackgroundPrimary);
+      border-left: var(--border-width-thin) solid var(--colorBackgroundPrimary);
     }
   }
 
@@ -83,24 +119,24 @@
     .c-pagination-pages-page {
       line-height: 32px;
       min-width: 32px;
-      border-radius: $borderRadius;
+      border-radius: var(--border-radius-medium);
       cursor: pointer;
       border: 1px solid transparent;
       transition: opacity 100ms, border-color 100ms, background-color 100ms,
         color 100ms;
 
       &:hover {
-        border-color: $colorBackgroundPrimary;
+        border-color: var(--colorBackgroundPrimary);
       }
 
       &.active {
         border-color: transparent;
-        background-color: $colorBackgroundPrimary;
+        background-color: var(--colorBackgroundPrimary);
         color: white;
 
         &:hover {
           span {
-            background-color: darken($colorBackgroundPrimary, $darkenOnHover);
+            background-color: var(--colorBackgroundPrimaryDarken);
           }
         }
       }
@@ -120,15 +156,6 @@
         height: 100%;
       }
     }
-  }
-
-  .c-pagination-resultsPerPage {
-    position: absolute;
-    right: 0;
-    border-radius: $borderRadius;
-    padding: 0 26px;
-    height: 32px;
-    line-height: 30px;
   }
 }
 
@@ -165,10 +192,6 @@
           &.inactive {
           }
         }
-      }
-
-      .c-pagination-resultsPerPage {
-        display: none;
       }
     }
   }

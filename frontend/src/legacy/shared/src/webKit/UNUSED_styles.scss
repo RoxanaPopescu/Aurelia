@@ -16,7 +16,7 @@ html {
   padding: 0;
   overflow-x: hidden;
   background-color: white;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontRegular;
   font-size: 14px;
 }
@@ -202,7 +202,7 @@ a[href^="tel:"] {
 
 kbd {
   font-family: monospace;
-  color: $colorInteractivePrimary;
+  color: var(--colorInteractivePrimary);
 }
 @-webkit-keyframes spin {
   0% {
@@ -263,14 +263,14 @@ kbd {
 .headline1 {
   font-size: 36px;
   line-height: 40px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontExtraLight;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 36px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontExtraLight;
   }
 }
@@ -278,14 +278,14 @@ kbd {
 .headline2 {
   font-size: 20px;
   line-height: 24px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 20px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontRegular;
   }
 }
@@ -293,7 +293,7 @@ kbd {
 .headline3 {
   font-size: 16px;
   line-height: 20px;
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
   font-weight: $fontRegular;
   font-style: italic;
 
@@ -301,7 +301,7 @@ kbd {
   &:focus,
   &:hover {
     font-size: 16px;
-    color: $textDarkInactive;
+    color: var(--textDarkInactive);
     font-weight: $fontRegular;
     font-style: italic;
   }
@@ -310,7 +310,7 @@ kbd {
 .headline4 {
   font-size: 20px;
   line-height: 24px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontLight;
   font-style: italic;
 
@@ -318,7 +318,7 @@ kbd {
   .headline4:focus,
   .headline4:hover {
     font-size: 20px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontLight;
     font-style: italic;
   }
@@ -327,14 +327,14 @@ kbd {
 .paragraph1 {
   font-size: 16px;
   line-height: 20px;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 16px;
-    color: $textDarkSecondary;
+    color: var(--textDarkSecondary);
     font-weight: $fontRegular;
   }
 }
@@ -342,14 +342,14 @@ kbd {
 .paragraph2 {
   font-size: 13px;
   line-height: 16px;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 13px;
-    color: $textDarkSecondary;
+    color: var(--textDarkSecondary);
     font-weight: $fontRegular;
   }
 }
@@ -357,14 +357,14 @@ kbd {
 .label1 {
   font-size: 13px;
   line-height: 16px;
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 13px;
-    color: $textDarkInactive;
+    color: var(--textDarkInactive);
     font-weight: $fontRegular;
   }
 }
@@ -372,14 +372,14 @@ kbd {
 .label2 {
   font-size: 13px;
   line-height: 16px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontSemibold;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 13px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontSemibold;
   }
 }
@@ -443,7 +443,7 @@ kbd {
 .globalNavigation {
   font-size: 14px;
   line-height: 20px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontSemibold;
   text-transform: uppercase;
 
@@ -451,7 +451,7 @@ kbd {
   &:focus,
   &:hover {
     font-size: 14px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontSemibold;
     text-transform: uppercase;
   }
@@ -460,14 +460,14 @@ kbd {
 .inputHint {
   font-size: 14px;
   line-height: 20px;
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 14px;
-    color: $textDarkInactive;
+    color: var(--textDarkInactive);
     font-weight: $fontRegular;
   }
 }
@@ -475,14 +475,14 @@ kbd {
 .inputDefault {
   font-size: 14px;
   line-height: 20px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 14px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontRegular;
   }
 }
@@ -490,14 +490,14 @@ kbd {
 .list1 {
   font-size: 11px;
   line-height: 13px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 11px;
-    color: $textDarkPrimary;
+    color: var(--textDarkPrimary);
     font-weight: $fontRegular;
   }
 }
@@ -505,14 +505,14 @@ kbd {
 .list2 {
   font-size: 11px;
   line-height: 13px;
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
   font-weight: $fontRegular;
 
   &:active,
   &:focus,
   &:hover {
     font-size: 11px;
-    color: $textDarkInactive;
+    color: var(--textDarkInactive);
     font-weight: $fontRegular;
   }
 }
@@ -536,14 +536,14 @@ kbd {
   text-transform: uppercase;
   font-size: 16px;
   line-height: 22px;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   font-weight: $fontBold;
 }
 
 .h5 {
   text-transform: uppercase;
   font-size: 12px;
-  color: $textDarkSecondary;
+  color: var(--textDarkSecondary);
   font-weight: $fontBold;
 }
 
@@ -596,18 +596,18 @@ kbd {
 }
 
 a {
-  color: $colorInteractivePrimary;
+  color: var(--colorInteractivePrimary);
   cursor: pointer;
 
   &:active,
   &:focus,
   &:hover {
-    color: $colorInteractivePrimaryActive;
+    color: var(--colorInteractivePrimaryActive);
   }
 }
 
 .inactive {
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
 }
 
 .dark {
@@ -683,7 +683,7 @@ a {
   .inputHint:active,
   .inputHint:focus,
   .inputHint:hover {
-    color: $textLightPrimary;
+    color: var(--textLightPrimary);
   }
 
   .inputDefault,

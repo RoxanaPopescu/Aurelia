@@ -59,7 +59,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
     let array: JSX.Element[] = [];
 
     headers.map((header, index) => {
-      let classNames: string = "c-gridTable-header";
+      let classNames: string = "c-gridTable-header font-heading";
 
       if (
         this.state.sorting &&
@@ -88,17 +88,13 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           onMouseEnter={() => this.setState({ hoveredColumnRow: index })}
           onMouseLeave={() => this.setState({ hoveredColumnRow: undefined })}
         >
-          <h4 className="c-gridTable-header-text font-heading">
-            {header.text}
-            {this.props.sorting && (
-              <span className="c-gridTable-header-arrows" />
-            )}
-          </h4>
+          {header.text}
+          {this.props.sorting && <span className="c-gridTable-header-arrows" />}
         </div>
       );
     });
 
-    return array;
+    return <div className="c-gridTable-row">{array}</div>;
   }
 
   // tslint:disable-next-line:no-any
@@ -158,14 +154,14 @@ export class TableComponent extends React.Component<TableProps, TableState> {
               rowsArray.push(
                 <div
                   key={`skeleton-row_${i}-column_${index}`}
-                  className="c-gridTable-content c-gridTable-skeleton c-gridTable-firstColumn"
+                  className="c-gridTable-content c-gridTable-skeleton"
                 />
               );
             } else if (index === this.props.data.headers.length - 1) {
               rowsArray.push(
                 <div
                   key={`skeleton-row_${i}-column_${index}`}
-                  className="c-gridTable-content c-gridTable-skeleton c-gridTable-lastColumn"
+                  className="c-gridTable-content c-gridTable-skeleton"
                 />
               );
             } else {
@@ -191,13 +187,6 @@ export class TableComponent extends React.Component<TableProps, TableState> {
 
             // Get class names related
             let classNames = " c-gridTable-content";
-
-            if (columnIndex === 0) {
-              classNames += " c-gridTable-firstColumn";
-            }
-            if (columnIndex === row.length - 1) {
-              classNames += " c-gridTable-lastColumn";
-            }
 
             if (
               this.state.hoveredColumnRow !== undefined &&
@@ -281,7 +270,8 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           let rowClassName = "c-gridTable-row";
           if (
             this.props.highlightedRowIndexes &&
-            this.props.highlightedRowIndexes.filter(hi => hi === index)
+            this.props.highlightedRowIndexes.filter(hi => hi === index).length >
+              0
           ) {
             rowClassName += " highlighted";
           }
@@ -334,16 +324,12 @@ export class TableComponent extends React.Component<TableProps, TableState> {
     if (this.props.data.rows.length === 0 && !this.props.loading) {
       tableClassnames += " c-gridTable-blank";
     }
+    if (this.props.pagination) {
+      tableClassnames += " c-gridTable-pagination";
+    }
 
     return (
       <div className="gridTable-container">
-        {this.props.totalRowsText && (
-          <div className="c-gridTable-totalRows font-large">
-            {this.props.loading && this.props.data.rows.length === 0
-              ? "--"
-              : this.props.totalRowsText}
-          </div>
-        )}
         <div
           key="gridTable"
           className={tableClassnames}
@@ -363,13 +349,15 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           this.props.data.rows.length > 0 && (
             <TablePaginationComponent
               pages={this.props.pagination.pages}
-              resultsPerPage={this.props.pagination.resultsPerPage}
               currentPageIndex={this.props.pagination.currentPageIndex}
               displayMode={this.props.pagination.displayMode}
               onPageChange={(nextPage, previousPage) =>
                 this.props.pagination &&
                 this.props.pagination.onPageChange(nextPage, previousPage)
               }
+              onResultsPerPageChanged={() => {
+                /* */
+              }}
             />
           )}
         {this.renderSortingLoadingOverlay()}

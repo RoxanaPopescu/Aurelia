@@ -58,7 +58,7 @@ div[class$="mapContainer"] {
           border-top-left-radius: $borderRadius;
           border-top-right-radius: $borderRadius;
           margin-bottom: 8px;
-          background-color: $colorInteractivePrimary;
+          background-color: var(--colorInteractivePrimary);
         }
 
         .c-infoBox-children {
@@ -85,7 +85,7 @@ div[class$="mapContainer"] {
         .c-infoBox-actionLink {
           padding: 0 12px;
           text-align: right;
-          color: $colorInteractivePrimary;
+          color: var(--colorInteractivePrimary);
           margin-top: 16px;
           margin-bottom: 4px;
           cursor: pointer;

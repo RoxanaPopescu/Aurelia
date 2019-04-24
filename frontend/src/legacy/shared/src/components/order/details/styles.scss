@@ -13,7 +13,7 @@
 
 .c-orderDetails-meta {
   width: 400px;
-  background-color: $colorNeutralExtraLight;
+  background-color: var(--colorNeutralExtraLight);
   padding: 25px 32px;
 }
 
@@ -25,7 +25,7 @@
   }
 
   &:not(:last-child) {
-    border-bottom: 1px solid $colorNeutralLight;
+    border-bottom: 1px solid var(--colorNeutralLight);
   }
 }
 
@@ -36,7 +36,7 @@
 .c-orderDetails-colli {
   max-height: 350px;
   overflow: hidden;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
   padding-bottom: 18px;
   display: flex;
   flex-direction: column;
@@ -50,25 +50,25 @@
     justify-content: flex-end;
 
     .c-orderDetails-tab {
-      border-top: 1px solid $colorNeutralRegular;
-      border-bottom: 1px solid $colorNeutralRegular;
-      border-right: 1px solid $colorNeutralRegular;
+      border-top: 1px solid var(--colorNeutralRegular);
+      border-bottom: 1px solid var(--colorNeutralRegular);
+      border-right: 1px solid var(--colorNeutralRegular);
       height: 22px;
       line-height: 20px;
       padding: 0 12px;
       font-size: 12px;
-      color: $colorBackgroundPrimary;
+      color: var(--colorBackgroundPrimary);
       cursor: pointer;
 
       &:hover {
-        color: $colorInteractivePrimaryActive;
-        background-color: rgba(255,255,255,.4);
+        color: var(--colorInteractivePrimaryActive);
+        background-color: rgba(255, 255, 255, 0.4);
       }
 
       &:first-child {
         border-bottom-left-radius: $borderRadius;
         border-top-left-radius: $borderRadius;
-        border-left: 1px solid $colorNeutralRegular;
+        border-left: 1px solid var(--colorNeutralRegular);
       }
 
       &:last-child {
@@ -77,7 +77,7 @@
       }
 
       &.active {
-        background-color: $colorNeutralRegular;
+        background-color: var(--colorNeutralRegular);
         color: white;
 
         &:hover {
@@ -108,11 +108,11 @@
       margin-left: 10px;
 
       &.positive {
-        color: $colorOk;
+        color: var(--colorOk);
       }
 
       &.negative {
-        color: $colorAlert;
+        color: var(--colorAlert);
       }
     }
 
@@ -176,7 +176,7 @@
   padding: 0 30px 0 28px;
   height: 62px;
   width: 100%;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -197,13 +197,13 @@
 
 .c-colloDetails-details {
   padding: 13px 0;
-  border-bottom: 1px solid $colorNeutralLight;
+  border-bottom: 1px solid var(--colorNeutralLight);
 }
 
 .c-colloDetails-info {
   padding: 13px 0;
   width: 50%;
-  border-right: 1px solid $colorNeutralLight;
+  border-right: 1px solid var(--colorNeutralLight);
 
   > * {
     &:first-child {
@@ -222,7 +222,7 @@
   padding: 13px 0;
 
   &:first-child {
-    border-right: 1px solid $colorNeutralLight;
+    border-right: 1px solid var(--colorNeutralLight);
   }
 
   &:last-child {
@@ -247,8 +247,8 @@
 .c-orderDetails-map {
   height: 40vh;
   min-height: 200px;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
   border: 1px solid #f2f2f2;
-  border-left: 1px solid darken($colorNeutralExtraLight, 3%);
+  border-left: 1px solid var(--colorNeutralExtraLightDarken);
   border-right: none;
 }

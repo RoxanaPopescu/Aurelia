@@ -57,7 +57,7 @@
         width: 100%;
         text-align: center;
         padding-bottom: 20px;
-        border-bottom: 1px solid $inputBorderColor;
+        border-bottom: 1px solid var(--colorNeutralRegular);
 
         .DateInput {
           width: calc(50% - 6px);
@@ -71,18 +71,18 @@
           }
 
           .DateInput_input {
-            border: solid 1px $inputBorderColor;
+            border: solid 1px var(--colorNeutralRegular);
             border-radius: $borderRadius;
             padding: 0;
             height: $heightInputSmall;
             padding-left: 12px;
             font-size: 11px;
             line-height: 13px;
-            color: $textDarkPrimary;
+            color: var(--textDarkPrimary);
             font-weight: $fontRegular;
 
             &.DateInput_input__focused {
-              border: solid 1px $inputBorderColor;
+              border: solid 1px var(--colorNeutralRegular);
             }
           }
         }
@@ -116,7 +116,7 @@
                   small {
                     font-size: 13px;
                     line-height: 16px;
-                    color: $textDarkPrimary;
+                    color: var(--textDarkPrimary);
                     font-weight: $fontSemibold;
                   }
                 }
@@ -150,7 +150,7 @@
                       strong {
                         font-size: 16px;
                         line-height: 20px;
-                        color: $textDarkSecondary;
+                        color: var(--textDarkSecondary);
                         font-weight: $fontRegular;
                         text-transform: capitalize;
                       }
@@ -169,7 +169,7 @@
 
                               &.CalendarDay__default {
                                 &:hover {
-                                  background-color: $colorInteractiveSecondary;
+                                  background-color: var(--colorInteractiveSecondary);
                                   color: white;
                                 }
 
@@ -193,7 +193,7 @@
                                 &.CalendarDay__selected_span,
                                 &.CalendarDay__selected_span:active,
                                 &.CalendarDay__selected_span:hover {
-                                  background-color: $colorInteractivePrimary;
+                                  background-color: var(--colorInteractivePrimary);
                                   color: white;
                                   border-radius: 0;
                                   border-radius: 0;
@@ -202,7 +202,7 @@
                                 &.CalendarDay__selected,
                                 &.CalendarDay__selected:active,
                                 &.CalendarDay__selected:hover {
-                                  background-color: $colorInteractiveSecondary;
+                                  background-color: var(--colorInteractiveSecondary);
                                   color: white;
                                 }
                               }

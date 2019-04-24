@@ -45,9 +45,9 @@
 .c-communication-event {
   margin: 25px 0;
   padding: 16px 19px;
-  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: 3px;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
   
   h3 {
     display: flex;

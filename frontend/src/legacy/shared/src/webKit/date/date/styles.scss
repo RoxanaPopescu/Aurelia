@@ -47,7 +47,7 @@
 
       .react-datepicker-wrapper {
         .dateTimeInput {
-          background-color: $colorNeutralLight;
+          background-color: var(--colorNeutralLight);
           pointer-events: none;
         }
       }
@@ -73,7 +73,7 @@
         .react-datepicker__triangle {
 
           &:before {
-            border-bottom-color: $dropdownBorderColor;
+            border-bottom-color: var(--colorNeutralRegular);
           }
         }
       }
@@ -83,7 +83,7 @@
           border-top-color: white;
 
           &:before {
-            border-top-color: $dropdownBorderColor;
+            border-top-color: var(--colorNeutralRegular);
           }
         }
       }
@@ -91,12 +91,12 @@
       .react-datepicker {
         font-family: inherit;
         font-size: inherit;
-        border: solid 1px $dropdownBorderColor;
+        border: solid 1px var(--colorNeutralRegular);
         border-radius: $borderRadius;
         box-shadow: $dropdownShadow;
 
         .react-datepicker__header {
-          border-bottom-color: $inputBorderColor;
+          border-bottom-color: var(--colorNeutralRegular);
         }
 
         &.react-datepicker--time-only {
@@ -152,16 +152,16 @@
                   }
 
                   &:hover {
-                    background-color: $colorNeutralLight;
+                    background-color: var(--colorNeutralLight);
                   }
 
                   &.react-datepicker__time-list-item--selected {
-                    background-color: $colorInteractivePrimary;
+                    background-color: var(--colorInteractivePrimary);
                     color: white;
                     font-weight: inherit;
 
                     &:hover {
-                      background-color: rgba($colorInteractivePrimary, .5);
+                      background-color: var(--colorInteractivePrimaryAlpha50);
                     }
                   }
                 }
@@ -185,7 +185,7 @@
 
       .dateTimeInput {
         padding-left: 14px;
-        border: solid 1px $inputBorderColor;
+        border: solid 1px var(--colorNeutralRegular);
         width: 100%;
         transition: border 300ms;
         background-color: white;
@@ -203,28 +203,28 @@
         &:active,
         &:focus,
         &:hover {
-          border-color: $inputBorderColor;
+          border-color: var(--colorNeutralRegular);
         }
       }
 
       ::-webkit-input-placeholder {
         /* Chrome/Opera/Safari */
-        color: $textDarkInactive;
+        color: var(--textDarkInactive);
       }
 
       ::-moz-placeholder {
         /* Firefox 19+ */
-        color: $textDarkInactive;
+        color: var(--textDarkInactive);
       }
 
       :-ms-input-placeholder {
         /* IE 10+ */
-        color: $textDarkInactive;
+        color: var(--textDarkInactive);
       }
 
       :-moz-placeholder {
         /* Firefox 18- */
-        color: $textDarkInactive;
+        color: var(--textDarkInactive);
       }
     }
   }
@@ -233,17 +233,17 @@
     .middleWrapper {
       .react-datepicker-wrapper {
         .dateTimeInput {
-          border: solid 1px $colorAlert;
+          border: solid 1px var(--colorAlert);
 
           &:active,
           &:focus,
           &:hover {
-            border: solid 1px $colorAlert;
+            border: solid 1px var(--colorAlert);
           }
         }
 
         .timeDropdown {
-          border: solid 1px $colorAlert;
+          border: solid 1px var(--colorAlert);
           box-shadow: $dropdownShadow;
         }
       }
@@ -254,12 +254,12 @@
     .middleWrapper {
       .react-datepicker-wrapper {
         .dateTimeInput {
-          border: solid 1px $colorAlert;
+          border: solid 1px var(--colorAlert);
 
           &:active,
           &:focus,
           &:hover {
-            border: solid 1px $colorAlert;
+            border: solid 1px var(--colorAlert);
           }
         }
       }

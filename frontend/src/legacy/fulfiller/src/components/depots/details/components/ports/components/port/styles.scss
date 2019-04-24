@@ -4,9 +4,9 @@
   display: flex;
   margin: 4px 0;
   padding: 16px 20px;
-  border: 1px solid darken($colorNeutralExtraLight, 1%);
+  border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: $listItemBorderRadius;
-  background: $colorNeutralExtraLight;
+  background: var(--colorNeutralExtraLight);
 
   .icon {
     width: 18px;
@@ -18,7 +18,7 @@
 
 .c-depotsPort-rule--selected,
 .c-depotsPort-rule--selected:hover {
-  background-color: $colorNeutralLight;
+  background-color: var(--colorNeutralLight);
 }
 
 .c-depotsPort-rule-actions {

@@ -26,12 +26,12 @@
   top: 1px;
   height: 100%;
   color: #ffffff;
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   border-color: transparent;
   cursor: pointer;
 
   &:hover {
-    background-color: $colorInteractivePrimaryActive;
+    background-color: var(--colorInteractivePrimaryActive);
     color: #ffffff;
   }
 }
@@ -41,7 +41,7 @@
   top: 1px;
   height: 100%;
   color: #ffffff;
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   border-color: transparent;
   opacity: $opacityDisabled;
   cursor: default;
@@ -56,7 +56,7 @@
   z-index: 6;
   background-color: white;
   pointer-events: none;
-  color: $colorNeutralDark;
+  color: var(--colorNeutralDark);
   cursor: none;
 
   &:hover {

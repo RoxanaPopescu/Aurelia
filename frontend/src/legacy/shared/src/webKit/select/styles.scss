@@ -23,7 +23,7 @@ $paddingLeft: 14px;
 
     .selectWrapper {
       .react-selectize {
-        background-color: $colorNeutralLight;
+        background-color: var(--colorNeutralLight);
       }
     }
   }
@@ -63,14 +63,13 @@ $paddingLeft: 14px;
     width: 100%;
 
     .react-selectize {
-
       &.simple-select {
         cursor: pointer;
       }
 
       &.open {
         .react-selectize-control {
-          border: solid 1px $dropdownBorderColor;
+          border: solid 1px var(--colorNeutralRegular);
           z-index: 1001;
         }
       }
@@ -78,7 +77,7 @@ $paddingLeft: 14px;
       .react-selectize-control {
         position: relative;
         background-color: white;
-        border: solid 1px $inputBorderColor;
+        border: solid 1px var(--colorNeutralRegular);
         border-radius: $borderRadius;
 
         .react-selectize-placeholder {
@@ -89,7 +88,7 @@ $paddingLeft: 14px;
           padding-right: 35px;
           height: 100%;
           width: 100%;
-          color: $colorNeutralRegular;
+          color: var(--colorNeutralRegular);
           pointer-events: none;
           display: flex;
           align-items: center;
@@ -104,8 +103,8 @@ $paddingLeft: 14px;
           height: 8px;
           transition: all 150ms;
           transform: rotate(-45deg);
-          border-left: 1px solid $colorBackgroundPrimary;
-          border-bottom: 1px solid $colorBackgroundPrimary;
+          border-left: 1px solid var(--colorBackgroundPrimary);
+          border-bottom: 1px solid var(--colorBackgroundPrimary);
 
           svg {
             display: none;
@@ -178,7 +177,7 @@ $paddingLeft: 14px;
         width: 100%;
         border-bottom-left-radius: $borderRadius;
         border-bottom-right-radius: $borderRadius;
-        border: 1px solid $dropdownBorderColor;
+        border: 1px solid var(--colorNeutralRegular);
         border-top: 0;
         background-color: white;
         z-index: 1000;
@@ -191,7 +190,7 @@ $paddingLeft: 14px;
           font-size: 12px;
           font-style: italic;
           pointer-events: none;
-          background-color: $colorNeutralExtraLight;
+          background-color: var(--colorNeutralExtraLight);
         }
 
         .option-wrapper {
@@ -201,12 +200,12 @@ $paddingLeft: 14px;
           align-items: center;
 
           &:not(:last-child) {
-            border-bottom: 1px solid $colorNeutralLight;
+            border-bottom: 1px solid var(--colorNeutralLight);
           }
 
           &.highlight,
           &:hover {
-            background-color: $colorNeutralExtraLight;
+            background-color: var(--colorNeutralExtraLight);
           }
 
           .simple-option {
@@ -219,15 +218,17 @@ $paddingLeft: 14px;
 
       &.open {
         .react-selectize-control {
-          background-color: $colorNeutralExtraLight;
+          background-color: var(--colorNeutralExtraLight);
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
 
-          .react-selectize-toggle-button-container {}
+          .react-selectize-toggle-button-container {
+          }
 
           .react-selectize-search-field-and-selected-values {
             &:focus,
-            &:hover {}
+            &:hover {
+            }
           }
         }
       }
@@ -240,9 +241,9 @@ $paddingLeft: 14px;
     .selectWrapper {
       .react-selectize {
         .react-selectize-control {
-          border-color: $colorNeutralExtraExtraLight;
-          background-color: $colorNeutralExtraExtraLight;
-          color: $colorNeutralSemiDark;
+          border-color: var(--colorNeutralExtraExtraLight);
+          background-color: var(--colorNeutralExtraExtraLight);
+          color: var(--colorNeutralSemiDark);
 
           &:focus,
           &:hover {
@@ -257,8 +258,8 @@ $paddingLeft: 14px;
         &.open {
           .react-selectize-control {
             border-color: transparent;
-            background-color: $colorNeutralExtraExtraLight;
-            color: $colorNeutralSemiDark;
+            background-color: var(--colorNeutralExtraExtraLight);
+            color: var(--colorNeutralSemiDark);
 
             &:focus,
             &:hover {
@@ -274,21 +275,21 @@ $paddingLeft: 14px;
     .selectWrapper {
       .react-selectize {
         .react-selectize-control {
-          border: solid 1px $colorAlert;
+          border: solid 1px var(--colorAlert);
 
           &:focus,
           &:hover {
-            border: solid 1px $colorAlert;
+            border: solid 1px var(--colorAlert);
           }
         }
 
         &.open {
           .react-selectize-control {
-            border: solid 1px $colorAlert;
+            border: solid 1px var(--colorAlert);
 
             &:focus,
             &:hover {
-              border: solid 1px $colorAlert;
+              border: solid 1px var(--colorAlert);
             }
           }
         }
@@ -304,7 +305,7 @@ $paddingLeft: 14px;
 
     .selectHeadline {
       padding-left: $paddingLeft;
-      color: $colorInteractiveSecondary;
+      color: var(--colorInteractiveSecondary);
       text-transform: uppercase;
       letter-spacing: 1px;
       position: absolute;
@@ -320,12 +321,14 @@ $paddingLeft: 14px;
           .react-selectize-placeholder {
             top: 30px;
             height: 20px;
-            color: $colorNeutralSemiDark;
+            color: var(--colorNeutralSemiDark);
           }
 
-          .react-selectize-toggle-button-container {}
+          .react-selectize-toggle-button-container {
+          }
 
-          .react-selectize-reset-button-container {}
+          .react-selectize-reset-button-container {
+          }
 
           .react-selectize-search-field-and-selected-values {
             padding: 30px 38px 12px $paddingLeft;
@@ -334,7 +337,7 @@ $paddingLeft: 14px;
 
             .resizable-input {
               height: 100%;
-              color: $textDarkPrimary;
+              color: var(--textDarkPrimary);
               font-weight: $fontLight;
               background-color: transparent;
               width: 100% !important;
@@ -350,14 +353,15 @@ $paddingLeft: 14px;
               line-height: 20px;
               overflow: hidden;
               padding-right: 38px;
-              color: $textDarkPrimary;
+              color: var(--textDarkPrimary);
             }
           }
         }
 
         &.open {
           .react-selectize-control {
-            .react-selectize-toggle-button-container {}
+            .react-selectize-toggle-button-container {
+            }
           }
 
           .dropdown-menu {

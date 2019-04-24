@@ -24,7 +24,7 @@ $speed: 300ms;
   }
 
   .c-toast-message {
-    border: 1px solid $colorNeutralLight;
+    border: 1px solid var(--colorNeutralLight);
     border-left: 0;
     padding: 12px 0 12px 15px;
     flex: 1;
@@ -53,7 +53,7 @@ $speed: 300ms;
         margin-left: -1px;
         height: 100%;
         width: 1px;
-        background-color: $colorBackgroundPrimary;
+        background-color: var(--colorBackgroundPrimary);
         transform: rotate(45deg);
       }
 
@@ -64,7 +64,7 @@ $speed: 300ms;
         margin-left: -1px;
         height: 100%;
         width: 1px;
-        background-color: $colorBackgroundPrimary;
+        background-color: var(--colorBackgroundPrimary);
         transform: rotate(-45deg);
       }
     }
@@ -73,21 +73,21 @@ $speed: 300ms;
   &.alert {
     .c-toast-icon {
       background-image: url("../assets/images/icons/alert.svg");
-      background-color: $colorAlert;
+      background-color: var(--colorAlert);
     }
   }
 
   &.success {
     .c-toast-icon {
       background-image: url("../assets/images/icons/success.svg");
-      background-color: $colorOk;
+      background-color: var(--colorOk);
     }
   }
 
   &.warning {
     .c-toast-icon {
       background-image: url("../assets/images/icons/warning.svg");
-      background-color: $colorWarning;
+      background-color: var(--colorWarning);
     }
   }
 }

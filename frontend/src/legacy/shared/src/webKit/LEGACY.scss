@@ -156,21 +156,21 @@ textarea:invalid {
 // .headline1 {
 //   font-size: 36px;
 //   line-height: 40px;
-//   color: $textDarkPrimary;
+//   color: var(--textDarkPrimary);
 //   font-weight: $fontExtraLight;
 // }
 
 // .headline2 {
 //   font-size: 20px;
 //   line-height: 24px;
-//   color: $textDarkPrimary;
+//   color: var(--textDarkPrimary);
 //   font-weight: $fontRegular;
 // }
 
 // .headline3 {
 //   font-size: 16px;
 //   line-height: 20px;
-//   color: $textDarkInactive;
+//   color: var(--textDarkInactive);
 //   font-weight: $fontRegular;
 //   font-style: italic;
 // }
@@ -178,14 +178,14 @@ textarea:invalid {
 // .paragraph1 {
 //   font-size: 16px;
 //   line-height: 20px;
-//   color: $textDarkSecondary;
+//   color: var(--textDarkSecondary);
 //   font-weight: $fontRegular;
 // }
 
 // .paragraph2 {
 //   font-size: 13px;
 //   line-height: 16px;
-//   color: $textDarkSecondary;
+//   color: var(--textDarkSecondary);
 //   font-weight: $fontRegular;
 // }
 
@@ -222,21 +222,21 @@ textarea:invalid {
 .inputDefault {
   font-size: 14px;
   line-height: 20px;
-  color: $textDarkPrimary;
+  color: var(--textDarkPrimary);
   font-weight: $fontRegular;
 }
 
 .list1 {
   font-size: 11px;
   line-height: 13px;
-  // color: $textDarkPrimary;
+  // color: var(--textDarkPrimary);
   // font-weight: $fontRegular;
 }
 
 .list2 {
   font-size: 11px;
   line-height: 13px;
-  // color: $textDarkInactive;
+  // color: var(--textDarkInactive);
   // font-weight: $fontRegular;
 }
 
@@ -259,14 +259,14 @@ textarea:invalid {
 //   text-transform: uppercase;
 //   font-size: 16px;
 //   line-height: 22px;
-//   color: $textDarkSecondary;
+//   color: var(--textDarkSecondary);
 //   font-weight: $fontBold;
 // }
 
 // .h5 {
 //   text-transform: uppercase;
 //   font-size: 12px;
-//   color: $textDarkSecondary;
+//   color: var(--textDarkSecondary);
 //   font-weight: $fontBold;
 // }
 
@@ -295,17 +295,17 @@ textarea:invalid {
 // }
 
 // a {
-//   color: $colorInteractivePrimary;
+//   color: var(--colorInteractivePrimary);
 //   cursor: pointer;
 
 //   &:focus,
 //   &:hover {
-//     color: $colorInteractivePrimaryActive;
+//     color: var(--colorInteractivePrimaryActive);
 //   }
 // }
 
 .inactive {
-  color: $textDarkInactive;
+  color: var(--textDarkInactive);
 }
 
 .dark {

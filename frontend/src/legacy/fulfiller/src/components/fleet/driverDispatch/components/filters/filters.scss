@@ -2,8 +2,8 @@
 
 .c-driverDispatch-filters {
   width: 330px;
-  background-color: $colorNeutralExtraExtraLight;
-  border-right: 1px solid $colorNeutralLight;
+  background-color: var(--colorNeutralExtraExtraLight);
+  border-right: 1px solid var(--colorNeutralLight);
   height: 100%;
   overflow-y: overlay;
 

@@ -24,7 +24,7 @@
 .c-dialog-header {
   position: relative;
   padding: 25px 105px 25px 70px;
-  background-color: $colorBackgroundPrimary;
+  background-color: var(--colorBackgroundPrimary);
   color: white;
 
   img {

@@ -44,7 +44,7 @@ $paddingLeft: 15px;
       }
 
       &:not(.noBorder) {
-        border: solid 1px $inputBorderColor;
+        border: solid 1px var(--colorNeutralRegular);
       }
 
       width: 100%;
@@ -56,14 +56,14 @@ $paddingLeft: 15px;
       &:focus,
       &:hover {
         &:not(.noBorder) {
-          border: solid 1px $inputBorderColor;
+          border: solid 1px var(--colorNeutralRegular);
         }
       }
 
       &:disabled {
         &:not(.noDisabledStyle) {
           opacity: .5;
-          background-color: $colorNeutralLight;
+          background-color: var(--colorNeutralLight);
           pointer-events: none;
         }
       }
@@ -71,22 +71,22 @@ $paddingLeft: 15px;
 
     ::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
-      color: $textDarkInactive;
+      color: var(--textDarkInactive);
     }
 
     ::-moz-placeholder {
       /* Firefox 19+ */
-      color: $textDarkInactive;
+      color: var(--textDarkInactive);
     }
 
     :-ms-input-placeholder {
       /* IE 10+ */
-      color: $textDarkInactive;
+      color: var(--textDarkInactive);
     }
 
     :-moz-placeholder {
       /* Firefox 18- */
-      color: $textDarkInactive;
+      color: var(--textDarkInactive);
     }
   }
 
@@ -118,14 +118,14 @@ $paddingLeft: 15px;
     .inputWrapper {
       input {
         border-color: transparent;
-        background-color: $colorNeutralExtraExtraLight;
-        color: $colorNeutralSemiDark;
+        background-color: var(--colorNeutralExtraExtraLight);
+        color: var(--colorNeutralSemiDark);
 
         &:active,
         &:focus,
         &:hover {
           &:not(.noBorder) {
-            border: solid 1px $colorNeutralExtraExtraLight;
+            border: solid 1px var(--colorNeutralExtraExtraLight);
           }
         }
       }
@@ -135,12 +135,12 @@ $paddingLeft: 15px;
   &.error {
     .inputWrapper {
       input {
-        border: solid 1px $colorAlert;
+        border: solid 1px var(--colorAlert);
 
         &:active,
         &:focus,
         &:hover {
-          border: solid 1px $colorAlert;
+          border: solid 1px var(--colorAlert);
         }
       }
     }
@@ -155,7 +155,7 @@ $paddingLeft: 15px;
 
     .inputHeadline {
       padding-left: 20px;
-      color: $colorInteractiveSecondary;
+      color: var(--colorInteractiveSecondary);
       text-transform: uppercase;
       letter-spacing: 1px;
       top: $inputHeadlineMargin;

@@ -19,7 +19,7 @@ $gridLength: 9;
 .c-order-placed-grid-header {
   height: 40px;
   padding: 0 10px;
-  background-color: $colorInteractivePrimary;
+  background-color: var(--colorInteractivePrimary);
   color: white;
   align-self: center;
   position: sticky;

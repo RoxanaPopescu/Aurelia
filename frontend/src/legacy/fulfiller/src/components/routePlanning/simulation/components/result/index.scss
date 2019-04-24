@@ -36,7 +36,7 @@
       right: 0px;
       bottom: 0px;
       left: -1px;
-      border: 1px solid $colorNeutralRegular;
+      border: 1px solid var(--colorNeutralRegular);
       z-index: 2;
       pointer-events: none;
     }
@@ -48,7 +48,7 @@
     //   right: 0;
     //   bottom: 0;
     //   left: -1px;
-    //   border: 1px solid $colorBackgroundPrimary;
+    //   border: 1px solid var(--colorBackgroundPrimary);
     //   z-index: 1;
     //   opacity: .6;
     //   pointer-events: none;
@@ -77,18 +77,18 @@
   width: 100%;
   line-height: 40px;
   text-align: center;
-  border-top: 1px solid $colorNeutralLight; 
-  background: $colorNeutralExtraLight;
+  border-top: 1px solid var(--colorNeutralLight);
+  background: var(--colorNeutralExtraLight);
 
   .c-routeSimulation-result-comparison-column:not(.selected) & {
-    color: $colorInteractivePrimary;
+    color: var(--colorInteractivePrimary);
     background: transparent;
   }
 }
 
 .c-routeSimulation-result-comparison-column {
   & > div {
-    border: 0px solid $colorNeutralLight; 
+    border: 0px solid var(--colorNeutralLight);
     border-bottom-width: 1px;
     border-right-width: 1px;
   }
@@ -105,10 +105,10 @@
   &:first-child > div:last-child {
     border-bottom-color: transparent;
   }
-  
+
   &:not(:first-child) > div:first-child {
     border-top-width: 1px;
-    background: $colorNeutralExtraLight;
+    background: var(--colorNeutralExtraLight);
   }
 
   &:first-child > div {

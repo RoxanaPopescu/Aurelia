@@ -15,7 +15,7 @@
 
     .c-fulfillerKpi-actionSkeletonBig {
       height: 42px;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
       border-radius: $borderRadius;
       width: 487px;
       margin-right: 18px;
@@ -23,7 +23,7 @@
 
     .c-fulfillerKpi-actionSkeletonSmall {
       height: 42px;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
       border-radius: $borderRadius;
       width: 173px;
     }
@@ -36,7 +36,7 @@
         height: 42px;
         width: 42px;
         background-color: white;
-        border: 1px solid $colorNeutralLight;
+        border: 1px solid var(--colorNeutralLight);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -49,14 +49,14 @@
         }
 
         &:hover {
-          background-color: $colorNeutralRegular;
-          border-color: $colorNeutralRegular;
+          background-color: var(--colorNeutralRegular);
+          border-color: var(--colorNeutralRegular);
           color: white;
         }
 
         &.active {
-          background-color: $colorNeutralSemiDark;
-          border-color: $colorNeutralSemiDark;
+          background-color: var(--colorNeutralSemiDark);
+          border-color: var(--colorNeutralSemiDark);
           color: white;
         }
       }
@@ -81,16 +81,16 @@
         margin-bottom: 20px;
         height: 20px;
         border-radius: $borderRadius;
-        background-color: $colorNeutralExtraLight;
+        background-color: var(--colorNeutralExtraLight);
       }
     }
 
     .c-fulfillerKpi-table {
       display: grid;
       grid-template-columns: repeat(11, auto);
-      border-bottom: 1px solid $colorNeutralLight;
-      border-left: 1px solid $colorNeutralLight;
-      border-right: 1px solid $colorNeutralLight;
+      border-bottom: 1px solid var(--colorNeutralLight);
+      border-left: 1px solid var(--colorNeutralLight);
+      border-right: 1px solid var(--colorNeutralLight);
 
       .c-fulfillerKpi-kpiColumn {
         grid-row-gap: 0;
@@ -115,28 +115,28 @@
 
         &:not(.c-fulfillerKpi-kpiColumn-head) {
           &:nth-child(11n + 2) {
-            background-color: $colorNeutralExtraLight;
-            border-left: 1px solid $colorNeutralLight;
-            border-right: 1px solid $colorNeutralLight;
+            background-color: var(--colorNeutralExtraLight);
+            border-left: 1px solid var(--colorNeutralLight);
+            border-right: 1px solid var(--colorNeutralLight);
             text-align: center;
             justify-content: center;
           }
 
           &:not(:nth-child(11n + 2)) {
             &.hoveredX {
-              background-color: $colorNeutralExtraExtraLight;
+              background-color: var(--colorNeutralExtraExtraLight);
             }
 
             &.hoveredY {
-              background-color: $colorNeutralLight;
+              background-color: var(--colorNeutralLight);
             }
           }
         }
 
         &.c-fulfillerKpi-kpiColumn-head {
-          border-top: 1px solid $colorNeutralLight;
-          border-bottom: 1px solid $colorNeutralLight;
-          color: $colorNeutralRegular;
+          border-top: 1px solid var(--colorNeutralLight);
+          border-bottom: 1px solid var(--colorNeutralLight);
+          color: var(--colorNeutralRegular);
         }
 
         &.c-fulfillerKpi-kpiGroupHeadline,
@@ -154,14 +154,14 @@
 }
 @keyframes animation-skeleton {
   0% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 
   50% {
-    background-color: rgba($colorNeutralExtraLight, .7);
+    background-color: var(--colorNeutralExtraLightAlpha70);
   }
 
   100% {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
   }
 }

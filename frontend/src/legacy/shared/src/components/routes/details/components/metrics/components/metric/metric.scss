@@ -27,10 +27,10 @@
   font-weight: bold;
 
   .c-routeDetails-metrics-metric-positive & {
-    color: $textDarkInactive;
+    color: var(--textDarkInactive);
   }
 
   .c-routeDetails-metrics-metric-negative & {
-    color: $colorAlert;
+    color: var(--colorAlert);
   }
 }

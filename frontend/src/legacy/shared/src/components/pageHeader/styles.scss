@@ -1,8 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .pageHeader {
-  padding: 10rem 10rem 0 10rem;
-  border-bottom: var(--border-width-thin) solid $colorNeutralLight;
+  padding: 8rem 8rem 0 8rem;
 }
 
 .pageHeader-path {
@@ -41,7 +40,7 @@
 
 .pageHeader-tabs {
   display: flex;
-  border: var(--border-width-thin) solid $tabBorderColor;
+  border: var(--border-width-thin) solid var(--colorNeutralExtraLight);
   border-radius: var(--border-radius-large);
   overflow: hidden;
 }
@@ -53,16 +52,16 @@
   padding: 0 5rem;
   line-height: calc(10rem - 2 * var(--border-width-thin));
   text-align: center;
-  color: $colorInteractivePrimary;
+  color: var(--colorInteractivePrimary);
   cursor: pointer;
 
   &:not(:last-child) {
-    border-right: var(--border-width-thin) solid $tabBorderColor;
+    border-right: var(--border-width-thin) solid var(--colorNeutralExtraLight);
   }
 
   &.active {
-    background: $colorNeutralExtraLight;
-    color: $colorNeutralDark;
+    background: var(--colorNeutralExtraLight);
+    color: var(--colorNeutralDark);
   }
 }
 

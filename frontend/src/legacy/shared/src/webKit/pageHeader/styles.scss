@@ -1,6 +1,8 @@
 @import "../constants.scss";
 
 .c-pageHeader {
+  margin-top: 8rem;
+  margin-left: 8rem;
   &.withTabs {
     display: block;
     padding-top: 24px;
@@ -76,13 +78,13 @@
       height: 28px;
       padding: 0 20px;
       line-height: 28px;
-      border-top: 1px solid $colorInteractivePrimary;
-      border-bottom: 1px solid $colorInteractivePrimary;
-      border-right: 1px solid $colorInteractivePrimary;
+      border-top: 1px solid var(--colorInteractivePrimary);
+      border-bottom: 1px solid var(--colorInteractivePrimary);
+      border-right: 1px solid var(--colorInteractivePrimary);
       cursor: pointer;
 
       &:first-child {
-        border-left: 1px solid $colorInteractivePrimary;
+        border-left: 1px solid var(--colorInteractivePrimary);
         border-top-left-radius: $borderRadius;
         border-bottom-left-radius: $borderRadius;
       }
@@ -94,10 +96,10 @@
 
       &.active {
         color: white;
-        background-color: $colorInteractivePrimary;
+        background-color: var(--colorInteractivePrimary);
 
         &:hover {
-          background-color: darken($colorInteractivePrimary, $darkenOnHover);
+          background-color: var(--colorInteractivePrimaryDarken);
         }
       }
     }
@@ -108,7 +110,8 @@
     width: calc(100% - 2 *#{$backofficeSidePaddingMobile});
     height: $backofficePageHeaderMobile;
 
-    &.withTabs {}
+    &.withTabs {
+    }
 
     .c-pageHeader-actionOuterContainer {
       .c-pageHeader-mobileButton {

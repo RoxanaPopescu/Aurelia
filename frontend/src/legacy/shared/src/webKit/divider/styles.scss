@@ -8,14 +8,14 @@
   :nth-child(2) {
     margin: 0 10px;
     text-transform: uppercase;
-    color: $colorNeutralLight;
+    color: var(--colorNeutralLight);
     font-weight: bold;
   }
 
   :first-child,
   :last-child {
     height: 0;
-    border-top: 1px solid $colorNeutralLight;
+    border-top: 1px solid var(--colorNeutralLight);
     flex-grow: 2;
   }
 }

@@ -58,7 +58,7 @@ $paddingLeft: 14px;
           .value-wrapper {
             padding: 0 7px;
             align-self: flex-start;
-            background-color: $colorNeutralExtraLight;
+            background-color: var(--colorNeutralExtraLight);
             border-radius: $borderRadius;
             margin-bottom: 4px;
             height: 22px;
@@ -90,7 +90,7 @@ $paddingLeft: 14px;
                 span {
                   height: 1px;
                   width: 10px;
-                  background-color: $colorBackgroundPrimary;
+                  background-color: var(--colorBackgroundPrimary);
                   position: absolute;
                   left: 4px;
                   top: 50%;
@@ -109,7 +109,8 @@ $paddingLeft: 14px;
         }
 
         .react-selectize-reset-button-container {
-          svg {}
+          svg {
+          }
         }
       }
 
@@ -120,7 +121,7 @@ $paddingLeft: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: $colorBackgroundPrimary;
+          color: var(--colorBackgroundPrimary);
         }
 
         .addOptionIcon {
@@ -135,7 +136,7 @@ $paddingLeft: 14px;
             transform: translateX(-50%);
             height: 100%;
             width: 1px;
-            background-color: $colorBackgroundPrimary;
+            background-color: var(--colorBackgroundPrimary);
           }
 
           &:before {
@@ -145,16 +146,18 @@ $paddingLeft: 14px;
             transform: translateY(-50%);
             width: 100%;
             height: 1px;
-            background-color: $colorBackgroundPrimary;
+            background-color: var(--colorBackgroundPrimary);
           }
         }
 
         .option-wrapper {
-          &:not(:last-child) {}
+          &:not(:last-child) {
+          }
 
           &.highlight,
           &:hover {
-            .simple-option {}
+            .simple-option {
+            }
           }
 
           &.add-option {
@@ -162,7 +165,7 @@ $paddingLeft: 14px;
               display: flex;
               align-items: center;
               justify-content: center;
-              color: $colorBackgroundPrimary;
+              color: var(--colorBackgroundPrimary);
               font-weight: inherit;
             }
           }
@@ -172,7 +175,7 @@ $paddingLeft: 14px;
               display: flex;
               align-items: center;
               justify-content: center;
-              color: $colorBackgroundPrimary;
+              color: var(--colorBackgroundPrimary);
               font-weight: inherit;
             }
 
@@ -186,14 +189,16 @@ $paddingLeft: 14px;
       &.open {
         .react-selectize-control {
           background-color: white;
-          border: solid 1px $dropdownBorderColor;
+          border: solid 1px var(--colorNeutralRegular);
           z-index: 1001;
 
-          .react-selectize-toggle-button-container {}
+          .react-selectize-toggle-button-container {
+          }
 
           .react-selectize-search-field-and-selected-values {
             &:focus,
-            &:hover {}
+            &:hover {
+            }
           }
         }
       }
@@ -205,13 +210,15 @@ $paddingLeft: 14px;
       .react-selectize {
         .react-selectize-control {
           &:focus,
-          &:hover {}
+          &:hover {
+          }
         }
 
         &.open {
           .react-selectize-control {
             &:focus,
-            &:hover {}
+            &:hover {
+            }
           }
         }
       }
@@ -219,28 +226,35 @@ $paddingLeft: 14px;
   }
 
   &.inlineHeadline {
-    .selectHeadline {}
+    .selectHeadline {
+    }
 
     .selectWrapper {
       .react-selectize {
         .react-selectize-control {
-          .react-selectize-placeholder {}
+          .react-selectize-placeholder {
+          }
 
-          .react-selectize-toggle-button-container {}
+          .react-selectize-toggle-button-container {
+          }
 
-          .react-selectize-reset-button-container {}
+          .react-selectize-reset-button-container {
+          }
 
           .react-selectize-search-field-and-selected-values {
-            .resizable-input {}
+            .resizable-input {
+            }
           }
         }
 
         &.open {
           .react-selectize-control {
-            .react-selectize-toggle-button-container {}
+            .react-selectize-toggle-button-container {
+            }
           }
 
-          .dropdown-menu {}
+          .dropdown-menu {
+          }
         }
       }
     }

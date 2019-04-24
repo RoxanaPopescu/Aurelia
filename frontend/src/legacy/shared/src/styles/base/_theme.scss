@@ -4,11 +4,11 @@
 :root
 {
     --surface-color: white;
-    --surface-text-color: #{$textDarkPrimary};
-    --surface-subtle-color: #{$textDarkSecondary};
+    --surface-text-color: #{var(--textDarkPrimary)};
+    --surface-subtle-color: #{var(--textDarkSecondary)};
     --surface-heading-color: var(--surface-subtle-color);
 
-    --surface-primary-text-color: #{$colorInteractivePrimary};
+    --surface-primary-text-color: #{var(--colorInteractivePrimary)};
     
     --surface-mark-color: yellow;
 }

@@ -39,7 +39,7 @@
 
     .menuNote {
       font-size: 11px;
-      color: $textDarkInactive;
+      color: var(--textDarkInactive);
       height: 30px;
       width: 100%;
       line-height: 30px;
@@ -88,7 +88,7 @@
 
           a {
             color: rgba(255, 255, 255, 0.5);
-            background-color: $colorInteractiveSecondary;
+            background-color: var(--colorInteractiveSecondary);
 
             &:hover {
               color: rgba(255, 255, 255, 0.9);
@@ -103,7 +103,7 @@
 
         &.active {
           .main-link {
-            background-color: $colorInteractiveSecondary;
+            background-color: var(--colorInteractiveSecondary);
             color: white;
 
             .sideMenuIcons {

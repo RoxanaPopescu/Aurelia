@@ -15,7 +15,7 @@
       width: 177px;
       border-radius: $borderRadius;
       height: 20px;
-      background-color: $colorNeutralExtraLight;
+      background-color: var(--colorNeutralExtraLight);
 
       &:not(:last-child) {
         margin-right: 15px;
@@ -35,15 +35,15 @@
       border-bottom-width: 1px;
       bottom: -1px;
       transition: background-color 150ms, color 150ms;
-      
+
       &:not(:last-child) {
         margin-right: 6px;
       }
 
       &:not(.c-tabPage-tab--single) {
-        background-color: $colorNeutralExtraExtraLight;
-        border: 1px solid $colorNeutralLight;
-        color: $colorBackgroundPrimary;
+        background-color: var(--colorNeutralExtraExtraLight);
+        border: 1px solid var(--colorNeutralLight);
+        color: var(--colorBackgroundPrimary);
         cursor: pointer;
 
         &.loading {
@@ -53,7 +53,7 @@
         &.active,
         &:hover {
           color: black;
-          background-color: $colorNeutralExtraLight;
+          background-color: var(--colorNeutralExtraLight);
           z-index: 1;
         }
 
@@ -72,9 +72,9 @@
   }
 
   .c-tabPage-contentContainer {
-    background-color: $colorNeutralExtraLight;
+    background-color: var(--colorNeutralExtraLight);
     flex: 1;
-    border-top: 1px solid $colorNeutralLight;
+    border-top: 1px solid var(--colorNeutralLight);
     height: 100%;
     padding: 28px 30px;
     overflow: auto;
@@ -85,7 +85,7 @@
 
     .c-tabPage-content {
       background-color: white;
-      border: 1px solid $colorNeutralLight;
+      border: 1px solid var(--colorNeutralLight);
 
       &.loading {
         border: 0;
@@ -97,8 +97,8 @@
         align-items: center;
         padding: 0 30px;
         align-items: center;
-        background-color: $colorNeutralExtraExtraLight;
-        border-bottom: 1px solid $colorNeutralLight;
+        background-color: var(--colorNeutralExtraExtraLight);
+        border-bottom: 1px solid var(--colorNeutralLight);
 
         &.loading {
           border: 0;

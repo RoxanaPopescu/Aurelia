@@ -330,8 +330,7 @@ export namespace FulfillerSubPage {
         return FulfillerNavigationPage.path("Depots") + "/details/:id";
       case FulfillerSubPage.DriverDisposition:
         return (
-          FulfillerNavigationPage.path("FleetManagement") +
-          "/driver-disposition"
+          FulfillerNavigationPage.path("FleetManagement") + "/driver-dispatch"
         );
       case FulfillerSubPage.DriverList:
         return FulfillerNavigationPage.path("FleetManagement") + "/driver-list";
