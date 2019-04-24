@@ -18,17 +18,11 @@
   
    Download [here](http://code.visualstudio.com).
 
-3. **Install `GitHub Desktop`**
-  
-   Download [here](https://desktop.github.com).
-
-   > You may also want to consider [caching your GitHub credentials](https://help.github.com/articles/caching-your-github-password-in-git).
-
-4. **Install the latest version of the `Node.js` runtime**
+3. **Install the latest version of the `Node.js` runtime**
   
    Download [here](http://nodejs.org).
 
-5. **Install the latest version of the `npm` package**
+4. **Install the latest version of the `npm` package**
   
    In a terminal, execute the command:
   
@@ -57,6 +51,5 @@
    * To work with the repository, including hidden files and folders, open the repository folder.
    * To work with both frontend and backend area, open `platform.code-workspace`.
    * To work with only the frontend area, open the `frontend` folder.
-   * To work with only the backend area, open the `backend` folder.
 
 4. **Install any recommended extensions**
