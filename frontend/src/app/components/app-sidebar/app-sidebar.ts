@@ -49,7 +49,7 @@ export class AppSidebarCustomElement
     /**
      * True if the sidebar is expanded, otherwise false.
      */
-    protected expanded = false;
+    protected expanded = true;
 
     /**
      * True to reduce the visibility of the shadow, otherwise false.
