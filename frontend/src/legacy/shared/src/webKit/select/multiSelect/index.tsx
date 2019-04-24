@@ -163,7 +163,7 @@ export default class MultiSelectComponent extends React.Component<
               }
             }}
             onBlur={e => this.onBlur()}
-            //values={this.state.selectedOptions}
+            values={this.state.selectedOptions}
             renderValue={option => {
               return (
                 <div className="simple-value">

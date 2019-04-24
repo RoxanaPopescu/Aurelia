@@ -28,7 +28,8 @@
     "react-swipeable": "4.3.x",
     "react-transition-group": "1.x",
     "throttle-debounce": "2.0.x",
-    "universal-cookie": "2.x"
+    "universal-cookie": "2.x",
+    "patch-package": "5.1.x"
   },
   "devDependencies": {
     "@babel/core": "7.1.x",
@@ -60,6 +61,6 @@
   ],
   "license": "UNLICENSED",
   "scripts": {
-    "prepare_DISABLED": "patch-package"
+    "prepare": "patch-package"
   }
 }
