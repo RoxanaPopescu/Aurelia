@@ -6,7 +6,7 @@ export class Availability {
     if (json) {
       this.openingTime = json.openingTime;
       this.closingTime = json.closingTime;
-      this.numberOfGates = json.numberOfPorts;
+      this.numberOfGates = json.numberOfGates;
       this.daysOfWeek = json.daysOfWeek;
       this.created = true;
     } else {

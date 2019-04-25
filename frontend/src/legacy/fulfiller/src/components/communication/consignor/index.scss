@@ -1,16 +1,14 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-communication
-{
-    max-width: none;
+.c-communication {
+  max-width: none;
 
-    .c-divider
-    {
-        position: relative;
-        left: -10rem;
-        right: 10rem;
-        width: calc(100% + 20rem);
-    }
+  .c-divider {
+    position: relative;
+    left: -10rem;
+    right: 10rem;
+    width: calc(100% + 20rem);
+  }
 }
 
 .c-communication-consignor {
@@ -27,7 +25,8 @@
 }
 
 .c-communication-section {
-  margin: 40px 0;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
 }
 
 .c-communication-section-input {
@@ -48,7 +47,7 @@
   border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: 3px;
   background: var(--colorNeutralExtraLight);
-  
+
   h3 {
     display: flex;
   }
@@ -67,7 +66,6 @@
 }
 
 .c-communication-form-row {
-
   .inputWrapper {
     max-width: 150px;
   }

@@ -61,7 +61,7 @@ export default class UsersListComponent extends React.Component {
     return (
       <div className="c-users-list">
         <TableComponent
-          gridTemplateColumns="95px auto 35% 35%"
+          gridTemplateColumns="120px auto 35% 35%"
           generateURL={index => {
             return SubPage.path(SubPage.UsersDetails).replace(
               ":id",

@@ -91,6 +91,7 @@ export default class extends React.Component {
       <PageContentComponent>
         <TableComponent
           canSelectRow={() => false}
+          newVersion={true}
           data={{
             headers: this.getHeaders(),
             rows: this.getRows()

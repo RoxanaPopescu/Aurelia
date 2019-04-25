@@ -21,6 +21,7 @@ export interface TableProps {
   totalRowsText?: string;
   highlightedRowIndexes?: number[];
   canSelectRow?: boolean | ((index: number) => boolean);
+  newVersion?: boolean;
   loading: boolean;
   pagination?: {
     pages: number;
@@ -329,7 +330,13 @@ export class TableComponent extends React.Component<TableProps, TableState> {
     }
 
     return (
-      <div className="gridTable-container">
+      <div
+        className={`gridTable-container${
+          this.props.newVersion
+            ? " gridTable-container-new"
+            : " gridTable-container-old"
+        }`}
+      >
         <div
           key="gridTable"
           className={tableClassnames}

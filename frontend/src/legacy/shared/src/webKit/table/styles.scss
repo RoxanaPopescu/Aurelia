@@ -1,10 +1,11 @@
 @import "../constants.scss";
 
 .gridTable-container {
+  position: relative;
+  top: -15px;
 }
-
 .c-gridTable-totalRows {
-  padding: 3rem 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--colorNeutralLight);
 }
 
@@ -16,217 +17,432 @@
   cursor: pointer;
 }
 
-.c-gridTable {
-  width: auto;
-  min-width: 800px;
-  display: grid;
-  grid-row-gap: 0;
-  padding: 0 8rem;
+.gridTable-container-old {
+  .c-gridTable {
+    width: auto;
+    min-width: 800px;
+    display: grid;
+    grid-row-gap: 0;
 
-  * {
-    position: relative;
-  }
+    .c-gridTable-row {
+      display: contents;
 
-  &.c-gridTable-blank {
-    padding-bottom: 300px !important;
-  }
+      &:hover,
+      &.highlighted {
+        .c-gridTable-content {
+          background-color: var(--colorNeutralExtraLightDarken);
+          border-color: var(--colorNeutralExtraLightDarken);
 
-  .c-gridTable-row {
-    display: contents;
+          &:first-child {
+            &:before {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 0;
+              bottom: 0;
+              width: 1rem;
+              background-color: var(--colorBackgroundPrimary);
+              border-top-left-radius: $listItemBorderRadius;
+              border-bottom-left-radius: $listItemBorderRadius;
+            }
+          }
+        }
+      }
+      &.highlighted {
+        .c-gridTable-content {
+          z-index: 1;
+        }
+      }
 
-    &:hover,
-    &.highlighted {
-      .c-gridTable-content {
-        background-color: var(--colorNeutralExtraLightDarken);
+      &.disabled {
+        .c-gridTable-content {
+          color: var(--colorNeutralExtraLightDarken);
+        }
       }
     }
-    &.highlighted {
-      .c-gridTable-content {
-        z-index: 1;
-      }
+
+    &.c-gridTable-blank {
+      padding-bottom: 300px !important;
     }
 
-    &.disabled {
-      .c-gridTable-content {
-        color: var(--colorNeutralExtraLightDarken);
-      }
-    }
-  }
-
-  .c-gridTable-header {
-    display: flex;
-    align-items: center;
-    height: 10rem;
-    text-align: left;
-    position: sticky;
-    z-index: 2;
-    border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
-    border-top: var(--border-width-thin) solid var(--colorNeutralLight);
-    top: 0;
-    background-color: var(--colorNeutralExtraExtraLight);
-    padding: 0 5rem;
-    transition: all 150ms;
-
-    $arrowHeight: 4px;
-
-    &:first-child {
-      border-left: var(--border-width-thin) solid var(--colorNeutralLight);
-      border-top-left-radius: var(--border-radius-medium);
-      border-bottom-left-radius: var(--border-radius-medium);
-    }
-    &:last-child {
-      border-right: var(--border-width-thin) solid var(--colorNeutralLight);
-      border-top-right-radius: var(--border-radius-medium);
-      border-bottom-right-radius: var(--border-radius-medium);
-    }
-
-    .c-gridTable-header-arrows {
-      height: 100%;
-      margin-left: 2rem;
+    .c-gridTable-header {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      user-select: none;
+      height: 48px;
+      text-align: left;
+      align-self: center;
+      position: sticky;
+      z-index: 101;
+      padding: 0 5rem;
+      top: 0;
+      background-color: white;
+      line-height: 48px;
 
-      &:after,
-      &:before {
-        content: "";
-        width: 0;
-        height: 0;
-        border-left: $arrowHeight solid transparent;
-        border-right: $arrowHeight solid transparent;
+      transition: all 150ms;
+      font-size: 13px;
+      font-weight: 600;
+
+      &:hover {
+        .c-gridTable-header-text {
+          background-color: $colorHighlightWhite;
+        }
       }
 
-      &:before {
-        border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
-        margin-bottom: 0.5rem;
+      $arrowHeight: 4px;
+
+      .c-gridTable-header-text {
+        padding: 0 15px;
       }
 
-      &:after {
-        border-top: $arrowHeight solid var(--colorBackgroundPrimary);
-        margin-top: 0.5rem;
-      }
-    }
-
-    &.Descending {
       .c-gridTable-header-arrows {
+        height: 100%;
+        margin-left: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &:after,
         &:before {
-          border-bottom: $arrowHeight solid var(--colorNeutralRegular);
+          content: "";
+          width: 0;
+          height: 0;
+          border-left: $arrowHeight solid transparent;
+          border-right: $arrowHeight solid transparent;
+        }
+
+        &:before {
+          border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
+          margin-bottom: 0.5rem;
         }
 
         &:after {
           border-top: $arrowHeight solid var(--colorBackgroundPrimary);
+          margin-top: 0.5rem;
+        }
+      }
+
+      &.Descending {
+        .c-gridTable-header-arrows {
+          &:before {
+            border-bottom: $arrowHeight solid var(--colorNeutralRegular);
+          }
+
+          &:after {
+            border-top: $arrowHeight solid var(--colorBackgroundPrimary);
+          }
+        }
+      }
+
+      &.Ascending {
+        .c-gridTable-header-arrows {
+          &:before {
+            border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
+          }
+
+          &:after {
+            border-top: $arrowHeight solid var(--colorNeutralRegular);
+          }
         }
       }
     }
 
-    &.Ascending {
-      .c-gridTable-header-arrows {
-        &:before {
-          border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
-        }
+    .c-gridTable-content-inner {
+      @include ellipsis;
+    }
 
-        &:after {
-          border-top: $arrowHeight solid var(--colorNeutralRegular);
+    .c-gridTable-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background-color: var(--colorNeutralExtraLight);
+      text-align: left;
+      padding: 2rem 5rem;
+      transition: background-color 100ms;
+      color: var(--colorNeutralDark);
+      margin-bottom: 4px;
+
+      &.c-gridTable-skeleton {
+        height: 40px;
+        margin-bottom: 10px;
+        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal
+          none running;
+      }
+
+      &.c-gridTable-lastColumn {
+        border-top-right-radius: $listItemBorderRadius;
+        border-bottom-right-radius: $listItemBorderRadius;
+      }
+
+      &.c-gridTable-firstColumn {
+        padding-left: 15px;
+        border-top-left-radius: $listItemBorderRadius;
+        border-bottom-left-radius: $listItemBorderRadius;
+      }
+
+      &.hovered {
+        background-color: var(--colorNeutralExtraLightDarken);
+        border-color: var(--colorNeutralExtraLightDarken);
+
+        &.c-gridTable-firstColumn:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: var(--colorBackgroundPrimary);
+          border-top-left-radius: $listItemBorderRadius;
+          border-bottom-left-radius: $listItemBorderRadius;
         }
+      }
+
+      &.selectable {
+        cursor: pointer;
       }
     }
   }
 
-  .c-gridTable-content-inner {
-    @include ellipsis;
-  }
-
-  .c-gridTable-content {
-    display: flex;
-    align-items: center;
-    height: 10rem;
-    padding: 0 5rem;
-    border-bottom: 1px solid var(--colorNeutralLight);
-    transition: background-color 100ms;
-
-    &.c-gridTable-skeleton {
-      height: 10rem;
-      margin-bottom: 2rem;
-      animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none
-        running;
-    }
-
-    &.selectable {
-      cursor: pointer;
-    }
-  }
-}
-
-.c-gridTable-noResults {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 900;
-  display: grid;
-  grid-row-gap: 0;
-  height: 100%;
-
-  .c-gridTable-noResults-headline {
-    padding-right: 10rem;
-    align-self: center;
-    justify-self: center;
-    position: sticky;
-    top: 50%;
-  }
-}
-
-.c-gridTable-sortingLoadingOverlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: var(--size-app-sidebar-width-expanded);
-  right: 0;
-  z-index: 900;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 150ms;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-
-  .sideMenu--collapsed
-  {
-    left: var(--size-app-sidebar-width);
-  }
-
-  .c-gridTable-sortingLoadingOverlay-indicator {
+  .c-gridTable-noResults {
     position: absolute;
-    margin-top: 50vh;
-  }
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    display: grid;
+    grid-row-gap: 0;
+    height: 100%;
 
-  .c-gridTable-sortingLoadingOverlay-headline {
-    position: absolute;
-    margin-top: 50vh;
-    color: var(--colorNeutralDark);
-
-    &:after {
-      content: "";
-      position: absolute;
-      right: 0;
+    .c-gridTable-noResults-headline {
+      padding-right: 40px;
+      align-self: center;
+      justify-self: center;
+      position: sticky;
       top: 50%;
-      margin-top: -13px;
-      margin-left: -13px;
-      -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
-      animation: fade-in 300ms ease both, spin 600ms linear infinite;
-      height: 26px;
-      width: 26px;
-      border: 4px solid transparent;
-      border-radius: 50%;
-      border-top-color: var(--colorNeutralDark);
     }
   }
 
-  &.active {
-    opacity: 1;
-    pointer-events: auto;
-    pointer-events: initial;
+  .c-gridTable-sortingLoadingOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: var(--size-app-sidebar-width-expanded, #{$backofficeMenuBig});
+    right: 0;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    .sideMenu--collapsed
+    {
+      left: var(--size-app-sidebar-width, #{$backofficeMenuSmall});
+    }
+
+    .c-gridTable-sortingLoadingOverlay-indicator {
+      position: absolute;
+      margin-top: 50vh;
+    }
+
+    .c-gridTable-sortingLoadingOverlay-headline {
+      position: absolute;
+      margin-top: 50vh;
+      color: var(--colorNeutralDark);
+
+      &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -13px;
+        margin-left: -13px;
+        -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
+        animation: fade-in 300ms ease both, spin 600ms linear infinite;
+        height: 26px;
+        width: 26px;
+        border: 4px solid transparent;
+        border-radius: 50%;
+        border-top-color: var(--colorNeutralDark);
+      }
+    }
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+      pointer-events: initial;
+    }
+  }
+}
+
+/*
+** Semi hack to accommodate transition between "old" and "new" design
+*/
+.gridTable-container-new {
+  .c-gridTable {
+    width: auto;
+    min-width: 800px;
+    display: grid;
+    grid-row-gap: 0;
+
+    * {
+      position: relative;
+    }
+
+    &.c-gridTable-blank {
+      padding-bottom: 300px !important;
+    }
+
+    .c-gridTable-row {
+      display: contents;
+
+      &:hover,
+      &.highlighted {
+        .c-gridTable-content {
+          background-color: var(--colorNeutralExtraLightDarken);
+        }
+      }
+      &.highlighted {
+        .c-gridTable-content {
+          z-index: 1;
+        }
+      }
+
+      &.disabled {
+        .c-gridTable-content {
+          color: var(--colorNeutralExtraLightDarken);
+        }
+      }
+    }
+
+    .c-gridTable-header {
+      display: flex;
+      align-items: center;
+      height: 10rem;
+      text-align: left;
+      position: sticky;
+      z-index: 2;
+      border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
+      border-top: var(--border-width-thin) solid var(--colorNeutralLight);
+      top: 0;
+      background-color: var(--colorNeutralExtraExtraLight);
+      padding: 0 5rem;
+      transition: all 150ms;
+
+      $arrowHeight: 4px;
+
+      &:first-child {
+        border-left: var(--border-width-thin) solid var(--colorNeutralLight);
+        border-top-left-radius: var(--border-radius-medium);
+        border-bottom-left-radius: var(--border-radius-medium);
+      }
+      &:last-child {
+        border-right: var(--border-width-thin) solid var(--colorNeutralLight);
+        border-top-right-radius: var(--border-radius-medium);
+        border-bottom-right-radius: var(--border-radius-medium);
+      }
+    }
+
+    .c-gridTable-content-inner {
+      @include ellipsis;
+    }
+
+    .c-gridTable-content {
+      display: flex;
+      align-items: center;
+      height: 10rem;
+      padding: 0 5rem;
+      border-bottom: 1px solid var(--colorNeutralLight);
+      transition: background-color 100ms;
+
+      &.c-gridTable-skeleton {
+        height: 10rem;
+        margin-bottom: 2rem;
+        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal
+          none running;
+      }
+
+      &.selectable {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .c-gridTable-noResults {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    display: grid;
+    grid-row-gap: 0;
+    height: 100%;
+
+    .c-gridTable-noResults-headline {
+      padding-right: 10rem;
+      align-self: center;
+      justify-self: center;
+      position: sticky;
+      top: 50%;
+    }
+  }
+
+  .c-gridTable-sortingLoadingOverlay {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms;
+    display: grid;
+    grid-row-gap: 0;
+    height: 100%;
+
+    .c-gridTable-sortingLoadingOverlay-indicator {
+      align-self: center;
+      justify-self: center;
+      position: sticky;
+      top: 50%;
+      margin-top: -50%;
+    }
+
+    .c-gridTable-sortingLoadingOverlay-headline {
+      padding-right: 40px;
+      align-self: center;
+      justify-self: center;
+      position: sticky;
+      top: 50%;
+      margin-top: -50%;
+      color: var(--colorNeutralDark);
+
+      &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -13px;
+        margin-left: -13px;
+        -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
+        animation: fade-in 300ms ease both, spin 600ms linear infinite;
+        height: 26px;
+        width: 26px;
+        border: 4px solid transparent;
+        border-radius: 50%;
+        border-top-color: var(--colorNeutralDark);
+      }
+    }
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+      pointer-events: initial;
+    }
   }
 }
 @keyframes animation-table-skeleton {
