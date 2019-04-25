@@ -181,7 +181,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: var(--size-app-sidebar-width-expanded);
   right: 0;
   z-index: 900;
   opacity: 0;
@@ -191,12 +191,19 @@
   justify-content: center;
   align-content: center;
 
+  .sideMenu--collapsed
+  {
+    left: var(--size-app-sidebar-width);
+  }
+
   .c-gridTable-sortingLoadingOverlay-indicator {
     position: absolute;
+    margin-top: 50vh;
   }
 
   .c-gridTable-sortingLoadingOverlay-headline {
     position: absolute;
+    margin-top: 50vh;
     color: var(--colorNeutralDark);
 
     &:after {
