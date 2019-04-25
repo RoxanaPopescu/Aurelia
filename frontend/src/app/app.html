@@ -4,7 +4,7 @@
 
     <require from="./app.scss"></require>
 
-    <app-sidebar></app-sidebar>
+    <app-sidebar if.bind="identityService.identity"></app-sidebar>
 
     <router-view class="app au-animate animation-fade-in-medium animation-fade-out-medium" swap-order="after"></router-view>
 

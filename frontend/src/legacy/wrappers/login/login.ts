@@ -57,9 +57,5 @@ export class LoginCustomElement extends Wrapper
         {
             this._router.navigate("/");
         }
-        else
-        {
-            this._router.navigate("/account/sign-in");
-        }
     }
 }

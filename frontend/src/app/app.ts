@@ -3,6 +3,7 @@ import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, Pip
 import { ModalService } from "shared/framework";
 import { AuthorizationService } from "./services/user/authorization";
 import routeTitles from "./resources/strings/route-titles.json";
+import { IdentityService } from "./services/user/identity";
 
 /**
  * Represents the app module.
@@ -15,8 +16,10 @@ export class AppModule
      * @param identityService The `IdentityService` instance.
      * @param modalService The `ModalService` instance.
      */
-    public constructor(modalService: ModalService)
+    public constructor(identityService: IdentityService, modalService: ModalService)
     {
+        this.identityService = identityService;
+
         // Register global modals.
 
         // Panels.
@@ -29,6 +32,8 @@ export class AppModule
         // Dialogs.
         modalService.register("confirm", PLATFORM.moduleName("app/modals/dialogs/confirm/confirm"));
     }
+
+    protected readonly identityService: IdentityService;
 
     /**
      * Called to configure the router for the module.
