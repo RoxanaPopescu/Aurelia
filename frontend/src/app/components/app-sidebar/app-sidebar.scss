@@ -88,9 +88,18 @@ app-sidebar
             opacity: 0.5;
         }
     }
+
+    .app-sidebar--powered-by {
+        display: none;
+        margin-top: 3rem;
+        margin-bottom: 10px;
+        margin-left: 7rem;
+        opacity: 0.4;
+        white-space: nowrap;
+    }
 }
 
-.sidebar-link
+.nav-link
 {
     display: flex;
     align-items: center;
@@ -226,7 +235,7 @@ app-sidebar.--expanded
         margin-right: 7rem;
     }
 
-    .sidebar-link
+    .nav-link
     {
         > span
         {
@@ -239,5 +248,10 @@ app-sidebar.--expanded
     {
         display: block;
         padding: 5rem 6rem;
+    }
+
+    .app-sidebar--powered-by
+    {
+        display: block;
     }
 }
