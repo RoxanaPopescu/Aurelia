@@ -26,7 +26,9 @@ export class FleetModule
                 name: "list",
                 route: "drivers",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                title: routeTitles.list
+                nav: true,
+                title: routeTitles.list,
+                href: "/drivers"
             },
             {
                 name: "details",
@@ -39,7 +41,20 @@ export class FleetModule
                 route: "drivers/create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
                 title: routeTitles.create
-            }
+            },
+
+            ...
+            ENVIRONMENT.name === "development" ?
+            [
+                {
+                    name: "driver-disposition",
+                    route: "driver-disposition",
+                    moduleId: PLATFORM.moduleName("./modules/driver-disposition/driver-disposition"),
+                    nav: true,
+                    title: routeTitles.driverDisposition,
+                    href: "/fleet-management/driver-disposition"
+                }
+            ] : []
         ]);
     }
 }

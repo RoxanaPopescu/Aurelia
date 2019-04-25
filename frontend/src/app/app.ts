@@ -44,7 +44,7 @@ export class AppModule
         router.titleSeparator = " — ";
 
         // Remove unwanted route titles.
-        router.transformTitle = title => ["List", "All routes"].includes(title) ? "" : title;
+        router.transformTitle = title => ["List"].includes(title) ? "" : title;
 
         // Add the authorization step.
         config.addPipelineStep("authorize", AuthorizePipelineStep);

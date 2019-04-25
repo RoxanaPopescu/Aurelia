@@ -1,5 +1,6 @@
 {
-    "list": "List",
+    "list": "All drivers",
     "details": "Details",
-    "create": "Create"
+    "create": "Create",
+    "driverDisposition": "Driver disposition"
 }
