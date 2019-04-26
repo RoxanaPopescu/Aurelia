@@ -12,7 +12,7 @@ const dateTimeStyles =
 };
 
 /**
- * The supported date-time style values.
+ * Represents the supported date-time style values.
  */
 export type DateTimeStyle = keyof typeof dateTimeStyles;
 

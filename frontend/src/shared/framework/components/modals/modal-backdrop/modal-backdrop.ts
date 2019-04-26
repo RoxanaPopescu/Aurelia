@@ -1,5 +1,5 @@
-import { autoinject, bindable } from "aurelia-framework";
-import { Modal } from "../../../services/modal";
+import { inject, bindable, Optional } from "aurelia-framework";
+import { Modal, ModalService } from "../../../services/modal";
 
 /**
  * Represents the backdrop for a modal.
@@ -8,34 +8,47 @@ import { Modal } from "../../../services/modal";
  * Place directly within the `template` element of the modal,
  * before its content.
  */
-@autoinject
+@inject(ModalService, Optional.of(Modal, true))
 export class ModalBackdropCustomElement
 {
     /**
      * Creates a new instance of the type.
+     * @param modalService The `ModalService`instance.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(modal: Modal)
+    public constructor(modalService: ModalService, modal?: Modal)
     {
+        this._modalService = modalService;
         this._modal = modal;
     }
 
-    private readonly _modal: Modal;
+    private readonly _modalService: ModalService;
+    private readonly _modal: Modal | undefined;
 
     /**
-     * True to close the modal when the backdrop is clicked, otherwise false.
+     * True to close the modal on when the backdrop is clicked, false to do nothing, or the name of a modal group to
+     * The modal close action to take when the overlay is clicked, where 'top' attempts to close
+     * the modal at the top, 'all' attempts to close all modals, and 'none' does nothing.
+     * The default is 'top'.
      */
-    @bindable({ defaultValue: true })
-    public closeModal: boolean;
+    @bindable({ defaultValue: "top" })
+    public close: "top" | "all" | "none";
 
     /**
      * Called when the backdrop is clicked.
      */
     protected async onClick(): Promise<void>
     {
-        if (this.closeModal)
+        if (this._modal)
         {
-            await this._modal.close();
+            if (this.close === "all")
+            {
+                await this._modalService.closeAll();
+            }
+            else if (this.close === "top")
+            {
+                await this._modal.close("backdrop-click");
+            }
         }
     }
 }

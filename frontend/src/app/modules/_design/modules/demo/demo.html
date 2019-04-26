@@ -28,17 +28,9 @@
 
         </div>
 
-        <div theme-surface="${surface}" class="font-${fontSize}">
+        <div surface.bind="surface & attr" class="font-${fontSize}">
 
             <design-item heading="md-icon (deprecated)">
-
-                <design-row heading="Icon inline with text">
-
-                    <div class="line-height-1">
-                        X <md-icon name="add"></md-icon> X
-                    </div>
-
-                </design-row>
 
                 <design-row heading="Icon centered using flexbox">
 
@@ -50,7 +42,15 @@
 
                 </design-row>
 
-                <design-row heading="Icon stack inline with text">
+                <design-row heading="Icon inline with text, with line height equal to 1">
+
+                    <div class="line-height-1">
+                        X <md-icon name="add"></md-icon> X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon stack inline with text, with line height equal to 1">
 
                     <div class="line-height-1">
                         X
@@ -67,14 +67,6 @@
 
             <design-item heading="icon">
 
-                <design-row heading="Icon inline icon with text">
-
-                    <div class="line-height-1">
-                        X <icon name="add"></icon> X
-                    </div>
-
-                </design-row>
-
                 <design-row heading="Icon centered using flexbox">
 
                     <div class="line-height-1" style="display: flex; align-items: center;">
@@ -85,11 +77,40 @@
 
                 </design-row>
 
-                <design-row heading="Icon stack inline with text">
+                <design-row heading="Icon inline icon with text, with line-height equal to 1">
+
+                    <div class="line-height-1">
+                        X <icon name="add"></icon> X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon inline icon with text, with line-height larger than 1">
+
+                    <div>
+                        X <icon inline name="add"></icon> X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon stack inline with text, with line-height equal to 1">
 
                     <div class="line-height-1">
                         X
                         <icon>
+                            <icon name="watch"></icon>
+                            <icon name="add"></icon>
+                        </icon>
+                        X
+                    </div>
+
+                </design-row>
+
+                <design-row heading="Icon stack inline with text, with line-height larger than 1">
+
+                    <div>
+                        X
+                        <icon inline>
                             <icon name="watch"></icon>
                             <icon name="add"></icon>
                         </icon>

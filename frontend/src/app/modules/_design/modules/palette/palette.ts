@@ -3,7 +3,7 @@
 import { autoinject } from "aurelia-framework";
 
 @autoinject
-export class PaletteModule
+export class PalettePage
 {
     public attached(): void
     {

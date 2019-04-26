@@ -53,22 +53,30 @@ const compilerOptions: ICompilerOptions =
 
         // Environment-specific configuration.
 
-        integrations:
+        ...
+        commander.environment === "production" ?
         {
-            googleMaps:
+            integrations:
             {
-                key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
-            },
+                googleMaps:
+                {
+                    key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
+                },
 
-            ...
-            commander.environment === "production" ?
-            {
                 sentry:
                 {
                     dsn: "https://e1c6cac2640e4683b490730936816c46@sentry.io/1430333"
                 }
-            } :
-            {}
+            }
+        } :
+        {
+            integrations:
+            {
+                googleMaps:
+                {
+                    key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
+                }
+            }
         }
     }
 };

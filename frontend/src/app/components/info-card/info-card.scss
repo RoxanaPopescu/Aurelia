@@ -1,0 +1,17 @@
+@import "styles/resources/index";
+
+info-card
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 1;
+    min-width: var(--card-width);
+    height: var(--card-height);
+    padding: var(--card-padding-large);
+    background: var(--color-surface);
+    color: var(--color-surface-text);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--border-radius-medium);
+    border-left: var(--border-width-thick) solid var(--palette-color-info);
+}

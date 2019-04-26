@@ -11,9 +11,11 @@ const focusVisibleClassName = "focus-visible";
 export interface IExtendedFocusOptions extends FocusOptions
 {
     /**
-     * True to prevent the focus visibility from changing, otherwise false.
+     * True to make the focus visible, false to make it invisible,
+     * or undefined to keep the current visibility.
+     * Default is undefined.
      */
-    preventFocusVisible?: boolean;
+    focusVisible?: boolean;
 }
 
 /**
@@ -33,7 +35,7 @@ export class FocusService
         // Hide keyboard focus when any mouse, touch or pointer event occurs.
         this._eventManager.addEventListener(document, ["mousedown", "touchstart", "pointerdown"], () =>
         {
-            this.setFocusVisible(false);
+            this.focusVisible = false;
         },
         { capture: true });
 
@@ -42,19 +44,19 @@ export class FocusService
         {
             if (event.key === "Tab" && !event.ctrlKey && !event.altKey && !event.metaKey && !event.defaultPrevented)
             {
-                this.setFocusVisible(true);
+                this.focusVisible = true;
             }
         });
 
-        // Show keyboard focus when set programatically.
+        // Optionally show or hide focus when set programatically.
         // tslint:disable: no-invalid-this no-unbound-method no-this-assignment
         const focusService = this;
         const focusFunc = HTMLElement.prototype.focus;
-        HTMLElement.prototype.focus = function(options: IExtendedFocusOptions): void
+        HTMLElement.prototype.focus = function(options?: IExtendedFocusOptions): void
         {
-            if (options == null || !options.preventFocusVisible)
+            if (options != null && options.focusVisible != null)
             {
-                focusService.setFocusVisible(true);
+                focusService.focusVisible = options.focusVisible;
             }
 
             focusFunc.apply(this, arguments as any);
@@ -81,7 +83,7 @@ export class FocusService
 
     /**
      * Sets whether focus should be visible.
-     * Note that this can be set regardless of whether automatic focus management is enabled.
+     * Note that this can be set regardless of whether the service is enabled or disabled.
      * @param value True if focus should be visible, otherwise false.
      */
     public set focusVisible(value: boolean)
@@ -95,23 +97,6 @@ export class FocusService
         else
         {
             document.body.classList.remove(focusVisibleClassName);
-        }
-    }
-
-    /**
-     * Called when the service determines focus visibility should change.
-     * This updates the backing variable for the `focusVisible` property, but defers the update of the DOM,
-     * thereby allowing the change to be overridden before it takes effect. This is useful in situations
-     * where focus is set programatically, but should not be visible.
-     * @param value True if focus should be visible, otherwise false.
-     */
-    private setFocusVisible(value: boolean): void
-    {
-        if (this.enabled)
-        {
-            this._focusVisible = value;
-
-            setTimeout(() => this.focusVisible = this._focusVisible);
         }
     }
 }

@@ -1,4 +1,5 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, bindable } from "aurelia-framework";
+import { IExtendedFocusOptions } from "shared/framework/services/focus";
 /**
  * Custom attribute that focuses the element to which it is applied.
  */
@@ -17,10 +18,33 @@ export class AutofocusCustomAttribute
     private readonly _element: HTMLElement;
 
     /**
+     * True or empty string to enable autofocus, otherwise false.
+     * The default is true.
+     */
+    @bindable({ primaryProperty: true, defaultValue: true })
+    public enabled: boolean | "";
+
+    /**
+     * True to make the focus visible, false to make it invisible,
+     * or undefined to keep the current visibility.
+     * The default is undefined.
+     */
+    @bindable({ defaultValue: undefined })
+    public visible: boolean | undefined;
+
+    /**
      * Called by the framework when the component is attached.
      */
     public attached(): void
     {
-        setTimeout(() => this._element.focus());
+        if (this.enabled || this.enabled === "")
+        {
+            const customFocusOptions: IExtendedFocusOptions =
+            {
+                focusVisible: this.visible
+            };
+
+            this._element.focus(customFocusOptions);
+        }
     }
 }

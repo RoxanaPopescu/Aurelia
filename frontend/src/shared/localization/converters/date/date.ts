@@ -12,7 +12,7 @@ const dateStyles =
 };
 
 /**
- * The supported date style values.
+ * Represents the supported date style values.
  */
 export type DateStyle = keyof typeof dateStyles;
 

@@ -2,14 +2,22 @@
 /// @group themes/default/surfaces/card
 ////
 
-/// Theme surface defining the appearance of cards placed on the base surface.
+/// Surface defining the appearance of cards placed on the base surface.
 $__summary: comment;
 
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
-[theme-surface="card"]
+[surface="card"]
 {
+    --color-surface-subtle: var(--palette-color-neutral-dark);
+    --color-surface-text: var(--palette-color-neutral-darker);
+    --color-surface-icon: var(--palette-color-neutral-dark);
+    --color-surface-border: var(--palette-color-neutral);
+
+    // Needed for proper gradients.
+    --color-surface-transparent: #{hsla(240, 14%, 99%, 0)};
+
     // State: normal
     --color-border: var(--palette-color-neutral-light);
     --color-surface: var(--palette-color-neutral-lighter);
@@ -18,7 +26,7 @@ $__summary: comment;
     --color-border--hover: var(--palette-color-neutral-light);
     --color-surface--hover: var(--palette-color-neutral-HOVER);
 
-    // State: hover
+    // State: focus
     --color-border--focus: var(--palette-color-neutral-light);
     --color-surface--focus: var(--palette-color-neutral-HOVER);
 
@@ -58,35 +66,312 @@ $__summary: comment;
     &
     {
         // State: normal
-        --color-surface-neutral-border: var(--palette-color-neutral);
-        --color-surface-neutral-surface: var(--palette-color-neutral);
+        --color-surface-neutral-text: var(--color-surface-text);
+        --color-surface-neutral-icon: var(--color-surface-icon);
+        --color-surface-neutral-border: var(--palette-color-neutral-light);
+        --color-surface-neutral-surface: var(--palette-color-neutral-light);
+        --color-surface-neutral-surface-text: var(--color-surface-text);
+        --color-surface-neutral-surface-icon: var(--color-surface-icon);
 
         // State: hover
+        --color-surface-neutral-text--hover: var(--color-surface-text);
+        --color-surface-neutral-icon--hover: var(--color-surface-icon);
         --color-surface-neutral-border--hover: var(--palette-color-neutral);
         --color-surface-neutral-surface--hover: var(--palette-color-neutral);
+        --color-surface-neutral-surface-text--hover: var(--color-surface-text);
+        --color-surface-neutral-surface-icon--hover: var(--color-surface-icon);
 
         // State: focus
+        --color-surface-neutral-text--focus: var(--color-surface-text);
+        --color-surface-neutral-icon--focus: var(--color-surface-icon);
         --color-surface-neutral-border--focus: var(--palette-color-neutral);
         --color-surface-neutral-surface--focus: var(--palette-color-neutral);
+        --color-surface-neutral-surface-text--focus: var(--color-surface-text);
+        --color-surface-neutral-surface-icon--focus: var(--color-surface-icon);
 
         // State: active
+        --color-surface-neutral-text--active: var(--color-surface-text);
+        --color-surface-neutral-icon--active: var(--color-surface-icon);
         --color-surface-neutral-border--active: var(--palette-color-neutral-dark);
         --color-surface-neutral-surface--active: var(--palette-color-neutral-dark);
+        --color-surface-neutral-surface-text--active: var(--color-surface-whitepoint);
+        --color-surface-neutral-surface-icon--active: var(--color-surface-whitepoint);
+    }
+
+    // Primary elements on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-primary-text: var(--palette-color-primary);
+        --color-surface-primary-icon: var(--palette-color-primary);
+        --color-surface-primary-border: var(--palette-color-primary);
+        --color-surface-primary-surface: var(--palette-color-primary);
+        --color-surface-primary-surface-text: var(--palette-color-primary-lighter);
+        --color-surface-primary-surface-icon: var(--palette-color-primary-lighter);
+
+        // State: hover
+        --color-surface-primary-text--hover: var(--palette-color-primary-dark);
+        --color-surface-primary-icon--hover: var(--palette-color-primary-dark);
+        --color-surface-primary-border--hover: var(--palette-color-primary-dark);
+        --color-surface-primary-surface--hover: var(--palette-color-primary-dark);
+        --color-surface-primary-surface-text--hover: var(--palette-color-primary-lighter);
+        --color-surface-primary-surface-icon--hover: var(--palette-color-primary-lighter);
+
+        // State: focus
+        --color-surface-primary-text--focus: var(--palette-color-primary-dark);
+        --color-surface-primary-icon--focus: var(--palette-color-primary-dark);
+        --color-surface-primary-border--focus: var(--palette-color-primary-dark);
+        --color-surface-primary-surface--focus: var(--palette-color-primary-dark);
+        --color-surface-primary-surface-text--focus: var(--palette-color-primary-lighter);
+        --color-surface-primary-surface-icon--focus: var(--palette-color-primary-lighter);
+
+        // State: active
+        --color-surface-primary-text--active: var(--palette-color-primary-darker);
+        --color-surface-primary-icon--active: var(--palette-color-primary-darker);
+        --color-surface-primary-border--active: var(--palette-color-primary-darker);
+        --color-surface-primary-surface--active: var(--palette-color-primary-darker);
+        --color-surface-primary-surface-text--active: var(--palette-color-primary-lighter);
+        --color-surface-primary-surface-icon--active: var(--palette-color-primary-lighter);
+    }
+
+    // Info elements on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-info-text: var(--palette-color-info);
+        --color-surface-info-icon: var(--palette-color-info);
+        --color-surface-info-border: var(--palette-color-info);
+        --color-surface-info-surface: var(--palette-color-info);
+        --color-surface-info-surface-text: var(--palette-color-info-lighter);
+        --color-surface-info-surface-icon: var(--palette-color-info-lighter);
+
+        // State: hover
+        --color-surface-info-text--hover: var(--palette-color-info-dark);
+        --color-surface-info-icon--hover: var(--palette-color-info-dark);
+        --color-surface-info-border--hover: var(--palette-color-info-dark);
+        --color-surface-info-surface--hover: var(--palette-color-info-dark);
+        --color-surface-info-surface-text--hover: var(--palette-color-info-lighter);
+        --color-surface-info-surface-icon--hover: var(--palette-color-info-lighter);
+
+        // State: focus
+        --color-surface-info-text--focus: var(--palette-color-info-dark);
+        --color-surface-info-icon--focus: var(--palette-color-info-dark);
+        --color-surface-info-border--focus: var(--palette-color-info-dark);
+        --color-surface-info-surface--focus: var(--palette-color-info-dark);
+        --color-surface-info-surface-text--focus: var(--palette-color-info-lighter);
+        --color-surface-info-surface-icon--focus: var(--palette-color-info-lighter);
+
+        // State: active
+        --color-surface-info-text--active: var(--palette-color-info-darker);
+        --color-surface-info-icon--active: var(--palette-color-info-darker);
+        --color-surface-info-border--active: var(--palette-color-info-darker);
+        --color-surface-info-surface--active: var(--palette-color-info-darker);
+        --color-surface-info-surface-text--active: var(--palette-color-info-lighter);
+        --color-surface-info-surface-icon--active: var(--palette-color-info-lighter);
+    }
+
+    // Positive elements on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-positive-text: var(--palette-color-positive);
+        --color-surface-positive-icon: var(--palette-color-positive);
+        --color-surface-positive-border: var(--palette-color-positive);
+        --color-surface-positive-surface: var(--palette-color-positive);
+        --color-surface-positive-surface-text: var(--palette-color-positive-lighter);
+        --color-surface-positive-surface-icon: var(--palette-color-positive-lighter);
+
+        // State: hover
+        --color-surface-positive-text--hover: var(--palette-color-positive-dark);
+        --color-surface-positive-icon--hover: var(--palette-color-positive-dark);
+        --color-surface-positive-border--hover: var(--palette-color-positive-dark);
+        --color-surface-positive-surface--hover: var(--palette-color-positive-dark);
+        --color-surface-positive-surface-text--hover: var(--palette-color-positive-lighter);
+        --color-surface-positive-surface-icon--hover: var(--palette-color-positive-lighter);
+
+        // State: focus
+        --color-surface-positive-text--focus: var(--palette-color-positive-dark);
+        --color-surface-positive-icon--focus: var(--palette-color-positive-dark);
+        --color-surface-positive-border--focus: var(--palette-color-positive-dark);
+        --color-surface-positive-surface--focus: var(--palette-color-positive-dark);
+        --color-surface-positive-surface-text--focus: var(--palette-color-positive-lighter);
+        --color-surface-positive-surface-icon--focus: var(--palette-color-positive-lighter);
+
+        // State: active
+        --color-surface-positive-text--active: var(--palette-color-positive-darker);
+        --color-surface-positive-icon--active: var(--palette-color-positive-darker);
+        --color-surface-positive-border--active: var(--palette-color-positive-darker);
+        --color-surface-positive-surface--active: var(--palette-color-positive-darker);
+        --color-surface-positive-surface-text--active: var(--palette-color-positive-lighter);
+        --color-surface-positive-surface-icon--active: var(--palette-color-positive-lighter);
+    }
+
+    // Attention elements on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-attention-text: var(--palette-color-attention);
+        --color-surface-attention-icon: var(--palette-color-attention);
+        --color-surface-attention-border: var(--palette-color-attention);
+        --color-surface-attention-surface: var(--palette-color-attention);
+        --color-surface-attention-surface-text: var(--palette-color-attention-lighter);
+        --color-surface-attention-surface-icon: var(--palette-color-attention-lighter);
+
+        // State: hover
+        --color-surface-attention-text--hover: var(--palette-color-attention-dark);
+        --color-surface-attention-icon--hover: var(--palette-color-attention-dark);
+        --color-surface-attention-border--hover: var(--palette-color-attention-dark);
+        --color-surface-attention-surface--hover: var(--palette-color-attention-dark);
+        --color-surface-attention-surface-text--hover: var(--palette-color-attention-lighter);
+        --color-surface-attention-surface-icon--hover: var(--palette-color-attention-lighter);
+
+        // State: focus
+        --color-surface-attention-text--focus: var(--palette-color-attention-dark);
+        --color-surface-attention-icon--focus: var(--palette-color-attention-dark);
+        --color-surface-attention-border--focus: var(--palette-color-attention-dark);
+        --color-surface-attention-surface--focus: var(--palette-color-attention-dark);
+        --color-surface-attention-surface-text--focus: var(--palette-color-attention-lighter);
+        --color-surface-attention-surface-icon--focus: var(--palette-color-attention-lighter);
+
+        // State: active
+        --color-surface-attention-text--active: var(--palette-color-attention-darker);
+        --color-surface-attention-icon--active: var(--palette-color-attention-darker);
+        --color-surface-attention-border--active: var(--palette-color-attention-darker);
+        --color-surface-attention-surface--active: var(--palette-color-attention-darker);
+        --color-surface-attention-surface-text--active: var(--palette-color-attention-lighter);
+        --color-surface-attention-surface-icon--active: var(--palette-color-attention-lighter);
+    }
+
+    // Negative elements on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-negative-text: var(--palette-color-negative);
+        --color-surface-negative-icon: var(--palette-color-negative);
+        --color-surface-negative-border: var(--palette-color-negative);
+        --color-surface-negative-surface: var(--palette-color-negative);
+        --color-surface-negative-surface-text: var(--palette-color-negative-lighter);
+        --color-surface-negative-surface-icon: var(--palette-color-negative-lighter);
+
+        // State: hover
+        --color-surface-negative-text--hover: var(--palette-color-negative-dark);
+        --color-surface-negative-icon--hover: var(--palette-color-negative-dark);
+        --color-surface-negative-border--hover: var(--palette-color-negative-dark);
+        --color-surface-negative-surface--hover: var(--palette-color-negative-dark);
+        --color-surface-negative-surface-text--hover: var(--palette-color-negative-lighter);
+        --color-surface-negative-surface-icon--hover: var(--palette-color-negative-lighter);
+
+        // State: focus
+        --color-surface-negative-text--focus: var(--palette-color-negative-dark);
+        --color-surface-negative-icon--focus: var(--palette-color-negative-dark);
+        --color-surface-negative-border--focus: var(--palette-color-negative-dark);
+        --color-surface-negative-surface--focus: var(--palette-color-negative-dark);
+        --color-surface-negative-surface-text--focus: var(--palette-color-negative-lighter);
+        --color-surface-negative-surface-icon--focus: var(--palette-color-negative-lighter);
+
+        // State: active
+        --color-surface-negative-text--active: var(--palette-color-negative-darker);
+        --color-surface-negative-icon--active: var(--palette-color-negative-darker);
+        --color-surface-negative-border--active: var(--palette-color-negative-darker);
+        --color-surface-negative-surface--active: var(--palette-color-negative-darker);
+        --color-surface-negative-surface-text--active: var(--palette-color-negative-lighter);
+        --color-surface-negative-surface-icon--active: var(--palette-color-negative-lighter);
+    }
+
+    // Labels on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-label: var(--palette-color-neutral-dark);
+
+        // State: hover
+        --color-surface-label--hover: var(--palette-color-neutral-dark);
+
+        // State: active
+        --color-surface-label--active: var(--palette-color-neutral-dark);
+    }
+
+    // Badges on the surface.
+    &
+    {
+        --color-surface-badge-surface: var(--palette-color-negative);
+        --color-surface-badge-surface-text: var(--palette-color-negative-lighter);
+    }
+
+    // Toggles on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-toggle-border: var(--palette-color-neutral-light);
+        --color-surface-toggle-surface: var(--palette-color-neutral-lighter);
+        --color-surface-toggle-surface-indicator: var(--palette-color-whitepoint);
+
+        // State: hover
+        --color-surface-toggle-border--hover: var(--palette-color-neutral-light);
+        --color-surface-toggle-surface--hover: var(--palette-color-neutral-lighter);
+        --color-surface-toggle-surface-indicator--hover: var(--palette-color-whitepoint);
+
+        // State: focus
+        --color-surface-toggle-border--focus: var(--palette-color-neutral-light);
+        --color-surface-toggle-surface--focus: var(--palette-color-neutral-lighter);
+        --color-surface-toggle-surface-indicator--focus: var(--palette-color-whitepoint);
+
+        // State: active
+        --color-surface-toggle-border--active: var(--palette-color-primary);
+        --color-surface-toggle-surface--active: var(--palette-color-primary);
+        --color-surface-toggle-surface-indicator--active: var(--palette-color-whitepoint);
     }
 
     // Inputs on the surface.
     &
     {
         // State: normal
-        --color-surface-input-border: var(--palette-color-neutral);
-        --color-surface-input-surface: var(--palette-color-whitepoint);
+        --color-surface-input-border: var(--palette-color-neutral-light);
+        --color-surface-input-surface: var(--palette-color-neutral-light);
+        --color-surface-input-surface-subtle: var(--color-surface-subtle);
+        --color-surface-input-surface-text: var(--color-surface-text);
+        --color-surface-input-surface-icon: var(--color-surface-icon);
 
         // State: hover
-        --color-surface-input-border--hover: var(--palette-color-neutral);
-        --color-surface-input-surface--hover: var(--palette-color-whitepoint);
+        --color-surface-input-border--hover: var(--palette-color-neutral-light);
+        --color-surface-input-surface--hover: var(--palette-color-neutral-light);
+        --color-surface-input-surface-subtle--hover: var(--color-surface-subtle);
+        --color-surface-input-surface-text--hover: var(--color-surface-text);
+        --color-surface-input-surface-icon--hover: var(--color-surface-icon);
 
         // State: focus
-        --color-surface-input-border--focus: var(--palette-color-neutral);
-        --color-surface-input-surface--focus: var(--palette-color-whitepoint);
+        --color-surface-input-border--focus: var(--palette-color-neutral-light);
+        --color-surface-input-surface--focus: var(--palette-color-neutral-light);
+        --color-surface-input-surface-subtle--focus: var(--color-surface-subtle);
+        --color-surface-input-surface-text--focus: var(--color-surface-text);
+        --color-surface-input-surface-icon--focus: var(--color-surface-icon);
+
+        // Items within inputs on the surface.
+        &
+        {
+            // State: normal
+            --color-surface-input-surface-item-border: var(--palette-color-neutral);
+            --color-surface-input-surface-item-surface: var(--palette-color-neutral-light);
+            --color-surface-input-surface-item-surface-text: var(--palette-color-neutral-dark);
+            --color-surface-input-surface-item-surface-icon: var(--palette-color-neutral);
+
+            // State: hover
+            --color-surface-input-surface-item-border--hover: var(--palette-color-neutral);
+            --color-surface-input-surface-item-surface--hover: var(--palette-color-neutral);
+            --color-surface-input-surface-item-surface-text--hover: var(--palette-color-neutral-lighter);
+            --color-surface-input-surface-item-surface-icon--hover: var(--palette-color-neutral-dark);
+
+            // State: focus
+            --color-surface-input-surface-item-border--focus: var(--palette-color-neutral-neutral);
+            --color-surface-input-surface-item-surface--focus: var(--palette-color-neutral-neutral);
+            --color-surface-input-surface-item-surface-text--focus: var(--palette-color-neutral-lighter);
+            --color-surface-input-surface-item-surface-icon--focus: var(--palette-color-neutral-dark);
+        }
+    }
+
+    // Colors for text that is marked, e.g. because it matches a search query.
+    &
+    {
+        --color-surface-mark: #ffff00;
     }
 }

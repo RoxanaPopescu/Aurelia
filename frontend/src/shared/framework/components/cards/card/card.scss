@@ -1,0 +1,112 @@
+@import "styles/resources/index";
+
+card
+{
+    // Use inline flex layout, so the card does not expand when placed in e.g. a grid layout.
+    display: inline-flex;
+
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Apply the card size set by the layout.
+    width: var(--card-width, auto);
+    min-height: var(--card-height, auto);
+
+    > a
+    {
+        // Fill the available space.
+        flex-grow: 1;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply default card padding.
+        padding: var(--card-padding);
+
+        // Apply border.
+        border: var(--border-width-thin) solid;
+        border-radius: var(--border-radius-medium);
+
+        // Apply surface style.
+        border-color: var(--color-border);
+        background: var(--color-surface);
+        color: var(--color-surface-text);
+
+        &:hover
+        {
+            border-color: var(--color-border--hover);
+            background: var(--color-surface--hover);
+            color: var(--color-surface-text--hover);
+        }
+
+        &:focus
+        {
+            border-color: var(--color-border--focus);
+            background: var(--color-surface--focus);
+            color: var(--color-surface-text--focus);
+        }
+
+        footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+        }
+
+        > [slot="actions"]
+        {
+            // Position the action container along the right edge of the card.
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+            bottom: 3rem;
+
+            icon
+            {
+                // Set the icon size.
+                font-size: var(--font-larger-font-size);
+            }
+
+            > *,
+            {
+                // Provide vertical layout for items.
+                display: block;
+                margin-bottom: 2rem;
+
+                // Fade the items so they are barely visible.
+                opacity: var(--opacity-faded-most);
+
+                &, icon
+                {
+                    // Apply surface style.
+                    color: var(--color-surface-neutral-icon);
+                }
+
+                &:hover
+                {
+                    // Highlight when hovered.
+                    opacity: var(--opacity-faded-more);
+
+                    &, icon
+                    {
+                        // Apply surface style.
+                        color: var(--color-surface-icon--hover);
+                    }
+                }
+
+                &.--active
+                {
+                    // Highlight when active.
+
+                    opacity: var(--opacity-faded-less);
+
+                    &, icon
+                    {
+                        // Apply surface style.
+                        color: var(--color-surface-icon--active);
+                    }
+                }
+            }
+        }
+    }
+}

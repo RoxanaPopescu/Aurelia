@@ -16,9 +16,6 @@ modal-overlay
     background: var(--color-surface);
     color: var(--color-surface-text);
 
-    // Hint that animation will be applied.
-    will-change: opacity;
-
     .modal-overlay-content
     {
         // Position at the top and allow content to
@@ -41,6 +38,14 @@ modal-overlay
         // Provide defaults for sectioning elements.
 
         > header,
+        > section,
+        > footer
+        {
+            // Prevent shrinking by default.
+            flex-shrink: 0;
+        }
+
+        > header,
         > footer
         {
             // Apply padding to header and footer.
@@ -48,9 +53,6 @@ modal-overlay
             // to enable sticky positioning.
             padding-top: 10rem;
             padding-bottom: 10rem;
-
-            // Prevent shrinking.
-            flex-shrink: 0;
         }
 
         > footer
@@ -94,15 +96,18 @@ modal-overlay
     }
 }
 
+// Animate the overlay and app-sidebar.
+
 modal-overlay,
 app-sidebar
 {
-    // Animate the overlay and app-sidebar.
-
     modal-view &
     {
         // Hint that animation will be applied.
         will-change: opacity;
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both !important;
     }
 
     modal-view compose.au-enter &
@@ -129,32 +134,6 @@ app-sidebar
     }
 }
 
-modal-overlay
-{
-    // Animate the content of the panel.
-
-    > *
-    {
-        // Hint that animation will be applied.
-        will-change: opacity;
-
-        modal-view compose.au-enter &
-        {
-            opacity: 0;
-        }
-
-        modal-view compose.au-enter-active &
-        {
-            animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
-        }
-
-        modal-view compose.au-leave-active &
-        {
-            animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
-        }
-    }
-}
-
 @keyframes modal-overlay-enter
 {
     50%
@@ -176,7 +155,33 @@ modal-overlay
     }
 }
 
-@keyframes modal-panel-content-enter
+// Animate the content of the overlay.
+
+modal-overlay > *
+{
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    // Prevent glitches at the ends of the animation.
+    animation-fill-mode: both !important;
+
+    modal-view compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-overlay-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-overlay-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-overlay-content-enter
 {
     100%
     {
@@ -184,7 +189,7 @@ modal-overlay
     }
 }
 
-@keyframes modal-panel-content-leave
+@keyframes modal-overlay-content-leave
 {
     25%
     {

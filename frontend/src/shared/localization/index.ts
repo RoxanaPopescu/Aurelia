@@ -18,6 +18,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/number/number"),
         PLATFORM.moduleName("./converters/percent/percent"),
         PLATFORM.moduleName("./converters/plural/plural"),
+        PLATFORM.moduleName("./converters/relative-date/relative-date"),
         PLATFORM.moduleName("./converters/relative-time/relative-time"),
         PLATFORM.moduleName("./converters/select/select"),
         PLATFORM.moduleName("./converters/time/time")
@@ -34,6 +35,7 @@ export * from "./converters/list/list";
 export * from "./converters/number/number";
 export * from "./converters/percent/percent";
 export * from "./converters/plural/plural";
+export * from "./converters/relative-date/relative-date";
 export * from "./converters/relative-time/relative-time";
 export * from "./converters/select/select";
 export * from "./converters/time/time";

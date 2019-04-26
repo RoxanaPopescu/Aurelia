@@ -24,15 +24,8 @@ $__summary: comment;
     /// such as e.g. a picture and the text that follows.
     --size-inline-spacing-large: 0.8em;
 
-    /// The width of the collapsed app sidebar.
-    --size-app-sidebar-width: 20rem;
-
-    /// The width of the expanded app sidebar.
-    --size-app-sidebar-width-expanded: 65rem;
-
-    /// The min-width of the module sidebar.
-    --size-module-sidebar-min-width: 78rem;
-
-    /// The max-width of the module sidebar.
-    --size-module-sidebar-max-width: 50%;
+    /// The vertical spacing to apply between two single-height lines of text.
+    /// Use this to apply spacing between a title and and its related subtitle,
+    /// such as e.g. the title and subtitle in an identity component.
+    --size-line-spacing: 1.5rem;
 }

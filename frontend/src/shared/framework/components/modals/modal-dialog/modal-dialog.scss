@@ -33,9 +33,6 @@ modal-dialog
     background: var(--color-surface);
     color: var(--color-surface-text);
 
-    // Hint that animation will be applied.
-    will-change: opacity;
-
     .modal-dialog-content
     {
         position: relative;
@@ -155,56 +152,37 @@ modal-dialog
         }
     }
 
-    // Classes that apply an edge with the specified accent color.
-
-    &.--accent-neutral
+    &[accent]
     {
+        // Apply an edge to the dialog.
         border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-neutral-border);
+
+        // Ensure the accent only affects the edge, and not the content.
+        color: inherit;
     }
 
-    &.--accent-primary
+    // Add accent color support for the edge.
+
+    @each $accent in $accents
     {
-        border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-primary-border);
+        &[accent="#{$accent}"]
+        {
+            border-color: var(--color-surface-#{$accent}-border);
+        }
     }
+}
 
-    &.--accent-positive
-    {
-        border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-positive-border);
-    }
+// Animate the dialog.
 
-    &.--accent-attention
-    {
-        border-left-width: var(--border-width-thicker);
-        border-left-color: var(--color-surface-attention-border);
-    }
-
-    &.--accent-negative
-    {
-        border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-negative-border);
-    }
-
-    &.--accent-info
-    {
-        border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-info-border);
-    }
-
-    &.--accent-help
-    {
-        border-left-width: var(--border-width-thicker);
-        border-color: var(--color-surface-help-border);
-    }
-
-    // Animate the dialog.
-
+modal-dialog
+{
     modal-view &
     {
         // Hint that animation will be applied.
         will-change: opacity;
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both !important;
     }
 
     modal-view compose.au-enter &

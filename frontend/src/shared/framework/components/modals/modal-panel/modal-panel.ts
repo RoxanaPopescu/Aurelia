@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { inject, bindable, Optional } from "aurelia-framework";
 import { Modal } from "../../../services/modal";
 
 /**
@@ -7,9 +7,8 @@ import { Modal } from "../../../services/modal";
  * ### How to use:
  * Place directly within the `template` element for the panel view.
  * When scoping styles, use a selector such as `modal-panel[name="example"]`.
- * If the module is nested, also include parent modules in the selector.
  */
-@autoinject
+@inject(Element, Optional.of(Modal, true))
 export class ModalPanelCustomElement
 {
     /**
@@ -17,18 +16,21 @@ export class ModalPanelCustomElement
      * @param element The element representing the component.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(element: Element, modal: Modal)
+    public constructor(element: Element, modal?: Modal)
     {
-        this._modal = modal;
         this.element = element as HTMLElement;
+        this.modal = modal;
     }
-
-    private readonly _modal: Modal;
 
     /**
      * The element representing the component.
      */
     protected readonly element: HTMLElement;
+
+    /**
+     * The `Modal` instance representing the modal.
+     */
+    protected readonly modal: Modal | undefined;
 
     /**
      * The name of the panel.
@@ -54,8 +56,11 @@ export class ModalPanelCustomElement
      */
     protected onCloseClick(): void
     {
-        // tslint:disable-next-line: no-floating-promises
-        this._modal.close();
+        if (this.modal != null)
+        {
+            // tslint:disable-next-line: no-floating-promises
+            this.modal.close();
+        }
     }
 
     /**
@@ -63,10 +68,10 @@ export class ModalPanelCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
-        if (event.key === "Escape" && this.closeShortcut)
+        if (event.key === "Escape" && this.closeShortcut && this.modal != null)
         {
             // tslint:disable-next-line: no-floating-promises
-            this._modal.close();
+            this.modal.close();
 
             return false;
         }

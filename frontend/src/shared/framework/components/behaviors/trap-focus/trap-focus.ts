@@ -1,7 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import focusTrap, { FocusTrap, Options, FocusTarget } from "focus-trap";
 import { EventManager } from "shared/utilities";
-import { FocusService } from "../../../services/focus";
 
 /**
  * Custom attribute that traps focus within the element to which it is applied.
@@ -12,17 +11,14 @@ export class TrapFocusCustomAttribute implements Options
     /**
      * Creates a new instance of the type.
      * @param element The element to which this attribute is applied.
-     * @param focusService The `FocusService` instance.
      */
-    public constructor(element: Element, focusService: FocusService)
+    public constructor(element: Element)
     {
         this._element = element as HTMLElement;
-        this._focusService = focusService;
     }
 
     private readonly _eventManager = new EventManager(this);
     private readonly _element: HTMLElement;
-    private readonly _focusService: FocusService;
     private _focusTrap: FocusTrap;
     private _active = false;
 
@@ -124,7 +120,6 @@ export class TrapFocusCustomAttribute implements Options
 
         if (this.enabled !== false)
         {
-            console.log("trap.activate");
             this._focusTrap.activate();
         }
 
@@ -138,7 +133,6 @@ export class TrapFocusCustomAttribute implements Options
     {
         this._eventManager.removeEventListeners();
 
-        console.log("trap.deactivate");
         this._focusTrap.deactivate();
     }
 
@@ -147,16 +141,7 @@ export class TrapFocusCustomAttribute implements Options
      */
     private onActivating(): void
     {
-        console.log("trap.onActivate");
         this._active = true;
-
-        // Capture the current focus visibility, and ensure it is
-        // restored after focus moves into the trap.
-        const focusVisible = this._focusService.focusVisible;
-        this._focusService.focusVisible = false;
-        setTimeout(() =>
-            setTimeout(() =>
-                this._focusService.focusVisible = focusVisible));
 
         if (this.onActivate != null)
         {
@@ -169,19 +154,7 @@ export class TrapFocusCustomAttribute implements Options
      */
     private onDeactivating(): void
     {
-        console.log("trap.onDeactivate");
         this._active = false;
-
-        if (this.returnFocusOnDeactivate)
-        {
-            // Capture the current focus visibility, and ensure it is
-            // restored after focus moves back to the previous element.
-            const focusVisible = this._focusService.focusVisible;
-            this._focusService.focusVisible = false;
-            setTimeout(() =>
-                setTimeout(() =>
-                    this._focusService.focusVisible = focusVisible));
-        }
 
         if (this.onDeactivate != null)
         {
@@ -195,10 +168,8 @@ export class TrapFocusCustomAttribute implements Options
      */
     private onFocusIn(): void
     {
-        console.log("onFocusIn");
         if (!this._active && this.enabled !== false)
         {
-            console.log("trap.activate on focusin");
             this._focusTrap.activate();
         }
     }

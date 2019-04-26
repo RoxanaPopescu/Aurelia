@@ -1,0 +1,27 @@
+list-layout
+{
+    display: block;
+
+    // Set the default card size.
+    --card-width: 100%;
+    --card-height: 20rem;
+
+    // The distance between each row.
+    --list-layout-row-gap: 5rem;
+
+    .list-layout-items
+    {
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply negative margins to compensate for the row gap.
+        margin-bottom: calc(-1 * var(--list-layout-row-gap));
+
+        // Set the row gap.
+        > *
+        {
+            margin-bottom: var(--list-layout-row-gap);
+        }
+    }
+}

@@ -73,7 +73,7 @@ export namespace TextCaseFuncs
     }
 
     /**
-     * Formats and joins the specified strings using 'Sentenc case' rules,
+     * Formats and joins the specified strings using 'Sentence case' rules,
      * meaning that the first letter of the first string will be upper-cased while all remaining characters will be either unchanged or lower-cased.
      * The strings will then be joined using a single space as separator, except if
      * the previous string is all whitespace, in which case no separator will be inserted.
@@ -165,7 +165,7 @@ export namespace TextCaseFuncs
     /**
      * Formats and joins the specified strings using 'kebab-case' rules,
      * meaning that each string will be lower cased.
-     * The strings will then be joined using '-' as separator, except if the previous string is all whitespace,
+     * The strings will then be joined using "-" as separator, except if the previous string is all whitespace,
      * in which case each of those whitespace characters will be replaced with the separator instead.
      * @param strings The strings to join, which may be either words or whitespace.
      * @param localized True to use the rules of the current locale when upper-casing or lower-casing, otherwise false.
@@ -179,7 +179,7 @@ export namespace TextCaseFuncs
     /**
      * Formats and joins the specified strings using 'snake_case' rules,
      * meaning that each string will be lower cased.
-     * The strings will then be joined using '_' as separator, except if the previous string is all whitespace,
+     * The strings will then be joined using "_" as separator, except if the previous string is all whitespace,
      * in which case each of those whitespace characters will be replaced with the separator instead.
      * @param strings The strings to join, which may be either words or whitespace.
      * @param localized True to use the rules of the current locale when upper-casing or lower-casing, otherwise false.

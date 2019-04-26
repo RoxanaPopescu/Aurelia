@@ -2,83 +2,53 @@
 
 user-identity
 {
-    display: block;
-
     a
     {
+        // Use horizontal flex layout.
         display: flex;
+
+        // Center items vertically.
         align-items: center;
-        color: inherit;
 
-        .user-identity-picture-placeholder,
-        .user-identity-picture-image
-        {
-            // Animate the hover effect.
-            transition:
-                border-color var(--animation-duration-short),
-                filter var(--animation-duration-short);
-        }
+        // Animate the hover effect.
+        transition:
+            border-color var(--animation-duration-short),
+            filter var(--animation-duration-short);
 
-        &:hover
+        &:hover identity-picture
         {
-            color: #ffffff;
-        }
-
-        &:hover .user-identity-picture-placeholder,
-        &:hover .user-identity-picture-image,
-        {
-            // Highlight on hover.
-            filter: brightness(105%);
+            // Highlight when hovered.
+            filter: brightness(103%);
             border-color: #ffffff;
         }
-    }
 
-    .user-identity-column-1
-    {
-        position: relative;
-        width: 13rem;
-        height: 13rem;
-        border: var(--border-width-thin) solid;
-        border-radius: 50%;
-        border-color: var(--color-surface-icon);
-        overflow: hidden;
-
-        div
+        identity-picture
         {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            // Set the icon size.
+            width: 10rem;
+            height: 10rem;
+
+            // Clip as a circle.
+            border-radius: 50%;
+
+            // Apply a border to ensure acceptable contrast.
+            border: var(--border-width-thin) solid var(--color-surface-icon);
         }
-    }
 
-    .user-identity-initials
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--color-surface-primary-surface);
-        color: var(--color-surface-primary-surface-text);
-        font-weight: 600;
-    }
-
-    .user-identity-picture
-    {
-        background-size: cover;
-    }
-
-    .user-identity-column-2
-    {
-        display: none;
-
-        app-sidebar.--expanded &
+        .user-identity-text
         {
-            display: block;
-            margin-left: var(--size-inline-spacing-large);
-        }
-    }
+            display: none;
 
-    .user-identity-name
-    {
-        margin-bottom: 0.5rem;
+            app-sidebar.--expanded &
+            {
+                display: block;
+                margin-left: var(--size-inline-spacing-large);
+            }
+        }
+
+        .user-identity-name
+        {
+            margin-bottom: 0.5rem;
+        }
     }
 }

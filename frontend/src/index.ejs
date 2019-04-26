@@ -34,7 +34,7 @@
         <meta name="msapplication-navbutton-color" content="#0747a6">
 
         <!-- Analytics -->
-        <%if (htmlWebpackPlugin.options.environment.integrations.googleAnalytics) { %>
+        <% if (htmlWebpackPlugin.options.environment.integrations.googleAnalytics) { %>
         <script async src="https://www.googletagmanager.com/gtag/js?id=<%- htmlWebpackPlugin.options.environment.integrations.googleAnalytics.id %>"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -53,7 +53,7 @@
 
     </head>
 
-    <body theme-context="app" theme-surface="base">
+    <body context="app" surface="base">
 
         <!-- App -->
         <main aurelia-app="index">
@@ -84,8 +84,8 @@
         </main>
 
         <!-- Logging -->
-        <%if (htmlWebpackPlugin.options.environment.integrations.sentry) { %>
-        <script src="https://browser.sentry-cdn.com/4.6.1/bundle.min.js" crossorigin="anonymous"></script>
+        <% if (htmlWebpackPlugin.options.environment.integrations.sentry) { %>
+        <script src="https://browser.sentry-cdn.com/4.6.6/bundle.min.js" crossorigin="anonymous"></script>
         <script>
             Sentry.init({ dsn: "<%- htmlWebpackPlugin.options.environment.integrations.sentry.dsn %>" });
         </script>

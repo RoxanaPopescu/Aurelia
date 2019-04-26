@@ -60,6 +60,7 @@ export class ApiClient
 
     /**
      * Sends a `HEAD` request to the specified endpoint.
+     * This should get a response identical to that of a `GET` request, but without the response body.
      * Note that a `HEAD` request cannot have a body.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
@@ -77,6 +78,7 @@ export class ApiClient
 
     /**
      * Sends a `GET` request to the specified endpoint.
+     * This should get the entity at the specified resource.
      * Note that a `GET` request cannot have a body.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
@@ -94,6 +96,7 @@ export class ApiClient
 
     /**
      * Sends a `PUT` request to the specified endpoint.
+     * This should replace the entity at the specified resource.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
@@ -105,6 +108,7 @@ export class ApiClient
 
     /**
      * Sends a `POST` request to the specified endpoint.
+     * This should add an entity to the specified resource, or if the resource is an action, execute it.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
@@ -116,6 +120,7 @@ export class ApiClient
 
     /**
      * Sends a `PATCH` request to the specified endpoint.
+     * This should partially update the entity at the specified resource.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
@@ -127,6 +132,7 @@ export class ApiClient
 
     /**
      * Sends a `DELETE` request to the specified endpoint.
+     * This should delete the entity at the specified resource.
      * Note that a `DELETE` request cannot have a body.
      * @param path The path identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.

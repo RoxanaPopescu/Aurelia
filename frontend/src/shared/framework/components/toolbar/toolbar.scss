@@ -19,14 +19,14 @@ toolbar
     input[type="text"],
     input[type="search"]
     {
-        width: 15vw;
+        width: 8vw;
         min-width: 20rem;
         transition: width 0.8s;
         transition-delay: 0.1s;
 
         &:focus
         {
-            width: 22vw;
+            width: 16vw;
         }
     }
 }

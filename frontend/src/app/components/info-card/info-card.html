@@ -1,0 +1,13 @@
+<template surface="card">
+
+    <require from="./info-card.scss"></require>
+
+    <div>
+
+        <div if.bind="title" class="font-large margin-bottom">${title}</div>
+
+        <slot></slot>
+
+    </div>
+
+</template>

@@ -8,13 +8,19 @@ $__summary: comment;
 
 :root
 {
-    /// The opacity applied to e.g. elements that should appear de-emphasized or faded.
+    /// The opacity applied to elements that should appear slightly de-emphasized or faded.
+    --opacity-faded-less: 0.8;
+
+    /// The opacity applied to elements that should appear de-emphasized or faded.
     --opacity-faded: 0.6;
 
-    /// The opacity applied to e.g. elements that should just barely be visible.
+    /// The opacity applied to elements that should appear significantly de-emphasized or faded.
     --opacity-faded-more: 0.2;
 
-    /// The opacity applied to e.g. elements that should appear disabled or unavailable.
+    /// The opacity applied to elements that should appear as barely visible.
+    --opacity-faded-most: 0.07;
+
+    /// The opacity applied to elements that should appear disabled or unavailable.
     --opacity-disabled: 0.3;
 
     /// The opacity applied to the backdrop of a modal.

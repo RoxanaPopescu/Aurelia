@@ -37,11 +37,6 @@ export class TreeNavCustomElement
     @bindable()
     public change: (context: { value: ITreeNavNode }) => void;
 
-    public valueChanged(newValue: ITreeNavNode, oldValue: ITreeNavNode): void
-    {
-        this.navigate(this.value, true, undefined, undefined, newValue !== oldValue);
-    }
-
     public navigate(node: ITreeNavNode, select?: boolean, expand?: boolean, expandChildren?: boolean, notify?: boolean): void
     {
         if (node == null)
@@ -99,6 +94,11 @@ export class TreeNavCustomElement
     public isFile = (node: ITreeNavNode) =>
     {
         return !this.isFolder(node);
+    }
+
+    protected valueChanged(newValue: ITreeNavNode, oldValue: ITreeNavNode): void
+    {
+        this.navigate(this.value, true, undefined, undefined, newValue !== oldValue);
     }
 }
 

@@ -8,15 +8,19 @@
 $__summary: comment;
 
 
-// Export the settings.
+// Export the base settings.
 @import "./accessibility";
 @import "./animation";
 @import "./border";
 @import "./font-face";
 @import "./font-family";
 @import "./font";
-@import "./modal";
 @import "./opacity";
 @import "./shadow";
 @import "./size";
 @import "./z-index";
+
+// Export the component settings.
+@import "./components/modal";
+@import "./components/app-sidebar";
+@import "./components/page-sidebar";

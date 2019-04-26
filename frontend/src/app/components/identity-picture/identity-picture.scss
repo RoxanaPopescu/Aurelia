@@ -1,0 +1,72 @@
+@import "styles/resources/index";
+
+identity-picture
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Prevent shrinking.
+    flex-shrink: 0;
+
+    // Use flex layout to center content.
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Apply default size.
+    width: 13rem;
+    height: 13rem;
+
+    // Apply default border radius.
+    border-radius: var(--border-radius-large);
+
+    // Apply default font style.
+    font-size: var(--font-larger-font-size);
+    font-weight: 600;
+    line-height: 1;
+
+    // Apply surface style.
+    background: var(--color-surface-primary-surface);
+    color: var(--color-surface-primary-surface-text);
+
+    // Clip the content.
+    overflow: hidden;
+
+    .identity-picture-surface
+    {
+        // This allows the lighten filter to be applied only to the surface,
+        // and not to the image. It also prevents conflicts if a filter is
+        // applied to the component as a whole, e.g. when hovered.
+
+        // Fill the available space.
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        // Inherit the background, so it can be modified from the outside.
+        background: inherit;
+    }
+
+    .identity-picture-content
+    {
+        // Center the content.
+        position: absolute;
+
+        // Ensure the content appears on top of the surface.
+        z-index: 1;
+    }
+
+    .identity-picture-image
+    {
+        // Fill the available space.
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        // Ensure the content appears on top of the surface and content.
+        z-index: 2;
+
+        // Scale the image to cover the component.
+        background-size: cover;
+    }
+}

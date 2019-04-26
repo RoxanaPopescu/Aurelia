@@ -65,6 +65,18 @@ export class ModalHrefCustomAttribute
      */
     private async onElementClick(event: MouseEvent): Promise<void>
     {
+        // Don't handle the event if it originated from an anchor with an href nested inside the element.
+        if (event.target !== this._element && event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href"))
+        {
+            return;
+        }
+
+        // Don't handle the event if default has been prevented.
+        if (event.defaultPrevented)
+        {
+            return;
+        }
+
         event.preventDefault();
 
         if (!this.modal)

@@ -8,6 +8,19 @@ $__summary: comment;
 @import "styles/resources/index";
 
 
+// Theme support
+// ====================================================================================================
+
+// Add accent color support to all elements.
+// Note that the base styles for some elements may override this.
+@each $accent in $accents
+{
+    [accent="#{$accent}"]
+    {
+        color: var(--color-surface-#{$accent}-text, inherit);
+    }
+}
+
 // Sectioning
 // See: https://www.w3.org/TR/html51/sections.html
 // ====================================================================================================
@@ -258,9 +271,6 @@ a
 
     // Ensure consistent foreground color.
     color: var(--color-surface-primary-text);
-
-    // Ensure consistent cursor.
-    cursor: pointer;
 }
 
 

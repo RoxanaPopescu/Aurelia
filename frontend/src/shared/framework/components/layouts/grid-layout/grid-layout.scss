@@ -1,0 +1,32 @@
+grid-layout
+{
+    display: block;
+
+    // Set the default card size.
+    --card-width: 75rem;
+    --card-height: 40rem;
+
+    // The distance between each column.
+    --grid-layout-column-gap: 5rem;
+
+    // The distance between each row.
+    --grid-layout-row-gap: 5rem;
+
+    .grid-layout-items
+    {
+        // Use horizontal flex layout, with wrapping.
+        display: flex;
+        flex-wrap: wrap;
+
+        // Apply negative margins to compensate for the row and column gap.
+        margin-right: calc(-1 * var(--grid-layout-column-gap));
+        margin-bottom: calc(-1 * var(--grid-layout-row-gap));
+
+        // Set the row and column gap.
+        > *
+        {
+            margin-right: var(--grid-layout-column-gap);
+            margin-bottom: var(--grid-layout-row-gap);
+        }
+    }
+}

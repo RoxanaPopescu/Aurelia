@@ -5,7 +5,7 @@
 /// The base text settings.
 $__summary: comment;
 
-[theme-context="app"] {
+[context="app"] {
   & {
     --font-largest-line-height: 10rem;
     --font-largest-font-size: 7rem;

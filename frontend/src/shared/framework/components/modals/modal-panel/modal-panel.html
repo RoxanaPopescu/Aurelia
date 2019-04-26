@@ -14,7 +14,7 @@
 
     <div class="modal-panel-actions">
 
-        <button if.bind="closeButton" appearance="icon" click.delegate="onCloseClick()">
+        <button if.bind="closeButton && modal != null" appearance="icon" click.delegate="onCloseClick()">
             <icon name="back"></icon>
         </button>
 

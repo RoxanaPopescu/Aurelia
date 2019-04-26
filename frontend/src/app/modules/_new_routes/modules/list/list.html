@@ -2,9 +2,9 @@
 
     <require from="./list.scss"></require>
 
-    <module name="list">
+    <page name="list">
 
-        <module-content scroll>
+        <page-content scroll>
 
             <header scroll-fade>
 
@@ -63,7 +63,7 @@
                         <div class="text-align-right" translate>Stops</div>
                     </data-table-headers>
 
-                    <data-table-row repeat.for="route of routes" module-href="path.bind: '/routes/' + route.slug">
+                    <data-table-row repeat.for="route of routes" page-href="path.bind: '/routes/' + route.slug">
                         <div class="font-monospaced">${route.slug}</div>
                         <div class="font-monospaced">${route.reference}</div>
                         <div>${route.status.name}</div>
@@ -76,7 +76,7 @@
 
             </section>
 
-        </module-content>
+        </page-content>
 
     </module>
 

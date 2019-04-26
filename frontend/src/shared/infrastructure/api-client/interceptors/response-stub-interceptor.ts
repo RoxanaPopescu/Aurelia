@@ -1,5 +1,6 @@
 import { MapObject } from "shared/types";
 import { Interceptor, json } from "aurelia-fetch-client";
+import { delay } from "shared/utilities";
 
 /**
  * Represents an interceptor that responds with a stubbed response,
@@ -10,10 +11,12 @@ export class ResponseStubInterceptor implements Interceptor
     /**
      * Creates a new instance of the type.
      * @param stubs The response stubs to use.
+     * @param latency The network latency to simulate, in milliseconds.
      */
-    public constructor(stubs: IResponseStubs)
+    public constructor(stubs: IResponseStubs, latency = 0)
     {
         this.stubs = stubs;
+        this.latency = latency;
 
         // Validate the stubs to prevent the most common mistakes.
         if (ENVIRONMENT.debug)
@@ -40,13 +43,14 @@ export class ResponseStubInterceptor implements Interceptor
     }
 
     private readonly stubs: IResponseStubs;
+    private readonly latency: number;
 
     /**
      * Called when a request is intercepted.
      * @param request The request that was intercepted.
      * @returns The request to send, or the stubbed response, if available.
      */
-    public request(request: Request): Request | Response
+    public async request(request: Request): Promise<Request | Response>
     {
         const [, host, pathAndQuery] = /(?:https?:\/\/([^/]+))?(.*)/.exec(request.url)!;
         const method = request.method.toUpperCase();
@@ -56,9 +60,11 @@ export class ResponseStubInterceptor implements Interceptor
 
         if (key in this.stubs)
         {
-            console.warn(`Using response stub for '${method} ${request.url}'.`);
-
             const stub = this.stubs[key];
+
+            const totalDelay = this.latency + (stub.delay || 0);
+
+            console.warn(`Using response stub for '${method} ${request.url}'${totalDelay ? ` (${totalDelay}ms)` : ""}`);
 
             const status = stub.status != null ? stub.status : 200;
             const statusText = stub.statusText;
@@ -75,6 +81,8 @@ export class ResponseStubInterceptor implements Interceptor
                 ...stub.headers
 
             } as MapObject<string>;
+
+            await delay(totalDelay);
 
             return new Response(body,
             {
@@ -137,4 +145,11 @@ export interface IResponseStub
      * default is undefined;
      */
     data?: any;
+
+    /**
+     * The number of milliseconds to delay the response,
+     * or undefined to respond without delay.
+     * Use this to simulate a realistic response time.
+     */
+    delay?: number;
 }

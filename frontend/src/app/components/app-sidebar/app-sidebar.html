@@ -1,4 +1,4 @@
-<template theme-surface="primary" scroll class="${expanded ? '--expanded' : ''}">
+<template surface="primary" scroll class="${expanded ? '--expanded' : ''}">
 
     <require from="app/components/user-identity/user-identity"></require>
     <require from="app/components/app-logo/app-logo"></require>
@@ -40,7 +40,7 @@
 
             <a
                 class="nav-link ${navModel.isActive ? '--active' : ''}"
-                module-href="path.bind: navModel.href">
+                page-href="path.bind: navModel.href">
 
                 <icon name.bind="navModel.config.icon"></icon>
 
@@ -55,7 +55,7 @@
                 <a
                     repeat.for="navModel of childNavModels"
                     class="sidebar-child-link ${navModel.isActive ? '--active' : ''}"
-                    module-href="path.bind: navModel.href">
+                    page-href="path.bind: navModel.href">
 
                     <span>${navModel.config.title}</span>
 
@@ -85,7 +85,7 @@
                 <span translate>Help and support</span>
             </a>
 
-            <a class="nav-link" module-href="path: design">
+            <a class="nav-link" page-href="path: design">
                 <icon title.translate="Design" name="md-style"></icon>
                 <span translate>Design</span>
             </a>

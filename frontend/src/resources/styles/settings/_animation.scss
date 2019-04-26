@@ -8,8 +8,16 @@ $__summary: comment;
 
 :root
 {
+    /// The hover animation delay to use,
+    /// used for e.g. animations that should run only on hover, and not when the cursor moves across.
+    --animation-delay-hover: 0.3s;
+
+    /// The longest animation duration,
+    /// used for e.g. animations that need to be subtle, such as the hover effect on the edge of a sidebar.
+    --animation-duration-longer: 2s;
+
     /// The long animation duration,
-    /// used for e.g. annimations applied unexpectedly, such as when fading in lazy loaded content.
+    /// used for e.g. animations applied unexpectedly, such as when fading in lazy loaded content.
     --animation-duration-long: 1s;
 
     /// The medium animation duration,
@@ -19,4 +27,8 @@ $__summary: comment;
     /// The short animation duration,
     /// used for e.g. interaction effects, such as highlights on touch, click or hover.
     --animation-duration-short: 0.1s;
+
+    /// The skeleton animation duration,
+    /// used for animations applied to skeleton objects shown while loading.
+    --animation-duration-skeleton: 1.5s;
 }

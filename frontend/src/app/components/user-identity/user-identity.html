@@ -1,24 +1,16 @@
-<template>
+<template title.bind="identityService.identity.fullName">
+
+    <require from="app/components/identity-picture/identity-picture"></require>
 
     <require from="./user-identity.scss"></require>
 
     <a href="/profile" title.translate="Profile">
 
-        <div class="user-identity-column-1">
+        <identity-picture src.bind="identityService.identity.pictureUrl">
+            ${identityService.identity.preferredName[0]}
+        </identity-picture>
 
-            <div class="user-identity-initials font-large line-height-1 text-transform-uppercase filter-lighten">
-                ${identityService.identity.fullName[0]}
-            </div>
-
-            <div
-                if.bind="identityService.identity.pictureUrl"
-                class="user-identity-picture"
-                css="background-image: url(${identityService.identity.pictureUrl});">
-            </div>
-
-        </div>
-
-        <div class="user-identity-column-2">
+        <div class="user-identity-text">
             <div class="user-identity-name">${identityService.identity.preferredName}</div>
             <div class="font-small">${identityService.identity.outfit.primaryName}</div>
         </div>

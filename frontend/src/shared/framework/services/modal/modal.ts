@@ -52,12 +52,15 @@ export class Modal<TModel = any, TResult = any>
 
     /**
      * Closes the modal.
+     * @param reason The reason for closing the modal, which may affect how the modal responds.
+     * @returns A promise that will be resolved with true if the modal accepted the close request,
+     * or false if it rejected it with a reason other than an Error instance.
      */
-    public async close(): Promise<void>
+    public async close(reason?: any): Promise<boolean>
     {
         if (this._closed)
         {
-            return;
+            return true;
         }
 
         if (this._modals[this._modals.length - 1] !== this)
@@ -71,14 +74,26 @@ export class Modal<TModel = any, TResult = any>
 
         if (compose && compose.currentViewModel && compose.currentViewModel.deactivate)
         {
-            result = await compose.currentViewModel.deactivate();
-        }
+            try
+            {
+                result = await compose.currentViewModel.deactivate(reason);
+            }
+            catch (reason)
+            {
+                if (reason instanceof Error)
+                {
+                    throw reason;
+                }
 
-        console.log("modal result: ", result);
+                return false;
+            }
+        }
 
         this._modals.pop();
         this._closed = true;
 
         this._promiseController.resolve(result);
+
+        return true;
     }
 }

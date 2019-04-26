@@ -10,7 +10,7 @@
 
         <md-icon-stack>
             <md-icon name="folder" click.trigger="onClick(true, $event)"></md-icon>
-            <md-icon name.bind="active && (tree.selectChildren || (!model.expanded && tree.selectChildren == undefined)) ? 'folder' : 'folder_open'" click.trigger="onClick(true, $event)"></md-icon>
+            <md-icon name.bind="iconName" click.trigger="onClick(true, $event)"></md-icon>
         </md-icon-stack>
 
         <span class="tree-nav-node-title">${model.name}</span>

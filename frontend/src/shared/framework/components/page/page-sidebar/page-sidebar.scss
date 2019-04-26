@@ -1,0 +1,144 @@
+@import "styles/resources/index";
+
+page-sidebar
+{
+    position: relative;
+
+    // Prevent shrinking, as that will be handled explicitly when needed.
+    flex-shrink: 0;
+
+    // Apply a border to the right edge.
+    border: var(--border-width-thin) solid;
+
+    // Apply surface style.
+    background: var(--color-surface);
+    border-color: var(--color-border);
+
+    > header,
+    > section,
+    > footer
+    {
+        // Apply margin to content.
+        margin: 8rem 9rem;
+    }
+
+    .page-sidebar-edge-icon
+    {
+        // Position near the top.
+        position: absolute;
+        top: 10rem;
+
+        icon
+        {
+            // Set the icon size.
+            font-size: 6rem;
+
+            // Apply the primary icon color.
+            color: var(--color-surface-primary-icon);
+        }
+    }
+
+    .page-sidebar-edge
+    {
+        // Position the shadow along the right edge.
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        // Set the size of the shadow.
+        width: 3rem;
+
+        // Use a gradient to simulate a subtle shadow.
+        background: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.3) 8.333%,
+            rgba(0, 0, 0, 0.15) 8.333%,
+            rgba(0, 0, 0, 0.1) 8.333%,
+            rgba(0, 0, 0, 0) 100%
+        );
+
+        // Reduce opacity when not hovered.
+        opacity: 0.05;
+
+        // Animate hover effect quickly when hover ends.
+        transition: opacity var(--animation-duration-medium);
+    }
+
+    .page-sidebar-edge:hover,
+    &:not(.--expanded):hover .page-sidebar-edge
+    {
+        // Animate hover effect slowly when hover begins.
+        transition: opacity var(--animation-duration-long);
+
+        // Prevent hover effect when the cursor moves across the edge.
+        transition-delay: var(--animation-delay-hover);
+
+        // Highlight while hovered.
+        opacity: 0.2;
+    }
+
+    &:not(.--expanded)
+    {
+        // Use flex layout so we can center the expand icon.
+        display: flex;
+        justify-content: center;
+
+        // Collapse the sidebar.
+        width: var(--size-page-sidebar-collapsed-width);
+
+        // Use cursor to indicate a click on the surface expands the sidebar.
+        cursor: e-resize;
+
+        > :not(.page-sidebar-edge):not(.page-sidebar-edge-icon)
+        {
+            // Hide content when the sidebar is collapsed.
+            display: none;
+        }
+
+        .page-sidebar-edge-icon
+        {
+            // Disable pointer events, as the entire sidebar is clickable.
+            pointer-events: none;
+        }
+    }
+
+    &.--expanded
+    {
+        // Set min and max size of the expanded sidebar.
+        min-width: var(--size-page-sidebar-min-width);
+        max-width: var(--size-page-sidebar-max-width);
+
+        .page-sidebar-edge
+        {
+            // Use cursor to indicate the edge collapses the sidebar.
+            cursor: w-resize;
+        }
+
+        .page-sidebar-edge-icon
+        {
+            // Position near the edge of the sidebar.
+            right: 2.5rem;
+        }
+
+        @media ($media-smallest-max)
+        {
+            .page-sidebar-edge
+            {
+                // Disable pointer events, as the sidebar fills the screen,
+                // so collapsing on edge click would be confusing.
+                pointer-events: none;
+            }
+        }
+
+        @media ($media-smaller-min)
+        {
+            .page-sidebar-edge-icon
+            {
+                // Only show the collapse icon in the smallest viewports.
+                display: none;
+            }
+        }
+    }
+}

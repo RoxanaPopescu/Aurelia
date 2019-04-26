@@ -1,0 +1,11 @@
+////
+/// @group resources/settings
+////
+
+/// Variables representing various settings.
+$__summary: comment;
+
+
+/// The names of the supported accent colors.
+/// Use this to generate accent color support, with a loop such as `@each $accent in $accents { }`.
+$accents: ["neutral", "primary", "info", "positive", "attention", "negative"];

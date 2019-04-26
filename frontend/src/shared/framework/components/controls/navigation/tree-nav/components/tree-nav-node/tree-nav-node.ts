@@ -11,24 +11,39 @@ export class TreeNavNodeCustomElement
     public model: ITreeNavNode;
 
     @computedFrom("node.children.length")
-    public get isFolder(): boolean
+    protected get isFolder(): boolean
     {
         return this.model.children != null;
     }
 
     @computedFrom("node.children.length")
-    public get expandable(): boolean
+    protected get expandable(): boolean
     {
         return this.model.children != null && this.model.children.length > 0;
     }
 
     @computedFrom("tree.value")
-    public get active(): boolean
+    protected get active(): boolean
     {
         return this.tree.value === this.model;
     }
 
-    public onClick(toggle: boolean, event: MouseEvent): void
+    @computedFrom("active", "tree.selectChildren", "model.expanded")
+    protected get iconName(): string
+    {
+        if (this.active && (this.tree.selectChildren || (!this.model.expanded && this.tree.selectChildren == undefined)))
+        {
+            // Filled icon, indicating that child nodes are included.
+            return "folder";
+        }
+        else
+        {
+            // Outline icon, indicating that child nodes are excluded.
+            return "folder_open";
+        }
+    }
+
+    protected onClick(toggle: boolean, event: MouseEvent): void
     {
         if (this.expandable && (toggle || this.active || !this.model.expanded))
         {

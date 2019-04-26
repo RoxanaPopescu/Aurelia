@@ -27,6 +27,14 @@ app-sidebar
 
         // Center horizontally.
         align-self: center;
+
+        // HACK: This assumes the dashboard is the only modal using the app-sidebar.
+        modal-view & a:hover
+        {
+            // Prevent the hover effect from repeating when the dashboard
+            // appears as a result of a click on the app-icon.
+            transition: none;
+        }
     }
 
     user-identity
@@ -91,7 +99,7 @@ app-sidebar
 
     .app-sidebar--powered-by {
         display: none;
-        margin-top: 3rem;
+        margin-top: 1rem;
         margin-bottom: 10px;
         margin-left: 7rem;
         opacity: 0.4;

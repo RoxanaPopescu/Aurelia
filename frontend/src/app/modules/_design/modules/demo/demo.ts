@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 
 @autoinject
-export class DemoModule
+export class DemoPage
 {
     public surface = "base";
 

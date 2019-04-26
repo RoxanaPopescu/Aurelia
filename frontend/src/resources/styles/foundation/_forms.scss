@@ -22,6 +22,35 @@ form
     // Ensure consistent `margin` and `padding`.
     margin: 0;
     padding: 0;
+
+    // Provide defaults for sectioning elements.
+
+    header,
+    footer
+    {
+        &:not(:first-child)
+        {
+            margin-top: 10rem;
+        }
+
+        &:not(:last-child)
+        {
+            margin-bottom: 10rem;
+        }
+    }
+
+    section
+    {
+        &:not(:first-child)
+        {
+            margin-top: 6rem;
+        }
+
+        &:not(:last-child)
+        {
+            margin-bottom: 6rem;
+        }
+    }
 }
 
 // fieldset
@@ -78,29 +107,13 @@ fieldset
 // Style for anchors with unspecified appearance.
 a:not([appearance])
 {
-    &[accent="neutral"]
+    // Add accent color support.
+    @each $accent in $accents
     {
-        color: var(--color-surface-neutral-text);
-    }
-
-    &[accent="primary"]
-    {
-        color: var(--color-surface-primary-text);
-    }
-
-    &[accent="positive"]
-    {
-        color: var(--color-surface-positive-text);
-    }
-
-    &[accent="attention"]
-    {
-        color: var(--color-surface-attention-text);
-    }
-
-    &[accent="negative"]
-    {
-        color: var(--color-surface-negative-text);
+        &[accent="#{$accent}"]
+        {
+            color: var(--color-surface-#{$accent}-text);
+        }
     }
 }
 
@@ -119,13 +132,16 @@ a[appearance]
     // Ensure consistent cursor.
     cursor: pointer;
 
+    // Prevent shrinking.
+    flex-shrink: 0;
+
     form &
     {
-        // Apply the default `margin` when the control is within a form.
+        // Apply the default `margin` when placed within a form.
         margin-top: var(--font-current-margin-top);
         margin-bottom: var(--font-current-margin-bottom);
 
-        // Expand to fill the full width when the control is within a form.
+        // Expand to fill the available width when placed within a form.
         width: 100%;
     }
 
@@ -154,29 +170,13 @@ a[appearance]
             color: inherit;
         }
 
-        &[accent="neutral"]
+        // Add accent color support.
+        @each $accent in $accents
         {
-            color: var(--color-surface-neutral-text);
-        }
-
-        &[accent="primary"]
-        {
-            color: var(--color-surface-primary-text);
-        }
-
-        &[accent="positive"]
-        {
-            color: var(--color-surface-positive-text);
-        }
-
-        &[accent="attention"]
-        {
-            color: var(--color-surface-attention-text);
-        }
-
-        &[accent="negative"]
-        {
-            color: var(--color-surface-negative-text);
+            &[accent="#{$accent}"]
+            {
+                color: var(--color-surface-#{$accent}-text);
+            }
         }
     }
 
@@ -187,30 +187,18 @@ a[appearance]
         background: transparent;
         border-color: transparent;
 
-        &:not([accent]),
-        &[accent="neutral"]
+        &:not([accent])
         {
             color: var(--color-surface-neutral-text);
         }
 
-        &[accent="primary"]
+        // Add accent color support.
+        @each $accent in $accents
         {
-            color: var(--color-surface-primary-text);
-        }
-
-        &[accent="positive"]
-        {
-            color: var(--color-surface-positive-text);
-        }
-
-        &[accent="attention"]
-        {
-            color: var(--color-surface-attention-text);
-        }
-
-        &[accent="negative"]
-        {
-            color: var(--color-surface-negative-text);
+            &[accent="#{$accent}"]
+            {
+                color: var(--color-surface-#{$accent}-text);
+            }
         }
     }
 
@@ -226,30 +214,18 @@ a[appearance]
         background: transparent;
         border-color: transparent;
 
-        &:not([accent]),
-        &[accent="neutral"]
+        &:not([accent])
         {
             color: var(--color-surface-neutral-text);
         }
 
-        &[accent="primary"]
+        // Add accent color support.
+        @each $accent in $accents
         {
-            color: var(--color-surface-primary-text);
-        }
-
-        &[accent="positive"]
-        {
-            color: var(--color-surface-positive-text);
-        }
-
-        &[accent="attention"]
-        {
-            color: var(--color-surface-attention-text);
-        }
-
-        &[accent="negative"]
-        {
-            color: var(--color-surface-negative-text);
+            &[accent="#{$accent}"]
+            {
+                color: var(--color-surface-#{$accent}-text);
+            }
         }
     }
 
@@ -262,35 +238,20 @@ a[appearance]
     {
         background: transparent;
 
-        &:not([accent]),
-        &[accent="neutral"]
+        &:not([accent])
         {
             border-color: var(--color-surface-neutral-border);
             color: var(--color-surface-neutral-text);
         }
 
-        &[accent="primary"]
+        // Add accent color support.
+        @each $accent in $accents
         {
-            border-color: var(--color-surface-primary-border);
-            color: var(--color-surface-primary-text);
-        }
-
-        &[accent="positive"]
-        {
-            border-color: var(--color-surface-positive-border);
-            color: var(--color-surface-positive-text);
-        }
-
-        &[accent="attention"]
-        {
-            border-color: var(--color-surface-attention-border);
-            color: var(--color-surface-attention-text);
-        }
-
-        &[accent="negative"]
-        {
-            border-color: var(--color-surface-negative-border);
-            color: var(--color-surface-negative-text);
+            &[accent="#{$accent}"]
+            {
+                border-color: var(--color-surface-#{$accent}-border);
+                color: var(--color-surface-#{$accent}-text);
+            }
         }
     }
 
@@ -299,40 +260,22 @@ a[appearance]
     &[appearance="icon"]:hover,
     &[appearance="icon"]:focus
     {
-        &:not([accent]),
-        &[accent="neutral"]
+        &:not([accent])
         {
             border-color: var(--color-surface-neutral-border);
             background: var(--color-surface-neutral-surface);
             color: var(--color-surface-neutral-surface-text);
         }
 
-        &[accent="primary"]
+        // Add accent color support.
+        @each $accent in $accents
         {
-            border-color: var(--color-surface-primary-border);
-            background: var(--color-surface-primary-surface);
-            color: var(--color-surface-primary-surface-text);
-        }
-
-        &[accent="positive"]
-        {
-            border-color: var(--color-surface-positive-border);
-            background: var(--color-surface-positive-surface);
-            color: var(--color-surface-positive-surface-text);
-        }
-
-        &[accent="attention"]
-        {
-            border-color: var(--color-surface-attention-border);
-            background: var(--color-surface-attention-surface);
-            color: var(--color-surface-attention-surface-text);
-        }
-
-        &[accent="negative"]
-        {
-            border-color: var(--color-surface-negative-border);
-            background: var(--color-surface-negative-surface);
-            color: var(--color-surface-negative-surface-text);
+            &[accent="#{$accent}"]
+            {
+                border-color: var(--color-surface-#{$accent}-border);
+                background: var(--color-surface-#{$accent}-surface);
+                color: var(--color-surface-#{$accent}-surface-text);
+            }
         }
     }
 }
@@ -349,6 +292,16 @@ label
 
     // Ensure consistent cursor.
     cursor: pointer;
+
+    &[appearance="input"]
+    {
+        input
+        {
+            // Remove margin on nested input, as the label will have it too.
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
 }
 
 
@@ -356,6 +309,7 @@ label
 // Controls which resemble text inputs, meaning that they can be styled as rectangles.
 // ----------------------------------------------------------------------------------------------------
 
+label[appearance="input"],
 select,
 textarea,
 input:not([type]),
@@ -375,25 +329,29 @@ input[type="week"]
 {
     // Remove the default browser styling.
     appearance: none;
-    display: block;
     padding: 0 3rem;
-    width: 64rem;
     min-width: 10rem;
-    line-height: calc(10rem - 2 * var(--border-width-thin));
+    min-height: calc(10rem - 2 * var(--border-width-thin));
+    line-height: 1.5;
     border: var(--border-width-thin) solid var(--color-surface-input-border);
     border-radius: var(--border-radius-medium);
     font-size: inherit;
     color: var(--color-surface-input-surface-text);
     background: var(--color-surface-input-surface);
 
+    &:not(label)
+    {
+        display: block;
+    }
+
+    // Expand to fill the available width by default.
+    width: 100%;
+
     form &
     {
         // Apply the default `margin` when the control is within a form.
         margin-top: var(--font-current-margin-top);
         margin-bottom: var(--font-current-margin-bottom);
-
-        // Expand to fill the full width when the control is within a form.
-        width: 100%;
     }
 
     label &
@@ -448,7 +406,7 @@ input[type="checkbox"]
     // Remove the default browser styling.
     appearance: none;
     position: relative;
-    margin: 0 $offset;
+    margin: 0 $offset 0 0;
     border: none;
     padding: 0;
     width: 1em;
@@ -458,6 +416,23 @@ input[type="checkbox"]
     background: none;
     cursor: pointer;
 
+    // Animate color changes.
+    transition: color var(--animation-duration-short);
+
+    &:not([accent])
+    {
+        color: var(--color-surface-neutral-icon);
+    }
+
+    // Add accent color support.
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"]
+        {
+            color: var(--color-surface-#{$accent}-icon);
+        }
+    }
+
     &::after
     {
         content: "";
@@ -466,9 +441,9 @@ input[type="checkbox"]
         top: ($offset * -1);
         width: $size;
         height: $size;
-        background: var(--color-surface-primary-icon);
         mask-size: $size;
         mask-repeat: no-repeat;
+        background: currentColor;
 
         /* stylelint-disable indentation */
         mask-image: url(
@@ -521,69 +496,6 @@ input[type="checkbox"]
     }
 }
 
-/**
- * Custom checkbox using an icon font.
- *
-input[type="checkbox"]
-{
-    $size: 1.5em;
-    $offset: ($size - 1em) / 2;
-
-    // Remove the default browser styling.
-    appearance: none;
-    position: relative;
-    border: none;
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    margin: 0 $offset;
-    line-height: inherit;
-    font-size: inherit;
-    background: none;
-    cursor: pointer;
-
-    &::after
-    {
-        position: absolute;
-        line-height: 1;
-        font-size: $size;
-        margin-left: ($offset / $size * -1em);
-        margin-top: ($offset / $size * -1em);
-        font-family: var(--font-family-icon);
-        color: var(--color-surface-primary-icon);
-
-        // Render the unchecked state.
-        content: "check_box_outline_blank";
-    }
-
-    &:checked::after
-    {
-        // Render the checked state.
-        content: "check_box";
-    }
-
-    &:indeterminate::after
-    {
-        // Render the indeterminate state.
-        content: "indeterminate_check_box";
-    }
-
-    form &
-    {
-        // Apply the default `margin` when the control is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
-    }
-
-    label &
-    {
-        // Ensure proper spacing between the label and the control.
-        margin-right: var(--size-inline-spacing);
-    }
-}
-*/
-
-
 // input (radio)
 // Radio button supporting the checked and unchecked state.
 // ----------------------------------------------------------------------------------------------------
@@ -596,7 +508,7 @@ input[type="radio"]
     // Remove the default browser styling.
     appearance: none;
     position: relative;
-    margin: 0 $offset;
+    margin: 0 $offset 0 0;
     border: none;
     padding: 0;
     width: 1em;
@@ -606,6 +518,23 @@ input[type="radio"]
     background: none;
     cursor: pointer;
 
+    // Animate color changes.
+    transition: color var(--animation-duration-short);
+
+    &:not([accent])
+    {
+        color: var(--color-surface-neutral-icon);
+    }
+
+    // Add accent color support.
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"]
+        {
+            color: var(--color-surface-#{$accent}-icon);
+        }
+    }
+
     &::after
     {
         content: "";
@@ -614,9 +543,9 @@ input[type="radio"]
         top: ($offset * -1);
         width: $size;
         height: $size;
-        background: var(--color-surface-primary-icon);
         mask-size: $size;
         mask-repeat: no-repeat;
+        background: currentColor;
 
         /* stylelint-disable indentation */
         mask-image: url(
@@ -655,62 +584,3 @@ input[type="radio"]
         margin-right: var(--size-inline-spacing);
     }
 }
-
-/**
- * Custom radio button using an icon font.
- *
-input[type="radio"]
-{
-    $size: 1.5em;
-    $offset: ($size - 1em) / 2;
-
-    // Remove the default browser styling.
-    padding: 0;
-    appearance: none;
-    background: none;
-    border: none;
-
-    // Ensure consistent cursor.
-    cursor: pointer;
-
-    position: relative;
-    width: 1em;
-    height: 1em;
-    margin: 0 $offset;
-    line-height: inherit;
-    font-size: inherit;
-
-    &::after
-    {
-        position: absolute;
-        line-height: 1;
-        font-size: $size;
-        margin-left: ($offset / $size * -1em);
-        margin-top: ($offset / $size * -1em);
-        font-family: var(--font-family-icon);
-        color: var(--color-surface-primary-icon);
-
-        // Render the unchecked state.
-        content: "radio_button_unchecked";
-    }
-
-    &:checked::after
-    {
-        // Render the checked state.
-        content: "radio_button_checked";
-    }
-
-    form &
-    {
-        // Apply the default `margin` when the control is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
-    }
-
-    label &
-    {
-        // Ensure proper spacing between the label and the control.
-        margin-right: var(--size-inline-spacing);
-    }
-}
-*/

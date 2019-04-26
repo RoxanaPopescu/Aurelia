@@ -1,0 +1,16 @@
+////
+/// @group settings/components/app-sidebar
+////
+
+/// The settings to use for the `app-sidebar` component.
+$__summary: comment;
+
+
+:root
+{
+    /// The width of the app-sidebar.
+    --size-app-sidebar-width: 20rem;
+
+    /// The width of the expanded app sidebar.
+    --size-app-sidebar-width-expanded: 65rem;
+}

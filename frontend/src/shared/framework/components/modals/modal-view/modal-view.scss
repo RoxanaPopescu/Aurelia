@@ -11,6 +11,9 @@ modal-view
         right: 0;
         bottom: 0;
 
+        // Apply the z-index for backdrops.
+        z-index: var(--z-index-backdrop);
+
         // Use horizontal flex layout.
         display: flex;
 

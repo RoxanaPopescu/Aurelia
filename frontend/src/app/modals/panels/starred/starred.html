@@ -2,14 +2,14 @@
 
     <require from="./starred.scss"></require>
 
-    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+    <modal-backdrop close="all"></modal-backdrop>
 
     <modal-panel name="starred" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <header scroll-fade>
 
             <h1 class="font-largest margin-bottom" translate>
-                Starred and recent
+                Pinned and recent
             </h1>
 
             <input type="text" placeholder.translate="Type to find..." autofocus>
@@ -20,7 +20,7 @@
 
             <section class="margin-bottom">
 
-                <h2 class="font-large margin-bottom" translate>Starred items</h2>
+                <h2 class="font-large margin-bottom" translate>Pinned items</h2>
 
                 <div style="background: #efefef; height: 40px;" class="margin"></div>
                 <div style="background: #efefef; height: 40px;" class="margin"></div>

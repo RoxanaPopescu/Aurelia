@@ -95,3 +95,30 @@ body
         outline-offset: var(--accessibility-focus-outline-offset);
     }
 }
+
+.focus-debug
+{
+    :focus
+    {
+        // Set the focus style to use during keyboard navigation.
+        outline: dotted #ff0000;
+        outline-width: 0.5rem;
+        outline-offset: 0.5rem;
+    }
+
+    .focus-visible .focus-hidden:focus
+    {
+        // Set the focus style to use during keyboard navigation.
+        outline: dotted #008000;
+        outline-width: 0.5rem;
+        outline-offset: 0.5rem;
+    }
+
+    .focus-visible :not(.focus-hidden):focus
+    {
+        // Set the focus style to use during keyboard navigation.
+        outline: solid #008000;
+        outline-width: 0.5rem;
+        outline-offset: 0.5rem;
+    }
+}

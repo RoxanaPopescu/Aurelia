@@ -26,41 +26,37 @@ export class AppLogoCustomElement
     protected readonly themeService: ThemeService;
 
     /**
-     * True to disable toggling of the dashboard, otherwise false.
-     * This should only be false when presented as the landing page after sign in.
-     */
-    @bindable({ defaultValue: false })
-    public disabled: boolean;
-
-    /**
      * The size of the logo to show.
      */
     @bindable({ defaultValue: "icon" })
     public size: "icon" | "wide";
 
     /**
-     * Called when the element is clicked.
-     * Opens or toggles the specified modal.
+     * True to disable toggling of the `dashboard` modal, otherwise false.
+     * This should only be true when presented as the landing page after sign in.
      */
-    protected onClick(event: MouseEvent): void
+    @bindable({ defaultValue: false })
+    public disabled: boolean;
+
+    /**
+     * Called when the element is clicked.
+     * Toggles the `dashboard` modal.
+     */
+    protected onClick(): void
     {
-        event.preventDefault();
-
-        if (this.disabled)
+        if (!this.disabled)
         {
-            return;
-        }
+            const openModals = this._modalService.find("dashboard");
 
-        const openModals = this._modalService.find("dashboard");
-
-        if (openModals.length > 0)
-        {
-            // tslint:disable-next-line: no-floating-promises
-            openModals[openModals.length - 1].close();
-        }
-        else
-        {
-            this._modalService.open("dashboard");
+            if (openModals.length > 0)
+            {
+                // tslint:disable-next-line: no-floating-promises
+                openModals[openModals.length - 1].close();
+            }
+            else
+            {
+                this._modalService.open("dashboard");
+            }
         }
     }
 }

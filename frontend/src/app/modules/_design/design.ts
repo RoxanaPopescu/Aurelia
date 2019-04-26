@@ -2,7 +2,7 @@ import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration } from "aurelia-router";
 
 @autoinject
-export class DesignModule
+export class DesignPage
 {
     /**
      * Called to configure the router for the module.

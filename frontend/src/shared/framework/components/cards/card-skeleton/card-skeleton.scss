@@ -1,0 +1,65 @@
+@import "styles/resources/index";
+
+card-skeleton
+{
+    // Use inline flex layout, so the card does not expand when placed in e.g. a grid layout.
+    display: inline-flex;
+
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Apply the card size set by the layout.
+    width: var(--card-width);
+    min-height: var(--card-height);
+
+    > div
+    {
+        // Fill the available space.
+        flex-grow: 1;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply default card padding.
+        padding: var(--card-padding);
+
+        // Apply border.
+        border-radius: var(--border-radius-medium);
+
+        // Apply surface style.
+        color: var(--color-surface-text);
+
+        // Apply animated background.
+
+        background-image: linear-gradient(
+            105deg,
+            var(--color-surface) 18%,
+            var(--color-surface-transparent) 48%,
+            var(--color-surface-transparent) 52%,
+            var(--color-surface) 87%
+        );
+
+        animation: card-skeleton var(--animation-duration-skeleton) infinite ease;
+        animation-delay: calc(var(--animation-duration-skeleton) / 3);
+
+        footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+        }
+    }
+}
+
+@keyframes card-skeleton
+{
+    0%
+    {
+        background-position: 0;
+    }
+
+    60%, 100%
+    {
+        background-position: var(--card-width);
+    }
+}

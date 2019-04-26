@@ -13,7 +13,7 @@ export const routeNameSeparator = "/";
 export interface IHistoryState
 {
     /**
-     * The name of the current child route.
+     * The name of the route.
      */
     route: string;
 
@@ -31,11 +31,6 @@ export interface IHistoryState
      * The data associated with the state in the browser history.
      */
     data: any;
-
-    /**
-     * The route name path identifying the current route.
-     */
-    routePath: string;
 }
 
 /**
@@ -107,6 +102,7 @@ export class HistoryHelper
 
     /**
      * The current history state.
+     * Note that this will be undefined until the initial navigation succedes.
      */
     @computedFrom("_state")
     public get state(): IHistoryState
@@ -268,7 +264,6 @@ export class HistoryHelper
 
         const data = this._history.getState("data");
 
-        // BUG: This only works for the root-level routes. We need our own routing layer to fix this.
-        return { routePath: route, route: route.replace(/\/.*/, ""), params, fragment, data };
+        return { route, params, fragment, data };
     }
 }

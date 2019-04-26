@@ -1,0 +1,17 @@
+////
+/// @group framework/modifiers/filter
+////
+
+/// Modifier classes affecting the clipping of elements.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that subtly lightens the element.
+/// Use this to make small colored surfaces slightly lighter,
+/// so they look better when placed on a light surface.
+.filter-lighten
+{
+    filter: contrast(90%) brightness(113%);
+}

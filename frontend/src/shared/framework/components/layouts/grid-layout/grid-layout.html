@@ -1,0 +1,12 @@
+<template>
+
+    <require from="./grid-layout.scss"></require>
+
+    <div class="grid-layout-items">
+        <slot>
+            <!-- Needed to compensate for the negative bottom margin. -->
+            <div class="visibility-hidden"></div>
+        </slot>
+    </div>
+
+</template>

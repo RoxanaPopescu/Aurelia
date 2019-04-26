@@ -46,10 +46,10 @@ export async function configure(aurelia: Aurelia): Promise<any>
         if (ENVIRONMENT.stubs)
         {
             const { stubs } = await import("resources/stubs");
-            settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs));
+            settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs, 20));
         }
 
-        // Configure the infrastructure.
+        // Configure features.
 
         const cookies = aurelia.container.get(Cookies) as Cookies;
         cookies.configure(settings.infrastructure.cookies);
@@ -69,11 +69,11 @@ export async function configure(aurelia: Aurelia): Promise<any>
         themeService.configure(settings.app.themes, setThemeName);
         await themeService.setTheme(getThemeName());
 
-        // Import the base styles and theme.
+        // Import style resources.
         await import("resources/styles/index.scss" as any);
         await import(`resources/themes/${getThemeName()}/styles/index.scss`);
 
-        // Import the icons in the icons folder.
+        // Import icon resources.
         await import("resources/icons");
 
         // Attempt to reauthenticate using a token stored on the device.
@@ -83,8 +83,6 @@ export async function configure(aurelia: Aurelia): Promise<any>
         // Configure legacy Mover services.
         Localization.configure(localeService.locale.code, localeService.locale.code);
         await Profile.autoLogin();
-        // const loginResponse = await LoginService.login("Fulfiller", "connie@cooplogistik.dk", "mover1234!");
-        // await Profile.login(loginResponse.accessToken, loginResponse.refreshToken);
     });
 
     // Start the framework.
@@ -161,7 +159,8 @@ function getLocaleCode(): string
 }
 
 /**
- * Called when the locale changes, and reloads the app for the new locale.
+ * Called when the locale changes.
+ * This stores the locale code in a cookie and reloads the app.
  * @param newLocale The new locale being set.
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns A promise that never resolves, as the page is about to reload.
@@ -171,6 +170,7 @@ async function setLocaleCode(newLocale: ILocale, oldLocale: ILocale): Promise<vo
     if (oldLocale != null)
     {
         const cookies = Container.instance.get(Cookies) as Cookies;
+
         cookies.set("locale", newLocale.code);
 
         location.reload();
@@ -191,7 +191,8 @@ function getCurrencyCode(): string
 }
 
 /**
- * Called when the currency changes, and stores the currency code on the device.
+ * Called when the currency changes.
+ * This stores the currency code in a cookie.
  * @param newCurrency The new currency being set.
  * @param oldCurrency The old currency, or undefined if not previously set.
  */

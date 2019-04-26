@@ -1,0 +1,12 @@
+<template>
+
+    <require from="./list-layout.scss"></require>
+
+    <div class="list-layout-items">
+        <slot>
+            <!-- Needed to compensate for the negative bottom margin. -->
+            <div class="visibility-hidden"></div>
+        </slot>
+    </div>
+
+</template>

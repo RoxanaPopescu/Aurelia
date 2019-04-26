@@ -2,21 +2,42 @@
 /// @group themes/default/surfaces/base
 ////
 
-/// Theme surface defining the appearance of the base of the view hierarchy.
+/// Surface defining the appearance of the base of the view hierarchy.
 $__summary: comment;
 
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
-[theme-surface="base"]
+[surface="base"]
 {
     // State: normal
     --color-surface: var(--palette-color-whitepoint);
     --color-surface-subtle: var(--palette-color-neutral-dark);
     --color-surface-text: var(--palette-color-neutral-darker);
-    --color-surface-icon: var(--palette-color-neutral-darker);
+    --color-surface-icon: var(--palette-color-neutral-dark);
     --color-surface-border: var(--palette-color-neutral);
     --color-surface-heading: var(--palette-color-neutral-dark);
+
+    // State: hover
+    --color-surface--hover: var(--palette-color-whitepoint);
+    --color-surface-subtle--hover: var(--palette-color-neutral-dark);
+    --color-surface-text--hover: var(--palette-color-neutral-darker);
+    --color-surface-icon--hover: var(--palette-color-neutral-darker);
+    --color-surface-border--hover: var(--palette-color-neutral);
+
+    // State: focus
+    --color-surface--focus: var(--palette-color-whitepoint);
+    --color-surface-subtle--focus: var(--palette-color-neutral-dark);
+    --color-surface-text--focus: var(--palette-color-neutral-darker);
+    --color-surface-icon--focus: var(--palette-color-neutral-darker);
+    --color-surface-border--focus: var(--palette-color-neutral);
+
+    // State: active
+    --color-surface--active: var(--palette-color-whitepoint);
+    --color-surface-subtle--active: var(--palette-color-neutral-dark);
+    --color-surface-text--active: var(--palette-color-neutral-darker);
+    --color-surface-icon--active: var(--palette-color-neutral-darker);
+    --color-surface-border--active: var(--palette-color-neutral);
 
     // Neutral elements on the surface.
     &

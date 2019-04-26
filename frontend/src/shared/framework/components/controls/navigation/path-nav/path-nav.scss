@@ -4,34 +4,34 @@ path-nav
 {
     display: flex;
 
-    a
+    > *
     {
         display: block;
         color: var(--color-surface-heading);
 
-        &[href]:hover, .focus-visible &[href]:focus
-        {
-            color: var(--color-surface-primary-text--hover);
-        }
-
         &:not(:last-child)::after
         {
-            content: "";
-            padding: 0 1.5em;
+            content: ".";
+            display: inline-block;
+            width: 2.5em;
             opacity: 0.3;
             background: var(--color-surface-primary-icon);
-            mask-size: 1em;
-            mask-position: center;
+            mask-size: 0.6em;
+            mask-position: center 55%;
             mask-repeat: no-repeat;
 
             mask-image: url(
                 "data:image/svg+xml;utf8," +
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 18'>" +
-                    "<g fill='none' fill-rule='evenodd' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'>" +
-                        "<path d='M.75 8.6h18.39M12.25.75L20.1 8.6l-7.85 7.85'/>" +
-                    "</g>" +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                    "<path fill-rule='odd' d='M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z'/>" +
                 "</svg>"
             );
         }
+    }
+
+    > a[href]:hover,
+    .focus-visible > a[href]:focus
+    {
+        color: var(--color-surface-primary-text--hover);
     }
 }

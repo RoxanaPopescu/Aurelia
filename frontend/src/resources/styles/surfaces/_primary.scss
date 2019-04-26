@@ -2,14 +2,14 @@
 /// @group themes/default/surfaces/sidebar
 ////
 
-/// Theme surface defining the appearance of surfaces with the primary theme color as background,
+/// Surface defining the appearance of surfaces with the primary theme color as background,
 /// such as the sidebar and dashboard.
 $__summary: comment;
 
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
-[theme-surface="primary"]
+[surface="primary"]
 {
     // State: normal
     --color-border: var(--palette-color-primary);
@@ -18,6 +18,16 @@ $__summary: comment;
     --color-surface-text: var(--palette-color-primary-lighter);
     --color-surface-icon: var(--palette-color-primary-lighter);
     --color-surface-border: var(--palette-color-primary-dark);
+
+    // Edge of the sidebar, used for resizing and toggling.
+    &
+    {
+        // State: normal
+        --color-surface-edge: var(--palette-color-primary);
+
+        // State: hover
+        --color-surface-edge--hover: var(--palette-color-primary-dark);
+    }
 
     // Navigation links on the surface.
     &
@@ -33,6 +43,12 @@ $__summary: comment;
         --color-surface-nav-link-surface--hover: var(--palette-color-primary-HOVER);
         --color-surface-nav-link-surface-text--hover: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--hover: var(--palette-color-primary-lighter);
+
+        // State: focus
+        --color-surface-nav-link-border--focus: var(--palette-color-primary-HOVER);
+        --color-surface-nav-link-surface--focus: var(--palette-color-primary-HOVER);
+        --color-surface-nav-link-surface-text--focus: var(--palette-color-primary-lighter);
+        --color-surface-nav-link-surface-icon--focus: var(--palette-color-primary-lighter);
 
         // State: active
         --color-surface-nav-link-border--active: var(--palette-color-primary-dark);

@@ -5,7 +5,7 @@ import currencies from "./currencies.json";
 import themes from "./themes.json";
 
 /**
- * Represents the settings for the app, infrastructure, and framework.
+ * Represents the settings related to infrastructure, framework and environment.
  */
 export default
 {

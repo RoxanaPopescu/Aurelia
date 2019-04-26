@@ -95,6 +95,34 @@ export class ModalService
     }
 
     /**
+     * Attempts to close all open modals.
+     * @param reason The reason for closing the modal, which may affect how the modals responds.
+     * @returns A promise that will be resolved with true if all modals accepted the close request,
+     * or false if one of them rejected it with a reason other than an Error instance.
+     */
+    public async closeAll(reason?: any): Promise<boolean>
+    {
+        for (const modal of this.modals.slice().reverse())
+        {
+            try
+            {
+                await modal.close(reason);
+            }
+            catch (reason)
+            {
+                if (reason instanceof Error)
+                {
+                    throw reason;
+                }
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Finds all open modals of the specified type.
      * @param viewModel The type of the modal.
      * @returns The open modals with the specified name, if any.

@@ -13,9 +13,8 @@ modal-panel
     max-width: var(--modal-panel-max-width);
 
     // Apply a border to the panel.
-    border: 0 solid var(--modal-panel-border-color);
     border-radius: var(--border-radius-large);
-    margin: 1rem;
+    margin: var(--modal-panel-margin);
 
     // Apply surface style.
     background: var(--color-surface);
@@ -46,6 +45,14 @@ modal-panel
         // Provide defaults for sectioning elements.
 
         > header,
+        > section,
+        > footer
+        {
+            // Prevent shrinking by default.
+            flex-shrink: 0;
+        }
+
+        > header,
         > footer
         {
             // Apply padding to header and footer.
@@ -53,9 +60,6 @@ modal-panel
             // to enable sticky positioning.
             padding-top: calc(9rem - var(--border-width-thin));
             padding-bottom: calc(9rem - var(--border-width-thin));
-
-            // Prevent shrinking.
-            flex-shrink: 0;
         }
 
         > footer
@@ -97,9 +101,12 @@ modal-panel
             font-size: 6rem;
         }
     }
+}
 
-    // Animate the panel.
+// Animate the panel.
 
+modal-panel
+{
     // The transform to apply to the panel before it enters and after it leaves.
     --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
 
@@ -116,6 +123,9 @@ modal-panel
     modal-view compose.au-enter-active &
     {
         animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1) var(--animation-duration-medium);
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both;
     }
 
     modal-view compose.au-leave &
@@ -127,42 +137,22 @@ modal-panel
     modal-view compose.au-leave-active &
     {
         animation: modal-panel-leave cubic-bezier(0.2, 0, 0.2, 0.5) var(--animation-duration-medium);
-    }
 
-    // Animate the content of the panel.
-
-    > *
-    {
-        // Hint that animation will be applied.
-        will-change: opacity;
-
-        modal-view compose.au-enter &
-        {
-            opacity: 0;
-        }
-
-        modal-view compose.au-enter-active &
-        {
-            animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
-        }
-
-        modal-view compose.au-leave-active &
-        {
-            animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
-        }
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both;
     }
 }
 
 @keyframes modal-panel-enter
 {
-    20%
+    30%
     {
         opacity: 1;
     }
 
-    100%
+    50%, to
     {
-        transform: none;
+        transform: translateX(0);
         opacity: 1;
     }
 }
@@ -178,6 +168,32 @@ modal-panel
     {
         transform: var(--modal-panel-origin-transform);
         opacity: 0;
+    }
+}
+
+// Animate the content of the panel.
+
+modal-panel > *
+{
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    // Prevent glitches at the ends of the animation.
+    animation-fill-mode: both !important;
+
+    modal-view compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
     }
 }
 
