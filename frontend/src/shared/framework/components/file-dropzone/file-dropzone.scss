@@ -1,0 +1,28 @@
+file-dropzone
+{
+    &.dropzone
+    {
+        display: block;
+        padding: 10rem;
+        width: 100rem;
+        height: 60rem;
+        background: var(--color-surface);
+        border: var(--border-width-medium) dashed var(--color-border);
+        border-radius: var(--border-radius-large);
+
+        .dz-success-mark g
+        {
+            fill: var(--color-surface-positive-icon) !important;
+        }
+
+        .dz-error-mark g
+        {
+            fill: var(--color-surface-negative-icon) !important;
+        }
+
+        .dz-filename span
+        {
+            border: none !important;
+        }
+    }
+}

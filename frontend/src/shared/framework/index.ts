@@ -21,6 +21,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/icons/md-icon/md-icon-stack"),
         PLATFORM.moduleName("./components/controls/navigation/path-nav/path-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tree-nav/tree-nav"),
+        PLATFORM.moduleName("./components/file-dropzone/file-dropzone"),
         PLATFORM.moduleName("./components/layouts/grid-layout/grid-layout"),
         PLATFORM.moduleName("./components/layouts/list-layout/list-layout"),
         PLATFORM.moduleName("./components/modals/modal-backdrop/modal-backdrop"),
@@ -59,6 +60,7 @@ export * from "./components/controls/icons/md-icon/md-icon";
 export * from "./components/controls/icons/md-icon/md-icon-stack";
 export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tree-nav/tree-nav";
+export * from "./components/file-dropzone/file-dropzone";
 export * from "./components/filter/filter";
 export * from "./components/layouts/grid-layout/grid-layout";
 export * from "./components/layouts/list-layout/list-layout";

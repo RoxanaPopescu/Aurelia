@@ -33,6 +33,13 @@ export class DesignPage
                 moduleId: PLATFORM.moduleName("./modules/demo/demo"),
                 nav: true,
                 title: "Demo"
+            },
+            {
+                name: "playground",
+                route: "playground",
+                moduleId: PLATFORM.moduleName("./modules/playground/playground"),
+                nav: true,
+                title: "Playground"
             }
         ]);
     }
