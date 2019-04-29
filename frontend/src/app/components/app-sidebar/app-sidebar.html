@@ -9,6 +9,7 @@
 
         <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
 
+        <!--
         <template if.bind="environment == 'development'">
 
             <a class="nav-link" modal-href="modal: starred">
@@ -27,6 +28,7 @@
             </a>
 
         </template>
+        -->
 
         <slot name="header"></slot>
 
@@ -71,6 +73,7 @@
 
         <slot name="footer"></slot>
 
+        <!--
         <template if.bind="environment == 'development'">
 
             <a class="nav-link" modal-href="modal: notifications">
@@ -91,13 +94,14 @@
             </a>
 
         </template>
+        -->
+
+        <user-identity size="icon"></user-identity>
 
         <a class="nav-link" click.trigger="toggleWidth()">
             <icon title.translate="Collapse menu" name="md-menu"></icon>
             <span translate>Collapse menu</span>
         </a>
-
-        <user-identity size="icon"></user-identity>
 
         <div class="app-sidebar--powered-by font-small">Powered by Mover Systems</div>
 

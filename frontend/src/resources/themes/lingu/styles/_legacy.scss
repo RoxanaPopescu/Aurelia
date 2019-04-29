@@ -1,0 +1,38 @@
+:root {
+    //Colors
+    --colorBackgroundPrimary: var(--palette-color-primary);
+    --colorBackgroundPrimaryDarken: var(--palette-color-primary-dark);
+    --colorBackgroundSecondary: #00162e;
+    --colorInteractivePrimary: var(--palette-color-primary);
+    --colorInteractivePrimaryAlpha0: #{rgba(#0646a6, 0)};
+    --colorInteractivePrimaryAlpha15: #{rgba(#0646a6, 0.15)};
+    --colorInteractivePrimaryAlpha50: #{rgba(#0646a6, 0.5)};
+    --colorInteractivePrimaryAlpha80: #{rgba(#0646a6, 0.8)};
+    --colorInteractivePrimaryAlpha97: #{rgba(#0646a6, 0.97)};
+    --colorInteractivePrimaryDarken: var(--palette-color-primary-dark);
+    --colorInteractivePrimaryLighten: var(--palette-color-primary-light);
+    --colorInteractivePrimaryActive: #034894;
+    --colorInteractivePrimaryInactive: #abbec7;
+    --colorInteractiveSecondary: #fff;
+    --colorOk: #52ad1a;
+    --colorOkDarken: #50a919;
+    --colorWarning: #ff8906;
+    --colorWarningDarken: #ff8600;
+    --colorAlert: #e6310d;
+    --colorAlertDarken: #e1300c;
+    --colorNeutralExtraExtraLight: #f6f9fe;
+    --colorNeutralExtraLight: #edf2f9;
+    --colorNeutralExtraLightDarken: #e5ecf6;
+    --colorNeutralExtraLightAlpha70: rgba(237, 242, 249, 0.7);
+    --colorNeutralLight: #d8e1ee;
+    --colorNeutralRegular: #abbec7;
+    --colorNeutralRegularDarken: #a6bac4;
+    --colorNeutralSemiDark: #7b8e97;
+    --colorNeutralDark: #00162e;
+
+    //Text color
+    --textDarkPrimary: #11253e;
+    --textDarkSecondary: #abbec7;
+    --textDarkInactive: #abbec7;
+    --textLightPrimary: white;
+}

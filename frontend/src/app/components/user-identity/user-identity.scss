@@ -25,14 +25,19 @@ user-identity
         identity-picture
         {
             // Set the icon size.
-            width: 10rem;
-            height: 10rem;
+            width: 12rem;
+            height: 12rem;
 
             // Clip as a circle.
             border-radius: 50%;
 
             // Apply a border to ensure acceptable contrast.
-            border: var(--border-width-thin) solid var(--color-surface-icon);
+            // border: var(--border-width-thin) solid var(--color-surface-icon);
+
+            .identity-picture-surface
+            {
+                filter: none;
+            }
         }
 
         .user-identity-text
@@ -49,6 +54,7 @@ user-identity
         .user-identity-name
         {
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
     }
 }

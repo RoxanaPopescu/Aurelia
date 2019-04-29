@@ -24,12 +24,16 @@ $__summary: comment;
 /// The primary color and its variations.
 :root
 {
-    --palette-color-primary-lighter: #{hsl(353, 100%, 94%)};
-    --palette-color-primary-light: #{hsl(353, 47%, 65%)};
-    --palette-color-primary: #{hsl(353, 100%, 39%)};
-    --palette-color-primary-dark: #{hsl(353, 86%, 28%)};
+    --palette-color-primary-lighter: hsl(353, 100%, 94%);
+    --palette-color-primary-light: hsl(353, 47%, 65%);
+    --palette-color-primary: hsl(353, 100%, 39%);
+    --palette-color-primary-dark: hsl(353, 86%, 28%);
     --palette-color-primary-HOVER: hsla(353, 86%, 28%, 0.6);
-    --palette-color-primary-darker: #{hsl(353, 54%, 20%)};
+    --palette-color-primary-darker: hsl(353, 54%, 20%);
+
+    --palette-color-primary--hover: hsla(353, 54%, 20%, 0.1);
+    --palette-color-primary--active: hsla(353, 54%, 20%, 0.2);
+    --palette-color-primary-dark--hover: hsl(353, 54%, 20%, 0.2);
 }
 
 /// The accent color indicating information.

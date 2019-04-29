@@ -39,20 +39,20 @@ $__summary: comment;
         --color-surface-nav-link-surface-icon: var(--palette-color-primary-lighter);
 
         // State: hover
-        --color-surface-nav-link-border--hover: var(--palette-color-primary-HOVER);
-        --color-surface-nav-link-surface--hover: var(--palette-color-primary-HOVER);
+        --color-surface-nav-link-border--hover: var(--palette-color-primary--hover);
+        --color-surface-nav-link-surface--hover: var(--palette-color-primary--hover);
         --color-surface-nav-link-surface-text--hover: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--hover: var(--palette-color-primary-lighter);
 
         // State: focus
-        --color-surface-nav-link-border--focus: var(--palette-color-primary-HOVER);
-        --color-surface-nav-link-surface--focus: var(--palette-color-primary-HOVER);
+        --color-surface-nav-link-border--focus: var(--palette-color-primary--hover);
+        --color-surface-nav-link-surface--focus: var(--palette-color-primary--hover);
         --color-surface-nav-link-surface-text--focus: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--focus: var(--palette-color-primary-lighter);
 
         // State: active
-        --color-surface-nav-link-border--active: var(--palette-color-primary-dark);
-        --color-surface-nav-link-surface--active: var(--palette-color-primary-dark);
+        --color-surface-nav-link-border--active: var(--palette-color-primary--active);
+        --color-surface-nav-link-surface--active: var(--palette-color-primary--active);
         --color-surface-nav-link-surface-text--active: var(--palette-color-primary-lighter);
         --color-surface-nav-link-surface-icon--active: var(--palette-color-primary-lighter);
     }
@@ -60,7 +60,7 @@ $__summary: comment;
     // Navigation child links on the surface.
     &
     {
-        --color-surface-nav-child-surface: var(--palette-color-primary-darker);
+        --color-surface-nav-child-surface: var(--palette-color-primary-dark);
 
         // State: normal
         --color-surface-nav-child-link-border: transparent;
@@ -69,8 +69,8 @@ $__summary: comment;
         --color-surface-nav-child-link-surface-icon: var(--palette-color-primary-lighter);
 
         // State: hover
-        --color-surface-nav-child-link-border--hover: var(--palette-color-primary-HOVER);
-        --color-surface-nav-child-link-surface--hover: var(--palette-color-primary-HOVER);
+        --color-surface-nav-child-link-border--hover: var(--palette-color-primary-dark--hover);
+        --color-surface-nav-child-link-surface--hover: var(--palette-color-primary-dark--hover);
         --color-surface-nav-child-link-surface-text--hover: var(--palette-color-primary-lighter);
         --color-surface-nav-child-link-surface-icon--hover: var(--palette-color-primary-lighter);
 

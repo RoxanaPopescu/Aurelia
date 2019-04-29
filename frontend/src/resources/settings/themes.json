@@ -1,4 +1,5 @@
 [
     { "slug": "default", "name": "Default" },
-    { "slug": "coop", "name": "Coop" }
+    { "slug": "coop", "name": "Coop" },
+    { "slug": "lingu", "name": "Lingu" }
 ]
