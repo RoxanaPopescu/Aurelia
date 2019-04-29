@@ -31,11 +31,15 @@ user-identity
             // Clip as a circle.
             border-radius: 50%;
 
+            // Use color suitable for the app-sidebar.
+            background: var(--color-surface-nav-link-surface--active);
+
             // Apply a border to ensure acceptable contrast.
             // border: var(--border-width-thin) solid var(--color-surface-icon);
 
             .identity-picture-surface
             {
+                // Remove the filter that normally lightens the background color.
                 filter: none;
             }
         }
