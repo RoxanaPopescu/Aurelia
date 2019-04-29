@@ -35,7 +35,7 @@ user-identity
             background: var(--color-surface-nav-link-surface--active);
 
             // Apply a border to ensure acceptable contrast.
-            // border: var(--border-width-thin) solid var(--color-surface-icon);
+            border: var(--border-width-thin) solid var(--color-surface-nav-link-surface--active);
 
             .identity-picture-surface
             {
