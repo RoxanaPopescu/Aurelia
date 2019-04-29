@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import Dropzone from "dropzone";
 
 // tslint:disable-next-line: no-submodule-imports
@@ -23,7 +23,14 @@ export class FileDropzoneCustomElement
     private readonly _element: HTMLElement;
 
     /**
-     * The options to use for the dropzone.
+     * The `Dropzone` instance attached to this component.
+     * See: https://www.dropzonejs.com/#configuration
+     */
+    @bindable({ defaultBindingMode: bindingMode.fromView })
+    public dropzone: Dropzone;
+
+    /**
+     * The options to use when attaching the `Dropzone`.
      * See: https://www.dropzonejs.com/#configuration
      */
     @bindable
@@ -34,7 +41,9 @@ export class FileDropzoneCustomElement
      */
     public attached(): void
     {
-        // tslint:disable-next-line: no-unused-expression
-        new Dropzone(this._element, this.options);
+        if (this.dropzone == null)
+        {
+            this.dropzone = new Dropzone(this._element, this.options);
+        }
     }
 }

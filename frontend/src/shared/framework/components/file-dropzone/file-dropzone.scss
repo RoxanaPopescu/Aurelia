@@ -10,19 +10,40 @@ file-dropzone
         border: var(--border-width-medium) dashed var(--color-border);
         border-radius: var(--border-radius-large);
 
-        .dz-success-mark g
+        .dz-preview
         {
-            fill: var(--color-surface-positive-icon) !important;
-        }
+            &.dz-error
+            {
+                .dz-image
+                {
+                    //background: var(--color-surface-negative-icon);
+                }
 
-        .dz-error-mark g
-        {
-            fill: var(--color-surface-negative-icon) !important;
-        }
+                .dz-error-mark
+                {
+                    //display: none;
 
-        .dz-filename span
-        {
-            border: none !important;
+                    g
+                    {
+                        fill: var(--color-surface-negative-icon) !important;
+                    }
+                }
+            }
+
+            .dz-size
+            {
+                //display: none;
+            }
+
+            .dz-filename
+            {
+                pointer-events: none;
+
+                span
+                {
+                    border: none;
+                }
+            }
         }
     }
 }
