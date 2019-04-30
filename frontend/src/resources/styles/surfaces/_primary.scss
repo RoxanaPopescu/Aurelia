@@ -53,8 +53,8 @@ $__summary: comment;
         // State: active
         --color-surface-nav-link-border--active: var(--palette-color-primary--active);
         --color-surface-nav-link-surface--active: var(--palette-color-primary--active);
-        --color-surface-nav-link-surface-text--active: var(--palette-color-primary-lighter);
-        --color-surface-nav-link-surface-icon--active: var(--palette-color-primary-lighter);
+        --color-surface-nav-link-surface-text--active: var(--palette-color-whitepoint);
+        --color-surface-nav-link-surface-icon--active: var(--palette-color-whitepoint);
     }
 
     // Navigation child links on the surface.
@@ -77,8 +77,8 @@ $__summary: comment;
         // State: active
         --color-surface-nav-child-link-border--active: transparent;
         --color-surface-nav-child-link-surface--active: transparent;
-        --color-surface-nav-child-link-surface-text--active: var(--palette-color-primary-lighter);
-        --color-surface-nav-child-link-surface-icon--active: var(--palette-color-neutral-lighter);
+        --color-surface-nav-child-link-surface-text--active: var(--palette-color-whitepoint);
+        --color-surface-nav-child-link-surface-icon--active: var(--palette-color-whitepoint);
     }
 
     // Neutral elements on the surface.

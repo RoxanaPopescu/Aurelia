@@ -98,13 +98,18 @@ app-sidebar
         }
     }
 
-    .app-sidebar--powered-by {
-        display: none;
-        margin-top: 0.5rem;
-        margin-bottom: 2rem;
-        margin-left: 7rem;
-        opacity: 0.5;
-        white-space: nowrap;
+    .app-sidebar--powered-by
+    {
+        padding: 1rem;
+        font-size: 2.25rem;
+        line-height: 1.5;
+        text-align: center;
+        background-color: var(--color-surface-nav-link-surface--hover);
+
+        span
+        {
+            opacity: 0.5;
+        }
     }
 }
 
@@ -159,13 +164,14 @@ app-sidebar
 
         > span
         {
-            color: var(--color-surface-nav-link-surface-text--hover);
+            color: var(--color-surface-nav-link-surface-text--active);
         }
     }
 
     > icon
     {
         font-size: 6rem;
+        color: var(--color-surface-nav-link-surface-icon);
     }
 
     > span
@@ -177,21 +183,29 @@ app-sidebar
 
 .sidebar-child-link-container
 {
-    display: none;
+    padding: 2rem 0;
     background: var(--color-surface-nav-child-surface);
 }
 
 .sidebar-child-link
 {
     display: block;
-    padding: 1.75rem 0 1.75rem 10.5rem;
+    padding: 1.75rem 0 1.75rem 8rem;
     border-radius: var(--border-radius-small);
+
+    opacity: 0.7;
 
     // Apply theme colors.
 
     color: var(--color-surface-nav-child-link-surface-text);
     background-color: var(--color-surface-nav-child-link-surface);
     border-color: var(--color-surface-nav-child-link-border);
+
+    icon
+    {
+        font-size: 4rem;
+        color: var(--color-surface-nav-child-link-surface-icon);
+    }
 
     &:hover
     {
@@ -215,6 +229,8 @@ app-sidebar
         cursor: default;
         font-weight: 700;
 
+        opacity: 1;
+
         color: var(--color-surface-nav-child-link-surface-text--active);
         background-color: var(--color-surface-nav-child-link-surface--active);
         border-color: var(--color-surface-nav-child-link-border--active);
@@ -226,7 +242,7 @@ app-sidebar
 
         > span
         {
-            color: var(--color-surface-nav-child-link-surface-text--hover);
+            color: var(--color-surface-nav-child-link-surface-text--active);
         }
     }
 }
@@ -256,12 +272,20 @@ app-sidebar.--expanded
 
     .sidebar-child-link-container
     {
-        display: block;
         padding: 5rem 6rem;
+    }
+
+    .sidebar-child-link
+    {
+        padding: 1.75rem 0 1.75rem 10.5rem;
     }
 
     .app-sidebar--powered-by
     {
-        display: block;
+        padding-left: 7rem;
+        line-height: 6.5rem;
+        font-size: 2.75rem;
+        text-align: left;
+        white-space: nowrap;
     }
 }
