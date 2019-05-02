@@ -1,3 +1,5 @@
+type Value<TKey, TValue> = Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined;
+
 /**
  * Value converter that skips up to the specified number of items in an iterable.
  */
@@ -9,8 +11,7 @@ export class SkipValueConverter
      * @param count The number of items to skip, or undefined to skip no items.
      * @returns A new iterable, containing the remaining items.
      */
-    public toView<TKey, TValue>(value: Iterable<TKey> | Iterable<[TKey, TValue]> | null | undefined, count: number)
-        : Iterable<TKey> | Iterable<[TKey, TValue]> | null | undefined
+    public toView<TKey, TValue>(value: Value<TKey, TValue>, count: number): Value<TKey, TValue>
     {
         if (value == null)
         {
@@ -23,7 +24,7 @@ export class SkipValueConverter
         }
         else if (value instanceof Set)
         {
-            return new Set<TKey>(Array.from<TKey>(value).slice(count));
+            return new Set<TValue>(Array.from<TValue>(value).slice(count));
         }
         else if (value instanceof Map)
         {

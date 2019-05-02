@@ -38,6 +38,12 @@ export class ModalHrefCustomAttribute
     public modal?: string;
 
     /**
+     * The model to pass to the `activate` life cycle method of the component.
+     */
+    @bindable
+    public readonly model?: any;
+
+    /**
      * True to toggle between opening and closing the modal, false to always open the modal.
      * The default is false.
      */
@@ -92,7 +98,7 @@ export class ModalHrefCustomAttribute
             }
             else
             {
-                this._modal = this._modalService.open(this.modal);
+                this._modal = this._modalService.open(this.modal, this.model);
                 await this._modal.promise;
             }
         }

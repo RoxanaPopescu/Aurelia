@@ -1,6 +1,6 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
-import { ModalService, Modal, IComposedModal } from "../../../services/modal";
+import { ModalService, Modal } from "../../../services/modal";
 
 /**
  * Represents the stack of modal view currently being presented.
@@ -27,6 +27,32 @@ export class ModalViewCustomElement
     protected modalService: ModalService;
 
     /**
+     * Gets the modal currently at the top of the stack.
+     */
+    @computedFrom("modalService.modals.length")
+    protected get topModal(): Modal | undefined
+    {
+        return this.modalService.modals[this.modalService.modals.length - 1];
+    }
+
+    /**
+     * Called when an event is captured before reaching the modal.
+     * If the modal is not at the top, this stops the event from propagating.
+     * @param modal The modal for which the event was captured.
+     * @param event The event that was captured.
+     * @returns True if the event should be allowed to continue, otherwise false.
+     */
+    protected onEventCaptured(modal: Modal, event: Event): boolean
+    {
+        if (modal !== this.topModal)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Called for each modal, to get the model to pass to the `activate` method of the modal component,
      * to enrich the modal with a reference to the `compose` element, and to register the modal in the
      * container associated with the `compose` element.
@@ -34,7 +60,7 @@ export class ModalViewCustomElement
      * @param compose The `compose` component presenting the modal.
      * @returns The model to pass to the `activate` method of the modal component.
      */
-    protected getModel(modal: IComposedModal, compose: Compose): Modal
+    protected getModel(modal: Modal, compose: Compose): Modal
     {
         // Store a reference to the `compose` element on the modal.
         // This allows the modal to access the life cycle methods on the component being presented.

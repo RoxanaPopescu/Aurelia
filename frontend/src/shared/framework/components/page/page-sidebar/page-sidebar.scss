@@ -122,16 +122,6 @@ page-sidebar
             right: 2.5rem;
         }
 
-        @media ($media-smallest-max)
-        {
-            .page-sidebar-edge
-            {
-                // Disable pointer events, as the sidebar fills the screen,
-                // so collapsing on edge click would be confusing.
-                pointer-events: none;
-            }
-        }
-
         @media ($media-smaller-min)
         {
             .page-sidebar-edge-icon

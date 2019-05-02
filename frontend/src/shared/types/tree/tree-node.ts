@@ -3,7 +3,7 @@ import { computedFrom } from "aurelia-binding";
 /**
  * Represents the data for a node in a tree.
  */
-export interface ITreeNode<TTreeNode extends TreeNode = TreeNode<any>>
+export interface ITreeNode<TTreeNode extends TreeNode<TTreeNode> = any>
 {
     /**
      * The slug to use in the path that identifies this node within the tree,
@@ -35,7 +35,7 @@ export interface ITreeNode<TTreeNode extends TreeNode = TreeNode<any>>
 /**
  * Represents a node in a tree.
  */
-export class TreeNode<TTreeNode extends TreeNode = TreeNode<any>> implements ITreeNode
+export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements ITreeNode<TTreeNode>
 {
     /**
      * Creates a new instance of the class.
@@ -84,99 +84,94 @@ export class TreeNode<TTreeNode extends TreeNode = TreeNode<any>> implements ITr
     {
         if (this.parent != null && this.parent.path)
         {
-            return `${this.parent.path}/${this.slug}`;
+            return this.slug ? `${this.parent.path}/${this.slug}` : this.parent.path;
         }
 
-        return this.slug;
+        return this.slug || "";
     }
+
+    /**
+     * Expands every node along the path to this node, optionally including this node.
+     * @param expandThis True to expand this node, false to collapse this node, or undefined to keep its current state.
+     */
+    public expandPath(expandThis?: boolean): void
+    {
+        if (this.parent != null)
+        {
+            this.parent.expandPath(true);
+        }
+
+        if (expandThis != null)
+        {
+            this.expanded = expandThis;
+        }
+    }
+
+    /**
+     * Finds the first node for which the specified function returns true.
+     * @param testFunc The function used to determien whether a node is a match.
+     * @returns The matched node, or undefined if not found.
+     */
+    public find(testFunc: (node: this | TTreeNode) => boolean): this | TTreeNode | undefined;
 
     /**
      * Finds the node matching the specified path.
      * @param path The sequence of node slugs, separated by "/", that identify the node within the tree.
-     * @returns The node matching the specified path, or undefined if not found.
+     * @returns The matched node, or undefined if not found.
      */
-    public find(path: string): this | TTreeNode | undefined
+    public find(path: string): this | TTreeNode | undefined;
+
+    public find(nodeOrPath: string | ((node: this | TTreeNode) => boolean)): this | TTreeNode | undefined
     {
-        const expanded = path.endsWith("/");
-        const unexpandedPath = expanded ? path.substring(0, path.length - 1) : path;
-
-        if (unexpandedPath === this.slug)
+        if (nodeOrPath instanceof Function)
         {
-            return this;
-        }
+            // Find using test function.
 
-        const slugs = unexpandedPath.split("/");
-
-        let nodes: TreeNode[] | undefined = this.slug ? [this] : this.children;
-
-        let node: TreeNode | undefined;
-
-        while (slugs.length > 0)
-        {
-            if (nodes == null)
+            if (nodeOrPath(this))
             {
-                return undefined;
+                return this;
             }
 
-            const slug = slugs.shift();
-            node = nodes.find(s => s.slug === slug);
-
-            if (node == null)
+            if (this.children != null)
             {
-                return undefined;
+                for (const child of this.children)
+                {
+                    const match = child.find(nodeOrPath);
+
+                    if (match != null)
+                    {
+                        return match;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Find using path.
+
+            const pathToThis = this.path;
+
+            if (nodeOrPath === pathToThis)
+            {
+                return this;
             }
 
-            nodes = node.children;
-        }
+            const isPartialMatch = pathToThis === "" || nodeOrPath.startsWith(`${pathToThis}/`);
 
-        return node as any;
-    }
-
-    /**
-     * Removes the specified child nodes from this node.
-     * @param nodes The nodes to remove.
-     */
-    public removeChildren(...nodes: TTreeNode[]): void
-    {
-        if (this.children == null)
-        {
-            return;
-        }
-
-        for (const node of nodes)
-        {
-            if (node.parent !== this)
+            if (isPartialMatch && this.children != null)
             {
-                throw new Error("Cannot remove node that is not a child of this node.");
+                for (const child of this.children)
+                {
+                    const match = child.find(nodeOrPath);
+
+                    if (match != null)
+                    {
+                        return match as any;
+                    }
+                }
             }
-
-            this.children.splice(this.children.indexOf(node), 1);
-            node.parent = undefined;
-        }
-    }
-
-    /**
-     * Adds the specified child nodes to this node,
-     * removing them from any previous parent node.
-     * @param nodes The nodes to add.
-     */
-    public addChildren(...nodes: TTreeNode[]): void
-    {
-        if (this.children == null)
-        {
-            this.children = [];
         }
 
-        for (const node of nodes)
-        {
-            if (node.parent)
-            {
-                node.parent.removeChildren(node);
-            }
-
-            node.parent = this;
-        }
-
-        this.children.push(...nodes);
+        return undefined;
     }
 }

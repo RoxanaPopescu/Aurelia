@@ -1,3 +1,5 @@
+type Value<TKey, TValue> = Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined;
+
 /**
  * Value converter that takes at most the specified number of items from an iterable.
  */
@@ -9,8 +11,7 @@ export class TakeValueConverter
      * @param count The max number of items to take, or undefined to take all items.
      * @returns A new iterable, containing the items taken.
      */
-    public toView<TKey, TValue>(value: Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined, count?: number)
-        : Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined
+    public toView<TKey, TValue>(value: Value<TKey, TValue>, count?: number): Value<TKey, TValue>
     {
         if (value == null || count == null)
         {

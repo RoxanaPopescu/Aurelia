@@ -1,114 +1,183 @@
 import { bindable, autoinject, bindingMode } from "aurelia-framework";
+import { TreeNode } from "shared/types";
 
+/**
+ * Represents a component that presents a tree structure, that the user can navigate within.
+ */
 @autoinject
 export class TreeNavCustomElement
 {
     /**
-     * The tree of which this is a sub-tree, or undefined if this is the root tree.
+     * The tree of which this is a sub-tree, or undefined if this is the root.
      */
     @bindable
     public tree: TreeNavCustomElement;
 
     /**
-     * The data models representing the root nodes of the tree.
+     * The root nodes of the tree.
      */
     @bindable
-    public model: ITreeNavNode[];
+    public model: TreeNode[];
 
     /**
-     * The selected node model.
+     * The selected node, or undefined if no node is selected.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public value: ITreeNavNode;
+    public value: TreeNode | undefined;
 
     /**
-     * True to indicate that the selected node includes its children,
-     * false to indicate that the selected node excludes its children,
+     * True to indicate that the selected node includes its subtree,
+     * false to indicate that the selected node excludes its subtree,
      * or undefined to indicate that the selected node includes its
-     * children only when the node is collapsed.
-     * The default is undefined.
+     * subtree only when the node is collapsed.
+     * The default is false.
+     */
+    @bindable({ defaultValue: false })
+    public selectSubtree: boolean | undefined;
+
+    /**
+     * Called when an element is dropped on a node.
+     * @param params The parameters available for binding.
      */
     @bindable
-    public selectChildren: boolean | undefined;
+    public drop: (params:
+    {
+        /**
+         * The drag event.
+         */
+        event: DragEvent;
+
+        /**
+         * The node on which the event occurred.
+         */
+        node: TreeNode;
+
+    }) => void;
 
     /**
-     * The change callback function.
+     * Called when an element is dragged over a node.
+     * @param params The parameters available for binding.
      */
-    @bindable()
-    public change: (context: { value: ITreeNavNode }) => void;
-
-    public navigate(node: ITreeNavNode, select?: boolean, expand?: boolean, expandChildren?: boolean, notify?: boolean): void
+    @bindable
+    public dragOver: (params:
     {
-        if (node == null)
+        /**
+         * The drag event.
+         */
+        event: DragEvent;
+
+        /**
+         * The node on which the event occurred.
+         */
+        node: TreeNode;
+
+    }) => void;
+
+    /**
+     * Called when the value changes, or when the expanded state of the value changes.
+     * @param params The parameters available for binding.
+     */
+    @bindable
+    public change: (params:
+    {
+        /**
+         * The new value.
+         */
+        newValue: TreeNode | undefined;
+
+        /**
+         * The old value.
+         */
+        oldValue: TreeNode | undefined;
+
+    }) => void;
+
+    /**
+     * Navigates to the specified node.
+     * @param newValue The note to navigate to and set as the new value.
+     * @param selectNode True to select the node, otherewise false.
+     * @param expandNode True to expand the node itself, otherwise false.
+     * @param expandPath True to expand every node along the path to the node, otherwise false.
+     * @param notify True to call the `change` function if something changed, otherwise false.
+     */
+    public navigate(newValue: TreeNode | undefined, selectNode?: boolean, expandNode?: boolean, expandPath = true, notify = true): void
+    {
+        const oldValue = this.value;
+        const oldExpanded = this.value != null ? this.value.expanded : undefined;
+
+        if (newValue != null && expandPath)
         {
-            throw new Error("Cannot navigate to an undefined node.");
+            newValue.expandPath(expandNode);
         }
 
-        const allowNotify = notify !== false;
-        let shouldNotify = notify === true;
-
-        if (select != null && this.value !== node)
+        if (selectNode)
         {
-            this.value = node;
-            shouldNotify = allowNotify;
+            this.value = newValue;
         }
 
-        if (expand != null && expand !== !!this.value.expanded)
+        if (notify)
         {
-            this.value.expanded = expand;
-            shouldNotify = allowNotify;
-        }
-
-        if (expandChildren != null && this.value.children != null)
-        {
-            for (const child of this.value.children)
-            {
-                if (expandChildren !== !!child.expanded)
-                {
-                    shouldNotify = allowNotify;
-                }
-
-                child.expanded = expandChildren;
-            }
-        }
-
-        let current = this.value.parent;
-
-        while (current != null)
-        {
-            current.expanded = true;
-            current = current.parent;
-        }
-
-        if (shouldNotify && this.change != null)
-        {
-            this.change({ value: this.value });
+            this.notifyValueChanged(newValue, oldValue, oldExpanded);
         }
     }
 
-    public isFolder = (node: ITreeNavNode) =>
+    /**
+     * Determines whether the specified node supports having child nodes,
+     * i.e. whether the node is folder-like.
+     * @param node The node to test.
+     * @returns True if the node supports having child nodes, otherwise false.
+     */
+    protected isFolderLike = (node: TreeNode) =>
     {
         return node.children != null;
     }
 
-    public isFile = (node: ITreeNavNode) =>
+    /**
+     * Determines whether the specified node does not support having child nodes,
+     * i.e. whether the node is file-like.
+     * @param node The node to test.
+     * @returns True if the node does not support having child nodes, otherwise false.
+     */
+    protected isFileLike = (node: TreeNode) =>
     {
-        return !this.isFolder(node);
+        return node.children == null;
     }
 
-    protected valueChanged(newValue: ITreeNavNode, oldValue: ITreeNavNode): void
+    /**
+     * Called by the framework when the `value` property changes.
+     * @param newValue The new value.
+     * @param oldValue The old value.
+     */
+    protected valueChanged(newValue: TreeNode | undefined, oldValue: TreeNode | undefined): void
     {
-        this.navigate(this.value, true, undefined, undefined, newValue !== oldValue);
+        if (newValue !== oldValue)
+        {
+            this.navigate(newValue, true, undefined, true, false);
+
+            const oldExpanded = oldValue != null ? oldValue.expanded : undefined;
+
+            this.notifyValueChanged(newValue, oldValue, oldExpanded);
+        }
     }
-}
 
-export interface ITreeNavNode
-{
-    name: string;
+    /**
+     * Calls the `change` callback function if something has changed.
+     * @param newValue The new value.
+     * @param oldValue The old value.
+     * @param oldExpanded The expanded state of the old value.
+     */
+    private notifyValueChanged(newValue: TreeNode | undefined, oldValue: TreeNode | undefined, oldExpanded: boolean | undefined): void
+    {
+        if (this.change != null)
+        {
+            const changed =
+                (newValue !== oldValue) ||
+                (newValue != null && newValue.expanded !== oldExpanded);
 
-    parent?: ITreeNavNode;
-
-    children?: ITreeNavNode[];
-
-    expanded?: boolean;
+            if (changed)
+            {
+                this.change({ newValue, oldValue });
+            }
+        }
+    }
 }

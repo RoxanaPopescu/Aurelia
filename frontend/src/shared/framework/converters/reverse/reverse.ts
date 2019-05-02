@@ -1,3 +1,5 @@
+type Value<TKey, TValue> = Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined;
+
 /**
  * Value converter that reverses the order of the items in an iterable.
  */
@@ -8,8 +10,7 @@ export class ReverseValueConverter
      * @param value The iterable containing the items.
      * @returns A new iterable, containing the items in reverse order.
      */
-    public toView<TKey, TValue>(value: Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined)
-        : Iterable<TValue> | Iterable<[TKey, TValue]> | null | undefined
+    public toView<TKey, TValue>(value: Value<TKey, TValue>): Value<TKey, TValue>
     {
         if (value == null)
         {
