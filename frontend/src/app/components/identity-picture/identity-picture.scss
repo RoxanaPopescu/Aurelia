@@ -21,9 +21,10 @@ identity-picture
     border-radius: var(--border-radius-large);
 
     // Apply default font style.
-    font-size: var(--font-larger-font-size);
+    font-size: var(--font-large-font-size);
     font-weight: 600;
     line-height: 1;
+    text-transform: uppercase;
 
     // Apply surface style.
     background: var(--color-surface-primary-surface);
@@ -63,7 +64,7 @@ identity-picture
         width: 100%;
         height: 100%;
 
-        // Ensure the content appears on top of the surface and content.
+        // Ensure the picture appears on top of the surface and content.
         z-index: 2;
 
         // Scale the image to cover the component.

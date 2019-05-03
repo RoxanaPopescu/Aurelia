@@ -2,11 +2,11 @@
 
     <require from="./identity-picture.scss"></require>
 
-    <div class="identity-picture-content font-large line-height-1 text-transform-uppercase">
+    <div class="identity-picture-surface filter-lighten"></div>
+
+    <div class="identity-picture-content">
         <slot></slot>
     </div>
-
-    <div class="identity-picture-surface filter-lighten"></div>
 
     <div if.bind="src" class="identity-picture-image" css="background-image: url(${src});"></div>
 

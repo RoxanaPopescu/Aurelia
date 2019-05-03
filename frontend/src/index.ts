@@ -88,7 +88,7 @@ export async function configure(aurelia: Aurelia): Promise<any>
     // Start the framework.
     await aurelia.start();
 
-    // Set the root module and compose the app.
+    // Set the root component and compose the app.
     await aurelia.setRoot(PLATFORM.moduleName("app/app"));
 }
 
