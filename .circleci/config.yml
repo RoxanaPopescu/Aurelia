@@ -16,9 +16,9 @@ jobs:
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
             serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY_TEST}
-            dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
+            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
   setup-test-azure:

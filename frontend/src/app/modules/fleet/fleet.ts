@@ -28,7 +28,7 @@ export class FleetModule
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
                 title: routeTitles.list,
-                href: "/drivers"
+                href: "fleet-management/drivers"
             },
             {
                 name: "details",

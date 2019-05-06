@@ -1,0 +1,11 @@
+<template>
+    <require from="./modules/upload/upload"></require>
+    <require from="./modules/success/success"></require>
+    <require from="./modules/failed/failed"></require>
+
+    <page-content>
+        <upload service.bind="service" if.bind="service.currentPage === 'upload'"></upload>
+        <success value.bind="service" if.bind="service.currentPage === 'success'"></success>
+        <failed value.bind="service" if.bind="service.currentPage === 'failed'"></failed>
+    </page-content>
+</template>
