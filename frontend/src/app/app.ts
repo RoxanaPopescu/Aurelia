@@ -177,7 +177,7 @@ export class AppModule
             },
             {
                 name: "fleet",
-                route: "fleet-management",
+                route: "fleet",
                 moduleId: PLATFORM.moduleName("./modules/fleet/fleet"),
                 settings:
                 {
@@ -193,7 +193,7 @@ export class AppModule
                 },
                 nav: true,
                 title: routeTitles.fleet,
-                href: "/fleet-management",
+                href: "/fleet",
                 icon: "fleet"
             },
             {
