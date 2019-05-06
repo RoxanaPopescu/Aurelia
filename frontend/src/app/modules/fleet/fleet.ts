@@ -28,7 +28,7 @@ export class FleetModule
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
                 title: routeTitles.list,
-                href: "/fleet/drivers",
+                href: "/fleet-management/drivers",
                 icon: "drivers"
             },
             {
@@ -53,7 +53,7 @@ export class FleetModule
                     moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
                     nav: true,
                     title: routeTitles.dispatch,
-                    href: "/fleet/dispatch",
+                    href: "/fleet-management/dispatch",
                     icon: "forecast"
                 }
             ] : []
