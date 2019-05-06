@@ -13,13 +13,30 @@ type Model<TModal> = TModal extends { activate(modal: Modal<infer T>): any } ? T
 type Result<TModal> = TModal extends { deactivate(): infer T } ? T : TModal extends never ? any : void;
 
 /**
+ * Represents the registration to which a modal name maps.
+ */
+interface IModalRegistration
+{
+    /**
+     * The type of the component to present, or its module ID.
+     */
+    viewModel: string | Type;
+
+    /**
+     * The default model to pass to the `activate` life cycle method of the component
+     * if no model is specified when the modal is opened.
+     */
+    model?: any;
+}
+
+/**
  * Represents a service that manages the modals on the stack.
  * Inject this where needed, and use it to open and close modals.
  */
 @autoinject
 export class ModalService
 {
-    private readonly _registrations = new Map<string, string | Type>();
+    private readonly _registrations = new Map<string, IModalRegistration>();
 
     /**
      * The stack of modals currently being presented,
@@ -31,10 +48,11 @@ export class ModalService
      * Registers the component with the specified module ID, as a modal with the specified name.
      * @param name The name under which the modal should be registered.
      * @param viewModel The type of the component to present, or its module ID.
+     * @param model The default model to use, if not specified when the modal is opened.
      */
-    public register(name: string, viewModel: string | Type): void
+    public register(name: string, viewModel: string | Type, model?: any): void
     {
-        this._registrations.set(name, viewModel);
+        this._registrations.set(name, { viewModel, model });
     }
 
     /**
@@ -51,7 +69,7 @@ export class ModalService
      * @param viewModel The type of the modal.
      * @returns A promise that will be resolved when the modal is closed.
      */
-    public open<TModal = any>(viewModel: Type<TModal>): Modal<void, Result<TModal>>;
+    public open<TModal = any>(viewModel: Type<TModal>): Modal<undefined, Result<TModal>>;
 
     /**
      * Opens a modal of the specified type.
@@ -71,23 +89,25 @@ export class ModalService
 
     public open(nameOrType: string | Type, model?: any): Modal
     {
-        let viewModel: string | Type | undefined;
+        console.info("Attempting to open modal.", { nameOrType, model });
+
+        let registration: IModalRegistration | undefined;
 
         if (typeof nameOrType === "string")
         {
-            viewModel = this._registrations.get(nameOrType);
+            registration = this._registrations.get(nameOrType);
 
-            if (viewModel == null)
+            if (registration == null)
             {
                 throw new Error(`No modal has been registered with the name '${nameOrType}'.`);
             }
         }
         else
         {
-            viewModel = nameOrType;
+            registration = { viewModel: nameOrType };
         }
 
-        const modal = new Modal(this.modals, viewModel, model);
+        const modal = new Modal(this.modals, registration.viewModel, model !== undefined ? model : registration.model);
 
         this.modals.push(modal);
 
@@ -96,25 +116,20 @@ export class ModalService
 
     /**
      * Attempts to close all open modals.
-     * @param reason The reason for closing the modal, which may affect how the modals responds.
+     * @param reason The reason for closing the modals, which may affect how the modals responds.
      * @returns A promise that will be resolved with true if all modals accepted the close request,
-     * or false if one of them rejected it with a reason other than an Error instance.
+     * or false if one of them rejected it with a reason other than an `Error` instance.
      */
     public async closeAll(reason?: any): Promise<boolean>
     {
+        console.info("Attempting to close all modals.", { modals: this.modals, reason });
+
         for (const modal of this.modals.slice().reverse())
         {
-            try
-            {
-                await modal.close(reason);
-            }
-            catch (reason)
-            {
-                if (reason instanceof Error)
-                {
-                    throw reason;
-                }
+            const closed = await modal.close(reason);
 
+            if (!closed)
+            {
                 return false;
             }
         }
@@ -138,22 +153,22 @@ export class ModalService
 
     public find(nameOrType: string | Type): Modal[]
     {
-        let viewModel: string | Type | undefined;
+        let registration: IModalRegistration | undefined;
 
         if (typeof nameOrType === "string")
         {
-            viewModel = this._registrations.get(nameOrType);
+            registration = this._registrations.get(nameOrType);
 
-            if (viewModel == null)
+            if (registration == null)
             {
                 throw new Error(`No modal has been registered with the name '${nameOrType}'.`);
             }
         }
         else
         {
-            viewModel = nameOrType;
+            registration = { viewModel: nameOrType };
         }
 
-        return this.modals.filter(m => m.viewModel === viewModel);
+        return this.modals.filter(m => m.viewModel === registration!.viewModel);
     }
 }

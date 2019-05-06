@@ -17,9 +17,9 @@ user-identity
 
         &:hover identity-picture
         {
-            // Highlight when hovered.
-            filter: brightness(103%);
-            border-color: #ffffff;
+            // Darken when hovered.
+            filter: brightness(98%);
+            border-color: var(--color-surface-primary-border);
         }
 
         identity-picture
@@ -31,11 +31,11 @@ user-identity
             // Clip as a circle.
             border-radius: 50%;
 
-            // Use color suitable for the app-sidebar.
+            // Use surface color suitable for the app-sidebar.
             background: var(--color-surface-nav-link-surface--active);
 
             // Apply a border to ensure acceptable contrast.
-            border: var(--border-width-thin) solid var(--color-surface-nav-link-surface--active);
+            border: var(--border-width-thin) solid transparent;
 
             .identity-picture-surface
             {

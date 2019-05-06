@@ -1,26 +1,33 @@
-import { PromiseController } from "shared/utilities";
+import { Container, BindingEngine } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
 import { Type } from "shared/types";
-
-export interface IComposedModal extends Modal
-{
-    /**
-     * The `Compose` instance presenting the component.
-     */
-    compose?: Compose & { currentViewModel?: any };
-}
+import { PromiseController } from "shared/utilities";
 
 /**
  * Represents a modal on the stack.
  */
 export class Modal<TModel = any, TResult = any>
 {
-    public constructor(modals: Modal[], viewModel: string | Type, name?: string, model?: TModel)
+    /**
+     * Creates a new instance of teh type.
+     * @param modals The stack of open modals.
+     * @param viewModel The type of the component to present, or its module ID.
+     * @param model The model to pass to the `activate` life cycle method of the component.
+     */
+    public constructor(modals: Modal[], viewModel: string | Type, model?: TModel)
     {
         this._modals = modals;
         this.viewModel = viewModel;
-        this.name = name;
         this.model = model;
+
+        const bindingEngine = Container.instance.get(BindingEngine) as BindingEngine;
+        const handle = bindingEngine.propertyObserver(this, "compose").subscribe((newValue: any) =>
+        {
+            handle.dispose();
+
+            // tslint:disable-next-line: no-floating-promises
+            this.onComposeSet(newValue);
+        });
     }
 
     private readonly _promiseController = new PromiseController<any>();
@@ -33,14 +40,14 @@ export class Modal<TModel = any, TResult = any>
     public readonly viewModel: string | Type;
 
     /**
-     * The name of the component to present, if specified.
-     */
-    public readonly name?: string;
-
-    /**
-     * The model passed to the `activate` life cycle method of the component.
+     * The model to pass to the `activate` life cycle method of the component.
      */
     public readonly model?: TModel;
+
+    /**
+     * The `Compose` instance presenting the component.
+     */
+    public compose: Compose | undefined;
 
     /**
      * The promise that will be resolved when the modal is closed.
@@ -51,10 +58,35 @@ export class Modal<TModel = any, TResult = any>
     }
 
     /**
+     * Attempts to close all open modals, up to an including this.
+     * @param reason The reason for closing the modals, which may affect how the modals responds.
+     * @returns A promise that will be resolved with true if all modals accepted the close request,
+     * or false if one of them rejected it with a reason other than an `Error` instance.
+     */
+    public async closeAll(reason?: any): Promise<boolean>
+    {
+        console.info("Attempting to close all modals, starting from this.", { modal: this, reason, modals: this._modals });
+
+        const index = this._modals.findIndex(m => m === this);
+
+        for (const modal of this._modals.slice(0, index + 1).reverse())
+        {
+            const closed = await modal.close(reason);
+
+            if (!closed)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Closes the modal.
      * @param reason The reason for closing the modal, which may affect how the modal responds.
      * @returns A promise that will be resolved with true if the modal accepted the close request,
-     * or false if it rejected it with a reason other than an Error instance.
+     * or false if it rejected it with a reason other than an `Error` instance.
      */
     public async close(reason?: any): Promise<boolean>
     {
@@ -63,14 +95,16 @@ export class Modal<TModel = any, TResult = any>
             return true;
         }
 
+        console.info("Attempting to close modal.", { modal: this, reason });
+
         if (this._modals[this._modals.length - 1] !== this)
         {
-            throw new Error("Cannot close modal when it is not at the top of the stack.");
+            console.error("The modal being closed is not at the top of the stack.", { modal: this });
         }
 
         let result: TResult | undefined;
 
-        const compose = (this as IComposedModal).compose;
+        const compose = this.compose as any;
 
         if (compose && compose.currentViewModel && compose.currentViewModel.deactivate)
         {
@@ -82,18 +116,62 @@ export class Modal<TModel = any, TResult = any>
             {
                 if (reason instanceof Error)
                 {
+                    console.warn("Modal failed to close.", { modal: this, reason });
+
                     throw reason;
                 }
+
+                console.warn("Modal refused to close.", { modal: this, reason });
 
                 return false;
             }
         }
 
-        this._modals.pop();
+        const index = this._modals.findIndex(m => m === this);
+        this._modals.splice(index, 1);
+
         this._closed = true;
+
+        console.info("Modal closed.", { modal: this, result });
 
         this._promiseController.resolve(result);
 
         return true;
+    }
+
+    /**
+     * Called when the `compose` property is set.
+     * @param compose The `Compose` instance presenting the component.
+     */
+    private async onComposeSet(compose: any): Promise<void>
+    {
+        try
+        {
+            await compose.pendingTask;
+
+            console.info("Modal opened.", { modal: this });
+        }
+        catch (reason)
+        {
+            const index = this._modals.findIndex(m => m === this);
+
+            if (index >= 0)
+            {
+                this._modals.splice(index, 1);
+            }
+
+            this._closed = true;
+
+            if (reason instanceof Error)
+            {
+                console.error("Modal failed to open.", { modal: this, reason });
+            }
+            else
+            {
+                console.warn("Modal refused to open.", { modal: this, reason });
+            }
+
+            this._promiseController.reject(reason);
+        }
     }
 }

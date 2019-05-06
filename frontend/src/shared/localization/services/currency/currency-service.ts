@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { ICurrency } from "./currency";
 
 /**
@@ -23,6 +23,7 @@ export class CurrencyService
     /**
      * Gets the supported currencies.
      */
+    @computedFrom("_currencies")
     public get currencies(): ReadonlyArray<ICurrency>
     {
         return this._currencies;
@@ -31,6 +32,7 @@ export class CurrencyService
     /**
      * Gets the current currency.
      */
+    @computedFrom("_currency")
     public get currency(): ICurrency
     {
         return this._currency;

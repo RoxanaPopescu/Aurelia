@@ -1,4 +1,4 @@
-import { singleton } from "aurelia-framework";
+import { singleton, computedFrom } from "aurelia-framework";
 import { EventManager } from "shared/utilities";
 
 // The class name added to the `body` element during keyboard navigation.
@@ -76,6 +76,7 @@ export class FocusService
     /**
      * True if focus is visible, otherwise false.
      */
+    @computedFrom("_focusVisible")
     public get focusVisible(): boolean
     {
         return this._focusVisible;

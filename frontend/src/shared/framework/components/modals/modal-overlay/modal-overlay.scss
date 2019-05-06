@@ -112,7 +112,6 @@ app-sidebar
 
     modal-view compose.au-enter &
     {
-        transform: var(--modal-overlay-origin-transform);
         opacity: 0;
         overflow: hidden;
     }

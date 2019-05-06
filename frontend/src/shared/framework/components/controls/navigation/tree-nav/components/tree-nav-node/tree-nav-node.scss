@@ -3,23 +3,26 @@
 tree-nav-node
 {
     display: block;
-    line-height: 8rem;
 
-    nav-subtree &
+    tree-nav-subtree &
     {
         padding-left: 4rem;
     }
 
     .tree-nav-node
     {
+
         display: flex;
-        padding: 1rem 3rem;
+        padding: calc(1rem - var(--border-width-medium)) 3rem;
+        line-height: 8rem;
         align-items: center;
+        border: var(--border-width-medium) solid transparent;
         border-radius: var(--border-radius-medium);
         cursor: pointer;
 
         &:not(.--active):hover,
-        .focus-visible &:not(.--active):focus
+        .focus-visible &:not(.--active):focus,
+        &.--dragover
         {
             color: var(--color-surface-nav-link-surface-text--hover);
             background: var(--color-surface-nav-link-surface--hover);
@@ -39,6 +42,11 @@ tree-nav-node
             {
                 color: var(--color-surface-nav-link-surface-icon--active);
             }
+        }
+
+        &.--dragover
+        {
+            border-color: var(--color-surface-primary-border);
         }
     }
 
@@ -65,7 +73,7 @@ tree-nav-node
         opacity: 0;
     }
 
-    .--folder md-icon
+    .--folder-like md-icon
     {
         margin-left: 0;
         margin-right: var(--size-inline-spacing);

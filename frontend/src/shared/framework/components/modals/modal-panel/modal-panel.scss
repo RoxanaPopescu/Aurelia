@@ -124,6 +124,11 @@ modal-panel
     {
         animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1) var(--animation-duration-medium);
 
+        // HACK: This is needed to avoid a bug in Safari, which apparently causes the animation to start before
+        // the width of the element has been calculated, thus causing an incorrect transform to be applied.
+        // We work around this by delaying the animation, so it starts after the width has been calculated.
+        animation-delay: 10ms;
+
         // Prevent glitches at the ends of the animation.
         animation-fill-mode: both;
     }

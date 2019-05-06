@@ -1,23 +1,33 @@
 <template>
 
-    <require from="./tree-nav-node.scss"></require>
     <require from="../../tree-nav"></require>
 
+    <require from="./tree-nav-node.scss"></require>
+
     <div
-        class="tree-nav-node ${active ? '--active' : ''} ${isFolder ? '--folder' : ''} ${model.expanded ? '--expanded' : ''}"
+        class="tree-nav-node
+            ${dragover ? '--dragover' : ''}
+            ${active ? '--active' : ''}
+            ${folderLike ? '--folder-like' : ''}
+            ${model.expanded ? '--expanded' : ''}"
         tabindex.bind="active ? 0 : -1"
-        click.trigger="onClick(false, $event)">
+        click.trigger="onClick(false, $event)"
+        dragover.trigger="onDragOver($event, model)"
+        dragleave.trigger="onDragLeave()"
+        drop.trigger="onDrop($event, model)">
 
         <md-icon-stack>
             <md-icon name="folder" click.trigger="onClick(true, $event)"></md-icon>
             <md-icon name.bind="iconName" click.trigger="onClick(true, $event)"></md-icon>
         </md-icon-stack>
 
-        <span class="tree-nav-node-title">${model.name}</span>
+        <span class="tree-nav-node-title">
+            ${model.name}
+        </span>
 
     </div>
 
-    <nav-subtree
+    <tree-nav-subtree
         as-element="tree-nav"
         if.bind="expandable"
         show.bind="model.expanded"
@@ -25,6 +35,6 @@
         select-children.bind="tree.selectChildren"
         model.bind="model.children"
         tabindex="-1">
-    </nav-subtree>
+    </tree-nav-subtree>
 
 </template>

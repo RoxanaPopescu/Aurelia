@@ -39,15 +39,17 @@ export class ModalBackdropCustomElement
      */
     protected async onClick(): Promise<void>
     {
-        if (this._modal)
+        const topModal = this._modalService.modals[this._modalService.modals.length - 1];
+
+        if (this._modal && this._modal === topModal)
         {
             if (this.close === "all")
             {
-                await this._modalService.closeAll();
+                await this._modalService.closeAll("backdrop-clicked");
             }
             else if (this.close === "top")
             {
-                await this._modal.close("backdrop-click");
+                await this._modal.close("backdrop-clicked");
             }
         }
     }

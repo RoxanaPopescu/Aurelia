@@ -2,7 +2,7 @@ import { inject, bindable, Optional } from "aurelia-framework";
 import { Modal } from "../../../services/modal";
 
 /**
- * Represents a panel to be presented in the `modal-view`.
+ * Represents a modal panel to be presented in the `modal-view`.
  *
  * ### How to use:
  * Place directly within the `template` element for the panel view.

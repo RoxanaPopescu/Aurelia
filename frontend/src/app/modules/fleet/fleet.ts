@@ -28,7 +28,8 @@ export class FleetModule
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
                 title: routeTitles.list,
-                href: "fleet-management/drivers"
+                href: "/fleet-management/drivers",
+                icon: "drivers"
             },
             {
                 name: "details",
@@ -47,12 +48,13 @@ export class FleetModule
             ENVIRONMENT.name === "development" ?
             [
                 {
-                    name: "driver-disposition",
-                    route: "driver-disposition",
-                    moduleId: PLATFORM.moduleName("./modules/driver-disposition/driver-disposition"),
+                    name: "dispatch",
+                    route: "dispatch",
+                    moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
                     nav: true,
-                    title: routeTitles.driverDisposition,
-                    href: "/fleet-management/driver-disposition"
+                    title: routeTitles.dispatch,
+                    href: "/fleet-management/dispatch",
+                    icon: "forecast"
                 }
             ] : []
         ]);

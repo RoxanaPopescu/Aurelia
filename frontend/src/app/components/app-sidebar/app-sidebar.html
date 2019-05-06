@@ -59,7 +59,7 @@
                     class="sidebar-child-link ${navModel.isActive ? '--active' : ''}"
                     page-href="path.bind: navModel.href">
 
-                    <icon if.bind="!expanded" name="starred"></icon>
+                    <icon name.bind="navModel.config.icon"></icon>
 
                     <span if.bind="expanded">${navModel.config.title}</span>
 
@@ -105,7 +105,10 @@
             <span translate>Collapse menu</span>
         </a>
 
-        <div class="app-sidebar--powered-by"><span>Powered by Mover Systems</span></div>
+        <div class="app-sidebar--powered-by">
+            <span if.bind="expanded">Powered by Mover Systems</span>
+            <span if.bind="!expanded">Mover Systems</span>
+        </div>
 
     </footer>
 

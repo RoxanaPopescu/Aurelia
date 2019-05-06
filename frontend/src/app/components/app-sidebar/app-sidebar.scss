@@ -102,7 +102,7 @@ app-sidebar
     {
         padding: 1rem;
         font-size: 2.25rem;
-        line-height: 1.5;
+        line-height: 6.5rem;
         text-align: center;
         background-color: var(--color-surface-nav-link-surface--hover);
 
@@ -189,7 +189,8 @@ app-sidebar
 
 .sidebar-child-link
 {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 1.75rem 0 1.75rem 8rem;
     border-radius: var(--border-radius-small);
 
@@ -205,6 +206,7 @@ app-sidebar
     {
         font-size: 4rem;
         color: var(--color-surface-nav-child-link-surface-icon);
+        margin-right: 4rem;
     }
 
     &:hover
@@ -277,7 +279,7 @@ app-sidebar.--expanded
 
     .sidebar-child-link
     {
-        padding: 1.75rem 0 1.75rem 10.5rem;
+        padding: 1.75rem 0 1.75rem 2rem;
     }
 
     .app-sidebar--powered-by

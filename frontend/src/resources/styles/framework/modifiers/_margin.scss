@@ -1,0 +1,149 @@
+////
+/// @group framework/modifiers/margin
+////
+
+/// Modifier classes that apply standard margins.
+$__summary: comment;
+
+@import "styles/resources/index";
+
+
+/// Modifier class that applies the largest margin.
+.margin-largest
+{
+    &,
+    &-top
+    {
+        margin-top: 20rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 20rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 20rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 20rem;
+    }
+}
+
+/// Modifier class that applies the larger margin.
+.margin-larger
+{
+    &,
+    &-top
+    {
+        margin-top: 10rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 10rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 10rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 10rem;
+    }
+}
+
+/// Modifier class that applies the large margin.
+.margin-large
+{
+    &,
+    &-top
+    {
+        margin-top: 6rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 6rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 6rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 6rem;
+    }
+}
+
+/// Modifier class that applies the medium margin.
+.margin-medium
+{
+    &,
+    &-top
+    {
+        margin-top: 4rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 4rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 4rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 4rem;
+    }
+}
+
+/// Modifier class that applies the small margin.
+.margin-small
+{
+    &,
+    &-top
+    {
+        margin-top: 3rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 3rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 3rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 3rem;
+    }
+}

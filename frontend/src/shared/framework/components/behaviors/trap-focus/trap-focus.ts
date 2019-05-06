@@ -88,7 +88,7 @@ export class TrapFocusCustomAttribute implements Options
     public clickOutsideDeactivates: boolean;
 
     /**
-     * Called by the framework when the property is set.
+     * Called by the framework when the `enabled` property changes.
      */
     public enabledChanged(): void
     {

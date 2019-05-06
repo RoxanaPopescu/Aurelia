@@ -1,10 +1,19 @@
 <template>
 
-    <require from="./tree-nav.scss"></require>
     <require from="./components/tree-nav-node/tree-nav-node"></require>
 
-    <tree-nav-node repeat.for="node of model | filter: isFolder" tree.bind="$parent.tree || $parent" model.one-time="node"></tree-nav-node>
+    <require from="./tree-nav.scss"></require>
 
-    <tree-nav-node repeat.for="node of model | filter: isFile" tree.bind="$parent.tree || $parent" model.one-time="node"></tree-nav-node>
+    <tree-nav-node
+        repeat.for="node of model | filter: isFolderLike"
+        tree.bind="$parent.tree || $parent"
+        model.one-time="node">
+    </tree-nav-node>
+
+    <tree-nav-node
+        repeat.for="node of model | filter: isFileLike"
+        tree.bind="$parent.tree || $parent"
+        model.one-time="node">
+    </tree-nav-node>
 
 </template>

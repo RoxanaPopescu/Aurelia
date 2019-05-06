@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { ILocale } from "./locale";
 
 /**
@@ -23,6 +23,7 @@ export class LocaleService
     /**
      * Gets the supported locales.
      */
+    @computedFrom("locales")
     public get locales(): ReadonlyArray<ILocale>
     {
         return this._locales;
@@ -31,6 +32,7 @@ export class LocaleService
     /**
      * Gets the current locale.
      */
+    @computedFrom("locale")
     public get locale(): ILocale
     {
         return this._locale;

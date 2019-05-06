@@ -3,11 +3,14 @@
     <require from="./modal-view.scss"></require>
 
     <compose
-        repeat.for="$modal of modalService.modals"
-        view-model.one-time="$modal.viewModel"
+        repeat.for="modal of modalService.modals"
+        view-model.one-time="modal.viewModel"
         view-model.ref="$compose"
-        model.one-time="getModel($modal, $compose)"
-        class="au-animate">
+        model.one-time="getModel(modal, $compose)"
+        class="au-animate ${modal !== topModal ? '--disabled' : ''}"
+        keydown.capture="onEventCaptured(modal, $event)"
+        keyup.capture="onEventCaptured(modal, $event)"
+        keypress.capture="onEventCaptured(modal, $event)">
     </compose>
 
 </template>

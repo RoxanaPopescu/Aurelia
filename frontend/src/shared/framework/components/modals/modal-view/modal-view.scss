@@ -28,24 +28,44 @@ modal-view
         {
             // Apply the z-index for modals.
             z-index: var(--z-index-modal);
+        }
 
-            // Prevent clicks from passing through.
+        &:not(.--disabled) > *
+        {
+            // Prevent clicks from passing through the modal at the top.
             pointer-events: initial;
         }
 
         &.au-enter-active
         {
-            animation: modal-view-compose var(--animation-duration-medium);
+            animation: modal-view-compose-enter var(--animation-duration-medium);
         }
 
         &.au-leave-active
         {
-            animation: modal-view-compose var(--animation-duration-medium);
+            animation: modal-view-compose-leave var(--animation-duration-medium);
         }
     }
 }
 
-@keyframes modal-view-compose
+@keyframes modal-view-compose-enter
 {
-    // Empty, as we just need it to trigger the animation plugin.
+    to
+    {
+        // This is needed to ensure the animation events are triggered.
+        // Without it, the `aurelia-animator-css` plugin will misbehave.
+        // Note that the enter and leave animations cannot be the same.
+        --modal-view-compose-animation-trigger: 1;
+    }
+}
+
+@keyframes modal-view-compose-leave
+{
+    to
+    {
+        // This is needed to ensure the animation events are triggered.
+        // Without it, the `aurelia-animator-css` plugin will misbehave.
+        // Note that the enter and leave animations cannot be the same.
+        --modal-view-compose-animation-trigger: 0;
+    }
 }

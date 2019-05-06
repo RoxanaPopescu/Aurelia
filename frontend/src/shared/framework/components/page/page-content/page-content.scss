@@ -7,11 +7,14 @@ page-content
 
     > header
     {
-        // Apply margin to sectioning elements.
+        // Apply default padding.
         padding: 9rem 9rem 5rem 9rem;
 
         // Add a border below the header.
         border-bottom: var(--border-width-thin) solid var(--color-surface-border);
+
+        // Apply surface color, so the header covers the page content when scrolled.
+        background: var(--color-surface);
 
         h1
         {
@@ -23,7 +26,65 @@ page-content
     > section,
     > footer
     {
-        // Apply margin to content.
+        // Apply default margin.
         margin: 8rem 9rem;
+    }
+}
+
+page-content.page-content-flex,
+page-content.page-content-stretch,
+page-content.page-content-center
+{
+    display: flex;
+    flex-direction: column;
+
+    > header
+    {
+        // Ensure the footer sticks to the bottom.
+        position: sticky;
+        top: 0;
+    }
+
+    > footer
+    {
+        // Ensure the footer sticks to the bottom.
+        position: sticky;
+        bottom: 0;
+
+        // Push the footer down by default.
+        margin: auto 0 0 0;
+
+        // Apply default padding.
+        padding: 8rem 9rem;
+
+        // Apply surface color, so the footer covers the page content when scrolled.
+        background: var(--color-surface);
+
+        // Add a border above the footer.
+        border-top: var(--border-width-thin) solid var(--color-surface-border);
+    }
+}
+
+page-content.page-content-stretch
+{
+    > section
+    {
+        // Fill the available space.
+        flex-grow: 1;
+    }
+}
+
+page-content.page-content-center
+{
+    > section
+    {
+        // Center in the available space.
+        margin: auto;
+    }
+
+    > footer
+    {
+        // Remove margin on footer, as the section will push it down.
+        margin-top: 0;
     }
 }
