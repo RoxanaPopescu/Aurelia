@@ -28,7 +28,7 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 nav: true,
                 title: routeTitles.list,
-                icon: "business"
+                icon: "routes"
             },
             {
                 name: "details",
@@ -42,7 +42,7 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
                 nav: true,
                 title: routeTitles.routeTracking,
-                icon: "business"
+                icon: "route-tracking"
             },
             {
                 name: "driver-tracking",
@@ -50,7 +50,7 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
                 nav: true,
                 title: routeTitles.driverTracking,
-                icon: "business"
+                icon: "driver-tracking"
             },
             {
                 name: "auto-dispatch",
@@ -58,7 +58,7 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
                 nav: true,
                 title: routeTitles.autoDispatch,
-                icon: "business"
+                icon: "auto-dispatch"
             }
         ]);
     }
