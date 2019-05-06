@@ -48,12 +48,12 @@ export class FleetModule
             ENVIRONMENT.name === "development" ?
             [
                 {
-                    name: "driver-disposition",
-                    route: "driver-disposition",
-                    moduleId: PLATFORM.moduleName("./modules/driver-disposition/driver-disposition"),
+                    name: "dispatch",
+                    route: "dispatch",
+                    moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
                     nav: true,
-                    title: routeTitles.driverDisposition,
-                    href: "/fleet/driver-disposition",
+                    title: routeTitles.dispatch,
+                    href: "/fleet/dispatch",
                     icon: "forecast"
                 }
             ] : []

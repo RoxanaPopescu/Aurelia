@@ -7,7 +7,7 @@ import Component from "fulfiller/src/components/fleet/driverDispatch/index";
 
 @noView
 @autoinject
-export class DriverDispositionCustomElement extends Wrapper
+export class DispatchCustomElement extends Wrapper
 {
     /**
      * Creates a new instance of the type.
