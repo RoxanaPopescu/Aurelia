@@ -3,11 +3,13 @@
 path-nav
 {
     display: flex;
+    flex-wrap: wrap;
 
     > *
     {
         display: block;
         color: var(--color-surface-heading);
+        white-space: nowrap;
 
         &:not(:last-child)::after
         {

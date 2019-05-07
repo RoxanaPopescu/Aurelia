@@ -3,7 +3,7 @@
 card
 {
     // Use inline flex layout, so the card does not expand when placed in e.g. a grid layout.
-    display: inline-flex;
+    display: flex;
 
     // Allow content to be positioned relative to this element.
     position: relative;

@@ -36,9 +36,69 @@ export class TreeNavNodeCustomElement
      * The name of the icon to use for the node.
      */
     @computedFrom("active", "tree.selectSubtree", "model.expanded")
+    protected get descendentsActive(): boolean
+    {
+        if (!this.active)
+        {
+            return false;
+        }
+
+        if (!this.folderLike || !this.expandable)
+        {
+            return true;
+        }
+
+        if (this.tree.selectSubtree === true)
+        {
+            return true;
+        }
+
+        if (this.tree.selectSubtree === false)
+        {
+            return false;
+        }
+
+        if (this.model.expanded)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * The name of the icon to use for the node.
+     */
+    @computedFrom("active", "tree.selectSubtree", "model.expanded")
     protected get iconName(): string
     {
-        if (this.active && (this.tree.selectSubtree || (!this.model.expanded && this.tree.selectSubtree == undefined)))
+        if (!this.active)
+        {
+            // Filled icon, when the node is not active.
+            return "folder";
+        }
+
+        if (!this.folderLike || !this.expandable)
+        {
+             // Filled icon, if the node is not folder-like or expandable.
+             return "folder";
+        }
+
+        if (this.tree.selectSubtree === true)
+        {
+            // Filled icon, indicating that child nodes are included.
+            return "folder";
+        }
+
+        if (this.tree.selectSubtree === false)
+        {
+            // Outline icon, indicating that child nodes are excluded.
+            return "folder_open";
+        }
+
+        if (this.model.expanded)
         {
             // Filled icon, indicating that child nodes are included.
             return "folder";

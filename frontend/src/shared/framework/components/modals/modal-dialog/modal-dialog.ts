@@ -1,4 +1,5 @@
 import { inject, bindable, Optional } from "aurelia-framework";
+import { AccentColor } from "resources/styles";
 import { Modal } from "../../../services/modal";
 
 /**
@@ -56,7 +57,7 @@ export class ModalDialogCustomElement
      * The default is undefined.
      */
     @bindable
-    public accent?: "neutral" | "primary" | "positive" | "attention" | "negative" | "info" | "help";
+    public accent?: AccentColor;
 
     /**
      * Called when the close button is clicked.

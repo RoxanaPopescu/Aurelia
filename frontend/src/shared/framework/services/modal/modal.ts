@@ -50,6 +50,13 @@ export class Modal<TModel = any, TResult = any>
     public compose: Compose | undefined;
 
     /**
+     * True if the modal is busy, false if the modal is not busy, or null
+     * if the modal is technically not busy, but should still appear as busy.
+     * Note that all interaction with the modal is blocked when this is not false.
+     */
+    public busy: boolean | null  = false;
+
+    /**
      * The promise that will be resolved when the modal is closed.
      */
     public get promise(): Promise<TResult>

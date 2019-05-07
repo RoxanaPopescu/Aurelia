@@ -80,12 +80,14 @@ tree-nav-node
         font-size: $icon-size-folder;
     }
 
-    .--active md-icon:first-child
+    > .tree-nav-node.--active md-icon:first-child,
+    > tree-nav-subtree.--descendents-active .tree-nav-node md-icon:first-child
     {
         opacity: 0.1;
     }
 
-    .--active md-icon:last-child
+    > .tree-nav-node.--active md-icon:last-child,
+    > tree-nav-subtree.--descendents-active .tree-nav-node md-icon:last-child,
     {
         color: var(--color-surface-nav-link-surface-icon--active);
         opacity: 1;

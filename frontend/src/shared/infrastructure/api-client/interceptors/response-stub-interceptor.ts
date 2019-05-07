@@ -15,21 +15,21 @@ export class ResponseStubInterceptor implements Interceptor
      */
     public constructor(stubs: IResponseStubs, latency = 0)
     {
-        this.stubs = stubs;
-        this.latency = latency;
+        this._stubs = stubs;
+        this._latency = latency;
 
         // Validate the stubs to prevent the most common mistakes.
         if (ENVIRONMENT.debug)
         {
             const invalidStubs: any[] = [];
 
-            for (const key in this.stubs)
+            for (const key in this._stubs)
             {
-                if (!/^[A-Z]+ \/\/?/.test(key) || (this.stubs[key].body != null && this.stubs[key].data != null))
+                if (!/^[A-Z]+ \/\/?/.test(key) || (this._stubs[key].body != null && this._stubs[key].data != null))
                 {
                     invalidStubs.push(key);
                 }
-                else if ("body" in this.stubs[key] && "data" in this.stubs[key])
+                else if ("body" in this._stubs[key] && "data" in this._stubs[key])
                 {
                     invalidStubs.push(key);
                 }
@@ -42,8 +42,8 @@ export class ResponseStubInterceptor implements Interceptor
         }
     }
 
-    private readonly stubs: IResponseStubs;
-    private readonly latency: number;
+    private readonly _stubs: IResponseStubs;
+    private readonly _latency: number;
 
     /**
      * Called when a request is intercepted.
@@ -58,11 +58,11 @@ export class ResponseStubInterceptor implements Interceptor
 
         const key = `${method} ${url}`;
 
-        if (key in this.stubs)
+        if (key in this._stubs)
         {
-            const stub = this.stubs[key];
+            const stub = this._stubs[key];
 
-            const totalDelay = this.latency + (stub.delay || 0);
+            const totalDelay = this._latency + (stub.delay || 0);
 
             console.warn(`Using response stub for '${method} ${request.url}'${totalDelay ? ` (${totalDelay}ms)` : ""}`);
 

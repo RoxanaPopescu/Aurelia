@@ -5,12 +5,12 @@ import { Modal } from "./modal";
 /**
  * Represents the type of the object passed to the `activate` life cycle method of a component.
  */
-type Model<TModal> = TModal extends { activate(modal: Modal<infer T>): any } ? T : never;
+type Model<TModal> = TModal extends { activate(modal: infer TModel): any } ? TModel : never;
 
 /**
  * Represents the type of the object returned by the `deactivate` life cycle method of a component.
  */
-type Result<TModal> = TModal extends { deactivate(): infer T } ? T : TModal extends never ? any : void;
+type Result<TModal> = TModal extends { deactivate(): infer TResult } ? TResult : TModal extends never ? any : void;
 
 /**
  * Represents the registration to which a modal name maps.

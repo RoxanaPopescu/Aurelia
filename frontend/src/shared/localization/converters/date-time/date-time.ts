@@ -29,10 +29,10 @@ export class DateTimeValueConverter
      */
     public constructor(localeService: LocaleService)
     {
-        this.localeService = localeService;
+        this._localeService = localeService;
     }
 
-    private readonly localeService: LocaleService;
+    private readonly _localeService: LocaleService;
 
     /**
      * Converts the value for use in the view,
@@ -53,7 +53,7 @@ export class DateTimeValueConverter
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
-            locale: this.localeService.locale.code,
+            locale: this._localeService.locale.code,
             ...dateTimeStyles[style || "short"]
         };
 

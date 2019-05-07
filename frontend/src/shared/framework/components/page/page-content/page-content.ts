@@ -1,5 +1,5 @@
 /**
- * Represents the content area of the module.
+ * Represents the content area of a page.
  *
  * ### How to use:
  * Place this directly within the `page` element, either before or after the `page-sidebar` element.

@@ -17,10 +17,10 @@ export class PercentValueConverter
      */
     public constructor(localeService: LocaleService)
     {
-        this.localeService = localeService;
+        this._localeService = localeService;
     }
 
-    private readonly localeService: LocaleService;
+    private readonly _localeService: LocaleService;
 
     /**
      * Converts the value for use in the view,
@@ -56,7 +56,7 @@ export class PercentValueConverter
             return args[0];
         }
 
-        const numberFormat = this.getNumberFormat(this.localeService.locale.code,
+        const numberFormat = this.getNumberFormat(this._localeService.locale.code,
         {
             style: "percent",
             minimumFractionDigits: args[1],

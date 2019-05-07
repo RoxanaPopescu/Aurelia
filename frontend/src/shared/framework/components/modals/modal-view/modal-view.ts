@@ -39,12 +39,11 @@ export class ModalViewCustomElement
      * Called when an event is captured before reaching the modal.
      * If the modal is not at the top, this stops the event from propagating.
      * @param modal The modal for which the event was captured.
-     * @param event The event that was captured.
      * @returns True if the event should be allowed to continue, otherwise false.
      */
-    protected onEventCaptured(modal: Modal, event: Event): boolean
+    protected onEventCaptured(modal: Modal): boolean
     {
-        if (modal !== this.topModal)
+        if (modal !== this.topModal || modal.busy)
         {
             return false;
         }

@@ -22,14 +22,14 @@
          */
         public constructor(text: string, viewResources: ViewResources, bindingLanguage: BindingLanguage)
         {
-            this.text = text;
-            this.viewResources = viewResources;
-            this.bindingLanguage = bindingLanguage;
+            this._text = text;
+            this._viewResources = viewResources;
+            this._bindingLanguage = bindingLanguage;
         }
 
-        private readonly text: string;
-        private readonly viewResources: ViewResources;
-        private readonly bindingLanguage: BindingLanguage;
+        private readonly _text: string;
+        private readonly _viewResources: ViewResources;
+        private readonly _bindingLanguage: BindingLanguage;
 
         /**
          * Evaluates the interpolation expression against the specified context.
@@ -39,14 +39,14 @@
          */
         public evaluate(bindingContext?: any, overrideContext?: any): string
         {
-            let parts = cache.get(this.text);
+            let parts = cache.get(this._text);
 
             if (parts == null)
             {
-                parts = ((this.bindingLanguage as any)
-                    .parseInterpolation(null, this.text) || [this.text]) as (Expression | string)[];
+                parts = ((this._bindingLanguage as any)
+                    .parseInterpolation(null, this._text) || [this._text]) as (Expression | string)[];
 
-                cache.set(this.text, parts);
+                cache.set(this._text, parts);
             }
 
             const scope =
@@ -55,7 +55,7 @@
                 overrideContext: overrideContext || createOverrideContext(bindingContext)
             };
 
-            const lookupFunctions = (this.viewResources as any).lookupFunctions;
+            const lookupFunctions = (this._viewResources as any).lookupFunctions;
 
             return parts.map(expression =>
             {
@@ -75,7 +75,7 @@
          */
         public toString(): string
         {
-            return this.text;
+            return this._text;
         }
     }
 
@@ -93,12 +93,12 @@
          */
         public constructor(resources: ViewResources, bindingLanguage: BindingLanguage)
         {
-            this.resources = resources;
-            this.bindingLanguage = bindingLanguage;
+            this._resources = resources;
+            this._bindingLanguage = bindingLanguage;
         }
 
-        private readonly resources: ViewResources;
-        private readonly bindingLanguage: BindingLanguage;
+        private readonly _resources: ViewResources;
+        private readonly _bindingLanguage: BindingLanguage;
 
         /**
          * Parses the specified text as an interpolation expression.
@@ -107,6 +107,6 @@
          */
         public parse(text: string): TemplateString
         {
-            return new TemplateString(text, this.resources, this.bindingLanguage);
+            return new TemplateString(text, this._resources, this._bindingLanguage);
         }
     }

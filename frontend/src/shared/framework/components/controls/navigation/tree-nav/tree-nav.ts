@@ -30,9 +30,9 @@ export class TreeNavCustomElement
      * false to indicate that the selected node excludes its subtree,
      * or undefined to indicate that the selected node includes its
      * subtree only when the node is collapsed.
-     * The default is false.
+     * The default is undefined.
      */
-    @bindable({ defaultValue: false })
+    @bindable({ defaultValue: undefined })
     public selectSubtree: boolean | undefined;
 
     /**

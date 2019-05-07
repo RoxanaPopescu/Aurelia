@@ -38,9 +38,8 @@ modal-panel
         display: flex;
         flex-direction: column;
 
-        // Apply horizontal padding.
-        padding-right: 9rem;
-        padding-left: var(--modal-panel-actions-width);
+        // Apply padding.
+        padding: 9rem 9rem 9rem var(--modal-panel-actions-width);
 
         // Provide defaults for sectioning elements.
 
@@ -52,14 +51,10 @@ modal-panel
             flex-shrink: 0;
         }
 
-        > header,
-        > footer
+        > header
         {
-            // Apply padding to header and footer.
-            // Note that we use padding instead of margin,
-            // to enable sticky positioning.
-            padding-top: calc(9rem - var(--border-width-thin));
-            padding-bottom: calc(9rem - var(--border-width-thin));
+            // Apply default margin.
+            margin-bottom: 9rem;
         }
 
         > footer
@@ -111,7 +106,7 @@ modal-panel
     --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
 
     // Hint that animation will be applied.
-    will-change: opacity, transform;
+    will-change: opacity, transform, filter;
 
     modal-view compose.au-enter &
     {

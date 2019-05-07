@@ -16,10 +16,10 @@ export class PluralValueConverter
      */
     public constructor(localeService: LocaleService)
     {
-        this.localeService = localeService;
+        this._localeService = localeService;
     }
 
-    private readonly localeService: LocaleService;
+    private readonly _localeService: LocaleService;
 
     /**
      * Converts the value for use in the view,
@@ -35,7 +35,7 @@ export class PluralValueConverter
             return value;
         }
 
-        const pluralRules = this.getPluralFormat(this.localeService.locale.code);
+        const pluralRules = this.getPluralFormat(this._localeService.locale.code);
         const pluralCategories = pluralRules.resolvedOptions().pluralCategories;
 
         if (strings.length !== pluralCategories.length)
