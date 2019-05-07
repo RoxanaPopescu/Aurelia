@@ -101,7 +101,7 @@
         <user-identity size="icon"></user-identity>
 
         <a class="nav-link" click.trigger="toggleWidth()">
-            <icon title.translate="Collapse menu" name="md-menu"></icon>
+            <icon title.translate="Collapse menu" name.bind="expanded ? 'sidebar-collapse' : 'sidebar-expand'"></icon>
             <span translate>Collapse menu</span>
         </a>
 

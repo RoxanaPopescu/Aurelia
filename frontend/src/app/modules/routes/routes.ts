@@ -26,7 +26,7 @@ export class RoutesModule
                 name: "list",
                 route: "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                nav: true,
+                nav: false,
                 title: routeTitles.list,
                 icon: "routes"
             },

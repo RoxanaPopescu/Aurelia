@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(0.000000, 8.000000)" stroke="currentColor" stroke-width="1.5">
+            <g>
+                <path d="M27.1414,5.7896 L17.3324,5.7896"></path>
+                <polyline points="21.7561 10.8297 16.7161 5.7897 21.7561 0.7497"></polyline>
+                <path d="M0.7498,5.7896 L10.5588,5.7896"></path>
+                <polyline points="6.135 0.7501 11.175 5.7901 6.135 10.8301"></polyline>
+            </g>
+            <path d="M16.7166,5.7896 L26.5246,5.7896"></path>
+            <path d="M11.1751,5.7896 L1.3661,5.7896"></path>
+        </g>
+    </g>
+</svg>

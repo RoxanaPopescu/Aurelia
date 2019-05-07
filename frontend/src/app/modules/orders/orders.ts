@@ -27,7 +27,7 @@ export class OrdersModule
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 title: routeTitles.list,
-                nav: true,
+                nav: false,
                 href: "/orders/list"
             },
             {
@@ -54,7 +54,8 @@ export class OrdersModule
                 moduleId: PLATFORM.moduleName("./modules/import/import"),
                 title: routeTitles.import,
                 nav: true,
-                href: "/orders/import"
+                href: "/orders/import",
+                icon: "import"
             }
         ]);
     }
