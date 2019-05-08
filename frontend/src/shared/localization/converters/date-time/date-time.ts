@@ -54,7 +54,8 @@ export class DateTimeValueConverter
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
             locale: this._localeService.locale.code,
-            ...dateTimeStyles[style || "short"]
+            ...dateTimeStyles[style || "short"],
+            hour12: false
         };
 
         return valueToFormat.toLocaleString(formatOptions);

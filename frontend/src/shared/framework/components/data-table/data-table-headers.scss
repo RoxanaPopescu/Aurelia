@@ -2,9 +2,10 @@ data-table-headers
 {
     display: contents;
 
-    > :first-child
+    > :first-child::before
     {
-        border-left: var(--data-table-row-edge-width) solid var(--data-table-header-background);
+        content: "";
+        border-left: var(--data-table-row-edge-width) solid transparent;
     }
 
     > *
@@ -14,5 +15,16 @@ data-table-headers
         padding: var(--data-table-header-padding);
         border-bottom: var(--data-table-header-border-width) solid var(--data-table-header-border-color);
         background: var(--data-table-header-background);
+    }
+}
+
+.data-table-new
+{
+    data-table-headers
+    {
+        > :first-child::before
+        {
+            content: none;
+        }
     }
 }

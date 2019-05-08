@@ -73,21 +73,79 @@ app-sidebar
 
     .app-sidebar-shadow
     {
+        // Position the shadow container so it sticks along the top edge.
+        position: sticky;
+        top: 0;
+        width: 100%;
+
+        div
+        {
+            // Position the shadow along the right edge.
+            position: absolute;
+            right: 0;
+
+            // Set the size of the shadow.
+            width: 4rem;
+            height: 100vh;
+
+            // Use a gradient to simulate a subtle shadow.
+            background: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 0.3) 0,
+                rgba(0, 0, 0, 0.3) 0.25rem,
+                rgba(0, 0, 0, 0.15) 0.25rem,
+                rgba(0, 0, 0, 0.1) 0.25rem,
+                rgba(0, 0, 0, 0.004) 3rem,
+                rgba(0, 0, 0, 0) 0.25rem
+            );
+
+            // Ensure the shadow does not interfere with interaction.
+            pointer-events: none;
+
+            // Animate opacity changes.
+            transition: opacity var(--animation-duration-short);
+
+            // Set the opacity of the shadow.
+            opacity: 0.5;
+
+            // HACK: This assumes all modals that use the `app-sidebar` has the same surface color.
+            modal-view &
+            {
+                // Reduce the opacity of the shadow while a modal overlay with
+                // the same surface color, such as the `dashboard`, is open.
+                opacity: 0.4;
+            }
+        }
+    }
+    .app-sidebar-shadow
+    {
+        // Position the shadow along the right edge.
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
-        width: 5rem;
+
+        // Set the size of the shadow.
+        width: 4rem;
+
+        // Use a gradient to simulate a subtle shadow.
         background: linear-gradient(
             to left,
             rgba(0, 0, 0, 0.3) 0,
-            rgba(0, 0, 0, 0.3) 5%,
-            rgba(0, 0, 0, 0.15) 5%,
-            rgba(0, 0, 0, 0.1) 5%,
-            rgba(0, 0, 0, 0) 60%
+            rgba(0, 0, 0, 0.3) 0.25rem,
+            rgba(0, 0, 0, 0.15) 0.25rem,
+            rgba(0, 0, 0, 0.1) 0.25rem,
+            rgba(0, 0, 0, 0.004) 3rem,
+            rgba(0, 0, 0, 0) 0.25rem
         );
+
+        // Ensure the shadow does not interfere with interaction.
         pointer-events: none;
+
+        // Reduce the visibility of the shadow.
         opacity: 0.25;
+
+        // Animate opacity changes.
         transition: opacity var(--animation-duration-short);
 
         &.--reduce-opacity
@@ -100,6 +158,7 @@ app-sidebar
 
     .app-sidebar--powered-by
     {
+        display: block;
         margin-top: 1px;
         padding: 1rem;
         font-size: 2.25rem;
@@ -253,12 +312,19 @@ app-sidebar.--expanded
     // Set the width of the sidebar.
     width: var(--size-app-sidebar-width-expanded);
 
-    app-logo,
+    app-logo
+    {
+        // Align horizontally with the links.
+        align-self: flex-start;
+        margin-left: 7rem;
+        margin-right: 6.5rem;
+    }
+
     user-identity
     {
         // Align horizontally with the links.
         align-self: flex-start;
-        margin-left: 6.5rem;
+        margin-left: 6rem;
         margin-right: 6.5rem;
     }
 
@@ -273,12 +339,12 @@ app-sidebar.--expanded
 
     .sidebar-child-link-container
     {
-        padding: 5rem 6rem;
+        padding: 5rem 5rem;
     }
 
     .sidebar-child-link
     {
-        padding: 1.75rem 0 1.75rem 2rem;
+        padding: 1.75rem 1rem 1.75rem 3rem;
     }
 
     .app-sidebar--powered-by

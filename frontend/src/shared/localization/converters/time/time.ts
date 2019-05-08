@@ -39,7 +39,8 @@ export class TimeValueConverter
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
             locale: this._localeService.locale.code,
-            ...DateTime.TIME_SIMPLE
+            ...DateTime.TIME_SIMPLE,
+            hour12: false
         };
 
         return valueToFormat.toLocaleString(formatOptions);

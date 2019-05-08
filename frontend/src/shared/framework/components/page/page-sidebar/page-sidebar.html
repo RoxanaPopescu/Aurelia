@@ -1,13 +1,13 @@
-<template surface="card" class="${expanded ? '--expanded' : ''}" click.trigger="onSurfaceClick()">
+<template surface="neutral" class="${expanded ? '--expanded' : ''}" click.trigger="onSurfaceClick()">
 
     <require from="./page-sidebar.scss"></require>
+
+    <div class="page-sidebar-edge" click.trigger="onEdgeClick($event)"><div></div></div>
 
     <slot></slot>
 
     <button appearance="icon" class="page-sidebar-edge-icon" click.trigger="onEdgeClick($event)">
         <icon name="md-chevron-${expanded ? 'left' : 'right'}"></icon>
     </button>
-
-    <div class="page-sidebar-edge" click.trigger="onEdgeClick($event)"></div>
 
 </template>

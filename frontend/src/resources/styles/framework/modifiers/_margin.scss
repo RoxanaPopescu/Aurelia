@@ -147,3 +147,31 @@ $__summary: comment;
         margin-bottom: 3rem;
     }
 }
+
+/// Modifier class that applies auto margin.
+.margin-auto
+{
+    &,
+    &-top
+    {
+        margin-top: auto;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: auto;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: auto;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: auto;
+    }
+}

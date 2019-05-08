@@ -8,3 +8,15 @@ data-table-details
     border-bottom-right-radius: var(--data-table-row-border-radius);
     padding: var(--data-table-cell-padding);
 }
+
+.data-table-new
+{
+    data-table-details
+    {
+        border-left: none;
+        border-right: none;
+        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}

@@ -1,6 +1,6 @@
 import { IResponseStubs } from "shared/infrastructure";
-// import routes from "./responses/routes";
-// import route from "./responses/route";
+import routes from "./responses/routes";
+import route from "./responses/route";
 // import orders from "./responses/orders";
 // import order from "./responses/order";
 
@@ -17,8 +17,8 @@ import { IResponseStubs } from "shared/infrastructure";
  */
 export const stubs: IResponseStubs =
 {
-    // ...routes,
-    // ...route,
+    ...routes,
+    ...route,
     // ...orders,
     // ...order
 };

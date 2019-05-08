@@ -4,13 +4,20 @@
 
     <page name="list">
 
+        <page-sidebar scroll>
+            <header>HEADER</header>
+            <section>SECTION</section>
+            <section>SECTION</section>
+            <footer>FOOTER</footer>
+        </page-sidebar>
+
         <page-content scroll>
 
             <header scroll-fade>
 
                 <h1 class="font-larger">
                     <path-nav>
-                        <a translate>Routes</a>
+                        <span translate>Routes</span>
                     </path-nav>
                 </h1>
 
@@ -48,7 +55,7 @@
 
                 <toolbar class="margin-bottom" scroll-fade="0.2">
 
-                    <input type="search" placeholder="Find..." value.bind="statusTab">
+                    <input type="search" placeholder="Find...">
 
                 </toolbar>
 
@@ -60,7 +67,7 @@
                         <div translate>Status</div>
                         <div translate>Start date</div>
                         <div translate>Start address</div>
-                        <div class="text-align-right" translate>Stops</div>
+                        <div class="margin-auto-left" translate>Stops</div>
                     </data-table-headers>
 
                     <data-table-row repeat.for="route of routes" page-href="path.bind: '/routes/' + route.slug">
@@ -69,7 +76,7 @@
                         <div>${route.status.name}</div>
                         <div>${route.startDateTime | dateTime: 'narrow'}</div>
                         <div>${route.startAddress}</div>
-                        <div class="text-align-right">${route.stopCount}</div>
+                        <div class="margin-auto-left">${route.stopCount}</div>
                     </data-table-row>
 
                 </data-table>

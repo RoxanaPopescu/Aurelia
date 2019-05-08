@@ -12,10 +12,10 @@ export class ListModule
 {
     public constructor(routeService: RouteService, modalService: ModalService)
     {
-        //this._routeService = routeService;
+        this._routeService = routeService;
     }
 
-    //private readonly _routeService: RouteService;
+    private readonly _routeService: RouteService;
 
     /**
      * The routes to present.
@@ -36,6 +36,6 @@ export class ListModule
     public async activate(params: never, routeConfig: RouteConfig): Promise<void>
     {
         // Get the domain models.
-        //this.routes = await this._routeService.getAll();
+        this.routes = await this._routeService.getAll();
     }
 }

@@ -1,6 +1,10 @@
 import { autoinject } from "aurelia-framework";
 import { EventManager } from "shared/utilities";
 
+// The events that should be prevented from propagating through the
+// element in which the `busy-overlay` element is placed.
+const eventsToBlock = ["keydown", "keydown", "keypress", "keyup"];
+
 /**
  * Represents an overlay that covers the component in which it is placed,
  * blocking pointer interaction and indicating that the component is busy.
@@ -26,10 +30,6 @@ export class BusyOverlayCustomElement
      */
     public attached(): void
     {
-        // The events that should be prevented from propagating to the
-        // element in which this overlay is placed.
-        const eventsToBlock = ["keydown", "keydown", "keypress", "keyup"];
-
         this._eventManager.addEventListener(this._element.parentElement!,
             eventsToBlock, event => this.onEventCaptured(event), { capture: true });
     }
@@ -49,7 +49,6 @@ export class BusyOverlayCustomElement
     private onEventCaptured(event: Event): void
     {
         event.stopPropagation();
-        event.stopImmediatePropagation();
         event.preventDefault();
     }
 }

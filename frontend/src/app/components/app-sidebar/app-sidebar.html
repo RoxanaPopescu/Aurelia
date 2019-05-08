@@ -5,6 +5,8 @@
 
     <require from="./app-sidebar.scss"></require>
 
+    <div class="app-sidebar-shadow ${reduceShadow ? '--reduce-opacity' : ''}"><div></div></div>
+
     <header>
 
         <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
@@ -101,17 +103,19 @@
         <user-identity size="icon"></user-identity>
 
         <a class="nav-link" click.trigger="toggleWidth()">
-            <icon title.translate="Collapse menu" name.bind="expanded ? 'sidebar-collapse' : 'sidebar-expand'"></icon>
-            <span translate>Collapse menu</span>
+
+            <icon if.bind="expanded" name="sidebar-collapse"></icon>
+            <span if.bind="expanded" translate>Collapse menu</span>
+
+            <icon if.bind="!expanded" title.translate="Expand menu" name="sidebar-expand"></icon>
+
         </a>
 
-        <div class="app-sidebar--powered-by">
+        <a class="app-sidebar--powered-by" href="https://www.mover.dk" target="_blank">
             <span if.bind="expanded">Powered by Mover Systems</span>
             <span if.bind="!expanded">Mover Systems</span>
-        </div>
+        </a>
 
     </footer>
-
-    <div class="app-sidebar-shadow ${reduceShadow ? '--reduce-opacity' : ''}"></div>
 
 </template>

@@ -1,43 +1,54 @@
 ////
-/// @group themes/default/surfaces/base
+/// @group themes/default/surfaces/neutral
 ////
 
-/// Surface defining the appearance of the base of the view hierarchy.
+/// Surface defining the appearance of surfaces with the neutral theme color as background,
+/// such as the `page-sidebar` and `dashboard`.
 $__summary: comment;
 
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
-[surface="base"]
+[surface="neutral"]
 {
     // State: normal
-    --color-surface: var(--palette-color-whitepoint);
+    --color-border: var(--palette-color-neutral-light);
+    --color-surface: var(--palette-color-neutral-lighter);
     --color-surface-subtle: var(--palette-color-neutral-dark);
     --color-surface-text: var(--palette-color-neutral-darker);
     --color-surface-icon: var(--palette-color-neutral-dark);
-    --color-surface-border: var(--palette-color-neutral-light);
-    --color-surface-heading: var(--palette-color-neutral-dark);
+    --color-surface-border: var(--palette-color-neutral);
 
-    // State: hover
-    --color-surface--hover: var(--palette-color-whitepoint);
-    --color-surface-subtle--hover: var(--palette-color-neutral-dark);
-    --color-surface-text--hover: var(--palette-color-neutral-darker);
-    --color-surface-icon--hover: var(--palette-color-neutral-darker);
-    --color-surface-border--hover: var(--palette-color-neutral);
+    // Needed for proper gradients.
+    --color-surface-transparent: #{hsla(240, 14%, 99%, 0)};
 
-    // State: focus
-    --color-surface--focus: var(--palette-color-whitepoint);
-    --color-surface-subtle--focus: var(--palette-color-neutral-dark);
-    --color-surface-text--focus: var(--palette-color-neutral-darker);
-    --color-surface-icon--focus: var(--palette-color-neutral-darker);
-    --color-surface-border--focus: var(--palette-color-neutral);
+    // Navigation links on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-nav-link-border: transparent;
+        --color-surface-nav-link-surface: transparent;
+        --color-surface-nav-link-surface-text: inherit;
+        --color-surface-nav-link-surface-icon: var(--palette-color-neutral);
 
-    // State: active
-    --color-surface--active: var(--palette-color-whitepoint);
-    --color-surface-subtle--active: var(--palette-color-neutral-dark);
-    --color-surface-text--active: var(--palette-color-neutral-darker);
-    --color-surface-icon--active: var(--palette-color-neutral-darker);
-    --color-surface-border--active: var(--palette-color-neutral);
+        // State: hover
+        --color-surface-nav-link-border--hover: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-surface--hover: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-surface-text--hover: inherit;
+        --color-surface-nav-link-surface-icon--hover: var(--palette-color-neutral);
+
+        // State: focus
+        --color-surface-nav-link-border--focus: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-surface--focus: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-surface-text--focus: inherit;
+        --color-surface-nav-link-surface-icon--focus: var(--palette-color-neutral);
+
+        // State: active
+        --color-surface-nav-link-border--active: var(--palette-color-neutral-light);
+        --color-surface-nav-link-surface--active: var(--palette-color-neutral-light);
+        --color-surface-nav-link-surface-text--active: inherit;
+        --color-surface-nav-link-surface-icon--active: var(--palette-color-neutral-dark);
+    }
 
     // Neutral elements on the surface.
     &
