@@ -1,0 +1,23 @@
+<template>
+    <require from="./import-success.scss"></require>
+    
+    <h1 class="font-largest margin-bottom" translate>
+        Excel document has been uploaded successfully
+    </h1>
+
+    <div class="font-large" translate>
+        254 orders are being created, it can take up to 10 minutes for them to  be created
+    </div>
+
+    <img class="margin-larger-bottom margin-larger-top" src="./resources/images/success.svg" />
+        
+    <div class="button-row">
+        <button appearance="outline" click.trigger="service.currentPage = 'upload'">
+            Upload another file
+        </button>
+        <button appearance="solid" accent="primary" click.trigger="service.currentPage = 'upload'">
+            Goto orders
+        </button>
+    </div>
+</template>
+    

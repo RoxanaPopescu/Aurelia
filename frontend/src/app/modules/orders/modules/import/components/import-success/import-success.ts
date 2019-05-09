@@ -5,7 +5,7 @@ import { ImportService } from "../../services/import-service";
  * Represents the module.
  */
 @autoinject
-export class SuccessCustomElement
+export class ImportSuccessCustomElement
 {
     @bindable protected service: ImportService;
 }

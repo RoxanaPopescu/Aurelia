@@ -5,7 +5,7 @@ import { ImportService } from "../../services/import-service";
  * Represents the module.
  */
 @autoinject
-export class UploadCustomElement
+export class ImportUploadCustomElement
 {
     @bindable protected service: ImportService;
 
