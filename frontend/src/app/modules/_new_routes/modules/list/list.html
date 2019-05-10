@@ -67,16 +67,16 @@
                         <div translate>Status</div>
                         <div translate>Start date</div>
                         <div translate>Start address</div>
-                        <div class="margin-auto-left" translate>Stops</div>
+                        <div><div class="margin-auto-left" translate>Stops</div></div>
                     </data-table-headers>
 
-                    <data-table-row repeat.for="route of routes" page-href="path.bind: '/routes/' + route.slug">
+                    <data-table-row repeat.for="route of routes" href.bind="'/routes/' + route.slug">
                         <div class="font-monospaced">${route.slug}</div>
                         <div class="font-monospaced">${route.reference}</div>
                         <div>${route.status.name}</div>
                         <div>${route.startDateTime | dateTime: 'narrow'}</div>
                         <div>${route.startAddress}</div>
-                        <div class="margin-auto-left">${route.stopCount}</div>
+                        <div><div class="margin-auto-left">${route.stopCount}</div></div>
                     </data-table-row>
 
                 </data-table>

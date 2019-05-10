@@ -1,6 +1,21 @@
-data-table-row
+.data-table-row
 {
+    font: inherit;
+    color: inherit;
     display: contents;
+
+    &:not(:any-link)
+    {
+        cursor: inherit;
+    }
+
+    &:any-link
+    {
+        &:hover
+        {
+            background: var(--data-table-cell-background--hover);
+        }
+    }
 
     > *
     {
@@ -42,13 +57,12 @@ data-table-row
 
 .data-table-new
 {
-    data-table-row
+    .data-table-row
     {
         > *
         {
             margin-top: 0;
             border-top: var(--data-table-row-border-width) solid transparent;
-            background: transparent;
 
             &:first-child
             {

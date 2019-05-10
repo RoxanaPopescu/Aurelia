@@ -24,11 +24,11 @@ $__summary: comment;
 
     // State: hover
     --color-border--hover: var(--palette-color-neutral-light);
-    --color-surface--hover: var(--palette-color-neutral-HOVER);
+    --color-surface--hover: var(--palette-color-neutral-hover);
 
     // State: focus
     --color-border--focus: var(--palette-color-neutral-light);
-    --color-surface--focus: var(--palette-color-neutral-HOVER);
+    --color-surface--focus: var(--palette-color-neutral-hover);
 
     // State: active
     --color-border--active: var(--palette-color-neutral-light);
@@ -44,14 +44,14 @@ $__summary: comment;
         --color-surface-nav-link-surface-icon: var(--palette-color-neutral);
 
         // State: hover
-        --color-surface-nav-link-border--hover: var(--palette-color-neutral-HOVER);
-        --color-surface-nav-link-surface--hover: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-border--hover: var(--palette-color-neutral-hover);
+        --color-surface-nav-link-surface--hover: var(--palette-color-neutral-hover);
         --color-surface-nav-link-surface-text--hover: inherit;
         --color-surface-nav-link-surface-icon--hover: var(--palette-color-neutral);
 
         // State: focus
-        --color-surface-nav-link-border--focus: var(--palette-color-neutral-HOVER);
-        --color-surface-nav-link-surface--focus: var(--palette-color-neutral-HOVER);
+        --color-surface-nav-link-border--focus: var(--palette-color-neutral-hover);
+        --color-surface-nav-link-surface--focus: var(--palette-color-neutral-hover);
         --color-surface-nav-link-surface-text--focus: inherit;
         --color-surface-nav-link-surface-icon--focus: var(--palette-color-neutral);
 

@@ -2,7 +2,19 @@
 {
     data-table
     {
+
+        --data-table-header-padding: 4rem 5rem;
+        --data-table-header-background: rgba(255, 255, 255, 0.97);
+        --data-table-header-border-width: var(--border-width-thin);
         --data-table-header-border-color: var(--data-table-row-border-color);
+        --data-table-cell-padding: 4rem 5rem;
+        --data-table-cell-background: transparent;
+        --data-table-row-gap: 2rem;
+        --data-table-row-border-width: var(--border-width-thin);
+        --data-table-row-border-radius: var(--border-radius-medium);
+        --data-table-row-border-color: var(--color-border);
+        --data-table-row-edge-width: var(--border-width-thick);
+        --data-table-row-edge-color: var(--color-surface-neutral-surface);
     }
 }
 
@@ -21,21 +33,15 @@ data-table
     --data-table-row-edge-width: var(--border-width-thick);
     --data-table-row-edge-color: var(--color-surface-neutral-surface);
 
-    data-table-row:hover
+    .data-table-row:any-link:hover > *
     {
         --data-table-cell-background: var(--color-surface--hover);
         --data-table-row-border-color: var(--color-border--hover);
         cursor: pointer;
     }
 
-    data-table-row:focus
-    {
-        --data-table-cell-background: var(--color-surface--focus);
-        --data-table-row-border-color: var(--color-border--focus);
-    }
-
     data-table-details,
-    data-table-row.expanded
+    .data-table-row.expanded
     {
         --data-table-cell-background: var(--color-surface--active);
         --data-table-row-border-color: var(--color-border--active);
