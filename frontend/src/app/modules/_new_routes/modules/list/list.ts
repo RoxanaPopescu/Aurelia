@@ -25,7 +25,7 @@ export class ListModule
     /**
      * The name identifying the currently selected status tab.
      */
-    protected statusTab: string;
+    protected statusTab = "unassigned";
 
     /**
      * The sorting to use.

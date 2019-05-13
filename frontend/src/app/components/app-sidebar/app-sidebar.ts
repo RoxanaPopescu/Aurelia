@@ -49,7 +49,7 @@ export class AppSidebarCustomElement
     /**
      * True if the sidebar is expanded, otherwise false.
      */
-    protected expanded = true;
+    protected expanded = localStorage.getItem("app-sidebar-expanded") === "true";
 
     /**
      * True to reduce the visibility of the shadow, otherwise false.
@@ -68,6 +68,8 @@ export class AppSidebarCustomElement
     protected toggleWidth(): void
     {
         this.expanded = !this.expanded;
+
+        localStorage.setItem("app-sidebar-expanded", `${this.expanded}`);
 
         if (this.expanded)
         {

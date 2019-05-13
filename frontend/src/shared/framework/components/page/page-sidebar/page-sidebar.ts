@@ -1,3 +1,5 @@
+import { bindable } from "aurelia-framework";
+
 /**
  * Represents the sidebar area of a page.
  *
@@ -10,7 +12,8 @@ export class PageSidebarCustomElement
     /**
      * True if the sidebar is expanded, otherwise false.
      */
-    protected expanded = true;
+    @bindable
+    public expanded = true;
 
     /**
      * Called when the edge of the sidebar is clicked.
