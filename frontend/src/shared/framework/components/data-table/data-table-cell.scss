@@ -1,0 +1,32 @@
+data-table-cell
+{
+    display: flex;
+    align-items: center;
+    padding: var(--data-table-cell-padding);
+    background: var(--data-table-cell-background);
+
+    &.--sortable
+    {
+        cursor: pointer;
+
+        &:hover
+        {
+            color: var(--color-surface-primary-text--hover);
+        }
+    }
+
+    .data-table-cell-content
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    .data-table-cell-sorting
+    {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 1em;
+        margin-left: var(--size-inline-spacing);
+    }
+}

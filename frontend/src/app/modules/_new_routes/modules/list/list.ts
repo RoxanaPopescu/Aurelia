@@ -28,6 +28,18 @@ export class ListModule
     protected statusTab: string;
 
     /**
+     * The sorting to use.
+     */
+    protected sorting =
+    {
+        "reference": "ascending",
+        "status": "descending",
+        "start-date": null,
+        "start-address": null,
+        "stops": null
+    };
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @param routeConfig The route configuration.
@@ -37,5 +49,33 @@ export class ListModule
     {
         // Get the domain models.
         this.routes = await this._routeService.getAll();
+    }
+
+    protected captureRowClick(event: Event): boolean
+    {
+        event.stopPropagation();
+
+        return true;
+    }
+
+    protected onRowClick(route: any): boolean
+    {
+        console.log("row click:", route.slug);
+
+        return true;
+    }
+
+    protected onToggleRow(route: any, value: boolean): boolean
+    {
+        console.log("toggle row:", value, route.slug);
+
+        return true;
+    }
+
+    protected onToggleAll(value: boolean): boolean
+    {
+        console.log("toggle all:", value);
+
+        return true;
     }
 }

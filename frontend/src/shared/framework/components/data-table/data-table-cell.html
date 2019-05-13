@@ -1,0 +1,19 @@
+<template click.delegate="onClick()" class="${dataTable.sorting[name] !== undefined ? '--sortable' : ''}">
+
+    <require from="./data-table-cell.scss"></require>
+
+    <div  class="data-table-cell-content ${align === 'right' ? 'margin-auto-left' : align === 'center' ? 'margin-auto' : ''}">
+
+        <slot></slot>
+
+        <div if.bind="dataTable.sorting[name] !== undefined" class="data-table-cell-sorting">
+            <icon if.bind="dataTable.sorting[name] === 'ascending'" name="md-arrow-upward"></icon>
+            <icon if.bind="dataTable.sorting[name] === 'descending'" name="md-arrow-downward"></icon>
+            <icon if.bind="dataTable.sorting[name] === null">
+                <div class="margin-auto opacity-faded-more">–</div>
+            </icon>
+        </div>
+
+    </div>
+
+</template>

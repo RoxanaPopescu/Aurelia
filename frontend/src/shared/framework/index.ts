@@ -25,6 +25,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
         PLATFORM.moduleName("./components/controls/navigation/tree-nav/tree-nav"),
         PLATFORM.moduleName("./components/data-table/data-table"),
+        PLATFORM.moduleName("./components/data-table/data-table-cell"),
         PLATFORM.moduleName("./components/data-table/data-table-headers"),
         PLATFORM.moduleName("./components/data-table/data-table-row"),
         PLATFORM.moduleName("./components/data-table/data-table-details"),
@@ -71,6 +72,7 @@ export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
 export * from "./components/controls/navigation/tree-nav/tree-nav";
 export * from "./components/data-table/data-table";
+export * from "./components/data-table/data-table-cell";
 export * from "./components/data-table/data-table-headers";
 export * from "./components/data-table/data-table-row";
 export * from "./components/data-table/data-table-details";

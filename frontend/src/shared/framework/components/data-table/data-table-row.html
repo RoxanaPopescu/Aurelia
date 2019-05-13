@@ -2,8 +2,18 @@
 
     <require from="./data-table-row.scss"></require>
 
-    <a class="data-table-row" href.bind="href">
-        <slot></slot>
-    </a>
+    <data-table-cell if.bind="selectable !== false && dataTable.selection === 'multiple'">
+        <input type="checkbox" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
+    </data-table-cell>
+
+    <data-table-cell if.bind="selectable !== false && dataTable.selection === 'single'">
+        <input type="radio" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
+    </data-table-cell>
+
+    <data-table-cell if.bind="selectable === false && dataTable.selection !== 'none'">
+        <!-- Selection disabled for this row. -->
+    </data-table-cell>
+
+    <slot></slot>
 
 </template>

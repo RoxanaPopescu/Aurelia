@@ -2,6 +2,14 @@
 
     <require from="./data-table-headers.scss"></require>
 
+    <data-table-cell if.bind="dataTable.selection === 'multiple'">
+        <input type="checkbox" change.trigger="dataTable.toggleAll && dataTable.toggleAll({ value: $event.target.checked })">
+    </data-table-cell>
+
+    <data-table-cell if.bind="dataTable.selection === 'single'">
+        <!-- No select all in `single` selection mode. -->
+    </data-table-cell>
+
     <slot></slot>
 
 </template>

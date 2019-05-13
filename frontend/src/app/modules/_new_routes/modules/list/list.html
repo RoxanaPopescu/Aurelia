@@ -59,27 +59,74 @@
 
                 </toolbar>
 
-                <data-table>
+                <data-table appearance="rows" sorting.bind="sorting" selection="multiple" toggle-all.call="onToggleAll(value)">
 
                     <data-table-headers>
-                        <div translate>Id</div>
-                        <div translate>Reference</div>
-                        <div translate>Status</div>
-                        <div translate>Start date</div>
-                        <div translate>Start address</div>
-                        <div><div class="margin-auto-left" translate>Stops</div></div>
+
+                        <data-table-cell name="id" translate>
+                            Id
+                        </data-table-cell>
+
+                        <data-table-cell name="reference" translate>
+                            Reference
+                        </data-table-cell>
+
+                        <data-table-cell name="status" align="center" translate>
+                            Status
+                        </data-table-cell>
+
+                        <data-table-cell name="start-date" translate>
+                            Start date
+                        </data-table-cell>
+
+                        <data-table-cell name="start-address" translate>
+                            Start address
+                        </data-table-cell>
+
+                        <data-table-cell name="stops" align="right" translate>
+                            Stops
+                        </data-table-cell>
+
                     </data-table-headers>
 
-                    <data-table-row repeat.for="route of routes" href.bind="'/routes/' + route.slug">
-                        <div class="font-monospaced">${route.slug}</div>
-                        <div class="font-monospaced">${route.reference}</div>
-                        <div>${route.status.name}</div>
-                        <div>${route.startDateTime | dateTime: 'narrow'}</div>
-                        <div>${route.startAddress}</div>
-                        <div><div class="margin-auto-left">${route.stopCount}</div></div>
+                    <data-table-row
+                        repeat.for="route of routes"
+                        toggle.call="onToggleRow(route, value)"
+                        selected.bind="route.selected"
+                        selectable.bind="true"
+                        click.trigger="onRowClick(route)"
+                        href="path.bind: '/routes/' + route.slug">
+
+                        <data-table-cell class="font-monospaced">
+                            ${route.slug}
+                        </data-table-cell>
+
+                        <data-table-cell class="font-monospaced">
+                            ${route.reference}
+                        </data-table-cell>
+
+                        <data-table-cell align="center">
+                            ${route.status.name}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${route.startDateTime | dateTime: 'narrow'}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${route.startAddress}
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            ${route.stopCount}
+                        </data-table-cell>
+
                     </data-table-row>
 
                 </data-table>
+
+
+
 
             </section>
 
