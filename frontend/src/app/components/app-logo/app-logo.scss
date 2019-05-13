@@ -7,17 +7,15 @@ app-logo
     a
     {
         height: 100%;
-
-        // Darken the logo slightly.
-        filter: brightness(90%);
+        opacity: 0.94;
 
         // Animate the hover effect.
-        transition: filter var(--animation-duration-short);
+        transition: opacity var(--animation-duration-short);
 
         &:hover
         {
             // Highlight on hover.
-            filter: brightness(100%);
+            opacity: 1;
         }
 
         img
