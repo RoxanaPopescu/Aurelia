@@ -57,9 +57,27 @@
 
                     <input type="search" placeholder="Find...">
 
+                    <select value.bind="tableAppearance">
+                        <option value="rows">rows</option>
+                        <option value="cards">cards</option>
+                    </select>
+
+                    <select value.bind="tableSelection">
+                        <option value="none">none</option>
+                        <option value="single">single</option>
+                        <option value="multiple">multiple</option>
+                    </select>
+
+                    <select value.bind="tableRowAccent">
+                        <option value="neutral">neutral</option>
+                        <option value="positive">positive</option>
+                        <option value="attention">attention</option>
+                        <option value="negative">negative</option>
+                    </select>
+
                 </toolbar>
 
-                <data-table appearance="rows" sorting.bind="sorting" selection="multiple" toggle-all.call="onToggleAll(value)">
+                <data-table appearance.bind="tableAppearance & attr" sorting.bind="sorting" selection.bind="tableSelection" toggle-all.call="onToggleAll(value)">
 
                     <data-table-headers>
 
@@ -95,6 +113,7 @@
                         selected.bind="route.selected"
                         selectable.bind="true"
                         click.trigger="onRowClick(route)"
+                        accent.bind="tableRowAccent & attr"
                         href="path.bind: '/routes/' + route.slug">
 
                         <data-table-cell class="font-monospaced">

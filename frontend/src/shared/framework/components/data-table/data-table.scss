@@ -1,10 +1,22 @@
+@import "styles/resources/index";
+
 data-table
 {
     display: grid;
 
     // Define the grid columns.
     // Note that this should be customized as needed for each table.
-    grid-template-columns: repeat(6, 1fr);
+    --data-table-columns: repeat(6, 1fr);
+
+    &:not(.--selection)
+    {
+        grid-template-columns: var(--data-table-columns);
+    }
+
+    &.--selection
+    {
+        grid-template-columns: 15rem var(--data-table-columns);
+    }
 
     data-table-headers
     {

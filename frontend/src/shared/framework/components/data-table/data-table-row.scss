@@ -1,6 +1,22 @@
+@import "styles/resources/index";
+
 data-table-row
 {
     display: contents;
+
+    &[accent]
+    {
+        color: inherit;
+    }
+
+    // Add accent color support.
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"]
+        {
+            --data-table-row-edge-color: var(--color-surface-#{$accent}-border);
+        }
+    }
 }
 
 data-table[appearance="rows"]

@@ -27,6 +27,12 @@ export class ListModule
      */
     protected statusTab = "unassigned";
 
+    protected tableAppearance = "rows";
+
+    protected tableSelection = "none";
+
+    protected tableRowAccent = undefined;
+
     /**
      * The sorting to use.
      */
