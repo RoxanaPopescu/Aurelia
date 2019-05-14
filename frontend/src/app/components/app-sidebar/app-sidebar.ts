@@ -12,6 +12,9 @@ export class AppSidebarCustomElement
     {
         this._router = router;
         this._authorizationService = authorizationService;
+
+        this.expanded = localStorage.getItem("app-sidebar-expanded") === "true";
+        document.documentElement.classList.toggle("sideMenu--collapsed", !this.expanded);
     }
 
     private readonly _router: Router;
@@ -49,7 +52,7 @@ export class AppSidebarCustomElement
     /**
      * True if the sidebar is expanded, otherwise false.
      */
-    protected expanded = localStorage.getItem("app-sidebar-expanded") === "true";
+    protected expanded = true;
 
     /**
      * True to reduce the visibility of the shadow, otherwise false.
@@ -68,16 +71,7 @@ export class AppSidebarCustomElement
     protected toggleWidth(): void
     {
         this.expanded = !this.expanded;
-
         localStorage.setItem("app-sidebar-expanded", `${this.expanded}`);
-
-        if (this.expanded)
-        {
-            document.documentElement.classList.remove("sideMenu--collapsed");
-        }
-        else
-        {
-            document.documentElement.classList.add("sideMenu--collapsed");
-        }
+        document.documentElement.classList.toggle("sideMenu--collapsed", !this.expanded);
     }
 }

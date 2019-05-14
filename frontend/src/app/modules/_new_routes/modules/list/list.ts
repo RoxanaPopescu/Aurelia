@@ -82,6 +82,11 @@ export class ListModule
     {
         console.log("toggle all:", value);
 
+        for (const route of this.routes)
+        {
+            (route as any).selected = value;
+        }
+
         return true;
     }
 }
