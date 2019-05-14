@@ -115,15 +115,15 @@
                         selected.bind="route.selected"
                         selectable.bind="true"
                         click.trigger="onRowClick(route)"
-                        accent.bind="tableRowAccent & attr"
-                        href="path.bind: '/routes/' + route.slug">
+                        accent.bind="tableRowAccent"
+                        href="/routes/${route.slug}">
 
                         <data-table-cell class="font-monospaced">
                             ${route.slug}
                         </data-table-cell>
 
                         <data-table-cell class="font-monospaced">
-                            ${route.reference}
+                            <a href="/foo">${route.reference}</a>
                         </data-table-cell>
 
                         <data-table-cell align="center">

@@ -1,12 +1,14 @@
 @import "styles/resources/index";
 
-data-table-row
+.data-table-row
 {
     display: contents;
+    color: inherit;
+    cursor: default;
 
     &[accent]
     {
-        color: inherit;
+        color: inherit !important;
     }
 
     // Add accent color support.
@@ -21,7 +23,7 @@ data-table-row
 
 data-table[appearance="rows"]
 {
-    data-table-row
+    .data-table-row
     {
         data-table-cell
         {
@@ -37,7 +39,7 @@ data-table[appearance="rows"]
 
 data-table[appearance="cards"]
 {
-    data-table-row
+    .data-table-row
     {
         data-table-cell
         {

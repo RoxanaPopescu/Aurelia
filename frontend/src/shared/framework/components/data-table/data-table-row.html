@@ -2,18 +2,22 @@
 
     <require from="./data-table-row.scss"></require>
 
-    <data-table-cell if.bind="selectable !== false && dataTable.selection === 'multiple'">
-        <input type="checkbox" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
-    </data-table-cell>
+    <a class="data-table-row ${selected ? '--selected' : ''}" href.bind="href" accent.bind="accent & attr">
 
-    <data-table-cell if.bind="selectable !== false && dataTable.selection === 'single'">
-        <input type="radio" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
-    </data-table-cell>
+        <data-table-cell click.trigger="stopEvent($event)" if.bind="selectable !== false && dataTable.selection === 'multiple'">
+            <input type="checkbox" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
+        </data-table-cell>
 
-    <data-table-cell if.bind="selectable === false && dataTable.selection !== 'none'">
-        <!-- Selection disabled for this row. -->
-    </data-table-cell>
+        <data-table-cell click.trigger="stopEvent($event)" if.bind="selectable !== false && dataTable.selection === 'single'">
+            <input type="radio" checked.bind="selected" change.trigger="toggle && toggle({ value: $event.target.checked })">
+        </data-table-cell>
 
-    <slot></slot>
+        <data-table-cell click.trigger="stopEvent($event)" if.bind="selectable === false && dataTable.selection !== 'none'">
+            <!-- Selection disabled for this row. -->
+        </data-table-cell>
+
+        <slot></slot>
+
+    </a>
 
 </template>

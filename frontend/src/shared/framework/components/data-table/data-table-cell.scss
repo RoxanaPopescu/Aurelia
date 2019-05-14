@@ -17,6 +17,11 @@ data-table-cell
         }
     }
 
+    .data-table-row:any-link &
+    {
+        cursor: pointer;
+    }
+
     .data-table-cell-content
     {
         display: flex;

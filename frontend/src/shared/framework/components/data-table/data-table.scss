@@ -23,15 +23,20 @@ data-table
         font-weight: 600;
     }
 
-    data-table-row:hover
+    .data-table-row:hover
     {
         --data-table-cell-background: var(--color-surface--hover);
         --data-table-row-border-color: var(--color-border--hover);
-        cursor: pointer;
+    }
+
+    .data-table-row.--selected
+    {
+        --data-table-cell-background: var(--color-surface--active);
+        --data-table-row-border-color: var(--color-border--active);
     }
 
     data-table-details,
-    data-table-row.expanded
+    .data-table-row.expanded
     {
         --data-table-cell-background: var(--color-surface--active);
         --data-table-row-border-color: var(--color-border--active);
