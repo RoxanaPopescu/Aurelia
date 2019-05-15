@@ -9,7 +9,7 @@ export class TabCustomElement
 {
     /**
      * Creates a new instance of the class.
-     * @param tabNav The `tab-nav`component owning this tab.
+     * @param tabNav The `tab-nav`component to which this tab belongs.
      */
     public constructor(tabNav: TabNavCustomElement)
     {
@@ -17,7 +17,7 @@ export class TabCustomElement
     }
 
     /**
-     * The `tab-nav`component owning this tab.
+     * The `tab-nav`component to which this tab belongs.
      */
     protected tabNav: TabNavCustomElement;
 

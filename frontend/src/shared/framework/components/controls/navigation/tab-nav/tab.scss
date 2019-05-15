@@ -1,20 +1,71 @@
 tab
 {
-    // Style to appear as a button.
-    padding: 0 3.5rem;
-    min-width: 10rem;
-    line-height: calc(10rem - 2 * var(--border-width-medium));
-    text-align: center;
+    display: block;
     cursor: pointer;
 
-    &:not(:last-child)
+    // Set the size of the tab.
+    tab-nav[appearance] &
     {
-        border-right: var(--border-width-medium) solid var(--color-surface-neutral-border);
+        min-width: 10rem;
+        line-height: 10rem;
     }
 
-    &.--active
+    tab-nav[appearance="text"] &
     {
-        background: var(--color-surface-neutral-surface);
-        color: var(--color-surface-neutral-text);
+        &:not(:last-child)
+        {
+            // Apply margin between the tabs.
+            margin-right: 6rem;
+        }
+
+        &.--active
+        {
+            // Highlight the active tab.
+            color: var(--color-surface-neutral-text);
+        }
+    }
+
+    tab-nav[appearance="solid"] &,
+    tab-nav[appearance="outline"] &
+    {
+        // Style to appear as a button.
+        padding: 0 3.5rem;
+        text-align: center;
+    }
+
+    tab-nav[appearance="solid"] &
+    {
+        // Compensate for the border around the `tab-nav`.
+        line-height: calc(10rem - 2 * var(--border-width-medium));
+
+        &:not(:last-child)
+        {
+            // Apply a border between the tabs.
+            border-right: var(--border-width-medium) solid var(--color-surface-neutral-border);
+        }
+
+        &.--active
+        {
+            // Highlight the active tab.
+            background: var(--color-surface-neutral-surface);
+            color: var(--color-surface-neutral-text);
+        }
+    }
+
+    tab-nav[appearance="outline"] &
+    {
+        // Apply a border around the tab.
+        border: var(--border-width-medium) solid transparent;
+        border-radius: var(--border-radius-medium);
+
+        // Compensate for the border around the tab.
+        line-height: calc(10rem - 2 * var(--border-width-medium));
+
+        &.--active
+        {
+            // Highlight the active tab.
+            border-color: var(--color-surface-neutral-border);
+            color: var(--color-surface-neutral-text);
+        }
     }
 }

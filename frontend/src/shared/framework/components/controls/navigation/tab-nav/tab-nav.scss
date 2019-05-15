@@ -1,7 +1,15 @@
 tab-nav
 {
+    // Use horizontal flex layout.
     display: flex;
-    border: var(--border-width-medium) solid var(--color-surface-neutral-border);
-    border-radius: var(--border-radius-medium);
+
+    // Set the text color.
     color: var(--color-surface-primary-text);
+
+    &[appearance="solid"]
+    {
+        // Apply a border around the tabs.
+        border: var(--border-width-medium) solid var(--color-surface-neutral-border);
+        border-radius: var(--border-radius-medium);
+    }
 }

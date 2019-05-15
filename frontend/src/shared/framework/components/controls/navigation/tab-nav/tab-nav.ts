@@ -1,7 +1,7 @@
 import { autoinject, bindable, bindingMode } from "aurelia-framework";
 
 /**
- * Custom element that represents a set of tabs.
+ * Custom element that represents a group of tabs.
  */
 @autoinject
 export class TabNavCustomElement
@@ -11,4 +11,10 @@ export class TabNavCustomElement
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
     public value: string;
+
+    /**
+     * The appearance to use for the tabs.
+     */
+    @bindable
+    public appearance: "outine" | "solid" | "text";
 }
