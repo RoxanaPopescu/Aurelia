@@ -57,13 +57,6 @@ export class ListModule
         this.routes = await this._routeService.getAll();
     }
 
-    protected captureRowClick(event: Event): boolean
-    {
-        event.stopPropagation();
-
-        return true;
-    }
-
     protected onRowClick(route: any): boolean
     {
         console.log("row click:", route.slug);
@@ -81,11 +74,6 @@ export class ListModule
     protected onToggleAll(value: boolean): boolean
     {
         console.log("toggle all:", value);
-
-        for (const route of this.routes)
-        {
-            (route as any).selected = value;
-        }
 
         return true;
     }
