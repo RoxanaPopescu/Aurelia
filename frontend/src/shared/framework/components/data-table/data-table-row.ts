@@ -95,43 +95,43 @@ export class DataTableRowCustomElement
     }
 
     /**
-     * Called when an event is intercepted and needs to be stopped from propagating further.
-     * @param event The event that was intercepted.
+     * Called when the selected state of the row is toggled.
+     * @param event The event that caused the toggle.
      */
-    protected stopEvent(event: Event): boolean
+    protected onToggle(event: Event): boolean
     {
+        if (this.selectable)
+        {
+            // Get the selection state of this row.
+            const selected = this.selected;
+
+            // In `single` selection mode, deselect all selectable rows.
+            if (this.dataTable.selection === "single")
+            {
+                this.dataTable.rows.forEach(row =>
+                {
+                    if (row.selectable)
+                    {
+                        row.selected = false;
+                    }
+                });
+            }
+
+            // Toggle the selection state of this row.
+            this.selected = !selected;
+
+            // Call the `toggle` callback function, if specified.
+            if (this.toggle != null)
+            {
+                this.toggle({ value: this.selected });
+            }
+        }
+
+        // Prevent the event from triggering navigation if the row is a link,
+        // but allow it to toggle the state of the checkbox or radio input.
+
         event.stopPropagation();
 
-        return true;
-    }
-
-    /**
-     * Called when the selected state of the row is toggled.
-     * @param value True if the row is selected, otherwise false.
-     */
-    protected onToggle(value: boolean): boolean
-    {
-        // In `single` selection mode, deselect all selectable rows.
-        if (this.dataTable.selection === "single")
-        {
-            this.dataTable.rows.forEach(row =>
-            {
-                if (row.selectable)
-                {
-                    row.selected = false;
-                }
-            });
-        }
-
-        // Select this row.
-        this.selected = value;
-
-        // Call the `toggle` callback function, if specified.
-        if (this.toggle != null)
-        {
-            this.toggle({ value: this.selected });
-        }
-
-        return true;
+        return event.target instanceof HTMLInputElement;
     }
 }

@@ -4,12 +4,12 @@
 
     <a class="data-table-row ${selected ? '--selected' : ''}" href.bind="href" accent.bind="accent & attr">
 
-        <data-table-cell if.bind="dataTable.selection === 'multiple'" disabled.bind="!selectable" click.trigger="stopEvent($event)">
-            <input type="checkbox" checked.to-view="selected" change.trigger="onToggle($event.target.checked)">
+        <data-table-cell if.bind="dataTable.selection === 'multiple'" click.trigger="onToggle($event)">
+            <input type="checkbox" class="pointer-events-none" disabled.bind="!selectable" checked.to-view="selected">
         </data-table-cell>
 
-        <data-table-cell if.bind="dataTable.selection === 'single'" disabled.bind="!selectable" click.trigger="stopEvent($event)">
-            <input type="radio" model.bind="$this" checked.to-view="selectedModel" change.trigger="onToggle($event.target.checked)">
+        <data-table-cell if.bind="dataTable.selection === 'single'" click.trigger="onToggle($event)">
+            <input type="radio" class="pointer-events-none" disabled.bind="!selectable" model.bind="$this" checked.to-view="selectedModel">
         </data-table-cell>
 
         <slot></slot>
