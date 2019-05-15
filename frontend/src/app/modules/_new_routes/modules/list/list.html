@@ -5,10 +5,46 @@
     <page name="list">
 
         <page-sidebar scroll expanded.bind="false">
-            <header>HEADER</header>
-            <section>SECTION</section>
-            <section>SECTION</section>
-            <footer>FOOTER</footer>
+
+            <header>
+                <h1 class="font-larger margin-bottom">
+                    Settings for data-table
+                </h1>
+            </header>
+
+            <section>
+
+                <label class="margin">
+                    Appearance
+                    <select value.bind="tableAppearance">
+                        <option value="rows">rows</option>
+                        <option value="cards">cards</option>
+                    </select>
+                </label>
+
+                <label class="margin">
+                    Selection
+                    <select value.bind="tableSelection">
+                        <option value="none">none</option>
+                        <option value="single">single</option>
+                        <option value="multiple">multiple</option>
+                    </select>
+                </label>
+
+                <label class="margin">
+                    Accent
+                    <select value.bind="tableRowAccent">
+                        <option value="neutral">neutral</option>
+                        <option value="primary">primary</option>
+                        <option value="positive">positive</option>
+                        <option value="attention">attention</option>
+                        <option value="negative">negative</option>
+                        <option value="info">info</option>
+                    </select>
+                </label>
+
+            </section>
+
         </page-sidebar>
 
         <page-content scroll>
@@ -56,26 +92,6 @@
                 <toolbar class="margin-bottom" scroll-fade="0.2">
 
                     <input type="search" placeholder="Find...">
-
-                    <select value.bind="tableAppearance">
-                        <option value="rows">rows</option>
-                        <option value="cards">cards</option>
-                    </select>
-
-                    <select value.bind="tableSelection">
-                        <option value="none">none</option>
-                        <option value="single">single</option>
-                        <option value="multiple">multiple</option>
-                    </select>
-
-                    <select value.bind="tableRowAccent">
-                        <option value="neutral">neutral</option>
-                        <option value="primary">primary</option>
-                        <option value="positive">positive</option>
-                        <option value="attention">attention</option>
-                        <option value="negative">negative</option>
-                        <option value="info">info</option>
-                    </select>
 
                 </toolbar>
 

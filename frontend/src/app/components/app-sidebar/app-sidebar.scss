@@ -61,7 +61,8 @@ app-sidebar
 
     section
     {
-        // Apply vertical spacing below sections.
+        // Apply vertical margins to separate sections.
+        margin-top: 4rem;
         margin-bottom: 4rem;
     }
 

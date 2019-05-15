@@ -20,7 +20,9 @@ toolbar
     input[type="search"]
     {
         width: 8vw;
-        transition: width 0.8s;
+        transition: width calc(2 * var(--animation-duration-medium));
+
+        // Delay transition so it's possible to click the clear icon within the input.
         transition-delay: 0.1s;
 
         &:focus

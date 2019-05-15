@@ -43,10 +43,21 @@ data-table[appearance="cards"]
     {
         data-table-cell
         {
+            position: relative;
             margin-top: var(--data-table-row-gap);
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-child
+            &:first-child:before
+            {
+                content: "";
+                position: absolute;
+                top: calc(-1 * var(--data-table-row-border-width));
+                left: calc(-1 * var(--data-table-row-edge-width));
+                bottom: calc(-1 * var(--data-table-row-border-width));
+            }
+
+            &:first-child,
+            &:first-child:before,
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
                 border-top-left-radius: var(--data-table-row-border-radius);
@@ -63,7 +74,8 @@ data-table[appearance="cards"]
         {
             border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-child
+            &:first-child,
+            &:first-child:before
             {
                 border-bottom-left-radius: var(--data-table-row-border-radius);
             }
