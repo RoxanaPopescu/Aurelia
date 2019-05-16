@@ -15,7 +15,16 @@
             <section>
 
                 <label class="margin">
-                    Appearance
+                    <span>Type</span>
+                    <select value.bind="rowType">
+                        <option value="normal">normal</option>
+                        <option value="expandable">expandable</option>
+                        <option value="link">link</option>
+                    </select>
+                </label>
+
+                <label class="margin">
+                    <span>Appearance</span>
                     <select value.bind="tableAppearance">
                         <option value="rows">rows</option>
                         <option value="cards">cards</option>
@@ -23,7 +32,7 @@
                 </label>
 
                 <label class="margin">
-                    Selection
+                    <span>Selection</span>
                     <select value.bind="tableSelection">
                         <option value="none">none</option>
                         <option value="single">single</option>
@@ -32,7 +41,7 @@
                 </label>
 
                 <label class="margin">
-                    Accent
+                    <span>Accent</span>
                     <select value.bind="tableRowAccent">
                         <option value="neutral">neutral</option>
                         <option value="primary">primary</option>
@@ -131,9 +140,9 @@
                             toggle.call="onToggleRow(route, value)"
                             selected.bind="route.selected"
                             selectable.bind="true"
-                            click.trigger="onRowClick(route)"
+                            click.call="onRowClick(route)"
                             accent.bind="tableRowAccent"
-                            href="/routes/${route.slug}">
+                            href.bind="rowType == 'link' ? `/routes/${route.slug}` : undefined">
 
                             <data-table-cell class="font-monospaced">
                                 ${route.slug}
@@ -159,11 +168,11 @@
                                 ${route.stopCount}
                             </data-table-cell>
 
-                        </data-table-row>
+                            <data-table-details if.bind="rowType == 'expandable' && route.slug == $parent.expandedRouteSlug" accent.bind="tableRowAccent">
+                                DETAILS
+                            </data-table-details>
 
-                        <data-table-details if.bind="$index === 2" accent.bind="tableRowAccent">
-                            DETAILS
-                        </data-table-details>
+                        </data-table-row>
 
                     </template>
 

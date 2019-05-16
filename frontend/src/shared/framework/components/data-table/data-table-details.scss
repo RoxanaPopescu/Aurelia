@@ -35,24 +35,23 @@ data-table[appearance="cards"]
         position: relative;
 
         border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-        border-bottom-left-radius: var(--data-table-row-border-radius);
-        border-bottom-right-radius: var(--data-table-row-border-radius);
 
         &:before
         {
             content: "";
             position: absolute;
-            z-index: -1;
             top: calc(-1 * var(--data-table-row-border-radius));
             left: calc(-1 * var(--data-table-row-edge-width));
             right: calc(-1 * var(--data-table-row-border-width));
-            height: var(--data-table-row-border-radius);
+            bottom: calc(-1 * var(--data-table-row-border-width));
         }
 
         &, &:before
         {
             border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
             border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+            border-bottom-left-radius: var(--data-table-row-border-radius);
+            border-bottom-right-radius: var(--data-table-row-border-radius);
         }
     }
 }

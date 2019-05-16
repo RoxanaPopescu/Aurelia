@@ -31,7 +31,11 @@ export class ListModule
 
     protected tableSelection = "none";
 
-    protected tableRowAccent = undefined;
+    protected tableRowAccent = "neutral";
+
+    protected rowType = "normal";
+
+    protected expandedRouteSlug: string | undefined;
 
     /**
      * The sorting to use.
@@ -60,6 +64,8 @@ export class ListModule
     protected onRowClick(route: any): boolean
     {
         console.log("row click:", route.slug);
+
+        this.expandedRouteSlug = route.slug;
 
         return true;
     }

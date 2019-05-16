@@ -30,8 +30,10 @@ export class PageSidebarCustomElement
      * Called when the surface of the sidebar is clicked.
      * Ensures the sidebar is expanded.
      */
-    protected onSurfaceClick(): void
+    protected onSurfaceClick(): boolean
     {
         this.expanded = true;
+
+        return true;
     }
 }

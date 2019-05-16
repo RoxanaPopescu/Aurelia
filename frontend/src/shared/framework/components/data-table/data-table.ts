@@ -22,7 +22,7 @@ export class DataTableCustomElement
      * Called when the select all option is checked or unchecked.
      */
     @bindable
-    public toggleAll: (({ value: boolean }) => void) | undefined;
+    public toggleAll: ((context: { value: boolean }) => void) | undefined;
 
     /**
      * True if the select all option is checked, otherwise false.

@@ -44,7 +44,13 @@ export class DataTableRowCustomElement
      * Called when the row is selected or deselected.
      */
     @bindable
-    public toggle: (({ value: boolean }) => void) | undefined;
+    public toggle: ((context: { value: boolean }) => void) | undefined;
+
+    /**
+     * Called when the row is clicked.
+     */
+    @bindable
+    public click: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
      * True if the row is selected, otherwise false.
@@ -133,5 +139,17 @@ export class DataTableRowCustomElement
         event.stopPropagation();
 
         return event.target instanceof HTMLInputElement;
+    }
+
+    /**
+     * Called when the selected state of the row is toggled.
+     * @param event The event that caused the toggle.
+     */
+    protected onClick(event: MouseEvent): void
+    {
+        if (!event.defaultPrevented && this.click)
+        {
+            this.click({ event });
+        }
     }
 }
