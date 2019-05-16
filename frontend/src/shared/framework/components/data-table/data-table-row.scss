@@ -28,10 +28,6 @@ data-table[appearance="rows"]
         data-table-cell
         {
             border-top: var(--data-table-row-border-width) solid transparent;
-        }
-
-        &:not(.--expanded) data-table-cell
-        {
             border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
         }
     }
@@ -46,6 +42,7 @@ data-table[appearance="cards"]
             position: relative;
             margin-top: var(--data-table-row-gap);
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+            border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
             &:first-child:before
             {
@@ -61,27 +58,13 @@ data-table[appearance="cards"]
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
                 border-top-left-radius: var(--data-table-row-border-radius);
+                border-bottom-left-radius: var(--data-table-row-border-radius);
             }
 
             &:last-child
             {
                 border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
                 border-top-right-radius: var(--data-table-row-border-radius);
-            }
-        }
-
-        &:not(.--expanded) data-table-cell
-        {
-            border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-
-            &:first-child,
-            &:first-child:before
-            {
-                border-bottom-left-radius: var(--data-table-row-border-radius);
-            }
-
-            &:last-child
-            {
                 border-bottom-right-radius: var(--data-table-row-border-radius);
             }
         }

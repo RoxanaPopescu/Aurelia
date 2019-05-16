@@ -3,22 +3,56 @@
 data-table-details
 {
     grid-column: 1 / -1;
-    border-left: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-    border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-    border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-    border-bottom-left-radius: var(--data-table-row-border-radius);
-    border-bottom-right-radius: var(--data-table-row-border-radius);
     padding: var(--data-table-cell-padding);
+
+    &[accent]
+    {
+        color: inherit !important;
+    }
+
+    // Add accent color support.
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"]
+        {
+            --data-table-row-edge-color: var(--color-surface-#{$accent}-border);
+        }
+    }
 }
 
-.data-table-new
+data-table[appearance="rows"]
 {
     data-table-details
     {
-        border-left: none;
-        border-right: none;
         border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+    }
+}
+
+data-table[appearance="cards"]
+{
+    data-table-details
+    {
+        position: relative;
+
+        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+        border-bottom-left-radius: var(--data-table-row-border-radius);
+        border-bottom-right-radius: var(--data-table-row-border-radius);
+
+        &:before
+        {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: calc(-1 * var(--data-table-row-border-radius));
+            left: calc(-1 * var(--data-table-row-edge-width));
+            right: calc(-1 * var(--data-table-row-border-width));
+            height: var(--data-table-row-border-radius);
+        }
+
+        &, &:before
+        {
+            border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
+            border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+        }
     }
 }

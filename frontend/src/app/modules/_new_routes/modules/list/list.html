@@ -125,45 +125,49 @@
 
                     </data-table-headers>
 
-                    <data-table-row
-                        repeat.for="route of routes"
-                        toggle.call="onToggleRow(route, value)"
-                        selected.bind="route.selected"
-                        selectable.bind="true"
-                        click.trigger="onRowClick(route)"
-                        accent.bind="tableRowAccent"
-                        href="/routes/${route.slug}">
+                    <template repeat.for="route of routes">
 
-                        <data-table-cell class="font-monospaced">
-                            ${route.slug}
-                        </data-table-cell>
+                        <data-table-row
+                            toggle.call="onToggleRow(route, value)"
+                            selected.bind="route.selected"
+                            selectable.bind="true"
+                            click.trigger="onRowClick(route)"
+                            accent.bind="tableRowAccent"
+                            href="/routes/${route.slug}">
 
-                        <data-table-cell class="font-monospaced">
-                            <a href="/foo">${route.reference}</a>
-                        </data-table-cell>
+                            <data-table-cell class="font-monospaced">
+                                ${route.slug}
+                            </data-table-cell>
 
-                        <data-table-cell align="center">
-                            ${route.status.name}
-                        </data-table-cell>
+                            <data-table-cell class="font-monospaced">
+                                <a href="/foo">${route.reference}</a>
+                            </data-table-cell>
 
-                        <data-table-cell>
-                            ${route.startDateTime | dateTime: 'narrow'}
-                        </data-table-cell>
+                            <data-table-cell align="center">
+                                ${route.status.name}
+                            </data-table-cell>
 
-                        <data-table-cell>
-                            ${route.startAddress}
-                        </data-table-cell>
+                            <data-table-cell>
+                                ${route.startDateTime | dateTime: 'narrow'}
+                            </data-table-cell>
 
-                        <data-table-cell align="right">
-                            ${route.stopCount}
-                        </data-table-cell>
+                            <data-table-cell>
+                                ${route.startAddress}
+                            </data-table-cell>
 
-                    </data-table-row>
+                            <data-table-cell align="right">
+                                ${route.stopCount}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                        <data-table-details if.bind="$index === 2" accent.bind="tableRowAccent">
+                            DETAILS
+                        </data-table-details>
+
+                    </template>
 
                 </data-table>
-
-
-
 
             </section>
 
