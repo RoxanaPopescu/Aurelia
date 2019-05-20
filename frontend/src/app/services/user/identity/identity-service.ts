@@ -3,6 +3,7 @@ import { Identity } from "./identity";
 import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
 import { getUserClaims } from "legacy/helpers/identity-helper";
+import settings from "resources/settings";
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -31,7 +32,8 @@ export class IdentityService
             preferredName: Session.userInfo.firstName,
             pictureUrl: undefined,
             outfit: Session.outfit,
-            claims: getUserClaims()
+            claims: getUserClaims(),
+            tokens: Profile.tokens
         });
     }
 
@@ -44,7 +46,7 @@ export class IdentityService
      */
     public async authenticate(email: string, password: string, remember = false): Promise<boolean>
     {
-        return Promise.resolve(true);
+        throw new Error("Not implemented.");
     }
 
     /**
@@ -53,7 +55,11 @@ export class IdentityService
      */
     public async reauthenticate(): Promise<boolean>
     {
-        return Promise.resolve(true);
+        await Profile.autoLogin();
+
+        this.configureApiClient();
+
+        return Promise.resolve(this.identity != null);
     }
 
     /**
@@ -62,6 +68,27 @@ export class IdentityService
      */
     public async unauthenticate(): Promise<boolean>
     {
+        Profile.logout();
+
+        this.configureApiClient();
+
         return Promise.resolve(true);
+    }
+
+    /**
+     * Adds or removes the tokens to the set of default headers used by the `ApiClient`.
+     */
+    private configureApiClient(): void
+    {
+        if (this.identity != null)
+        {
+            settings.infrastructure.api.defaults!.headers!["access-token"] = this.identity.tokens.access;
+            settings.infrastructure.api.defaults!.headers!["refresh-token"] = this.identity.tokens.refresh;
+        }
+        else
+        {
+            delete settings.infrastructure.api.defaults!.headers!["access-token"];
+            delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
+        }
     }
 }

@@ -13,7 +13,6 @@ import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
 import Localization from "shared/src/localization";
-import { Profile } from "shared/src/model/profile";
 
 /**
  * The entry point of the app, called by the Aurelia bootstrapper.
@@ -69,6 +68,10 @@ export async function configure(aurelia: Aurelia): Promise<any>
         themeService.configure(settings.app.themes, setThemeName);
         await themeService.setTheme(getThemeName());
 
+        // Configure legacy features.
+
+        Localization.configure(localeService.locale.code, localeService.locale.code);
+
         // Import style resources.
         await import("resources/styles/index.scss" as any);
         await import(`resources/themes/${getThemeName()}/styles/index.scss`);
@@ -79,10 +82,6 @@ export async function configure(aurelia: Aurelia): Promise<any>
         // Attempt to reauthenticate using a token stored on the device.
         const identityService = aurelia.container.get(IdentityService) as IdentityService;
         await identityService.reauthenticate();
-
-        // Configure legacy Mover services.
-        Localization.configure(localeService.locale.code, localeService.locale.code);
-        await Profile.autoLogin();
     });
 
     // Start the framework.

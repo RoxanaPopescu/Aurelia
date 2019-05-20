@@ -17,6 +17,7 @@ export class Identity
         this.pictureUrl = data.pictureUrl;
         this.outfit = new Outfit(data.outfit);
         this.claims = new Set<string>(data.claims);
+        this.tokens = data.tokens;
     }
 
     /**
@@ -48,4 +49,9 @@ export class Identity
      * The claims assigned to the user.
      */
     public readonly claims: ReadonlySet<string>;
+
+    /**
+     * The the tokens to use when accessing the API.
+     */
+    public readonly tokens: { refresh: string, access: string };
 }

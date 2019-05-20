@@ -18,8 +18,13 @@ export class DepartmentsModule
         config.map(
         [
             {
-                name: "list",
+                name: "default",
                 route: "",
+                redirect: "list"
+            },
+            {
+                name: "list",
+                route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 title: routeTitles.list
             },
