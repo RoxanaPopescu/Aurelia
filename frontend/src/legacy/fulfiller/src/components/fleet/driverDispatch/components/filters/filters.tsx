@@ -1,20 +1,24 @@
 import React from "react";
 import "./filters.scss";
 import DateComponent from "shared/src/webKit/date/date";
-import { InputRadioGroup } from "shared/src/webKit";
+import { InputRadioGroup, Select } from "shared/src/webKit";
 import Slider from "./components/slider/slider";
 import CheckboxFilter from "./components/checkboxFilter/checkboxFilter";
 import { observer } from "mobx-react";
 import { driverDispatchService } from "../../driverDispatchService";
+import TimeComponent from "shared/src/webKit/date/time";
+import { SelectOptionValue } from "shared/src/webKit/select";
 
-interface Props {}
+interface Props {
+  // tslint:disable-next-line: no-any
+  onStateChange(state: any);
+  onFilterChange();
+}
 
 @observer
 export default class extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-
-    this.fetchOverviewData();
   }
 
   // private getDistinct(array: { name: string; id: string }[]) {
@@ -33,19 +37,18 @@ export default class extends React.Component<Props> {
   //   return distinctArray;
   // }
 
-  private async fetchOverviewData(): Promise<void> {
-    await driverDispatchService.fetchOverview();
+  getDurationOptions() {
+    let array: SelectOptionValue[] = [];
 
-    this.fetchData();
-  }
-
-  private async fetchData(): Promise<void> {
-    if (driverDispatchService.state === "forecasts") {
-      driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
-    } else if (driverDispatchService.state === "preBookings") {
-      driverDispatchService.preBookings = await driverDispatchService.fetchPreBookings();
+    for (var i = 1; i <= 24; i++) {
+      array.push({
+        label: i.toString(),
+        value: i,
+        labelNote: `time${i > 1 ? "r" : ""}`
+      });
     }
-    // TODO: Assigned and unassigned routes
+
+    return array;
   }
 
   render() {
@@ -59,6 +62,20 @@ export default class extends React.Component<Props> {
               driverDispatchService.date = date;
             }}
           />
+          <TimeComponent
+            headline="Time"
+            onChange={() => {
+              /* */
+            }}
+            interval={60}
+          />
+          <Select
+            headline="Duration"
+            options={this.getDurationOptions()}
+            onSelect={() => {
+              /**/
+            }}
+          />
           <InputRadioGroup
             radioButtons={[
               { value: "forecasts", headline: "Forecast" },
@@ -68,28 +85,27 @@ export default class extends React.Component<Props> {
             ]}
             checkedValue={driverDispatchService.state}
             onChange={value => {
-              driverDispatchService.state = value;
-              this.fetchOverviewData();
+              this.props.onStateChange(value);
             }}
           />
         </Slider>
         <Slider headline="Kunde">
           <CheckboxFilter
-            data={driverDispatchService.consignors.map(c => {
+            data={driverDispatchService.fulfillees.map(c => {
               return {
                 label: c.name,
                 value: c.id,
                 checked:
-                  driverDispatchService.consignorFilters.filter(
+                  driverDispatchService.fulfilleeFilters.filter(
                     cf => cf.id === c.id
                   ).length > 0
               };
             })}
             onChange={checkedData => {
-              driverDispatchService.consignorFilters = checkedData.map(d => {
+              driverDispatchService.fulfilleeFilters = checkedData.map(d => {
                 return { name: d.label, id: d.value };
               });
-              this.fetchData();
+              this.props.onFilterChange();
             }}
           />
         </Slider>
@@ -112,7 +128,7 @@ export default class extends React.Component<Props> {
                   driverDispatchService.haulierFilters = checkedData.map(d => {
                     return { name: d.label, id: d.value };
                   });
-                  this.fetchData();
+                  this.props.onFilterChange();
                 }}
               />
             </Slider>
@@ -132,7 +148,7 @@ export default class extends React.Component<Props> {
                   driverDispatchService.driverFilters = checkedData.map(d => {
                     return { name: d.label, id: d.value };
                   });
-                  this.fetchData();
+                  this.props.onFilterChange();
                 }}
               />
             </Slider>

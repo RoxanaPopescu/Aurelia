@@ -12,11 +12,11 @@ export class DepotsListStore {
   depots: Depot[] = [];
   headers = [
     {
-      text: "Navn",
+      content: "Navn",
       key: ""
     },
     {
-      text: "Adresse",
+      content: "Adresse",
       key: ""
     }
   ];

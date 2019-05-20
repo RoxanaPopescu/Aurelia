@@ -88,16 +88,17 @@ export default class DepotActivityComponent extends React.Component<Props> {
           )}
           data={{
             headers: [
-              { key: "route", text: "Rute" },
-              { key: "port", text: "Port" },
-              { key: "fulfiller", text: "Logistikpartner" },
-              { key: "planned-arrival", text: "Planlagt ankomst" },
-              { key: "actual-arrival", text: "Chauffør ankomst" },
-              { key: "actual-departure", text: "Chauffør afgang" },
-              { key: "colli-status", text: "Kolli scannet / total" },
-              { key: "driver-list-ready", text: "Køreliste klar" },
-              { key: "print-driver-list", text: "" },
-              { key: "report-problem", text: "" }
+              { key: "route", content: "Rute" },
+              { key: "reference", content: "Reference" },
+              { key: "port", content: "Port" },
+              { key: "fulfiller", content: "Logistikpartner" },
+              { key: "planned-arrival", content: "Planlagt ankomst" },
+              { key: "actual-arrival", content: "Chauffør ankomst" },
+              { key: "actual-departure", content: "Chauffør afgang" },
+              { key: "colli-status", content: "Kolli scannet / total" },
+              { key: "driver-list-ready", content: "Køreliste klar" },
+              { key: "print-driver-list", content: "" },
+              { key: "report-problem", content: "" }
             ],
             rows: this.getRows(this.service.routes)
           }}
@@ -168,6 +169,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
         >
           {route.slug}
         </a>,
+        route.reference ? route.reference : "--",
         route.gate ? route.gate : "--",
         route.fulfillerName,
         Localization.formatTime(route.plannedArrival),

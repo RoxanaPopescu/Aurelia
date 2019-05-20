@@ -18,9 +18,9 @@ export class DriverDispatchService {
   @observable public loading = false;
 
   /**
-   * Represents the consignor filters applied by the user.
+   * Represents the fulfillee filters applied by the user.
    */
-  @observable public consignorFilters: { name: string; id: string }[] = [];
+  @observable public fulfilleeFilters: { name: string; id: string }[] = [];
 
   /**
    * Represents the driver filters applied by the user.
@@ -63,17 +63,17 @@ export class DriverDispatchService {
   @observable public overviewData: OverviewData[] = [];
 
   /**
-   * Represents the consignor filter for the data shown in the view.
+   * Represents the fulfillee filter for the data shown in the view.
    */
-  @observable public consignors: { name: string; id: string }[] = [];
+  @observable public fulfillees: { name: string; id: string }[] = [];
 
   /**
-   * Represents the consignor filter for the data shown in the view.
+   * Represents the driver filter for the data shown in the view.
    */
   @observable public drivers: { name: string; id: string }[] = [];
 
   /**
-   * Represents the consignor filter for the data shown in the view.
+   * Represents the haulier filter for the data shown in the view.
    */
   @observable public hauliers: { name: string; id: string }[] = [];
 
@@ -127,7 +127,7 @@ export class DriverDispatchService {
       ];
     }
 
-    this.consignors = data.consignors.map(c => {
+    this.fulfillees = data.fulfillees.map(c => {
       return { name: c.name, id: c.id };
     });
     this.drivers = data.drivers.map(d => {
@@ -160,9 +160,9 @@ export class DriverDispatchService {
     const data = ForecastsMock.map(f => new Forecast(f));
     var filteredData: Forecast[] = [];
 
-    if (this.consignorFilters.length > 0) {
-      this.consignorFilters.forEach(cf => {
-        var temp = data.filter(d => d.consignorId === cf.id);
+    if (this.fulfilleeFilters.length > 0) {
+      this.fulfilleeFilters.forEach(cf => {
+        var temp = data.filter(d => d.fulfilleeId === cf.id);
         filteredData = filteredData.concat(temp);
       });
     } else {
@@ -195,12 +195,12 @@ export class DriverDispatchService {
     var filteredData: PreBooking[] = [];
 
     if (
-      this.consignorFilters.length > 0 ||
+      this.fulfilleeFilters.length > 0 ||
       this.driverFilters.length > 0 ||
       this.haulierFilters.length > 0
     ) {
-      this.consignorFilters.forEach(cf => {
-        var temp = data.filter(d => d.consignorId === cf.id);
+      this.fulfilleeFilters.forEach(cf => {
+        var temp = data.filter(d => d.fulfilleeId === cf.id);
         filteredData = filteredData.concat(temp);
       });
       this.driverFilters.forEach(df => {

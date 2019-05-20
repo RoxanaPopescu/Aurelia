@@ -1,12 +1,6 @@
 import React from "react";
 import "./checkboxFilter.scss";
-import {
-  InputCheckbox,
-  Input,
-  ButtonSize,
-  Button,
-  ButtonType
-} from "shared/src/webKit";
+import { InputCheckbox, Input } from "shared/src/webKit";
 
 interface Props {
   data: { label: string; value: string; checked?: boolean }[];
@@ -59,20 +53,6 @@ export default class extends React.Component<Props, State> {
   render() {
     return (
       <>
-        <Button
-          type={ButtonType.Light}
-          size={ButtonSize.Small}
-          onClick={() => {
-            this.setState({
-              query: undefined,
-              checkedData: [],
-              shownData: this.props.data
-            });
-            this.props.onChange([]);
-          }}
-        >
-          Reset
-        </Button>
         <Input
           headline="Name or id"
           placeholder="Type a name or id here"

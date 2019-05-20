@@ -46,19 +46,19 @@ export class UsersListStore {
 
   headers = [
     {
-      text: "",
+      content: "",
       key: UsersListSortingKey.map.Initials.slug
     },
     {
-      text: Localization.operationsValue("Users_List_Username"),
+      content: Localization.operationsValue("Users_List_Username"),
       key: UsersListSortingKey.map.Username.slug
     },
     {
-      text: Localization.operationsValue("Users_List_Name"),
+      content: Localization.operationsValue("Users_List_Name"),
       key: UsersListSortingKey.map.Name.slug
     },
     {
-      text: Localization.operationsValue("Users_List_Role"),
+      content: Localization.operationsValue("Users_List_Role"),
       key: UsersListSortingKey.map.Roles.slug
     }
   ];

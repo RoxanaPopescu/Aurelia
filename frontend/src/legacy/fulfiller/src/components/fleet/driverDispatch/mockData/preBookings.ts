@@ -2,8 +2,8 @@ export default [
   {
     id: "120931",
     slug: "1230-232-1-MV", // Discuss
-    consignorName: "Coop Mad",
-    consignorId: "892359",
+    fulfilleeName: "Coop Mad",
+    fulfilleeId: "892359",
     date: "2019-06-01T14:00:00",
     timePeriod: {
       from: "2019-06-19T06:00:00",
@@ -22,8 +22,8 @@ export default [
   {
     id: "120932",
     slug: "1230-233-1-MV", // Discuss
-    consignorName: "Coop Mad",
-    consignorId: "892359",
+    fulfilleeName: "Coop Mad",
+    fulfilleeId: "892359",
     date: "2019-06-01T14:00:00",
     timePeriod: {
       from: "2019-06-19T13:00:00",
@@ -42,8 +42,8 @@ export default [
   {
     id: "120933",
     slug: "1230-234-1-MV", // Discuss
-    consignorName: "Coop Logistik",
-    consignorId: "892360",
+    fulfilleeName: "Coop Logistik",
+    fulfilleeId: "892360",
     date: "2019-06-01T14:00:00",
     timePeriod: {
       from: "2019-06-19T06:00:00",

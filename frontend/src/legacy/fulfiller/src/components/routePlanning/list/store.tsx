@@ -12,27 +12,27 @@ export class RoutePlanListStore {
   plans: ListRoutePlan[] = [];
   headers = [
     {
-      text: Localization.sharedValue("Timeframe"),
+      content: Localization.sharedValue("Timeframe"),
       key: "8"
     },
     {
-      text: Localization.sharedValue("Header_Created"),
+      content: Localization.sharedValue("Header_Created"),
       key: "4"
     },
     {
-      text: Localization.sharedValue("Header_LastUpdated"),
+      content: Localization.sharedValue("Header_LastUpdated"),
       key: "5"
     },
     {
-      text: Localization.sharedValue("Header_Routes"),
+      content: Localization.sharedValue("Header_Routes"),
       key: "6"
     },
     {
-      text: Localization.sharedValue("Header_UnscheduledTasks"),
+      content: Localization.sharedValue("Header_UnscheduledTasks"),
       key: "7"
     },
     {
-      text: Localization.sharedValue("Header_Status"),
+      content: Localization.sharedValue("Header_Status"),
       key: "9"
     }
   ];

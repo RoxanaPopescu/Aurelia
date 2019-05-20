@@ -15,29 +15,29 @@ export class RoutesListStore {
   @observable pageIndex: number = 0;
   @observable resultsPerPage: number = 40;
   @observable sorting = new RoutesListSorting("RouteId", "Descending");
-  headers: { text: string; key: RoutesListSortingKey }[] = [
+  headers: { content: string; key: RoutesListSortingKey }[] = [
     {
-      text: Localization.sharedValue("Route_TableHeader_Id"),
+      content: Localization.sharedValue("Route_TableHeader_Id"),
       key: "RouteId"
     },
     {
-      text: Localization.sharedValue("Route_TableHeader_Reference"),
+      content: Localization.sharedValue("Route_TableHeader_Reference"),
       key: "Reference"
     },
     {
-      text: Localization.sharedValue("Route_TableHeader_Status"),
+      content: Localization.sharedValue("Route_TableHeader_Status"),
       key: "Status"
     },
     {
-      text: Localization.sharedValue("Route_TableHeader_StartDate"),
+      content: Localization.sharedValue("Route_TableHeader_StartDate"),
       key: "StartDate"
     },
     {
-      text: Localization.sharedValue("Route_TableHeader_StartAddress"),
+      content: Localization.sharedValue("Route_TableHeader_StartAddress"),
       key: "StartAddress"
     },
     {
-      text: Localization.sharedValue("Route_TableHeader_StopCount"),
+      content: Localization.sharedValue("Route_TableHeader_StopCount"),
       key: "StopCount"
     }
   ];

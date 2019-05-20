@@ -23,7 +23,7 @@ export default {
     { name: "Deadpool 5", id: "97643648" },
     { name: "Deadpool 6", id: "97643649" }
   ],
-  consignors: [
+  fulfillees: [
     { name: "Coop Mad", id: "892359" },
     { name: "Coop Logistik", id: "892360" },
     { name: "Cosmetics", id: "892361" },

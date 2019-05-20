@@ -3,14 +3,13 @@ import { observable } from "mobx";
 import { observer } from "mobx-react";
 import H from "history";
 import Localization from "shared/src/localization";
-import {
-  TableComponent,
-  ErrorInline,
-  LoadingInline
-} from "shared/src/webKit";
+import { TableComponent, ErrorInline, LoadingInline } from "shared/src/webKit";
 import { Row } from "shared/src/webKit/table";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
-import { RouteSimulationService, RouteSimulationInfo } from "../../services/routeSimulationService/index";
+import {
+  RouteSimulationService,
+  RouteSimulationInfo
+} from "../../services/routeSimulationService/index";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
 
@@ -20,7 +19,6 @@ interface Props {
 
 @observer
 export default class SimulationListComponent extends React.Component<Props> {
-
   private service = new RouteSimulationService();
 
   @observable
@@ -38,24 +36,19 @@ export default class SimulationListComponent extends React.Component<Props> {
   }
 
   public render() {
-
     if (this.error) {
-      return (
-        <ErrorInline description={this.error.message}/>
-      );
+      return <ErrorInline description={this.error.message} />;
     }
 
     if (this.routeSimulations == null) {
-      return <LoadingInline/>;
+      return <LoadingInline />;
     }
-    
+
     return (
       <>
         <PageHeaderComponent
           history={this.props.history}
-          path={[
-            { title: "Ruteplanlægning" }
-          ]}
+          path={[{ title: "Ruteplanlægning" }]}
           tabs={[
             {
               title: "Ruteplaner",
@@ -65,7 +58,9 @@ export default class SimulationListComponent extends React.Component<Props> {
             {
               title: "Indstillinger",
               name: "settings",
-              href: FulfillerSubPage.path(FulfillerSubPage.RoutePlanningSettingList)
+              href: FulfillerSubPage.path(
+                FulfillerSubPage.RoutePlanningSettingList
+              )
             },
             {
               title: "Ordregrupper",
@@ -82,21 +77,21 @@ export default class SimulationListComponent extends React.Component<Props> {
         />
 
         <PageContentComponent>
-
           <TableComponent
             data={{
               headers: [
-                { key: "name", text: "Navn" },
-                { key: "date", text: "Oprettet" }
+                { key: "name", content: "Navn" },
+                { key: "date", content: "Oprettet" }
               ],
               rows: this.getRows(this.routeSimulations)
             }}
-            generateURL={index => FulfillerSubPage
-              .path(FulfillerSubPage.SimulationResult)
-              .replace(":id", this.routeSimulations[index].id)
+            generateURL={index =>
+              FulfillerSubPage.path(FulfillerSubPage.SimulationResult).replace(
+                ":id",
+                this.routeSimulations[index].id
+              )
             }
           />
-
         </PageContentComponent>
       </>
     );

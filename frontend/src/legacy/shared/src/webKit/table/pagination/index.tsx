@@ -166,18 +166,21 @@ export class TablePaginationComponent extends React.Component<
     });
 
     return (
-      <div
-        className={`c-pagination-resultsPerPage${
-          this.state.dropdownOpen ? " open" : ""
-        }`}
-        onClick={() =>
-          this.setState({ dropdownOpen: !this.state.dropdownOpen })
-        }
-      >
-        {this.state.resultsPerPage}
-        {this.props.onResultsPerPageChanged && (
-          <div className="c-pagination-dropdown">{array}</div>
-        )}
+      <div className="c-pagination-amountOfResults" key="resultsPerPage">
+        Antal pr. side
+        <div
+          className={`c-pagination-resultsPerPage${
+            this.state.dropdownOpen ? " open" : ""
+          }`}
+          onClick={() =>
+            this.setState({ dropdownOpen: !this.state.dropdownOpen })
+          }
+        >
+          {this.state.resultsPerPage}
+          {this.props.onResultsPerPageChanged && (
+            <div className="c-pagination-dropdown">{array}</div>
+          )}
+        </div>
       </div>
     );
   }

@@ -2,8 +2,7 @@
 
 .c-pagination {
   z-index: 102;
-  padding: 0 8rem;
-  height: 19rem;
+  height: 14rem;
   background-color: white;
   text-align: center;
 }
@@ -22,12 +21,16 @@
 
 .c-pagination-content {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
   height: 100%;
   line-height: $backofficeSidePadding;
   user-select: none;
-  color: var(--colorBackgroundPrimary);
+
+  .c-pagination-amountOfResults {
+    display: flex;
+    align-items: center;
+  }
 
   .c-pagination-resultsPerPage {
     position: relative;
@@ -40,10 +43,13 @@
     border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
     border-radius: var(--border-radius-medium);
     margin-right: 3rem;
+    color: var(--colorBackgroundPrimary);
+    margin-left: 2rem;
 
     &.open {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+
       .c-pagination-dropdown {
         display: flex;
       }
@@ -82,13 +88,14 @@
 
     &.inactive {
       pointer-events: none;
-      opacity: 0.3;
+      opacity: .3;
     }
 
     &.previousPage {
       border-top-left-radius: var(--border-radius-medium);
       border-bottom-left-radius: var(--border-radius-medium);
       border-right: 0;
+
       span {
         transform: rotate(45deg);
         margin-right: -6px;
@@ -98,16 +105,17 @@
     &.nextPage {
       border-top-right-radius: var(--border-radius-medium);
       border-bottom-right-radius: var(--border-radius-medium);
+
       span {
         transform: rotate(225deg);
         margin-left: -6px;
       }
     }
+
     span {
       width: 11px;
       height: 11px;
-      border-bottom: var(--border-width-thin) solid
-        var(--colorBackgroundPrimary);
+      border-bottom: var(--border-width-thin) solid var(--colorBackgroundPrimary);
       border-left: var(--border-width-thin) solid var(--colorBackgroundPrimary);
     }
   }
@@ -122,8 +130,7 @@
       border-radius: var(--border-radius-medium);
       cursor: pointer;
       border: 1px solid transparent;
-      transition: opacity 100ms, border-color 100ms, background-color 100ms,
-        color 100ms;
+      transition: opacity 100ms, border-color 100ms, background-color 100ms, color 100ms;
 
       &:hover {
         border-color: var(--colorBackgroundPrimary);
@@ -148,7 +155,7 @@
       &.inactive {
         border: 0;
         pointer-events: none;
-        opacity: 0.3;
+        opacity: .3;
       }
 
       span {
@@ -158,7 +165,6 @@
     }
   }
 }
-
 @media (max-width: $mediaIpadV - 1) {
   .c-pagination {
     width: 100%;
@@ -167,30 +173,24 @@
 
     .c-pagination-content {
       .c-pagination-navigation {
-        &.inactive {
-        }
+        &.inactive {}
 
         &.previousPage {
-          &:before {
-          }
+          &:before {}
         }
 
         &.nextPage {
-          &:after {
-          }
+          &:after {}
         }
       }
 
       .c-pagination-pages {
         .c-pagination-pages-page {
-          &.active {
-          }
+          &.active {}
 
-          &:not(:last-child) {
-          }
+          &:not(:last-child) {}
 
-          &.inactive {
-          }
+          &.inactive {}
         }
       }
     }

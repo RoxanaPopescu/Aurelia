@@ -8,7 +8,7 @@ import LoadingOverlay from "../loading/overlay";
 import { GUID } from "..";
 
 export interface Header {
-  text: string;
+  content: string | JSX.Element;
   key: string;
 }
 
@@ -20,6 +20,7 @@ export interface TableProps {
   generateURL?(index: number): string | undefined;
   totalRowsText?: string;
   highlightedRowIndexes?: number[];
+  disabledRowIndexes?: number[];
   canSelectRow?: boolean | ((index: number) => boolean);
   newVersion?: boolean;
   loading: boolean;
@@ -56,7 +57,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
   }
 
   // tslint:disable-next-line:no-any
-  renderTableHeader(headers: { text: string; key: any }[]) {
+  renderTableHeader(headers: Header[]) {
     let array: JSX.Element[] = [];
 
     headers.map((header, index) => {
@@ -85,11 +86,11 @@ export class TableComponent extends React.Component<TableProps, TableState> {
         <div
           className={classNames}
           onClick={() => this.toggleSorting(header)}
-          key={header.text + header.key}
+          key={header.content + header.key}
           onMouseEnter={() => this.setState({ hoveredColumnRow: index })}
           onMouseLeave={() => this.setState({ hoveredColumnRow: undefined })}
         >
-          {header.text}
+          {header.content}
           {this.props.sorting && <span className="c-gridTable-header-arrows" />}
         </div>
       );
@@ -239,9 +240,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                       columnIndex === row.length - 1 ? "1px" : undefined
                   }}
                 >
-                  <div className="c-gridTable-content-inner">
-                    {column ? column : columnElement ? columnElement : "--"}
-                  </div>
+                  {column ? column : columnElement ? columnElement : "--"}
                 </Link>
               );
             } else {
@@ -260,9 +259,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                       columnIndex === row.length - 1 ? "1px" : undefined
                   }}
                 >
-                  <div className="c-gridTable-content-inner">
-                    {column ? column : columnElement ? columnElement : "--"}
-                  </div>
+                  {column ? column : columnElement ? columnElement : "--"}
                 </div>
               );
             }
@@ -275,6 +272,12 @@ export class TableComponent extends React.Component<TableProps, TableState> {
               0
           ) {
             rowClassName += " highlighted";
+          }
+          if (
+            this.props.disabledRowIndexes &&
+            this.props.disabledRowIndexes.filter(ai => ai === index).length > 0
+          ) {
+            rowClassName += " disabledRow";
           }
 
           rowsArray.push(

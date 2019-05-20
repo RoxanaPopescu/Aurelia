@@ -11,8 +11,8 @@ export class PreBooking {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.consignorId = data.consignorId;
-    this.consignorName = data.consignorName;
+    this.fulfilleeId = data.fulfilleeId;
+    this.fulfilleeName = data.fulfilleeName;
     this.date = DateTime.fromISO(data.date);
     this.timeFrame = new DateTimeRange(data.timePeriod, {
       setZone: true
@@ -34,14 +34,14 @@ export class PreBooking {
   public slug: string;
 
   /**
-   * The ID of the consignor related to this pre-booking
+   * The ID of the fulfillee related to this pre-booking
    */
-  public consignorId: string;
+  public fulfilleeId: string;
 
   /**
-   * The name of the consignor related to this pre-booking
+   * The name of the fulfillee related to this pre-booking
    */
-  public readonly consignorName: string;
+  public readonly fulfilleeName: string;
 
   /**
    * The status of the collo.

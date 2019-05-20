@@ -623,7 +623,7 @@ export default class TrackingRoute extends React.Component<Props> {
 
           <DriverTrackingGoogleMap
             loadingElement={<div />}
-            googleMapURL={MapConstants.url()}
+            googleMapURL={MapConstants.url("3.35")}
             containerElement={<div className="c-driverTacking-mapContainer" />}
             mapElement={<div style={{ height: "100%", width: "100%" }} />}
           />

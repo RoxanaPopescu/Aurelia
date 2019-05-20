@@ -10,13 +10,13 @@ export class DepartmentsListStore {
   @observable outfits: Outfit[] = [];
   @observable selectedOutfit?: Outfit;
 
-  headers: { text: string; key: DepartmentsListSortingKey }[] = [
+  headers: { content: string; key: DepartmentsListSortingKey }[] = [
     {
-      text: "Id",
+      content: "Id",
       key: "PublicId"
     },
     {
-      text: Localization.consignorValue("Departments_List_CompanyName"),
+      content: Localization.consignorValue("Departments_List_CompanyName"),
       key: "CompanyName"
     }
   ];

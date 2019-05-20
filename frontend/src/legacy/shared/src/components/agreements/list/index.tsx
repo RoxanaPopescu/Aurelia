@@ -23,14 +23,14 @@ export default class AgreementsListComponent extends React.Component {
     this.fetch();
   }
 
-  getHeaders(): { text: string; key: string }[] {
+  getHeaders(): { content: string; key: string }[] {
     return [
       {
-        text: Localization.consignorValue("Departments_List_CompanyName"),
+        content: Localization.consignorValue("Departments_List_CompanyName"),
         key: "1"
       },
       {
-        text: Localization.consignorValue("Departments_List_Type"),
+        content: Localization.consignorValue("Departments_List_Type"),
         key: "2"
       }
     ];
@@ -63,15 +63,9 @@ export default class AgreementsListComponent extends React.Component {
   render() {
     return (
       <React.Fragment>
-
-        <PageHeaderComponent
-          path={[
-            { title: "Aftaler" }
-          ]}
-        />
+        <PageHeaderComponent path={[{ title: "Aftaler" }]} />
 
         <PageContentComponent>
-          
           <TableComponent
             data={{
               headers: this.getHeaders(),
@@ -80,9 +74,7 @@ export default class AgreementsListComponent extends React.Component {
             loading={store.loading}
             canSelectRow={() => false}
           />
-          
         </PageContentComponent>
-
       </React.Fragment>
     );
   }

@@ -1,5 +1,5 @@
 @import "../constants.scss";
-$smallButtonHeight: 32px;
+$smallButtonHeight: 24px;
 $mediumButtonHeight: 40px;
 $largeButtonHeight: 52px;
 
@@ -26,7 +26,6 @@ $largeButtonHeight: 52px;
       top: 50%;
       margin-top: -13px;
       margin-left: -13px;
-      -webkit-animation: fade-in 300ms ease both, spin 600ms linear infinite;
       animation: fade-in 300ms ease both, spin 600ms linear infinite;
       min-height: 26px;
       width: 26px;
@@ -126,6 +125,23 @@ $largeButtonHeight: 52px;
         padding: calc((#{$mediumButtonHeight} - 24px) / 2) 16px;
       }
     }
+
+    &.buttonSmall {
+      min-height: $smallButtonHeight;
+      min-width: 100px;
+
+      &:active,
+      &:focus,
+      &:hover {
+        .moverButtonText {
+          padding: calc((#{$smallButtonHeight} - 21px) / 2) 16px;
+        }
+      }
+
+      .moverButtonText {
+        padding: calc((#{$smallButtonHeight} - 21px) / 2) 16px;
+      }
+    }
   }
 }
 
@@ -200,7 +216,7 @@ $largeButtonHeight: 52px;
         }
 
         &.disabled {
-          opacity: 0.5;
+          opacity: .5;
           border: 1px solid white;
           background-color: transparent;
         }

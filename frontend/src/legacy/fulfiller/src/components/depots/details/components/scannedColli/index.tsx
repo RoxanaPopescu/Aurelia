@@ -147,9 +147,7 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
 
   public renderMainContent() {
     if (this.error) {
-      return (
-        <ErrorInline description={this.error.message}/>
-      );
+      return <ErrorInline description={this.error.message} />;
     }
 
     return (
@@ -158,7 +156,8 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
         <TableComponent
           totalRowsText={
             this.service.missingColli
-              ? Localization.formatNumber(this.service.missingColli.length) + " Ikke scannede kolli"
+              ? Localization.formatNumber(this.service.missingColli.length) +
+                " Ikke scannede kolli"
               : undefined
           }
           canSelectRow={() => false}
@@ -181,16 +180,16 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
   }
 
   private getHead() {
-    let rowHead: { key: string; text: string }[] = [];
+    let rowHead: { key: string; content: string }[] = [];
 
-    rowHead.push({ key: "barcode", text: "Barcode" });
+    rowHead.push({ key: "barcode", content: "Barcode" });
     if (this.service.selectedConsignor === undefined) {
-      rowHead.push({ key: "consignorCompanyName", text: "Afsender" });
+      rowHead.push({ key: "consignorCompanyName", content: "Afsender" });
     }
-    rowHead.push({ key: "stopNumber", text: "Stop" });
-    rowHead.push({ key: "routeSlug", text: "Rute id" });
-    rowHead.push({ key: "routeReference", text: "Rute reference" });
-    rowHead.push({ key: "orderId", text: "Ordre id" });
+    rowHead.push({ key: "stopNumber", content: "Stop" });
+    rowHead.push({ key: "routeSlug", content: "Rute id" });
+    rowHead.push({ key: "routeReference", content: "Rute reference" });
+    rowHead.push({ key: "orderId", content: "Ordre id" });
 
     return rowHead;
   }

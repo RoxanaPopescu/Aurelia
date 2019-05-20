@@ -15,7 +15,7 @@ function withWorldMap(map: ComponentClass) {
     public render() {
       return (
         <WrappedMap
-          googleMapURL={MapConstants.url()}
+          googleMapURL={MapConstants.url("3.35")}
           loadingElement={<div className="c-worldMap c-worldMap-loading" />}
           containerElement={<div className="c-worldMap" />}
           mapElement={<div style={{ position: "absolute", width: "100%", height: "100%" }} />}

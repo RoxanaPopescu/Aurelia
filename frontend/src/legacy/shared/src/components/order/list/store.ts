@@ -16,29 +16,29 @@ export class OrderListStore {
   @observable resultsPerPage: number = 40;
   @observable sorting = new OrderListSorting("OrderId", "Descending");
 
-  headers: { text: string; key: OrdersListSortingKey }[] = [
+  headers: { content: string; key: OrdersListSortingKey }[] = [
     {
-      text: Localization.consignorValue("Order_TableHeader_Id"),
+      content: Localization.consignorValue("Order_TableHeader_Id"),
       key: "OrderId"
     },
     {
-      text: Localization.consignorValue("Order_TableHeader_Status"),
+      content: Localization.consignorValue("Order_TableHeader_Status"),
       key: "Status"
     },
     {
-      text: Localization.consignorValue("Order_TableHeader_Date"),
+      content: Localization.consignorValue("Order_TableHeader_Date"),
       key: "DeliveryEarliestDate"
     },
     {
-      text: Localization.consignorValue("Order_TableHeader_PickupTimeframe"),
+      content: Localization.consignorValue("Order_TableHeader_PickupTimeframe"),
       key: "PickupEarliestTime"
     },
     {
-      text: Localization.consignorValue("Order_TableHeader_PickupAddress"),
+      content: Localization.consignorValue("Order_TableHeader_PickupAddress"),
       key: "ConsignorAddress"
     },
     {
-      text: Localization.consignorValue("Order_TableHeader_DeliveryAddress"),
+      content: Localization.consignorValue("Order_TableHeader_DeliveryAddress"),
       key: "ConsigneeAddress"
     }
   ];

@@ -11,19 +11,19 @@ export class OrderGroupListStore {
   orderGroups: OrderGroup[] = [];
   headers = [
     {
-      text: Localization.sharedValue("OrderGroup_TableHeader_Name"),
+      content: Localization.sharedValue("OrderGroup_TableHeader_Name"),
       key: OrderGroupListSortingKey.map.Name.slug
     },
     {
-      text: Localization.sharedValue("OrderGroup_TableHeader_PostalCodes"),
+      content: Localization.sharedValue("OrderGroup_TableHeader_PostalCodes"),
       key: OrderGroupListSortingKey.map.PostalCode.slug
     },
     {
-      text: Localization.sharedValue("OrderGroup_TableHeader_Consignor"),
+      content: Localization.sharedValue("OrderGroup_TableHeader_Consignor"),
       key: OrderGroupListSortingKey.map.Customer.slug
     },
     {
-      text: Localization.sharedValue("OrderGroup_TableHeader_Tags"),
+      content: Localization.sharedValue("OrderGroup_TableHeader_Tags"),
       key: OrderGroupListSortingKey.map.Tags.slug
     }
   ];

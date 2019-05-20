@@ -5,69 +5,69 @@ import { Icon } from "shared/src/webKit";
 import "./styles.scss";
 
 interface Props {
-
   history?: H.History;
 
   /**
    * The path to show.
    */
   path: {
-
     /**
      * The title of the path segment.
      */
-    title: string,
+    title: string;
 
     /**
      * The URL to navigate to, when the path segment is clicked.
      */
-    href?: string,
+    href?: string;
 
     /**
      * Called when the path segment is clicked.
      * @returns True or void to continue, false to, if an `href` is specified, prevent navigation.
      */
-    onClick?: () => boolean | void
-    
+    onClick?: () => boolean | void;
   }[];
-  
+
   /**
    * The tabs to show.
    */
   tabs?: {
-    
     /**
      * The name of the tab.
      */
-    name: string,
-    
+    name: string;
+
     /**
      * The title of the tab.
      */
-    title: string,
+    title: string;
 
     /**
      * The URL to navigate to, when the tab is clicked.
      */
-    href?: string,
+    href?: string;
 
     /**
      * True to disable the tab, otherwise false.
      */
     disabled?: boolean;
-    
+
     /**
      * Called when the tab is clicked.
      * @returns True or void to continue, false to prevent the tab change.
      */
-    onClick?: () => boolean | void
-
+    onClick?: () => boolean | void;
   }[];
-  
+
   /**
    * The name identifying the active tab, or undefined to activate the first tab.
    */
   tab?: string;
+
+  /**
+   * The action elements.
+   */
+  actionElements?: JSX.Element;
 
   /**
    * Called when the active tab changes.
@@ -84,92 +84,94 @@ interface Props {
  */
 @observer
 export class PageHeaderComponent extends React.Component<Props> {
-
   public render() {
     return (
       <div className="pageHeader">
-
-        {this.renderPath()}
+        <div className="pageHeader-top">
+          {this.renderPath()}
+          {this.props.actionElements && (
+            <div className="pageHeader-actionContainer">
+              {this.props.actionElements}
+            </div>
+          )}
+        </div>
 
         <div className="pageHeader-toolbar">
           {this.renderTabs()}
           {this.renderChildren()}
         </div>
-
       </div>
     );
   }
 
   private renderPath() {
-    return this.props.path && this.props.path.length > 0 && (
-      <h1 className="pageHeader-path font-larger line-height-1 user-select-text">
-
-        {this.props.path.map((s, i) =>
-          <div
-            key={`${i}|${s.title}`}
-            className="pageHeader-path-segment"
-          >
-            {i > 0 && <Icon name="arrowRight"/>}
-            <div
-              onClick={() => {
-                if (s.onClick && s.onClick() === false) {
-                  return;
-                }
-                if (s.href) {
-                  this.props.history!.push(s.href);
-                }
-              }}
-            >
-              {s.title}
+    return (
+      this.props.path &&
+      this.props.path.length > 0 && (
+        <h1 className="pageHeader-path font-larger line-height-1 user-select-text">
+          {this.props.path.map((s, i) => (
+            <div key={`${i}|${s.title}`} className="pageHeader-path-segment">
+              {i > 0 && <Icon name="arrowRight" />}
+              <div
+                onClick={() => {
+                  if (s.onClick && s.onClick() === false) {
+                    return;
+                  }
+                  if (s.href) {
+                    this.props.history!.push(s.href);
+                  }
+                }}
+              >
+                {s.title}
+              </div>
             </div>
-          </div>
-        )}
-
-      </h1>
+          ))}
+        </h1>
+      )
     );
   }
 
   private renderTabs() {
-    return this.props.tabs && this.props.tabs.length > 0 && (
-      <div className="pageHeader-tabs">
-
-        {this.props.tabs.map((t, i) =>
-          <div
-            key={t.name}
-            className={
-              `pageHeader-tabs-tab font-label-base
+    return (
+      this.props.tabs &&
+      this.props.tabs.length > 0 && (
+        <div className="pageHeader-tabs">
+          {this.props.tabs.map((t, i) => (
+            <div
+              key={t.name}
+              className={`pageHeader-tabs-tab font-label-base
               ${t.disabled ? "disabled" : ""}
-              ${this.isActiveTab(t.name, i) ? "active" : ""}`
-            }
-            onClick={() => {
-              if (!this.isActiveTab(t.name, i)) {
-                if (t.onClick && t.onClick() === false) {
-                  return;
+              ${this.isActiveTab(t.name, i) ? "active" : ""}`}
+              onClick={() => {
+                if (!this.isActiveTab(t.name, i)) {
+                  if (t.onClick && t.onClick() === false) {
+                    return;
+                  }
+                  if (
+                    this.props.onTabChange &&
+                    this.props.onTabChange(t.name, i) === false
+                  ) {
+                    return;
+                  }
+                  if (t.href) {
+                    this.props.history!.push(t.href);
+                  }
                 }
-                if (this.props.onTabChange && this.props.onTabChange(t.name, i) === false) {
-                  return;
-                }
-                if (t.href) {
-                  this.props.history!.push(t.href);
-                }
-              }
-            }}
-          >
-            {t.title}
-          </div>
-        )}
-
-      </div>
+              }}
+            >
+              {t.title}
+            </div>
+          ))}
+        </div>
+      )
     );
   }
 
   private renderChildren() {
-    return this.props.children && (
-      <div className="pageHeader-actions">
-
-        {this.props.children}
-
-      </div>
+    return (
+      this.props.children && (
+        <div className="pageHeader-actions">{this.props.children}</div>
+      )
     );
   }
 

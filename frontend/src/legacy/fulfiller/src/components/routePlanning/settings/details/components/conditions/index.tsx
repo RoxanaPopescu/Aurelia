@@ -86,7 +86,7 @@ export default class AreasComponent extends React.Component<Props> {
         <div className="c-routePlanning-settings-details-mapContainer">
           <RoutePlanningSettingsMap
             store={this.props.store}
-            googleMapURL={MapConstants.url()}
+            googleMapURL={MapConstants.url("3.35")}
             loadingElement={<div style={{ display: "flex", flex: 1 }} />}
             containerElement={<div style={{ display: "flex", flex: 1 }} />}
             mapElement={<div style={{ display: "flex", flex: 1 }} />}

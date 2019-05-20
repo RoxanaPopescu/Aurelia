@@ -10,6 +10,7 @@ $paddingLeft: 14px;
     min-width: 30%;
   }
 }
+
 .selectHeadline {
   margin-bottom: $inputHeadlineMargin;
 }
@@ -138,6 +139,13 @@ $paddingLeft: 14px;
             .simple-value {
               height: 100%;
               width: 100%;
+              display: flex;
+              align-items: center;
+
+              .label-note {
+                margin-left: 1rem;
+                color: var(--colorNeutralRegular);
+              }
 
               span {
                 display: flex;
@@ -187,7 +195,6 @@ $paddingLeft: 14px;
 
         .no-results-found {
           padding: 10px $paddingLeft;
-          font-size: 12px;
           font-style: italic;
           pointer-events: none;
           background-color: var(--colorNeutralExtraLight);
@@ -212,6 +219,11 @@ $paddingLeft: 14px;
             padding: 0 $paddingLeft;
             cursor: pointer;
             font-weight: $fontSemibold;
+
+            span {
+              color: var(--colorNeutralRegular);
+              margin-left: 1rem;
+            }
           }
         }
       }
@@ -222,13 +234,11 @@ $paddingLeft: 14px;
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
 
-          .react-selectize-toggle-button-container {
-          }
+          .react-selectize-toggle-button-container {}
 
           .react-selectize-search-field-and-selected-values {
             &:focus,
-            &:hover {
-            }
+            &:hover {}
           }
         }
       }
@@ -324,11 +334,9 @@ $paddingLeft: 14px;
             color: var(--colorNeutralSemiDark);
           }
 
-          .react-selectize-toggle-button-container {
-          }
+          .react-selectize-toggle-button-container {}
 
-          .react-selectize-reset-button-container {
-          }
+          .react-selectize-reset-button-container {}
 
           .react-selectize-search-field-and-selected-values {
             padding: 30px 38px 12px $paddingLeft;
@@ -360,8 +368,7 @@ $paddingLeft: 14px;
 
         &.open {
           .react-selectize-control {
-            .react-selectize-toggle-button-container {
-            }
+            .react-selectize-toggle-button-container {}
           }
 
           .dropdown-menu {

@@ -1,13 +1,22 @@
 @import "shared/src/webKit/constants.scss";
 
 .pageHeader {
-  padding: 8rem 8rem 0 8rem;
+  padding: 10rem 8rem 0;
   border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
+}
+
+.pageHeader-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7rem;
+}
+
+.pageHeader-actionContainer {
+  margin-left: auto;
 }
 
 .pageHeader-path {
   display: flex;
-  margin-bottom: 7rem;
 }
 
 .pageHeader-path-segment {

@@ -12,11 +12,11 @@ export class RoutePlanSettingListStore {
   settings: RoutePlanSetting[] = [];
   headers = [
     {
-      text: "Navn",
+      content: "Navn",
       key: "8"
     },
     {
-      text: "Specielle regler",
+      content: "Specielle regler",
       key: "4"
     }
   ];

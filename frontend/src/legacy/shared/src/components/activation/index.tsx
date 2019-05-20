@@ -76,6 +76,7 @@ export default class Activation extends React.Component<Props> {
     )
       .then(async success => {
         if (success !== false) {
+          this.redirect();
 
           const loginPromise = await Profile.login(
             success.accessToken,
@@ -84,9 +85,6 @@ export default class Activation extends React.Component<Props> {
 
           store.validate = false;
           store.loading = false;
-
-          this.redirect();
-
           return loginPromise;
         }
 

@@ -50,19 +50,19 @@ export default class DriverListComponent extends React.Component<Props> {
   getHeaders() {
     return [
       {
-        text: Localization.sharedValue("Header_Id"),
+        content: Localization.sharedValue("Header_Id"),
         key: "0"
       },
       {
-        text: Localization.sharedValue("Header_Name"),
+        content: Localization.sharedValue("Header_Name"),
         key: "1"
       },
       {
-        text: Localization.sharedValue("Header_Vehicles"),
+        content: Localization.sharedValue("Header_Vehicles"),
         key: "2"
       },
       {
-        text: Localization.sharedValue("Header_Phone"),
+        content: Localization.sharedValue("Header_Phone"),
         key: "3"
       }
     ];
@@ -71,25 +71,21 @@ export default class DriverListComponent extends React.Component<Props> {
   render() {
     return (
       <>
-
-        <PageHeaderComponent
-          path={[
-            { title: "Chauffører" }
-          ]}
-        >
-
+        <PageHeaderComponent path={[{ title: "Chauffører" }]}>
           <ButtonAdd
             size={ButtonSize.Medium}
             type={ButtonType.Light}
-            onClick={() => this.props.history!.push(FulfillerSubPage.path(FulfillerSubPage.DriverCreate))}
+            onClick={() =>
+              this.props.history!.push(
+                FulfillerSubPage.path(FulfillerSubPage.DriverCreate)
+              )
+            }
           >
             Tilføj chauffør
           </ButtonAdd>
-
         </PageHeaderComponent>
 
         <PageContentComponent>
-        
           <TableComponent
             gridTemplateColumns="25% 25% 25% 25%"
             data={{
@@ -104,7 +100,6 @@ export default class DriverListComponent extends React.Component<Props> {
               );
             }}
           />
-
         </PageContentComponent>
 
         {store.error && (
@@ -115,7 +110,6 @@ export default class DriverListComponent extends React.Component<Props> {
             {store.error}
           </Toast>
         )}
-        
       </>
     );
   }

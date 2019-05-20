@@ -2,15 +2,15 @@
 
 .gridTable-container {
   position: relative;
-  top: -15px;
 }
+
 .c-gridTable-totalRows {
   padding: 12px 0;
   border-bottom: 1px solid var(--colorNeutralLight);
 }
 
 .c-gridTable-loading {
-  opacity: 0.3;
+  opacity: .3;
 }
 
 .c-gridTable-headerSorting {
@@ -27,8 +27,8 @@
     .c-gridTable-row {
       display: contents;
 
-      &:hover,
-      &.highlighted {
+      &.highlighted,
+      &:hover {
         .c-gridTable-content {
           background-color: var(--colorNeutralExtraLightDarken);
           border-color: var(--colorNeutralExtraLightDarken);
@@ -48,6 +48,7 @@
           }
         }
       }
+
       &.highlighted {
         .c-gridTable-content {
           z-index: 1;
@@ -113,12 +114,12 @@
 
         &:before {
           border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
-          margin-bottom: 0.5rem;
+          margin-bottom: .5rem;
         }
 
         &:after {
           border-top: $arrowHeight solid var(--colorBackgroundPrimary);
-          margin-top: 0.5rem;
+          margin-top: .5rem;
         }
       }
 
@@ -162,23 +163,20 @@
       color: var(--colorNeutralDark);
       margin-bottom: 4px;
 
-      &:first-child
-      {
-          border-top-left-radius: 3px;
-          border-bottom-left-radius: 3px;
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
       }
 
-      &:last-child
-      {
-          border-top-right-radius: 3px;
-          border-bottom-right-radius: 3px;
+      &:last-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
       }
 
       &.c-gridTable-skeleton {
         height: 40px;
         margin-bottom: 10px;
-        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal
-          none running;
+        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none running;
       }
 
       &.c-gridTable-lastColumn {
@@ -249,8 +247,7 @@
     justify-content: center;
     align-content: center;
 
-    .sideMenu--collapsed
-    {
+    .sideMenu--collapsed {
       left: var(--size-app-sidebar-width, #{$backofficeMenuSmall});
     }
 
@@ -310,21 +307,24 @@
     .c-gridTable-row {
       display: contents;
 
-      &:hover,
-      &.highlighted {
-        .c-gridTable-content {
-          background-color: var(--colorNeutralExtraLightDarken);
+      &.highlighted,
+      &:hover {
+        &:not(.disabledRow) {
+          .c-gridTable-content {
+            background-color: var(--colorNeutralExtraExtraLight);
+          }
         }
       }
+
       &.highlighted {
         .c-gridTable-content {
           z-index: 1;
         }
       }
 
-      &.disabled {
+      &.disabledRow {
         .c-gridTable-content {
-          color: var(--colorNeutralExtraLightDarken);
+          color: var(--colorNeutralSemiDark);
         }
       }
     }
@@ -350,6 +350,7 @@
         border-top-left-radius: var(--border-radius-medium);
         border-bottom-left-radius: var(--border-radius-medium);
       }
+
       &:last-child {
         border-right: var(--border-width-thin) solid var(--colorNeutralLight);
         border-top-right-radius: var(--border-radius-medium);
@@ -372,8 +373,7 @@
       &.c-gridTable-skeleton {
         height: 10rem;
         margin-bottom: 2rem;
-        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal
-          none running;
+        animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none running;
       }
 
       &.selectable {

@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.scss";
 import "../date/styles.scss";
 import Moment from "moment";
 import { InputSize } from "../../input";
@@ -130,7 +131,7 @@ export default class TimeComponent extends React.Component<Props, State> {
             onChangeRaw={e => e.preventDefault()} // EXTRA HACK, in case the above hack fails.
             className="dateTimeInput timeInput"
             selected={this.state.date}
-            timeIntervals={15}
+            timeIntervals={this.props.interval ? this.props.interval : 15}
             onChange={date => this.onChangeDate(date)}
             placeholderText={this.props.placeholder}
             showTimeSelect={true}
@@ -139,7 +140,6 @@ export default class TimeComponent extends React.Component<Props, State> {
             dateFormat="HH:mm"
             timeFormat="HH:mm"
             locale="da"
-            timeInterval={this.props.interval}
             minDate={
               this.props.minimum
                 ? Moment(this.props.minimum.toString())
@@ -152,7 +152,6 @@ export default class TimeComponent extends React.Component<Props, State> {
                 : undefined
             }
           />
-          <img src={require("./assets/clock.svg")} className="clock" />
         </div>
       </div>
     );

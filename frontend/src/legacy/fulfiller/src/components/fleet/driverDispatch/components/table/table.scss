@@ -1,1 +1,26 @@
 @import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-table-actionButton {
+  margin-left: auto;
+}
+
+.c-driverDispatch-checkMark {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background-color: #1acce2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -1rem;
+
+  &:before {
+    content: "";
+    height: 3rem;
+    width: 1.5rem;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    margin-bottom: 1px;
+  }
+}

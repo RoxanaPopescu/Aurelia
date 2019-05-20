@@ -10,8 +10,8 @@ export class Forecast {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.consignorId = data.consignorId;
-    this.consignorName = data.consignorName;
+    this.fulfilleeId = data.fulfilleeId;
+    this.fulfilleeName = data.fulfilleeName;
     this.date = DateTime.fromISO(data.date);
     this.timeFrame = new DateTimeRange(data.timePeriod, {
       setZone: true
@@ -32,14 +32,14 @@ export class Forecast {
   public slug: string;
 
   /**
-   * The ID of the consignor related to this forecast
+   * The ID of the fulfillee related to this forecast
    */
-  public consignorId: string;
+  public fulfilleeId: string;
 
   /**
-   * The name of the consignor related to this forecast
+   * The name of the fulfillee related to this forecast
    */
-  public readonly consignorName: string;
+  public readonly fulfilleeName: string;
 
   /**
    * The status of the collo.

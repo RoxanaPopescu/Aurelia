@@ -61,21 +61,15 @@ export default class Select extends React.Component<SelectProps, SelectState> {
   }
 
   getSelectClassName() {
-    let className: string;
+    let className: string = "";
 
     if (this.props.inlineHeadline) {
       className = " font-base";
     } else {
-      switch (this.props.size) {
-        case "medium":
-          className = "inputDefault";
-          break;
-        case "large":
-          className = "font-base";
-          break;
-        default:
-          className = "list1";
-          break;
+      if (this.props.size === "medium") {
+        className = "inputDefault";
+      } else if (this.props.size === "large") {
+        className = "font-base";
       }
     }
 
@@ -162,9 +156,24 @@ export default class Select extends React.Component<SelectProps, SelectState> {
               this.props.onSelect(value);
             }}
             onBlur={e => this.onBlur()}
+            renderValue={
+              // tslint:disable-next-line:no-any
+              (arg$: any) => {
+                var label, labelNote;
+                if (arg$ != null) {
+                  (label = arg$.label), (labelNote = arg$.labelNote);
+                }
+                return (
+                  <div className="simple-value ">
+                    {label}
+                    {labelNote && <div className="label-note">{labelNote}</div>}
+                  </div>
+                );
+              }
+            }
             renderOption={
               // tslint:disable-next-line:no-any
-              function(arg$: any) {
+              (arg$: any) => {
                 var label, newOption, selectable, isSelectable, labelNote;
                 if (arg$ != null) {
                   (label = arg$.label),

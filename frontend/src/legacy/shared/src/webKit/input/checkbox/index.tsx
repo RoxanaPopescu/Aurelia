@@ -63,7 +63,11 @@ export default class InputCheckbox extends React.Component<
         }}
       >
         <span className="c-checkbox">{this.state.checked && <span />}</span>
-        <div className="c-checkboxContainer-content">{this.props.children}</div>
+        {this.props.children && (
+          <div className="c-checkboxContainer-content">
+            {this.props.children}
+          </div>
+        )}
       </div>
     );
   }

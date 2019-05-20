@@ -1,0 +1,23 @@
+@import "../../constants.scss";
+
+.react-datepicker {
+  &.react-datepicker--time-only {
+    .react-datepicker__time-container {
+      .react-datepicker__time {
+        .react-datepicker__time-box {
+          .react-datepicker__time-list {
+            height: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dateTimeInput {
+  &.timeInput {
+    background-image: url("./assets/clock.svg");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 2rem) center;
+  }
+}

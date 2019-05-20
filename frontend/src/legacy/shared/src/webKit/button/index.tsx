@@ -68,6 +68,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     let containerClassNames =
       (this.props.size === ButtonSize.Large ? "buttonBig " : "") +
       (this.props.size === ButtonSize.Medium ? "buttonMedium " : "") +
+      (this.props.size === ButtonSize.Small ? "buttonSmall " : "") +
       "buttonContainer moverButton" +
       (this.props.className ? " " + this.props.className : "") +
       (this.props.loading ? " loading" : "") +

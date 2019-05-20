@@ -7,6 +7,7 @@ export class DepotRoute {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
+    this.reference = data.reference;
     this.gate = data.gate;
     this.driverId = data.driverId;
     this.fulfillerName = data.fulfillerName;
@@ -48,6 +49,7 @@ export class DepotRoute {
 
   public readonly id: string;
   public readonly slug: string;
+  public readonly reference: string;
   public readonly gate: string;
   public readonly driverId: string;
   public readonly fulfillerName: string;
