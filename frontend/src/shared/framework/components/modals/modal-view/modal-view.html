@@ -7,7 +7,8 @@
         view-model.one-time="modal.viewModel"
         view-model.ref="$compose"
         model.one-time="getModel(modal, $compose)"
-        class="au-animate ${modal !== topModal || modal.busy !== false ? '--disabled' : ''} ${modal.busy !== false ? '--busy' : ''}"
+        inert.bind="modal !== topModal"
+        class="au-animate"
         keydown.capture="onEventCaptured(modal)"
         keyup.capture="onEventCaptured(modal)"
         keypress.capture="onEventCaptured(modal)">

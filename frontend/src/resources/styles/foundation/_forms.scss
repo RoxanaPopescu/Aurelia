@@ -104,6 +104,22 @@ fieldset
 // the default accent is `neutral`, and buttons with `text` appearance have the touch area of a button.
 // ----------------------------------------------------------------------------------------------------
 
+// Style for anchors that should inherit the accent.
+a
+{
+    &[accent="inherit"]
+    {
+        color: inherit;
+
+        &:any-link:hover,
+        .focus-visible > &:any-link:focus
+        {
+            // If a neutral accent is applied, highlight when hovered or focused.
+            color: var(--color-surface-primary-text--hover);
+        }
+    }
+}
+
 // Style for anchors with unspecified appearance.
 a:not([appearance])
 {
@@ -135,7 +151,7 @@ a[appearance]
     // Prevent shrinking.
     flex-shrink: 0;
 
-    form &
+    form > &
     {
         // Apply the default `margin` when placed within a form.
         margin-top: var(--font-current-margin-top);
@@ -149,12 +165,13 @@ a[appearance]
     {
         // Style to appear as a button.
         padding: 0 3.5rem;
-        min-width: 45rem;
+        min-width: 10rem;
         line-height: calc(10rem - 2 * var(--border-width-medium));
         border: var(--border-width-medium) solid;
         border-radius: var(--border-radius-medium);
         border-color: transparent;
         text-align: center;
+        font-weight: 500;
     }
 
     // Style for the `none` appearance.
@@ -293,14 +310,38 @@ label
     // Ensure consistent cursor.
     cursor: pointer;
 
+    form > &
+    {
+        // Apply the default `margin` when the label is within a form.
+        margin-top: var(--font-current-margin-top);
+        margin-bottom: var(--font-current-margin-bottom);
+
+        &:not([appearance="input"])
+        {
+            > span:first-child
+            {
+                // Ensure consistent default layout of forms.
+                margin-right: auto;
+                flex-basis: 40%;
+            }
+
+            > :not(:first-child)
+            {
+                // Ensure minimum spacing between the label and the control.
+                margin-left: var(--size-inline-spacing);
+            }
+        }
+    }
+
     &[appearance="input"]
     {
-        input
-        {
-            // Remove margin on nested input, as the label will have it too.
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-        }
+        cursor: text;
+    }
+
+    > span
+    {
+        // Prevent text from shrinking, as it causes unwanted wrapping.
+        flex-shrink: 0;
     }
 }
 
@@ -330,8 +371,8 @@ input[type="week"]
     // Remove the default browser styling.
     appearance: none;
     padding: 0 3rem;
-    min-width: 10rem;
-    min-height: calc(10rem - 2 * var(--border-width-thin));
+    max-width: 100%;
+    min-height: 10rem;
     line-height: 1.5;
     border: var(--border-width-thin) solid var(--color-surface-input-border);
     border-radius: var(--border-radius-medium);
@@ -339,33 +380,43 @@ input[type="week"]
     color: var(--color-surface-input-surface-text);
     background: var(--color-surface-input-surface);
 
+    // Expand to fill the available width by default.
+    width: 100%;
+
     &:not(label)
     {
         display: block;
     }
 
-    // Expand to fill the available width by default.
-    width: 100%;
-
-    form &
+    form > &
     {
         // Apply the default `margin` when the control is within a form.
         margin-top: var(--font-current-margin-top);
         margin-bottom: var(--font-current-margin-bottom);
     }
 
-    label &
+    label[appearance="input"] > &
     {
-        // Ensure the label text appears before the control.
-        align-self: flex-end;
+        // Remove padding, as the label will have it too.
+        padding-left: 0;
+        padding-right: 0;
 
-        // Ensure proper spacing between the label and the control.
-        margin-left: var(--size-inline-spacing);
-
-        // Ensure consistent default layout of forms.
-        margin-left: auto;
-        flex-basis: 60%;
+        // Reduce the min-width to prevent overflow.
+        min-width: 10rem;
     }
+}
+
+textarea
+{
+    // Set the default height.
+    height: 20rem;
+
+    // Set the default min-width to prevent horizontal resizing.
+    min-width: 100%;
+
+    // Ensure consistent padding.
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
 }
 
 select
@@ -482,14 +533,14 @@ input[type="checkbox"]
         /* stylelint-enable */
     }
 
-    form &
+    form > &
     {
         // Apply the default `margin` when the control is within a form.
         margin-top: var(--font-current-margin-top);
         margin-bottom: var(--font-current-margin-bottom);
     }
 
-    label &
+    label > &
     {
         // Ensure proper spacing between the label and the control.
         margin-right: var(--size-inline-spacing);
@@ -571,14 +622,14 @@ input[type="radio"]
         /* stylelint-enable */
     }
 
-    form &
+    form > &
     {
         // Apply the default `margin` when the control is within a form.
         margin-top: var(--font-current-margin-top);
         margin-bottom: var(--font-current-margin-bottom);
     }
 
-    label &
+    label > &
     {
         // Ensure proper spacing between the label and the control.
         margin-right: var(--size-inline-spacing);

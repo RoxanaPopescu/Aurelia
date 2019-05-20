@@ -1,5 +1,6 @@
 <template
-    class="focus-hidden --accent-${accent || 'default'}"
+    class="focus-hidden ${modal != null && modal.busy !== false ? '--busy' : ''} --accent-${accent || 'default'}"
+    inert.bind="modal != null && modal.busy !== false"
     keydown.trigger="onKeyDown($event)"
     tabindex="-1"
     trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
@@ -21,7 +22,5 @@
         <slot></slot>
 
     </div>
-
-    <busy-overlay if.bind="modal.busy"></busy-overlay>
 
 </template>

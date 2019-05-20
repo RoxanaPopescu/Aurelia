@@ -13,7 +13,6 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
-        PLATFORM.moduleName("./components/busy-overlay/busy-overlay"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
         PLATFORM.moduleName("./components/controls/icons/badge/badge"),
@@ -49,7 +48,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/filter/filter"),
         PLATFORM.moduleName("./converters/take/take"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
-        PLATFORM.moduleName("./converters/skip/skip")
+        PLATFORM.moduleName("./converters/skip/skip"),
+        PLATFORM.moduleName("./converters/trim/trim")
     ]);
 
     // Instantiate the focus service, as it needs to track keyboard and mouse events.
@@ -60,7 +60,6 @@ export function configure(use: FrameworkConfiguration): void
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/trap-focus/trap-focus";
-export * from "./components/busy-overlay/busy-overlay";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
 export * from "./components/controls/icons/badge/badge";
@@ -98,6 +97,7 @@ export * from "./converters/filter/filter";
 export * from "./converters/take/take";
 export * from "./converters/reverse/reverse";
 export * from "./converters/skip/skip";
+export * from "./converters/trim/trim";
 
 // Services
 export * from "./services/focus";

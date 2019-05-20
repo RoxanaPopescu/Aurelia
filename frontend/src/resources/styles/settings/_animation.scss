@@ -8,9 +8,13 @@ $__summary: comment;
 
 :root
 {
-    /// The hover animation delay to use,
+    /// The hover animation delay,
     /// used for e.g. animations that should run only on hover, and not when the cursor moves across.
     --animation-delay-hover: 0.3s;
+
+    /// The busy animation delay,
+    /// used for e.g. animations that should run only if an operation takes somne time to complete.
+    --animation-delay-busy: 0.5s;
 
     /// The longest animation duration,
     /// used for e.g. animations that need to be subtle, such as the hover effect on the edge of a sidebar.

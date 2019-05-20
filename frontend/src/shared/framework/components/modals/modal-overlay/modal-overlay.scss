@@ -16,6 +16,15 @@ modal-overlay
     background: var(--color-surface);
     color: var(--color-surface-text);
 
+    &.--busy
+    {
+        > *
+        {
+            // Make content appear disabled while busy.
+            opacity: var(--opacity-disabled) !important;
+        }
+    }
+
     .modal-overlay-content
     {
         // Position at the top and allow content to

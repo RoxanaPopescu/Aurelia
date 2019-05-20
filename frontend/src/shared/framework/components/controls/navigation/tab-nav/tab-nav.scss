@@ -3,8 +3,9 @@ tab-nav
     // Use horizontal flex layout.
     display: flex;
 
-    // Set the text color.
+    // Set the text color and font weight.
     color: var(--color-surface-primary-text);
+    font-weight: 500;
 
     &[appearance="solid"]
     {

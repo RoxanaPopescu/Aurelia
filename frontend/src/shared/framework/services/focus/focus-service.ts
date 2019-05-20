@@ -13,7 +13,7 @@ export interface IExtendedFocusOptions extends FocusOptions
     /**
      * True to make the focus visible, false to make it invisible,
      * or undefined to keep the current visibility.
-     * Default is undefined.
+     * The default is undefined.
      */
     focusVisible?: boolean;
 }

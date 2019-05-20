@@ -224,7 +224,7 @@ export class HistoryHelper
                 url += `#${encodeURIComponent(state.fragment).replace(/%2F/g, "/").replace(/%3F/g, "?")}`;
             }
 
-            const success = await this._router.navigate(url, options) !== false;
+            const success = this._router.navigate(url, options) !== false;
 
             if (success)
             {

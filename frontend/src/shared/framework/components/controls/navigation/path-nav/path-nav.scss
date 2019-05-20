@@ -3,20 +3,23 @@
 path-nav
 {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
 
-    > *
+    > *,
+    > a[accent="inherit"]
     {
         display: block;
         white-space: nowrap;
 
         &:not(:last-child)::after
         {
-            content: ".";
+            content: "-";
             display: inline-block;
             width: 2.5em;
             opacity: 0.3;
             background: var(--color-surface-primary-icon);
+            color: transparent;
             mask-size: 0.6em;
             mask-position: center 55%;
             mask-repeat: no-repeat;
@@ -28,11 +31,5 @@ path-nav
                 "</svg>"
             );
         }
-    }
-
-    > a[href]:hover,
-    .focus-visible > a[href]:focus
-    {
-        color: var(--color-surface-primary-text--hover);
     }
 }

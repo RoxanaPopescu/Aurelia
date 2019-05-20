@@ -92,6 +92,6 @@ export class PageHrefCustomAttribute
             return;
         }
 
-        await this._router.navigate(this.path);
+        this._router.navigate(this.path);
     }
 }

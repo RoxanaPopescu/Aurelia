@@ -1,5 +1,6 @@
 <template
-    class="focus-hidden"
+    class="focus-hidden ${modal != null && modal.busy !== false ? '--busy' : ''}"
+    inert.bind="modal != null && modal.busy !== false"
     keydown.trigger="onKeyDown($event)"
     tabindex="-1"
     trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
@@ -21,7 +22,5 @@
         <slot name="actions"></slot>
 
     </div>
-
-    <busy-overlay if.bind="modal.busy"></busy-overlay>
 
 </template>

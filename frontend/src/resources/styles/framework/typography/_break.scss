@@ -3,11 +3,20 @@
 ////
 
 /// Classes representing styles for the otherwise unstyled
-/// `blockquote` element.
+/// `br` and `hr` elements.
 $__summary: comment;
 
 @import "styles/resources/index";
 
+
+/// Modifier class that may be used to indicate that at line break is optional,
+/// meaning that it can be omitted if needed, such as in a very small viewport.
+/// Note that the actual style, such as `display: none` should be defined in,
+/// and scoped to, the individual components and viewport sizes.
+br.br-preferred
+{
+    @include mark-empty;
+}
 
 /// Horizontal separator that renders as a thin, neutral line.
 /// If inside a content context, text margin is applied.

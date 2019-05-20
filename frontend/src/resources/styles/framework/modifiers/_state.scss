@@ -10,8 +10,26 @@ $__summary: comment;
 @import "styles/resources/index";
 
 
+/// Reserved modifier class indicating that the element is enabled.
+.--enabled
+{
+    @include mark-empty;
+}
+
+/// Reserved modifier class indicating that the element is disabled.
+.--disabled
+{
+    @include mark-empty;
+}
+
 /// Reserved modifier class indicating that the element is active.
 .--active
+{
+    @include mark-empty;
+}
+
+/// Reserved modifier class indicating that the element is inactive.
+.--inactive
 {
     @include mark-empty;
 }
@@ -33,4 +51,3 @@ $__summary: comment;
 {
     @include mark-empty;
 }
-

@@ -20,18 +20,26 @@
   });
 
   document.addEventListener("mousedown", event => {
-    var selection = window.getSelection().toString();
+    const selection = window.getSelection();
+    if (selection)
+    {
+      var selectionText = selection.toString();
 
-    if (selection === "") {
-      suppressClick = true;
+      if (selectionText === "") {
+        suppressClick = true;
+      }
     }
   }, true);
 
   document.addEventListener("mouseup", event => {
-    var selection = window.getSelection().toString();
+    const selection = window.getSelection();
+    if (selection)
+    {
+      var selectionText = selection.toString();
 
-    if (selection === "") {
-      suppressClick = false;
+      if (selectionText === "") {
+        suppressClick = false;
+      }
     }
   }, true);
 
@@ -48,7 +56,11 @@
     if (!event.defaultPrevented) {
       if (clearSelectionTimeout == null) {
         clearSelectionTimeout = setTimeout(() => {
-          window.getSelection().removeAllRanges();
+          const selection = window.getSelection();
+          if (selection)
+          {
+            selection.removeAllRanges();
+          }
         }, 500);
       } else {
         clearTimeout(clearSelectionTimeout);

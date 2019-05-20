@@ -44,7 +44,7 @@ $__summary: comment;
     text-transform: capitalize;
 }
 
-/// Truncates the text content of the element, adding an ellipsis at the end.
+/// Truncates the text content of the element, adding an ellipsis at the end of the text.
 /// Note that this only works for single-line text.
 .text-truncate
 {
@@ -52,4 +52,19 @@ $__summary: comment;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/// Truncates the text content of the element, adding an ellipsis at the beginning of the text.
+/// Note that this only works for single-line text.
+.text-truncate-reverse
+{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    // Hack to make the ellipsis appear at the beginning of the text.
+    direction: rtl;
+    text-align: left;
+    unicode-bidi: plaintext;
 }

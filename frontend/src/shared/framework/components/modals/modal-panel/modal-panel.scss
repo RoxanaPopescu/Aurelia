@@ -23,6 +23,15 @@ modal-panel
     // Apply a shadow to the panel.
     box-shadow: var(--modal-shadow);
 
+    &.--busy
+    {
+        > *
+        {
+            // Make content appear disabled while busy.
+            opacity: var(--opacity-disabled) !important;
+        }
+    }
+
     .modal-panel-content
     {
         // Position at the top and allow content to

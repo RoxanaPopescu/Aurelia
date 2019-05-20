@@ -3,13 +3,6 @@ tab
     display: block;
     cursor: pointer;
 
-    // Set the size of the tab.
-    tab-nav[appearance] &
-    {
-        min-width: 10rem;
-        line-height: 10rem;
-    }
-
     tab-nav[appearance="text"] &
     {
         &:not(:last-child)
@@ -28,6 +21,8 @@ tab
     tab-nav[appearance="solid"] &,
     tab-nav[appearance="outline"] &
     {
+        min-width: 10rem;
+
         // Style to appear as a button.
         padding: 0 3.5rem;
         text-align: center;
@@ -35,6 +30,9 @@ tab
 
     tab-nav[appearance="solid"] &
     {
+        // Fill the available space.
+        flex-grow: 1;
+
         // Compensate for the border around the `tab-nav`.
         line-height: calc(10rem - 2 * var(--border-width-medium));
 

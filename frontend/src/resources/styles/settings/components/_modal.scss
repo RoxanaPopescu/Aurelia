@@ -22,7 +22,7 @@ $__summary: comment;
 :root
 {
     // The margin between the panel and the edge of the viewport.
-    --modal-panel-margin: 0.5rem 0.25rem;
+    --modal-panel-margin: 0.5rem 0.5rem 0.5rem 0.25rem;
 
     // The min width of the panel, as a fixed size.
     --modal-panel-min-width: 140rem;
@@ -40,8 +40,11 @@ $__summary: comment;
 
     @media ($media-smallest-max)
     {
+        // The margin between the panel and the edge of the viewport.
+        --modal-panel-margin: 0.75rem 0.75rem 0.75rem 0.25rem;
+
         // When the viewport is too small for the default panel width, fill the viewport instead.
-        --modal-panel-min-width: calc(100vw - 2 * 0.25rem);
+        --modal-panel-min-width: calc(100vw - 0.25rem - 0.75rem);
         --modal-panel-max-width: var(--modal-panel-min-width);
     }
 }
