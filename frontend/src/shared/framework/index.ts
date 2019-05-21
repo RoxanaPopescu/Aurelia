@@ -26,6 +26,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/data-table/data-table"),
         PLATFORM.moduleName("./components/data-table/data-table-cell"),
         PLATFORM.moduleName("./components/data-table/data-table-headers"),
+        PLATFORM.moduleName("./components/data-table/data-table-pager"),
         PLATFORM.moduleName("./components/data-table/data-table-row"),
         PLATFORM.moduleName("./components/data-table/data-table-details"),
         PLATFORM.moduleName("./components/file-dropzone/file-dropzone"),
@@ -73,6 +74,7 @@ export * from "./components/controls/navigation/tree-nav/tree-nav";
 export * from "./components/data-table/data-table";
 export * from "./components/data-table/data-table-cell";
 export * from "./components/data-table/data-table-headers";
+export * from "./components/data-table/data-table-pager";
 export * from "./components/data-table/data-table-row";
 export * from "./components/data-table/data-table-details";
 export * from "./components/file-dropzone/file-dropzone";

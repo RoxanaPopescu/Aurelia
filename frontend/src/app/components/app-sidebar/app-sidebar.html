@@ -1,4 +1,4 @@
-<template surface="primary" scroll class="${expanded ? '--expanded' : ''}">
+<template surface="primary" class="${expanded ? '--expanded' : ''}">
 
     <require from="app/components/user-identity/user-identity"></require>
     <require from="app/components/app-logo/app-logo"></require>
@@ -36,7 +36,7 @@
 
     </header>
 
-    <section>
+    <section scroll>
 
         <div
             repeat.for="navModel of navModels"

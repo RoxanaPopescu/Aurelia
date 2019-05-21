@@ -1,0 +1,35 @@
+<template>
+
+    <require from="./data-table-pager.scss"></require>
+
+    <label class="data-table-pager-page-size" if.bind="pages != null">
+        <div translate>
+            Rows per page
+        </div>
+        <select value.bind="pageSize">
+            <option value="20">20</option>
+            <option value="20">40</option>
+            <option value="20">100</option>
+        </select>
+    </label>
+
+    <label class="data-table-pager-page" if.bind="page != null">
+        <div translate>
+            Page
+        </div>
+        <input type="text" value.bind="page" focus.trigger="onInputFocus($event.target)">
+        <div translate>
+            of ${pages | number}
+        </div>
+    </label>
+
+    <div class="data-table-pager-buttons">
+        <button disabled.bind="page > 1" appearance="solid" click.delegate="onNavClick(-1)">
+            <icon name="md-chevron-left"></icon>
+        </button>
+        <button disabled.bind="page < pages" appearance="solid" click.delegate="onNavClick(1)">
+            <icon name="md-chevron-right"></icon>
+        </button>
+    </div>
+
+</template>

@@ -1,0 +1,64 @@
+@import "resources/index";
+
+data-table-pager
+{
+    display: flex;
+    align-items: center;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-larger);
+    }
+
+    label > div
+    {
+        flex-shrink: 0;
+
+        &:first-child
+        {
+            margin-right: var(--size-inline-spacing);
+        }
+
+        &:last-child
+        {
+            margin-left: var(--size-inline-spacing);
+        }
+    }
+
+    .data-table-pager-buttons
+    {
+        display: flex;
+        align-items: center;
+
+        icon
+        {
+            font-size: 6rem;
+            vertical-align: middle;
+        }
+
+        button:first-child
+        {
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        button:last-child
+        {
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    .data-table-pager-page-size select
+    {
+        width: 17rem;
+    }
+
+    .data-table-pager-page input
+    {
+        width: 14rem;
+        text-align: center;
+    }
+}

@@ -166,7 +166,7 @@
   "Model_Logistics_RouteStatus:Completed": "Afsluttet",
   "Model_Logistics_RouteStatus:Expired": "Udløbet",
   "Model_Logistics_RouteStatus:Requested": "Ikke tildelt chauffør",
-  "Model_Logistics_RouteStatus:Started": "Igangværende",
+  "Model_Logistics_RouteStatus:Started": "Igang",
   "Model_Logistics_RouteStopStatus:Arrived": "Ankommet",
   "Model_Logistics_RouteStopStatus:Cancelled": "Annulleret",
   "Model_Logistics_RouteStopStatus:CancelledByDriver": "Anulleret af chauffør",

@@ -15,14 +15,18 @@ $__summary: comment;
     --size-indent-spacing: 5rem;
 
     /// The horizontal spacing to apply between an inline element and its neighbor.
-    /// Use this to apply spacing between a small object and its related text,
+    /// Use this to apply spacing between a small element and its related text,
     /// such as e.g. bullet points or checkboxes and the text that folows.
     --size-inline-spacing: 0.6em;
 
     /// The horizontal spacing to apply between an inline element and its neighbor.
-    /// Use this to apply spacing between a large object and its related text,
+    /// Use this to apply spacing between a large element and its related text,
     /// such as e.g. a picture and the text that follows.
     --size-inline-spacing-large: 0.8em;
+
+    /// The horizontal spacing to apply between an inline element and its neighbor.
+    /// Use this to apply spacing between unrelated elements that need additional spacing.
+    --size-inline-spacing-larger: 1.5em;
 
     /// The vertical spacing to apply between two single-height lines of text.
     /// Use this to apply spacing between a title and and its related subtitle,

@@ -64,6 +64,8 @@ app-sidebar
         // Apply vertical margins to separate sections.
         margin-top: 4rem;
         margin-bottom: 4rem;
+
+        flex-shrink: 1;
     }
 
     footer
