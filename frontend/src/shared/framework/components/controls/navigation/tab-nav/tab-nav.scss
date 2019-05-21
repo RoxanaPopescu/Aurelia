@@ -1,3 +1,5 @@
+@import "styles/resources/index";
+
 tab-nav
 {
     // Use horizontal flex layout.
@@ -6,6 +8,13 @@ tab-nav
     // Set the text color and font weight.
     color: var(--color-surface-primary-text);
     font-weight: 500;
+
+    &:not([appearance]),
+    &[appearance="tabs"]
+    {
+        // Apply a border along the bottom of the tabs.
+        border-bottom: var(--border-width-medium) solid var(--color-surface-neutral-border);
+    }
 
     &[appearance="solid"]
     {

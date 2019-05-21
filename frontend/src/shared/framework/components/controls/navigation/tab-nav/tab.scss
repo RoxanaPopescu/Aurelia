@@ -1,3 +1,5 @@
+@import "styles/resources/index";
+
 tab
 {
     display: block;
@@ -18,6 +20,8 @@ tab
         }
     }
 
+    tab-nav:not([appearance]) &,
+    tab-nav[appearance="tabs"] &,
     tab-nav[appearance="solid"] &,
     tab-nav[appearance="outline"] &
     {
@@ -28,12 +32,31 @@ tab
         text-align: center;
     }
 
+    tab-nav:not([appearance]) &,
+    tab-nav[appearance="tabs"] &
+    {
+        // Fill the available space.
+        flex-grow: 1;
+
+        // Compensate for the border along the bottom of the tabs.
+        line-height: calc(10rem - var(--border-width-medium));
+
+        &.--active
+        {
+            // Highlight the active tab.
+            background: var(--color-surface-neutral-surface);
+            color: var(--color-surface-neutral-text);
+            border-top-left-radius: var(--border-radius-medium);
+            border-top-right-radius: var(--border-radius-medium);
+        }
+    }
+
     tab-nav[appearance="solid"] &
     {
         // Fill the available space.
         flex-grow: 1;
 
-        // Compensate for the border around the `tab-nav`.
+        // Compensate for the border around the tabs.
         line-height: calc(10rem - 2 * var(--border-width-medium));
 
         &:not(:last-child)

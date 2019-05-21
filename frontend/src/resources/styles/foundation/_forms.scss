@@ -397,9 +397,12 @@ input[type="week"]
 
     label[appearance="input"] > &
     {
-        // Remove padding, as the label will have it too.
+        // Remove padding and border, as the label will have it too.
         padding-left: 0;
         padding-right: 0;
+
+        // Reduce the min-height to compensate for the border on the label.
+        min-height: calc(10rem - 2 * var(--border-width-thin));
 
         // Reduce the min-width to prevent overflow.
         min-width: 10rem;
