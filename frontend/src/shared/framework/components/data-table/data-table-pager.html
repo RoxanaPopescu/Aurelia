@@ -2,34 +2,54 @@
 
     <require from="./data-table-pager.scss"></require>
 
-    <label class="data-table-pager-page-size" if.bind="pages != null">
+    <div class="data-table-pager-page-size" if.bind="pageSize != null">
+
         <div translate>
             Rows per page
         </div>
-        <select value.bind="pageSize">
-            <option value="20">20</option>
-            <option value="20">40</option>
-            <option value="20">100</option>
-        </select>
-    </label>
 
-    <label class="data-table-pager-page" if.bind="page != null">
+        <select value.bind="pageSize">
+            <option model.bind="20">20</option>
+            <option model.bind="40">40</option>
+            <option model.bind="100">100</option>
+        </select>
+
+    </div>
+
+    <div class="data-table-pager-page">
+
         <div translate>
             Page
         </div>
-        <input type="text" value.bind="page" focus.trigger="onInputFocus($event.target)">
-        <div translate>
+
+        <input
+            type="number"
+            min="1"
+            max.bind="pages"
+            step="1"
+            value.bind="pageInputValue"
+            focus.trigger="onPageInputFocus($event)"
+            blur.trigger="onPageInputBlur()"
+            keydown.trigger="onPageInputKeydown($event)">
+
+        <div translate if.bind="pages != null">
             of ${pages | number}
         </div>
-    </label>
+
+    </div>
 
     <div class="data-table-pager-buttons">
-        <button disabled.bind="page > 1" appearance="solid" click.delegate="onNavClick(-1)">
+
+        <button disabled.bind="page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
             <icon name="md-chevron-left"></icon>
         </button>
-        <button disabled.bind="page < pages" appearance="solid" click.delegate="onNavClick(1)">
+
+        <div></div>
+
+        <button disabled.bind="pages != null && page >= pages" appearance="solid" click.delegate="onNavClick(1)">
             <icon name="md-chevron-right"></icon>
         </button>
+
     </div>
 
 </template>

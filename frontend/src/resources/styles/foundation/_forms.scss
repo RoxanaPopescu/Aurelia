@@ -409,6 +409,14 @@ input[type="week"]
     }
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button
+{
+    // Remove spin buttons in inputs of type `number`.
+    appearance: none;
+    margin: 0;
+}
+
 textarea
 {
     // Set the default height.

@@ -10,25 +10,43 @@ data-table-pager
         margin-right: var(--size-inline-spacing-larger);
     }
 
-    label > div
+    .data-table-pager-page-size,
+    .data-table-pager-page
     {
-        flex-shrink: 0;
+        display: flex;
+        align-items: center;
 
-        &:first-child
+        > div
         {
-            margin-right: var(--size-inline-spacing);
-        }
+            flex-shrink: 0;
 
-        &:last-child
-        {
-            margin-left: var(--size-inline-spacing);
+            &:first-child
+            {
+                margin-right: var(--size-inline-spacing);
+            }
+
+            &:last-child
+            {
+                margin-left: var(--size-inline-spacing);
+            }
         }
+    }
+
+    .data-table-pager-page-size select
+    {
+        width: 17rem;
+    }
+
+    .data-table-pager-page input
+    {
+        width: 14rem;
+        text-align: center;
+        appearance: none;
     }
 
     .data-table-pager-buttons
     {
         display: flex;
-        align-items: center;
 
         icon
         {
@@ -49,16 +67,11 @@ data-table-pager
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
         }
-    }
 
-    .data-table-pager-page-size select
-    {
-        width: 17rem;
-    }
-
-    .data-table-pager-page input
-    {
-        width: 14rem;
-        text-align: center;
+        div
+        {
+            width: var(--border-width-medium);
+            background: var(--color-surface-neutral-border);
+        }
     }
 }
