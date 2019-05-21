@@ -1,4 +1,4 @@
-<template click.delegate="onClick()" class="${dataTable.sorting[name] !== undefined ? '--sortable' : ''}">
+<template click.delegate="onClick()" class="${name ? '--sortable' : ''}">
 
     <require from="./data-table-cell.scss"></require>
 
@@ -6,10 +6,10 @@
 
         <slot></slot>
 
-        <div if.bind="dataTable.sorting[name] !== undefined" class="data-table-cell-sorting">
-            <icon if.bind="dataTable.sorting[name] === 'ascending'" name="md-arrow-upward"></icon>
-            <icon if.bind="dataTable.sorting[name] === 'descending'" name="md-arrow-downward"></icon>
-            <icon if.bind="dataTable.sorting[name] === null">
+        <div if.bind="name" class="data-table-cell-sorting">
+            <icon if.bind="dataTable.sorting.column === name && dataTable.sorting.direction === 'ascending'" name="md-arrow-upward"></icon>
+            <icon if.bind="dataTable.sorting.column === name && dataTable.sorting.direction === 'descending'" name="md-arrow-downward"></icon>
+            <icon if.bind="dataTable.sorting.column !== name || dataTable.sorting.direction === null">
                 <div class="margin-auto opacity-faded-more">–</div>
             </icon>
         </div>

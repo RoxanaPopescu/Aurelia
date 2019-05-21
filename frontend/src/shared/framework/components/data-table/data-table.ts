@@ -2,6 +2,18 @@ import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { DataTableRowCustomElement } from "./data-table-row";
 
 /**
+ * Represents the sorting options for a `data-table`.
+ */
+export interface IDataTableSorting
+{
+    // The name of the column by which the rows should be sorted.
+    column: string;
+
+    // The direction in which the rows should be sorted.
+    direction: string | null;
+}
+
+/**
  * Represents a data table.
  */
 @autoinject
@@ -34,5 +46,5 @@ export class DataTableCustomElement
      * The sorting options to use.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public sorting = {};
+    public sorting: IDataTableSorting;
 }

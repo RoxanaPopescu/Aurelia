@@ -31,12 +31,19 @@ export class DataTableCellCustomElement
      */
     protected onClick(): boolean
     {
-        if (this.name && this.dataTable.sorting[this.name] !== undefined)
+        if (this.name)
         {
-            this.dataTable.sorting[this.name] =
-                this.dataTable.sorting[this.name] === null ? "ascending" :
-                this.dataTable.sorting[this.name] === "ascending" ? "descending" :
+            const direction =
+                (this.dataTable.sorting == null || this.dataTable.sorting.column !== this.name) ? "descending" :
+                this.dataTable.sorting.direction === null ? "descending" :
+                this.dataTable.sorting.direction === "descending" ? "ascending" :
                 null;
+
+            this.dataTable.sorting =
+            {
+                column: this.name,
+                direction
+            };
         }
 
         return true;
