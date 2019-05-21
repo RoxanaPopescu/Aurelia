@@ -43,7 +43,7 @@ export const paths =
     styleFolders:
     [
         resolve("src/"),
-        resolve("src/resources/")
+        resolve("src/resources/styles/")
     ],
 
     /**
