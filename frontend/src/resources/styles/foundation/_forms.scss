@@ -373,10 +373,10 @@ input[type="week"]
     padding: 0 3rem;
     max-width: 100%;
     min-height: 10rem;
-    line-height: 1.5;
     border: var(--border-width-thin) solid var(--color-surface-input-border);
     border-radius: var(--border-radius-medium);
     font-size: inherit;
+    line-height: inherit;
     color: var(--color-surface-input-surface-text);
     background: var(--color-surface-input-surface);
 
@@ -409,25 +409,28 @@ input[type="week"]
     }
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button
+input[type="number"]
 {
-    // Remove spin buttons in inputs of type `number`.
-    appearance: none;
-    margin: 0;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button
+    {
+        // Remove spin buttons in inputs of type `number`.
+        appearance: none;
+        margin: 0;
+    }
 }
 
 textarea
 {
     // Set the default height.
-    height: 20rem;
+    min-height: 20rem;
 
     // Set the default min-width to prevent horizontal resizing.
     min-width: 100%;
 
     // Ensure consistent padding.
-    padding-top: 1.75rem;
-    padding-bottom: 1.75rem;
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
 }
 
 select

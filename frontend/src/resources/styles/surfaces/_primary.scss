@@ -19,16 +19,6 @@ $__summary: comment;
     --color-surface-icon: var(--palette-color-primary-lighter);
     --color-surface-border: var(--palette-color-primary-dark);
 
-    // Edge of the sidebar, used for resizing and toggling.
-    &
-    {
-        // State: normal
-        --color-surface-edge: var(--palette-color-primary);
-
-        // State: hover
-        --color-surface-edge--hover: var(--palette-color-primary-dark);
-    }
-
     // Navigation links on the surface.
     &
     {
