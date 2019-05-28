@@ -1,14 +1,19 @@
 import { Accent } from "app/model/entities/shared";
 
 /**
+ * Represents the slug identifying a `ColloStatus`.
+ */
+export type ColloStatusSlug = keyof typeof ColloStatus.map;
+
+/**
  * Represents the status of a collo.
  */
 export class ColloStatus
 {
-    public constructor(status: keyof typeof ColloStatus.map)
+    public constructor(slug: keyof typeof ColloStatus.map)
     {
-        this.slug = status;
-        Object.assign(this, ColloStatus.map[status]);
+        this.slug = slug;
+        Object.assign(this, ColloStatus.map[slug]);
     }
 
     public slug: keyof typeof ColloStatus.map;

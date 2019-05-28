@@ -54,7 +54,12 @@ const serveOptions: IServerOptions =
     hmr: true,
     proxy:
     {
-        "/api/": "http://localhost:8008/"
+        "/api/v1/":
+        {
+            target: "https://bff-v1-test-mover.azurewebsites.net/",
+            pathRewrite: { "^/api/v1/": "" },
+            changeOrigin: true
+        }
     }
 };
 

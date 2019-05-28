@@ -1,14 +1,19 @@
 import { Accent } from "app/model/entities/shared";
 
 /**
+ * Represents the slug identifying a `RouteStatus`.
+ */
+export type RouteStatusSlug = keyof typeof RouteStatus.map;
+
+/**
  * Represents the status of a route.
  */
 export class RouteStatus
 {
-    public constructor(status: keyof typeof RouteStatus.map)
+    public constructor(slug: keyof typeof RouteStatus.map)
     {
-        this.slug = status;
-        Object.assign(this, RouteStatus.map[status]);
+        this.slug = slug;
+        Object.assign(this, RouteStatus.map[slug]);
     }
 
     public slug: keyof typeof RouteStatus.map;
@@ -18,37 +23,37 @@ export class RouteStatus
 
     public static readonly map =
     {
-        requested:
+        "requested":
         {
             name: "Requested",
             accent: "neutral",
             value: 1
         },
-        accepted:
+        "accepted":
         {
             name: "Accepted",
             accent: "neutral",
             value: 2
         },
-        assigned:
+        "assigned":
         {
             name: "Assigned",
             accent: "neutral",
             value: 3
         },
-        started:
+        "started":
         {
             name: "Started",
             accent: "neutral",
             value: 4
         },
-        completed:
+        "completed":
         {
             name: "Completed",
             accent: "positive",
             value: 20
         },
-        cancelled:
+        "cancelled":
         {
             name: "Cancelled",
             accent: "neutral",

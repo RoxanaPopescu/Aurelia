@@ -1,29 +1,34 @@
 /**
+ * Represents the slug identifying a `SortingDirection`.
+ */
+export type SortingDirectionSlug = keyof typeof SortingDirection.map;
+
+/**
  * Represents a sorting direction.
  */
 export class SortingDirection
 {
-    public constructor(status: keyof typeof SortingDirection.map)
+    public constructor(slug: keyof typeof SortingDirection.map)
     {
-        this.slug = status;
-        Object.assign(this, SortingDirection.map[status]);
+        this.slug = slug;
+        Object.assign(this, SortingDirection.map[slug]);
     }
 
     public slug: keyof typeof SortingDirection.map;
     public name: string;
-    public id: number;
+    public value: number;
 
     public static readonly map =
     {
-        Ascending:
+        "ascending":
         {
             name: "Ascending",
-            id: 1
+            value: 1
         },
-        Descending:
+        "descending":
         {
             name: "Descending",
-            id: 2
+            value: 2
         }
     };
 }

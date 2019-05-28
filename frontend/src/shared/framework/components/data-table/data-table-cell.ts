@@ -34,16 +34,17 @@ export class DataTableCellCustomElement
         if (this.name)
         {
             const direction =
-                (this.dataTable.sorting == null || this.dataTable.sorting.column !== this.name) ? "descending" :
+                (this.dataTable.sorting == null || this.dataTable.sorting.property !== this.name) ? "descending" :
                 this.dataTable.sorting.direction === null ? "descending" :
                 this.dataTable.sorting.direction === "descending" ? "ascending" :
                 null;
 
             this.dataTable.sorting =
-            {
-                column: this.name,
-                direction
-            };
+                direction == null ? undefined :
+                {
+                    property: this.name,
+                    direction
+                };
         }
 
         return true;

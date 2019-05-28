@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framework";
 
 /**
  * Represents a pager for a data table.
@@ -12,22 +12,55 @@ export class DataTablePagerCustomElement
     protected pageInputValue: string;
 
     /**
+     * The total number of pages, or undefined if unknown.
+     * This is computed from `listSize` and `pageSize`, with `pageCount` used as fallback.
+     */
+    @computedFrom("pageCount", "listSize", "pageSize")
+    protected get computedPageCount(): number | undefined
+    {
+        if (this.pageCount != null && this.listSize != null && this.pageSize)
+        {
+            return Math.min(this.pageCount, Math.ceil(this.listSize / this.pageSize));
+        }
+
+        if (this.listSize != null && this.pageSize)
+        {
+            return Math.ceil(this.listSize / this.pageSize);
+        }
+
+        return this.pageCount;
+    }
+
+    /**
      * The current page number, starting from 1.
      */
-    @bindable({ defaultValue: 1 })
+    @bindable({ defaultValue: 1, defaultBindingMode: bindingMode.twoWay })
     public page: number;
 
     /**
-     * The total number of pages, or undefined to apply no upper limit.
+     * The page sizes the user may choose from.
      */
-    @bindable
-    public pages: number | undefined;
+    @bindable({ defaultValue: [10, 20, 30, 40, 50] })
+    public pageSizes: number[];
 
     /**
      * The max number of items to show on a page, or undefined to disable this option.
      */
-    @bindable
+    @bindable({ defaultBindingMode: bindingMode.twoWay })
     public pageSize: number | undefined;
+
+    /**
+     * The total number of items in the list, or undefined if unknown.
+     */
+    @bindable
+    public listSize: number | undefined;
+
+    /**
+     * The total number of pages, used as fallback if `listSize` or `pageSize` is undefined,
+     * or undefined to to fall back to unlimited paging.
+     */
+    @bindable
+    public pageCount: number | undefined;
 
     /**
      * Called by the framework when the component is binding.
@@ -75,7 +108,7 @@ export class DataTablePagerCustomElement
         if (event.key === "Enter")
         {
             const page = Number.parseInt(this.pageInputValue || this.page.toString());
-            this.page = Math.max(1, Math.min(this.pages || page, page));
+            this.page = Math.max(1, Math.min(this.pageCount || page, page));
             this.pageInputValue = this.page.toString();
         }
 

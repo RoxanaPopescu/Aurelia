@@ -1,13 +1,18 @@
 /**
+ * Represents the slug identifying a `RouteCriticality`.
+ */
+export type RouteCriticalitySlug = keyof typeof RouteCriticality.map;
+
+/**
  * Represents the criticality of a route, which is an indication of
  * how much attention it requires from the operations team.
  */
 export class RouteCriticality
 {
-    public constructor(criticality: keyof typeof RouteCriticality.map)
+    public constructor(slug: keyof typeof RouteCriticality.map)
     {
-        this.slug = criticality;
-        Object.assign(this, RouteCriticality.map[criticality]);
+        this.slug = slug;
+        Object.assign(this, RouteCriticality.map[slug]);
     }
 
     public slug: keyof typeof RouteCriticality.map;

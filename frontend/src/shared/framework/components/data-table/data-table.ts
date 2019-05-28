@@ -1,16 +1,17 @@
 import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { DataTableRowCustomElement } from "./data-table-row";
+import { SortDirection } from "shared/types";
 
 /**
  * Represents the sorting options for a `data-table`.
  */
 export interface IDataTableSorting
 {
-    // The name of the column by which the rows should be sorted.
-    column: string;
+    // The name of the property by which the items should be sorted.
+    property: string;
 
-    // The direction in which the rows should be sorted.
-    direction: string | null;
+    // The direction in which the items should be sorted.
+    direction: SortDirection;
 }
 
 /**
@@ -43,8 +44,8 @@ export class DataTableCustomElement
     public allSelected: boolean;
 
     /**
-     * The sorting options to use.
+     * The sorting to use, or undefined to use no sorting.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public sorting: IDataTableSorting;
+    public sorting: IDataTableSorting | undefined;
 }

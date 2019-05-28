@@ -80,15 +80,17 @@ export class IdentityService
      */
     private configureApiClient(): void
     {
+        // tslint:disable: no-string-literal no-dynamic-delete
         if (this.identity != null)
         {
-            settings.infrastructure.api.defaults!.headers!["access-token"] = this.identity.tokens.access;
+            settings.infrastructure.api.defaults!.headers!["authorization"] = `Bearer ${this.identity.tokens.access}`;
             settings.infrastructure.api.defaults!.headers!["refresh-token"] = this.identity.tokens.refresh;
         }
         else
         {
-            delete settings.infrastructure.api.defaults!.headers!["access-token"];
+            delete settings.infrastructure.api.defaults!.headers!["authorization"];
             delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
         }
+        // tslint:disable
     }
 }

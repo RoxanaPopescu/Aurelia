@@ -1,4 +1,5 @@
 import { ColloStatus } from "./collo-status";
+import { ColloOrigin } from "./collo-origin";
 
 /**
  * Represents a single collo.
@@ -44,31 +45,4 @@ export class Collo
      * The origin of the collo.
      */
     public readonly origin: ColloOrigin;
-}
-
-/**
- * Represents the origin of the collo entry.
- */
-export class ColloOrigin
-{
-    public static readonly map =
-    {
-        "regular":
-        {
-            name: ""
-        },
-        "added-by-driver":
-        {
-            name: "Added by driver"
-        }
-    };
-
-    public constructor(status: keyof typeof ColloOrigin.map)
-    {
-        this.slug = status;
-        Object.assign(this, ColloOrigin.map[status]);
-    }
-
-    public slug: keyof typeof ColloOrigin.map;
-    public name: string;
 }

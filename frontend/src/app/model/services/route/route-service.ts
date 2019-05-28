@@ -2,6 +2,9 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { RouteInfo } from "../../entities/route/list";
 import { Route } from "../../entities/route/details";
+import { RouteStatusSlug } from "app/model/entities/route";
+import { SortDirection } from "shared/types";
+import { getLegacyRouteSortProperty, getLegacySortDirection, getLegacyRouteStatus } from "legacy/helpers/api-helper";
 
 /**
  * Represents a service that manages routes.
@@ -55,11 +58,24 @@ export class RouteService
      * Gets all routes associatd with the current user.
      * @returns A promise that will be resolved with info about the routes.
      */
-    public async getAll(): Promise<RouteInfo[]>
+    public async getAll(sortProperty: string, sortDirection: SortDirection, page: number, pageSize: number, statusFilter?: RouteStatusSlug, textFilter?: string): Promise<{ routes: RouteInfo[]; routeCount: number }>
     {
-        const result = await this.apiClient.get("routes");
+        const result = await this.apiClient.post("routes/list",
+        {
+            body:
+            {
+                page,
+                pageSize,
+                sorting: [{ field: getLegacyRouteSortProperty(sortProperty), direction: getLegacySortDirection(sortDirection) }],
+                status: statusFilter ? [getLegacyRouteStatus(statusFilter)] : [],
+                filter: textFilter ? [textFilter] : []
+            }
+        });
 
-        return result.data.map((data: any) => new RouteInfo(data));
+        return {
+            routes: result.data.routes.map((data: any) => new RouteInfo(data)),
+            routeCount: result.data.totalCount
+        };
     }
 
     /**

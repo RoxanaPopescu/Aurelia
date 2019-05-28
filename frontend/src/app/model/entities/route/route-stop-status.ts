@@ -1,14 +1,19 @@
 import { Accent } from "app/model/entities/shared";
 
 /**
+ * Represents the slug identifying a `RouteStopStatus`.
+ */
+export type RouteStopStatusSlug = keyof typeof RouteStopStatus.map;
+
+/**
  * Represents the status of a route stop.
  */
 export class RouteStopStatus
 {
-    public constructor(status: keyof typeof RouteStopStatus.map)
+    public constructor(slug: keyof typeof RouteStopStatus.map)
     {
-        this.slug = status;
-        Object.assign(this, RouteStopStatus.map[status]);
+        this.slug = slug;
+        Object.assign(this, RouteStopStatus.map[slug]);
     }
 
     public slug: keyof typeof RouteStopStatus.map;

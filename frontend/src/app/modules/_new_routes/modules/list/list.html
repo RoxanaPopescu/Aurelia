@@ -72,17 +72,21 @@
 
                 <toolbar>
 
-                    <tab-nav appearance="solid" value.bind="statusTab">
+                    <tab-nav appearance="solid" value.bind="statusFilter">
 
-                        <tab name="unassigned" translate>
-                            Unassigned
+                        <tab name="requested" translate>
+                            Requested
+                        </tab>
+
+                        <tab name="accepted" translate>
+                            Accepted
                         </tab>
 
                         <tab name="assigned" translate>
                             Assigned
                         </tab>
 
-                        <tab name="in-progress" translate>
+                        <tab name="started" translate>
                             In progress
                         </tab>
 
@@ -104,11 +108,15 @@
 
                 <toolbar class="margin-bottom" scroll-fade="0.2">
 
-                    <input type="search" placeholder="Find...">
+                    <input type="search" placeholder="Find..." value.bind="textFilter & debounce: 500">
 
                 </toolbar>
 
-                <data-table appearance.bind="tableAppearance & attr" sorting.bind="sorting" selection.bind="tableSelection" toggle-all.call="onToggleAll(value)">
+                <data-table
+                    appearance.bind="tableAppearance & attr"
+                    sorting.bind="sorting"
+                    selection.bind="tableSelection"
+                    toggle-all.call="onToggleAll(value)">
 
                     <data-table-headers>
 
@@ -146,7 +154,7 @@
                             selectable.bind="true"
                             click.call="onRowClick(route)"
                             accent.bind="tableRowAccent"
-                            href.bind="rowType == 'link' ? `/routes/${route.slug}` : undefined">
+                            href.bind="rowType == 'link' ? `/routes/details/${route.slug}` : undefined">
 
                             <data-table-cell class="font-monospaced">
                                 ${route.slug}
@@ -183,7 +191,14 @@
                 </data-table>
 
                 <div class="flex-row">
-                    <data-table-pager class="flex-push-right margin-top" page.bind="1" pages.bind="5" page-size.bind="20"></data-table-pager>
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        page.bind="page"
+                        list-size.bind="routeCount"
+                        page-size.bind="pageSize">
+                    </data-table-pager>
+
                 </div>
 
             </section>
