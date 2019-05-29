@@ -1,9 +1,9 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep } from "aurelia-router";
 import { ModalService } from "shared/framework";
-import { AuthorizationService } from "./services/user/authorization";
+import { AuthorizationService } from "./services/authorization";
 import routeTitles from "./resources/strings/route-titles.json";
-import { IdentityService } from "./services/user/identity";
+import { IdentityService } from "./services/identity";
 
 /**
  * Represents the app module.

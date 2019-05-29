@@ -4,6 +4,7 @@ import { RouteService } from "app/model/services/route";
 import { RouteInfo } from "app/model/entities/route/list";
 import { IDataTableSorting } from "shared/framework";
 import { RouteStatusSlug } from "app/model/entities/route";
+import { AbortError } from "shared/types";
 
 /**
  * Represents the page.
@@ -21,6 +22,12 @@ export class ListPage
     }
 
     private readonly _routeService: RouteService;
+
+    /**
+     * The abort controller for the current operation,
+     * or undefined if no operation is pending.
+     */
+    protected abortController: AbortController | undefined;
 
     /**
      * The appearance to use for the table.
@@ -112,17 +119,50 @@ export class ListPage
             return;
         }
 
-        // Fetch data.
+        // Create the abort controller for the new fetch.
+        const abortController = new AbortController();
 
-        const result = await this._routeService.getAll(
-            this.sorting.property,
-            this.sorting.direction,
-            this.page, this.pageSize,
-            this.statusFilter,
-            this.textFilter);
+        try
+        {
+            // Abort any existing fetch.
+            if (this.abortController != null)
+            {
+                this.abortController.abort();
+            }
 
-        this.routes = result.routes;
-        this.routeCount = result.routeCount;
+            // Set the abort controller, indicating that the page is busy.
+            this.abortController = abortController;
+
+            // Fetch the data.
+            const result = await this._routeService.getAll(
+                this.sorting ? this.sorting.property : "reference",
+                this.sorting ? this.sorting.direction : "descending",
+                this.page,
+                this.pageSize,
+                this.statusFilter,
+                this.textFilter,
+                this.abortController.signal);
+
+            // Update the state.
+            this.routes = result.routes;
+            this.routeCount = result.routeCount;
+        }
+        catch (error)
+        {
+            // Throw if not caused by an abort.
+            if (!(error instanceof AbortError))
+            {
+                throw error;
+            }
+        }
+        finally
+        {
+            // Clear abort controller, indicating that the page is ready.
+            if (this.abortController === abortController)
+            {
+                this.abortController = undefined;
+            }
+        }
     }
 
     /**

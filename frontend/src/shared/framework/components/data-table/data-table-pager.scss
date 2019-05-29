@@ -5,6 +5,13 @@ data-table-pager
     display: flex;
     align-items: center;
 
+    transition: opacity var(--animation-duration-medium);
+
+    &.--disabled
+    {
+        opacity: var(--opacity-disabled);
+    }
+
     > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing-larger);

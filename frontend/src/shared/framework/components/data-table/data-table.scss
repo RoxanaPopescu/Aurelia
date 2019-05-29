@@ -8,6 +8,8 @@ data-table
     // Note that this should be customized as needed for each table.
     --data-table-columns: repeat(6, 1fr);
 
+    transition: opacity var(--animation-duration-medium);
+
     &:not(.--selection)
     {
         grid-template-columns: var(--data-table-columns);
@@ -40,6 +42,11 @@ data-table
     {
         --data-table-cell-background: var(--color-surface--active);
         --data-table-row-border-color: var(--color-border--active);
+    }
+
+    &.--busy
+    {
+        opacity: var(--opacity-disabled);
     }
 }
 

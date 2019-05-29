@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { IdentityService } from "app/services/user/identity";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the identity of the currently authenticated user,

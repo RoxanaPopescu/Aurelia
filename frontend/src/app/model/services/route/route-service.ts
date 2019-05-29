@@ -18,49 +18,32 @@ export class RouteService
      */
     public constructor(apiClient: ApiClient)
     {
-        this.apiClient = apiClient;
+        this._apiClient = apiClient;
     }
 
-    private readonly apiClient: ApiClient;
-
-    /**
-     * Determines whether the specified route exists.
-     * @param routeSlug The slug for the route whose existence should be determined.
-     * @returns A promise that will be resolved with a boolean indicating whether the route exists.
-     */
-    public async exists(routeSlug: string): Promise<boolean>
-    {
-        const result = await this.apiClient.head(`routes/${routeSlug}`,
-        {
-            optional: true
-        });
-
-        return result.response.ok;
-    }
-
-    /**
-     * Creates a new route.
-     * @param routeSlug The slug identifying the new route.
-     * @param routeName The name of the new route.
-     * @returns A promise that will be resolved with the new route.
-     */
-    public async create(route: RouteInfo): Promise<Route>
-    {
-        const result = await this.apiClient.post("routes",
-        {
-            body: { route }
-        });
-
-        return new Route(result.data);
-    }
+    private readonly _apiClient: ApiClient;
 
     /**
      * Gets all routes associatd with the current user.
-     * @returns A promise that will be resolved with info about the routes.
+     * @param sortProperty The property by which the results should be sorted.
+     * @paran sortDirection The direction in which the results should be sorted.
+     * @paran page The page to get.
+     * @paran pageSize The size of the pages.
+     * @paran statusFilter The route status to filter by, or undefined to apply no status filter.
+     * @paran textFilter The route text to filter by, or undefined to apply no text filter.
+     * @paran signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the routes.
      */
-    public async getAll(sortProperty: string, sortDirection: SortDirection, page: number, pageSize: number, statusFilter?: RouteStatusSlug, textFilter?: string): Promise<{ routes: RouteInfo[]; routeCount: number }>
+    public async getAll(
+        sortProperty: string,
+        sortDirection: SortDirection,
+        page: number,
+        pageSize: number,
+        statusFilter?: RouteStatusSlug,
+        textFilter?: string,
+        signal?: AbortSignal): Promise<{ routes: RouteInfo[]; routeCount: number }>
     {
-        const result = await this.apiClient.post("routes/list",
+        const result = await this._apiClient.post("routes/list",
         {
             body:
             {
@@ -69,7 +52,8 @@ export class RouteService
                 sorting: [{ field: getLegacyRouteSortProperty(sortProperty), direction: getLegacySortDirection(sortDirection) }],
                 status: statusFilter ? [getLegacyRouteStatus(statusFilter)] : [],
                 filter: textFilter ? [textFilter] : []
-            }
+            },
+            signal
         });
 
         return {
@@ -85,31 +69,11 @@ export class RouteService
      */
     public async get(routeSlug: string): Promise<Route>
     {
-        const result = await this.apiClient.get(`routes/${routeSlug}`);
+        const result = await this._apiClient.get("routes/details",
+        {
+            query: { routeSlug }
+        });
 
         return new Route(result.data);
-    }
-
-    /**
-     * Saves the changes made to the specified route.
-     * @param route The route to save.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async save(route: RouteInfo): Promise<void>
-    {
-        await this.apiClient.put(`routes/${route.slug}`,
-        {
-            body: route
-        });
-    }
-
-    /**
-     * Deletes the specified route.
-     * @param routeSlug The slug identifying the route.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async delete(routeSlug: string): Promise<void>
-    {
-        await this.apiClient.delete(`routes/${routeSlug}`);
     }
 }

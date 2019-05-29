@@ -33,20 +33,6 @@ export default
     /**
      * Settings for the infrastructure.
      */
-    framework:
-    {
-        components:
-        {
-            icon:
-            {
-                folderPath: "resources/icons"
-            }
-        }
-    },
-
-    /**
-     * Settings for the infrastructure.
-     */
     infrastructure:
     {
         /**

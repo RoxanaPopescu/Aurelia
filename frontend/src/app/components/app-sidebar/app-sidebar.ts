@@ -1,6 +1,6 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Router, NavModel } from "aurelia-router";
-import { AuthorizationService } from "app/services/user/authorization";
+import { AuthorizationService } from "app/services/authorization";
 
 /**
  * Represents the sidebar of the app, which acts as the global navigation hub for authenticated users.

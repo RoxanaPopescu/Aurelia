@@ -44,6 +44,12 @@ export class DataTableCustomElement
     public allSelected: boolean;
 
     /**
+     * True if busy, e.g. while loading data, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public busy: boolean;
+
+    /**
      * The sorting to use, or undefined to use no sorting.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })

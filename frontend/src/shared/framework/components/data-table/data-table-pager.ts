@@ -15,20 +15,15 @@ export class DataTablePagerCustomElement
      * The total number of pages, or undefined if unknown.
      * This is computed from `listSize` and `pageSize`, with `pageCount` used as fallback.
      */
-    @computedFrom("pageCount", "listSize", "pageSize")
+    @computedFrom("listSize", "pageSize", "pageCount")
     protected get computedPageCount(): number | undefined
     {
-        if (this.pageCount != null && this.listSize != null && this.pageSize)
+        if (this.listSize == null || this.pageSize == null)
         {
-            return Math.min(this.pageCount, Math.ceil(this.listSize / this.pageSize));
+            return this.pageCount;
         }
 
-        if (this.listSize != null && this.pageSize)
-        {
-            return Math.ceil(this.listSize / this.pageSize);
-        }
-
-        return this.pageCount;
+        return Math.ceil(this.listSize / this.pageSize);
     }
 
     /**
@@ -61,6 +56,12 @@ export class DataTablePagerCustomElement
      */
     @bindable
     public pageCount: number | undefined;
+
+    /**
+     * True if disabled, e.g. while loading data, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public disabled: boolean;
 
     /**
      * Called by the framework when the component is binding.
@@ -108,7 +109,7 @@ export class DataTablePagerCustomElement
         if (event.key === "Enter")
         {
             const page = Number.parseInt(this.pageInputValue || this.page.toString());
-            this.page = Math.max(1, Math.min(this.pageCount || page, page));
+            this.page = Math.max(1, this.computedPageCount == null ? page : Math.min(this.computedPageCount, page));
             this.pageInputValue = this.page.toString();
         }
 

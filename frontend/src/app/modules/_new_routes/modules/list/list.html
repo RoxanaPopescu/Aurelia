@@ -7,9 +7,11 @@
         <page-sidebar scroll expanded.bind="false">
 
             <header>
+
                 <h1 class="font-larger margin-bottom">
                     Settings for data-table
                 </h1>
+
             </header>
 
             <section>
@@ -54,6 +56,11 @@
                         </select>
                     </label>
 
+                    <label class="margin">
+                        <span>Busy</span>
+                        <input type="checkbox" checked.bind="abortController != null">
+                    </label>
+
                 </form>
 
             </section>
@@ -66,7 +73,11 @@
 
                 <h1 class="font-larger">
                     <path-nav>
-                        <span translate>Routes</span>
+
+                        <span translate>
+                            Routes
+                        </span>
+
                     </path-nav>
                 </h1>
 
@@ -87,7 +98,7 @@
                         </tab>
 
                         <tab name="started" translate>
-                            In progress
+                            Started
                         </tab>
 
                         <tab name="completed" translate>
@@ -108,7 +119,7 @@
 
                 <toolbar class="margin-bottom" scroll-fade="0.2">
 
-                    <input type="search" placeholder="Find..." value.bind="textFilter & debounce: 500">
+                    <input type="search" placeholder.translate="Find..." value.bind="textFilter & debounce: 200">
 
                 </toolbar>
 
@@ -116,19 +127,20 @@
                     appearance.bind="tableAppearance & attr"
                     sorting.bind="sorting"
                     selection.bind="tableSelection"
-                    toggle-all.call="onToggleAll(value)">
+                    toggle-all.call="onToggleAll(value)"
+                    busy.bind="abortController != null">
 
                     <data-table-headers>
 
                         <data-table-cell translate>
-                            Id
+                            ID
                         </data-table-cell>
 
                         <data-table-cell name="reference" translate>
                             Reference
                         </data-table-cell>
 
-                        <data-table-cell name="status" align="center" translate>
+                        <data-table-cell name="status" translate>
                             Status
                         </data-table-cell>
 
@@ -164,7 +176,7 @@
                                 <a href="/foo">${route.reference}</a>
                             </data-table-cell>
 
-                            <data-table-cell align="center">
+                            <data-table-cell>
                                 ${route.status.name}
                             </data-table-cell>
 
@@ -196,7 +208,8 @@
                         class="flex-push-right margin-top"
                         page.bind="page"
                         list-size.bind="routeCount"
-                        page-size.bind="pageSize">
+                        page-size.bind="pageSize"
+                        disabled.bind="routes == null">
                     </data-table-pager>
 
                 </div>
