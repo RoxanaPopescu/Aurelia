@@ -3,7 +3,7 @@ import { RouteConfig } from "aurelia-router";
 import { RouteService } from "app/model/services/route";
 import { RouteInfo } from "app/model/entities/route/list";
 import { RouteStatusSlug } from "app/model/entities/route";
-import { AbortError, ISorting } from "shared/types";
+import { Operation, ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -18,15 +18,13 @@ export class ListPage
     public constructor(routeService: RouteService)
     {
         this._routeService = routeService;
+        this._constructed = true;
     }
 
     private readonly _routeService: RouteService;
+    private readonly _constructed;
 
-    /**
-     * The abort controller for the current operation,
-     * or undefined if no operation is pending.
-     */
-    protected abortController: AbortController | undefined;
+    // ----------
 
     /**
      * The appearance to use for the table.
@@ -53,10 +51,17 @@ export class ListPage
      */
     protected expandedRouteSlug: string | undefined;
 
+    // ----------
+
+    /**
+     * The most recent fetch operation.
+     */
+    protected updateOperation: Operation;
+
     /**
      * The sorting to use for the table.
      */
-    @observable({ changeHandler: "fetchData" })
+    @observable({ changeHandler: "update" })
     protected sorting: ISorting =
     {
         property: "reference",
@@ -66,25 +71,25 @@ export class ListPage
     /**
      * The name identifying the selected status tab.
      */
-    @observable({ changeHandler: "fetchData" })
+    @observable({ changeHandler: "update" })
     protected statusFilter: RouteStatusSlug = "requested";
 
     /**
      * The text in the filter text input.
      */
-    @observable({ changeHandler: "fetchData" })
+    @observable({ changeHandler: "update" })
     protected textFilter: string;
 
     /**
      * The current page number, starting from 1.
      */
-    @observable({ changeHandler: "fetchData" })
+    @observable({ changeHandler: "update" })
     protected page: number = 1;
 
     /**
      * The max number of items to show on a page, or undefined to disable this option.
      */
-    @observable({ changeHandler: "fetchData" })
+    @observable({ changeHandler: "update" })
     protected pageSize: number = 20;
 
     /**
@@ -103,64 +108,47 @@ export class ListPage
      * @param routeConfig The route configuration.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: never, routeConfig: RouteConfig): Promise<void>
+    public async activate(params: {}, routeConfig: RouteConfig): Promise<void>
     {
-        // tslint:disable-next-line: no-floating-promises
-        this.fetchData();
+        this.update();
     }
 
-    protected async fetchData(): Promise<void>
+    /**
+     * Updates the page by fetching the latest data.
+     */
+    protected update(): void
     {
         // Return if the constructor has not run yet.
         // This is needed because the `observable` decorator calls the change handler before the constructor has run.
-        if (this._routeService == null)
+        if (!this._constructed)
         {
             return;
         }
 
-        // Create the abort controller for the new fetch.
-        const abortController = new AbortController();
-
-        try
+        // Abort any existing operation.
+        if (this.updateOperation != null)
         {
-            // Abort any existing fetch.
-            if (this.abortController != null)
-            {
-                this.abortController.abort();
-            }
+            this.updateOperation.abort();
+        }
 
-            // Set the abort controller, indicating that the page is busy.
-            this.abortController = abortController;
-
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
             // Fetch the data.
             const result = await this._routeService.getAll(
                 this.statusFilter,
                 this.textFilter,
                 this.sorting,
                 { page: this.page, pageSize: this.pageSize },
-                this.abortController.signal);
+                signal);
 
             // Update the state.
             this.routes = result.routes;
             this.routeCount = result.routeCount;
-        }
-        catch (error)
-        {
-            // Throw if not caused by an abort.
-            if (!(error instanceof AbortError))
-            {
-                throw error;
-            }
-        }
-        finally
-        {
-            // Clear abort controller, indicating that the page is ready.
-            if (this.abortController === abortController)
-            {
-                this.abortController = undefined;
-            }
-        }
+        });
     }
+
+    // ----------
 
     /**
      * Called when a row is clicked.

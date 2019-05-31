@@ -25,7 +25,8 @@ toolbar
         // Delay transition so it's possible to click the clear icon within the input.
         transition-delay: 0.1s;
 
-        &:focus
+        &:focus,
+        &:not(:placeholder-shown)
         {
             width: 16vw;
         }

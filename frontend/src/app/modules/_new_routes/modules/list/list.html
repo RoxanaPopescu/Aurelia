@@ -128,7 +128,7 @@
                     sorting.bind="sorting"
                     selection.bind="tableSelection"
                     toggle-all.call="onToggleAll(value)"
-                    busy.bind="abortController != null">
+                    busy.bind="updateOperation.pending">
 
                     <data-table-headers>
 
@@ -169,11 +169,11 @@
                             href.bind="rowType == 'link' ? `/routes/details/${route.slug}` : undefined">
 
                             <data-table-cell class="font-monospaced">
-                                ${route.slug}
+                                <a href="/routes/details/${route.slug}">${route.slug}</a>
                             </data-table-cell>
 
                             <data-table-cell class="font-monospaced">
-                                <a href="/foo">${route.reference}</a>
+                                ${route.reference}
                             </data-table-cell>
 
                             <data-table-cell>
@@ -192,8 +192,12 @@
                                 ${route.stopCount}
                             </data-table-cell>
 
-                            <data-table-details if.bind="rowType == 'expandable' && route.slug == $parent.expandedRouteSlug" accent.bind="tableRowAccent">
+                            <data-table-details
+                                if.bind="rowType == 'expandable' && route.slug == $parent.expandedRouteSlug"
+                                accent.bind="tableRowAccent">
+
                                 DETAILS
+
                             </data-table-details>
 
                         </data-table-row>
