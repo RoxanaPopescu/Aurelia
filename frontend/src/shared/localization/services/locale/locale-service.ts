@@ -23,7 +23,7 @@ export class LocaleService
     /**
      * Gets the supported locales.
      */
-    @computedFrom("locales")
+    @computedFrom("_locales")
     public get locales(): ReadonlyArray<ILocale>
     {
         return this._locales;
@@ -32,7 +32,7 @@ export class LocaleService
     /**
      * Gets the current locale.
      */
-    @computedFrom("locale")
+    @computedFrom("_locale")
     public get locale(): ILocale
     {
         return this._locale;

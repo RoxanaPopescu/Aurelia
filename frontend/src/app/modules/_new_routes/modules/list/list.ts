@@ -2,9 +2,8 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { RouteService } from "app/model/services/route";
 import { RouteInfo } from "app/model/entities/route/list";
-import { IDataTableSorting } from "shared/framework";
 import { RouteStatusSlug } from "app/model/entities/route";
-import { AbortError } from "shared/types";
+import { AbortError, ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -58,7 +57,7 @@ export class ListPage
      * The sorting to use for the table.
      */
     @observable({ changeHandler: "fetchData" })
-    protected sorting: IDataTableSorting =
+    protected sorting: ISorting =
     {
         property: "reference",
         direction: "descending"
@@ -135,12 +134,10 @@ export class ListPage
 
             // Fetch the data.
             const result = await this._routeService.getAll(
-                this.sorting ? this.sorting.property : "reference",
-                this.sorting ? this.sorting.direction : "descending",
-                this.page,
-                this.pageSize,
                 this.statusFilter,
                 this.textFilter,
+                this.sorting,
+                { page: this.page, pageSize: this.pageSize },
                 this.abortController.signal);
 
             // Update the state.

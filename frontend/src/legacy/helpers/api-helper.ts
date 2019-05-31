@@ -1,8 +1,7 @@
-import { SortDirection } from "shared/types";
 import { RouteStatus, RouteStatusSlug } from "app/model/entities/route";
-import { SortingDirection } from "app/model/entities/shared";
+import { SortingDirection, SortingDirectionSlug } from "app/model/entities/shared";
 
-export function getLegacySortDirection(direction: SortDirection): number
+export function getLegacySortDirection(direction: SortingDirectionSlug): number
 {
     return SortingDirection.map[direction].value;
 }

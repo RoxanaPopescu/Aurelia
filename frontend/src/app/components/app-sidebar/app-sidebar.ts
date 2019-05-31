@@ -22,14 +22,14 @@ export class AppSidebarCustomElement
 
     protected readonly environment = ENVIRONMENT.name;
 
-    @computedFrom("router.navigation")
+    @computedFrom("_router.navigation")
     protected get navModels(): NavModel[]
     {
         return this._router.navigation
             .filter(m => this._authorizationService.isAuthorizedForRoute(m.config.settings));
     }
 
-    @computedFrom("router.currentInstruction")
+    @computedFrom("_router.currentInstruction")
     protected get childNavModels(): NavModel[] | undefined
     {
         if (this._router.currentInstruction == null)
