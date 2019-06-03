@@ -42,14 +42,14 @@ export class DateTimeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTime | undefined | null, style?: DateTimeStyle, convert?: boolean): string | null | undefined
+    public toView(value: DateTime | undefined | null, style?: DateTimeStyle, convert = true): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const valueToFormat = convert === false ? value : value.toLocal();
+        const valueToFormat = convert ? value.toLocal() : value;
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {

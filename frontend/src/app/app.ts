@@ -92,8 +92,8 @@ export class AppModule
                     outfits: ["fulfiller", "consignor"],
                     claims: ["view-kpis"]
                 },
-                nav: true,
                 title: routeTitles.kpi,
+                nav: true,
                 href: "/kpi",
                 icon: "kpi"
             },
@@ -111,8 +111,8 @@ export class AppModule
                         "view-orders"
                     ]
                 },
-                nav: true,
                 title: routeTitles.orders,
+                nav: true,
                 href: "/orders",
                 icon: "orders"
             },
@@ -129,8 +129,8 @@ export class AppModule
                         "view-routes"
                     ]
                 },
-                nav: true,
                 title: routeTitles.routes,
+                nav: true,
                 href: "/routes",
                 icon: "routes"
             },
@@ -151,8 +151,8 @@ export class AppModule
                         "create-routeplan-settings"
                     ]
                 },
-                nav: true,
                 title: routeTitles.routePlanning,
+                nav: true,
                 href: "/route-planning",
                 icon: "route-planning"
             },
@@ -170,8 +170,8 @@ export class AppModule
                         "edit-depot"
                     ]
                 },
-                nav: true,
                 title: routeTitles.depots,
+                nav: true,
                 href: "/depots",
                 icon: "depots"
             },
@@ -191,8 +191,8 @@ export class AppModule
                         "view-vehicles"
                     ]
                 },
-                nav: true,
                 title: routeTitles.fleet,
+                nav: true,
                 href: "/fleet-management",
                 icon: "fleet"
             },
@@ -204,8 +204,8 @@ export class AppModule
                 {
                     outfits: ["fulfiller"]
                 },
-                nav: true,
                 title: routeTitles.communication,
+                nav: true,
                 href: "/communication",
                 icon: "communication"
             },
@@ -223,8 +223,8 @@ export class AppModule
                         "view-departments"
                     ]
                 },
-                nav: true,
                 title: routeTitles.departments,
+                nav: true,
                 href: "/departments",
                 icon: "departments"
             },
@@ -242,8 +242,8 @@ export class AppModule
                         "view-users"
                     ]
                 },
-                nav: true,
                 title: routeTitles.users,
+                nav: true,
                 href: "/users",
                 icon: "users"
             },
@@ -255,8 +255,8 @@ export class AppModule
                 {
                     outfits: ["fulfiller"]
                 },
-                nav: true,
                 title: routeTitles.agreements,
+                nav: true,
                 href: "/agreements",
                 icon: "agreements"
             },

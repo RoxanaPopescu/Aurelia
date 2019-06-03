@@ -25,9 +25,11 @@ export class RoutesModule
             {
                 name: "list",
                 route: "list",
-                moduleId: PLATFORM.moduleName("./modules/list/list"),
-                nav: false,
+                moduleId: ENVIRONMENT.name === "development"
+                    ? PLATFORM.moduleName("./modules/_list/list")
+                    : PLATFORM.moduleName("./modules/list/list"),
                 title: routeTitles.list,
+                nav: false,
                 icon: "routes"
             },
             {
@@ -40,24 +42,24 @@ export class RoutesModule
                 name: "route-tracking",
                 route: "route-tracking",
                 moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
-                nav: true,
                 title: routeTitles.routeTracking,
+                nav: true,
                 icon: "route-tracking"
             },
             {
                 name: "driver-tracking",
                 route: "driver-tracking",
                 moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
-                nav: true,
                 title: routeTitles.driverTracking,
+                nav: true,
                 icon: "driver-tracking"
             },
             {
                 name: "auto-dispatch",
                 route: "auto-dispatch",
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
-                nav: true,
                 title: routeTitles.autoDispatch,
+                nav: true,
                 icon: "auto-dispatch"
             }
         ]);

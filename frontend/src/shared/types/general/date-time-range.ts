@@ -1,10 +1,15 @@
 import { DateTime, Duration, DateTimeOptions, ISOTimeOptions } from "luxon";
 
 /**
- * Represents a time range, defined by a start and end date and time.
+ * Represents a data and time range, which may optionally be open ended.
  */
 export class DateTimeRange
 {
+    /**
+     * Creates a new instance of the class.
+     * @param data The response data from which the instance should be created.
+     * @param options The parsing options to use.
+     */
     public constructor(data: any, options?: DateTimeOptions)
     {
         if (data.from instanceof DateTime)
@@ -97,6 +102,10 @@ export class DateTimeRange
         return this.to!.diff(dateTime!).valueOf() > 0;
     }
 
+    /**
+     * Gets the data representing this instance.
+     * @param options The formatting options to use.
+     */
     public toJSON(options?: ISOTimeOptions): object
     {
         return {

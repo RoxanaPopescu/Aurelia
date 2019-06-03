@@ -12,6 +12,7 @@
     ]
   },
   "rules": {
+    "no-null-undefined-union": false,
     "no-unused-variable": false,
     "no-default-import": false,
     "align": [true, "parameters", "statements", "elements"],

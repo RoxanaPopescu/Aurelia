@@ -72,13 +72,13 @@ export class ListPage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug = "requested";
+    protected statusFilter: RouteStatusSlug | undefined = "requested";
 
     /**
      * The text in the filter text input.
      */
     @observable({ changeHandler: "update" })
-    protected textFilter: string;
+    protected textFilter: string | undefined;
 
     /**
      * The current page number, starting from 1.

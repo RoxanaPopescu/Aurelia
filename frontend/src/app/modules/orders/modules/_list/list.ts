@@ -1,8 +1,8 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
-import { RouteService } from "app/model/services/route";
-import { RouteInfo } from "app/model/entities/route/list";
-import { RouteStatusSlug } from "app/model/entities/route";
+import { OrderService } from "app/model/services/order";
+import { OrderInfo } from "app/model/entities/order/list";
+import { OrderStatusSlug } from "app/model/entities/order";
 import { Operation, ISorting } from "shared/types";
 
 /**
@@ -13,45 +13,16 @@ export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routeService The `RouteService` instance.
+     * @param orderService The `RouteService` instance.
      */
-    public constructor(routeService: RouteService)
+    public constructor(orderService: OrderService)
     {
-        this._routeService = routeService;
+        this._orderService = orderService;
         this._constructed = true;
     }
 
-    private readonly _routeService: RouteService;
+    private readonly _orderService: OrderService;
     private readonly _constructed;
-
-    // ----------
-
-    /**
-     * The appearance to use for the table.
-     */
-    protected tableAppearance = "rows";
-
-    /**
-     * The selection mode to use for the table.
-     */
-    protected tableSelection = "none";
-
-    /**
-     * The accent color to use for the table.
-     */
-    protected tableRowAccent = "neutral";
-
-    /**
-     * The row type to use for the table.
-     */
-    protected rowType = "normal";
-
-    /**
-     * The slug identifying the expanded route.
-     */
-    protected expandedRouteSlug: string | undefined;
-
-    // ----------
 
     /**
      * The most recent update operation.
@@ -72,13 +43,13 @@ export class ListPage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug = "requested";
+    protected statusFilter: OrderStatusSlug | undefined;
 
     /**
      * The text in the filter text input.
      */
     @observable({ changeHandler: "update" })
-    protected textFilter: string;
+    protected textFilter: string | undefined;
 
     /**
      * The current page number, starting from 1.
@@ -95,16 +66,16 @@ export class ListPage
     /**
      * The total number of items in the list, or undefined if unknown.
      */
-    protected routeCount: number | undefined;
+    protected orderCount: number | undefined;
 
     /**
-     * The routes to present in the list.
+     * The orders to present in the list.
      */
-    protected routes: RouteInfo[];
+    protected orders: OrderInfo[];
 
     /**
      * Called by the framework when the module is activated.
-     * @param params The route parameters from the URL.
+     * @param params The order parameters from the URL.
      * @param routeConfig The route configuration.
      * @returns A promise that will be resolved when the module is activated.
      */
@@ -136,7 +107,7 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._routeService.getAll(
+            const result = await this._orderService.getAll(
                 this.statusFilter,
                 this.textFilter,
                 this.sorting,
@@ -144,46 +115,8 @@ export class ListPage
                 signal);
 
             // Update the state.
-            this.routes = result.routes;
-            this.routeCount = result.routeCount;
+            this.orders = result.orders;
+            this.orderCount = result.orderCount;
         });
-    }
-
-    // ----------
-
-    /**
-     * Called when a row is clicked.
-     * @param route The route represented by the row.
-     */
-    protected onRowClick(route: any): boolean
-    {
-        console.log("row click:", route.slug);
-
-        this.expandedRouteSlug = route.slug;
-
-        return true;
-    }
-
-    /**
-     * Called when a row is selected or deselected.
-     * @param route The route represented by the row.
-     * @param value True if the row is selected, otherwise false.
-     */
-    protected onToggleRow(route: any, value: boolean): boolean
-    {
-        console.log("toggle row:", value, route.slug);
-
-        return true;
-    }
-
-    /**
-     * Called when all rows are selected or deselected.
-     * @param value True if the rows are selected, otherwise false.
-     */
-    protected onToggleAll(value: boolean): boolean
-    {
-        console.log("toggle all:", value);
-
-        return true;
     }
 }

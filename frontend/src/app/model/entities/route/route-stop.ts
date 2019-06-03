@@ -1,5 +1,6 @@
 import { DateTime, Duration } from "luxon";
-import { DateTimeRange, Location } from "app/model/entities/shared";
+import { DateTimeRange } from "shared/types";
+import { Location } from "app/model/entities/shared";
 import { Outfit } from "../outfit/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopBase } from "./route-stop-base";

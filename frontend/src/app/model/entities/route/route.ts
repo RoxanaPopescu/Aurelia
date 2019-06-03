@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
-import { DateTimeRange, Position } from "app/model/entities/shared";
+import { DateTimeRange } from "shared/types";
+import { Position } from "app/model/entities/shared";
 import { Fulfiller } from "../outfit/fulfiller";
 import { Driver } from "../driver/driver";
 import { VehicleType } from "../vehicle/vehicle-type";

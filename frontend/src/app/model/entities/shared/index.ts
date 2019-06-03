@@ -1,6 +1,5 @@
 export * from "./accent";
 export * from "./address";
-export * from "./date-time-range";
 export * from "./location";
 export * from "./person-name";
 export * from "./phone";

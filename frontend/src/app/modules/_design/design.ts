@@ -24,22 +24,22 @@ export class DesignPage
                 name: "palette",
                 route: "palette",
                 moduleId: PLATFORM.moduleName("./modules/palette/palette"),
-                nav: true,
-                title: "Palette"
+                title: "Palette",
+                nav: true
             },
             {
                 name: "demo",
                 route: "demo",
                 moduleId: PLATFORM.moduleName("./modules/demo/demo"),
-                nav: true,
-                title: "Demo"
+                title: "Demo",
+                nav: true
             },
             {
                 name: "playground",
                 route: "playground",
                 moduleId: PLATFORM.moduleName("./modules/playground/playground"),
-                nav: true,
-                title: "Playground"
+                title: "Playground",
+                nav: true
             }
         ]);
     }

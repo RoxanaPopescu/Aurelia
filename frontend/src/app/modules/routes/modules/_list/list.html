@@ -1,0 +1,227 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-sidebar scroll expanded.bind="false">
+
+            <header>
+
+                <h1 class="font-larger margin-bottom">
+                    Settings for data-table
+                </h1>
+
+            </header>
+
+            <section>
+
+                <form>
+
+                    <label class="margin">
+                        <span>Type</span>
+                        <select value.bind="rowType">
+                            <option value="normal">normal</option>
+                            <option value="expandable">expandable</option>
+                            <option value="link">link</option>
+                        </select>
+                    </label>
+
+                    <label class="margin">
+                        <span>Appearance</span>
+                        <select value.bind="tableAppearance">
+                            <option value="rows">rows</option>
+                            <option value="cards">cards</option>
+                        </select>
+                    </label>
+
+                    <label class="margin">
+                        <span>Selection</span>
+                        <select value.bind="tableSelection">
+                            <option value="none">none</option>
+                            <option value="single">single</option>
+                            <option value="multiple">multiple</option>
+                        </select>
+                    </label>
+
+                    <label class="margin">
+                        <span>Accent</span>
+                        <select value.bind="tableRowAccent">
+                            <option value="neutral">neutral</option>
+                            <option value="primary">primary</option>
+                            <option value="positive">positive</option>
+                            <option value="attention">attention</option>
+                            <option value="negative">negative</option>
+                            <option value="info">info</option>
+                        </select>
+                    </label>
+
+                    <label class="margin">
+                        <span>Busy</span>
+                        <input type="checkbox" checked.bind="abortController != null">
+                    </label>
+
+                </form>
+
+            </section>
+
+        </page-sidebar>
+
+        <page-content scroll>
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Routes
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value.bind="statusFilter">
+
+                        <tab name.bind="undefined" translate>
+                            All
+                        </tab>
+
+                        <tab name="requested" translate>
+                            Unassigned
+                        </tab>
+
+                        <tab name="assigned" translate>
+                            Assigned
+                        </tab>
+
+                        <tab name="started" translate>
+                            Started
+                        </tab>
+
+                        <tab name="completed" translate>
+                            Completed
+                        </tab>
+
+                        <tab name="cancelled" translate>
+                            Cancelled
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                    <input type="search" placeholder.translate="Find..." value.bind="textFilter & debounce: 200">
+
+                </toolbar>
+
+                <data-table
+                    appearance.bind="tableAppearance & attr"
+                    sorting.bind="sorting"
+                    selection.bind="tableSelection"
+                    toggle-all.call="onToggleAll(value)"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell translate>
+                            ID
+                        </data-table-cell>
+
+                        <data-table-cell name="reference" translate>
+                            Reference
+                        </data-table-cell>
+
+                        <data-table-cell name="status" translate>
+                            Status
+                        </data-table-cell>
+
+                        <data-table-cell name="start-date" translate>
+                            Start date
+                        </data-table-cell>
+
+                        <data-table-cell name="start-address" translate>
+                            Start address
+                        </data-table-cell>
+
+                        <data-table-cell name="stops" align="right" translate>
+                            Stops
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="route of routes">
+
+                        <data-table-row
+                            toggle.call="onToggleRow(route, value)"
+                            selected.bind="route.selected"
+                            selectable.bind="true"
+                            click.call="onRowClick(route)"
+                            accent.bind="tableRowAccent"
+                            href.bind="rowType == 'link' ? `/routes/details/${route.slug}` : undefined">
+
+                            <data-table-cell class="font-monospaced">
+                                <a href="/routes/details/${route.slug}">${route.slug}</a>
+                            </data-table-cell>
+
+                            <data-table-cell class="font-monospaced">
+                                ${route.reference}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${route.status.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${route.startDateTime | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${route.startAddress}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${route.stopCount}
+                            </data-table-cell>
+
+                            <data-table-details
+                                if.bind="rowType == 'expandable' && route.slug == $parent.expandedRouteSlug"
+                                accent.bind="tableRowAccent">
+
+                                DETAILS
+
+                            </data-table-details>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        page.bind="page"
+                        list-size.bind="routeCount"
+                        page-size.bind="pageSize"
+                        disabled.bind="routes == null">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

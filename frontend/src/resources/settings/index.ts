@@ -1,5 +1,4 @@
 import { IApiClientSettings, ICookieOptions } from "shared/infrastructure";
-import { jsonReviver } from "shared/utilities";
 import locales from "./locales.json";
 import currencies from "./currencies.json";
 import themes from "./themes.json";
@@ -54,8 +53,7 @@ export default
                 headers:
                 {
                     "x-api-key": "a89ba961-1a7d-4a1e-953c-0c8a766979ae"
-                },
-                jsonReviver
+                }
             },
             cipher: "svrmZIDJCKab+o8n-h7wTR6l4XO1Qz95PHMp3BFNiqeYGdEAUx0_SckLVufy2jtgW",
             obfuscate: ENVIRONMENT.obfuscate,

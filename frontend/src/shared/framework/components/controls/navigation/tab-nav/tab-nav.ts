@@ -10,7 +10,7 @@ export class TabNavCustomElement
      * The currently selected tab.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public value: string;
+    public value: string | undefined;
 
     /**
      * The appearance to use for the tabs.

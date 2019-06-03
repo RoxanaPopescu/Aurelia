@@ -26,13 +26,15 @@ export class KpiModule
                 name: "fulfillers",
                 route: "fulfillers",
                 moduleId: PLATFORM.moduleName("./modules/fulfillers/fulfillers"),
-                title: routeTitles.fulfillers
+                title: routeTitles.fulfillers,
+                nav: true
             },
             {
                 name: "consignors",
                 route: "consignors",
                 moduleId: PLATFORM.moduleName("./modules/consignors/consignors"),
-                title: routeTitles.consignors
+                title: routeTitles.consignors,
+                nav: true
             }
         ]);
     }

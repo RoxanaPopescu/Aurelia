@@ -1,0 +1,151 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll>
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Orders
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value.bind="statusFilter">
+
+                        <tab name.bind="undefined" translate>
+                            All
+                        </tab>
+
+                        <tab name="placed" translate>
+                            Placed
+                        </tab>
+
+                        <tab name="ready" translate>
+                            Ready
+                        </tab>
+
+                        <tab name="delivered" translate>
+                            Delivered
+                        </tab>
+
+                        <tab name="cancelled" translate>
+                            Cancelled
+                        </tab>
+
+                        <tab name="deleted" translate>
+                            Deleted
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                    <input type="search" placeholder.translate="Find..." value.bind="textFilter & debounce: 200">
+
+                </toolbar>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell translate>
+                            ID
+                        </data-table-cell>
+
+                        <data-table-cell name="status" translate>
+                            Status
+                        </data-table-cell>
+
+                        <data-table-cell name="date" translate>
+                            Pickup date
+                        </data-table-cell>
+
+                        <data-table-cell name="pickup-timeframe" translate>
+                            Pickup timeframe
+                        </data-table-cell>
+
+                        <data-table-cell name="pickup-address" translate>
+                            Pickup address
+                        </data-table-cell>
+
+                        <data-table-cell name="delivery-address" translate>
+                            Deliverey address
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="order of orders">
+
+                        <data-table-row
+                            href="/orders/details/${order.slug}">
+
+                            <data-table-cell class="font-monospaced">
+                                ${order.slug}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${order.status.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${order.earliestPickupDate | date: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${order.earliestPickupTime | time: 'narrow'}
+                                –
+                                ${order.latestPickupTime | time: 'narrow'}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${order.pickupLocation.address}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${order.deliveryLocation.address}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        page.bind="page"
+                        list-size.bind="routeCount"
+                        page-size.bind="pageSize"
+                        disabled.bind="orders == null">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

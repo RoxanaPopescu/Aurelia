@@ -25,8 +25,8 @@ export class RoutesModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
-                nav: true,
                 title: "List",
+                nav: true,
                 icon: "business"
             },
             {
@@ -39,8 +39,8 @@ export class RoutesModule
                 name: "route-tracking",
                 route: "route-tracking",
                 moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
-                nav: true,
                 title: "Live tracking",
+                nav: true,
                 icon: "business"
             }
         ]);

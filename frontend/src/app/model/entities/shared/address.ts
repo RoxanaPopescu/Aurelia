@@ -22,7 +22,7 @@ export class Address
     /**
      * The name identifying the provider of the address.
      */
-    public provider: string;
+    public provider?: string;
 
     /**
      * The primary address information.

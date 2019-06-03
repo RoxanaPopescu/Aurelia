@@ -25,7 +25,7 @@ export class TabCustomElement
      * The name identifying the tab.
      */
     @bindable
-    public name: string;
+    public name: string | undefined;
 
     /**
      * Called when the tab is clicked.
