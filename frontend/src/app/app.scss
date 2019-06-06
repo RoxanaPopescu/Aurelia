@@ -1,69 +1,62 @@
 @import "resources/index";
 
-main
+main,
+router-view
 {
-    height: 100%;
+    // Use horizontal flex layout.
     display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Allow the element to shrink.
+    min-width: 0;
+
+    // Fill the available height.
+    height: 100%;
 }
 
-.app
+react-module
 {
-    // Use column layout.
-    display: flex;
+    // Ensure react modules fill the content area of the viewport.
+    // We must use absoliute positioning to do this, due to the legacy styles.
+    position: absolute;
+    height: 100vh;
 
-    // Ensure the element fills the viewport.
-    width: 100%;
-    height: 100%;
+    width: calc(100vw - var(--size-app-sidebar-width-expanded));
+    left: var(--size-app-sidebar-width-expanded);
 
-    router-view
+    .sideMenu--collapsed &
     {
-        // Fill the available space.
-        flex-grow: 1;
-
-        // Use horizontal flex layout.
-        display: flex;
+        width: calc(100vw - var(--size-app-sidebar-width));
+        left: var(--size-app-sidebar-width);
     }
 
-    react-module
+    // Use vertical flex layout.
+    display: flex;
+    flex-direction: column;
+
+    // Ensure react modules never overlap any app elements.
+    z-index: 0;
+
+    // Import legacy styles.
+    @import "../legacy/shared/src/webKit/LEGACY";
+
+    .c-login-outerContainer,
+    .c-activation-outerContainer
     {
-        // Ensure react modules fill the content area of the viewport.
-        // We must use absoliute positioning to do this, due to the legacy styles.
-        position: absolute;
-        height: 100vh;
-
-        width: calc(100vw - var(--size-app-sidebar-width-expanded));
-        left: var(--size-app-sidebar-width-expanded);
-
-        .sideMenu--collapsed &
-        {
-            width: calc(100vw - var(--size-app-sidebar-width));
-            left: var(--size-app-sidebar-width);
-        }
-
-        // Use vertical flex layout.
-        display: flex;
-        flex-direction: column;
-
-        // Ensure react modules never overlap any app elements.
-        z-index: 0;
-
-        // Import legacy styles.
-        @import "../legacy/shared/src/webKit/LEGACY";
-
-        .c-login-outerContainer,
-        .c-activation-outerContainer
-        {
-            position: fixed;
-            left: 0;
-            right: 0;
-        }
+        position: fixed;
+        left: 0;
+        right: 0;
     }
 }
 
-.button-row {
+.button-row
+{
     display: flex;
 
-    > button:not(:last-child) {
+    > button:not(:last-child)
+    {
         margin-right: var(--size-inline-spacing)
     }
 }
