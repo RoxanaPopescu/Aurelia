@@ -32,19 +32,19 @@ export class TimeOfDay
      */
     public toString(precision: "hour" | "minute" | "second" | "millisecond" = "minute"): string
     {
-        let result = `${this.hour >= 10 ? this.hour : `0${this.hour}`}`;
+        let result = this.hour.toString().padStart(2, "0");
 
         if (precision !== "hour")
         {
-            result += `:${this.minute >= 10 ? this.minute : `0${this.minute}`}`;
+            result += `:${this.minute.toString().padStart(2, "0")}`;
 
             if (precision !== "minute")
             {
-                result += `:${this.second >= 10 ? this.second : `0${this.second}`}`;
+                result += `:${this.second.toString().padStart(2, "0")}`;
 
                 if (precision !== "second")
                 {
-                    result += `.${this.millisecond >= 10 ? this.millisecond : `0${this.millisecond}`}`;
+                    result += `.${this.millisecond.toString().padStart(3, "0")}`;
                 }
             }
         }
@@ -80,7 +80,7 @@ export class TimeOfDay
         result.hour = parseInt(parts[0]);
         result.minute = parseInt(parts[1] || "0");
         result.second = parseInt(parts[2] || "0");
-        result.millisecond = parseInt(parts[3] || "0");
+        result.millisecond = parseFloat(`0.${parts[3] || "0"}`) * 1000;
 
         return result;
     }

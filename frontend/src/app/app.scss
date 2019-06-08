@@ -60,3 +60,11 @@ react-module
         margin-right: var(--size-inline-spacing)
     }
 }
+
+@media ($media-smallest-max)
+{
+    app-sidebar.--expanded
+    {
+        width: 100vw !important;
+    }
+}
