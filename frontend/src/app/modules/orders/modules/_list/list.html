@@ -71,15 +71,15 @@
                             ID
                         </data-table-cell>
 
-                        <data-table-cell name="status" translate>
+                        <data-table-cell translate>
                             Status
                         </data-table-cell>
 
-                        <data-table-cell name="date" translate>
+                        <data-table-cell name="pickup-date" translate>
                             Pickup date
                         </data-table-cell>
 
-                        <data-table-cell name="pickup-timeframe" translate>
+                        <data-table-cell name="pickup-time" translate>
                             Pickup timeframe
                         </data-table-cell>
 
@@ -135,7 +135,7 @@
                     <data-table-pager
                         class="flex-push-right margin-top"
                         page.bind="page"
-                        list-size.bind="routeCount"
+                        list-size.bind="orderCount"
                         page-size.bind="pageSize"
                         disabled.bind="orders == null">
                     </data-table-pager>

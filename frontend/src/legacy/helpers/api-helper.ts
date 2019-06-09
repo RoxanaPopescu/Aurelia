@@ -50,16 +50,15 @@ export function getLegacyRouteStatus(status: RouteStatusSlug): number
     return RouteStatus.map[status].value;
 }
 
-export function getLegacyOrderSortProperty(property: string): number
+export function getLegacyOrderSortProperty(property: string): number | undefined
 {
     switch (property)
     {
         case "slug": return 1;
-        case "reference": return 2;
-        case "status": return 6;
-        case "start-date": return 4;
-        case "start-address": return 3;
-        case "stops": return 5;
+        case "pickup-date": return 14;
+        case "pickup-time": return 7;
+        case "pickup-address": return 3;
+        case "delivery-address": return 12
         default: throw new Error("Unexpected sort property.");
     }
 }

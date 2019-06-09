@@ -67,7 +67,7 @@ $__summary: comment;
     --modal-dialog-max-width: calc(100vw - var(--modal-dialog-margin-left) - var(--modal-dialog-margin-right));
 
     // The min width of the dialog, as a fixed size.
-    --modal-dialog-min-width: 140rem;
+    --modal-dialog-min-width: 150rem;
 
     @media ($media-smallest-max)
     {

@@ -35,7 +35,7 @@ export class ListPage
     @observable({ changeHandler: "update" })
     protected sorting: ISorting =
     {
-        property: "reference",
+        property: "pickup-date",
         direction: "descending"
     };
 
@@ -87,7 +87,7 @@ export class ListPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(): void
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
     {
         // Return if the object is not constructed.
         // This is needed because the `observable` decorator calls the change handler when the
@@ -95,6 +95,11 @@ export class ListPage
         if (!this._constructed)
         {
             return;
+        }
+
+        if (propertyName === "statusFilter" || propertyName === "sorting")
+        {
+            this.page = 1;
         }
 
         // Abort any existing operation.
