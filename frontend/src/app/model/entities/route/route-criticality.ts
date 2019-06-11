@@ -9,13 +9,13 @@ export type RouteCriticalitySlug = keyof typeof RouteCriticality.map;
  */
 export class RouteCriticality
 {
-    public constructor(slug: keyof typeof RouteCriticality.map)
+    public constructor(slug: RouteCriticalitySlug)
     {
         this.slug = slug;
         Object.assign(this, RouteCriticality.map[slug]);
     }
 
-    public slug: keyof typeof RouteCriticality.map;
+    public slug: RouteCriticalitySlug;
     public name: string;
     public rank: number;
 

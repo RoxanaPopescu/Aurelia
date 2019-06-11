@@ -25,13 +25,15 @@ export class RoutePlanningModule
             {
                 name: "list",
                 route: "list",
-                moduleId: PLATFORM.moduleName("./modules/list/list"),
+                moduleId: ENVIRONMENT.name === "development"
+                    ? PLATFORM.moduleName("./modules/route-plans/_list/list")
+                    : PLATFORM.moduleName("./modules/route-plans/list/list"),
                 title: routeTitles.list
             },
             {
                 name: "details",
                 route: "details/:id",
-                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                moduleId: PLATFORM.moduleName("./modules/route-plans/details/details"),
                 title: routeTitles.details
             },
             {

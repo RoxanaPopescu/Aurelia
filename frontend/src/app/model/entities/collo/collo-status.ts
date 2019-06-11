@@ -10,13 +10,13 @@ export type ColloStatusSlug = keyof typeof ColloStatus.map;
  */
 export class ColloStatus
 {
-    public constructor(slug: keyof typeof ColloStatus.map)
+    public constructor(slug: ColloStatusSlug)
     {
         this.slug = slug;
         Object.assign(this, ColloStatus.map[slug]);
     }
 
-    public slug: keyof typeof ColloStatus.map;
+    public slug: ColloStatusSlug;
     public name: string;
     public accent: { pickup: Accent, delivery: Accent };
 

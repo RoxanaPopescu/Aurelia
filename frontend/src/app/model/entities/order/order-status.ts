@@ -10,13 +10,13 @@ export type OrderStatusSlug = keyof typeof OrderStatus.map;
  */
 export class OrderStatus
 {
-    public constructor(slug: keyof typeof OrderStatus.map)
+    public constructor(slug: OrderStatusSlug)
     {
         this.slug = slug;
         Object.assign(this, OrderStatus.map[slug]);
     }
 
-    public slug: keyof typeof OrderStatus.map;
+    public slug: OrderStatusSlug;
     public name: string;
     public accent: Accent;
     public value: number;

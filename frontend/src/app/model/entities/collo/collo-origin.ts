@@ -9,13 +9,13 @@ export type ColloOriginSlug = keyof typeof ColloOrigin.map;
 export class ColloOrigin
 {
 
-    public constructor(slug: keyof typeof ColloOrigin.map)
+    public constructor(slug: ColloOriginSlug)
     {
         this.slug = slug;
         Object.assign(this, ColloOrigin.map[slug]);
     }
 
-    public slug: keyof typeof ColloOrigin.map;
+    public slug: ColloOriginSlug;
     public name: string;
 
     public static readonly map =

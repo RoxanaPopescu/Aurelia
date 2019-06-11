@@ -2,11 +2,11 @@
 
     <require from="./data-table-cell.scss"></require>
 
-    <div  class="data-table-cell-content ${align === 'right' ? 'margin-auto-left' : align === 'center' ? 'margin-auto' : ''}">
+    <div class="data-table-cell-content ${align === 'right' ? 'margin-auto-left' : align === 'center' ? 'margin-auto' : ''}">
 
         <slot></slot>
 
-        <div if.bind="name" class="data-table-cell-sorting">
+        <div if.bind="name" class="data-table-cell-sorting user-select-none">
             <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'ascending'" name="md-arrow-upward"></icon>
             <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'descending'" name="md-arrow-downward"></icon>
             <icon if.bind="dataTable.sorting.property !== name || dataTable.sorting.direction === null">

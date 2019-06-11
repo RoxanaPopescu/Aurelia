@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { DateTimeRange } from "shared/types";
 import { DateTimeStyle, DateTimeValueConverter } from "../date-time/date-time";
+import { TimeValueConverter } from "../time/time";
 
 /**
  * Represents a value converter that formats a date and time range value as a localized date and time range string.
@@ -12,13 +13,16 @@ export class DateTimeRangeValueConverter
     /**
      * Creates a new instance of the type.
      * @param dateTimeValueConverter The `DateTimeValueConverter` instance.
+     * @param timeValueConverter The `TimeValueConverter` instance.
      */
-    public constructor(dateTimeValueConverter: DateTimeValueConverter)
+    public constructor(dateTimeValueConverter: DateTimeValueConverter, timeValueConverter: TimeValueConverter)
     {
         this._dateTimeValueConverter = dateTimeValueConverter;
+        this._timeValueConverter = timeValueConverter;
     }
 
     private readonly _dateTimeValueConverter: DateTimeValueConverter;
+    private readonly _timeValueConverter: TimeValueConverter;
 
     /**
      * Converts the value for use in the view,
@@ -35,8 +39,16 @@ export class DateTimeRangeValueConverter
             return value;
         }
 
+        const includeToDate =
+            value.from != null &&
+            value.to != null &&
+            value.to.diff(value.from).as("day") > 1;
+
         const from = this._dateTimeValueConverter.toView(value.from, style, convert);
-        const to = this._dateTimeValueConverter.toView(value.to, style, convert);
+
+        const to = includeToDate
+            ? this._dateTimeValueConverter.toView(value.to, style, convert)
+            : this._timeValueConverter.toView(value.to, convert);
 
         return `${from || ""} – ${to || ""}`.trim();
     }

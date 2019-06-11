@@ -1,0 +1,136 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll>
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Route planning
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value="plans">
+
+                        <tab name="plans" page-href="path: route-planning/list" translate>
+                            Plans
+                        </tab>
+
+                        <tab page-href="path: route-planning/settings/list" translate>
+                            Settings
+                        </tab>
+
+                        <tab page-href="path: route-planning/order-groups/list" translate>
+                            Order groups
+                        </tab>
+
+                        <tab page-href="path: route-planning/simulations/list" translate>
+                            Simulations
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="time-frame" translate>
+                            Time frame
+                        </data-table-cell>
+
+                        <data-table-cell name="created" translate>
+                            Created
+                        </data-table-cell>
+
+                        <data-table-cell name="updated" translate>
+                            Updated
+                        </data-table-cell>
+
+                        <data-table-cell name="routes" align="right" translate>
+                            Routes
+                        </data-table-cell>
+
+                        <data-table-cell name="unplanned-tasks" align="right" translate>
+                            Unplanned tasks
+                        </data-table-cell>
+
+                        <data-table-cell name="status" align="right" translate>
+                            Status
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="plan of plans">
+
+                        <data-table-row
+                            accent.bind="plan.status.accent"
+                            href="/route-planning/details/${plan.slug}">
+
+                            <data-table-cell>
+                                ${plan.timeFrame | dateTimeRange: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${plan.createdDateTime | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${plan.updatedDateTime | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${plan.routeCount}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${plan.unscheduledStopCount}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${plan.status.name}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        page.bind="page"
+                        list-size.bind="planCount"
+                        page-size.bind="pageSize"
+                        disabled.bind="plans == null">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

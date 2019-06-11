@@ -10,13 +10,13 @@ export type RouteStopStatusSlug = keyof typeof RouteStopStatus.map;
  */
 export class RouteStopStatus
 {
-    public constructor(slug: keyof typeof RouteStopStatus.map)
+    public constructor(slug: RouteStopStatusSlug)
     {
         this.slug = slug;
         Object.assign(this, RouteStopStatus.map[slug]);
     }
 
-    public slug: keyof typeof RouteStopStatus.map;
+    public slug: RouteStopStatusSlug;
     public name: string;
     public accent: Accent;
 

@@ -8,13 +8,13 @@ export type SortingDirectionSlug = keyof typeof SortingDirection.map;
  */
 export class SortingDirection
 {
-    public constructor(slug: keyof typeof SortingDirection.map)
+    public constructor(slug: SortingDirectionSlug)
     {
         this.slug = slug;
         Object.assign(this, SortingDirection.map[slug]);
     }
 
-    public slug: keyof typeof SortingDirection.map;
+    public slug: SortingDirectionSlug;
     public name: string;
     public value: number;
 

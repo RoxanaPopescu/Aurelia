@@ -140,10 +140,6 @@
                             Reference
                         </data-table-cell>
 
-                        <data-table-cell name="status" translate>
-                            Status
-                        </data-table-cell>
-
                         <data-table-cell name="start-date" translate>
                             Start date
                         </data-table-cell>
@@ -154,6 +150,10 @@
 
                         <data-table-cell name="stops" align="right" translate>
                             Stops
+                        </data-table-cell>
+
+                        <data-table-cell name="status" align="right" translate>
+                            Status
                         </data-table-cell>
 
                     </data-table-headers>
@@ -177,10 +177,6 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.status.name}
-                            </data-table-cell>
-
-                            <data-table-cell>
                                 ${route.startDateTime | dateTime: 'narrow' : false}
                             </data-table-cell>
 
@@ -190,6 +186,10 @@
 
                             <data-table-cell align="right">
                                 ${route.stopCount}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${route.status.name}
                             </data-table-cell>
 
                             <data-table-details
