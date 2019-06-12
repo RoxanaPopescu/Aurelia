@@ -31,6 +31,7 @@ const compilerOptions: ICompilerOptions =
         debug: false,
         optimize: true,
         obfuscate: false,
+        apiBaseUrl: "/api/",
 
         // Platform-specific configuration.
 
@@ -39,21 +40,39 @@ const compilerOptions: ICompilerOptions =
         {
             pushState: true,
             publicPath: "./",
-            appBaseUrl: "/",
-            apiBaseUrl: "/api/"
+            appBaseUrl: "/"
         } :
         commander.platform === "desktop" ?
         {
             pushState: false,
             publicPath: paths.artifacts.desktopClientBuildFolder,
-            appBaseUrl: "",
-            apiBaseUrl: "http://localhost:8008/"
+            appBaseUrl: ""
         } :
         {} as never,
 
         // Environment-specific configuration.
 
         ...
+        commander.environment === "development" ?
+        {
+            integrations:
+            {
+                googleMaps:
+                {
+                    key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
+                }
+            }
+        } :
+        commander.environment === "preview" ?
+        {
+            integrations:
+            {
+                googleMaps:
+                {
+                    key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
+                }
+            }
+        } :
         commander.environment === "production" ?
         {
             integrations:
@@ -69,15 +88,7 @@ const compilerOptions: ICompilerOptions =
                 }
             }
         } :
-        {
-            integrations:
-            {
-                googleMaps:
-                {
-                    key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
-                }
-            }
-        }
+        {} as never
     }
 };
 

@@ -27,13 +27,13 @@ const compilerOptions: ICompilerOptions =
         debug: true,
         optimize: false,
         obfuscate: false,
+        apiBaseUrl: "/api/",
 
         // Platform-specific configuration.
 
         pushState: true,
         publicPath: "./",
         appBaseUrl: "/",
-        apiBaseUrl: "/api/",
 
         // Environment-specific configuration.
 
@@ -56,9 +56,12 @@ const serveOptions: IServerOptions =
     {
         "/api/v1/":
         {
-            target: "https://bff-v1-test-mover.azurewebsites.net/",
             pathRewrite: { "^/api/v1/": "" },
-            changeOrigin: true
+            changeOrigin: true,
+
+            // Environment-specific configuration.
+
+            target: "https://bff-v1-test-mover.azurewebsites.net/",
         }
     }
 };
