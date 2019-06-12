@@ -9,6 +9,7 @@ export interface DialogProps {
   closeOnClickOutside?: boolean;
   verifyCancel?: string;
   disabled?: boolean;
+  actionItems?: JSX.Element[];
 }
 
 const defaultProps: Partial<DialogProps> = {
@@ -29,7 +30,9 @@ export class Dialog extends React.Component<DialogProps> {
         className="c-dialog-container"
       >
         <div
-          className={`c-dialog ${this.props.className || ""} ${props.disabled ? "c-dialog--disabled" : ""}`}
+          className={`c-dialog ${this.props.className || ""} ${
+            props.disabled ? "c-dialog--disabled" : ""
+          }`}
           onClick={event => event.stopPropagation()}
         >
           <div className="c-dialog-header">
@@ -38,13 +41,16 @@ export class Dialog extends React.Component<DialogProps> {
             {props.showCloseButton && (
               <div className="c-dialog-close" onClick={() => this.onClose()}>
                 <img
-                  src={require("shared/src/assets/interaction/removeLight.svg")}
+                  src={require("shared/src/assets/interaction/removeDark.svg")}
                 />
               </div>
             )}
           </div>
 
           <div className="c-dialog-content">{this.props.children}</div>
+          {this.props.actionItems && (
+            <div className="c-dialog-action">{this.props.actionItems}</div>
+          )}
         </div>
       </div>
     );

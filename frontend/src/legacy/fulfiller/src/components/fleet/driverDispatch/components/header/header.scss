@@ -22,55 +22,6 @@
   }
 }
 
-.c-driverDispatch-buttonDropdown {
-  position: relative;
-  width: 66rem;
-
-  .c-driverDispatch-buttonDropdown-button {
-    .moverButtonText {
-      justify-content: flex-start;
-    }
-  }
-
-  &.open {
-    .c-driverDispatch-buttonDropdown-button {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    .c-driverDispatch-dropdown {
-      position: absolute;
-      width: 100%;
-      background-color: white;
-      border: 1px solid var(--colorNeutralRegular);
-      border-top: 0;
-      border-bottom-left-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      overflow: hidden;
-
-      .c-driverDispatch-dropdown-value {
-        height: 10rem;
-        display: flex;
-        align-items: center;
-        padding: 0 5rem;
-        color: var(--colorInteractivePrimary);
-        cursor: pointer;
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
-
-        &:first-child {
-          border-top: 0;
-        }
-
-        &:last-child {
-          border-bottom: 0;
-        }
-
-        &:hover {
-          background-color: var(--colorNeutralExtraExtraLight);
-          border-color: var(--colorNeutralLight);
-        }
-      }
-    }
-  }
+.pageHeader-top {
+  height: 40px;
 }

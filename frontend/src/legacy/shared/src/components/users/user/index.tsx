@@ -84,6 +84,39 @@ export default class UserComponent extends React.Component<Props> {
       });
   }
 
+  requestPasswordReset() {
+    if (confirm("Sikker på du starte et password reset flow til denne bruger?")) {
+      userStore.loading = true;
+
+      UserManagementService.requestPasswordReset(userStore.user!.username)
+      .then(user => {
+        userStore.loading = false;
+
+        alert("Brugeren har fået en mail med et reset password link");
+      })
+      .catch(error => {
+        userStore.loading = false;
+      });
+    }
+  }
+
+  deactivate() {
+    if (confirm("Sikker på du vil deaktivere denne bruger?")) {
+      userStore.loading = true;
+
+      UserManagementService.deactivate(userStore.user!.username)
+      .then(user => {
+        userStore.loading = false;
+
+        alert("Brugeren er blevet deaktiveret");
+        userStore.user!.canDeactivate = false;
+      })
+      .catch(error => {
+        userStore.loading = false;
+      });
+    }
+  }
+
   updateRole() {
     userStore.validate = true;
     if (userStore.role === undefined || userStore.user === undefined) {
@@ -140,6 +173,10 @@ export default class UserComponent extends React.Component<Props> {
   }
 
   render() {
+    let userTitle = userStore.user
+    ? userStore.user!.fullName.toString()
+    : "Henter bruger...";
+
     return (
       <>
 
@@ -147,12 +184,9 @@ export default class UserComponent extends React.Component<Props> {
           history={this.props.history}
           path={[
             { title: "Brugere", href: SubPage.path(SubPage.UsersManagement) },
-            { title: userStore.user
-              ? userStore.user!.fullName.toString()
-              : "Henter bruger..." }
+            { title:  userTitle}
           ]}
         >
-        
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -162,9 +196,29 @@ export default class UserComponent extends React.Component<Props> {
           >
             {Localization.operationsValue("Users_Update:Button")}
           </Button>
-
+          { userStore.user && userStore.user.canDeactivate && 
+            <Button
+              type={ButtonType.Neutral}
+              size={ButtonSize.Medium}
+              className="c-users-create-sendButton"
+              onClick={() => this.deactivate()}
+              disabled={userStore.loading}
+            >
+              Deaktiver brugeren
+            </Button> 
+          }
+          { userStore.user && 
+            <Button
+              type={ButtonType.Neutral}
+              size={ButtonSize.Medium}
+              className="c-users-create-sendButton"
+              onClick={() => this.requestPasswordReset()}
+              disabled={userStore.loading}
+            >
+              Nulstil bruger
+            </Button> 
+          }
         </PageHeaderComponent>
-
         <PageContentComponent className="c-users-user">
         
           <Select

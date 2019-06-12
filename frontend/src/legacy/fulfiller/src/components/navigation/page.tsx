@@ -17,7 +17,8 @@ import RoutePlanSettingDetailsComponent from "../routePlanning/settings/details"
 import SimulationListComponent from "../routePlanning/simulation/components/list";
 import SimulationStartComponent from "../routePlanning/simulation/components/start";
 import SimulationResultComponent from "../routePlanning/simulation/components/result";
-import DriverDispositionComponent from "../fleet/driverDispatch";
+import DriverDispositionComponent from "../fleet/driverDispatch/dispatch";
+import ForecastsComponent from "../fleet/driverDispatch/forecasts";
 
 export type FulfillerPageType =
   | "RoutePlanning"
@@ -140,7 +141,8 @@ export class FulfillerNavigationPage {
         ];
       case "FleetManagement":
         return [
-          // FulfillerSubPage.DriverDispatch,
+          FulfillerSubPage.Forecasts,
+          FulfillerSubPage.DriverDispatch,
           FulfillerSubPage.DriverList,
           FulfillerSubPage.DriverCreate,
           FulfillerSubPage.DriverEdit
@@ -166,6 +168,7 @@ export enum FulfillerSubPage {
   DepotList,
   DepotCreate,
   DepotDetails,
+  Forecasts,
   DriverDispatch,
   DriverList,
   DriverCreate,
@@ -179,7 +182,9 @@ export namespace FulfillerSubPage {
       Base.isProduction &&
       (page === FulfillerSubPage.OrderGroupList ||
         page === FulfillerSubPage.OrderGroupDetails ||
-        page === FulfillerSubPage.OrderGroupCreate)
+        page === FulfillerSubPage.OrderGroupCreate ||
+        page === FulfillerSubPage.DriverDispatch ||
+        page === FulfillerSubPage.Forecasts)
     ) {
       return false;
     }
@@ -218,8 +223,10 @@ export namespace FulfillerSubPage {
         return undefined; // return Localization.operationsValue("Menu_RoutePlanning_Depots_Create");
       case FulfillerSubPage.DepotDetails:
         return undefined;
+      case FulfillerSubPage.Forecasts:
+        return "Forecasts";
       case FulfillerSubPage.DriverDispatch:
-        return Localization.operationsValue("Menu_Driver_Dispatch");
+        return "Dispatch";
       case FulfillerSubPage.DriverList:
         return Localization.operationsValue("Menu_Driver_List");
       case FulfillerSubPage.DriverCreate:
@@ -266,6 +273,8 @@ export namespace FulfillerSubPage {
         return DepotsDetailsComponent;
       case FulfillerSubPage.DriverDispatch:
         return DriverDispositionComponent;
+      case FulfillerSubPage.Forecasts:
+        return ForecastsComponent;
       case FulfillerSubPage.DriverList:
         return DriverListComponent;
       case FulfillerSubPage.DriverCreate:
@@ -328,6 +337,8 @@ export namespace FulfillerSubPage {
         return FulfillerNavigationPage.path("Depots") + "/create";
       case FulfillerSubPage.DepotDetails:
         return FulfillerNavigationPage.path("Depots") + "/details/:id";
+      case FulfillerSubPage.Forecasts:
+        return FulfillerNavigationPage.path("FleetManagement") + "/forecasts";
       case FulfillerSubPage.DriverDispatch:
         return (
           FulfillerNavigationPage.path("FleetManagement") + "/dispatch/:state"

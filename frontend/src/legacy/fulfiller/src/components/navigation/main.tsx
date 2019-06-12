@@ -92,13 +92,10 @@ export default class Main extends React.Component<Props, State> {
         pages.push(FulfillerNavigationPage.page("RoutePlanning"));
       }
       if (
-        this.state.claims["Create Depot"] &&
-        this.state.claims["View Depot"] &&
-        this.state.claims["Edit Depot"]
-      ) {
-        pages.push(FulfillerNavigationPage.page("Depots"));
-      }
-      if (
+        this.state.claims["Create Prebooking"] &&
+        this.state.claims["Edit Prebooking"] &&
+        this.state.claims["View Prebooking"] &&
+        this.state.claims["View Forecast"] &&
         this.state.claims["Invite driver"] &&
         this.state.claims["View drivers"] &&
         this.state.claims["Edit vehicle"] &&
@@ -106,6 +103,13 @@ export default class Main extends React.Component<Props, State> {
         this.state.claims["View vehicles"]
       ) {
         pages.push(FulfillerNavigationPage.page("FleetManagement"));
+      }
+      if (
+        this.state.claims["Create Depot"] &&
+        this.state.claims["View Depot"] &&
+        this.state.claims["Edit Depot"]
+      ) {
+        pages.push(FulfillerNavigationPage.page("Depots"));
       }
 
       pages.push(FulfillerNavigationPage.page("Communication"));

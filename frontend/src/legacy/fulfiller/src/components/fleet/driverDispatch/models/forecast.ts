@@ -10,15 +10,18 @@ export class Forecast {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.fulfilleeId = data.fulfilleeId;
-    this.fulfilleeName = data.fulfilleeName;
+    this.fulfilleeId = data.fulfillee.id;
+    this.fulfilleeName = data.fulfillee.name;
     this.date = DateTime.fromISO(data.date);
     this.timeFrame = new DateTimeRange(data.timePeriod, {
       setZone: true
     });
-    this.startAddress = data.startAddress;
+    this.startingAddress = data.startingAddress;
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
-    this.slots = { total: data.slots.total, assigned: data.slots.assigned };
+    this.slots = {
+      total: data.slots.total,
+      assigned: data.slots.assigned ? data.slots.assigned : 0
+    };
   }
 
   /**
@@ -54,7 +57,7 @@ export class Forecast {
   /**
    * The address for this forecast's starting position
    */
-  public readonly startAddress: string;
+  public readonly startingAddress: string;
 
   /**
    * The vehicle type related to this forecast

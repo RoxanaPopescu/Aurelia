@@ -281,7 +281,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           }
 
           rowsArray.push(
-            <div key={row.toString()} className={rowClassName}>
+            <div key={row.toString() + index} className={rowClassName}>
               {rowArray}
             </div>
           );

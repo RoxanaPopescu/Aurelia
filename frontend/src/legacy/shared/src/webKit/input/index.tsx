@@ -24,7 +24,8 @@ export interface InputProps {
   gridMode?: boolean;
   // tslint:disable-next-line:no-any
   onChange(value: any | undefined, event: React.ChangeEvent<HTMLInputElement>);
-  onEnter?();
+  // tslint:disable-next-line: no-any
+  onEnter?(value: any | undefined);
 }
 
 export interface InputState {
@@ -208,7 +209,7 @@ export default class Input extends React.Component<InputProps, InputState> {
             className={this.getInputClassName()}
             onKeyPress={event => {
               if (this.props.onEnter && event && event.key === "Enter") {
-                this.props.onEnter();
+                this.props.onEnter(this.state.value);
               }
             }}
             style={{

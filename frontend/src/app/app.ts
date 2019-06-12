@@ -75,6 +75,12 @@ export class AppModule
                 title: routeTitles.activateAccount
             },
             {
+                name: "account/reset-password",
+                route: "reset-password",
+                moduleId: PLATFORM.moduleName("./modules/account/modules/reset-password/reset-password"),
+                title: routeTitles.resetPassword
+            },
+            {
                 name: "profile",
                 route: "profile",
                 moduleId: PLATFORM.moduleName("./modules/profile/profile"),

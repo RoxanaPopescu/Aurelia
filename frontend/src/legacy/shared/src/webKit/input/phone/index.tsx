@@ -20,7 +20,8 @@ export interface InputPhoneProps {
   error?: boolean;
   // tslint:disable-next-line:no-any
   onChange(value?: any);
-  onEnter?();
+  // tslint:disable-next-line: no-any
+  onEnter?(value?: any);
 }
 
 export interface InputPhoneState {
@@ -69,7 +70,11 @@ export default class InputPhone extends React.Component<
   render() {
     return (
       <Input
-        onEnter={this.props.onEnter}
+        onEnter={value => {
+          if (this.props.onEnter) {
+            this.props.onEnter(value);
+          }
+        }}
         name={this.props.name}
         placeholder={this.props.placeholder}
         size={this.props.size}

@@ -1,9 +1,12 @@
 import React from "react";
 import "./table.scss";
-import { TableComponent } from "shared/src/webKit";
+import { TableComponent, InputNumbers } from "shared/src/webKit";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
-import { driverDispatchService } from "../../driverDispatchService";
+import {
+  driverDispatchService,
+  DispatchState
+} from "../../driverDispatchService";
 import { PageContentComponent } from "../../../../../../../shared/src/components/pageContent/index";
 import { ButtonSize } from "../../../../../../../shared/src/webKit/button/index";
 import { Forecast } from "../../models/forecast";
@@ -15,34 +18,47 @@ import {
 import { Route } from "shared/src/model/logistics/routes";
 import { PreBooking } from "../../models/preBooking";
 
-interface State {
-  checkedRows: number[];
+interface Props {
+  page: "dispatch" | "forecasts";
+  onPreBookingAction(preBooking: PreBooking);
+  onForecastEdit?(forecast: Forecast, totalSlots: number);
 }
 
 @observer
-export default class extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class extends React.Component<Props> {
+  constructor(props: Props) {
     super(props);
-    this.state = {
-      checkedRows: []
-    };
   }
 
   componentWillMount() {
-    this.setState({ checkedRows: [] });
+    driverDispatchService.selectedItemIndexes = [];
   }
 
   private getHeaders() {
-    if (driverDispatchService.state === "forecasts") {
-      return [
-        { key: "customer", content: "Customer" },
-        { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting addresse" },
-        { key: "vehicle", content: "Vehicle" },
-        { key: "assigned-slots", content: "Assigned slots" },
-        { key: "unassigned-slots", content: "Missing" }
-      ];
-    } else if (driverDispatchService.state === "preBookings") {
+    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
+      if (this.props.page === "dispatch") {
+        return [
+          { key: "customer", content: "Customer" },
+          { key: "date-start", content: "Date start" },
+          { key: "time-period", content: "Time period" },
+          { key: "starting-addresse", content: "Starting address" },
+          { key: "vehicle", content: "Vehicle" },
+          { key: "assigned-slots", content: "Assigned slots" },
+          { key: "unassigned-slots", content: "Missing" }
+        ];
+      } else {
+        return [
+          { key: "customer", content: "Customer" },
+          { key: "date-start", content: "Date start" },
+          { key: "time-period", content: "Time period" },
+          { key: "starting-addresse", content: "Starting address" },
+          { key: "vehicle", content: "Vehicle" },
+          { key: "slots", content: "Total slots" }
+        ];
+      }
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+    ) {
       return [
         {
           key: "select",
@@ -50,7 +66,7 @@ export default class extends React.Component<{}, State> {
             <InputCheckbox
               checked={
                 driverDispatchService.preBookings.length !== 0 &&
-                this.state.checkedRows.length ===
+                driverDispatchService.selectedItemIndexes.length ===
                   driverDispatchService.preBookings.length
               }
               onChange={checked => {
@@ -60,36 +76,40 @@ export default class extends React.Component<{}, State> {
                     checkedRows.push(i);
                   });
                 }
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }}
             />
           )
         },
         { key: "customer", content: "Customer" },
+        { key: "date-start", content: "Date start" },
         { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting addresse" },
+        { key: "starting-addresse", content: "Starting address" },
         { key: "driver", content: "Driver" },
         { key: "vehicle", content: "Vehicle" }
       ];
-    } else if (driverDispatchService.state === "unassignedRoutes") {
+    } else if (
+      driverDispatchService.state.slug ===
+      DispatchState.map.unassignedRoute.slug
+    ) {
       return [
         {
           key: "select",
           content: (
             <InputCheckbox
               checked={
-                driverDispatchService.preBookings.length !== 0 &&
-                this.state.checkedRows.length ===
-                  driverDispatchService.preBookings.length
+                driverDispatchService.unassignedRoutes.length !== 0 &&
+                driverDispatchService.selectedItemIndexes.length ===
+                  driverDispatchService.unassignedRoutes.length
               }
               onChange={checked => {
                 var checkedRows: number[] = [];
                 if (checked) {
-                  driverDispatchService.preBookings.forEach((p, i) => {
+                  driverDispatchService.unassignedRoutes.forEach((p, i) => {
                     checkedRows.push(i);
                   });
                 }
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }}
             />
           )
@@ -97,29 +117,31 @@ export default class extends React.Component<{}, State> {
         { key: "reference", content: "Reference" },
         { key: "customer", content: "Customer" },
         { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting addresse" },
-        { key: "end-addresse", content: "End addresse" },
+        { key: "starting-addresse", content: "Starting address" },
+        { key: "end-addresse", content: "End address" },
         { key: "vehicle", content: "Vehicle" }
       ];
-    } else if (driverDispatchService.state === "assignedRoutes") {
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
+    ) {
       return [
         {
           key: "select",
           content: (
             <InputCheckbox
               checked={
-                driverDispatchService.preBookings.length !== 0 &&
-                this.state.checkedRows.length ===
-                  driverDispatchService.preBookings.length
+                driverDispatchService.assignedRoutes.length !== 0 &&
+                driverDispatchService.selectedItemIndexes.length ===
+                  driverDispatchService.assignedRoutes.length
               }
               onChange={checked => {
                 var checkedRows: number[] = [];
                 if (checked) {
-                  driverDispatchService.preBookings.forEach((p, i) => {
+                  driverDispatchService.assignedRoutes.forEach((p, i) => {
                     checkedRows.push(i);
                   });
                 }
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }}
             />
           )
@@ -127,8 +149,8 @@ export default class extends React.Component<{}, State> {
         { key: "reference", content: "Reference" },
         { key: "customer", content: "Customer" },
         { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting addresse" },
-        { key: "end-addresse", content: "End addresse" },
+        { key: "starting-addresse", content: "Starting address" },
+        { key: "end-addresse", content: "End address" },
         { key: "driver", content: "Driver" }
       ];
     } else {
@@ -136,21 +158,38 @@ export default class extends React.Component<{}, State> {
     }
   }
 
-  private getAssignForecast(forecast: Forecast) {
-    if (forecast.slots.assigned === forecast.slots.total) {
-      return <div className="c-driverDispatch-checkMark" />;
+  private getForecastAction(forecast: Forecast) {
+    if (this.props.page === "dispatch") {
+      if (forecast.slots.assigned === forecast.slots.total) {
+        return <div className="c-driverDispatch-checkMark" />;
+      } else {
+        return (
+          <>
+            {`${forecast.slots.total - forecast.slots.assigned}`}
+            <Button
+              type={ButtonType.Light}
+              size={ButtonSize.Small}
+              className="c-driverDispatch-table-actionButton"
+            >
+              Assign
+            </Button>
+          </>
+        );
+      }
     } else {
       return (
-        <>
-          {`${forecast.slots.total - forecast.slots.assigned}`}
-          <Button
-            type={ButtonType.Light}
-            size={ButtonSize.Small}
-            className="c-driverDispatch-table-actionButton"
-          >
-            Assign
-          </Button>
-        </>
+        <InputNumbers
+          onChange={() => {
+            /** */
+          }}
+          onEnter={value => {
+            if (value && this.props.onForecastEdit) {
+              this.props.onForecastEdit(forecast, value);
+            }
+          }}
+          className="c-driverDispatch-forecastSlotsInput"
+          value={forecast.slots.total}
+        />
       );
     }
   }
@@ -178,6 +217,9 @@ export default class extends React.Component<{}, State> {
           type={ButtonType.Light}
           size={ButtonSize.Small}
           className="c-driverDispatch-table-actionButton"
+          onClick={() => {
+            this.props.onPreBookingAction(preBooking);
+          }}
         >
           Actions
         </Button>
@@ -188,7 +230,9 @@ export default class extends React.Component<{}, State> {
   private getRemoveDriver(route: Route) {
     return (
       <>
-        {`${route.driver!.name} (${route.driver!.phone.number})`}
+        {route.driver
+          ? `${route.driver.name} (${route.driver.phone.number})`
+          : "--"}
         <div className="c-driverDispatch-table-actionButton" />
       </>
     );
@@ -197,7 +241,7 @@ export default class extends React.Component<{}, State> {
   private getDisabledRowIndexes() {
     let array: number[] = [];
 
-    if (driverDispatchService.state === "forecasts") {
+    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
       driverDispatchService.forecasts.map((f, i) => {
         if (f.slots.total === f.slots.assigned) {
           array.push(i);
@@ -209,60 +253,73 @@ export default class extends React.Component<{}, State> {
   }
 
   private getRows() {
-    if (driverDispatchService.state === "forecasts") {
+    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
       return driverDispatchService.forecasts.map(f => {
-        return [
-          f.fulfilleeName,
-          Localization.formatTimeRange(f.timeFrame),
-          f.startAddress,
-          f.vehicleType.name,
-          `${f.slots.assigned}/${f.slots.total}`,
-          this.getAssignForecast(f)
-        ];
+        if (this.props.page === "dispatch") {
+          return [
+            f.fulfilleeName,
+            Localization.formatDate(f.date),
+            Localization.formatTimeRange(f.timeFrame),
+            f.startingAddress,
+            f.vehicleType.name,
+            `${f.slots.assigned}/${f.slots.total}`,
+            this.getForecastAction(f)
+          ];
+        } else {
+          return [
+            f.fulfilleeName,
+            Localization.formatDate(f.date),
+            Localization.formatTimeRange(f.timeFrame),
+            f.startingAddress,
+            f.vehicleType.name,
+            this.getForecastAction(f)
+          ];
+        }
       });
-    } else if (driverDispatchService.state === "preBookings") {
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+    ) {
       return driverDispatchService.preBookings.map((p, i) => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
-            checked={this.state.checkedRows.indexOf(i) > -1}
+            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
-              var checkedRows = this.state.checkedRows;
+              var checkedRows = driverDispatchService.selectedItemIndexes;
               if (checked) {
                 checkedRows.push(i);
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               } else {
                 checkedRows.splice(checkedRows.indexOf(i), 1);
-                this.setState({
-                  checkedRows: checkedRows
-                });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }
             }}
             key={p.id}
           />,
           p.fulfilleeName,
+          Localization.formatDate(p.date),
           Localization.formatTimeRange(p.timeFrame),
-          p.startAddress,
+          p.startingAddress,
           `${p.driver.formattedName} (${p.driver.phoneNumber.number})`,
           this.getPreBookingActions(p)
         ];
       });
-    } else if (driverDispatchService.state === "assignedRoutes") {
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.forecast.slug
+    ) {
       return driverDispatchService.assignedRoutes.map((ar, i) => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
-            checked={this.state.checkedRows.indexOf(i) > -1}
+            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
-              var checkedRows = this.state.checkedRows;
+              var checkedRows = driverDispatchService.selectedItemIndexes;
               if (checked) {
                 checkedRows.push(i);
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               } else {
                 checkedRows.splice(checkedRows.indexOf(i), 1);
-                this.setState({
-                  checkedRows: checkedRows
-                });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }
             }}
             key={ar.id}
@@ -275,22 +332,23 @@ export default class extends React.Component<{}, State> {
           this.getRemoveDriver(ar)
         ];
       });
-    } else if (driverDispatchService.state === "unassignedRoutes") {
+    } else if (
+      driverDispatchService.state.slug ===
+      DispatchState.map.unassignedRoute.slug
+    ) {
       return driverDispatchService.assignedRoutes.map((ur, i) => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
-            checked={this.state.checkedRows.indexOf(i) > -1}
+            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
-              var checkedRows = this.state.checkedRows;
+              var checkedRows = driverDispatchService.selectedItemIndexes;
               if (checked) {
                 checkedRows.push(i);
-                this.setState({ checkedRows: checkedRows });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               } else {
                 checkedRows.splice(checkedRows.indexOf(i), 1);
-                this.setState({
-                  checkedRows: checkedRows
-                });
+                driverDispatchService.selectedItemIndexes = checkedRows;
               }
             }}
             key={ur.id}
@@ -310,31 +368,26 @@ export default class extends React.Component<{}, State> {
 
   render() {
     return (
-      <PageContentComponent>
-        <TableComponent
-          canSelectRow={() => false}
-          newVersion={true}
-          data={{
-            headers: this.getHeaders(),
-            rows: this.getRows()
-          }}
-          pagination={{
-            pages: 3,
-            currentPageIndex: 1,
-            resultsPerPage: 40,
-            onPageChange: () => {
-              /* */
+      <>
+        <PageContentComponent>
+          <TableComponent
+            canSelectRow={() => false}
+            newVersion={true}
+            data={{
+              headers: this.getHeaders(),
+              rows: this.getRows()
+            }}
+            highlightedRowIndexes={driverDispatchService.selectedItemIndexes}
+            disabledRowIndexes={this.getDisabledRowIndexes()}
+            gridTemplateColumns={
+              driverDispatchService.state.slug ===
+              DispatchState.map.preBooking.slug
+                ? "min-content auto auto auto auto auto auto"
+                : undefined
             }
-          }}
-          highlightedRowIndexes={this.state.checkedRows}
-          disabledRowIndexes={this.getDisabledRowIndexes()}
-          gridTemplateColumns={
-            driverDispatchService.state === "preBookings"
-              ? "min-content auto auto auto auto auto"
-              : undefined
-          }
-        />
-      </PageContentComponent>
+          />
+        </PageContentComponent>
+      </>
     );
   }
 }

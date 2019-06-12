@@ -25,7 +25,7 @@ interface Props {
   gridMode?: boolean;
   // tslint:disable-next-line:no-any
   onChange(value?: number, event?: any);
-  onEnter?();
+  onEnter?(value?: number);
 }
 
 interface State {
@@ -73,7 +73,11 @@ export default class InputPhone extends React.Component<Props, State> {
   render() {
     return (
       <Input
-        onEnter={this.props.onEnter}
+        onEnter={value => {
+          if (this.props.onEnter) {
+            this.props.onEnter(value);
+          }
+        }}
         name={this.props.name}
         noDisabledStyle={this.props.noDisabledStyle}
         placeholder={this.props.placeholder}

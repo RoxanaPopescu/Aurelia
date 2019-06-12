@@ -5,9 +5,36 @@ import { Consignor } from "shared/src/model/logistics/consignor";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 
 export class AgreementsService {
+  static async inviteFulfiller(
+    publicId: string, 
+    companyName: string, 
+    firstName: string, 
+    lastName: string, 
+    email: string
+  ) {
+    var items = {
+      publicId: publicId,
+      companyName: companyName,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    };
+
+    let response = await fetch(
+      Base.url("Agreements/Fulfillers/Invite"),
+      Base.defaultConfig(items)
+    );
+
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    return;
+  }
+
   static async fulfillers(): Promise<Outfit[]> {
     let response = await fetch(
-      Base.url("Agreements/Fulfillers"),
+      Base.url("Agreements/Fulfillers/List"),
       Base.defaultConfig()
     );
 
@@ -34,7 +61,7 @@ export class AgreementsService {
 
   static async fulfilees(): Promise<Outfit[]> {
     let response = await fetch(
-      Base.url("Agreements/Fulfilees"),
+      Base.url("Agreements/Fulfilees/List"),
       Base.defaultConfig()
     );
 

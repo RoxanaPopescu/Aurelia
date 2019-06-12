@@ -20,7 +20,8 @@ export interface InputPasswordProps {
   height?: string;
   // tslint:disable-next-line:no-any
   onChange(value?: any);
-  onEnter?();
+  // tslint:disable-next-line: no-any
+  onEnter?(value?: any);
 }
 
 export interface InputPasswordState {
@@ -68,7 +69,11 @@ export default class InputPassword extends React.Component<
         type={this.state.showPassword ? "text" : "password"}
         minlength={this.props.minlength}
         maxlength={this.props.maxlength}
-        onEnter={this.props.onEnter}
+        onEnter={value => {
+          if (this.props.onEnter) {
+            this.props.onEnter(value);
+          }
+        }}
         onChange={value => {
           this.setState({ value: value });
           this.props.onChange(value);

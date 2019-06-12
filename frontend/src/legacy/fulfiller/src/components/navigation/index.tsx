@@ -8,7 +8,8 @@ import Login from "shared/src/components/login";
 import Main from "./main";
 import Localization from "shared/src/localization";
 import DeploymentComponent from "shared/src/components/deployment";
-import Activation from "../../../../shared/src/components/activation/index";
+import Activation from "../../../../shared/src/components/activation";
+import ResetPassword from "../../../../shared/src/components/resetPassword";
 import H from "history";
 
 interface Props {
@@ -28,6 +29,10 @@ export default class App extends React.Component<Props> {
               <Route
                 path="/activation"
                 render={props => <Activation type={"Fulfiller"} {...props} />}
+              />
+              <Route
+                path="/reset-password"
+                render={props => <ResetPassword type={"Fulfiller"} {...props} />}
               />
               <Route path="/">
                 <Login

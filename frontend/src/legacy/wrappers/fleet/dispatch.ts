@@ -3,7 +3,7 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "fulfiller/src/components/fleet/driverDispatch/index";
+import Component from "fulfiller/src/components/fleet/driverDispatch/dispatch/index";
 
 @noView
 @autoinject

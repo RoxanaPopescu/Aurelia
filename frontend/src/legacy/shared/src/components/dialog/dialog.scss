@@ -14,7 +14,10 @@
 }
 
 .c-dialog {
-  min-width: 600px;
+  min-width: 850px;
+  border-radius: var(--border-radius-medium);
+  overflow: hidden;
+  margin-top: -25rem;
 }
 
 .c-dialog--disabled {
@@ -23,9 +26,12 @@
 
 .c-dialog-header {
   position: relative;
-  padding: 25px 105px 25px 70px;
-  background-color: var(--colorBackgroundPrimary);
-  color: white;
+  height: 15rem;
+  padding: 0 8rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--colorNeutralExtraLight);
+  border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
 
   img {
     width: auto;
@@ -33,24 +39,33 @@
 }
 
 .c-dialog-close {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 70px;
+  margin-left: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
 
   &:hover {
-    opacity: 0.7;
+    opacity: .7;
   }
 }
 
 .c-dialog-content {
   background-color: white;
-  padding: 40px 70px;
+  padding: 11rem 8rem;
   max-height: 70vh;
   overflow-y: auto;
+}
+
+.c-dialog-action {
+  height: 19rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: var(--border-width-thin) solid var(--colorNeutralLight);
+  background-color: white;
+  padding: 0 8rem;
+
+  > *:not(:first-child) {
+    margin-left: 5rem;
+  }
 }

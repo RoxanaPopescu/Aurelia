@@ -11,15 +11,19 @@ export class PreBooking {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.fulfilleeId = data.fulfilleeId;
-    this.fulfilleeName = data.fulfilleeName;
+    this.fulfilleeId = data.fulfillee.id;
+    this.fulfilleeName = data.fulfillee.name;
     this.date = DateTime.fromISO(data.date);
     this.timeFrame = new DateTimeRange(data.timePeriod, {
       setZone: true
     });
-    this.startAddress = data.startAddress;
-    this.startAddress = data.startAddress;
+    this.startingAddress = data.startingAddress;
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
+    // TODO: REMOVE WHEN DATA IS OK
+    if (!data.driver.name) {
+      data.driver.name = { first: "--", last: "--" };
+      data.driver.phone = { countryPrefix: "", number: "" };
+    }
     this.driver = new Driver(data.driver);
   }
 
@@ -56,7 +60,7 @@ export class PreBooking {
   /**
    * The address for this pre-booking's starting position
    */
-  public readonly startAddress: string;
+  public readonly startingAddress: string;
 
   /**
    * The vehicle type related to this pre-booking

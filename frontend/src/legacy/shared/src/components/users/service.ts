@@ -101,6 +101,46 @@ export default class UserManagementService {
   }
 
   /*
+  ** API call to request password reset
+  */
+  static async requestPasswordReset(username: string) {
+    var items = {
+      username: username
+    };
+  
+    let response = await fetch(
+      Base.url("RequestPasswordReset"),
+      Base.defaultConfig(items)
+    );
+  
+    try {
+      await response.json();
+    } catch {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+  }
+
+  /*
+  ** API call to deactivate a user
+  */
+ static async deactivate(username: string) {
+  var items = {
+    username: username
+  };
+
+  let response = await fetch(
+    Base.url("users/Deactivate"),
+    Base.defaultConfig(items)
+  );
+
+  try {
+    await response.json();
+  } catch {
+    throw new Error(Localization.sharedValue("Error_General"));
+  }
+}
+
+  /*
   ** API call to update a user's information
   */
   static async updateUser(userId: string, role: Role) {

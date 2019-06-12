@@ -55,6 +55,15 @@ export class FleetModule
                     nav: true,
                     href: "/fleet-management/dispatch",
                     icon: "forecast"
+                },
+                {
+                    name: "forecasts",
+                    route: "forecasts",
+                    moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),
+                    title: routeTitles.forecasts,
+                    nav: true,
+                    href: "/fleet-management/forecasts",
+                    icon: "forecast"
                 }
             ] : []
         ]);

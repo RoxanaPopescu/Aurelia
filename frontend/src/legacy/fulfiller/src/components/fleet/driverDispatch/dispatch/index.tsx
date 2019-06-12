@@ -1,0 +1,171 @@
+import React from "react";
+import "./index.scss";
+import Localization from "shared/src/localization";
+import { observer } from "mobx-react";
+import Filters from "../components/filters/filters";
+import Table from "../components/table/table";
+import Header from "../components/header/header";
+import H from "history";
+import { driverDispatchService, DispatchState } from "../driverDispatchService";
+import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
+import { PreBooking } from "../models/preBooking";
+import PreBookingDialog from "../components/preBookingDialog";
+import Dropdown from "./components/dropdown";
+import { Button, ButtonType } from "shared/src/webKit";
+
+interface Props {
+  // tslint:disable-next-line:no-any
+  match: any;
+  history: H.History;
+}
+
+interface State {
+  preBookingDialog?: {
+    preBookings: PreBooking[];
+    state?: "actions" | "remove" | "change";
+  };
+}
+
+@observer
+export default class DispatchComponent extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    document.title = Localization.operationsValue("Drivers_Title");
+
+    this.state = {};
+  }
+
+  componentWillMount() {
+    this.handleStateChange();
+  }
+
+  componentWillUpdate() {
+    this.handleStateChange();
+  }
+
+  private handleStateChange() {
+    if (this.props.match.params.state === ":state") {
+      this.props.history.push(
+        FulfillerSubPage.path(FulfillerSubPage.DriverDispatch).replace(
+          ":state",
+          driverDispatchService.state.slug
+        )
+      );
+    } else if (
+      this.props.match.params.state === DispatchState.map.forecast.slug
+    ) {
+      driverDispatchService.state = new DispatchState("forecast");
+    } else if (
+      this.props.match.params.state === DispatchState.map.preBooking.slug
+    ) {
+      driverDispatchService.state = new DispatchState("preBooking");
+    } else if (
+      this.props.match.params.state === DispatchState.map.assignedRoute.slug
+    ) {
+      driverDispatchService.state = new DispatchState("assignedRoute");
+    } else if (
+      this.props.match.params.state === DispatchState.map.unassignedRoute.slug
+    ) {
+      driverDispatchService.state = new DispatchState("unassignedRoute");
+    }
+
+    this.fetchOverviewData();
+  }
+
+  private async fetchOverviewData(): Promise<void> {
+    driverDispatchService.selectedItemIndexes = [];
+    await driverDispatchService.fetchOverview();
+
+    this.fetchData();
+  }
+
+  private async fetchData(): Promise<void> {
+    if (
+      driverDispatchService.state.value === DispatchState.map.forecast.value
+    ) {
+      await driverDispatchService.fetchForecasts();
+    } else if (
+      driverDispatchService.state.value === DispatchState.map.preBooking.value
+    ) {
+      await driverDispatchService.fetchPreBookings();
+    }
+    // TODO: Assigned and unassigned routes
+  }
+
+  private get headerElements() {
+    if (
+      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+    ) {
+      return (
+        <Dropdown
+          removePreBookingDrivers={() => this.removePreBookingDrivers()}
+        />
+      );
+    } else if (
+      driverDispatchService.state.slug ===
+      DispatchState.map.unassignedRoute.slug
+    ) {
+      return <Button type={ButtonType.Light}>Match route</Button>;
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
+    ) {
+      return <Button type={ButtonType.Light}>Delete driver</Button>;
+    } else {
+      return undefined;
+    }
+  }
+
+  private removePreBookingDrivers() {
+    let array: PreBooking[] = [];
+    driverDispatchService.preBookings.forEach((p, i) => {
+      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+        array.push(p);
+      }
+
+      this.setState({
+        preBookingDialog: { preBookings: array, state: "remove" }
+      });
+    });
+  }
+
+  render() {
+    return (
+      <div className="c-driverDispatch-container">
+        {this.state.preBookingDialog && (
+          <PreBookingDialog
+            onClose={() => {
+              this.setState({ preBookingDialog: undefined });
+            }}
+            data={this.state.preBookingDialog}
+          />
+        )}
+        <Filters
+          page="dispatch"
+          onStateChange={state => {
+            this.props.history.push(
+              FulfillerSubPage.path(FulfillerSubPage.DriverDispatch).replace(
+                ":state",
+                state.slug
+              )
+            );
+          }}
+          onFilterChange={() => this.fetchData()}
+          onTopFilterChange={() => {
+            this.fetchOverviewData();
+          }}
+        />
+        <div className="c-driverDispatch-main">
+          <Header>{this.headerElements}</Header>
+          <Table
+            page="dispatch"
+            onPreBookingAction={preBooking => {
+              this.setState({
+                preBookingDialog: { preBookings: [preBooking] }
+              });
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+}

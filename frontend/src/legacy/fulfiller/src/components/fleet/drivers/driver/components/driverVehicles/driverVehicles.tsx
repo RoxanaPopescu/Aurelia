@@ -2,7 +2,13 @@ import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
-import { LoadingOverlay, Button, ButtonType, Divider, ButtonSize } from "shared/src/webKit";
+import {
+  LoadingOverlay,
+  Button,
+  ButtonType,
+  Divider,
+  ButtonSize
+} from "shared/src/webKit";
 import { DriverService } from "../../services/driverService";
 import { VehicleService } from "../../services/vehicleService";
 import { Vehicle } from "../../models/vehicle";
@@ -17,10 +23,9 @@ export interface DriverProfileProps {
 
 @observer
 export class DriverVehicles extends React.Component<DriverProfileProps> {
-
   public constructor(props: DriverProfileProps) {
     super(props);
-    
+
     this.newVehicle = new Vehicle();
   }
 
@@ -33,13 +38,14 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
   public render() {
     return (
       <>
+        {this.props.vehicleService.busy && (
+          <LoadingOverlay fade={this.props.vehicleService.vehicles != null} />
+        )}
 
-        {this.props.vehicleService.busy &&
-          <LoadingOverlay fade={this.props.vehicleService.vehicles != null}/>}
-        
         <div className="c-driver-tab c-driver-driverVehicles">
-          
-          <div className="font-large">{Localization.operationsValue("Driver_Vehicles_ListTitle")}</div>
+          <div className="font-large">
+            {Localization.operationsValue("Driver_Vehicles_ListTitle")}
+          </div>
 
           <VehicleList
             vehicles={this.props.vehicleService.vehicles}
@@ -48,12 +54,13 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
 
           <Divider />
 
-          <div className="font-large">{Localization.operationsValue("Driver_Vehicles_AddVehicleTitle")}</div>
+          <div className="font-large">
+            {Localization.operationsValue("Driver_Vehicles_AddVehicleTitle")}
+          </div>
 
-          <VehicleForm validate={this.validate} vehicle={this.newVehicle}/>
-          
+          <VehicleForm validate={this.validate} vehicle={this.newVehicle} />
+
           <div className="c-driver-driverVehicles-actions">
-
             <Button
               size={ButtonSize.Medium}
               type={ButtonType.Action}
@@ -62,18 +69,18 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
             >
               {Localization.operationsValue("Driver_Vehicles_AddVehicle")}
             </Button>
-            
           </div>
-
         </div>
-        
       </>
     );
   }
 
   private onAddVehicle(vehicle: Vehicle): void {
     try {
-      this.props.vehicleService.addVehicle(vehicle, this.props.driverService.driver!.id!);
+      this.props.vehicleService.addVehicle(
+        vehicle,
+        this.props.driverService.driver!.id!
+      );
       this.newVehicle = new Vehicle({});
       this.validate = false;
     } catch (error) {
@@ -84,9 +91,14 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
 
   private onRemoveVehicle(vehicle: Vehicle): void {
     try {
-      this.props.vehicleService.removeVehicle(vehicle, this.props.driverService.driver!.id!);
+      this.props.vehicleService.removeVehicle(
+        vehicle,
+        this.props.driverService.driver!.id!
+      );
     } catch (error) {
-      alert(Localization.operationsValue("Driver_Vehicles_CouldNotRemoveVehicle"));
+      alert(
+        Localization.operationsValue("Driver_Vehicles_CouldNotRemoveVehicle")
+      );
     }
   }
 }

@@ -11,7 +11,7 @@
     },
     "mover": {
       "themedDomains": [],
-      "productionDomains": ["mover.dk", "usemover.com"],
+      "productionDomains": ["mover.dk", "usemover.com", "movertransport.com"],
       "appIdentifiers": {
         "iOS": "com.mover.driver",
         "Android": "com.mover.driver"

@@ -11,7 +11,7 @@ export class Route {
     this.status = new RouteStatus(data.status);
     this.fulfiller =
       data.fulfiller != null ? new Fulfiller(data.fulfiller) : undefined;
-    this.startDateTime = DateTime.fromISO(data.startDateTime);
+    this.startDateTime = DateTime.fromISO(data.startDateTime, {setZone: true});
     this.startAddress = new Address({ primary: data.pickupAddress });
     this.stopCount = data.stopCount;
   }

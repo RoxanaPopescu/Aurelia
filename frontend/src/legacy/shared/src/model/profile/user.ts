@@ -6,6 +6,7 @@ export default class User {
   public email: string;
   public outfitId: string;
   public role: Role;
+  public canDeactivate: boolean;
 
   // tslint:disable-next-line:no-any
   constructor(json: any) {
@@ -15,6 +16,11 @@ export default class User {
     this.lastName = json.lastName;
     this.email = json.email;
     this.outfitId = json.outfitId;
+    if (json.canDeactivate) {
+      this.canDeactivate = json.canDeactivate;
+    } else {
+      this.canDeactivate = false;
+    }
     this.role = new Role({ id: json.roleId, name: json.roleName });
   }
 

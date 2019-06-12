@@ -4,7 +4,6 @@ import { Session } from "../session";
  * Represents a vehicle types.
  */
 export class VehicleType {
-
   /**
    * Gets the vehicle type with the specified ID.
    */
