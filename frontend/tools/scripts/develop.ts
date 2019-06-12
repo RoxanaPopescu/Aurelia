@@ -61,7 +61,7 @@ const serveOptions: IServerOptions =
 
             // Environment-specific configuration.
 
-            target: "https://bff-v1-test-mover.azurewebsites.net/",
+            target: "https://bff-v1-test-mover.azurewebsites.net/"
         }
     }
 };
