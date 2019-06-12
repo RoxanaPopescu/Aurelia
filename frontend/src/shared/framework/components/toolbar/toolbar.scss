@@ -19,8 +19,8 @@ toolbar
     input[type="text"],
     input[type="search"]
     {
-        width: 8vw;
-        min-width: 20rem;
+        width: 10vw;
+        min-width: 30rem;
         max-width: 80rem;
         transition: width calc(2 * var(--animation-duration-medium));
 
@@ -37,6 +37,6 @@ toolbar
     select
     {
         width: auto;
-        min-width: 40rem;
+        min-width: 30rem;
     }
 }

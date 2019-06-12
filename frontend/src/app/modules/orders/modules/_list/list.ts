@@ -1,9 +1,10 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
+import { Operation, ISorting, IPaging } from "shared/types";
+import { IScroll } from "shared/framework";
 import { OrderService } from "app/model/services/order";
 import { OrderInfo } from "app/model/entities/order/list";
 import { OrderStatusSlug } from "app/model/entities/order";
-import { Operation, ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -25,6 +26,11 @@ export class ListPage
     private readonly _constructed;
 
     /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
      * The most recent update operation.
      */
     protected updateOperation: Operation;
@@ -40,6 +46,16 @@ export class ListPage
     };
 
     /**
+     * The paging to use for the table.
+     */
+    @observable({ changeHandler: "update" })
+    protected paging: IPaging =
+    {
+        page: 1,
+        pageSize: 20
+    };
+
+    /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
@@ -50,18 +66,6 @@ export class ListPage
      */
     @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
-
-    /**
-     * The current page number, starting from 1.
-     */
-    @observable({ changeHandler: "update" })
-    protected page: number = 1;
-
-    /**
-     * The max number of items to show on a page, or undefined to disable this option.
-     */
-    @observable({ changeHandler: "update" })
-    protected pageSize: number = 20;
 
     /**
      * The total number of items in the list, or undefined if unknown.
@@ -97,11 +101,6 @@ export class ListPage
             return;
         }
 
-        if (propertyName === "statusFilter" || propertyName === "sorting")
-        {
-            this.page = 1;
-        }
-
         // Abort any existing operation.
         if (this.updateOperation != null)
         {
@@ -116,12 +115,21 @@ export class ListPage
                 this.statusFilter,
                 this.textFilter,
                 this.sorting,
-                { page: this.page, pageSize: this.pageSize },
+                this.paging,
                 signal);
 
             // Update the state.
             this.orders = result.orders;
             this.orderCount = result.orderCount;
+
+            // Reset page.
+            if (propertyName !== "paging")
+            {
+                this.paging.page = 1;
+            }
+
+            // Scroll to top.
+            this.scroll.reset();
         });
     }
 }

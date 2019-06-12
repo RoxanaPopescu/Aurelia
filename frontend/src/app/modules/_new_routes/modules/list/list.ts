@@ -1,9 +1,10 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
+import { Operation, ISorting, IPaging } from "shared/types";
+import { IScroll } from "shared/framework";
 import { RouteService } from "app/model/services/route";
 import { RouteInfo } from "app/model/entities/route/list";
 import { RouteStatusSlug } from "app/model/entities/route";
-import { Operation, ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -54,6 +55,11 @@ export class ListPage
     // ----------
 
     /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
      * The most recent update operation.
      */
     protected updateOperation: Operation;
@@ -64,33 +70,31 @@ export class ListPage
     @observable({ changeHandler: "update" })
     protected sorting: ISorting =
     {
-        property: "reference",
+        property: "status",
         direction: "descending"
+    };
+
+    /**
+     * The paging to use for the table.
+     */
+    @observable({ changeHandler: "update" })
+    protected paging: IPaging =
+    {
+        page: 1,
+        pageSize: 20
     };
 
     /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug = "requested";
+    protected statusFilter: RouteStatusSlug | undefined = "requested";
 
     /**
      * The text in the filter text input.
      */
     @observable({ changeHandler: "update" })
-    protected textFilter: string;
-
-    /**
-     * The current page number, starting from 1.
-     */
-    @observable({ changeHandler: "update" })
-    protected page: number = 1;
-
-    /**
-     * The max number of items to show on a page, or undefined to disable this option.
-     */
-    @observable({ changeHandler: "update" })
-    protected pageSize: number = 20;
+    protected textFilter: string | undefined;
 
     /**
      * The total number of items in the list, or undefined if unknown.
@@ -116,7 +120,7 @@ export class ListPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(): void
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
     {
         // Return if the object is not constructed.
         // This is needed because the `observable` decorator calls the change handler when the
@@ -140,12 +144,21 @@ export class ListPage
                 this.statusFilter,
                 this.textFilter,
                 this.sorting,
-                { page: this.page, pageSize: this.pageSize },
+                this.paging,
                 signal);
 
             // Update the state.
             this.routes = result.routes;
             this.routeCount = result.routeCount;
+
+            // Reset page.
+            if (propertyName !== "paging")
+            {
+                this.paging.page = 1;
+            }
+
+            // Scroll to top.
+            this.scroll.reset();
         });
     }
 

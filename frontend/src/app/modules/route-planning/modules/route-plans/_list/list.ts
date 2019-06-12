@@ -1,7 +1,8 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
+import { Operation, ISorting, IPaging } from "shared/types";
+import { IScroll } from "shared/framework";
 import { RoutePlanService } from "app/model/services/route-plan";
-import { Operation, ISorting } from "shared/types";
 import { RoutePlanInfo } from "app/model/entities/route-plan";
 
 /**
@@ -24,6 +25,11 @@ export class ListPage
     private readonly _constructed;
 
     /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
      * The most recent update operation.
      */
     protected updateOperation: Operation;
@@ -39,16 +45,14 @@ export class ListPage
     };
 
     /**
-     * The current page number, starting from 1.
+     * The paging to use for the table.
      */
     @observable({ changeHandler: "update" })
-    protected page: number = 1;
-
-    /**
-     * The max number of items to show on a page, or undefined to disable this option.
-     */
-    @observable({ changeHandler: "update" })
-    protected pageSize: number = 20;
+    protected paging: IPaging =
+    {
+        page: 1,
+        pageSize: 20
+    };
 
     /**
      * The total number of items in the list, or undefined if unknown.
@@ -74,7 +78,7 @@ export class ListPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?): void
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
     {
         // Return if the object is not constructed.
         // This is needed because the `observable` decorator calls the change handler when the
@@ -82,11 +86,6 @@ export class ListPage
         if (!this._constructed)
         {
             return;
-        }
-
-        if (propertyName === "sorting")
-        {
-            this.page = 1;
         }
 
         // Abort any existing operation.
@@ -101,12 +100,21 @@ export class ListPage
             // Fetch the data.
             const result = await this._routePlanService.getAll(
                 this.sorting,
-                { page: this.page, pageSize: this.pageSize },
+                this.paging,
                 signal);
 
             // Update the state.
             this.plans = result.plans;
             this.planCount = result.planCount;
+
+            // Reset page.
+            if (propertyName !== "paging")
+            {
+                this.paging.page = 1;
+            }
+
+            // Scroll to top.
+            this.scroll.reset();
         });
     }
 }

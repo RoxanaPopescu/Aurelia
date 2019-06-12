@@ -5,11 +5,29 @@ import { EventManager } from "shared/utilities";
 import "./scroll.scss";
 
 /**
+ * Represents the public interface for a `ScrollCustomAttribute`.
+ */
+export interface IScroll
+{
+    /**
+     * Resets the scroll position.
+     * @param options The scroll options specifying the behavior.
+     */
+    reset(options?: ScrollOptions): void;
+
+    /**
+     * Resets the scroll position.
+     * @param options The scroll options specifying the offset and behavior.
+     */
+    scrollTo(options: ScrollToOptions): void;
+}
+
+/**
  * Custom attribute that makes the element to which it is applied scrollable.
  * Also provides support for fading out elements at the top of the scroll area.
  */
 @autoinject
-export class ScrollCustomAttribute
+export class ScrollCustomAttribute implements IScroll
 {
     /**
      * Creates a new instance of the type.
@@ -82,6 +100,24 @@ export class ScrollCustomAttribute
     public detached(): void
     {
         this._eventManager.removeEventListeners();
+    }
+
+    /**
+     * Resets the scroll position.
+     * @param options The scroll options specifying behavior.
+     */
+    public reset(options?: ScrollOptions): void
+    {
+        this._element.scrollTo({ top: 0, left: 0, ...options });
+    }
+
+    /**
+     * Scrolls to the specified position.
+     * @param options The scroll options specifying the offset and behavior.
+     */
+    public scrollTo(options: ScrollToOptions): void
+    {
+        this._element.scrollTo(options);
     }
 
     /**

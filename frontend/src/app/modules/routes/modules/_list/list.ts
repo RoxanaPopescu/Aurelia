@@ -1,9 +1,10 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
+import { Operation, ISorting, IPaging } from "shared/types";
+import { IScroll } from "shared/framework";
 import { RouteService } from "app/model/services/route";
 import { RouteInfo } from "app/model/entities/route/list";
 import { RouteStatusSlug } from "app/model/entities/route";
-import { Operation, ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -24,34 +25,10 @@ export class ListPage
     private readonly _routeService: RouteService;
     private readonly _constructed;
 
-    // ----------
-
     /**
-     * The appearance to use for the table.
+     * The scroll manager for the page.
      */
-    protected tableAppearance = "rows";
-
-    /**
-     * The selection mode to use for the table.
-     */
-    protected tableSelection = "none";
-
-    /**
-     * The accent color to use for the table.
-     */
-    protected tableRowAccent = "neutral";
-
-    /**
-     * The row type to use for the table.
-     */
-    protected rowType = "normal";
-
-    /**
-     * The slug identifying the expanded route.
-     */
-    protected expandedRouteSlug: string | undefined;
-
-    // ----------
+    protected scroll: IScroll;
 
     /**
      * The most recent update operation.
@@ -69,6 +46,16 @@ export class ListPage
     };
 
     /**
+     * The paging to use for the table.
+     */
+    @observable({ changeHandler: "update" })
+    protected paging: IPaging =
+    {
+        page: 1,
+        pageSize: 20
+    };
+
+    /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
@@ -79,18 +66,6 @@ export class ListPage
      */
     @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
-
-    /**
-     * The current page number, starting from 1.
-     */
-    @observable({ changeHandler: "update" })
-    protected page: number = 1;
-
-    /**
-     * The max number of items to show on a page, or undefined to disable this option.
-     */
-    @observable({ changeHandler: "update" })
-    protected pageSize: number = 20;
 
     /**
      * The total number of items in the list, or undefined if unknown.
@@ -116,7 +91,7 @@ export class ListPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?): void
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
     {
         // Return if the object is not constructed.
         // This is needed because the `observable` decorator calls the change handler when the
@@ -124,11 +99,6 @@ export class ListPage
         if (!this._constructed)
         {
             return;
-        }
-
-        if (propertyName === "statusFilter" || propertyName === "sorting")
-        {
-            this.page = 1;
         }
 
         // Abort any existing operation.
@@ -145,50 +115,21 @@ export class ListPage
                 this.statusFilter,
                 this.textFilter,
                 this.sorting,
-                { page: this.page, pageSize: this.pageSize },
+                this.paging,
                 signal);
 
             // Update the state.
             this.routes = result.routes;
             this.routeCount = result.routeCount;
+
+            // Reset page.
+            if (propertyName !== "paging")
+            {
+                this.paging.page = 1;
+            }
+
+            // Scroll to top.
+            this.scroll.reset();
         });
-    }
-
-    // ----------
-
-    /**
-     * Called when a row is clicked.
-     * @param route The route represented by the row.
-     */
-    protected onRowClick(route: any): boolean
-    {
-        console.log("row click:", route.slug);
-
-        this.expandedRouteSlug = route.slug;
-
-        return true;
-    }
-
-    /**
-     * Called when a row is selected or deselected.
-     * @param route The route represented by the row.
-     * @param value True if the row is selected, otherwise false.
-     */
-    protected onToggleRow(route: any, value: boolean): boolean
-    {
-        console.log("toggle row:", value, route.slug);
-
-        return true;
-    }
-
-    /**
-     * Called when all rows are selected or deselected.
-     * @param value True if the rows are selected, otherwise false.
-     */
-    protected onToggleAll(value: boolean): boolean
-    {
-        console.log("toggle all:", value);
-
-        return true;
     }
 }

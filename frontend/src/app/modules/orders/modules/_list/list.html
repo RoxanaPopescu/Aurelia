@@ -61,7 +61,7 @@
                 </toolbar>
 
                 <data-table
-                    appearance="rows"
+                    appearance="cards"
                     sorting.bind="sorting"
                     busy.bind="updateOperation.pending">
 
@@ -69,10 +69,6 @@
 
                         <data-table-cell translate>
                             ID
-                        </data-table-cell>
-
-                        <data-table-cell translate>
-                            Status
                         </data-table-cell>
 
                         <data-table-cell name="pickup-date" translate>
@@ -91,6 +87,10 @@
                             Deliverey address
                         </data-table-cell>
 
+                        <data-table-cell align="right" translate>
+                            Status
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="order of orders">
@@ -100,10 +100,6 @@
 
                             <data-table-cell class="font-monospaced">
                                 ${order.slug}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${order.status.name}
                             </data-table-cell>
 
                             <data-table-cell>
@@ -124,6 +120,10 @@
                                 ${order.deliveryLocation.address}
                             </data-table-cell>
 
+                            <data-table-cell align="right">
+                                ${order.status.name}
+                            </data-table-cell>
+
                         </data-table-row>
 
                     </template>
@@ -134,9 +134,8 @@
 
                     <data-table-pager
                         class="flex-push-right margin-top"
-                        page.bind="page"
+                        value.bind="paging"
                         list-size.bind="orderCount"
-                        page-size.bind="pageSize"
                         disabled.bind="orders == null">
                     </data-table-pager>
 

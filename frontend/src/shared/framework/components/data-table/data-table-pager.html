@@ -2,13 +2,13 @@
 
     <require from="./data-table-pager.scss"></require>
 
-    <div class="data-table-pager-page-size" if.bind="pageSize != null">
+    <div class="data-table-pager-page-size" if.bind="value.pageSize != null">
 
         <div translate>
             Page size
         </div>
 
-        <select value.bind="pageSize">
+        <select disabled.bind="value == null" value.bind="value.pageSize">
             <option repeat.for="size of pageSizes" model.bind="size">${size}</option>
         </select>
 
@@ -21,16 +21,18 @@
         </div>
 
         <input
+            ref="pageInputElement"
             type="number"
             min="1"
             max.bind="computedPageCount"
             step="1"
-            value.bind="pageInputValue"
+            value.to-view="value.page"
+            disabled.bind="value == null"
             focus.trigger="onPageInputFocus($event)"
             blur.trigger="onPageInputBlur()"
             keydown.trigger="onPageInputKeydown($event)">
 
-        <div translate if.bind="computedPageCount != null">
+        <div if.bind="computedPageCount != null" translate>
             of ${computedPageCount | number}
         </div>
 
@@ -38,13 +40,13 @@
 
     <div class="data-table-pager-buttons">
 
-        <button disabled.bind="page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
+        <button disabled.bind="value == null || value.page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
             <icon name="md-chevron-left"></icon>
         </button>
 
         <div></div>
 
-        <button disabled.bind="computedPageCount != null && page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
+        <button disabled.bind="value == null || computedPageCount != null && value.page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
             <icon name="md-chevron-right"></icon>
         </button>
 

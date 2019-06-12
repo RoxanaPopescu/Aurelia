@@ -23,21 +23,35 @@ export class RoutePlanStatus
 
     public static readonly map =
     {
-        "Completed":
+        "Processing":
         {
-            name: "Completed",
-            accent: "positive"
+            name: "Processing",
+            accent: "neutral"
         },
         "WaitingForApproval":
         {
             name: "Waiting for approval",
             accent: "neutral"
         },
+        "Completed":
+        {
+            name: "Completed",
+            accent: "positive"
+        },
+        "FailedExternally":
+        {
+            name: "Failed externally",
+            accent: "negative"
+        },
         "FailedInternally":
         {
             name: "Failed internally",
-            accent: "negative",
-            value: 3
+            accent: "negative"
+        },
+        "Cancelled":
+        {
+            name: "Cancelled",
+            accent: "neutral"
         }
     };
 }

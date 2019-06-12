@@ -4,70 +4,7 @@
 
     <page name="list">
 
-        <page-sidebar scroll expanded.bind="false">
-
-            <header>
-
-                <h1 class="font-larger margin-bottom">
-                    Settings for data-table
-                </h1>
-
-            </header>
-
-            <section>
-
-                <form>
-
-                    <label class="margin">
-                        <span>Type</span>
-                        <select value.bind="rowType">
-                            <option value="normal">normal</option>
-                            <option value="expandable">expandable</option>
-                            <option value="link">link</option>
-                        </select>
-                    </label>
-
-                    <label class="margin">
-                        <span>Appearance</span>
-                        <select value.bind="tableAppearance">
-                            <option value="rows">rows</option>
-                            <option value="cards">cards</option>
-                        </select>
-                    </label>
-
-                    <label class="margin">
-                        <span>Selection</span>
-                        <select value.bind="tableSelection">
-                            <option value="none">none</option>
-                            <option value="single">single</option>
-                            <option value="multiple">multiple</option>
-                        </select>
-                    </label>
-
-                    <label class="margin">
-                        <span>Accent</span>
-                        <select value.bind="tableRowAccent">
-                            <option value="neutral">neutral</option>
-                            <option value="primary">primary</option>
-                            <option value="positive">positive</option>
-                            <option value="attention">attention</option>
-                            <option value="negative">negative</option>
-                            <option value="info">info</option>
-                        </select>
-                    </label>
-
-                    <label class="margin">
-                        <span>Busy</span>
-                        <input type="checkbox" checked.bind="abortController != null">
-                    </label>
-
-                </form>
-
-            </section>
-
-        </page-sidebar>
-
-        <page-content scroll>
+        <page-content scroll scroll.ref="scroll">
 
             <header scroll-fade>
 
@@ -124,10 +61,8 @@
                 </toolbar>
 
                 <data-table
-                    appearance.bind="tableAppearance & attr"
+                    appearance="cards"
                     sorting.bind="sorting"
-                    selection.bind="tableSelection"
-                    toggle-all.call="onToggleAll(value)"
                     busy.bind="updateOperation.pending">
 
                     <data-table-headers>
@@ -161,15 +96,11 @@
                     <template repeat.for="route of routes">
 
                         <data-table-row
-                            toggle.call="onToggleRow(route, value)"
-                            selected.bind="route.selected"
-                            selectable.bind="true"
-                            click.call="onRowClick(route)"
-                            accent.bind="tableRowAccent"
-                            href.bind="rowType == 'link' ? `/routes/details/${route.slug}` : undefined">
+                            accent.bind="route.status.accent"
+                            href="/routes/details/${route.slug}">
 
                             <data-table-cell class="font-monospaced">
-                                <a href="/routes/details/${route.slug}">${route.slug}</a>
+                                ${route.slug}
                             </data-table-cell>
 
                             <data-table-cell class="font-monospaced">
@@ -192,14 +123,6 @@
                                 ${route.status.name}
                             </data-table-cell>
 
-                            <data-table-details
-                                if.bind="rowType == 'expandable' && route.slug == $parent.expandedRouteSlug"
-                                accent.bind="tableRowAccent">
-
-                                DETAILS
-
-                            </data-table-details>
-
                         </data-table-row>
 
                     </template>
@@ -210,9 +133,8 @@
 
                     <data-table-pager
                         class="flex-push-right margin-top"
-                        page.bind="page"
+                        value.bind="paging"
                         list-size.bind="routeCount"
-                        page-size.bind="pageSize"
                         disabled.bind="routes == null">
                     </data-table-pager>
 

@@ -9,7 +9,8 @@ export interface IPaging
     page: number;
 
     /**
-     * The max number of items to show on a page.
+     * The max number of items to show on a page,
+     * or undefined to use the default size.
      */
-    pageSize: number;
+    pageSize: number | undefined;
 }

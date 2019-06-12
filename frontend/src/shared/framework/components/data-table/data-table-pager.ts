@@ -1,4 +1,5 @@
 import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framework";
+import { IPaging } from "shared/types";
 
 /**
  * Represents a pager for a data table.
@@ -7,42 +8,41 @@ import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framewo
 export class DataTablePagerCustomElement
 {
     /**
-     * The value of the page number input.
+     * The page number input element.
      */
-    protected pageInputValue: string;
+    protected pageInputElement: HTMLInputElement;
 
     /**
      * The total number of pages, or undefined if unknown.
      * This is computed from `listSize` and `pageSize`, with `pageCount` used as fallback.
      */
-    @computedFrom("listSize", "pageSize", "pageCount")
+    @computedFrom("listSize", "model.pageSize", "pageCount")
     protected get computedPageCount(): number | undefined
     {
-        if (this.listSize == null || this.pageSize == null)
+        if (this.value == null)
+        {
+            return undefined;
+        }
+
+        if (this.listSize == null || this.value.pageSize == null)
         {
             return this.pageCount;
         }
 
-        return Math.ceil(this.listSize / this.pageSize);
+        return Math.ceil(this.listSize / this.value.pageSize);
     }
 
     /**
-     * The current page number, starting from 1.
+     * The model representing the current state of the pager.
      */
-    @bindable({ defaultValue: 1, defaultBindingMode: bindingMode.twoWay })
-    public page: number;
+    @bindable({ defaultBindingMode: bindingMode.twoWay })
+    public value: IPaging;
 
     /**
      * The page sizes the user may choose from.
      */
     @bindable({ defaultValue: [10, 20, 30, 40, 50] })
     public pageSizes: number[];
-
-    /**
-     * The max number of items to show on a page, or undefined to disable this option.
-     */
-    @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public pageSize: number | undefined;
 
     /**
      * The total number of items in the list, or undefined if unknown.
@@ -64,30 +64,12 @@ export class DataTablePagerCustomElement
     public disabled: boolean;
 
     /**
-     * Called by the framework when the component is binding.
-     */
-    protected bind(): void
-    {
-        this.pageChanged();
-    }
-
-    /**
-     * Called by the framework when the `page` property changes.
-     * Ensures the number shown in the input matches the current page number.
-     */
-    protected pageChanged(): void
-    {
-        this.pageInputValue = this.page.toString();
-    }
-
-    /**
      * Called when the page input receives focus.
      * Selects all content in the input.
-     * @param event The focus event.
      */
-    protected onPageInputFocus(event: FocusEvent): void
+    protected onPageInputFocus(): void
     {
-        (event.target! as HTMLInputElement).select();
+        this.pageInputElement.select();
     }
 
     /**
@@ -96,7 +78,7 @@ export class DataTablePagerCustomElement
      */
     protected onPageInputBlur(): void
     {
-        this.pageInputValue = this.page.toString();
+        this.pageInputElement.valueAsNumber = this.value.page;
     }
 
     /**
@@ -108,9 +90,12 @@ export class DataTablePagerCustomElement
     {
         if (event.key === "Enter")
         {
-            const page = Number.parseInt(this.pageInputValue || this.page.toString());
-            this.page = Math.max(1, this.computedPageCount == null ? page : Math.min(this.computedPageCount, page));
-            this.pageInputValue = this.page.toString();
+            const page = this.pageInputElement.valueAsNumber || this.value.page;
+            this.value =
+            {
+                ...this.value,
+                page: Math.max(1, this.computedPageCount == null ? page : Math.min(this.computedPageCount, page))
+            };
         }
 
         return true;
@@ -123,6 +108,10 @@ export class DataTablePagerCustomElement
      */
     protected onNavClick(offset: number): void
     {
-        this.page += offset;
+        this.value =
+        {
+            ...this.value,
+            page: this.value.page + offset
+        };
     }
 }

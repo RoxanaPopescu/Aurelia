@@ -69,8 +69,8 @@
                             Routes
                         </data-table-cell>
 
-                        <data-table-cell name="unplanned-tasks" align="right" translate>
-                            Unplanned tasks
+                        <data-table-cell name="unscheduled-stops" align="right" translate>
+                            Unscheduled stops
                         </data-table-cell>
 
                         <data-table-cell name="status" align="right" translate>
@@ -119,9 +119,8 @@
 
                     <data-table-pager
                         class="flex-push-right margin-top"
-                        page.bind="page"
+                        value.bind="paging"
                         list-size.bind="planCount"
-                        page-size.bind="pageSize"
                         disabled.bind="plans == null">
                     </data-table-pager>
 
