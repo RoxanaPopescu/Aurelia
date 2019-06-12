@@ -8,6 +8,7 @@ export class UserStore {
   @observable error?: string;
   @observable validate: boolean = false;
   @observable roleUpdated: boolean = false;
+  @observable toastMessage?: string;
 
   @observable id?: string;
   @observable user?: User;

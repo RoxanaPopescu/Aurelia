@@ -36,6 +36,13 @@ export class ResetPasswordService {
       } else {
         if (response.status === 401) {
           throw new Error(Localization.operationsValue("Error_LoginNotAdmin"));
+        } else if (response.status === 400) {
+          let responseJson = await response.json();
+          if (responseJson.errors[0].errorCode === 101) {
+            throw new Error("Token er forkert");
+          } else {
+            throw new Error("Token er udløbet, bed om ny nulstilling");
+          }
         } else if (response.status === 403) {
           throw new Error(Localization.sharedValue("Error_LoginIncorrect"));
         } else {

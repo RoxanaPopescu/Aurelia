@@ -85,14 +85,13 @@ export default class UserComponent extends React.Component<Props> {
   }
 
   requestPasswordReset() {
-    if (confirm("Sikker på du starte et password reset flow til denne bruger?")) {
+    if (confirm("Er du sikker på du vil nulstille passwordet for denne bruger?")) {
       userStore.loading = true;
 
       UserManagementService.requestPasswordReset(userStore.user!.username)
       .then(user => {
         userStore.loading = false;
-
-        alert("Brugeren har fået en mail med et reset password link");
+        userStore.toastMessage = "Brugeren har fået en mail med et reset password link";
       })
       .catch(error => {
         userStore.loading = false;
@@ -108,7 +107,7 @@ export default class UserComponent extends React.Component<Props> {
       .then(user => {
         userStore.loading = false;
 
-        alert("Brugeren er blevet deaktiveret");
+        userStore.toastMessage = "Brugeren er blevet deaktiveret";
         userStore.user!.canDeactivate = false;
       })
       .catch(error => {
@@ -313,7 +312,15 @@ export default class UserComponent extends React.Component<Props> {
               )}
             </Toast>
           )}
-
+          { userStore.toastMessage &&
+            <Toast
+              remove={() => (userStore.toastMessage = undefined)}
+              type={ToastType.Success}
+            >
+              userStore.toastMessage
+              )}
+            </Toast>
+  }
       </>
     );
   }
