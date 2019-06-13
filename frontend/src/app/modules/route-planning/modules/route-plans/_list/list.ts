@@ -55,12 +55,12 @@ export class ListPage
     };
 
     /**
-     * The total number of items in the list, or undefined if unknown.
+     * The total number of items matching the query, or undefined if unknown.
      */
     protected planCount: number | undefined;
 
     /**
-     * The route plans to present in the list.
+     * The items to present in the table.
      */
     protected plans: RoutePlanInfo[];
 

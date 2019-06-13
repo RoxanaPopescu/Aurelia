@@ -1,7 +1,7 @@
 /**
- * Represents a route plan.
+ * Represents settings used for route planning.
  */
-export class RoutePlan
+export class RoutePlanSettings
 {
     /**
      * Creates a new instance of the type.

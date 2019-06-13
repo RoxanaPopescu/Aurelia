@@ -2,8 +2,15 @@ import { DateTime } from "luxon";
 import { DateTimeRange } from "shared/types";
 import { RoutePlanStatus } from "./route-plan-status";
 
+/**
+ * Represents info about a route plan.
+ */
 export class RoutePlanInfo
 {
+    /**
+     * Creates a new instance of the type.
+     * @param data The response data from which the instance should be created.
+     */
     public constructor(data: any)
     {
         this.slug = data.id;

@@ -9,7 +9,7 @@ const numberFormatCache = new Map<string, Intl.NumberFormat>();
 /**
  * The supported currency display values.
  */
-type CurrencyDisplay = "symbol" | "code" | "name";
+type CurrencyDisplay = "symbol" | "code" | "name" | "none";
 
 /**
  * Represents a value converter that formats a number value as a localized currency string.
@@ -71,45 +71,80 @@ export class CurrencyValueConverter
             throw new Error("Invalid currency value.");
         }
 
-        const autoFractionDigits = args[1] === "auto";
-
+        // Define the formatting options.
         const numberFormatOptions =
         {
             style: "currency",
             currency: args[0].currencyCode,
-            currencyDisplay: args.length > 1 ? args[args.length - 1] : undefined
+            currencyDisplay:
+                typeof args[3] === "string"  && args[3] !== "none" ? args[3] :
+                typeof args[2] === "string" && args[2] !== "none" ? args[2] :
+                typeof args[1] === "string" && args[1] !== "none" && args[1] !== "auto" ? args[1] :
+                undefined
         };
 
+        // Create the format, based on what we know so far.
+        // Note that this may not be the format we actually end up using,
+        // but we need it to resolve the min and max fraction digits.
         let numberFormat = this.getNumberFormat(this._localeService.locale.code,
         {
             ...numberFormatOptions,
-            minimumFractionDigits: autoFractionDigits ? args[1] : undefined,
-            maximumFractionDigits: args.length > 2 ? args[2] : args[1]
+
+            minimumFractionDigits:
+                typeof args[1] === "number" ? args[1] :
+                undefined,
+
+            maximumFractionDigits:
+                typeof args[2] === "number" ? args[2] :
+                typeof args[1] === "number" ? args[1] :
+                undefined
         });
 
-        if (autoFractionDigits)
+        // If we should format the number without any currency info,
+        // change the formatting style to `decimal`.
+        if (args[args.length - 1] === "none")
         {
+            numberFormatOptions.style = "decimal";
+        }
+
+        // Should we only show the fraction if it is non-zero?
+        if (args[1] === "auto")
+        {
+            // Get the resolved format options.
             const resolvedOptions = numberFormat.resolvedOptions();
+
+            // Round the amount to the resolved max fraction digits.
             const roundedAmount = roundNumber(args[0].amount, resolvedOptions.maximumFractionDigits);
 
-            if (roundedAmount % 1 === 0)
+            // Do we have a non-zero fraction?
+            if (roundedAmount % 1 !== 0)
             {
-                numberFormat = this.getNumberFormat(this._localeService.locale.code,
-                {
-                    ...numberFormatOptions,
-                    minimumFractionDigits: 0
-                });
-            }
-            else
-            {
+                // Create a new format with the resolved max fraction digits.
                 numberFormat = this.getNumberFormat(this._localeService.locale.code,
                 {
                     ...numberFormatOptions,
                     maximumFractionDigits: resolvedOptions.maximumFractionDigits
                 });
             }
+            else
+            {
+                // Create a new format with zero min fraction digits.
+                numberFormat = this.getNumberFormat(this._localeService.locale.code,
+                {
+                    ...numberFormatOptions,
+                    minimumFractionDigits: 0
+                });
+            }
         }
 
+        // Was the formatting style changed?
+        else if (args[1] === "none")
+        {
+            // Create a new format with the modified style.
+            numberFormat = this.getNumberFormat(this._localeService.locale.code, numberFormatOptions);
+        }
+
+        // Format the value.
         return numberFormat.format(args[0].amount);
     }
 

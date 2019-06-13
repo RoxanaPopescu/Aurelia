@@ -21,7 +21,7 @@ export class RoutePlanService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets all route plans associatd with the current user.
+     * Gets all route plans associatd with the current outfit.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
@@ -45,14 +45,14 @@ export class RoutePlanService
 
     /**
      * Gets the specified route plan.
-     * @param routeSlug The slug identifying the route plan.
+     * @param routePlanSlug The slug identifying the route plan.
      * @returns A promise that will be resolved with the route plan.
      */
-    public async get(routeSlug: string): Promise<RoutePlan>
+    public async get(routePlanSlug: string): Promise<RoutePlan>
     {
         const result = await this._apiClient.get("routeplanning/details",
         {
-            query: { routeSlug }
+            query: { id: routePlanSlug }
         });
 
         return new RoutePlan(result.data);

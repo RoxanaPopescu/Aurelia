@@ -1,0 +1,102 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="settings-list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Route planning
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value="settings">
+
+                        <tab page-href="path: route-planning/list" translate>
+                            Plans
+                        </tab>
+
+                        <tab name="settings" page-href="path: route-planning/settings/list" translate>
+                            Settings
+                        </tab>
+
+                        <tab page-href="path: route-planning/order-groups/list" translate>
+                            Order groups
+                        </tab>
+
+                        <tab page-href="path: route-planning/simulations/list" translate>
+                            Simulations
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell name="special-conditions" align="right" translate>
+                            Special conditions
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="setting of settings">
+
+                        <data-table-row
+                            href="/route-planning/details/${plan.slug}">
+
+                            <data-table-cell>
+                                ${setting.name}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${setting.specialConditionCount}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="settingCount"
+                        disabled.bind="settings == null">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

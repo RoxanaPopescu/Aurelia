@@ -68,12 +68,12 @@ export class ListPage
     protected textFilter: string | undefined;
 
     /**
-     * The total number of items in the list, or undefined if unknown.
+     * The total number of items matching the query, or undefined if unknown.
      */
     protected orderCount: number | undefined;
 
     /**
-     * The orders to present in the list.
+     * The items to present in the table.
      */
     protected orders: OrderInfo[];
 

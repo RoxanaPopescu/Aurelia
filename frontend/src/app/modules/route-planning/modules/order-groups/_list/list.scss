@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="route-planning"] page[name="order-groups-list"]
+{
+    data-table
+    {
+        --data-table-columns: 1fr 1fr 2fr 0.5fr;
+    }
+}

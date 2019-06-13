@@ -68,12 +68,12 @@ export class ListPage
     protected textFilter: string | undefined;
 
     /**
-     * The total number of items in the list, or undefined if unknown.
+     * The total number of items matching the query, or undefined if unknown.
      */
     protected routeCount: number | undefined;
 
     /**
-     * The routes to present in the list.
+     * The items to present in the table.
      */
     protected routes: RouteInfo[];
 
