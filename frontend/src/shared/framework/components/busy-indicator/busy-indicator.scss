@@ -1,0 +1,54 @@
+busy-indicator
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .busy-indicator
+    {
+        position: relative;
+        width: 25vh;
+        height: 25vh;
+        opacity: 0.05;
+    }
+
+    .busy-indicator div
+    {
+        box-sizing: border-box;
+        position: absolute;
+        width: inherit;
+        height: inherit;
+        border: 6px solid #000000;
+        border-radius: 50%;
+        animation: busy-indicator 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #000000 transparent transparent transparent;
+    }
+
+    .busy-indicator div:nth-child(1)
+    {
+        animation-delay: -0.5625s;
+    }
+
+    .busy-indicator div:nth-child(2)
+    {
+        animation-delay: -0.375s;
+    }
+
+    .busy-indicator div:nth-child(3)
+    {
+        animation-delay: -0.1875s;
+    }
+
+    @keyframes busy-indicator
+    {
+        0%
+        {
+            transform: rotate(0deg);
+        }
+
+        100%
+        {
+            transform: rotate(360deg);
+        }
+    }
+}

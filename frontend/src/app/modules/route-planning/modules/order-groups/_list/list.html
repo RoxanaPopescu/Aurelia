@@ -97,13 +97,15 @@
 
                 </data-table>
 
+                <busy-indicator if.bind="orderGroups == null" class="margin-largest"></busy-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
+                        if.bind="orderGroups != null"
                         class="flex-push-right margin-top"
                         value.bind="paging"
-                        list-size.bind="orderGroupCount"
-                        disabled.bind="orderGroups == null">
+                        list-size.bind="orderGroupCount">
                     </data-table-pager>
 
                 </div>

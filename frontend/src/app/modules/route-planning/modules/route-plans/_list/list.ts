@@ -76,6 +76,19 @@ export class ListPage
     }
 
     /**
+     * Called by the framework when the module is deactivated.
+     * @returns A promise that will be resolved when the module is activated.
+     */
+    public deactivate(): void
+    {
+        // Abort any existing operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+    }
+
+    /**
      * Updates the page by fetching the latest data.
      */
     protected update(newValue?: any, oldValue?: any, propertyName?: string): void

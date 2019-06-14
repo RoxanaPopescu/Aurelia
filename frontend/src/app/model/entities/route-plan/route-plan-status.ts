@@ -31,7 +31,7 @@ export class RoutePlanStatus
         "WaitingForApproval":
         {
             name: "Waiting for approval",
-            accent: "neutral"
+            accent: "attention"
         },
         "Completed":
         {

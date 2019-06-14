@@ -130,13 +130,15 @@
 
                 </data-table>
 
+                <busy-indicator if.bind="orders == null" class="margin-largest"></busy-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
+                        if.bind="orders != null"
                         class="flex-push-right margin-top"
                         value.bind="paging"
-                        list-size.bind="orderCount"
-                        disabled.bind="orders == null">
+                        list-size.bind="orderCount">
                     </data-table-pager>
 
                 </div>

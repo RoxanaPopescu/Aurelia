@@ -13,6 +13,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
+        PLATFORM.moduleName("./components/busy-indicator/busy-indicator"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
         PLATFORM.moduleName("./components/controls/icons/badge/badge"),
@@ -61,6 +62,7 @@ export function configure(use: FrameworkConfiguration): void
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/trap-focus/trap-focus";
+export * from "./components/busy-indicator/busy-indicator";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
 export * from "./components/controls/icons/badge/badge";

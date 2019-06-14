@@ -82,13 +82,15 @@
 
                 </data-table>
 
+                <busy-indicator if.bind="settings == null" class="margin-largest"></busy-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
+                        if.bind="settings != null"
                         class="flex-push-right margin-top"
                         value.bind="paging"
-                        list-size.bind="settingCount"
-                        disabled.bind="settings == null">
+                        list-size.bind="settingCount">
                     </data-table-pager>
 
                 </div>
