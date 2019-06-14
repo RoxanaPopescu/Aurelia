@@ -84,10 +84,14 @@
 
                 <busy-indicator if.bind="settings == null" class="margin-largest"></busy-indicator>
 
+                <empty-indicator if.bind="settings.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="settings != null"
+                        if.bind="settings != null && settings.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="settingCount">

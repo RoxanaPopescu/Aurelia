@@ -117,10 +117,14 @@
 
                 <busy-indicator if.bind="plans == null" class="margin-largest"></busy-indicator>
 
+                <empty-indicator if.bind="plans.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="plans != null"
+                        if.bind="plans != null && plans.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="planCount">

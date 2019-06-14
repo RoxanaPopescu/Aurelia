@@ -99,10 +99,14 @@
 
                 <busy-indicator if.bind="orderGroups == null" class="margin-largest"></busy-indicator>
 
+                <empty-indicator if.bind="orderGroups.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="orderGroups != null"
+                        if.bind="orderGroups != null && orderGroups.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="orderGroupCount">

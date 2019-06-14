@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 
 /**
- * Represents a busy animation.
+ * Represents the indicator to be shown while a view is busy.
  */
 @autoinject
 export class BusyIndicatorCustomElement

@@ -13,7 +13,6 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
-        PLATFORM.moduleName("./components/busy-indicator/busy-indicator"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
         PLATFORM.moduleName("./components/controls/icons/badge/badge"),
@@ -31,6 +30,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/data-table/data-table-row"),
         PLATFORM.moduleName("./components/data-table/data-table-details"),
         PLATFORM.moduleName("./components/file-dropzone/file-dropzone"),
+        PLATFORM.moduleName("./components/indicators/busy-indicator/busy-indicator"),
+        PLATFORM.moduleName("./components/indicators/empty-indicator/empty-indicator"),
         PLATFORM.moduleName("./components/layouts/grid-layout/grid-layout"),
         PLATFORM.moduleName("./components/layouts/list-layout/list-layout"),
         PLATFORM.moduleName("./components/modals/modal-backdrop/modal-backdrop"),
@@ -62,7 +63,6 @@ export function configure(use: FrameworkConfiguration): void
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/trap-focus/trap-focus";
-export * from "./components/busy-indicator/busy-indicator";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
 export * from "./components/controls/icons/badge/badge";
@@ -81,6 +81,8 @@ export * from "./components/data-table/data-table-row";
 export * from "./components/data-table/data-table-details";
 export * from "./components/file-dropzone/file-dropzone";
 export * from "./components/filter/filter";
+export * from "./components/indicators/busy-indicator/busy-indicator";
+export * from "./components/indicators/empty-indicator/empty-indicator";
 export * from "./components/layouts/grid-layout/grid-layout";
 export * from "./components/layouts/list-layout/list-layout";
 export * from "./components/modals/modal-backdrop/modal-backdrop";
