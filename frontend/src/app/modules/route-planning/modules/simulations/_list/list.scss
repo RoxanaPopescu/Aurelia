@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="route-planning"] page[name="simulations-list"]
+{
+    data-table
+    {
+        --data-table-columns: 3fr 1fr;
+    }
+}

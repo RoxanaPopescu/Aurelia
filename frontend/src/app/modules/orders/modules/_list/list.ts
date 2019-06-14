@@ -2,9 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging } from "shared/types";
 import { IScroll } from "shared/framework";
-import { OrderService } from "app/model/services/order";
-import { OrderInfo } from "app/model/entities/order/list";
-import { OrderStatusSlug } from "app/model/entities/order";
+import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/orders";
 
 /**
  * Represents the page.

@@ -1,7 +1,7 @@
-import { RouteStatus, RouteStatusSlug } from "app/model/entities/route";
-import { SortingDirection, SortingDirectionSlug } from "app/model/entities/shared";
 import { DateTime } from "luxon";
-import { OrderStatusSlug, OrderStatus } from "app/model/entities/order";
+import { SortingDirection, SortingDirectionSlug } from "app/model/shared";
+import { RouteStatus, RouteStatusSlug } from "app/model/routes";
+import { OrderStatusSlug, OrderStatus } from "app/model/orders";
 
 export function parseDateTime(date: string, time?: string): DateTime
 {
@@ -28,7 +28,7 @@ export function parseDateTime(date: string, time?: string): DateTime
 
 export function getLegacySortDirection(direction: SortingDirectionSlug): number
 {
-    return SortingDirection.map[direction].value;
+    return SortingDirection.values[direction].value;
 }
 
 export function getLegacyRouteSortProperty(property: string): number
@@ -47,7 +47,7 @@ export function getLegacyRouteSortProperty(property: string): number
 
 export function getLegacyRouteStatus(status: RouteStatusSlug): number
 {
-    return RouteStatus.map[status].value;
+    return RouteStatus.values[status].value;
 }
 
 export function getLegacyOrderSortProperty(property: string): number | undefined
@@ -65,5 +65,5 @@ export function getLegacyOrderSortProperty(property: string): number | undefined
 
 export function getLegacyOrderStatus(status: OrderStatusSlug): number
 {
-    return OrderStatus.map[status].value;
+    return OrderStatus.values[status].value;
 }

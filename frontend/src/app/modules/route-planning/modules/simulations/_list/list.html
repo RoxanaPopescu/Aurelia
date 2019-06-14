@@ -1,0 +1,108 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="simulations-list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Route planning
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value="simulations">
+
+                        <tab page-href="path: route-planning/list" translate>
+                            Plans
+                        </tab>
+
+                        <tab page-href="path: route-planning/settings/list" translate>
+                            Settings
+                        </tab>
+
+                        <tab page-href="path: route-planning/order-groups/list" translate>
+                            Order groups
+                        </tab>
+
+                        <tab name="simulations" page-href="path: route-planning/simulations/list" translate>
+                            Simulations
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell name="zip-range" translate>
+                            Created
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="simulation of simulations">
+
+                        <data-table-row
+                            href="/route-planning/simulations/${simulation.slug}/result">
+
+                            <data-table-cell>
+                                ${simulation.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${simulation.created | dateTime: 'narroew' }
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="simulations == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="simulations.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="simulations.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="simulationCount">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

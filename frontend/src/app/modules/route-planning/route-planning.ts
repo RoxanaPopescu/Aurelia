@@ -67,7 +67,9 @@ export class RoutePlanningModule
             {
                 name: "simulations list",
                 route: "simulations/list",
-                moduleId: PLATFORM.moduleName("./modules/simulations/list/list"),
+                moduleId: ENVIRONMENT.name === "development"
+                    ? PLATFORM.moduleName("./modules/simulations/_list/list")
+                    : PLATFORM.moduleName("./modules/simulations/list/list"),
                 title: routeTitles.simulationsList
             },
             {

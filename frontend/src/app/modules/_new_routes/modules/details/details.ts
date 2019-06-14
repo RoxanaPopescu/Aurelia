@@ -1,9 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { ModalService } from "shared/framework/services/modal";
-import { RouteService } from "app/model/services/route";
-import { Route } from "app/model/entities/route/details";
-
+import { RouteService, Route } from "app/model/routes";
 
 /**
  * Represents the URL parameters expected by the module.

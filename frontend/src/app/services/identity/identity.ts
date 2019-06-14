@@ -1,4 +1,4 @@
-import { Outfit } from "app/model/entities/outfit";
+import { Outfit } from "app/model/outfits";
 
 /**
  * Represents the identity of an authenticated user.

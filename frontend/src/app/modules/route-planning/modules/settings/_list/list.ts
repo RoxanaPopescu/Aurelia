@@ -2,8 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging } from "shared/types";
 import { IScroll } from "shared/framework";
-import { RoutePlanSettingsService } from "app/model/services/route-plan";
-import { RoutePlanSettingsInfo } from "app/model/entities/route-plan";
+import { RoutePlanSettingsService, RoutePlanSettingsInfo } from "app/model/route-planning/route-plan-settings";
 
 /**
  * Represents the page.

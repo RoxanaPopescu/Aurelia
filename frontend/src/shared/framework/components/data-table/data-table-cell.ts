@@ -7,6 +7,10 @@ import { DataTableCustomElement } from "./data-table";
 @autoinject
 export class DataTableCellCustomElement
 {
+    /**
+     * Creates a new instance of the type.
+     * @param dataTable The data table to which the cell belongs.
+     */
     public constructor(dataTable: DataTableCustomElement)
     {
         this.dataTable = dataTable;
