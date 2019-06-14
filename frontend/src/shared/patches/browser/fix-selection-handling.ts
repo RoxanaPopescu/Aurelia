@@ -25,8 +25,6 @@
     {
         const selection = window.getSelection();
 
-        console.log("capture mousedown", selection);
-
         if (selection)
         {
             const selectionText = selection.toString();
@@ -43,8 +41,6 @@
     {
         const selection = window.getSelection();
 
-        console.log("capture mouseup", selection);
-
         if (selection)
         {
             const selectionText = selection.toString();
@@ -59,8 +55,6 @@
 
     document.addEventListener("click", event =>
     {
-        console.log("capture click", suppressClick);
-
         if (suppressClick)
         {
             suppressClick = false;
@@ -73,8 +67,6 @@
 
     document.addEventListener("click", event =>
     {
-        console.log("click", event.defaultPrevented);
-
         if (!event.defaultPrevented && clearSelectionTimeout == null)
         {
             clearSelectionTimeout = setTimeout(() =>

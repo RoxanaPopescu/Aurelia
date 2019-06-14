@@ -96,6 +96,7 @@
                     <template repeat.for="order of orders">
 
                         <data-table-row
+                            accent.bind="order.status.accent"
                             href="/orders/details/${order.slug}">
 
                             <data-table-cell class="font-monospaced">
@@ -139,7 +140,7 @@
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="orders != null && orders.length > 0"
+                        if.bind="orders.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="orderCount">

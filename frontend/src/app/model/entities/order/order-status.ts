@@ -44,13 +44,13 @@ export class OrderStatus
         "deleted":
         {
             name: "Deleted",
-            accent: "negative",
+            accent: "neutral",
             value: 4
         },
         "cancelled":
         {
             name: "Cancelled",
-            accent: "negative",
+            accent: "neutral",
             value: 5
         },
         "inRoutePlanning":
