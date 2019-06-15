@@ -49,6 +49,42 @@ react-module
         left: 0;
         right: 0;
     }
+
+    // Change page header to better match the new pages.
+    .pageHeader
+    {
+        padding: 9rem 9rem 0 9rem;
+        border-bottom: var(--border-width-thin) solid var(--color-surface-border);
+
+        --colorNeutralDark: var(--color-surface-neutral-surface);
+        --colorInteractivePrimary: var(--color-surface-primary-text);
+
+        .pageHeader-top
+        {
+            height: auto;
+
+            .pageHeader-path
+            {
+                line-height: var(--font-larger-line-height);
+            }
+        }
+
+        .pageHeader-tabs
+        {
+            border: var(--border-width-medium) solid var(--color-surface-neutral-border);
+            border-radius: var(--border-radius-medium);
+
+            .pageHeader-tabs-tab
+            {
+                line-height: calc(10rem - 2 * var(--border-width-medium));
+
+                &.active
+                {
+                    color: inherit;
+                }
+            }
+        }
+    }
 }
 
 .button-row
