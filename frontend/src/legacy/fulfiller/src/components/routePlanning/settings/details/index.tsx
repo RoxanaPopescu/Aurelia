@@ -93,8 +93,8 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
           }}
         />
 
-        <div className="c-routePlanning-settings-details-container">
-          <PageContentComponent>
+        <PageContentComponent>
+          <div className="c-routePlanning-settings-details-container">
 
             {this.tab === "settings" &&
             <GeneralComponent store={this.store} />}
@@ -102,8 +102,8 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
             {this.tab === "areas" &&
             <ConditionsComponent store={this.store} />}
 
-          </PageContentComponent>
-        </div>
+          </div>
+        </PageContentComponent>
 
         {this.store.mode === "assigningSettings" && (
           <Dialog

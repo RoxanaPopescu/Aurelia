@@ -37,7 +37,7 @@ export class RoutePlanningModule
                 title: routeTitles.details
             },
             {
-                name: "settings list",
+                name: "settings-list",
                 route: "settings/list",
                 moduleId: ENVIRONMENT.name === "development"
                     ? PLATFORM.moduleName("./modules/settings/_list/list")
@@ -45,10 +45,16 @@ export class RoutePlanningModule
                 title: routeTitles.settingsList
             },
             {
-                name: "settings details",
+                name: "settings-details",
                 route: "settings/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/settings/details/details"),
                 title: routeTitles.settingsDetails
+            },
+            {
+                name: "settings-details",
+                route: "settings/create",
+                moduleId: PLATFORM.moduleName("./modules/settings/create/create"),
+                title: routeTitles.settingsCreate
             },
             {
                 name: "order-groups-list",
@@ -65,7 +71,7 @@ export class RoutePlanningModule
                 title: routeTitles.orderGroupDetails
             },
             {
-                name: "simulations list",
+                name: "simulations-list",
                 route: "simulations/list",
                 moduleId: ENVIRONMENT.name === "development"
                     ? PLATFORM.moduleName("./modules/simulations/_list/list")
@@ -73,7 +79,7 @@ export class RoutePlanningModule
                 title: routeTitles.simulationsList
             },
             {
-                name: "simulations details",
+                name: "simulations-details",
                 route: "simulations/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/simulations/details/details"),
                 title: routeTitles.simulationsDetails

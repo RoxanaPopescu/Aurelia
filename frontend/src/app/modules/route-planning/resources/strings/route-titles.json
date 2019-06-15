@@ -1,10 +1,11 @@
 {
     "list": "List",
     "details": "Details",
-    "settingsList": "Settings list",
-    "settingsDetails": "Settings details",
-    "orderGroupList": "Order group list",
-    "orderGroupDetails": "Order group details",
-    "simulationsList": "Simulations list",
-    "simulationsDetails": "Simulations details"
+    "settingsList": "Settings",
+    "settingsDetails": "Setting",
+    "settingsCreate": "Create setting",
+    "orderGroupList": "Order groups",
+    "orderGroupDetails": "Order group",
+    "simulationsList": "Simulations",
+    "simulationsDetails": "Simulation"
 }
