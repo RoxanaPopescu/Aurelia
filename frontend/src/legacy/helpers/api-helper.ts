@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { SortingDirection, SortingDirectionSlug } from "app/model/shared";
-import { RouteStatus, RouteStatusSlug } from "app/model/routes";
-import { OrderStatusSlug, OrderStatus } from "app/model/orders";
+import { RouteStatus, RouteStatusSlug } from "app/model/route";
+import { OrderStatusSlug, OrderStatus } from "app/model/order";
 
 export function parseDateTime(date: string, time?: string): DateTime
 {

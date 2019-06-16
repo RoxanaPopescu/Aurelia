@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging } from "shared/types";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+import { RouteSettingsService, RouteSettingsInfo } from "app/model/route-settings";
 
 /**
  * Represents the page.
@@ -12,15 +12,15 @@ export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routePlanService The `RoutePlanService` instance.
+     * @param routeSettingsService The `RouteSettingsService` instance.
      */
-    public constructor(routePlanService: RoutePlanService)
+    public constructor(routeSettingsService: RouteSettingsService)
     {
-        this._routePlanService = routePlanService;
+        this._routeSettingsService = routeSettingsService;
         this._constructed = true;
     }
 
-    private readonly _routePlanService: RoutePlanService;
+    private readonly _routeSettingsService: RouteSettingsService;
     private readonly _constructed;
 
     /**
@@ -56,12 +56,12 @@ export class ListPage
     /**
      * The total number of items matching the query, or undefined if unknown.
      */
-    protected planCount: number | undefined;
+    protected settingCount: number | undefined;
 
     /**
      * The items to present in the table.
      */
-    protected plans: RoutePlanInfo[];
+    protected settings: RouteSettingsInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -110,14 +110,14 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._routePlanService.getAll(
+            const result = await this._routeSettingsService.getAll(
                 this.sorting,
                 this.paging,
                 signal);
 
             // Update the state.
-            this.plans = result.plans;
-            this.planCount = result.planCount;
+            this.settings = result.settings;
+            this.settingCount = result.settingCount;
 
             // Reset page.
             if (propertyName !== "paging")

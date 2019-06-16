@@ -27,6 +27,7 @@ export class KpiModule
                 route: "fulfillers",
                 moduleId: PLATFORM.moduleName("./modules/fulfillers/fulfillers"),
                 title: routeTitles.fulfillers,
+                icon: "kpi",
                 nav: true
             },
             {
@@ -34,6 +35,7 @@ export class KpiModule
                 route: "consignors",
                 moduleId: PLATFORM.moduleName("./modules/consignors/consignors"),
                 title: routeTitles.consignors,
+                icon: "kpi",
                 nav: true
             }
         ]);

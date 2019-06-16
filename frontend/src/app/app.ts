@@ -271,11 +271,6 @@ export class AppModule
             ENVIRONMENT.name === "development" ?
             [
                 {
-                    name: "new-routes",
-                    route: "new-routes",
-                    moduleId: PLATFORM.moduleName("./modules/_new_routes/routes")
-                },
-                {
                     name: "design",
                     route: "design",
                     moduleId: PLATFORM.moduleName("./modules/_design/design"),

@@ -6,5 +6,5 @@ export * from "./entities/phone";
 export * from "./entities/photo";
 export * from "./entities/position";
 export * from "./entities/signature";
-export * from "./entities/sorting";
+export * from "./entities/sort-direction";
 export * from "./types/day-of-week";

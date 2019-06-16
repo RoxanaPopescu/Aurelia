@@ -1,4 +1,4 @@
-import { RouteBase, RouteStopInfo } from "app/model/routes";
+import { RouteBase, RouteStopInfo } from "app/model/route";
 import { RouteStop } from "./route-stop";
 
 /**

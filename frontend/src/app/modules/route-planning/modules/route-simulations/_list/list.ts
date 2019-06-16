@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging } from "shared/types";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+import { RouteSimulationService, RouteSimulationInfo } from "app/model/route-simulation";
 
 /**
  * Represents the page.
@@ -12,15 +12,15 @@ export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routePlanService The `RoutePlanService` instance.
+     * @param routeGroupsService The `RouteSimulationService` instance.
      */
-    public constructor(routePlanService: RoutePlanService)
+    public constructor(routeGroupsService: RouteSimulationService)
     {
-        this._routePlanService = routePlanService;
+        this._routeGroupsService = routeGroupsService;
         this._constructed = true;
     }
 
-    private readonly _routePlanService: RoutePlanService;
+    private readonly _routeGroupsService: RouteSimulationService;
     private readonly _constructed;
 
     /**
@@ -56,12 +56,12 @@ export class ListPage
     /**
      * The total number of items matching the query, or undefined if unknown.
      */
-    protected planCount: number | undefined;
+    protected simulationCount: number | undefined;
 
     /**
      * The items to present in the table.
      */
-    protected plans: RoutePlanInfo[];
+    protected simulations: RouteSimulationInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -110,14 +110,14 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._routePlanService.getAll(
+            const result = await this._routeGroupsService.getAll(
                 this.sorting,
                 this.paging,
                 signal);
 
             // Update the state.
-            this.plans = result.plans;
-            this.planCount = result.planCount;
+            this.simulations = result.simulations;
+            this.simulationCount = result.simulationCount;
 
             // Reset page.
             if (propertyName !== "paging")

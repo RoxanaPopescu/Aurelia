@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging } from "shared/types";
 import { IScroll } from "shared/framework";
-import { OrderGroupService, OrderGroupInfo } from "app/model/order-groups";
+import { OrderGroupService, OrderGroupInfo } from "app/model/order-group";
 
 /**
  * Represents the page.

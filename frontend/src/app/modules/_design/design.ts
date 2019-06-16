@@ -35,6 +35,13 @@ export class DesignPage
                 nav: true
             },
             {
+                name: "data-table",
+                route: "data-table",
+                moduleId: PLATFORM.moduleName("./modules/data-table/data-table"),
+                title: "Data table",
+                nav: true
+            },
+            {
                 name: "playground",
                 route: "playground",
                 moduleId: PLATFORM.moduleName("./modules/playground/playground"),
