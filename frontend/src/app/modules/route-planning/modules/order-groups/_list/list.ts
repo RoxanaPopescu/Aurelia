@@ -1,5 +1,4 @@
 import { autoinject, observable } from "aurelia-framework";
-import { RouteConfig } from "aurelia-router";
 import { Operation, ISorting, IPaging, SortingDirection } from "shared/types";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
@@ -81,12 +80,11 @@ export class ListPage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @param routeConfig The route configuration.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams, routeConfig: RouteConfig): Promise<void>
+    public async activate(params: IRouteParams): Promise<void>
     {
-        this.paging.page = params.page || this.paging.page;
+        this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;

@@ -22,7 +22,7 @@ export class RoutePlanService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets all route plans associatd with the current outfit.
+     * Gets all route plans associated with the current outfit.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.

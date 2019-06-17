@@ -1,13 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
-import { RouteSimulationInfo } from "../entities/route-simulation-info";
+import { Depot } from "../entities/depot";
 
 /**
- * Represents a service that manages route simulations.
+ * Represents a service that manages depots.
  */
 @autoinject
-export class RouteSimulationService
+export class DepotService
 {
     /**
      * Creates a new instance of the type.
@@ -21,22 +21,25 @@ export class RouteSimulationService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets all route simulations associated with the current outfit.
+     * Gets all depots associated with the current user.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the route simulations.
+     * @returns A promise that will be resolved with the depots.
      */
-    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ simulations: RouteSimulationInfo[]; simulationCount: number }>
+    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ depots: Depot[]; depotCount: number }>
     {
-        const result = await this._apiClient.get("routeplanning/simulations/list",
+        const result = await this._apiClient.post("depots/list",
         {
+            body:
+            {
+            },
             signal
         });
 
         return {
-            simulations: result.data.map((data: any) => new RouteSimulationInfo(data)),
-            simulationCount: result.data.length
+            depots: result.data.map((data: any) => new Depot(data)),
+            depotCount: result.data.length
         };
     }
 }

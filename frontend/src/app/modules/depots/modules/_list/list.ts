@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { Operation, ISorting, IPaging, SortingDirection } from "shared/types";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RouteService, RouteStatusSlug, RouteInfo } from "app/model/route";
+import { DepotService, Depot } from "app/model/depot";
 
 /**
  * Represents the route parameters for the page.
@@ -19,52 +19,23 @@ interface IRouteParams
  * Represents the page.
  */
 @autoinject
-export class DataTablePage
+export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routeService The `RouteService` instance.
+     * @param depotService The `DepotService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routeService: RouteService, historyHelper: HistoryHelper)
+    public constructor(depotService: DepotService, historyHelper: HistoryHelper)
     {
-        this._routeService = routeService;
+        this._depotService = depotService;
         this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
-    private readonly _routeService: RouteService;
+    private readonly _depotService: DepotService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
-
-    // ----------
-
-    /**
-     * The appearance to use for the table.
-     */
-    protected tableAppearance = "rows";
-
-    /**
-     * The selection mode to use for the table.
-     */
-    protected tableSelection = "none";
-
-    /**
-     * The accent color to use for the table.
-     */
-    protected tableRowAccent = "neutral";
-
-    /**
-     * The row type to use for the table.
-     */
-    protected rowType = "normal";
-
-    /**
-     * The slug identifying the expanded route.
-     */
-    protected expandedRouteSlug: string | undefined;
-
-    // ----------
 
     /**
      * The scroll manager for the page.
@@ -82,7 +53,7 @@ export class DataTablePage
     @observable({ changeHandler: "update" })
     protected sorting: ISorting =
     {
-        property: "status",
+        property: "name",
         direction: "descending"
     };
 
@@ -97,26 +68,14 @@ export class DataTablePage
     };
 
     /**
-     * The name identifying the selected status tab.
-     */
-    @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug | undefined = "requested";
-
-    /**
-     * The text in the filter text input.
-     */
-    @observable({ changeHandler: "update" })
-    protected textFilter: string | undefined;
-
-    /**
      * The total number of items matching the query, or undefined if unknown.
      */
-    protected routeCount: number | undefined;
+    protected depotCount: number | undefined;
 
     /**
      * The items to present in the table.
      */
-    protected routes: RouteInfo[];
+    protected depots: Depot[];
 
     /**
      * Called by the framework when the module is activated.
@@ -169,16 +128,14 @@ export class DataTablePage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._routeService.getAll(
-                this.statusFilter,
-                this.textFilter,
+            const result = await this._depotService.getAll(
                 this.sorting,
                 this.paging,
                 signal);
 
             // Update the state.
-            this.routes = result.routes;
-            this.routeCount = result.routeCount;
+            this.depots = result.depots;
+            this.depotCount = result.depotCount;
 
             // Reset page.
             if (propertyName !== "paging")
@@ -199,43 +156,5 @@ export class DataTablePage
             },
             { trigger: false, replace: true });
         });
-    }
-
-    // ----------
-
-    /**
-     * Called when a row is clicked.
-     * @param route The route represented by the row.
-     */
-    protected onRowClick(route: any): boolean
-    {
-        console.log("row click:", route.slug);
-
-        this.expandedRouteSlug = route.slug;
-
-        return true;
-    }
-
-    /**
-     * Called when a row is selected or deselected.
-     * @param route The route represented by the row.
-     * @param value True if the row is selected, otherwise false.
-     */
-    protected onToggleRow(route: any, value: boolean): boolean
-    {
-        console.log("toggle row:", value, route.slug);
-
-        return true;
-    }
-
-    /**
-     * Called when all rows are selected or deselected.
-     * @param value True if the rows are selected, otherwise false.
-     */
-    protected onToggleAll(value: boolean): boolean
-    {
-        console.log("toggle all:", value);
-
-        return true;
     }
 }
