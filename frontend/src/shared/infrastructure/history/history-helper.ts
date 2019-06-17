@@ -1,7 +1,7 @@
 import { MapObject } from "shared/types";
 import { singleton, computedFrom } from "aurelia-framework";
 import { History } from "aurelia-history";
-import { Router, PipelineResult } from "aurelia-router";
+import { AppRouter, PipelineResult } from "aurelia-router";
 import { EventAggregator } from "aurelia-event-aggregator";
 
 // The separator used between segments of a route name.
@@ -13,9 +13,9 @@ export const routeNameSeparator = "/";
 export interface IHistoryState
 {
     /**
-     * The name of the route.
+     * The path for the route, which may contain dynamic segments.
      */
-    route: string;
+    path: string;
 
     /**
      * The parameters for the route.
@@ -61,7 +61,7 @@ export class HistoryHelper
      * @param router The `Router` instance.
      * @param eventAggregator The `EventAggregator` instance.
      */
-    public constructor(history: History, router: Router, eventAggregator: EventAggregator)
+    public constructor(history: History, router: AppRouter, eventAggregator: EventAggregator)
     {
         this._history = history;
         this._router = router;
@@ -86,7 +86,7 @@ export class HistoryHelper
     }
 
     private readonly _history: History;
-    private readonly _router: Router;
+    private readonly _router: AppRouter;
     private readonly _eventAggregator: EventAggregator;
     private _navigating = true;
     private _state: IHistoryState;
@@ -206,36 +206,61 @@ export class HistoryHelper
 
             return this._router.navigate(url, options);
         }
-        else if (typeof args[0] === "function")
+
+        if (typeof args[0] === "function")
         {
-            let state = this.state;
+            let state = { ...this.state };
+
             state = args[0](state) || state;
 
             return this.navigate(state, options);
         }
-        else
+
+        const state = args[0];
+
+        const urlPattern = state.url || this.state.path;
+        const urlParams = { ...state.params };
+
+        let url = urlPattern;
+
+        for (const key of Object.keys(urlParams))
         {
-            const state = args[0];
-
-            let url = this._router.generate(state.route || this.state.route, state.params);
-
-            if (state.fragment)
+            url = url.replace(new RegExp(`:${key}(/|$)`), ($0, $1) =>
             {
-                url += `#${encodeURIComponent(state.fragment).replace(/%2F/g, "/").replace(/%3F/g, "?")}`;
-            }
+                const value = urlParams[key];
 
-            const success = this._router.navigate(url, options) !== false;
+                // tslint:disable-next-line: no-dynamic-delete
+                delete urlParams[key];
 
-            if (success)
-            {
-                if (state.data)
-                {
-                    this._history.setState("data", state.data);
-                }
-            }
-
-            return success;
+                return `${value}${$1}`;
+            });
         }
+
+        const query = Object.keys(urlParams)
+            .filter(key => urlParams[key] !== undefined)
+            .map(key => `${key}=${urlParams[key].toString()}`).join("&");
+
+        if (query)
+        {
+            url += `?${query}`;
+        }
+
+        if (state.fragment)
+        {
+            url += `#${encodeURIComponent(state.fragment).replace(/%2F/g, "/").replace(/%3F/g, "?")}`;
+        }
+
+        const success = this._router.navigate(url, options) !== false;
+
+        if (success)
+        {
+            if (state.data)
+            {
+                this._history.setState("data", state.data);
+            }
+        }
+
+        return success;
     }
 
     /**
@@ -251,7 +276,7 @@ export class HistoryHelper
 
         const instructions = this._router.currentInstruction.getAllInstructions();
 
-        const route = instructions.map(i => i.config.name).join(routeNameSeparator);
+        const path = instructions.map(i => (i.config.route as string).replace("/*childRoute", "")).join(routeNameSeparator);
 
         const params = instructions.reduce((previous, current) =>
         ({
@@ -264,6 +289,6 @@ export class HistoryHelper
 
         const data = this._history.getState("data");
 
-        return { route, params, fragment, data };
+        return { path, params, fragment, data };
     }
 }

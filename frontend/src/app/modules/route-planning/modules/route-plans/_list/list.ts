@@ -1,8 +1,20 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
-import { Operation, ISorting, IPaging } from "shared/types";
+import { Operation, ISorting, IPaging, SortingDirection } from "shared/types";
+import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+
+/**
+ * Represents the route parameters for the page.
+ */
+interface IRouteParams
+{
+    page?: number;
+    pageSize?: number;
+    sortProperty?: string;
+    sortDirection?: SortingDirection;
+}
 
 /**
  * Represents the page.
@@ -13,14 +25,17 @@ export class ListPage
     /**
      * Creates a new instance of the class.
      * @param routePlanService The `RoutePlanService` instance.
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routePlanService: RoutePlanService)
+    public constructor(routePlanService: RoutePlanService, historyHelper: HistoryHelper)
     {
         this._routePlanService = routePlanService;
+        this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
     private readonly _routePlanService: RoutePlanService;
+    private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
     /**
@@ -69,8 +84,13 @@ export class ListPage
      * @param routeConfig The route configuration.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: {}, routeConfig: RouteConfig): Promise<void>
+    public async activate(params: IRouteParams, routeConfig: RouteConfig): Promise<void>
     {
+        this.paging.page = params.page || this.paging.page;
+        this.paging.pageSize = params.pageSize || this.paging.pageSize;
+        this.sorting.property = params.sortProperty || this.sorting.property;
+        this.sorting.direction = params.sortDirection || this.sorting.direction;
+
         this.update();
     }
 
@@ -127,6 +147,16 @@ export class ListPage
 
             // Scroll to top.
             this.scroll.reset();
+
+            // tslint:disable-next-line: no-floating-promises
+            this._historyHelper.navigate((state: IHistoryState) =>
+            {
+                state.params.page = this.paging.page;
+                state.params.pageSize = this.paging.pageSize;
+                state.params.sortProperty = this.sorting.property;
+                state.params.sortDirection = this.sorting.direction;
+            },
+            { trigger: false, replace: true });
         });
     }
 }

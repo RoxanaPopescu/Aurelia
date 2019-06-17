@@ -1,8 +1,20 @@
 import { autoinject, observable } from "aurelia-framework";
 import { RouteConfig } from "aurelia-router";
-import { Operation, ISorting, IPaging } from "shared/types";
+import { Operation, ISorting, IPaging, SortingDirection } from "shared/types";
+import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { RouteService, RouteStatusSlug, RouteInfo } from "app/model/route";
+
+/**
+ * Represents the route parameters for the page.
+ */
+interface IRouteParams
+{
+    page?: number;
+    pageSize?: number;
+    sortProperty?: string;
+    sortDirection?: SortingDirection;
+}
 
 /**
  * Represents the page.
@@ -13,14 +25,17 @@ export class DataTablePage
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routeService: RouteService)
+    public constructor(routeService: RouteService, historyHelper: HistoryHelper)
     {
         this._routeService = routeService;
+        this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
     private readonly _routeService: RouteService;
+    private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
     // ----------
@@ -110,8 +125,13 @@ export class DataTablePage
      * @param routeConfig The route configuration.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: {}, routeConfig: RouteConfig): Promise<void>
+    public async activate(params: IRouteParams, routeConfig: RouteConfig): Promise<void>
     {
+        this.paging.page = params.page || this.paging.page;
+        this.paging.pageSize = params.pageSize || this.paging.pageSize;
+        this.sorting.property = params.sortProperty || this.sorting.property;
+        this.sorting.direction = params.sortDirection || this.sorting.direction;
+
         this.update();
     }
 
@@ -170,6 +190,16 @@ export class DataTablePage
 
             // Scroll to top.
             this.scroll.reset();
+
+            // tslint:disable-next-line: no-floating-promises
+            this._historyHelper.navigate((state: IHistoryState) =>
+            {
+                state.params.page = this.paging.page;
+                state.params.pageSize = this.paging.pageSize;
+                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+            },
+            { trigger: false, replace: true });
         });
     }
 
