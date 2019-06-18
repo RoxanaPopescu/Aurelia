@@ -19,6 +19,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/icons/icon/icon"),
         PLATFORM.moduleName("./components/controls/icons/md-icon/md-icon"),
         PLATFORM.moduleName("./components/controls/icons/md-icon/md-icon-stack"),
+        PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
+        PLATFORM.moduleName("./components/controls/inputs/text-input/text-input"),
         PLATFORM.moduleName("./components/controls/navigation/path-nav/path-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
@@ -46,6 +48,15 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/page/page-sidebar/page-sidebar"),
         PLATFORM.moduleName("./components/toolbar/toolbar"),
         PLATFORM.moduleName("./components/toolbar/toolbar-group"),
+        PLATFORM.moduleName("./components/validation/validation"),
+        PLATFORM.moduleName("./components/validation/validators/async-validator/async-validator"),
+        PLATFORM.moduleName("./components/validation/validators/custom-validator/custom-validator"),
+        PLATFORM.moduleName("./components/validation/validators/invalid-validator/invalid-validator"),
+        PLATFORM.moduleName("./components/validation/validators/length-validator/length-validator"),
+        PLATFORM.moduleName("./components/validation/validators/input-validator/input-validator"),
+        PLATFORM.moduleName("./components/validation/validators/pattern-validator/pattern-validator"),
+        PLATFORM.moduleName("./components/validation/validators/range-validator/range-validator"),
+        PLATFORM.moduleName("./components/validation/validators/required-validator/required-validator"),
 
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
@@ -70,6 +81,8 @@ export * from "./components/controls/icons/badge/badge";
 export * from "./components/controls/icons/icon/icon";
 export * from "./components/controls/icons/md-icon/md-icon";
 export * from "./components/controls/icons/md-icon/md-icon-stack";
+export * from "./components/controls/inputs/number-input/number-input";
+export * from "./components/controls/inputs/text-input/text-input";
 export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
@@ -98,6 +111,15 @@ export * from "./components/page/page-href/page-href";
 export * from "./components/page/page-sidebar/page-sidebar";
 export * from "./components/toolbar/toolbar";
 export * from "./components/toolbar/toolbar-group";
+export * from "./components/validation/validation";
+export * from "./components/validation/validators/async-validator/async-validator";
+export * from "./components/validation/validators/custom-validator/custom-validator";
+export * from "./components/validation/validators/invalid-validator/invalid-validator";
+export * from "./components/validation/validators/length-validator/length-validator";
+export * from "./components/validation/validators/input-validator/input-validator";
+export * from "./components/validation/validators/pattern-validator/pattern-validator";
+export * from "./components/validation/validators/range-validator/range-validator";
+export * from "./components/validation/validators/required-validator/required-validator";
 
 // Converters
 export * from "./converters/filter/filter";

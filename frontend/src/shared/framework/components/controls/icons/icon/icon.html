@@ -1,4 +1,4 @@
 <!-- Note that whitespace matters here -->
-<template aria-hidden="true" class="icon-${name}"><require from="./icon.scss"></require><svg if.bind="name" xmlns:xlink="http://www.w3.org/1999/xlink">
+<template class="icon-${name}"><require from="./icon.scss"></require><svg if.bind="name" aria-hidden="true" xmlns:xlink="http://www.w3.org/1999/xlink">
     <use xlink:href="#icon-${name}" />
 </svg><slot></slot></template>

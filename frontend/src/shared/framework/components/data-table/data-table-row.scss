@@ -68,5 +68,13 @@ data-table[appearance="cards"]
                 border-bottom-right-radius: var(--data-table-row-border-radius);
             }
         }
+
+        &:first-of-type
+        {
+            data-table-cell
+            {
+                margin-top: 0;
+            }
+        }
     }
 }

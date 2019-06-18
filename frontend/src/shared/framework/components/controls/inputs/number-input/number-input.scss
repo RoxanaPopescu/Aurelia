@@ -1,0 +1,32 @@
+number-input
+{
+    > label > .input-control
+    {
+        .input-input,
+        .input-value
+        {
+            text-align: right;
+        }
+
+        input
+        {
+            // Remove the default browser styling.
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: inherit;
+
+            // Inherit font-size and line-height, to ensure correct vertical alignment.
+            font-size: inherit;
+            line-height: inherit;
+
+            &::-webkit-inner-spin-button,
+            &::-webkit-outer-spin-button
+            {
+                // Remove spin buttons.
+                appearance: none;
+                margin: 0;
+            }
+        }
+    }
+}

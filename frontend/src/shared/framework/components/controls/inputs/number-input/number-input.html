@@ -1,0 +1,80 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${!inputValue ? '--empty' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./number-input.scss"></require>
+
+    <label>
+
+        <div class="input-label">
+
+            <div class="input-heading">
+                <slot name="heading"></slot>
+            </div>
+
+            <div class="input-description font-small">
+                <slot name="description"></slot>
+            </div>
+
+        </div>
+
+        <div class="input-control">
+
+            <slot name="before"></slot>
+
+            <div class="input-control-inner">
+
+                <input
+                    ref="inputElement"
+                    class="input-input --hide-when-unfocused"
+                    type="number"
+                    inputmode="decimal"
+                    value.two-way="inputValue"
+                    min.bind="min"
+                    max.bind="max"
+                    step.bind="step"
+                    autocomplete.bind="autocomplete"
+                    disabled.bind="disabled"
+                    readonly.bind="readonly"
+                    blur.trigger="onBlur()"
+                    placeholder=" ">
+
+                <div class="input-value">
+                    ${value | number}
+                </div>
+
+                <div class="input-placeholder text-truncate">
+                    <slot name="placeholder"></slot>
+                </div>
+
+            </div>
+
+            <slot name="after"></slot>
+
+        </div>
+
+        <div class="input-validation font-small">
+
+            <input-validator
+                input.bind="inputElement"
+                trigger="input">
+
+                <template replace-part="invalid" translate>
+                    Please provide a numeric value.
+                </template>
+
+            </input-validator>
+
+            <slot name="validation"></slot>
+
+        </div>
+
+    </label>
+
+</template>

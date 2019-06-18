@@ -14,11 +14,12 @@ $__summary: comment;
 @import "./animations/fade-in";
 @import "./animations/fade-out";
 
+@import "./layout/flex";
+@import "./layout/margin";
+
 @import "./modifiers/clip";
 @import "./modifiers/display";
 @import "./modifiers/filter";
-@import "./modifiers/flex";
-@import "./modifiers/margin";
 @import "./modifiers/opacity";
 @import "./modifiers/pointer-events";
 @import "./modifiers/state";

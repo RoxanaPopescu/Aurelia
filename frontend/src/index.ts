@@ -124,7 +124,9 @@ function getThemeName(): string
 
     // If no theme was specified, use the default.
 
-    return "default";
+    return ENVIRONMENT.name === "development"
+        ? "lingu"
+        : "default";
 }
 
 /**

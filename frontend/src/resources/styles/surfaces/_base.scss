@@ -1,5 +1,5 @@
 ////
-/// @group themes/default/surfaces/base
+/// @group styles/surfaces/base
 ////
 
 /// Surface defining the appearance of the base of the view hierarchy.
@@ -15,7 +15,7 @@ $__summary: comment;
     --color-surface-subtle: var(--palette-color-neutral-dark);
     --color-surface-text: var(--palette-color-neutral-darker);
     --color-surface-icon: var(--palette-color-neutral-dark);
-    --color-surface-border: var(--palette-color-neutral-light);
+    --color-surface-border: var(--palette-color-neutral);
     --color-surface-heading: var(--palette-color-neutral-dark);
 
     // State: hover
@@ -351,4 +351,29 @@ $__summary: comment;
     {
         --color-surface-mark: #ffff00;
     }
+
+
+    /**
+     * The color of the border of the input.
+     */
+    --input-border-color: var(--color-surface-input-border);
+    --input-border-color--hover: var(--color-surface-input-border--hover);
+    --input-border-color--focus: var(--color-surface-input-border--focus);
+    --input-border-color--invalid: var(--color-surface-input-border);
+
+    /**
+     * The color of the input surface.
+     */
+    --input-surface-color: var(--color-surface-input-surface);
+    --input-surface-color--hover: var(--color-surface-input-surface--hover);
+    --input-surface-color--focus: var(--color-surface-input-surface--focus);
+    --input-surface-color--invalid: var(--color-surface-input-surface);
+
+    /**
+     * The color of the text on the input surface.
+     */
+    --input-surface-text-color: var(--color-surface-input-surface-text);
+    --input-surface-text-color--hover: var(--color-surface-input-surface-text--hover);
+    --input-surface-text-color--focus: var(--color-surface-input-surface-text--focus);
+    --input-surface-text-color--invalid: var(--palette-color-negative);
 }

@@ -1,0 +1,40 @@
+text-input
+{
+    // Set the default resize mode.
+    resize: vertical;
+
+    > label > .input-control > .input-control-inner
+    {
+        input,
+        textarea
+        {
+            // Remove the default browser styling.
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: inherit;
+
+            // Inherit font-size and line-height, to ensure correct vertical alignment.
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        textarea
+        {
+            // Constrain resizing by the user.
+            min-height: calc(var(--input-min-height) - 2 * var(--input-border-width));
+            min-width: calc(var(--input-min-width) - 2 * var(--input-border-width));
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
+
+    > label,
+    > label > .input-control,
+    > label > .input-control > .input-control-inner,
+    > label > .input-control > .input-control-inner > textarea
+    {
+        // Inherit the resize mode.
+        resize: inherit;
+    }
+}

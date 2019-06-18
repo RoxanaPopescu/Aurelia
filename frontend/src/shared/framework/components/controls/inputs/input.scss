@@ -1,0 +1,310 @@
+@import "resources/index";
+
+:root
+{
+    /// The color of the surface of the component.
+    --input-surface-color: unset;
+    --input-surface-color--hover: unset;
+    --input-surface-color--focus: unset;
+    --input-surface-color--invalid: unset;
+
+    /// The color of the text on the surface of the component.
+    --input-surface-text-color: unset;
+    --input-surface-text-color--hover: unset;
+    --input-surface-text-color--focus: unset;
+    --input-surface-text-color--invalid: unset;
+
+    /// The color of the border of the component.
+    --input-border-color: unset;
+    --input-border-color--hover: unset;
+    --input-border-color--focus: unset;
+    --input-border-color--invalid: unset;
+
+    /// The width of the border of the component.
+    --input-border-width: var(--border-width-thin);
+
+    /// The padding of the component.
+    --input-padding: 2.25rem 3rem;
+
+    /// The min height of the component.
+    --input-min-height: 10rem;
+
+    /// The min width of the component.
+    --input-min-width: 40rem;
+}
+
+.input
+{
+    // Use grid layout.
+    display: grid;
+
+    // Align items with the top.
+    align-items: flex-start;
+
+    // By default, define the grid without the label.
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "control"
+        "validation";
+
+    &[label="above"]
+    {
+        // Define the grid with the label above the control.
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "label"
+            "control"
+            "validation";
+
+        > label > .input-label
+        {
+            // Show the label.
+            display: block;
+
+            // Apply spacing between the label and the control.
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &[label="inline"]
+    {
+        // Define the grid with the label inline with the control.
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "label control"
+            "validation validation";
+
+        > label > .input-label
+        {
+            // Show the label.
+            display: block;
+
+            // Position the label so it appears centered
+            // relative to a single line input.
+            margin-top: 0.5rem;
+
+            // Apply spacing between the label and the control.
+            margin-right: var(--size-inline-spacing-large);
+        }
+    }
+
+    > label
+    {
+        // Use vertical flex layout.
+        display: contents;
+
+        // Always use the default cursor.
+        cursor: default;
+
+        &:focus-within
+        {
+            // Make the label non-clickable when focus is already within.
+            pointer-events: none;
+        }
+
+        > .input-label
+        {
+            // Don't show, unless a `label` is specified.
+            display: none;
+
+            // Position the element within the grid.
+            grid-area: label;
+
+            .input-heading > *
+            {
+                // Apply spacing below the heading.
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        > .input-control
+        {
+            grid-area: control;
+
+            // Use horizontal flex layout.
+            display: flex;
+            align-items: center;
+
+            // Enable pointer events for the control, even when they are disabled for the label.
+            pointer-events: all;
+
+            // Allow content to be positioned relative to this element.
+            position: relative;
+
+            // Set the min-width and min-height.
+            min-height: var(--input-min-height);
+            min-width: var(--input-min-width);
+
+            // Apply a border around the component.
+            border: var(--input-border-width) solid;
+            border-radius: var(--border-radius-medium);
+
+            // Apply component style for the normal state.
+            border-color: var(--input-border-color);
+            background: var(--input-surface-color);
+            color: var(--input-surface-text-color);
+
+            .input-control
+            {
+                // Remove border and min-height if the control is nested within another control.
+                border: none;
+                min-height: 0;
+
+                // Reduce min-width if the control is nested within another control.
+                min-width: var(--input-min-height);
+            }
+
+            > [slot="before"],
+            > [slot="after"]
+            {
+                // Use horizontal flex layout.
+                display: flex;
+                align-items: center;
+            }
+
+            > span[slot="before"]
+            {
+                // Apply the input padding, except at the end closes to the input.
+                padding: var(--input-padding);
+                padding-right: 0;
+            }
+
+            > span[slot="after"]
+            {
+                // Apply the input padding, except at the end closes to the input.
+                padding: var(--input-padding);
+                padding-left: 0;
+            }
+
+            > .input-control-inner
+            {
+                // Allow content to be positioned relative to this element.
+                position: relative;
+
+                // Expand to fill the available width.
+                flex-grow: 1;
+
+                // Use horizontal flex layout.
+                display: flex;
+                align-items: center;
+
+                .input-placeholder,
+                .input-input,
+                .input-value
+                {
+                    // Fill the container.
+                    width: 100%;
+
+                    // Apply the input padding.
+                    padding: var(--input-padding);
+                }
+
+                .input-placeholder,
+                .input-value
+                {
+                    // Position to cover the input.
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+
+                    // Ignore pointer events.
+                    pointer-events: none;
+                }
+
+                .input-placeholder
+                {
+                    // Make the placeholder appear faded.
+                    opacity: var(--opacity-faded);
+
+                    // Animate opacity changes.
+                    transition: opacity var(--animation-duration-long);
+                }
+            }
+        }
+
+        > .input-validation
+        {
+            // Position the element within the grid.
+            grid-area: validation;
+
+            validation-message
+            {
+                // Apply spacing above the validation messages.
+                margin-top: 1.5rem;
+            }
+        }
+    }
+
+    &.--disabled
+    {
+        // Reduce opacity if the element is disabled.
+        opacity: var(--opacity-disabled);
+    }
+
+    &:not(.--disabled):not(.--readonly):not(.--invalid):hover
+    {
+        > label > .input-control
+        {
+            // Apply component style for the hover state.
+            border-color: var(--input-border-color--hover);
+            color: var(--input-surface-text-color--hover);
+            background: var(--input-surface-color--hover);
+        }
+    }
+
+    &:not(.--disabled):not(.--readonly):focus-within
+    {
+        > label > .input-control
+        {
+            // Apply component style for the focus state.
+            border-color: var(--input-border-color--focus);
+            color: var(--input-surface-text-color--focus);
+            background: var(--input-surface-color--focus);
+        }
+    }
+
+    &:not(.--disabled):not(.--readonly).--invalid
+    {
+        > label > .input-control
+        {
+            // Apply component style for the invalid state.
+            border-color: var(--input-border-color--invalid);
+            color: var(--input-surface-text-color--invalid);
+            background: var(--input-surface-color--invalid);
+        }
+    }
+
+    &.--invalid,
+    &:focus-within,
+    &:not(.--empty)
+    {
+        > label > .input-control > .input-control-inner > .input-placeholder
+        {
+            // Hide the placeholder when invalid, focused, or not empty.
+            opacity: 0;
+
+            // Animate opacity changes only when the input looses focus.
+            transition: none;
+        }
+    }
+
+    &.--invalid, &:focus-within
+    {
+        > label > .input-control > .input-control-inner > .input-value
+        {
+            // Hide the value when invalid or focused.
+            opacity: 0;
+        }
+    }
+
+    &:not(:focus-within):not(.--invalid)
+    {
+        > label > .input-control > .input-control-inner > .input-input.--hide-when-unfocused
+        {
+            // Hide the input when not invalid or focused.
+            opacity: 0;
+        }
+    }
+}

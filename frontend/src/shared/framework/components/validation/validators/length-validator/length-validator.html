@@ -1,0 +1,25 @@
+<template>
+
+    <template if.bind="invalid === true">
+
+        <validation-message if.bind="min && max" accent="negative">
+            <template replaceable part="invalid-min-max" translate>
+                Please provide a value with a length between ${min} and ${max}.
+            </template>
+        </validation-message>
+
+        <validation-message if.bind="min && !max" accent="negative">
+            <template replaceable part="invalid-min" translate>
+                Please provide a value with a length of at least ${min}.
+            </template>
+        </validation-message>
+
+        <validation-message if.bind="!min && max" accent="negative">
+            <template replaceable part="invalid-max" translate>
+                Please provide a value with a length of at most ${max}.
+            </template>
+        </validation-message>
+
+    </template>
+
+</template>
