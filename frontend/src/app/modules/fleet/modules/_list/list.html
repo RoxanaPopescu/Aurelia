@@ -1,0 +1,108 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Drivers
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <button appearance="solid" page-href="path: /fleet-management/drivers/create" translate>
+                        Add driver
+                    </button>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="id" translate>
+                            Id
+                        </data-table-cell>
+
+                        <data-table-cell name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell name="vehicles" translate>
+                            Vehicles
+                        </data-table-cell>
+
+                        <data-table-cell name="phone" align="right" translate>
+                            Phone
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="driver of drivers">
+
+                        <data-table-row
+                            href="/fleet-management/drivers/edit/${driver.id}">
+
+                            <data-table-cell>
+                                ${driver.id}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${driver.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                ${driver.phone}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="drivers == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="drivers.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="drivers.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="driverCount">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>

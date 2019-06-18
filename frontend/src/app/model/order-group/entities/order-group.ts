@@ -23,7 +23,7 @@ export class OrderGroupInfo
             consignors.push(...matchingCriteria.consignors);
         }
 
-        this.consignorNames = [...new Set(consignors.map(c => c.primaryName))];
+        this.consignors = [...new Set(consignors)];
     }
 
     /**
@@ -42,7 +42,7 @@ export class OrderGroupInfo
     public readonly matchingCriterias: MatchingCriteria[];
 
     /**
-     * The names of the consignors associated with the matching criteria.
+     * The consignors to which the order group applies.
      */
-    public readonly consignorNames: string[];
+    public readonly consignors: Consignor[];
 }

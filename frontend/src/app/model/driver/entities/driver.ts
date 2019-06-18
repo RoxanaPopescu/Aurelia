@@ -1,4 +1,5 @@
 import { PersonName, Phone } from "app/model/shared";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents a driver, who makes the trip to fulfill the transportation of an order.
@@ -8,13 +9,15 @@ export class Driver
     /**
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
+     * @param vehicleTypes The vehicle types associated with the driver, or undefined if unknown.
      */
-    public constructor(data: any)
+    public constructor(data: any, vehicleTypes?: VehicleType[])
     {
         this.id = data.id;
         this.name = new PersonName(data.name);
         this.phone = new Phone(data.phone);
         this.pictureUrl = data.pictureUrl;
+        this.vehicleTypes = vehicleTypes;
     }
 
     /**
@@ -36,4 +39,10 @@ export class Driver
      * The URL for the picture of the driver.
      */
     public pictureUrl: string;
+
+    /**
+     * The vehicle types associated with the driver,
+     * or undefined if unknown.
+     */
+    public vehicleTypes: VehicleType[] | undefined;
 }

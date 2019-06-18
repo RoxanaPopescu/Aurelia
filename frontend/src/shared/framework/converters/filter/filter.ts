@@ -18,6 +18,7 @@ export class FilterValueConverter
      * @param value The iterable containing the items.
      * @param testFunc The function that should be used to test each item, or undefined to apply no filter.
      * @param args The arguments to pass to the test function, in addition to the value being tested.
+     * @returns A new iterable, containing the filtered items.
      */
     public toView<TKey, TValue>(value: Value<TKey, TValue>, testFunc: FilterTestFunc, ...args: any[]): Value<TKey, TValue>
     {

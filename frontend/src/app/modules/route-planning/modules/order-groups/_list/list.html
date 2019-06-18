@@ -84,7 +84,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.consignorNames | list: 'short'}
+                                ${orderGroup.consignors | map: 'primaryName' | list: 'short' : 'unit'}
                             </data-table-cell>
 
                             <data-table-cell align="right">

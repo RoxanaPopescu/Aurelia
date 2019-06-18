@@ -2,7 +2,8 @@ import { MapObject } from "../../../types";
 
 /**
  * Represents a value converter that takes a key, and selects the corresponding value
- * from a `Map`, `Object` or `Array`, or a default value, if specified,
+ * from a `Map`, `Object` or `Array`, or a default value, if specified. Use this to
+ * e.g. choose a word based on the grammatical gender of another word.
  */
 export class SelectValueConverter
 {
