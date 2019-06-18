@@ -106,7 +106,7 @@ export class DateTimeRange
      * Gets the data representing this instance.
      * @param options The formatting options to use.
      */
-    public toJSON(options?: ISOTimeOptions): object
+    public toJSON(options?: ISOTimeOptions): any
     {
         return {
             from: this.from ? this.from.toISO(options) : undefined,

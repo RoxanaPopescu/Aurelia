@@ -51,7 +51,7 @@ export class PersonName
     }
 
     /**
-     * Gets the data that should be serialized to JSON.
+     * Gets the data representing this instance.
      */
     public toJSON(): any
     {

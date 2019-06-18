@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
+import { ModalService } from "shared/framework";
 import routeTitles from "./resources/strings/route-titles.json";
 
 /**
@@ -8,6 +9,15 @@ import routeTitles from "./resources/strings/route-titles.json";
 @autoinject
 export class AgreementsModule
 {
+    /**
+     * Creates a new instance of the class.
+     * @param modalService The `ModalService` instance.
+     */
+    public constructor(modalService: ModalService)
+    {
+        modalService.register("add-agreement", PLATFORM.moduleName("app/modules/agreements/modals/add-agreement/add-agreement"));
+    }
+
     /**
      * Called to configure the router for the module.
      * @param config The router configuration associated with the module.
