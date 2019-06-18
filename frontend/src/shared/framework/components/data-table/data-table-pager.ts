@@ -13,6 +13,11 @@ export class DataTablePagerCustomElement
     protected pageInputElement: HTMLInputElement;
 
     /**
+     * The page size select element.
+     */
+    protected pageSizeSelectElement: HTMLInputElement;
+
+    /**
      * The total number of pages, or undefined if unknown.
      * This is computed from `listSize` and `pageSize`, with `pageCount` used as fallback.
      */
@@ -83,7 +88,7 @@ export class DataTablePagerCustomElement
 
     /**
      * Called when a key is pressed while the input is focused.
-     * If the key being pressed is `Enter`, commits the entered value.
+     * If the key being pressed is `Enter`, commits the change.
      * @param event The keyboard event.
      */
     protected onPageInputKeydown(event: KeyboardEvent): boolean
@@ -102,8 +107,21 @@ export class DataTablePagerCustomElement
     }
 
     /**
+     * Called when the page size is changed.
+     * Sets the page size and commits the change.
+     */
+    protected onPageSizeChange(): void
+    {
+        this.value =
+        {
+            ...this.value,
+            pageSize: parseInt(this.pageSizeSelectElement.value)
+        };
+    }
+
+    /**
      * Called when one of the navigation buttons are pressed.
-     * Adds the specified offset to the current page number.
+     * Adds the specified offset to the current page number and commits the change.
      * @param offset The offset to apply to the current page.
      */
     protected onNavClick(offset: number): void

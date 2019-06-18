@@ -8,7 +8,11 @@
             Page size
         </div>
 
-        <select disabled.bind="value == null" value.bind="value.pageSize">
+        <select
+            ref="pageSizeSelectElement"
+            disabled.bind="value == null"
+            value.to-view="value.pageSize"
+            change.trigger="onPageSizeChange()">
             <option repeat.for="size of pageSizes" model.bind="size">${size}</option>
         </select>
 
