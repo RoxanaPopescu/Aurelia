@@ -50,15 +50,20 @@ export class OrdersModule
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
                 title: routeTitles.create
             },
-            {
-                name: "import",
-                route: "import",
-                moduleId: PLATFORM.moduleName("./modules/import/import"),
-                title: routeTitles.import,
-                nav: true,
-                href: "/orders/import",
-                icon: "import"
-            }
+
+            ...
+            ENVIRONMENT.name === "development" ?
+            [
+                {
+                    name: "import",
+                    route: "import",
+                    moduleId: PLATFORM.moduleName("./modules/import/import"),
+                    title: routeTitles.import,
+                    nav: true,
+                    href: "/orders/import",
+                    icon: "import"
+                }
+            ] : []
         ]);
     }
 }
