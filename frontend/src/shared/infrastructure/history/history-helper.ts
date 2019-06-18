@@ -225,7 +225,7 @@ export class HistoryHelper
 
         for (const key of Object.keys(urlParams))
         {
-            url = url.replace(new RegExp(`:${key}(/|$)`), ($0, $1) =>
+            url = url.replace(new RegExp(`:${key}(/|$)`), ($0: string, $1: string) =>
             {
                 const value = urlParams[key];
 

@@ -4,10 +4,14 @@
 
     <require from="./app.scss"></require>
 
-    <app-sidebar if.bind="identityService.identity" class="au-animate animation-fade-in-medium"></app-sidebar>
+    <div class="app-container au-animate animation-fade-in-long">
 
-    <router-view inert.bind="modalService.modals.length > 0" class="app au-animate animation-fade-in-medium"></router-view>
+        <app-sidebar if.bind="identityService.identity"></app-sidebar>
 
-    <modal-view class="au-animate animation-fade-in-medium"></modal-view>
+        <router-view inert.bind="modalService.modals.length > 0"></router-view>
+
+        <modal-view></modal-view>
+
+    </div>
 
 </template>

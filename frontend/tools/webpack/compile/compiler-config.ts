@@ -33,12 +33,16 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         translateConfig.excludedFilePaths = ["**"];
     }
 
-     // The options for the `autoprefixer` plugin.
-    const autoprefixerOptions: autoprefixer.Options =
+    // The options for the `autoprefixer` plugin.
+    // When building for the `development` environment, we override the browser list
+    // specified in `package.json`, to reducing the clutter caused by prefixes.
+    const autoprefixerOptions: autoprefixer.Options & { overrideBrowserslist?: string[] | string } =
     {
-        browsers: compilerOptions.environment.name === "development"
-            ? ["last 1 version"]
-            : ["last 2 version"]
+        overrideBrowserslist: compilerOptions.environment.name === "development" ?
+        [
+            "last 1 version",
+            "not dead"
+        ] : undefined
     };
 
     const config: Configuration =
