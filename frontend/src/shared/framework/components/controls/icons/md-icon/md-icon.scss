@@ -11,10 +11,6 @@ md-icon
     flex-shrink: 0;
 
     position: relative;
-    font-family: var(--font-family-icon);
-    font-weight: 400;
-    font-style: normal;
-    font-size: inherit;
     line-height: inherit;
     vertical-align: bottom;
     letter-spacing: normal;
@@ -23,6 +19,12 @@ md-icon
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: "Material Icons";
+    font-weight: 400;
+    font-style: normal;
+    font-size: inherit;
 
     /* stylelint-disable property-no-vendor-prefix */
     -webkit-font-feature-settings: "liga";

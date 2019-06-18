@@ -45,6 +45,7 @@ user-identity
 
         .user-identity-text
         {
+            position: relative;
             display: none;
 
             app-sidebar.--expanded &
@@ -57,7 +58,7 @@ user-identity
         .user-identity-name
         {
             margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-weight: 600;
         }
     }
 }

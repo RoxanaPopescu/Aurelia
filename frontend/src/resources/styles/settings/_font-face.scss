@@ -56,7 +56,7 @@
 {
     font-family: "Nunito";
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     src:
         url("/resources/fonts/nunito/nunito-semibold.woff2") format("woff2"),
         url("/resources/fonts/nunito/nunito-semibold.ttf") format("truetype");
@@ -65,10 +65,28 @@
 {
     font-family: "Nunito";
     font-style: italic;
-    font-weight: 600;
+    font-weight: 500;
     src:
         url("/resources/fonts/nunito/nunito-semibolditalic.woff2") format("woff2"),
         url("/resources/fonts/nunito/nunito-semibolditalic.ttf") format("truetype");
+}
+@font-face
+{
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 600;
+    src:
+        url("/resources/fonts/nunito/nunito-bold.woff2") format("woff2"),
+        url("/resources/fonts/nunito/nunito-bold.ttf") format("truetype");
+}
+@font-face
+{
+    font-family: "Nunito";
+    font-style: italic;
+    font-weight: 600;
+    src:
+        url("/resources/fonts/nunito/nunito-bolditalic.woff2") format("woff2"),
+        url("/resources/fonts/nunito/nunito-bolditalic.ttf") format("truetype");
 }
 @font-face
 {
