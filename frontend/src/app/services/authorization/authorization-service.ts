@@ -50,7 +50,7 @@ export class AuthorizationService
 
         if (routeSettings.outfits != null && routeSettings.outfits.length > 0)
         {
-            if (identity == null || !routeSettings.outfits.some(outfitType => identity.outfit.type === outfitType))
+            if (identity == null || !routeSettings.outfits.some(outfitType => identity.outfit.type.slug === outfitType))
             {
                 return false;
             }

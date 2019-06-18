@@ -1,9 +1,5 @@
 import { Phone } from "app/model/shared";
-
-/**
- * Represents the type of outfit
- */
-export type OutfitType = "fulfiller" | "consignor" | "consignee" | "system";
+import { OutfitType } from "./outfit-type";
 
 /**
  * Represents a base type for entities such as a Consignor and Consignee.
@@ -16,7 +12,7 @@ export class Outfit
      */
     public constructor(data: any)
     {
-        this.type = (data.type || data.typeName).toLowerCase();
+        this.type = new OutfitType((data.type || data.typeName).toLowerCase());
         this.id = data.id;
         this.slug = data.publicId;
         this.companyName = data.companyName;
@@ -33,7 +29,7 @@ export class Outfit
     /**
      * The name of outfit type.
      */
-    public readonly type: string | undefined;
+    public readonly type: OutfitType;
 
     /**
      * The ID of the outfit.

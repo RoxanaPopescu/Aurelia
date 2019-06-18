@@ -1,0 +1,84 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade>
+
+                <h1 class="font-larger">
+                    <path-nav>
+
+                        <span translate>
+                            Departments
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <button appearance="solid" page-href="path: /departments/create" translate>
+                        Add department
+                    </button>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="department of departments">
+
+                        <data-table-row
+                            href="/departments/${department.slug}">
+
+                            <data-table-cell>
+                                ${department.primaryName}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="departments == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="departments.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="departments.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="departmentCount">
+                    </data-table-pager>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </module>
+
+</template>
