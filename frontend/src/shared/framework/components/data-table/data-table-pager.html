@@ -48,7 +48,7 @@
             <icon name="md-chevron-left"></icon>
         </button>
 
-        <div></div>
+        <div class="${value == null || value.page <= 1 || computedPageCount == 0 ? 'opacity-disabled' : ''}"></div>
 
         <button disabled.bind="value == null || computedPageCount != null && value.page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
             <icon name="md-chevron-right"></icon>

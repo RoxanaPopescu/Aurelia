@@ -19,6 +19,13 @@
             --data-table-row-edge-color: var(--color-surface-#{$accent}-border);
         }
     }
+
+    // HACK: We don't have a separate edge color for the surface yet, so just use the neutral palette color for now.
+    &:not([accent]),
+    &[accent="neutral"]
+    {
+        --data-table-row-edge-color: var(--palette-color-neutral);
+    }
 }
 
 data-table[appearance="rows"]

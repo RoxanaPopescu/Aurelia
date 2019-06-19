@@ -235,6 +235,19 @@ export class AppModule
                 icon: "departments"
             },
             {
+                name: "agreements",
+                route: "agreements",
+                moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
+                settings:
+                {
+                    outfits: ["fulfiller"]
+                },
+                title: routeTitles.agreements,
+                nav: true,
+                href: "/agreements",
+                icon: "agreements"
+            },
+            {
                 name: "users",
                 route: "users",
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
@@ -252,19 +265,6 @@ export class AppModule
                 nav: true,
                 href: "/users",
                 icon: "users"
-            },
-            {
-                name: "agreements",
-                route: "agreements",
-                moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
-                settings:
-                {
-                    outfits: ["fulfiller"]
-                },
-                title: routeTitles.agreements,
-                nav: true,
-                href: "/agreements",
-                icon: "agreements"
             },
 
             ...

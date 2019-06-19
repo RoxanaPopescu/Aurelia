@@ -64,9 +64,14 @@ react-module
         {
             height: auto;
 
-            .pageHeader-path
+            .pageHeader-path,
+            .pageHeader-path-segment
             {
-                line-height: var(--font-larger-line-height);
+                line-height: var(--font-largest-line-height);
+                font-size: var(--font-largest-font-size);
+                font-weight: var(--font-largest-font-weight);
+                --font-current-margin-top: var(--font-largest-margin-top);
+                --font-current-margin-bottom: var(--font-largest-margin-bottom);
             }
         }
 
