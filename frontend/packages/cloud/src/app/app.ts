@@ -87,19 +87,6 @@ export class App
                 throw new Error(`No settings found for the hostname '${request.hostname}'.`);
             }
 
-            // Resolve the locale to use, ensure the cookie is set,
-            // and rewrite the request so we serve the correct build.
-
-            const localeCodeFromCookie = request.cookies["locale"];
-            response.locals.localeCode = localeCodeFromCookie || hostSettings.localeCode;
-
-            if (!localeCodeFromCookie)
-            {
-                response.cookie("locale", response.locals.localeCode);
-            }
-
-            request.url = `/${response.locals.localeCode}${request.url}`;
-
             // Resolve the theme to use, ensure the cookie is set,
             // and rewrite the request to serve the correct resources.
 
@@ -115,6 +102,19 @@ export class App
                 /^\/resources\/themes\/default\//,
                 `/resources/themes/${response.locals.themeSlug}/`);
 
+            // Resolve the locale to use, ensure the cookie is set,
+            // and rewrite the request so we serve the correct build.
+
+            const localeCodeFromCookie = request.cookies["locale"];
+            response.locals.localeCode = localeCodeFromCookie || hostSettings.localeCode;
+
+            if (!localeCodeFromCookie)
+            {
+                response.cookie("locale", response.locals.localeCode);
+            }
+
+            request.url = `/${response.locals.localeCode}${request.url}`;
+
             // Resolve the currency to use and ensure the cookie is set.
 
             const currencyCodeFromCookie = request.cookies["currency"];
@@ -129,10 +129,18 @@ export class App
         });
 
         // Serve build artifacts.
-        this._app.use(express.static(clientFolderPath));
+        this._app.use(express.static(clientFolderPath,
+        {
+            index: false,
+            redirect: false
+        }));
 
         // Serve static assets.
-        this._app.use(express.static(staticFolderPath));
+        this._app.use(express.static(staticFolderPath,
+        {
+            index: false,
+            redirect: false
+        }));
 
         // Serve the localized `index.html` for any page request.
         // We ignore requests where the last path segment contains a `.`, as those are for files that do not exist.
