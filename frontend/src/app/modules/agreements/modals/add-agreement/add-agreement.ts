@@ -59,6 +59,8 @@ export class AddAgreementDialogCustomElement
             this.model.outfitSlug = this.computedOutfitSlug;
         }
 
+        this.validation.enabled = true;
+
         if (!await this.validation.validate())
         {
             return;

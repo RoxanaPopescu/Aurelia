@@ -1,7 +1,5 @@
 <template>
 
-    <require from="./add-agreement.scss"></require>
-
     <modal-backdrop close-modal.bind="true"></modal-backdrop>
 
     <modal-dialog name="add-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
@@ -18,7 +16,7 @@
 
         </header>
 
-        <section validation validation.ref="validation">
+        <section validation="enabled.bind: false; trigger: input;" validation.ref="validation">
 
             <text-input value.bind="model.outfitName" label="above" class="margin">
 
@@ -52,12 +50,7 @@
 
                 <div slot="validation">
 
-                    <required-validator
-                        value.bind="model.outfitSlug">
-                    </required-validator>
-
                     <pattern-validator
-                        trigger="blur"
                         value.bind="model.outfitSlug"
                         pattern="^[^\s]*$">
 
@@ -80,7 +73,7 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.userLastName">
+                        value.bind="model.userFirstName">
                     </required-validator>
 
                 </div>

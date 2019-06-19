@@ -29,8 +29,8 @@ export interface IValidation
 {
     /**
      * True if this validation is enabled, otherwise false.
-     * Note that if false, all child validation will be considered
-     * disabled too, even if their own enabled properties are true.
+     * Note that if a parent validation is disabled, this validation will
+     * be disabled too, regardless of the value of this property.
      */
     enabled: boolean | undefined;
 
@@ -115,7 +115,9 @@ export class ValidationCustomAttribute implements IValidation
      */
     protected get computedEnabled(): boolean
     {
-        return this.enabled || this.enabled === undefined && (this.parentValidation != null ? this.parentValidation.computedEnabled : true);
+        const parentEnabled = this.parentValidation != null ? this.parentValidation.computedEnabled : true;
+
+        return this.enabled && parentEnabled;
     }
 
     /**
@@ -135,7 +137,7 @@ export class ValidationCustomAttribute implements IValidation
      */
     protected get computedInvalid(): boolean | undefined
     {
-        if (this.enabled === false)
+        if (!this.enabled)
         {
             return undefined;
         }
@@ -145,11 +147,11 @@ export class ValidationCustomAttribute implements IValidation
 
     /**
      * True if this validation is enabled, otherwise false.
-     * Note that if false, all child validation will be considered
-     * disabled too, even if their own enabled properties are true.
+     * Note that if a parent validation is disabled, this validation will
+     * be disabled too, regardless of the value of this property.
      */
     @bindable({ defaultValue: true })
-    public enabled: boolean | undefined;
+    public enabled: boolean;
 
     /**
      * The trigger to use for this validation, or undefined to

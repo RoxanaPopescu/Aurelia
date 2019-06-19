@@ -276,13 +276,12 @@
         }
     }
 
-    &.--invalid,
     &:focus-within,
     &:not(.--empty)
     {
         > label > .input-control > .input-control-inner > .input-placeholder
         {
-            // Hide the placeholder when invalid, focused, or not empty.
+            // Hide the placeholder when focused or not empty.
             opacity: 0;
 
             // Animate opacity changes only when the input looses focus.
