@@ -20,8 +20,14 @@ page-content
 
         h1
         {
-            // Apply margin to the title.
+            // HACK: Apply margin to the title.
             margin: 0 0 7rem 0;
+        }
+
+        toolbar button
+        {
+            // HACK: Ensure min-width of buttons match that of the tabs.
+            min-width: 30rem !important;
         }
     }
 

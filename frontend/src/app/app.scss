@@ -72,6 +72,12 @@ react-module
                 font-weight: var(--font-largest-font-weight);
                 --font-current-margin-top: var(--font-largest-margin-top);
                 --font-current-margin-bottom: var(--font-largest-margin-bottom);
+
+                .icon
+                {
+                    margin-top: 1px;
+                    font-size: 23px;
+                }
             }
         }
 
