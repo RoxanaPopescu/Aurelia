@@ -11,14 +11,14 @@
             </h1>
 
             <div translate>
-                Once added, an invitation will be sent to the specified user.
+                Note that an invitation will be sent to the specified user.
             </div>
 
         </header>
 
         <section validation="enabled.bind: false; trigger: input;" validation.ref="validation">
 
-            <text-input value.bind="model.outfitName" label="above" class="margin">
+            <text-input value.bind="model.outfitName" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     The name of the fulfiller
@@ -34,7 +34,7 @@
 
             </text-input>
 
-            <text-input value.bind="model.outfitSlug" value.bind="model.outfitSlug" label="above" class="margin-bottom" autofocus>
+            <text-input value.bind="model.outfitSlug" value.bind="model.outfitSlug" label="above" class="margin-medium-bottom" autofocus>
 
                 <div slot="heading" translate>
                     The ID to use for the fulfiller
@@ -64,7 +64,7 @@
 
             </text-input>
 
-            <text-input value.bind="model.userFirstName" label="above" class="margin">
+            <text-input value.bind="model.userFirstName" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     The first name of the user
@@ -80,7 +80,7 @@
 
             </text-input>
 
-            <text-input value.bind="model.userLastName" label="above" class="margin">
+            <text-input value.bind="model.userLastName" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     The last name of the user
@@ -96,7 +96,7 @@
 
             </text-input>
 
-            <text-input value.bind="model.userEmail" label="above" class="margin-top">
+            <text-input value.bind="model.userEmail" label="above">
 
                 <div slot="heading" translate>
                     The email of the user
@@ -116,7 +116,7 @@
 
         <footer>
 
-            <button appearance="solid" accent="primary" click.delegate="onInviteClick()">Send invitation</button>
+            <button appearance="solid" accent="primary" click.delegate="onInviteClick()">Add agreement</button>
 
         </footer>
 
