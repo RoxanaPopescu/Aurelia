@@ -2,7 +2,7 @@
 
 FROM node:10-alpine as build-frontend-stage
 
-## Setup default build variables
+## Setup default build variables.
 ARG ENVIRONMENT=development
 
 ## Add additional packages.

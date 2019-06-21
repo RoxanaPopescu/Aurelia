@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "../tslint.json"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**",
+      "artifacts/**",
+      "**/*.json",
+      "**/.*",
+      "**/~*"
+    ]
+  },
+  "rules": {
+    "no-submodule-imports": [
+      true,
+      "env",
+      "app",
+      "shared",
+      "resources"
+    ]
+  }
+}

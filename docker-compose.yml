@@ -1,6 +1,7 @@
 version: "2.1"
 
 services:
+
   frontend-cloud:
     environment:
       NODE_ENV: build

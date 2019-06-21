@@ -14,7 +14,7 @@
 
    See the readme in that package for instructions.
 
-   > Note that you cannot use the `develop` task here, as that does not write the artifacts to storage.
+   > Note that you cannot use the `develop` task here, as that does not persist the artifacts.
 
 2. **Build this package**
 

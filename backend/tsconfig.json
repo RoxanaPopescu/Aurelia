@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "lib": [
+      "es2018"
+    ],
+    "module": "commonjs",
+    "target": "es2018",
+    "sourceRoot": "src",
+    "outDir": "artifacts/build",
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -1,0 +1,13 @@
+version: "2.1"
+
+services:
+
+  backend:
+    container_name: backend
+    environment:
+      NODE_ENV: production
+    build:
+      context: ../
+      dockerfile: ./backend/dockerfile
+    ports:
+      - 8008:8008
