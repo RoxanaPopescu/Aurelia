@@ -1,9 +1,46 @@
 <template>
+    <require from="./import-failed.scss"></require>
 
-        <h1 class="font-largest margin-bottom">
-            Failed text
-        </h1>
-        
-        <button appearance="solid" accent="primary" click.trigger="service.currentPage = 'upload'">Restart</button>
-    </template>
+    <h1 class="font-largest margin-bottom">
+        Failed text
+    </h1>
+
+    <div class="font-large" translate>
+        You typed in a string in a number field
+    </div>
+
+    <div id="error-outer-container">
+        <div id="error-container" class="margin-largest-top">
+            <div>
+                <div>
+                    <svg>
+                        <line x1='0' y1='100%' x2='100%' y2='0' />
+                    </svg>
+                </div>
+                <div><div></div></div>
+                <div class="font-larger">Postal number</div>
+                <div><div></div></div>
+            </div>
+            <div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+            </div>
+            <div>
+                <div class="font-larger">23</div>
+                <div><div></div></div>
+                <div class="font-larger">Tester</div>
+                <div><div></div></div>
+            </div>
+            <div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+            </div>
+        </div>
+        <div id="line"></div>
+    </div>
+</template>
     

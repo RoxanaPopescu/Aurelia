@@ -5,5 +5,5 @@ import { autoinject } from "aurelia-framework";
  */
 @autoinject
 export class ImportService {
-    public currentPage: "upload" | "success" | "failed" = "success";
+    public currentPage: "upload" | "success" | "failed" = "failed";
 }
