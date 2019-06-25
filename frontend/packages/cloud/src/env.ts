@@ -14,7 +14,12 @@ export class CloudEnvironment
         // The default environment to use if `NODE_ENV` is undefined.
         const defaultName = "development";
 
+        // The default port to use if `PORT` is undefined.
+        const defaultPort = "8080";
+
+        // Configure environment.
         this.name = (process.env.NODE_ENV || defaultName).trim() as CloudEnvironmentName;
+        this.port = parseInt((process.env.PORT || defaultPort).trim());
         this.protect = this.name !== "development";
     }
 
@@ -24,9 +29,16 @@ export class CloudEnvironment
     public name: CloudEnvironmentName;
 
     /**
+     * The port to which the server should bind.
+     * The default is `8080`.
+     */
+    public port: number;
+
+    /**
      * True if sensitive resources should be protected, otherwise false.
      * When enabled, sensitive resources will only be served if the request
      * contains the secret `x-debug-token` header.
+     * Recommended in the `production` environment.
      */
     public protect: boolean;
 }

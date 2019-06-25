@@ -41,7 +41,7 @@ export interface IValidation
     trigger: ValidationTrigger | ValidationTrigger[] | undefined;
 
     /**
-     * True if the validation failed, false if the validation succeded,
+     * True if the validation failed, false if the validation succeeded,
      * or undefined if not yet validated.
      */
     invalid: boolean | undefined;
@@ -51,7 +51,7 @@ export interface IValidation
      * Note that validators will only run for validations that are enabled,
      * with no disabled parent validator.
      * @param trigger The trigger that caused the validation to run.
-     * @returns A promise that will be resolved with true if validation succeded,
+     * @returns A promise that will be resolved with true if validation succeeded,
      * false if validation failed, or undefined if this validator is disabled.
      */
     validate(): Promise<boolean | undefined>;
@@ -161,7 +161,7 @@ export class ValidationCustomAttribute implements IValidation
     public trigger: ValidationTrigger | ValidationTrigger[] | undefined;
 
     /**
-     * True if the validation failed, false if the validation succeded,
+     * True if the validation failed, false if the validation succeeded,
      * or undefined if not yet validated.
      */
     @bindable({ defaultBindingMode: bindingMode.fromView })
@@ -242,7 +242,7 @@ export class ValidationCustomAttribute implements IValidation
      * Note that validators will only run for validations that are enabled,
      * with no disabled parent validator.
      * @param trigger The trigger that caused the validation to run.
-     * @returns A promise that will be resolved with true if validation succeded,
+     * @returns A promise that will be resolved with true if validation succeeded,
      * false if validation failed, or undefined if this validator is disabled.
      */
     public async validate(trigger: ValidationTrigger = "none"): Promise<boolean | undefined>

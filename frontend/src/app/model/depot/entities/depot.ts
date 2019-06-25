@@ -54,7 +54,7 @@ export class Depot
     public location?: Location;
 
     /**
-     * The availability of teh depot.
+     * The availability of the depot.
      */
     public availability: DepotAvailability[];
 }

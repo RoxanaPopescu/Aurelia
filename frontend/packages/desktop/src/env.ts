@@ -11,7 +11,7 @@ export class DesktopEnvironment
 {
     public constructor()
     {
-        // The default environment to use if NODE_ENV is undefined.
+        // The default environment to use if `NODE_ENV` is undefined.
         const defaultName = "development";
 
         this.name = (process.env.NODE_ENV || defaultName).trim() as DesktopEnvironmentName;
@@ -24,13 +24,13 @@ export class DesktopEnvironment
 
     /**
      * True to enable debugging features, otherwise false.
-     * Recommended in the `development` and `preview` environments.
+     * Recommended in the `development` environment.
      */
     public debug: boolean = true;
 
     /**
      * True to open the development tools, otherwise false.
-     * Recommended in the `development` and `preview` environments.
+     * Recommended in the `development` environment.
      */
     public devTools: boolean = true;
 }

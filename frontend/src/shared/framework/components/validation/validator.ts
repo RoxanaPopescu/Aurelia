@@ -28,7 +28,7 @@ export interface IValidator
     /**
      * Called by the validation when this validator should run.
      * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeded, otherwise false.
+     * @returns True if validation succeeded, otherwise false.
      */
     validate(trigger: ValidationTrigger): Promise<boolean>;
 
@@ -112,7 +112,7 @@ export abstract class Validator implements IValidator
     /**
      * Called by the validation when this validator should run.
      * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeded, otherwise false.
+     * @returns True if validation succeeded, otherwise false.
      */
     public abstract async validate(trigger: ValidationTrigger): Promise<boolean>;
 

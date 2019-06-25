@@ -9,7 +9,7 @@ import { PromiseController } from "shared/utilities";
 export class Modal<TModel = any, TResult = any>
 {
     /**
-     * Creates a new instance of teh type.
+     * Creates a new instance of the type.
      * @param modals The stack of open modals.
      * @param viewModel The type of the component to present, or its module ID.
      * @param model The model to pass to the `activate` life cycle method of the component.

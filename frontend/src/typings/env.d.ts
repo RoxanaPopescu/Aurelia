@@ -58,7 +58,7 @@ declare interface IClientEnvironment
 
     /**
      * True to enable debugging features, otherwise false.
-     * Recommended in the `development` and `preview` environments.
+     * Recommended in the `development` environment.
      */
     debug: boolean;
 
@@ -69,7 +69,7 @@ declare interface IClientEnvironment
     optimize: boolean;
 
     /**
-     * True to apenable API obfuscation, otherwise false.
+     * True to enable API obfuscation, otherwise false.
      * Recommended in the `production` environment.
      */
     obfuscate: boolean;

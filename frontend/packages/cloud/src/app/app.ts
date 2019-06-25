@@ -21,9 +21,6 @@ const clientFolderPath = path.join(packageFolderPath, "artifacts/build/client");
 // The path for the `static` folder containing publicly available files.
 const staticFolderPath = path.join(packageFolderPath, "static");
 
-// The port to which the server should bind.
-const port = parseInt(process.env.PORT || "8080");
-
 /**
  * Represents the app.
  */
@@ -160,9 +157,9 @@ export class App
     public start(): void
     {
         // Start the server.
-        this._app.listen(port, () =>
+        this._app.listen(environment.port, () =>
         {
-            console.info(`Server running in '${environment.name}' environment, listening on port ${port}`);
+            console.info(`Server running in '${environment.name}' environment, listening on port ${environment.port}`);
         });
     }
 }

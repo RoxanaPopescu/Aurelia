@@ -29,7 +29,7 @@ export class PatternValidatorCustomElement extends Validator
     /**
      * Called by the validation when this validator should run.
      * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeded, otherwise false.
+     * @returns True if validation succeeded, otherwise false.
      */
     public async validate(trigger: ValidationTrigger): Promise<boolean>
     {
