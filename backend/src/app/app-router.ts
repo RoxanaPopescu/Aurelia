@@ -1,8 +1,9 @@
 import path from "path";
 import globs from "globs";
 import KoaRouter from "koa-router";
-import { ApiClient, inject } from "../shared/infrastructure";
+import { Type, container, inject } from "../shared/infrastructure";
 import { IAppContext } from "./app-context";
+import { AppModule } from "./app-module";
 
 /**
  * Represents the app router.
@@ -11,33 +12,30 @@ import { IAppContext } from "./app-context";
 export class AppRouter extends KoaRouter<any, IAppContext>
 {
     /**
-     * Creates a new instance of the type.
-     * @param apiClient The `ApiClient` instance.
-     */
-    public constructor(apiClient: ApiClient)
-    {
-        super();
-
-        this._apiClient = apiClient;
-    }
-
-    private readonly _apiClient: ApiClient;
-
-    /**
      * Configures the instance.
      */
     public configure(): void
     {
-        // Find all modules in the `modules` folder.
+        // Find and configure all modules in the `modules` folder.
         for (const modulePath of globs.sync(path.join(__dirname, "modules/*")))
         {
-            // Load the module.
+            // Load the module file.
             const moduleInstance = require(modulePath.replace(/([^/]+)$/, "$1/$1"));
 
-            // Configure the module, if it exports a `configure` method.
-            if (moduleInstance.configure instanceof Function)
+            // Find exported module classes.
+            for (const key in moduleInstance)
             {
-                moduleInstance.configure(this, this._apiClient);
+                if (key.endsWith("Module"))
+                {
+                    // Get the module class.
+                    const type: Type<AppModule> = moduleInstance[key];
+
+                    // Add and configure the module.
+                    container
+                        .add(type)
+                        .get(type)
+                        .configure();
+                }
             }
         }
     }
