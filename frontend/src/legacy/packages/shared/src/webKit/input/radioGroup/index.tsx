@@ -75,7 +75,7 @@ class Radio extends React.Component<RadioProps, RadioStates> {
           checked={this.props.checked}
           disabled={this.props.disabled}
         />
-        {this.props.headline}
+        {this.props.headline !== "" && <span>{this.props.headline}</span>}
       </label>
     );
   }

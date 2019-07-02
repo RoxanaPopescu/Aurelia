@@ -2,13 +2,14 @@ import React from "react";
 import Localization from "shared/src/localization";
 import { observer } from "mobx-react";
 import Filters from "../components/filters/filters";
-import Table from "../components/table/table";
-import Header from "../components/header/header";
+import Table from "../components/table";
+import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
-import { PreBooking } from "../models/preBooking";
-import PreBookingDialog from "../components/preBookingDialog";
+import CreateForecastDialog from "./components/createForecastDialog";
 import { Button } from "shared/src/webKit";
+import { Forecast } from "../models/forecast";
+import { DateTimeRange } from "../../../../../../shared/src/model/general/dateTimeRange";
 import {
   ButtonType,
   ButtonSize
@@ -19,61 +20,80 @@ interface Props {
 }
 
 interface State {
-  preBookingDialog?: {
-    preBookings: PreBooking[];
-    state?: "actions" | "remove" | "change";
-  };
+  createForecastDialogOpen: boolean;
 }
 
 @observer
 export default class ForecastsComponent extends React.Component<Props, State> {
+  forecasts: {
+    forecast: Forecast;
+    newTotalSlots: number;
+  }[];
   constructor(props: Props) {
     super(props);
     document.title = Localization.operationsValue("Drivers_Title");
 
     driverDispatchService.state = new DispatchState("forecast");
-    this.state = {};
+    this.state = {
+      createForecastDialogOpen: false
+    };
   }
 
   componentWillMount() {
-    this.fetchOverviewData();
+    this.fetchData();
   }
 
   componentWillUpdate() {
-    this.fetchOverviewData();
-  }
-
-  private async fetchOverviewData(): Promise<void> {
-    driverDispatchService.selectedItemIndexes = [];
-    await driverDispatchService.fetchOverview();
-
     this.fetchData();
   }
 
   private async fetchData(): Promise<void> {
-    if (
-      driverDispatchService.state.value === DispatchState.map.forecast.value
-    ) {
-      await driverDispatchService.fetchForecasts();
-    } else if (
-      driverDispatchService.state.value === DispatchState.map.preBooking.value
-    ) {
-      await driverDispatchService.fetchPreBookings();
-    }
-    // TODO: Assigned and unassigned routes
+    driverDispatchService.selectedItemIndexes = [];
+    await driverDispatchService.fetchOverview();
+
+    driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
+    this.forecasts = driverDispatchService.forecasts.map(f => {
+      return {
+        forecast: f,
+        newTotalSlots: f.slots.total
+      };
+    });
   }
 
   render() {
     return (
       <div className="c-driverDispatch-container">
-        {this.state.preBookingDialog && (
-          <PreBookingDialog
-            onClose={() => {
-              this.setState({ preBookingDialog: undefined });
-            }}
-            data={this.state.preBookingDialog}
-          />
-        )}
+        <CreateForecastDialog
+          open={this.state.createForecastDialogOpen}
+          onClose={() => {
+            this.setState({
+              createForecastDialogOpen: false
+            });
+          }}
+          onCreate={forecast => {
+            try {
+              driverDispatchService.createForecast({
+                fulfilleeId: forecast.fulfillee.id,
+                date: forecast.dateFrom,
+                timePeriod: new DateTimeRange({
+                  from: forecast.dateTimeFrom,
+                  to: forecast.dateTimeTo
+                }),
+                startingAddress: forecast.startingAddress.address.toString(),
+                vehicleTypeId: forecast.vehicleType.toString(),
+                slots: forecast.totalSlots
+              });
+
+              this.setState({
+                createForecastDialogOpen: false
+              });
+
+              return true;
+            } catch {
+              return false;
+            }
+          }}
+        />
         <Filters
           page="forecasts"
           onStateChange={() => {
@@ -81,26 +101,51 @@ export default class ForecastsComponent extends React.Component<Props, State> {
           }}
           onFilterChange={() => this.fetchData()}
           onTopFilterChange={() => {
-            this.fetchOverviewData();
+            this.fetchData();
           }}
         />
         <div className="c-driverDispatch-main">
           <Header>
-            <Button type={ButtonType.Action} size={ButtonSize.Medium}>
+            <Button
+              onClick={async () => {
+                this.setState({
+                  createForecastDialogOpen: true
+                });
+              }}
+              type={ButtonType.Light}
+              size={ButtonSize.Medium}
+            >
+              Create forecast
+            </Button>
+            <Button
+              onClick={async () => {
+                await driverDispatchService.updateForecasts(this.forecasts);
+                driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
+              }}
+              type={ButtonType.Action}
+              size={ButtonSize.Medium}
+              disabled={driverDispatchService.forecasts.length === 0}
+            >
               Update forecasts
             </Button>
           </Header>
           <Table
-            onForecastEdit={async (forecast, value) => {
-              await driverDispatchService.updateForecast(forecast, value);
+            onForecastEnter={async (forecast, newValue) => {
+              await driverDispatchService.updateForecasts([
+                { forecast: forecast, newTotalSlots: newValue }
+              ]);
               driverDispatchService.fetchForecasts();
             }}
-            page="forecasts"
-            onPreBookingAction={preBooking => {
-              this.setState({
-                preBookingDialog: { preBookings: [preBooking] }
+            onForecastChange={(forecast, newValue) => {
+              this.forecasts = this.forecasts.map(f => {
+                if (f.forecast.id === forecast.id) {
+                  return { forecast: forecast, newTotalSlots: newValue };
+                } else {
+                  return f;
+                }
               });
             }}
+            page="forecasts"
           />
         </div>
       </div>

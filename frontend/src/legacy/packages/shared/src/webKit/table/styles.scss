@@ -292,7 +292,6 @@
 .gridTable-container-new {
   .c-gridTable {
     width: auto;
-    min-width: 800px;
     display: grid;
     grid-row-gap: 0;
 
@@ -325,6 +324,24 @@
       &.disabledRow {
         .c-gridTable-content {
           color: var(--colorNeutralSemiDark);
+        }
+      }
+
+      &.accordionOpen,
+      &:hover.accordionOpen {
+        .c-gridTable-content {
+          background-color: var(--colorNeutralExtraLight);
+          border-bottom: 0;
+        }
+
+        .c-gridTable-accordionToggle {
+          > * {
+            transform: rotate(45deg);
+          }
+        }
+
+        .c-gridTable-accordionContent {
+          border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
         }
       }
     }
@@ -379,6 +396,31 @@
       &.selectable {
         cursor: pointer;
       }
+
+      .c-gridTable-accordionToggle {
+        margin-left: auto;
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > * {
+          height: 10px;
+          width: 10px;
+          border-right: 1px solid var(--colorBackgroundPrimary);
+          border-bottom: 1px solid var(--colorBackgroundPrimary);
+          transform: rotate(-45deg);
+          transition: transform 100ms;
+        }
+      }
+    }
+
+    .c-gridTable-accordionContent {
+      grid-column: 1 / -1;
+      padding: 7rem 5rem 10rem;
+      background-color: var(--colorNeutralExtraExtraLight);
     }
   }
 
@@ -398,7 +440,6 @@
       align-self: center;
       justify-self: center;
       position: sticky;
-      top: 50%;
     }
   }
 

@@ -23,14 +23,14 @@ import { EditRuleForm } from "./components/editRuleForm/editRuleForm";
 import "./index.scss";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
+import { ButtonSize } from "../../../../../shared/src/webKit/button/index";
 
 @observer
 export default class AutoDispatchComponent extends React.Component {
-  
   // tslint:disable-next-line:no-any
   public constructor(props: any) {
     super(props);
-    
+
     document.title = Localization.operationsValue("Routes_AutoDispatch_Title");
 
     this.loadFulfillers();
@@ -56,11 +56,8 @@ export default class AutoDispatchComponent extends React.Component {
   private error: Error;
 
   public render() {
-    
     if (this.error) {
-      return (
-        <ErrorInline description={this.error.message}/>
-      );
+      return <ErrorInline description={this.error.message} />;
     }
 
     if (this.autoDispatchService.rules == null) {
@@ -69,7 +66,6 @@ export default class AutoDispatchComponent extends React.Component {
 
     return (
       <>
-
         <PageHeaderComponent
           path={[
             { title: Localization.operationsValue("Routes_AutoDispatch_Title") }
@@ -78,7 +74,6 @@ export default class AutoDispatchComponent extends React.Component {
 
         <div className="c-autoDispatch">
           <PageContentComponent>
-
             <div className="c-autoDispatch-rules">
               {this.autoDispatchService.rules.map(r => (
                 <RuleComponent
@@ -127,12 +122,12 @@ export default class AutoDispatchComponent extends React.Component {
                 )}
               </WorldMap>
             </div>
-
           </PageContentComponent>
         </div>
 
         {this.openRule != null && (
           <Dialog
+            className="c-autoDispatch-dialog"
             title={
               this.openRule.id
                 ? Localization.operationsValue(
@@ -153,6 +148,7 @@ export default class AutoDispatchComponent extends React.Component {
             <div className="c-autoDispatch-actions">
               <Button
                 type={ButtonType.Action}
+                size={ButtonSize.Medium}
                 disabled={!this.openRule.isValid}
                 onClick={() => this.onSaveOpenRule()}
               >
@@ -163,7 +159,6 @@ export default class AutoDispatchComponent extends React.Component {
             </div>
           </Dialog>
         )}
-
       </>
     );
   }

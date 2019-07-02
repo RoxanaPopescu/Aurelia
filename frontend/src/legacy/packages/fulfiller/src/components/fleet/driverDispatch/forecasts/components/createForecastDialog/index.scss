@@ -1,0 +1,30 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-driverDispatch-forecastDialog {
+  width: 120rem;
+
+  .c-dialog-content {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      &:not(:last-child) {
+        margin-bottom: 5rem;
+      }
+    }
+
+    .c-driverDispatch-dateContainer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      > * {
+        width: calc(100% / 3 - 5rem * 2 / 3);
+      }
+    }
+
+    .c-driverDispatch-forecastDialog-slots {
+      width: 40rem;
+    }
+  }
+}

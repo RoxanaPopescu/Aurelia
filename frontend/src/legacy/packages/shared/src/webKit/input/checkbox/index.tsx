@@ -53,11 +53,12 @@ export default class InputCheckbox extends React.Component<
       <div
         className={labelClassName}
         onClick={event => {
+          var status = !this.state.checked;
           if (!this.props.readonly) {
             if (this.props.onChange) {
-              this.props.onChange(!this.state.checked);
+              this.props.onChange(status);
             }
-            this.setState({ checked: !this.state.checked });
+            this.setState({ checked: status });
           }
           event.stopPropagation();
         }}

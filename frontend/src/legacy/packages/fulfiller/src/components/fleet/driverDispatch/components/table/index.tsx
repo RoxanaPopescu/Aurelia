@@ -1,5 +1,5 @@
 import React from "react";
-import "./table.scss";
+import "./index.scss";
 import { TableComponent, InputNumbers } from "shared/src/webKit";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
@@ -17,11 +17,14 @@ import {
 } from "../../../../../../../shared/src/webKit/button/index";
 import { Route } from "shared/src/model/logistics/routes";
 import { PreBooking } from "../../models/preBooking";
+import { FulfillerSubPage } from "../../../../navigation/page";
+import { Link } from "react-router-dom";
 
 interface Props {
   page: "dispatch" | "forecasts";
-  onPreBookingAction(preBooking: PreBooking);
-  onForecastEdit?(forecast: Forecast, totalSlots: number);
+  onPreBookingAction?(preBooking: PreBooking);
+  onForecastChange?(forecast: Forecast, totalSlots: number);
+  onForecastEnter?(forecast: Forecast, totalSlots: number);
 }
 
 @observer
@@ -166,25 +169,30 @@ export default class extends React.Component<Props> {
         return (
           <>
             {`${forecast.slots.total - forecast.slots.assigned}`}
-            <Button
-              type={ButtonType.Light}
-              size={ButtonSize.Small}
+            <Link
+              to={FulfillerSubPage.path(
+                FulfillerSubPage.CreatePreBooking
+              ).replace(":id", forecast.id)}
               className="c-driverDispatch-table-actionButton"
             >
-              Assign
-            </Button>
+              <Button type={ButtonType.Light} size={ButtonSize.Small}>
+                Assign
+              </Button>
+            </Link>
           </>
         );
       }
     } else {
       return (
         <InputNumbers
-          onChange={() => {
-            /** */
+          onChange={value => {
+            if (value && this.props.onForecastChange) {
+              this.props.onForecastChange(forecast, value);
+            }
           }}
           onEnter={value => {
-            if (value && this.props.onForecastEdit) {
-              this.props.onForecastEdit(forecast, value);
+            if (value && this.props.onForecastEnter) {
+              this.props.onForecastEnter(forecast, value);
             }
           }}
           className="c-driverDispatch-forecastSlotsInput"
@@ -218,7 +226,9 @@ export default class extends React.Component<Props> {
           size={ButtonSize.Small}
           className="c-driverDispatch-table-actionButton"
           onClick={() => {
-            this.props.onPreBookingAction(preBooking);
+            if (this.props.onPreBookingAction) {
+              this.props.onPreBookingAction(preBooking);
+            }
           }}
         >
           Actions
@@ -259,7 +269,7 @@ export default class extends React.Component<Props> {
           return [
             f.fulfilleeName,
             Localization.formatDate(f.date),
-            Localization.formatTimeRange(f.timeFrame),
+            Localization.formatTimeRange(f.timePeriod),
             f.startingAddress,
             f.vehicleType.name,
             `${f.slots.assigned}/${f.slots.total}`,
@@ -269,7 +279,7 @@ export default class extends React.Component<Props> {
           return [
             f.fulfilleeName,
             Localization.formatDate(f.date),
-            Localization.formatTimeRange(f.timeFrame),
+            Localization.formatTimeRange(f.timePeriod),
             f.startingAddress,
             f.vehicleType.name,
             this.getForecastAction(f)
@@ -286,13 +296,16 @@ export default class extends React.Component<Props> {
             checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
               var checkedRows = driverDispatchService.selectedItemIndexes;
-              if (checked) {
+              if (
+                checked &&
+                driverDispatchService.selectedItemIndexes.indexOf(i) === -1
+              ) {
                 checkedRows.push(i);
-                driverDispatchService.selectedItemIndexes = checkedRows;
               } else {
                 checkedRows.splice(checkedRows.indexOf(i), 1);
-                driverDispatchService.selectedItemIndexes = checkedRows;
               }
+
+              driverDispatchService.selectedItemIndexes = checkedRows;
             }}
             key={p.id}
           />,

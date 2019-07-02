@@ -92,10 +92,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
     if (this.props.readonly) {
       containerClassnames += " readOnly";
     }
-    if (
-      this.props.error &&
-      !(this.props.validate === false || !this.state.changed)
-    ) {
+    if (this.props.error) {
       containerClassnames += " error";
     }
 

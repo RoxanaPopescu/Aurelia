@@ -1,0 +1,30 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-assignRoutes-assigneeState {
+  display: flex;
+  align-items: flex-end;
+  margin: 5rem 0;
+
+  > * {
+    &:not(:last-child) {
+      margin-right: 12rem;
+    }
+
+    &.c-createPreBooking-search {
+      width: 90rem;
+    }
+
+    &.radioGroup {
+      flex-direction: row;
+      height: 8rem;
+      align-items: center;
+
+      > * {
+        &:not(:last-child) {
+          margin-bottom: 0;
+          margin-right: 5rem;
+        }
+      }
+    }
+  }
+}

@@ -113,9 +113,7 @@ export default class UserManagementService {
       Base.defaultConfig(items)
     );
   
-    try {
-      await response.json();
-    } catch {
+    if (response.status < 200 || response.status >= 300) {
       throw new Error(Localization.sharedValue("Error_General"));
     }
   }
@@ -133,9 +131,7 @@ export default class UserManagementService {
     Base.defaultConfig(items)
   );
 
-  try {
-    await response.json();
-  } catch {
+  if (response.status < 200 || response.status >= 300) {
     throw new Error(Localization.sharedValue("Error_General"));
   }
 }

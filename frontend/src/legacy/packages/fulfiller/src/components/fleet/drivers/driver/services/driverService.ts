@@ -58,7 +58,6 @@ export class DriverService {
     }
 
     const data = await response.json();
-
     this._driver = new Driver(data);
     this._busy = false;
   }

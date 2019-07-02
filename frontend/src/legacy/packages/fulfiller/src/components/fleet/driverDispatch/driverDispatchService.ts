@@ -7,6 +7,13 @@ import { OverviewData } from "./models/overviewData";
 import { Route } from "shared/src/model/logistics/routes/details";
 import Localization from "shared/src/localization";
 import BaseService from "shared/src/services/base";
+import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
+import { Driver } from "shared/src/model/logistics/order/driver";
+import { Position } from "../../../../../shared/src/model/general/position";
+import {
+  SortingDirection,
+  SortingDirectionMap
+} from "shared/src/model/general/sorting";
 
 export class DispatchState {
   public static readonly map = {
@@ -39,6 +46,49 @@ export class DispatchState {
   public slug: keyof typeof DispatchState.map;
   public name: string;
   public value: string;
+}
+
+export type OrdersListSortingKey =
+  | "OrderId"
+  | "ConsignorId"
+  | "ConsignorCompanyName"
+  | "ConsignorAddress"
+  | "ConsignorPhoneNumber"
+  | "PickupEarliestDate"
+  | "PickupEarliestTime"
+  | "PickupLastestDate"
+  | "PickupLatestTime"
+  | "ConsigneePersonName"
+  | "ConsigneeCompanyName"
+  | "ConsigneeAddress"
+  | "ConsigneePhoneNumber"
+  | "DeliveryEarliestDate"
+  | "DeliveryEarliestTime"
+  | "DeliveryLatestDate"
+  | "DeliveryLatestTime"
+  | "EstimatedColli"
+  | "ActualColli"
+  | "Status";
+
+export class DriversListSortingMap {
+  public static readonly map = {
+    NoSorting: { id: 0 },
+    DriverId: { id: 1 },
+    DriverName: { id: 2 },
+    DriverPhone: { id: 3 },
+    CompanyName: { id: 4 },
+    CompanyId: { id: 5 },
+    VehicleTypeID: { id: 6 },
+    DriverState: { id: 7 }
+  };
+
+  public constructor(status: keyof typeof DriversListSortingMap.map) {
+    this.slug = status;
+    Object.assign(this, DriversListSortingMap.map[status]);
+  }
+
+  public slug: keyof typeof DriversListSortingMap.map;
+  public id: number;
 }
 
 /**
@@ -160,12 +210,12 @@ export class DriverDispatchService {
    * Dispatch states are: Forecasts, pre-bookings, unassigned routes, and assigned routes.
    */
   public async fetchOverview(): Promise<void> {
-    this.fulfillees = [];
-    this.drivers = [];
-    this.hauliers = [];
-    this.fulfilleeFilters = [];
-    this.driverFilters = [];
-    this.haulierFilters = [];
+    // this.fulfillees = [];
+    // this.drivers = [];
+    // this.hauliers = [];
+    // this.fulfilleeFilters = [];
+    // this.driverFilters = [];
+    // this.haulierFilters = [];
     // const response = await fetch(
     //   BaseService.url("driverDispatch/", { routeSlug }),
     //   BaseService.defaultConfig()
@@ -228,20 +278,23 @@ export class DriverDispatchService {
   /**
    * Updates the total amount of slots in a Forecast
    */
-  public async updateForecast(
-    forecast: Forecast,
-    newTotalSlots: number
+  public async updateForecasts(
+    updatedForecasts: { forecast: Forecast; newTotalSlots: number }[]
   ): Promise<void> {
     const response = await fetch(
       BaseService.url("dispatch/forecast/update"),
       BaseService.defaultConfig({
-        id: forecast.id,
-        fulfilleeId: forecast.fulfilleeId,
-        date: forecast.date,
-        timePeriod: forecast.timeFrame,
-        startingAddress: forecast.startingAddress,
-        vehicleTypeId: forecast.vehicleType.id,
-        slots: newTotalSlots
+        forecasts: updatedForecasts.map(uf => {
+          return {
+            id: uf.forecast.id,
+            fulfilleeId: uf.forecast.fulfilleeId,
+            date: uf.forecast.date,
+            timePeriod: uf.forecast.timePeriod,
+            startingAddress: uf.forecast.startingAddress,
+            vehicleTypeId: uf.forecast.vehicleType.id,
+            slots: uf.newTotalSlots
+          };
+        })
       })
     );
 
@@ -256,16 +309,61 @@ export class DriverDispatchService {
   }
 
   /**
-   * Fetches a list of forecasts mathing the specific filters.
-   * @returns A promise that will be resolved with an array of forecasts.
+   * Creates a forecast with a specific set of parameters
    */
-  public async fetchForecasts(): Promise<void> {
+  public async createForecast(forecast: {
+    fulfilleeId: string;
+    date: DateTime;
+    timePeriod: DateTimeRange;
+    startingAddress: string;
+    vehicleTypeId: string;
+    slots: number;
+  }): Promise<void> {
     const response = await fetch(
-      BaseService.url("dispatch/forecast/list"),
+      BaseService.url("dispatch/forecast/create"),
+      BaseService.defaultConfig(forecast)
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+  }
+
+  /**
+   * Deletes a prebooking with a specific ID.
+   */
+  public async removePreBooking(ids: string[]): Promise<void> {
+    const response = await fetch(
+      BaseService.url("dispatch/prebooking/delete"),
       BaseService.defaultConfig({
-        startDate: this.startDateTime,
-        endDate: this.endDateTime,
-        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
+        prebookingIds: ids
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+  }
+
+  /**
+   * Fetches a Forecast with a specific ID.
+   * @returns A promise that will be resolved with Forecast.
+   */
+  public async fetchForecast(id: string): Promise<Forecast> {
+    const response = await fetch(
+      BaseService.url("dispatch/forecast/details"),
+      BaseService.defaultConfig({
+        id: id
       })
     );
 
@@ -280,23 +378,191 @@ export class DriverDispatchService {
 
     try {
       let responseJson = await response.json();
-      this.forecasts = responseJson.map(f => new Forecast(f));
+      return new Forecast(responseJson);
     } catch {
-      this.forecasts = [];
+      throw new Error(Localization.sharedValue("Error_General"));
     }
-    this.fetchOverview(); // Remove later
   }
 
   /**
-   * Fetches a list of pre-bookings mathing the specific filters.
-   * @returns A promise that will be resolved with an array of pre-bookings.
+   * Creates pre-bookings for drivers, linking them to a specific forecast
    */
-  public async fetchPreBookings(): Promise<void> {
+  public async createPreBookings(
+    forecast: Forecast,
+    drivers: Driver[]
+  ): Promise<void> {
+    const response = await fetch(
+      BaseService.url("dispatch/prebooking/create"),
+      BaseService.defaultConfig({
+        forecast: {
+          id: forecast.id,
+          fulfilleeId: forecast.fulfilleeId,
+          date: forecast.date,
+          timePeriod: forecast.timePeriod,
+          startingAddress: forecast.startingAddress,
+          vehicleTypeId: forecast.vehicleType.id,
+          slots: forecast.slots.total
+        },
+        driverIds: drivers.map(d => d.id)
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+  }
+
+  /**
+   * Fetches unassigned routes with specific IDs.
+   * @returns A promise that will be resolved with an array of routes.
+   */
+  public async fetchUnassignedRoutes(ids: string[]): Promise<Route[]> {
+    // const response = await fetch(
+    //   BaseService.url("dispatch/forecast/details"),
+    //   BaseService.defaultConfig({
+    //     ids: ids
+    //   })
+    // );
+
+    // if (response.status === 404) {
+    //   const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+    //   error.name = "not-found-error";
+    //   throw error;
+    // }
+    // if (!response.ok) {
+    //   throw new Error(Localization.sharedValue("Error_General"));
+    // }
+
+    var responseData: Route[] = [];
+    // try {
+    //   let responseJson = await response.json();
+    //   return responseJson.map(rj => new Route(rj));
+    // } catch {
+    //   throw new Error(Localization.sharedValue("Error_General"));
+    // }
+
+    return responseData;
+  }
+
+  /**
+   * Fetches a list of drivers matching the specific filters.
+   * @returns A promise that will be resolved with an array of drivers.
+   */
+  public async fetchDrivers(
+    filter: {
+      date: DateTime;
+      search: string;
+      fulfilleeId?: string;
+      position?: Position;
+      vehicleTypeId?: string;
+      period?: DateTimeRange;
+      driverIds?: string[];
+    },
+    sorting?: {
+      field: DriversListSortingMap;
+      direction: SortingDirection;
+    },
+    paging?: {
+      page: number;
+      pageSize: number;
+    }
+  ): Promise<{ drivers: Driver[]; totalCount: number }> {
+    const response = await fetch(
+      BaseService.url("drivers/query"),
+      BaseService.defaultConfig({
+        filter: filter,
+        sorting: sorting
+          ? {
+              field: sorting.field.id,
+              direction: new SortingDirectionMap(sorting.direction).id
+            }
+          : undefined,
+        paging: paging ? {} : undefined
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    try {
+      let responseJson = await response.json();
+      return {
+        drivers: responseJson.result.map(d => new Driver(d)),
+        totalCount: responseJson.totalCount
+      };
+    } catch {
+      return { drivers: [], totalCount: 0 };
+    }
+  }
+
+  /**
+   * Fetches a list of forecasts matching the specific filters.
+   */
+  public async fetchForecasts(
+    startDate?: DateTime,
+    endDate?: DateTime,
+    startTime?: DateTime,
+    endTime?: DateTime
+  ): Promise<Forecast[]> {
+    const response = await fetch(
+      BaseService.url("dispatch/forecast/list"),
+      BaseService.defaultConfig({
+        startDate: startDate ? startDate : this.startDateTime,
+        endDate: endDate ? endDate : this.endDateTime,
+        startTime: startTime ? startTime : this.startDateTime,
+        endTime: endTime ? endTime : this.endDateTime,
+        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    var responseData = [];
+    try {
+      let responseJson = await response.json();
+      responseData = responseJson.map(f => new Forecast(f));
+    } catch {
+      // Do something
+    }
+
+    this.fetchOverview(); // Remove later
+    return responseData;
+  }
+
+  /**
+   * Fetches a list of pre-bookings matching the specific filters.
+   */
+  public async fetchPreBookings(
+    startDate?: DateTime,
+    endDate?: DateTime,
+    startTime?: DateTime,
+    endTime?: DateTime
+  ): Promise<PreBooking[]> {
     const response = await fetch(
       BaseService.url("dispatch/prebooking/list"),
       BaseService.defaultConfig({
-        startDate: this.startDateTime,
-        endDate: this.endDateTime,
+        startDate: startDate ? startDate : this.startDateTime,
+        endDate: endDate ? endDate : this.endDateTime,
+        startTime: startTime ? startTime : this.startDateTime,
+        endTime: endTime ? endTime : this.endDateTime,
         fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id),
         fulfillerIds: this.haulierFilters.map(h => h.id),
         driverIds: this.driverFilters.map(d => d.id)
@@ -312,13 +578,48 @@ export class DriverDispatchService {
       throw new Error(Localization.sharedValue("Error_General"));
     }
 
+    var responseData = [];
     try {
       let responseJson = await response.json();
-      this.preBookings = responseJson.map(f => new PreBooking(f));
+      responseData = responseJson.map(f => new PreBooking(f));
     } catch {
-      this.preBookings = [];
+      // DO something
     }
+
     this.fetchOverview(); // Remove later
+    return responseData;
+  }
+
+  /**
+   * Fetches a list of pre-bookings matching the specific ids.
+   */
+  public async fetchPreBookingsFromIds(ids: string[]): Promise<PreBooking[]> {
+    const response = await fetch(
+      BaseService.url("dispatch/prebooking/list"),
+      BaseService.defaultConfig({
+        ids: ids
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    var responseData = [];
+    try {
+      let responseJson = await response.json();
+      responseData = responseJson.map(f => new PreBooking(f));
+    } catch {
+      // DO something
+    }
+
+    this.fetchOverview(); // Remove later
+    return responseData;
   }
 }
 

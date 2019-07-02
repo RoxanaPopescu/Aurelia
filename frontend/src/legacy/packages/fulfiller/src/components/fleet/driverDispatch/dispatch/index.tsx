@@ -3,8 +3,8 @@ import "./index.scss";
 import Localization from "shared/src/localization";
 import { observer } from "mobx-react";
 import Filters from "../components/filters/filters";
-import Table from "../components/table/table";
-import Header from "../components/header/header";
+import Table from "../components/table";
+import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
@@ -12,6 +12,7 @@ import { PreBooking } from "../models/preBooking";
 import PreBookingDialog from "../components/preBookingDialog";
 import Dropdown from "./components/dropdown";
 import { Button, ButtonType } from "shared/src/webKit";
+import { Link } from "react-router-dom";
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -36,10 +37,6 @@ export default class DispatchComponent extends React.Component<Props, State> {
   }
 
   componentWillMount() {
-    this.handleStateChange();
-  }
-
-  componentWillUpdate() {
     this.handleStateChange();
   }
 
@@ -83,11 +80,11 @@ export default class DispatchComponent extends React.Component<Props, State> {
     if (
       driverDispatchService.state.value === DispatchState.map.forecast.value
     ) {
-      await driverDispatchService.fetchForecasts();
+      driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
     } else if (
       driverDispatchService.state.value === DispatchState.map.preBooking.value
     ) {
-      await driverDispatchService.fetchPreBookings();
+      driverDispatchService.preBookings = await driverDispatchService.fetchPreBookings();
     }
     // TODO: Assigned and unassigned routes
   }
@@ -99,13 +96,18 @@ export default class DispatchComponent extends React.Component<Props, State> {
       return (
         <Dropdown
           removePreBookingDrivers={() => this.removePreBookingDrivers()}
+          assignPreBookingDrivers={() => this.assignPreBookingDrivers()}
         />
       );
     } else if (
       driverDispatchService.state.slug ===
       DispatchState.map.unassignedRoute.slug
     ) {
-      return <Button type={ButtonType.Light}>Match route</Button>;
+      return (
+        <Link to="">
+          <Button type={ButtonType.Light}>Match route</Button>
+        </Link>
+      );
     } else if (
       driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
     ) {
@@ -121,11 +123,26 @@ export default class DispatchComponent extends React.Component<Props, State> {
       if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
         array.push(p);
       }
-
-      this.setState({
-        preBookingDialog: { preBookings: array, state: "remove" }
-      });
     });
+
+    this.setState({
+      preBookingDialog: { preBookings: array, state: "remove" }
+    });
+  }
+
+  private assignPreBookingDrivers() {
+    let array: PreBooking[] = [];
+    driverDispatchService.preBookings.forEach((p, i) => {
+      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+        array.push(p);
+      }
+    });
+
+    this.props.history.push(
+      FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
+        .replace(":ids", array.map(p => p.id).join(","))
+        .replace(":origin", "pre-bookings")
+    );
   }
 
   render() {
@@ -137,6 +154,17 @@ export default class DispatchComponent extends React.Component<Props, State> {
               this.setState({ preBookingDialog: undefined });
             }}
             data={this.state.preBookingDialog}
+            onRemove={async preBookings => {
+              try {
+                await driverDispatchService.removePreBooking(
+                  preBookings.map(p => p.id)
+                );
+                this.fetchData();
+                return true;
+              } catch {
+                return false;
+              }
+            }}
           />
         )}
         <Filters
@@ -148,6 +176,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
                 state.slug
               )
             );
+            this.componentWillMount();
           }}
           onFilterChange={() => this.fetchData()}
           onTopFilterChange={() => {

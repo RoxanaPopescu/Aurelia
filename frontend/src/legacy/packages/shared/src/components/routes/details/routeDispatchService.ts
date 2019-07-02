@@ -38,8 +38,7 @@ export class RouteDispatchService {
 
     const data = await response.json();
 
-    return data.map(f => new DriverInfo(f))
-      .filter(driverInfo => driverInfo.vehicleTypes.length > 0);
+    return data.map(f => new DriverInfo(f));
   }
 
   public async assignDriver(route: Route, driver: Driver): Promise<void> {

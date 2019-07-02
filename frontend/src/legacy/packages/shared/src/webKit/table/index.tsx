@@ -18,6 +18,7 @@ export interface TableProps {
   // tslint:disable-next-line:no-any
   data: { headers: Header[]; rows: Row[][] };
   generateURL?(index: number): string | undefined;
+  accordionRows?(rowIndex?: number): JSX.Element;
   totalRowsText?: string;
   highlightedRowIndexes?: number[];
   disabledRowIndexes?: number[];
@@ -43,6 +44,7 @@ export interface TableState {
   sorting?: { key: any; direction: SortingDirection };
   hoveredRowIndex?: number;
   hoveredColumnRow?: number;
+  accordionContent?: JSX.Element;
 }
 
 export class TableComponent extends React.Component<TableProps, TableState> {
@@ -260,6 +262,23 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                   }}
                 >
                   {column ? column : columnElement ? columnElement : "--"}
+                  {this.props.accordionRows &&
+                    columnIndex === row.length - 1 && (
+                      <div
+                        onClick={() => {
+                          var content: JSX.Element | undefined = undefined;
+                          if (!this.state.accordionContent) {
+                            content = this.props.accordionRows!(index);
+                          } else {
+                            this.props.accordionRows!(undefined);
+                          }
+                          this.setState({ accordionContent: content });
+                        }}
+                        className="c-gridTable-accordionToggle"
+                      >
+                        <div />
+                      </div>
+                    )}
                 </div>
               );
             }
@@ -279,10 +298,14 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           ) {
             rowClassName += " disabledRow";
           }
+          if (this.state.accordionContent) {
+            rowClassName += " accordionOpen";
+          }
 
           rowsArray.push(
             <div key={row.toString() + index} className={rowClassName}>
               {rowArray}
+              {this.renderAccordionContent()}
             </div>
           );
         });
@@ -290,6 +313,18 @@ export class TableComponent extends React.Component<TableProps, TableState> {
     }
 
     return rowsArray;
+  }
+
+  renderAccordionContent() {
+    if (this.state.accordionContent) {
+      return (
+        <div className="c-gridTable-accordionContent">
+          {this.state.accordionContent}
+        </div>
+      );
+    } else {
+      return <></>;
+    }
   }
 
   renderNoResults() {

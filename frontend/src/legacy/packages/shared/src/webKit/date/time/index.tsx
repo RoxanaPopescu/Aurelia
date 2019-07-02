@@ -53,6 +53,12 @@ export default class TimeComponent extends React.Component<Props, State> {
     };
   }
 
+  componentWillReceiveProps(props: Props) {
+    this.setState({
+      error: props.error
+    });
+  }
+
   onChangeDate(value: Moment.Moment) {
     this.setState({
       date: value

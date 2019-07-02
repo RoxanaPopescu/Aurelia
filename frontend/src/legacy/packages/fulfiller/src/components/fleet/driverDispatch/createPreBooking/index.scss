@@ -1,0 +1,67 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-createPreBooking-container {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 19rem;
+  margin-bottom: 0;
+
+  .pageHeader {
+    border: 0;
+
+    .pageHeader-toolbar {
+      margin: 0;
+    }
+
+    .pageHeader-actions {
+      flex-direction: column;
+      align-items: unset;
+      justify-content: unset;
+
+      > * {
+        &:not(:first-child) {
+          margin: 9rem 0 0;
+        }
+      }
+
+      .c-createPreBooking-search {
+        align-self: flex-start;
+        width: 370px;
+        margin-bottom: 5rem;
+      }
+    }
+  }
+}
+
+.c-createPreBooking-forecastInfo {
+  display: flex;
+
+  .c-createPreBooking-infoContainer {
+    display: flex;
+
+    &:not(:last-child) {
+      margin-right: 8rem;
+    }
+  }
+}
+
+.c-createPreBooking-saveContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 19rem;
+  padding: 0 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid var(--colorNeutralLight);
+
+  > * {
+    &:not(:last-child) {
+      margin-right: 5rem;
+    }
+  }
+}

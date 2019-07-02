@@ -13,7 +13,7 @@ export class Forecast {
     this.fulfilleeId = data.fulfillee.id;
     this.fulfilleeName = data.fulfillee.name;
     this.date = DateTime.fromISO(data.date);
-    this.timeFrame = new DateTimeRange(data.timePeriod, {
+    this.timePeriod = new DateTimeRange(data.timePeriod, {
       setZone: true
     });
     this.startingAddress = data.startingAddress;
@@ -45,14 +45,14 @@ export class Forecast {
   public readonly fulfilleeName: string;
 
   /**
-   * The status of the collo.
+   * The date of the forecast.
    */
   public readonly date: DateTime;
 
   /**
    * The time frame related to this forecast
    */
-  public readonly timeFrame: DateTimeRange;
+  public readonly timePeriod: DateTimeRange;
 
   /**
    * The address for this forecast's starting position

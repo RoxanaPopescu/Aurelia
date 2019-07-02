@@ -3,3 +3,18 @@
 
 # Because this contains dependencies installed by NPM.
 /**/node_modules/
+
+# Because we don't need those files from the legacy packages.
+# Note that if any of those files exist, they should be deleted.
+/packages/fulfiller/public
+/packages/fulfiller/dockerfile
+/packages/fulfiller/package.json
+/packages/fulfiller/tsconfig.json
+/packages/fulfiller/tsconfig.test.json
+/packages/fulfiller/tslint.json
+/packages/fulfiller/test
+/packages/shared/README.md
+/packages/shared/package.json
+/packages/shared/tsconfig.json
+/packages/shared/tsconfig.test.json
+/packages/shared/tslint.json

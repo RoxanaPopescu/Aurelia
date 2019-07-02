@@ -28,7 +28,9 @@ interface Props {
 }
 
 @observer
-export default class RoutePlanningSettingsComponent extends React.Component<Props> {
+export default class RoutePlanningSettingsComponent extends React.Component<
+  Props
+> {
   private store = new RoutePlanningSettingsStore();
 
   @observable
@@ -50,9 +52,7 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
 
   render() {
     if (this.store.loading) {
-      return (
-        <LoadingInline/>
-      );
+      return <LoadingInline />;
     }
 
     if (this.store.error) {
@@ -73,7 +73,12 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Ruteplanlægning", href: FulfillerSubPage.path(FulfillerSubPage.RoutePlanningSettingList) },
+            {
+              title: "Ruteplanlægning",
+              href: FulfillerSubPage.path(
+                FulfillerSubPage.RoutePlanningSettingList
+              )
+            },
             { title: "Indstillinger" }
           ]}
           tabs={[
@@ -95,13 +100,9 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
 
         <PageContentComponent>
           <div className="c-routePlanning-settings-details-container">
+            {this.tab === "settings" && <GeneralComponent store={this.store} />}
 
-            {this.tab === "settings" &&
-            <GeneralComponent store={this.store} />}
-
-            {this.tab === "areas" &&
-            <ConditionsComponent store={this.store} />}
-
+            {this.tab === "areas" && <ConditionsComponent store={this.store} />}
           </div>
         </PageContentComponent>
 
@@ -126,7 +127,6 @@ export default class RoutePlanningSettingsComponent extends React.Component<Prop
             {this.store.toastMessage}
           </Toast>
         )}
-
       </>
     );
   }

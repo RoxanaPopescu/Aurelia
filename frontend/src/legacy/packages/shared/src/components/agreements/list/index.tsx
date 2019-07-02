@@ -1,5 +1,10 @@
 import React from "react";
-import { TableComponent, ButtonSize, ButtonType, ButtonAdd } from "shared/src/webKit";
+import {
+  TableComponent,
+  ButtonSize,
+  ButtonType,
+  ButtonAdd
+} from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { AgreementsListStore } from "./store";
 import { Outfit } from "shared/src/model/logistics/outfit";
@@ -16,7 +21,7 @@ export const store = new AgreementsListStore();
 
 @observer
 export default class AgreementsListComponent extends React.Component {
- @observable invitingFulfiller = false;
+  @observable invitingFulfiller = false;
 
   // tslint:disable-next-line:no-any
   constructor(props: any) {
@@ -69,13 +74,13 @@ export default class AgreementsListComponent extends React.Component {
     return (
       <React.Fragment>
         <PageHeaderComponent path={[{ title: "Aftaler" }]}>
-        <ButtonAdd
+          <ButtonAdd
             size={ButtonSize.Medium}
             type={ButtonType.Light}
-            onClick={() => this.invitingFulfiller = true}
-        >
+            onClick={() => (this.invitingFulfiller = true)}
+          >
             Inviter fulfiller/transportør
-        </ButtonAdd>
+          </ButtonAdd>
         </PageHeaderComponent>
 
         <PageContentComponent>
@@ -88,23 +93,19 @@ export default class AgreementsListComponent extends React.Component {
             canSelectRow={() => false}
           />
         </PageContentComponent>
-      
+
         {this.invitingFulfiller && (
           <Dialog
-            title={
-              "Inviter og opret fulfiller"
-            }
+            title={"Inviter og opret fulfiller"}
             onClose={() => {
               this.invitingFulfiller = false;
             }}
           >
-            <InviteFulfiller 
-              added={() => 
-              {
+            <InviteFulfiller
+              added={() => {
                 this.invitingFulfiller = false;
                 this.fetch();
-              }
-            } 
+              }}
             />
           </Dialog>
         )}
@@ -112,5 +113,3 @@ export default class AgreementsListComponent extends React.Component {
     );
   }
 }
-
-

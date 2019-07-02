@@ -26,13 +26,14 @@ export class InviteFulfiller extends React.Component<Props> {
       this.firstName!,
       this.lastName!,
       this.email!
-    ).then(() => {
+    )
+      .then(() => {
         this.props.added();
       })
       .catch(error => {
         window.alert("Der skete desværre en fejl: " + error.message);
         this.loading = false;
-    });
+      });
   }
 
   canCreate(): boolean {
@@ -41,15 +42,14 @@ export class InviteFulfiller extends React.Component<Props> {
     }
 
     if (
-      !this.publicId || 
-      !this.companyName || 
-      !this.firstName || 
-      !this.lastName || 
+      !this.publicId ||
+      !this.companyName ||
+      !this.firstName ||
+      !this.lastName ||
       !this.email
     ) {
       return false;
     }
-
 
     return true;
   }
@@ -63,8 +63,8 @@ export class InviteFulfiller extends React.Component<Props> {
           placeholder="Indskriv firmanavn"
           onChange={value => {
             this.companyName = value;
-            
-            let converted = value.replace(/[^a-zA-Z ]/g, "").replace(/ /g,"-");
+
+            let converted = value.replace(/[^a-zA-Z ]/g, "").replace(/ /g, "-");
             this.publicId = converted;
           }}
           disabled={this.loading}
@@ -74,7 +74,7 @@ export class InviteFulfiller extends React.Component<Props> {
           size={"medium"}
           headline="Brugerens fornavn"
           placeholder="Fornavn"
-          onChange={value => this.firstName = value}
+          onChange={value => (this.firstName = value)}
           disabled={this.loading}
           value={this.firstName}
         />
@@ -82,7 +82,7 @@ export class InviteFulfiller extends React.Component<Props> {
           size={"medium"}
           headline="Brugerens efternavn"
           placeholder="Efternavn"
-          onChange={value => this.lastName = value}
+          onChange={value => (this.lastName = value)}
           disabled={this.loading}
           value={this.lastName}
         />
@@ -90,7 +90,7 @@ export class InviteFulfiller extends React.Component<Props> {
           size={"medium"}
           headline="Brugerens email"
           placeholder="Email"
-          onChange={value => this.email = value}
+          onChange={value => (this.email = value)}
           disabled={this.loading}
           value={this.email}
         />
@@ -98,18 +98,18 @@ export class InviteFulfiller extends React.Component<Props> {
           size={"medium"}
           headline="Fulfuller public id (kan være deres navn)"
           placeholder="Public id"
-          onChange={value => this.publicId = value}
+          onChange={value => (this.publicId = value)}
           disabled={this.loading}
           value={this.publicId}
         />
         <Button
-            type={ButtonType.Action}
-            size={ButtonSize.Medium}
-            disabled={!this.canCreate()}
-            loading={this.loading}
-            onClick={() => this.create()}
+          type={ButtonType.Action}
+          size={ButtonSize.Medium}
+          disabled={!this.canCreate()}
+          loading={this.loading}
+          onClick={() => this.create()}
         >
-           Inviter
+          Inviter
         </Button>
       </div>
     );

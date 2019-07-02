@@ -19,6 +19,8 @@ import SimulationStartComponent from "../routePlanning/simulation/components/sta
 import SimulationResultComponent from "../routePlanning/simulation/components/result";
 import DriverDispositionComponent from "../fleet/driverDispatch/dispatch";
 import ForecastsComponent from "../fleet/driverDispatch/forecasts";
+import CreatePreBookingComponent from "../fleet/driverDispatch/createPreBooking";
+import AssignRoutesComponent from "../fleet/driverDispatch/assignRoutes";
 
 export type FulfillerPageType =
   | "RoutePlanning"
@@ -142,6 +144,8 @@ export class FulfillerNavigationPage {
       case "FleetManagement":
         return [
           FulfillerSubPage.Forecasts,
+          FulfillerSubPage.AssignRoutes,
+          FulfillerSubPage.CreatePreBooking,
           FulfillerSubPage.DriverDispatch,
           FulfillerSubPage.DriverList,
           FulfillerSubPage.DriverCreate,
@@ -169,6 +173,8 @@ export enum FulfillerSubPage {
   DepotCreate,
   DepotDetails,
   Forecasts,
+  AssignRoutes,
+  CreatePreBooking,
   DriverDispatch,
   DriverList,
   DriverCreate,
@@ -184,7 +190,9 @@ export namespace FulfillerSubPage {
         page === FulfillerSubPage.OrderGroupDetails ||
         page === FulfillerSubPage.OrderGroupCreate ||
         page === FulfillerSubPage.DriverDispatch ||
-        page === FulfillerSubPage.Forecasts)
+        page === FulfillerSubPage.Forecasts ||
+        page === FulfillerSubPage.CreatePreBooking ||
+        page === FulfillerSubPage.AssignRoutes)
     ) {
       return false;
     }
@@ -222,6 +230,10 @@ export namespace FulfillerSubPage {
       case FulfillerSubPage.DepotCreate:
         return undefined; // return Localization.operationsValue("Menu_RoutePlanning_Depots_Create");
       case FulfillerSubPage.DepotDetails:
+        return undefined;
+      case FulfillerSubPage.CreatePreBooking:
+        return undefined;
+      case FulfillerSubPage.AssignRoutes:
         return undefined;
       case FulfillerSubPage.Forecasts:
         return "Forecasts";
@@ -273,8 +285,12 @@ export namespace FulfillerSubPage {
         return DepotsDetailsComponent;
       case FulfillerSubPage.DriverDispatch:
         return DriverDispositionComponent;
+      case FulfillerSubPage.CreatePreBooking:
+        return CreatePreBookingComponent;
       case FulfillerSubPage.Forecasts:
         return ForecastsComponent;
+      case FulfillerSubPage.AssignRoutes:
+        return AssignRoutesComponent;
       case FulfillerSubPage.DriverList:
         return DriverListComponent;
       case FulfillerSubPage.DriverCreate:
@@ -337,6 +353,16 @@ export namespace FulfillerSubPage {
         return FulfillerNavigationPage.path("Depots") + "/create";
       case FulfillerSubPage.DepotDetails:
         return FulfillerNavigationPage.path("Depots") + "/details/:id";
+      case FulfillerSubPage.CreatePreBooking:
+        return (
+          FulfillerNavigationPage.path("FleetManagement") +
+          "/create-prebooking/:id"
+        );
+      case FulfillerSubPage.AssignRoutes:
+        return (
+          FulfillerNavigationPage.path("FleetManagement") +
+          "/assign-routes/:origin/:ids"
+        );
       case FulfillerSubPage.Forecasts:
         return FulfillerNavigationPage.path("FleetManagement") + "/forecasts";
       case FulfillerSubPage.DriverDispatch:

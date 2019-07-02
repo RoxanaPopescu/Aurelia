@@ -95,6 +95,7 @@ export default class UserComponent extends React.Component<Props> {
       })
       .catch(error => {
         userStore.loading = false;
+        userStore.error = error.message;
       });
     }
   }
@@ -112,6 +113,7 @@ export default class UserComponent extends React.Component<Props> {
       })
       .catch(error => {
         userStore.loading = false;
+        userStore.error = error.message;
       });
     }
   }
@@ -214,7 +216,7 @@ export default class UserComponent extends React.Component<Props> {
               onClick={() => this.requestPasswordReset()}
               disabled={userStore.loading}
             >
-              Nulstil bruger
+              Nulstil password
             </Button> 
           }
         </PageHeaderComponent>
@@ -317,10 +319,9 @@ export default class UserComponent extends React.Component<Props> {
               remove={() => (userStore.toastMessage = undefined)}
               type={ToastType.Success}
             >
-              userStore.toastMessage
-              )}
+              {userStore.toastMessage}
             </Toast>
-  }
+          }
       </>
     );
   }

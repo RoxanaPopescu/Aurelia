@@ -11,6 +11,7 @@ $height: 24px;
     height: $height;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     cursor: pointer;
 
     input {
@@ -21,8 +22,11 @@ $height: 24px;
       margin-bottom: 15px;
     }
 
+    span {
+      margin-left: 10px;
+    }
+
     .radioButton {
-      margin-right: 10px;
       height: $height;
       width: $height;
       border: 1px solid var(--colorNeutralLight);

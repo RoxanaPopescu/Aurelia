@@ -1,0 +1,25 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-assignRoutes-routes {
+  .c-createPreBooking-search {
+    width: 90rem;
+    margin: 5rem 0;
+  }
+
+  .c-assignRoutes-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .c-assignRoutes-accordion {
+    display: flex;
+
+    .c-assignRoutes-accordionInfo {
+      &:not(:last-child) {
+        margin-right: 25rem;
+      }
+    }
+  }
+}

@@ -8,16 +8,14 @@
   left: 0;
   right: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.8);
+  overflow: overlay;
+  padding: 20rem 0;
 }
 
 .c-dialog {
-  min-width: 850px;
   border-radius: var(--border-radius-medium);
-  overflow: hidden;
-  margin-top: -25rem;
 }
 
 .c-dialog--disabled {
@@ -52,8 +50,6 @@
 .c-dialog-content {
   background-color: white;
   padding: 11rem 8rem;
-  max-height: 70vh;
-  overflow-y: auto;
 }
 
 .c-dialog-action {

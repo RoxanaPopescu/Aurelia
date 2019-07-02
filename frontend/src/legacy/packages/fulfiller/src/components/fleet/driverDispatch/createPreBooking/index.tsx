@@ -1,0 +1,346 @@
+import React from "react";
+import "./index.scss";
+import { observer } from "mobx-react";
+import H from "history";
+import {
+  TableComponent,
+  Button,
+  InputCheckbox,
+  Input
+} from "shared/src/webKit";
+import { Forecast } from "../models/forecast";
+import { PageHeaderComponent } from "../../../../../../shared/src/components/pageHeader/index";
+import { FulfillerSubPage } from "../../../navigation/page";
+import InfoBox from "../components/infoBox";
+import { OverviewData } from "../models/overviewData";
+import Localization from "shared/src/localization";
+import { driverDispatchService } from "../driverDispatchService";
+import { Driver } from "shared/src/model/logistics/order/driver";
+import { PageContentComponent } from "shared/src/components/pageContent";
+import {
+  ButtonType,
+  ButtonSize
+} from "../../../../../../shared/src/webKit/button/index";
+import { Link } from "react-router-dom";
+
+interface Props {
+  // tslint:disable-next-line:no-any
+  match: any;
+  history: H.History;
+}
+
+interface State {
+  id?: string;
+  drivers: Driver[];
+  forecast?: Forecast;
+  search?: string;
+  checkedDrivers: Driver[];
+}
+
+@observer
+export default class CreatePreBookingComponent extends React.Component<
+  Props,
+  State
+> {
+  constructor(props: Props) {
+    super(props);
+    document.title = "Assign drivers to forecast";
+
+    this.state = {
+      id: this.props.match.params.id,
+      drivers: [],
+      checkedDrivers: []
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  private async fetchData(): Promise<void> {
+    if (this.state.id) {
+      var forecast = await driverDispatchService.fetchForecast(this.state.id);
+      var driverResult: { drivers: Driver[]; totalCount: number } = {
+        drivers: [],
+        totalCount: 0
+      };
+      if (forecast) {
+        driverResult = await this.fetchDrivers(forecast);
+      }
+
+      this.setState({
+        drivers: driverResult.drivers,
+        forecast: forecast
+      });
+    }
+  }
+
+  private async fetchDrivers(
+    forecast: Forecast
+  ): Promise<{ drivers: Driver[]; totalCount: number }> {
+    return await driverDispatchService.fetchDrivers({
+      date: forecast.date,
+      search: this.state.search ? this.state.search : "",
+      driverIds: []
+    });
+  }
+
+  private async createPreBookings(saveAndClose?: boolean) {
+    if (this.state.forecast && this.state.checkedDrivers.length > 0) {
+      await driverDispatchService.createPreBookings(
+        this.state.forecast,
+        this.state.checkedDrivers
+      );
+
+      if (saveAndClose) {
+        this.props.history.push(
+          FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
+        );
+      } else {
+        this.setState({
+          checkedDrivers: [],
+          drivers: [],
+          forecast: undefined
+        });
+
+        this.fetchData();
+      }
+    }
+  }
+
+  private get infoBoxData() {
+    return [
+      new OverviewData(
+        "Total slots",
+        this.state.forecast ? this.state.forecast.slots.total : "--"
+      ),
+      new OverviewData(
+        "Unassigned slots",
+        this.state.forecast
+          ? `${this.state.forecast.slots.total -
+              this.state.forecast.slots.assigned}`
+          : "--"
+      ),
+      new OverviewData(
+        "Selected drivers",
+        `${this.state.checkedDrivers.length}`
+      )
+    ];
+  }
+
+  private renderForecastInfo(forecast?: Forecast) {
+    return (
+      <div className="c-createPreBooking-forecastInfo">
+        <div className="c-createPreBooking-infoContainer">
+          <img
+            className="c-driverDispatch-preBookingDialog-icon"
+            src={require("../assets/icons/company.svg")}
+          />
+          <h4>{`${forecast ? forecast.fulfilleeName : "--"}, ${
+            forecast ? forecast.startingAddress : "--"
+          }`}</h4>
+        </div>
+        <div className="c-createPreBooking-infoContainer">
+          <img
+            className="c-driverDispatch-preBookingDialog-icon"
+            src={require("../assets/icons/calendar.svg")}
+          />
+          <h4>{forecast ? Localization.formatDate(forecast.date) : "--"}</h4>
+        </div>
+        <div className="c-createPreBooking-infoContainer">
+          <img
+            className="c-driverDispatch-preBookingDialog-icon"
+            src={require("../assets/icons/watch.svg")}
+          />
+          <h4>
+            {forecast
+              ? Localization.formatDateRange(forecast.timePeriod)
+              : "--"}
+          </h4>
+        </div>
+        <div className="c-createPreBooking-infoContainer">
+          <img
+            className="c-driverDispatch-preBookingDialog-icon"
+            src={require("../assets/icons/van.svg")}
+          />
+          <h4>{forecast ? forecast.vehicleType.name : "--"}</h4>
+        </div>
+      </div>
+    );
+  }
+
+  private getHeaders() {
+    return [
+      {
+        key: "select",
+        content: (
+          <InputCheckbox
+            readonly={
+              this.state.forecast &&
+              this.state.forecast.slots.total -
+                this.state.forecast.slots.assigned <=
+                this.state.drivers.length
+            }
+            checked={
+              this.state.drivers.length !== 0 &&
+              this.state.checkedDrivers.length === this.state.drivers.length
+            }
+            onChange={checked => {
+              var checkedRows: Driver[] = [];
+              if (checked) {
+                this.state.drivers.forEach(d => {
+                  checkedRows.push(d);
+                });
+              }
+
+              this.setState({
+                checkedDrivers: checkedRows
+              });
+            }}
+          />
+        )
+      },
+      { key: "name", content: "Name" },
+      { key: "phone", content: "Phone" },
+      { key: "driver-id", content: "id" },
+      { key: "haulier", content: "Haulier" }
+    ];
+  }
+
+  private getRows() {
+    return this.state.drivers.map(d => {
+      return [
+        // tslint:disable-next-line: jsx-wrap-multiline
+        <InputCheckbox
+          checked={
+            this.state.checkedDrivers.filter(cd => cd.id === d.id).length > 0
+          }
+          onChange={checked => {
+            var checkedRows = this.state.checkedDrivers;
+            var unassignedSlots =
+              this.state.forecast!.slots.total -
+              this.state.forecast!.slots.assigned;
+            if (
+              checked &&
+              this.state.checkedDrivers.length < unassignedSlots &&
+              this.state.checkedDrivers.filter(cd => cd.id === d.id).length ===
+                0
+            ) {
+              checkedRows.push(d);
+            } else {
+              checkedRows = checkedRows.filter(cr => cr.id !== d.id);
+            }
+            this.setState({
+              checkedDrivers: checkedRows
+            });
+          }}
+          key={d.id}
+        />,
+        // tslint:disable-next-line: jsx-wrap-multiline
+        <Link
+          key={d.id}
+          to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
+            ":id",
+            d.id
+          )}
+        >
+          {d.formattedName}
+        </Link>,
+        d.phoneNumber.number,
+        d.id,
+        d.company ? `${d.company.name} (${d.company.id})` : "--"
+      ];
+    });
+  }
+
+  private onSearchChange(query: string | undefined) {
+    if (this.state.forecast) {
+      this.setState({
+        search: query
+      });
+      this.fetchDrivers(this.state.forecast);
+    }
+  }
+
+  private get disabledRows(): number[] {
+    let array: number[] = [];
+    if (this.state.forecast) {
+      if (
+        this.state.forecast.slots.total - this.state.forecast.slots.assigned ===
+        this.state.checkedDrivers.length
+      ) {
+        array = this.state.drivers
+          .map((d, i) => i)
+          .filter(
+            d => !this.state.checkedDrivers.map((cd, i) => i).includes(d)
+          );
+      }
+    }
+
+    return array;
+  }
+
+  render() {
+    return (
+      <div className="c-createPreBooking-container">
+        <PageHeaderComponent
+          path={[
+            {
+              title: "Disponering",
+              href: FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
+            },
+            { title: "Assign drivers to forecast" }
+          ]}
+        >
+          {this.renderForecastInfo(this.state.forecast)}
+          <InfoBox data={this.infoBoxData} />
+          <Input
+            className="c-createPreBooking-search"
+            headline="Search for specific drivers"
+            placeholder={Localization.sharedValue("Search_TypeToSearch")}
+            onChange={(value, event) => {
+              if (event) {
+                event.persist();
+              }
+
+              this.onSearchChange(value);
+            }}
+            value={this.state.search}
+          />
+        </PageHeaderComponent>
+        <PageContentComponent className="c-createPreBooking-content">
+          <TableComponent
+            newVersion={true}
+            data={{
+              headers: this.getHeaders(),
+              rows: this.getRows()
+            }}
+            gridTemplateColumns="min-content auto auto auto auto"
+            highlightedRowIndexes={this.state.checkedDrivers.map((d, i) => i)}
+            disabledRowIndexes={this.disabledRows}
+          />
+        </PageContentComponent>
+        <div className="c-createPreBooking-saveContainer">
+          <Button
+            type={ButtonType.Light}
+            size={ButtonSize.Medium}
+            onClick={() => {
+              this.createPreBookings();
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            type={ButtonType.Action}
+            size={ButtonSize.Medium}
+            onClick={() => {
+              this.createPreBookings(true);
+            }}
+          >
+            Save and close
+          </Button>
+        </div>
+      </div>
+    );
+  }
+}

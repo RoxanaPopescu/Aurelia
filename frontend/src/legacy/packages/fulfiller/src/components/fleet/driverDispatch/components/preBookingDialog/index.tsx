@@ -10,9 +10,12 @@ import {
   ButtonSize
 } from "../../../../../../../shared/src/webKit/button/index";
 import Localization from "shared/src/localization";
+import { Link } from "react-router-dom";
+import { FulfillerSubPage } from "../../../../navigation/page";
 
 interface Props {
   data: { preBookings: PreBooking[]; state?: "actions" | "change" | "remove" };
+  onRemove(preBookings: PreBooking[]): Promise<boolean>;
   onClose();
 }
 
@@ -53,7 +56,10 @@ export default class extends React.Component<Props, State> {
           type={ButtonType.Light}
           size={ButtonSize.Medium}
           onClick={() => {
-            // console.log(this.state.selectedPreBookings);
+            var success = this.props.onRemove(this.state.selectedPreBookings);
+            if (success) {
+              this.props.onClose();
+            }
           }}
         >
           Confirm
@@ -84,13 +90,19 @@ export default class extends React.Component<Props, State> {
           Remove driver
         </Button>,
         // tslint:disable-next-line: jsx-wrap-multiline
-        <Button
+        <Link
           key="match-with-route"
-          type={ButtonType.Light}
-          size={ButtonSize.Medium}
+          to={FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
+            .replace(
+              ":ids",
+              this.state.selectedPreBookings.map(p => p.id).join(",")
+            )
+            .replace(":origin", "pre-bookings")}
         >
-          Match with a route
-        </Button>
+          <Button type={ButtonType.Light} size={ButtonSize.Medium}>
+            Match with a route
+          </Button>
+        </Link>
       ];
     }
   }
@@ -101,28 +113,28 @@ export default class extends React.Component<Props, State> {
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("./assets/icons/company.svg")}
+            src={require("../../assets/icons/company.svg")}
           />
           {preBooking.fulfilleeName}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("./assets/icons/calendar.svg")}
+            src={require("../../assets/icons/calendar.svg")}
           />
           {preBooking.date.toLocaleString(DateTime.DATE_SHORT)}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("./assets/icons/watch.svg")}
+            src={require("../../assets/icons/watch.svg")}
           />
           {`${Localization.formatTimeRange(preBooking.timeFrame)}`}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("./assets/icons/van.svg")}
+            src={require("../../assets/icons/van.svg")}
           />
           {preBooking.vehicleType.name}
         </h4>
@@ -144,7 +156,7 @@ export default class extends React.Component<Props, State> {
         <div className="c-driverDispatch-preBookingDialog-infobox">
           <h4 className="font-heading">Driver</h4>
           <h4>{preBooking.driver.formattedName}</h4>
-          <h4>{preBooking.driver.phoneNumber}</h4>
+          <h4>{preBooking.driver.phoneNumber.number}</h4>
         </div>
       </div>
     );
@@ -153,7 +165,7 @@ export default class extends React.Component<Props, State> {
   private getRemoveHeadline() {
     if (this.state.selectedPreBookings.length === 1) {
       return `You are about to remove ${
-        this.state.selectedPreBookings[0].driver
+        this.state.selectedPreBookings[0].driver.formattedName
       }'s pre-booking`;
     } else {
       return `You are about to remove ${
@@ -176,7 +188,10 @@ export default class extends React.Component<Props, State> {
         key: "select",
         content: (
           <InputCheckbox
-            checked={true}
+            checked={
+              this.state.selectedPreBookings.length ===
+              this.props.data.preBookings.length
+            }
             onChange={checked => {
               var checkedRows: PreBooking[] = [];
               if (checked) {
@@ -201,7 +216,10 @@ export default class extends React.Component<Props, State> {
       return [
         // tslint:disable-next-line: jsx-wrap-multiline
         <InputCheckbox
-          checked={true}
+          checked={
+            this.state.selectedPreBookings.filter(sp => sp.id === p.id).length >
+            0
+          }
           onChange={checked => {
             var checkedRows = this.state.selectedPreBookings;
             if (checked) {

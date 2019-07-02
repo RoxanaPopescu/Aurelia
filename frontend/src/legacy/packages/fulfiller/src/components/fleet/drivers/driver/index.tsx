@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { RouteComponentProps } from "react-router";
 import Localization from "shared/src/localization";
-import { TabBarComponent, ErrorInline } from "shared/src/webKit";
+import { ErrorInline } from "shared/src/webKit";
 import { DriverService } from "./services/driverService";
 import { VehicleService } from "./services/vehicleService";
 import { DriverProfile } from "./components/driverProfile/driverProfile";
@@ -25,7 +25,6 @@ export default class DriverComponent extends React.Component<
 > {
   private driverService: DriverService;
   private vehicleService: VehicleService;
-  private tabBarComponent: TabBarComponent | null;
   private error: Error | undefined;
 
   @observable
@@ -59,6 +58,8 @@ export default class DriverComponent extends React.Component<
 
     document.title = `${title} | Chauffører`;
 
+    console.warn("PROBLEM: ", this.driverService.driver);
+
     return (
       <>
 
@@ -69,8 +70,17 @@ export default class DriverComponent extends React.Component<
             { title: title }
           ]}
           tabs={[
-            { name: "profile", title: Localization.operationsValue("Driver_Tabs_Profile")},
-            { name: "vehicles", title: Localization.operationsValue("Driver_Tabs_Vehicles")}
+            { 
+              name: "profile", 
+              title: Localization.operationsValue("Driver_Tabs_Profile")
+            },
+            { 
+              name: "vehicles", 
+              disabled: 
+                this.driverService.driver == null || 
+                (this.driverService.driver && this.driverService.driver.id == null), 
+              title: Localization.operationsValue("Driver_Tabs_Vehicles")
+            }
           ]}
           tab={this.tab}
           onTabChange={tab => {
@@ -113,6 +123,6 @@ export default class DriverComponent extends React.Component<
   }
 
   private onDriverAdded(): void {
-    this.tabBarComponent!.setState({ selectedIndex: 1 });
+    this.tab = "vehicles";
   }
 }

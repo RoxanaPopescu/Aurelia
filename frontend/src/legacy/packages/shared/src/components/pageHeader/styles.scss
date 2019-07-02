@@ -13,6 +13,13 @@
 
 .pageHeader-actionContainer {
   margin-left: auto;
+  display: flex;
+
+  > * {
+    &:not(:last-child) {
+      margin-right: 4rem;
+    }
+  }
 }
 
 .pageHeader-path {

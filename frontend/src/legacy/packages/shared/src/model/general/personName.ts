@@ -4,7 +4,6 @@ import { observable, computed } from "mobx";
  * Represents the name of a person.
  */
 export class PersonName {
-
   /* tslint:disable-next-line: no-any */
   public constructor(data?: any) {
     if (data != null) {
@@ -16,14 +15,12 @@ export class PersonName {
   /**
    * The given name or names.
    */
-  @observable
-  public first: string;
+  @observable public first: string;
 
   /**
    * The family name or names, if any.
    */
-  @observable
-  public last: string;
+  @observable public last: string;
 
   /**
    * The initials to be used instead of the name, where space is limited.
@@ -38,10 +35,7 @@ export class PersonName {
    */
   @computed
   public get isValid(): boolean {
-    return !!(
-      this.first &&
-      this.last
-    );
+    return !!(this.first && this.last);
   }
 
   /**

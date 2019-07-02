@@ -2,16 +2,19 @@ import React from "react";
 import "./index.scss";
 import { Button, ButtonType, ButtonSize } from "shared/src/webKit";
 import { driverDispatchService } from "../../../driverDispatchService";
+import { observer } from "mobx-react";
 
 interface Props {
   removePreBookingDrivers();
+  assignPreBookingDrivers();
 }
 
 interface State {
   dropdownOpen: boolean;
 }
 
-export default class DropdownComponent extends React.Component<Props, State> {
+@observer
+export default class extends React.Component<Props, State> {
   node;
   constructor(props: Props) {
     super(props);
@@ -38,19 +41,21 @@ export default class DropdownComponent extends React.Component<Props, State> {
     this.setState({ dropdownOpen: false });
   }
 
+  private get classNames() {
+    var classNames = "c-driverDispatch-buttonDropdown";
+    if (this.state.dropdownOpen) {
+      classNames += " open";
+    }
+    if (driverDispatchService.selectedItemIndexes.length === 0) {
+      classNames += " disabled";
+    }
+
+    return classNames;
+  }
+
   render() {
     return (
-      <div
-        ref={e => (this.node = e)}
-        className={`c-driverDispatch-buttonDropdown${
-          this.state.dropdownOpen ? " open" : ""
-        }
-          ${
-            driverDispatchService.selectedItemIndexes.length > 0
-              ? ""
-              : " disabled"
-          }`}
-      >
+      <div ref={e => (this.node = e)} className={this.classNames}>
         <Button
           className="c-driverDispatch-buttonDropdown-button"
           type={ButtonType.Light}
@@ -81,6 +86,7 @@ export default class DropdownComponent extends React.Component<Props, State> {
             </div>
             <div
               onClick={() => {
+                this.props.assignPreBookingDrivers();
                 this.setState({ dropdownOpen: false });
               }}
               className="c-driverDispatch-dropdown-value"

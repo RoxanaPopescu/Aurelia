@@ -39,21 +39,23 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
       // Set current tab's chosen date
       this.fulfillersKpiStore.outfitsData[
         this.fulfillersKpiStore.activeOutfitIndex
-      ].toDateChosen =
-        this.fulfillersKpiStore.outfitsData[
-          this.fulfillersKpiStore.activeOutfitIndex
-        ].toDate;
+      ].toDateChosen = this.fulfillersKpiStore.outfitsData[
+        this.fulfillersKpiStore.activeOutfitIndex
+      ].toDate;
 
       this.fulfillersKpiStore.loading = true;
 
       KpiService.fulfiller(
-        this.fulfillersKpiStore.outfitsData[this.fulfillersKpiStore.activeOutfitIndex]
-          .toDateChosen,
-        this.fulfillersKpiStore.outfitsData[this.fulfillersKpiStore.activeOutfitIndex]
-          .format,
+        this.fulfillersKpiStore.outfitsData[
+          this.fulfillersKpiStore.activeOutfitIndex
+        ].toDateChosen,
+        this.fulfillersKpiStore.outfitsData[
+          this.fulfillersKpiStore.activeOutfitIndex
+        ].format,
         undefined,
-        this.fulfillersKpiStore.outfitsData[this.fulfillersKpiStore.activeOutfitIndex]
-          .outfit
+        this.fulfillersKpiStore.outfitsData[
+          this.fulfillersKpiStore.activeOutfitIndex
+        ].outfit
       )
         .then(kpiTemplate => {
           this.fulfillersKpiStore.outfitsData![
@@ -139,13 +141,15 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
   }
 
   render() {
-    var tabs: { name: string, title: string}[] | undefined;
+    var tabs: { name: string; title: string }[] | undefined;
     if (this.fulfillersKpiStore.outfitsData) {
       if (this.fulfillersKpiStore.outfitsData.length === 0) {
-        tabs = [{
-          name: "overview",
-          title: Localization.sharedValue("Kpi_Tab_OverallData")
-        }]
+        tabs = [
+          {
+            name: "overview",
+            title: Localization.sharedValue("Kpi_Tab_OverallData")
+          }
+        ];
       } else {
         tabs = this.fulfillersKpiStore.outfitsData.map(consignorData => {
           if (consignorData.outfit) {
@@ -159,32 +163,29 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
               title: Localization.sharedValue("Kpi_Tab_OverallData")
             };
           }
-        })
+        });
       }
     } else {
       tabs = undefined;
     }
- 
+
     return (
       <>
         <PageHeaderComponent
-          path={[
-            { title: "KPIs" }
-          ]}
+          path={[{ title: "KPIs" }]}
           tabs={tabs}
-          tab={tabs ? tabs[this.fulfillersKpiStore.activeOutfitIndex].name : undefined}
+          tab={
+            tabs
+              ? tabs[this.fulfillersKpiStore.activeOutfitIndex].name
+              : undefined
+          }
           onTabChange={(tab, index) => {
             this.fulfillersKpiStore.activeOutfitIndex = index;
             this.fetchKpi();
           }}
         />
 
-        <PageContentComponent>
-
-          {this.renderTable()}
-
-        </PageContentComponent>
-
+        <PageContentComponent>{this.renderTable()}</PageContentComponent>
       </>
     );
   }
