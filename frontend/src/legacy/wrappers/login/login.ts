@@ -6,6 +6,7 @@ import { Wrapper } from "../wrapper";
 import Component from "shared/src/components/login/index";
 import Localization from "shared/src/localization";
 import { Profile } from "shared/src/model/profile";
+import { IdentityService } from "app/services/identity";
 
 @noView
 @autoinject
@@ -14,16 +15,21 @@ export class LoginCustomElement extends Wrapper
     /**
      * Creates a new instance of the type.
      * @param element The element representing the component.
+     * @param router The `Router` instance.
+     * @param observerLocator The `ObserverLocator` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(element: Element, router: Router, observerLocator: ObserverLocator)
+    public constructor(element: Element, router: Router, observerLocator: ObserverLocator, identityService: IdentityService)
     {
         super(element);
         this._router = router;
         this._observerLocator = observerLocator;
+        this._identityService = identityService;
     }
 
     private readonly _router: Router;
     private readonly _observerLocator: ObserverLocator;
+    private readonly _identityService: IdentityService;
     private _isAuthenticatedObserver: InternalPropertyObserver;
 
     /**
@@ -55,6 +61,7 @@ export class LoginCustomElement extends Wrapper
     {
         if (newValue)
         {
+            this._identityService.authenticated();
             this._router.navigate("/");
         }
     }

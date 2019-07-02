@@ -38,15 +38,11 @@ export class IdentityService
     }
 
     /**
-     * Authenticates the specified user.
-     * @param email The email identifying the user.
-     * @param password The users password.
-     * @param remember True to store the authentication cookie on the device, otherwise false.
-     * @returns A promise that will be resolved with a boolean indicating whether authentication succeeded.
+     * Called when the user is authenticated, to configure the app.
      */
-    public async authenticate(email: string, password: string, remember = false): Promise<boolean>
+    public authenticated(): void
     {
-        throw new Error("Not implemented.");
+        this.configureApiClient();
     }
 
     /**
