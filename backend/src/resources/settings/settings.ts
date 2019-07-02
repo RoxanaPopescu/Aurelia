@@ -1,5 +1,6 @@
 import { environment } from "../../env";
 import { IApiClientSettings } from "../../shared/infrastructure";
+import { Duration } from "luxon";
 
 /**
  * Represents the settings related to infrastructure, framework and environment.
@@ -7,10 +8,48 @@ import { IApiClientSettings } from "../../shared/infrastructure";
 export default
 {
     /**
+     * Settings for the middleware.
+     */
+    middleware:
+    {
+        /**
+         * Settings related to identity.
+         */
+        identity:
+        {
+            refreshToken:
+            {
+                issuer: "mover",
+                audience: "mover",
+                cookie: "refresh-token",
+                expiresIn: Duration.fromObject({ days: 30 }),
+                secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
+            },
+            accessToken:
+            {
+                issuer: "mover",
+                audience: "mover",
+                cookie: "access-token",
+                expiresIn: Duration.fromObject({ days: 3 }),
+                secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
+            }
+        }
+    },
+
+    /**
      * Settings for the infrastructure.
      */
     infrastructure:
     {
+        /**
+         * Settings related to cookies.
+         */
+        cookies:
+        {
+            path: "/"
+
+        },
+
         /**
          * Settings related to the API client.
          */

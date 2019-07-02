@@ -1,9 +1,9 @@
 import { environment } from "./env";
 import { container, ApiClient, CorrelationIdInterceptor, StubInterceptor } from "./shared/infrastructure";
-import { getCorrelationId } from "./shared/middleware/koa-correlation-id";
+import { getCorrelationId } from "./shared/middleware/correlation-id-middleware";
 import { App } from "./app/app";
 import { AppRouter } from "./app/app-router";
-import settings from "./resources/settings";
+import settings from "./resources/settings/settings";
 
 // Add and configure the interceptors used by the API client.
 

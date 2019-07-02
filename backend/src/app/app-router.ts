@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 import globs from "globs";
 import KoaRouter from "koa-router";
@@ -13,28 +14,32 @@ export class AppRouter extends KoaRouter<any, IAppContext>
 {
     /**
      * Configures the instance.
+     * Finds, adds and configures all modules within the app.
      */
     public configure(): void
     {
-        // Find and configure all modules in the `modules` folder.
-        for (const modulePath of globs.sync(path.join(__dirname, "modules/*")))
+        const moduleFolderPaths = globs.sync(path.join(__dirname, "**/modules/*"));
+
+        for (const moduleFolderPath of moduleFolderPaths)
         {
-            // Load the module file.
-            const moduleInstance = require(modulePath.replace(/([^/]+)$/, "$1/$1"));
+            const moduleFilePath = moduleFolderPath.replace(/([^/]+)$/, "$1/$1.js");
 
-            // Find exported module classes.
-            for (const key in moduleInstance)
+            if (fs.existsSync(moduleFilePath))
             {
-                if (key.endsWith("Module"))
-                {
-                    // Get the module class.
-                    const type: Type<AppModule> = moduleInstance[key];
+                const moduleFileInstance = require(moduleFilePath);
 
-                    // Add and configure the module.
-                    container
-                        .add(type)
-                        .get(type)
-                        .configure();
+                // tslint:disable-next-line: forin
+                for (const key in moduleFileInstance)
+                {
+                    if (key.endsWith("Module"))
+                    {
+                        const moduleClass: Type<AppModule> = moduleFileInstance[key];
+
+                        container
+                            .add(moduleClass)
+                            .get(moduleClass)
+                            .configure();
+                    }
                 }
             }
         }

@@ -8,32 +8,11 @@ export class RoutesModule extends AppModule
     public configure(): void
     {
         /**
-         * Gets the depot with the specified ID.
-         * @param context.params.id The ID of the depot to get.
-         * @returns The depot with the specified ID.
-         */
-        this.router.get("/depots/:id", async context =>
-        {
-            context.authorize("view-depots");
-
-            const depotResult = await this.apiClient.post("depots/details",
-            {
-                body:
-                {
-                    id: context.params.id
-                }
-            });
-
-            context.response.body = depotResult.data;
-            context.response.status = 200;
-        });
-
-        /**
          * Gets the route with the specified ID.
          * @param context.params.id The ID of the route to get.
          * @returns The route with the specified ID.
          */
-        this.router.get("/route/:id", async context =>
+        this.router.get("/routes/:id", async context =>
         {
             context.authorize("view-routes");
 
@@ -64,8 +43,8 @@ export class RoutesModule extends AppModule
             {
                 body:
                 {
-                    paging: context.params.paging,
-                    sorting: context.params.sorting
+                    paging: context.paging,
+                    sorting: context.sorting
                 }
             });
 
@@ -103,8 +82,8 @@ export class RoutesModule extends AppModule
                 {
                     ids: context.request.body.ids,
 
-                    paging: context.params.paging,
-                    sorting: context.params.sorting
+                    paging: context.paging,
+                    sorting: context.sorting
                 }
             });
 

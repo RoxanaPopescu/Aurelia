@@ -3,10 +3,9 @@ import { ApiError } from "../infrastructure";
 
 /**
  * Creates a new middlerware instance, that adds a `internal` method to the
- * context, and handles otherwise unhandled errors by sending the proper
- * response to the client.
+ * context, and handles errors by sending the proper response to the client.
  */
-export function errorHandler(): Middleware
+export function apiErrorMiddleware(): Middleware
 {
     return async (context, next) =>
     {
@@ -25,22 +24,25 @@ export function errorHandler(): Middleware
         }
         catch (error)
         {
-            if (error instanceof ApiError && error.response)
+            // Was the error caused by an upstream request?
+            if (error instanceof ApiError)
             {
                 context.body = `Upstream request failed: ${error.message}`;
-            }
-            else
-            {
-                context.body = `Internal server error: ${error}`;
-            }
 
-            if (!context.state.internal && error.response != null)
-            {
-                context.status = error.response.status;
+                // Do we have a response for the upstream request,
+                // and should we forward that status downstream?
+                if (error.response && !context.state.internal)
+                {
+                    context.status = error.response.status;
+                }
+                else
+                {
+                    context.status = 500;
+                }
             }
             else
             {
-                context.status = 500;
+                throw error;
             }
         }
     };

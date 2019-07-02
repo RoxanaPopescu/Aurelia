@@ -11,7 +11,7 @@ const namespace = cls.createNamespace("koa-correlation-id");
  * even anywhere in the app. In your HTTP client of choice, you can then
  * use this to automatically add that same ID to any outgoing requests.
  */
-export function koaCorrelationId(): Middleware
+export function correlationIdMiddleware(): Middleware
 {
     const headerName = "correlation-id";
 

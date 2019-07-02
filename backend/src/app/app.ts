@@ -3,12 +3,14 @@ import koaConditionalGet from "koa-conditional-get";
 import koaEtag from "koa-etag";
 import koaCompress from "koa-compress";
 import koaBodyparser from "koa-bodyparser";
+import settings from "../resources/settings/settings";
 import { environment } from "../env";
 import { inject } from "../shared/infrastructure";
-import { errorHandler } from "../shared/middleware/error-handler";
-import { koaCorrelationId } from "../shared/middleware/koa-correlation-id";
-import { koaAuthorize } from "../shared/middleware/koa-authorize";
-import { pagingAndSorting } from "../shared/middleware/paging-and-sorting";
+import { apiErrorMiddleware } from "../shared/middleware/api-error-middleware";
+import { correlationIdMiddleware } from "../shared/middleware/correlation-id-middleware";
+import { authorizeMiddleware } from "../shared/middleware/authorize-middleware";
+import { pagingMiddleware } from "../shared/middleware/paging-middleware";
+import { sortingMiddleware } from "../shared/middleware/sorting-middleware";
 import { AppRouter } from "./app-router";
 import { IAppContext } from "./app-context";
 
@@ -37,9 +39,6 @@ export class App extends Koa<any, IAppContext>
      */
     public configure(): this
     {
-        // Add error handling middleware.
-        this.use(errorHandler());
-
         // Add standard middleware.
         this.use(koaConditionalGet());
         this.use(koaEtag());
@@ -47,9 +46,11 @@ export class App extends Koa<any, IAppContext>
         this.use(koaBodyparser());
 
         // Add custom middleware.
-        this.use(koaCorrelationId());
-        this.use(koaAuthorize());
-        this.use(pagingAndSorting());
+        this.use(correlationIdMiddleware());
+        this.use(apiErrorMiddleware());
+        this.use(authorizeMiddleware(settings.middleware.identity.accessToken));
+        this.use(pagingMiddleware());
+        this.use(sortingMiddleware());
 
         // Add router middleware.
         this.use(this._appRouter.routes());
