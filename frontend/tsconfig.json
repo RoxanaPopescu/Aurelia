@@ -12,8 +12,8 @@
     "jsx": "react",
     "noImplicitAny": false,
     "paths": {
-      "shared/*": ["shared/*", "legacy/shared/*"],
-      "fulfiller/*": ["legacy/fulfiller/*"]
+      "shared/*": ["shared/*", "legacy/packages/shared/*"],
+      "fulfiller/*": ["legacy/packages/fulfiller/*"]
     },
     "typeRoots": [
       "node_modules/@types",

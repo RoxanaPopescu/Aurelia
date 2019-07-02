@@ -41,7 +41,7 @@ react-module
     z-index: 0;
 
     // Import legacy styles.
-    @import "../legacy/shared/src/webKit/LEGACY";
+    @import "../legacy/packages/shared/src/webKit/LEGACY";
 
     .c-login-outerContainer,
     .c-activation-outerContainer
