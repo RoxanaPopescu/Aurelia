@@ -74,7 +74,7 @@ export class DataTablePagerCustomElement
      */
     protected onPageInputFocus(): void
     {
-        this.pageInputElement.select();
+        setTimeout(() => this.pageInputElement.setSelectionRange(0, this.pageInputElement.value.length));
     }
 
     /**

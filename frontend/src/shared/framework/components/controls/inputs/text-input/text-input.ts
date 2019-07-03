@@ -8,6 +8,11 @@ import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint } f
 export class TextInputCustomElement
 {
     /**
+     * The input element.
+     */
+    protected inputElement: HTMLInputElement | HTMLTextAreaElement;
+
+    /**
      * Gets the input value.
      */
     @computedFrom("value")
@@ -29,13 +34,6 @@ export class TextInputCustomElement
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public value: string | undefined;
-
-    /**
-     * The placeholder text to show when the input is empty,
-     * or undefined to show no placeholder.
-     */
-    @bindable({ defaultValue: undefined })
-    public placeholder: string | undefined;
 
     /**
      * True if the input is disabled, otherwise false.
@@ -71,6 +69,12 @@ export class TextInputCustomElement
     public autocapitalize: AutocapitalizeHint;
 
     /**
+     * True to select the contents when the input is focused, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public autoselect: boolean;
+
+    /**
      * The initial number of text lines in the input,
      * or undefined to allow only a single line.
      */
@@ -101,6 +105,18 @@ export class TextInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public enterkey: EnterKeyHint | undefined;
+
+    /**
+     * Called when the input receives focus.
+     * Selects the contents of the input, if `autoselect` is enabled.
+     */
+    protected onFocus(): void
+    {
+        if (this.autoselect)
+        {
+            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+        }
+    }
 
     /**
      * Called when the input looses focus.

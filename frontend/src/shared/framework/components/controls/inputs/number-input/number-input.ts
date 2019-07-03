@@ -46,13 +46,6 @@ export class NumberInputCustomElement
     public value: number | undefined;
 
     /**
-     * The placeholder text to show when the input is empty,
-     * or undefined to show no placeholder.
-     */
-    @bindable({ defaultValue: undefined })
-    public placeholder: string | undefined;
-
-    /**
      * True if the input is disabled, otherwise false.
      */
     @bindable({ defaultValue: false })
@@ -72,6 +65,12 @@ export class NumberInputCustomElement
     public autocomplete: AutocompleteHint;
 
     /**
+     * True to select the contents when the input is focused, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public autoselect: boolean;
+
+    /**
      * The amount by which the value should increment or decrement for each step.
      */
     @bindable({ defaultValue: 1 })
@@ -88,6 +87,18 @@ export class NumberInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public max: number | undefined;
+
+    /**
+     * Called when the input receives focus.
+     * Selects the contents of the input, if `autoselect` is enabled.
+     */
+    protected onFocus(): void
+    {
+        if (this.autoselect)
+        {
+            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+        }
+    }
 
     /**
      * Called when the input looses focus.

@@ -32,6 +32,7 @@
 
                 <input
                     if.bind="lines == null"
+                    ref="inputElement"
                     class="input-input"
                     type="text"
                     value.bind="inputValue"
@@ -42,11 +43,13 @@
                     enterkeyhint.bind="enterkey"
                     disabled.bind="disabled"
                     readonly.bind="readonly"
+                    focus.trigger="onFocus()"
                     blur.trigger="onBlur()"
                     placeholder=" ">
 
                 <textarea
                     if.bind="lines != null"
+                    ref="inputElement"
                     class="input-input"
                     value.bind="inputValue"
                     rows.bind="lines"
@@ -55,6 +58,7 @@
                     autocapitalize.bind="autocapitalize"
                     disabled.bind="disabled"
                     readonly.bind="readonly"
+                    focus.trigger="onFocus()"
                     blur.trigger="onBlur()"
                     placeholder=" ">
                 </textarea>
