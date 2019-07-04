@@ -1,0 +1,149 @@
+////
+/// @group framework/modifiers/padding
+////
+
+/// Modifier classes that apply standard paddings.
+$__summary: comment;
+
+@import "resources/index";
+
+
+/// Modifier class that applies the largest padding.
+.padding-largest
+{
+    &,
+    &-top
+    {
+        padding-top: 8rem;
+    }
+
+    &,
+    &-left
+    {
+        padding-left: 8rem;
+    }
+
+    &,
+    &-right
+    {
+        padding-right: 8rem;
+    }
+
+    &,
+    &-bottom
+    {
+        padding-bottom: 8rem;
+    }
+}
+
+/// Modifier class that applies the larger padding.
+.padding-larger
+{
+    &,
+    &-top
+    {
+        padding-top: 6rem;
+    }
+
+    &,
+    &-left
+    {
+        padding-left: 6rem;
+    }
+
+    &,
+    &-right
+    {
+        padding-right: 6rem;
+    }
+
+    &,
+    &-bottom
+    {
+        padding-bottom: 6rem;
+    }
+}
+
+/// Modifier class that applies the large padding.
+.padding-large
+{
+    &,
+    &-top
+    {
+        padding-top: 5rem;
+    }
+
+    &,
+    &-left
+    {
+        padding-left: 5rem;
+    }
+
+    &,
+    &-right
+    {
+        padding-right: 5rem;
+    }
+
+    &,
+    &-bottom
+    {
+        padding-bottom: 5rem;
+    }
+}
+
+/// Modifier class that applies the medium padding.
+.padding-medium
+{
+    &,
+    &-top
+    {
+        padding-top: 4rem;
+    }
+
+    &,
+    &-left
+    {
+        padding-left: 4rem;
+    }
+
+    &,
+    &-right
+    {
+        padding-right: 4rem;
+    }
+
+    &,
+    &-bottom
+    {
+        padding-bottom: 4rem;
+    }
+}
+
+/// Modifier class that applies the small padding.
+.padding-small
+{
+    &,
+    &-top
+    {
+        padding-top: 3rem;
+    }
+
+    &,
+    &-left
+    {
+        padding-left: 3rem;
+    }
+
+    &,
+    &-right
+    {
+        padding-right: 3rem;
+    }
+
+    &,
+    &-bottom
+    {
+        padding-bottom: 3rem;
+    }
+}

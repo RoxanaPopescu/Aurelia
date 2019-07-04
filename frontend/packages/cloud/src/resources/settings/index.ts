@@ -9,6 +9,7 @@ export default
      */
     hosts:
     [
+        { hostname: /-test-mover.azurewebsites.net$/, localeCode: "en-US", currencyCode: "DKK", themeSlug: "lingu" },
         { hostname: /^cooplogistikonline\.dk$/, localeCode: "da", currencyCode: "DKK", themeSlug: "coop" },
         { hostname: /./, localeCode: "en-US", currencyCode: "DKK", themeSlug: "default" }
     ]

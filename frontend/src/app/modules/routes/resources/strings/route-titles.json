@@ -3,5 +3,6 @@
     "details": "Details",
     "routeTracking": "Live tracking",
     "driverTracking": "Driver tracking",
-    "autoDispatch": "Auto dispatch"
+    "autoDispatch": "Auto dispatch",
+    "dispatch": "Dispatch"
 }

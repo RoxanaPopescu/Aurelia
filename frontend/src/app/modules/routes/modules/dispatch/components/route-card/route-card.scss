@@ -1,0 +1,16 @@
+@import "resources/index";
+
+route-card
+{
+    display: block;
+
+    card > a
+    {
+        padding: 4rem;
+    }
+
+    .route-card-info > div > div:not(:first-child)
+    {
+        margin-top: 0.75rem;
+    }
+}

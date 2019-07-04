@@ -1,0 +1,29 @@
+@import "resources/index";
+
+page[name="routes"] page[name="dispatch"]
+{
+    --size-page-sidebar-min-width: 120rem;
+
+    page-sidebar
+    {
+        background: transparent;
+
+        section > card > a
+        {
+            background: transparent;
+            border-width: var(--border-width-thick);
+
+            & > header
+            {
+                padding: 1rem 2rem 1.5rem 2rem;
+                background: var(--color-border);
+            }
+        }
+
+        section > route-card
+        {
+            margin-left: 3.25rem;
+            margin-right: 3.25rem;
+        }
+    }
+}
