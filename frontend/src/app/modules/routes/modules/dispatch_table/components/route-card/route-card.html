@@ -1,0 +1,34 @@
+<template draggable="true">
+
+    <require from="./route-card.scss"></require>
+
+    <card accent.bind="accent & attr">
+
+        <div class="font-large margin-bottom flex-row">
+            <div>
+                Solar
+            </div>
+        </div>
+
+        <div class="route-card-info font-small flex-row">
+            <div class="flex-grow">
+                <div>
+                    Pickup: &nbsp;&nbsp; 10:00 - <span accent.bind="accent & attr">12:00</span>
+                </div>
+                <div>
+                    Delivery: &nbsp;10:00 - 16:00
+                </div>
+            </div>
+            <div class="flex-grow">
+                <div>
+                    Stops: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5
+                </div>
+                <div>
+                    Duration: &nbsp;1h 36min
+                </div>
+            </div>
+        </div>
+
+    </card>
+
+</template>
