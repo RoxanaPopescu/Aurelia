@@ -69,7 +69,7 @@ export class RoutesModule
                 {
                     name: "dispatch",
                     route: "dispatch",
-                    moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
+                    moduleId: PLATFORM.moduleName("./modules/dispatch_cards/dispatch"),
                     title: routeTitles.dispatch,
                     nav: true,
                     icon: "fleet"
