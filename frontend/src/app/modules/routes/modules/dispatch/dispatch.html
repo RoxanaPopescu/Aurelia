@@ -1,0 +1,35 @@
+<template>
+
+    <require from="./components/orders-column/orders-column"></require>
+    <require from="./components/drivers-column/drivers-column"></require>
+    <require from="./components/map-column/map-column"></require>
+
+    <require from="./dispatch.scss"></require>
+
+    <page name="dispatch">
+
+        <tab-nav appearance="solid" value.bind="column">
+
+            <tab name="orders">
+                Orders
+            </tab>
+
+            <tab name="drivers">
+                Drivers
+            </tab>
+
+            <tab name="map">
+                Map
+            </tab>
+
+        </tab-nav>
+
+        <orders-column show.bind="column == 'orders'"></orders-column>
+
+        <drivers-column show.bind="column == 'drivers'"></drivers-column>
+
+        <map-column show.bind="column == 'map'"></map-column>
+
+    </page>
+
+</template>

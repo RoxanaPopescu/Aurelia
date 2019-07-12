@@ -1,0 +1,12 @@
+@import "resources/index";
+
+page[name="routes"] page[name="dispatch"]
+{
+    > tab-nav
+    {
+        position: absolute;
+        z-index: 99999;
+        right: 20rem;
+        top: 8rem;
+    }
+}

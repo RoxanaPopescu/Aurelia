@@ -1,0 +1,172 @@
+<template>
+
+    <require from="./drivers-column.scss"></require>
+
+    <page-content scroll>
+
+        <header scroll-fade>
+
+            <h1 class="font-largest">
+                <path-nav>
+
+                    <span translate>
+                        Express dispatch
+                    </span>
+
+                    <span translate>
+                        Drivers
+                    </span>
+
+                </path-nav>
+            </h1>
+
+        </header>
+
+        <section>
+
+            <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                <text-input value.bind="textFilter & debounce: 200">
+
+                    <div slot="placeholder">
+                        Find...
+                    </div>
+
+                </text-input>
+
+            </toolbar>
+
+            <data-table
+                appearance="cards"
+                sorting.bind="sorting"
+                busy.bind="updateOperation.pending">
+
+                <data-table-headers>
+
+                    <data-table-cell name="deadline" translate>
+                        Deadline
+                    </data-table-cell>
+
+                    <data-table-cell name="order-id" translate>
+                        Order
+                    </data-table-cell>
+
+                    <data-table-cell name="consignor" translate>
+                        Consignor
+                    </data-table-cell>
+
+                    <data-table-cell name="vehicle" translate>
+                        Vehicle
+                    </data-table-cell>
+
+                    <data-table-cell name="pickup-address" translate>
+                        Pickup address
+                    </data-table-cell>
+
+                    <data-table-cell name="pickup-zip" translate>
+                        Pickup zip
+                    </data-table-cell>
+
+                    <data-table-cell name="pickup-from" translate>
+                        Pickup from
+                    </data-table-cell>
+
+                    <data-table-cell name="pickup-to" translate>
+                        Pickup to
+                    </data-table-cell>
+
+                    <data-table-cell name="delivery-address" translate>
+                        Delivery address
+                    </data-table-cell>
+
+                    <data-table-cell name="delivery-zip" translate>
+                        Delivery zip
+                    </data-table-cell>
+
+                    <data-table-cell name="delivery-zip" translate>
+                        Delivery from
+                    </data-table-cell>
+
+                    <data-table-cell name="delivery-zip" translate>
+                        Delivery to
+                    </data-table-cell>
+
+                    <data-table-cell name="stops" align="right" translate>
+                        Stops
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="item of items">
+
+                    <data-table-row accent.bind="item.status.accent">
+
+                        <data-table-cell>
+                            ${item.deadline}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.orderId}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.consignor}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.vehicle}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.pickupAddress}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.pickupZip}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.pickupFrom}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.pickupTo}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.deliveryAddress}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.deliveryZip}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.deliveryZip}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            ${item.deliveryZip}
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            ${item.stops}
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+            <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
+
+            <empty-indicator if.bind="items.length == 0" class="margin-largest" translate>
+                No results
+            </empty-indicator>
+
+        </section>
+
+    </page-content>
+
+</template>

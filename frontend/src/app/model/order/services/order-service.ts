@@ -24,7 +24,7 @@ export class OrderService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets all orders associated with the current user.
+     * Gets all orders visible to the current user.
      * @param statusFilter The order status to filter by, or undefined to apply no status filter.
      * @param textFilter The order text to filter by, or undefined to apply no text filter.
      * @param sorting The sorting options to use.

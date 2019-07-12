@@ -1,8 +1,5 @@
 import { IResponseStubs } from "shared/infrastructure";
-import routes from "./responses/routes";
-import route from "./responses/route";
-// import orders from "./responses/orders";
-// import order from "./responses/order";
+import expressOrders from "./responses/express-orders";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -17,8 +14,5 @@ import route from "./responses/route";
  */
 export const stubs: IResponseStubs =
 {
-    ...routes,
-    ...route,
-    // ...orders,
-    // ...order
+    ...expressOrders
 };

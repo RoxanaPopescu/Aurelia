@@ -7,6 +7,9 @@ page-content
     // Fill the available space.
     flex-grow: 1;
 
+    // Allow the element to shrink.
+    min-width: 0;
+
     > header
     {
         // Apply default padding.

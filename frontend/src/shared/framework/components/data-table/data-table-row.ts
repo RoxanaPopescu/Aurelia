@@ -1,4 +1,4 @@
-import { autoinject, bindable, containerless } from "aurelia-framework";
+import { autoinject, bindable, containerless, bindingMode } from "aurelia-framework";
 import { DataTableCustomElement } from "./data-table";
 import { AccentColor } from "resources/styles";
 
@@ -55,7 +55,7 @@ export class DataTableRowCustomElement
     /**
      * True if the row is selected, otherwise false.
      */
-    @bindable({ defaultValue: false })
+    @bindable({ defaultBindingMode: bindingMode.twoWay, defaultValue: false })
     public selected: boolean;
 
     /**

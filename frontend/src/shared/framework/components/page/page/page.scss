@@ -2,12 +2,12 @@
 
 page
 {
+    // Use horizontal flex layout.
+    display: flex;
+
     // Fill the available space.
     flex-grow: 1;
 
     // Allow the element to shrink.
     min-width: 0;
-
-    // Use horizontal flex layout.
-    display: flex;
 }

@@ -4,6 +4,7 @@ import { Position } from "app/model/shared";
 import { Fulfiller } from "app/model/outfit";
 import { Driver } from "app/model/driver";
 import { Vehicle, VehicleType } from "app/model/vehicle";
+import { SearchModel } from "app/model/search-model";
 import { IRouteReference } from "./route-reference";
 import { RouteStatus } from "./route-status";
 import { RouteStopBase } from "./route-stop-base";
@@ -62,8 +63,6 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
             this.completionTime = DateTime.fromISO(data.completionTime, { setZone: true });
         }
     }
-
-    private _json: string | undefined;
 
     /**
      * The ID of the route.
@@ -151,6 +150,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public readonly stops: (RouteStopBase | RouteStopInfo)[];
 
     /**
+     * The model representing the searchable text in the entity.
+     */
+    public readonly searchModel = new SearchModel(this);
+
+    /**
      * The total number of non-cancelled stops on the route,
      * excluding stops the user is not allowed to see.
      */
@@ -213,30 +217,6 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
                 s instanceof RouteStopBase &&
                 s.status.slug === "not-visited" &&
                 s.isDelayed) as TRouteStop[];
-    }
-
-    /**
-     * Determines whether the object contains the specified text.
-     * @param text The text to search for.
-     * @returns True if the object contains the specified text, otherwise false.
-     */
-    public containsText(text?: string): boolean
-    {
-        // TODO: We should find a more efficient way to do free-text search.
-
-        if (!text)
-        {
-            return true;
-        }
-
-        if (this._json == null)
-        {
-            this._json = JSON.stringify(this, null, 1).toLowerCase();
-        }
-
-        const q = text.toLowerCase();
-
-        return new RegExp(`^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`, "m").test(this._json);
     }
 
     /**

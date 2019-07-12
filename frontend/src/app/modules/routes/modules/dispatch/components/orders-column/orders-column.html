@@ -1,0 +1,225 @@
+<template>
+
+    <require from="./orders-column.scss"></require>
+
+    <page-content scroll scroll.ref="scroll">
+
+        <header scroll-fade>
+
+            <h1 class="font-largest">
+                <path-nav>
+
+                    <span translate>
+                        Express dispatch
+                    </span>
+
+                    <span translate>
+                        Orders
+                    </span>
+
+                </path-nav>
+            </h1>
+
+        </header>
+
+        <section>
+
+            <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                <text-input value.bind="textFilter & debounce: 200">
+
+                    <div slot="placeholder">
+                        Find...
+                    </div>
+
+                </text-input>
+
+            </toolbar>
+
+            <data-table
+                appearance="cards"
+                sorting.bind="sorting"
+                selection="multiple"
+                busy.bind="updateOperation.pending">
+
+                <data-table-headers>
+
+                    <data-table-cell title.translate="Deadline" name="timeToDeadline">
+                        <span class="text-truncate" translate>
+                            Deadline
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="ID" name="slug">
+                        <span class="text-truncate" translate>
+                            ID
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Consignor" name="consignor">
+                        <span class="text-truncate" translate>
+                            Consignor
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Vehicle" name="vehicleType.name">
+                        <span class="text-truncate" translate>
+                            Vehicle
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Pickup address" name="pickupLocation.address">
+                        <span class="text-truncate" translate>
+                            Pickup address
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Postal code" name="pickupPostalCode">
+                        <span class="text-truncate" translate>
+                            Postal code
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="From" name="pickupFromTime">
+                        <span class="text-truncate" translate>
+                            From
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="To" name="pickupToTime">
+                        <span class="text-truncate" translate>
+                            To
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Delivery address" name="deliveryLocation.address">
+                        <span class="text-truncate" translate>
+                            Delivery address
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Postal code" name="deliveryPostalCode">
+                        <span class="text-truncate" translate>
+                            Postal code
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="From" name="deliveryFromTime">
+                        <span class="text-truncate" translate>
+                            From
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="To" name="deliveryToTime">
+                        <span class="text-truncate" translate>
+                            To
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Stops" name="stopCount" align="right">
+                        <span class="text-truncate" translate>
+                            Stops
+                        </span>
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="item of orderedAndFilteredItems">
+
+                    <data-table-row accent.bind="item.selectionAccent" selected.bind="item.selected" toggle.call="onRowToggle()">
+
+                        <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.accent & attr">
+                            <span class="text-truncate">
+                                ${item.timeToDeadline | duration }
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.slug" class="font-monospaced">
+                            <a class="text-truncate" href="/orders/details/${item.slug}">
+                                ${item.slug}
+                            </a>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.consignor.primaryName">
+                            <span class="text-truncate">
+                                ${item.consignor.primaryName}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.vehicleType.name">
+                            <span class="text-truncate">
+                                ${item.vehicleType.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.pickupLocation.address">
+                            <span class="text-truncate">
+                                ${item.pickupLocation.address}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.pickupPostalCode">
+                            <span class="text-truncate">
+                                ${item.pickupPostalCode}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.pickupFromTime | time">
+                            <span class="text-truncate">
+                                ${item.pickupFromTime | time}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.pickupToTime | time">
+                            <span class="text-truncate">
+                                ${item.pickupToTime | time}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.deliveryLocation.address">
+                            <span class="text-truncate">
+                                ${item.deliveryLocation.address}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.deliveryPostalCode">
+                            <span class="text-truncate">
+                                ${item.deliveryPostalCode}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.deliveryFromTime | time">
+                            <span class="text-truncate">
+                                ${item.deliveryFromTime | time}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.deliveryToTime | time">
+                            <span class="text-truncate">
+                                ${item.deliveryToTime | time}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.stopCount | number" align="right">
+                            <span class="text-truncate">
+                                ${item.stopCount | number}
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+            <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
+
+            <empty-indicator if.bind="items.length == 0" class="margin-largest" translate>
+                No results
+            </empty-indicator>
+
+        </section>
+
+    </page-content>
+
+</template>

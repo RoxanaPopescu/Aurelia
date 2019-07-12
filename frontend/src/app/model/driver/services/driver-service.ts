@@ -25,7 +25,7 @@ export class DriverService
     private readonly _vehicleService: VehicleService;
 
     /**
-     * Gets all drivers associated with the current user.
+     * Gets all drivers visible to the current user.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
