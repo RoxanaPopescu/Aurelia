@@ -1,6 +1,6 @@
 <template>
 
-    <require from="./components/orders-column/orders-column"></require>
+    <require from="./components/routes-column/routes-column"></require>
     <require from="./components/drivers-column/drivers-column"></require>
     <require from="./components/map-column/map-column"></require>
 
@@ -10,8 +10,8 @@
 
         <tab-nav appearance="solid" value.bind="column">
 
-            <tab name="orders">
-                Orders
+            <tab name="routes">
+                Routes
             </tab>
 
             <tab name="drivers">
@@ -24,7 +24,7 @@
 
         </tab-nav>
 
-        <orders-column show.bind="column == 'orders'"></orders-column>
+        <routes-column show.bind="column == 'routes'"></routes-column>
 
         <drivers-column show.bind="column == 'drivers'"></drivers-column>
 

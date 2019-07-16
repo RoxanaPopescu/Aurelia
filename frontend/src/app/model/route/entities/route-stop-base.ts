@@ -90,7 +90,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     public readonly arrivalTimeFrame: DateTimeRange;
 
     /**
-     * The date and time at which the driver is estimated to arrive.
+     * The date and time at which the driver arrives.
      * If the stop is not yet completed, this will be an estimate.
      * If the route is not yet accepted, this will be undefined.
      */
@@ -104,8 +104,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     public readonly isDelayed?: boolean;
 
     /**
-     * True if the route stop has been selected by the user,
-     * otherwise false.
+     * True if the route stop has been selected by the user, otherwise false.
      */
     public selected: boolean;
 

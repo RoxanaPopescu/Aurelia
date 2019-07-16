@@ -12,7 +12,9 @@ export class Outfit
      */
     public constructor(data: any)
     {
-        this.type = new OutfitType((data.type || data.typeName).toLowerCase());
+        const type = (data.type || data.typeName || "").toLowerCase();
+        this.type = type ? new OutfitType(type) : undefined;
+
         this.id = data.id;
         this.slug = data.publicId;
         this.companyName = data.companyName;
@@ -27,9 +29,9 @@ export class Outfit
     }
 
     /**
-     * The name of outfit type.
+     * The name of outfit type, if known.
      */
-    public readonly type: OutfitType;
+    public readonly type: OutfitType | undefined;
 
     /**
      * The ID of the outfit.

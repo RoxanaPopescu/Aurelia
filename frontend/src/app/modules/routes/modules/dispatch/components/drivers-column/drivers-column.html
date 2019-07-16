@@ -2,7 +2,7 @@
 
     <require from="./drivers-column.scss"></require>
 
-    <page-content scroll>
+    <page-content scroll scroll.ref="scroll">
 
         <header scroll-fade>
 
@@ -39,118 +39,111 @@
             <data-table
                 appearance="cards"
                 sorting.bind="sorting"
+                selection="multiple"
                 busy.bind="updateOperation.pending">
 
                 <data-table-headers>
 
-                    <data-table-cell name="deadline" translate>
-                        Deadline
+                    <data-table-cell title.translate="Deadline" name="status">
+                        <span class="text-truncate" translate>
+                            Status
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="order-id" translate>
-                        Order
+                    <data-table-cell title.translate="ID" name="slug">
+                        <span class="text-truncate" translate>
+                            ID
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="consignor" translate>
-                        Consignor
+                    <data-table-cell title.translate="Name" name="driver.name">
+                        <span class="text-truncate" translate>
+                            Name
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="vehicle" translate>
-                        Vehicle
+                    <data-table-cell title.translate="Vehicle" name="vehicle.vehicleType.name">
+                        <span class="text-truncate" translate>
+                            Vehicle
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="pickup-address" translate>
-                        Pickup address
+                    <data-table-cell title.translate="Stops remaining" name="remainingStopCount" align="right">
+                        <span class="text-truncate" translate>
+                            Stops remaining
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="pickup-zip" translate>
-                        Pickup zip
+                    <data-table-cell title.translate="Done" name="completionTime">
+                        <span class="text-truncate" translate>
+                            Done
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="pickup-from" translate>
-                        Pickup from
+                    <data-table-cell title.translate="Last stop address" name="lastStop.location.address">
+                        <span class="text-truncate" translate>
+                            Last stop address
+                        </span>
                     </data-table-cell>
 
-                    <data-table-cell name="pickup-to" translate>
-                        Pickup to
-                    </data-table-cell>
-
-                    <data-table-cell name="delivery-address" translate>
-                        Delivery address
-                    </data-table-cell>
-
-                    <data-table-cell name="delivery-zip" translate>
-                        Delivery zip
-                    </data-table-cell>
-
-                    <data-table-cell name="delivery-zip" translate>
-                        Delivery from
-                    </data-table-cell>
-
-                    <data-table-cell name="delivery-zip" translate>
-                        Delivery to
-                    </data-table-cell>
-
-                    <data-table-cell name="stops" align="right" translate>
-                        Stops
+                    <data-table-cell title.translate="Postal code" name="TODO" align="right">
+                        <span class="text-truncate" translate>
+                            Postal code
+                        </span>
                     </data-table-cell>
 
                 </data-table-headers>
 
-                <template repeat.for="item of items">
+                <template repeat.for="item of orderedAndFilteredItems">
 
-                    <data-table-row accent.bind="item.status.accent">
+                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected">
 
-                        <data-table-cell>
-                            ${item.deadline}
+                        <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
+                            <span class="text-truncate">
+                                ${item.status.name }
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.orderId}
+                        <data-table-cell title.bind="item.slug" class="font-monospaced">
+                            <a class="text-truncate" href="/fleet-management/drivers/edit/${item.driver.id}">
+                                ${item.driver.id}
+                            </a>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.consignor}
+                        <data-table-cell title.bind="item.driver.name">
+                            <span class="text-truncate">
+                                ${item.driver.name}
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.vehicle}
+                        <data-table-cell title.bind="item.driverVehicle.vehicleType.name">
+                            <span class="text-truncate">
+                                ${item.driverVehicle.vehicleType.name}
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.pickupAddress}
+                        <data-table-cell title.bind="item.remainingStopCount" align="right">
+                            <span class="text-truncate">
+                                ${item.remainingStopCount}
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.pickupZip}
+                        <data-table-cell title.bind="item.completionTime">
+                            <span class="text-truncate">
+                                ${item.completionTime | time}
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.pickupFrom}
+                        <data-table-cell title.bind="item.lastStop.location.address">
+                            <span class="text-truncate">
+                                ${item.lastStop.location.address}
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell>
-                            ${item.pickupTo}
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            ${item.deliveryAddress}
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            ${item.deliveryZip}
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            ${item.deliveryZip}
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            ${item.deliveryZip}
-                        </data-table-cell>
-
-                        <data-table-cell align="right">
-                            ${item.stops}
+                        <data-table-cell title.bind="TODO" align="right">
+                            <span class="text-truncate">
+                                TODO
+                            </span>
                         </data-table-cell>
 
                     </data-table-row>

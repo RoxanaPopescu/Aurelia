@@ -1,3 +1,5 @@
+import { Accent } from "app/model/shared";
+
 /**
  * Represents the slug identifying a `RouteCriticality`.
  */
@@ -22,23 +24,27 @@ export class RouteCriticality
     public slug: RouteCriticalitySlug;
     public name: string;
     public rank: number;
+    public accent: Accent;
 
     public static readonly values =
     {
         "high":
         {
             name: "High",
-            rank: 2
+            rank: 2,
+            accent: "negative"
         },
         "medium":
         {
             name: "Medium",
-            rank: 1
+            rank: 1,
+            accent: "attention"
         },
         "low":
         {
             name: "Low",
-            rank: 0
+            rank: 0,
+            accent: "neutral"
         }
     };
 }

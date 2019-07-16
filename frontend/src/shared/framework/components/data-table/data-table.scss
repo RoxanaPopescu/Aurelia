@@ -63,7 +63,7 @@ data-table[appearance="rows"]
     --data-table-row-border-radius: var(--border-radius-medium);
     --data-table-row-border-color: var(--color-border);
     --data-table-row-edge-width: var(--border-width-thick);
-    --data-table-row-edge-color: var(--color-surface-neutral-surface);
+    --data-table-row-edge-color: transparent;
 }
 
 data-table[appearance="cards"]

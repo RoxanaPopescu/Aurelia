@@ -1,6 +1,6 @@
 <template>
 
-    <require from="./orders-column.scss"></require>
+    <require from="./routes-column.scss"></require>
 
     <page-content scroll scroll.ref="scroll">
 
@@ -14,7 +14,7 @@
                     </span>
 
                     <span translate>
-                        Orders
+                        Routes
                     </span>
 
                 </path-nav>
@@ -44,9 +44,9 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Deadline" name="timeToDeadline">
+                    <data-table-cell title.translate="Time remaining" name="timeToDeadline">
                         <span class="text-truncate" translate>
-                            Deadline
+                            Time remaining
                         </span>
                     </data-table-cell>
 
@@ -110,15 +110,9 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To" name="deliveryToTime">
+                    <data-table-cell title.translate="To" name="deliveryToTime" align="right">
                         <span class="text-truncate" translate>
                             To
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Stops" name="stopCount" align="right">
-                        <span class="text-truncate" translate>
-                            Stops
                         </span>
                     </data-table-cell>
 
@@ -126,16 +120,16 @@
 
                 <template repeat.for="item of orderedAndFilteredItems">
 
-                    <data-table-row accent.bind="item.selectionAccent" selected.bind="item.selected" toggle.call="onRowToggle()">
+                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected" toggle.call="onRowToggle()">
 
-                        <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.accent & attr">
+                        <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
                             <span class="text-truncate">
                                 ${item.timeToDeadline | duration }
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.slug" class="font-monospaced">
-                            <a class="text-truncate" href="/orders/details/${item.slug}">
+                            <a class="text-truncate" href="/routes/details/${item.slug}">
                                 ${item.slug}
                             </a>
                         </data-table-cell>
@@ -164,15 +158,15 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.pickupFromTime | time">
+                        <data-table-cell title.bind="item.earliestPickupDate | time">
                             <span class="text-truncate">
-                                ${item.pickupFromTime | time}
+                                ${item.earliestPickupDate | time}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.pickupToTime | time">
+                        <data-table-cell title.bind="item.latestPickupDate | time">
                             <span class="text-truncate">
-                                ${item.pickupToTime | time}
+                                ${item.latestPickupDate | time}
                             </span>
                         </data-table-cell>
 
@@ -188,21 +182,15 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.deliveryFromTime | time">
+                        <data-table-cell title.bind="item.earliestDeliveryDate | time">
                             <span class="text-truncate">
-                                ${item.deliveryFromTime | time}
+                                ${item.earliestDeliveryDate | time}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.deliveryToTime | time">
+                        <data-table-cell title.bind="item.latestDeliveryDate | time" align="right">
                             <span class="text-truncate">
-                                ${item.deliveryToTime | time}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.stopCount | number" align="right">
-                            <span class="text-truncate">
-                                ${item.stopCount | number}
+                                ${item.latestDeliveryDate | time}
                             </span>
                         </data-table-cell>
 

@@ -1,0 +1,39 @@
+@import "resources/index";
+
+page[name="routes"] page[name="dispatch"] routes-column
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Allow the element to shrink.
+    min-width: 0;
+
+    data-table
+    {
+        --data-table-columns: 1.2fr 1fr 1fr 1fr 1.5fr 0.8fr 0.75fr 0.75fr 1.5fr 0.8fr 0.75fr 0.75fr;
+    }
+
+    .data-table-row.--selected + .data-table-row:not(.--selected)
+    {
+        data-table-cell
+        {
+            // Apply spacing between selected and unselected rows.
+            margin-top: 5rem;
+        }
+    }
+
+    data-table[appearance="rows"]
+    {
+        .data-table-row.--selected + .data-table-row:not(.--selected)
+        {
+            data-table-cell
+            {
+                // Apply top border to the first unselected row after a selected row.
+                border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+            }
+        }
+    }
+}

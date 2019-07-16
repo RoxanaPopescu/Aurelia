@@ -21,7 +21,6 @@
     }
 
     // HACK: We don't have a separate edge color for the surface yet, so just use the neutral palette color for now.
-    &:not([accent]),
     &[accent="neutral"]
     {
         --data-table-row-edge-color: var(--palette-color-neutral);
@@ -34,8 +33,23 @@ data-table[appearance="rows"]
     {
         data-table-cell
         {
+            position: relative;
             border-top: var(--data-table-row-border-width) solid transparent;
             border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+
+            &:first-child:before
+            {
+                content: "";
+                position: absolute;
+                top: calc(-1 * var(--data-table-row-border-width));
+                left: 0;
+                bottom: 0;
+            }
+
+            &:first-child:before,
+            {
+                border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
+            }
         }
     }
 }

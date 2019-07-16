@@ -6,5 +6,5 @@ import { autoinject } from "aurelia-framework";
 @autoinject
 export class DispatchPage
 {
-    protected column = "orders";
+    protected column = "routes";
 }

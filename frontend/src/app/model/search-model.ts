@@ -1,5 +1,5 @@
 /**
- * Represents a model representing the searchable text in an entity.
+ * Represents the searchable text of an entity.
  */
 export class SearchModel
 {
@@ -29,7 +29,7 @@ export class SearchModel
 
         if (this._json == null)
         {
-            this._json = JSON.stringify(this._entity, null, 1).toLowerCase();
+            this._json = JSON.stringify(this._entity, (key, value) => value === this ? "" : value, 1).toLowerCase();
         }
 
         const q = text.toLowerCase();
