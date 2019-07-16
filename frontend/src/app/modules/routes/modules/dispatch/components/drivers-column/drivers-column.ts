@@ -7,7 +7,7 @@ import { Duration, DateTime } from "luxon";
 /**
  * The time between each update of the list.
  */
-const updateInterval = 500000;
+const updateInterval = 5000;
 
 @autoinject
 export class DriversColumnCustomElement

@@ -99,6 +99,7 @@
                     <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected">
 
                         <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
+                            <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
                             <span class="text-truncate">
                                 ${item.status.name }
                             </span>

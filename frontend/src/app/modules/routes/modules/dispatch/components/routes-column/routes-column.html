@@ -123,6 +123,7 @@
                     <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected" toggle.call="onRowToggle()">
 
                         <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
+                            <icon name="md-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
                             <span class="text-truncate">
                                 ${item.timeToDeadline | duration }
                             </span>

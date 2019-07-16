@@ -29,7 +29,7 @@ export class DriverRouteStatus
         "on-time":
         {
             name: "On time",
-            accent: "positive"
+            accent: "neutral"
         },
         "delayed":
         {

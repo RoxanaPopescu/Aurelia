@@ -17,6 +17,8 @@ router-view
     height: 100%;
 }
 
+// --- LEGACY SUPPORT -----------------------------------------------------------------------------
+
 react-module
 {
     // Ensure react modules fill the content area of the viewport.
@@ -99,6 +101,8 @@ react-module
     }
 }
 
+// --- TEMPORARY STYLES ---------------------------------------------------------------------------
+
 .button-row
 {
     display: flex;
@@ -107,6 +111,11 @@ react-module
     {
         margin-right: var(--size-inline-spacing)
     }
+}
+
+data-table-cell icon + span
+{
+    margin-left: var(--size-inline-spacing);
 }
 
 @media ($media-smallest-max)
