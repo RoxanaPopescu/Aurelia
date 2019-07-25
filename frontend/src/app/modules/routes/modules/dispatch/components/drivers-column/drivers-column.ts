@@ -1,13 +1,14 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { IScroll } from "shared/framework";
 import { Operation, ISorting } from "shared/types";
 import { ExpressRouteService, DriverRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
+import { Workspace } from "../../services/workspace";
 
 /**
  * The time between each update of the list.
  */
-const updateInterval = 5000;
+const updateInterval = 999999;
 
 @autoinject
 export class DriversColumnCustomElement
@@ -44,31 +45,27 @@ export class DriversColumnCustomElement
     };
 
     /**
+     * The workspace.
+     */
+    @bindable
+    protected workspace: Workspace;
+
+    /**
      * The text in the filter text input.
      */
     protected textFilter: string | undefined;
 
-    /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected itemCount: number | undefined;
-
-    /**
-     * The items to present in the table.
-     */
-    protected items: DriverRoute[];
-
-    @computedFrom("items", "textFilter", "sorting")
+    @computedFrom("workspace.driverRoutes", "textFilter", "sorting")
     protected get orderedAndFilteredItems(): DriverRoute[]
     {
-        if (this.items == null)
+        if (this.workspace.driverRoutes == null)
         {
             return [];
         }
 
         const offset = this.sorting.direction === "ascending" ? 1 : -1;
 
-        return this.items
+        return this.workspace.driverRoutes
             .filter(r => !this.textFilter || r.searchModel.contains(this.textFilter))
             .sort((a, b) =>
             {
@@ -148,22 +145,42 @@ export class DriversColumnCustomElement
                 const result = await this._expressRouteService.getDriverRoutes(signal);
 
                 // Migrate the state to the new routes.
-                if (this.items != null)
+                if (this.workspace.driverRoutes != null)
                 {
-                    for (const item of this.items)
+                    for (const item of this.workspace.driverRoutes)
                     {
                         item.migrateState(result.routes.find(r => r.driver.id === item.driver.id));
                     }
                 }
 
                 // Update the state.
-                this.items = result.routes;
-                this.itemCount = result.routeCount;
+                this.workspace.driverRoutes = result.routes;
             }
             finally
             {
                 this._updateTimeoutHandle = setTimeout(() => this.update(), updateInterval);
             }
         });
+    }
+
+    /**
+     * Called when the selection of an item is toggled.
+     * Adds or removes the item from the `selectedDriverRoutes` array.
+     * @param item The item being toggled.
+     * @param selected True if the item is selected, otherwise false.
+     */
+    protected onRowToggle(item: DriverRoute, selected: boolean): void
+    {
+        if (selected)
+        {
+            this.workspace.selectedDriverRoutes.push(item);
+        }
+        else
+        {
+            this.workspace.selectedDriverRoutes.splice(this.workspace.selectedDriverRoutes.indexOf(item), 1);
+        }
+
+        this.workspace.driverRoutes = this.workspace.driverRoutes.slice();
+        this.workspace.selectedDriverRoutes = this.workspace.selectedDriverRoutes.slice();
     }
 }

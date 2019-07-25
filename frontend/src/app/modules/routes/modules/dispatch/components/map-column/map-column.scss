@@ -7,7 +7,7 @@ page[name="routes"] page[name="dispatch"] map-column
 
     // Fill the available space.
     flex-grow: 1;
-    width: 100%;
+    flex-basis: 33%;
 
     // Allow the element to shrink.
     min-width: 0;

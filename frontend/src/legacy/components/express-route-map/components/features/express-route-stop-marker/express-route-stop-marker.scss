@@ -1,0 +1,81 @@
+@import "shared/src/webKit/constants.scss";
+
+.expressRoutes-expressRouteStopMarker {
+  padding: 5px;
+  pointer-events: none;
+
+  &.--faded {
+    opacity: 0.3;
+  }
+}
+
+.expressRoutes-expressRouteStopMarker-shape {
+  position: relative;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 3px;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  pointer-events: all;
+  background: black;
+  border: 2px solid black;
+  box-shadow: 0 0 1px 1px white;
+  transform: rotate(45deg);
+
+  > div
+  {
+    transform: rotate(-45deg);
+  }
+
+  &.expressRoutes-expressRouteStopMarker--pending {
+    background: gray;
+    border-color: gray;
+  }
+
+  &.expressRoutes-expressRouteStopMarker--arrived {
+    background: #7d887c;
+    border-color: var(--colorOkDarken);
+    box-shadow: inset 0 0 0 1px lighten(#7d887c, 2%), 0 0 1px 1px white;
+  }
+
+  &.expressRoutes-expressRouteStopMarker--done {
+    background: var(--colorOk);
+    border-color: var(--colorOkDarken);
+  }
+
+  &.expressRoutes-expressRouteStopMarker--cancelled {
+    background: gray;
+    border-color: gray;
+    opacity: .5;
+  }
+
+  &.expressRoutes-expressRouteStopMarker--selected {
+    box-shadow:
+      0 0 1px 1px rgba(white, .3),
+      0 0 0px 3px var(--colorBackgroundPrimary),
+      0 0 2px 5px white;
+  }
+}
+
+.expressRoutes-expressRouteStopMarker-warning,
+.expressRoutes-expressRouteStopMarker-alert {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 1px white;
+  border-radius: 4px;
+  pointer-events: all;
+}
+
+.expressRoutes-expressRouteStopMarker-warning {
+  background: var(--colorWarning);
+}
+
+.expressRoutes-expressRouteStopMarker-alert {
+  background: var(--colorAlert);
+}

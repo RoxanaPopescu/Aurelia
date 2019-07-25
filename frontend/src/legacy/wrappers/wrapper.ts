@@ -33,7 +33,7 @@ export class Wrapper
     /**
      * Called by the component implementation when the component is attached to the DOM.
      */
-    public attached(component: Type, params?: any): void
+    public attached(component: Type, params?: any, props?: any): void
     {
         ReactDom.render(React.createElement(ReactRouter, { history }, React.createElement(component,
         {
@@ -42,7 +42,8 @@ export class Wrapper
             match:
             {
                 params: params || {}
-            }
+            },
+            ...props
         })),
         this._element);
     }

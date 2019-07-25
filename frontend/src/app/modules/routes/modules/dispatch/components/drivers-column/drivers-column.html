@@ -9,13 +9,7 @@
             <h1 class="font-largest">
                 <path-nav>
 
-                    <span translate>
-                        Express dispatch
-                    </span>
-
-                    <span translate>
-                        Drivers
-                    </span>
+                    <span>&nbsp;</span>
 
                 </path-nav>
             </h1>
@@ -23,6 +17,10 @@
         </header>
 
         <section>
+
+            <h2 class="font-larger margin-large-bottom" translate>
+                Drivers on contract
+            </h2>
 
             <toolbar class="margin-bottom" scroll-fade="0.2">
 
@@ -96,12 +94,12 @@
 
                 <template repeat.for="item of orderedAndFilteredItems">
 
-                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected">
+                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
 
                         <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
                             <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
                             <span class="text-truncate">
-                                ${item.status.name }
+                                ${item.status.name}
                             </span>
                         </data-table-cell>
 
@@ -153,9 +151,9 @@
 
             </data-table>
 
-            <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="workspace.driverRoutes == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="items.length == 0" class="margin-largest" translate>
+            <empty-indicator if.bind="workspace.driverRoutes.length == 0" class="margin-largest" translate>
                 No results
             </empty-indicator>
 

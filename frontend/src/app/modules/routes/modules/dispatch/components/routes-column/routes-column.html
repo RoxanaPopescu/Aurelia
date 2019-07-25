@@ -13,16 +13,16 @@
                         Express dispatch
                     </span>
 
-                    <span translate>
-                        Routes
-                    </span>
-
                 </path-nav>
             </h1>
 
         </header>
 
         <section>
+
+            <h2 class="font-larger margin-large-bottom" translate>
+                Orders
+            </h2>
 
             <toolbar class="margin-bottom" scroll-fade="0.2">
 
@@ -120,7 +120,7 @@
 
                 <template repeat.for="item of orderedAndFilteredItems">
 
-                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected" toggle.call="onRowToggle()">
+                    <data-table-row accent.bind="item.selected ? 'primary' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
 
                         <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
                             <icon name="md-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
@@ -201,9 +201,9 @@
 
             </data-table>
 
-            <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="workspace.expressRoutes == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="items.length == 0" class="margin-largest" translate>
+            <empty-indicator if.bind="workspace.expressRoutes.length == 0" class="margin-largest" translate>
                 No results
             </empty-indicator>
 

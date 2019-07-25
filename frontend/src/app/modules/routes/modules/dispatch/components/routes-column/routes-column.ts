@@ -1,13 +1,14 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { IScroll } from "shared/framework";
 import { Operation, ISorting } from "shared/types";
 import { ExpressRouteService, ExpressRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
+import { Workspace } from "../../services/workspace";
 
 /**
  * The time between each update of the list.
  */
-const updateInterval = 5000;
+const updateInterval = 999999;
 
 @autoinject
 export class RoutesColumnCustomElement
@@ -50,26 +51,22 @@ export class RoutesColumnCustomElement
     protected textFilter: string | undefined;
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * The workspace.
      */
-    protected itemCount: number | undefined;
+    @bindable
+    protected workspace: Workspace;
 
-    /**
-     * The items to present in the table.
-     */
-    protected items: ExpressRoute[];
-
-    @computedFrom("items", "textFilter", "sorting", "_selectionCounter")
+    @computedFrom("workspace.expressRoutes", "textFilter", "sorting", "_selectionCounter")
     protected get orderedAndFilteredItems(): ExpressRoute[]
     {
-        if (this.items == null)
+        if (this.workspace.expressRoutes == null)
         {
             return [];
         }
 
         const offset = this.sorting.direction === "ascending" ? 1 : -1;
 
-        return this.items
+        return this.workspace.expressRoutes
             .filter(r => !this.textFilter || r.searchModel.contains(this.textFilter))
             .sort((a, b) =>
             {
@@ -153,17 +150,16 @@ export class RoutesColumnCustomElement
                 const result = await this._expressRouteService.getExpressRoutes(signal);
 
                 // Migrate the state to the new routes.
-                if (this.items != null)
+                if (this.workspace.expressRoutes != null)
                 {
-                    for (const item of this.items)
+                    for (const item of this.workspace.expressRoutes)
                     {
                         item.migrateState(result.routes.find(r => r.id === item.id));
                     }
                 }
 
                 // Update the state.
-                this.items = result.routes;
-                this.itemCount = result.routeCount;
+                this.workspace.expressRoutes = result.routes;
             }
             finally
             {
@@ -174,10 +170,21 @@ export class RoutesColumnCustomElement
 
     /**
      * Called when the selection of a row is toggled.
-     * Increments the selection counter to force the list to update.
      */
-    protected onRowToggle(): void
+    protected onRowToggle(item: ExpressRoute, selected: boolean): void
     {
         this._selectionCounter++;
+
+        if (selected)
+        {
+            this.workspace.selectedExpressRoutes.push(item);
+        }
+        else
+        {
+            this.workspace.selectedExpressRoutes.splice(this.workspace.selectedExpressRoutes.indexOf(item), 1);
+        }
+
+        this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
+        this.workspace.selectedExpressRoutes = this.workspace.selectedExpressRoutes.slice();
     }
 }

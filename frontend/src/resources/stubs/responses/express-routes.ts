@@ -76,12 +76,12 @@ const expressRoutes =
                 {
                     "address":
                     {
-                        "primary": "Erhvervsvej 4 , 2600  Glostrup"
+                        "primary": "Refshalevej 147 , 1432  København K"
                     },
                     "position":
                     {
-                        "latitude": 55.697408,
-                        "longitude": 12.424408
+                        "latitude": 55.6895894,
+                        "longitude": 12.6114004
                     }
                 },
                 "loadingTime": 120.0,
@@ -146,7 +146,7 @@ const driverRoutes =
             {
                 "hidden": false,
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c1",
-                "status": "not-visited",
+                "status": "completed",
                 "type": "Pickup",
                 "outfit":
                 {
@@ -204,12 +204,55 @@ const driverRoutes =
                 {
                     "address":
                     {
-                        "primary": "Erhvervsvej 4 , 2600  Glostrup"
+                        "primary": "Refshalevej 147 , 1432  København K"
                     },
                     "position":
                     {
-                        "latitude": 55.697408,
-                        "longitude": 12.424408
+                        "latitude": 55.6895894,
+                        "longitude": 12.6114004
+                    }
+                },
+                "loadingTime": 120.0,
+                "arrivalTimeFrame":
+                {
+                    "from": "2019-03-18T09:00:00+00:00",
+                    "to": "2019-03-18T10:45:00+00:00"
+                },
+                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
+                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "isDelayed": true,
+                "estimates":
+                {
+                    "drivingTime": 130,
+                    "loadingTime": 120,
+                    "waitingTime": 0,
+                    "completionTime": "2019-03-18T09:38:05+00:00"
+                }
+            },
+            {
+                "hidden": false,
+                "id": "4c76a098-6a70-4be2-80ed-ffb76792a7c4",
+                "status": "not-visited",
+                "type": "Delivery",
+                "outfit":
+                {
+                    "contactPhone":
+                    {
+                        "countryPrefix": "45",
+                        "number": "53585845",
+                        "formatted": "+45 53 58 58 45"
+                    }
+                },
+                "location":
+                {
+                    "address":
+                    {
+                        "primary": "Somestreat 123 , 1337  Somecity"
+                    },
+                    "position":
+                    {
+                        "latitude": 55.66,
+                        "longitude": 12.8
                     }
                 },
                 "loadingTime": 120.0,
@@ -237,21 +280,62 @@ export default
     {
         "POST /api/v1/express-routes/get-express-routes":
         {
-            data: [...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes]
+            data: cloneExpressRoutes([...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes])
         },
 
         "POST /api/v1/express-routes/get-driver-routes":
         {
-            data: [...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes]
+            data: cloneDriverRoutes([...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes])
         },
 
         "POST /api/v1/express-routes/estimate-driver-route":
         {
-            data: driverRoutes[0]
+            data: cloneDriverRoutes(driverRoutes)[0]
         },
 
         "POST /api/v1/express-routes/update-driver-route":
         {
-            data: driverRoutes[0]
+            data: cloneDriverRoutes(driverRoutes)[0]
         }
+    }
+
+    function cloneExpressRoutes(routes)
+    {
+        let i = 0;
+
+        return routes.map(r =>
+        {
+            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.5;
+            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.5;
+            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.5;
+            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.5;
+
+            const route = JSON.parse(JSON.stringify(r));
+            route.id = route.id + i++;
+
+
+            return route;
+        });
+    }
+
+    function cloneDriverRoutes(routes)
+    {
+        let i = 0;
+
+        return routes.map(r =>
+        {
+            const route = JSON.parse(JSON.stringify(r));
+            route.driver.id = route.driver.id + i++;
+
+            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.5;
+            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.5;
+            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.5;
+            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.5;
+            r.stops[2].location.position.latitude += (1 - Math.random()) * 0.5;
+            r.stops[2].location.position.longitude += (1 - Math.random()) * 0.5;
+            r.driverPosition.latitude = r.stops[1].location.position.latitude + (1 - Math.random()) * 0.05;;
+            r.driverPosition.longitude = r.stops[1].location.position.longitude + (1 - Math.random()) * 0.2;
+
+            return route;
+        });
     }

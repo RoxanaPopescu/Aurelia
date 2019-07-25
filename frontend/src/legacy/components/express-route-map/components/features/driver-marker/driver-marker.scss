@@ -1,0 +1,63 @@
+@import "shared/src/webKit/constants.scss";
+
+.expressRoutes-driverMarker {
+  padding: 5px;
+  pointer-events: none;
+
+  &.--faded {
+    opacity: 0.3;
+  }
+}
+
+.expressRoutes-driverMarker-shape {
+  position: relative;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 12px;
+  line-height: 22px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: "gray";
+
+  &.expressRoutes-driverMarker--online {
+    // Disabled due to extremely high CPU usage.
+    //animation: liveTracking-driverMarker-pulse 2s infinite;
+    border: 1px solid var(--colorOkDarken);
+    background: var(--colorOk);
+  }
+
+  &.expressRoutes-driverMarker--offline {
+    box-shadow: 0 0 1px 1px rgba(white, .7);
+    border: 1px solid var(--colorAlertDarken);
+    background: var(--colorOk);
+  }
+
+  &.expressRoutes-driverMarker--completed {
+    opacity: .3;
+  }
+
+  &.expressRoutes-driverMarker--cancelled {
+    opacity: .3;
+  }
+}
+
+.expressRoutes-driverMarker-warning,
+.expressRoutes-driverMarker-alert {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 1px white;
+  border-radius: 4px;
+}
+
+.expressRoutes-driverMarker-warning {
+  background: var(--colorWarning);
+}
+
+.expressRoutes-driverMarker-alert {
+  background: var(--colorAlert);
+}
