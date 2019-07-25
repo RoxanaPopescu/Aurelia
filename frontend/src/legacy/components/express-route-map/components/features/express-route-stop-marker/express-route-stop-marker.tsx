@@ -30,7 +30,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                 icon=" "
                 labelAnchor={new google.maps.Point(15, 15)}
                 position={position}
-                zIndex={this.props.routeStop.selected ? 3 : 2}
+                zIndex={this.props.routeStop.selected ? 103 : 102}
                 onMouseOver={() => this.showPopup()}
                 onMouseOut={() => this.hidePopup()}
                 onClick={() => this.props.onClick && this.props.onClick()}>

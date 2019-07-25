@@ -19,6 +19,13 @@ export class DriverRouteLayer extends React.Component<DriverRouteLayerProps> {
         return (
             <React.Fragment>
 
+                <DriverRouteSegmentLine
+                    key={`DriverRouteSegmentLine-driver-${this.props.route.stops[0].id}`}
+                    routeStops={[this.props.route.driverPosition!, this.props.route.stops[0]]}
+                    onClick={() => this.onRouteClick()}
+                    faded={!this.props.route.selected}
+                />
+
                 {this.props.route.stops
                     .filter(s =>
                         !s.status.slug.startsWith("cancelled"))

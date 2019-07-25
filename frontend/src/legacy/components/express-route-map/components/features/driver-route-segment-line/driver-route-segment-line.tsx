@@ -2,6 +2,7 @@ import React from "react";
 import { Polyline } from "react-google-maps";
 import { DriverRouteStop } from "app/model/express-route";
 import { RouteStopInfo } from "app/model/route";
+import { Position } from "app/model/shared";
 
 // The width of the stroke, in pixels.
 const strokeWeight = 2;
@@ -11,7 +12,7 @@ const normalStrokeOpacity = 0.9;
 const fadedStrokeOpacity = 0.1;
 
 export interface DriverRouteSegmentLineProps {
-  routeStops: (DriverRouteStop | RouteStopInfo)[];
+  routeStops: (Position | DriverRouteStop | RouteStopInfo)[];
   onClick?: () => void;
   faded?: boolean;
 }
@@ -19,7 +20,7 @@ export interface DriverRouteSegmentLineProps {
 export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLineProps> {
   public render() {
     const positions = this.props.routeStops.map(s =>
-      s.location.position!.toGoogleLatLng()
+      s instanceof Position ? s.toGoogleLatLng() : s.location.position!.toGoogleLatLng()
     );
     const options = this.getPolylineOptions();
 
@@ -44,9 +45,14 @@ export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLi
 
     const strokeOpacity = this.props.faded ? fadedStrokeOpacity : normalStrokeOpacity;
 
+    const a = this.props.routeStops[0];
+    const b = this.props.routeStops[1];
+
     if (
-      this.props.routeStops[0].status.slug !== "not-visited" &&
-      this.props.routeStops[1].status.slug !== "not-visited"
+      !(a instanceof Position) &&
+      !(b instanceof Position) &&
+      a.status.slug !== "not-visited" &&
+      b.status.slug !== "not-visited"
     ) {
       return {
         clickable: this.props.onClick != null,
@@ -59,28 +65,38 @@ export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLi
     }
 
     const color =
-      this.props.routeStops[0].status.slug !== "not-visited" &&
-      this.props.routeStops[0].status.slug !== "arrived"
+      a instanceof Position ? "#17C800" :
+      a.status.slug !== "not-visited" &&
+      a.status.slug !== "arrived"
         ? "#17C800"
         : "gray";
 
     return {
-      clickable: this.props.onClick != null,
-      strokeColor: color,
-      strokeWeight,
-      strokeOpacity: 0,
-      zIndex: 1,
-      icons: [
-        {
-          icon: {
-            path: "M 0,-1 0,1",
-            strokeOpacity,
-            scale: strokeWeight
-          },
-          offset: "0",
-          repeat: `${4 * strokeWeight}px`
-        }
-      ]
-    };
+        clickable: this.props.onClick != null,
+        strokeColor: color,
+        strokeWeight,
+        strokeOpacity,
+        zIndex: 100,
+        icons: []
+      };
+
+    // return {
+    //   clickable: this.props.onClick != null,
+    //   strokeColor: color,
+    //   strokeWeight,
+    //   strokeOpacity: 0,
+    //   zIndex: 1,
+    //   icons: [
+    //     {
+    //       icon: {
+    //         path: "M 0,-1 0,1",
+    //         strokeOpacity,
+    //         scale: strokeWeight
+    //       },
+    //       offset: "0",
+    //       repeat: `${4 * strokeWeight}px`
+    //     }
+    //   ]
+    // };
   }
 }

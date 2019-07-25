@@ -49,7 +49,7 @@ export class ExpressRouteDeliveryArrow extends React.Component<ExpressRouteDeliv
       strokeColor: "gray",
       strokeWeight,
       strokeOpacity: 0,
-      zIndex: 100,
+      zIndex: 101,
       icons: [
         {
           icon: {

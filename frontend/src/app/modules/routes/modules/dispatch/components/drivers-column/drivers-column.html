@@ -38,7 +38,8 @@
                 appearance="cards"
                 sorting.bind="sorting"
                 selection="multiple"
-                busy.bind="updateOperation.pending">
+                busy.bind="updateOperation.pending"
+                toggle-all.call="onToogleAll(value)">
 
                 <data-table-headers>
 

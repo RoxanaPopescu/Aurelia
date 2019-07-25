@@ -173,8 +173,6 @@ export class RoutesColumnCustomElement
      */
     protected onRowToggle(item: ExpressRoute, selected: boolean): void
     {
-        this._selectionCounter++;
-
         if (selected)
         {
             this.workspace.selectedExpressRoutes.push(item);
@@ -186,5 +184,23 @@ export class RoutesColumnCustomElement
 
         this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
         this.workspace.selectedExpressRoutes = this.workspace.selectedExpressRoutes.slice();
+
+        this._selectionCounter++;
+    }
+
+    /**
+     * Called when the selection of all rows is toggled.
+     */
+    protected onToogleAll(selected: boolean): void
+    {
+        for (const route of this.workspace.expressRoutes)
+        {
+            route.selected = selected;
+        }
+
+        this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
+        this.workspace.selectedExpressRoutes = selected ? this.workspace.expressRoutes.slice() : [];
+
+        this._selectionCounter++;
     }
 }

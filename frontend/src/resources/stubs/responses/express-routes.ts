@@ -92,7 +92,7 @@ const expressRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
                 "completionTime": "2019-07-16T14:26:50.8846266+00:00",
-                "isDelayed": true,
+                "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
@@ -133,7 +133,7 @@ const driverRoutes =
             "makeAndModel": "Mike Model",
             "color": "Sort"
         },
-        "driverOnline": false,
+        "driverOnline": true,
         "driverPosition":
         {
             "latitude": 55.68221077,
@@ -143,49 +143,6 @@ const driverRoutes =
 
         "stops":
         [
-            {
-                "hidden": false,
-                "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c1",
-                "status": "completed",
-                "type": "Pickup",
-                "outfit":
-                {
-                    "contactPerson": "Oliver Kas",
-                    "contactPhone":
-                    {
-                        "countryPrefix": "45",
-                        "number": "13123",
-                        "formatted": "+45  1 31 23"
-                    }
-                },
-                "location":
-                {
-                    "address":
-                    {
-                        "primary": "Ejby Industrivej 38 , 2600  Glostrup"
-                    },
-                    "position":
-                    {
-                        "latitude": 55.694707,
-                        "longitude": 12.423264
-                    }
-                },
-                "loadingTime": 420.0,
-                "arrivalTimeFrame":
-                {
-                    "from": "2019-03-18T09:00:00+00:00"
-                },
-                "arrivalTime": "2019-07-16T14:15:40.8220995+00:00",
-                "completionTime": "2019-07-16T14:22:40.8220995+00:00",
-                "isDelayed": false,
-                "estimates":
-                {
-                    "drivingTime": 1615,
-                    "loadingTime": 420,
-                    "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:33:55+00:00"
-                }
-            },
             {
                 "hidden": false,
                 "id": "3c76a098-6a70-4be2-80ed-ffb76792a7c4",
@@ -220,7 +177,7 @@ const driverRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
                 "completionTime": "2019-07-16T14:26:50.8846266+00:00",
-                "isDelayed": true,
+                "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
@@ -251,8 +208,8 @@ const driverRoutes =
                     },
                     "position":
                     {
-                        "latitude": 55.66,
-                        "longitude": 12.8
+                        "latitude": 55.67,
+                        "longitude": 12.7
                     }
                 },
                 "loadingTime": 120.0,
@@ -263,7 +220,50 @@ const driverRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
                 "completionTime": "2019-07-16T14:26:50.8846266+00:00",
-                "isDelayed": true,
+                "isDelayed": false,
+                "estimates":
+                {
+                    "drivingTime": 130,
+                    "loadingTime": 120,
+                    "waitingTime": 0,
+                    "completionTime": "2019-03-18T09:38:05+00:00"
+                }
+            },
+            {
+                "hidden": false,
+                "id": "4c76a098-6a70-4be2-80ed-ffb76792a7c4",
+                "status": "not-visited",
+                "type": "Delivery",
+                "outfit":
+                {
+                    "contactPhone":
+                    {
+                        "countryPrefix": "45",
+                        "number": "53585845",
+                        "formatted": "+45 53 58 58 45"
+                    }
+                },
+                "location":
+                {
+                    "address":
+                    {
+                        "primary": "Otherstreat 123 , 4242  Othercity"
+                    },
+                    "position":
+                    {
+                        "latitude": 55.665,
+                        "longitude": 12.85
+                    }
+                },
+                "loadingTime": 120.0,
+                "arrivalTimeFrame":
+                {
+                    "from": "2019-03-18T09:00:00+00:00",
+                    "to": "2019-03-18T10:45:00+00:00"
+                },
+                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
+                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
@@ -305,10 +305,10 @@ export default
 
         return routes.map(r =>
         {
-            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.5;
-            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.5;
-            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.5;
-            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.5;
+            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.2;
+            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.2;
+            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.2;
+            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.2;
 
             const route = JSON.parse(JSON.stringify(r));
             route.id = route.id + i++;
@@ -327,14 +327,14 @@ export default
             const route = JSON.parse(JSON.stringify(r));
             route.driver.id = route.driver.id + i++;
 
-            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.5;
-            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.5;
-            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.5;
-            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.5;
-            r.stops[2].location.position.latitude += (1 - Math.random()) * 0.5;
-            r.stops[2].location.position.longitude += (1 - Math.random()) * 0.5;
-            r.driverPosition.latitude = r.stops[1].location.position.latitude + (1 - Math.random()) * 0.05;;
-            r.driverPosition.longitude = r.stops[1].location.position.longitude + (1 - Math.random()) * 0.2;
+            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.2;
+            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.2;
+            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.2;
+            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.2;
+            r.stops[2].location.position.latitude += (1 - Math.random()) * 0.2;
+            r.stops[2].location.position.longitude += (1 - Math.random()) * 0.2;
+            r.driverPosition.latitude = r.stops[0].location.position.latitude + (1 - Math.random()) * 0.02;
+            r.driverPosition.longitude = -0.1 + r.stops[0].location.position.longitude + (1 - Math.random()) * 0.02;
 
             return route;
         });

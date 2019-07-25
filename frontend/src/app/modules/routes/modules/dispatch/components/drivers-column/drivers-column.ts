@@ -183,4 +183,18 @@ export class DriversColumnCustomElement
         this.workspace.driverRoutes = this.workspace.driverRoutes.slice();
         this.workspace.selectedDriverRoutes = this.workspace.selectedDriverRoutes.slice();
     }
+
+    /**
+     * Called when the selection of all rows is toggled.
+     */
+    protected onToogleAll(selected: boolean): void
+    {
+        for (const route of this.workspace.driverRoutes)
+        {
+            route.selected = selected;
+        }
+
+        this.workspace.driverRoutes = this.workspace.driverRoutes.slice();
+        this.workspace.selectedDriverRoutes = selected ? this.workspace.driverRoutes.slice() : [];
+    }
 }
