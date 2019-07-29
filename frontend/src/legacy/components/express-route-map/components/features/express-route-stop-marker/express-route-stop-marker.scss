@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .expressRoutes-expressRouteStopMarker {
-  padding: 5px;
+  padding: 10px;
   pointer-events: none;
 
   &.--faded {
@@ -11,11 +11,11 @@
 
 .expressRoutes-expressRouteStopMarker-shape {
   position: relative;
-  width: 20px;
-  min-height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 3px;
-  line-height: 16px;
-  font-size: 10px;
+  line-height: 28px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
   color: white;
@@ -67,14 +67,14 @@
   background: white;
   padding: 4px;
   font-size: 0.75em;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   z-index: 1;
 
   &::after
   {
     content: "";
     position: absolute;
-    left: 5px;
+    left: 10px;
     display: block;
     width: 8px;
     height: 8px;
@@ -88,8 +88,8 @@
 .expressRoutes-expressRouteStopMarker-warning,
 .expressRoutes-expressRouteStopMarker-alert {
   position: absolute;
-  bottom: -3px;
-  right: -3px;
+  bottom: 0;
+  right: -2px;
   width: 8px;
   height: 8px;
   box-shadow: 0 0 0 1px white;

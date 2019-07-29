@@ -29,7 +29,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
         return (
             <MarkerWithLabel
                 icon=" "
-                labelAnchor={new google.maps.Point(15, 40)}
+                labelAnchor={new google.maps.Point(26, 41)}
                 position={position}
                 zIndex={this.props.routeStop.selected ? 203 : 2}
                 onMouseOver={() => this.showPopup()}

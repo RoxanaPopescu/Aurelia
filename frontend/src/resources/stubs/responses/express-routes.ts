@@ -49,7 +49,7 @@ const expressRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:15:40.8220995+00:00",
                 "completionTime": "2019-07-16T14:22:40.8220995+00:00",
-                "isDelayed": false,
+                "isDelayed": true,
                 "estimates":
                 {
                     "drivingTime": 1615,
@@ -133,7 +133,7 @@ const driverRoutes =
             "makeAndModel": "Mike Model",
             "color": "Sort"
         },
-        "driverOnline": true,
+        "driverOnline": false,
         "driverPosition":
         {
             "latitude": 55.68221077,
@@ -177,7 +177,7 @@ const driverRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
                 "completionTime": "2019-07-16T14:26:50.8846266+00:00",
-                "isDelayed": false,
+                "isDelayed": true,
                 "estimates":
                 {
                     "drivingTime": 130,

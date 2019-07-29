@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .expressRoutes-driverMarker {
-  padding: 5px;
+  padding: 0 10px;
   pointer-events: none;
 
   &.--faded {
@@ -11,19 +11,17 @@
 
 .expressRoutes-driverMarker-shape {
   position: relative;
-  min-width: 24px;
-  min-height: 24px;
-  border-radius: 12px;
-  line-height: 22px;
-  font-size: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  line-height: 30px;
+  font-size: 12px;
   font-weight: 600;
   text-align: center;
   color: white;
   background: "gray";
 
   &.expressRoutes-driverMarker--online {
-    // Disabled due to extremely high CPU usage.
-    //animation: liveTracking-driverMarker-pulse 2s infinite;
     border: 1px solid var(--colorOkDarken);
     background: var(--colorOk);
   }
@@ -46,7 +44,7 @@
 .expressRoutes-driverMarker-warning,
 .expressRoutes-driverMarker-alert {
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   right: -2px;
   width: 8px;
   height: 8px;

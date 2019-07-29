@@ -25,7 +25,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
     return (
       <MarkerWithLabel
         icon=" "
-        labelAnchor={new google.maps.Point(17, 18)}
+        labelAnchor={new google.maps.Point(26, 17)}
         position={position}
         zIndex={100}
         onMouseOver={() => this.showPopup()}

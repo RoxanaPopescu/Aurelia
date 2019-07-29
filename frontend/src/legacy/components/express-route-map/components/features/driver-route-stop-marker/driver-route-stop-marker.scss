@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .expressRoutes-driverRouteStopMarker {
-  padding: 5px;
+  padding: 0 10px;
   pointer-events: none;
 
   &.--faded {
@@ -11,11 +11,11 @@
 
 .expressRoutes-driverRouteStopMarker-shape {
   position: relative;
-  width: 20px;
-  min-height: 20px;
-  border-radius: 10px;
-  line-height: 16px;
-  font-size: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  line-height: 28px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
   color: white;
@@ -68,7 +68,7 @@
   {
     content: "";
     position: absolute;
-    left: 5px;
+    left: 11px;
     display: block;
     width: 8px;
     height: 8px;
@@ -82,8 +82,8 @@
 .expressRoutes-driverRouteStopMarker-warning,
 .expressRoutes-driverRouteStopMarker-alert {
   position: absolute;
-  bottom: -3px;
-  right: -3px;
+  bottom: 0;
+  right: -2px;
   width: 8px;
   height: 8px;
   box-shadow: 0 0 0 1px white;
