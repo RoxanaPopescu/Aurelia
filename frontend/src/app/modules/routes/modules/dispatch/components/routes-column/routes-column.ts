@@ -71,8 +71,8 @@ export class RoutesColumnCustomElement
             .sort((a, b) =>
             {
                 // Sort by selected selection state.
-                if (!b.selected && a.selected) { return -offset; }
-                if (b.selected && !a.selected) { return offset; }
+                if (!b.selected && a.selected) { return -1; }
+                if (b.selected && !a.selected) { return 1; }
 
                 // tslint:disable: no-eval
                 let aPropertyValue = eval(`a.${this.sorting.property}`);

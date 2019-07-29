@@ -4,6 +4,7 @@ import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithL
 import { Marker } from "shared/src/components/worldMap";
 import { DriverRouteStop } from "app/model/express-route";
 import "./express-route-stop-marker.scss";
+import Localization from "shared/src/localization";
 
 export interface ExpressRouteStopMarkerProps
 {
@@ -28,15 +29,20 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
         return (
             <MarkerWithLabel
                 icon=" "
-                labelAnchor={new google.maps.Point(15, 15)}
+                labelAnchor={new google.maps.Point(15, 42)}
                 position={position}
-                zIndex={this.props.routeStop.selected ? 103 : 102}
+                zIndex={this.props.routeStop.selected ? 303 : 102}
                 onMouseOver={() => this.showPopup()}
                 onMouseOut={() => this.hidePopup()}
                 onClick={() => this.props.onClick && this.props.onClick()}>
 
                 <React.Fragment>
                     <div className={`expressRoutes-expressRouteStopMarker ${this.props.faded ? "--faded" : ""}`}>
+
+                        <div className="expressRoutes-expressRouteStopMarker-info">
+                            {Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}
+                        </div>
+
                         <div className={`
                             expressRoutes-expressRouteStopMarker-shape
                             expressRoutes-expressRouteStopMarker--${this.getMarkerModifier()}
@@ -58,6 +64,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
                         </div>
                     </div>
+
                 </React.Fragment>
             </MarkerWithLabel>
         );

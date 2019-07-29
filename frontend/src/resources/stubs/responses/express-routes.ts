@@ -231,7 +231,7 @@ const driverRoutes =
             },
             {
                 "hidden": false,
-                "id": "4c76a098-6a70-4be2-80ed-ffb76792a7c4",
+                "id": "5c76a098-6a70-4be2-80ed-ffb76792a7c4",
                 "status": "not-visited",
                 "type": "Delivery",
                 "outfit":
@@ -305,14 +305,13 @@ export default
 
         return routes.map(r =>
         {
-            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.2;
-            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.2;
-            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.2;
-            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.2;
-
             const route = JSON.parse(JSON.stringify(r));
             route.id = route.id + i++;
 
+            route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
+            route.stops[0].location.position.longitude += -0.1 + (0.8 - Math.random()) * 0.1;
+            route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
+            route.stops[1].location.position.longitude += -0.15 + (0.8 - Math.random()) * 0.1;
 
             return route;
         });
@@ -322,20 +321,36 @@ export default
     {
         let i = 0;
 
-        return routes.map(r =>
+        const result: any[] = [];
+
+        result.push(...routes.map(r =>
         {
             const route = JSON.parse(JSON.stringify(r));
             route.driver.id = route.driver.id + i++;
 
-            r.stops[0].location.position.latitude += (1 - Math.random()) * 0.2;
-            r.stops[0].location.position.longitude += (1 - Math.random()) * 0.2;
-            r.stops[1].location.position.latitude += (1 - Math.random()) * 0.2;
-            r.stops[1].location.position.longitude += (1 - Math.random()) * 0.2;
-            r.stops[2].location.position.latitude += (1 - Math.random()) * 0.2;
-            r.stops[2].location.position.longitude += (1 - Math.random()) * 0.2;
-            r.driverPosition.latitude = r.stops[0].location.position.latitude + (1 - Math.random()) * 0.02;
-            r.driverPosition.longitude = -0.1 + r.stops[0].location.position.longitude + (1 - Math.random()) * 0.02;
+            route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
+            route.stops[0].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
+            route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
+            route.stops[1].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
+            route.stops[2].location.position.latitude += (0.8 - Math.random()) * 0.1;
+            route.stops[2].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.1;
+            route.driverPosition.latitude = route.stops[0].location.position.latitude + (1 - Math.random()) * 0.02;
+            route.driverPosition.longitude = -0.05 + route.stops[0].location.position.longitude + (1 - Math.random()) * 0.02;
 
             return route;
-        });
+        }));
+
+        result.push(...routes.map(r =>
+        {
+            const route = JSON.parse(JSON.stringify(r));
+            route.driver.id = route.driver.id + routes.length + i++;
+
+            route.stops = [];
+            route.driverPosition.latitude = route.driverPosition.latitude + (1 - Math.random()) * 0.1;
+            route.driverPosition.longitude = -0.2 + route.driverPosition.longitude + (1 - Math.random()) * 0.2;
+
+            return route;
+        }));
+
+        return result;
     }

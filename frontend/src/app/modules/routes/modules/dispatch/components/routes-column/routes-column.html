@@ -57,7 +57,7 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Consignor" name="consignor">
+                    <data-table-cell title.translate="Consignor" name="consignor.primaryName">
                         <span class="text-truncate" translate>
                             Consignor
                         </span>
@@ -81,13 +81,13 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="From" name="pickupFromTime">
+                    <data-table-cell title.translate="From" name="earliestPickupDate">
                         <span class="text-truncate" translate>
                             From
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To" name="pickupToTime">
+                    <data-table-cell title.translate="To" name="latestPickupDate">
                         <span class="text-truncate" translate>
                             To
                         </span>
@@ -105,13 +105,13 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="From" name="deliveryFromTime">
+                    <data-table-cell title.translate="From" name="earliestDeliveryDate">
                         <span class="text-truncate" translate>
                             From
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To" name="deliveryToTime" align="right">
+                    <data-table-cell title.translate="To" name="latestDeliveryDate" align="right">
                         <span class="text-truncate" translate>
                             To
                         </span>
@@ -204,7 +204,7 @@
 
             <busy-indicator if.bind="workspace.expressRoutes == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="workspace.expressRoutes.length == 0" class="margin-largest" translate>
+            <empty-indicator if.bind="orderedAndFilteredItems.length == 0" class="margin-largest" translate>
                 No results
             </empty-indicator>
 

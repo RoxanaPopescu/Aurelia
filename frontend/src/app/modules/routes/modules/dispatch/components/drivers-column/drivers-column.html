@@ -43,13 +43,13 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Deadline" name="status">
+                    <data-table-cell title.translate="Deadline" name="status.name">
                         <span class="text-truncate" translate>
                             Status
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="ID" name="slug">
+                    <data-table-cell title.translate="ID" name="driver.id">
                         <span class="text-truncate" translate>
                             ID
                         </span>
@@ -61,7 +61,7 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Vehicle" name="vehicle.vehicleType.name">
+                    <data-table-cell title.translate="Vehicle" name="driverVehicle.vehicleType.name">
                         <span class="text-truncate" translate>
                             Vehicle
                         </span>
@@ -154,7 +154,7 @@
 
             <busy-indicator if.bind="workspace.driverRoutes == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="workspace.driverRoutes.length == 0" class="margin-largest" translate>
+            <empty-indicator if.bind="orderedAndFilteredItems.length == 0" class="margin-largest" translate>
                 No results
             </empty-indicator>
 
