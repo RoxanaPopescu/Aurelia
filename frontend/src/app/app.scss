@@ -103,6 +103,13 @@ react-module
 
 // --- TEMPORARY STYLES ---------------------------------------------------------------------------
 
+:root
+{
+    // Default padding for cards.
+    // TODO: Should we define variables for standard margin and padding instead?
+    --card-padding: 3.5rem 3rem;
+}
+
 .button-row
 {
     display: flex;

@@ -3,7 +3,7 @@ import { SearchModel } from "app/model/search-model";
 import { Location } from "app/model/shared";
 import { Outfit } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
-import { IRouteReference, RouteStopInfo, RouteCriticality } from "app/model/route";
+import { IRouteReference, RouteCriticality } from "app/model/route";
 import { ExpressRouteStop } from "./express-route-stop";
 
 /**
@@ -33,7 +33,7 @@ export class ExpressRoute implements IRouteReference
         }
 
         this.stops = data.stops
-            .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new ExpressRouteStop(s, i + 1));
+            .map((s, i: number) => new ExpressRouteStop(s, i + 1));
     }
 
     /**
@@ -72,7 +72,7 @@ export class ExpressRoute implements IRouteReference
     /**
      * The stops at which the driver must either pick up or deliver colli.
      */
-    public readonly stops: (ExpressRouteStop | RouteStopInfo)[];
+    public readonly stops: ExpressRouteStop[];
 
     /**
      * The postal code in which the pickup stop is located.
@@ -102,12 +102,7 @@ export class ExpressRoute implements IRouteReference
     {
         const pickupStop = this.stops[0];
 
-        if (pickupStop instanceof ExpressRouteStop)
-        {
-            return pickupStop.outfit;
-        }
-
-        return undefined;
+        return pickupStop.outfit;
     }
 
     /**
@@ -118,12 +113,7 @@ export class ExpressRoute implements IRouteReference
     {
         const deliveryStop = this.stops[this.stops.length - 1];
 
-        if (deliveryStop instanceof ExpressRouteStop)
-        {
-            return deliveryStop.outfit;
-        }
-
-        return undefined;
+        return deliveryStop.outfit;
     }
 
     /**
@@ -133,12 +123,7 @@ export class ExpressRoute implements IRouteReference
     {
         const pickupStop = this.stops[0];
 
-        if (pickupStop instanceof ExpressRouteStop)
-        {
-            return pickupStop.arrivalTimeFrame.from;
-        }
-
-        return undefined;
+        return pickupStop.arrivalTimeFrame.from;
     }
 
     /**
@@ -148,12 +133,7 @@ export class ExpressRoute implements IRouteReference
     {
         const pickupStop = this.stops[0];
 
-        if (pickupStop instanceof ExpressRouteStop)
-        {
-            return pickupStop.arrivalTimeFrame.to;
-        }
-
-        return undefined;
+        return pickupStop.arrivalTimeFrame.to;
     }
 
     /**
@@ -163,12 +143,7 @@ export class ExpressRoute implements IRouteReference
     {
         const pickupStop = this.stops[0];
 
-        if (pickupStop instanceof ExpressRouteStop)
-        {
-            return pickupStop.arrivalTimeFrame.from;
-        }
-
-        return undefined;
+        return pickupStop.arrivalTimeFrame.from;
     }
 
     /**
@@ -178,12 +153,7 @@ export class ExpressRoute implements IRouteReference
     {
         const pickupStop = this.stops[0];
 
-        if (pickupStop instanceof ExpressRouteStop)
-        {
-            return pickupStop.arrivalTimeFrame.to;
-        }
-
-        return undefined;
+        return pickupStop.arrivalTimeFrame.to;
     }
 
     /**
@@ -215,7 +185,6 @@ export class ExpressRoute implements IRouteReference
     {
         return this.stops
             .filter(s =>
-                s instanceof ExpressRouteStop &&
                 !s.status.slug.startsWith("cancelled"))
             .length;
     }
@@ -228,7 +197,6 @@ export class ExpressRoute implements IRouteReference
     {
         return this.stops
             .filter(s =>
-                s instanceof ExpressRouteStop &&
                 !s.status.slug.startsWith("cancelled") &&
                 s.status.slug !== "not-visited")
             .length;
@@ -240,10 +208,7 @@ export class ExpressRoute implements IRouteReference
      */
     public get cancelledStopCount(): number
     {
-        return this.stops
-            .filter(s =>
-                s instanceof ExpressRouteStop)
-            .length - this.totalStopCount;
+        return this.stops.length - this.totalStopCount;
     }
 
     /**
@@ -254,10 +219,9 @@ export class ExpressRoute implements IRouteReference
     {
         return this.stops
             .filter(s =>
-                s instanceof ExpressRouteStop &&
                 !s.status.slug.startsWith("cancelled"))
             .find(s =>
-                s.status.slug === "arrived" || s.status.slug === "not-visited") as ExpressRouteStop;
+                s.status.slug === "arrived" || s.status.slug === "not-visited");
     }
 
     /**
@@ -267,9 +231,8 @@ export class ExpressRoute implements IRouteReference
     {
         return this.stops
             .filter(s =>
-                s instanceof ExpressRouteStop &&
                 s.status.slug === "not-visited" &&
-                s.isDelayed) as ExpressRouteStop[];
+                s.isDelayed);
     }
 
     /**
@@ -289,13 +252,11 @@ export class ExpressRoute implements IRouteReference
         // Migrate the selection state of each of the route stops in this route.
         for (const stop of this.stops)
         {
-            if (stop instanceof ExpressRouteStop)
+            const newStop = targetRoute.stops.find(s => s.id === stop.id);
+
+            if (newStop != null)
             {
-                const newStop = targetRoute.stops.find(s => s.id === stop.id);
-                if (newStop instanceof ExpressRouteStop)
-                {
-                    newStop.selected = stop.selected;
-                }
+                newStop.selected = stop.selected;
             }
         }
     }

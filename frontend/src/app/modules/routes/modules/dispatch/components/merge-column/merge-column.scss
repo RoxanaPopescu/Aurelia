@@ -11,4 +11,35 @@ page[name="routes"] page[name="dispatch"] merge-column
 
     // Allow the element to shrink.
     min-width: 0;
+
+    page-content
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stop-lists
+    {
+        flex-grow: 1;
+        display: flex;
+    }
+
+    .stop-list
+    {
+        flex-grow: 1;
+        background: var(--color-surface);
+        border: var(--border-width-thin) solid var(--color-border);
+        border-radius: var(--border-radius-medium);
+
+        &:not(:first-child)
+        {
+            margin-left: 5rem;
+        }
+
+        card > a
+        {
+            padding: var(--card-padding);
+            background: white;
+        }
+    }
 }

@@ -9,5 +9,5 @@ export class DispatchPage
 {
     protected workspace = new Workspace();
 
-    protected column = "routes";
+    protected column = "merge";
 }

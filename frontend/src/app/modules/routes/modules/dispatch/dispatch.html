@@ -40,9 +40,9 @@
 
         <map-column workspace.bind="workspace" show.bind="column == 'map'"></map-column>
 
-        <info-column workspace.bind="workspace" show.bind="column == 'info'"></info-column>
+        <info-column workspace.bind="workspace" if.bind="column == 'info'"></info-column>
 
-        <merge-column workspace.bind="workspace" show.bind="column == 'merge'"></merge-column>
+        <merge-column workspace.bind="workspace" if.bind="column == 'merge'"></merge-column>
 
     </page>
 

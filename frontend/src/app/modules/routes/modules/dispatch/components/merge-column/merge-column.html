@@ -16,9 +16,41 @@
 
         </header>
 
-        <section>
+        <section class="stop-lists">
 
-            STOPS IN DRAG-DROP LISTS
+            <div surface="card" class="stop-list express-stops padding-medium">
+
+                <h2 class="font-large margin-bottom" translate>
+                    New stops
+                </h2>
+
+                <card
+                    repeat.for="stop of expressStops"
+                    class="margin-bottom"
+                    draggable="true">
+
+                    STOP ${stop.id}
+
+                </card>
+
+            </div>
+
+            <div surface="card" class="stop-list driver-stops padding-medium">
+
+                <h2 class="font-large margin-bottom" translate>
+                    Driver stops
+                </h2>
+
+                <card
+                    repeat.for="stop of driverStops"
+                    class="margin-bottom"
+                    draggable="true">
+
+                    STOP ${stop.id}
+
+                </card>
+
+            </div>
 
         </section>
 

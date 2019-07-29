@@ -8,5 +8,8 @@ export class Workspace
     public driverRoutes: DriverRoute[] = [];
     public selectedDriverRoutes: DriverRoute[] = [];
 
-    public newDriverRoute: DriverRoute;
+    public get newDriverRoute(): DriverRoute
+    {
+        return this.selectedDriverRoutes[0];
+    }
 }

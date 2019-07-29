@@ -3,7 +3,6 @@ import { SearchModel } from "app/model/search-model";
 import { Position } from "app/model/shared";
 import { Driver } from "app/model/driver";
 import { Vehicle } from "app/model/vehicle";
-import { RouteStopInfo } from "app/model/route";
 import { DriverRouteStop } from "./driver-route-stop";
 import { DriverRouteStatus } from "./driver-route-status";
 
@@ -42,7 +41,7 @@ export class DriverRoute
         }
 
         this.stops = data.stops
-            .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new DriverRouteStop(s, i + 1));
+            .map((s, i: number) => new DriverRouteStop(s, i + 1));
     }
 
     /**
@@ -81,7 +80,7 @@ export class DriverRoute
     /**
      * The stops at which the driver must either pick up or deliver colli.
      */
-    public readonly stops: (DriverRouteStop | RouteStopInfo)[];
+    public readonly stops: DriverRouteStop[];
 
     /**
      * True if the route has been selected by the user, otherwise false.
@@ -101,7 +100,6 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 !s.status.slug.startsWith("cancelled"))
             .length;
     }
@@ -114,7 +112,6 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 !s.status.slug.startsWith("cancelled") &&
                 s.status.slug !== "not-visited")
             .length;
@@ -128,7 +125,6 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 !s.status.slug.startsWith("cancelled") &&
                 s.status.slug === "not-visited")
             .length;
@@ -140,10 +136,7 @@ export class DriverRoute
      */
     public get cancelledStopCount(): number
     {
-        return this.stops
-            .filter(s =>
-                s instanceof DriverRouteStop)
-            .length - this.totalStopCount;
+        return this.stops.length - this.totalStopCount;
     }
 
     /**
@@ -154,10 +147,9 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 !s.status.slug.startsWith("cancelled"))
             .find(s =>
-                s.status.slug === "arrived" || s.status.slug === "not-visited") as DriverRouteStop;
+                s.status.slug === "arrived" || s.status.slug === "not-visited");
     }
 
     /**
@@ -168,10 +160,9 @@ export class DriverRoute
     {
         const remainingStops = this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 !s.status.slug.startsWith("cancelled"));
 
-        return remainingStops[remainingStops.length - 1]  as DriverRouteStop;
+        return remainingStops[remainingStops.length - 1];
     }
 
     /**
@@ -181,9 +172,8 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                s instanceof DriverRouteStop &&
                 s.status.slug === "not-visited" &&
-                s.isDelayed) as DriverRouteStop[];
+                s.isDelayed);
     }
 
     /**
@@ -203,13 +193,11 @@ export class DriverRoute
         // Migrate the selection state of each of the route stops in this route.
         for (const stop of this.stops)
         {
-            if (stop instanceof DriverRouteStop)
+            const newStop = targetRoute.stops.find(s => s.id === stop.id);
+
+            if (newStop != null)
             {
-                const newStop = targetRoute.stops.find(s => s.id === stop.id);
-                if (newStop instanceof DriverRouteStop)
-                {
-                    newStop.selected = stop.selected;
-                }
+                newStop.selected = stop.selected;
             }
         }
     }
