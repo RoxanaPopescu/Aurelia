@@ -162,13 +162,13 @@
 
                         <data-table-cell title.bind="item.earliestPickupDate | time">
                             <span class="text-truncate">
-                                ${item.earliestPickupDate | time}
+                                ${item.earliestPickupDate | time: false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.latestPickupDate | time">
                             <span class="text-truncate">
-                                ${item.latestPickupDate | time}
+                                ${item.latestPickupDate | time: false}
                             </span>
                         </data-table-cell>
 
@@ -186,13 +186,13 @@
 
                         <data-table-cell title.bind="item.earliestDeliveryDate | time">
                             <span class="text-truncate">
-                                ${item.earliestDeliveryDate | time}
+                                ${item.earliestDeliveryDate | time: false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.latestDeliveryDate | time" align="right">
                             <span class="text-truncate">
-                                ${item.latestDeliveryDate | time}
+                                ${item.latestDeliveryDate | time: false}
                             </span>
                         </data-table-cell>
 

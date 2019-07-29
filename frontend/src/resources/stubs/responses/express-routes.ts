@@ -45,7 +45,8 @@ const expressRoutes =
                 "loadingTime": 420.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00"
+                    "from": "2019-03-18T09:00:00+00:00",
+                    "to": "2019-03-18T11:00:00+00:00"
                 },
                 "arrivalTime": "2019-07-16T14:15:40.8220995+00:00",
                 "completionTime": "2019-07-16T14:22:40.8220995+00:00",
@@ -346,6 +347,7 @@ export default
             route.driver.id = route.driver.id + routes.length + i++;
 
             route.stops = [];
+            route.completionTime = undefined;
             route.driverPosition.latitude = route.driverPosition.latitude + (1 - Math.random()) * 0.1;
             route.driverPosition.longitude = -0.2 + route.driverPosition.longitude + (1 - Math.random()) * 0.2;
 

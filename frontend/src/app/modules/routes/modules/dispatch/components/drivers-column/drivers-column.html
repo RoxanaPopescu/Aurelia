@@ -124,13 +124,13 @@
 
                         <data-table-cell title.bind="item.remainingStopCount" align="right">
                             <span class="text-truncate">
-                                ${item.remainingStopCount}
+                                ${item.remainingStopCount || ''}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.completionTime">
                             <span class="text-truncate">
-                                ${item.completionTime | time}
+                                ${item.completionTime | time: false}
                             </span>
                         </data-table-cell>
 
