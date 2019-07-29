@@ -34,7 +34,7 @@ export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLi
         options={{
           strokeColor: "transparent",
           strokeWeight: 9 * strokeWeight,
-          zIndex: 100
+          zIndex: this.props.faded ? 1 : 101
         }}
         onClick={() => this.props.onClick && this.props.onClick()}
       />
@@ -59,7 +59,7 @@ export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLi
         strokeColor: "#17C800",
         strokeWeight,
         strokeOpacity,
-        zIndex: 100,
+        zIndex: this.props.faded ? 1 : 100,
         icons: []
       };
     }
@@ -76,7 +76,7 @@ export class DriverRouteSegmentLine extends React.Component<DriverRouteSegmentLi
         strokeColor: color,
         strokeWeight,
         strokeOpacity,
-        zIndex: 100,
+        zIndex: this.props.faded ? 1 : 100,
         icons: []
       };
 

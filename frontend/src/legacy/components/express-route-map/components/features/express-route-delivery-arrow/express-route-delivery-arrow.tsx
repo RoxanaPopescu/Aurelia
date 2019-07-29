@@ -33,7 +33,7 @@ export class ExpressRouteDeliveryArrow extends React.Component<ExpressRouteDeliv
         options={{
           strokeColor: "transparent",
           strokeWeight: 9 * strokeWeight,
-          zIndex: 100
+          zIndex: this.props.faded ? 2 : 202
         }}
         onClick={() => this.props.onClick && this.props.onClick()}
       />
@@ -49,7 +49,7 @@ export class ExpressRouteDeliveryArrow extends React.Component<ExpressRouteDeliv
       strokeColor: "gray",
       strokeWeight,
       strokeOpacity: 0,
-      zIndex: 101,
+      zIndex: this.props.faded ? 2 : 102,
       icons: [
         {
           icon: {

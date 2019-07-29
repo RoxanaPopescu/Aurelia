@@ -5,7 +5,7 @@
   pointer-events: none;
 
   &.--faded {
-    opacity: 0.3;
+    opacity: 0.4;
   }
 }
 
@@ -62,7 +62,6 @@
   padding: 4px;
   font-size: 0.75em;
   margin-bottom: 5px;
-  z-index: 1;
 
   &::after
   {
