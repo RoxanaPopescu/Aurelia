@@ -3,6 +3,8 @@
     <require from="./components/routes-column/routes-column"></require>
     <require from="./components/drivers-column/drivers-column"></require>
     <require from="./components/map-column/map-column"></require>
+    <require from="./components/info-column/info-column"></require>
+    <require from="./components/merge-column/merge-column"></require>
 
     <require from="./dispatch.scss"></require>
 
@@ -22,6 +24,14 @@
                 Map
             </tab>
 
+            <tab name="info">
+                Merge > Info
+            </tab>
+
+            <tab name="merge">
+                Merge > Stops
+            </tab>
+
         </tab-nav>
 
         <routes-column workspace.bind="workspace" show.bind="column == 'routes'"></routes-column>
@@ -29,6 +39,10 @@
         <drivers-column workspace.bind="workspace" show.bind="column == 'drivers'"></drivers-column>
 
         <map-column workspace.bind="workspace" show.bind="column == 'map'"></map-column>
+
+        <info-column workspace.bind="workspace" show.bind="column == 'info'"></info-column>
+
+        <merge-column workspace.bind="workspace" show.bind="column == 'merge'"></merge-column>
 
     </page>
 

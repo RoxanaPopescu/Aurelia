@@ -1,0 +1,14 @@
+@import "resources/index";
+
+page[name="routes"] page[name="dispatch"] merge-column
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+    flex-basis: 15%;
+
+    // Allow the element to shrink.
+    min-width: 0;
+}
