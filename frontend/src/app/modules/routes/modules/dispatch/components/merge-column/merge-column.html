@@ -18,7 +18,13 @@
 
         <section class="stop-lists">
 
-            <div surface="card" class="stop-list express-stops padding-medium">
+            <div
+                class="stop-list express-stops padding-medium"
+                surface="card"
+                scroll
+                dragover.trigger="onExpressStopsDragOver($event)"
+                dragleave.trigger="onExpressStopsDragLeave($event)"
+                drop.trigger="onExpressStopsDrop($event)">
 
                 <h2 class="font-large margin-bottom" translate>
                     New stops
@@ -26,29 +32,56 @@
 
                 <card
                     repeat.for="stop of expressStops"
-                    class="margin-bottom"
-                    draggable="true">
+                    class="express-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
+                    draggable="true"
+                    dragstart.trigger="onExpressStopsDragStart($event, stop)"
+                    dragend.trigger="onExpressStopsDragEnd($event, stop)">
 
                     STOP ${stop.id}
 
                 </card>
 
+                <div class="express-stops-dropzone ${expressStopsDragover ? '--dragover' : ''}">
+                    <div></div>
+                </div>
+
             </div>
 
-            <div surface="card" class="stop-list driver-stops padding-medium">
+            <div
+                class="stop-list driver-stops padding-medium"
+                surface="card"
+                scroll>
 
                 <h2 class="font-large margin-bottom" translate>
-                    Driver stops
+                    Driver stops ${driverStops.length}
                 </h2>
 
                 <card
                     repeat.for="stop of driverStops"
-                    class="margin-bottom"
-                    draggable="true">
+                    class="driver-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
+                    draggable="true"
+                    dragstart.trigger="onDriverStopsDragStart($event, stop)"
+                    dragend.trigger="onDriverStopsDragEnd($event, stop)">
+
+                    <div
+                        class="stop-dropzone"
+                        dragover.trigger="onDriverStopsDragOver($event, stop)"
+                        dragleave.trigger="onDriverStopsDragLeave($event, stop)"
+                        drop.trigger="onDriverStopsDrop($event, stop)">
+                        <div></div>
+                    </div>
 
                     STOP ${stop.id}
 
                 </card>
+
+                <div
+                    class="driver-stops-dropzone ${driverStopsDragover ? '--dragover' : ''}"
+                    dragover.trigger="onDriverStopsDragOver($event)"
+                    dragleave.trigger="onDriverStopsDragLeave($event)"
+                    drop.trigger="onDriverStopsDrop($event)">
+                    <div></div>
+                </div>
 
             </div>
 

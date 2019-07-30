@@ -155,6 +155,9 @@ export class DriversColumnCustomElement
 
                 // Update the state.
                 this.workspace.driverRoutes = result.routes;
+
+                this.workspace.driverRoutes[0].selected = true;
+                this.onRowToggle(this.workspace.driverRoutes[0], true);
             }
             finally
             {
