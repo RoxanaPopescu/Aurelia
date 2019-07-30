@@ -64,6 +64,7 @@
                     dragend.trigger="onDriverStopsDragEnd($event, stop)">
 
                     <div
+                        if.bind="!stop.dragstart"
                         class="stop-dropzone"
                         dragover.trigger="onDriverStopsDragOver($event, stop)"
                         dragleave.trigger="onDriverStopsDragLeave($event, stop)"

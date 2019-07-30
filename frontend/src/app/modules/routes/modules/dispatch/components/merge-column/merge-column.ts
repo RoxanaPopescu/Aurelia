@@ -144,7 +144,12 @@ export class MergeColumnCustomElement
         event.dataTransfer!.setData(`text/${stopClassName}+json`, payloadJson);
         event.dataTransfer!.dropEffect = "move";
 
-        requestAnimationFrame(() => stop.dragged = true);
+        stop.dragstart = true;
+        requestAnimationFrame(() =>
+        {
+            stop.dragstart = false;
+            stop.dragged = true;
+        });
 
         return true;
     }
