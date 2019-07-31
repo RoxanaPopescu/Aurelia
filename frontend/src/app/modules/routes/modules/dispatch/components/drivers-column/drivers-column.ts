@@ -200,4 +200,10 @@ export class DriversColumnCustomElement
         this.workspace.driverRoutes = this.workspace.driverRoutes.slice();
         this.workspace.selectedDriverRoutes = selected ? this.workspace.driverRoutes.slice() : [];
     }
+
+    protected onMergeClick(): void
+    {
+        this.workspace.isMerging = true;
+        this.workspace.tab = "info";
+    }
 }

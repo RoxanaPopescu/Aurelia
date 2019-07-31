@@ -7,6 +7,7 @@
     <page-content scroll>
 
         <react-express-route-map
+            is-merging.bind="workspace.isMerging"
             express-routes.bind="workspace.expressRoutes"
             driver-routes.bind="workspace.driverRoutes"
             new-driver-stops.bind="workspace.newDriverStops"

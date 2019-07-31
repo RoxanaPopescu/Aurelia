@@ -1,6 +1,7 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { ExpressRouteService, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
+import { Operation } from "shared/types";
 
 interface IExpressRouteStop
 {
@@ -44,6 +45,8 @@ export class MergeColumnCustomElement
     protected expressStops: IExpressRouteStop[];
     protected driverStopsDragover = false;
     protected expressStopsDragover = false;
+    protected updateOperation: Operation;
+    protected canApply = false;
 
     /**
      * Called by the framework when the component is attached to the DOM.
@@ -51,8 +54,6 @@ export class MergeColumnCustomElement
      */
     public async attached(): Promise<void>
     {
-        this.workspace.isMerging = true;
-
         const selectedDriverRoute = this.workspace.selectedDriverRoutes[0];
 
         this.driverStops = selectedDriverRoute.stops.map(stop => ({ type: "driver-route-stop", stop }));
@@ -74,7 +75,6 @@ export class MergeColumnCustomElement
     public async detached(): Promise<void>
     {
         // Clear state related to the merge.
-        this.workspace.isMerging = false;
         this.workspace.newDriverStops = undefined;
         this.workspace.remainingExpressStops = undefined;
     }
@@ -282,6 +282,21 @@ export class MergeColumnCustomElement
         this.updateWorkspace();
     }
 
+    protected async onApplyClick(): Promise<void>
+    {
+        if (!this.canApply)
+        {
+            return;
+        }
+
+        await this._expressRouteService.updateDriverRoute(
+            this.workspace.selectedDriverRoutes[0].driver.id,
+            this.driverStops.map(s => s.stop.id));
+
+        this.workspace.isMerging = false;
+        this.workspace.tab = "routes";
+    }
+
     /**
      * Removes the specified stop from the stop lists.
      * @param stopId The ID of the stop to remove.
@@ -313,6 +328,33 @@ export class MergeColumnCustomElement
 
     private updateWorkspace(): void
     {
+        this.canApply = false;
+
+        // Abort any existing update operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+
+        // Create and execute the new update operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            await this.updateEstimates(signal);
+
+            // HACK: Force a full update of the map.
+
+            const newDriverStops = this.workspace.newDriverStops;
+            const remainingExpressStops = this.workspace.remainingExpressStops;
+            this.workspace.newDriverStops = [];
+            this.workspace.remainingExpressStops = [];
+
+            setTimeout(() =>
+            {
+                this.workspace.newDriverStops = newDriverStops;
+                this.workspace.remainingExpressStops = remainingExpressStops;
+            });
+        });
+
         // HACK: Force a full update of the map.
 
         this.workspace.newDriverStops = [];
@@ -344,5 +386,26 @@ export class MergeColumnCustomElement
 
             this.workspace.remainingExpressStops = Array.from(expressStopMap.values());
         });
+    }
+
+    private async updateEstimates(signal: AbortSignal): Promise<void>
+    {
+        const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
+            this.workspace.selectedDriverRoutes[0].driver.id,
+            this.driverStops.map(s => s.stop.id),
+            signal);
+
+        for (const estimatedStop of estimatedDriverRoute.stops)
+        {
+            const stop = this.driverStops.find(s => s.stop.id === estimatedStop.id);
+
+            if (stop != null)
+            {
+                stop.stop.arrivalTime = estimatedStop.arrivalTime;
+                stop.stop.isDelayed = estimatedStop.isDelayed;
+            }
+        }
+
+        this.canApply = this.expressStops.length === 0; // && !estimatedDriverRoute.stops.some(s => s.isDelayed);
     }
 }

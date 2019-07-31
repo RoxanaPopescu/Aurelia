@@ -3,6 +3,7 @@ import { ExpressRoute, DriverRoute, DriverRouteStop, ExpressRouteStop } from "ap
 export class Workspace
 {
     public isMerging = false;
+    public tab = "routes";
 
     public expressRoutes: ExpressRoute[] = [];
     public selectedExpressRoutes: ExpressRoute[] = [];

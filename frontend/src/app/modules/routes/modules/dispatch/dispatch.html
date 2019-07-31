@@ -10,43 +10,55 @@
 
     <page name="dispatch">
 
-        <tab-nav appearance="solid" value.bind="column">
+        <template if.bind="!workspace.isMerging">
 
-            <tab name="routes">
-                Routes
-            </tab>
+            <tab-nav appearance="solid" value.bind="workspace.tab">
 
-            <tab name="drivers">
-                Drivers
-            </tab>
+                <tab name="routes">
+                    Routes
+                </tab>
 
-            <tab name="map">
-                Map
-            </tab>
+                <tab name="drivers">
+                    Drivers
+                </tab>
 
-            <tab name="info">
-                Merge > Info
-            </tab>
+                <tab name="map">
+                    Map
+                </tab>
 
-            <tab name="merge">
-                Merge > Stops
-            </tab>
+            </tab-nav>
 
-        </tab-nav>
+            <routes-column workspace.bind="workspace" show.bind="workspace.tab == 'routes'"></routes-column>
 
-        <routes-column workspace.bind="workspace" show.bind="column == 'routes'"></routes-column>
-
-        <drivers-column workspace.bind="workspace" show.bind="column == 'drivers'"></drivers-column>
-
-        <map-column workspace.bind="workspace" show.bind="column == 'map'"></map-column>
-
-        <template if.bind="workspace.selectedExpressRoutes.length > 0 && workspace.selectedDriverRoutes.length > 0">
-
-            <info-column workspace.bind="workspace" show.bind="column == 'info'"></info-column>
-
-            <merge-column workspace.bind="workspace" show.bind="column == 'merge'"></merge-column>
+            <drivers-column workspace.bind="workspace" show.bind="workspace.tab == 'drivers'"></drivers-column>
 
         </template>
+
+        <template if.bind="workspace.isMerging">
+
+            <tab-nav appearance="solid" value.bind="workspace.tab">
+
+                <tab name="info">
+                    Info
+                </tab>
+
+                <tab name="merge">
+                    Stops
+                </tab>
+
+                <tab name="map">
+                    Map
+                </tab>
+
+            </tab-nav>
+
+            <info-column workspace.bind="workspace" show.bind="workspace.tab == 'info'"></info-column>
+
+            <merge-column workspace.bind="workspace" show.bind="workspace.tab == 'merge'"></merge-column>
+
+        </template>
+
+        <map-column workspace.bind="workspace" show.bind="workspace.tab == 'map'"></map-column>
 
     </page>
 

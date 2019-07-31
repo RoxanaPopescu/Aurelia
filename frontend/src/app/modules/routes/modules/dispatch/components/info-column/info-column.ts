@@ -9,4 +9,10 @@ export class InfoColumnCustomElement
      */
     @bindable
     protected workspace: Workspace;
+
+    protected onBackClick(): void
+    {
+        this.workspace.isMerging = false;
+        this.workspace.tab = "routes";
+    }
 }

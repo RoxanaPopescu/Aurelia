@@ -6,13 +6,28 @@
 
         <header scroll-fade>
 
-            <h1 class="font-largest">
-                <path-nav>
+            <div class="flex-row">
 
-                    <span>&nbsp;</span>
+                <div>
+                    <button
+                        appearance="solid"
+                        accent="primary"
+                        disabled.bind="workspace.selectedExpressRoutes.length == 0 || workspace.selectedDriverRoutes.length != 1"
+                        click.trigger="onMergeClick()"
+                        translate>
+                        Assign routes to driver
+                    </button>
+                </div>
 
-                </path-nav>
-            </h1>
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span>&nbsp;</span>
+
+                    </path-nav>
+                </h1>
+
+            </div>
 
         </header>
 

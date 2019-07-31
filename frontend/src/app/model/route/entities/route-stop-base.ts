@@ -94,14 +94,14 @@ export abstract class RouteStopBase extends RouteStopInfo
      * If the stop is not yet completed, this will be an estimate.
      * If the route is not yet accepted, this will be undefined.
      */
-    public readonly arrivalTime?: DateTime;
+    public arrivalTime?: DateTime;
 
     /**
      * True if there is a delay at this stop, and the delay excedes
      * the threshold for an acceptable delay, or undefined if the route
      * is not yet started.
      */
-    public readonly isDelayed?: boolean;
+    public isDelayed?: boolean;
 
     /**
      * True if the route stop has been selected by the user, otherwise false.

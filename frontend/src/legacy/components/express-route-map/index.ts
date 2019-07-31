@@ -19,6 +19,9 @@ export class WorldMapCustomElement extends Wrapper
     }
 
     @bindable
+    public isMerging: boolean;
+
+    @bindable
     public expressRoutes: ExpressRoute[];
 
     @bindable
@@ -37,6 +40,7 @@ export class WorldMapCustomElement extends Wrapper
     {
         super.attached(Component, {},
         {
+            isMerging: this.isMerging,
             expressRoutes: this.expressRoutes,
             driverRoutes: this.driverRoutes,
             newDriverStops: this.newDriverStops,

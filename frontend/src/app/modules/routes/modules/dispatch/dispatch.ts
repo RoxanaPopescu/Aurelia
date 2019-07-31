@@ -8,6 +8,4 @@ import { Workspace } from "./services/workspace";
 export class DispatchPage
 {
     protected workspace = new Workspace();
-
-    protected column = "merge";
 }
