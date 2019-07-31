@@ -33,6 +33,12 @@ export class WorldMapCustomElement extends Wrapper
     @bindable
     public remainingExpressStops?: ExpressRouteStop[][];
 
+    @bindable
+    public onDriverRouteClick: (context: { route: DriverRoute }) => void;
+
+    @bindable
+    public onExpressRouteClick: (context: { route: DriverRoute }) => void;
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
@@ -44,7 +50,9 @@ export class WorldMapCustomElement extends Wrapper
             expressRoutes: this.expressRoutes,
             driverRoutes: this.driverRoutes,
             newDriverStops: this.newDriverStops,
-            remainingExpressStops: this.remainingExpressStops
+            remainingExpressStops: this.remainingExpressStops,
+            onDriverRouteClick: route => this.onDriverRouteClick({ route }),
+            onExpressRouteClick: route => this.onExpressRouteClick({ route })
         });
     }
 

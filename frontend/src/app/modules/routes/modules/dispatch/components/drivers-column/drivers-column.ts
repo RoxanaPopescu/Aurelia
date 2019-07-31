@@ -180,7 +180,7 @@ export class DriversColumnCustomElement
         }
         else
         {
-            this.workspace.selectedDriverRoutes.splice(this.workspace.selectedDriverRoutes.indexOf(item), 1);
+            this.workspace.selectedDriverRoutes.splice(this.workspace.selectedDriverRoutes.findIndex(r => r.driver.id === item.driver.id), 1);
         }
 
         this.workspace.driverRoutes = this.workspace.driverRoutes.slice();

@@ -24,7 +24,6 @@ export class RoutesColumnCustomElement
 
     private readonly _expressRouteService: ExpressRouteService;
     private _updateTimeoutHandle: any;
-    protected _selectionCounter = 0;
 
     /**
      * The scroll manager for the page.
@@ -56,7 +55,7 @@ export class RoutesColumnCustomElement
     @bindable
     protected workspace: Workspace;
 
-    @computedFrom("workspace.expressRoutes", "textFilter", "sorting", "_selectionCounter")
+    @computedFrom("workspace.expressRoutes", "textFilter", "sorting")
     protected get orderedAndFilteredItems(): ExpressRoute[]
     {
         if (this.workspace.expressRoutes == null)
@@ -182,13 +181,11 @@ export class RoutesColumnCustomElement
         }
         else
         {
-            this.workspace.selectedExpressRoutes.splice(this.workspace.selectedExpressRoutes.indexOf(item), 1);
+            this.workspace.selectedExpressRoutes.splice(this.workspace.selectedExpressRoutes.findIndex(r => r.id === item.id), 1);
         }
 
         this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
         this.workspace.selectedExpressRoutes = this.workspace.selectedExpressRoutes.slice();
-
-        this._selectionCounter++;
     }
 
     /**
@@ -203,7 +200,5 @@ export class RoutesColumnCustomElement
 
         this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
         this.workspace.selectedExpressRoutes = selected ? this.workspace.expressRoutes.slice() : [];
-
-        this._selectionCounter++;
     }
 }

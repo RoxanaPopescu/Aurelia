@@ -18,6 +18,8 @@ export interface IExpressRouteMapProps
     driverRoutes?: DriverRoute[];
     newDriverStops?: (DriverRouteStop | ExpressRouteStop)[];
     remainingExpressStops?: ExpressRouteStop[][];
+    onExpressRouteClick: (route: ExpressRoute) => void;
+    onDriverRouteClick: (route: DriverRoute) => void;
 }
 
 /**
@@ -51,7 +53,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                             route={route}
                             onClick={() =>
                             {
-                                route.selected = !route.selected;
+                                this.props.onDriverRouteClick(route);
                                 this.forceUpdate();
                             }}
                         />
@@ -63,7 +65,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                             route={route}
                             onClick={() =>
                             {
-                                route.selected = !route.selected;
+                                this.props.onExpressRouteClick(route);
                                 this.forceUpdate();
                             }}
                         />
