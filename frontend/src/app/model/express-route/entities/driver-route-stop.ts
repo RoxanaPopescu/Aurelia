@@ -13,4 +13,9 @@ export class DriverRouteStop extends RouteStopBase
     {
         super(data, stopNumber);
     }
+
+    /**
+     * The number this stop will have on the new route.
+     */
+    public newStopNumber: number | undefined;
 }

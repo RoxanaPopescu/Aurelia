@@ -4,7 +4,7 @@ const expressRoutes =
 [
     {
         "id": "f0a4c73f-f8ae-494c-a1e6-0051e526f53e",
-        "slug": "R6274179423-Split000027",
+        "slug": "R6274179423",
         "reference": "0910-165A-MV",
         "criticality": "high",
         "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
@@ -45,18 +45,18 @@ const expressRoutes =
                 "loadingTime": 420.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00",
-                    "to": "2019-03-18T11:00:00+00:00"
+                    "from": "2019-03-18T09:00:00+01:00",
+                    "to": "2019-03-18T11:00:00+01:00"
                 },
-                "arrivalTime": "2019-07-16T14:15:40.8220995+00:00",
-                "completionTime": "2019-07-16T14:22:40.8220995+00:00",
+                "arrivalTime": "2019-07-16T14:15:40.8220995+01:00",
+                "completionTime": "2019-07-16T14:22:40.8220995+01:00",
                 "isDelayed": true,
                 "estimates":
                 {
                     "drivingTime": 1615,
                     "loadingTime": 420,
                     "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:33:55+00:00"
+                    "completionTime": "2019-03-18T09:33:55+01:00"
                 }
             },
             {
@@ -88,18 +88,18 @@ const expressRoutes =
                 "loadingTime": 120.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00",
-                    "to": "2019-03-18T10:45:00+00:00"
+                    "from": "2019-03-18T09:00:00+01:00",
+                    "to": "2019-03-18T10:30:00+01:00"
                 },
-                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
-                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "arrivalTime": "2019-07-16T10:23+01:00",
+                "completionTime": "2019-07-16T10:28+01:00",
                 "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
                     "loadingTime": 120,
                     "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:38:05+00:00"
+                    "completionTime": "2019-03-18T09:38:05+01:00"
                 }
             }
         ],
@@ -140,7 +140,7 @@ const driverRoutes =
             "latitude": 55.68221077,
             "longitude": 12.58594925
         },
-        "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+        "completionTime": "2019-07-16T10:28+01:00",
 
         "stops":
         [
@@ -173,18 +173,18 @@ const driverRoutes =
                 "loadingTime": 120.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00",
-                    "to": "2019-03-18T10:45:00+00:00"
+                    "from": "2019-03-18T09:00:00+01:00",
+                    "to": "2019-03-18T10:00:00+01:00"
                 },
-                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
-                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "arrivalTime": "2019-07-16T10:23+01:00",
+                "completionTime": "2019-07-16T10:28+01:00",
                 "isDelayed": true,
                 "estimates":
                 {
                     "drivingTime": 130,
                     "loadingTime": 120,
                     "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:38:05+00:00"
+                    "completionTime": "2019-03-18T09:38:05+01:00"
                 }
             },
             {
@@ -216,18 +216,18 @@ const driverRoutes =
                 "loadingTime": 120.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00",
-                    "to": "2019-03-18T10:45:00+00:00"
+                    "from": "2019-03-18T09:00:00+01:00",
+                    "to": "2019-03-18T12:00:00+01:00"
                 },
-                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
-                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "arrivalTime": "2019-07-16T10:33+01:00",
+                "completionTime": "2019-07-16T10:38+01:00",
                 "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
                     "loadingTime": 120,
                     "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:38:05+00:00"
+                    "completionTime": "2019-03-18T09:38:05+01:00"
                 }
             },
             {
@@ -259,18 +259,18 @@ const driverRoutes =
                 "loadingTime": 120.0,
                 "arrivalTimeFrame":
                 {
-                    "from": "2019-03-18T09:00:00+00:00",
-                    "to": "2019-03-18T10:45:00+00:00"
+                    "from": "2019-03-18T09:00:00+01:00",
+                    "to": "2019-03-18T12:00:00+01:00"
                 },
-                "arrivalTime": "2019-07-16T14:24:50.8846266+00:00",
-                "completionTime": "2019-07-16T14:26:50.8846266+00:00",
+                "arrivalTime": "2019-07-16T10:43+01:00",
+                "completionTime": "2019-07-16T10:48+01:00",
                 "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 130,
                     "loadingTime": 120,
                     "waitingTime": 0,
-                    "completionTime": "2019-03-18T09:38:05+00:00"
+                    "completionTime": "2019-03-18T09:38:05+01:00"
                 }
             }
         ],

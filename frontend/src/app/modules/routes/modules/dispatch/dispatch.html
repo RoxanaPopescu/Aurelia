@@ -40,9 +40,13 @@
 
         <map-column workspace.bind="workspace" show.bind="column == 'map'"></map-column>
 
-        <info-column workspace.bind="workspace" if.bind="column == 'info' && workspace.selectedDriverRoutes.length > 0"></info-column>
+        <template if.bind="workspace.selectedExpressRoutes.length > 0 && workspace.selectedDriverRoutes.length > 0">
 
-        <merge-column workspace.bind="workspace" if.bind="column == 'merge' && workspace.selectedDriverRoutes.length > 0"></merge-column>
+            <info-column workspace.bind="workspace" show.bind="column == 'info'"></info-column>
+
+            <merge-column workspace.bind="workspace" show.bind="column == 'merge'"></merge-column>
+
+        </template>
 
     </page>
 

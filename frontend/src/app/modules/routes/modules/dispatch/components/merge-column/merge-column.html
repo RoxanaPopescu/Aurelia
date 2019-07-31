@@ -30,16 +30,38 @@
                     New stops
                 </h2>
 
-                <card
+                <div
                     repeat.for="stop of expressStops"
-                    class="express-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
+                    class="stop-list-item express-route-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
                     draggable="true"
                     dragstart.trigger="onExpressStopsDragStart($event, stop)"
                     dragend.trigger="onExpressStopsDragEnd($event, stop)">
 
-                    STOP ${stop.id}
+                    <card accent="primary">
 
-                </card>
+                        <div class="flex-row">
+                            <div class="stop-icon">
+                                <div>${stop.stop.stopNumber}</div>
+                            </div>
+                            <div>
+                                <div>Stop: ${stop.stop.outfit.primaryName}</div>
+                                <div>${stop.stop.location.address}</div>
+                            </div>
+                            <div class="flex-push-right text-align-right">
+                                <div>
+                                    &nbsp;
+                                    <a href="/routes/details/${stop.routeSlug}">
+                                        ${stop.routeSlug}
+                                    </a>
+                                </div>
+                                <div>${stop.stop.arrivalTimeFrame | timeRange}</div>
+                            </div>
+                            <icon name="md-drag-handle" class="opacity-faded-more"></icon>
+                        </div>
+
+                    </card>
+
+                </div>
 
                 <div class="express-stops-dropzone ${expressStopsDragover ? '--dragover' : ''}">
                     <div></div>
@@ -53,15 +75,15 @@
                 scroll>
 
                 <h2 class="font-large margin-bottom" translate>
-                    Driver stops ${driverStops.length}
+                    Driver stops
                 </h2>
 
-                <card
+                <div
                     repeat.for="stop of driverStops"
-                    class="driver-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
                     draggable="true"
                     dragstart.trigger="onDriverStopsDragStart($event, stop)"
-                    dragend.trigger="onDriverStopsDragEnd($event, stop)">
+                    dragend.trigger="onDriverStopsDragEnd($event, stop)"
+                    class="stop-list-item ${stop.type} margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}">
 
                     <div
                         if.bind="!stop.dragstart"
@@ -72,9 +94,34 @@
                         <div></div>
                     </div>
 
-                    STOP ${stop.id}
+                    <card accent.bind="stop.type == 'express-route-stop' ? 'primary' : 'neutral' & attr">
 
-                </card>
+                        <div class="flex-row">
+                            <div class="stop-icon">
+                                <div>${$index + 1}</div>
+                            </div>
+                            <div>
+                                <div>Stop: ${stop.stop.outfit.primaryName}</div>
+                                <div>${stop.stop.location.address}</div>
+                            </div>
+                            <div class="flex-push-right text-align-right">
+                                <div>
+                                    &nbsp;
+                                    <a href="/routes/details/${stop.routeSlug}">
+                                        ${stop.routeSlug}
+                                    </a>
+                                </div>
+                                <div>
+                                    ${stop.stop.arrivalTimeFrame | timeRange}
+                                    <span accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">(${stop.stop.arrivalTime | time})</span>
+                                </div>
+                            </div>
+                            <icon name="md-drag-handle" class="opacity-faded-more"></icon>
+                        </div>
+
+                    </card>
+
+                </div>
 
                 <div
                     class="driver-stops-dropzone ${driverStopsDragover ? '--dragover' : ''}"

@@ -25,6 +25,8 @@ page[name="routes"] page[name="dispatch"] merge-column
 
     .stop-list
     {
+        --stop-card-height: 17.5rem;
+
         position: relative;
         flex-grow: 1;
         flex-basis: 100%;
@@ -64,6 +66,27 @@ page[name="routes"] page[name="dispatch"] merge-column
             }
         }
 
+        .driver-stops-dropzone
+        {
+            flex-grow: 1;
+            margin-top: calc(-1 * var(--font-current-margin-top));
+            padding-top: var(--font-current-margin-top);
+            opacity: 0;
+
+            &.--dragover
+            {
+                //transition: opacity var(--animation-duration-medium);
+                opacity: 1;
+            }
+
+            > div
+            {
+                height: var(--stop-card-height);
+                border: var(--border-width-medium) dashed var(--color-surface-primary-border);
+                border-radius: var(--border-radius-medium);
+            }
+        }
+
         .stop-dropzone
         {
             position: absolute;
@@ -75,52 +98,83 @@ page[name="routes"] page[name="dispatch"] merge-column
 
             > div
             {
-                height: 12.5rem;
+                height: var(--stop-card-height);
                 border: var(--border-width-medium) dashed var(--color-surface-primary-border);
                 border-radius: var(--border-radius-medium);
             }
         }
 
-        card > a
+        .stop-list-item
         {
-            padding: var(--card-padding);
-            background: white;
-        }
+            position: relative;
 
-        card.--dragover
-        {
-            padding-top: calc(12.5rem + var(--font-current-margin-top));
-
-            .stop-dropzone
+            &.--dragged
             {
-                transition: opacity var(--animation-duration-medium);
-                opacity: 1;
+                display: none;
             }
-        }
-
-        card.--dragged
-        {
-            display: none;
-        }
-
-        .driver-stops-dropzone
-        {
-            flex-grow: 1;
-            margin-top: calc(-1 * var(--font-current-margin-top));
-            padding-top: var(--font-current-margin-top);
-            opacity: 0;
 
             &.--dragover
             {
-                transition: opacity var(--animation-duration-medium);
-                opacity: 1;
+                padding-top: calc(var(--stop-card-height) + var(--font-current-margin-top));
+
+                .stop-dropzone
+                {
+                    //transition: opacity var(--animation-duration-medium);
+                    opacity: 1;
+                }
             }
 
-            > div
+            card
             {
-                height: 12.5rem;
-                border: var(--border-width-medium) dashed var(--color-surface-primary-border);
-                border-radius: var(--border-radius-medium);
+                pointer-events: none;
+            }
+
+            card > a
+            {
+                background: white;
+            }
+
+            .icon-md-drag-handle
+            {
+                align-self: center;
+                font-size: 8rem;
+                margin-right: -2rem;
+                margin-left: 2rem;
+            }
+
+            .stop-icon
+            {
+                align-self: center;
+                margin-right: var(--size-inline-spacing-larger);
+                margin-left: 2rem;
+            }
+
+            &.driver-route-stop .stop-icon
+            {
+                width: 8rem;
+                height: 8rem;
+                line-height: 8rem;
+                border-radius: 50%;
+                text-align: center;
+                background: gray;
+                color: white;
+            }
+
+            &.express-route-stop .stop-icon
+            {
+                width: 7rem;
+                height: 7rem;
+                line-height: 7rem;
+                border-radius: 3px;
+                transform: rotate(45deg);
+                text-align: center;
+                background: gray;
+                color: white;
+
+                > div
+                {
+                    transform: rotate(-45deg);
+                }
             }
         }
     }

@@ -1,15 +1,15 @@
-import { ExpressRoute, DriverRoute } from "app/model/express-route";
+import { ExpressRoute, DriverRoute, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
 
 export class Workspace
 {
+    public isMerging = false;
+
     public expressRoutes: ExpressRoute[] = [];
     public selectedExpressRoutes: ExpressRoute[] = [];
 
     public driverRoutes: DriverRoute[] = [];
     public selectedDriverRoutes: DriverRoute[] = [];
 
-    public get newDriverRoute(): DriverRoute
-    {
-        return this.selectedDriverRoutes[0];
-    }
+    public newDriverStops?: (DriverRouteStop | ExpressRouteStop)[];
+    public remainingExpressStops?: ExpressRouteStop[][];
 }

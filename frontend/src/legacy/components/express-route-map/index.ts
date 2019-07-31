@@ -3,7 +3,7 @@ import { Wrapper } from "../../wrappers/wrapper";
 
 // Import the component that should be wrapped.
 import { ExpressRouteMapComponent as Component } from "./express-route-map";
-import { DriverRoute, ExpressRoute } from "app/model/express-route";
+import { DriverRoute, ExpressRoute, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
 
 @noView
 @autoinject
@@ -24,6 +24,12 @@ export class WorldMapCustomElement extends Wrapper
     @bindable
     public driverRoutes: DriverRoute[];
 
+    @bindable
+    public newDriverStops: (DriverRouteStop | ExpressRouteStop)[];
+
+    @bindable
+    public remainingExpressStops?: ExpressRouteStop[][];
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
@@ -32,7 +38,9 @@ export class WorldMapCustomElement extends Wrapper
         super.attached(Component, {},
         {
             expressRoutes: this.expressRoutes,
-            driverRoutes: this.driverRoutes
+            driverRoutes: this.driverRoutes,
+            newDriverStops: this.newDriverStops,
+            remainingExpressStops: this.remainingExpressStops
         });
     }
 

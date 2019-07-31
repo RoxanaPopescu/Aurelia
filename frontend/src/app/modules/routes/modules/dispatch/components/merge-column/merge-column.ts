@@ -1,6 +1,24 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ExpressRouteService, DriverRouteStop } from "app/model/express-route";
+import { ExpressRouteService, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
+
+interface IExpressRouteStop
+{
+    type: "express-route-stop";
+    stop: ExpressRouteStop;
+    dragged?: boolean;
+    dragstart?: boolean;
+    routeSlug: string;
+}
+
+interface IDriverRouteStop
+{
+    type: "driver-route-stop";
+    stop: DriverRouteStop;
+    dragged?: boolean;
+    dragstart?: boolean;
+    dragover?: boolean;
+}
 
 @autoinject
 export class MergeColumnCustomElement
@@ -22,8 +40,8 @@ export class MergeColumnCustomElement
     @bindable
     protected workspace: Workspace;
 
-    protected driverStops: DriverRouteStop[];
-    protected expressStops: DriverRouteStop[];
+    protected driverStops: (IExpressRouteStop | IDriverRouteStop)[];
+    protected expressStops: IExpressRouteStop[];
     protected driverStopsDragover = false;
     protected expressStopsDragover = false;
 
@@ -33,13 +51,32 @@ export class MergeColumnCustomElement
      */
     public async attached(): Promise<void>
     {
-        this.driverStops = this.workspace.selectedDriverRoutes[0].stops;
+        this.workspace.isMerging = true;
+
+        const selectedDriverRoute = this.workspace.selectedDriverRoutes[0];
+
+        this.driverStops = selectedDriverRoute.stops.map(stop => ({ type: "driver-route-stop", stop }));
+
         this.expressStops = [];
 
         for (const route of this.workspace.selectedExpressRoutes)
         {
-            this.expressStops.push(...route.stops);
+            this.expressStops.push(...route.stops.map(stop => ({ type: "express-route-stop" as any, stop, routeSlug: route.slug })));
         }
+
+        this.updateWorkspace();
+    }
+
+    /**
+     * Called by the framework when the component is detached to the DOM.
+     * @returns A promise that will be resolved when the module is activated.
+     */
+    public async detached(): Promise<void>
+    {
+        // Clear state related to the merge.
+        this.workspace.isMerging = false;
+        this.workspace.newDriverStops = undefined;
+        this.workspace.remainingExpressStops = undefined;
     }
 
     /**
@@ -48,12 +85,11 @@ export class MergeColumnCustomElement
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
      */
-    protected onExpressStopsDragStart(event: DragEvent, stop: any): boolean
+    protected onExpressStopsDragStart(event: DragEvent, stop: IExpressRouteStop): boolean
     {
-        const payloadJson = JSON.stringify({ stopId: stop.id });
-        const stopClassName = stop.constructor.name.toLowerCase();
+        const payloadJson = JSON.stringify({ stopId: stop.stop.id });
 
-        event.dataTransfer!.setData(`text/${stopClassName}+json`, payloadJson);
+        event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
         event.dataTransfer!.dropEffect = "move";
 
         requestAnimationFrame(() => stop.dragged = true);
@@ -67,7 +103,7 @@ export class MergeColumnCustomElement
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
      */
-    protected onExpressStopsDragEnd(event: DragEvent, stop?: any): void
+    protected onExpressStopsDragEnd(event: DragEvent, stop: IExpressRouteStop): void
     {
         requestAnimationFrame(() =>
         {
@@ -83,7 +119,7 @@ export class MergeColumnCustomElement
     protected onExpressStopsDragOver(event: DragEvent): void
     {
         const allowDrop =
-            event.dataTransfer!.types.includes("text/expressroutestop+json");
+            event.dataTransfer!.types.includes("text/express-route-stop+json");
 
         event.dataTransfer!.dropEffect = allowDrop ? "move" : "none";
 
@@ -119,15 +155,17 @@ export class MergeColumnCustomElement
         });
 
         const payloadJson =
-            event.dataTransfer!.getData("text/expressroutestop+json");
+            event.dataTransfer!.getData("text/express-route-stop+json");
 
         const payloadData = JSON.parse(payloadJson);
         const draggedStop = this.removeStop(payloadData.stopId);
 
-        this.expressStops.push(draggedStop);
+        this.expressStops.push(draggedStop as IExpressRouteStop);
         draggedStop.dragged = false;
 
         // TODO: Sort stops
+
+        this.updateWorkspace();
     }
 
     /**
@@ -136,12 +174,11 @@ export class MergeColumnCustomElement
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
      */
-    protected onDriverStopsDragStart(event: DragEvent, stop: any): boolean
+    protected onDriverStopsDragStart(event: DragEvent, stop: IDriverRouteStop): boolean
     {
-        const payloadJson = JSON.stringify({ stopId: stop.id });
-        const stopClassName = stop.constructor.name.toLowerCase();
+        const payloadJson = JSON.stringify({ stopId: stop.stop.id });
 
-        event.dataTransfer!.setData(`text/${stopClassName}+json`, payloadJson);
+        event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
         event.dataTransfer!.dropEffect = "move";
 
         stop.dragstart = true;
@@ -160,7 +197,7 @@ export class MergeColumnCustomElement
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
      */
-    protected onDriverStopsDragEnd(event: DragEvent, stop?: any): void
+    protected onDriverStopsDragEnd(event: DragEvent, stop: IDriverRouteStop): void
     {
         requestAnimationFrame(() =>
         {
@@ -174,11 +211,11 @@ export class MergeColumnCustomElement
      * @param event The drag event.
      * @param item The item on which the even occurred.
      */
-    protected onDriverStopsDragOver(event: DragEvent, stop?: any): void
+    protected onDriverStopsDragOver(event: DragEvent, stop?: IDriverRouteStop): void
     {
         const allowDrop =
-            event.dataTransfer!.types.includes("text/driverroutestop+json") ||
-            event.dataTransfer!.types.includes("text/expressroutestop+json");
+            event.dataTransfer!.types.includes("text/driver-route-stop+json") ||
+            event.dataTransfer!.types.includes("text/express-route-stop+json");
 
         event.dataTransfer!.dropEffect = allowDrop ? "move" : "none";
 
@@ -201,7 +238,7 @@ export class MergeColumnCustomElement
      * @param event The drag event.
      * @param item The item on which the even occurred.
      */
-    protected onDriverStopsDragLeave(event: DragEvent, stop?: any): void
+    protected onDriverStopsDragLeave(event: DragEvent, stop?: IDriverRouteStop): void
     {
         requestAnimationFrame(() =>
         {
@@ -219,7 +256,7 @@ export class MergeColumnCustomElement
      * @param event The drag event.
      * @param item The item on which the even occurred.
      */
-    protected onDriverStopsDrop(event: DragEvent, stop?: any): void
+    protected onDriverStopsDrop(event: DragEvent, stop?: IDriverRouteStop): void
     {
         requestAnimationFrame(() =>
         {
@@ -232,15 +269,17 @@ export class MergeColumnCustomElement
         });
 
         const payloadJson =
-            event.dataTransfer!.getData("text/expressroutestop+json") ||
-            event.dataTransfer!.getData("text/driverroutestop+json");
+            event.dataTransfer!.getData("text/express-route-stop+json") ||
+            event.dataTransfer!.getData("text/driver-route-stop+json");
 
         const payloadData = JSON.parse(payloadJson);
         const draggedStop = this.removeStop(payloadData.stopId);
 
-        const targetStopIndex = this.driverStops.findIndex(s => s === stop);
+        const targetStopIndex = stop != null ? this.driverStops.findIndex(s => s === stop) : this.driverStops.length;
         this.driverStops.splice(targetStopIndex, 0, draggedStop);
         draggedStop.dragged = false;
+
+        this.updateWorkspace();
     }
 
     /**
@@ -248,12 +287,12 @@ export class MergeColumnCustomElement
      * @param stopId The ID of the stop to remove.
      * @returns The stop that was removed.
      */
-    private removeStop(stopId: string): any
+    private removeStop(stopId: string): (IExpressRouteStop | IDriverRouteStop)
     {
         let stop: any;
         let stopIndex: number;
 
-        stopIndex = this.expressStops.findIndex(s => s.id === stopId);
+        stopIndex = this.expressStops.findIndex(s => s.stop.id === stopId);
 
         if (stopIndex > -1)
         {
@@ -261,7 +300,7 @@ export class MergeColumnCustomElement
             this.expressStops.splice(stopIndex, 1);
         }
 
-        stopIndex = this.driverStops.findIndex(s => s.id === stopId);
+        stopIndex = this.driverStops.findIndex(s => s.stop.id === stopId);
 
         if (stopIndex > -1)
         {
@@ -270,5 +309,40 @@ export class MergeColumnCustomElement
         }
 
         return stop;
+    }
+
+    private updateWorkspace(): void
+    {
+        // HACK: Force a full update of the map.
+
+        this.workspace.newDriverStops = [];
+        this.workspace.remainingExpressStops = [];
+
+        setTimeout(() =>
+        {
+            let i = 0;
+
+            this.workspace.newDriverStops = this.driverStops.map(stop =>
+            {
+                stop.stop.newStopNumber = ++i;
+
+                return stop.stop;
+            });
+
+            const expressStopMap = new Map<string, ExpressRouteStop[]>();
+
+            const sortedExpressStops = this.expressStops.slice().sort((a, b) => a.stop.stopNumber - b.stop.stopNumber);
+
+            for (const stop of sortedExpressStops)
+            {
+                stop.stop.newStopNumber = undefined;
+
+                const stops = expressStopMap.get(stop.routeSlug) || [];
+                stops.push(stop.stop);
+                expressStopMap.set(stop.routeSlug, stops);
+            }
+
+            this.workspace.remainingExpressStops = Array.from(expressStopMap.values());
+        });
     }
 }

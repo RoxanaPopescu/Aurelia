@@ -163,8 +163,6 @@ export class RoutesColumnCustomElement
 
                 this.workspace.expressRoutes[0].selected = true;
                 this.onRowToggle(this.workspace.expressRoutes[0], true);
-                this.workspace.expressRoutes[1].selected = true;
-                this.onRowToggle(this.workspace.expressRoutes[1], true);
             }
             finally
             {

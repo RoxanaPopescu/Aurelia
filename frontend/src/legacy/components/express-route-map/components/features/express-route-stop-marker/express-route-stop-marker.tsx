@@ -24,7 +24,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
     protected renderMarker()
     {
         const position = this.props.routeStop.location.position!.toGoogleLatLng();
-        const labelText = this.props.routeStop.stopNumber.toString();
+        const labelText = (this.props.routeStop.newStopNumber || this.props.routeStop.stopNumber).toString();
 
         return (
             <MarkerWithLabel
