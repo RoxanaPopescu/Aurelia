@@ -34,14 +34,13 @@ data-table[appearance="rows"]
         data-table-cell
         {
             position: relative;
-            border-top: var(--data-table-row-border-width) solid transparent;
-            border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+            border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
             &:first-child:before
             {
                 content: "";
                 position: absolute;
-                top: calc(-1 * var(--data-table-row-border-width));
+                top: 0;
                 left: 0;
                 bottom: 0;
             }
@@ -51,6 +50,31 @@ data-table[appearance="rows"]
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
             }
         }
+    }
+
+    .data-table-row:last-child data-table-cell
+    {
+        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+    }
+
+    .data-table-row.--selected data-table-cell
+    {
+        border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color--active);
+    }
+
+    .data-table-row.--selected + .data-table-row.--selected data-table-cell
+    {
+        border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color--active);
+    }
+
+    .data-table-row.--selected + .data-table-row:not(.--selected) data-table-cell
+    {
+        border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color--active);
+    }
+
+    .data-table-row.--selected:last-child data-table-cell
+    {
+        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color--active);
     }
 }
 

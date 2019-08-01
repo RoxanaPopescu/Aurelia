@@ -25,6 +25,14 @@ data-table[appearance="rows"]
             border-left: none;
         }
     }
+
+    data-table-headers:not(:last-child)
+    {
+        data-table-cell
+        {
+            border-bottom: none;
+        }
+    }
 }
 
 data-table[appearance="cards"]
