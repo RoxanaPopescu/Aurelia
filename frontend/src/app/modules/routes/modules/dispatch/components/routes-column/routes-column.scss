@@ -14,7 +14,7 @@ page[name="routes"] page[name="dispatch"] routes-column
 
     data-table
     {
-        --data-table-columns: 0.75fr 1fr 1fr 1fr 1.5fr 0.8fr 0.75fr 0.75fr 1.5fr 0.8fr 0.75fr 0.75fr;
+        --data-table-columns: 0.75fr 0.8fr 1fr 0.75fr 1.5fr 0.8fr 0.7fr 0.7fr 1.5fr 0.8fr 0.7fr 0.7fr;
     }
 
     .data-table-row.--selected + .data-table-row:not(.--selected)
