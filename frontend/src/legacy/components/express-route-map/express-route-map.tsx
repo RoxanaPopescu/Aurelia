@@ -100,7 +100,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
                     {this.props.isMerging && this.props.remainingExpressStops && this.props.remainingExpressStops.map(stops =>
                         stops.map(stop =>
-                            <ExpressRouteStopMarker key={`RemainingExpressRouteStop-${stop.id}`} routeStop={stop}/>
+                            <ExpressRouteStopMarker key={`RemainingExpressRouteStop-${stop.id}`} routeStop={stop} unconnected={true}/>
                         )
                     )}
 

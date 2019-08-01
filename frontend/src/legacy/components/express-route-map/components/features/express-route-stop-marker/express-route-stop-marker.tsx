@@ -11,6 +11,7 @@ export interface ExpressRouteStopMarkerProps
     routeStop: ExpressRouteStop;
     onClick?: () => void;
     faded?: boolean;
+    unconnected?: boolean;
 }
 
 @observer
@@ -28,11 +29,11 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
         const hasAlert =
             this.props.routeStop.hasAlert ||
-            this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "negative";
+            this.props.unconnected && this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "negative";
 
         const hasWarning =
             this.props.routeStop.hasWarning ||
-            this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "attention";
+            this.props.unconnected && this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "attention";
 
         return (
             <MarkerWithLabel
