@@ -59,17 +59,20 @@
                                 <div>${stop.stop.stopNumber}</div>
                             </div>
                             <div>
-                                <div>Stop: ${stop.stop.outfit.primaryName}</div>
+                                <div>${stop.stop.outfit.primaryName}${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.type.name}</div>
                                 <div>${stop.stop.location.address}</div>
                             </div>
                             <div class="flex-push-right text-align-right">
                                 <div>
                                     &nbsp;
-                                    <a href="/routes/details/${stop.routeSlug}">
-                                        ${stop.routeSlug}
+                                    <a href="/routes/details/${stop.route.slug}">
+                                        ${stop.route.slug}
                                     </a>
                                 </div>
-                                <div>${stop.stop.arrivalTimeFrame | timeRange}</div>
+                                <div class="flex-row" accent.bind="stop.route.criticality.accent & attr">
+                                    <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
+                                    &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                </div>
                             </div>
                             <icon name="md-drag-handle" class="opacity-faded-more"></icon>
                         </div>
@@ -116,19 +119,19 @@
                                 <div>${$index + 1}</div>
                             </div>
                             <div>
-                                <div>Stop: ${stop.stop.outfit.primaryName}</div>
+                                <div>${stop.stop.outfit.primaryName}${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.type.name}</div>
                                 <div>${stop.stop.location.address}</div>
                             </div>
                             <div class="flex-push-right text-align-right">
                                 <div>
                                     &nbsp;
-                                    <a href="/routes/details/${stop.routeSlug}">
-                                        ${stop.routeSlug}
+                                    <a href="/routes/details/${stop.route.slug}">
+                                        ${stop.route.slug}
                                     </a>
                                 </div>
-                                <div>
-                                    ${stop.stop.arrivalTimeFrame | timeRange}
-                                    <span accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">(${stop.stop.arrivalTime | time})</span>
+                                <div class="flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
+                                    <icon name="md-warning" if.bind="stop.stop.isDelayed"></icon>
+                                    &nbsp;${stop.stop.arrivalTimeFrame | timeRange} (${stop.stop.arrivalTime | time})
                                 </div>
                             </div>
                             <icon name="md-drag-handle" class="opacity-faded-more"></icon>

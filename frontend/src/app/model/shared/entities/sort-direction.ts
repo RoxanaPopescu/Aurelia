@@ -11,7 +11,7 @@ export class SortingDirection
     public constructor(slug: SortingDirectionSlug)
     {
         this.slug = slug;
-        Object.assign(this, SortingDirection.values[slug]);
+        Object.assign(this, SortingDirection.values[this.slug]);
     }
 
     public slug: SortingDirectionSlug;

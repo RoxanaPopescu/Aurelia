@@ -15,7 +15,7 @@ export class OutfitType
     public constructor(slug: OutfitTypeSlug)
     {
         this.slug = slug;
-        Object.assign(this, OutfitType.values[slug]);
+        Object.assign(this, OutfitType.values[this.slug]);
     }
 
     public slug: OutfitTypeSlug;

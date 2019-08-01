@@ -17,7 +17,7 @@ export class ColloStatus
     public constructor(slug: ColloStatusSlug)
     {
         this.slug = slug;
-        Object.assign(this, ColloStatus.values[slug]);
+        Object.assign(this, ColloStatus.values[this.slug]);
     }
 
     public slug: ColloStatusSlug;

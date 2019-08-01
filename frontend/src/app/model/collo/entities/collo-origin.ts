@@ -15,7 +15,7 @@ export class ColloOrigin
     public constructor(slug: ColloOriginSlug)
     {
         this.slug = slug;
-        Object.assign(this, ColloOrigin.values[slug]);
+        Object.assign(this, ColloOrigin.values[this.slug]);
     }
 
     public slug: ColloOriginSlug;

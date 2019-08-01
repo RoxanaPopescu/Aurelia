@@ -17,7 +17,7 @@ export class RoutePlanStatus
     public constructor(slug: RoutePlanStatusSlug)
     {
         this.slug = slug;
-        Object.assign(this, RoutePlanStatus.values[slug] || { name: slug, accent: "neutral" });
+        Object.assign(this, RoutePlanStatus.values[this.slug] || { name: slug, accent: "neutral" });
     }
 
     public slug: RoutePlanStatusSlug;

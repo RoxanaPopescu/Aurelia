@@ -20,6 +20,7 @@ const expressRoutes =
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c1",
                 "status": "not-visited",
                 "type": "Pickup",
+                "orderIds": ["4321"],
                 "outfit":
                 {
                     "contactPerson": "Oliver Kas",
@@ -64,6 +65,7 @@ const expressRoutes =
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c2",
                 "status": "not-visited",
                 "type": "Delivery",
+                "orderIds": ["4321"],
                 "outfit":
                 {
                     "contactPhone":
@@ -148,7 +150,8 @@ const driverRoutes =
                 "hidden": false,
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c3",
                 "status": "not-visited",
-                "type": "Delivery",
+                "type": "Pickup",
+                "orderIds": ["1234", "5678", "2468"],
                 "outfit":
                 {
                     "contactPhone":
@@ -192,6 +195,7 @@ const driverRoutes =
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c4",
                 "status": "not-visited",
                 "type": "Delivery",
+                "orderIds": ["1234"],
                 "outfit":
                 {
                     "contactPhone":
@@ -205,7 +209,7 @@ const driverRoutes =
                 {
                     "address":
                     {
-                        "primary": "Somestreat 123 , 1337  Somecity"
+                        "primary": "Somestreet 123 , 1337  Somecity"
                     },
                     "position":
                     {
@@ -235,6 +239,7 @@ const driverRoutes =
                 "id": "3c76a098-6a70-4be2-80ed-ffb76692a7c5",
                 "status": "not-visited",
                 "type": "Delivery",
+                "orderIds": ["5678", "2468"],
                 "outfit":
                 {
                     "contactPhone":
@@ -248,7 +253,7 @@ const driverRoutes =
                 {
                     "address":
                     {
-                        "primary": "Otherstreat 123 , 4242  Othercity"
+                        "primary": "Otherstreet 123 , 4242  Othercity"
                     },
                     "position":
                     {

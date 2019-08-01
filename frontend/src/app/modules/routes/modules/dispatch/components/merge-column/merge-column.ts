@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ExpressRouteService, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
+import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
 import { Operation } from "shared/types";
 
@@ -9,7 +9,7 @@ interface IExpressRouteStop
     stop: ExpressRouteStop;
     dragged?: boolean;
     dragstart?: boolean;
-    routeSlug: string;
+    route: ExpressRoute;
 }
 
 interface IDriverRouteStop
@@ -32,6 +32,8 @@ export class MergeColumnCustomElement
     {
         this._expressRouteService = routeService;
     }
+
+    private _draggedStop: IDriverRouteStop | IExpressRouteStop;
 
     protected readonly _expressRouteService: ExpressRouteService;
 
@@ -62,7 +64,7 @@ export class MergeColumnCustomElement
 
         for (const route of this.workspace.selectedExpressRoutes)
         {
-            this.expressStops.push(...route.stops.map(stop => ({ type: "express-route-stop" as any, stop, routeSlug: route.slug })));
+            this.expressStops.push(...route.stops.map(stop => ({ type: "express-route-stop" as any, stop, route })));
         }
 
         this.updateWorkspace();
@@ -87,6 +89,8 @@ export class MergeColumnCustomElement
      */
     protected onExpressStopsDragStart(event: DragEvent, stop: IExpressRouteStop): boolean
     {
+        this._draggedStop = stop;
+
         const payloadJson = JSON.stringify({ stopId: stop.stop.id });
 
         event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
@@ -163,8 +167,6 @@ export class MergeColumnCustomElement
         this.expressStops.push(draggedStop as IExpressRouteStop);
         draggedStop.dragged = false;
 
-        // TODO: Sort stops
-
         this.updateWorkspace();
     }
 
@@ -176,6 +178,8 @@ export class MergeColumnCustomElement
      */
     protected onDriverStopsDragStart(event: DragEvent, stop: IDriverRouteStop): boolean
     {
+        this._draggedStop = stop;
+
         const payloadJson = JSON.stringify({ stopId: stop.stop.id });
 
         event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
@@ -214,8 +218,9 @@ export class MergeColumnCustomElement
     protected onDriverStopsDragOver(event: DragEvent, stop?: IDriverRouteStop): void
     {
         const allowDrop =
-            event.dataTransfer!.types.includes("text/driver-route-stop+json") ||
-            event.dataTransfer!.types.includes("text/express-route-stop+json");
+            (event.dataTransfer!.types.includes("text/driver-route-stop+json") ||
+            event.dataTransfer!.types.includes("text/express-route-stop+json")) &&
+            this.validateDriverStopDrop(stop);
 
         event.dataTransfer!.dropEffect = allowDrop ? "move" : "none";
 
@@ -326,6 +331,40 @@ export class MergeColumnCustomElement
         return stop;
     }
 
+    private validateDriverStopDrop(targetStop?: IDriverRouteStop | IExpressRouteStop): boolean
+    {
+        if (this._draggedStop.stop.type.slug === "pickup")
+        {
+            for (const orderId of this._draggedStop.stop.orderIds)
+            {
+                const deliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.orderIds.includes(orderId));
+
+                if (
+                    (deliveryStop != null && targetStop == null) ||
+                    (deliveryStop != null && targetStop != null && this.driverStops.indexOf(deliveryStop) < this.driverStops.indexOf(targetStop)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            for (const orderId of this._draggedStop.stop.orderIds)
+            {
+                const pickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.orderIds.includes(orderId));
+
+                if (
+                    (pickupStop == null) ||
+                    (targetStop != null && this.driverStops.indexOf(pickupStop) >= this.driverStops.indexOf(targetStop)))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private updateWorkspace(): void
     {
         this.canApply = false;
@@ -355,6 +394,18 @@ export class MergeColumnCustomElement
             });
         });
 
+        // Sort the express stops.
+        this.expressStops.sort((a, b) =>
+        {
+            if (a.stop.orderIds[0] < b.stop.orderIds[0]) { return -1; }
+            if (a.stop.orderIds[0] > b.stop.orderIds[0]) { return 1; }
+
+            if (a.stop.stopNumber < b.stop.stopNumber) { return -1; }
+            if (a.stop.stopNumber > b.stop.stopNumber) { return 1; }
+
+            return 0;
+        });
+
         // HACK: Force a full update of the map.
 
         this.workspace.newDriverStops = [];
@@ -379,9 +430,9 @@ export class MergeColumnCustomElement
             {
                 stop.stop.newStopNumber = undefined;
 
-                const stops = expressStopMap.get(stop.routeSlug) || [];
+                const stops = expressStopMap.get(stop.route.slug) || [];
                 stops.push(stop.stop);
-                expressStopMap.set(stop.routeSlug, stops);
+                expressStopMap.set(stop.route.slug, stops);
             }
 
             this.workspace.remainingExpressStops = Array.from(expressStopMap.values());

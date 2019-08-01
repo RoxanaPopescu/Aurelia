@@ -18,7 +18,7 @@ export class RouteCriticality
     public constructor(slug: RouteCriticalitySlug)
     {
         this.slug = slug;
-        Object.assign(this, RouteCriticality.values[slug]);
+        Object.assign(this, RouteCriticality.values[this.slug]);
     }
 
     public slug: RouteCriticalitySlug;

@@ -17,7 +17,7 @@ export class RouteStopStatus
     public constructor(slug: RouteStopStatusSlug)
     {
         this.slug = slug;
-        Object.assign(this, RouteStopStatus.values[slug]);
+        Object.assign(this, RouteStopStatus.values[this.slug]);
     }
 
     public slug: RouteStopStatusSlug;

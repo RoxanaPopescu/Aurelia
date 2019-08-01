@@ -17,7 +17,7 @@ export class DriverRouteStatus
     public constructor(slug: DriverRouteStatusSlug)
     {
         this.slug = slug;
-        Object.assign(this, DriverRouteStatus.values[slug]);
+        Object.assign(this, DriverRouteStatus.values[this.slug]);
     }
 
     public slug: DriverRouteStatusSlug;

@@ -17,7 +17,7 @@ export class OrderStatus
     public constructor(slug: OrderStatusSlug)
     {
         this.slug = slug;
-        Object.assign(this, OrderStatus.values[slug]);
+        Object.assign(this, OrderStatus.values[this.slug]);
     }
 
     public slug: OrderStatusSlug;
