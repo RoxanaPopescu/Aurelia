@@ -69,6 +69,16 @@
   font-size: 0.75em;
   margin-bottom: 10px;
 
+  &.--has-alert
+  {
+    color: var(--colorAlert);
+  }
+
+  &.--has-warning
+  {
+    color: var(--colorWarning);
+  }
+
   &::after
   {
     content: "";

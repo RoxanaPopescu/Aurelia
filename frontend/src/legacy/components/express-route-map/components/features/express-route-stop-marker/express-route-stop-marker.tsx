@@ -2,13 +2,13 @@ import React from "react";
 import { observer } from "mobx-react";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import { Marker } from "shared/src/components/worldMap";
-import { DriverRouteStop } from "app/model/express-route";
 import "./express-route-stop-marker.scss";
 import Localization from "shared/src/localization";
+import { ExpressRouteStop } from "app/model/express-route";
 
 export interface ExpressRouteStopMarkerProps
 {
-    routeStop: DriverRouteStop;
+    routeStop: ExpressRouteStop;
     onClick?: () => void;
     faded?: boolean;
 }
@@ -26,6 +26,14 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
         const position = this.props.routeStop.location.position!.toGoogleLatLng();
         const labelText = (this.props.routeStop.newStopNumber || this.props.routeStop.stopNumber).toString();
 
+        const hasAlert =
+            this.props.routeStop.hasAlert ||
+            this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "negative";
+
+        const hasWarning =
+            this.props.routeStop.hasWarning ||
+            this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "attention";
+
         return (
             <MarkerWithLabel
                 icon=" "
@@ -39,7 +47,9 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                 <React.Fragment>
                     <div className={`expressRoutes-expressRouteStopMarker ${this.props.faded ? "--faded" : ""}`}>
 
-                        <div className="expressRoutes-expressRouteStopMarker-info">
+                        <div className={`
+                            expressRoutes-expressRouteStopMarker-info
+                            ${hasAlert ? '--has-alert' : hasWarning ? '--has-warning' : ''}`}>
                             {Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}
                         </div>
 
@@ -52,11 +62,11 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
                                 {labelText}
 
-                                {this.props.routeStop.hasAlert && (
+                                {hasAlert && (
                                     <div className="expressRoutes-expressRouteStopMarker-alert" />
                                     )}
 
-                                {!this.props.routeStop.hasAlert && this.props.routeStop.hasWarning && (
+                                {!hasAlert && hasWarning && (
                                     <div className="expressRoutes-expressRouteStopMarker-warning" />
                                     )}
 

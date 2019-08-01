@@ -51,7 +51,7 @@ const expressRoutes =
                 },
                 "arrivalTime": "2019-07-16T14:15:40.8220995+01:00",
                 "completionTime": "2019-07-16T14:22:40.8220995+01:00",
-                "isDelayed": true,
+                "isDelayed": false,
                 "estimates":
                 {
                     "drivingTime": 1615,

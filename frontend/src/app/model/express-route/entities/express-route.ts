@@ -33,7 +33,7 @@ export class ExpressRoute implements IRouteReference
         }
 
         this.stops = data.stops
-            .map((s, i: number) => new ExpressRouteStop(s, i + 1));
+            .map((s, i: number) => new ExpressRouteStop(s, i + 1, i === 0 ? this.criticality : undefined));
     }
 
     /**
