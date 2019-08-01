@@ -5,7 +5,7 @@ import { Workspace } from "./services/workspace";
  * Represents the page.
  */
 @autoinject
-export class DispatchPage
+export class ExpressDispatchPage
 {
     protected workspace = new Workspace();
 }

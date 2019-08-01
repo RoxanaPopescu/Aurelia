@@ -67,9 +67,9 @@ export class RoutesModule
             ENVIRONMENT.name === "development" ?
             [
                 {
-                    name: "dispatch",
-                    route: "dispatch",
-                    moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
+                    name: "express-dispatch",
+                    route: "express-dispatch",
+                    moduleId: PLATFORM.moduleName("./modules/express-dispatch/express-dispatch"),
                     title: routeTitles.dispatch,
                     nav: true,
                     icon: "fleet"
