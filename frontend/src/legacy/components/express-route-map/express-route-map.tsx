@@ -10,6 +10,8 @@ import { DriverRouteStopMarker } from "./components/features/driver-route-stop-m
 import { ExpressRouteStopMarker } from "./components/features/express-route-stop-marker/express-route-stop-marker";
 import { DriverRouteSegmentLine } from "./components/features/driver-route-segment-line/driver-route-segment-line";
 import { ExpressRouteDeliveryArrow } from "./components/features/express-route-delivery-arrow/express-route-delivery-arrow";
+import { GoogleMap } from "react-google-maps";
+import { Button, ButtonType } from "shared/src/webKit";
 
 export interface IExpressRouteMapProps
 {
@@ -40,12 +42,25 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
         super(props);
     }
 
+    private map: GoogleMap | undefined;
+    private hasFittedBounds = false;
+
     public render()
     {
+        this.fitBoundsOnLoad();
+
         return (
             <div className="express-route-map">
 
-                <WorldMap options={{ scrollwheel: true }}>
+                <Button className="express-route-map-fit-button" type={ButtonType.Light} onClick={() => this.tryFitBounds()}>
+                    Zoom to fit
+                </Button>
+
+                <WorldMap options={{ scrollwheel: true }} onMapReady={map =>
+                    {
+                        this.map = map;
+                        this.fitBoundsOnLoad();
+                    }}>
 
                     {!this.props.isMerging && this.props.driverRoutes && this.props.driverRoutes.map(route =>
                         <DriverRouteLayer
@@ -101,5 +116,75 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
             </div>
         );
+    }
+
+    private fitBoundsOnLoad(): void
+    {
+        if (
+            !this.hasFittedBounds &&
+            this.map &&
+            this.props.expressRoutes &&
+            this.props.expressRoutes.length > 0 &&
+            this.props.driverRoutes &&
+            this.props.driverRoutes.length > 0)
+        {
+            this.hasFittedBounds = true;
+            this.tryFitBounds();
+        }
+    }
+
+    private tryFitBounds(): void
+    {
+        if (this.map == null)
+        {
+            return;
+        }
+
+        const routeBounds = new google.maps.LatLngBounds();
+
+        if (this.props.expressRoutes)
+        {
+            for (const route of this.props.expressRoutes)
+            {
+                for (const stop of route.stops)
+                {
+                    routeBounds.extend(stop.location.position!.toGoogleLatLng());
+                }
+            }
+        }
+
+        if (this.props.driverRoutes)
+        {
+            for (const route of this.props.driverRoutes)
+            {
+                for (const stop of route.stops)
+                {
+                    routeBounds.extend(stop.location.position!.toGoogleLatLng());
+                }
+
+                routeBounds.extend(route.driverPosition!.toGoogleLatLng());
+            }
+        }
+
+        if (this.props.newDriverStops)
+        {
+            for (const stop of this.props.newDriverStops)
+            {
+                routeBounds.extend(stop.location.position!.toGoogleLatLng());
+            }
+        }
+
+        if (this.props.remainingExpressStops)
+        {
+            for (const stops of this.props.remainingExpressStops)
+            {
+                for (const stop of stops)
+                {
+                    routeBounds.extend(stop.location.position!.toGoogleLatLng());
+                }
+            }
+        }
+
+        (this.map.fitBounds as Function)(routeBounds, 50);
     }
 }
