@@ -50,7 +50,8 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                         <div className={`
                             expressRoutes-expressRouteStopMarker-info
                             ${hasAlert ? '--has-alert' : hasWarning ? '--has-warning' : ''}`}>
-                            {Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}
+                            <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
+                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime)}</div>
                         </div>
 
                         <div className={`
