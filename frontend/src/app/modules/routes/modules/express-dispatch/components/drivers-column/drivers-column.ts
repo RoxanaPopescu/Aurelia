@@ -203,4 +203,16 @@ export class DriversColumnCustomElement
         this.workspace.isMerging = true;
         this.workspace.tab = "info";
     }
+
+    protected async onReleaseClick(): Promise<void>
+    {
+        try
+        {
+            await this._expressRouteService.releaseExpressRoutes(this.workspace.selectedExpressRoutes.map(r => r.id));
+        }
+        catch (error)
+        {
+            alert(error.message);
+        }
+    }
 }

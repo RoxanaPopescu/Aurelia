@@ -90,4 +90,19 @@ export class ExpressRouteService
             signal
         });
     }
+
+    /**
+     * Releases the specified express routes, making them available to drivers who are not on contract.
+     * @param routeIds The IDs of the routes to release.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async releaseExpressRoutes(routeIds: string[], signal?: AbortSignal): Promise<void>
+    {
+        await this._apiClient.post("express-routes/release-express-route",
+        {
+            body: { routeIds },
+            signal
+        });
+    }
 }

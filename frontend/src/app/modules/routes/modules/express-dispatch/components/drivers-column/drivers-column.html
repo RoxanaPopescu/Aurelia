@@ -8,7 +8,8 @@
 
             <div class="flex-row">
 
-                <div>
+                <toolbar>
+
                     <button
                         appearance="solid"
                         accent="primary"
@@ -17,7 +18,16 @@
                         translate>
                         Add selected routes to driver route
                     </button>
-                </div>
+                    <button
+                        appearance="outline"
+                        accent="primary"
+                        disabled.bind="workspace.selectedExpressRoutes.length == 0"
+                        click.trigger="onReleaseClick()"
+                        translate>
+                        Release selected routes to all drivers
+                    </button>
+
+                </toolbar>
 
                 <h1 class="font-largest">
                     <path-nav>

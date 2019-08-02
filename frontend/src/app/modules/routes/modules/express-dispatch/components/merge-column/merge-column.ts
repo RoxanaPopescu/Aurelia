@@ -300,12 +300,19 @@ export class MergeColumnCustomElement
             return;
         }
 
-        await this._expressRouteService.updateDriverRoute(
-            this.workspace.selectedDriverRoutes[0].driver.id,
-            this.driverStops.map(s => s.stop.id));
+        try
+        {
+            await this._expressRouteService.updateDriverRoute(
+                this.workspace.selectedDriverRoutes[0].driver.id,
+                this.driverStops.map(s => s.stop.id));
 
-        this.workspace.isMerging = false;
-        this.workspace.tab = "routes";
+            this.workspace.isMerging = false;
+            this.workspace.tab = "routes";
+        }
+        catch (error)
+        {
+            alert(error.message);
+        }
     }
 
     /**
