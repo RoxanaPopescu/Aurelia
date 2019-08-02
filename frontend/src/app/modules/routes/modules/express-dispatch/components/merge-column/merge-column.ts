@@ -33,7 +33,7 @@ export class MergeColumnCustomElement
         this._expressRouteService = routeService;
     }
 
-    private _draggedStop: IDriverRouteStop | IExpressRouteStop;
+    private _draggedStop: IDriverRouteStop | IExpressRouteStop | undefined;
 
     protected readonly _expressRouteService: ExpressRouteService;
 
@@ -49,6 +49,7 @@ export class MergeColumnCustomElement
     protected expressStopsDragover = false;
     protected updateOperation: Operation;
     protected canApply = false;
+    protected isDragging = false;
 
     /**
      * Called by the framework when the component is attached to the DOM.
@@ -102,13 +103,14 @@ export class MergeColumnCustomElement
         event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
         event.dataTransfer!.dropEffect = "move";
 
+        this.isDragging = true;
         requestAnimationFrame(() => stop.dragged = true);
 
         return true;
     }
 
     /**
-     * Called when the user starts dragging an item.
+     * Called when the user is done dragging an item.
      * @param event The drag event.
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
@@ -118,6 +120,7 @@ export class MergeColumnCustomElement
         requestAnimationFrame(() =>
         {
             stop.dragged = false;
+            this.isDragging = false;
         });
     }
 
@@ -191,6 +194,7 @@ export class MergeColumnCustomElement
         event.dataTransfer!.setData(`text/${stop.type}+json`, payloadJson);
         event.dataTransfer!.dropEffect = "move";
 
+        this.isDragging = true;
         stop.dragstart = true;
         requestAnimationFrame(() =>
         {
@@ -202,7 +206,7 @@ export class MergeColumnCustomElement
     }
 
     /**
-     * Called when the user starts dragging an item.
+     * Called when the user is done dragging an item.
      * @param event The drag event.
      * @param item The item being dragged.
      * @returns True to continue, false to prevent default.
@@ -213,6 +217,7 @@ export class MergeColumnCustomElement
         {
             this.driverStopsDragover = false;
             stop.dragged = false;
+            this.isDragging = false;
         });
     }
 
@@ -346,9 +351,9 @@ export class MergeColumnCustomElement
 
     private validateDriverStopDrop(targetStop?: IDriverRouteStop | IExpressRouteStop): boolean
     {
-        if (this._draggedStop.stop.type.slug === "pickup")
+        if (this._draggedStop!.stop.type.slug === "pickup")
         {
-            for (const orderId of this._draggedStop.stop.orderIds)
+            for (const orderId of this._draggedStop!.stop.orderIds)
             {
                 const deliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.orderIds.includes(orderId));
 
@@ -362,7 +367,7 @@ export class MergeColumnCustomElement
         }
         else
         {
-            for (const orderId of this._draggedStop.stop.orderIds)
+            for (const orderId of this._draggedStop!.stop.orderIds)
             {
                 const pickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.orderIds.includes(orderId));
 

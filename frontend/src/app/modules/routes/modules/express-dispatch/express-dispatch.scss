@@ -50,4 +50,85 @@ page[name="routes"] page[name="express-dispatch"]
             display: flex !important;
         }
     }
+
+    card[accent="0"] > a > .card-edge
+    {
+        background: var(--palette-color-neutral);
+    }
+    data-table > a[accent="0"]
+    {
+        --data-table-row-edge-color: var(--palette-color-neutral);
+    }
+
+    card[accent="1"] > a > .card-edge
+    {
+        background: #bd10e0;
+    }
+    data-table > a[accent="1"]
+    {
+        --data-table-row-edge-color: #bd10e0;
+    }
+
+    card[accent="2"] > a > .card-edge
+    {
+        background: #26bcae;
+    }
+    data-table > a[accent="2"]
+    {
+        --data-table-row-edge-color: #26bcae;
+    }
+
+    card[accent="3"] > a > .card-edge
+    {
+        background: #bc26ae;
+    }
+    data-table > a[accent="3"]
+    {
+        --data-table-row-edge-color: #bc26ae;
+    }
+
+    card[accent="4"] > a > .card-edge
+    {
+        background: #268bbc;
+    }
+    data-table > a[accent="4"]
+    {
+        --data-table-row-edge-color: #268bbc;
+    }
+
+    card[accent="5"] > a > .card-edge
+    {
+        background: #bcb226;
+    }
+    data-table > a[accent="5"]
+    {
+        --data-table-row-edge-color: #bcb226;
+    }
+
+    card[accent="6"] > a > .card-edge
+    {
+        background: #c1e21a;
+    }
+    data-table > a[accent="6"]
+    {
+        --data-table-row-edge-color: #c1e21a;
+    }
+
+    card[accent="7"] > a > .card-edge
+    {
+        background: #e21aa7;
+    }
+    data-table > a[accent="7"]
+    {
+        --data-table-row-edge-color: #e21aa7;
+    }
+
+    card[accent="8"] > a > .card-edge
+    {
+        background: #1acce2;
+    }
+    data-table > a[accent="8"]
+    {
+        --data-table-row-edge-color: #1acce2;
+    }
 }

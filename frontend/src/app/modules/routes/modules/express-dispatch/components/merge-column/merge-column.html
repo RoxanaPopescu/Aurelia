@@ -33,7 +33,7 @@
 
         </header>
 
-        <section class="stop-lists">
+        <section class="stop-lists ${isDragging != null ? '--dragging' : ''}">
 
             <div
                 class="stop-list express-stops padding-medium"
@@ -54,7 +54,7 @@
                     dragstart.trigger="onExpressStopsDragStart($event, stop)"
                     dragend.trigger="onExpressStopsDragEnd($event, stop)">
 
-                    <card accent="primary">
+                    <card accent.bind="stop.route.colorIndex & attr">
 
                         <div class="flex-row">
                             <div class="stop-icon">
@@ -114,7 +114,7 @@
                         <div></div>
                     </div>
 
-                    <card accent.bind="stop.type == 'express-route-stop' ? 'primary' : 'neutral' & attr">
+                    <card accent.bind="(stop.type == 'express-route-stop' ? stop.route.colorIndex : undefined) & attr">
 
                         <div class="flex-row">
                             <div class="stop-icon">

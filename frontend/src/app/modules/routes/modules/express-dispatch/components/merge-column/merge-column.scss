@@ -22,6 +22,11 @@ page[name="routes"] page[name="express-dispatch"] merge-column
     {
         flex-grow: 1;
         display: flex;
+
+        &.--dragging card
+        {
+            pointer-events: none;
+        }
     }
 
     .stop-list

@@ -5,6 +5,10 @@ import { Outfit } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
 import { IRouteReference, RouteCriticality } from "app/model/route";
 import { ExpressRouteStop } from "./express-route-stop";
+import { computedFrom } from "aurelia-binding";
+
+// The available color indexes.
+const colorIndexes = [1, 2, 3, 4, 5, 6, 7, 8];
 
 /**
  * Represents an express route that should be dispatched to a driver.
@@ -35,6 +39,8 @@ export class ExpressRoute implements IRouteReference
         this.stops = data.stops
             .map((s, i: number) => new ExpressRouteStop(s, i + 1, i === 0 ? this.criticality : undefined));
     }
+
+    private _selected: boolean;
 
     /**
      * The ID of the route.
@@ -90,9 +96,35 @@ export class ExpressRoute implements IRouteReference
     public readonly timeToDeadline: Duration;
 
     /**
+     * The index of the color to use when presenting this route.
+     */
+    public colorIndex: number | undefined;
+
+    /**
      * True if the route has been selected by the user, otherwise false.
      */
-    public selected: boolean;
+    @computedFrom("_selected")
+    public get selected(): boolean
+    {
+        return this._selected;
+    }
+    public set selected(value: boolean)
+    {
+        if (value !== this._selected)
+        {
+            if (value)
+            {
+                this.colorIndex = (colorIndexes.shift() as any || 0);
+            }
+            else if (this.colorIndex)
+            {
+                colorIndexes.unshift(this.colorIndex);
+                this.colorIndex = undefined;
+            }
+
+            this._selected = value;
+        }
+    }
 
     /**
      * The consignor associated with the pickup stop on the route,

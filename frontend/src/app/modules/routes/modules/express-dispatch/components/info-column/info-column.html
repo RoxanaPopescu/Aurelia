@@ -229,7 +229,7 @@
 
                 <template repeat.for="item of workspace.selectedExpressRoutes">
 
-                    <data-table-row accent="primary">
+                    <data-table-row accent.bind="item.selected ? item.colorIndex : undefined">
 
                         <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
                             <icon name="md-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
