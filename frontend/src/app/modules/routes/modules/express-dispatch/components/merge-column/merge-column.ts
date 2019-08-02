@@ -67,6 +67,12 @@ export class MergeColumnCustomElement
             this.expressStops.push(...route.stops.map(stop => ({ type: "express-route-stop" as any, stop, route })));
         }
 
+        if (this.driverStops.length === 0)
+        {
+            this.driverStops = this.expressStops;
+            this.expressStops = [];
+        }
+
         this.updateWorkspace();
     }
 
