@@ -38,7 +38,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
         return (
             <MarkerWithLabel
                 icon=" "
-                labelAnchor={new google.maps.Point(27, 56)}
+                labelAnchor={new google.maps.Point(27, 66)}
                 position={position}
                 zIndex={this.props.routeStop.selected ? 205 : 5}
                 onMouseOver={() => this.showPopup()}
@@ -52,7 +52,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                             expressRoutes-expressRouteStopMarker-info
                             ${hasAlert ? '--has-alert' : hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
-                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime)}</div>
+                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime ) || "--"}</div>
                         </div>
 
                         <div className={`
