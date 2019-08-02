@@ -125,14 +125,10 @@ page[name="routes"] page[name="express-dispatch"] merge-column
                 }
             }
 
-            card
-            {
-                pointer-events: none;
-            }
-
             card > a
             {
                 background: white;
+                cursor: move;
             }
 
             .icon-md-drag-handle
