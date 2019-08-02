@@ -10,4 +10,44 @@ page[name="routes"] page[name="express-dispatch"]
         top: 8rem;
         background: white;
     }
+
+    &.express-dispatch--map > tab-nav
+    {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    }
+
+    @media (min-width: 3360px)
+    {
+        tab-nav
+        {
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+        }
+
+        tab-nav > :last-child
+        {
+            display: none;
+        }
+
+        map-column
+        {
+            display: flex !important;
+        }
+    }
+
+    @media (min-width: 5040px)
+    {
+        tab-nav
+        {
+            display: none;
+        }
+
+        routes-column,
+        drivers-column,
+        info-column,
+        merge-column,
+        map-column
+        {
+            display: flex !important;
+        }
+    }
 }
