@@ -284,27 +284,27 @@ const driverRoutes =
 
 export default
     {
-        "POST /api/v1/express-routes/get-express-routes":
+        "GET /api/v1/expressdispatch/newroutes":
         {
             data: cloneExpressRoutes([...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes])
         },
 
-        "POST /api/v1/express-routes/get-driver-routes":
+        "GET /api/v1/expressdispatch/driverroutes":
         {
             data: cloneDriverRoutes([...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes])
         },
 
-        "POST /api/v1/express-routes/estimate-driver-route":
+        "POST /api/v1/expressdispatch/estimatedriverroute":
         {
             data: cloneDriverRoutes(driverRoutes)[0]
         },
 
-        "POST /api/v1/express-routes/update-driver-route":
+        "POST /api/v1/expressdispatch/updatedriverroute":
         {
             data: cloneDriverRoutes(driverRoutes)[0]
         },
 
-        "POST /api/v1/express-routes/release-express-route":
+        "POST /api/v1/expressdispatch/releaseroute":
         {
             status: 204
         }
