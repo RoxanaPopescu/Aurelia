@@ -9,4 +9,4 @@ export const accentColors =
     "#e21aa7",
     "#1acce2",
     "#bc26ae"
-]
+];

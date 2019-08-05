@@ -7,7 +7,7 @@ import { DriverRoute, ExpressRoute, DriverRouteStop, ExpressRouteStop } from "ap
 
 @noView
 @autoinject
-export class WorldMapCustomElement extends Wrapper
+export class ExpressRouteMap extends Wrapper
 {
     /**
      * Creates a new instance of the type.
