@@ -27,7 +27,7 @@ export class ExpressRouteService
      */
     public async getExpressRoutes(signal?: AbortSignal): Promise<{ routes: ExpressRoute[]; routeCount: number }>
     {
-        const result = await this._apiClient.post("express-routes/get-express-routes",
+        const result = await this._apiClient.get("expressdispatch/newroutes",
         {
             signal
         });
@@ -46,7 +46,7 @@ export class ExpressRouteService
      */
     public async getDriverRoutes(signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
     {
-        const result = await this._apiClient.post("express-routes/get-driver-routes",
+        const result = await this._apiClient.get("expressdispatch/driverroutes",
         {
             signal
         });
@@ -66,7 +66,7 @@ export class ExpressRouteService
      */
     public async estimateDriverRoute(driverId: number, stopIds: string[], signal?: AbortSignal): Promise<DriverRoute>
     {
-        const result = await this._apiClient.post("express-routes/estimate-driver-route",
+        const result = await this._apiClient.post("expressdispatch/estimatedriverroute",
         {
             body: { driverId, stopIds },
             signal
@@ -84,7 +84,7 @@ export class ExpressRouteService
      */
     public async updateDriverRoute(driverId: number, stopIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post("express-routes/update-driver-route",
+        await this._apiClient.post("expressdispatch/updatedriverroute",
         {
             body: { driverId, stopIds },
             signal
@@ -99,7 +99,7 @@ export class ExpressRouteService
      */
     public async releaseExpressRoutes(routeIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post("express-routes/release-express-route",
+        await this._apiClient.post("expressdispatch/releaseexpressroute",
         {
             body: { routeIds },
             signal
