@@ -21,8 +21,21 @@ page[name="routes"] page[name="express-dispatch"]
         box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     }
 
+    map-column
+    {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
     @media (min-width: 3360px)
     {
+        map-column
+        {
+            visibility: visible !important;
+            position: initial;
+        }
+
         tab-nav
         {
             box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;

@@ -58,7 +58,7 @@
 
         </template>
 
-        <map-column workspace.bind="workspace" show.bind="workspace.tab == 'map'"></map-column>
+        <map-column workspace.bind="workspace" class="${workspace.tab == 'map' ? '' : 'visibility-hidden'}"></map-column>
 
     </page>
 
