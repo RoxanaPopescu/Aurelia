@@ -6,9 +6,14 @@ page[name="routes"] page[name="express-dispatch"]
     {
         position: absolute;
         z-index: 99999;
-        right: 20rem;
-        top: 8rem;
+        right: 22rem;
+        top: 9rem;
         background: white;
+    }
+
+    page-content > header > .flex-row > toolbar
+    {
+        align-self: flex-start;
     }
 
     &.express-dispatch--map > tab-nav
