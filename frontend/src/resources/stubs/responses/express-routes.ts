@@ -6,7 +6,7 @@ const expressRoutes =
         "id": "f0a4c73f-f8ae-494c-a1e6-0051e526f53e",
         "slug": "R6274179423",
         "reference": "0910-165A-MV",
-        "criticality": "high",
+        "criticality": "medium",
         "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
         "pickupPostalCode": "2600",
         "deliveryPostalCode": "2600",
