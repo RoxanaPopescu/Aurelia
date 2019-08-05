@@ -10,14 +10,20 @@ export class ExpressRouteStop extends RouteStopBase
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, stopNumber: number, criticality?: RouteCriticality)
+    public constructor(data: any, route: any, stopNumber: number, criticality?: RouteCriticality)
     {
         super(data, stopNumber);
 
+        this.route = route;
         this.type = new RouteStopType(data.type);
         this.orderIds = data.orderIds;
         this.criticality = criticality;
     }
+
+    /**
+     * The route to which this stop belongs.
+     */
+    public route: any;
 
     /**
      * The type of stop.

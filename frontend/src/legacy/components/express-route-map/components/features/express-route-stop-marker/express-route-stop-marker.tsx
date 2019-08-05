@@ -46,7 +46,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                 onClick={() => this.props.onClick && this.props.onClick()}>
 
                 <React.Fragment>
-                    <div className={`expressRoutes-expressRouteStopMarker ${this.props.faded ? "--faded" : ""}`}>
+                    <div className={`expressRoutes-expressRouteStopMarker ${this.props.faded ? "--faded" : ""} --accent-${this.props.routeStop.route.colorIndex}`}>
 
                         <div className={`
                             expressRoutes-expressRouteStopMarker-info

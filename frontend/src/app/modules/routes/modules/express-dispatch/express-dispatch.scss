@@ -85,55 +85,55 @@ page[name="routes"] page[name="express-dispatch"]
 
     card[accent="3"] > a > .card-edge
     {
-        background: #bc26ae;
-    }
-    data-table > a[accent="3"]
-    {
-        --data-table-row-edge-color: #bc26ae;
-    }
-
-    card[accent="4"] > a > .card-edge
-    {
         background: #268bbc;
     }
-    data-table > a[accent="4"]
+    data-table > a[accent="3"]
     {
         --data-table-row-edge-color: #268bbc;
     }
 
-    card[accent="5"] > a > .card-edge
+    card[accent="4"] > a > .card-edge
     {
         background: #bcb226;
     }
-    data-table > a[accent="5"]
+    data-table > a[accent="4"]
     {
         --data-table-row-edge-color: #bcb226;
     }
 
-    card[accent="6"] > a > .card-edge
+    card[accent="5"] > a > .card-edge
     {
         background: #c1e21a;
     }
-    data-table > a[accent="6"]
+    data-table > a[accent="5"]
     {
         --data-table-row-edge-color: #c1e21a;
     }
 
-    card[accent="7"] > a > .card-edge
+    card[accent="6"] > a > .card-edge
     {
         background: #e21aa7;
     }
-    data-table > a[accent="7"]
+    data-table > a[accent="6"]
     {
         --data-table-row-edge-color: #e21aa7;
     }
 
-    card[accent="8"] > a > .card-edge
+    card[accent="7"] > a > .card-edge
     {
         background: #1acce2;
     }
-    data-table > a[accent="8"]
+    data-table > a[accent="7"]
     {
         --data-table-row-edge-color: #1acce2;
+    }
+
+    card[accent="8"] > a > .card-edge
+    {
+        background: #bc26ae;
+    }
+    data-table > a[accent="8"]
+    {
+        --data-table-row-edge-color: #bc26ae;
     }
 }

@@ -302,6 +302,11 @@ export default
         "POST /api/v1/express-routes/update-driver-route":
         {
             data: cloneDriverRoutes(driverRoutes)[0]
+        },
+
+        "POST /api/v1/express-routes/release-express-route":
+        {
+            status: 204
         }
     }
 

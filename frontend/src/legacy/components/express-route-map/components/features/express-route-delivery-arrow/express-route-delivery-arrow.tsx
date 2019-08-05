@@ -1,7 +1,7 @@
 import React from "react";
 import { Polyline } from "react-google-maps";
-import { DriverRouteStop } from "app/model/express-route";
-import { RouteStopInfo } from "app/model/route";
+import { ExpressRouteStop } from "app/model/express-route";
+import { accentColors } from "legacy/components/express-route-map/accent-colors";
 
 // The width of the stroke, in pixels.
 const strokeWeight = 2;
@@ -11,7 +11,7 @@ const normalStrokeOpacity = 0.9;
 const fadedStrokeOpacity = 0.1;
 
 export interface ExpressRouteDeliveryArrowProps {
-  routeStops: (DriverRouteStop | RouteStopInfo)[];
+  routeStops: ExpressRouteStop[];
   onClick?: () => void;
   faded?: boolean;
 }
@@ -46,7 +46,7 @@ export class ExpressRouteDeliveryArrow extends React.Component<ExpressRouteDeliv
 
     return {
       clickable: this.props.onClick != null,
-      strokeColor: "gray",
+      strokeColor: this.props.faded ? "gray" : accentColors[this.props.routeStops[0].route.colorIndex] || "gray",
       strokeWeight,
       strokeOpacity: 0,
       zIndex: this.props.faded ? 2 : 102,
