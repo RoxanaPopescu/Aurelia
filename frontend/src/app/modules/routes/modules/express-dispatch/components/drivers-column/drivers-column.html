@@ -178,7 +178,7 @@
 
             <busy-indicator if.bind="loading" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="orderedAndFilteredItems.length == 0" class="margin-largest" translate>
+            <empty-indicator if.bind="!loading && orderedAndFilteredItems.length == 0" class="margin-largest" translate>
                 No results
             </empty-indicator>
 
