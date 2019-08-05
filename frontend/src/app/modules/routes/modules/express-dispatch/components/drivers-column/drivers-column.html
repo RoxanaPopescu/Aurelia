@@ -63,7 +63,6 @@
                 appearance="rows"
                 sorting.bind="sorting"
                 selection="multiple"
-                busy.bind="updateOperation.pending"
                 toggle-all.call="onToogleAll(value)">
 
                 <data-table-headers>
@@ -177,7 +176,7 @@
 
             </data-table>
 
-            <busy-indicator if.bind="workspace.driverRoutes == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="loading" class="margin-largest"></busy-indicator>
 
             <empty-indicator if.bind="orderedAndFilteredItems.length == 0" class="margin-largest" translate>
                 No results

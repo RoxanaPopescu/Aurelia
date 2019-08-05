@@ -307,6 +307,8 @@ export class MergeColumnCustomElement
 
         try
         {
+            this.workspace.isBusy = true;
+
             await this._expressRouteService.updateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].driver.id,
                 this.driverStops.map(s => s.stop.id));
@@ -317,6 +319,10 @@ export class MergeColumnCustomElement
         catch (error)
         {
             alert(error.message);
+        }
+        finally
+        {
+            this.workspace.isBusy = false;
         }
     }
 

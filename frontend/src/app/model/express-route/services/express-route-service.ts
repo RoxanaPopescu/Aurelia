@@ -99,7 +99,7 @@ export class ExpressRouteService
      */
     public async releaseExpressRoutes(routeIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post("expressdispatch/releaseexpressroute",
+        await this._apiClient.post("expressdispatch/releaseroute",
         {
             body: { routeIds },
             signal

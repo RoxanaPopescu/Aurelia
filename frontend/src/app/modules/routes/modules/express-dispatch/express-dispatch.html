@@ -8,7 +8,7 @@
 
     <require from="./express-dispatch.scss"></require>
 
-    <page name="express-dispatch" class="express-dispatch--${workspace.tab}">
+    <page name="express-dispatch" class="express-dispatch--${workspace.tab}" inert.bind="workspace.isBusy">
 
         <template if.bind="!workspace.isMerging">
 

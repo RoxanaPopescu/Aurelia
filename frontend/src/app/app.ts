@@ -18,22 +18,58 @@ export class AppModule
      */
     public constructor(identityService: IdentityService, modalService: ModalService)
     {
+        this.modalService = modalService;
         this.identityService = identityService;
 
-        // Register global modals.
-
-        // Panels.
-        modalService.register("dashboard", PLATFORM.moduleName("app/modals/overlays/dashboard/dashboard"));
-        modalService.register("search", PLATFORM.moduleName("app/modals/panels/search/search"));
-        modalService.register("starred", PLATFORM.moduleName("app/modals/panels/starred/starred"));
-        modalService.register("add", PLATFORM.moduleName("app/modals/panels/add/add"));
-        modalService.register("notifications", PLATFORM.moduleName("app/modals/panels/notifications/notifications"));
-
-        // Dialogs.
-        modalService.register("confirm", PLATFORM.moduleName("app/modals/dialogs/confirm/confirm"));
+        this.configureModals();
     }
 
+    /**
+     * The `ModalService` instance.
+     */
+    protected readonly modalService: ModalService;
+
+    /**
+     * The `IdentityService` instance.
+     */
     protected readonly identityService: IdentityService;
+
+    /**
+     * Called to configure the modals for the app.
+     */
+    public configureModals(): void
+    {
+        const modalConfigs =
+        [
+            {
+                name: "dashboard",
+                moduleId: PLATFORM.moduleName("app/modals/overlays/dashboard/dashboard")
+            },
+            {
+                name: "search",
+                moduleId: PLATFORM.moduleName("app/modals/panels/search/search")
+            },
+            {
+                name: "starred",
+                moduleId: PLATFORM.moduleName("app/modals/panels/starred/starred")
+            },
+            {
+                name: "add",
+                moduleId: PLATFORM.moduleName("app/modals/panels/add/add")
+            },
+            {
+                name: "notifications",
+                moduleId: PLATFORM.moduleName("app/modals/panels/notifications/notifications")
+            },
+            {
+                name: "confirm",
+                moduleId: PLATFORM.moduleName("app/modals/dialogs/confirm/confirm")
+            }
+        ];
+
+        // Configure the modals.
+        modalConfigs.forEach(config => this.modalService.register(config.name, config.moduleId));
+    }
 
     /**
      * Called to configure the router for the module.

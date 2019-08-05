@@ -1,6 +1,9 @@
 // Load and apply patches needed to fix various bugs.
 import "shared/patches";
 
+// Load and apply polyfills.
+import "inert-polyfill";
+
 // Configure and start the app.
 
 import { Aurelia, Container, PLATFORM } from "aurelia-framework";

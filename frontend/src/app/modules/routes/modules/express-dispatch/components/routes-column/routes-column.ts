@@ -8,7 +8,7 @@ import { Workspace } from "../../services/workspace";
 /**
  * The time between each update of the list.
  */
-const updateInterval = 999999;
+const updateInterval = 20000;
 
 @autoinject
 export class RoutesColumnCustomElement
@@ -24,6 +24,11 @@ export class RoutesColumnCustomElement
 
     private readonly _expressRouteService: ExpressRouteService;
     private _updateTimeoutHandle: any;
+
+    /**
+     * True during the initial load, then false.
+     */
+    protected loading = true;
 
     /**
      * The scroll manager for the page.
@@ -132,7 +137,7 @@ export class RoutesColumnCustomElement
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected update(): void
     {
         // Abort any existing operation.
         if (this.updateOperation != null)
@@ -159,6 +164,9 @@ export class RoutesColumnCustomElement
 
                 // Update the state.
                 this.workspace.expressRoutes = result.routes;
+
+                // Indicate that the initial load succeeded.
+                this.loading = false;
             }
             finally
             {

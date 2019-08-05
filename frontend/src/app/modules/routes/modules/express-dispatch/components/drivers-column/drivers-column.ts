@@ -8,7 +8,7 @@ import { Workspace } from "../../services/workspace";
 /**
  * The time between each update of the list.
  */
-const updateInterval = 999999;
+const updateInterval = 20000;
 
 @autoinject
 export class DriversColumnCustomElement
@@ -24,6 +24,11 @@ export class DriversColumnCustomElement
 
     private readonly _expressRouteService: ExpressRouteService;
     private _updateTimeoutHandle: any;
+
+    /**
+     * True during the initial load, then false.
+     */
+    protected loading = true;
 
     /**
      * The scroll manager for the page.
@@ -128,7 +133,7 @@ export class DriversColumnCustomElement
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected update(): void
     {
         // Abort any existing operation.
         if (this.updateOperation != null)
@@ -155,6 +160,9 @@ export class DriversColumnCustomElement
 
                 // Update the state.
                 this.workspace.driverRoutes = result.routes;
+
+                // Indicate that the initial load succeeded.
+                this.loading = false;
             }
             finally
             {
@@ -208,11 +216,17 @@ export class DriversColumnCustomElement
     {
         try
         {
+            this.workspace.isBusy = true;
+
             await this._expressRouteService.releaseExpressRoutes(this.workspace.selectedExpressRoutes.map(r => r.id));
         }
         catch (error)
         {
             alert(error.message);
+        }
+        finally
+        {
+            this.workspace.isBusy = false;
         }
     }
 }

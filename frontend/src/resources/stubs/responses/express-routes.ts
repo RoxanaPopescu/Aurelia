@@ -286,26 +286,31 @@ export default
     {
         "GET /api/v1/expressdispatch/newroutes":
         {
+            delay: 1000,
             data: cloneExpressRoutes([...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes])
         },
 
         "GET /api/v1/expressdispatch/driverroutes":
         {
+            delay: 1000,
             data: cloneDriverRoutes([...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes])
         },
 
         "POST /api/v1/expressdispatch/estimatedriverroute":
         {
+            delay: 1000,
             data: cloneDriverRoutes(driverRoutes)[0]
         },
 
         "POST /api/v1/expressdispatch/updatedriverroute":
         {
+            delay: 1000,
             data: cloneDriverRoutes(driverRoutes)[0]
         },
 
         "POST /api/v1/expressdispatch/releaseroute":
         {
+            delay: 1000,
             status: 204
         }
     }
