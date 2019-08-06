@@ -162,7 +162,10 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                     routeBounds.extend(stop.location.position!.toGoogleLatLng());
                 }
 
-                routeBounds.extend(route.driverPosition!.toGoogleLatLng());
+                if (route.driverPosition)
+                {
+                    routeBounds.extend(route.driverPosition!.toGoogleLatLng());
+                }
             }
         }
 

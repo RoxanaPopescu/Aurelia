@@ -1,4 +1,5 @@
 import { Accent } from "app/model/shared";
+import { textCase } from "shared/utilities/text";
 
 /**
  * Represents the slug identifying a `RouteStopStatus`.
@@ -16,7 +17,7 @@ export class RouteStopStatus
      */
     public constructor(slug: RouteStopStatusSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, RouteStopStatus.values[this.slug]);
     }
 

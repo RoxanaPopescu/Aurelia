@@ -1,4 +1,5 @@
 import { Accent } from "app/model/shared";
+import { textCase } from "shared/utilities/text";
 
 /**
  * Represents the slug identifying a `RouteStopType`.
@@ -16,7 +17,7 @@ export class RouteStopType
      */
     public constructor(slug: RouteStopTypeSlug)
     {
-        this.slug = slug.toLowerCase() as any;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, RouteStopType.values[this.slug]);
     }
 

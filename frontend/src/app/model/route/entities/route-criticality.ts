@@ -1,4 +1,5 @@
 import { Accent } from "app/model/shared";
+import { textCase } from "shared/utilities/text";
 
 /**
  * Represents the slug identifying a `RouteCriticality`.
@@ -17,7 +18,7 @@ export class RouteCriticality
      */
     public constructor(slug: RouteCriticalitySlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, RouteCriticality.values[this.slug]);
     }
 
