@@ -116,7 +116,6 @@ export class DriversColumnCustomElement
 
     /**
      * Called by the framework when the component is dettached from the DOM.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public dettached(): void
     {
@@ -210,6 +209,8 @@ export class DriversColumnCustomElement
     {
         this.workspace.isMerging = true;
         this.workspace.tab = "info";
+
+        history.pushState({ view: "express-dispatch-merge" }, "", location.href);
     }
 
     protected async onReleaseClick(): Promise<void>

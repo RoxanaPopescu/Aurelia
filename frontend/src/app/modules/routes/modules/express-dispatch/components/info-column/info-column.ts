@@ -12,7 +12,6 @@ export class InfoColumnCustomElement
 
     protected onBackClick(): void
     {
-        this.workspace.isMerging = false;
-        this.workspace.tab = "routes";
+        history.back();
     }
 }

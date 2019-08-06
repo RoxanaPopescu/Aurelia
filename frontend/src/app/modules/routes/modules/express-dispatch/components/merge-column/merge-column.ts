@@ -313,8 +313,7 @@ export class MergeColumnCustomElement
                 this.workspace.selectedDriverRoutes[0].driver.id,
                 this.driverStops.map(s => s.stop.id));
 
-            this.workspace.isMerging = false;
-            this.workspace.tab = "routes";
+            history.back();
         }
         catch (error)
         {
@@ -481,6 +480,6 @@ export class MergeColumnCustomElement
             }
         }
 
-        this.canApply = this.expressStops.length === 0; // && !estimatedDriverRoute.stops.some(s => s.isDelayed);
+        this.canApply = this.expressStops.length === 0;
     }
 }
