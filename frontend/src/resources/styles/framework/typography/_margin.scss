@@ -22,6 +22,34 @@ $__summary: comment;
     }
 }
 
+/// Applies the double the margin defined by the current font class to the element.
+.margin-double
+{
+    &, &-top
+    {
+        margin-top: calc(2 * var(--font-current-margin-top));
+    }
+
+    &, &-bottom
+    {
+        margin-bottom: calc(2 * var(--font-current-margin-bottom));
+    }
+}
+
+/// Applies triple the margin defined by the current font class to the element.
+.margin-triple
+{
+    &, &-top
+    {
+        margin-top: calc(3 * var(--font-current-margin-top));
+    }
+
+    &, &-bottom
+    {
+        margin-bottom: calc(3 * var(--font-current-margin-bottom));
+    }
+}
+
 /// Applies the default margins to any descendent element that supports it.
 /// Use in situations where all content of an element should be spaced using the default margins,
 /// as an alternative to applying the `margin` class everywhere.

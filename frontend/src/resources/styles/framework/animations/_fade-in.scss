@@ -11,12 +11,12 @@ $__summary: comment;
 /// Animates the `opacity` of the element linearly from 0 to 1.
 @keyframes fade-in
 {
-    0%
+    from
     {
         opacity: 0;
     }
 
-    100%
+    to
     {
         opacity: 1;
     }
@@ -33,7 +33,8 @@ $__summary: comment;
 
     &.au-enter-active
     {
-        animation: fade-in ease var(--animation-duration-long);
+        animation: fade-in ease forwards;
+        animation-duration: var(--animation-duration-long);
     }
 }
 
@@ -48,7 +49,8 @@ $__summary: comment;
 
     &.au-enter-active
     {
-        animation: fade-in ease var(--animation-duration-medium);
+        animation: fade-in ease forwards;
+        animation-duration: var(--animation-duration-medium);
     }
 }
 
@@ -63,6 +65,7 @@ $__summary: comment;
 
     &.au-enter-active
     {
-        animation: fade-in ease var(--animation-duration-short);
+        animation: fade-in ease forwards;
+        animation-duration: var(--animation-duration-short);
     }
 }

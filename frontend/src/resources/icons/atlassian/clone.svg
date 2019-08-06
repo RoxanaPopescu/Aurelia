@@ -1,0 +1,9 @@
+<svg width="24" height="24" viewBox="0 0 20 20" focusable="false" role="presentation">
+  <g transform="translate(1 .5)" fill="currentColor" fill-rule="evenodd">
+    <path d="M5.4 17.2h8.1V19H5.4zM0 14.5h18v1.8H0zM.9 10.8h16.2v1.8H.9z"/>
+    <path d="M16.2 9H18v7.3h-1.8zM0 1.9h1.8v13.5H0z"/>
+    <path d="M.9 1.9h8.2v1.8H.9zM8.1 15.4h2.7v1.8H8.1z"/>
+    <rect x="11.7" width="1.8" height="7.2" rx=".9"/>
+    <path d="M15.275 6.705c.175-.175.175-.46 0-.636l-.475-.476c-.176-.175-.46-.175-.636 0l-1.872 1.872h.636L11.03 5.568c-.176-.176-.46-.176-.637 0l-.468.468c-.175.175-.175.46 0 .636l2.373 2.373c.176.176.46.176.637 0l2.34-2.34z" fill-rule="nonzero"/>
+  </g>
+</svg>

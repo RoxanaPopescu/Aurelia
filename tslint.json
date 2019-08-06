@@ -111,6 +111,7 @@
     ],
     "radix": false,
     "strict-boolean-expressions": false,
+    "strict-comparisons": false,
     "switch-final-break": [true, "always"],
     "strict-type-predicates": false,
     "switch-default": false,

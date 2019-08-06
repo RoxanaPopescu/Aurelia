@@ -98,7 +98,7 @@ export const paths =
         translatables: resolve("artifacts/translation/export.json"),
 
         /**
-         * The path for the folder in the `forntend-desktop` package,
+         * The path for the folder in the `frontend-desktop` package,
          * representing the copy of the `build` artifact from the `frontend` package.
          */
         desktopClientBuildFolder: resolve("packages/desktop/artifacts/client/")

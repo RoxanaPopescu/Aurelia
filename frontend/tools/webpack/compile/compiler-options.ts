@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-reference
-/// <reference path="../../../src/typings/env.d.ts" />
+/// <reference path="../../../src/typings/globals/env.d.ts" />
 
 /**
  * Represents the compiler options.

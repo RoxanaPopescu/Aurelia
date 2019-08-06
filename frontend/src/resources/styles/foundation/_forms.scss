@@ -74,13 +74,15 @@ fieldset
 // The disabled state, in which opacity is applied to make the element appear unavailable.
 // ----------------------------------------------------------------------------------------------------
 
-[disabled]
+[disabled=""],
+[disabled="disabled"]
 {
     opacity: var(--opacity-disabled);
     pointer-events: none;
     cursor: default;
 
-    [disabled]
+    [disabled=""],
+    [disabled="disabled"]
     {
         // TODO: This is not ideal, as it might override existing opacity applied to the element.
         // Needed to prevent unwanted opacity when a disabled
@@ -140,8 +142,9 @@ a[appearance]
 {
     display: block;
 
-    // Remove default appearance.
+    // Remove the default browser styling.
     appearance: none;
+    margin: 0;
     font: inherit;
 
     // Prevent overflow.
@@ -372,6 +375,7 @@ input[type="week"]
 {
     // Remove the default browser styling.
     appearance: none;
+    margin: 0;
     padding: 0 3rem;
     max-width: 100%;
     min-height: 10rem;

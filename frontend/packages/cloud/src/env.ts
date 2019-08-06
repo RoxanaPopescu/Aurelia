@@ -19,7 +19,7 @@ export class CloudEnvironment
 
         // Configure environment.
         this.name = (process.env.NODE_ENV || defaultName).trim() as CloudEnvironmentName;
-        this.port = parseInt((process.env.PORT || defaultPort).trim());
+        this.port = parseInt(process.env.PORT || defaultPort);
         this.protect = this.name !== "development";
     }
 

@@ -484,6 +484,13 @@ code, var, kbd, samp
     background: none;
 }
 
+kbd
+{
+    // Style to resemble keys on a keyboard.
+    background: var(--color-surface-neutral-surface);
+    padding: 0.2em 0.55em;
+    border-radius: 0.25em;
+}
 
 // Edits
 // See: https://www.w3.org/TR/html51/edits.html

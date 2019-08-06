@@ -11,7 +11,7 @@ $__summary: comment;
 /// Animates the `opacity` of the element linearly from its current value to 0.
 @keyframes fade-out
 {
-    100%
+    to
     {
         opacity: 0;
     }
@@ -23,7 +23,8 @@ $__summary: comment;
 {
     &.au-leave-active
     {
-        animation: fade-out ease var(--animation-duration-long);
+        animation: fade-out ease forwards;
+        animation-duration: var(--animation-duration-long);
     }
 }
 
@@ -33,7 +34,8 @@ $__summary: comment;
 {
     &.au-leave-active
     {
-        animation: fade-out ease var(--animation-duration-medium);
+        animation: fade-out ease forwards;
+        animation-duration: var(--animation-duration-medium);
     }
 }
 
@@ -43,6 +45,7 @@ $__summary: comment;
 {
     &.au-leave-active
     {
-        animation: fade-out ease var(--animation-duration-short);
+        animation: fade-out ease forwards;
+        animation-duration: var(--animation-duration-short);
     }
 }

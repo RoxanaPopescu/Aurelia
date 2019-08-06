@@ -13,4 +13,4 @@ function requireAll(r: any): void
 //
 requireAll((require as any).context("resources/icons", true, /.*\.svg$/));
 
-export default null;
+export default undefined;

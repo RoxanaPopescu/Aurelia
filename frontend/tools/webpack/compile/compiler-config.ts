@@ -68,7 +68,11 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             // Only apply hashes to source file names if needed.
             // See: https://www.mistergoodcat.com/post/the-joy-that-is-source-maps-with-vuejs-and-typescript
             devtoolModuleFilenameTemplate: "webpack:///[resource-path]",
-            devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]"
+            devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]",
+
+            // Needed to ensure web workers load correctly.
+            // See: https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
+            globalObject: "this"
         },
         optimization:
         {
@@ -185,6 +189,15 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     [
                         { loader: "translation-loader", options: translateConfig }
                     ]
+                },
+
+                // Loader for `.worker.ts` files, representing modules that should executed in a Web Worker.
+                {
+                    test: /\.worker\.ts$/,
+                    use:
+                    {
+                        loader: "worker-loader"
+                    }
                 },
 
                 // Loader for `.ts` and `.tsx` files.

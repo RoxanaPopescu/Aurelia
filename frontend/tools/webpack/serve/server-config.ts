@@ -18,7 +18,7 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
         // See: https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a
         disableHostCheck: true,
 
-        host: "localhost",
+        host: "0.0.0.0",
         port: serverOptions.port,
         hot: serverOptions.hmr,
         open: serverOptions.open,

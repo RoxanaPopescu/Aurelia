@@ -78,20 +78,7 @@ export class AppModule
      */
     public configureRouter(config: RouterConfiguration, router: Router): void
     {
-        config.options.pushState = ENVIRONMENT.pushState;
-        config.title = document.title;
-
-        // Set the title separator.
-        router.titleSeparator = " — ";
-
-        // Remove unwanted route titles.
-        router.transformTitle = title => ["List"].includes(title) ? "" : title;
-
-        // Add the authorization step.
-        config.addPipelineStep("authorize", AuthorizePipelineStep);
-
-        // Configure the routes.
-        config.map(
+        const routeConfigs =
         [
             {
                 name: "default",
@@ -314,14 +301,31 @@ export class AppModule
                 }
             ] : []
 
-        ]);
+        ];
+
+        // Configure the routes.
+        config.map(routeConfigs);
+
+        // Add a router pipeline step that checks whether the user is authorized to access the route.
+        config.addPipelineStep("authorize", AuthorizePipelineStep);
+
+        // Add a router pipeline step that attempts to close any open modals before navigating.
+        config.addPipelineStep("preActivate", CloseModalsPipelineStep);
+
+        // Configure history usage.
+        config.options.pushState = ENVIRONMENT.pushState;
+
+        // Configure title generation.
+        config.title = document.title;
+        router.titleSeparator = " — ";
+        router.transformTitle = title => ["List"].includes(title) ? "" : title;
     }
 }
 
 /**
- * Represents a router pipeline step that determines whether the user is authorized to access a route.
+ * Represents a router pipeline step that determines whether the user is authorized to access the route.
  * If the user is authenticated, a failed authorization will cause an error to be thrown.
- * If the user is not authenticated, a failed validation will result in a redirect to the sign in page.
+ * If the user is not authenticated, a failed validation will result in a redirect to the sign-in route.
  */
 @autoinject
 class AuthorizePipelineStep implements PipelineStep
@@ -360,6 +364,38 @@ class AuthorizePipelineStep implements PipelineStep
         {
             return next.cancel(new Redirect("account/sign-in"));
         }
+
+        return next();
+    }
+}
+
+/**
+ * Represents a router pipeline step that attempts to close any open modals before navigating.
+ * If a modal refuses to close, navigation will be cancelled.
+ */
+@autoinject
+class CloseModalsPipelineStep implements PipelineStep
+{
+    /**
+     * Creates a new instance of the type.
+     * @param modalService The `ModalService` instance.
+     */
+    public constructor(modalService: ModalService)
+    {
+        this._modalService = modalService;
+    }
+
+    private readonly _modalService: ModalService;
+
+    /**
+     * Called by the router when this step should execute.
+     * @param instruction The current navigation instruction.
+     * @param next A callback to indicate when pipeline processing should advance to the next step or be aborted.
+     * @returns A promise that will be resolved when this step is complete.
+     */
+    public async run(instruction: NavigationInstruction, next: Next): Promise<any>
+    {
+        await this._modalService.closeAll("navigation");
 
         return next();
     }
