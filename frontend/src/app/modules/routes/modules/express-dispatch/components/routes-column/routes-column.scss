@@ -12,6 +12,8 @@ page[name="routes"] page[name="express-dispatch"] routes-column
     // Allow the element to shrink.
     min-width: 0;
 
+    z-index: 1;
+
     data-table
     {
         --data-table-columns: 0.75fr 0.8fr 1fr 0.75fr 1.5fr 0.8fr 0.7fr 0.7fr 1.5fr 0.8fr 0.7fr 0.7fr;

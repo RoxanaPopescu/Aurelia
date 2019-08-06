@@ -12,6 +12,8 @@ page[name="routes"] page[name="express-dispatch"] merge-column
     // Allow the element to shrink.
     min-width: 0;
 
+    z-index: 1;
+
     page-content
     {
         display: flex;
