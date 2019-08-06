@@ -8,7 +8,7 @@ import { TabNavCustomElement } from "./tab-nav";
 export class TabCustomElement
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param tabNav The `tab-nav`component to which this tab belongs.
      */
     public constructor(tabNav: TabNavCustomElement)
@@ -26,6 +26,12 @@ export class TabCustomElement
      */
     @bindable
     public name: string | undefined;
+
+    /**
+     * True to indicate that the state of the tab is invalid, otherwise false.
+     */
+    @bindable
+    public invalid: boolean | undefined;
 
     /**
      * Called when the tab is clicked.

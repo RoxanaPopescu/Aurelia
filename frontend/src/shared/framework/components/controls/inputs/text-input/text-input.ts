@@ -1,5 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
-import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint } from "../input";
+import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, SpellcheckHint } from "../input";
 
 /**
  * Custom element representing a text input.
@@ -49,21 +49,18 @@ export class TextInputCustomElement
 
     /**
      * The autocomplete mode to use.
-     * The default is `off`.
      */
     @bindable({ defaultValue: "off" })
     public autocomplete: AutocompleteHint;
 
     /**
-     * The autocomplete mode to use.
-     * The default is `off`.
+     * The autocorrect mode to use.
      */
     @bindable({ defaultValue: "off" })
     public autocorrect: AutocorrectHint;
 
     /**
-     * True to enable autocomplete.
-     * The default is `sentence`.
+     * The autocapitalize mode to use.
      */
     @bindable({ defaultValue: "sentence" })
     public autocapitalize: AutocapitalizeHint;
@@ -75,29 +72,10 @@ export class TextInputCustomElement
     public autoselect: boolean;
 
     /**
-     * The initial number of text lines in the input,
-     * or undefined to allow only a single line.
+     * The spellcheck mode to use.
      */
-    @bindable({ defaultValue: undefined })
-    public lines: number | undefined;
-
-    /**
-     * The min length of the value.
-     */
-    @bindable({ defaultValue: 0 })
-    public minLength: number;
-
-    /**
-     * The max length of the value.
-     */
-    @bindable({ defaultValue: 100 })
-    public maxLength: number;
-
-    /**
-     * True to remove leading and trailing whitespace, otherwise false.
-     */
-    @bindable({ defaultValue: true })
-    public trim: boolean;
+    @bindable({ defaultValue: "multiline" })
+    public spellcheck: SpellcheckHint;
 
     /**
      * The hint indicating the type of `Enter` key to show on a virtual keyboard
@@ -105,6 +83,25 @@ export class TextInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public enterkey: EnterKeyHint | undefined;
+
+    /**
+     * The initial number of text lines in the input,
+     * or undefined to allow only a single line.
+     */
+    @bindable({ defaultValue: undefined })
+    public lines: number | undefined;
+
+    /**
+     * The max length of the value, or undefined to use the max supported length.
+     */
+    @bindable({ defaultValue: undefined })
+    public maxlength: number | undefined;
+
+    /**
+     * True to remove leading and trailing whitespace, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public trim: boolean;
 
     /**
      * Called when the input receives focus.

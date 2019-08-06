@@ -15,3 +15,4 @@ export * from "./api-client";
 export * from "./cookies";
 export * from "./history";
 export * from "./templating";
+export * from "./workers";

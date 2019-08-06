@@ -2,7 +2,7 @@
 
 card
 {
-    // Use inline flex layout, so the card does not expand when placed in e.g. a grid layout.
+    // Use horizontal flex layout.
     display: flex;
 
     // Allow content to be positioned relative to this element.
@@ -54,6 +54,9 @@ card
     {
         // Fill the available space.
         flex-grow: 1;
+
+        // Allow the element to shrink.
+        min-width: 0;
 
         // Use vertical flex layout.
         display: flex;

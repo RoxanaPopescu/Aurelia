@@ -92,6 +92,12 @@ export class TrapFocusCustomAttribute implements Options
      */
     public enabledChanged(): void
     {
+        // Return if not yet attached.
+        if (this._focusTrap == null)
+        {
+            return;
+        }
+
         if (this.enabled !== false)
         {
             this._focusTrap.activate();

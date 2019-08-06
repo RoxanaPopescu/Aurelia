@@ -31,11 +31,13 @@ export class FilterValueConverter
         {
             return value.filter(v => testFunc(v, ...args));
         }
-        else if (value instanceof Set)
+
+        if (value instanceof Set)
         {
             return new Set<TValue>(Array.from(value).filter(v => testFunc(v, ...args)));
         }
-        else if (value instanceof Map)
+
+        if (value instanceof Map)
         {
             return new Map<TKey, TValue>(Array.from(value).filter(v => testFunc(v, ...args)));
         }

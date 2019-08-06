@@ -108,14 +108,6 @@ declare interface IClientEnvironment
     integrations:
     {
         /**
-         * The settings to use for the Google Maps integration.
-         */
-        googleMaps:
-        {
-            key: string;
-        }
-
-        /**
          * The settings to use for the Google Analytics integration, or undefined to disable the integration.
          */
         googleAnalytics?:

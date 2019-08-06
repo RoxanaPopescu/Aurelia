@@ -62,10 +62,8 @@ export class TreeNavNodeCustomElement
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     /**
@@ -103,11 +101,9 @@ export class TreeNavNodeCustomElement
             // Filled icon, indicating that child nodes are included.
             return "folder";
         }
-        else
-        {
-            // Outline icon, indicating that child nodes are excluded.
-            return "folder_open";
-        }
+
+        // Outline icon, indicating that child nodes are excluded.
+        return "folder_open";
     }
 
     /**

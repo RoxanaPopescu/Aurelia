@@ -13,4 +13,10 @@ export class CardCustomElement
      */
     @bindable
     public href: string | undefined;
+
+    /**
+     * The browsing context in which the URL should load.
+     */
+    @bindable({ defaultValue: "_self" })
+    public target: "_blank" | "_parent" | "_self" | "_top";
 }

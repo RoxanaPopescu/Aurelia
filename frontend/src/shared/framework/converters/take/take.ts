@@ -27,11 +27,13 @@ export class TakeValueConverter
         {
             return value.slice(0, count);
         }
-        else if (value instanceof Set)
+
+        if (value instanceof Set)
         {
             return new Set<TValue>(Array.from(value).slice(0, count));
         }
-        else if (value instanceof Map)
+
+        if (value instanceof Map)
         {
             return new Map<TKey, TValue>(Array.from(value).slice(0, count));
         }

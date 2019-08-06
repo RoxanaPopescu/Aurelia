@@ -62,14 +62,20 @@
             display: block;
 
             // Apply spacing between the label and the control.
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--font-current-margin-bottom);
+
+            .input-description > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-top: var(--font-current-margin-top);
+            }
         }
     }
 
     &[label="inline"]
     {
         // Define the grid with the label inline with the control.
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1.5fr;
         grid-template-areas:
             "label control"
             "validation validation";
@@ -81,7 +87,7 @@
 
             // Position the label so it appears centered
             // relative to a single line input.
-            margin-top: 0.5rem;
+            margin-top: 2.75rem;
 
             // Apply spacing between the label and the control.
             margin-right: var(--size-inline-spacing-large);
@@ -109,12 +115,6 @@
 
             // Position the element within the grid.
             grid-area: label;
-
-            .input-heading > *
-            {
-                // Apply spacing below the heading.
-                margin-bottom: 0.5rem;
-            }
         }
 
         > .input-control
@@ -164,14 +164,14 @@
 
             > span[slot="before"]
             {
-                // Apply the input padding, except at the end closes to the input.
+                // Apply the input padding, except at the end closest to the input.
                 padding: var(--input-padding);
                 padding-right: 0;
             }
 
             > span[slot="after"]
             {
-                // Apply the input padding, except at the end closes to the input.
+                // Apply the input padding, except at the end closest to the input.
                 padding: var(--input-padding);
                 padding-left: 0;
             }
@@ -271,12 +271,16 @@
         {
             // Apply component style for the invalid state.
             border-color: var(--input-border-color--invalid);
-            color: var(--input-surface-text-color--invalid);
             background: var(--input-surface-color--invalid);
+        }
+
+        &:not(.--empty) > label > .input-control > .input-control-inner
+        {
+            // Apply component style for the invalid state.
+            color: var(--input-surface-text-color--invalid);
         }
     }
 
-    &:focus-within,
     &:not(.--empty)
     {
         > label > .input-control > .input-control-inner > .input-placeholder

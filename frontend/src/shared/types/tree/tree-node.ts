@@ -38,7 +38,7 @@ export interface ITreeNode<TTreeNode extends TreeNode<TTreeNode> = any>
 export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements ITreeNode<TTreeNode>
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      * @param parent The parent node, or undefined if this node represents the root in the tree.
      */

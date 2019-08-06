@@ -1,0 +1,82 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${!value ? '--empty' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./url-input.scss"></require>
+
+    <label>
+
+        <div class="input-label">
+
+            <div class="input-heading">
+                <slot name="heading"></slot>
+            </div>
+
+            <div class="input-description font-small opacity-faded">
+                <slot name="description"></slot>
+            </div>
+
+        </div>
+
+        <div class="input-control">
+
+            <slot name="before"></slot>
+
+            <div class="input-control-inner">
+
+                <input
+                    if.bind="lines == null"
+                    ref="inputElement"
+                    class="input-input"
+                    type="url"
+                    value.bind="inputValue"
+                    autocomplete.bind="autocomplete"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="off"
+                    mozactionhint.bind="enterkey"
+                    enterkeyhint.bind="enterkey"
+                    maxlength.bind="maxlength || 524288"
+                    disabled.bind="disabled"
+                    readonly.bind="readonly"
+                    focus.trigger="onFocus()"
+                    blur.trigger="onBlur()"
+                    keydown.trigger="onKeyDown($event)"
+                    pattern="[\s]*(https?://[^\s]+)?[\s]*"
+                    placeholder=" ">
+
+                <div class="input-placeholder text-truncate">
+                    <slot name="placeholder"></slot>
+                </div>
+
+            </div>
+
+            <slot name="after"></slot>
+
+        </div>
+
+        <div class="input-validation font-small">
+
+            <input-validator
+                input.bind="inputElement"
+                trigger.bind="validationTrigger">
+
+                <template replace-part="invalid" translate>
+                    Please provide a valid URL.
+                </template>
+
+            </input-validator>
+
+            <slot name="validation"></slot>
+
+        </div>
+
+    </label>
+
+</template>

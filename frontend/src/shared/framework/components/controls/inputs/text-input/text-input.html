@@ -18,7 +18,7 @@
                 <slot name="heading"></slot>
             </div>
 
-            <div class="input-description font-small">
+            <div class="input-description font-small opacity-faded">
                 <slot name="description"></slot>
             </div>
 
@@ -39,8 +39,10 @@
                     autocomplete.bind="autocomplete"
                     autocorrect.bind="autocorrect"
                     autocapitalize.bind="autocapitalize"
+                    spellcheck.bind="spellcheck == 'on' ? true : false"
                     mozactionhint.bind="enterkey"
                     enterkeyhint.bind="enterkey"
+                    maxlength.bind="maxlength || 524288"
                     disabled.bind="disabled"
                     readonly.bind="readonly"
                     focus.trigger="onFocus()"
@@ -56,6 +58,10 @@
                     autocomplete.bind="autocomplete"
                     autocorrect.bind="autocorrect"
                     autocapitalize.bind="autocapitalize"
+                    spellcheck.bind="spellcheck == 'off' ? false : true"
+                    mozactionhint.bind="enterkey"
+                    enterkeyhint.bind="enterkey"
+                    maxlength.bind="maxlength || 524288"
                     disabled.bind="disabled"
                     readonly.bind="readonly"
                     focus.trigger="onFocus()"

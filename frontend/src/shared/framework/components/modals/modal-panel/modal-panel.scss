@@ -16,6 +16,9 @@ modal-panel
     border-radius: var(--border-radius-large);
     margin: var(--modal-panel-margin);
 
+    // Hide overflow by default, so we get rounded borders.
+    overflow: hidden;
+
     // Apply surface style.
     background: var(--color-surface);
     color: var(--color-surface-text);
@@ -48,7 +51,7 @@ modal-panel
         flex-direction: column;
 
         // Apply padding.
-        padding: 9rem 9rem 9rem var(--modal-panel-actions-width);
+        padding: 9rem 12rem 9rem var(--modal-panel-actions-width);
 
         // Provide defaults for sectioning elements.
 
@@ -64,6 +67,12 @@ modal-panel
         {
             // Apply default margin.
             margin-bottom: 9rem;
+
+            h1.font-largest.margin-bottom
+            {
+                // HACK: Add a bit more spacing below the modal title.
+                margin-bottom: 6rem;
+            }
         }
 
         > footer
@@ -96,7 +105,7 @@ modal-panel
         > *
         {
             // Provide default item spacing.
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         button[appearance="icon"]
@@ -126,7 +135,8 @@ modal-panel
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1) var(--animation-duration-medium);
+        animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1);
+        animation-duration: var(--animation-duration-medium);
 
         // HACK: This is needed to avoid a bug in Safari, which apparently causes the animation to start before
         // the width of the element has been calculated, thus causing an incorrect transform to be applied.
@@ -145,7 +155,8 @@ modal-panel
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-panel-leave cubic-bezier(0.2, 0, 0.2, 0.5) var(--animation-duration-medium);
+        animation: modal-panel-leave cubic-bezier(0.2, 0, 0.2, 0.5);
+        animation-duration: var(--animation-duration-medium);
 
         // Prevent glitches at the ends of the animation.
         animation-fill-mode: both;
@@ -197,12 +208,14 @@ modal-panel > *
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 }
 

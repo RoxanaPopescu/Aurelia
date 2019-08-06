@@ -1,7 +1,11 @@
-<template class="${name == tabNav.value ? '--active' : ''}" click.delegate="onClick()">
+<template class="
+    ${name == tabNav.value ? '--active' : ''}
+    ${invalid ? '--invalid' : ''}">
 
     <require from="./tab.scss"></require>
 
-    <slot></slot>
+    <button appearance="none" click.delegate="onClick()">
+        <slot></slot>
+    </button>
 
 </template>

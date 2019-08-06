@@ -22,11 +22,13 @@ export class SkipValueConverter
         {
             return value.slice(count);
         }
-        else if (value instanceof Set)
+
+        if (value instanceof Set)
         {
             return new Set<TValue>(Array.from<TValue>(value).slice(count));
         }
-        else if (value instanceof Map)
+
+        if (value instanceof Map)
         {
             return new Map<TKey, TValue>(Array.from<[TKey, TValue]>(value).slice(count));
         }

@@ -19,14 +19,12 @@ export async function delay(time: number, abortSignal?: AbortSignal): Promise<vo
 
                 return;
             }
-            else
+
+            abortSignal.addEventListener("abort", () =>
             {
-                abortSignal.addEventListener("abort", () =>
-                {
-                    clearTimeout(timeoutHandle);
-                    reject(new AbortError());
-                });
-            }
+                clearTimeout(timeoutHandle);
+                reject(new AbortError());
+            });
         }
 
         const timeoutHandle = setTimeout(resolve, time);

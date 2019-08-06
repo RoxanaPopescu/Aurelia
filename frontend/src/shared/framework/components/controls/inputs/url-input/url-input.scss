@@ -1,0 +1,18 @@
+url-input
+{
+    > label > .input-control > .input-control-inner
+    {
+        input
+        {
+            // Remove the default browser styling.
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: inherit;
+
+            // Inherit font-size and line-height, to ensure correct vertical alignment.
+            font-size: inherit;
+            line-height: inherit;
+        }
+    }
+}

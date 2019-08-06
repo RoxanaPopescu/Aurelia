@@ -1,0 +1,67 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${!value ? '--empty' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./search-input.scss"></require>
+
+    <label>
+
+        <div class="input-label">
+
+            <div class="input-heading">
+                <slot name="heading"></slot>
+            </div>
+
+            <div class="input-description font-small opacity-faded">
+                <slot name="description"></slot>
+            </div>
+
+        </div>
+
+        <div class="input-control">
+
+            <slot name="before"></slot>
+
+            <div class="input-control-inner">
+
+                <input
+                    ref="inputElement"
+                    class="input-input"
+                    type="search"
+                    value.bind="inputValue"
+                    autocomplete.bind="autocomplete"
+                    autocorrect.bind="autocorrect"
+                    autocapitalize.bind="autocapitalize"
+                    spellcheck.bind="spellcheck == 'on' ? true : false"
+                    mozactionhint.bind="enterkey"
+                    enterkeyhint.bind="enterkey"
+                    maxlength.bind="maxlength || 524288"
+                    disabled.bind="disabled"
+                    readonly.bind="readonly"
+                    focus.trigger="onFocus()"
+                    blur.trigger="onBlur()"
+                    placeholder=" ">
+
+                <div class="input-placeholder text-truncate">
+                    <slot name="placeholder"></slot>
+                </div>
+
+            </div>
+
+            <slot name="after"></slot>
+
+        </div>
+
+        <div class="input-validation font-small">
+            <slot name="validation"></slot>
+        </div>
+
+    </label>
+
+</template>

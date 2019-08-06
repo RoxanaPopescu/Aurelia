@@ -3,7 +3,22 @@
 tab
 {
     display: block;
+    position: relative;
     cursor: pointer;
+
+    &:focus-within
+    {
+        // Increase the z-index, so the focus outline is
+        // not covered by other tabs.
+        z-index: 1;
+    }
+
+    &.--invalid
+    {
+        // Use negative accent color if the tab is invalid.
+        // Note that this will be overridden if the tab is active.
+        color: var(--color-surface-negative-text);
+    }
 
     tab-nav[appearance="text"] &
     {
@@ -25,11 +40,14 @@ tab
     tab-nav[appearance="solid"] &,
     tab-nav[appearance="outline"] &
     {
-        min-width: 30rem;
+        button
+        {
+            min-width: 30rem;
 
-        // Style to appear as a button.
-        padding: 0 3.5rem;
-        text-align: center;
+            // Style to appear as a button.
+            padding: 0 3.5rem;
+            text-align: center;
+        }
     }
 
     tab-nav:not([appearance]) &,
@@ -38,10 +56,15 @@ tab
         // Fill the available space.
         flex-grow: 1;
 
-        // Compensate for the border along the bottom of the tabs.
-        line-height: calc(10rem - var(--border-width-medium));
+        button
+        {
+            width: 100%;
 
-        &.--active
+            // Compensate for the border along the bottom of the tabs.
+            line-height: calc(10rem - var(--border-width-medium));
+        }
+
+        &.--active button
         {
             // Highlight the active tab.
             background: var(--color-surface-neutral-surface);
@@ -53,19 +76,22 @@ tab
 
     tab-nav[appearance="solid"] &
     {
-        // Fill the available space.
-        flex-grow: 1;
+        button
+        {
+            // Fill the available space.
+            flex-grow: 1;
 
-        // Compensate for the border around the tabs.
-        line-height: calc(10rem - 2 * var(--border-width-medium));
+            // Compensate for the border around the tabs.
+            line-height: calc(10rem - 2 * var(--border-width-medium));
+        }
 
-        &:not(:last-child)
+        &:not(:last-child) button
         {
             // Apply a border between the tabs.
             border-right: var(--border-width-medium) solid var(--color-surface-neutral-border);
         }
 
-        &.--active
+        &.--active button
         {
             // Highlight the active tab.
             background: var(--color-surface-neutral-surface);
@@ -75,14 +101,17 @@ tab
 
     tab-nav[appearance="outline"] &
     {
-        // Apply a border around the tab.
-        border: var(--border-width-medium) solid transparent;
-        border-radius: var(--border-radius-medium);
+        button
+        {
+            // Apply a border around the tab.
+            border: var(--border-width-medium) solid transparent;
+            border-radius: var(--border-radius-medium);
 
-        // Compensate for the border around the tab.
-        line-height: calc(10rem - 2 * var(--border-width-medium));
+            // Compensate for the border around the tab.
+            line-height: calc(10rem - 2 * var(--border-width-medium));
+        }
 
-        &.--active
+        &.--active button
         {
             // Highlight the active tab.
             border-color: var(--color-surface-neutral-border);

@@ -1,20 +1,20 @@
-import { containerless, bindable, bindingMode } from "aurelia-framework";
+import { containerless, bindable } from "aurelia-framework";
 import { Validator } from "../../validator";
 import { ValidationTrigger } from "../../validation-trigger";
 
 /**
- * Represents a validator that is always invalid.
- * Use this to manually add validation errors, such as errors received from an API.
+ * Represents a validator whose validity is bound to a view model property,
+ * but not applied to the validation until the validator actually runs.
+ * Use this to validate e.g. dependencies between inputs.
  */
 @containerless
 export class CustomValidatorCustomElement extends Validator
 {
     /**
-     * True if the validation failed, false if validation succeeded,
-     * or undefined if not yet validated.
+     * True if the validation should succeed, false if validation should fail.
      */
-    @bindable({ defaultBindingMode: bindingMode.toView })
-    public invalid: boolean | undefined;
+    @bindable
+    public valid: boolean;
 
     /**
      * Called by the validation when this validator should run.
@@ -23,6 +23,8 @@ export class CustomValidatorCustomElement extends Validator
      */
     public async validate(trigger: ValidationTrigger): Promise<boolean>
     {
-        return !this.invalid;
+        this.invalid = !this.valid;
+
+        return this.valid;
     }
 }

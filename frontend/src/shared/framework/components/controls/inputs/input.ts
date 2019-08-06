@@ -16,10 +16,28 @@ export type AutocompleteHint =
 export type AutocorrectHint =
     "on" | "off";
 
+/**
+ * Represents the type of autocapitalization to use for an input.
+ * Note that we exclude the values "none" and "on" here to enforce consistency.
+ */
 export type AutocapitalizeHint =
     "off" | "characters" | "words" | "sentences";
+
+/**
+ * Represents the type of spellchecking to use for an input.
+ * Note that we include a non-standard "multiline" value here, which means only when the input allows multiple lines.
+ */
+export type SpellcheckHint =
+    "on" | "off" | "multiline";
+
 /**
  * Represents the type of `Enter` key to show on a virtual keyboard for a single-line text input.
  */
 export type EnterKeyHint =
-    "go" | "done" | "next" | "search" | "send";
+    "enter" | "done" | "go" | "previous" | "next" | "search" | "send";
+
+/**
+ * Represents the position of the label, relative to the input.
+ */
+export type LabelPosition =
+    "inline" | "above";

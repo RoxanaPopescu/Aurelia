@@ -13,7 +13,7 @@ interface IValidationTriggerEvent extends Event
      * The promise for the validation run triggered by this event,
      * or undefined if no validation has been triggered.
      */
-    __validationPromise?: Promise<boolean | undefined>
+    __validationPromise?: Promise<boolean | undefined>;
 }
 
 /**
@@ -72,7 +72,7 @@ export interface IValidation
 export class ValidationCustomAttribute implements IValidation
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param container The `Container` instance associated with the component.
      */
     public constructor(container: Container)
@@ -113,7 +113,7 @@ export class ValidationCustomAttribute implements IValidation
      * True if this validation, and all ancestor validations, are enabled, otherwise false.
      * If no parent validation exists, the default is true.
      */
-    protected get computedEnabled(): boolean
+    public get computedEnabled(): boolean
     {
         const parentEnabled = this.parentValidation != null ? this.parentValidation.computedEnabled : true;
 
@@ -122,11 +122,11 @@ export class ValidationCustomAttribute implements IValidation
 
     /**
      * The trigger specified for this validation, or inherited from a parent validation.
-     * If not specified and no validation exists, the default is `none`.
+     * If no trigger is specified and no parent validation exists, the default is `input`.
      */
-    protected get computedTrigger(): ValidationTrigger[]
+    public get computedTrigger(): ValidationTrigger[]
     {
-        const computedTriggers = this.trigger || (this.parentValidation != null ? this.parentValidation.computedTrigger : "none");
+        const computedTriggers = this.trigger || (this.parentValidation != null ? this.parentValidation.computedTrigger : "input");
 
         return computedTriggers instanceof Array ? computedTriggers : [computedTriggers];
     }
@@ -135,7 +135,7 @@ export class ValidationCustomAttribute implements IValidation
      * True if this validation, or any child validations, are invalid, false if valid,
      * or undefined if this validation is disabled.
      */
-    protected get computedInvalid(): boolean | undefined
+    public get computedInvalid(): boolean | undefined
     {
         if (!this.enabled)
         {
@@ -156,6 +156,7 @@ export class ValidationCustomAttribute implements IValidation
     /**
      * The trigger to use for this validation, or undefined to
      * inherit the trigger specified on the parent validation.
+     * If no parent validation exists, the computed default is `input`.
      */
     @bindable({ defaultValue: undefined })
     public trigger: ValidationTrigger | ValidationTrigger[] | undefined;

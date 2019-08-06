@@ -64,7 +64,7 @@ icon
 }
 
 // Apply colors to Material Design icons.
-icon[name^="md-"]
+icon[class*="md-"]
 {
     // Use the current foreground color for both stroke and fill.
     // This means that the markup for each icon must specify the
@@ -80,7 +80,7 @@ icon[name^="md-"]
 }
 
 // Apply colors to Atlassian icons.
-icon:not([name^="md-"])
+icon:not([class*="md-"])
 {
     // Note: `color` is used as the primary icon color.
 

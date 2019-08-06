@@ -21,13 +21,11 @@ export function once<T>(target: any, key?: any, descriptor?: any): any
             {
                 throw new Error(`The class '${target.name}' may only be constructed once.`);
             }
-            else
-            {
-                called = true;
 
-                // Call the original constructor to create the instance.
-                return oldConstructor.apply(this, arguments) as T;
-            }
+            called = true;
+
+            // Call the original constructor to create the instance.
+            return oldConstructor.apply(this, arguments) as T;
 
             // tslint:enable
         };
@@ -38,7 +36,8 @@ export function once<T>(target: any, key?: any, descriptor?: any): any
         // Return the new constructor.
         return newConstructor as any;
     }
-    else if (key != null && descriptor != null && typeof (descriptor.value || descriptor.set) === "function")
+
+    if (key != null && descriptor != null && typeof (descriptor.value || descriptor.set) === "function")
     {
         const called = new WeakMap();
 
@@ -56,13 +55,11 @@ export function once<T>(target: any, key?: any, descriptor?: any): any
                 {
                     throw new Error(`The method '${key.toString()}' on class '${target.constructor.name}' may only be called once`);
                 }
-                else
-                {
-                    called.set(this, true);
 
-                    // Call the original method.
-                    oldMethod.apply(this, arguments);
-                }
+                called.set(this, true);
+
+                // Call the original method.
+                oldMethod.apply(this, arguments);
 
                 // tslint:enable
             } as any;
@@ -81,13 +78,11 @@ export function once<T>(target: any, key?: any, descriptor?: any): any
                 {
                     throw new Error(`The setter '${key.toString()}' on class '${target.constructor.name}' may only be called once`);
                 }
-                else
-                {
-                    called.set(this, true);
 
-                    // Call the original setter.
-                    oldSetter.apply(this, arguments);
-                }
+                called.set(this, true);
+
+                // Call the original setter.
+                oldSetter.apply(this, arguments);
 
                 // tslint:enable
             };
@@ -96,8 +91,6 @@ export function once<T>(target: any, key?: any, descriptor?: any): any
         // Return the descriptor.
         return descriptor;
     }
-    else
-    {
-        throw new SyntaxError("Only constructors, methods and setters can be marked as callable only once.");
-    }
+
+    throw new SyntaxError("Only constructors, methods and setters can be marked as callable only once.");
 }

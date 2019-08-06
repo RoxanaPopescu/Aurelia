@@ -18,7 +18,7 @@
                 <slot name="heading"></slot>
             </div>
 
-            <div class="input-description font-small">
+            <div class="input-description font-small opacity-faded">
                 <slot name="description"></slot>
             </div>
 
@@ -40,6 +40,8 @@
                     max.bind="max"
                     step.bind="step"
                     autocomplete.bind="autocomplete"
+                    mozactionhint.bind="enterkey"
+                    enterkeyhint.bind="enterkey"
                     disabled.bind="disabled"
                     readonly.bind="readonly"
                     focus.trigger="onFocus()"

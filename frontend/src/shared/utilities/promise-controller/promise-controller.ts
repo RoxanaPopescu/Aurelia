@@ -27,13 +27,11 @@ export class PromiseController<T = void>
 
                 return;
             }
-            else
+
+            abortSignal.addEventListener("abort", () =>
             {
-                abortSignal.addEventListener("abort", () =>
-                {
-                    this.reject(new AbortError());
-                });
-            }
+                this.reject(new AbortError());
+            });
         }
     }
 

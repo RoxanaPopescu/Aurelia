@@ -1,0 +1,16 @@
+<template class="${opaque ? '--opaque' : ''} ${animate ? '--animate' : ''} ${delay ? '--delay' : ''}">
+
+    <require from="./busy-overlay.scss"></require>
+
+    <div class="busy-overlay-inner" ref="busyOverlayContainerElement">
+
+        <busy-indicator></busy-indicator>
+
+        <div class="busy-overlay-message opacity-faded margin-top">
+            <slot></slot>
+        </div>
+
+    </div>
+
+
+</template>

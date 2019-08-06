@@ -127,7 +127,8 @@ app-sidebar
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-overlay-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-overlay-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave &
@@ -138,7 +139,8 @@ app-sidebar
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-overlay-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-overlay-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 }
 
@@ -180,12 +182,14 @@ modal-overlay > *
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-overlay-content-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-overlay-content-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-overlay-content-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-overlay-content-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 }
 

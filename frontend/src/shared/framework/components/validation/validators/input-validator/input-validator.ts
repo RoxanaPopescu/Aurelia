@@ -3,8 +3,8 @@ import { Validator } from "../../validator";
 import { ValidationTrigger } from "../../validation-trigger";
 
 /**
- * Represents a validator that validates that an input element does not contain a badly formatted value,
- * as determined by the validation built into the input element.
+ * Represents a validator that validates that a standard input element does not contain
+ * an invalid value, as determined by the validation built into the input element.
  */
 @containerless
 export class InputValidatorCustomElement extends Validator
@@ -22,7 +22,7 @@ export class InputValidatorCustomElement extends Validator
      */
     public async validate(trigger: ValidationTrigger): Promise<boolean>
     {
-        this.invalid = this.input.validity.badInput;
+        this.invalid = !this.input.validity.valid;
 
         return !this.invalid;
     }

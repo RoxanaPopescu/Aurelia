@@ -47,7 +47,7 @@ export interface IValidator
 export abstract class Validator implements IValidator
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param container The `Container` instance associated with the component.
      */
     public constructor(container: Container)
@@ -89,11 +89,16 @@ export abstract class Validator implements IValidator
      * Called by the framework when the component is attached.
      * Attaches this validator to the validation.
      */
-    public attached(): void
+    public async attached(): Promise<void>
     {
         if (this.validation != null)
         {
             this.validation.attachValidator(this);
+
+            if (this.validation.computedEnabled)
+            {
+                await this.validate("none");
+            }
         }
     }
 

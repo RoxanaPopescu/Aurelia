@@ -76,16 +76,14 @@ export class ModalDialogCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
-        if (event.key === "Escape" && this.closeShortcut && this.modal != null)
+        if (event.key === "Escape" && !event.defaultPrevented && this.closeShortcut && this.modal != null)
         {
             // tslint:disable-next-line: no-floating-promises
             this.modal.close();
 
             return false;
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
     }
 }

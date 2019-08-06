@@ -7,7 +7,7 @@ import { AbortError } from "../errors/abort-error";
 export class Operation<TResult = void>
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param func The function to execute, which will be called immediately.
      */
     public constructor(func: (signal: AbortSignal) => Promise<TResult>)

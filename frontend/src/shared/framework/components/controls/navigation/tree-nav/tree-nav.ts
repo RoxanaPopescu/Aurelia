@@ -2,7 +2,7 @@ import { bindable, autoinject, bindingMode } from "aurelia-framework";
 import { TreeNode } from "shared/types";
 
 /**
- * Represents a component that presents a tree structure, that the user can navigate within.
+ * Represents a tree structure, that the user can navigate within.
  */
 @autoinject
 export class TreeNavCustomElement

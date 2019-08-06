@@ -26,6 +26,9 @@ modal-dialog
     border: 0 solid var(--color-surface-border);
     border-radius: var(--border-radius-large);
 
+    // Hide overflow by default, so we get rounded borders.
+    overflow: hidden;
+
     // Apply a shadow to the dialog.
     box-shadow: var(--modal-shadow);
 
@@ -203,7 +206,8 @@ modal-dialog
 
     modal-view compose.au-enter-active &
     {
-        animation: modal-dialog-enter cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-dialog-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 
     modal-view compose.au-leave &
@@ -214,7 +218,8 @@ modal-dialog
 
     modal-view compose.au-leave-active &
     {
-        animation: modal-dialog-leave cubic-bezier(0.2, 0, 0, 1) var(--animation-duration-medium);
+        animation: modal-dialog-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
     }
 }
 

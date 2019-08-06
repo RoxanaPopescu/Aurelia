@@ -16,6 +16,8 @@ export type TextCaseFunc = (strings: string[], localized?: boolean, aggressive?:
  */
 export namespace TextCaseFuncs
 {
+    // tslint:disable: unnecessary-else
+
     /**
      * Formats and joins the specified strings using 'space case' rules,
      * meaning that no changes will be made to the strings.
@@ -189,4 +191,6 @@ export namespace TextCaseFuncs
     {
         return textJoin(strings.map(s => lowerCase([s], localized), localized), "_");
     }
+
+    // tslint:enable
 }

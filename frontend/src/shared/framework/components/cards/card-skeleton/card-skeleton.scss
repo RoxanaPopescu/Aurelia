@@ -2,8 +2,8 @@
 
 card-skeleton
 {
-    // Use inline flex layout, so the card does not expand when placed in e.g. a grid layout.
-    display: inline-flex;
+    // Use horizontal flex layout.
+    display: flex;
 
     // Allow content to be positioned relative to this element.
     position: relative;
@@ -40,7 +40,8 @@ card-skeleton
             var(--color-surface) 87%
         );
 
-        animation: card-skeleton var(--animation-duration-skeleton) infinite ease;
+        animation: card-skeleton ease infinite;
+        animation-duration: var(--animation-duration-skeleton);
         animation-delay: calc(var(--animation-duration-skeleton) / 3);
 
         footer

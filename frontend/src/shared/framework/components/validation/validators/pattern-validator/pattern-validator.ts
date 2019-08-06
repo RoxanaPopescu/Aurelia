@@ -27,6 +27,12 @@ export class PatternValidatorCustomElement extends Validator
     public pattern: string | RegExp | undefined;
 
     /**
+     * True to invert the validation, meaning that a valid input is one that does not match the pattern.
+     */
+    @bindable({ defaultValue: false })
+    public invert: boolean;
+
+    /**
      * Called by the validation when this validator should run.
      * @param trigger The trigger that caused the validation to run.
      * @returns True if validation succeeded, otherwise false.
@@ -39,8 +45,9 @@ export class PatternValidatorCustomElement extends Validator
         }
         else
         {
-            this.invalid =
-                this._pattern != null && !this._pattern.test(this.value);
+            const match = this._pattern != null && !this._pattern.test(this.value);
+
+            this.invalid = this.invert ? !match : match;
         }
 
         return !this.invalid;

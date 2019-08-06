@@ -1,0 +1,36 @@
+<template class="
+    ${toggle ? '--toggle' : ''}
+    ${expanded ? '--expanded' : ''}
+    ${invalid || invalid == null && validation.invalid ? '--invalid' : ''}
+    ${headerSlotEmpty ? '--header-slot-empty' : ''}"
+    validation
+    validation.ref="validation">
+
+    <require from="./modal-section.scss"></require>
+
+    <button appearance="none" class="modal-section-header font-large" click.trigger="onHeaderClick()">
+
+        <div empty.bind="headerSlotEmpty">
+            <slot name="header"></slot>
+        </div>
+
+        <div
+            if.bind="toggle"
+            class="modal-section-toggle ${expanded ? 'opacity-faded-more' : ''}"
+            accent.bind="expanded ? 'neutral' : 'primary' & attr">
+
+            <span if.bind="!expanded" class="font-small" translate>
+                Expand
+            </span>
+
+            <icon name="md-expand-${expanded ? 'less' : 'more'}"></icon>
+
+        </div>
+
+    </button>
+
+    <div show.bind="expanded" class="modal-section-content">
+        <slot></slot>
+    </div>
+
+</template>

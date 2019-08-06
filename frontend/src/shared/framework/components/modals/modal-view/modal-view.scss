@@ -38,12 +38,14 @@ modal-view
 
         &.au-enter-active
         {
-            animation: modal-view-compose-enter var(--animation-duration-medium);
+            animation: modal-view-compose-enter ease;
+            animation-duration: var(--animation-duration-medium);
         }
 
         &.au-leave-active
         {
-            animation: modal-view-compose-leave var(--animation-duration-medium);
+            animation: modal-view-compose-leave ease;
+            animation-duration: var(--animation-duration-medium);
         }
     }
 }
