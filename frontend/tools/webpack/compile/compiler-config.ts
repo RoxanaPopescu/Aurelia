@@ -101,7 +101,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.scss` files defining themes, one of which will be loaded during app start.
                 // Note that we need `style-loader` to inject the these.
                 {
-                    test: /\/themes\/.+\.scss$/,
+                    test: /[\\/]themes[\\/].*\.scss$/,
                     use:
                     [
                         "style-loader",
@@ -137,22 +137,6 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     issuer: /\.tsx?$/i
                 },
 
-                // Loader for `.css` files required in `.ts` files.
-                // Note that we need `style-loader` to inject the these.
-                {
-                    test: /\.css$/,
-                    use:
-                    [
-                        "style-loader",
-                        "css-loader",
-                        {
-                            loader: "postcss-loader",
-                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
-                        }
-                    ],
-                    issuer: /\.tsx?$/i
-                },
-
                 // Loader for `.scss` files required in `.html` files.
                 // Note that we do not need `style-loader` to inject the these, as Aurelia handles that itself.
                 {
@@ -172,6 +156,22 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     issuer: /\.html$/i
                 },
 
+                // Loader for `.css` files required in `.ts` files.
+                // Note that we need `style-loader` to inject the these.
+                {
+                    test: /\.css$/,
+                    use:
+                    [
+                        "style-loader",
+                        "css-loader",
+                        {
+                            loader: "postcss-loader",
+                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
+                        }
+                    ],
+                    issuer: /\.tsx?$/i
+                },
+
                 // Loader for `.html` files.
                 {
                     test: /\.html$/i,
@@ -184,7 +184,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
 
                 // Loader for `.json` files containing translatable strings.
                 {
-                    test: /\/resources\/strings\/.*\.json$/,
+                    test: /[\\/]resources[\\/]strings[\\/].*\.json$/,
                     use:
                     [
                         { loader: "translation-loader", options: translateConfig }

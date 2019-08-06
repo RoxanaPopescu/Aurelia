@@ -14,10 +14,10 @@
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
-    "develop": "rimraf 'artifacts/build' && tsc --watch",
-    "build": "rimraf 'artifacts/build' && tsc",
-    "start": "node 'artifacts/build/index'",
-    "lint": "tslint --project 'tsconfig.json' --format stylish"
+    "develop": "cross-env rimraf 'artifacts/build' && tsc --watch",
+    "build": "cross-env rimraf 'artifacts/build' && tsc",
+    "start": "cross-env node 'artifacts/build/index'",
+    "lint": "cross-env tslint --project 'tsconfig.json' --format stylish"
   },
   "dependencies": {
     "@types/cls-hooked": "^4.3.0",
@@ -28,6 +28,7 @@
     "bcrypt": "^3.0.6",
     "chalk": "^2.4.2",
     "cls-hooked": "^4.2.2",
+    "cross-env": "^5.2.0",
     "globs": "^0.1.4",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.5.1",

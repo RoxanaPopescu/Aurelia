@@ -15,11 +15,11 @@
   },
   "main": "artifacts/build/index.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "build": "rimraf 'artifacts/{build,client}' && cpx '../../artifacts/build/**' 'artifacts/client' && tsc",
-    "start": "electron 'artifacts/build/' --debug",
-    "lint": "tslint --project 'tsconfig.json' --format stylish",
-    "release": "electron-builder --config 'tools/release.yml'"
+    "postinstall": "cross-env electron-builder install-app-deps",
+    "build": "cross-env rimraf 'artifacts/{build,client}' && cpx '../../artifacts/build/**' 'artifacts/client' && tsc",
+    "start": "cross-env electron 'artifacts/build/' --debug",
+    "lint": "cross-env tslint --project 'tsconfig.json' --format stylish",
+    "release": "cross-env electron-builder --config 'tools/release.yml'"
   },
   "dependencies": {},
   "peerDependencies": {},
@@ -30,6 +30,7 @@
     "@types/node": "^10.12.24",
     "@types/uuid": "^3.4.4",
     "cpx": "^1.5.0",
+    "cross-env": "^5.2.0",
     "electron": "^4.0.4",
     "electron-builder": "^20.38.5",
     "nodemon": "^1.18.10",
