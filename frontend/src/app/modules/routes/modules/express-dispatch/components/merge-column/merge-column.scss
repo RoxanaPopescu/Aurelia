@@ -31,23 +31,31 @@ page[name="routes"] page[name="express-dispatch"] merge-column
         }
     }
 
-    .stop-list
+    .stop-list-container
     {
-        --stop-card-height: 17.5rem;
-
         position: relative;
         flex-grow: 1;
         flex-basis: 100%;
         display: flex;
         flex-direction: column;
-        background: var(--color-surface);
-        border: var(--border-width-thin) solid var(--color-border);
-        border-radius: var(--border-radius-medium);
 
         &:not(:first-child)
         {
             margin-left: 5rem;
         }
+    }
+
+    .stop-list
+    {
+        --stop-card-height: 18.5rem;
+
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        background: var(--color-surface);
+        border: var(--border-width-thin) solid var(--color-border);
+        border-radius: var(--border-radius-medium);
 
         .express-stops-dropzone
         {

@@ -148,6 +148,62 @@ $__summary: comment;
     }
 }
 
+/// Modifier class that applies the smaller margin.
+.margin-smaller
+{
+    &,
+    &-top
+    {
+        margin-top: 2rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 2rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 2rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 2rem;
+    }
+}
+
+/// Modifier class that applies the smallest margin.
+.margin-smallest
+{
+    &,
+    &-top
+    {
+        margin-top: 1rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 1rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 1rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 1rem;
+    }
+}
+
 /// Modifier class that applies auto margin.
 .margin-auto
 {

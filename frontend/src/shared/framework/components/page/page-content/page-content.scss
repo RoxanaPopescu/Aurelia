@@ -2,6 +2,10 @@
 
 page-content
 {
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use block layout.
     display: block;
 
     // Fill the available space.
@@ -24,7 +28,13 @@ page-content
         h1
         {
             // HACK: Apply margin to the title.
-            margin: 0 0 7rem 0;
+            margin-bottom: 5rem;
+
+            &.margin-bottom
+            {
+                // HACK: Apply more margin to the title.
+                margin-bottom: 7rem;
+            }
         }
 
         toolbar button

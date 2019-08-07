@@ -2,6 +2,9 @@
 
 page
 {
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
     // Use horizontal flex layout.
     display: flex;
 

@@ -123,6 +123,23 @@ react-module
 toolbar
 {
     // Use a small default width for search inputs, and expand them when focused.
+    search-input
+    {
+        --input-min-width: 0;
+        width: 10vw;
+        transition: width calc(2 * var(--animation-duration-medium));
+
+        // Delay transition so it's possible to click the clear icon within the input.
+        transition-delay: 0.1s;
+
+        &:focus-within,
+        &:not(.--empty)
+        {
+            width: 80rem;
+        }
+    }
+
+    // Use a small default width for search inputs, and expand them when focused.
     input[type="text"],
     input[type="search"]
     {

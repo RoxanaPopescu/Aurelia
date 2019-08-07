@@ -129,10 +129,18 @@ export abstract class RouteStopBase extends RouteStopInfo
     protected getHasAlert(): boolean
     {
         return (
-            ((this.status.slug === "arrived" || this.status.slug === "completed") &&
-                this.isDelayed) ||
+            ((this.status.slug === "arrived" || this.status.slug === "completed") && this.isDelayed) ||
             this.status.accent === "negative"
         );
+    }
+
+    /**
+     * True if there is an alert for this route stop, otherwise false.
+     * @returns True if there is an alert for this route stop, otherwise false.
+     */
+    protected getHasWarning(): boolean
+    {
+        return this.status.slug === "not-visited" && this.isDelayed === true;
     }
 
     /**
@@ -148,6 +156,6 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public get hasWarning(): boolean
     {
-        return this.status.slug === "not-visited" && this.isDelayed === true;
+        return this.getHasWarning();
     }
 }
