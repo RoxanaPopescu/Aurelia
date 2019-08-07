@@ -70,7 +70,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                     </div>
 
                     <Button className="express-route-map-cancel-connect" type={ButtonType.Action} onClick={() => this.onCancel()}>
-                        Cancel connection
+                        Cancel
                     </Button>
                 </div>}
 
