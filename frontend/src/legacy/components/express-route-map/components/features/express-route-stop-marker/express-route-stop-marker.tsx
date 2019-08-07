@@ -27,14 +27,6 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
         const position = this.props.routeStop.location.position!.toGoogleLatLng();
         const labelText = (this.props.routeStop.newStopNumber || this.props.routeStop.stopNumber).toString();
 
-        const hasAlert =
-            this.props.routeStop.hasAlert ||
-            this.props.unconnected && this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "negative";
-
-        const hasWarning =
-            this.props.routeStop.hasWarning ||
-            this.props.unconnected && this.props.routeStop.criticality && this.props.routeStop.criticality.accent === "attention";
-
         return (
             <MarkerWithLabel
                 icon=" "
@@ -50,7 +42,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
                         <div className={`
                             expressRoutes-expressRouteStopMarker-info
-                            ${hasAlert ? '--has-alert' : hasWarning ? '--has-warning' : ''}`}>
+                            ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
                             <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime ) || "--"}</div>
                         </div>
@@ -64,11 +56,11 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
                                 {labelText}
 
-                                {hasAlert && (
+                                {this.props.routeStop.hasAlert && (
                                     <div className="expressRoutes-expressRouteStopMarker-alert" />
                                     )}
 
-                                {!hasAlert && hasWarning && (
+                                {!this.props.routeStop.hasAlert && this.props.routeStop.hasWarning && (
                                     <div className="expressRoutes-expressRouteStopMarker-warning" />
                                     )}
 

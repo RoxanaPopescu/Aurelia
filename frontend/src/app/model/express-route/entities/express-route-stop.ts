@@ -44,4 +44,22 @@ export class ExpressRouteStop extends RouteStopBase
      * The number this stop will have on the new route.
      */
     public newStopNumber: number | undefined;
+
+    /**
+     * True if there is an alert for this route stop, otherwise false.
+     * @returns True if there is an alert for this route stop, otherwise false.
+     */
+    public get hasAlert(): boolean
+    {
+        return this.isDelayed === true || (this.criticality != null && this.criticality.accent === "negative");
+    }
+
+    /**
+     * True if there is an alert for this route stop, otherwise false.
+     * @returns True if there is an alert for this route stop, otherwise false.
+     */
+    public get hasWarning(): boolean
+    {
+        return (this.criticality != null && this.criticality.accent === "attention");
+    }
 }
