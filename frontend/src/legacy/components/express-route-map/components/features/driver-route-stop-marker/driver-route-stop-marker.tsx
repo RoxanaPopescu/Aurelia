@@ -32,8 +32,6 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                 labelAnchor={new google.maps.Point(26, 51)}
                 position={position}
                 zIndex={this.props.routeStop.selected ? 103 : 3}
-                onMouseOver={() => this.showPopup()}
-                onMouseOut={() => this.hidePopup()}
                 onClick={() => this.props.onClick && this.props.onClick()}>
 
                 <React.Fragment>

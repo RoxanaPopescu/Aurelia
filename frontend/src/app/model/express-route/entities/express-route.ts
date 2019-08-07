@@ -279,7 +279,7 @@ export class ExpressRoute implements IRouteReference
         }
 
         // Migrate the selection and color state of the route.
-        targetRoute.selected = this.selected;
+        targetRoute._selected = this._selected;
         targetRoute.colorIndex = this.colorIndex;
 
         // Migrate the selection state of each of the route stops in this route.

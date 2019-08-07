@@ -24,6 +24,45 @@ express-route-map
   border-radius: 2px !important;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
   color: #333 !important;
+
+  .moverButtonText
+  {
+    font-weight: 400 !important;
+  }
+}
+
+.express-route-map-connect-info
+{
+  position: absolute !important;
+  top: 10px !important;
+  height: 40px !important;
+  min-width: 80px !important;
+  z-index: 999 !important;
+  left: 285px !important;
+  display: flex;
+  background: white;
+  border-radius: 2px !important;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
+  color: #333 !important;
+  align-items: center;
+  padding-left: 15px;
+  font-weight: 600;
+
+  .buttonContainer
+  {
+    height: 100%;
+  }
+
+  .moverButtonText
+  {
+    height: 100%;
+  }
+}
+
+.express-route-map-cancel-connect
+{
+  min-width: 80px;
+  margin-left: 20px;
 }
 
 .expressRoutes-expressRouteStopMarker.--accent-0 .expressRoutes-expressRouteStopMarker-shape

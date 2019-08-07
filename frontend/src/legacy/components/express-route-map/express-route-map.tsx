@@ -12,6 +12,7 @@ import { DriverRouteSegmentLine } from "./components/features/driver-route-segme
 import { ExpressRouteDeliveryArrow } from "./components/features/express-route-delivery-arrow/express-route-delivery-arrow";
 import { GoogleMap } from "react-google-maps";
 import { Button, ButtonType } from "shared/src/webKit";
+import { observable } from "mobx";
 
 export interface IExpressRouteMapProps
 {
@@ -22,6 +23,9 @@ export interface IExpressRouteMapProps
     remainingExpressStops?: ExpressRouteStop[][];
     onExpressRouteClick: (route: ExpressRoute) => void;
     onDriverRouteClick: (route: DriverRoute) => void;
+    onConnectedStopClick: (stop: DriverRouteStop | ExpressRouteStop) => void;
+    onUnconnectedStopClick: (stop: ExpressRouteStop) => void;
+    onMapClick: () => void;
 }
 
 /**
@@ -45,6 +49,9 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     private map: GoogleMap | undefined;
     private hasFittedBounds = false;
 
+    @observable
+    private isConnecting = false;
+
     public render()
     {
         this.fitBoundsOnLoad();
@@ -56,7 +63,21 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                     Zoom to fit
                 </Button>
 
-                <WorldMap options={{ scrollwheel: true }} onMapReady={map =>
+                {this.isConnecting &&
+                <div className="express-route-map-connect-info">
+                    <div>
+                        Choose the stop that should follow the stop you just clicked.
+                    </div>
+
+                    <Button className="express-route-map-cancel-connect" type={ButtonType.Action} onClick={() => this.onCancel()}>
+                        Cancel connection
+                    </Button>
+                </div>}
+
+                <WorldMap
+                    options={{ scrollwheel: true }}
+                    onClick={() =>this.onCancel()}
+                    onMapReady={map =>
                     {
                         this.map = map;
                         this.fitBoundsOnLoad();
@@ -88,19 +109,23 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
                     {this.props.isMerging && this.props.newDriverStops && this.props.newDriverStops.map(stop =>
                         stop instanceof DriverRouteStop
-                        ? <DriverRouteStopMarker key={`NewDriverRouteStop-${stop.id}`} routeStop={stop}/>
-                        : <ExpressRouteStopMarker key={`NewDriverRouteStop-${stop.id}`} routeStop={stop}/>
+                        ? <DriverRouteStopMarker key={`NewDriverRouteStop-${stop.id}`} routeStop={stop} onClick={() =>
+                            { this.isConnecting = !this.isConnecting; this.props.onConnectedStopClick(stop); }}/>
+                        : <ExpressRouteStopMarker key={`NewDriverRouteStop-${stop.id}`} routeStop={stop} onClick={() =>
+                            { this.isConnecting = !this.isConnecting; this.props.onConnectedStopClick(stop); }}/>
                     )}
 
                     {this.props.isMerging && this.props.newDriverStops && this.props.newDriverStops.map((s, i, a) => i > 0 &&
                         <DriverRouteSegmentLine
                             key={`NewDriverRouteSegmentLine-${a[i - 1].id}-${s.id}`}
-                            routeStops={[a[i - 1], s]}/>
+                            routeStops={[a[i - 1], s]}
+                            onClick={() => { this.onCancel(); }}/>
                     )}
 
                     {this.props.isMerging && this.props.remainingExpressStops && this.props.remainingExpressStops.map(stops =>
                         stops.map(stop =>
-                            <ExpressRouteStopMarker key={`RemainingExpressRouteStop-${stop.id}`} routeStop={stop} unconnected={true}/>
+                            <ExpressRouteStopMarker key={`RemainingExpressRouteStop-${stop.id}`} routeStop={stop} unconnected={true} onClick={() =>
+                                { this.isConnecting = !this.isConnecting; this.props.onUnconnectedStopClick(stop); }}/>
                         )
                     )}
 
@@ -108,7 +133,8 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         stops.length > 1 && stops.map((s, i, a) => i > 0 &&
                             <ExpressRouteDeliveryArrow
                                 key={`RemainingExpressRouteSegmentLine-${a[i - 1].id}-${s.id}`}
-                                routeStops={[a[i - 1], s]}/>
+                                routeStops={[a[i - 1], s]}
+                                onClick={() => { this.onCancel(); }}/>
                         )
                     )}
 
@@ -116,6 +142,12 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
             </div>
         );
+    }
+
+    private onCancel(): void
+    {
+        this.isConnecting = false;
+        this.props.onMapClick();
     }
 
     private fitBoundsOnLoad(): void

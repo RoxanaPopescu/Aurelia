@@ -51,11 +51,30 @@ export class MergeColumnCustomElement
     protected canApply = false;
     protected isDragging = false;
 
+    public updateFromWorkspace(): void
+    {
+        this.driverStops = this.workspace.newDriverStops!.map(stop =>
+        {
+            if (stop instanceof ExpressRouteStop)
+            {
+                return { type: "express-route-stop", stop, route: stop.route };
+            }
+
+            return { type: "driver-route-stop", stop };
+        });
+
+        this.expressStops = this.workspace.remainingExpressStops!
+            .reduce((p, c) => { p.push(...c); return p; }, [])
+            .map(stop => ({ type: "express-route-stop", stop, route: stop.route }));
+
+        this.updateWorkspace();
+    }
+
     /**
      * Called by the framework when the component is attached to the DOM.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async attached(): Promise<void>
+    public attached(): void
     {
         const selectedDriverRoute = this.workspace.selectedDriverRoutes[0];
 
@@ -81,7 +100,7 @@ export class MergeColumnCustomElement
      * Called by the framework when the component is detached to the DOM.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async detached(): Promise<void>
+    public detached(): void
     {
         // Clear state related to the merge.
         this.workspace.newDriverStops = undefined;

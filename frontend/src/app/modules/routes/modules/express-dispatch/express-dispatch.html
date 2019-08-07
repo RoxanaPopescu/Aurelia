@@ -54,11 +54,12 @@
 
             <info-column workspace.bind="workspace" show.bind="workspace.tab == 'info'"></info-column>
 
-            <merge-column workspace.bind="workspace" show.bind="workspace.tab == 'merge'"></merge-column>
+            <merge-column workspace.bind="workspace" show.bind="workspace.tab == 'merge'" view-model.ref="mergeColumn"></merge-column>
 
         </template>
 
-        <map-column workspace.bind="workspace" class="${workspace.tab == 'map' ? '' : 'visibility-hidden'}"></map-column>
+        <map-column workspace.bind="workspace" class="${workspace.tab == 'map' ? '' : 'visibility-hidden'}"
+            update-merge-column.call="mergeColumn.updateFromWorkspace()"></map-column>
 
     </page>
 

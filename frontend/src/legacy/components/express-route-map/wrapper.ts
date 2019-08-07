@@ -39,6 +39,15 @@ export class ExpressRouteMap extends Wrapper
     @bindable
     public onExpressRouteClick: (context: { route: DriverRoute }) => void;
 
+    @bindable
+    public onConnectedStopClick: (context: { stop: DriverRouteStop | ExpressRouteStop }) => void;
+
+    @bindable
+    public onUnconnectedStopClick: (context: { stop: ExpressRouteStop }) => void;
+
+    @bindable
+    public onMapClick: () => void;
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
@@ -52,7 +61,11 @@ export class ExpressRouteMap extends Wrapper
             newDriverStops: this.newDriverStops,
             remainingExpressStops: this.remainingExpressStops,
             onDriverRouteClick: route => this.onDriverRouteClick({ route }),
-            onExpressRouteClick: route => this.onExpressRouteClick({ route })
+            onExpressRouteClick: route => this.onExpressRouteClick({ route }),
+            onConnectedStopClick: stop => this.onConnectedStopClick({ stop }),
+            onUnconnectedStopClick: stop => this.onUnconnectedStopClick({ stop }),
+            onMapClick: () => this.onMapClick()
+
         });
     }
 

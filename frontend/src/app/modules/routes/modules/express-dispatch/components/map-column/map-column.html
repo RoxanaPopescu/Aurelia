@@ -13,7 +13,10 @@
             new-driver-stops.bind="workspace.newDriverStops"
             remaining-express-stops.bind="workspace.remainingExpressStops"
             on-driver-route-click.call="onDriverRouteClick(route)"
-            on-express-route-click.call="onExpressRouteClick(route)">
+            on-express-route-click.call="onExpressRouteClick(route)"
+            on-connected-stop-click.call="onConnectedStopClick(stop)"
+            on-unconnected-stop-click.call="onUnconnectedStopClick(stop)"
+            on-map-click.call="onMapClick()">
         </react-express-route-map>
 
     </page-content>
