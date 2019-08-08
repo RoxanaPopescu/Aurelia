@@ -1,0 +1,33 @@
+////
+/// @group themes/mover/surfaces/base
+////
+
+/// Surface defining the appearance of the base of the view hierarchy.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+[surface="base"]
+{
+    // Inputs on the surface.
+    &
+    {
+        // State: normal
+        --color-surface-input-border: var(--palette-color-neutral);
+        --color-surface-input-surface: var(--palette-whitepoint);
+
+        // State: hover
+        --color-surface-input-border--hover: var(--palette-color-neutral);
+        --color-surface-input-surface--hover: var(--palette-whitepoint);
+
+        // State: focus
+        --color-surface-input-border--focus: var(--palette-color-neutral);
+        --color-surface-input-surface--focus: var(--palette-whitepoint);
+    }
+
+    /**
+     * The width of the border of the input.
+     */
+    --input-border-width: var(--border-width-thin);
+}

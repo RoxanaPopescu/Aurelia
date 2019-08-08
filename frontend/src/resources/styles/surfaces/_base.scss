@@ -352,6 +352,15 @@ $__summary: comment;
         --color-surface-mark: #ffff00;
     }
 
+    /**
+     * The width of the border of the button.
+     */
+     --button-border-width: var(--border-width-medium);
+
+    /**
+     * The width of the border of the input.
+     */
+    --input-border-width: var(--border-width-medium);
 
     /**
      * The color of the border of the input.

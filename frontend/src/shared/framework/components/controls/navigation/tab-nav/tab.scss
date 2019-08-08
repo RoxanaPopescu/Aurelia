@@ -61,7 +61,7 @@ tab
             width: 100%;
 
             // Compensate for the border along the bottom of the tabs.
-            line-height: calc(10rem - var(--border-width-medium));
+            line-height: calc(10rem - var(--button-border-width));
         }
 
         &.--active button
@@ -82,13 +82,13 @@ tab
             flex-grow: 1;
 
             // Compensate for the border around the tabs.
-            line-height: calc(10rem - 2 * var(--border-width-medium));
+            line-height: calc(10rem - 2 * var(--button-border-width));
         }
 
         &:not(:last-child) button
         {
             // Apply a border between the tabs.
-            border-right: var(--border-width-medium) solid var(--color-surface-neutral-border);
+            border-right: var(--button-border-width) solid var(--color-surface-neutral-border);
         }
 
         &.--active button
@@ -104,11 +104,11 @@ tab
         button
         {
             // Apply a border around the tab.
-            border: var(--border-width-medium) solid transparent;
+            border: var(--button-border-width) solid transparent;
             border-radius: var(--border-radius-medium);
 
             // Compensate for the border around the tab.
-            line-height: calc(10rem - 2 * var(--border-width-medium));
+            line-height: calc(10rem - 2 * var(--button-border-width));
         }
 
         &.--active button

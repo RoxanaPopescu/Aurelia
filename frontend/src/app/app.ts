@@ -300,7 +300,6 @@ export class AppModule
                     title: routeTitles.design
                 }
             ] : []
-
         ];
 
         // Configure the routes.

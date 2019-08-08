@@ -171,8 +171,8 @@ a[appearance]
         // Style to appear as a button.
         padding: 0 3.5rem;
         min-width: 10rem;
-        line-height: calc(10rem - 2 * var(--border-width-medium));
-        border: var(--border-width-medium) solid;
+        line-height: calc(10rem - 2 * var(--button-border-width));
+        border: var(--button-border-width) solid;
         border-radius: var(--border-radius-medium);
         border-color: transparent;
         text-align: center;
@@ -379,7 +379,7 @@ input[type="week"]
     padding: 0 3rem;
     max-width: 100%;
     min-height: 10rem;
-    border: var(--border-width-thin) solid var(--color-surface-input-border);
+    border: var(--input-border-width) solid var(--color-surface-input-border);
     border-radius: var(--border-radius-medium);
     font-size: inherit;
     line-height: inherit;
@@ -408,7 +408,7 @@ input[type="week"]
         padding-right: 0;
 
         // Reduce the min-height to compensate for the border on the label.
-        min-height: calc(10rem - 2 * var(--border-width-thin));
+        min-height: calc(10rem - 2 * var(--input-border-width));
 
         // Reduce the min-width to prevent overflow.
         min-width: 10rem;
