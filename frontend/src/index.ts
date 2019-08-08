@@ -60,16 +60,16 @@ export async function configure(aurelia: Aurelia): Promise<any>
         apiClient.configure(settings.infrastructure.api);
 
         const localeService = aurelia.container.get(LocaleService) as LocaleService;
-        localeService.configure(settings.app.locales, setLocaleCode);
+        localeService.configure(settings.app.locales, setLocale);
         await localeService.setLocale(getLocaleCode());
 
         const currencyService = aurelia.container.get(CurrencyService) as CurrencyService;
-        currencyService.configure(settings.app.currencies, setCurrencyCode);
+        currencyService.configure(settings.app.currencies, setCurrency);
         await currencyService.setCurrency(getCurrencyCode());
 
         const themeService = aurelia.container.get(ThemeService) as ThemeService;
-        themeService.configure(settings.app.themes, setThemeName);
-        await themeService.setTheme(getThemeName());
+        themeService.configure(settings.app.themes, setTheme);
+        await themeService.setTheme(getThemeSlug());
 
         // Configure legacy features.
 
@@ -77,7 +77,7 @@ export async function configure(aurelia: Aurelia): Promise<any>
 
         // Import style resources.
         await import("resources/styles/index.scss" as any);
-        await import(`resources/themes/${getThemeName()}/styles/index.scss`);
+        await import(`resources/themes/${themeService.theme.slug}/styles/index.scss`);
 
         // Import icon resources.
         await import("resources/icons");
@@ -92,65 +92,6 @@ export async function configure(aurelia: Aurelia): Promise<any>
 
     // Set the root component and compose the app.
     await aurelia.setRoot(PLATFORM.moduleName("app/app"));
-}
-
-/**
- * Gets the name of the theme to use, or the default.
- * @return The name of the theme to use.
- */
-function getThemeName(): string
-{
-    let theme: string | undefined;
-
-    // Try to get the theme from the URL.
-    // This is intended as an override to be used for testing.
-
-    const url = new URL(location.href);
-    theme = url.searchParams.get("theme") || undefined;
-
-    if (theme)
-    {
-        return theme;
-    }
-
-    // Try to get the theme from the cookie.
-    // This should be set by the server based on the domain,
-    // or by the client if the theme is changed by the user.
-
-    const cookies = Container.instance.get(Cookies) as Cookies;
-    theme = cookies.get("theme");
-
-    if (theme)
-    {
-        return theme;
-    }
-
-    // If no theme was specified, use the default.
-
-    return ENVIRONMENT.name === "development"
-        ? "lingu"
-        : "default";
-}
-
-/**
- * Called when the theme changes.
- * This stores the theme slug in a cookie and reloads the app.
- * @param newTheme The new theme being set.
- * @param oldTheme The old theme, or undefined if not previously set.
- * @returns A promise that never resolves, as the page is about to reload.
- */
-async function setThemeName(newTheme: ITheme, oldTheme: ITheme): Promise<void>
-{
-    if (oldTheme != null)
-    {
-        const cookies = Container.instance.get(Cookies) as Cookies;
-
-        cookies.set("theme", newTheme.slug);
-
-        location.reload();
-
-        return new Promise(() => undefined);
-    }
 }
 
 /**
@@ -169,7 +110,7 @@ function getLocaleCode(): string
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns A promise that never resolves, as the page is about to reload.
  */
-async function setLocaleCode(newLocale: ILocale, oldLocale: ILocale): Promise<void>
+async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
 {
     if (oldLocale != null)
     {
@@ -184,14 +125,45 @@ async function setLocaleCode(newLocale: ILocale, oldLocale: ILocale): Promise<vo
 }
 
 /**
- * Gets the currency code stored on the device, or the default.
- * @return The currency code to use.
+ * Gets the code identifying the currency to use, or the default.
+ * This may be stored on the device or specified using the `currency` query parameter.
+ * @return The code identifying the currency to use.
  */
 function getCurrencyCode(): string
 {
+    const url = new URL(location.href);
     const cookies = Container.instance.get(Cookies) as Cookies;
 
-    return cookies.get("currency") || "DKK";
+    // Try to get the currency from the URL.
+    // This is intended as an override to be used for testing.
+    let currencyCode = url.searchParams.get("currency") || undefined;
+
+    // Try to get the currency from the cookie.
+    // This should be set by the server based on the domain,
+    // or by the client if the currency is changed by the user.
+    if (!currencyCode)
+    {
+        currencyCode = cookies.get("currency");
+    }
+
+    // If a currency was specified, verify that it exists.
+    if (currencyCode)
+    {
+        const currencyService = Container.instance.get(CurrencyService) as CurrencyService;
+
+        try
+        {
+            currencyService.getCurrency(currencyCode);
+        }
+        catch
+        {
+            console.warn(`The currency '${currencyCode}' is not supported.`);
+            currencyCode = undefined;
+        }
+    }
+
+    // Return the slug identifying the specified currency, or the default.
+    return currencyCode || settings.app.defaultCurrencyCode;
 }
 
 /**
@@ -200,12 +172,75 @@ function getCurrencyCode(): string
  * @param newCurrency The new currency being set.
  * @param oldCurrency The old currency, or undefined if not previously set.
  */
-function setCurrencyCode(newCurrency: ICurrency, oldCurrency: ICurrency): void
+function setCurrency(newCurrency: ICurrency, oldCurrency: ICurrency): void
 {
     if (oldCurrency != null)
     {
         const cookies = Container.instance.get(Cookies) as Cookies;
 
         cookies.set("currency", newCurrency.code);
+    }
+}
+
+/**
+ * Gets the slug identifying the theme to use, or the default.
+ * This may be stored on the device or specified using the `theme` query parameter.
+ * @return The slug identigying the theme to use.
+ */
+function getThemeSlug(): string
+{
+    const url = new URL(location.href);
+    const cookies = Container.instance.get(Cookies) as Cookies;
+
+    // Try to get the theme from the URL.
+    // This is intended as an override to be used for testing.
+    let themeSlug = url.searchParams.get("theme") || undefined;
+
+    // Try to get the theme from the cookie.
+    // This should be set by the server based on the domain,
+    // or by the client if the theme is changed by the user.
+    if (!themeSlug)
+    {
+        themeSlug = cookies.get("theme");
+    }
+
+    // If a theme was specified, verify that it exists.
+    if (themeSlug)
+    {
+        const themeService = Container.instance.get(ThemeService) as ThemeService;
+
+        try
+        {
+            themeService.getTheme(themeSlug);
+        }
+        catch
+        {
+            console.warn(`The theme '${themeSlug}' is not supported.`);
+            themeSlug = undefined;
+        }
+    }
+
+    // Return the slug identifying the specified theme, or the default.
+    return themeSlug || settings.app.defaultThemeSlug;
+}
+
+/**
+ * Called when the theme changes.
+ * If the theme was changed, this stores the theme slug in a cookie and reloads the app.
+ * @param newTheme The new theme being set.
+ * @param oldTheme The old theme, or undefined if not previously set.
+ * @returns A promise that never resolves, as the page is about to reload.
+ */
+async function setTheme(newTheme: ITheme, oldTheme: ITheme): Promise<void>
+{
+    if (oldTheme != null)
+    {
+        const cookies = Container.instance.get(Cookies) as Cookies;
+
+        cookies.set("theme", newTheme.slug);
+
+        location.reload();
+
+        return new Promise(() => undefined);
     }
 }

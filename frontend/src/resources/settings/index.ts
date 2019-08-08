@@ -26,7 +26,17 @@ export default
         /**
          * The themes supported by the app.
          */
-        themes
+        themes,
+
+        /**
+         * The slug identifying the default theme.
+         */
+        defaultThemeSlug: "default",
+
+        /**
+         * The code identifying the default currency.
+         */
+        defaultCurrencyCode: "DKK"
     },
 
     /**
