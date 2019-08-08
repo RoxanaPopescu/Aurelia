@@ -209,6 +209,10 @@
                     right: 0;
                     bottom: 0;
 
+                    // Use horizontal flex layout.
+                    display: flex;
+                    align-items: center;
+
                     // Ignore pointer events.
                     pointer-events: none;
                 }

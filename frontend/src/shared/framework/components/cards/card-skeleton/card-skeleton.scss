@@ -2,54 +2,28 @@
 
 card-skeleton
 {
-    // Use horizontal flex layout.
-    display: flex;
-
-    // Allow content to be positioned relative to this element.
-    position: relative;
+    display: block;
 
     // Apply the card size set by the layout.
     width: var(--card-width);
     min-height: var(--card-height);
 
-    > div
-    {
-        // Fill the available space.
-        flex-grow: 1;
+    // Apply border.
+    border-radius: var(--border-radius-medium);
 
-        // Use vertical flex layout.
-        display: flex;
-        flex-direction: column;
+    // Apply animated background.
 
-        // Apply default card padding.
-        padding: var(--card-padding);
+    background-image: linear-gradient(
+        105deg,
+        var(--color-surface) 18%,
+        var(--color-surface-transparent) 48%,
+        var(--color-surface-transparent) 52%,
+        var(--color-surface) 87%
+    );
 
-        // Apply border.
-        border-radius: var(--border-radius-medium);
-
-        // Apply surface style.
-        color: var(--color-surface-text);
-
-        // Apply animated background.
-
-        background-image: linear-gradient(
-            105deg,
-            var(--color-surface) 18%,
-            var(--color-surface-transparent) 48%,
-            var(--color-surface-transparent) 52%,
-            var(--color-surface) 87%
-        );
-
-        animation: card-skeleton ease infinite;
-        animation-duration: var(--animation-duration-skeleton);
-        animation-delay: calc(var(--animation-duration-skeleton) / 3);
-
-        footer
-        {
-            // Push the footer to the bottom by default.
-            margin-top: auto;
-        }
-    }
+    animation: card-skeleton ease infinite;
+    animation-duration: var(--animation-duration-skeleton);
+    animation-delay: calc(var(--animation-duration-skeleton) / 3);
 }
 
 @keyframes card-skeleton

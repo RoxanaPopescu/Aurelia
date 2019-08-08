@@ -2,6 +2,7 @@
 
 page-sidebar
 {
+    // Allow content to be positioned relative to this element.
     position: relative;
 
     // Prevent shrinking, as that will be handled explicitly when needed.

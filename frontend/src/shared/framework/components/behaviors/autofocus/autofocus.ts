@@ -1,5 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IExtendedFocusOptions } from "shared/framework/services/focus";
+
 /**
  * Custom attribute that focuses the element to which it is applied.
  */
@@ -44,7 +45,9 @@ export class AutofocusCustomAttribute
                 focusVisible: this.visible
             };
 
-            this._element.focus(customFocusOptions);
+            // Delay focusing the element, to prevent conflicts with the `trap-focus` attribute,
+            // which if applied will also attempt to focus an element after a timeout.
+            setTimeout(() => setTimeout(() => this._element.focus(customFocusOptions)));
         }
     }
 }

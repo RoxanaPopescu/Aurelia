@@ -8,7 +8,11 @@
 
     <require from="./modal-section.scss"></require>
 
-    <button appearance="none" class="modal-section-header font-large" click.trigger="onHeaderClick()">
+    <button
+        appearance="none"
+        class="modal-section-header font-large"
+        disabled.bind="headerSlotEmpty !== false"
+        click.trigger="onHeaderClick()">
 
         <div empty.bind="headerSlotEmpty">
             <slot name="header"></slot>

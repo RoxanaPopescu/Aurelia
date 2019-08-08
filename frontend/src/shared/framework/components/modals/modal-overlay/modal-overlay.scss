@@ -54,20 +54,23 @@ modal-overlay
             flex-shrink: 0;
         }
 
-        > header,
-        > footer
+        > header
         {
-            // Apply padding to header and footer.
-            // Note that we use padding instead of margin,
-            // to enable sticky positioning.
+            // Apply padding.
+            // Note that we use padding instead of margin, to enable sticky positioning.
             padding-top: 10rem;
-            padding-bottom: 10rem;
+            padding-bottom: 7.5rem;
         }
 
         > footer
         {
             // Push the footer to the bottom by default.
             margin-top: auto;
+
+            // Apply padding.
+            // Note that we use padding instead of margin, to enable sticky positioning.
+            padding-top: 7.5rem;
+            padding-bottom: 10rem;
         }
     }
 
