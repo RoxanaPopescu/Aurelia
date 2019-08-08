@@ -51,7 +51,7 @@ export class RoutePlanningModule
                 title: routeTitles.settingsDetails
             },
             {
-                name: "settings-details",
+                name: "settings-create",
                 route: "settings/create",
                 moduleId: PLATFORM.moduleName("./modules/route-settings/create/create"),
                 title: routeTitles.settingsCreate
