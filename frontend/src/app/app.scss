@@ -32,7 +32,7 @@ react-module
     .sideMenu--collapsed &
     {
         width: calc(100vw - var(--size-app-sidebar-width));
-        left: var(--size-app-sidebar-width);
+        left: 0;
     }
 
     // Use vertical flex layout.
