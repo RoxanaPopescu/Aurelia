@@ -69,14 +69,16 @@
                                 <div class="flex-push-right text-align-right">
                                     <div>
                                         &nbsp;
-                                        <a href="/routes/details/${stop.route.slug}">
+                                        <a href="/routes/details/${stop.route.slug}" target="_blank">
                                             ${stop.route.slug}
                                         </a>
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
                                         <div class="flex-row flex-push-right">
                                             <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
-                                            &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                            <div>
+                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,14 +137,19 @@
                                 <div class="flex-push-right text-align-right">
                                     <div>
                                         &nbsp;
-                                        <a href="/routes/details/${stop.route.slug}">
+                                        <a href="/routes/details/${stop.route.slug}" target="_blank">
                                             ${stop.route.slug}
                                         </a>
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
                                         <div class="flex-row flex-push-right">
                                             <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
-                                            &nbsp;${stop.stop.arrivalTimeFrame | timeRange} (${stop.stop.arrivalTime | time})
+                                            <div>
+                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                            </div>
+                                            <div if.bind="!isEstimating">
+                                                &nbsp;(${stop.stop.arrivalTime | time})
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

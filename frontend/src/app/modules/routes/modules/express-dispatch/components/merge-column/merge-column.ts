@@ -50,6 +50,7 @@ export class MergeColumnCustomElement
     protected updateOperation: Operation;
     protected canApply = false;
     protected isDragging = false;
+    protected isEstimating = false;
 
     public updateFromWorkspace(): void
     {
@@ -485,22 +486,31 @@ export class MergeColumnCustomElement
 
     private async updateEstimates(signal: AbortSignal): Promise<void>
     {
-        const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
-            this.workspace.selectedDriverRoutes[0].driver.id,
-            this.driverStops.map(s => s.stop.id),
-            signal);
-
-        for (const estimatedStop of estimatedDriverRoute.stops)
+        try
         {
-            const stop = this.driverStops.find(s => s.stop.id === estimatedStop.id);
+            this.isEstimating = true;
 
-            if (stop != null)
+            const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
+                this.workspace.selectedDriverRoutes[0].driver.id,
+                this.driverStops.map(s => s.stop.id),
+                signal);
+
+            for (const estimatedStop of estimatedDriverRoute.stops)
             {
-                stop.stop.arrivalTime = estimatedStop.arrivalTime;
-                stop.stop.isDelayed = estimatedStop.isDelayed;
-            }
-        }
+                const stop = this.driverStops.find(s => s.stop.id === estimatedStop.id);
 
-        this.canApply = this.expressStops.length === 0;
+                if (stop != null)
+                {
+                    stop.stop.arrivalTime = estimatedStop.arrivalTime;
+                    stop.stop.isDelayed = estimatedStop.isDelayed;
+                }
+            }
+
+            this.canApply = this.expressStops.length === 0;
+        }
+        catch (error)
+        {
+            alert("Could not re-estimate route.");
+        }
     }
 }
