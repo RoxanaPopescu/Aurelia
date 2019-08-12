@@ -194,6 +194,7 @@ export class MergeColumnCustomElement
 
         this.expressStops.push(draggedStop as IExpressRouteStop);
         draggedStop.dragged = false;
+        this.isDragging = false;
 
         this.updateWorkspace();
     }
@@ -313,6 +314,7 @@ export class MergeColumnCustomElement
         const targetStopIndex = stop != null ? this.driverStops.findIndex(s => s === stop) : this.driverStops.length;
         this.driverStops.splice(targetStopIndex, 0, draggedStop);
         draggedStop.dragged = false;
+        this.isDragging = false;
 
         this.updateWorkspace();
     }

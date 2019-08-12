@@ -33,7 +33,7 @@
 
         </header>
 
-        <section class="stop-lists ${isDragging != null ? '--dragging' : ''}">
+        <section class="stop-lists ${isDragging ? '--dragging' : ''}">
 
             <div class="stop-list-container">
 
@@ -74,8 +74,10 @@
                                         </a>
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
-                                        <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
-                                        &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                        <div class="flex-row flex-push-right">
+                                            <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
+                                            &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                        </div>
                                     </div>
                                 </div>
                                 <icon name="drag-handle" class="opacity-faded-more"></icon>
@@ -138,8 +140,10 @@
                                         </a>
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
-                                        <icon name="md-warning" if.bind="stop.stop.isDelayed"></icon>
-                                        &nbsp;${stop.stop.arrivalTimeFrame | timeRange} (${stop.stop.arrivalTime | time})
+                                        <div class="flex-row flex-push-right">
+                                            <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
+                                            &nbsp;${stop.stop.arrivalTimeFrame | timeRange} (${stop.stop.arrivalTime | time})
+                                        </div>
                                     </div>
                                 </div>
                                 <icon name="drag-handle" class="opacity-faded-more"></icon>
