@@ -1,6 +1,6 @@
 import { containerless } from "aurelia-framework";
 import { Validator } from "../../validator";
-import { ValidationTrigger } from "../../validation-trigger";
+import { ValidationReason } from "../../validation-trigger";
 
 /**
  * Represents a validator that is always invalid.
@@ -11,10 +11,10 @@ export class InvalidValidatorCustomElement extends Validator
 {
     /**
      * Called by the validation when this validator should run.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeeded, otherwise false.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public async validate(trigger: ValidationTrigger): Promise<boolean>
+    public async validate(reason: ValidationReason): Promise<boolean>
     {
         return false;
     }

@@ -1,0 +1,36 @@
+input,
+textarea,
+select
+{
+    &:placeholder-shown
+    {
+        animation: on-placeholder-shown 1ms;
+    }
+
+    &:not(:placeholder-shown)
+    {
+        animation: on-placeholder-hidden 1ms;
+    }
+}
+
+@keyframes on-placeholder-shown
+{
+    // This is needed to ensure the animation events are triggered.
+    // Without it, the `aurelia-animator-css` plugin will misbehave.
+    // Note that the enter and leave animations cannot be the same.
+    from
+    {
+        --placeholder-shown-animation-trigger: not-a-real-value;
+    }
+}
+
+@keyframes on-placeholder-hidden
+{
+    // This is needed to ensure the animation events are triggered.
+    // Without it, the `aurelia-animator-css` plugin will misbehave.
+    // Note that the enter and leave animations cannot be the same.
+    from
+    {
+        --placeholder-shown-animation-trigger: not-a-real-value;
+    }
+}

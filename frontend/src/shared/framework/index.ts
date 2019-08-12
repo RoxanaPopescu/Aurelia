@@ -22,6 +22,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/icons/md-icon/md-icon-stack"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
+        PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
         PLATFORM.moduleName("./components/controls/inputs/slug-input/slug-input"),
         PLATFORM.moduleName("./components/controls/inputs/text-input/text-input"),
@@ -92,6 +93,7 @@ export * from "./components/icons/md-icon/md-icon";
 export * from "./components/icons/md-icon/md-icon-stack";
 export * from "./components/controls/inputs/email-input/email-input";
 export * from "./components/controls/inputs/number-input/number-input";
+export * from "./components/controls/inputs/password-input/password-input";
 export * from "./components/controls/inputs/search-input/search-input";
 export * from "./components/controls/inputs/slug-input/slug-input";
 export * from "./components/controls/inputs/text-input/text-input";

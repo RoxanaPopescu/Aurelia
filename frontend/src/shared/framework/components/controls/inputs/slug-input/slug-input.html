@@ -2,7 +2,7 @@
     input
     ${disabled ? '--disabled' : ''}
     ${readonly ? '--readonly' : ''}
-    ${!value ? '--empty' : ''}
+    ${!inputValue && inputElement.placeholderShown !== false ? '--empty' : ''}
     ${validation.invalid ? '--invalid' : ''}"
     validation
     validation.ref="validation">
@@ -63,46 +63,50 @@
         <div class="input-validation font-small">
 
             <pattern-validator
+                active.bind="true"
                 pattern="^[-a-z0-9]*$"
                 value.bind="inputValue">
 
                 <template replace-part="invalid" translate>
-                    Please provide a value using only the characters
-                    <kbd>a</kbd>–<kbd>z</kbd>, <kbd>0</kbd>–<kbd>9</kbd> or <kbd>-</kbd>.
+                    Please provide a value using only
+                    <kbd>a</kbd>–<kbd>z</kbd>, <kbd>0</kbd>–<kbd>9</kbd> and <kbd>-</kbd>.
                 </template>
 
             </pattern-validator>
 
             <pattern-validator
+                active.bind="true"
                 pattern="^-"
                 invert.bind="true"
                 value.bind="inputValue">
 
                 <template replace-part="invalid" translate>
-                    Please provide a value that does not start or end with the character <kbd>-</kbd>.
+                    Please provide a value that does not start or end with <kbd>-</kbd>.
                 </template>
 
             </pattern-validator>
 
             <pattern-validator
+                active.bind="true"
+                trigger="change"
                 pattern="^[^-].*-$"
                 invert.bind="true"
-                trigger="blur"
                 value.bind="inputValue">
 
                 <template replace-part="invalid" translate>
-                    Please provide a value that does not start or end with the character <kbd>-</kbd>.
+                    Please provide a value that does not start or end with <kbd>-</kbd>.
                 </template>
 
             </pattern-validator>
 
             <pattern-validator
+                active.bind="true"
                 pattern="--"
                 invert.bind="true"
                 value.bind="inputValue">
 
                 <template replace-part="invalid" translate>
-                    Please provide a value that does not contain consecutive <kbd>-</kbd> characters.
+                    Please provide a value that does not contain consecutive <kbd>-</kbd>.
                 </template>
 
             </pattern-validator>

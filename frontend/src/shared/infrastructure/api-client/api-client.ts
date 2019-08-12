@@ -153,7 +153,7 @@ export class ApiClient
      * @param method The HTTP method to use.
      * @param path The path identifying the endpoint.
      * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * @returns A promise that will be resolved with the result of the request.
      */
     private async fetch<T>(method: string, path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
@@ -372,7 +372,7 @@ export class ApiClient
      * Sends the specified fetch request and gets the response.
      * @param fetchRequest The request to send.
      * @param options The request options to use.
-     * @returns The response to the fetch request.
+     * @returns A promise that will be resolved with the response to the fetch request.
      */
     private async getResponse(fetchRequest: Request, options: IApiRequestOptions): Promise<Response>
     {
@@ -403,7 +403,7 @@ export class ApiClient
                 }
 
                 // Throw an `ApiError` if the error is non-transient.
-                if (error.transient !== false)
+                if (error.transient !== true)
                 {
                     throw new ApiError(false, fetchRequest, fetchResponse, error.message);
                 }
@@ -419,7 +419,7 @@ export class ApiClient
                     // Await the next retry.
                     const retryDelayIndex = Math.min(attempt, options.retryDelay!.length - 1);
                     const retryDelay = options.retryDelay![retryDelayIndex];
-                    await delay(retryDelay, options.signal).catch();
+                    await delay(retryDelay, options.signal);
                 }
                 catch (delayError)
                 {
@@ -436,7 +436,8 @@ export class ApiClient
      * @param fetchRequest The request to send.
      * @param options The request options to use.
      * @param endpointSettings The endpoint settings to use.
-     * @returns The deobfuscated and deserialized response body, or undefined if deserialization is disabled.
+     * @returns A promise that will be resolved with the deobfuscated and deserialized
+     * response body, or undefined if deserialization is disabled.
      */
     private async getResponseBody(fetchResponse: Response, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): Promise<any>
     {

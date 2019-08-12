@@ -16,7 +16,7 @@
 
         </header>
 
-        <section validation="enabled.bind: false; trigger: input;" validation.ref="validation">
+        <section validation validation.ref="validation">
 
             <text-input value.bind="model.outfitName" label="above" class="margin-medium-bottom">
 
@@ -51,6 +51,7 @@
                 <div slot="validation">
 
                     <pattern-validator
+                        active.bind="true"
                         value.bind="model.outfitSlug"
                         pattern="^[^\s]*$">
 

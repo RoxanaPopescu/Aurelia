@@ -38,13 +38,13 @@ modal-view
 
         &.au-enter-active
         {
-            animation: modal-view-compose-enter ease;
+            animation: modal-view-compose-enter;
             animation-duration: var(--animation-duration-medium);
         }
 
         &.au-leave-active
         {
-            animation: modal-view-compose-leave ease;
+            animation: modal-view-compose-leave;
             animation-duration: var(--animation-duration-medium);
         }
     }
@@ -57,7 +57,7 @@ modal-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --modal-view-compose-animation-trigger: 1;
+        --modal-view-compose-animation-trigger: not-a-real-value;
     }
 }
 
@@ -68,6 +68,6 @@ modal-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --modal-view-compose-animation-trigger: 0;
+        --modal-view-compose-animation-trigger: not-a-real-value;
     }
 }

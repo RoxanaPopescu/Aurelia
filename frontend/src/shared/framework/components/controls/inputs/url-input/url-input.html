@@ -2,7 +2,7 @@
     input
     ${disabled ? '--disabled' : ''}
     ${readonly ? '--readonly' : ''}
-    ${!value ? '--empty' : ''}
+    ${!inputValue && inputElement.placeholderShown !== false ? '--empty' : ''}
     ${validation.invalid ? '--invalid' : ''}"
     validation
     validation.ref="validation">
@@ -64,6 +64,7 @@
         <div class="input-validation font-small">
 
             <input-validator
+                active.bind="true"
                 input.bind="inputElement"
                 trigger.bind="validationTrigger">
 

@@ -86,7 +86,7 @@ body
     outline: none;
 
     // Show focus indicator during keyboard navigation or when an element
-    // was programatically focused - unless it has explicitly opted out.
+    // was programmatically focused - unless it has explicitly opted out.
     .focus-visible &:not(.focus-hidden)
     {
         // Set the focus style to use during keyboard navigation.

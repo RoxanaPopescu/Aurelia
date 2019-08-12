@@ -71,6 +71,9 @@ modal-overlay
             // Note that we use padding instead of margin, to enable sticky positioning.
             padding-top: 7.5rem;
             padding-bottom: 10rem;
+
+            // Push the footer to the bottom by default.
+            margin-top: auto;
         }
     }
 

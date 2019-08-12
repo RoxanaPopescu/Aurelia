@@ -1,6 +1,8 @@
 import { bindable, containerless } from "aurelia-framework";
 import { Validator } from "../../validator";
-import { ValidationTrigger } from "../../validation-trigger";
+import { ValidationReason } from "../../validation-trigger";
+
+const preventDefault = (event: Event) => event.preventDefault();
 
 /**
  * Represents a validator that validates that a standard input element does not contain
@@ -16,11 +18,33 @@ export class InputValidatorCustomElement extends Validator
     public input: HTMLInputElement;
 
     /**
-     * Called by the validation when this validator should run.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeeded, otherwise false.
+     * Called by the framework when the component is attached.
      */
-    public async validate(trigger: ValidationTrigger): Promise<boolean>
+    public async attached(): Promise<void>
+    {
+        // Prevent the browser validation UI from appearing.
+        this.input.addEventListener("invalid", preventDefault, true);
+
+        return super.attached();
+    }
+
+    /**
+     * Called by the framework when the component is detached.
+     */
+    public async detached(): Promise<void>
+    {
+        // Prevent the browser validation UI from appearing.
+        this.input.removeEventListener("invalid", preventDefault, true);
+
+        return super.attached();
+    }
+
+    /**
+     * Called by the validation when this validator should run.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
+     */
+    public async validate(reason: ValidationReason): Promise<boolean>
     {
         this.invalid = !this.input.validity.valid;
 

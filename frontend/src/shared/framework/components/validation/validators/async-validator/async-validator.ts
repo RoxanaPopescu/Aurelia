@@ -1,6 +1,6 @@
 import { bindable, containerless } from "aurelia-framework";
 import { Validator } from "../../validator";
-import { ValidationTrigger } from "../../validation-trigger";
+import { ValidationReason } from "../../validation-trigger";
 import { Operation } from "shared/types";
 
 /**
@@ -13,11 +13,17 @@ import { Operation } from "shared/types";
 @containerless
 export class AsyncValidatorCustomElement extends Validator
 {
-    private _operation: Operation | undefined;
+    /**
+     * The most recent operation, if any.
+     */
+    protected operation: Operation | undefined;
 
     /**
      * The function that should be called to validate the value,
-     * or undefined to disable this requirement.
+     * or undefined to disable this requirement. This function
+     * should return true if validation succeeded, otherwise false.
+     * @param params.signal The abort signal, which will be triggered if a new validation run starts.
+     * @returns A promise that resolves
      */
     @bindable
     public function: (params:
@@ -31,14 +37,14 @@ export class AsyncValidatorCustomElement extends Validator
 
     /**
      * Called by the validation when this validator should run.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeeded, otherwise false.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public async validate(trigger: ValidationTrigger): Promise<boolean>
+    public async validate(reason: ValidationReason): Promise<boolean>
     {
-        if (this._operation != null)
+        if (this.operation != null)
         {
-            this._operation.abort();
+            this.operation.abort();
         }
 
         if (this.function == null)
@@ -47,11 +53,18 @@ export class AsyncValidatorCustomElement extends Validator
         }
         else
         {
-            this._operation = new Operation(async signal =>
+            this.operation = new Operation(async signal =>
             {
-                this.invalid = await this.function({ signal });
+                try
+                {
+                    this.invalid = !await this.function({ signal });
+                }
+                catch (error)
+                {
+                    this.invalid = undefined;
 
-                this._operation = undefined;
+                    throw error;
+                }
             });
         }
 

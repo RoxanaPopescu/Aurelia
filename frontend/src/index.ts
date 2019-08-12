@@ -21,7 +21,7 @@ import Localization from "shared/src/localization";
  * The entry point of the app, called by the Aurelia bootstrapper.
  * @param aurelia The `Aurelia` instance.
  */
-export async function configure(aurelia: Aurelia): Promise<any>
+export async function configure(aurelia: Aurelia): Promise<void>
 {
     // Create the visitor.
     aurelia.container.get(Visitor);

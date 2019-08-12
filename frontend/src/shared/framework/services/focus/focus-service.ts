@@ -48,7 +48,7 @@ export class FocusService
             }
         });
 
-        // Optionally show or hide focus when set programatically.
+        // Optionally show or hide focus when set programmatically.
         // tslint:disable: no-invalid-this no-unbound-method no-this-assignment
         const focusService = this;
         const focusFunc = HTMLElement.prototype.focus;

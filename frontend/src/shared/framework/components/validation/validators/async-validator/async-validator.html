@@ -1,6 +1,6 @@
 <template>
 
-    <template if.bind="operation.busy">
+    <template if.bind="operation.pending">
 
         <validation-message accent="neutral">
             <template replaceable part="validating" translate>
@@ -12,7 +12,7 @@
 
     <template if.bind="operation.error">
 
-        <validation-message accent="negative">
+        <validation-message accent="attention">
             <template replaceable part="error" translate>
                 Validation failed.
             </template>
@@ -20,7 +20,7 @@
 
     </template>
 
-    <template if.bind="invalid === true && !operation.busy && !operation.error">
+    <template if.bind="invalid === true && !operation.pending && !operation.error">
 
         <validation-message accent="negative">
             <template replaceable part="invalid" translate>

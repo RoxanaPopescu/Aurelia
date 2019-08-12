@@ -127,7 +127,7 @@ toolbar
     {
         --input-min-width: 0;
         width: 10vw;
-        transition: width calc(2 * var(--animation-duration-medium));
+        transition: width var(--animation-duration-long);
 
         // Delay transition so it's possible to click the clear icon within the input.
         transition-delay: 0.1s;
@@ -146,7 +146,7 @@ toolbar
         width: 10vw;
         min-width: 30rem;
         max-width: 80rem;
-        transition: width calc(2 * var(--animation-duration-medium));
+        transition: width var(--animation-duration-long);
 
         // Delay transition so it's possible to click the clear icon within the input.
         transition-delay: 0.1s;

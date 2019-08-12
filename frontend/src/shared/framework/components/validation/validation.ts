@@ -1,7 +1,7 @@
-import { Container, autoinject, bindable, bindingMode } from "aurelia-framework";
+import { Container, autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { EventManager } from "shared/utilities";
 import { Validator } from "./validator";
-import { ValidationTrigger } from "./validation-trigger";
+import { ValidationTrigger, ValidationReason } from "./validation-trigger";
 
 /**
  * Represents an event that may trigger validation,
@@ -28,37 +28,56 @@ interface IValidationTriggerEvent extends Event
 export interface IValidation
 {
     /**
-     * True if this validation is enabled, otherwise false.
-     * Note that if a parent validation is disabled, this validation will
+     * True to enable this validation, false to disable this validation,
+     * or undefined to inherit the enabled state from the parent validation.
+     *
+     * If no parent validation exists, the computed default is true.
+     *
+     * Note that if the parent validation is disabled, this validation will
      * be disabled too, regardless of the value of this property.
      */
     enabled: boolean | undefined;
 
     /**
-     * The trigger to use for this validation, or undefined to
-     * inherit the trigger specified on the parent validation.
+     * True to validate on trigger events, false to not validate on trigger
+     * events, null to let child validations and validators decide themselves,
+     * or undefined to inherit the active state from the parent validation.
+     *
+     * If no parent validation exists, the computed default is null.
+     *
+     * Note that if the parent validation is inactive, this validation will
+     * be inactive too, regardless of the value of this property.
      */
-    trigger: ValidationTrigger | ValidationTrigger[] | undefined;
+    active: boolean | null | undefined;
 
     /**
-     * True if the validation failed, false if the validation succeeded,
-     * or undefined if not yet validated.
+     * The trigger to use for this validation, or undefined to
+     * inherit the trigger from the parent validation.
+     *
+     * If no parent validation exists, the computed default is `input`.
+     */
+    trigger: ValidationReason | undefined;
+
+    /**
+     * True if validation failed, false if validation succeeded,
+     * or undefined if this validation is computed as disabled,
+     * or if validation has not yet run.
      */
     invalid: boolean | undefined;
 
     /**
-     * Validate by running all validators attached to this validation tree.
+     * Validate by running all validators attached to this validation subtree.
      * Note that validators will only run for validations that are enabled,
      * with no disabled parent validator.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns A promise that will be resolved with true if validation succeeded,
-     * false if validation failed, or undefined if this validator is disabled.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation
+     * succeeded, otherwise false.
      */
-    validate(): Promise<boolean | undefined>;
+    validate(reason?: ValidationReason): Promise<boolean | undefined>;
 
     /**
-     * Resets the state of all validators within this validation tree,
-     * and resets this validation to its default validity state.
+     * Resets this validation and all child validations and validators
+     * to the default validity state.
      */
     reset(): void;
 }
@@ -79,6 +98,7 @@ export class ValidationCustomAttribute implements IValidation
     {
         this.element = container.get(Element);
 
+        // Try to get the parent validation of this validation.
         if (container.parent.hasResolver(ValidationCustomAttribute, true))
         {
             this.parentValidation = container.parent.get(ValidationCustomAttribute);
@@ -86,7 +106,7 @@ export class ValidationCustomAttribute implements IValidation
     }
 
     private readonly _eventManager = new EventManager(this);
-    private _validationPromise: Promise<boolean | undefined> | undefined;
+    private _validationPromise: Promise<boolean> | undefined;
 
     /**
      * The element representing the component.
@@ -110,78 +130,147 @@ export class ValidationCustomAttribute implements IValidation
     protected readonly validators: Validator[] = [];
 
     /**
-     * True if this validation, and all ancestor validations, are enabled, otherwise false.
-     * If no parent validation exists, the default is true.
-     */
-    public get computedEnabled(): boolean
-    {
-        const parentEnabled = this.parentValidation != null ? this.parentValidation.computedEnabled : true;
-
-        return this.enabled && parentEnabled;
-    }
-
-    /**
-     * The trigger specified for this validation, or inherited from a parent validation.
-     * If no trigger is specified and no parent validation exists, the default is `input`.
-     */
-    public get computedTrigger(): ValidationTrigger[]
-    {
-        const computedTriggers = this.trigger || (this.parentValidation != null ? this.parentValidation.computedTrigger : "input");
-
-        return computedTriggers instanceof Array ? computedTriggers : [computedTriggers];
-    }
-
-    /**
-     * True if this validation, or any child validations, are invalid, false if valid,
-     * or undefined if this validation is disabled.
-     */
-    public get computedInvalid(): boolean | undefined
-    {
-        if (!this.enabled)
-        {
-            return undefined;
-        }
-
-        return this.invalid || this.childValidations.filter(v => v.enabled).some(v => !!v.computedInvalid) || this.validators.some(v => !!v.invalid);
-    }
-
-    /**
-     * True if this validation is enabled, otherwise false.
-     * Note that if a parent validation is disabled, this validation will
+     * True to enable this validation, false to disable this validation,
+     * or undefined to inherit the enabled state from the parent validation.
+     *
+     * If no parent validation exists, the computed default is true.
+     *
+     * Note that if the parent validation is disabled, this validation will
      * be disabled too, regardless of the value of this property.
      */
-    @bindable({ defaultValue: true })
-    public enabled: boolean;
+    @bindable({ defaultValue: undefined })
+    public enabled: boolean | undefined;
+
+    /**
+     * True to validate on trigger events, false to not validate on trigger
+     * events, null to let child validations and validators decide themselves,
+     * or undefined to inherit the active state from the parent validation.
+     *
+     * If no parent validation exists, the computed default is null.
+     *
+     * Note that if the parent validation is inactive, this validation will
+     * be inactive too, regardless of the value of this property.
+     */
+    @bindable({ defaultValue: undefined })
+    public active: boolean | null | undefined;
 
     /**
      * The trigger to use for this validation, or undefined to
-     * inherit the trigger specified on the parent validation.
+     * inherit the trigger from the parent validation.
+     *
      * If no parent validation exists, the computed default is `input`.
      */
     @bindable({ defaultValue: undefined })
-    public trigger: ValidationTrigger | ValidationTrigger[] | undefined;
+    public trigger: ValidationTrigger | undefined;
 
     /**
-     * True if the validation failed, false if the validation succeeded,
-     * or undefined if not yet validated.
+     * True if validation failed, false if validation succeeded,
+     * or undefined if this validation is computed as disabled,
+     * or if validation has not yet run.
      */
     @bindable({ defaultBindingMode: bindingMode.fromView })
     public invalid: boolean | undefined;
 
     /**
-     * Called by the framework when the component is attached.
-     * Attaches this validation to its parent validation and adds event listeners.
+     * The enabled state specified for this validation, or inherited from the parent validation.
+     * If no enabled state is specified and no parent validation exists, the default is true.
      */
-    public attached(): void
+    @computedFrom("enabled", "parentValidation.computedEnabled")
+    public get computedEnabled(): boolean
+    {
+        if (this.parentValidation != null)
+        {
+            if (!this.parentValidation.computedEnabled)
+            {
+                return false;
+            }
+
+            if (this.enabled !== undefined)
+            {
+                return this.enabled;
+            }
+
+            return this.parentValidation.computedEnabled;
+        }
+
+        if (this.enabled !== undefined)
+        {
+            return this.enabled;
+        }
+
+        return true;
+    }
+
+    /**
+     * The active state specified for this validation, or inherited from the parent validation.
+     * If no active state is specified and no parent validation exists, the default is null.
+     */
+    @computedFrom("active", "parentValidation.computedActive")
+    public get computedActive(): boolean | null
+    {
+        if (this.parentValidation != null)
+        {
+            if (this.parentValidation.computedActive === false)
+            {
+                return false;
+            }
+
+            if (this.active !== undefined)
+            {
+                return this.active;
+            }
+
+            return this.parentValidation.computedActive;
+        }
+
+        if (this.active !== undefined)
+        {
+            return this.active;
+        }
+
+        return null;
+    }
+
+    /**
+     * The trigger specified for this validation, or inherited from the parent validation.
+     * If no trigger is specified and no parent validation exists, the default is `input`.
+     */
+    @computedFrom("trigger", "parentValidation.computedTrigger")
+    public get computedTrigger(): ValidationTrigger
+    {
+        if (this.trigger != null)
+        {
+            return this.trigger;
+        }
+
+        if (this.parentValidation != null)
+        {
+            return this.parentValidation.computedTrigger;
+        }
+
+        return "input";
+    }
+
+    /**
+     * Called by the framework when the component is attached.
+     * Attaches this validation to its parent validation, adds trigger event listeners,
+     * and if this validation is computed as enabled and active, runs it immediately.
+     * @returns A promise that will be resolved immediately, or when validation completes.
+     */
+    public async attached(): Promise<void>
     {
         if (this.parentValidation != null)
         {
             this.parentValidation.attachValidation(this);
         }
 
-        this._eventManager.addEventListener(this.element, "input", event => this.onTriggerEvent(event, "input"));
-        this._eventManager.addEventListener(this.element, "change", event => this.onTriggerEvent(event, "change"));
-        this._eventManager.addEventListener(this.element, "focusout", event => this.onTriggerEvent(event, "blur"));
+        this._eventManager.addEventListener(this.element, "input", event => this.onTriggerEvent(event));
+        this._eventManager.addEventListener(this.element, "change", event => this.onTriggerEvent(event));
+
+        if (this.computedEnabled && this.computedActive)
+        {
+            await this.validate("attached");
+        }
     }
 
     /**
@@ -190,12 +279,12 @@ export class ValidationCustomAttribute implements IValidation
      */
     public detached(): void
     {
+        this._eventManager.removeEventListeners();
+
         if (this.parentValidation != null)
         {
             this.parentValidation.detachValidation(this);
         }
-
-        this._eventManager.removeEventListeners();
     }
 
     /**
@@ -216,6 +305,7 @@ export class ValidationCustomAttribute implements IValidation
     public detachValidation(validation: ValidationCustomAttribute): void
     {
         this.childValidations.splice(this.childValidations.indexOf(validation), 1);
+        this.update();
     }
 
     /**
@@ -236,104 +326,112 @@ export class ValidationCustomAttribute implements IValidation
     public detachValidator(validator: Validator): void
     {
         this.validators.splice(this.validators.indexOf(validator), 1);
+        this.update();
     }
 
     /**
-     * Validate by running all validators attached to this validation tree.
+     * Validate by running all validators attached to this validation subtree.
      * Note that validators will only run for validations that are enabled,
      * with no disabled parent validator.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns A promise that will be resolved with true if validation succeeded,
-     * false if validation failed, or undefined if this validator is disabled.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public async validate(trigger: ValidationTrigger = "none"): Promise<boolean | undefined>
+    public async validate(reason?: ValidationReason): Promise<boolean>
     {
+        const pendingValidationPromise = this._validationPromise;
+
         // Wait for any pending validation run to complete, to avoid a race condition.
-        await this._validationPromise;
+        await pendingValidationPromise;
 
-        // If this validation is enabled, start the validation run.
-        if (this.computedEnabled)
+        // If this validation is computed as disabled, or if the trigger is an event and this
+        // validation is computed as inactive, just return true.
+        if (!this.computedEnabled)
         {
-            // If a new validation promise has already been created, just return that.
-            if (this._validationPromise != null)
+            return true;
+        }
+
+        // If a new validation promise was already created, just return that.
+        // This happens if multiple `validate` calls were waiting for a
+        // pending validation run to complete.
+        if (this._validationPromise != null && this._validationPromise !== pendingValidationPromise)
+        {
+            return this._validationPromise;
+        }
+
+        // Assume validation is successful until proven otherwise.
+        let invalid = false;
+
+        // Run the child validations and validators, collecting their promises.
+        const validationPromises =
+        [
+            ...this.childValidations.map(validation =>
             {
-                return this._validationPromise;
-            }
+                return validation.validate(reason);
+            }),
 
-            // Assume validation is successful until proven otherwise.
-            let invalid = false;
+            ...this.validators.map(validator =>
+            {
+                const shouldValidate =
 
-            // Get the computed trigger or triggers for this validation.
-            const computedTrigger = this.computedTrigger;
+                    // Always run if the validation run was triggered programmatically.
+                    reason == null ||
 
-            // Run the child validations and validators, collecting their promises.
-            const validationPromises =
-            [
-                ...this.childValidations.map(v =>
-                {
-                    return v.validate(trigger);
-                }),
-
-                ...this.validators.map(v =>
-                {
-                    // Compute the effective triggers for the validator.
-                    const triggers = v.trigger != null
-                        ? v.trigger instanceof Array ? v.trigger : [v.trigger]
-                        : computedTrigger instanceof Array ? computedTrigger : [computedTrigger];
-
-                    const shouldValidate =
-
-                        // Run if the validation run was triggered programatically.
-                        // This ensures all validators run before a form is submitted.
-                        trigger === "none" ||
-
+                    // Only run active validators in response to events.
+                    validator.computedActive &&
+                    (
                         // Run if the trigger matches a trigger specified on,
                         // or inherited by, the validator.
-                        triggers.includes(trigger) ||
+                        validator.computedTrigger === reason ||
 
-                        // Run if the validator is already in the invalid state, and the trigger
-                        // specified on, or inherited by, the validator is not "none".
-                        // This ensures the user gets immediate feedback when correcting an error,
-                        // while still allowing validators to be configured to only run explicitly.
-                        v.invalid && !triggers.includes("none");
+                        // Run if the validator is already in the invalid state.
+                        // This ensures immediate feedback when an error is corrected.
+                        validator.invalid
+                    );
 
-                    if (shouldValidate)
-                    {
-                        return v.validate(trigger);
-                    }
+                if (shouldValidate)
+                {
+                    return validator.validate(reason);
+                }
 
-                    return Promise.resolve(!v.invalid);
-                })
-            ];
+                return Promise.resolve(!validator.invalid);
+            })
+        ];
 
-            // Store a promise for the pending validation run.
-            this._validationPromise = Promise.all(validationPromises).then(validationResults =>
+        // Store a promise for the validation run.
+        this._validationPromise = Promise.all(validationPromises)
+
+            .then(validationResults =>
             {
                 // Clear the stored promise.
                 this._validationPromise = undefined;
 
                 // If the validation run failed, mark this validation as invalid.
-                if (validationResults.some(r => r === false))
+                if (validationResults.some(valid => !valid))
                 {
                     invalid = true;
                 }
 
-                // Update the state of the validation.
+                // Update the validity state of the validation.
                 this.invalid = invalid;
 
                 return !this.invalid;
+            })
+
+            .catch(error =>
+            {
+                // Ensure the validation promise is always cleared after it settles.
+                this._validationPromise = undefined;
+
+                throw error;
             });
 
-            // Wait for the pending validation run to complete.
-            return this._validationPromise;
-        }
-
-        return !this.invalid;
+        // Return the validation promise.
+        return this._validationPromise;
     }
 
     /**
-     * Resets the state of all validators within this validation tree,
-     * and resets this validation to its default validity state.
+     * Resets this validation and all child validations and validators
+     * to the default validity state, then updates the ancestor validations.
      */
     public reset(): void
     {
@@ -348,24 +446,27 @@ export class ValidationCustomAttribute implements IValidation
         }
 
         this.invalid = undefined;
+
+        // Note:
+        // Resetting the validators will trigger the nessesary tree update.
     }
 
     /**
      * Called by validators when their `invalid` state changes.
-     * Updates the `invalid` state of this validator, then calls `update`
-     * on the parant validation, thus propagating the change up the tree.
+     * Queries the child validations and validators to update the `invalid` state of this validation,
+     * then calls `update` on the parant validation, thereby propagating the change up the tree.
      */
     public update(): void
     {
         if (!this.computedEnabled)
         {
-            this.invalid = false;
+            this.invalid = undefined;
         }
         else
         {
             this.invalid =
-                this.childValidations.filter(v => v.enabled).some(v => !!v.computedInvalid) ||
-                this.validators.some(v => !!v.invalid);
+                this.validators.filter(v => v.enabled !== false).some(v => !!v.invalid) ||
+                this.childValidations.filter(v => v.enabled !== false).some(v => !!v.invalid);
         }
 
         if (this.parentValidation != null)
@@ -376,11 +477,20 @@ export class ValidationCustomAttribute implements IValidation
 
     /**
      * Called by the framework when the `enabled` property changes.
-     * Ensures the validation is reset if the value changes to false.
+     * Ensures the validation is reset if the value changes to false, and run
+     * if the value changes to true and the `enabled` trigger is specified.
      */
     protected enabledChanged(): void
     {
-        if (!this.enabled)
+        if (this.enabled)
+        {
+            if (this.computedEnabled && this.computedActive)
+            {
+                // tslint:disable-next-line: no-floating-promises
+                this.validate("enabled");
+            }
+        }
+        else
         {
             this.reset();
         }
@@ -390,13 +500,12 @@ export class ValidationCustomAttribute implements IValidation
      * Called when a trigger event occurs.
      * Starts a new validation run, if this is the first validation to handle the event.
      * @param event The trigger event.
-     * @param trigger The trigger that was activated by the event.
      */
-    private onTriggerEvent(event: IValidationTriggerEvent, trigger: ValidationTrigger): void
+    private onTriggerEvent(event: IValidationTriggerEvent): void
     {
         if (event.__validationPromise == null)
         {
-            event.__validationPromise = this.validate(trigger);
+            event.__validationPromise = this.validate(event.type as ValidationTrigger);
         }
     }
 }

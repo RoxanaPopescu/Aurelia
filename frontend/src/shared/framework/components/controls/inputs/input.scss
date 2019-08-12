@@ -148,6 +148,7 @@
             {
                 // Remove border and min-height if the control is nested within another control.
                 border: none;
+                border-radius: 0;
                 min-height: 0;
 
                 // Reduce min-width if the control is nested within another control.

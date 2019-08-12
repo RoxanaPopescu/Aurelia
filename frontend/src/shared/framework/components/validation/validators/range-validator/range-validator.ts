@@ -1,6 +1,6 @@
 import { bindable, containerless } from "aurelia-framework";
 import { Validator } from "../../validator";
-import { ValidationTrigger } from "../../validation-trigger";
+import { ValidationReason } from "../../validation-trigger";
 
 /**
  * Represents a validator that validates that
@@ -31,18 +31,17 @@ export class RangeValidatorCustomElement extends Validator
     public max: { valueOf(): number } | undefined;
 
     /**
-     * The step size of which the value must be a multiple,
-     * or undefined to disable this requirement.
+     * The step size of which the value must be a multiple, or undefined to disable this requirement.
      */
     @bindable
     public step: { valueOf(): number } | undefined;
 
     /**
      * Called by the validation when this validator should run.
-     * @param trigger The trigger that caused the validation to run.
-     * @returns True if validation succeeded, otherwise false.
+     * @param reason The reason for the validation run.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public async validate(trigger: ValidationTrigger): Promise<boolean>
+    public async validate(reason: ValidationReason): Promise<boolean>
     {
         if (this.value == null)
         {

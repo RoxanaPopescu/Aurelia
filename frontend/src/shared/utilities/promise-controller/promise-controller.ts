@@ -9,9 +9,9 @@ export class PromiseController<T = void>
 {
     /**
      * Creates a new instance of the type.
-     * @param abortSignal The abort signal to use, or undefined to use no abort signal.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
      */
-    public constructor(abortSignal?: AbortSignal)
+    public constructor(signal?: AbortSignal)
     {
         this.promise = new Promise<T>((resolve, reject) =>
         {
@@ -19,16 +19,16 @@ export class PromiseController<T = void>
             this._reject = reject;
         });
 
-        if (abortSignal != null)
+        if (signal != null)
         {
-            if (abortSignal.aborted)
+            if (signal.aborted)
             {
                 this.reject(new AbortError());
 
                 return;
             }
 
-            abortSignal.addEventListener("abort", () =>
+            signal.addEventListener("abort", () =>
             {
                 this.reject(new AbortError());
             });

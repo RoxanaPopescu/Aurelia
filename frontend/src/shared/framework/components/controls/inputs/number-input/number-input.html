@@ -2,7 +2,7 @@
     input
     ${disabled ? '--disabled' : ''}
     ${readonly ? '--readonly' : ''}
-    ${!inputValue ? '--empty' : ''}
+    ${!inputValue && inputElement.placeholderShown !== false ? '--empty' : ''}
     ${validation.invalid ? '--invalid' : ''}"
     validation
     validation.ref="validation">
@@ -65,8 +65,8 @@
         <div class="input-validation font-small">
 
             <input-validator
-                input.bind="inputElement"
-                trigger="input">
+                active.bind="true"
+                input.bind="inputElement">
 
                 <template replace-part="invalid" translate>
                     Please provide a numeric value.
