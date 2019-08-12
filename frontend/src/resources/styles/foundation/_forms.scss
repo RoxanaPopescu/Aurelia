@@ -22,35 +22,6 @@ form
     // Ensure consistent `margin` and `padding`.
     margin: 0;
     padding: 0;
-
-    // Provide defaults for sectioning elements.
-
-    header,
-    footer
-    {
-        &:not(:first-child)
-        {
-            margin-top: 10rem;
-        }
-
-        &:not(:last-child)
-        {
-            margin-bottom: 10rem;
-        }
-    }
-
-    section
-    {
-        &:not(:first-child)
-        {
-            margin-top: 6rem;
-        }
-
-        &:not(:last-child)
-        {
-            margin-bottom: 6rem;
-        }
-    }
 }
 
 
@@ -155,16 +126,6 @@ a[appearance]
 
     // Prevent shrinking.
     flex-shrink: 0;
-
-    form > &
-    {
-        // Apply the default `margin` when placed within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
-
-        // Expand to fill the available width when placed within a form.
-        width: 100%;
-    }
 
     &:not([appearance="none"])
     {
@@ -315,29 +276,6 @@ label
     // Ensure consistent cursor.
     cursor: pointer;
 
-    form > &
-    {
-        // Apply the default `margin` when the label is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
-
-        &:not([appearance="input"])
-        {
-            > span:first-child
-            {
-                // Ensure consistent default layout of forms.
-                margin-right: auto;
-                flex-basis: 40%;
-            }
-
-            > :not(:first-child)
-            {
-                // Ensure minimum spacing between the label and the control.
-                margin-left: var(--size-inline-spacing);
-            }
-        }
-    }
-
     &[appearance="input"]
     {
         cursor: text;
@@ -392,13 +330,6 @@ input[type="week"]
     &:not(label)
     {
         display: block;
-    }
-
-    form > &
-    {
-        // Apply the default `margin` when the control is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
     }
 
     label[appearance="input"] > &
@@ -553,13 +484,6 @@ input[type="checkbox"]
         /* stylelint-enable */
     }
 
-    form > &
-    {
-        // Apply the default `margin` when the control is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
-    }
-
     label > &
     {
         // Ensure proper spacing between the label and the control.
@@ -640,13 +564,6 @@ input[type="radio"]
             "</svg>"
         );
         /* stylelint-enable */
-    }
-
-    form > &
-    {
-        // Apply the default `margin` when the control is within a form.
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
     }
 
     label > &
