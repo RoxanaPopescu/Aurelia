@@ -157,6 +157,19 @@ export class DriversColumnCustomElement
                     }
                 }
 
+                // Remove selected routes that no longer exists.
+                if (this.workspace.selectedDriverRoutes != null)
+                {
+                    for (const item of this.workspace.selectedDriverRoutes)
+                    {
+                        if (!result.routes.some(r => r.driver.id === item.driver.id))
+                        {
+                            const index = this.workspace.selectedDriverRoutes.indexOf(item);
+                            this.workspace.selectedDriverRoutes.splice(index, 1);
+                        }
+                    }
+                }
+
                 // Update the state.
                 this.workspace.driverRoutes = result.routes;
 

@@ -162,6 +162,19 @@ export class RoutesColumnCustomElement
                     }
                 }
 
+                // Remove selected routes that no longer exists.
+                if (this.workspace.selectedExpressRoutes != null)
+                {
+                    for (const item of this.workspace.selectedExpressRoutes)
+                    {
+                        if (!result.routes.some(r => r.id === item.id))
+                        {
+                            const index = this.workspace.selectedExpressRoutes.indexOf(item);
+                            this.workspace.selectedExpressRoutes.splice(index, 1);
+                        }
+                    }
+                }
+
                 // Update the state.
                 this.workspace.expressRoutes = result.routes;
 

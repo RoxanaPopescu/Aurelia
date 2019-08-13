@@ -33,9 +33,10 @@ export class MergeColumnCustomElement
         this._expressRouteService = routeService;
     }
 
+    private readonly _expressRouteService: ExpressRouteService;
     private _draggedStop: IDriverRouteStop | IExpressRouteStop | undefined;
 
-    protected readonly _expressRouteService: ExpressRouteService;
+    protected driverStopsElement: HTMLElement;
 
     /**
      * The workspace.
@@ -115,6 +116,7 @@ export class MergeColumnCustomElement
      */
     protected onExpressStopsDragStart(event: DragEvent, stop: IExpressRouteStop): boolean
     {
+        this.driverStopsElement.style.height = `${this.driverStopsElement.offsetHeight}px`;
         this._draggedStop = stop;
 
         const payloadJson = JSON.stringify({ stopId: stop.stop.id });
@@ -140,6 +142,7 @@ export class MergeColumnCustomElement
         {
             stop.dragged = false;
             this.isDragging = false;
+            this.driverStopsElement.style.height = null;
         });
     }
 
@@ -195,6 +198,7 @@ export class MergeColumnCustomElement
         this.expressStops.push(draggedStop as IExpressRouteStop);
         draggedStop.dragged = false;
         this.isDragging = false;
+        this.driverStopsElement.style.height = null;
 
         this.updateWorkspace();
     }
@@ -207,6 +211,7 @@ export class MergeColumnCustomElement
      */
     protected onDriverStopsDragStart(event: DragEvent, stop: IDriverRouteStop): boolean
     {
+        this.driverStopsElement.style.height = `${this.driverStopsElement.offsetHeight}px`;
         this._draggedStop = stop;
 
         const payloadJson = JSON.stringify({ stopId: stop.stop.id });
@@ -238,6 +243,7 @@ export class MergeColumnCustomElement
             this.driverStopsDragover = false;
             stop.dragged = false;
             this.isDragging = false;
+            this.driverStopsElement.style.height = null;
         });
     }
 
@@ -315,6 +321,7 @@ export class MergeColumnCustomElement
         this.driverStops.splice(targetStopIndex, 0, draggedStop);
         draggedStop.dragged = false;
         this.isDragging = false;
+        this.driverStopsElement.style.height = null;
 
         this.updateWorkspace();
     }
