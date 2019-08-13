@@ -507,9 +507,11 @@ export class MergeColumnCustomElement
             }
 
             this.canApply = this.expressStops.length === 0;
+            this.isEstimating = false;
         }
         catch (error)
         {
+            this.isEstimating = false;
             alert("Could not re-estimate route.");
         }
     }

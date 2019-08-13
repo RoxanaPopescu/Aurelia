@@ -298,7 +298,7 @@ export default
 
         "POST /api/v1/expressdispatch/estimatedriverroute":
         {
-            delay: 1000,
+            delay: 3000,
             data: cloneDriverRoutes(driverRoutes)[0]
         },
 
