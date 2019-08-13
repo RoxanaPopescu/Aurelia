@@ -169,6 +169,9 @@ export class RoutesColumnCustomElement
                     {
                         if (!result.routes.some(r => r.id === item.id))
                         {
+                            // Needed to release the color assigned to the route.
+                            item.selected = false;
+
                             const index = this.workspace.selectedExpressRoutes.indexOf(item);
                             this.workspace.selectedExpressRoutes.splice(index, 1);
                         }
