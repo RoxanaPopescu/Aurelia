@@ -24,7 +24,7 @@ export class FulfillerAgreementInvite
     public userLastName: string;
 
     /**
-     * The email of the user.
+     * The email for the user.
      */
     public userEmail: string;
 
@@ -34,8 +34,8 @@ export class FulfillerAgreementInvite
     public toJSON(): any
     {
         return {
-            companyName: this.outfitName,
             publicId: this.outfitSlug,
+            companyName: this.outfitName,
             firstName: this.userFirstName,
             lastName: this.userLastName,
             email: this.userEmail

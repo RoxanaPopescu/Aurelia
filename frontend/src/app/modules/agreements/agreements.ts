@@ -15,7 +15,8 @@ export class AgreementsModule
      */
     public constructor(modalService: ModalService)
     {
-        modalService.register("add-agreement", PLATFORM.moduleName("app/modules/agreements/modals/add-agreement/add-agreement"));
+        modalService.register("add-fulfiller-agreement", PLATFORM.moduleName("app/modules/agreements/modals/add-fulfiller-agreement/add-fulfiller-agreement"));
+        modalService.register("add-consignor-agreement", PLATFORM.moduleName("app/modules/agreements/modals/add-consignor-agreement/add-consignor-agreement"));
     }
 
     /**

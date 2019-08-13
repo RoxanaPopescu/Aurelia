@@ -2,7 +2,8 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
 import { Outfit } from "app/model/outfit";
-import { FulfillerAgreementInvite } from "../entities/fulfiller-invite";
+import { FulfillerAgreementInvite } from "../entities/fulfiller-agreement-invite";
+import { ConsignorAgreementInvite } from "../entities/consignor-agreement-invite";
 
 /**
  * Represents a service that manages agreements.
@@ -56,6 +57,19 @@ export class AgreementService
     public async inviteFulfiller(invite: FulfillerAgreementInvite): Promise<void>
     {
         await this._apiClient.post("agreements/fulfillers/invite",
+        {
+            body: invite
+        });
+    }
+
+    /**
+     * Creates a new agreement and invites the specified consignor.
+     * @param invite The invite to send.
+     * @returns A promise that will be resolved when the invitation has been sent.
+     */
+    public async inviteConsignor(invite: ConsignorAgreementInvite): Promise<void>
+    {
+        await this._apiClient.post("agreements/fulfilees/invite",
         {
             body: invite
         });

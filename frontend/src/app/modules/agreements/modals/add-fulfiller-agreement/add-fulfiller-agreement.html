@@ -2,7 +2,7 @@
 
     <modal-backdrop close-modal.bind="true"></modal-backdrop>
 
-    <modal-dialog name="add-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-dialog name="add-fulfiller-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <header>
 
@@ -100,7 +100,7 @@
             <text-input value.bind="model.userEmail" label="above">
 
                 <div slot="heading" translate>
-                    The email of the user
+                    The email for the user
                 </div>
 
                 <div slot="validation">
@@ -117,7 +117,9 @@
 
         <footer>
 
-            <button appearance="solid" accent="primary" click.delegate="onInviteClick()">Add agreement</button>
+            <button appearance="solid" accent="primary" click.delegate="onInviteClick()" translate>
+                Add agreement
+            </button>
 
         </footer>
 

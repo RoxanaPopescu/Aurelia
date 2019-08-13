@@ -1,0 +1,160 @@
+<template>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="add-consignor-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <header>
+
+            <h1 class="font-larger margin-bottom" translate>
+                Add consignor agreement
+            </h1>
+
+            <div translate>
+                Note that an invitation will be sent to the specified contact person.
+            </div>
+
+        </header>
+
+        <section validation validation.ref="validation">
+
+            <text-input value.bind="model.outfitName" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    The name of the consignor
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.outfitName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input value.bind="model.outfitSlug" value.bind="model.outfitSlug" label="above" class="margin-medium-bottom" autofocus>
+
+                <div slot="heading" translate>
+                    The ID to use for the consignor
+                </div>
+
+                <div slot="description" translate>
+                    This could be the name of the consignor, but without any spaces.
+                </div>
+
+                <div slot="placeholder">
+                    ${computedOutfitSlug}
+                </div>
+
+                <div slot="validation">
+
+                    <pattern-validator
+                        active.bind="true"
+                        value.bind="model.outfitSlug"
+                        pattern="^[^\s]*$">
+
+                        <template replace-part="invalid" translate>
+                            Please provide a value without spaces.
+                        </template>
+
+                    </pattern-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input value.bind="model.outfitAddress" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    The address of the consignor
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.outfitAddress">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input value.bind="model.contactFirstName" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    The first name of the contact person
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.contactFirstName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input value.bind="model.contactLastName" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    The last name of the contact person
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.contactLastName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <email-input value.bind="model.contactEmail" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    The email for the contact person
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.contactEmail">
+                    </required-validator>
+
+                </div>
+
+            </email-input>
+
+            <number-input value.bind="model.contactPhone" label="above">
+
+                <div slot="heading" translate>
+                    The phone number for the contact person
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.contactPhone">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+        </section>
+
+        <footer>
+
+            <button appearance="solid" accent="primary" click.delegate="onInviteClick()" translate>
+                Add agreement
+            </button>
+
+        </footer>
+
+    </modal-dialog>
+
+</template>

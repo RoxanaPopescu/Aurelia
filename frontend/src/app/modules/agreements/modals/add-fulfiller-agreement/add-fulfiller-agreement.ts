@@ -1,10 +1,9 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal, IValidation } from "shared/framework";
-import { AgreementService } from "app/model/agreement";
-import { FulfillerAgreementInvite } from "app/model/agreement/entities/fulfiller-invite";
+import { AgreementService, FulfillerAgreementInvite } from "app/model/agreement";
 
 @autoinject
-export class AddAgreementDialogCustomElement
+export class AddFulfillerAgreementDialogCustomElement
 {
     /**
      * Creates a new instance of the type.
