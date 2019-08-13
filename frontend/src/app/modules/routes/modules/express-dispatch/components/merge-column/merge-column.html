@@ -63,15 +63,12 @@
                                     <div>${stop.stop.stopNumber}</div>
                                 </div>
                                 <div>
-                                    <div>${stop.stop.type.name}${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
+                                    <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
                                     <div class="margin-smallest-top">${stop.stop.location.address}</div>
                                 </div>
                                 <div class="flex-push-right text-align-right">
                                     <div>
-                                        &nbsp;
-                                        <a href="/routes/details/${stop.route.slug}" target="_blank">
-                                            ${stop.route.slug}
-                                        </a>
+                                        &nbsp;${stop.stop.orderIds | list: 'narrow'}
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
                                         <div class="flex-row flex-push-right">
@@ -132,15 +129,12 @@
                                     <div>${$index + 1}</div>
                                 </div>
                                 <div>
-                                    <div>${stop.stop.type.name}${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
+                                    <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
                                     <div class="margin-smallest-top">${stop.stop.location.address}</div>
                                 </div>
                                 <div class="flex-push-right text-align-right">
                                     <div>
-                                        &nbsp;
-                                        <a href="/routes/details/${stop.route.slug}" target="_blank">
-                                            ${stop.route.slug}
-                                        </a>
+                                        &nbsp;${stop.stop.orderIds | list: 'narrow'}
                                     </div>
                                     <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
                                         <div class="flex-row flex-push-right">
