@@ -7,9 +7,10 @@ import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import CreateForecastDialog from "./components/createForecastDialog";
-import { Button } from "shared/src/webKit";
+import { Button, Toast } from "shared/src/webKit";
 import { Forecast } from "../models/forecast";
 import { DateTimeRange } from "../../../../../../shared/src/model/general/dateTimeRange";
+import { ToastType } from "../../../../../../shared/src/webKit/toast/index";
 import {
   ButtonType,
   ButtonSize
@@ -43,10 +44,6 @@ export default class ForecastsComponent extends React.Component<Props, State> {
     this.fetchData();
   }
 
-  componentWillUpdate() {
-    this.fetchData();
-  }
-
   private async fetchData(): Promise<void> {
     driverDispatchService.selectedItemIndexes = [];
     await driverDispatchService.fetchOverview();
@@ -63,6 +60,20 @@ export default class ForecastsComponent extends React.Component<Props, State> {
   render() {
     return (
       <div className="c-driverDispatch-container">
+        {driverDispatchService.toast && (
+          <Toast
+            type={
+              driverDispatchService.toast.type === "error"
+                ? ToastType.Alert
+                : ToastType.Success
+            }
+            remove={() => {
+              driverDispatchService.toast = undefined;
+            }}
+          >
+            {driverDispatchService.toast.message}
+          </Toast>
+        )}
         <CreateForecastDialog
           open={this.state.createForecastDialogOpen}
           onClose={() => {
@@ -79,7 +90,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
                   from: forecast.dateTimeFrom,
                   to: forecast.dateTimeTo
                 }),
-                startingAddress: forecast.startingAddress.address.toString(),
+                startingAddress: forecast.startingLocation,
                 vehicleTypeId: forecast.vehicleType.toString(),
                 slots: forecast.totalSlots
               });

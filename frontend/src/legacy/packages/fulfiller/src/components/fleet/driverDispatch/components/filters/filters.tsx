@@ -1,7 +1,7 @@
 import React from "react";
 import "./filters.scss";
 import DateComponent from "shared/src/webKit/date/date";
-import { InputRadioGroup, Select, Button } from "shared/src/webKit";
+import { InputRadioGroup, Button } from "shared/src/webKit";
 import Slider from "./components/slider/slider";
 import CheckboxFilter from "./components/checkboxFilter/checkboxFilter";
 import { observer } from "mobx-react";
@@ -9,6 +9,7 @@ import {
   driverDispatchService,
   DispatchState
 } from "../../driverDispatchService";
+import { DateTime } from "luxon";
 import TimeComponent from "shared/src/webKit/date/time";
 import { SelectOptionValue } from "shared/src/webKit/select";
 import {
@@ -24,35 +25,35 @@ interface Props {
 }
 
 interface State {
-  startTimeInSeconds: number;
+  startTimeInSeconds?: number;
+  endTimeInSeconds?: number;
   duration?: number;
 }
 
 @observer
 export default class extends React.Component<Props, State> {
+  intervalInSeconds = 3600;
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      startTimeInSeconds: 0
-    };
   }
 
-  // private getDistinct(array: { name: string; id: string }[]) {
-  //   var distinctArray: { name: string; id: string }[] = [];
-  //   const map = new Map();
-  //   for (const item of array) {
-  //     if (!map.has(item.id)) {
-  //       map.set(item.id, true); // set any value to Map
-  //       distinctArray.push({
-  //         id: item.id,
-  //         name: item.name
-  //       });
-  //     }
-  //   }
+  componentWillMount() {
+    var startTimeInSeconds,
+      endTimeInSeconds: undefined | number = undefined;
+    if (driverDispatchService.startTime) {
+      startTimeInSeconds =
+        driverDispatchService.startTime.hour * this.intervalInSeconds;
+    }
+    if (driverDispatchService.startTime) {
+      endTimeInSeconds =
+        driverDispatchService.endTime.hour * this.intervalInSeconds;
+    }
 
-  //   return distinctArray;
-  // }
+    this.setState({
+      startTimeInSeconds: startTimeInSeconds,
+      endTimeInSeconds: endTimeInSeconds
+    });
+  }
 
   getDurationOptions() {
     let array: SelectOptionValue[] = [];
@@ -78,7 +79,8 @@ export default class extends React.Component<Props, State> {
             onClick={() => {
               driverDispatchService.setDefaultValues();
               this.setState({
-                startTimeInSeconds: 0,
+                startTimeInSeconds: undefined,
+                endTimeInSeconds: undefined,
                 duration: undefined
               });
 
@@ -87,61 +89,132 @@ export default class extends React.Component<Props, State> {
           >
             Reset all
           </Button>
-          <DateComponent
-            headline="Date"
-            date={driverDispatchService.startDateTime}
-            onChange={date => {
-              var temp = driverDispatchService.startDateTime.set({
-                year: date.year,
-                month: date.month,
-                day: date.day
-              });
-              driverDispatchService.startDateTime = temp;
+          <div className="c-driverDispatch-filters-datetime">
+            <DateComponent
+              headline="Start date"
+              date={driverDispatchService.startDate}
+              onChange={date => {
+                var temp = driverDispatchService.startDate.set({
+                  year: date.year,
+                  month: date.month,
+                  day: date.day
+                });
+                driverDispatchService.startDate = temp;
 
-              driverDispatchService.endDateTime = temp.plus({
-                hours: this.state.duration,
-                milliseconds: this.state.startTimeInSeconds
-              });
-
-              this.props.onTopFilterChange();
-            }}
-          />
-          <TimeComponent
-            headline="Time"
-            onChange={seconds => {
-              var temp = driverDispatchService.startDateTime.set({
-                hour: seconds / 3600
-              });
-              driverDispatchService.startDateTime = temp;
-
-              driverDispatchService.endDateTime = temp.plus(
-                this.state.duration ? this.state.duration : 24
-              );
-
-              this.setState({ startTimeInSeconds: seconds });
-
-              this.props.onTopFilterChange();
-            }}
-            interval={60}
-          />
-          <Select
-            headline="Duration"
-            options={this.getDurationOptions()}
-            value={this.state.duration}
-            onSelect={option => {
-              if (option) {
-                driverDispatchService.endDateTime = driverDispatchService.endDateTime.plus(
-                  {
-                    hours: option.value
-                  }
-                );
-
-                this.setState({ duration: option.value });
+                if (
+                  driverDispatchService.startDate
+                    .diff(driverDispatchService.endDate)
+                    .valueOf() > 0
+                ) {
+                  driverDispatchService.endDate =
+                    driverDispatchService.startDate;
+                }
 
                 this.props.onTopFilterChange();
-              }
-            }}
-          />
+              }}
+            />
+            <DateComponent
+              headline="End date"
+              date={driverDispatchService.endDate}
+              onChange={date => {
+                var temp = driverDispatchService.endDate.set({
+                  year: date.year,
+                  month: date.month,
+                  day: date.day
+                });
+                driverDispatchService.endDate = temp;
+
+                if (
+                  driverDispatchService.endDate
+                    .diff(driverDispatchService.startDate)
+                    .valueOf() < 0
+                ) {
+                  driverDispatchService.startDate =
+                    driverDispatchService.endDate;
+                }
+
+                this.props.onTopFilterChange();
+              }}
+            />
+          </div>
+          <div className="c-driverDispatch-filters-datetime">
+            <TimeComponent
+              headline="Start time"
+              seconds={this.state.startTimeInSeconds}
+              onChange={seconds => {
+                var temp = DateTime.local().startOf("day");
+
+                if (driverDispatchService.startTime) {
+                  temp = driverDispatchService.startTime.set({
+                    hour: seconds / this.intervalInSeconds
+                  });
+                } else {
+                  temp = temp.set({
+                    hour: seconds / this.intervalInSeconds
+                  });
+                  driverDispatchService.endTime = temp;
+                  this.setState({
+                    endTimeInSeconds: seconds
+                  });
+                }
+                driverDispatchService.startTime = temp;
+
+                if (
+                  driverDispatchService.startTime
+                    .diff(driverDispatchService.endTime)
+                    .valueOf() > 0
+                ) {
+                  driverDispatchService.endTime =
+                    driverDispatchService.startTime;
+                  this.setState({
+                    endTimeInSeconds: seconds
+                  });
+                }
+
+                this.setState({ startTimeInSeconds: seconds });
+                this.props.onTopFilterChange();
+              }}
+              interval={60}
+            />
+            <TimeComponent
+              headline="End time"
+              seconds={this.state.endTimeInSeconds}
+              onChange={seconds => {
+                var temp = DateTime.local().startOf("day");
+
+                if (driverDispatchService.endTime) {
+                  temp = driverDispatchService.endTime.set({
+                    hour: seconds / this.intervalInSeconds
+                  });
+                } else {
+                  temp = temp.set({
+                    hour: seconds / this.intervalInSeconds
+                  });
+                  driverDispatchService.startTime = temp;
+                  this.setState({
+                    startTimeInSeconds: seconds
+                  });
+                }
+                driverDispatchService.endTime = temp;
+
+                if (
+                  driverDispatchService.endTime
+                    .diff(driverDispatchService.startTime)
+                    .valueOf() < 0
+                ) {
+                  driverDispatchService.startTime =
+                    driverDispatchService.endTime;
+                  this.setState({
+                    startTimeInSeconds: seconds
+                  });
+                }
+
+                this.setState({ endTimeInSeconds: seconds });
+                this.props.onTopFilterChange();
+              }}
+              interval={60}
+            />
+          </div>
           {this.props.page === "dispatch" && (
             <InputRadioGroup
               radioButtons={[
@@ -169,26 +242,28 @@ export default class extends React.Component<Props, State> {
             />
           )}
         </Slider>
-        <Slider collapsible={true} headline="Kunde">
-          <CheckboxFilter
-            data={driverDispatchService.fulfillees.map(c => {
-              return {
-                label: c.name,
-                value: c.id,
-                checked:
-                  driverDispatchService.fulfilleeFilters.filter(
-                    cf => cf.id === c.id
-                  ).length > 0
-              };
-            })}
-            onChange={checkedData => {
-              driverDispatchService.fulfilleeFilters = checkedData.map(d => {
-                return { name: d.label, id: d.value };
-              });
-              this.props.onFilterChange();
-            }}
-          />
-        </Slider>
+        {driverDispatchService.fulfillees.length > 0 && (
+          <Slider collapsible={true} headline="Kunde">
+            <CheckboxFilter
+              data={driverDispatchService.fulfillees.map(c => {
+                return {
+                  label: c.name,
+                  value: c.id,
+                  checked:
+                    driverDispatchService.fulfilleeFilters.filter(
+                      cf => cf.id === c.id
+                    ).length > 0
+                };
+              })}
+              onChange={checkedData => {
+                driverDispatchService.fulfilleeFilters = checkedData.map(d => {
+                  return { name: d.label, id: d.value };
+                });
+                this.props.onFilterChange();
+              }}
+            />
+          </Slider>
+        )}
         {(driverDispatchService.state.slug ===
           DispatchState.map.assignedRoute.slug ||
           driverDispatchService.state.slug ===

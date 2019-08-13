@@ -9,9 +9,9 @@ import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 import { PreBooking } from "../models/preBooking";
-import PreBookingDialog from "../components/preBookingDialog";
+import PreBookingDialog from "./components/preBookingDialog";
 import Dropdown from "./components/dropdown";
-import { Button, ButtonType } from "shared/src/webKit";
+import { Button, ButtonType, Toast, ToastType } from "shared/src/webKit";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -85,8 +85,17 @@ export default class DispatchComponent extends React.Component<Props, State> {
       driverDispatchService.state.value === DispatchState.map.preBooking.value
     ) {
       driverDispatchService.preBookings = await driverDispatchService.fetchPreBookings();
+    } else if (
+      driverDispatchService.state.value ===
+      DispatchState.map.unassignedRoute.value
+    ) {
+      driverDispatchService.unassignedRoutes = await driverDispatchService.fetchUnassignedRoutes();
+    } else if (
+      driverDispatchService.state.value ===
+      DispatchState.map.assignedRoute.value
+    ) {
+      driverDispatchService.assignedRoutes = await driverDispatchService.fetchAssignedRoutes();
     }
-    // TODO: Assigned and unassigned routes
   }
 
   private get headerElements() {
@@ -148,6 +157,20 @@ export default class DispatchComponent extends React.Component<Props, State> {
   render() {
     return (
       <div className="c-driverDispatch-container">
+        {driverDispatchService.toast && (
+          <Toast
+            type={
+              driverDispatchService.toast.type === "error"
+                ? ToastType.Alert
+                : ToastType.Success
+            }
+            remove={() => {
+              driverDispatchService.toast = undefined;
+            }}
+          >
+            {driverDispatchService.toast.message}
+          </Toast>
+        )}
         {this.state.preBookingDialog && (
           <PreBookingDialog
             onClose={() => {
@@ -176,7 +199,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
                 state.slug
               )
             );
-            this.componentWillMount();
+            this.handleStateChange();
           }}
           onFilterChange={() => this.fetchData()}
           onTopFilterChange={() => {
@@ -191,6 +214,13 @@ export default class DispatchComponent extends React.Component<Props, State> {
               this.setState({
                 preBookingDialog: { preBookings: [preBooking] }
               });
+            }}
+            onUnassignedRouteAction={route => {
+              this.props.history.push(
+                FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
+                  .replace(":ids", route.slug)
+                  .replace(":origin", "routes")
+              );
             }}
           />
         </div>

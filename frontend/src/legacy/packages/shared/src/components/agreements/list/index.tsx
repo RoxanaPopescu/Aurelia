@@ -16,12 +16,14 @@ import { PageContentComponent } from "shared/src/components/pageContent";
 import { observable } from "mobx";
 import { Dialog } from "../../dialog/dialog";
 import { InviteFulfiller } from "../invite/fulfiller";
+import { InviteConsignor } from "../invite/consignor";
 
 export const store = new AgreementsListStore();
 
 @observer
 export default class AgreementsListComponent extends React.Component {
   @observable invitingFulfiller = false;
+  @observable invitingConsignor = false;
 
   // tslint:disable-next-line:no-any
   constructor(props: any) {
@@ -79,7 +81,14 @@ export default class AgreementsListComponent extends React.Component {
             type={ButtonType.Light}
             onClick={() => (this.invitingFulfiller = true)}
           >
-            Inviter fulfiller/transportør
+            Inviter transportør
+          </ButtonAdd>
+          <ButtonAdd
+            size={ButtonSize.Medium}
+            type={ButtonType.Light}
+            onClick={() => (this.invitingConsignor = true)}
+          >
+            Inviter kunde
           </ButtonAdd>
         </PageHeaderComponent>
 
@@ -96,7 +105,7 @@ export default class AgreementsListComponent extends React.Component {
 
         {this.invitingFulfiller && (
           <Dialog
-            title={"Inviter og opret fulfiller"}
+            title={"Inviter og opret transportør"}
             onClose={() => {
               this.invitingFulfiller = false;
             }}
@@ -104,6 +113,21 @@ export default class AgreementsListComponent extends React.Component {
             <InviteFulfiller
               added={() => {
                 this.invitingFulfiller = false;
+                this.fetch();
+              }}
+            />
+          </Dialog>
+        )}
+        {this.invitingConsignor && (
+          <Dialog
+            title={"Inviter og opret kunde"}
+            onClose={() => {
+              this.invitingConsignor = false;
+            }}
+          >
+            <InviteConsignor
+              added={() => {
+                this.invitingConsignor = false;
                 this.fetch();
               }}
             />

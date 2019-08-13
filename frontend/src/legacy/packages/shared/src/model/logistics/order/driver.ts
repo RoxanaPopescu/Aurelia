@@ -5,7 +5,7 @@ export class Driver {
   public id: string;
   public firstName: string;
   public lastName: string;
-  public phoneNumber: Phone;
+  public phone: Phone;
   public vehicleTypes?: VehicleType[];
   public company?: { name: string; id: string };
 
@@ -14,7 +14,7 @@ export class Driver {
     this.id = json.id;
     this.firstName = json.name.first;
     this.lastName = json.name.last;
-    this.phoneNumber = new Phone(json.phone);
+    this.phone = new Phone(json.phone);
     this.vehicleTypes = json.vehicleTypeIds
       ? json.vehicleTypeIds.map(v => VehicleType.get(v))
       : undefined;

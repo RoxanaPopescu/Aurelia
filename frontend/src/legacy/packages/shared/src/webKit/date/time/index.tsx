@@ -54,8 +54,21 @@ export default class TimeComponent extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(props: Props) {
+    let date: Moment.Moment | undefined;
+    if (props.seconds !== undefined) {
+      let luxonDate = DateTime.fromObject({})
+        .startOf("day")
+        .plus(
+          Duration.fromObject({
+            seconds: props.seconds
+          })
+        );
+      date = Moment(luxonDate.toString());
+    }
+
     this.setState({
-      error: props.error
+      error: props.error,
+      date: date
     });
   }
 

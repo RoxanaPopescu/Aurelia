@@ -8,12 +8,11 @@ import { RoutePrice } from "./routePrice";
  * Represents the live status of a route.
  */
 export class Route extends RouteBase<RouteStop> {
-  
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
-
-    const stops = data.stops
-      .map((s, i) => s.hidden ? new RouteStopBase(s, i) : new RouteStop(s, i + 1));
+    const stops = data.stops.map(
+      (s, i) => (s.hidden ? new RouteStopBase(s, i) : new RouteStop(s, i + 1))
+    );
 
     super(data, stops);
 
@@ -45,6 +44,5 @@ export class Route extends RouteBase<RouteStop> {
    * True if the route may be assigned to a fulfiller or driver,
    * otherwise false.
    */
-  @observable
-  public allowAssignment: boolean;
+  @observable public allowAssignment: boolean;
 }

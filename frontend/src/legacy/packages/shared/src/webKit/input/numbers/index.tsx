@@ -32,7 +32,7 @@ interface State {
   value?: string;
 }
 
-export default class InputPhone extends React.Component<Props, State> {
+export default class InputNumbers extends React.Component<Props, State> {
   static defaultProps = {
     required: true,
     autoComplete: false

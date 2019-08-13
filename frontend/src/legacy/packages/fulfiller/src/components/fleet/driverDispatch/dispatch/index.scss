@@ -12,6 +12,14 @@
 
   .pageHeader {
     border: 0;
+
+    .pageHeader-top {
+      margin: 0;
+    }
+
+    .pageHeader-toolbar {
+      margin: 0;
+    }
   }
 
   .pageContent {

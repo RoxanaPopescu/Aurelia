@@ -8,10 +8,8 @@ import { RouteStop as RouteStopBase } from "../routeStop";
  * Represents a single location, where a driver must either pick up or deliver colli.
  */
 export class RouteStop extends RouteStopBase {
-  
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, stopNumber: number) {
-    
     super(data, stopNumber);
 
     this.signatureRequired = data.signatureRequired;
@@ -20,7 +18,7 @@ export class RouteStop extends RouteStopBase {
     if (data.signature != null) {
       this.signature = new Signature(data.signature);
     }
-    
+
     if (data.photo != null) {
       this.photo = new Photo(data.photo);
     }
@@ -70,8 +68,12 @@ export class RouteStop extends RouteStopBase {
   public get hasAlert(): boolean {
     return (
       super.getHasAlert() ||
-      this.pickups.some(p => p.colli.some(c => c.status.accent.pickup === "negative")) ||
-      this.deliveries.some(d => d.colli.some(c => c.status.accent.delivery === "negative"))
+      this.pickups.some(p =>
+        p.colli.some(c => c.status.accent.pickup === "negative")
+      ) ||
+      this.deliveries.some(d =>
+        d.colli.some(c => c.status.accent.delivery === "negative")
+      )
     );
   }
 }

@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import H from "history";
 import Localization from "shared/src/localization";
 import { routeDetailsService } from "./routeDetailsService";
+import { routeDispatchService } from "./routeDispatchService";
 import {
   LoadingInline,
   ErrorInline,
@@ -77,7 +78,11 @@ export default class RouteDetailsComponent extends React.Component<Props> {
             <Info service={routeDetailsService} />
 
             <div className="c-routeDetails-main">
-              <Header history={this.props.history} service={routeDetailsService} />
+              <Header
+                history={this.props.history}
+                detailsService={routeDetailsService}
+                dispatchService={routeDispatchService}
+              />
               <Metrics service={routeDetailsService} />
               <Map service={routeDetailsService} />
               <Stops service={routeDetailsService} />

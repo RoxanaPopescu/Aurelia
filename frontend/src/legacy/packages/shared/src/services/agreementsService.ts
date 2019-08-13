@@ -3,6 +3,7 @@ import { Outfit } from "shared/src/model/logistics/outfit";
 import Localization from "shared/src/localization";
 import { Consignor } from "shared/src/model/logistics/consignor";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
+import { Phone } from "../model/general/phone";
 
 export class AgreementsService {
   static async inviteFulfiller(
@@ -22,6 +23,37 @@ export class AgreementsService {
 
     let response = await fetch(
       Base.url("Agreements/Fulfillers/Invite"),
+      Base.defaultConfig(items)
+    );
+
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    return;
+  }
+
+  static async inviteConsignor(
+    publicId: string, 
+    companyName: string, 
+    firstName: string, 
+    lastName: string, 
+    email: string,
+    phone: Phone,
+    address: string
+  ) {
+    var items = {
+      publicId: publicId,
+      companyName: companyName,
+      firstName: firstName,
+      lastName: lastName,
+      contactPhone: phone,
+      email: email,
+      address: address
+    };
+
+    let response = await fetch(
+      Base.url("Agreements/Fulfilees/Invite"),
       Base.defaultConfig(items)
     );
 

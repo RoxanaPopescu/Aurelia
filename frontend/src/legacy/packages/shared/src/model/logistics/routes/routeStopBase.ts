@@ -6,10 +6,8 @@ import { RouteStopStatus } from "./routeStopStatus";
  * but where the user is not allowed to see any details about the stop.
  */
 export class RouteStopBase {
-  
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, stopNumber: number) {
-    
     this.id = data.id;
     this.stopNumber = stopNumber;
     this.status = new RouteStopStatus(data.status);

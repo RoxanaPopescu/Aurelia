@@ -24,6 +24,7 @@ interface Props {
 interface State {
   results?: OptionGroup[];
   value?: Address | Location;
+  disabled?: boolean;
 }
 
 export default class AddressSearchComponent extends React.Component<
@@ -47,7 +48,8 @@ export default class AddressSearchComponent extends React.Component<
 
   componentWillReceiveProps(props: Props) {
     this.setState({
-      value: props.value
+      value: props.value,
+      disabled: props.disabled
     });
   }
 
@@ -67,6 +69,7 @@ export default class AddressSearchComponent extends React.Component<
       .then(location => {
         if (this.props.onChange) {
           this.props.onChange(location);
+          this.setState({ disabled: false });
         }
       })
       .catch(() => {
@@ -100,7 +103,7 @@ export default class AddressSearchComponent extends React.Component<
         iconUrl={require("./assets/marker.svg")}
         className="c-addressSearch"
         size={"medium"}
-        disabled={this.props.disabled}
+        disabled={this.state.disabled}
         optionGroups={this.state.results}
         placeholder={this.props.placeholder}
         defaultTexts={{
@@ -115,6 +118,7 @@ export default class AddressSearchComponent extends React.Component<
               if (!this.props.locationRequired) {
                 this.props.onChange(new Location({ address: address }));
               } else {
+                this.setState({ disabled: true });
                 this.fetchPositionIfPossible(address);
               }
             }

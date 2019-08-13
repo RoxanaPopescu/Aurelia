@@ -67,14 +67,14 @@ export default class extends React.Component<Props, State> {
         </Button>
         {this.state.dropdownOpen && (
           <div className="c-driverDispatch-dropdown">
-            <div
+            {/* <div
               onClick={() => {
                 this.setState({ dropdownOpen: false });
               }}
               className="c-driverDispatch-dropdown-value"
             >
               Change drivers
-            </div>
+            </div> */}
             <div
               onClick={() => {
                 this.props.removePreBookingDrivers();

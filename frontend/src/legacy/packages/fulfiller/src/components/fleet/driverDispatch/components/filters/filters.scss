@@ -24,4 +24,33 @@
     box-shadow: none;
     background-color: rgba(0, 0, 0, 0.05);
   }
+
+  .c-driverDispatch-filters-datetime {
+    display: flex;
+
+    > * {
+      &:first-child {
+        input {
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          border-right: 0 !important;
+        }
+      }
+
+      &:last-child {
+        input {
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+
+        // HACK to circumvent "overflow-y: overlay" setting "overflow-x" to "auto"
+        .react-datepicker-popper {
+          position: fixed !important;
+          top: auto !important;
+          left: auto !important;
+          transform: none !important;
+        }
+      }
+    }
+  }
 }

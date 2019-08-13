@@ -7,13 +7,17 @@ import { Button, ButtonType, ButtonSize } from "shared/src/webKit";
 import { Session } from "shared/src/model/session";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { RouteDetailsService } from "../../routeDetailsService";
+import { RouteDispatchService } from "../../routeDispatchService";
+import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import AssignDriverButton from "./components/assignDriver/assignDriver";
 import AssignFulfillerButton from "./components/assignFulfiller/assignFulfiller";
+import SetStatusButton from "./components/setStatus/setStatus";
+import ReloadRouteButton from "./components/reloadRoute/reloadRoute";
 import "./header.scss";
-import { PageHeaderComponent } from "shared/src/components/pageHeader";
 
 interface Props {
-  service: RouteDetailsService;
+  detailsService: RouteDetailsService;
+  dispatchService: RouteDispatchService;
   history?: H.History;
 }
 
@@ -26,24 +30,30 @@ export default class extends React.Component<Props> {
         history={this.props.history}
         path={[
           { title: "Ruter", href: SubPage.path(SubPage.RouteList) },
-          { title: this.props.service.routeDetails!.slug }
+          { title: this.props.detailsService.routeDetails!.slug }
         ]}
       >
 
-        {isFulfiller && this.props.service.routeDetails!.driverListUrl &&
+        {isFulfiller && this.props.detailsService.routeDetails!.driverListUrl &&
         <Button
           type={ButtonType.Light}
           size={ButtonSize.Medium}
-          onClick={() => window.open(this.props.service.routeDetails!.driverListUrl)}
+          onClick={() => window.open(this.props.detailsService.routeDetails!.driverListUrl)}
         >
           {Localization.sharedValue("RouteDetails_PrintDriverList")}
         </Button>}
 
         {isFulfiller &&
-        <AssignFulfillerButton route={this.props.service.routeDetails!}/>}
+        <AssignFulfillerButton route={this.props.detailsService.routeDetails!}/>}
 
         {isFulfiller &&
-        <AssignDriverButton route={this.props.service.routeDetails!}/>}
+        <AssignDriverButton route={this.props.detailsService.routeDetails!}/>}
+
+        {isFulfiller && !["requested", "accepted"].includes(this.props.detailsService.routeDetails!.status.slug) &&
+        <SetStatusButton route={this.props.detailsService.routeDetails!}/>}
+
+        {isFulfiller && ["started"].includes(this.props.detailsService.routeDetails!.status.slug) &&
+        <ReloadRouteButton route={this.props.detailsService.routeDetails!}/>}
 
       </PageHeaderComponent>
     );

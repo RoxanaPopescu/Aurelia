@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 import { VehicleType } from "shared/src/model/session";
+import { Location } from "shared/src/model/general/location";
 
 /**
  * Represents a single forecast.
@@ -10,13 +11,13 @@ export class Forecast {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.fulfilleeId = data.fulfillee.id;
-    this.fulfilleeName = data.fulfillee.name;
+    this.ownerOutfitId = data.ownerOutfitId;
+    this.fulfillee = data.fulfillee;
     this.date = DateTime.fromISO(data.date);
     this.timePeriod = new DateTimeRange(data.timePeriod, {
       setZone: true
     });
-    this.startingAddress = data.startingAddress;
+    this.startingLocation = data.startingAddress;
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
     this.slots = {
       total: data.slots.total,
@@ -37,12 +38,12 @@ export class Forecast {
   /**
    * The ID of the fulfillee related to this forecast
    */
-  public fulfilleeId: string;
+  public ownerOutfitId: string;
 
   /**
    * The name of the fulfillee related to this forecast
    */
-  public readonly fulfilleeName: string;
+  public readonly fulfillee: { id: string; name: string };
 
   /**
    * The date of the forecast.
@@ -57,7 +58,7 @@ export class Forecast {
   /**
    * The address for this forecast's starting position
    */
-  public readonly startingAddress: string;
+  public readonly startingLocation: Location;
 
   /**
    * The vehicle type related to this forecast

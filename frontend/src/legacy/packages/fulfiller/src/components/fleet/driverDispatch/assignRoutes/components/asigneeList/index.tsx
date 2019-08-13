@@ -62,9 +62,11 @@ export default class extends React.Component<Props, State> {
       search: this.state.search ? this.state.search : ""
     });
 
-    this.setState({
-      drivers: response.drivers
-    });
+    if (response) {
+      this.setState({
+        drivers: response.drivers
+      });
+    }
   }
 
   private async fetchPreBookings(route: Route): Promise<void> {
@@ -119,7 +121,7 @@ export default class extends React.Component<Props, State> {
           />,
           d.formattedName,
           d.id,
-          d.phoneNumber.number,
+          d.phone.number,
           d.company ? `${d.company.name} (${d.company.id})` : "--"
         ];
       });
@@ -148,7 +150,7 @@ export default class extends React.Component<Props, State> {
           />,
           p.driver.formattedName,
           p.driver.id,
-          p.driver.phoneNumber.number,
+          p.driver.phone.number,
           p.driver.company
             ? `${p.driver.company.name} (${p.driver.company.id})`
             : "--"

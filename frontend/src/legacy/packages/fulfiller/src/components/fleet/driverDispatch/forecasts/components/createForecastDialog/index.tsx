@@ -25,7 +25,7 @@ interface Props {
     dateFrom: DateTime;
     dateTimeFrom: DateTime;
     dateTimeTo: DateTime;
-    startingAddress: Location;
+    startingLocation: Location;
     vehicleType: VehicleType;
     totalSlots: number;
   }): boolean;
@@ -40,7 +40,7 @@ interface State {
   dateFrom?: DateTime;
   timeFrom?: number;
   timeTo?: number;
-  startingAddress?: Location;
+  startingLocation?: Location;
   vehicleType?: VehicleType;
   totalSlots?: number;
 }
@@ -146,10 +146,11 @@ export default class extends React.Component<Props, State> {
         <AddressSearchComponent
           headline="Starting address"
           onChange={location => {
-            this.setState({ startingAddress: location });
+            this.setState({ startingLocation: location });
           }}
-          value={this.state.startingAddress}
-          error={this.state.validate && !this.state.startingAddress}
+          value={this.state.startingLocation}
+          error={this.state.validate && !this.state.startingLocation}
+          locationRequired={true}
         />
         <Select
           headline="Vehicle type"
@@ -189,7 +190,7 @@ export default class extends React.Component<Props, State> {
       this.state.timeFrom &&
       this.state.timeTo &&
       this.state.vehicleType &&
-      this.state.startingAddress &&
+      this.state.startingLocation &&
       this.state.totalSlots
     ) {
       var dateTimeFrom = this.state.dateFrom.plus({
@@ -206,7 +207,7 @@ export default class extends React.Component<Props, State> {
         dateTimeFrom: dateTimeFrom,
         dateTimeTo: dateTimeTo,
         vehicleType: this.state.vehicleType,
-        startingAddress: this.state.startingAddress,
+        startingLocation: this.state.startingLocation,
         totalSlots: this.state.totalSlots
       });
 
@@ -215,7 +216,7 @@ export default class extends React.Component<Props, State> {
           open: false,
           fulfillee: undefined,
           dateFrom: undefined,
-          startingAddress: undefined,
+          startingLocation: undefined,
           vehicleType: undefined,
           totalSlots: undefined
         });

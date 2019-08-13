@@ -15,14 +15,17 @@ import {
   Button,
   ButtonType
 } from "../../../../../../../shared/src/webKit/button/index";
-import { Route } from "shared/src/model/logistics/routes";
+import { Route } from "shared/src/components/routes/list/models/route";
 import { PreBooking } from "../../models/preBooking";
 import { FulfillerSubPage } from "../../../../navigation/page";
 import { Link } from "react-router-dom";
+import { DateTimeRange } from "../../../../../../../shared/src/model/general/dateTimeRange";
 
 interface Props {
   page: "dispatch" | "forecasts";
   onPreBookingAction?(preBooking: PreBooking);
+  onUnassignedRouteAction?(unassignedRoute: Route);
+  onAssignedRouteAction?(assignedRoute: Route);
   onForecastChange?(forecast: Forecast, totalSlots: number);
   onForecastEnter?(forecast: Forecast, totalSlots: number);
 }
@@ -89,6 +92,7 @@ export default class extends React.Component<Props> {
         { key: "time-period", content: "Time period" },
         { key: "starting-addresse", content: "Starting address" },
         { key: "driver", content: "Driver" },
+        { key: "phone", content: "Phone" },
         { key: "vehicle", content: "Vehicle" }
       ];
     } else if (
@@ -117,7 +121,7 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "reference", content: "Reference" },
+        { key: "slug", content: "Slug" },
         { key: "customer", content: "Customer" },
         { key: "time-period", content: "Time period" },
         { key: "starting-addresse", content: "Starting address" },
@@ -149,12 +153,13 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "reference", content: "Reference" },
+        { key: "slug", content: "Slug" },
         { key: "customer", content: "Customer" },
         { key: "time-period", content: "Time period" },
         { key: "starting-addresse", content: "Starting address" },
         { key: "end-addresse", content: "End address" },
-        { key: "driver", content: "Driver" }
+        { key: "driver", content: "Driver" },
+        { key: "phone", content: "Phone" }
       ];
     } else {
       return [];
@@ -210,6 +215,11 @@ export default class extends React.Component<Props> {
           type={ButtonType.Light}
           size={ButtonSize.Small}
           className="c-driverDispatch-table-actionButton"
+          onClick={() => {
+            if (this.props.onUnassignedRouteAction) {
+              this.props.onUnassignedRouteAction(route);
+            }
+          }}
         >
           Match
         </Button>
@@ -220,7 +230,7 @@ export default class extends React.Component<Props> {
   private getPreBookingActions(preBooking: PreBooking) {
     return (
       <>
-        {preBooking.vehicleType.name}
+        {preBooking.forecast.vehicleType.name}
         <Button
           type={ButtonType.Light}
           size={ButtonSize.Small}
@@ -233,17 +243,6 @@ export default class extends React.Component<Props> {
         >
           Actions
         </Button>
-      </>
-    );
-  }
-
-  private getRemoveDriver(route: Route) {
-    return (
-      <>
-        {route.driver
-          ? `${route.driver.name} (${route.driver.phone.number})`
-          : "--"}
-        <div className="c-driverDispatch-table-actionButton" />
       </>
     );
   }
@@ -267,20 +266,20 @@ export default class extends React.Component<Props> {
       return driverDispatchService.forecasts.map(f => {
         if (this.props.page === "dispatch") {
           return [
-            f.fulfilleeName,
+            f.fulfillee.name,
             Localization.formatDate(f.date),
             Localization.formatTimeRange(f.timePeriod),
-            f.startingAddress,
+            f.startingLocation.address.primary,
             f.vehicleType.name,
             `${f.slots.assigned}/${f.slots.total}`,
             this.getForecastAction(f)
           ];
         } else {
           return [
-            f.fulfilleeName,
+            f.fulfillee.name,
             Localization.formatDate(f.date),
             Localization.formatTimeRange(f.timePeriod),
-            f.startingAddress,
+            f.startingLocation.address.primary,
             f.vehicleType.name,
             this.getForecastAction(f)
           ];
@@ -309,16 +308,32 @@ export default class extends React.Component<Props> {
             }}
             key={p.id}
           />,
-          p.fulfilleeName,
-          Localization.formatDate(p.date),
-          Localization.formatTimeRange(p.timeFrame),
-          p.startingAddress,
-          `${p.driver.formattedName} (${p.driver.phoneNumber.number})`,
+          p.forecast.fulfillee.name,
+          Localization.formatDate(p.forecast.date),
+          Localization.formatTimeRange(p.forecast.timePeriod),
+          p.forecast.startingLocation.address.primary,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <Link
+            to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
+              ":id",
+              p.driver.id
+            )}
+            key={`preBooking-${p.slug}-driver-${p.driver.id}`}
+          >
+            {`${p.driver.formattedName} (${p.driver.id})`}
+          </Link>,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <a
+            key={`preBooking-${p.id}-driverPhone-${p.driver.id}`}
+            href={`tel:${p.driver.phone.number}`}
+          >
+            {p.driver.phone.number}
+          </a>,
           this.getPreBookingActions(p)
         ];
       });
     } else if (
-      driverDispatchService.state.slug === DispatchState.map.forecast.slug
+      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
     ) {
       return driverDispatchService.assignedRoutes.map((ar, i) => {
         return [
@@ -337,19 +352,37 @@ export default class extends React.Component<Props> {
             }}
             key={ar.id}
           />,
-          ar.reference,
-          Localization.formatTimeRange(ar.plannedTimeFrame),
-          ar.fulfiller.companyName,
-          ar.stops[0].location.address.toString(),
-          ar.stops[ar.stops.length - 1].location.address.toString(),
-          this.getRemoveDriver(ar)
+          ar.slug,
+          ar.fulfiller ? ar.fulfiller.companyName : "--",
+          Localization.formatTimeRange(
+            new DateTimeRange({ from: ar.startDateTime, to: ar.endDateTime })
+          ),
+          ar.startAddress.primary,
+          ar.endAddress.primary,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <Link
+            to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
+              ":id",
+              ar.driver!.id.toString()
+            )}
+            key={`route-${ar.slug}-driver-${ar.driver!.id}`}
+          >
+            {`${ar.driver!.name} (${ar.driver!.id})`}
+          </Link>,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <a
+            key={`route-${ar.slug}-driverPhone-${ar.driver!.id}`}
+            href={`tel:${ar.driver!.phone.number}`}
+          >
+            {ar.driver!.phone.number}
+          </a>
         ];
       });
     } else if (
       driverDispatchService.state.slug ===
       DispatchState.map.unassignedRoute.slug
     ) {
-      return driverDispatchService.assignedRoutes.map((ur, i) => {
+      return driverDispatchService.unassignedRoutes.map((ur, i) => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
@@ -367,15 +400,36 @@ export default class extends React.Component<Props> {
             key={ur.id}
           />,
           ur.slug,
-          Localization.formatTimeRange(ur.plannedTimeFrame),
-          ur.fulfiller.companyName,
-          ur.stops[0].location.address.toString(),
-          ur.stops[ur.stops.length - 1].location.address.toString(),
+          "", // ur.fulfiller.companyName,
+          Localization.formatTimeRange(
+            new DateTimeRange({ from: ur.startDateTime, to: ur.endDateTime })
+          ),
+          ur.startAddress.primary,
+          ur.endAddress.primary,
           this.getMatchRoute(ur)
         ];
       });
     } else {
       return [];
+    }
+  }
+
+  private get gridTemplateColumns() {
+    if (
+      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+    ) {
+      return "min-content auto auto auto auto auto auto auto";
+    } else if (
+      driverDispatchService.state.slug ===
+      DispatchState.map.unassignedRoute.slug
+    ) {
+      return "min-content auto auto auto auto auto auto";
+    } else if (
+      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
+    ) {
+      return "min-content auto auto auto auto auto auto auto";
+    } else {
+      return undefined;
     }
   }
 
@@ -392,12 +446,7 @@ export default class extends React.Component<Props> {
             }}
             highlightedRowIndexes={driverDispatchService.selectedItemIndexes}
             disabledRowIndexes={this.getDisabledRowIndexes()}
-            gridTemplateColumns={
-              driverDispatchService.state.slug ===
-              DispatchState.map.preBooking.slug
-                ? "min-content auto auto auto auto auto auto"
-                : undefined
-            }
+            gridTemplateColumns={this.gridTemplateColumns}
           />
         </PageContentComponent>
       </>

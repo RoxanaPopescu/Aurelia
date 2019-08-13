@@ -6,13 +6,13 @@ import {
   TableComponent,
   Button,
   InputCheckbox,
-  Input
+  Input,
+  Toast,
+  ToastType
 } from "shared/src/webKit";
 import { Forecast } from "../models/forecast";
 import { PageHeaderComponent } from "../../../../../../shared/src/components/pageHeader/index";
 import { FulfillerSubPage } from "../../../navigation/page";
-import InfoBox from "../components/infoBox";
-import { OverviewData } from "../models/overviewData";
 import Localization from "shared/src/localization";
 import { driverDispatchService } from "../driverDispatchService";
 import { Driver } from "shared/src/model/logistics/order/driver";
@@ -60,16 +60,19 @@ export default class CreatePreBookingComponent extends React.Component<
   private async fetchData(): Promise<void> {
     if (this.state.id) {
       var forecast = await driverDispatchService.fetchForecast(this.state.id);
-      var driverResult: { drivers: Driver[]; totalCount: number } = {
+      var driverResult:
+        | { drivers: Driver[]; totalCount: number }
+        | undefined = {
         drivers: [],
         totalCount: 0
       };
+
       if (forecast) {
         driverResult = await this.fetchDrivers(forecast);
       }
 
       this.setState({
-        drivers: driverResult.drivers,
+        drivers: driverResult ? driverResult.drivers : [],
         forecast: forecast
       });
     }
@@ -77,7 +80,7 @@ export default class CreatePreBookingComponent extends React.Component<
 
   private async fetchDrivers(
     forecast: Forecast
-  ): Promise<{ drivers: Driver[]; totalCount: number }> {
+  ): Promise<{ drivers: Driver[]; totalCount: number } | undefined> {
     return await driverDispatchService.fetchDrivers({
       date: forecast.date,
       search: this.state.search ? this.state.search : "",
@@ -108,26 +111,6 @@ export default class CreatePreBookingComponent extends React.Component<
     }
   }
 
-  private get infoBoxData() {
-    return [
-      new OverviewData(
-        "Total slots",
-        this.state.forecast ? this.state.forecast.slots.total : "--"
-      ),
-      new OverviewData(
-        "Unassigned slots",
-        this.state.forecast
-          ? `${this.state.forecast.slots.total -
-              this.state.forecast.slots.assigned}`
-          : "--"
-      ),
-      new OverviewData(
-        "Selected drivers",
-        `${this.state.checkedDrivers.length}`
-      )
-    ];
-  }
-
   private renderForecastInfo(forecast?: Forecast) {
     return (
       <div className="c-createPreBooking-forecastInfo">
@@ -136,8 +119,8 @@ export default class CreatePreBookingComponent extends React.Component<
             className="c-driverDispatch-preBookingDialog-icon"
             src={require("../assets/icons/company.svg")}
           />
-          <h4>{`${forecast ? forecast.fulfilleeName : "--"}, ${
-            forecast ? forecast.startingAddress : "--"
+          <h4>{`${forecast ? forecast.fulfillee.name : "--"}, ${
+            forecast ? forecast.startingLocation.address.primary : "--"
           }`}</h4>
         </div>
         <div className="c-createPreBooking-infoContainer">
@@ -246,7 +229,7 @@ export default class CreatePreBookingComponent extends React.Component<
         >
           {d.formattedName}
         </Link>,
-        d.phoneNumber.number,
+        d.phone.number,
         d.id,
         d.company ? `${d.company.name} (${d.company.id})` : "--"
       ];
@@ -283,6 +266,20 @@ export default class CreatePreBookingComponent extends React.Component<
   render() {
     return (
       <div className="c-createPreBooking-container">
+        {driverDispatchService.toast && (
+          <Toast
+            type={
+              driverDispatchService.toast.type === "error"
+                ? ToastType.Alert
+                : ToastType.Success
+            }
+            remove={() => {
+              driverDispatchService.toast = undefined;
+            }}
+          >
+            {driverDispatchService.toast.message}
+          </Toast>
+        )}
         <PageHeaderComponent
           path={[
             {
@@ -293,7 +290,6 @@ export default class CreatePreBookingComponent extends React.Component<
           ]}
         >
           {this.renderForecastInfo(this.state.forecast)}
-          <InfoBox data={this.infoBoxData} />
           <Input
             className="c-createPreBooking-search"
             headline="Search for specific drivers"

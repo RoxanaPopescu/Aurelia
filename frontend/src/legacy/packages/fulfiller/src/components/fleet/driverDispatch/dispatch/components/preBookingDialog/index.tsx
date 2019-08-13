@@ -2,16 +2,16 @@ import React from "react";
 import "./index.scss";
 import { observer } from "mobx-react";
 import { Dialog } from "shared/src/components/dialog/dialog";
-import { PreBooking } from "../../models/preBooking";
+import { PreBooking } from "../../../models/preBooking";
 import { DateTime } from "luxon";
 import { Button, TableComponent, InputCheckbox } from "shared/src/webKit";
 import {
   ButtonType,
   ButtonSize
-} from "../../../../../../../shared/src/webKit/button/index";
+} from "../../../../../../../../shared/src/webKit/button/index";
 import Localization from "shared/src/localization";
 import { Link } from "react-router-dom";
-import { FulfillerSubPage } from "../../../../navigation/page";
+import { FulfillerSubPage } from "../../../../../navigation/page";
 
 interface Props {
   data: { preBookings: PreBooking[]; state?: "actions" | "change" | "remove" };
@@ -67,14 +67,14 @@ export default class extends React.Component<Props, State> {
       ];
     } else {
       return [
-        // tslint:disable-next-line: jsx-wrap-multiline
-        <Button
-          key="change-driver"
-          type={ButtonType.Light}
-          size={ButtonSize.Medium}
-        >
-          Change driver
-        </Button>,
+        // // tslint:disable-next-line: jsx-wrap-multiline
+        // <Button
+        //   key="change-driver"
+        //   type={ButtonType.Light}
+        //   size={ButtonSize.Medium}
+        // >
+        //   Change driver
+        // </Button>,
         // tslint:disable-next-line: jsx-wrap-multiline
         <Button
           key="remove-driver"
@@ -113,30 +113,30 @@ export default class extends React.Component<Props, State> {
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("../../assets/icons/company.svg")}
+            src={require("../../../assets/icons/company.svg")}
           />
-          {preBooking.fulfilleeName}
+          {preBooking.forecast.fulfillee.name}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("../../assets/icons/calendar.svg")}
+            src={require("../../../assets/icons/calendar.svg")}
           />
-          {preBooking.date.toLocaleString(DateTime.DATE_SHORT)}
+          {preBooking.forecast.date.toLocaleString(DateTime.DATE_SHORT)}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("../../assets/icons/watch.svg")}
+            src={require("../../../assets/icons/watch.svg")}
           />
-          {`${Localization.formatTimeRange(preBooking.timeFrame)}`}
+          {`${Localization.formatTimeRange(preBooking.forecast.timePeriod)}`}
         </h4>
         <h4 className="font-larger">
           <img
             className="c-driverDispatch-preBookingDialog-icon"
-            src={require("../../assets/icons/van.svg")}
+            src={require("../../../assets/icons/van.svg")}
           />
-          {preBooking.vehicleType.name}
+          {preBooking.forecast.vehicleType.name}
         </h4>
       </div>
     );
@@ -147,16 +147,14 @@ export default class extends React.Component<Props, State> {
       <div className="c-driverDispatch-preBookingDialog-information">
         <div className="c-driverDispatch-preBookingDialog-infobox">
           <h4 className="font-heading">Starting address</h4>
-          <h4>{preBooking.startingAddress}</h4>
-        </div>
-        <div className="c-driverDispatch-preBookingDialog-infobox">
-          <h4 className="font-heading">Text</h4>
-          <h4>{preBooking.startingAddress}</h4>
+          <h4>{`${preBooking.forecast.startingLocation.address.primary}, ${
+            preBooking.forecast.startingLocation.address.secondary
+          }`}</h4>
         </div>
         <div className="c-driverDispatch-preBookingDialog-infobox">
           <h4 className="font-heading">Driver</h4>
           <h4>{preBooking.driver.formattedName}</h4>
-          <h4>{preBooking.driver.phoneNumber.number}</h4>
+          <h4>{preBooking.driver.phone.number}</h4>
         </div>
       </div>
     );
@@ -232,12 +230,12 @@ export default class extends React.Component<Props, State> {
           }}
           key={p.id}
         />,
-        p.fulfilleeName,
-        Localization.formatDate(p.date),
-        Localization.formatTimeRange(p.timeFrame),
-        p.startingAddress,
-        `${p.driver.formattedName} (${p.driver.phoneNumber.number})`,
-        p.vehicleType.name
+        p.forecast.fulfillee.name,
+        Localization.formatDate(p.forecast.date),
+        Localization.formatTimeRange(p.forecast.timePeriod),
+        p.forecast.startingLocation.address.primary,
+        `${p.driver.formattedName} (${p.driver.phone.number})`,
+        p.forecast.vehicleType.name
       ];
     });
   }

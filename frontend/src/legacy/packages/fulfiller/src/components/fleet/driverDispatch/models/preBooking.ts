@@ -1,7 +1,5 @@
-import { DateTime } from "luxon";
-import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 import { Driver } from "shared/src/model/logistics/order/driver";
-import { VehicleType } from "shared/src/model/session";
+import { Forecast } from "./forecast";
 
 /**
  * Represents a single pre-booking.
@@ -11,14 +9,7 @@ export class PreBooking {
   public constructor(data: any) {
     this.id = data.id;
     this.slug = data.slug;
-    this.fulfilleeId = data.fulfillee.id;
-    this.fulfilleeName = data.fulfillee.name;
-    this.date = DateTime.fromISO(data.date);
-    this.timeFrame = new DateTimeRange(data.timePeriod, {
-      setZone: true
-    });
-    this.startingAddress = data.startingAddress;
-    this.vehicleType = VehicleType.get(data.vehicleTypeId);
+    this.forecast = new Forecast(data.forecast);
     // TODO: REMOVE WHEN DATA IS OK
     if (!data.driver.name) {
       data.driver.name = { first: "--", last: "--" };
@@ -38,34 +29,9 @@ export class PreBooking {
   public slug: string;
 
   /**
-   * The ID of the fulfillee related to this pre-booking
+   * The forecast related to the pre-booking
    */
-  public fulfilleeId: string;
-
-  /**
-   * The name of the fulfillee related to this pre-booking
-   */
-  public readonly fulfilleeName: string;
-
-  /**
-   * The status of the collo.
-   */
-  public readonly date: DateTime;
-
-  /**
-   * The time period related to this pre-booking
-   */
-  public readonly timeFrame: DateTimeRange;
-
-  /**
-   * The address for this pre-booking's starting position
-   */
-  public readonly startingAddress: string;
-
-  /**
-   * The vehicle type related to this pre-booking
-   */
-  public readonly vehicleType: VehicleType;
+  public forecast: Forecast;
 
   /**
    * The driver associated to this pre-booking
