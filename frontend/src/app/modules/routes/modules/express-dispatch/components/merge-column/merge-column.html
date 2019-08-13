@@ -147,10 +147,10 @@
                                             <div>
                                                 &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
                                             </div>
-                                            <div if.bind="isEstimating">
+                                            <div if.bind="stop.stop.arrivalTime == null">
                                                 &nbsp;&nbsp;(--:--)
                                             </div>
-                                            <div if.bind="!isEstimating">
+                                            <div if.bind="stop.stop.arrivalTime != null">
                                                 &nbsp;&nbsp;(${stop.stop.arrivalTime | time})
                                             </div>
                                         </div>

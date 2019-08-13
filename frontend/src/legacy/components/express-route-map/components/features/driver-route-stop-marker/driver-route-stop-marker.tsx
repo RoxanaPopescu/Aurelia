@@ -42,7 +42,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                             expressRoutes-driverRouteStopMarker-info
                             ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
-                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--"}</div>
+                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--:--"}</div>
                         </div>
 
                         <div className={`

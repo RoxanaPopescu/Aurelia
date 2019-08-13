@@ -50,7 +50,6 @@ export class MergeColumnCustomElement
     protected updateOperation: Operation;
     protected canApply = false;
     protected isDragging = false;
-    protected isEstimating = false;
 
     public updateFromWorkspace(): void
     {
@@ -486,10 +485,21 @@ export class MergeColumnCustomElement
 
     private async updateEstimates(signal: AbortSignal): Promise<void>
     {
+        for (const stop of this.driverStops)
+        {
+            stop.stop.arrivalTime = undefined;
+        }
+
+        if (this.workspace.newDriverStops != null)
+        {
+            for (const stop of this.workspace.newDriverStops)
+            {
+                stop.arrivalTime = undefined;
+            }
+        }
+
         try
         {
-            this.isEstimating = true;
-
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].driver.id,
                 this.driverStops.map(s => s.stop.id),
@@ -507,11 +517,9 @@ export class MergeColumnCustomElement
             }
 
             this.canApply = this.expressStops.length === 0;
-            this.isEstimating = false;
         }
         catch (error)
         {
-            this.isEstimating = false;
             alert("Could not re-estimate route.");
         }
     }
