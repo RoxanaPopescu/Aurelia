@@ -1,7 +1,7 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
-import { Operation } from "shared/types";
+import { Operation, AbortError } from "shared/types";
 
 interface IExpressRouteStop
 {
@@ -520,7 +520,10 @@ export class MergeColumnCustomElement
         }
         catch (error)
         {
-            alert("Could not re-estimate route.");
+            if (!(error instanceof AbortError))
+            {
+                alert("Could not re-estimate route.");
+            }
         }
     }
 }
