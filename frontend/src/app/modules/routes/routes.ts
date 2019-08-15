@@ -62,19 +62,14 @@ export class RoutesModule
                 nav: true,
                 icon: "auto-dispatch"
             },
-
-            ...
-            ENVIRONMENT.name === "development" ?
-            [
-                {
-                    name: "express-dispatch",
-                    route: "express-dispatch",
-                    moduleId: PLATFORM.moduleName("./modules/express-dispatch/express-dispatch"),
-                    title: routeTitles.dispatch,
-                    nav: true,
-                    icon: "fleet"
-                }
-            ] : []
+            {
+                name: "express-dispatch",
+                route: "express-dispatch",
+                moduleId: PLATFORM.moduleName("./modules/express-dispatch/express-dispatch"),
+                title: routeTitles.dispatch,
+                nav: true,
+                icon: "fleet"
+            }
         ]);
     }
 }
