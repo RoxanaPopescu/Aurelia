@@ -20,7 +20,7 @@ export const MapStyles: any = [
               "visibility": "on"
           },
           {
-              "color": "#86a2af"
+              "color": "#ffffff"
           }
       ]
   },
@@ -50,7 +50,7 @@ export const MapStyles: any = [
       elementType: "labels.text.fill",
       stylers: [
           {
-              "color": "#14ff06"
+              "color": "#86a2af"
           }
       ]
   },
