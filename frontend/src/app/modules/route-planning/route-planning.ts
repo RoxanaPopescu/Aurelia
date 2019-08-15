@@ -25,9 +25,7 @@ export class RoutePlanningModule
             {
                 name: "list",
                 route: "list",
-                moduleId: ENVIRONMENT.name === "development"
-                    ? PLATFORM.moduleName("./modules/route-plans/_list/list")
-                    : PLATFORM.moduleName("./modules/route-plans/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/route-plans/_list/list"),
                 title: routeTitles.list
             },
             {
@@ -39,9 +37,7 @@ export class RoutePlanningModule
             {
                 name: "settings-list",
                 route: "settings/list",
-                moduleId: ENVIRONMENT.name === "development"
-                    ? PLATFORM.moduleName("./modules/route-settings/_list/list")
-                    : PLATFORM.moduleName("./modules/route-settings/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/route-settings/_list/list"),
                 title: routeTitles.settingsList
             },
             {
@@ -59,9 +55,7 @@ export class RoutePlanningModule
             {
                 name: "order-groups-list",
                 route: "order-groups/list",
-                moduleId: ENVIRONMENT.name === "development"
-                    ? PLATFORM.moduleName("./modules/order-groups/_list/list")
-                    : PLATFORM.moduleName("./modules/order-groups/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
                 title: routeTitles.orderGroupList
             },
             {
@@ -73,9 +67,7 @@ export class RoutePlanningModule
             {
                 name: "simulations-list",
                 route: "simulations/list",
-                moduleId: ENVIRONMENT.name === "development"
-                    ? PLATFORM.moduleName("./modules/route-simulations/_list/list")
-                    : PLATFORM.moduleName("./modules/route-simulations/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/route-simulations/_list/list"),
                 title: routeTitles.simulationsList
             },
             {

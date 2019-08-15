@@ -36,9 +36,7 @@ export class AgreementsModule
             {
                 name: "list",
                 route: "list",
-                moduleId: ENVIRONMENT.name === "development"
-                    ? PLATFORM.moduleName("./modules/_list/list")
-                    : PLATFORM.moduleName("./modules/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/_list/list"),
                 title: routeTitles.list
             }
         ]);
