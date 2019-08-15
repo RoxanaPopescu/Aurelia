@@ -51,7 +51,7 @@ export class FleetModule
             [
                 {
                     name: "dispatch",
-                    route: "dispatch",
+                    route: "dispatch/*state",
                     moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
                     title: routeTitles.dispatch,
                     nav: true,

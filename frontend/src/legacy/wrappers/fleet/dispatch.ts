@@ -1,4 +1,4 @@
-import { autoinject, noView } from "aurelia-framework";
+import { autoinject, noView, bindable } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
@@ -18,11 +18,17 @@ export class DispatchCustomElement extends Wrapper
         super(element);
     }
 
+    @bindable
+    public state: string;
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
     public attached(): void
     {
-        super.attached(Component);
+        super.attached(Component,
+        {
+            state: this.state
+        });
     }
 }

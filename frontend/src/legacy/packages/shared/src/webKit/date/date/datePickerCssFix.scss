@@ -26,11 +26,13 @@
     line-height: 1.7em;
     border: .45em solid transparent;
 
-    &--next {
+    &--next, &--next:hover:not([appearance]):hover:not([accent]) {
+      border-color: transparent;
       border-left-color: #c3c3c3;
     }
 
-    &--previous {
+    &--previous, &--previous:hover:not([appearance]):hover:not([accent]) {
+      border-color: transparent;
       border-right-color: #c3c3c3;
     }
   }
