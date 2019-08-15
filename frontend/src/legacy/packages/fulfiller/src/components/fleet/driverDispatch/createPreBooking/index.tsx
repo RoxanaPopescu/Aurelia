@@ -11,6 +11,7 @@ import {
   ToastType
 } from "shared/src/webKit";
 import { Forecast } from "../models/forecast";
+import InfoBox from "../components/infoBox";
 import { PageHeaderComponent } from "../../../../../../shared/src/components/pageHeader/index";
 import { FulfillerSubPage } from "../../../navigation/page";
 import Localization from "shared/src/localization";
@@ -22,6 +23,7 @@ import {
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
 import { Link } from "react-router-dom";
+import { OverviewData } from "../models/overviewData";
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -84,7 +86,8 @@ export default class CreatePreBookingComponent extends React.Component<
     return await driverDispatchService.fetchDrivers({
       date: forecast.date,
       search: this.state.search ? this.state.search : "",
-      driverIds: []
+      driverIds: [],
+      period: forecast.timePeriod
     });
   }
 
@@ -263,6 +266,26 @@ export default class CreatePreBookingComponent extends React.Component<
     return array;
   }
 
+  private get infoBoxData() {
+    return [
+      new OverviewData(
+        "Total slots",
+        this.state.forecast ? this.state.forecast.slots.total : "--"
+      ),
+      new OverviewData(
+        "Unassigned slots",
+        this.state.forecast
+          ? `${this.state.forecast.slots.total -
+              this.state.forecast.slots.assigned}`
+          : "--"
+      ),
+      new OverviewData(
+        "Selected drivers",
+        `${this.state.checkedDrivers.length}`
+      )
+    ];
+  }
+
   render() {
     return (
       <div className="c-createPreBooking-container">
@@ -289,7 +312,14 @@ export default class CreatePreBookingComponent extends React.Component<
             { title: "Assign drivers to forecast" }
           ]}
         >
+          <div
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+            className="c-createPreBooking-closeButton"
+          />
           {this.renderForecastInfo(this.state.forecast)}
+          <InfoBox data={this.infoBoxData} />
           <Input
             className="c-createPreBooking-search"
             headline="Search for specific drivers"

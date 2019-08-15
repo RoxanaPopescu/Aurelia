@@ -20,6 +20,7 @@ import { PreBooking } from "../../models/preBooking";
 import { FulfillerSubPage } from "../../../../navigation/page";
 import { Link } from "react-router-dom";
 import { DateTimeRange } from "../../../../../../../shared/src/model/general/dateTimeRange";
+import { SubPage } from "../../../../../../../shared/src/utillity/page";
 
 interface Props {
   page: "dispatch" | "forecasts";
@@ -121,8 +122,9 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "slug", content: "Slug" },
+        { key: "reference", content: "Reference" },
         { key: "customer", content: "Customer" },
+        { key: "date-start", content: "Date start" },
         { key: "time-period", content: "Time period" },
         { key: "starting-addresse", content: "Starting address" },
         { key: "end-addresse", content: "End address" },
@@ -153,8 +155,9 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "slug", content: "Slug" },
+        { key: "reference", content: "Reference" },
         { key: "customer", content: "Customer" },
+        { key: "date-start", content: "Date start" },
         { key: "time-period", content: "Time period" },
         { key: "starting-addresse", content: "Starting address" },
         { key: "end-addresse", content: "End address" },
@@ -342,18 +345,28 @@ export default class extends React.Component<Props> {
             checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
               var checkedRows = driverDispatchService.selectedItemIndexes;
-              if (checked) {
+              if (
+                checked &&
+                driverDispatchService.selectedItemIndexes.indexOf(i) === -1
+              ) {
                 checkedRows.push(i);
-                driverDispatchService.selectedItemIndexes = checkedRows;
               } else {
                 checkedRows.splice(checkedRows.indexOf(i), 1);
-                driverDispatchService.selectedItemIndexes = checkedRows;
               }
+
+              driverDispatchService.selectedItemIndexes = checkedRows;
             }}
             key={ar.id}
           />,
-          ar.slug,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <Link
+            to={SubPage.path(SubPage.RouteDetails).replace(":id", ar.slug)}
+            key={`route-${ar.id}-slug-${ar.slug}`}
+          >
+            {ar.slug}
+          </Link>,
           ar.fulfiller ? ar.fulfiller.companyName : "--",
+          Localization.formatDate(ar.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ar.startDateTime, to: ar.endDateTime })
           ),
@@ -365,7 +378,7 @@ export default class extends React.Component<Props> {
               ":id",
               ar.driver!.id.toString()
             )}
-            key={`route-${ar.slug}-driver-${ar.driver!.id}`}
+            key={`route-${ar.reference}-driver-${ar.driver!.id}`}
           >
             {`${ar.driver!.name} (${ar.driver!.id})`}
           </Link>,
@@ -399,8 +412,15 @@ export default class extends React.Component<Props> {
             }}
             key={ur.id}
           />,
-          ur.slug,
+          // tslint:disable-next-line: jsx-wrap-multiline
+          <Link
+            to={SubPage.path(SubPage.RouteDetails).replace(":id", ur.slug)}
+            key={`route-${ur.id}-slug-${ur.slug}`}
+          >
+            {ur.slug}
+          </Link>,
           "", // ur.fulfiller.companyName,
+          Localization.formatDate(ur.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ur.startDateTime, to: ur.endDateTime })
           ),
@@ -423,11 +443,11 @@ export default class extends React.Component<Props> {
       driverDispatchService.state.slug ===
       DispatchState.map.unassignedRoute.slug
     ) {
-      return "min-content auto auto auto auto auto auto";
+      return "min-content auto auto auto auto auto auto auto";
     } else if (
       driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
     ) {
-      return "min-content auto auto auto auto auto auto auto";
+      return "min-content auto auto auto auto auto auto auto auto";
     } else {
       return undefined;
     }

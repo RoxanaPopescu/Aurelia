@@ -8,9 +8,10 @@ import { Driver } from "shared/src/model/logistics/driver";
 export class Route {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
-    this.id = data.publicId;
+    this.id = data.id;
     this.slug = data.slug;
-    this.reference = data.routeReference;
+    this.complexity = data.complexity;
+    this.reference = data.reference;
     this.status = new RouteStatus(data.status);
     this.fulfiller =
       data.fulfiller != null ? new Fulfiller(data.fulfiller) : undefined;
@@ -23,7 +24,7 @@ export class Route {
     this.startAddress = new Address({ primary: data.startAddress });
     this.endAddress = new Address({ primary: data.endAddress });
     this.stopCount = data.stopCount;
-    this.vehicleType = data.vehicleTypeId;
+    this.vehicleType = VehicleType.get(data.vehicleTypeId);
     if (data.driver) {
       this.driver = new Driver(data.driver);
     }
@@ -38,6 +39,11 @@ export class Route {
    * The unique ID of the route.
    */
   public readonly id: string;
+
+  /**
+   * The complexity of the route.
+   */
+  public readonly complexity: number;
 
   /**
    * The non-unique reference for the route,

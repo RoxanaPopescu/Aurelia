@@ -454,7 +454,7 @@ export class DriverDispatchService {
    * Fetches unassigned routes
    * @returns A promise that will be resolved with an array of routes.
    */
-  public async fetchUnassignedRoutes(ids?: string[]): Promise<Route[]> {
+  public async fetchUnassignedRoutes(): Promise<Route[]> {
     const response = await fetch(
       BaseService.url("dispatch/route/unassigned/list"),
       BaseService.defaultConfig({
@@ -464,7 +464,41 @@ export class DriverDispatchService {
         endTime: this.endTime,
         fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id),
         page: 1, // Temporary
-        pageSize: 200 // Temporary
+        pageSize: 2000 // Temporary
+      })
+    );
+
+    if (response.status === 404) {
+      const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
+      error.name = "not-found-error";
+      throw error;
+    }
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    var responseData: Route[] = [];
+    try {
+      let responseJson = await response.json();
+      responseData = responseJson.routes.map(r => new Route(r));
+    } catch {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    return responseData;
+  }
+
+  /**
+   * Fetches unassigned routes by gives ids
+   * @returns A promise that will be resolved with an array of routes.
+   */
+  public async fetchUnassignedRoutesByIds(ids?: string[]): Promise<Route[]> {
+    const response = await fetch(
+      BaseService.url("dispatch/route/unassigned/listbyids"),
+      BaseService.defaultConfig({
+        routeIds: ids,
+        page: 1, // Temporary
+        pageSize: 2000 // Temporary
       })
     );
 
@@ -492,7 +526,7 @@ export class DriverDispatchService {
    * Fetches assigned routes with specific IDs.
    * @returns A promise that will be resolved with an array of routes.
    */
-  public async fetchAssignedRoutes(ids?: string[]): Promise<Route[]> {
+  public async fetchAssignedRoutes(): Promise<Route[]> {
     const response = await fetch(
       BaseService.url("dispatch/route/assigned/list"),
       BaseService.defaultConfig({
@@ -502,7 +536,7 @@ export class DriverDispatchService {
         endTime: this.endTime,
         fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id),
         page: 1, // Temporary
-        pageSize: 200 // Temporary
+        pageSize: 2000 // Temporary
       })
     );
 

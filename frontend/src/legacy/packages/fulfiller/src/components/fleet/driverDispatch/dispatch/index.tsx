@@ -12,7 +12,7 @@ import { PreBooking } from "../models/preBooking";
 import PreBookingDialog from "./components/preBookingDialog";
 import Dropdown from "./components/dropdown";
 import { Button, ButtonType, Toast, ToastType } from "shared/src/webKit";
-import { Link } from "react-router-dom";
+import { Route } from "shared/src/components/routes/list/models/route";
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -113,9 +113,13 @@ export default class DispatchComponent extends React.Component<Props, State> {
       DispatchState.map.unassignedRoute.slug
     ) {
       return (
-        <Link to="">
-          <Button type={ButtonType.Light}>Match route</Button>
-        </Link>
+        <Button
+          disabled={driverDispatchService.selectedItemIndexes.length === 0}
+          onClick={() => this.assignUnassignedRoutes()}
+          type={ButtonType.Light}
+        >
+          Match routes
+        </Button>
       );
     } else if (
       driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
@@ -137,6 +141,21 @@ export default class DispatchComponent extends React.Component<Props, State> {
     this.setState({
       preBookingDialog: { preBookings: array, state: "remove" }
     });
+  }
+
+  private assignUnassignedRoutes() {
+    let array: Route[] = [];
+    driverDispatchService.unassignedRoutes.forEach((ur, i) => {
+      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+        array.push(ur);
+      }
+    });
+
+    this.props.history.push(
+      FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
+        .replace(":ids", array.map(ur => ur.id).join(","))
+        .replace(":origin", "routes")
+    );
   }
 
   private assignPreBookingDrivers() {
@@ -218,7 +237,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
             onUnassignedRouteAction={route => {
               this.props.history.push(
                 FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
-                  .replace(":ids", route.slug)
+                  .replace(":ids", route.id)
                   .replace(":origin", "routes")
               );
             }}

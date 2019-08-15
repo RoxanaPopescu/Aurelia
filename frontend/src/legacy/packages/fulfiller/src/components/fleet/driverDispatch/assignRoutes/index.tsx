@@ -9,7 +9,7 @@ import {
   ButtonType,
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
-import { Route } from "shared/src/model/logistics/routes";
+import { Route } from "shared/src/components/routes/list/models/route";
 import { PreBooking } from "../models/preBooking";
 import RoutesList from "./components/routesList";
 import AsigneeList from "./components/asigneeList";
@@ -112,7 +112,14 @@ export default class AssignRoutesComponent extends React.Component<
             },
             { title: "Assign drivers to routes" }
           ]}
-        />
+        >
+          <div
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+            className="c-assignRoutes-closeButton"
+          />
+        </PageHeaderComponent>
         <div className="c-assignRoutes-topContainer">
           <div className="c-assignRoutes-topLists">
             {this.state.origin === "routes" && (
@@ -152,7 +159,8 @@ export default class AssignRoutesComponent extends React.Component<
               type={ButtonType.Action}
               size={ButtonSize.Medium}
               disabled={
-                !this.state.selectedAssignee && !this.state.selectedRoute
+                this.state.selectedAssignee === undefined ||
+                this.state.selectedRoute === undefined
               }
               onClick={() => {
                 if (this.state.selectedAssignee && this.state.selectedRoute) {

@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.scss";
-import { Route } from "shared/src/model/logistics/routes";
+import { Route } from "shared/src/components/routes/list/models/route";
 import { PreBooking } from "../../../models/preBooking";
 import { observer } from "mobx-react";
 import { driverDispatchService } from "../../../driverDispatchService";
@@ -8,6 +8,7 @@ import { Driver } from "shared/src/model/logistics/order/driver";
 import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import InfoBox from "../../../components/infoBox";
 import Localization from "shared/src/localization";
+import { DateTimeRange } from "../../../../../../../../shared/src/model/general/dateTimeRange";
 
 interface Props {
   preBookingIds?: string[];
@@ -41,24 +42,52 @@ export default class extends React.Component<Props, State> {
   }
 
   private async fetchData(): Promise<void> {
+    var drivers: Driver[] = [];
+    var preBookings: PreBooking[] = [];
+
     if (this.props.preBookingIds) {
-      var preBookings = await driverDispatchService.fetchPreBookingsFromIds(
+      preBookings = await driverDispatchService.fetchPreBookingsFromIds(
         this.props.preBookingIds
       );
+    } else {
+      if (this.props.selectedRoute) {
+        if (this.state.state === "drivers") {
+          var driverResponse = await driverDispatchService.fetchDrivers({
+            date: this.props.selectedRoute.startDateTime,
+            search: this.state.search ? this.state.search : "",
+            period: new DateTimeRange({
+              from: this.props.selectedRoute.startDateTime,
+              to: this.props.selectedRoute.endDateTime
+            })
+          });
 
-      this.setState({
-        preBookings: preBookings
-      });
+          if (driverResponse) {
+            drivers = driverResponse.drivers;
+          }
+        } else {
+          var preBookingResponse = await driverDispatchService.fetchPreBookings(
+            this.props.selectedRoute.startDateTime,
+            this.props.selectedRoute.endDateTime,
+            this.props.selectedRoute.startDateTime,
+            this.props.selectedRoute.endDateTime
+          );
+
+          if (preBookingResponse.length > 0) {
+            preBookings = preBookingResponse;
+          }
+        }
+      }
     }
 
-    if (this.props.selectedRoute) {
-      //
-    }
+    this.setState({
+      drivers: drivers,
+      preBookings: preBookings
+    });
   }
 
   private async fetchDrivers(route: Route): Promise<void> {
     var response = await driverDispatchService.fetchDrivers({
-      date: route.plannedTimeFrame!.from!,
+      date: route.startDateTime,
       search: this.state.search ? this.state.search : ""
     });
 
@@ -71,10 +100,10 @@ export default class extends React.Component<Props, State> {
 
   private async fetchPreBookings(route: Route): Promise<void> {
     var response = await driverDispatchService.fetchPreBookings(
-      route.plannedTimeFrame!.from!,
-      route.plannedTimeFrame!.to!,
-      route.plannedTimeFrame!.from!,
-      route.plannedTimeFrame!.to!
+      route.startDateTime,
+      route.endDateTime,
+      route.startDateTime,
+      route.endDateTime
     );
 
     this.setState({
@@ -192,55 +221,52 @@ export default class extends React.Component<Props, State> {
 
   render() {
     return (
-      <>
-        <div className="c-assignRoutes-assignees">
-          <InfoBox
-            data={[
-              { name: "Pre-bookings", value: "10" },
-              { name: "Not pre-booked drivers", value: "10" }
-            ]}
-          />
-          <div className="c-assignRoutes-assigneeState">
-            <Input
-              className="c-createPreBooking-search"
-              headline="Search for specific drivers"
-              placeholder={Localization.sharedValue("Search_TypeToSearch")}
-              onChange={(value, event) => {
-                if (event) {
-                  event.persist();
-                }
+      <div className="c-assignRoutes-assignees">
+        <InfoBox
+          data={[
+            { name: "Pre-bookings", value: this.state.preBookings.length }
+          ]}
+        />
+        <div className="c-assignRoutes-assigneeState">
+          <Input
+            className="c-createPreBooking-search"
+            headline="Search for specific drivers"
+            placeholder={Localization.sharedValue("Search_TypeToSearch")}
+            onChange={(value, event) => {
+              if (event) {
+                event.persist();
+              }
 
-                this.onSearchChange(value);
-              }}
-              value={this.state.search}
-            />
-            {!this.props.preBookingIds && (
-              <InputRadioGroup
-                radioButtons={[
-                  { value: "pre-bookings", headline: "Pre-bookings" },
-                  { value: "drivers", headline: "Drivers" }
-                ]}
-                onChange={value => {
-                  if (value !== this.state.state) {
-                    this.setState({
-                      state: value
-                    });
-                  }
-                }}
-                checkedValue={this.state.state}
-              />
-            )}
-          </div>
-          <TableComponent
-            newVersion={true}
-            data={{
-              headers: this.getHeaders(),
-              rows: this.getRows()
+              this.onSearchChange(value);
             }}
-            gridTemplateColumns="min-content auto auto auto auto"
+            value={this.state.search}
           />
+          {!this.props.preBookingIds && (
+            <InputRadioGroup
+              radioButtons={[
+                { value: "pre-bookings", headline: "Pre-bookings" },
+                { value: "drivers", headline: "Drivers" }
+              ]}
+              onChange={value => {
+                if (value !== this.state.state) {
+                  this.setState({
+                    state: value
+                  });
+                }
+              }}
+              checkedValue={this.state.state}
+            />
+          )}
         </div>
-      </>
+        <TableComponent
+          newVersion={true}
+          data={{
+            headers: this.getHeaders(),
+            rows: this.getRows()
+          }}
+          gridTemplateColumns="min-content auto auto auto auto"
+        />
+      </div>
     );
   }
 }

@@ -3,10 +3,10 @@ import "./index.scss";
 import { observer } from "mobx-react";
 import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import Localization from "shared/src/localization";
-import { Route } from "shared/src/model/logistics/routes/details";
+import { Route } from "shared/src/components/routes/list/models/route";
 import InfoBox from "../../../components/infoBox";
-import BaseService from "shared/src/services/base";
 import { PreBooking } from "../../../models/preBooking";
+import { driverDispatchService } from "../../../driverDispatchService";
 
 interface Props {
   selectedPreBooking?: PreBooking;
@@ -39,24 +39,14 @@ export default class extends React.Component<Props, State> {
 
   private async fetchData(): Promise<void> {
     if (this.props.ids) {
-      const response = await fetch(
-        BaseService.url("routes/details", { routeSlug: "R7909833124" }),
-        BaseService.defaultConfig()
-      );
-
-      if (response.status === 404) {
-        const error = new Error(
-          Localization.sharedValue("Error_RouteNotFound")
+      try {
+        var routes = await driverDispatchService.fetchUnassignedRoutesByIds(
+          this.props.ids
         );
-        error.name = "not-found-error";
-        throw error;
+        this.setState({ routes: routes });
+      } catch {
+        // Hej
       }
-      if (!response.ok) {
-        throw new Error(Localization.sharedValue("Error_General"));
-      }
-
-      const data = await response.json();
-      this.setState({ routes: [new Route(data)] });
     }
 
     if (this.props.selectedPreBooking) {
@@ -93,6 +83,45 @@ export default class extends React.Component<Props, State> {
     ];
   }
 
+  private renderComplexity(route: Route) {
+    var bars: JSX.Element[] = [];
+    console.log(route.complexity);
+
+    for (var i = 1; i <= 4; i++) {
+      var width = 100;
+      if (i * 25 > route.complexity) {
+        if (i * 25 - route.complexity > 25) {
+          width = 0;
+        } else {
+          width = route.complexity % (i * 25);
+        }
+      }
+
+      bars.push(
+        <div
+          key={`route-${route.id}-bar-${i}`}
+          className="c-assignRoutes-complexity-bar"
+        >
+          <div
+            style={{ width: `${width}%` }}
+            className="c-assignRoutes-complexity-filler"
+          />
+        </div>
+      );
+    }
+
+    if (route.complexity !== undefined) {
+      return (
+        <>
+          <div className="c-assignRoutes-complexity">{bars}</div>
+          {route.complexity}
+        </>
+      );
+    } else {
+      return "--";
+    }
+  }
+
   private getRows() {
     return this.state.routes.map((r, i) => {
       return [
@@ -118,20 +147,18 @@ export default class extends React.Component<Props, State> {
         />,
         // tslint:disable-next-line: jsx-wrap-multiline
         <div
-          key={`${r.fulfiller.companyName}-fulfiller`}
+          key={`${r.fulfiller ? r.fulfiller.companyName : ""}-fulfiller`}
           className="c-assignRoutes-ellipsis"
         >
-          {r.fulfiller.companyName}
+          {r.fulfiller ? r.fulfiller.companyName : "--"}
         </div>,
-        r.plannedTimeFrame &&
-          r.plannedTimeFrame.from &&
-          Localization.formatDateTime(r.plannedTimeFrame.from),
+        Localization.formatDateTime(r.startDateTime),
         // tslint:disable-next-line: jsx-wrap-multiline
         <div key={`${r.id}-address`} className="c-assignRoutes-ellipsis">
-          {r.stops[0].location.address.toString()}
+          {r.startAddress.primary}
         </div>,
         "--",
-        r.complexity ? r.complexity.toString() : "--"
+        this.renderComplexity(r)
       ];
     });
   }
@@ -139,10 +166,6 @@ export default class extends React.Component<Props, State> {
   private getSelectedValue() {
     if (this.state.selectedRoute) {
       return this.state.selectedRoute.id;
-    } else {
-      if (this.state.routes.length > 0) {
-        return this.state.routes[0].id;
-      }
     }
 
     return undefined;
@@ -155,8 +178,8 @@ export default class extends React.Component<Props, State> {
       var routes = this.state.routes;
 
       queries.forEach(q => {
-        queriedRoutes = routes.filter(
-          r => r.fulfiller.companyName!.indexOf(q) > 0
+        queriedRoutes = routes.filter(r =>
+          r.fulfiller ? r.fulfiller.companyName!.indexOf(q) > 0 : false
         );
         queriedRoutes.concat(routes.filter(r => r.id.indexOf(q) > 0));
       });
@@ -175,9 +198,11 @@ export default class extends React.Component<Props, State> {
       <div className="c-assignRoutes-accordion">
         <div className="c-assignRoutes-accordionInfo">
           <div className="font-heading">Slutadresse</div>
-          <div>
-            {route.stops[route.stops.length - 1].location.address.primary}
-          </div>
+          <div>{route.endAddress.primary}</div>
+        </div>
+        <div className="c-assignRoutes-accordionInfo">
+          <div className="font-heading">Sluttid</div>
+          <div>{Localization.formatDateTime(route.endDateTime)}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
           <div className="font-heading">Vehicle</div>
@@ -191,7 +216,11 @@ export default class extends React.Component<Props, State> {
     return (
       <>
         <div className="c-assignRoutes-routes">
-          <InfoBox data={[{ name: "Unassigned routes", value: "10" }]} />
+          <InfoBox
+            data={[
+              { name: "Unassigned routes", value: this.state.routes.length }
+            ]}
+          />
           <Input
             className="c-createPreBooking-search"
             headline="Search for specific routes"
@@ -217,7 +246,7 @@ export default class extends React.Component<Props, State> {
               }
               return <></>;
             }}
-            gridTemplateColumns="min-content 40rem auto 60rem auto auto"
+            gridTemplateColumns="min-content auto auto 60rem auto auto"
           />
         </div>
       </>
