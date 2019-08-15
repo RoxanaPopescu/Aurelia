@@ -68,7 +68,7 @@ export class RoutesModule
                 moduleId: PLATFORM.moduleName("./modules/express-dispatch/express-dispatch"),
                 title: routeTitles.dispatch,
                 nav: true,
-                icon: "fleet"
+                icon: "express-dispatch"
             }
         ]);
     }

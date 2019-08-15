@@ -31,7 +31,7 @@ export default
         /**
          * The slug identifying the default theme.
          */
-        defaultThemeSlug: "lingu",
+        defaultThemeSlug: "mover",
 
         /**
          * The code identifying the default currency.
