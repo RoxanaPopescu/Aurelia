@@ -82,7 +82,7 @@ $largeButtonHeight: 52px;
       color: var(--colorNeutralRegular);
       pointer-events: none;
       background-color: var(--colorNeutralExtraLight);
-      opacity: --opacity-disabled;
+      opacity: var(--opacity-disabled);
     }
 
     &.loading {
