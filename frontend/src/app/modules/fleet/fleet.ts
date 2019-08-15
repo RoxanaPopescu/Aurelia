@@ -50,6 +50,11 @@ export class FleetModule
             ENVIRONMENT.name === "development" ?
             [
                 {
+                    name: "dispatch-default",
+                    route: "dispatch",
+                    redirect: "dispatch/forecasts"
+                },
+                {
                     name: "dispatch",
                     route: "dispatch/*state",
                     moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
