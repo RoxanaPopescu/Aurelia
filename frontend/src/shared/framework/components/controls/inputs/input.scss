@@ -163,6 +163,16 @@
                 align-items: center;
             }
 
+            > div[slot="before"],
+            > div[slot="after"]
+            {
+                > icon
+                {
+                    // Apply the input padding as margin around icons.
+                    margin: var(--input-padding);
+                }
+            }
+
             > span[slot="before"]
             {
                 // Apply the input padding, except at the end closest to the input.

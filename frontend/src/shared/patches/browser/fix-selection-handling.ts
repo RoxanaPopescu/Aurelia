@@ -12,7 +12,7 @@
     document.addEventListener("mousedown", event =>
     {
         // Prevent double and triple clicks, as they cause unwanted selection.
-        if (event.composedPath().some(t => (t as HTMLElement).classList && (t as HTMLElement).classList.contains("--suppress-multi-click")))
+        if (event.composedPath().some((t: HTMLElement | SVGElement) => t.classList && t.classList.contains("--suppress-multi-click")))
         {
             if (event.detail > 1)
             {

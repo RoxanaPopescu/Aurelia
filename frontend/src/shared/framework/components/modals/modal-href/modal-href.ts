@@ -21,11 +21,11 @@ export class ModalHrefCustomAttribute
      */
     public constructor(element: Element, modalService: ModalService)
     {
-        this._element = element as HTMLElement;
+        this._element = element as HTMLElement | SVGElement;
         this._modalService = modalService;
     }
 
-    private readonly _element: HTMLElement;
+    private readonly _element: HTMLElement | SVGElement;
     private readonly _modalService: ModalService;
     private _modal: Modal | undefined;
 
@@ -55,7 +55,7 @@ export class ModalHrefCustomAttribute
      */
     public attached(): void
     {
-        this._element.addEventListener("click", event =>
+        this._element.addEventListener("click", (event: MouseEvent) =>
         {
             if (!event.defaultPrevented)
             {

@@ -13,10 +13,10 @@ export class AutofocusCustomAttribute
      */
     public constructor(element: Element)
     {
-        this._element = element as HTMLElement;
+        this._element = element as HTMLElement | SVGElement;
     }
 
-    private readonly _element: HTMLElement;
+    private readonly _element: HTMLElement | SVGElement;
 
     /**
      * True or empty string to enable autofocus, otherwise false.

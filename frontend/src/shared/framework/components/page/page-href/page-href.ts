@@ -20,11 +20,11 @@ export class PageHrefCustomAttribute
      */
     public constructor(element: Element, router: AppRouter)
     {
-        this._element = element as HTMLElement;
+        this._element = element as HTMLElement | SVGElement;
         this._router = router;
     }
 
-    private readonly _element: HTMLElement;
+    private readonly _element: HTMLElement | SVGElement;
     private readonly _router: AppRouter;
 
     /**
@@ -39,7 +39,7 @@ export class PageHrefCustomAttribute
      */
     public attached(): void
     {
-        this._element.addEventListener("click", event =>
+        this._element.addEventListener("click", (event: MouseEvent) =>
         {
             if (!event.defaultPrevented)
             {
