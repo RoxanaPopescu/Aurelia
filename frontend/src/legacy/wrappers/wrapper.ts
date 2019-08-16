@@ -8,6 +8,9 @@ import { Type } from "shared/types";
 const history =
 {
     push: async (path: string, state?: any) => Container.instance.get(Router).navigate(path),
+    go: (delta: number) => window.history.go(delta),
+    goBack: () => window.history.back(),
+    goForward: () => window.history.forward(),
     location: window.location,
     listen: (...args) => () => undefined,
     replace: (...args) => { throw new Error("router.history.replace is not implemented") },
