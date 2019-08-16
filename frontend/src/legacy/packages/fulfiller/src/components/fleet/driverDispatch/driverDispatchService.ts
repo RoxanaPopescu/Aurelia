@@ -572,7 +572,7 @@ export class DriverDispatchService {
       position?: Position;
       vehicleTypeId?: string;
       period?: DateTimeRange;
-      driverIds?: string[];
+      driverIds: string[];
     },
     sorting?: {
       field: DriversListSortingMap;

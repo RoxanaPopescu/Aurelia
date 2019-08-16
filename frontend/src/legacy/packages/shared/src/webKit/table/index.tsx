@@ -44,7 +44,7 @@ export interface TableState {
   sorting?: { key: any; direction: SortingDirection };
   hoveredRowIndex?: number;
   hoveredColumnRow?: number;
-  accordionContent?: JSX.Element;
+  accordionContent?: { content?: JSX.Element, rowIndex: number };
 }
 
 export class TableComponent extends React.Component<TableProps, TableState> {
@@ -272,7 +272,7 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                           } else {
                             this.props.accordionRows!(undefined);
                           }
-                          this.setState({ accordionContent: content });
+                          this.setState({ accordionContent: { content: content, rowIndex: index } });
                         }}
                         className="c-gridTable-accordionToggle"
                       >
@@ -298,14 +298,14 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           ) {
             rowClassName += " disabledRow";
           }
-          if (this.state.accordionContent) {
+          if (this.state.accordionContent && this.state.accordionContent.rowIndex === index) {
             rowClassName += " accordionOpen";
           }
 
           rowsArray.push(
             <div key={row.toString() + index} className={rowClassName}>
               {rowArray}
-              {this.renderAccordionContent()}
+              {this.state.accordionContent && this.state.accordionContent.rowIndex === index && this.renderAccordionContent()}
             </div>
           );
         });
@@ -316,10 +316,10 @@ export class TableComponent extends React.Component<TableProps, TableState> {
   }
 
   renderAccordionContent() {
-    if (this.state.accordionContent) {
+    if (this.state.accordionContent && this.state.accordionContent.content) {
       return (
         <div className="c-gridTable-accordionContent">
-          {this.state.accordionContent}
+          {this.state.accordionContent.content}
         </div>
       );
     } else {

@@ -13,6 +13,7 @@ import PreBookingDialog from "./components/preBookingDialog";
 import Dropdown from "./components/dropdown";
 import { Button, ButtonType, Toast, ToastType } from "shared/src/webKit";
 import { Route } from "shared/src/components/routes/list/models/route";
+import { ButtonSize } from '../../../../../../shared/src/webKit/button/index';
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -117,14 +118,11 @@ export default class DispatchComponent extends React.Component<Props, State> {
           disabled={driverDispatchService.selectedItemIndexes.length === 0}
           onClick={() => this.assignUnassignedRoutes()}
           type={ButtonType.Light}
+          size={ButtonSize.Medium}
         >
           Match routes
         </Button>
       );
-    } else if (
-      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
-    ) {
-      return <Button type={ButtonType.Light}>Delete driver</Button>;
     } else {
       return undefined;
     }

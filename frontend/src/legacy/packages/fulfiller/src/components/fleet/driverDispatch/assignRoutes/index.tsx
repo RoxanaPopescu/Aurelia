@@ -87,7 +87,7 @@ export default class AssignRoutesComponent extends React.Component<
   private getRows() {
     return this.state.matches.map(m => {
       return [
-        m.route.slug,
+        m.route.consignorNames,
         m.route.slug,
         m.route.slug,
         m.route.slug,
@@ -125,9 +125,10 @@ export default class AssignRoutesComponent extends React.Component<
             {this.state.origin === "routes" && (
               <RoutesList
                 ids={this.state.ids}
-                onRouteSelection={route =>
+                onRouteSelection={route => {
                   this.setState({ selectedRoute: route })
-                }
+                }}
+                matchedRoutes={this.state.matches.map(m => m.route)}
               />
             )}
             <AsigneeList
@@ -140,6 +141,7 @@ export default class AssignRoutesComponent extends React.Component<
               onAssigneeSelection={assignee =>
                 this.setState({ selectedAssignee: assignee })
               }
+              matchedAssignees={this.state.matches.map(m => m.assignee)}
             />
             {this.state.origin === "pre-bookings" && (
               <RoutesList
@@ -148,9 +150,10 @@ export default class AssignRoutesComponent extends React.Component<
                     ? this.state.selectedAssignee
                     : undefined
                 }
-                onRouteSelection={route =>
+                onRouteSelection={route => {
                   this.setState({ selectedRoute: route })
-                }
+                }}
+                matchedRoutes={this.state.matches.map(m => m.route)}
               />
             )}
           </div>

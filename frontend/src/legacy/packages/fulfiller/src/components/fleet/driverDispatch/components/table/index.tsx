@@ -367,9 +367,7 @@ export default class extends React.Component<Props> {
           >
             {ar.slug}
           </Link>,
-          ar.consignors.filter(c => c.companyName !== "unknown").length > 0 ?
-                    ar.consignors.filter(c => c.companyName !== "unknown").map(c => c.companyName).join(", ") :
-                    "--",
+          ar.consignorNames,
           Localization.formatDate(ar.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ar.startDateTime, to: ar.endDateTime })
@@ -423,9 +421,7 @@ export default class extends React.Component<Props> {
           >
             {ur.slug}
           </Link>,
-          ur.consignors.filter(c => c.companyName !== "unknown").length > 0 ?
-                    ur.consignors.filter(c => c.companyName !== "unknown").map(c => c.companyName).join(", ") :
-                    "--",
+          ur.consignorNames,
           Localization.formatDate(ur.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ur.startDateTime, to: ur.endDateTime })

@@ -12,6 +12,7 @@ interface Props {
   selectedPreBooking?: PreBooking;
   ids?: string[];
   onRouteSelection(route: Route);
+  matchedRoutes: Route[];
 }
 
 interface State {
@@ -76,7 +77,7 @@ export default class extends React.Component<Props, State> {
         content: ""
       },
       { key: "customer", content: "Customer" },
-      { key: "time", content: "Time" },
+      { key: "start-time", content: "Start time" },
       { key: "start-address", content: "Start address" },
       { key: "colli", content: "Colli" },
       { key: "complexity", content: "Complexity" }
@@ -85,7 +86,6 @@ export default class extends React.Component<Props, State> {
 
   private renderComplexity(route: Route) {
     var bars: JSX.Element[] = [];
-    console.log(route.complexity);
 
     for (var i = 1; i <= 4; i++) {
       var width = 100;
@@ -114,7 +114,7 @@ export default class extends React.Component<Props, State> {
       return (
         <>
           <div className="c-assignRoutes-complexity">{bars}</div>
-          {route.complexity}
+          {route.complexity.toFixed(2)}
         </>
       );
     } else {
@@ -123,34 +123,32 @@ export default class extends React.Component<Props, State> {
   }
 
   private getRows() {
-    return this.state.routes.map((r, i) => {
+    var routes = [...new Set(this.state.routes.concat(this.props.matchedRoutes))];
+    return routes.map((r, i) => {
       return [
         // tslint:disable-next-line: jsx-wrap-multiline
         <InputRadioGroup
           radioButtons={[{ value: r.id, headline: "" }]}
-          key={r.id}
+          key={`${r.id}-radio`}
           onChange={value => {
+            console.log(this.state.selectedRoute, r, value)
             if (
-              !this.state.selectedRoute ||
-              value !== this.state.selectedRoute.id
+              this.state.selectedRoute === undefined ||
+              r.id !== this.state.selectedRoute.id
             ) {
-              var route = this.state.routes.filter(
-                driver => driver.id === value
-              )[0];
               this.setState({
-                selectedRoute: route
+                selectedRoute: r
               });
-              this.props.onRouteSelection(route);
+              this.props.onRouteSelection(r);
             }
           }}
-          checkedValue={this.getSelectedValue()}
         />,
         // tslint:disable-next-line: jsx-wrap-multiline
         <div
           key={`${r.fulfiller ? r.fulfiller.companyName : ""}-fulfiller`}
           className="c-assignRoutes-ellipsis"
         >
-          {r.fulfiller ? r.fulfiller.companyName : "--"}
+          {r.consignorNames}
         </div>,
         Localization.formatDateTime(r.startDateTime),
         // tslint:disable-next-line: jsx-wrap-multiline
@@ -161,14 +159,6 @@ export default class extends React.Component<Props, State> {
         this.renderComplexity(r)
       ];
     });
-  }
-
-  private getSelectedValue() {
-    if (this.state.selectedRoute) {
-      return this.state.selectedRoute.id;
-    }
-
-    return undefined;
   }
 
   private onSearchChange(query: string | undefined) {
@@ -197,11 +187,11 @@ export default class extends React.Component<Props, State> {
     return (
       <div className="c-assignRoutes-accordion">
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">Slutadresse</div>
+          <div className="font-heading">End address</div>
           <div>{route.endAddress.primary}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">Sluttid</div>
+          <div className="font-heading">End time</div>
           <div>{Localization.formatDateTime(route.endDateTime)}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">

@@ -19,7 +19,7 @@ export class Route {
     } else {
       this.consignors = [];
     }
-    console.log(this.consignors)
+
     this.fulfiller =
       data.fulfiller != null ? new Fulfiller(data.fulfiller) : undefined;
     this.startDateTime = DateTime.fromISO(data.startDate, {
@@ -107,4 +107,13 @@ export class Route {
    * The type of vehicle required for the route.
    */
   public readonly vehicleType: VehicleType;
+
+  /**
+   * Formats the consignor names on a single line.
+   */
+  public get consignorNames(): string {
+    return this.consignors ?
+            this.consignors.filter(c => c.companyName !== "unknown" && c.companyName !== undefined).map(c => c.companyName).join(", ") :
+            "--";
+  }
 }

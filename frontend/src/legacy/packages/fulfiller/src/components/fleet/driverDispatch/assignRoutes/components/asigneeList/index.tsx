@@ -14,11 +14,13 @@ interface Props {
   preBookingIds?: string[];
   selectedRoute?: Route;
   onAssigneeSelection(asignee: Driver | PreBooking);
+  matchedAssignees: (Driver | PreBooking)[]
 }
 
 interface State {
   state: "drivers" | "pre-bookings";
   selectedAssignee?: Driver | PreBooking;
+  selectedRoute?: Route;
   search?: string;
   drivers: Driver[];
   preBookings: PreBooking[];
@@ -33,8 +35,17 @@ export default class extends React.Component<Props, State> {
       state: "pre-bookings",
       selectedAssignee: undefined,
       preBookings: [],
-      drivers: []
+      drivers: [],
+      selectedRoute: props.selectedRoute
     };
+  }
+
+  componentWillReceiveProps(props: Props) {
+    if (props.selectedRoute) {
+      this.setState({
+        selectedRoute: props.selectedRoute
+      }, () => this.fetchData())
+    }
   }
 
   componentDidMount() {
@@ -50,15 +61,16 @@ export default class extends React.Component<Props, State> {
         this.props.preBookingIds
       );
     } else {
-      if (this.props.selectedRoute) {
+      if (this.state.selectedRoute) {
         if (this.state.state === "drivers") {
           var driverResponse = await driverDispatchService.fetchDrivers({
-            date: this.props.selectedRoute.startDateTime,
+            date: this.state.selectedRoute.startDateTime,
             search: this.state.search ? this.state.search : "",
             period: new DateTimeRange({
-              from: this.props.selectedRoute.startDateTime,
-              to: this.props.selectedRoute.endDateTime
-            })
+              from: this.state.selectedRoute.startDateTime,
+              to: this.state.selectedRoute.endDateTime
+            }),
+            driverIds: []
           });
 
           if (driverResponse) {
@@ -66,10 +78,10 @@ export default class extends React.Component<Props, State> {
           }
         } else {
           var preBookingResponse = await driverDispatchService.fetchPreBookings(
-            this.props.selectedRoute.startDateTime,
-            this.props.selectedRoute.endDateTime,
-            this.props.selectedRoute.startDateTime,
-            this.props.selectedRoute.endDateTime
+            this.state.selectedRoute.startDateTime,
+            this.state.selectedRoute.endDateTime,
+            this.state.selectedRoute.startDateTime,
+            this.state.selectedRoute.endDateTime
           );
 
           if (preBookingResponse.length > 0) {
@@ -88,7 +100,8 @@ export default class extends React.Component<Props, State> {
   private async fetchDrivers(route: Route): Promise<void> {
     var response = await driverDispatchService.fetchDrivers({
       date: route.startDateTime,
-      search: this.state.search ? this.state.search : ""
+      search: this.state.search ? this.state.search : "",
+      driverIds: []
     });
 
     if (response) {
@@ -126,7 +139,8 @@ export default class extends React.Component<Props, State> {
 
   private getRows() {
     if (this.state.state === "drivers") {
-      return this.state.drivers.map(d => {
+      var drivers = this.state.drivers.filter(d => this.props.matchedAssignees.filter(a => a.id === d.id).length === 0);
+      return drivers.map(d => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputRadioGroup
@@ -155,7 +169,8 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
-      return this.state.preBookings.map(p => {
+      var preBookings = this.state.preBookings.filter(d => this.props.matchedAssignees.filter(a => a.id === d.id).length === 0);
+      return preBookings.map(p => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputRadioGroup
@@ -207,14 +222,14 @@ export default class extends React.Component<Props, State> {
   }
 
   private onSearchChange(query: string | undefined) {
-    if (this.props.selectedRoute) {
+    if (this.state.selectedRoute) {
       this.setState({
         search: query
       });
       if (this.state.state === "drivers") {
-        this.fetchDrivers(this.props.selectedRoute);
+        this.fetchDrivers(this.state.selectedRoute);
       } else {
-        this.fetchPreBookings(this.props.selectedRoute);
+        this.fetchPreBookings(this.state.selectedRoute);
       }
     }
   }
@@ -251,6 +266,10 @@ export default class extends React.Component<Props, State> {
                 if (value !== this.state.state) {
                   this.setState({
                     state: value
+                  }, () => {
+                    if (this.state.selectedRoute) {
+                      this.fetchData();
+                    }
                   });
                 }
               }}
