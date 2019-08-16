@@ -39,7 +39,9 @@ react-module
     flex-direction: column;
 
     // Ensure react modules never overlap any app elements.
-    z-index: 0;
+    // We can't set it to less than 1 though, as modal backdrops need to overlap
+    // the top and bottom of the app-sidebar.
+    z-index: 1;
 
     // Import legacy styles.
     @import "../legacy/packages/shared/src/webKit/LEGACY";

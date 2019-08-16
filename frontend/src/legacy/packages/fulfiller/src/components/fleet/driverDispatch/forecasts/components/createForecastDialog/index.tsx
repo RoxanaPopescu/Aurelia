@@ -112,7 +112,6 @@ export default class extends React.Component<Props, State> {
           <DateComponent
             headline="Date start"
             date={this.state.dateFrom}
-            minimum={DateTime.local().startOf("day")}
             size="medium"
             onChange={date => {
               this.setState({

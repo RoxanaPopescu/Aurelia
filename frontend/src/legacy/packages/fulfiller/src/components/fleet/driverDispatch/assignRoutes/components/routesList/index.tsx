@@ -123,7 +123,7 @@ export default class extends React.Component<Props, State> {
   }
 
   private getRows() {
-    var routes = [...new Set(this.state.routes.concat(this.props.matchedRoutes))];
+    var routes = this.state.routes.filter(r => this.props.matchedRoutes.filter(mr => mr.id === r.id).length === 0);
     return routes.map((r, i) => {
       return [
         // tslint:disable-next-line: jsx-wrap-multiline
@@ -131,7 +131,6 @@ export default class extends React.Component<Props, State> {
           radioButtons={[{ value: r.id, headline: "" }]}
           key={`${r.id}-radio`}
           onChange={value => {
-            console.log(this.state.selectedRoute, r, value)
             if (
               this.state.selectedRoute === undefined ||
               r.id !== this.state.selectedRoute.id
@@ -142,6 +141,7 @@ export default class extends React.Component<Props, State> {
               this.props.onRouteSelection(r);
             }
           }}
+          checkedValue={this.state.selectedRoute && this.state.selectedRoute.id}
         />,
         // tslint:disable-next-line: jsx-wrap-multiline
         <div

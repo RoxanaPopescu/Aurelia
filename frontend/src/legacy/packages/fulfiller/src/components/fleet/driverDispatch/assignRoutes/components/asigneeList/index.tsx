@@ -149,18 +149,15 @@ export default class extends React.Component<Props, State> {
             onChange={value => {
               if (
                 !this.state.selectedAssignee ||
-                value !== this.state.selectedAssignee.id
+                d.id !== this.state.selectedAssignee.id
               ) {
-                var assignee = this.state.drivers.filter(
-                  driver => driver.id === value
-                )[0];
                 this.setState({
-                  selectedAssignee: assignee
+                  selectedAssignee: d
                 });
-                this.props.onAssigneeSelection(assignee);
+                this.props.onAssigneeSelection(d);
               }
             }}
-            checkedValue={this.getSelectedValue()}
+            checkedValue={this.state.selectedAssignee instanceof Driver && this.state.selectedAssignee.id}
           />,
           d.formattedName,
           d.id,
@@ -169,7 +166,7 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
-      var preBookings = this.state.preBookings.filter(d => this.props.matchedAssignees.filter(a => a.id === d.id).length === 0);
+      var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
       return preBookings.map(p => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
@@ -179,18 +176,15 @@ export default class extends React.Component<Props, State> {
             onChange={value => {
               if (
                 !this.state.selectedAssignee ||
-                value !== this.state.selectedAssignee.id
+                p.id !== this.state.selectedAssignee.id
               ) {
-                var assignee = this.state.preBookings.filter(
-                  preBooking => preBooking.driver.id === value
-                )[0];
                 this.setState({
-                  selectedAssignee: assignee
+                  selectedAssignee: p
                 });
-                this.props.onAssigneeSelection(assignee);
+                this.props.onAssigneeSelection(p);
               }
             }}
-            checkedValue={this.getSelectedValue()}
+            checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
           />,
           p.driver.formattedName,
           p.driver.id,
@@ -201,24 +195,6 @@ export default class extends React.Component<Props, State> {
         ];
       });
     }
-  }
-
-  private getSelectedValue() {
-    if (this.state.selectedAssignee) {
-      return this.state.selectedAssignee.id;
-    } else {
-      if (this.state.state === "drivers") {
-        if (this.state.drivers.length > 0) {
-          return this.state.drivers[0].id;
-        }
-      } else {
-        if (this.state.preBookings.length > 0) {
-          return this.state.preBookings[0].driver.id;
-        }
-      }
-    }
-
-    return undefined;
   }
 
   private onSearchChange(query: string | undefined) {
@@ -238,8 +214,12 @@ export default class extends React.Component<Props, State> {
     return (
       <div className="c-assignRoutes-assignees">
         <InfoBox
-          data={[
+          data={this.state.state === "pre-bookings" ?
+          [
             { name: "Pre-bookings", value: this.state.preBookings.length }
+          ] :
+          [
+            { name: "Drivers", value: this.state.drivers.length }
           ]}
         />
         <div className="c-assignRoutes-assigneeState">
