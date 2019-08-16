@@ -4,13 +4,26 @@ import { IServerOptions, serve } from "../webpack/serve";
 
 commander
 
-    .option("-e, --environment [development, preview, production]",
-        "the target environment",
+    .option("--environment [development, preview, production]",
+        "The target environment",
         "development")
 
-    .option("-l, --locale [en-US, x-pseudo, da]",
-        "the target locale ",
+    .option("--locale [en-US, x-pseudo]",
+        "The target locale",
         "en-US")
+
+    .option("--api <url>",
+        "The URL to which API requests should be proxied",
+        "https://bff-v1-test-mover.azurewebsites.net/")
+
+    .option("--port <number>",
+        "The port on which the server should listen",
+        value => parseInt(value),
+        "8080")
+
+    .option("--public",
+        "Allow connections from any host and any device on the network, despite security risks",
+        false)
 
     .parse(process.argv);
 
@@ -47,9 +60,9 @@ const compilerOptions: ICompilerOptions =
     }
 };
 
-const serveOptions: IServerOptions =
+const serverOptions: IServerOptions =
 {
-    port: 8080,
+    port: commander.port,
     open: false,
     hmr: true,
     proxy:
@@ -58,13 +71,11 @@ const serveOptions: IServerOptions =
         {
             pathRewrite: { "^/api/v1/": "" },
             changeOrigin: true,
-
-            // Environment-specific configuration.
-
-            target: "https://bff-v1-test-mover.azurewebsites.net/"
+            target: commander.api
         }
-    }
+    },
+    public: commander.public
 };
 
 // tslint:disable-next-line: no-floating-promises
-serve(compilerOptions, serveOptions);
+serve(compilerOptions, serverOptions);

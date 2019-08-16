@@ -4,17 +4,21 @@ import { ICompilerOptions, compile } from "../webpack/compile";
 
 commander
 
-    .option("-e, --environment [development, preview, production]",
-        "the target environment",
+    .option("--environment [development, preview, production]",
+        "The target environment",
         "development")
 
-    .option("-p, --platform [cloud, desktop]",
-        "the target platform ",
+    .option("--platform [cloud, desktop]",
+        "The target platform",
         "cloud")
 
-    .option("-l, --locale [en-US, x-pseudo, da]",
-        "the target locale ",
+    .option("--locale [en-US, x-pseudo]",
+        "The target locale",
         "en-US")
+
+    .option("--api <url>",
+        "The base URL to use for API requests",
+        "/api/")
 
     .parse(process.argv);
 
@@ -31,7 +35,6 @@ const compilerOptions: ICompilerOptions =
         debug: false,
         optimize: true,
         obfuscate: false,
-        apiBaseUrl: "/api/",
 
         // Platform-specific configuration.
 
@@ -40,13 +43,15 @@ const compilerOptions: ICompilerOptions =
         {
             pushState: true,
             publicPath: "./",
-            appBaseUrl: "/"
+            appBaseUrl: "/",
+            apiBaseUrl: commander.api || "/api/"
         } :
         commander.platform === "desktop" ?
         {
             pushState: false,
             publicPath: paths.artifacts.desktopClientBuildFolder,
-            appBaseUrl: ""
+            appBaseUrl: "",
+            apiBaseUrl: commander.api || "http://localhost:8008/"
         } :
         {} as never,
 

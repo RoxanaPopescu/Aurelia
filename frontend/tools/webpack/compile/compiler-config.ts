@@ -82,7 +82,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 {
                     node_modules:
                     {
-                        test: /[\\/]node_modules[\\/]|svg/,
+                        test: /[\\/]node_modules[\\/]/,
                         chunks: "all",
                         priority: 1
                     }
@@ -101,7 +101,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.scss` files defining themes, one of which will be loaded during app start.
                 // Note that we need `style-loader` to inject the these.
                 {
-                    test: /[\\/]themes[\\/].*\.scss$/,
+                    test: /[\\/]themes[\\/].+\.scss$/,
                     use:
                     [
                         "style-loader",

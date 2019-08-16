@@ -5,11 +5,12 @@ import { Format } from "../helpers";
 const open = require("opn");
 
 /**
- * Called when the server is ready, to log server info to the console, and optionally open the browser.
+ * Called when the server is ready, logging server info to the console, and optionally opening the browser.
  * Note that this will kill the process if the server failed to start.
  * @param compilerConfig The config used for the compilation.
+ * @param error The error that occurred, if the server failed.
  */
-export function serverCallback(error: Error | undefined, compilerConfig: WebpackDevServer.Configuration): void
+export function serverCallback(compilerConfig: WebpackDevServer.Configuration, error?: Error): void
 {
     if (error == null)
     {
@@ -21,21 +22,23 @@ export function serverCallback(error: Error | undefined, compilerConfig: Webpack
 
         // Log the host at which the server can be accessed.
         console.log(`${Format.info("i")} Server listening on ${Format.info(host)}`);
-        console.log(`${Format.info(" ")} Waiting for compilation to complete...`);
 
         // Open the browser, if enabled.
         if (compilerConfig.open)
         {
             open(host).catch(() =>
             {
-                console.warn(`${Format.warn("warn")} Unable to open browser`);
+                console.warn(`\n${Format.attention("warn")} Unable to open browser`);
             });
         }
     }
     else
     {
-        // Log error and kill the process.
+        // Log the error.
         console.error(error);
-        process.exit(1);
+        console.error(`\n${Format.negative("Server failed")}`);
+
+        // Indicate that the process failed.
+        process.exitCode = 1;
     }
 }

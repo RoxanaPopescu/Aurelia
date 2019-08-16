@@ -14,29 +14,36 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
 {
     const config: WebpackDevServer.Configuration =
     {
-        // Disable host check, despite the security risk.
-        // See: https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a
-        disableHostCheck: true,
+        // Configure host and host check.
+        ...serverOptions.public ?
+        {
+            host: "0.0.0.0",
+            disableHostCheck: true
+        } :
+        {
+            host: "localhost"
+        },
 
-        host: "0.0.0.0",
+        // Configure server.
         port: serverOptions.port,
         hot: serverOptions.hmr,
         open: serverOptions.open,
         proxy: serverOptions.proxy,
-
         publicPath: compilerConfig.output!.publicPath,
-        filename: compilerConfig.output!.filename,
+        historyApiFallback: true,
+        compress: true,
         contentBase:
         [
-            compilerConfig.output!.path!,
             paths.srcFolder,
             paths.staticFolder
         ],
-        watchContentBase: true,
-        historyApiFallback: true,
-        compress: true,
+        watchContentBase: false,
+        filename: compilerConfig.output!.filename,
+
+        // Configure logging.
         clientLogLevel: "none",
         overlay: true,
+        noInfo: true,
         stats:
         {
             version: false,
@@ -47,7 +54,6 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
             modules: false,
             children: false,
 
-            // tslint:disable-next-line:no-require-imports
             colors: Format.supportsColor
         }
     };

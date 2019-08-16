@@ -23,5 +23,12 @@ export interface IServerOptions
     /**
      * The proxy config to use, or undefined to use no proxy.
      */
-    proxy: ProxyConfigMap | ProxyConfigArray;
+    proxy?: ProxyConfigMap | ProxyConfigArray;
+
+    /**
+     * True to allow connections from any host and any device on the network, otherwise false.
+     * Note that this is a major security risk, exposing you to CSRF and DNS Rebinding attacks.
+     * See: https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a
+     */
+    public?: boolean;
 }

@@ -1,49 +1,65 @@
 import webpack from "webpack";
-import { ICompilerOptions } from "./compiler-options";
 import { Format } from "../helpers";
+import { ICompilerOptions } from "./compiler-options";
 
 /**
  * Called every time a compilation ends.
  * Note that if not in watch more, this will kill the process if any
  * errors occurred, or if compilation failed.
- * @param error The error that occurred, if the compilation failed.
- * @param stats The compilaiton stats, if the compilation succeeded.
  * @param compilerOptions The compiler options.
+ * @param stats The compilation stats, if the compilation succeeded.
+ * @param error The error that occurred, if the compilation failed.
  */
-export function compilerCallback(error: Error & { details?: any }, stats: webpack.Stats, compilerOptions: ICompilerOptions): void
+export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpack.Stats, error?: Error & { details?: any }): void
 {
-    if (!compilerOptions.watch && error)
+    // Note: In watch mode, the development server is responsible for logging errors.
+
+    // Are we building for deployment?
+    if (!compilerOptions.watch)
     {
-        // Log the error.
-        console.error(error);
-
-        // Log error details, if available.
-        if (error.details)
+        // Did the build crash?
+        if (error)
         {
-            console.error(error.details);
-        }
+            // Log the error.
+            console.error(error);
 
-        // Kill the process.
-        process.exit(1);
+            // Log error details, if available.
+            if (error.details)
+            {
+                console.error(error.details);
+            }
+
+            // Indicate that the process failed.
+            process.exitCode = 1;
+        }
+        else
+        {
+            // Log the compilation stats.
+            console.log(`${stats.toString(
+            {
+                entrypoints: false,
+                modules: false,
+                children: false,
+
+                colors: Format.supportsColor
+            })}\n`);
+
+            // Did the build fail?
+            if (stats.hasErrors())
+            {
+                // Indicate that the process failed.
+                process.exitCode = 1;
+            }
+        }
+    }
+
+    // Log the build status, making sure it appears after any other build messages.
+    if (!error && !stats.hasErrors())
+    {
+        setTimeout(() => console.info(`${Format.positive("Build succeeded")}`), 0);
     }
     else
     {
-        // Log the compilation stats.
-        // tslint:disable-next-line:prefer-template
-        console.log(stats.toString(
-        {
-            entrypoints: false,
-            modules: false,
-            children: false,
-
-            // tslint:disable-next-line:no-require-imports
-            colors: Format.supportsColor
-        }) + "\n");
-
-        if (!compilerOptions.watch && stats.hasErrors())
-        {
-            // Kill the process.
-            process.exit(1);
-        }
+        setTimeout(() => console.error(`\n${Format.negative("Build failed")}`), 0);
     }
 }

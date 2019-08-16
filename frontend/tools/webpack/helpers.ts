@@ -7,16 +7,17 @@ export function logTaskInfo(compilerOptions: ICompilerOptions): void
     // tslint:disable: prefer-template
 
     console.info(Format.info("i") +
-        ` Running task in environment '${Format.info(environment.name)}'`);
+        ` Building in environment '${Format.info(environment.name)}'\n`);
 
     console.info(Format.info("i") +
         " Building for" +
+        ` environment '${Format.info(compilerOptions.environment.name)}',` +
         ` platform '${Format.info(compilerOptions.environment.platform)}',` +
-        ` locale '${Format.info(compilerOptions.environment.locale)}',` +
-        ` environment '${Format.info(compilerOptions.environment.name)}'...\n`);
+        ` locale '${Format.info(compilerOptions.environment.locale)}'...\n`);
 
     // tslint: enable
 }
+
 /**
  * Namespace providing functions for formatting text in console messages.
  */
@@ -28,7 +29,7 @@ export namespace Format
     export const supportsColor = chalk.supportsColor.hasBasic;
 
     /**
-     * Formats the specified text using the info style, which is bold and blue.
+     * Formats the specified text using the `info` style, which is bold and blue.
      * @param text The text to format.
      * @returns The formatted text.
      */
@@ -38,21 +39,31 @@ export namespace Format
     }
 
     /**
-     * Formats the specified text using the warning style, which is bold and yellow.
+     * Formats the specified text using the `positive` style, which is bold and green.
      * @param text The text to format.
      * @returns The formatted text.
      */
-    export function warn(text: string): string
+    export function positive(text: string): string
+    {
+        return chalk.bold(chalk.green(text));
+    }
+
+    /**
+     * Formats the specified text using the `attention` style, which is bold and yellow.
+     * @param text The text to format.
+     * @returns The formatted text.
+     */
+    export function attention(text: string): string
     {
         return chalk.bold(chalk.yellow(text));
     }
 
     /**
-     * Formats the specified text using the error style, which is bold and red.
+     * Formats the specified text using the `negative` style, which is bold and red.
      * @param text The text to format.
      * @returns The formatted text.
      */
-    export function error(text: string): string
+    export function negative(text: string): string
     {
         return chalk.bold(chalk.red(text));
     }

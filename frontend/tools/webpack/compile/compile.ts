@@ -25,13 +25,13 @@ export async function compile(compilerOptions: ICompilerOptions): Promise<void>
         if (compilerOptions.watch)
         {
             // Run the compiler in watch mode.
-            compiler.watch({}, (error, stats) => compilerCallback(error, stats, compilerOptions));
+            compiler.watch({}, (error, stats) => compilerCallback(compilerOptions, stats, error));
             compiler.hooks.watchClose.tap("watchClose", () => resolve());
         }
         else
         {
             // Run the compiler in build mode.
-            compiler.run((error, stats) => compilerCallback(error, stats, compilerOptions));
+            compiler.run((error, stats) => compilerCallback(compilerOptions, stats, error));
             compiler.hooks.done.tap("done", () => resolve());
             compiler.hooks.failed.tap("failed", error => reject(error));
         }
