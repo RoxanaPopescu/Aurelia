@@ -64,6 +64,18 @@ export class FleetModule
                     icon: "forecast"
                 },
                 {
+                    name: "assign-routes",
+                    route: "assign-routes/:origin/:ids",
+                    moduleId: PLATFORM.moduleName("./modules/assign-routes/assign-routes"),
+                    title: routeTitles.assignRoutes
+                },
+                {
+                    name: "create-prebooking",
+                    route: "create-prebooking/:id",
+                    moduleId: PLATFORM.moduleName("./modules/create-preBooking/create-preBooking"),
+                    title: routeTitles.createPreBooking
+                },
+                {
                     name: "forecasts",
                     route: "forecasts",
                     moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),

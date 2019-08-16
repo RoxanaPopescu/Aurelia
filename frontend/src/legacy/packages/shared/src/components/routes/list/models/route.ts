@@ -4,6 +4,7 @@ import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Address } from "shared/src/model/general/address";
 import { VehicleType } from "shared/src/model/session";
 import { Driver } from "shared/src/model/logistics/driver";
+import { Consignor } from "app/model/outfit/entities/consignor";
 
 export class Route {
   /* tslint:disable-next-line: no-any */
@@ -13,6 +14,12 @@ export class Route {
     this.complexity = data.complexity;
     this.reference = data.reference;
     this.status = new RouteStatus(data.status);
+    if (data.consignors) {
+      this.consignors = data.consignors.map(c => new Consignor(c));
+    } else {
+      this.consignors = [];
+    }
+    console.log(this.consignors)
     this.fulfiller =
       data.fulfiller != null ? new Fulfiller(data.fulfiller) : undefined;
     this.startDateTime = DateTime.fromISO(data.startDate, {
@@ -60,6 +67,11 @@ export class Route {
    * The fulfiller responsible for the shipment.
    */
   public fulfiller?: Fulfiller;
+
+  /**
+   * The consignors linked to the route.
+   */
+  public consignors: Consignor[];
 
   /**
    * The date and time at which the route is planned to start.

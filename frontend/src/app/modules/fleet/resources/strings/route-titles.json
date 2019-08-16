@@ -3,5 +3,7 @@
     "details": "Details",
     "create": "Create",
     "dispatch": "Dispatch",
-    "forecasts": "Forecasts"
+    "forecasts": "Forecasts",
+    "assignRoutes": "Assign routes",
+    "createPreBooking": "Create pre-booking"
 }

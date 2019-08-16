@@ -214,18 +214,19 @@ export default class extends React.Component<Props> {
     return (
       <>
         {route.vehicleType.name}
-        <Button
-          type={ButtonType.Light}
-          size={ButtonSize.Small}
-          className="c-driverDispatch-table-actionButton"
-          onClick={() => {
-            if (this.props.onUnassignedRouteAction) {
-              this.props.onUnassignedRouteAction(route);
-            }
-          }}
-        >
-          Match
-        </Button>
+        <div className="c-driverDispatch-table-actionButton">
+          <Button
+            type={ButtonType.Light}
+            size={ButtonSize.Small}
+            onClick={() => {
+              if (this.props.onUnassignedRouteAction) {
+                this.props.onUnassignedRouteAction(route);
+              }
+            }}
+          >
+            Match
+          </Button>
+        </div>
       </>
     );
   }
@@ -234,18 +235,19 @@ export default class extends React.Component<Props> {
     return (
       <>
         {preBooking.forecast.vehicleType.name}
-        <Button
-          type={ButtonType.Light}
-          size={ButtonSize.Small}
-          className="c-driverDispatch-table-actionButton"
-          onClick={() => {
-            if (this.props.onPreBookingAction) {
-              this.props.onPreBookingAction(preBooking);
-            }
-          }}
-        >
-          Actions
-        </Button>
+        <div className="c-driverDispatch-table-actionButton">
+          <Button
+            type={ButtonType.Light}
+            size={ButtonSize.Small}
+            onClick={() => {
+              if (this.props.onPreBookingAction) {
+                this.props.onPreBookingAction(preBooking);
+              }
+            }}
+          >
+            Actions
+          </Button>
+        </div>
       </>
     );
   }
@@ -365,7 +367,9 @@ export default class extends React.Component<Props> {
           >
             {ar.slug}
           </Link>,
-          ar.fulfiller ? ar.fulfiller.companyName : "--",
+          ar.consignors.filter(c => c.companyName !== "unknown").length > 0 ?
+                    ar.consignors.filter(c => c.companyName !== "unknown").map(c => c.companyName).join(", ") :
+                    "--",
           Localization.formatDate(ar.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ar.startDateTime, to: ar.endDateTime })
@@ -419,7 +423,9 @@ export default class extends React.Component<Props> {
           >
             {ur.slug}
           </Link>,
-          "", // ur.fulfiller.companyName,
+          ur.consignors.filter(c => c.companyName !== "unknown").length > 0 ?
+                    ur.consignors.filter(c => c.companyName !== "unknown").map(c => c.companyName).join(", ") :
+                    "--",
           Localization.formatDate(ur.startDateTime),
           Localization.formatTimeRange(
             new DateTimeRange({ from: ur.startDateTime, to: ur.endDateTime })
