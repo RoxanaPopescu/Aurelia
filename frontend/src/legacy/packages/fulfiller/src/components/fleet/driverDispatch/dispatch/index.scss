@@ -3,6 +3,10 @@
 .c-driverDispatch-container {
   display: flex;
   height: 100%;
+
+  .pageHeader .pageHeader-top {
+    height: 40px;
+  }
 }
 
 .c-driverDispatch-main {

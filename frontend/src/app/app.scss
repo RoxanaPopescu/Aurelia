@@ -44,6 +44,53 @@ react-module
     // Import legacy styles.
     @import "../legacy/packages/shared/src/webKit/LEGACY";
 
+
+    --font-label-base-line-height: 5rem;
+    --font-label-base-font-size: 3.5rem;
+    --font-label-base-margin-top: 3rem;
+    --font-label-base-margin-bottom: 3rem;
+    --font-label-base-font-weight: 600;
+
+    /// Text style for base text.
+    /// Use for base-sized labels, such as the text on buttons or tabs.
+    .font-label-base {
+        line-height: var(--font-label-base-line-height);
+        font-size: var(--font-label-base-font-size);
+        font-weight: var(--font-label-base-font-weight);
+
+        // Define the current text margins.
+        --font-current-margin-top: var(--font-label-base-margin-top);
+        --font-current-margin-bottom: var(--font-label-base-margin-bottom);
+
+        .margin-within & {
+            margin-top: var(--font-current-margin-top);
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+
+    --font-label-small-line-height: 4rem;
+    --font-label-small-font-size: 3rem;
+    --font-label-small-margin-top: 2rem;
+    --font-label-small-margin-bottom: 2rem;
+    --font-label-small-font-weight: 600;
+
+    /// Text style for small text.
+    /// Use for small-sized labels, such as column headers in a table.
+    .font-label-small {
+        line-height: var(--font-label-small-line-height);
+        font-size: var(--font-label-small-font-size);
+        font-weight: var(--font-label-small-font-weight);
+
+        // Define the current text margins.
+        --font-current-margin-top: var(--font-label-small-margin-top);
+        --font-current-margin-bottom: var(--font-label-small-margin-bottom);
+
+        .margin-within & {
+            margin-top: var(--font-current-margin-top);
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+
     .c-login-outerContainer,
     .c-activation-outerContainer
     {
