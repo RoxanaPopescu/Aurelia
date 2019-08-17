@@ -25,6 +25,12 @@ export const paths =
     srcFolder: resolve("src/"),
 
     /**
+     * The path for the folder containing the legacy code,
+     * that does not play well with hot module replacement.
+     */
+    legacyFolder: resolve("src/legacy/"),
+
+    /**
      * The path for the `static` folder.
      */
     staticFolder: resolve("static/"),

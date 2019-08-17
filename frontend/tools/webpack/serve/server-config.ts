@@ -34,10 +34,14 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
         compress: true,
         contentBase:
         [
-            paths.srcFolder,
-            paths.staticFolder
+            // HACK: Disabled because it would break hot module replacement.
+            // Once we remove of the legacy folder, we can disable `watchContentBase` and re-enable this.
+            // paths.srcFolder,
+
+            paths.staticFolder,
+            paths.legacyFolder
         ],
-        watchContentBase: false,
+        watchContentBase: true,
         filename: compilerConfig.output!.filename,
 
         // Configure logging.
