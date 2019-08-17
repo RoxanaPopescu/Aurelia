@@ -76,6 +76,12 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/details/details"),
                 title: routeTitles.simulationsDetails
             },
+            {
+                name: "simulations-start",
+                route: "simulations/start/:id",
+                moduleId: PLATFORM.moduleName("./modules/route-simulations/start/start"),
+                title: routeTitles.simulationsDetails
+            }
         ]);
     }
 }
