@@ -1,0 +1,25 @@
+page[name="route-planning"] page[name="settings-details"]
+{
+    .pageContent
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pageContent-content
+    {
+        flex-grow: 1;
+        min-height: 0;
+    }
+
+    .c-routePlanning-settings-details-container,
+    .c-routePlanning-settings-details
+    {
+        height: 100%;
+    }
+
+    .c-routePlanning-settings-details-areas
+    {
+        margin-right: -8rem;
+    }
+}

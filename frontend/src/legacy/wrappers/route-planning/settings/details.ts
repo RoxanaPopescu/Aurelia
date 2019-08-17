@@ -1,6 +1,7 @@
 import { autoinject, noView, bindable } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Wrapper } from "../../wrapper";
+import "./details.scss";
 
 // Import the component that should be wrapped.
 import Component from "fulfiller/src/components/routePlanning/settings/details/index";
