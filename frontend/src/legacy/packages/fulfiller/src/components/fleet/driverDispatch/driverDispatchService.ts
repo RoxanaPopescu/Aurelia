@@ -445,7 +445,7 @@ export class DriverDispatchService {
     this.toast = {
       message: `Created ${
         drivers.length
-      } pre-bookings for ${Localization.formatDate(forecast.date)}`,
+      } pre-bookings for ${forecast.fulfillee.name} (${Localization.formatDate(forecast.date)})`,
       type: "ok"
     };
   }
