@@ -4,7 +4,7 @@
     "exclude": [
       "node_modules/**",
       "artifacts/**",
-      "legacy/**",
+      "src/legacy/**",
       "**/*.json",
       "**/.*",
       "**/~*"
