@@ -227,14 +227,14 @@ export default class CreatePreBookingComponent extends React.Component<
           key={d.id}
           to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
             ":id",
-            d.id
+            d.id.toString()
           )}
         >
           {d.formattedName}
         </Link>,
         d.phone.number,
-        d.id,
-        d.company ? `${d.company.name} (${d.company.id})` : "--"
+        d.id.toString(),
+        d.company && d.company.name !== "" ? `${d.company.name} (${d.company.id})` : "--"
       ];
     });
   }

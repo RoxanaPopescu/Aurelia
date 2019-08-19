@@ -134,27 +134,6 @@ export default class extends React.Component<Props> {
       driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
     ) {
       return [
-        {
-          key: "select",
-          content: (
-            <InputCheckbox
-              checked={
-                driverDispatchService.assignedRoutes.length !== 0 &&
-                driverDispatchService.selectedItemIndexes.length ===
-                  driverDispatchService.assignedRoutes.length
-              }
-              onChange={checked => {
-                var checkedRows: number[] = [];
-                if (checked) {
-                  driverDispatchService.assignedRoutes.forEach((p, i) => {
-                    checkedRows.push(i);
-                  });
-                }
-                driverDispatchService.selectedItemIndexes = checkedRows;
-              }}
-            />
-          )
-        },
         { key: "reference", content: "Reference" },
         { key: "customer", content: "Customer" },
         { key: "date-start", content: "Date start" },
@@ -255,7 +234,8 @@ export default class extends React.Component<Props> {
   private getDisabledRowIndexes() {
     let array: number[] = [];
 
-    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
+    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug &&
+        this.props.page !== "forecasts") {
       driverDispatchService.forecasts.map((f, i) => {
         if (f.slots.total === f.slots.assigned) {
           array.push(i);
@@ -321,7 +301,7 @@ export default class extends React.Component<Props> {
           <Link
             to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
               ":id",
-              p.driver.id
+              p.driver.id.toString()
             )}
             key={`preBooking-${p.slug}-driver-${p.driver.id}`}
           >
@@ -342,24 +322,6 @@ export default class extends React.Component<Props> {
     ) {
       return driverDispatchService.assignedRoutes.map((ar, i) => {
         return [
-          // tslint:disable-next-line: jsx-wrap-multiline
-          <InputCheckbox
-            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
-            onChange={checked => {
-              var checkedRows = driverDispatchService.selectedItemIndexes;
-              if (
-                checked &&
-                driverDispatchService.selectedItemIndexes.indexOf(i) === -1
-              ) {
-                checkedRows.push(i);
-              } else {
-                checkedRows.splice(checkedRows.indexOf(i), 1);
-              }
-
-              driverDispatchService.selectedItemIndexes = checkedRows;
-            }}
-            key={ar.id}
-          />,
           // tslint:disable-next-line: jsx-wrap-multiline
           <Link
             to={SubPage.path(SubPage.RouteDetails).replace(":id", ar.slug)}
@@ -446,10 +408,6 @@ export default class extends React.Component<Props> {
       DispatchState.map.unassignedRoute.slug
     ) {
       return "min-content auto auto auto auto auto auto auto";
-    } else if (
-      driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
-    ) {
-      return "min-content auto auto auto auto auto auto auto auto";
     } else {
       return undefined;
     }

@@ -22,7 +22,7 @@ export class RouteDispatchService {
 
   public async getDrivers(vehicleTypeId?: string): Promise<DriverInfo[]> {
     let items: { [Key: string]: string } = {};
-    
+
     if (vehicleTypeId) {
       items.vehicleTypeId = vehicleTypeId;
     }
@@ -44,7 +44,7 @@ export class RouteDispatchService {
   public async assignDriver(route: Route, driver: Driver): Promise<void> {
     const response = await fetch(
       BaseService.url("dispatch/route/assignDriver"),
-      BaseService.defaultConfig({ routeId: route.id, driverId: driver.id.toString() })
+      BaseService.defaultConfig({ routeId: route.id, driverId: driver.id })
     );
 
     if (!response.ok) {

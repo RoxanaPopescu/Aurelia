@@ -22,24 +22,4 @@
       }
     }
   }
-
-  .c-assignRoutes-complexity {
-    display: flex;
-    margin-right: 2rem;
-
-    .c-assignRoutes-complexity-bar {
-      width: 2.5rem;
-      height: 1rem;
-      background-color: var(--colorNeutralLight);
-
-      &:not(:last-child) {
-        margin-right: 1.25rem;
-      }
-
-      .c-assignRoutes-complexity-filler {
-        background-color: var(--colorBackgroundPrimary);
-        height: 100%;
-      }
-    }
-  }
 }

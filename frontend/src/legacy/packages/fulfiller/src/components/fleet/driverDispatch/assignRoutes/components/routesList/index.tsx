@@ -10,6 +10,7 @@ import { driverDispatchService } from "../../../driverDispatchService";
 
 interface Props {
   selectedPreBooking?: PreBooking;
+  selectedRoute?: Route;
   ids?: string[];
   onRouteSelection(route: Route);
   matchedRoutes: Route[];
@@ -20,6 +21,7 @@ interface State {
   search?: string;
   routes: Route[];
   queriedRoutes: Route[];
+  selectedPreBooking?: PreBooking;
 }
 
 @observer
@@ -28,14 +30,78 @@ export default class extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      selectedRoute: undefined,
+      selectedRoute: props.selectedRoute,
       routes: [],
-      queriedRoutes: []
+      queriedRoutes: [],
+      selectedPreBooking: props.selectedPreBooking
     };
+  }
+
+  componentWillReceiveProps(props: Props) {
+    if (props.selectedPreBooking) {
+      this.setState({
+        selectedPreBooking: props.selectedPreBooking,
+        selectedRoute: props.selectedRoute
+      }, () => {
+        this.fetchData();
+      })
+    } else {
+      if (!this.props.ids && this.state.routes.length > 0) {
+        this.setState({
+          routes: [],
+          selectedRoute: props.selectedRoute
+        })
+      } else {
+        this.setState({
+          selectedRoute: props.selectedRoute
+        })
+      }
+    }
   }
 
   componentDidMount() {
     this.fetchData();
+  }
+
+  render() {
+    return (
+      <>
+        <div className="c-assignRoutes-routes">
+          <InfoBox
+            data={[
+              { name: "Unassigned routes", value: this.state.routes.length }
+            ]}
+          />
+          <Input
+            className="c-createPreBooking-search"
+            headline="Search for specific routes"
+            placeholder={Localization.sharedValue("Search_TypeToSearch")}
+            onChange={(value, event) => {
+              if (event) {
+                event.persist();
+              }
+
+              this.onSearchChange(value);
+            }}
+            value={this.state.search}
+          />
+          <TableComponent
+            newVersion={true}
+            data={{
+              headers: this.getHeaders(),
+              rows: this.getRows()
+            }}
+            accordionRows={rowIndex => {
+              if (rowIndex !== undefined) {
+                return this.renderAccordionContent(this.state.routes[rowIndex]);
+              }
+              return <></>;
+            }}
+            gridTemplateColumns="min-content auto auto 60rem auto auto"
+          />
+        </div>
+      </>
+    );
   }
 
   private async fetchData(): Promise<void> {
@@ -50,23 +116,17 @@ export default class extends React.Component<Props, State> {
       }
     }
 
-    if (this.props.selectedPreBooking) {
-      // const response = await fetch(
-      //   BaseService.url("routes/details", { routeSlug: "R7909833124" }),
-      //   BaseService.defaultConfig()
-      // );
-      // if (response.status === 404) {
-      //   const error = new Error(
-      //     Localization.sharedValue("Error_RouteNotFound")
-      //   );
-      //   error.name = "not-found-error";
-      //   throw error;
-      // }
-      // if (!response.ok) {
-      //   throw new Error(Localization.sharedValue("Error_General"));
-      // }
-      // const data = await response.json();
-      // this.setState({ routes: [new Route(data)] });
+    if (this.state.selectedPreBooking) {
+      var preBookingResponse = await driverDispatchService.fetchUnassignedRoutes(
+        this.state.selectedPreBooking.forecast.timePeriod.from,
+        this.state.selectedPreBooking.forecast.timePeriod.to,
+        this.state.selectedPreBooking.forecast.timePeriod.from,
+        this.state.selectedPreBooking.forecast.timePeriod.to,
+        []);
+
+      this.setState({
+        routes: preBookingResponse
+      })
     }
   }
 
@@ -113,8 +173,10 @@ export default class extends React.Component<Props, State> {
     if (route.complexity !== undefined) {
       return (
         <>
-          <div className="c-assignRoutes-complexity">{bars}</div>
-          {route.complexity.toFixed(2)}
+          <div className="c-assignRoutes-complexityContainer">
+            <div className="c-assignRoutes-complexity">{bars}</div>
+            {route.complexity.toFixed(2)}
+          </div>
         </>
       );
     } else {
@@ -135,9 +197,6 @@ export default class extends React.Component<Props, State> {
               this.state.selectedRoute === undefined ||
               r.id !== this.state.selectedRoute.id
             ) {
-              this.setState({
-                selectedRoute: r
-              });
               this.props.onRouteSelection(r);
             }
           }}
@@ -199,47 +258,6 @@ export default class extends React.Component<Props, State> {
           <div>{route.vehicleType.name}</div>
         </div>
       </div>
-    );
-  }
-
-  render() {
-    return (
-      <>
-        <div className="c-assignRoutes-routes">
-          <InfoBox
-            data={[
-              { name: "Unassigned routes", value: this.state.routes.length }
-            ]}
-          />
-          <Input
-            className="c-createPreBooking-search"
-            headline="Search for specific routes"
-            placeholder={Localization.sharedValue("Search_TypeToSearch")}
-            onChange={(value, event) => {
-              if (event) {
-                event.persist();
-              }
-
-              this.onSearchChange(value);
-            }}
-            value={this.state.search}
-          />
-          <TableComponent
-            newVersion={true}
-            data={{
-              headers: this.getHeaders(),
-              rows: this.getRows()
-            }}
-            accordionRows={rowIndex => {
-              if (rowIndex !== undefined) {
-                return this.renderAccordionContent(this.state.routes[rowIndex]);
-              }
-              return <></>;
-            }}
-            gridTemplateColumns="min-content auto auto 60rem auto auto"
-          />
-        </div>
-      </>
     );
   }
 }

@@ -15,6 +15,11 @@ import RoutesList from "./components/routesList";
 import AsigneeList from "./components/asigneeList";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
+import Localization from '../../../../../../shared/src/localization/index';
+import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
+import { driverDispatchService } from '../driverDispatchService';
+import Toast from '../../../../../../shared/src/webKit/toast/index';
+import { ToastType } from '../../../../../../shared/src/webKit/toast/index';
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -30,6 +35,7 @@ interface State {
   matches: { route: Route; assignee: Driver | PreBooking }[];
   selectedAssignee?: Driver | PreBooking;
   selectedRoute?: Route;
+  toasts: JSX.Element[];
 }
 
 @observer
@@ -47,63 +53,15 @@ export default class AssignRoutesComponent extends React.Component<
       routes: [],
       preBookings: [],
       ids: this.props.match.params.ids.split(","),
-      selectedAssignee: undefined
+      selectedAssignee: undefined,
+      toasts: []
     };
-  }
-
-  componentDidMount() {
-    // this.fetchData();
-  }
-
-  // private async fetchDrivers(
-  //   routes: Route
-  // ): Promise<{ drivers: Driver[]; totalCount: number }> {
-  //   return await driverDispatchService.fetchDrivers({
-  //     date: routes[0].date,
-  //     search: this.state.search ? this.state.search : "",
-  //     driverIds: []
-  //   });
-  // }
-
-  // private async assignRoutes(saveAndClose?: boolean) {
-
-  // }
-
-  private getHeaders() {
-    return [
-      { key: "customer", content: "Customer" },
-      { key: "date", content: "Date" },
-      { key: "starting-address", content: "Starting address" },
-      { key: "end-address", content: "End address" },
-      { key: "driver", content: "Driver" },
-      { key: "driver-phone", content: "Phone" },
-      { key: "vehicle", content: "Vehicle" },
-      { key: "stops", content: "Stops" },
-      { key: "colli", content: "Colli" },
-      { key: "complexity", content: "Complexity" }
-    ];
-  }
-
-  private getRows() {
-    return this.state.matches.map(m => {
-      return [
-        m.route.consignorNames,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug,
-        m.route.slug
-      ];
-    });
   }
 
   render() {
     return (
       <PageContentComponent className="c-assignRoutes">
+        {this.state.toasts}
         <PageHeaderComponent
           path={[
             {
@@ -128,6 +86,7 @@ export default class AssignRoutesComponent extends React.Component<
                 onRouteSelection={route => {
                   this.setState({ selectedRoute: route })
                 }}
+                selectedRoute={this.state.selectedRoute}
                 matchedRoutes={this.state.matches.map(m => m.route)}
               />
             )}
@@ -138,6 +97,7 @@ export default class AssignRoutesComponent extends React.Component<
                   : undefined
               }
               selectedRoute={this.state.selectedRoute}
+              selectedAssignee={this.state.selectedAssignee}
               onAssigneeSelection={assignee =>
                 this.setState({ selectedAssignee: assignee })
               }
@@ -150,6 +110,7 @@ export default class AssignRoutesComponent extends React.Component<
                     ? this.state.selectedAssignee
                     : undefined
                 }
+                selectedRoute={this.state.selectedRoute}
                 onRouteSelection={route => {
                   this.setState({ selectedRoute: route })
                 }}
@@ -173,7 +134,9 @@ export default class AssignRoutesComponent extends React.Component<
                     assignee: this.state.selectedAssignee
                   });
                   this.setState({
-                    matches: matches
+                    matches: matches,
+                    selectedAssignee: undefined,
+                    selectedRoute: undefined
                   });
                 }
               }}
@@ -197,7 +160,7 @@ export default class AssignRoutesComponent extends React.Component<
             size={ButtonSize.Medium}
             disabled={this.state.matches.length === 0}
             onClick={() => {
-              // this.createPreBookings();
+              this.assignDrivers()
             }}
           >
             Assign drivers
@@ -205,5 +168,185 @@ export default class AssignRoutesComponent extends React.Component<
         </div>
       </PageContentComponent>
     );
+  }
+
+  private async assignDrivers() {
+    var response = await driverDispatchService.assignDrivers(
+      this.state.matches.map(m => {
+        var driverId = 0;
+        if (m.assignee instanceof Driver) {
+          driverId = m.assignee.id;
+        } else if (m.assignee instanceof PreBooking) {
+          driverId = m.assignee.driver.id;
+        }
+        return { routeId: m.route.id, driverId: driverId };
+      })
+    );
+
+    if (response !== undefined) {
+      if (response.filter(r => !r.isAssigned).length === 0) {
+        driverDispatchService.toast = {
+          message: `${response.length} routes have been assigned`,
+          type: "ok"
+        }
+        this.props.history.goBack();
+      } else {
+        var toasts: JSX.Element[] = [];
+
+        toasts.push(
+          <Toast
+            key="successToast"
+            type={ToastType.Success}
+            remove={() => this.setState({ toasts: this.state.toasts.filter(t => t.key === "successToast") })}
+          >
+            {`${response.filter(r => r.isAssigned).length} routes have been assigned`}
+          </Toast>
+        )
+
+        toasts.push(
+          <Toast
+            key="alertToast"
+            type={ToastType.Alert}
+            remove={() => this.setState({ toasts: this.state.toasts.filter(t => t.key === "alertToast") })}
+          >
+            {`${response.filter(r => !r.isAssigned).length} routes failed to be assigned to the chosen drivers.`}
+          </Toast>
+        )
+
+        this.setState({
+          matches: this.state.matches.filter(m => response!.filter(r => r.routeId === m.route.id).length === 0)
+        })
+      }
+    }
+  }
+
+  private assigneeName(assignee: Driver | PreBooking): JSX.Element {
+    if (assignee instanceof Driver) {
+      return (
+        <a
+          target="_blank"
+          href={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(":id", assignee.id.toString())}>
+          {`${assignee.formattedName} (${assignee.id})`}
+        </a>
+      );
+    } else if (assignee instanceof PreBooking) {
+      return (
+        <a
+          target="_blank"
+          href={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(":id", assignee.driver.id.toString())}>
+          {`${assignee.driver.formattedName} (${assignee.driver.id})`}
+        </a>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
+  private assigneePhone(assignee: Driver | PreBooking): JSX.Element {
+    if (assignee instanceof Driver) {
+      return (
+        <a
+          href={`tel:${assignee.phone.number}`}>
+          {assignee.phone.number}
+        </a>
+      );
+    } else if (assignee instanceof PreBooking) {
+      return (
+        <a
+          href={`tel:${assignee.driver.phone.number}`}>
+          {assignee.driver.phone.number}
+        </a>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
+  private renderComplexity(route: Route) {
+    var bars: JSX.Element[] = [];
+
+    for (var i = 1; i <= 4; i++) {
+      var width = 100;
+      if (i * 25 > route.complexity) {
+        if (i * 25 - route.complexity > 25) {
+          width = 0;
+        } else {
+          width = route.complexity % (i * 25);
+        }
+      }
+
+      bars.push(
+        <div
+          key={`route-${route.id}-bar-${i}`}
+          className="c-assignRoutes-complexity-bar"
+        >
+          <div
+            style={{ width: `${width}%` }}
+            className="c-assignRoutes-complexity-filler"
+          />
+        </div>
+      );
+    }
+
+    if (route.complexity !== undefined) {
+      return (
+        <>
+          <div className="c-assignRoutes-complexityContainer">
+            <div className="c-assignRoutes-complexity">{bars}</div>
+            {route.complexity.toFixed(2)}
+          </div>
+          <Button
+          size={ButtonSize.Small}
+          className="c-assignRoutes-removePairing"
+          onClick={() => {
+            var matches = this.state.matches;
+            this.setState({
+              matches: matches.filter(m => m.route.id !== route.id),
+              selectedAssignee: undefined,
+              selectedRoute: undefined
+            })
+          }}
+          type={ButtonType.Light}
+        >
+          Remove pairing
+        </Button>
+      </>
+      );
+    } else {
+      return "--";
+    }
+  }
+
+  private getHeaders(): { key: string, content: string }[] {
+    return [
+      { key: "customer", content: "Customer" },
+      { key: "datetime-interval", content: "Datetime interval" },
+      { key: "starting-address", content: "Starting address" },
+      { key: "end-address", content: "End address" },
+      { key: "driver", content: "Driver" },
+      { key: "driver-phone", content: "Phone" },
+      { key: "vehicle", content: "Vehicle" },
+      { key: "stops", content: "Stops" },
+      { key: "complexity", content: "Complexity" }
+    ];
+  }
+
+  private getRows() {
+    return this.state.matches.map(m => {
+      return [
+        m.route.consignorNames,
+        Localization.formatDateTimeRange(
+          new DateTimeRange({
+             from: m.route.startDateTime,
+             to: m.route.endDateTime })),
+        m.route.startAddress.primary,
+        m.route.endAddress.primary,
+        this.assigneeName(m.assignee),
+        this.assigneePhone(m.assignee),
+        m.route.vehicleType.name,
+        m.route.stopCount.toString(),
+        this.renderComplexity(m.route)
+      ];
+    });
   }
 }

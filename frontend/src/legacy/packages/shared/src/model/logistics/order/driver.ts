@@ -2,7 +2,7 @@ import { Phone } from "../../general/phone";
 import { VehicleType } from "../../session";
 
 export class Driver {
-  public id: string;
+  public id: number;
   public firstName: string;
   public lastName: string;
   public phone: Phone;

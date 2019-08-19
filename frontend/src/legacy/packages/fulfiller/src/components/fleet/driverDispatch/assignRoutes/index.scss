@@ -1,6 +1,6 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-assignRoutes {
+.pageContent-content.c-assignRoutes {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -47,6 +47,36 @@
     }
   }
 
+  .c-assignRoutes-complexityContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+
+    .c-assignRoutes-complexity {
+      display: flex;
+      margin-right: 2rem;
+
+      .c-assignRoutes-complexity-bar {
+        width: 2.5rem;
+        height: 1rem;
+        background-color: var(--colorNeutralLight);
+
+        &:not(:last-child) {
+          margin-right: 1.25rem;
+        }
+
+        .c-assignRoutes-complexity-filler {
+          background-color: var(--colorBackgroundPrimary);
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .c-assignRoutes-removePairing {
+    margin-left: auto
+  }
+
   .gridTable-container-new .c-gridTable.c-gridTable-blank {
     padding-bottom: 200px !important;
   }
@@ -70,7 +100,7 @@
     overflow: overlay;
 
     > * {
-      padding: 5rem 10rem;
+      padding: 0 10rem;
       border: var(--border-width-thin) solid var(--colorNeutralExtraLight);
       border-radius: var(--border-radius-small);
       flex: 1;
@@ -78,6 +108,15 @@
 
       &:first-child {
         margin-right: 5rem;
+      }
+
+      > * {
+        &:first-child {
+          margin-top: 5rem;
+        }
+        &:last-child {
+          margin-bottom: 5rem;
+        }
       }
     }
   }
@@ -92,9 +131,13 @@
 }
 
 .c-assignRoutes-assignedRoutes {
-  padding: 7rem 8rem 0;
+  padding: 0 8rem 0;
   flex-grow: 1;
   overflow: overlay;
+
+  .gridTable-container-new {
+    margin-top: 7rem;
+  }
 }
 
 .c-assignRoutes-actionContainer {

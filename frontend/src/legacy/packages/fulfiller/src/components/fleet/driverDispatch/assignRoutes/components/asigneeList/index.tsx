@@ -9,12 +9,14 @@ import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import InfoBox from "../../../components/infoBox";
 import Localization from "shared/src/localization";
 import { DateTimeRange } from "../../../../../../../../shared/src/model/general/dateTimeRange";
+import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 
 interface Props {
   preBookingIds?: string[];
   selectedRoute?: Route;
   onAssigneeSelection(asignee: Driver | PreBooking);
-  matchedAssignees: (Driver | PreBooking)[]
+  matchedAssignees: (Driver | PreBooking)[];
+  selectedAssignee?: Driver | PreBooking;
 }
 
 interface State {
@@ -33,7 +35,7 @@ export default class extends React.Component<Props, State> {
 
     this.state = {
       state: "pre-bookings",
-      selectedAssignee: undefined,
+      selectedAssignee: props.selectedAssignee,
       preBookings: [],
       drivers: [],
       selectedRoute: props.selectedRoute
@@ -43,13 +45,85 @@ export default class extends React.Component<Props, State> {
   componentWillReceiveProps(props: Props) {
     if (props.selectedRoute) {
       this.setState({
-        selectedRoute: props.selectedRoute
+        selectedRoute: props.selectedRoute,
+        selectedAssignee: props.selectedAssignee
       }, () => this.fetchData())
+    } else {
+      if (!this.props.preBookingIds && (this.state.drivers.length > 0 || this.state.preBookings.length > 0)) {
+        this.setState({
+          preBookings: [],
+          drivers: [],
+          selectedAssignee: props.selectedAssignee
+        })
+      } else {
+        this.setState({
+          selectedRoute: props.selectedRoute
+        })
+      }
     }
   }
 
   componentDidMount() {
     this.fetchData();
+  }
+
+  render() {
+    return (
+      <div className="c-assignRoutes-assignees">
+        <InfoBox
+          data={this.state.state === "pre-bookings" ?
+          [
+            { name: "Pre-bookings", value: this.state.preBookings.length }
+          ] :
+          [
+            { name: "Drivers", value: this.state.drivers.length }
+          ]}
+        />
+        <div className="c-assignRoutes-assigneeState">
+          <Input
+            className="c-createPreBooking-search"
+            headline="Search for specific drivers"
+            placeholder={Localization.sharedValue("Search_TypeToSearch")}
+            onChange={(value, event) => {
+              if (event) {
+                event.persist();
+              }
+
+              this.onSearchChange(value);
+            }}
+            value={this.state.search}
+          />
+          {!this.props.preBookingIds && (
+            <InputRadioGroup
+              radioButtons={[
+                { value: "pre-bookings", headline: "Pre-bookings" },
+                { value: "drivers", headline: "Drivers" }
+              ]}
+              onChange={value => {
+                if (value !== this.state.state) {
+                  this.setState({
+                    state: value
+                  }, () => {
+                    if (this.state.selectedRoute) {
+                      this.fetchData();
+                    }
+                  });
+                }
+              }}
+              checkedValue={this.state.state}
+            />
+          )}
+        </div>
+        <TableComponent
+          newVersion={true}
+          data={{
+            headers: this.getHeaders(),
+            rows: this.getRows()
+          }}
+          gridTemplateColumns="min-content auto auto auto"
+        />
+      </div>
+    );
   }
 
   private async fetchData(): Promise<void> {
@@ -131,10 +205,51 @@ export default class extends React.Component<Props, State> {
         content: ""
       },
       { key: "driver", content: "Driver" },
-      { key: "id", content: "Id" },
       { key: "phone", content: "phone" },
       { key: "haulier", content: "Haulier" }
     ];
+  }
+
+  private assigneePhone(assignee: Driver | PreBooking): JSX.Element {
+    if (assignee instanceof Driver) {
+      return (
+        <a
+          href={`tel:${assignee.phone.number}`}>
+          {assignee.phone.number}
+        </a>
+      );
+    } else if (assignee instanceof PreBooking) {
+      return (
+        <a
+          href={`tel:${assignee.driver.phone.number}`}>
+          {assignee.driver.phone.number}
+        </a>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
+  private assigneeName(assignee: Driver | PreBooking): JSX.Element {
+    if (assignee instanceof Driver) {
+      return (
+        <a
+          target="_blank"
+          href={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(":id", assignee.id.toString())}>
+          {`${assignee.formattedName} (${assignee.id})`}
+        </a>
+      );
+    } else if (assignee instanceof PreBooking) {
+      return (
+        <a
+          target="_blank"
+          href={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(":id", assignee.driver.id.toString())}>
+          {`${assignee.driver.formattedName} (${assignee.driver.id})`}
+        </a>
+      );
+    } else {
+      return <></>;
+    }
   }
 
   private getRows() {
@@ -151,18 +266,14 @@ export default class extends React.Component<Props, State> {
                 !this.state.selectedAssignee ||
                 d.id !== this.state.selectedAssignee.id
               ) {
-                this.setState({
-                  selectedAssignee: d
-                });
                 this.props.onAssigneeSelection(d);
               }
             }}
             checkedValue={this.state.selectedAssignee instanceof Driver && this.state.selectedAssignee.id}
           />,
-          d.formattedName,
-          d.id,
-          d.phone.number,
-          d.company ? `${d.company.name} (${d.company.id})` : "--"
+          this.assigneeName(d),
+          this.assigneePhone(d),
+          d.company && d.company.name !== "" ? `${d.company.name} (${d.company.id})` : "--"
         ];
       });
     } else {
@@ -178,18 +289,14 @@ export default class extends React.Component<Props, State> {
                 !this.state.selectedAssignee ||
                 p.id !== this.state.selectedAssignee.id
               ) {
-                this.setState({
-                  selectedAssignee: p
-                });
                 this.props.onAssigneeSelection(p);
               }
             }}
             checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
           />,
-          p.driver.formattedName,
-          p.driver.id,
-          p.driver.phone.number,
-          p.driver.company
+          this.assigneeName(p),
+          this.assigneePhone(p),
+          p.driver.company && p.driver.company.name !== ""
             ? `${p.driver.company.name} (${p.driver.company.id})`
             : "--"
         ];
@@ -208,64 +315,5 @@ export default class extends React.Component<Props, State> {
         this.fetchPreBookings(this.state.selectedRoute);
       }
     }
-  }
-
-  render() {
-    return (
-      <div className="c-assignRoutes-assignees">
-        <InfoBox
-          data={this.state.state === "pre-bookings" ?
-          [
-            { name: "Pre-bookings", value: this.state.preBookings.length }
-          ] :
-          [
-            { name: "Drivers", value: this.state.drivers.length }
-          ]}
-        />
-        <div className="c-assignRoutes-assigneeState">
-          <Input
-            className="c-createPreBooking-search"
-            headline="Search for specific drivers"
-            placeholder={Localization.sharedValue("Search_TypeToSearch")}
-            onChange={(value, event) => {
-              if (event) {
-                event.persist();
-              }
-
-              this.onSearchChange(value);
-            }}
-            value={this.state.search}
-          />
-          {!this.props.preBookingIds && (
-            <InputRadioGroup
-              radioButtons={[
-                { value: "pre-bookings", headline: "Pre-bookings" },
-                { value: "drivers", headline: "Drivers" }
-              ]}
-              onChange={value => {
-                if (value !== this.state.state) {
-                  this.setState({
-                    state: value
-                  }, () => {
-                    if (this.state.selectedRoute) {
-                      this.fetchData();
-                    }
-                  });
-                }
-              }}
-              checkedValue={this.state.state}
-            />
-          )}
-        </div>
-        <TableComponent
-          newVersion={true}
-          data={{
-            headers: this.getHeaders(),
-            rows: this.getRows()
-          }}
-          gridTemplateColumns="min-content auto auto auto auto"
-        />
-      </div>
-    );
   }
 }

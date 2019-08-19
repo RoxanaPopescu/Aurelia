@@ -454,15 +454,21 @@ export class DriverDispatchService {
    * Fetches unassigned routes
    * @returns A promise that will be resolved with an array of routes.
    */
-  public async fetchUnassignedRoutes(): Promise<Route[]> {
+  public async fetchUnassignedRoutes(
+    startDate?: DateTime,
+    endDate?: DateTime,
+    startTime?: DateTime,
+    endTime?: DateTime,
+    fulfileeIds?: { name: string, id: string | number }[]
+  ): Promise<Route[]> {
     const response = await fetch(
       BaseService.url("dispatch/route/unassigned/list"),
       BaseService.defaultConfig({
-        startDate: this.startDate,
-        endDate: this.endDate,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id),
+        startDate: startDate ? startDate : this.startDate,
+        endDate: endDate ? endDate : this.endDate,
+        startTime: startTime ? startTime : this.startTime,
+        endTime: endTime ? endTime : this.endTime,
+        fulfilleeIds: fulfileeIds ? fulfileeIds : this.fulfilleeFilters.map(ff => ff.id),
         page: 1, // Temporary
         pageSize: 2000 // Temporary
       })
@@ -622,6 +628,42 @@ export class DriverDispatchService {
   }
 
   /**
+   * Assigns an array of drivers to an array of unassigned routes.
+   * @returns A promise that will be resolved with an array of statuses
+   * of the pairings sent.
+   */
+  public async assignDrivers(
+    pairings: { routeId: string, driverId: number }[]
+  ): Promise<{ routeId: string, driverId: number, isAssigned: boolean }[] | undefined> {
+    const response = await fetch(
+      BaseService.url("dispatch/route/assignDrivers"),
+      BaseService.defaultConfig({
+        assignments: pairings
+      })
+    );
+
+    if (response.status === 404) {
+      this.toast = { message: "404 not found", type: "error" };
+      return;
+    }
+    if (!response.ok) {
+      this.toast = { message: "The operation failed", type: "error" };
+      return;
+    }
+
+    try {
+      let responseJson = await response.json();
+      return responseJson;
+    } catch {
+      this.toast = {
+        message: Localization.sharedValue("Error_General"),
+        type: "error"
+      };
+      return;
+    }
+  }
+
+  /**
    * Fetches a list of forecasts matching the specific filters.
    */
   public async fetchForecasts(
@@ -710,10 +752,8 @@ export class DriverDispatchService {
    */
   public async fetchPreBookingsFromIds(ids: string[]): Promise<PreBooking[]> {
     const response = await fetch(
-      BaseService.url("dispatch/prebooking/list"),
+      BaseService.url("dispatch/prebooking/listbyids"),
       BaseService.defaultConfig({
-        startDate: this.startDate,
-        endDate: this.endDate,
         ids: ids
       })
     );
