@@ -111,6 +111,7 @@ export default class extends React.Component<Props, State> {
         <div className="c-driverDispatch-dateContainer">
           <DateComponent
             headline="Date start"
+            minimum={DateTime.local().startOf("day")}
             date={this.state.dateFrom}
             size="medium"
             onChange={date => {

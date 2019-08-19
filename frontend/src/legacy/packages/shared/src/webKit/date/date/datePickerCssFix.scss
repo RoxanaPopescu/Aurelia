@@ -67,6 +67,10 @@
     margin: .166em;
   }
 
+  .react-datepicker__day--outside-month {
+    opacity: .5;
+  }
+
   .react-datepicker__day:hover {
     border-radius: .3em;
   }
