@@ -2,13 +2,14 @@ import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
-import { LoadingOverlay, Button, ButtonType, ButtonSize } from "shared/src/webKit";
+import { LoadingOverlay, Button, ButtonType, ButtonSize, Input } from "shared/src/webKit";
 import { DriverService } from "../../services/driverService";
 import { Driver } from "../../models/driver";
 import { DriverForm } from "./components/driverForm/driverForm";
 import H from "history";
 import "./driverProfile.scss";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
+import { Dialog } from "shared/src/components/dialog/dialog";
 
 export interface DriverProfileProps {
   history: H.History;
@@ -22,7 +23,14 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
   @observable
   private validate = false;
 
+  @observable
+  private changePassword = false;
+
+  @observable
+  private newPassword: string | undefined;
+
   public render() {
+    const passwordMinLength = 6;
     return (
       <>
 
@@ -31,7 +39,7 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
 
         {this.props.driverService.driver != null &&
         <div className="c-driver-tab c-driver-driverProfile">
-        
+
           <DriverForm validate={this.validate} driver={this.props.driverService.driver}/>
 
           <Button
@@ -45,6 +53,14 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
               Localization.operationsValue("Driver_Profile_AddDriver")}
           </Button>
 
+          <Button
+            size={ButtonSize.Medium}
+            type={ButtonType.Light}
+            onClick={() => this.onChangePassword()}
+          >
+            {Localization.operationsValue("Driver_Profile_ChangePassword")}
+          </Button>
+
           {this.props.driverService.driver.id != null &&
           <Button
             size={ButtonSize.Medium}
@@ -56,10 +72,41 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
 
         </div>}
 
+        {this.changePassword && (
+          <Dialog
+            title={"Skift password"}
+            onClose={() =>
+            {
+              this.newPassword = undefined;
+              this.changePassword = false
+            }}
+          >
+            <div className="c-driver-changePasswordForm">
+              <Input
+                size={"medium"}
+                headline={Localization.operationsValue("Driver_Profile_Password")}
+                placeholder={Localization.operationsValue("Driver_Profile_PasswordPlaceholder")}
+                onChange={value => this.newPassword = value}
+                error={this.newPassword != null && this.newPassword.trim().length < passwordMinLength}
+                value={this.newPassword}
+              />
+            </div>
+
+            <Button
+              disabled={!this.newPassword || this.newPassword.trim().length < passwordMinLength}
+              size={ButtonSize.Medium}
+              type={ButtonType.Action}
+              onClick={(x) => this.setPassword(this.newPassword!.trim())}
+            >
+              {Localization.operationsValue("Driver_Profile_SetPassword")}
+            </Button>
+          </Dialog>
+        )}
+
       </>
     );
   }
-  
+
   private async onSaveDriver() {
     try {
       const isNewDriver = this.props.driverService.driver.id == null;
@@ -73,7 +120,7 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
       alert(Localization.operationsValue("Driver_Profile_CouldNotSaveDriver"));
     }
   }
-  
+
   private async onDeleteDriver() {
     if (!confirm(Localization.operationsValue("Driver_Profile_ConfirmDeleteDriver"))) {
       return;
@@ -84,5 +131,19 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
     } catch (error) {
       alert(Localization.operationsValue("Driver_Profile_CouldNotDeleteDriver"));
     }
+  }
+
+  private async onChangePassword() {
+    this.changePassword = true;
+  }
+
+  private async setPassword(newPassword: string) {
+    try {
+      await this.props.driverService.setPassword(newPassword);
+    } catch (error) {
+      alert(Localization.operationsValue("Driver_Profile_CouldNotSetPassword"));
+    }
+    this.newPassword = undefined;
+    this.changePassword = false;
   }
 }

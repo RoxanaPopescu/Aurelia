@@ -11,18 +11,18 @@ export class DriverService {
       this._driver = new Driver();
     }
   }
-  
+
   @observable
   private _busy: boolean = false;
-  
+
   @observable
   private _driver: Driver;
-  
+
   @computed
   public get busy(): boolean {
     return this._busy;
   }
-  
+
   @computed
   public get driver(): Driver {
     return this._driver;
@@ -37,6 +37,18 @@ export class DriverService {
     if (!response.ok) {
       this._busy = false;
       throw new Error("Could not delete driver.");
+    }
+  }
+
+  public async setPassword(newPassword: string): Promise<void> {
+    const response = await fetch(
+      BaseService.url("drivers/setpassword"),
+      BaseService.defaultConfig({ id: this._driver.id, newPassword })
+    );
+
+    if (!response.ok) {
+      this._busy = false;
+      throw new Error("Could not set password for driver.");
     }
   }
 
