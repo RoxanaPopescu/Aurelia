@@ -57,7 +57,7 @@ export default class extends React.Component<Props, State> {
         })
       } else {
         this.setState({
-          selectedRoute: props.selectedRoute
+          selectedAssignee: props.selectedAssignee
         })
       }
     }
