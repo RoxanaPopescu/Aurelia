@@ -122,7 +122,7 @@ export default class JourneyInformationComponent extends React.Component<
     if (column1 == null && column2 == null) {
       return;
     }
-    
+
     return (
       <div className="c-journeyOverview-passage-section user-select-text">
         <div className="c-journeyOverview-passage-headline font-heading">
@@ -218,11 +218,11 @@ export default class JourneyInformationComponent extends React.Component<
         {this.renderSection(
           {
             headline: Localization.sharedValue("Address_PickupAddress"),
-            content: <>{pickup.location.address.toString()}</>
+            content: <>{pickup.location.address.formattedString()}</>
           },
           {
             headline: Localization.sharedValue("Address_DeliveryAddress"),
-            content: <>{delivery.location.address.toString()}</>
+            content: <>{delivery.location.address.formattedString()}</>
           }
         )}
         {this.renderSection(

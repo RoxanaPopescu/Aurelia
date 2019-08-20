@@ -36,7 +36,7 @@ export class Address {
   /**
    * Formats the address for presentation on a single line.
    */
-  public toString(): string {
+  public formattedString(): string {
     return this.secondary ? `${this.primary}, ${this.secondary}` : this.primary;
   }
 }

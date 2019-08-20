@@ -120,7 +120,7 @@ export default class extends React.Component<Props, State> {
             headers: this.getHeaders(),
             rows: this.getRows()
           }}
-          gridTemplateColumns="min-content auto auto auto"
+          gridTemplateColumns={this.props.preBookingIds ? "min-content auto auto auto auto auto" : "min-content auto auto auto"}
         />
       </div>
     );
@@ -199,15 +199,29 @@ export default class extends React.Component<Props, State> {
   }
 
   private getHeaders() {
-    return [
-      {
-        key: "select",
-        content: ""
-      },
-      { key: "driver", content: "Driver" },
-      { key: "phone", content: "phone" },
-      { key: "haulier", content: "Haulier" }
-    ];
+    if (this.props.preBookingIds) {
+      return [
+        {
+          key: "select",
+          content: ""
+        },
+        { key: "customer", content: "Customer" },
+        { key: "datetime", content: "Datetime" },
+        { key: "start-address", content: "Start address" },
+        { key: "driver", content: "Driver" },
+        { key: "phone", content: "phone" }
+      ];
+    } else {
+      return [
+        {
+          key: "select",
+          content: ""
+        },
+        { key: "driver", content: "Driver" },
+        { key: "phone", content: "phone" },
+        { key: "haulier", content: "Haulier" }
+      ];
+    }
   }
 
   private assigneePhone(assignee: Driver | PreBooking): JSX.Element {
@@ -277,30 +291,57 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
-      var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
-      return preBookings.map(p => {
-        return [
-          // tslint:disable-next-line: jsx-wrap-multiline
-          <InputRadioGroup
-            radioButtons={[{ value: p.driver.id, headline: "" }]}
-            key={p.id}
-            onChange={value => {
-              if (
-                !this.state.selectedAssignee ||
-                p.id !== this.state.selectedAssignee.id
-              ) {
-                this.props.onAssigneeSelection(p);
-              }
-            }}
-            checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
-          />,
-          this.assigneeName(p),
-          this.assigneePhone(p),
-          p.driver.company && p.driver.company.name !== ""
-            ? `${p.driver.company.name} (${p.driver.company.id})`
-            : "--"
-        ];
-      });
+      if (this.props.preBookingIds) {
+        var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
+        return preBookings.map(p => {
+          return [
+            // tslint:disable-next-line: jsx-wrap-multiline
+            <InputRadioGroup
+              radioButtons={[{ value: p.driver.id, headline: "" }]}
+              key={p.id}
+              onChange={value => {
+                if (
+                  !this.state.selectedAssignee ||
+                  p.id !== this.state.selectedAssignee.id
+                ) {
+                  this.props.onAssigneeSelection(p);
+                }
+              }}
+              checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
+            />,
+            p.forecast.fulfillee.name,
+            Localization.formatDateTimeRange(p.forecast.timePeriod),
+            p.forecast.startingLocation.address.formattedString(),
+            this.assigneeName(p),
+            this.assigneePhone(p)
+          ];
+        });
+      } else {
+        var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
+        return preBookings.map(p => {
+          return [
+            // tslint:disable-next-line: jsx-wrap-multiline
+            <InputRadioGroup
+              radioButtons={[{ value: p.driver.id, headline: "" }]}
+              key={p.id}
+              onChange={value => {
+                if (
+                  !this.state.selectedAssignee ||
+                  p.id !== this.state.selectedAssignee.id
+                ) {
+                  this.props.onAssigneeSelection(p);
+                }
+              }}
+              checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
+            />,
+            this.assigneeName(p),
+            this.assigneePhone(p),
+            p.driver.company && p.driver.company.name !== ""
+              ? `${p.driver.company.name} (${p.driver.company.id})`
+              : "--"
+          ];
+        });
+      }
     }
   }
 

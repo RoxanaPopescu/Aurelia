@@ -334,10 +334,10 @@ export class SaveOrder {
       json.consignorOrderId = this.publicOrderId;
     }
     if (this.pickupAddress) {
-      json.pickupAddress = this.pickupAddress.toString();
+      json.pickupAddress = this.pickupAddress.formattedString();
     }
     if (this.deliveryAddress) {
-      json.deliveryAddress = this.deliveryAddress.toString();
+      json.deliveryAddress = this.deliveryAddress.formattedString();
     }
     if (this.deliveryDate) {
       json.deliveryDate = this.deliveryDate.toJSON();

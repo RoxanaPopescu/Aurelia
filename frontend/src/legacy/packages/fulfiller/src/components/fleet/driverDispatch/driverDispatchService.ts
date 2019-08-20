@@ -199,8 +199,8 @@ export class DriverDispatchService {
     this.driverFilters = [];
     this.haulierFilters = [];
 
-    this.startDate = DateTime.local();
-    this.endDate = DateTime.local();
+    this.startDate = DateTime.local().startOf("day");
+    this.endDate = DateTime.local().startOf("day");
 
     this.forecasts = [];
     this.preBookings = [];
@@ -375,6 +375,7 @@ export class DriverDispatchService {
       message: `Removed ${ids.length} pre-bookings`,
       type: "ok"
     };
+    this.selectedItemIndexes = [];
   }
 
   /**

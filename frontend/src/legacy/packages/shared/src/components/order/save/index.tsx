@@ -194,7 +194,7 @@ export default class SaveOrderComponent extends React.Component<Props> {
                 key={index + "-order-pickupAddress"}
                 placeholder={
                   this.saveOrdersStore.generalOrder.pickupAddress
-                    ? this.saveOrdersStore.generalOrder.pickupAddress.toString()
+                    ? this.saveOrdersStore.generalOrder.pickupAddress.formattedString()
                     : Localization.consignorValue(
                         "Order_Create_Placeholder_PickupAddress"
                       )
@@ -493,7 +493,7 @@ export default class SaveOrderComponent extends React.Component<Props> {
             { title: "Ny ordre" }
           ]}
         >
-          
+
           <Button
             onClick={() => this.saveOrdersStore.addOrder()}
             type={ButtonType.Light}
@@ -506,7 +506,7 @@ export default class SaveOrderComponent extends React.Component<Props> {
           </Button>
 
           <div className="pageHeader-actions-separator"/>
-          
+
           <Button
             onClick={() => this.placeOrder()}
             size={ButtonSize.Medium}
@@ -549,7 +549,7 @@ export default class SaveOrderComponent extends React.Component<Props> {
         </PageHeaderComponent>
 
         <PageContentComponent>
-        
+
           <div className="c-order-create-container">
               {this.saveOrdersStore.generalOrderTemplate.length > 0 &&
                 this.saveOrdersStore.orderId === undefined && (

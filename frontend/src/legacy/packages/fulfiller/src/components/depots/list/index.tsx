@@ -38,11 +38,11 @@ export default class RoutePlanningDepotsListComponent extends React.Component<Pr
 
   public getRows(depots: Depot[]) {
     return depots.map(depot =>
-      [ depot.name, depot.location ? depot.location.address.toString() : ""]);
+      [ depot.name, depot.location ? depot.location.address.formattedString() : ""]);
   }
 
   public render() {
-    
+
     if (store.error) {
       return (
         <ErrorInline description={store.error}>
@@ -77,7 +77,7 @@ export default class RoutePlanningDepotsListComponent extends React.Component<Pr
         </PageHeaderComponent>
 
         <PageContentComponent>
-        
+
           <TableComponent
             loading={store.loading}
             generateURL={index => FulfillerSubPage.path(FulfillerSubPage.DepotDetails)

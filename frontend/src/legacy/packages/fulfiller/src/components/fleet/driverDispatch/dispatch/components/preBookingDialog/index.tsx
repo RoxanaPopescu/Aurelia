@@ -40,16 +40,16 @@ export default class extends React.Component<Props, State> {
   private getActionItems(): JSX.Element[] {
     if (this.state.state === "remove") {
       return [
-        // tslint:disable-next-line: jsx-wrap-multiline
-        <InputCheckbox
-          checked={this.state.notifyDriver}
-          onChange={() =>
-            this.setState({ notifyDriver: !this.state.notifyDriver })
-          }
-          key="notify-driver-toggle"
-        >
-          Send notification via SMS
-        </InputCheckbox>,
+        // // tslint:disable-next-line: jsx-wrap-multiline
+        // <InputCheckbox
+        //   checked={this.state.notifyDriver}
+        //   onChange={() =>
+        //     this.setState({ notifyDriver: !this.state.notifyDriver })
+        //   }
+        //   key="notify-driver-toggle"
+        // >
+        //   Send notification via SMS
+        // </InputCheckbox>,
         // tslint:disable-next-line: jsx-wrap-multiline
         <Button
           key="remove-driver-confirm"

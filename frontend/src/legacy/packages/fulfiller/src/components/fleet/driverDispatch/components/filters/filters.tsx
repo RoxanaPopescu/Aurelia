@@ -99,7 +99,7 @@ export default class extends React.Component<Props, State> {
                   month: date.month,
                   day: date.day
                 });
-                driverDispatchService.startDate = temp;
+                driverDispatchService.startDate = temp.startOf("day");
 
                 if (
                   driverDispatchService.startDate
@@ -122,7 +122,7 @@ export default class extends React.Component<Props, State> {
                   month: date.month,
                   day: date.day
                 });
-                driverDispatchService.endDate = temp;
+                driverDispatchService.endDate = temp.startOf("day");
 
                 if (
                   driverDispatchService.endDate

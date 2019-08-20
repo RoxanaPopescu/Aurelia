@@ -181,7 +181,7 @@ export default class OrderDetailsMetaComponent extends React.Component<
         {order.consignee.location &&
           this.metaRow(
             Localization.operationsValue("Order_Details_Address"),
-            order.consignee.location.address.toString()
+            order.consignee.location.address.formattedString()
           )}
         {order.consignee.phone &&
           this.metaRow(
@@ -213,7 +213,7 @@ export default class OrderDetailsMetaComponent extends React.Component<
         {order.consignor.location &&
           this.metaRow(
             Localization.operationsValue("Order_Details_Address"),
-            order.consignor.location.address.toString()
+            order.consignor.location.address.formattedString()
           )}
         {order.consignor.phone &&
           this.metaRow(

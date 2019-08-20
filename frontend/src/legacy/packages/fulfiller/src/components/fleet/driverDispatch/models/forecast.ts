@@ -17,7 +17,7 @@ export class Forecast {
     this.timePeriod = new DateTimeRange(data.timePeriod, {
       setZone: true
     });
-    this.startingLocation = data.startingAddress;
+    this.startingLocation = new Location(data.startingAddress);
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
     this.slots = {
       total: data.slots.total,

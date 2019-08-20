@@ -127,7 +127,7 @@ export default class RouteListComponent extends React.Component<Props> {
           route.reference || "",
           route.status.name,
           Localization.formatDateTime(route.startDateTime),
-          route.startAddress.toString(),
+          route.startAddress.formattedString(),
           route.stopCount.toString()
         ]);
       });

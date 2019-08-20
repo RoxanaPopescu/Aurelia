@@ -138,8 +138,8 @@ export default class OrderListComponent extends React.Component<Props> {
         order.status.name,
         `${order.earliestPickupDate.toLocaleString(DateTime.DATE_SHORT)}`,
         `${order.earliestPickupTime.toString()} - ${order.latestPickupTime.toString()}`,
-        order.pickupLocation.address.toString(),
-        order.deliveryLocation.address.toString()
+        order.pickupLocation.address.formattedString(),
+        order.deliveryLocation.address.formattedString()
       ]);
     });
 

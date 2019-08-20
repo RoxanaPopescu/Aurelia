@@ -134,7 +134,7 @@ export default class extends React.Component<Props> {
             onClick={() => this.toggle()}
           >
             <div>{this.props.routeStop.stopNumber}</div>
-            <div>{this.props.routeStop.location.address.toString()}</div>
+            <div>{this.props.routeStop.location.address.formattedString()}</div>
             <div>
               {Localization.formatDate(
                 this.props.routeStop.arrivalTime ||
