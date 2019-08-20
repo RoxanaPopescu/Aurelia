@@ -1,0 +1,26 @@
+<template>
+
+    <require from="./confirm-release-route.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="confirm-release-route" accent="primary" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <header>
+
+            <h1 class="font-larger focus-hidden" tabindex="-1" autofocus>
+                Release the selected routes to all drivers?
+            </h1>
+
+        </header>
+
+        <footer>
+
+            <button appearance="solid" accent="primary" click.delegate="onButtonClick(true)">Release routes</button>
+            <button appearance="solid" accent="neutral" click.delegate="onButtonClick(false)">Cancel</button>
+
+        </footer>
+
+    </modal-dialog>
+
+</template>
