@@ -73,7 +73,6 @@ $__summary: comment;
 .font-heading-large
 {
     @include font("heading-large");
-    text-transform: uppercase;
     color: var(--color-surface-heading);
 }
 
@@ -82,7 +81,6 @@ $__summary: comment;
 .font-heading
 {
     @include font("heading");
-    text-transform: uppercase;
     color: var(--color-surface-heading);
 }
 

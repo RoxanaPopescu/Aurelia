@@ -52,18 +52,16 @@ $__summary: comment;
 }
 
 /// Text style for large headings.
-/// Use for headings above sections that present data. 
+/// Use for headings above sections that present data.
 .font-heading-large {
   @include font("heading-large");
-  text-transform: uppercase;
   color: var(--surface-heading-color);
 }
 
 /// Text style for headings.
-/// Use for headings above sections that present data. 
+/// Use for headings above sections that present data.
 .font-heading {
   @include font("heading");
-  text-transform: uppercase;
   color: var(--surface-heading-color);
 }
 
