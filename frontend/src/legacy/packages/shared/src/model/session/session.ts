@@ -6,7 +6,7 @@ import { Fulfiller } from "../logistics/fulfiller";
 import { Consignor } from "../logistics/consignor";
 
 // True to fall back to using mock data if the start session call fails, otherwise false.
-const useMockData = true;
+const useMockData = false;
 
 /**
  * Represents reference data for the session.
