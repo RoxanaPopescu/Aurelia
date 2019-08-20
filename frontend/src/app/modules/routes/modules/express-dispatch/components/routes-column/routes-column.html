@@ -133,7 +133,9 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.slug" class="font-monospaced">
-                            ${item.slug}
+                            <span class="text-truncate">
+                                ${item.slug}
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
