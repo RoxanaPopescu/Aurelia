@@ -16,7 +16,7 @@ import {
   ButtonType
 } from "../../../../../../../shared/src/webKit/button/index";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { PreBooking } from "../../models/preBooking";
+import { Prebooking } from "../../models/prebooking";
 import { FulfillerSubPage } from "../../../../navigation/page";
 import { Link } from "react-router-dom";
 import { DateTimeRange } from "../../../../../../../shared/src/model/general/dateTimeRange";
@@ -25,7 +25,7 @@ import Mousetrap from 'mousetrap';
 
 interface Props {
   page: "dispatch" | "forecasts";
-  onPreBookingAction?(preBooking: PreBooking);
+  onPrebookingAction?(prebooking: Prebooking);
   onUnassignedRouteAction?(unassignedRoute: Route);
   onAssignedRouteAction?(assignedRoute: Route);
   onForecastChange?(forecast: Forecast, totalSlots: number);
@@ -74,7 +74,7 @@ export default class extends React.Component<Props> {
         ];
       }
     } else if (
-      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+      driverDispatchService.state.slug === DispatchState.map.prebooking.slug
     ) {
       return [
         {
@@ -82,14 +82,14 @@ export default class extends React.Component<Props> {
           content: (
             <InputCheckbox
               checked={
-                driverDispatchService.preBookings.length !== 0 &&
+                driverDispatchService.prebookings.length !== 0 &&
                 driverDispatchService.selectedItemIndexes.length ===
-                  driverDispatchService.preBookings.length
+                  driverDispatchService.prebookings.length
               }
               onChange={checked => {
                 var checkedRows: number[] = [];
                 if (checked) {
-                  driverDispatchService.preBookings.forEach((p, i) => {
+                  driverDispatchService.prebookings.forEach((p, i) => {
                     checkedRows.push(i);
                   });
                 }
@@ -168,7 +168,7 @@ export default class extends React.Component<Props> {
             {`${forecast.slots.total - forecast.slots.assigned}`}
             <Link
               to={FulfillerSubPage.path(
-                FulfillerSubPage.CreatePreBooking
+                FulfillerSubPage.CreatePrebooking
               ).replace(":id", forecast.id)}
               className="c-driverDispatch-table-actionButton"
             >
@@ -220,17 +220,17 @@ export default class extends React.Component<Props> {
     );
   }
 
-  private getPreBookingActions(preBooking: PreBooking) {
+  private getPrebookingActions(prebooking: Prebooking) {
     return (
       <>
-        {preBooking.forecast.vehicleType.name}
+        {prebooking.forecast.vehicleType.name}
         <div className="c-driverDispatch-table-actionButton">
           <Button
             type={ButtonType.Light}
             size={ButtonSize.Small}
             onClick={() => {
-              if (this.props.onPreBookingAction) {
-                this.props.onPreBookingAction(preBooking);
+              if (this.props.onPrebookingAction) {
+                this.props.onPrebookingAction(prebooking);
               }
             }}
           >
@@ -310,9 +310,9 @@ export default class extends React.Component<Props> {
         }
       });
     } else if (
-      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+      driverDispatchService.state.slug === DispatchState.map.prebooking.slug
     ) {
-      return driverDispatchService.preBookings.map((p, i) => {
+      return driverDispatchService.prebookings.map((p, i) => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
@@ -332,18 +332,18 @@ export default class extends React.Component<Props> {
               ":id",
               p.driver.id.toString()
             )}
-            key={`preBooking-${p.slug}-driver-${p.driver.id}`}
+            key={`prebooking-${p.slug}-driver-${p.driver.id}`}
           >
             {`${p.driver.formattedName} (${p.driver.id})`}
           </Link>,
           // tslint:disable-next-line: jsx-wrap-multiline
           <a
-            key={`preBooking-${p.id}-driverPhone-${p.driver.id}`}
+            key={`prebooking-${p.id}-driverPhone-${p.driver.id}`}
             href={`tel:${p.driver.phone.number}`}
           >
             {p.driver.phone.number}
           </a>,
-          this.getPreBookingActions(p)
+          this.getPrebookingActions(p)
         ];
       });
     } else if (
@@ -422,7 +422,7 @@ export default class extends React.Component<Props> {
 
   private get gridTemplateColumns() {
     if (
-      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+      driverDispatchService.state.slug === DispatchState.map.prebooking.slug
     ) {
       return "min-content auto auto auto auto auto auto auto";
     } else if (

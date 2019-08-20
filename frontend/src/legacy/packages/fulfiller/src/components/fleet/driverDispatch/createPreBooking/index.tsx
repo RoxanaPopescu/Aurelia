@@ -40,7 +40,7 @@ interface State {
 }
 
 @observer
-export default class CreatePreBookingComponent extends React.Component<
+export default class CreatePrebookingComponent extends React.Component<
   Props,
   State
 > {
@@ -91,9 +91,9 @@ export default class CreatePreBookingComponent extends React.Component<
     });
   }
 
-  private async createPreBookings(saveAndClose?: boolean) {
+  private async createPrebookings(saveAndClose?: boolean) {
     if (this.state.forecast && this.state.checkedDrivers.length > 0) {
-      await driverDispatchService.createPreBookings(
+      await driverDispatchService.createPrebookings(
         this.state.forecast,
         this.state.checkedDrivers
       );
@@ -116,26 +116,26 @@ export default class CreatePreBookingComponent extends React.Component<
 
   private renderForecastInfo(forecast?: Forecast) {
     return (
-      <div className="c-createPreBooking-forecastInfo">
-        <div className="c-createPreBooking-infoContainer">
+      <div className="c-createPrebooking-forecastInfo">
+        <div className="c-createPrebooking-infoContainer">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../assets/icons/company.svg")}
           />
           <h4>{`${forecast ? forecast.fulfillee.name : "--"}, ${
             forecast ? forecast.startingLocation.address.primary : "--"
           }`}</h4>
         </div>
-        <div className="c-createPreBooking-infoContainer">
+        <div className="c-createPrebooking-infoContainer">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../assets/icons/calendar.svg")}
           />
           <h4>{forecast ? Localization.formatDate(forecast.date) : "--"}</h4>
         </div>
-        <div className="c-createPreBooking-infoContainer">
+        <div className="c-createPrebooking-infoContainer">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../assets/icons/watch.svg")}
           />
           <h4>
@@ -144,9 +144,9 @@ export default class CreatePreBookingComponent extends React.Component<
               : "--"}
           </h4>
         </div>
-        <div className="c-createPreBooking-infoContainer">
+        <div className="c-createPrebooking-infoContainer">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../assets/icons/van.svg")}
           />
           <h4>{forecast ? forecast.vehicleType.name : "--"}</h4>
@@ -288,7 +288,7 @@ export default class CreatePreBookingComponent extends React.Component<
 
   render() {
     return (
-      <div className="c-createPreBooking-container">
+      <div className="c-createPrebooking-container">
         {driverDispatchService.toast && (
           <Toast
             type={
@@ -316,12 +316,12 @@ export default class CreatePreBookingComponent extends React.Component<
             onClick={() => {
               this.props.history.goBack();
             }}
-            className="c-createPreBooking-closeButton"
+            className="c-createPrebooking-closeButton"
           />
           {this.renderForecastInfo(this.state.forecast)}
           <InfoBox data={this.infoBoxData} />
           <Input
-            className="c-createPreBooking-search"
+            className="c-createPrebooking-search"
             headline="Search for specific drivers"
             placeholder={Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
@@ -334,7 +334,7 @@ export default class CreatePreBookingComponent extends React.Component<
             value={this.state.search}
           />
         </PageHeaderComponent>
-        <PageContentComponent className="c-createPreBooking-content">
+        <PageContentComponent className="c-createPrebooking-content">
           <TableComponent
             newVersion={true}
             data={{
@@ -346,12 +346,12 @@ export default class CreatePreBookingComponent extends React.Component<
             disabledRowIndexes={this.disabledRows}
           />
         </PageContentComponent>
-        <div className="c-createPreBooking-saveContainer">
+        <div className="c-createPrebooking-saveContainer">
           <Button
             type={ButtonType.Light}
             size={ButtonSize.Medium}
             onClick={() => {
-              this.createPreBookings();
+              this.createPrebookings();
             }}
           >
             Save
@@ -360,7 +360,7 @@ export default class CreatePreBookingComponent extends React.Component<
             type={ButtonType.Action}
             size={ButtonSize.Medium}
             onClick={() => {
-              this.createPreBookings(true);
+              this.createPrebookings(true);
             }}
           >
             Save and close

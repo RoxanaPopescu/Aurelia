@@ -223,8 +223,8 @@ export default class extends React.Component<Props, State> {
                   headline: DispatchState.map.forecast.name
                 },
                 {
-                  value: DispatchState.map.preBooking.value,
-                  headline: DispatchState.map.preBooking.name
+                  value: DispatchState.map.prebooking.value,
+                  headline: DispatchState.map.prebooking.name
                 },
                 {
                   value: DispatchState.map.unassignedRoute.value,
@@ -267,7 +267,7 @@ export default class extends React.Component<Props, State> {
         {(driverDispatchService.state.slug ===
           DispatchState.map.assignedRoute.slug ||
           driverDispatchService.state.slug ===
-            DispatchState.map.preBooking.slug) && (
+            DispatchState.map.prebooking.slug) && (
           <>
             {driverDispatchService.drivers.length > 0 && (
               <Slider collapsible={true} headline="Chauffør">

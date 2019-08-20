@@ -10,7 +10,7 @@ import {
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { PreBooking } from "../models/preBooking";
+import { Prebooking } from "../models/prebooking";
 import RoutesList from "./components/routesList";
 import AsigneeList from "./components/asigneeList";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
@@ -28,12 +28,12 @@ interface Props {
 }
 
 interface State {
-  origin: "routes" | "pre-bookings";
+  origin: "routes" | "prebookings";
   ids?: string[];
   routes: Route[];
-  preBookings: PreBooking[];
-  matches: { route: Route; assignee: Driver | PreBooking }[];
-  selectedAssignee?: Driver | PreBooking;
+  prebookings: Prebooking[];
+  matches: { route: Route; assignee: Driver | Prebooking }[];
+  selectedAssignee?: Driver | Prebooking;
   selectedRoute?: Route;
   toasts: JSX.Element[];
 }
@@ -45,13 +45,13 @@ export default class AssignRoutesComponent extends React.Component<
 > {
   constructor(props: Props) {
     super(props);
-    document.title = "Assign pre-bookings to routes";
+    document.title = "Assign prebookings to routes";
 
     this.state = {
       origin: this.props.match.params.origin,
       matches: [],
       routes: [],
-      preBookings: [],
+      prebookings: [],
       ids: this.props.match.params.ids.split(","),
       selectedAssignee: undefined,
       toasts: []
@@ -91,8 +91,8 @@ export default class AssignRoutesComponent extends React.Component<
               />
             )}
             <AsigneeList
-              preBookingIds={
-                this.state.origin === "pre-bookings"
+              prebookingIds={
+                this.state.origin === "prebookings"
                   ? this.state.ids
                   : undefined
               }
@@ -103,10 +103,10 @@ export default class AssignRoutesComponent extends React.Component<
               }
               matchedAssignees={this.state.matches.map(m => m.assignee)}
             />
-            {this.state.origin === "pre-bookings" && (
+            {this.state.origin === "prebookings" && (
               <RoutesList
-                selectedPreBooking={
-                  this.state.selectedAssignee instanceof PreBooking
+                selectedPrebooking={
+                  this.state.selectedAssignee instanceof Prebooking
                     ? this.state.selectedAssignee
                     : undefined
                 }
@@ -176,7 +176,7 @@ export default class AssignRoutesComponent extends React.Component<
         var driverId = 0;
         if (m.assignee instanceof Driver) {
           driverId = m.assignee.id;
-        } else if (m.assignee instanceof PreBooking) {
+        } else if (m.assignee instanceof Prebooking) {
           driverId = m.assignee.driver.id;
         }
         return { routeId: m.route.id, driverId: driverId };
@@ -220,7 +220,7 @@ export default class AssignRoutesComponent extends React.Component<
     }
   }
 
-  private assigneeName(assignee: Driver | PreBooking): JSX.Element {
+  private assigneeName(assignee: Driver | Prebooking): JSX.Element {
     if (assignee instanceof Driver) {
       return (
         <a
@@ -229,7 +229,7 @@ export default class AssignRoutesComponent extends React.Component<
           {`${assignee.formattedName} (${assignee.id})`}
         </a>
       );
-    } else if (assignee instanceof PreBooking) {
+    } else if (assignee instanceof Prebooking) {
       return (
         <a
           target="_blank"
@@ -242,7 +242,7 @@ export default class AssignRoutesComponent extends React.Component<
     }
   }
 
-  private assigneePhone(assignee: Driver | PreBooking): JSX.Element {
+  private assigneePhone(assignee: Driver | Prebooking): JSX.Element {
     if (assignee instanceof Driver) {
       return (
         <a
@@ -250,7 +250,7 @@ export default class AssignRoutesComponent extends React.Component<
           {assignee.phone.number}
         </a>
       );
-    } else if (assignee instanceof PreBooking) {
+    } else if (assignee instanceof Prebooking) {
       return (
         <a
           href={`tel:${assignee.driver.phone.number}`}>

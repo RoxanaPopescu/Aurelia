@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { PreBooking } from "../../../models/preBooking";
+import { Prebooking } from "../../../models/prebooking";
 import { observer } from "mobx-react";
 import { driverDispatchService } from "../../../driverDispatchService";
 import { Driver } from "shared/src/model/logistics/order/driver";
@@ -12,21 +12,21 @@ import { DateTimeRange } from "../../../../../../../../shared/src/model/general/
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 
 interface Props {
-  preBookingIds?: string[];
+  prebookingIds?: string[];
   selectedRoute?: Route;
-  onAssigneeSelection(asignee: Driver | PreBooking);
-  matchedAssignees: (Driver | PreBooking)[];
-  selectedAssignee?: Driver | PreBooking;
+  onAssigneeSelection(asignee: Driver | Prebooking);
+  matchedAssignees: (Driver | Prebooking)[];
+  selectedAssignee?: Driver | Prebooking;
 }
 
 interface State {
-  state: "drivers" | "pre-bookings";
-  selectedAssignee?: Driver | PreBooking;
+  state: "drivers" | "prebookings";
+  selectedAssignee?: Driver | Prebooking;
   selectedRoute?: Route;
   search?: string;
   drivers: Driver[];
-  preBookings: PreBooking[];
-  queriedPreBookings: PreBooking[];
+  prebookings: Prebooking[];
+  queriedPrebookings: Prebooking[];
 }
 
 @observer
@@ -35,10 +35,10 @@ export default class extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      state: "pre-bookings",
+      state: "prebookings",
       selectedAssignee: props.selectedAssignee,
-      preBookings: [],
-      queriedPreBookings: [],
+      prebookings: [],
+      queriedPrebookings: [],
       drivers: [],
       selectedRoute: props.selectedRoute
     };
@@ -51,10 +51,10 @@ export default class extends React.Component<Props, State> {
         selectedAssignee: props.selectedAssignee
       }, () => this.fetchData())
     } else {
-      if (!this.props.preBookingIds && (this.state.drivers.length > 0 || this.state.preBookings.length > 0)) {
+      if (!this.props.prebookingIds && (this.state.drivers.length > 0 || this.state.prebookings.length > 0)) {
         this.setState({
-          preBookings: [],
-          queriedPreBookings: [],
+          prebookings: [],
+          queriedPrebookings: [],
           drivers: [],
           selectedAssignee: props.selectedAssignee
         })
@@ -74,9 +74,9 @@ export default class extends React.Component<Props, State> {
     return (
       <div className="c-assignRoutes-assignees">
         <InfoBox
-          data={this.state.state === "pre-bookings" ?
+          data={this.state.state === "prebookings" ?
           [
-            { name: "Pre-bookings", value: this.state.preBookings.length }
+            { name: "Prebookings", value: this.state.prebookings.length }
           ] :
           [
             { name: "Drivers", value: this.state.drivers.length }
@@ -85,8 +85,8 @@ export default class extends React.Component<Props, State> {
         <div className="c-assignRoutes-assigneeState">
           <Input
             className="c-assignRoutes-search"
-            headline={this.state.state === "drivers" ? "Search for specific drivers" : "Search for specific pre-bookings"}
-            placeholder={this.props.preBookingIds ? "Type queries seperated by spaces ..." : Localization.sharedValue("Search_TypeToSearch")}
+            headline={this.state.state === "drivers" ? "Search for specific drivers" : "Search for specific prebookings"}
+            placeholder={this.props.prebookingIds ? "Type queries seperated by spaces ..." : Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
               if (event) {
                 event.persist();
@@ -96,10 +96,10 @@ export default class extends React.Component<Props, State> {
             }}
             value={this.state.search}
           />
-          {!this.props.preBookingIds && (
+          {!this.props.prebookingIds && (
             <InputRadioGroup
               radioButtons={[
-                { value: "pre-bookings", headline: "Pre-bookings" },
+                { value: "prebookings", headline: "Prebookings" },
                 { value: "drivers", headline: "Drivers" }
               ]}
               onChange={value => {
@@ -123,7 +123,7 @@ export default class extends React.Component<Props, State> {
             headers: this.getHeaders(),
             rows: this.getRows()
           }}
-          gridTemplateColumns={this.props.preBookingIds ? "min-content auto auto auto auto auto" : "min-content auto auto auto"}
+          gridTemplateColumns={this.props.prebookingIds ? "min-content auto auto auto auto auto" : "min-content auto auto auto"}
         />
       </div>
     );
@@ -131,11 +131,11 @@ export default class extends React.Component<Props, State> {
 
   private async fetchData(): Promise<void> {
     var drivers: Driver[] = [];
-    var preBookings: PreBooking[] = [];
+    var prebookings: Prebooking[] = [];
 
-    if (this.props.preBookingIds) {
-      preBookings = await driverDispatchService.fetchPreBookingsFromIds(
-        this.props.preBookingIds
+    if (this.props.prebookingIds) {
+      prebookings = await driverDispatchService.fetchPrebookingsFromIds(
+        this.props.prebookingIds
       );
     } else {
       if (this.state.selectedRoute) {
@@ -154,15 +154,15 @@ export default class extends React.Component<Props, State> {
             drivers = driverResponse.drivers;
           }
         } else {
-          var preBookingResponse = await driverDispatchService.fetchPreBookings(
+          var prebookingResponse = await driverDispatchService.fetchPrebookings(
             this.state.selectedRoute.startDateTime,
             this.state.selectedRoute.endDateTime,
             this.state.selectedRoute.startDateTime,
             this.state.selectedRoute.endDateTime
           );
 
-          if (preBookingResponse.length > 0) {
-            preBookings = preBookingResponse;
+          if (prebookingResponse.length > 0) {
+            prebookings = prebookingResponse;
           }
         }
       }
@@ -170,7 +170,7 @@ export default class extends React.Component<Props, State> {
 
     this.setState({
       drivers: drivers,
-      preBookings: preBookings
+      prebookings: prebookings
     }, () => {
       if (this.state.search) {
        this.onSearchChange(this.state.search);
@@ -201,7 +201,7 @@ export default class extends React.Component<Props, State> {
   }
 
   private getHeaders() {
-    if (this.props.preBookingIds) {
+    if (this.props.prebookingIds) {
       return [
         {
           key: "select",
@@ -226,7 +226,7 @@ export default class extends React.Component<Props, State> {
     }
   }
 
-  private assigneePhone(assignee: Driver | PreBooking): JSX.Element {
+  private assigneePhone(assignee: Driver | Prebooking): JSX.Element {
     if (assignee instanceof Driver) {
       return (
         <a
@@ -234,7 +234,7 @@ export default class extends React.Component<Props, State> {
           {assignee.phone.number}
         </a>
       );
-    } else if (assignee instanceof PreBooking) {
+    } else if (assignee instanceof Prebooking) {
       return (
         <a
           href={`tel:${assignee.driver.phone.number}`}>
@@ -246,7 +246,7 @@ export default class extends React.Component<Props, State> {
     }
   }
 
-  private assigneeName(assignee: Driver | PreBooking): JSX.Element {
+  private assigneeName(assignee: Driver | Prebooking): JSX.Element {
     if (assignee instanceof Driver) {
       return (
         <a
@@ -255,7 +255,7 @@ export default class extends React.Component<Props, State> {
           {`${assignee.formattedName} (${assignee.id})`}
         </a>
       );
-    } else if (assignee instanceof PreBooking) {
+    } else if (assignee instanceof Prebooking) {
       return (
         <a
           target="_blank"
@@ -293,9 +293,9 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
-      var preBookings = this.state.queriedPreBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
-      if (this.props.preBookingIds) {
-        return preBookings.map(p => {
+      var prebookings = this.state.queriedPrebookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
+      if (this.props.prebookingIds) {
+        return prebookings.map(p => {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
             <InputRadioGroup
@@ -309,7 +309,7 @@ export default class extends React.Component<Props, State> {
                   this.props.onAssigneeSelection(p);
                 }
               }}
-              checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
+              checkedValue={this.state.selectedAssignee instanceof Prebooking && this.state.selectedAssignee.id}
             />,
             p.forecast.fulfillee.name,
             Localization.formatDateTimeRange(p.forecast.timePeriod),
@@ -319,7 +319,7 @@ export default class extends React.Component<Props, State> {
           ];
         });
       } else {
-        return preBookings.map(p => {
+        return prebookings.map(p => {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
             <InputRadioGroup
@@ -333,7 +333,7 @@ export default class extends React.Component<Props, State> {
                   this.props.onAssigneeSelection(p);
                 }
               }}
-              checkedValue={this.state.selectedAssignee instanceof PreBooking && this.state.selectedAssignee.id}
+              checkedValue={this.state.selectedAssignee instanceof Prebooking && this.state.selectedAssignee.id}
             />,
             this.assigneeName(p),
             this.assigneePhone(p),
@@ -347,28 +347,28 @@ export default class extends React.Component<Props, State> {
   }
 
   private onSearchChange(query: string | undefined) {
-    if (this.props.preBookingIds || (this.state.selectedRoute && this.state.state === "pre-bookings")) {
-      var queriedPreBookings: PreBooking[] = [];
+    if (this.props.prebookingIds || (this.state.selectedRoute && this.state.state === "prebookings")) {
+      var queriedPrebookings: Prebooking[] = [];
       if (query) {
         var queries = query.split(" ");
-        var preBookings = this.state.preBookings;
+        var prebookings = this.state.prebookings;
 
         queries.forEach(q => {
-          queriedPreBookings = preBookings.filter(p =>
+          queriedPrebookings = prebookings.filter(p =>
             p.driver.company ? p.driver.company.name.toLowerCase().indexOf(q.toLowerCase()) > -1 : false
           );
-          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.formattedName.toLowerCase().indexOf(q.toLowerCase()) > -1));
-          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.id.toString().indexOf(q) > -1));
-          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.phone.number.indexOf(q) > -1));
-          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.forecast.fulfillee.name.toLowerCase().indexOf(q.toLowerCase()) > -1));
+          queriedPrebookings = queriedPrebookings.concat(prebookings.filter(p => p.driver.formattedName.toLowerCase().indexOf(q.toLowerCase()) > -1));
+          queriedPrebookings = queriedPrebookings.concat(prebookings.filter(p => p.driver.id.toString().indexOf(q) > -1));
+          queriedPrebookings = queriedPrebookings.concat(prebookings.filter(p => p.driver.phone.number.indexOf(q) > -1));
+          queriedPrebookings = queriedPrebookings.concat(prebookings.filter(p => p.forecast.fulfillee.name.toLowerCase().indexOf(q.toLowerCase()) > -1));
         });
-        queriedPreBookings = [...new Set(queriedPreBookings)];
+        queriedPrebookings = [...new Set(queriedPrebookings)];
       } else {
-        queriedPreBookings = this.state.preBookings;
+        queriedPrebookings = this.state.prebookings;
       }
       this.setState({
         search: query,
-        queriedPreBookings: queriedPreBookings
+        queriedPrebookings: queriedPrebookings
       });
     } else if (this.state.selectedRoute) {
       this.setState({

@@ -5,8 +5,8 @@ import { driverDispatchService } from "../../../driverDispatchService";
 import { observer } from "mobx-react";
 
 interface Props {
-  removePreBookingDrivers();
-  assignPreBookingDrivers();
+  removePrebookingDrivers();
+  assignPrebookingDrivers();
 }
 
 interface State {
@@ -77,7 +77,7 @@ export default class extends React.Component<Props, State> {
             </div> */}
             <div
               onClick={() => {
-                this.props.removePreBookingDrivers();
+                this.props.removePrebookingDrivers();
                 this.setState({ dropdownOpen: false });
               }}
               className="c-driverDispatch-dropdown-value"
@@ -86,7 +86,7 @@ export default class extends React.Component<Props, State> {
             </div>
             <div
               onClick={() => {
-                this.props.assignPreBookingDrivers();
+                this.props.assignPrebookingDrivers();
                 this.setState({ dropdownOpen: false });
               }}
               className="c-driverDispatch-dropdown-value"

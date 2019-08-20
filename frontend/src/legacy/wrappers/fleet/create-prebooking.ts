@@ -3,11 +3,11 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "fulfiller/src/components/fleet/driverDispatch/createPreBooking/index";
+import Component from "fulfiller/src/components/fleet/driverDispatch/createPrebooking/index";
 
 @noView
 @autoinject
-export class CreatePreBookingCustomElement extends Wrapper
+export class CreatePrebookingCustomElement extends Wrapper
 {
     /**
      * Creates a new instance of the type.

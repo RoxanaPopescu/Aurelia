@@ -2,9 +2,9 @@ import { Driver } from "shared/src/model/logistics/order/driver";
 import { Forecast } from "./forecast";
 
 /**
- * Represents a single pre-booking.
+ * Represents a single prebooking.
  */
-export class PreBooking {
+export class Prebooking {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
     this.id = data.id;
@@ -19,22 +19,22 @@ export class PreBooking {
   }
 
   /**
-   * The ID of the pre-booking
+   * The ID of the prebooking
    */
   public readonly id: string;
 
   /**
-   * The slug identifying the pre-booking
+   * The slug identifying the prebooking
    */
   public slug: string;
 
   /**
-   * The forecast related to the pre-booking
+   * The forecast related to the prebooking
    */
   public forecast: Forecast;
 
   /**
-   * The driver associated to this pre-booking
+   * The driver associated to this prebooking
    */
   public readonly driver: Driver;
 }

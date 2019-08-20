@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 import { DateTime } from "luxon";
 import { Forecast } from "./models/forecast";
-import { PreBooking } from "./models/preBooking";
+import { Prebooking } from "./models/prebooking";
 import { OverviewData } from "./models/overviewData";
 import Localization from "shared/src/localization";
 import { Location } from "shared/src/model/general/location";
@@ -22,10 +22,10 @@ export class DispatchState {
       name: "Forecast",
       value: "forecast"
     },
-    preBooking: {
-      slug: "pre-booking",
-      name: "Pre-booking",
-      value: "preBooking"
+    prebooking: {
+      slug: "prebooking",
+      name: "Prebooking",
+      value: "prebooking"
     },
     unassignedRoute: {
       slug: "unassigned-route",
@@ -141,9 +141,9 @@ export class DriverDispatchService {
   @observable public forecasts: Forecast[];
 
   /**
-   * Represents the pre-bookings, which fits the search filters.
+   * Represents the prebookings, which fits the search filters.
    */
-  @observable public preBookings: PreBooking[];
+  @observable public prebookings: Prebooking[];
 
   /**
    * Represents the unassigned routes, which fits the search filters.
@@ -156,7 +156,7 @@ export class DriverDispatchService {
   @observable public assignedRoutes: Route[];
 
   /**
-   * Represents the selected Pre-Bookings, Unassigned Routes
+   * Represents the selected Prebookings, Unassigned Routes
    * or Routes indexes.
    */
   @observable public selectedItemIndexes: number[];
@@ -203,7 +203,7 @@ export class DriverDispatchService {
     this.endDate = DateTime.local().startOf("day");
 
     this.forecasts = [];
-    this.preBookings = [];
+    this.prebookings = [];
     this.unassignedRoutes = [];
     this.assignedRoutes = [];
     this.selectedItemIndexes = [];
@@ -215,7 +215,7 @@ export class DriverDispatchService {
 
   /**
    * Fetches overview data for the given dispatch state.
-   * Dispatch states are: Forecasts, pre-bookings, unassigned routes, and assigned routes.
+   * Dispatch states are: Forecasts, prebookings, unassigned routes, and assigned routes.
    */
   public async fetchOverview(): Promise<void> {
     if (
@@ -254,7 +254,7 @@ export class DriverDispatchService {
     }
 
     var drivers: { name: string; id: string }[] = [];
-    if (this.state.value === "preBooking") {
+    if (this.state.value === "prebooking") {
       const driverResponse = await fetch(
         BaseService.url(`dispatch/${this.state.value}/listdrivers`),
         BaseService.defaultConfig({
@@ -354,7 +354,7 @@ export class DriverDispatchService {
   /**
    * Deletes a prebooking with a specific ID.
    */
-  public async removePreBooking(ids: string[]): Promise<void> {
+  public async removePrebooking(ids: string[]): Promise<void> {
     const response = await fetch(
       BaseService.url("dispatch/prebooking/delete"),
       BaseService.defaultConfig({
@@ -372,7 +372,7 @@ export class DriverDispatchService {
     }
 
     this.toast = {
-      message: `Removed ${ids.length} pre-bookings`,
+      message: `Removed ${ids.length} prebookings`,
       type: "ok"
     };
     this.selectedItemIndexes = [];
@@ -412,9 +412,9 @@ export class DriverDispatchService {
   }
 
   /**
-   * Creates pre-bookings for drivers, linking them to a specific forecast
+   * Creates prebookings for drivers, linking them to a specific forecast
    */
-  public async createPreBookings(
+  public async createPrebookings(
     forecast: Forecast,
     drivers: Driver[]
   ): Promise<void> {
@@ -446,7 +446,7 @@ export class DriverDispatchService {
     this.toast = {
       message: `Created ${
         drivers.length
-      } pre-bookings for ${forecast.fulfillee.name} (${Localization.formatDate(forecast.date)})`,
+      } prebookings for ${forecast.fulfillee.name} (${Localization.formatDate(forecast.date)})`,
       type: "ok"
     };
   }
@@ -726,14 +726,14 @@ export class DriverDispatchService {
   }
 
   /**
-   * Fetches a list of pre-bookings matching the specific filters.
+   * Fetches a list of prebookings matching the specific filters.
    */
-  public async fetchPreBookings(
+  public async fetchPrebookings(
     startDate?: DateTime,
     endDate?: DateTime,
     startTime?: DateTime,
     endTime?: DateTime
-  ): Promise<PreBooking[]> {
+  ): Promise<Prebooking[]> {
     const response = await fetch(
       BaseService.url("dispatch/prebooking/list"),
       BaseService.defaultConfig({
@@ -757,7 +757,7 @@ export class DriverDispatchService {
     var responseData = [];
     try {
       let responseJson = await response.json();
-      responseData = responseJson.map(f => new PreBooking(f));
+      responseData = responseJson.map(f => new Prebooking(f));
     } catch {
       this.toast = {
         message: Localization.sharedValue("Error_General"),
@@ -769,9 +769,9 @@ export class DriverDispatchService {
   }
 
   /**
-   * Fetches a list of pre-bookings matching the specific ids.
+   * Fetches a list of prebookings matching the specific ids.
    */
-  public async fetchPreBookingsFromIds(ids: string[]): Promise<PreBooking[]> {
+  public async fetchPrebookingsFromIds(ids: string[]): Promise<Prebooking[]> {
     const response = await fetch(
       BaseService.url("dispatch/prebooking/listbyids"),
       BaseService.defaultConfig({
@@ -789,7 +789,7 @@ export class DriverDispatchService {
     var responseData = [];
     try {
       let responseJson = await response.json();
-      responseData = responseJson.map(f => new PreBooking(f));
+      responseData = responseJson.map(f => new Prebooking(f));
     } catch {
       this.toast = {
         message: Localization.sharedValue("Error_General"),

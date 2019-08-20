@@ -2,7 +2,7 @@ import React from "react";
 import "./index.scss";
 import { observer } from "mobx-react";
 import { Dialog } from "shared/src/components/dialog/dialog";
-import { PreBooking } from "../../../models/preBooking";
+import { Prebooking } from "../../../models/prebooking";
 import { DateTime } from "luxon";
 import { Button, TableComponent, InputCheckbox } from "shared/src/webKit";
 import {
@@ -14,14 +14,14 @@ import { Link } from "react-router-dom";
 import { FulfillerSubPage } from "../../../../../navigation/page";
 
 interface Props {
-  data: { preBookings: PreBooking[]; state?: "actions" | "change" | "remove" };
-  onRemove(preBookings: PreBooking[]): Promise<boolean>;
+  data: { prebookings: Prebooking[]; state?: "actions" | "change" | "remove" };
+  onRemove(prebookings: Prebooking[]): Promise<boolean>;
   onClose();
 }
 
 interface State {
   state: "actions" | "change" | "remove";
-  selectedPreBookings: PreBooking[];
+  selectedPrebookings: Prebooking[];
   notifyDriver: boolean;
 }
 
@@ -32,7 +32,7 @@ export default class extends React.Component<Props, State> {
 
     this.state = {
       state: props.data.state ? props.data.state : "actions",
-      selectedPreBookings: props.data.preBookings,
+      selectedPrebookings: props.data.prebookings,
       notifyDriver: true
     };
   }
@@ -56,7 +56,7 @@ export default class extends React.Component<Props, State> {
           type={ButtonType.Light}
           size={ButtonSize.Medium}
           onClick={() => {
-            var success = this.props.onRemove(this.state.selectedPreBookings);
+            var success = this.props.onRemove(this.state.selectedPrebookings);
             if (success) {
               this.props.onClose();
             }
@@ -82,7 +82,7 @@ export default class extends React.Component<Props, State> {
           size={ButtonSize.Medium}
           onClick={() => {
             this.setState({
-              selectedPreBookings: this.props.data.preBookings,
+              selectedPrebookings: this.props.data.prebookings,
               state: "remove"
             });
           }}
@@ -95,9 +95,9 @@ export default class extends React.Component<Props, State> {
           to={FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
             .replace(
               ":ids",
-              this.state.selectedPreBookings.map(p => p.id).join(",")
+              this.state.selectedPrebookings.map(p => p.id).join(",")
             )
-            .replace(":origin", "pre-bookings")}
+            .replace(":origin", "prebookings")}
         >
           <Button type={ButtonType.Light} size={ButtonSize.Medium}>
             Match with a route
@@ -107,76 +107,76 @@ export default class extends React.Component<Props, State> {
     }
   }
 
-  private renderSummary(preBooking: PreBooking) {
+  private renderSummary(prebooking: Prebooking) {
     return (
-      <div className="c-driverDispatch-preBookingDialog-summary">
+      <div className="c-driverDispatch-prebookingDialog-summary">
         <h4 className="font-larger">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../../../assets/icons/company.svg")}
           />
-          {preBooking.forecast.fulfillee.name}
+          {prebooking.forecast.fulfillee.name}
         </h4>
         <h4 className="font-larger">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../../../assets/icons/calendar.svg")}
           />
-          {preBooking.forecast.date.toLocaleString(DateTime.DATE_SHORT)}
+          {prebooking.forecast.date.toLocaleString(DateTime.DATE_SHORT)}
         </h4>
         <h4 className="font-larger">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../../../assets/icons/watch.svg")}
           />
-          {`${Localization.formatTimeRange(preBooking.forecast.timePeriod)}`}
+          {`${Localization.formatTimeRange(prebooking.forecast.timePeriod)}`}
         </h4>
         <h4 className="font-larger">
           <img
-            className="c-driverDispatch-preBookingDialog-icon"
+            className="c-driverDispatch-prebookingDialog-icon"
             src={require("../../../assets/icons/van.svg")}
           />
-          {preBooking.forecast.vehicleType.name}
+          {prebooking.forecast.vehicleType.name}
         </h4>
       </div>
     );
   }
 
-  private renderInformation(preBooking: PreBooking) {
+  private renderInformation(prebooking: Prebooking) {
     return (
-      <div className="c-driverDispatch-preBookingDialog-information">
-        <div className="c-driverDispatch-preBookingDialog-infobox">
+      <div className="c-driverDispatch-prebookingDialog-information">
+        <div className="c-driverDispatch-prebookingDialog-infobox">
           <h4 className="font-heading">Starting address</h4>
-          <h4>{`${preBooking.forecast.startingLocation.address.primary}, ${
-            preBooking.forecast.startingLocation.address.secondary
+          <h4>{`${prebooking.forecast.startingLocation.address.primary}, ${
+            prebooking.forecast.startingLocation.address.secondary
           }`}</h4>
         </div>
-        <div className="c-driverDispatch-preBookingDialog-infobox">
+        <div className="c-driverDispatch-prebookingDialog-infobox">
           <h4 className="font-heading">Driver</h4>
-          <h4>{preBooking.driver.formattedName}</h4>
-          <h4>{preBooking.driver.phone.number}</h4>
+          <h4>{prebooking.driver.formattedName}</h4>
+          <h4>{prebooking.driver.phone.number}</h4>
         </div>
       </div>
     );
   }
 
   private getRemoveHeadline() {
-    if (this.state.selectedPreBookings.length === 1) {
+    if (this.state.selectedPrebookings.length === 1) {
       return `You are about to remove ${
-        this.state.selectedPreBookings[0].driver.formattedName
-      }'s pre-booking`;
+        this.state.selectedPrebookings[0].driver.formattedName
+      }'s prebooking`;
     } else {
       return `You are about to remove ${
-        this.state.selectedPreBookings.length
-      } pre-bookings`;
+        this.state.selectedPrebookings.length
+      } prebookings`;
     }
   }
 
   private get title() {
     if (this.state.state === "remove") {
-      return "Remove pre-booking";
+      return "Remove prebooking";
     } else {
-      return "Assigning of pre-booking";
+      return "Assigning of prebooking";
     }
   }
 
@@ -187,15 +187,15 @@ export default class extends React.Component<Props, State> {
         content: (
           <InputCheckbox
             checked={
-              this.state.selectedPreBookings.length ===
-              this.props.data.preBookings.length
+              this.state.selectedPrebookings.length ===
+              this.props.data.prebookings.length
             }
             onChange={checked => {
-              var checkedRows: PreBooking[] = [];
+              var checkedRows: Prebooking[] = [];
               if (checked) {
-                checkedRows = this.props.data.preBookings;
+                checkedRows = this.props.data.prebookings;
               }
-              this.setState({ selectedPreBookings: checkedRows });
+              this.setState({ selectedPrebookings: checkedRows });
             }}
           />
         )
@@ -210,23 +210,23 @@ export default class extends React.Component<Props, State> {
   }
 
   private getRows() {
-    return this.props.data.preBookings.map((p, i) => {
+    return this.props.data.prebookings.map((p, i) => {
       return [
         // tslint:disable-next-line: jsx-wrap-multiline
         <InputCheckbox
           checked={
-            this.state.selectedPreBookings.filter(sp => sp.id === p.id).length >
+            this.state.selectedPrebookings.filter(sp => sp.id === p.id).length >
             0
           }
           onChange={checked => {
-            var checkedRows = this.state.selectedPreBookings;
+            var checkedRows = this.state.selectedPrebookings;
             if (checked) {
               checkedRows.push(p);
             } else {
               checkedRows = checkedRows.filter(r => r.id !== p.id);
             }
 
-            this.setState({ selectedPreBookings: checkedRows });
+            this.setState({ selectedPrebookings: checkedRows });
           }}
           key={p.id}
         />,
@@ -249,7 +249,7 @@ export default class extends React.Component<Props, State> {
           headers: this.getHeaders(),
           rows: this.getRows()
         }}
-        highlightedRowIndexes={this.state.selectedPreBookings.map((p, i) => i)}
+        highlightedRowIndexes={this.state.selectedPrebookings.map((p, i) => i)}
         gridTemplateColumns="min-content auto auto auto auto auto auto"
       />
     );
@@ -263,17 +263,17 @@ export default class extends React.Component<Props, State> {
           this.props.onClose();
         }}
         closeOnClickOutside={true}
-        className="c-driverDispatch-preBookingDialog"
+        className="c-driverDispatch-prebookingDialog"
         actionItems={this.getActionItems()}
       >
         {this.state.state === "remove" && (
           <h4 className="font-larger">{this.getRemoveHeadline()}</h4>
         )}
-        {this.props.data.preBookings.length === 1 &&
-          this.renderSummary(this.props.data.preBookings[0])}
-        {this.props.data.preBookings.length === 1 &&
-          this.renderInformation(this.props.data.preBookings[0])}
-        {this.props.data.preBookings.length > 1 && this.renderTable()}
+        {this.props.data.prebookings.length === 1 &&
+          this.renderSummary(this.props.data.prebookings[0])}
+        {this.props.data.prebookings.length === 1 &&
+          this.renderInformation(this.props.data.prebookings[0])}
+        {this.props.data.prebookings.length > 1 && this.renderTable()}
       </Dialog>
     );
   }

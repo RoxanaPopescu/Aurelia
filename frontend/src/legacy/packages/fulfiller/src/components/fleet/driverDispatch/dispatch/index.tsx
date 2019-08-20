@@ -8,8 +8,8 @@ import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
-import { PreBooking } from "../models/preBooking";
-import PreBookingDialog from "./components/preBookingDialog";
+import { Prebooking } from "../models/prebooking";
+import PrebookingDialog from "./components/prebookingDialog";
 import Dropdown from "./components/dropdown";
 import { Button, ButtonType, Toast, ToastType } from "shared/src/webKit";
 import { Route } from "shared/src/components/routes/list/models/route";
@@ -22,8 +22,8 @@ interface Props {
 }
 
 interface State {
-  preBookingDialog?: {
-    preBookings: PreBooking[];
+  prebookingDialog?: {
+    prebookings: Prebooking[];
     state?: "actions" | "remove" | "change";
   };
 }
@@ -54,9 +54,9 @@ export default class DispatchComponent extends React.Component<Props, State> {
     ) {
       driverDispatchService.state = new DispatchState("forecast");
     } else if (
-      this.props.match.params.state === DispatchState.map.preBooking.slug
+      this.props.match.params.state === DispatchState.map.prebooking.slug
     ) {
-      driverDispatchService.state = new DispatchState("preBooking");
+      driverDispatchService.state = new DispatchState("prebooking");
     } else if (
       this.props.match.params.state === DispatchState.map.assignedRoute.slug
     ) {
@@ -83,9 +83,9 @@ export default class DispatchComponent extends React.Component<Props, State> {
     ) {
       driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
     } else if (
-      driverDispatchService.state.value === DispatchState.map.preBooking.value
+      driverDispatchService.state.value === DispatchState.map.prebooking.value
     ) {
-      driverDispatchService.preBookings = await driverDispatchService.fetchPreBookings();
+      driverDispatchService.prebookings = await driverDispatchService.fetchPrebookings();
     } else if (
       driverDispatchService.state.value ===
       DispatchState.map.unassignedRoute.value
@@ -101,12 +101,12 @@ export default class DispatchComponent extends React.Component<Props, State> {
 
   private get headerElements() {
     if (
-      driverDispatchService.state.slug === DispatchState.map.preBooking.slug
+      driverDispatchService.state.slug === DispatchState.map.prebooking.slug
     ) {
       return (
         <Dropdown
-          removePreBookingDrivers={() => this.removePreBookingDrivers()}
-          assignPreBookingDrivers={() => this.assignPreBookingDrivers()}
+          removePrebookingDrivers={() => this.removePrebookingDrivers()}
+          assignPrebookingDrivers={() => this.assignPrebookingDrivers()}
         />
       );
     } else if (
@@ -128,16 +128,16 @@ export default class DispatchComponent extends React.Component<Props, State> {
     }
   }
 
-  private removePreBookingDrivers() {
-    let array: PreBooking[] = [];
-    driverDispatchService.preBookings.forEach((p, i) => {
+  private removePrebookingDrivers() {
+    let array: Prebooking[] = [];
+    driverDispatchService.prebookings.forEach((p, i) => {
       if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
         array.push(p);
       }
     });
 
     this.setState({
-      preBookingDialog: { preBookings: array, state: "remove" }
+      prebookingDialog: { prebookings: array, state: "remove" }
     });
   }
 
@@ -156,9 +156,9 @@ export default class DispatchComponent extends React.Component<Props, State> {
     );
   }
 
-  private assignPreBookingDrivers() {
-    let array: PreBooking[] = [];
-    driverDispatchService.preBookings.forEach((p, i) => {
+  private assignPrebookingDrivers() {
+    let array: Prebooking[] = [];
+    driverDispatchService.prebookings.forEach((p, i) => {
       if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
         array.push(p);
       }
@@ -167,7 +167,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
     this.props.history.push(
       FulfillerSubPage.path(FulfillerSubPage.AssignRoutes)
         .replace(":ids", array.map(p => p.id).join(","))
-        .replace(":origin", "pre-bookings")
+        .replace(":origin", "prebookings")
     );
   }
 
@@ -188,16 +188,16 @@ export default class DispatchComponent extends React.Component<Props, State> {
             {driverDispatchService.toast.message}
           </Toast>
         )}
-        {this.state.preBookingDialog && (
-          <PreBookingDialog
+        {this.state.prebookingDialog && (
+          <PrebookingDialog
             onClose={() => {
-              this.setState({ preBookingDialog: undefined });
+              this.setState({ prebookingDialog: undefined });
             }}
-            data={this.state.preBookingDialog}
-            onRemove={async preBookings => {
+            data={this.state.prebookingDialog}
+            onRemove={async prebookings => {
               try {
-                await driverDispatchService.removePreBooking(
-                  preBookings.map(p => p.id)
+                await driverDispatchService.removePrebooking(
+                  prebookings.map(p => p.id)
                 );
                 this.fetchData();
                 return true;
@@ -227,9 +227,9 @@ export default class DispatchComponent extends React.Component<Props, State> {
           <Header>{this.headerElements}</Header>
           <Table
             page="dispatch"
-            onPreBookingAction={preBooking => {
+            onPrebookingAction={prebooking => {
               this.setState({
-                preBookingDialog: { preBookings: [preBooking] }
+                prebookingDialog: { prebookings: [prebooking] }
               });
             }}
             onUnassignedRouteAction={route => {

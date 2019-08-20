@@ -5,11 +5,11 @@ import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { Route } from "shared/src/components/routes/list/models/route";
 import InfoBox from "../../../components/infoBox";
-import { PreBooking } from "../../../models/preBooking";
+import { Prebooking } from "../../../models/prebooking";
 import { driverDispatchService } from "../../../driverDispatchService";
 
 interface Props {
-  selectedPreBooking?: PreBooking;
+  selectedPrebooking?: Prebooking;
   selectedRoute?: Route;
   ids?: string[];
   onRouteSelection(route: Route);
@@ -21,7 +21,7 @@ interface State {
   search?: string;
   routes: Route[];
   queriedRoutes: Route[];
-  selectedPreBooking?: PreBooking;
+  selectedPrebooking?: Prebooking;
 }
 
 @observer
@@ -33,14 +33,14 @@ export default class extends React.Component<Props, State> {
       selectedRoute: props.selectedRoute,
       routes: [],
       queriedRoutes: [],
-      selectedPreBooking: props.selectedPreBooking
+      selectedPrebooking: props.selectedPrebooking
     };
   }
 
   componentWillReceiveProps(props: Props) {
-    if (props.selectedPreBooking) {
+    if (props.selectedPrebooking) {
       this.setState({
-        selectedPreBooking: props.selectedPreBooking,
+        selectedPrebooking: props.selectedPrebooking,
         selectedRoute: props.selectedRoute
       }, () => {
         this.fetchData();
@@ -116,16 +116,16 @@ export default class extends React.Component<Props, State> {
       }
     }
 
-    if (this.state.selectedPreBooking) {
-      var preBookingResponse = await driverDispatchService.fetchUnassignedRoutes(
-        this.state.selectedPreBooking.forecast.timePeriod.from,
-        this.state.selectedPreBooking.forecast.timePeriod.to,
-        this.state.selectedPreBooking.forecast.timePeriod.from,
-        this.state.selectedPreBooking.forecast.timePeriod.to,
+    if (this.state.selectedPrebooking) {
+      var prebookingResponse = await driverDispatchService.fetchUnassignedRoutes(
+        this.state.selectedPrebooking.forecast.timePeriod.from,
+        this.state.selectedPrebooking.forecast.timePeriod.to,
+        this.state.selectedPrebooking.forecast.timePeriod.from,
+        this.state.selectedPrebooking.forecast.timePeriod.to,
         []);
 
       this.setState({
-        routes: preBookingResponse
+        routes: prebookingResponse
       })
     }
   }

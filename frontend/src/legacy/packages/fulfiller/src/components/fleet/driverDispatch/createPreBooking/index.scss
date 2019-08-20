@@ -1,6 +1,6 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-createPreBooking-container {
+.c-createPrebooking-container {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -26,7 +26,7 @@
         }
       }
 
-      .c-createPreBooking-closeButton {
+      .c-createPrebooking-closeButton {
         position: absolute;
         top: 8rem;
         right: 8rem;
@@ -58,7 +58,7 @@
         }
       }
 
-      .c-createPreBooking-search {
+      .c-createPrebooking-search {
         align-self: flex-start;
         width: 370px;
         margin-bottom: 5rem;
@@ -67,10 +67,10 @@
   }
 }
 
-.c-createPreBooking-forecastInfo {
+.c-createPrebooking-forecastInfo {
   display: flex;
 
-  .c-createPreBooking-infoContainer {
+  .c-createPrebooking-infoContainer {
     display: flex;
 
     &:not(:last-child) {
@@ -79,7 +79,7 @@
   }
 }
 
-.c-createPreBooking-saveContainer {
+.c-createPrebooking-saveContainer {
   position: absolute;
   bottom: 0;
   left: 0;

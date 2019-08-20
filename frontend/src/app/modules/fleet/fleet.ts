@@ -71,7 +71,7 @@ export class FleetModule
                     name: "create-prebooking",
                     route: "create-prebooking/:id",
                     moduleId: PLATFORM.moduleName("./modules/create-prebooking/create-prebooking"),
-                    title: routeTitles.createPreBooking
+                    title: routeTitles.createPrebooking
                 },
                 {
                     name: "forecasts",

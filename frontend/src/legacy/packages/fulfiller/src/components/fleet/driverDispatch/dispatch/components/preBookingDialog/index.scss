@@ -1,6 +1,6 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-driverDispatch-preBookingDialog-summary {
+.c-driverDispatch-prebookingDialog-summary {
   display: flex;
   margin-top: 5rem;
 
@@ -11,24 +11,24 @@
   }
 }
 
-.c-driverDispatch-preBookingDialog {
+.c-driverDispatch-prebookingDialog {
   .gridTable-container {
     margin-top: 6rem;
   }
 }
 
-.c-driverDispatch-preBookingDialog-icon {
+.c-driverDispatch-prebookingDialog-icon {
   max-height: 5rem;
   max-width: 5rem;
   margin-right: 2rem;
 }
 
-.c-driverDispatch-preBookingDialog-information {
+.c-driverDispatch-prebookingDialog-information {
   display: flex;
   margin-top: 5rem;
 }
 
-.c-driverDispatch-preBookingDialog-infobox {
+.c-driverDispatch-prebookingDialog-infobox {
   &:not(:first-child) {
     margin-left: 10rem;
   }

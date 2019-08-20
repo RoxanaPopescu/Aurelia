@@ -5,7 +5,7 @@ import { activationStrategy } from "aurelia-router";
  * Represents the module.
  */
 @autoinject
-export class CreatePreBookingModule
+export class CreatePrebookingModule
 {
     protected id: string;
 

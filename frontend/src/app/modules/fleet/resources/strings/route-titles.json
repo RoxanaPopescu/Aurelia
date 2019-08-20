@@ -5,5 +5,5 @@
     "dispatch": "Dispatch",
     "forecasts": "Forecasts",
     "assignRoutes": "Assign routes",
-    "createPreBooking": "Create pre-booking"
+    "createPrebooking": "Create prebooking"
 }
