@@ -38,12 +38,6 @@ export class MergeColumnCustomElement
 
     protected driverStopsElement: HTMLElement;
 
-    /**
-     * The workspace.
-     */
-    @bindable
-    protected workspace: Workspace;
-
     protected driverStops: (IExpressRouteStop | IDriverRouteStop)[];
     protected expressStops: IExpressRouteStop[];
     protected driverStopsDragover = false;
@@ -51,6 +45,12 @@ export class MergeColumnCustomElement
     protected updateOperation: Operation;
     protected canApply = false;
     protected isDragging = false;
+
+    /**
+     * The workspace.
+     */
+    @bindable
+    public workspace: Workspace;
 
     public updateFromWorkspace(): void
     {
@@ -345,7 +345,7 @@ export class MergeColumnCustomElement
         }
         catch (error)
         {
-            alert(error.message);
+            alert("Could not save driver route changes.");
         }
         finally
         {

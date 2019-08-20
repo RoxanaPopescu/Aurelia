@@ -1,9 +1,10 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService } from "shared/framework";
 import { Operation, ISorting } from "shared/types";
 import { ExpressRouteService, DriverRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
 import { Workspace } from "../../services/workspace";
+import { ConfirmReleaseRouteDialog } from "./modals/confirm-release-route/confirm-release-route";
 
 /**
  * The time between each update of the list.
@@ -16,12 +17,15 @@ export class DriversColumnCustomElement
     /**
      * Creates a new instance of the class.
      * @param routeService The `ExpressRouteService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(routeService: ExpressRouteService)
+    public constructor(modalService: ModalService, routeService: ExpressRouteService)
     {
+        this._modalService = modalService;
         this._expressRouteService = routeService;
     }
 
+    private readonly _modalService: ModalService;
     private readonly _expressRouteService: ExpressRouteService;
     private _updateTimeoutHandle: any;
 
@@ -48,12 +52,6 @@ export class DriversColumnCustomElement
         property: "completionTime",
         direction: "ascending"
     };
-
-    /**
-     * The workspace.
-     */
-    @bindable
-    protected workspace: Workspace;
 
     /**
      * The text in the filter text input.
@@ -104,6 +102,12 @@ export class DriversColumnCustomElement
                 return 0;
             });
     }
+
+    /**
+     * The workspace.
+     */
+    @bindable
+    public workspace: Workspace;
 
     /**
      * Called by the framework when the component is attached to the DOM.
@@ -228,11 +232,18 @@ export class DriversColumnCustomElement
 
     protected async onReleaseClick(): Promise<void>
     {
+        if (!await this._modalService.open(ConfirmReleaseRouteDialog).promise)
+        {
+            return;
+        }
+
         try
         {
             this.workspace.isBusy = true;
 
             await this._expressRouteService.releaseExpressRoutes(this.workspace.selectedExpressRoutes.map(r => r.id));
+
+            this.update();
         }
         catch (error)
         {
