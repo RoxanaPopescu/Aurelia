@@ -21,6 +21,7 @@ import { FulfillerSubPage } from "../../../../navigation/page";
 import { Link } from "react-router-dom";
 import { DateTimeRange } from "../../../../../../../shared/src/model/general/dateTimeRange";
 import { SubPage } from "../../../../../../../shared/src/utillity/page";
+import Mousetrap from 'mousetrap';
 
 interface Props {
   page: "dispatch" | "forecasts";
@@ -33,8 +34,17 @@ interface Props {
 
 @observer
 export default class extends React.Component<Props> {
+  shiftDown: boolean = false;
+
   constructor(props: Props) {
     super(props);
+
+    Mousetrap.bind("shift", () => {
+      this.shiftDown = true;
+    });
+    Mousetrap.bind("shift", () => {
+      this.shiftDown = false;
+    }, "keyup");
   }
 
   componentWillMount() {
@@ -246,6 +256,35 @@ export default class extends React.Component<Props> {
     return array;
   }
 
+  private handleCheckboxClick(checked: boolean, currentIndex: number) {
+    var checkedRows = driverDispatchService.selectedItemIndexes;
+    if (
+      checked &&
+      driverDispatchService.selectedItemIndexes.indexOf(currentIndex) === -1
+    ) {
+      if (this.shiftDown) {
+        var indexes = checkedRows.slice();
+        if (currentIndex > indexes.sort()[indexes.length - 1]) {
+          for (var j = indexes.sort()[indexes.length - 1] + 1; j <= currentIndex; j++) {
+            indexes.push(j);
+          }
+        } else if (currentIndex < indexes.sort()[0]) {
+          for (var j = indexes.sort()[0] - 1; j >= currentIndex; j--) {
+            indexes.push(j);
+          }
+        }
+
+        checkedRows = indexes;
+      } else {
+        checkedRows.push(currentIndex);
+      }
+    } else {
+      checkedRows.splice(checkedRows.indexOf(currentIndex), 1);
+    }
+
+    driverDispatchService.selectedItemIndexes = checkedRows;
+  }
+
   private getRows() {
     if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
       return driverDispatchService.forecasts.map(f => {
@@ -279,17 +318,7 @@ export default class extends React.Component<Props> {
           <InputCheckbox
             checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
-              var checkedRows = driverDispatchService.selectedItemIndexes;
-              if (
-                checked &&
-                driverDispatchService.selectedItemIndexes.indexOf(i) === -1
-              ) {
-                checkedRows.push(i);
-              } else {
-                checkedRows.splice(checkedRows.indexOf(i), 1);
-              }
-
-              driverDispatchService.selectedItemIndexes = checkedRows;
+              this.handleCheckboxClick(checked, i);
             }}
             key={p.id}
           />,
@@ -365,14 +394,7 @@ export default class extends React.Component<Props> {
           <InputCheckbox
             checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
             onChange={checked => {
-              var checkedRows = driverDispatchService.selectedItemIndexes;
-              if (checked) {
-                checkedRows.push(i);
-                driverDispatchService.selectedItemIndexes = checkedRows;
-              } else {
-                checkedRows.splice(checkedRows.indexOf(i), 1);
-                driverDispatchService.selectedItemIndexes = checkedRows;
-              }
+              this.handleCheckboxClick(checked, i);
             }}
             key={ur.id}
           />,
