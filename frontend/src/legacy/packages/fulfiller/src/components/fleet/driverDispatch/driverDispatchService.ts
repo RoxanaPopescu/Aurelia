@@ -569,7 +569,7 @@ export class DriverDispatchService {
 
   /**
    * Fetches a list of drivers matching the specific filters.
-   * @returns A promise that will be resolved with an array of drivers.
+   * @returns A promise that will be resolved setting an array of drivers.
    */
   public async fetchDrivers(
     filter: {
@@ -626,6 +626,26 @@ export class DriverDispatchService {
       };
       return;
     }
+  }
+
+
+  /**
+   * Fetches a driver from the provided id.
+   * @returns A promise that will be resolved with a driver object.
+   */
+  public async fetchDriverById(driverId: number): Promise<Driver | undefined> {
+    const response = await fetch(
+      BaseService.url("drivers/details", { id: driverId.toString() }),
+      BaseService.defaultConfig()
+    );
+
+    if (!response.ok) {
+      return undefined;
+    }
+
+    const data = await response.json();
+
+    return new Driver(data);
   }
 
   /**

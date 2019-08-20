@@ -73,7 +73,7 @@ export default class extends React.Component<Props, State> {
             ]}
           />
           <Input
-            className="c-createPreBooking-search"
+            className="c-assignRoutes-search"
             headline="Search for specific routes"
             placeholder={Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
@@ -228,9 +228,9 @@ export default class extends React.Component<Props, State> {
 
       queries.forEach(q => {
         queriedRoutes = routes.filter(r =>
-          r.fulfiller ? r.fulfiller.companyName!.indexOf(q) > 0 : false
+          r.consignors.filter(c => c.companyName && c.companyName.toLowerCase().indexOf(q.toLowerCase()) > -1)
         );
-        queriedRoutes.concat(routes.filter(r => r.id.indexOf(q) > 0));
+        queriedRoutes = queriedRoutes.concat(routes.filter(r => r.id.indexOf(q) > -1));
       });
       queriedRoutes = [...new Set(queriedRoutes)];
     } else {

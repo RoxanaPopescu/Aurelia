@@ -26,6 +26,7 @@ interface State {
   search?: string;
   drivers: Driver[];
   preBookings: PreBooking[];
+  queriedPreBookings: PreBooking[];
 }
 
 @observer
@@ -37,6 +38,7 @@ export default class extends React.Component<Props, State> {
       state: "pre-bookings",
       selectedAssignee: props.selectedAssignee,
       preBookings: [],
+      queriedPreBookings: [],
       drivers: [],
       selectedRoute: props.selectedRoute
     };
@@ -52,6 +54,7 @@ export default class extends React.Component<Props, State> {
       if (!this.props.preBookingIds && (this.state.drivers.length > 0 || this.state.preBookings.length > 0)) {
         this.setState({
           preBookings: [],
+          queriedPreBookings: [],
           drivers: [],
           selectedAssignee: props.selectedAssignee
         })
@@ -81,9 +84,9 @@ export default class extends React.Component<Props, State> {
         />
         <div className="c-assignRoutes-assigneeState">
           <Input
-            className="c-createPreBooking-search"
-            headline="Search for specific drivers"
-            placeholder={Localization.sharedValue("Search_TypeToSearch")}
+            className="c-assignRoutes-search"
+            headline={this.state.state === "drivers" ? "Search for specific drivers" : "Search for specific pre-bookings"}
+            placeholder={this.props.preBookingIds ? "Type queries seperated by spaces ..." : Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
               if (event) {
                 event.persist();
@@ -168,6 +171,10 @@ export default class extends React.Component<Props, State> {
     this.setState({
       drivers: drivers,
       preBookings: preBookings
+    }, () => {
+      if (this.state.search) {
+       this.onSearchChange(this.state.search);
+      }
     });
   }
 
@@ -185,16 +192,11 @@ export default class extends React.Component<Props, State> {
     }
   }
 
-  private async fetchPreBookings(route: Route): Promise<void> {
-    var response = await driverDispatchService.fetchPreBookings(
-      route.startDateTime,
-      route.endDateTime,
-      route.startDateTime,
-      route.endDateTime
-    );
+  private async fetchDriverById(id: number): Promise<void> {
+    var driver = await driverDispatchService.fetchDriverById(id);
 
     this.setState({
-      preBookings: response
+      drivers: driver ? [driver] : []
     });
   }
 
@@ -291,8 +293,8 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
+      var preBookings = this.state.queriedPreBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
       if (this.props.preBookingIds) {
-        var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
         return preBookings.map(p => {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
@@ -317,7 +319,6 @@ export default class extends React.Component<Props, State> {
           ];
         });
       } else {
-        var preBookings = this.state.preBookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
         return preBookings.map(p => {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
@@ -346,14 +347,39 @@ export default class extends React.Component<Props, State> {
   }
 
   private onSearchChange(query: string | undefined) {
-    if (this.state.selectedRoute) {
+    if (this.props.preBookingIds || (this.state.selectedRoute && this.state.state === "pre-bookings")) {
+      var queriedPreBookings: PreBooking[] = [];
+      if (query) {
+        var queries = query.split(" ");
+        var preBookings = this.state.preBookings;
+
+        queries.forEach(q => {
+          queriedPreBookings = preBookings.filter(p =>
+            p.driver.company ? p.driver.company.name.toLowerCase().indexOf(q.toLowerCase()) > -1 : false
+          );
+          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.formattedName.toLowerCase().indexOf(q.toLowerCase()) > -1));
+          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.id.toString().indexOf(q) > -1));
+          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.driver.phone.number.indexOf(q) > -1));
+          queriedPreBookings = queriedPreBookings.concat(preBookings.filter(p => p.forecast.fulfillee.name.toLowerCase().indexOf(q.toLowerCase()) > -1));
+        });
+        queriedPreBookings = [...new Set(queriedPreBookings)];
+      } else {
+        queriedPreBookings = this.state.preBookings;
+      }
+      this.setState({
+        search: query,
+        queriedPreBookings: queriedPreBookings
+      });
+    } else if (this.state.selectedRoute) {
       this.setState({
         search: query
       });
       if (this.state.state === "drivers") {
-        this.fetchDrivers(this.state.selectedRoute);
-      } else {
-        this.fetchPreBookings(this.state.selectedRoute);
+        if (!isNaN(Number(query))) {
+          this.fetchDriverById(Number(query));
+        } else {
+          this.fetchDrivers(this.state.selectedRoute);
+        }
       }
     }
   }
