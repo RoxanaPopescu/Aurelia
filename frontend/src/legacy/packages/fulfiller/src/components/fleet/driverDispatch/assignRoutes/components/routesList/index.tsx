@@ -5,7 +5,7 @@ import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { Route } from "shared/src/components/routes/list/models/route";
 import InfoBox from "../../../components/infoBox";
-import { Prebooking } from "../../../models/prebooking";
+import { Prebooking } from "../../../models/preooking";
 import { driverDispatchService } from "../../../driverDispatchService";
 
 interface Props {

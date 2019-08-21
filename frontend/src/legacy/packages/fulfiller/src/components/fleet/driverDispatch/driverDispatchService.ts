@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 import { DateTime } from "luxon";
 import { Forecast } from "./models/forecast";
-import { Prebooking } from "./models/prebooking";
+import { Prebooking } from "./models/preooking";
 import { OverviewData } from "./models/overviewData";
 import Localization from "shared/src/localization";
 import { Location } from "shared/src/model/general/location";

@@ -10,7 +10,7 @@ import {
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { Prebooking } from "../models/prebooking";
+import { Prebooking } from "../models/preooking";
 import RoutesList from "./components/routesList";
 import AsigneeList from "./components/asigneeList";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";

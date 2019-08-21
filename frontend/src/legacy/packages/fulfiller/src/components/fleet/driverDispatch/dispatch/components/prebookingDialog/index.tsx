@@ -2,7 +2,7 @@ import React from "react";
 import "./index.scss";
 import { observer } from "mobx-react";
 import { Dialog } from "shared/src/components/dialog/dialog";
-import { Prebooking } from "../../../models/prebooking";
+import { Prebooking } from "../../../models/preooking";
 import { DateTime } from "luxon";
 import { Button, TableComponent, InputCheckbox } from "shared/src/webKit";
 import {
