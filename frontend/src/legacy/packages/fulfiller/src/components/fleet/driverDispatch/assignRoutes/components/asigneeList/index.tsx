@@ -170,7 +170,8 @@ export default class extends React.Component<Props, State> {
 
     this.setState({
       drivers: drivers,
-      prebookings: prebookings
+      prebookings: prebookings,
+      queriedPrebookings: prebookings
     }, () => {
       if (this.state.search) {
        this.onSearchChange(this.state.search);
@@ -366,6 +367,7 @@ export default class extends React.Component<Props, State> {
       } else {
         queriedPrebookings = this.state.prebookings;
       }
+
       this.setState({
         search: query,
         queriedPrebookings: queriedPrebookings
