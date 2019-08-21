@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { Prebooking } from "../../../models/preooking";
+import { Prebooking } from "../../../models/prebooking";
 import { observer } from "mobx-react";
 import { driverDispatchService } from "../../../driverDispatchService";
 import { Driver } from "shared/src/model/logistics/order/driver";

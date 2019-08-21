@@ -8,7 +8,7 @@ import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
-import { Prebooking } from "../models/preooking";
+import { Prebooking } from "../models/prebooking";
 import PrebookingDialog from "./components/prebookingDialog";
 import Dropdown from "./components/dropdown";
 import { Button, ButtonType, Toast, ToastType } from "shared/src/webKit";

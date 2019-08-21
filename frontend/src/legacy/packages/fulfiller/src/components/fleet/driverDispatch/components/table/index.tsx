@@ -16,7 +16,7 @@ import {
   ButtonType
 } from "../../../../../../../shared/src/webKit/button/index";
 import { Route } from "shared/src/components/routes/list/models/route";
-import { Prebooking } from "../../models/preooking";
+import { Prebooking } from "../../models/prebooking";
 import { FulfillerSubPage } from "../../../../navigation/page";
 import { Link } from "react-router-dom";
 import { DateTimeRange } from "../../../../../../../shared/src/model/general/dateTimeRange";
