@@ -122,7 +122,7 @@ export default class extends React.Component<Props, State> {
                   month: date.month,
                   day: date.day
                 });
-                driverDispatchService.endDate = temp.startOf("day");
+                driverDispatchService.endDate = temp.endOf("day");
 
                 if (
                   driverDispatchService.endDate
