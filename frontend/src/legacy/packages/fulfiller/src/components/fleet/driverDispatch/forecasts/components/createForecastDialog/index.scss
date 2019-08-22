@@ -25,7 +25,7 @@
     }
 
     .c-driverDispatch-forecastDialog-slots {
-      width: 40rem;
+      width: calc(100% / 3 - 5rem * 2 / 3);
     }
   }
 }
