@@ -1,0 +1,21 @@
+item-input
+{
+    display: block;
+    position: relative;
+
+    > text-input
+    {
+        .input-input
+        {
+            padding-right: 0;
+        }
+
+        .item-input-toggle
+        {
+            padding: var(--input-padding);
+            line-height: 1;
+            font-size: 1.3em;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<template ref="element" tabindex="-1" keydown.trigger="onKeyDown($event)">
+
+    <require from="./item-input.scss"></require>
+
+    <text-input
+        value.bind="inputValue"
+        label.bind="label & attr"
+        disabled.bind="disabled"
+        readonly.bind="!allowFiltering || readonly"
+        autocomplete.bind="autocomplete"
+        autoselect.bind="autoselect"
+        mousedown.trigger="onInputMouseDown($event)"
+        focusin.trigger="openDropdown(false)"
+        ref="inputElement">
+
+        <slot name="heading" slot="heading"></slot>
+        <slot name="description" slot="description"></slot>
+        <slot name="placeholder" slot="placeholder"></slot>
+        <slot name="validation" slot="validation"></slot>
+        <slot name="before" slot="before"></slot>
+
+        <div slot="after">
+
+            <slot name="after"></slot>
+
+            <div class="item-input-toggle">
+                <icon name.bind="open ? 'md-expand-less' : 'md-expand-more'" mousedown.trigger="onChevronMouseDown($event)"></icon>
+            </div>
+
+        </div>
+
+        <dropdown show.bind="open" close.call="closeDropdown(false)" scroll>
+
+            <item-picker value.bind="value" focused-value.bind="focusedValue" focused-element.bind="inputElement" change.call="closeDropdown(true)">
+
+                <slot></slot>
+
+            </item-picker>
+
+        </dropdown>
+
+    </text-input>
+
+</template>

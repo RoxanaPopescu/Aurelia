@@ -1,0 +1,43 @@
+body
+{
+    --item-padding: var(--input-padding);
+
+    --item-surface-color: var(---color-surface);
+    --item-surface-text-color: var(---color-surface-text);
+
+    --item-surface-color--active: var(--color-surface-primary-surface);
+    --item-surface-text-color--active: var(--color-surface-primary-surface-text);
+}
+
+item
+{
+    display: block;
+
+    // Apply padding.
+    padding: var(--item-padding);
+
+    // Truncate text content with an ellipsis.
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    // Set cursor to indicate the item is clickable.
+    cursor: pointer;
+
+    // Apply colors.
+
+    background: var(--item-surface-color);
+    color: var(--item-surface-text-color);
+
+    item-picker:not(.--hover-enabled) &.--active
+    {
+        background: var(--item-surface-color--active);
+        color: var(--item-surface-text-color--active);
+    }
+
+    item-picker.--hover-enabled &:hover
+    {
+        background: var(--item-surface-color--active);
+        color: var(--item-surface-text-color--active);
+    }
+}

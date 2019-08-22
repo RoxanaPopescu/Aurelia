@@ -1,0 +1,41 @@
+:root
+{
+    --dropdown-min-width: var(--input-min-width);
+    --dropdown-max-width: none;
+    --dropdown-min-height: 0;
+    --dropdown-max-height: 100rem;
+    --dropdown-border-width: var(--border-width-thin);
+    --dropdown-border-radius: var(--border-radius-large);
+    --dropdown-border-color: var(--palette-color-neutral);
+    --dropdown-surface-color: var(--palette-color-whitepoint);
+    --dropdown-surface-text-color: var(--palette-color-blackpoint);
+    --dropdown-shadow: rgba(0, 0, 0, 0.1) 0 1rem 2.75rem
+}
+
+dropdown
+{
+    display: block;
+
+    // Hide overflow by default.
+    overflow: hidden;
+
+    // Apply the z-index for dropdowns.
+    z-index: var(--z-index-dropdown);
+
+    // Add offset above and below the dropdown.
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    // Apply size constraints.
+    min-width: var(--dropdown-min-width);
+    max-width: var(--dropdown-max-width);
+    min-height: var(--dropdown-min-height);
+    max-height: var(--dropdown-max-height);
+
+    // Style to appears as a dropdown.
+    border: var(--dropdown-border-width) solid var(--dropdown-border-color);
+    border-radius: var(--dropdown-border-radius);
+    background: var(--dropdown-surface-color);
+    color: var(--dropdown-surface-text-color);
+    box-shadow: var(--dropdown-shadow);
+}

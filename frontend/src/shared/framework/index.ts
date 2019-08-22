@@ -12,6 +12,7 @@ export function configure(use: FrameworkConfiguration): void
         // Components
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/empty/empty"),
+        PLATFORM.moduleName("./components/behaviors/forward-focus/forward-focus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
         PLATFORM.moduleName("./components/cards/card/card"),
@@ -20,7 +21,9 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/icons/icon/icon"),
         PLATFORM.moduleName("./components/icons/md-icon/md-icon"),
         PLATFORM.moduleName("./components/icons/md-icon/md-icon-stack"),
+        PLATFORM.moduleName("./components/controls/dropdown/dropdown"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
+        PLATFORM.moduleName("./components/controls/inputs/item-input/item-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
@@ -31,6 +34,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
         PLATFORM.moduleName("./components/controls/navigation/tree-nav/tree-nav"),
+        PLATFORM.moduleName("./components/controls/pickers/item-picker/item-picker"),
+        PLATFORM.moduleName("./components/controls/pickers/item-picker/item"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar-group"),
         PLATFORM.moduleName("./components/data-table/data-table"),
@@ -83,6 +88,7 @@ export function configure(use: FrameworkConfiguration): void
 // Components
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/empty/empty";
+export * from "./components/behaviors/forward-focus/forward-focus";
 export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/trap-focus/trap-focus";
 export * from "./components/cards/card/card";
@@ -91,7 +97,9 @@ export * from "./components/icons/badge/badge";
 export * from "./components/icons/icon/icon";
 export * from "./components/icons/md-icon/md-icon";
 export * from "./components/icons/md-icon/md-icon-stack";
+export * from "./components/controls/dropdown/dropdown";
 export * from "./components/controls/inputs/email-input/email-input";
+export * from "./components/controls/inputs/item-input/item-input";
 export * from "./components/controls/inputs/number-input/number-input";
 export * from "./components/controls/inputs/password-input/password-input";
 export * from "./components/controls/inputs/search-input/search-input";
@@ -102,6 +110,8 @@ export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
 export * from "./components/controls/navigation/tree-nav/tree-nav";
+export * from "./components/controls/pickers/item-picker/item-picker";
+export * from "./components/controls/pickers/item-picker/item";
 export * from "./components/controls/toolbar/toolbar";
 export * from "./components/controls/toolbar/toolbar-group";
 export * from "./components/data-table/data-table";

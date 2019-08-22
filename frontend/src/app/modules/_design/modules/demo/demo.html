@@ -30,6 +30,44 @@
 
         <div surface.bind="surface & attr" class="font-${fontSize}">
 
+            <design-item heading="inputs with dropdowns">
+
+                <design-row heading="item-input">
+
+                    <design-column>
+
+                        <item-input label="above" value.bind="value" display-value.bind="value.name" allow-filtering.bind="true" filter-value.bind="filterValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <div slot="placeholder" translate>
+                                Choose an option
+                            </div>
+
+                            <!--
+                            <item repeat.for="item of items | filter: 'name' : filterValue" model.bind="item">
+                                ${item.name}
+                            </item>
+                            -->
+
+                            <item model.bind="{ name: 'a' }">First option</item>
+                            <item model.bind="{ name: 'b' }">Second option</item>
+                            <item model.bind="{ name: 'c' }">Third option, which is much longer than the others</item>
+
+                        </item-input>
+
+                    <design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="md-icon (deprecated)">
 
                 <design-row heading="Icon centered using flexbox">
