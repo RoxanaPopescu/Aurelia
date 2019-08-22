@@ -245,13 +245,13 @@ export default class extends React.Component<Props, State> {
         {driverDispatchService.fulfillees.length > 0 && (
           <Slider collapsible={true} headline="Kunde">
             <CheckboxFilter
-              data={driverDispatchService.fulfillees.map(c => {
+              data={driverDispatchService.fulfillees.map(f => {
                 return {
-                  label: c.name,
-                  value: c.id,
+                  label: f.name,
+                  value: f.id,
                   checked:
                     driverDispatchService.fulfilleeFilters.filter(
-                      cf => cf.id === c.id
+                      cf => cf.id === f.id
                     ).length > 0
                 };
               })}
@@ -265,8 +265,6 @@ export default class extends React.Component<Props, State> {
           </Slider>
         )}
         {(driverDispatchService.state.slug ===
-          DispatchState.map.assignedRoute.slug ||
-          driverDispatchService.state.slug ===
             DispatchState.map.prebooking.slug) && (
           <>
             {driverDispatchService.drivers.length > 0 && (

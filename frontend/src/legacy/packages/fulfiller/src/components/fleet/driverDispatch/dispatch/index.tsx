@@ -72,6 +72,9 @@ export default class DispatchComponent extends React.Component<Props, State> {
 
   private async fetchOverviewData(): Promise<void> {
     driverDispatchService.selectedItemIndexes = [];
+    driverDispatchService.driverFilters = [];
+    driverDispatchService.fulfilleeFilters = [];
+    driverDispatchService.haulierFilters = [];
     await driverDispatchService.fetchOverview();
 
     this.fetchData();

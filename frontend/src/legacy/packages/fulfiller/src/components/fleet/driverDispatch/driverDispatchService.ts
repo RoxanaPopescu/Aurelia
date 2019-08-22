@@ -218,40 +218,50 @@ export class DriverDispatchService {
    * Dispatch states are: Forecasts, prebookings, unassigned routes, and assigned routes.
    */
   public async fetchOverview(): Promise<void> {
+    var fulfillees: { name: string; id: string }[] = [];
+    this.fulfillees = [];
+    this.drivers = [];
+    var url = "";
     if (
       this.state.value !== "unassignedRoute" &&
       this.state.value !== "assignedRoute"
     ) {
-      const response = await fetch(
-        BaseService.url(`dispatch/${this.state.value}/listfulfillees`),
-        BaseService.defaultConfig({
-          startDate: this.startDate,
-          endDate: this.endDate,
-          startTime: this.startTime,
-          endTime: this.endTime,
-          fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
-        })
-      );
-
-      if (response.status === 404) {
-        this.toast = { message: "404 not found", type: "error" };
-        return;
+      url = `dispatch/${this.state.value}/listfulfillees`;
+    } else {
+      if (this.state.value === "assignedRoute") {
+        url = `dispatch/route/assigned/listfulfillees`;
+      } else if (this.state.value === "unassignedRoute") {
+        url = `dispatch/route/unassigned/listfulfillees`;
       }
-      if (!response.ok) {
-        this.toast = { message: "The operation failed", type: "error" };
-        return;
-      }
-
-      var fulfillees: { name: string; id: string }[] = [];
-      try {
-        let responseJson = await response.json();
-        fulfillees = responseJson;
-      } catch {
-        this.toast = { message: "Something went wrong", type: "error" };
-      }
-
-      this.fulfillees = fulfillees;
     }
+    const response = await fetch(
+      BaseService.url(url),
+      BaseService.defaultConfig({
+        startDate: this.startDate,
+        endDate: this.endDate,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
+      })
+    );
+
+    if (response.status === 404) {
+      this.toast = { message: "404 not found", type: "error" };
+      return;
+    }
+    if (!response.ok) {
+      this.toast = { message: "The operation failed", type: "error" };
+      return;
+    }
+
+    try {
+      let responseJson = await response.json();
+      fulfillees = responseJson.filter(r => r.name !== "unknown");
+    } catch {
+      this.toast = { message: "Something went wrong", type: "error" };
+    }
+
+    this.fulfillees = fulfillees;
 
     var drivers: { name: string; id: string }[] = [];
     if (this.state.value === "prebooking") {
