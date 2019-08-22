@@ -28,4 +28,8 @@
 
 .c-driverDispatch-forecastSlotsInput {
   width: 16rem;
+
+  input {
+    min-height: 1px !important;
+  }
 }

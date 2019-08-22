@@ -326,6 +326,11 @@ export class DriverDispatchService {
       this.toast = { message: "The operation failed", type: "error" };
       return;
     }
+
+    this.toast = {
+      message: `Updated forecast for ${updatedForecasts[0].forecast.fulfillee.name}. Changed ${updatedForecasts[0].forecast.slots.total} to ${updatedForecasts[0].newTotalSlots}`,
+      type: "ok"
+    };
   }
 
   /**

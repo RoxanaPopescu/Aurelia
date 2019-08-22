@@ -192,6 +192,7 @@ export default class extends React.Component<Props> {
               this.props.onForecastEnter(forecast, value);
             }
           }}
+          size={"small"}
           className="c-driverDispatch-forecastSlotsInput"
           value={forecast.slots.total}
         />
