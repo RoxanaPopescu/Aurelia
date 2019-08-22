@@ -447,6 +447,7 @@ export default class extends React.Component<Props> {
               headers: this.getHeaders(),
               rows: this.getRows()
             }}
+            loading={driverDispatchService.loading}
             highlightedRowIndexes={driverDispatchService.selectedItemIndexes}
             disabledRowIndexes={this.getDisabledRowIndexes()}
             gridTemplateColumns={this.gridTemplateColumns}

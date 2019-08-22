@@ -347,6 +347,7 @@ export default class CreatePrebookingComponent extends React.Component<
               headers: this.getHeaders(),
               rows: this.getRows()
             }}
+            loading={driverDispatchService.loading}
             gridTemplateColumns="min-content auto auto auto auto"
             highlightedRowIndexes={this.state.checkedDrivers.map((d, i) => i)}
             disabledRowIndexes={this.disabledRows}

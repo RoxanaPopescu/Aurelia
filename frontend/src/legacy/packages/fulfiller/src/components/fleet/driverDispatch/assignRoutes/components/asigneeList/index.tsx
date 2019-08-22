@@ -123,6 +123,7 @@ export default class extends React.Component<Props, State> {
             headers: this.getHeaders(),
             rows: this.getRows()
           }}
+          loading={driverDispatchService.loading}
           gridTemplateColumns={this.props.prebookingIds ? "min-content auto auto auto auto auto" : "min-content auto auto auto"}
         />
       </div>

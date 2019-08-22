@@ -97,6 +97,7 @@ export default class extends React.Component<Props, State> {
               }
               return <></>;
             }}
+            loading={driverDispatchService.loading}
             gridTemplateColumns="min-content auto auto 60rem auto auto"
           />
         </div>

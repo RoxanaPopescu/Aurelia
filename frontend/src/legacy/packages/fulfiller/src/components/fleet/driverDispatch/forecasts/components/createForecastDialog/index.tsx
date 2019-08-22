@@ -17,6 +17,7 @@ import { Location } from "shared/src/model/general/location";
 import { Outfit } from "shared/src/model/logistics/outfit";
 import { AgreementsService } from "shared/src/services/agreementsService";
 import { VehicleType } from "shared/src/model/session";
+import { driverDispatchService } from "../../../driverDispatchService";
 
 interface Props {
   open: boolean;
@@ -244,6 +245,7 @@ export default class extends React.Component<Props, State> {
               onClick={() => {
                 this.handleCreate();
               }}
+              loading={driverDispatchService.loading}
               size={ButtonSize.Medium}
               type={ButtonType.Action}
             >

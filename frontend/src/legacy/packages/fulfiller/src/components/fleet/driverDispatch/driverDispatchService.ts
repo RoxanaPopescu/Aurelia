@@ -98,6 +98,11 @@ export class DriverDispatchService {
   /**
    * True if the service is loading the data for the driver dispatch view, otherwise false.
    */
+  @observable public loading: boolean;
+
+  /**
+   * The content of a toast reporting a message to the user.
+   */
   @observable public toast?: { message: string; type: "error" | "ok" };
 
   /**
@@ -193,6 +198,7 @@ export class DriverDispatchService {
   public setDefaultValues(firstMount?: boolean) {
     if (firstMount) {
       this.state = new DispatchState("forecast");
+      this.loading = false;
     }
 
     this.fulfilleeFilters = [];
@@ -301,6 +307,8 @@ export class DriverDispatchService {
   public async updateForecasts(
     updatedForecasts: { forecast: Forecast; newTotalSlots: number }[]
   ): Promise<void> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/forecast/update"),
       BaseService.defaultConfig({
@@ -317,6 +325,7 @@ export class DriverDispatchService {
         })
       })
     );
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -344,10 +353,14 @@ export class DriverDispatchService {
     vehicleTypeId: string;
     slots: number;
   }): Promise<void> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/forecast/create"),
       BaseService.defaultConfig(forecast)
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -370,12 +383,16 @@ export class DriverDispatchService {
    * Deletes a prebooking with a specific ID.
    */
   public async removePrebooking(ids: string[]): Promise<void> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/prebooking/delete"),
       BaseService.defaultConfig({
         prebookingIds: ids
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -398,12 +415,16 @@ export class DriverDispatchService {
    * @returns A promise that will be resolved with Forecast.
    */
   public async fetchForecast(id: string): Promise<Forecast | undefined> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/forecast/details"),
       BaseService.defaultConfig({
         id: id
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -433,6 +454,8 @@ export class DriverDispatchService {
     forecast: Forecast,
     drivers: Driver[]
   ): Promise<void> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/prebooking/create"),
       BaseService.defaultConfig({
@@ -448,6 +471,8 @@ export class DriverDispatchService {
         driverIds: drivers.map(d => d.id)
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -477,6 +502,8 @@ export class DriverDispatchService {
     endTime?: DateTime,
     fulfileeIds?: { name: string, id: string | number }[]
   ): Promise<Route[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/route/unassigned/list"),
       BaseService.defaultConfig({
@@ -489,6 +516,8 @@ export class DriverDispatchService {
         pageSize: 2000 // Temporary
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
@@ -515,6 +544,8 @@ export class DriverDispatchService {
    * @returns A promise that will be resolved with an array of routes.
    */
   public async fetchUnassignedRoutesByIds(ids?: string[]): Promise<Route[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/route/unassigned/listbyids"),
       BaseService.defaultConfig({
@@ -523,6 +554,8 @@ export class DriverDispatchService {
         pageSize: 2000 // Temporary
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
@@ -549,6 +582,8 @@ export class DriverDispatchService {
    * @returns A promise that will be resolved with an array of routes.
    */
   public async fetchAssignedRoutes(): Promise<Route[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/route/assigned/list"),
       BaseService.defaultConfig({
@@ -561,6 +596,8 @@ export class DriverDispatchService {
         pageSize: 2000 // Temporary
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       const error = new Error(Localization.sharedValue("Error_RouteNotFound"));
@@ -605,6 +642,8 @@ export class DriverDispatchService {
       pageSize: number;
     }
   ): Promise<{ drivers: Driver[]; totalCount: number } | undefined> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("drivers/query"),
       BaseService.defaultConfig({
@@ -618,6 +657,8 @@ export class DriverDispatchService {
         paging: paging ? {} : undefined
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -649,10 +690,14 @@ export class DriverDispatchService {
    * @returns A promise that will be resolved with a driver object.
    */
   public async fetchDriverById(driverId: number): Promise<Driver | undefined> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("drivers/details", { id: driverId.toString() }),
       BaseService.defaultConfig()
     );
+
+    this.loading = false;
 
     if (!response.ok) {
       return undefined;
@@ -671,12 +716,16 @@ export class DriverDispatchService {
   public async assignDrivers(
     pairings: { routeId: string, driverId: number }[]
   ): Promise<{ routeId: string, driverId: number, isAssigned: boolean }[] | undefined> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/route/assignDrivers"),
       BaseService.defaultConfig({
         assignments: pairings
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -708,6 +757,8 @@ export class DriverDispatchService {
     startTime?: DateTime,
     endTime?: DateTime
   ): Promise<Forecast[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/forecast/list"),
       BaseService.defaultConfig({
@@ -718,6 +769,8 @@ export class DriverDispatchService {
         fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -749,6 +802,8 @@ export class DriverDispatchService {
     startTime?: DateTime,
     endTime?: DateTime
   ): Promise<Prebooking[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/prebooking/list"),
       BaseService.defaultConfig({
@@ -761,6 +816,8 @@ export class DriverDispatchService {
         driverIds: this.driverFilters.map(d => d.id)
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
@@ -787,12 +844,16 @@ export class DriverDispatchService {
    * Fetches a list of prebookings matching the specific ids.
    */
   public async fetchPrebookingsFromIds(ids: string[]): Promise<Prebooking[]> {
+    this.loading = true;
+
     const response = await fetch(
       BaseService.url("dispatch/prebooking/listbyids"),
       BaseService.defaultConfig({
         ids: ids
       })
     );
+
+    this.loading = false;
 
     if (response.status === 404) {
       this.toast = { message: "404 not found", type: "error" };
