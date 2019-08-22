@@ -22,7 +22,6 @@ import {
   ButtonType,
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
-import { Link } from "react-router-dom";
 import { OverviewData } from "../models/overviewData";
 
 interface Props {
@@ -81,11 +80,12 @@ export default class CreatePrebookingComponent extends React.Component<
   }
 
   private async fetchDrivers(
-    forecast: Forecast
+    forecast: Forecast,
+    query?: string
   ): Promise<{ drivers: Driver[]; totalCount: number } | undefined> {
     return await driverDispatchService.fetchDrivers({
       date: forecast.date,
-      search: this.state.search ? this.state.search : "",
+      search: query ? query : "",
       driverIds: [],
       period: forecast.timePeriod
     });
@@ -223,15 +223,16 @@ export default class CreatePrebookingComponent extends React.Component<
           key={d.id}
         />,
         // tslint:disable-next-line: jsx-wrap-multiline
-        <Link
+        <a
           key={d.id}
-          to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
+          target="_blank"
+          href={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(
             ":id",
             d.id.toString()
           )}
         >
           {d.formattedName}
-        </Link>,
+        </a>,
         d.phone.number,
         d.id.toString(),
         d.company && d.company.name !== "" ? `${d.company.name} (${d.company.id})` : "--"
@@ -239,12 +240,17 @@ export default class CreatePrebookingComponent extends React.Component<
     });
   }
 
-  private onSearchChange(query: string | undefined) {
+  private async onSearchChange(query: string | undefined) {
     if (this.state.forecast) {
       this.setState({
         search: query
       });
-      this.fetchDrivers(this.state.forecast);
+
+      var response = await this.fetchDrivers(this.state.forecast, query);
+
+      this.setState({
+        drivers: response ? response.drivers : []
+      })
     }
   }
 

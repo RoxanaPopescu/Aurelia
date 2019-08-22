@@ -128,7 +128,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
             >
               Create forecast
             </Button>
-            <Button
+            {/* <Button
               onClick={async () => {
                 await driverDispatchService.updateForecasts(this.forecasts);
                 driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
@@ -138,7 +138,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
               disabled={driverDispatchService.forecasts.length === 0}
             >
               Update forecasts
-            </Button>
+            </Button> */}
           </Header>
           <Table
             onForecastEnter={async (forecast, newValue) => {
