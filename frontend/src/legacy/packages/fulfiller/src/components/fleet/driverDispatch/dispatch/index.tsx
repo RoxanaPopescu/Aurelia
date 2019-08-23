@@ -71,7 +71,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
   }
 
   private async fetchOverviewData(): Promise<void> {
-    driverDispatchService.selectedItemIndexes = [];
+    driverDispatchService.selectedItemIds = [];
     driverDispatchService.driverFilters = [];
     driverDispatchService.fulfilleeFilters = [];
     driverDispatchService.haulierFilters = [];
@@ -118,7 +118,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
     ) {
       return (
         <Button
-          disabled={driverDispatchService.selectedItemIndexes.length === 0}
+          disabled={driverDispatchService.selectedItemIds.length === 0}
           onClick={() => this.assignUnassignedRoutes()}
           type={ButtonType.Light}
           size={ButtonSize.Medium}
@@ -133,8 +133,8 @@ export default class DispatchComponent extends React.Component<Props, State> {
 
   private removePrebookingDrivers() {
     let array: Prebooking[] = [];
-    driverDispatchService.prebookings.forEach((p, i) => {
-      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+    driverDispatchService.prebookings.forEach(p => {
+      if (driverDispatchService.selectedItemIds.indexOf(p.id) > -1) {
         array.push(p);
       }
     });
@@ -146,8 +146,8 @@ export default class DispatchComponent extends React.Component<Props, State> {
 
   private assignUnassignedRoutes() {
     let array: Route[] = [];
-    driverDispatchService.unassignedRoutes.forEach((ur, i) => {
-      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+    driverDispatchService.unassignedRoutes.forEach(ur => {
+      if (driverDispatchService.selectedItemIds.indexOf(ur.id) > -1) {
         array.push(ur);
       }
     });
@@ -161,8 +161,8 @@ export default class DispatchComponent extends React.Component<Props, State> {
 
   private assignPrebookingDrivers() {
     let array: Prebooking[] = [];
-    driverDispatchService.prebookings.forEach((p, i) => {
-      if (driverDispatchService.selectedItemIndexes.indexOf(i) > -1) {
+    driverDispatchService.prebookings.forEach(p => {
+      if (driverDispatchService.selectedItemIds.indexOf(p.id) > -1) {
         array.push(p);
       }
     });

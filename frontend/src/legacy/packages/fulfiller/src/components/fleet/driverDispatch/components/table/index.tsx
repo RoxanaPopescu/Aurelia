@@ -48,7 +48,7 @@ export default class extends React.Component<Props> {
   }
 
   componentWillMount() {
-    driverDispatchService.selectedItemIndexes = [];
+    driverDispatchService.selectedItemIds = [];
   }
 
   private getHeaders() {
@@ -83,17 +83,17 @@ export default class extends React.Component<Props> {
             <InputCheckbox
               checked={
                 driverDispatchService.prebookings.length !== 0 &&
-                driverDispatchService.selectedItemIndexes.length ===
+                driverDispatchService.selectedItemIds.length ===
                   driverDispatchService.prebookings.length
               }
               onChange={checked => {
-                var checkedRows: number[] = [];
+                var checkedRows: string[] = [];
                 if (checked) {
-                  driverDispatchService.prebookings.forEach((p, i) => {
-                    checkedRows.push(i);
+                  driverDispatchService.prebookings.forEach(p => {
+                    checkedRows.push(p.id);
                   });
                 }
-                driverDispatchService.selectedItemIndexes = checkedRows;
+                driverDispatchService.selectedItemIds = checkedRows;
               }}
             />
           )
@@ -117,17 +117,17 @@ export default class extends React.Component<Props> {
             <InputCheckbox
               checked={
                 driverDispatchService.unassignedRoutes.length !== 0 &&
-                driverDispatchService.selectedItemIndexes.length ===
+                driverDispatchService.selectedItemIds.length ===
                   driverDispatchService.unassignedRoutes.length
               }
               onChange={checked => {
-                var checkedRows: number[] = [];
+                var checkedRows: string[] = [];
                 if (checked) {
-                  driverDispatchService.unassignedRoutes.forEach((p, i) => {
-                    checkedRows.push(i);
+                  driverDispatchService.unassignedRoutes.forEach(p => {
+                    checkedRows.push(p.id);
                   });
                 }
-                driverDispatchService.selectedItemIndexes = checkedRows;
+                driverDispatchService.selectedItemIds = checkedRows;
               }}
             />
           )
@@ -257,14 +257,15 @@ export default class extends React.Component<Props> {
     return array;
   }
 
-  private handleCheckboxClick(checked: boolean, currentIndex: number) {
-    var checkedRows = driverDispatchService.selectedItemIndexes;
+  private handleCheckboxClick(checked: boolean, currentIndex: number, currentId: string) {
+    var checkedRowIds = driverDispatchService.selectedItemIds;
+
     if (
       checked &&
-      driverDispatchService.selectedItemIndexes.indexOf(currentIndex) === -1
+      this.highlightedIndexes.indexOf(currentIndex) === -1
     ) {
       if (this.shiftDown) {
-        var indexes = checkedRows.slice();
+        var indexes = this.highlightedIndexes;
         if (currentIndex > indexes.sort()[indexes.length - 1]) {
           for (var j = indexes.sort()[indexes.length - 1] + 1; j <= currentIndex; j++) {
             indexes.push(j);
@@ -275,15 +276,21 @@ export default class extends React.Component<Props> {
           }
         }
 
-        checkedRows = indexes;
+        checkedRowIds = indexes.map(i => {
+          if (driverDispatchService.state.slug === DispatchState.map.prebooking.slug) {
+            return driverDispatchService.prebookings[i].id;
+          } else {
+            return driverDispatchService.unassignedRoutes[i].id;
+          }
+        });
       } else {
-        checkedRows.push(currentIndex);
+        checkedRowIds.push(currentId);
       }
     } else {
-      checkedRows.splice(checkedRows.indexOf(currentIndex), 1);
+      checkedRowIds.splice(checkedRowIds.indexOf(currentId), 1);
     }
 
-    driverDispatchService.selectedItemIndexes = checkedRows;
+    driverDispatchService.selectedItemIds = checkedRowIds;
   }
 
   private getRows() {
@@ -317,9 +324,9 @@ export default class extends React.Component<Props> {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
-            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
+            checked={driverDispatchService.selectedItemIds.indexOf(p.id) > -1}
             onChange={checked => {
-              this.handleCheckboxClick(checked, i);
+              this.handleCheckboxClick(checked, i, p.id);
             }}
             key={p.id}
           />,
@@ -393,9 +400,9 @@ export default class extends React.Component<Props> {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
           <InputCheckbox
-            checked={driverDispatchService.selectedItemIndexes.indexOf(i) > -1}
+            checked={driverDispatchService.selectedItemIds.indexOf(ur.id) > -1}
             onChange={checked => {
-              this.handleCheckboxClick(checked, i);
+              this.handleCheckboxClick(checked, i, ur.id);
             }}
             key={ur.id}
           />,
@@ -436,6 +443,38 @@ export default class extends React.Component<Props> {
     }
   }
 
+  private get highlightedIndexes(): number[] {
+    var array: number[] = [];
+
+    if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
+      driverDispatchService.forecasts.forEach((f, i) => {
+        if (driverDispatchService.selectedItemIds.filter(id => id === f.id).length > 0) {
+          array.push(i);
+        }
+      })
+    } else if (driverDispatchService.state.slug === DispatchState.map.prebooking.slug) {
+      driverDispatchService.prebookings.forEach((p, i) => {
+        if (driverDispatchService.selectedItemIds.filter(id => id === p.id).length > 0) {
+          array.push(i);
+        }
+      })
+    } else if (driverDispatchService.state.slug === DispatchState.map.unassignedRoute.slug) {
+      driverDispatchService.unassignedRoutes.forEach((ur, i) => {
+        if (driverDispatchService.selectedItemIds.filter(id => id === ur.id).length > 0) {
+          array.push(i);
+        }
+      })
+    } else if (driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug) {
+      driverDispatchService.assignedRoutes.forEach((ar, i) => {
+        if (driverDispatchService.selectedItemIds.filter(id => id === ar.id).length > 0) {
+          array.push(i);
+        }
+      })
+    }
+
+    return array;
+  }
+
   render() {
     return (
       <>
@@ -448,7 +487,7 @@ export default class extends React.Component<Props> {
               rows: this.getRows()
             }}
             loading={driverDispatchService.loading}
-            highlightedRowIndexes={driverDispatchService.selectedItemIndexes}
+            highlightedRowIndexes={this.highlightedIndexes}
             disabledRowIndexes={this.getDisabledRowIndexes()}
             gridTemplateColumns={this.gridTemplateColumns}
           />

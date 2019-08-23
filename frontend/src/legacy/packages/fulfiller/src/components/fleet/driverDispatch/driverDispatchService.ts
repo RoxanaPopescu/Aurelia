@@ -165,7 +165,7 @@ export class DriverDispatchService {
    * Represents the selected Prebookings, Unassigned Routes
    * or Routes indexes.
    */
-  @observable public selectedItemIndexes: number[];
+  @observable public selectedItemIds: string[];
 
   /**
    * Represents the overview data, which fits the search filters.
@@ -213,7 +213,7 @@ export class DriverDispatchService {
     this.prebookings = [];
     this.unassignedRoutes = [];
     this.assignedRoutes = [];
-    this.selectedItemIndexes = [];
+    this.selectedItemIds = [];
 
     this.fulfillees = [];
     this.drivers = [];
@@ -419,7 +419,7 @@ export class DriverDispatchService {
                 .replace("{number}", ids.length.toString()),
       type: "ok"
     };
-    this.selectedItemIndexes = [];
+    this.selectedItemIds = [];
   }
 
   /**

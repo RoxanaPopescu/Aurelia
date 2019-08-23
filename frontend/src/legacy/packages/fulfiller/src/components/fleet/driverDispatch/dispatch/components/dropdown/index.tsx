@@ -47,7 +47,7 @@ export default class extends React.Component<Props, State> {
     if (this.state.dropdownOpen) {
       classNames += " open";
     }
-    if (driverDispatchService.selectedItemIndexes.length === 0) {
+    if (driverDispatchService.selectedItemIds.length === 0) {
       classNames += " disabled";
     }
 
@@ -61,7 +61,7 @@ export default class extends React.Component<Props, State> {
           className="c-driverDispatch-buttonDropdown-button"
           type={ButtonType.Light}
           size={ButtonSize.Medium}
-          disabled={driverDispatchService.selectedItemIndexes.length === 0}
+          disabled={driverDispatchService.selectedItemIds.length === 0}
         >
           {Localization.sharedValue("Action_Choose")}
           <div className="arrow" />

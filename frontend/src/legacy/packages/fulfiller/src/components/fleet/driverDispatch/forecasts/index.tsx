@@ -45,7 +45,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
   }
 
   private async fetchData(): Promise<void> {
-    driverDispatchService.selectedItemIndexes = [];
+    driverDispatchService.selectedItemIds = [];
     await driverDispatchService.fetchOverview();
 
     driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
