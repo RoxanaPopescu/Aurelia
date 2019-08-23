@@ -216,6 +216,7 @@ export default class CreatePrebookingComponent extends React.Component<
             } else {
               checkedRows = checkedRows.filter(cr => cr.id !== d.id);
             }
+
             this.setState({
               checkedDrivers: checkedRows
             });
@@ -292,6 +293,17 @@ export default class CreatePrebookingComponent extends React.Component<
     ];
   }
 
+  private get highlightedRowIndexes(): number[] {
+    var array: number[] = [];
+    this.state.drivers.forEach((d, i) => {
+      if (this.state.checkedDrivers.filter(cd => cd.id === d.id).length > 0) {
+        array.push(i);
+      }
+    })
+
+    return array;
+  }
+
   render() {
     return (
       <div className="c-createPrebooking-container">
@@ -349,7 +361,7 @@ export default class CreatePrebookingComponent extends React.Component<
             }}
             loading={driverDispatchService.loading}
             gridTemplateColumns="min-content auto auto auto auto"
-            highlightedRowIndexes={this.state.checkedDrivers.map((d, i) => i)}
+            highlightedRowIndexes={this.highlightedRowIndexes}
             disabledRowIndexes={this.disabledRows}
           />
         </PageContentComponent>
