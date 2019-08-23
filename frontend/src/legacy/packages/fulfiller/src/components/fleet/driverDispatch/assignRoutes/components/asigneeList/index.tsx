@@ -301,7 +301,7 @@ export default class extends React.Component<Props, State> {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
             <InputRadioGroup
-              radioButtons={[{ value: p.driver.id, headline: "" }]}
+              radioButtons={[{ value: p.id, headline: "" }]}
               key={p.id}
               onChange={value => {
                 if (
@@ -325,7 +325,7 @@ export default class extends React.Component<Props, State> {
           return [
             // tslint:disable-next-line: jsx-wrap-multiline
             <InputRadioGroup
-              radioButtons={[{ value: p.driver.id, headline: "" }]}
+              radioButtons={[{ value: p.id, headline: "" }]}
               key={p.id}
               onChange={value => {
                 if (

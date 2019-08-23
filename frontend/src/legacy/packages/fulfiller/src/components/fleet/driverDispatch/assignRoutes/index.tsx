@@ -53,7 +53,6 @@ export default class AssignRoutesComponent extends React.Component<
       routes: [],
       prebookings: [],
       ids: this.props.match.params.ids.split(","),
-      selectedAssignee: undefined,
       toasts: []
     };
   }
@@ -98,9 +97,9 @@ export default class AssignRoutesComponent extends React.Component<
               }
               selectedRoute={this.state.selectedRoute}
               selectedAssignee={this.state.selectedAssignee}
-              onAssigneeSelection={assignee =>
+              onAssigneeSelection={assignee => {
                 this.setState({ selectedAssignee: assignee })
-              }
+              }}
               matchedAssignees={this.state.matches.map(m => m.assignee)}
             />
             {this.state.origin === "prebookings" && (
