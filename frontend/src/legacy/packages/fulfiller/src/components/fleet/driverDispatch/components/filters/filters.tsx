@@ -107,7 +107,7 @@ export default class extends React.Component<Props, State> {
                     .valueOf() > 0
                 ) {
                   driverDispatchService.endDate =
-                    driverDispatchService.startDate;
+                    driverDispatchService.startDate.endOf("day");
                 }
 
                 this.props.onTopFilterChange();
