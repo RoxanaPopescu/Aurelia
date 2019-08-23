@@ -49,7 +49,7 @@ export default class extends React.Component<Props> {
           >
             <div className="c-dropdown-content">
 
-                  {!["requested", "assigned"].includes(this.props.route.status.slug) &&
+                  {!["requested", "accepted", "assigned"].includes(this.props.route.status.slug) &&
                   <div
                     className="c-dropdown-item"
                     onClick={() => this.setStatus("not-started")}
@@ -57,7 +57,7 @@ export default class extends React.Component<Props> {
                     Ikke startet
                   </div>}
 
-                  {!["requested", "started"].includes(this.props.route.status.slug) &&
+                  {!["requested", "accepted", "started"].includes(this.props.route.status.slug) &&
                   <div
                     className="c-dropdown-item"
                     onClick={() => this.setStatus("started")}
