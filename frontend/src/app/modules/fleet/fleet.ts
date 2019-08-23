@@ -59,7 +59,7 @@ export class FleetModule
                     title: routeTitles.dispatch,
                     nav: true,
                     href: "/fleet-management/dispatch",
-                    icon: "forecast"
+                    icon: "dispatch"
                 },
                 {
                     name: "assign-routes",
