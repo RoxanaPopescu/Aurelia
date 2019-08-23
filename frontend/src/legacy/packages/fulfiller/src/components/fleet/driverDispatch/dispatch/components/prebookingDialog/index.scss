@@ -12,6 +12,19 @@
 }
 
 .c-driverDispatch-prebookingDialog {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .c-dialog-content {
+    height: 100%;
+    overflow-y: overlay;
+    padding-top: 0;
+
+    > h4 {
+      padding-top: 11rem;
+    }
+  }
   .gridTable-container {
     margin-top: 6rem;
   }

@@ -168,7 +168,7 @@ export default class extends React.Component<Props, State> {
     } else {
       return Localization.operationsValue("Dispatch_Prebookings_RemoveWarning__Multiple")
               .replace("{number}", this.state.selectedPrebookings.length.toString())
-              .replace("{customer}", this.state.selectedPrebookings.map(p => p.forecast.fulfillee.name).join(","));
+              .replace("{customer}", [...new Set(this.state.selectedPrebookings.map(p => p.forecast.fulfillee.name))].join(", "));
     }
   }
 
@@ -200,7 +200,7 @@ export default class extends React.Component<Props, State> {
           />
         )
       },
-      { key: "customer", content: Localization.sharedValue("User_Customer") },
+      { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
       { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
       { key: "time-period", content: Localization.operationsValue("TimePeriod") },
       { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
