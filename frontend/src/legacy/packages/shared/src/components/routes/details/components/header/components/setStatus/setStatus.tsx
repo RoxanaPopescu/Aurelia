@@ -48,8 +48,8 @@ export default class extends React.Component<Props> {
             onClick={e => e.nativeEvent.stopPropagation()}
           >
             <div className="c-dropdown-content">
-              
-                  {["cancelled", "started", "completed"].includes(this.props.route.status.slug) &&
+
+                  {!["requested", "assigned"].includes(this.props.route.status.slug) &&
                   <div
                     className="c-dropdown-item"
                     onClick={() => this.setStatus("not-started")}
@@ -57,7 +57,7 @@ export default class extends React.Component<Props> {
                     Ikke startet
                   </div>}
 
-                  {["assigned"].includes(this.props.route.status.slug) &&
+                  {!["requested", "started"].includes(this.props.route.status.slug) &&
                   <div
                     className="c-dropdown-item"
                     onClick={() => this.setStatus("started")}
@@ -65,7 +65,7 @@ export default class extends React.Component<Props> {
                     Startet
                   </div>}
 
-                  {["assigned", "started"].includes(this.props.route.status.slug) &&
+                  {!["completed"].includes(this.props.route.status.slug) &&
                   <div
                     className="c-dropdown-item"
                     onClick={() => this.setStatus("completed")}
@@ -79,8 +79,8 @@ export default class extends React.Component<Props> {
                     onClick={() => this.setStatus("cancelled")}
                   >
                     Anulleret
-                  </div>}      
-                  
+                  </div>}
+
             </div>
           </div>
         )}

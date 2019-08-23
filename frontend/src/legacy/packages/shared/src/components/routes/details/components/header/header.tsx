@@ -49,7 +49,7 @@ export default class extends React.Component<Props> {
         {isFulfiller &&
         <AssignDriverButton route={this.props.detailsService.routeDetails!}/>}
 
-        {isFulfiller && !["requested", "accepted"].includes(this.props.detailsService.routeDetails!.status.slug) &&
+        {isFulfiller &&
         <SetStatusButton route={this.props.detailsService.routeDetails!}/>}
 
         {isFulfiller && ["started"].includes(this.props.detailsService.routeDetails!.status.slug) &&
