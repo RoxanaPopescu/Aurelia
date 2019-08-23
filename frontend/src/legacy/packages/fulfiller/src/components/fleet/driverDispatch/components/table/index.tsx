@@ -55,22 +55,22 @@ export default class extends React.Component<Props> {
     if (driverDispatchService.state.slug === DispatchState.map.forecast.slug) {
       if (this.props.page === "dispatch") {
         return [
-          { key: "customer", content: "Customer" },
-          { key: "date-start", content: "Date start" },
-          { key: "time-period", content: "Time period" },
-          { key: "starting-addresse", content: "Starting address" },
-          { key: "vehicle", content: "Vehicle" },
-          { key: "assigned-slots", content: "Assigned slots" },
-          { key: "unassigned-slots", content: "Missing" }
+          { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+          { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+          { key: "time-period", content: Localization.sharedValue("TimePeriod") },
+          { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+          { key: "vehicle", content: Localization.sharedValue("Vehicle") },
+          { key: "assigned-slots", content: Localization.operationsValue("Dispatch_Forecasts_SlotsAssigned") },
+          { key: "unassigned-slots", content: Localization.operationsValue("Dispatch_Forecasts_SlotsUnassigned") }
         ];
       } else {
         return [
-          { key: "customer", content: "Customer" },
-          { key: "date-start", content: "Date start" },
-          { key: "time-period", content: "Time period" },
-          { key: "starting-addresse", content: "Starting address" },
-          { key: "vehicle", content: "Vehicle" },
-          { key: "slots", content: "Total slots" }
+          { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+          { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+          { key: "time-period", content: Localization.sharedValue("TimePeriod") },
+          { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+          { key: "vehicle", content: Localization.sharedValue("Vehicle") },
+          { key: "slots", content: Localization.operationsValue("Dispatch_Forecasts_SlotsTotal") }
         ];
       }
     } else if (
@@ -98,13 +98,13 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "customer", content: "Customer" },
-        { key: "date-start", content: "Date start" },
-        { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting address" },
-        { key: "driver", content: "Driver" },
-        { key: "phone", content: "Phone" },
-        { key: "vehicle", content: "Vehicle" }
+        { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+        { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+        { key: "time-period", content: Localization.sharedValue("TimePeriod") },
+        { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+        { key: "driver", content: Localization.sharedValue("User_Driver") },
+        { key: "phone", content: Localization.sharedValue("Phone") },
+        { key: "vehicle", content: Localization.sharedValue("Vehicle") }
       ];
     } else if (
       driverDispatchService.state.slug ===
@@ -132,26 +132,26 @@ export default class extends React.Component<Props> {
             />
           )
         },
-        { key: "reference", content: "Reference" },
-        { key: "customer", content: "Customer" },
-        { key: "date-start", content: "Date start" },
-        { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting address" },
-        { key: "end-addresse", content: "End address" },
-        { key: "vehicle", content: "Vehicle" }
+        { key: "reference", content: Localization.sharedValue("Route_TableHeader_Reference") },
+        { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+        { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+        { key: "time-period", content: Localization.sharedValue("TimePeriod") },
+        { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+        { key: "end-addresse", content: Localization.operationsValue("Dispatch_EndAddress") },
+        { key: "vehicle", content: Localization.sharedValue("Vehicle") }
       ];
     } else if (
       driverDispatchService.state.slug === DispatchState.map.assignedRoute.slug
     ) {
       return [
-        { key: "reference", content: "Reference" },
-        { key: "customer", content: "Customer" },
-        { key: "date-start", content: "Date start" },
-        { key: "time-period", content: "Time period" },
-        { key: "starting-addresse", content: "Starting address" },
-        { key: "end-addresse", content: "End address" },
-        { key: "driver", content: "Driver" },
-        { key: "phone", content: "Phone" }
+        { key: "reference", content: Localization.sharedValue("Route_TableHeader_Reference") },
+        { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+        { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+        { key: "time-period", content: Localization.sharedValue("TimePeriod") },
+        { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+        { key: "end-addresse", content: Localization.operationsValue("Dispatch_EndAddress") },
+        { key: "driver", content: Localization.sharedValue("User_Driver") },
+        { key: "phone", content: Localization.sharedValue("Phone") }
       ];
     } else {
       return [];
@@ -173,7 +173,7 @@ export default class extends React.Component<Props> {
               className="c-driverDispatch-table-actionButton"
             >
               <Button type={ButtonType.Light} size={ButtonSize.Small}>
-                Assign
+                {Localization.operationsValue("Dispatch_Assign")}
               </Button>
             </Link>
           </>
@@ -214,7 +214,7 @@ export default class extends React.Component<Props> {
               }
             }}
           >
-            Match
+            {Localization.operationsValue("Dispatch_Match")}
           </Button>
         </div>
       </>

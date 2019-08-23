@@ -32,7 +32,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
   }[];
   constructor(props: Props) {
     super(props);
-    document.title = Localization.operationsValue("Dispatch_Forecast_Title");
+    document.title = Localization.operationsValue("Dispatch_Forecasts_Title");
 
     driverDispatchService.state = new DispatchState("forecast");
     this.state = {
@@ -126,9 +126,9 @@ export default class ForecastsComponent extends React.Component<Props, State> {
               type={ButtonType.Light}
               size={ButtonSize.Medium}
             >
-              {Localization.operationsValue("Dispatch_Forecast__Create")}
+              {Localization.operationsValue("Dispatch_Forecasts__Create")}
             </Button>
-            {/* <Button
+            <Button
               onClick={async () => {
                 await driverDispatchService.updateForecasts(this.forecasts);
                 driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
@@ -137,8 +137,8 @@ export default class ForecastsComponent extends React.Component<Props, State> {
               size={ButtonSize.Medium}
               disabled={driverDispatchService.forecasts.length === 0}
             >
-              Update forecasts
-            </Button> */}
+              {Localization.operationsValue("Dispatch_Forecasts__UpdateAll")}
+            </Button>
           </Header>
           <Table
             onForecastEnter={async (forecast, newValue) => {

@@ -45,7 +45,7 @@ export default class CreatePrebookingComponent extends React.Component<
 > {
   constructor(props: Props) {
     super(props);
-    document.title = "Assign drivers to forecast";
+    document.title = Localization.operationsValue("Dispatch_Prebookings_Create__Title");
 
     this.state = {
       id: this.props.match.params.id,
@@ -186,10 +186,10 @@ export default class CreatePrebookingComponent extends React.Component<
           />
         )
       },
-      { key: "name", content: "Name" },
-      { key: "phone", content: "Phone" },
-      { key: "driver-id", content: "id" },
-      { key: "haulier", content: "Haulier" }
+      { key: "name", content: Localization.sharedValue("Name") },
+      { key: "phone", content: Localization.sharedValue("Phone") },
+      { key: "driver-id", content: Localization.sharedValue("Id") },
+      { key: "haulier", content: Localization.sharedValue("Haulier") }
     ];
   }
 
@@ -276,18 +276,18 @@ export default class CreatePrebookingComponent extends React.Component<
   private get infoBoxData() {
     return [
       new OverviewData(
-        "Total slots",
+        Localization.operationsValue("Dispatch_Forecasts_SlotsTotal"),
         this.state.forecast ? this.state.forecast.slots.total : "--"
       ),
       new OverviewData(
-        "Unassigned slots",
+        Localization.operationsValue("Dispatch_Forecasts_SlotsUnassigned"),
         this.state.forecast
           ? `${this.state.forecast.slots.total -
               this.state.forecast.slots.assigned}`
           : "--"
       ),
       new OverviewData(
-        "Selected drivers",
+        Localization.operationsValue("Dispatch_Prebookings_SelectedDrivers"),
         `${this.state.checkedDrivers.length}`
       )
     ];
@@ -324,10 +324,10 @@ export default class CreatePrebookingComponent extends React.Component<
         <PageHeaderComponent
           path={[
             {
-              title: "Disponering",
+              title: Localization.operationsValue("Dispatch_Title"),
               href: FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
             },
-            { title: "Assign drivers to forecast" }
+            { title: Localization.operationsValue("Dispatch_Prebookings_Create__Title") }
           ]}
         >
           <div
@@ -373,7 +373,7 @@ export default class CreatePrebookingComponent extends React.Component<
               this.createPrebookings();
             }}
           >
-            Save
+            {Localization.sharedValue("SaveChanges")}
           </Button>
           <Button
             type={ButtonType.Action}
@@ -382,7 +382,7 @@ export default class CreatePrebookingComponent extends React.Component<
               this.createPrebookings(true);
             }}
           >
-            Save and close
+            {Localization.operationsValue("Dispatch_Prebookings_Create__SaveClose")}
           </Button>
         </div>
       </div>

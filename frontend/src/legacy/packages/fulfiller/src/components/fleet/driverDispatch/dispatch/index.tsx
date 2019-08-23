@@ -123,7 +123,7 @@ export default class DispatchComponent extends React.Component<Props, State> {
           type={ButtonType.Light}
           size={ButtonSize.Medium}
         >
-          Match routes
+          {Localization.operationsValue("Dispatch_Forecasts__MatchRoutes")}
         </Button>
       );
     } else {

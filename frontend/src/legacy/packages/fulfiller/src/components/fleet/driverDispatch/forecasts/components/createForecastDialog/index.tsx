@@ -91,8 +91,8 @@ export default class extends React.Component<Props, State> {
     return (
       <>
         <Select
-          headline={Localization.sharedValue("User_Customer")}
-          placeholder={Localization.operationsValue("Dispatch_Forecast_SelectCustomer")}
+          headline={Localization.sharedValue("User_Fulfillee")}
+          placeholder={Localization.operationsValue("Dispatch_Forecasts_SelectCustomer")}
           options={
             this.state.fulfillees
               ? this.state.fulfillees.map(f => {
@@ -172,7 +172,7 @@ export default class extends React.Component<Props, State> {
           error={this.state.validate && !this.state.vehicleType}
         />
         <InputNumbers
-          headline={Localization.operationsValue("Dispatch_Forecast_Slots__Headline")}
+          headline={Localization.operationsValue("Dispatch_Forecasts_SlotsTotal")}
           className="c-driverDispatch-forecastDialog-slots"
           size="medium"
           value={this.state.totalSlots}
@@ -234,7 +234,7 @@ export default class extends React.Component<Props, State> {
     if (this.state.open) {
       return (
         <Dialog
-          title={Localization.operationsValue("Dispatch_Forecast_Dialog__Title")}
+          title={Localization.operationsValue("Dispatch_Forecasts_Dialog__Title")}
           onClose={() => {
             this.props.onClose();
           }}
@@ -250,7 +250,7 @@ export default class extends React.Component<Props, State> {
               size={ButtonSize.Medium}
               type={ButtonType.Action}
             >
-              {Localization.operationsValue("Dispatch_Forecast_Dialog__Create")}
+              {Localization.operationsValue("Dispatch_Forecasts_Dialog__Create")}
             </Button>
           ]}
         >

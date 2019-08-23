@@ -3,6 +3,7 @@ import "./index.scss";
 import { observer } from "mobx-react";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { driverDispatchService } from "../../driverDispatchService";
+import Localization from "shared/src/localization";
 
 @observer
 export default class extends React.Component<{}> {
@@ -15,7 +16,7 @@ export default class extends React.Component<{}> {
       <PageHeaderComponent
         actionElements={<>{this.props.children}</>}
         path={[
-          { title: "Disponering" },
+          { title: Localization.operationsValue("Dispatch_Title") },
           { title: driverDispatchService.state.name }
         ]}
       />

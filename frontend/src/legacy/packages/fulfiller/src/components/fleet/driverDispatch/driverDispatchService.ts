@@ -25,7 +25,7 @@ export class DispatchState {
     },
     prebooking: {
       slug: "prebooking",
-      name: Localization.operationsValue("Dispatch_Prebooking"),
+      name: Localization.operationsValue("Dispatch_Prebookings"),
       value: "prebooking"
     },
     unassignedRoute: {
@@ -339,7 +339,7 @@ export class DriverDispatchService {
 
     this.toast = {
       message: Localization.operationsValue("Dispatch_Forecasts_UpdateSuccess")
-                  .replace("{fulfillee}", updatedForecasts[0].forecast.fulfillee.name)
+                  .replace("{customer}", updatedForecasts[0].forecast.fulfillee.name)
                   .replace("{oldSlots}", updatedForecasts[0].forecast.slots.total.toString())
                   .replace("{newSlots}", updatedForecasts[0].newTotalSlots.toString()),
       type: "ok"
@@ -384,7 +384,7 @@ export class DriverDispatchService {
 
     this.toast = {
       message: Localization.operationsValue("Dispatch_Forecasts_CreateSuccess")
-                .replace("{fulfillee}", forecast.fulfillee.companyName!)
+                .replace("{customer}", forecast.fulfillee.companyName!)
                 .replace("date", Localization.formatDateTimeRange(forecast.timePeriod)),
       type: "ok"
     };
@@ -498,7 +498,7 @@ export class DriverDispatchService {
     this.toast = {
       message: Localization.operationsValue("Dispatch_Prebookings_CreateSuccess")
                 .replace("{number}", drivers.length.toString())
-                .replace("{fulfillee}", forecast.fulfillee.name)
+                .replace("{customer}", forecast.fulfillee.name)
                 .replace("{date}", Localization.formatDate(forecast.date)),
       type: "ok"
     };

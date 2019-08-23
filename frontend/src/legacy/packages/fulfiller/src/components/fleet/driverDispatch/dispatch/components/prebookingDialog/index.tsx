@@ -62,7 +62,7 @@ export default class extends React.Component<Props, State> {
             }
           }}
         >
-          Confirm
+          {Localization.sharedValue("Action_Confirm")}
         </Button>
       ];
     } else {
@@ -87,7 +87,7 @@ export default class extends React.Component<Props, State> {
             });
           }}
         >
-          Remove driver
+          {Localization.operationsValue("Dispatch_Prebooking__RemoveDriver")}
         </Button>,
         // tslint:disable-next-line: jsx-wrap-multiline
         <Link
@@ -100,7 +100,7 @@ export default class extends React.Component<Props, State> {
             .replace(":origin", "prebookings")}
         >
           <Button type={ButtonType.Light} size={ButtonSize.Medium}>
-            Match with a route
+            {Localization.operationsValue("Dispatch_Prebooking__Match")}
           </Button>
         </Link>
       ];
@@ -146,13 +146,13 @@ export default class extends React.Component<Props, State> {
     return (
       <div className="c-driverDispatch-prebookingDialog-information">
         <div className="c-driverDispatch-prebookingDialog-infobox">
-          <h4 className="font-heading">Starting address</h4>
+          <h4 className="font-heading">{Localization.operationsValue("Dispatch_StartingAddress")}</h4>
           <h4>{`${prebooking.forecast.startingLocation.address.primary}, ${
             prebooking.forecast.startingLocation.address.secondary
           }`}</h4>
         </div>
         <div className="c-driverDispatch-prebookingDialog-infobox">
-          <h4 className="font-heading">Driver</h4>
+          <h4 className="font-heading">{Localization.operationsValue("Dispatch_Driver")}</h4>
           <h4>{prebooking.driver.formattedName}</h4>
           <h4>{prebooking.driver.phone.number}</h4>
         </div>
@@ -162,21 +162,21 @@ export default class extends React.Component<Props, State> {
 
   private getRemoveHeadline() {
     if (this.state.selectedPrebookings.length === 1) {
-      return `You are about to remove ${
-        this.state.selectedPrebookings[0].driver.formattedName
-      }'s prebooking`;
+      return Localization.operationsValue("Dispatch_Prebookings_RemoveWarning__Single")
+              .replace("{driver}", this.state.selectedPrebookings[0].driver.formattedName)
+              .replace("{customer}", this.state.selectedPrebookings[0].forecast.fulfillee.name);
     } else {
-      return `You are about to remove ${
-        this.state.selectedPrebookings.length
-      } prebookings`;
+      return Localization.operationsValue("Dispatch_Prebookings_RemoveWarning__Multiple")
+              .replace("{number}", this.state.selectedPrebookings.length.toString())
+              .replace("{customer}", this.state.selectedPrebookings.map(p => p.forecast.fulfillee.name).join(","));
     }
   }
 
   private get title() {
     if (this.state.state === "remove") {
-      return "Remove prebooking";
+      return Localization.operationsValue("Dispatch_Prebookings_Remove__Title");
     } else {
-      return "Assigning of prebooking";
+      return Localization.operationsValue("Dispatch_Prebookings_Action__Title");
     }
   }
 
@@ -200,12 +200,12 @@ export default class extends React.Component<Props, State> {
           />
         )
       },
-      { key: "customer", content: "Customer" },
-      { key: "date-start", content: "Date start" },
-      { key: "time-period", content: "Time period" },
-      { key: "starting-addresse", content: "Starting address" },
-      { key: "driver", content: "Driver" },
-      { key: "vehicle", content: "Vehicle" }
+      { key: "customer", content: Localization.sharedValue("User_Customer") },
+      { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
+      { key: "time-period", content: Localization.operationsValue("TimePeriod") },
+      { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
+      { key: "driver", content: Localization.operationsValue("Dispatch_Driver") },
+      { key: "vehicle", content: Localization.sharedValue("Vehicle") }
     ];
   }
 

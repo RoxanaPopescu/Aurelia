@@ -65,7 +65,7 @@ export default class AssignRoutesComponent extends React.Component<
         <PageHeaderComponent
           path={[
             {
-              title: "Disponering",
+              title: Localization.operationsValue("Dispatch_Title"),
               href: FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
             },
             { title: "Assign drivers to routes" }

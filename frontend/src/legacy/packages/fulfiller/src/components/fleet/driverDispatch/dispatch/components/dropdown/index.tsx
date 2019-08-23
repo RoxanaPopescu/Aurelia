@@ -3,6 +3,7 @@ import "./index.scss";
 import { Button, ButtonType, ButtonSize } from "shared/src/webKit";
 import { driverDispatchService } from "../../../driverDispatchService";
 import { observer } from "mobx-react";
+import Localization from '../../../../../../../../shared/src/localization/index';
 
 interface Props {
   removePrebookingDrivers();
@@ -62,7 +63,7 @@ export default class extends React.Component<Props, State> {
           size={ButtonSize.Medium}
           disabled={driverDispatchService.selectedItemIndexes.length === 0}
         >
-          Choose action
+          {Localization.sharedValue("Action_Choose")}
           <div className="arrow" />
         </Button>
         {this.state.dropdownOpen && (
@@ -82,7 +83,7 @@ export default class extends React.Component<Props, State> {
               }}
               className="c-driverDispatch-dropdown-value"
             >
-              Remove drivers
+              {Localization.operationsValue("Dispatch_Prebooking__RemoveDrivers")}
             </div>
             <div
               onClick={() => {
@@ -91,7 +92,7 @@ export default class extends React.Component<Props, State> {
               }}
               className="c-driverDispatch-dropdown-value"
             >
-              Match with route
+              {Localization.operationsValue("Dispatch_Prebooking__MatchRoute")}
             </div>
           </div>
         )}
