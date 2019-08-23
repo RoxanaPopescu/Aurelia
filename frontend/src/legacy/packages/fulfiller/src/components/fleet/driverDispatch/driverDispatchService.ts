@@ -14,27 +14,28 @@ import {
   SortingDirectionMap
 } from "shared/src/model/general/sorting";
 import { Route } from "shared/src/components/routes/list/models/route";
+import { Outfit } from "shared/src/model/logistics/outfit";
 
 export class DispatchState {
   public static readonly map = {
     forecast: {
       slug: "forecast",
-      name: "Forecast",
+      name: Localization.operationsValue("Dispatch_Forecasts"),
       value: "forecast"
     },
     prebooking: {
       slug: "prebooking",
-      name: "Prebooking",
+      name: Localization.operationsValue("Dispatch_Prebooking"),
       value: "prebooking"
     },
     unassignedRoute: {
       slug: "unassigned-route",
-      name: "Unassigned routes",
+      name: Localization.operationsValue("Dispatch_UnassignedRoutes"),
       value: "unassignedRoute"
     },
     assignedRoute: {
       slug: "assigned-route",
-      name: "Assigned routes",
+      name: Localization.operationsValue("Dispatch_AssignedRoutes"),
       value: "assignedRoute"
     }
   };
@@ -206,7 +207,7 @@ export class DriverDispatchService {
     this.haulierFilters = [];
 
     this.startDate = DateTime.local().startOf("day");
-    this.endDate = DateTime.local().startOf("day");
+    this.endDate = DateTime.local().endOf("day");
 
     this.forecasts = [];
     this.prebookings = [];
@@ -264,7 +265,7 @@ export class DriverDispatchService {
       let responseJson = await response.json();
       fulfillees = responseJson.filter(r => r.name !== "unknown");
     } catch {
-      this.toast = { message: "Something went wrong", type: "error" };
+      this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
     }
 
     this.fulfillees = fulfillees;
@@ -294,7 +295,7 @@ export class DriverDispatchService {
           return { id: d.id, name: `${d.name.first} ${d.name.last}` };
         });
       } catch {
-        this.toast = { message: "Something went wrong", type: "error" };
+        this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
       }
     }
 
@@ -337,7 +338,10 @@ export class DriverDispatchService {
     }
 
     this.toast = {
-      message: `Updated forecast for ${updatedForecasts[0].forecast.fulfillee.name}. Changed ${updatedForecasts[0].forecast.slots.total} to ${updatedForecasts[0].newTotalSlots}`,
+      message: Localization.operationsValue("Dispatch_Forecasts_UpdateSuccess")
+                  .replace("{fulfillee}", updatedForecasts[0].forecast.fulfillee.name)
+                  .replace("{oldSlots}", updatedForecasts[0].forecast.slots.total.toString())
+                  .replace("{newSlots}", updatedForecasts[0].newTotalSlots.toString()),
       type: "ok"
     };
   }
@@ -346,7 +350,7 @@ export class DriverDispatchService {
    * Creates a forecast with a specific set of parameters
    */
   public async createForecast(forecast: {
-    fulfilleeId: string;
+    fulfillee: Outfit;
     date: DateTime;
     timePeriod: DateTimeRange;
     startingAddress: Location;
@@ -357,7 +361,14 @@ export class DriverDispatchService {
 
     const response = await fetch(
       BaseService.url("dispatch/forecast/create"),
-      BaseService.defaultConfig(forecast)
+      BaseService.defaultConfig({
+        fulfilleeId: forecast.fulfillee.id,
+        date: forecast.date,
+        timePeriod: forecast.timePeriod,
+        startingAddress: forecast.startingAddress,
+        vehicleTypeId: forecast.vehicleTypeId,
+        slots: forecast.slots
+      })
     );
 
     this.loading = false;
@@ -372,9 +383,9 @@ export class DriverDispatchService {
     }
 
     this.toast = {
-      message: `Created 1 forecast for ${Localization.formatDate(
-        forecast.date
-      )}`,
+      message: Localization.operationsValue("Dispatch_Forecasts_CreateSuccess")
+                .replace("{fulfillee}", forecast.fulfillee.companyName!)
+                .replace("date", Localization.formatDateTimeRange(forecast.timePeriod)),
       type: "ok"
     };
   }
@@ -404,7 +415,8 @@ export class DriverDispatchService {
     }
 
     this.toast = {
-      message: `Removed ${ids.length} prebookings`,
+      message: Localization.operationsValue("Dispatch_Prebookings_RemoveSuccess")
+                .replace("{number}", ids.length.toString()),
       type: "ok"
     };
     this.selectedItemIndexes = [];
@@ -484,9 +496,10 @@ export class DriverDispatchService {
     }
 
     this.toast = {
-      message: `Created ${
-        drivers.length
-      } prebookings for ${forecast.fulfillee.name} (${Localization.formatDate(forecast.date)})`,
+      message: Localization.operationsValue("Dispatch_Prebookings_CreateSuccess")
+                .replace("{number}", drivers.length.toString())
+                .replace("{fulfillee}", forecast.fulfillee.name)
+                .replace("{date}", Localization.formatDate(forecast.date)),
       type: "ok"
     };
   }
