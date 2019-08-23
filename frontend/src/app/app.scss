@@ -21,6 +21,10 @@ router-view
 
 react-module
 {
+    // Import legacy styles.
+    @import "../legacy/packages/shared/src/webKit/LEGACY";
+    // @import "../legacy/constants";
+
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
     position: absolute;
@@ -42,10 +46,6 @@ react-module
     // We can't set it to less than 1 though, as modal backdrops need to overlap
     // the top and bottom of the app-sidebar.
     z-index: 1;
-
-    // Import legacy styles.
-    @import "../legacy/packages/shared/src/webKit/LEGACY";
-
 
     --font-label-base-line-height: 5rem;
     --font-label-base-font-size: 3.5rem;

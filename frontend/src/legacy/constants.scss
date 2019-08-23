@@ -1,0 +1,38 @@
+& {
+  //Colors
+  --colorBackgroundPrimary: var(--palette-color-primary);
+  --colorBackgroundPrimaryDarken: var(--palette-color-primary-dark);
+  --colorBackgroundSecondary: #333333;
+  --colorInteractivePrimary: var(--palette-color-primary);
+  --colorInteractivePrimaryAlpha0: hotpink;
+  --colorInteractivePrimaryAlpha15: hotpink;
+  --colorInteractivePrimaryAlpha50: hotpink;
+  --colorInteractivePrimaryAlpha80: hotpink;
+  --colorInteractivePrimaryAlpha97: hotpink;
+  --colorInteractivePrimaryDarken: var(--palette-color-primary-dark);
+  --colorInteractivePrimaryLighten: var(--palette-color-primary-light);
+  --colorInteractivePrimaryActive: var(--palette-color-primary-darker);
+  --colorInteractivePrimaryInactive: var(--palette-color-primary-light);
+  --colorInteractiveSecondary: #fff;
+  --colorOk: var(--palette-color-positive);
+  --colorOkDarken: var(--palette-color-positive-dark);
+  --colorWarning: var(--palette-color-attention);
+  --colorWarningDarken: var(--palette-color-attention-dark);
+  --colorAlert: var(--palette-color-negative);
+  --colorAlertDarken: var(--palette-color-negative-dark);
+  --colorNeutralExtraExtraLight: #fbfbfb;
+  --colorNeutralExtraLight: #f7f7f7;
+  --colorNeutralExtraLightDarken: #f2f2f2;
+  --colorNeutralExtraLightAlpha70: rgba(247, 247, 247, 0.7);
+  --colorNeutralLight: var(--palette-color-neutral-light);
+  --colorNeutralRegular: var(--palette-color-neutral);
+  --colorNeutralRegularDarken: var(--palette-color-neutral-dark);
+  --colorNeutralSemiDark: var(--palette-color-neutral-darker);
+  --colorNeutralDark: var(--palette-color-blackpoint);
+
+  //Text color
+  --textDarkPrimary: var(--palette-color-neutral-darker);
+  --textDarkSecondary: var(--palette-color-neutral-dark);
+  --textDarkInactive: var(--palette-color-neutral);
+  --textLightPrimary: white;
+}
