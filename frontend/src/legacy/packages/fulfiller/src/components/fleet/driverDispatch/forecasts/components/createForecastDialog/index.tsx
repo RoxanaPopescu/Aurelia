@@ -18,6 +18,7 @@ import { Outfit } from "shared/src/model/logistics/outfit";
 import { AgreementsService } from "shared/src/services/agreementsService";
 import { VehicleType } from "shared/src/model/session";
 import { driverDispatchService } from "../../../driverDispatchService";
+import Localization from '../../../../../../../../shared/src/localization/index';
 
 interface Props {
   open: boolean;
@@ -90,8 +91,8 @@ export default class extends React.Component<Props, State> {
     return (
       <>
         <Select
-          headline="Customer"
-          placeholder="Select a customer"
+          headline={Localization.sharedValue("User_Customer")}
+          placeholder={Localization.operationsValue("Dispatch_Forecast_SelectCustomer")}
           options={
             this.state.fulfillees
               ? this.state.fulfillees.map(f => {
@@ -111,7 +112,7 @@ export default class extends React.Component<Props, State> {
         />
         <div className="c-driverDispatch-dateContainer">
           <DateComponent
-            headline="Date start"
+            headline={Localization.operationsValue("Dispatch_DateStart")}
             minimum={DateTime.local().startOf("day")}
             date={this.state.dateFrom}
             size="medium"
@@ -124,7 +125,7 @@ export default class extends React.Component<Props, State> {
           />
           <TimeComponent
             size="medium"
-            headline="Time start"
+            headline={Localization.operationsValue("Dispatch_TimeStart")}
             seconds={this.state.timeFrom}
             onChange={seconds => {
               this.setState({ timeFrom: seconds });
@@ -134,7 +135,7 @@ export default class extends React.Component<Props, State> {
           />
           <TimeComponent
             size="medium"
-            headline="Time end"
+            headline={Localization.operationsValue("Dispatch_TimeEnd")}
             minimum={this.getTimeMinimum()}
             seconds={this.state.timeTo}
             onChange={seconds => {
@@ -145,7 +146,7 @@ export default class extends React.Component<Props, State> {
           />
         </div>
         <AddressSearchComponent
-          headline="Starting address"
+          headline={Localization.operationsValue("Dispatch_StartingAddress")}
           onChange={location => {
             this.setState({ startingLocation: location });
           }}
@@ -154,8 +155,8 @@ export default class extends React.Component<Props, State> {
           locationRequired={true}
         />
         <Select
-          headline="Vehicle type"
-          placeholder="Select a type"
+          headline={Localization.operationsValue("Dispatch_VehicleType")}
+          placeholder={Localization.operationsValue("Dispatch_VehicleType__Placeholder")}
           size="medium"
           options={VehicleType.getAll().map(vt => ({
             label: vt.name,
@@ -171,7 +172,7 @@ export default class extends React.Component<Props, State> {
           error={this.state.validate && !this.state.vehicleType}
         />
         <InputNumbers
-          headline="Total amount of slots"
+          headline={Localization.operationsValue("Dispatch_Forecast_Slots__Headline")}
           className="c-driverDispatch-forecastDialog-slots"
           size="medium"
           value={this.state.totalSlots}
@@ -233,7 +234,7 @@ export default class extends React.Component<Props, State> {
     if (this.state.open) {
       return (
         <Dialog
-          title="Create a Forecast"
+          title={Localization.operationsValue("Dispatch_Forecast_Dialog__Title")}
           onClose={() => {
             this.props.onClose();
           }}
@@ -249,7 +250,7 @@ export default class extends React.Component<Props, State> {
               size={ButtonSize.Medium}
               type={ButtonType.Action}
             >
-              Create
+              {Localization.operationsValue("Dispatch_Forecast_Dialog__Create")}
             </Button>
           ]}
         >

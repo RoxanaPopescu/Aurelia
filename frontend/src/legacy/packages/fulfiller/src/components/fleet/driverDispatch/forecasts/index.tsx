@@ -32,7 +32,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
   }[];
   constructor(props: Props) {
     super(props);
-    document.title = Localization.operationsValue("Drivers_Title");
+    document.title = Localization.operationsValue("Dispatch_Forecast_Title");
 
     driverDispatchService.state = new DispatchState("forecast");
     this.state = {
@@ -84,7 +84,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
           onCreate={forecast => {
             try {
               driverDispatchService.createForecast({
-                fulfilleeId: forecast.fulfillee.id,
+                fulfillee: forecast.fulfillee,
                 date: forecast.dateFrom,
                 timePeriod: new DateTimeRange({
                   from: forecast.dateTimeFrom,
@@ -126,7 +126,7 @@ export default class ForecastsComponent extends React.Component<Props, State> {
               type={ButtonType.Light}
               size={ButtonSize.Medium}
             >
-              Create forecast
+              {Localization.operationsValue("Dispatch_Forecast__Create")}
             </Button>
             {/* <Button
               onClick={async () => {

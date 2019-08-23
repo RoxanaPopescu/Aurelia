@@ -1,0 +1,122 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Ruby24-x64\bin;C:\Users\Hanif Zivlaei\AppData\Local\Microsoft\WindowsApps;C:\Users\Hanif Zivlaei\AppData\Roaming\npm;C:\Users\Hanif Zivlaei\AppData\Local\Yarn\bin;C:\Program Files\PhraseApp;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;%SYSTEMROOT%\System32\OpenSSH\;C:\Users\Hanif Zivlaei\.windows-build-tools\python27\;C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;C:\Users\Hanif Zivlaei\AppData\Roaming\npm\node_modules\windows-build-tools\node_modules\.bin;C:\Users\Hanif Zivlaei\AppData\Roaming\npm\node_modules\.bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Ruby24-x64\bin;C:\Users\Hanif Zivlaei\AppData\Local\Microsoft\WindowsApps;C:\Program Files\PhraseApp;C:\Program Files (x86)\Yarn\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Microsoft VS Code\bin;C:\Users\Hanif Zivlaei\AppData\Local\Android\Sdk\platform-tools\;C:\Users\Hanif Zivlaei\.dotnet\tools;C:\Users\Hanif Zivlaei\AppData\Local\Yarn\bin;C:\Users\Hanif Zivlaei\AppData\Roaming\npm;C:\Users\Hanif Zivlaei\AppData\Roaming\Composer\vendor\bin;C:\php;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  10.13.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Hanif Zivlaei\Documents\platform\frontend\node_modules\node-sass\vendor\win32-x64-64\binding.node'
+
+npm manifest: 
+  {
+    "name": "@mover/frontend",
+    "author": "Thomas Darling",
+    "description": "Frontend for the Mover logistics platform.",
+    "version": "0.0.0",
+    "license": "UNLICENSED",
+    "private": true,
+    "repository": {
+      "type": "git",
+      "url": "https://thomas_darling@bitbucket.org/moversystems/platform.git"
+    },
+    "engines": {
+      "node": ">=10.13.0 <12.0.0",
+      "npm": ">=6.7.0 <7.0.0"
+    },
+    "browserslist": [
+      "last 2 versions",
+      "> 1%",
+      "not dead"
+    ],
+    "scripts": {
+      "develop": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/develop'",
+      "clean": "cross-env rimraf 'artifacts/build'",
+      "build": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/build'",
+      "lint": "cross-env tslint --project 'tsconfig.json' --format stylish && stylelint 'src/**/*.css' 'src/**/*.scss' --config '../stylelint.json'",
+      "translate-export": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-export'",
+      "translate-pseudo": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-pseudo'",
+      "translate": "cross-env npm run translate-export && ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-da'"
+    },
+    "dependencies": {
+      "aurelia-animator-css": "^1.0.4",
+      "aurelia-bootstrapper": "^2.3.3",
+      "aurelia-fetch-client": "^1.8.2",
+      "compression": "^1.7.4",
+      "dropzone": "^5.5.1",
+      "express": "^4.17.1",
+      "focus-trap": "^5.0.2",
+      "inert-polyfill": "^0.2.5",
+      "luxon": "^1.17.2",
+      "popper.js": "^1.15.0",
+      "tslib": "^1.10.0",
+      "uuid": "^3.3.2"
+    },
+    "peerDependencies": {},
+    "devDependencies": {
+      "@types/autoprefixer": "^9.5.0",
+      "@types/compression": "0.0.36",
+      "@types/copy-webpack-plugin": "^5.0.0",
+      "@types/del": "^4.0.0",
+      "@types/dropzone": "^5.0.6",
+      "@types/duplicate-package-checker-webpack-plugin": "^2.1.0",
+      "@types/express": "^4.17.0",
+      "@types/html-webpack-plugin": "^3.2.1",
+      "@types/luxon": "^1.15.2",
+      "@types/node": "^12.6.9",
+      "@types/opn": "^5.5.0",
+      "@types/popper.js": "^1.11.0",
+      "@types/uuid": "^3.4.5",
+      "@types/webpack": "^4.32.1",
+      "@types/webpack-bundle-analyzer": "^2.13.2",
+      "@types/webpack-dev-server": "^3.1.7",
+      "aurelia-webpack-plugin": "^4.0.0",
+      "autoprefixer": "^9.6.1",
+      "chalk": "^2.4.2",
+      "commander": "^2.20.0",
+      "copy-webpack-plugin": "^5.0.4",
+      "cross-env": "^5.2.0",
+      "css-loader": "^3.1.0",
+      "duplicate-package-checker-webpack-plugin": "^3.0.0",
+      "expose-loader": "^0.7.5",
+      "file-loader": "^4.1.0",
+      "globs": "^0.1.4",
+      "html-loader": "^0.5.5",
+      "html-webpack-plugin": "^3.2.0",
+      "node-sass": "^4.12.0",
+      "pkg-dir": "^4.2.0",
+      "postcss-loader": "^3.0.0",
+      "rimraf": "^2.6.3",
+      "sass-loader": "^7.1.0",
+      "style-loader": "^0.23.1",
+      "stylelint": "^10.1.0",
+      "stylelint-config-standard": "^18.3.0",
+      "stylelint-scss": "^3.9.3",
+      "svg-sprite-loader": "^4.1.6",
+      "translation-loader": "^1.1.1",
+      "ts-loader": "^6.0.4",
+      "ts-node": "^8.3.0",
+      "tslint": "^5.18.0",
+      "typescript": "^3.5.3",
+      "url-loader": "^2.1.0",
+      "webpack": "^4.39.1",
+      "webpack-bundle-analyzer": "^3.4.1",
+      "webpack-cli": "^3.3.6",
+      "webpack-dev-server": "^3.7.2",
+      "worker-loader": "^2.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
