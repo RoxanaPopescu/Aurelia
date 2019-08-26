@@ -27,6 +27,7 @@ interface State {
   drivers: Driver[];
   prebookings: Prebooking[];
   queriedPrebookings: Prebooking[];
+  matchedAssignees: (Driver | Prebooking)[];
 }
 
 @observer
@@ -40,7 +41,8 @@ export default class extends React.Component<Props, State> {
       prebookings: [],
       queriedPrebookings: [],
       drivers: [],
-      selectedRoute: props.selectedRoute
+      selectedRoute: props.selectedRoute,
+      matchedAssignees: props.matchedAssignees
     };
   }
 
@@ -48,7 +50,8 @@ export default class extends React.Component<Props, State> {
     if (props.selectedRoute) {
       this.setState({
         selectedRoute: props.selectedRoute,
-        selectedAssignee: props.selectedAssignee
+        selectedAssignee: props.selectedAssignee,
+        matchedAssignees: props.matchedAssignees
       }, () => this.fetchData())
     } else {
       if (!this.props.prebookingIds && (this.state.drivers.length > 0 || this.state.prebookings.length > 0)) {
@@ -56,11 +59,13 @@ export default class extends React.Component<Props, State> {
           prebookings: [],
           queriedPrebookings: [],
           drivers: [],
-          selectedAssignee: props.selectedAssignee
+          selectedAssignee: props.selectedAssignee,
+          matchedAssignees: props.matchedAssignees
         })
       } else {
         this.setState({
-          selectedAssignee: props.selectedAssignee
+          selectedAssignee: props.selectedAssignee,
+          matchedAssignees: props.matchedAssignees
         })
       }
     }
@@ -76,10 +81,10 @@ export default class extends React.Component<Props, State> {
         <InfoBox
           data={this.state.state === "prebookings" ?
           [
-            { name: Localization.operationsValue("Dispatch_Prebookings"), value: this.state.prebookings.length }
+            { name: Localization.operationsValue("Dispatch_Prebookings"), value: this.state.prebookings.length - this.state.matchedAssignees.length }
           ] :
           [
-            { name: Localization.operationsValue("Drivers_Title"), value: this.state.drivers.length }
+            { name: Localization.operationsValue("Drivers_Title"), value: this.state.drivers.length - this.state.matchedAssignees.length }
           ]}
         />
         <div className="c-assignRoutes-assigneeState">
@@ -213,7 +218,7 @@ export default class extends React.Component<Props, State> {
           key: "select",
           content: ""
         },
-        { key: "customer", content: Localization.sharedValue("User_Fulfilee") },
+        { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
         { key: "datetime", content: Localization.operationsValue("Dispatch_DateTime") },
         { key: "start-address", content: Localization.operationsValue("Dispatch_StartingAddress") },
         { key: "driver", content: Localization.sharedValue("User_Driver") },
@@ -276,7 +281,7 @@ export default class extends React.Component<Props, State> {
 
   private getRows() {
     if (this.state.state === "drivers") {
-      var drivers = this.state.drivers.filter(d => this.props.matchedAssignees.filter(a => a.id === d.id).length === 0);
+      var drivers = this.state.drivers.filter(d => this.state.matchedAssignees.filter(a => a.id === d.id).length === 0);
       return drivers.map(d => {
         return [
           // tslint:disable-next-line: jsx-wrap-multiline
@@ -299,7 +304,7 @@ export default class extends React.Component<Props, State> {
         ];
       });
     } else {
-      var prebookings = this.state.queriedPrebookings.filter(p => this.props.matchedAssignees.filter(a => a.id === p.id).length === 0);
+      var prebookings = this.state.queriedPrebookings.filter(p => this.state.matchedAssignees.filter(a => a.id === p.id).length === 0);
       if (this.props.prebookingIds) {
         return prebookings.map(p => {
           return [

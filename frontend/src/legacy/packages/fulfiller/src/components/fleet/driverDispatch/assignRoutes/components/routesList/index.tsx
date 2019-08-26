@@ -22,6 +22,7 @@ interface State {
   routes: Route[];
   queriedRoutes: Route[];
   selectedPrebooking?: Prebooking;
+  matchedRoutes: Route[];
 }
 
 @observer
@@ -33,7 +34,8 @@ export default class extends React.Component<Props, State> {
       selectedRoute: props.selectedRoute,
       routes: [],
       queriedRoutes: [],
-      selectedPrebooking: props.selectedPrebooking
+      selectedPrebooking: props.selectedPrebooking,
+      matchedRoutes: props.matchedRoutes
     };
   }
 
@@ -41,7 +43,8 @@ export default class extends React.Component<Props, State> {
     if (props.selectedPrebooking) {
       this.setState({
         selectedPrebooking: props.selectedPrebooking,
-        selectedRoute: props.selectedRoute
+        selectedRoute: props.selectedRoute,
+        matchedRoutes: props.matchedRoutes
       }, () => {
         this.fetchData();
       })
@@ -49,11 +52,13 @@ export default class extends React.Component<Props, State> {
       if (!this.props.ids && this.state.routes.length > 0) {
         this.setState({
           routes: [],
-          selectedRoute: props.selectedRoute
+          selectedRoute: props.selectedRoute,
+          matchedRoutes: props.matchedRoutes
         })
       } else {
         this.setState({
-          selectedRoute: props.selectedRoute
+          selectedRoute: props.selectedRoute,
+          matchedRoutes: props.matchedRoutes
         })
       }
     }
@@ -69,7 +74,7 @@ export default class extends React.Component<Props, State> {
         <div className="c-assignRoutes-routes">
           <InfoBox
             data={[
-              { name: "Unassigned routes", value: this.state.routes.length }
+              { name: "Unassigned routes", value: this.state.routes.length - this.state.matchedRoutes.length }
             ]}
           />
           <Input
@@ -186,7 +191,7 @@ export default class extends React.Component<Props, State> {
   }
 
   private getRows() {
-    var routes = this.state.routes.filter(r => this.props.matchedRoutes.filter(mr => mr.id === r.id).length === 0);
+    var routes = this.state.routes.filter(r => this.state.matchedRoutes.filter(mr => mr.id === r.id).length === 0);
     return routes.map((r, i) => {
       return [
         // tslint:disable-next-line: jsx-wrap-multiline
@@ -251,7 +256,7 @@ export default class extends React.Component<Props, State> {
           <div>{route.endAddress.primary}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">{Localization.operationsValue("Dispatch_EndTime")}</div>
+          <div className="font-heading">{Localization.operationsValue("Dispatch_TimeEnd")}</div>
           <div>{Localization.formatDateTime(route.endDateTime)}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
