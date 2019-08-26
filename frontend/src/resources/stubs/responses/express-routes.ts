@@ -10,7 +10,7 @@ const expressRoutes =
         "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
         "pickupPostalCode": "2600",
         "deliveryPostalCode": "2600",
-        "timeToDeadline": "600",
+        "timeToDeadline": 600,
         "expires": undefined,
 
         "stops":
@@ -283,91 +283,101 @@ const driverRoutes =
 ];
 
 export default
+{
+    "GET /api/v1/expressdispatch/newroutes":
     {
-        "GET /api/v1/expressdispatch/newroutes":
-        {
-            delay: 1000,
-            data: cloneExpressRoutes([...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes])
-        },
+        delay: 1000,
+        data: cloneExpressRoutes([...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes, ...expressRoutes])
+    },
 
-        "GET /api/v1/expressdispatch/driverroutes":
-        {
-            delay: 1000,
-            data: cloneDriverRoutes([...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes])
-        },
+    "GET /api/v1/expressdispatch/driverroutes":
+    {
+        delay: 1000,
+        data: cloneDriverRoutes([...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes, ...driverRoutes])
+    },
 
-        "POST /api/v1/expressdispatch/estimatedriverroute":
-        {
-            delay: 3000,
-            data: cloneDriverRoutes(driverRoutes)[0]
-        },
+    "POST /api/v1/expressdispatch/estimatedriverroute":
+    {
+        delay: 3000,
+        data: cloneDriverRoutes(driverRoutes)[0]
+    },
 
-        "POST /api/v1/expressdispatch/updatedriverroute":
-        {
-            delay: 1000,
-            data: cloneDriverRoutes(driverRoutes)[0]
-        },
+    "POST /api/v1/expressdispatch/updatedriverroute":
+    {
+        delay: 1000,
+        data: cloneDriverRoutes(driverRoutes)[0]
+    },
 
-        "POST /api/v1/expressdispatch/releaseroute":
+    "POST /api/v1/expressdispatch/releaseroute":
+    {
+        delay: 1000,
+        status: 204
+    }
+};
+
+function cloneExpressRoutes(routes)
+{
+    let nextRouteIdPrefix = 0;
+    let nextStopIdPrefix = 0;
+
+    return routes.map(r =>
+    {
+        const route = JSON.parse(JSON.stringify(r));
+        route.slug = route.slug.replace("R", "R" + ++nextRouteIdPrefix);
+        route.id = nextRouteIdPrefix + route.id;
+
+        route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
+        route.stops[0].location.position.longitude += -0.1 + (0.8 - Math.random()) * 0.1;
+        route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
+        route.stops[1].location.position.longitude += -0.15 + (0.8 - Math.random()) * 0.1;
+
+        route.timeToDeadline += -500 + Math.random() * 2000;
+        route.criticality = route.timeToDeadline <= 600 ? "high" : route.timeToDeadline <= 1800 ? "medium" : "low";
+
+        for (let stop of route.stops)
         {
-            delay: 1000,
-            status: 204
+            stop.id = ++nextStopIdPrefix + route.id;
         }
-    }
 
-    function cloneExpressRoutes(routes)
+        return route;
+    });
+}
+
+function cloneDriverRoutes(routes)
+{
+    let i = 0;
+
+    const result: any[] = [];
+
+    result.push(...routes.map(r =>
     {
-        let i = 0;
+        const route = JSON.parse(JSON.stringify(r));
+        route.driver.id = route.driver.id + i++;
 
-        return routes.map(r =>
-        {
-            const route = JSON.parse(JSON.stringify(r));
-            route.id = route.id + i++;
+        route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
+        route.stops[0].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
+        route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
+        route.stops[1].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
+        route.stops[2].location.position.latitude += (0.8 - Math.random()) * 0.1;
+        route.stops[2].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.1;
+        route.driverPosition.latitude = route.stops[0].location.position.latitude + (1 - Math.random()) * 0.02;
+        route.driverPosition.longitude = -0.05 + route.stops[0].location.position.longitude + (1 - Math.random()) * 0.02;
 
-            route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
-            route.stops[0].location.position.longitude += -0.1 + (0.8 - Math.random()) * 0.1;
-            route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
-            route.stops[1].location.position.longitude += -0.15 + (0.8 - Math.random()) * 0.1;
+        return route;
+    }));
 
-            return route;
-        });
-    }
-
-    function cloneDriverRoutes(routes)
+    result.push(...routes.map(r =>
     {
-        let i = 0;
+        const route = JSON.parse(JSON.stringify(r));
+        route.driver.id = route.driver.id + routes.length + i++;
 
-        const result: any[] = [];
+        route.stops = [];
+        route.completionTime = undefined;
+        route.driverPosition.latitude = route.driverPosition.latitude + (1 - Math.random()) * 0.1;
+        route.driverPosition.longitude = -0.2 + route.driverPosition.longitude + (1 - Math.random()) * 0.2;
 
-        result.push(...routes.map(r =>
-        {
-            const route = JSON.parse(JSON.stringify(r));
-            route.driver.id = route.driver.id + i++;
+        return route;
+    }));
 
-            route.stops[0].location.position.latitude += (0.8 - Math.random()) * 0.1;
-            route.stops[0].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
-            route.stops[1].location.position.latitude += (0.8 - Math.random()) * 0.1;
-            route.stops[1].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.2;
-            route.stops[2].location.position.latitude += (0.8 - Math.random()) * 0.1;
-            route.stops[2].location.position.longitude += -0.35 + (0.8 - Math.random()) * 0.1;
-            route.driverPosition.latitude = route.stops[0].location.position.latitude + (1 - Math.random()) * 0.02;
-            route.driverPosition.longitude = -0.05 + route.stops[0].location.position.longitude + (1 - Math.random()) * 0.02;
-
-            return route;
-        }));
-
-        result.push(...routes.map(r =>
-        {
-            const route = JSON.parse(JSON.stringify(r));
-            route.driver.id = route.driver.id + routes.length + i++;
-
-            route.stops = [];
-            route.completionTime = undefined;
-            route.driverPosition.latitude = route.driverPosition.latitude + (1 - Math.random()) * 0.1;
-            route.driverPosition.longitude = -0.2 + route.driverPosition.longitude + (1 - Math.random()) * 0.2;
-
-            return route;
-        }));
-
-        return result;
-    }
+    return result;
+}

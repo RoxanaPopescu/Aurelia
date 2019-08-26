@@ -13,6 +13,7 @@ import { ExpressRouteDeliveryArrow } from "./components/features/express-route-d
 import { GoogleMap } from "react-google-maps";
 import { Button, ButtonType } from "shared/src/webKit";
 import { observable } from "mobx";
+import { DriverMarker } from "./components/features/driver-marker/driver-marker";
 
 export interface IExpressRouteMapProps
 {
@@ -23,7 +24,7 @@ export interface IExpressRouteMapProps
     remainingExpressStops?: ExpressRouteStop[][];
     onExpressRouteClick: (route: ExpressRoute) => void;
     onDriverRouteClick: (route: DriverRoute) => void;
-    onConnectedStopClick: (stop: DriverRouteStop | ExpressRouteStop) => void;
+    onConnectedStopClick: (stop: DriverRouteStop | ExpressRouteStop | null) => void;
     onUnconnectedStopClick: (stop: ExpressRouteStop) => void;
     onMapClick: () => void;
 }
@@ -137,6 +138,21 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                                 onClick={() => { this.onCancel(); }}/>
                         )
                     )}
+
+                    {this.props.isMerging && this.props.driverRoutes![0].driverPosition && this.props.newDriverStops &&
+                        <DriverMarker
+                            key={`DriverMarker-${this.props.driverRoutes![0].driver.id}`}
+                            route={this.props.driverRoutes![0]}
+                            faded={!this.props.driverRoutes![0].selected}
+                            onClick={() =>
+                                { this.isConnecting = !this.isConnecting; this.props.onConnectedStopClick(null); }}
+                        />}
+
+                    {this.props.isMerging && this.props.driverRoutes![0].driverPosition && this.props.newDriverStops && this.props.newDriverStops[0] &&
+                        <DriverRouteSegmentLine
+                            key={`DriverRouteSegmentLine-driver-${this.props.newDriverStops[0].id}`}
+                            routeStops={[this.props.driverRoutes![0].driverPosition!, this.props.newDriverStops[0]]}
+                        />}
 
                 </WorldMap>
 

@@ -4,7 +4,8 @@ import { DriverRoute, ExpressRoute, DriverRouteStop, ExpressRouteStop } from "ap
 
 export class MapColumnCustomElement
 {
-    private _selectedFromStop: DriverRouteStop | ExpressRouteStop | undefined;
+    // Null means the driver.
+    private _selectedFromStop: DriverRouteStop | ExpressRouteStop | null | undefined;
 
     /**
      * The workspace.
@@ -52,36 +53,55 @@ export class MapColumnCustomElement
         this.workspace.selectedExpressRoutes = this.workspace.selectedExpressRoutes.slice();
     }
 
-    protected onConnectedStopClick(stop: DriverRouteStop | ExpressRouteStop): void
+    protected onConnectedStopClick(stop: DriverRouteStop | ExpressRouteStop | null): void
     {
-        if (this._selectedFromStop == null)
+        if (stop == null || this._selectedFromStop === undefined)
         {
             this._selectedFromStop = stop;
 
             return;
         }
 
-        if (this._selectedFromStop.id === stop.id)
+        if ((this._selectedFromStop == null && stop == null) || (this._selectedFromStop != null && stop != null && this._selectedFromStop!.id === stop.id))
         {
             this._selectedFromStop = undefined;
 
             return;
         }
 
-        const insertAfterIndex = this.workspace.newDriverStops!.findIndex(s => s.id === this._selectedFromStop!.id);
-        const insertBeforeStop = this.workspace.newDriverStops![insertAfterIndex + 1];
-
-        if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+        if (this._selectedFromStop !== null)
         {
-            this._selectedFromStop = undefined;
+            const insertAfterIndex = this.workspace.newDriverStops!.findIndex(s => s.id === this._selectedFromStop!.id);
+            const insertBeforeStop = this.workspace.newDriverStops![insertAfterIndex + 1];
 
-            return;
+            if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+            {
+                this._selectedFromStop = undefined;
+
+                return;
+            }
+
+            const movedStopIndex = this.workspace.newDriverStops!.findIndex(s => s.id === stop.id);
+
+            this.workspace.newDriverStops!.splice(movedStopIndex, 1);
+            this.workspace.newDriverStops!.splice(insertAfterIndex + 1, 0, stop);
         }
+        else
+        {
+            const insertBeforeStop = this.workspace.newDriverStops![0];
 
-        const movedStopIndex = this.workspace.newDriverStops!.findIndex(s => s.id === stop.id);
+            if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+            {
+                this._selectedFromStop = undefined;
 
-        this.workspace.newDriverStops!.splice(movedStopIndex, 1);
-        this.workspace.newDriverStops!.splice(insertAfterIndex + 1, 0, stop);
+                return;
+            }
+
+            const movedStopIndex = this.workspace.newDriverStops!.findIndex(s => s.id === stop.id);
+
+            this.workspace.newDriverStops!.splice(movedStopIndex, 1);
+            this.workspace.newDriverStops!.unshift(stop);
+        }
 
         this._selectedFromStop = undefined;
         this.workspace.newDriverStops = this.workspace.newDriverStops!.slice();
@@ -91,19 +111,35 @@ export class MapColumnCustomElement
 
     protected onUnconnectedStopClick(stop: DriverRouteStop | ExpressRouteStop): void
     {
-        if (this._selectedFromStop == null)
+        if (this._selectedFromStop === undefined)
         {
             return;
         }
 
-        const insertAfterIndex = this.workspace.newDriverStops!.findIndex(s => s.id === this._selectedFromStop!.id);
-        const insertBeforeStop = this.workspace.newDriverStops![insertAfterIndex + 1];
+        let insertAfterIndex: number;
 
-        if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+        if (this._selectedFromStop !== null)
         {
-            this._selectedFromStop = undefined;
+            insertAfterIndex = this.workspace.newDriverStops!.findIndex(s => s.id === this._selectedFromStop!.id);
+            const insertBeforeStop = this.workspace.newDriverStops![insertAfterIndex + 1];
 
-            return;
+            if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+            {
+                this._selectedFromStop = undefined;
+
+                return;
+            }
+        }
+        else
+        {
+            const insertBeforeStop = this.workspace.newDriverStops![0];
+
+            if (!this.validateDriverStopConnection(stop, insertBeforeStop))
+            {
+                this._selectedFromStop = undefined;
+
+                return;
+            }
         }
 
         // tslint:disable-next-line: prefer-for-of
@@ -126,7 +162,14 @@ export class MapColumnCustomElement
             }
         }
 
-        this.workspace.newDriverStops!.splice(insertAfterIndex + 1, 0, stop);
+        if (this._selectedFromStop !== null)
+        {
+            this.workspace.newDriverStops!.splice(insertAfterIndex! + 1, 0, stop);
+        }
+        else
+        {
+            this.workspace.newDriverStops!.unshift(stop);
+        }
 
         this._selectedFromStop = undefined;
         this.workspace.newDriverStops = this.workspace.newDriverStops!.slice();
