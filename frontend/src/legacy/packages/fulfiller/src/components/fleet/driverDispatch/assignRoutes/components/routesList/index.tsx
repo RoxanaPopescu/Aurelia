@@ -74,7 +74,7 @@ export default class extends React.Component<Props, State> {
           />
           <Input
             className="c-assignRoutes-search"
-            headline="Search for specific routes"
+            headline={Localization.operationsValue("Dispatch_AssignRoutes_SearchRoutes")}
             placeholder={Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
               if (event) {
@@ -137,11 +137,11 @@ export default class extends React.Component<Props, State> {
         key: "select",
         content: ""
       },
-      { key: "customer", content: "Customer" },
-      { key: "start-time", content: "Start time" },
-      { key: "start-address", content: "Start address" },
-      { key: "colli", content: "Colli" },
-      { key: "complexity", content: "Complexity" }
+      { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+      { key: "start-time", content: Localization.operationsValue("Dispatch_TimeStart") },
+      { key: "start-address", content: Localization.operationsValue("Dispatch_StartingAddress") },
+      { key: "colli", content: Localization.sharedValue("Colli") },
+      { key: "complexity", content: Localization.sharedValue("Complexity") }
     ];
   }
 
@@ -193,7 +193,7 @@ export default class extends React.Component<Props, State> {
         <InputRadioGroup
           radioButtons={[{ value: r.id, headline: "" }]}
           key={`${r.id}-radio`}
-          onChange={value => {
+          onChange={() => {
             if (
               this.state.selectedRoute === undefined ||
               r.id !== this.state.selectedRoute.id
@@ -247,15 +247,15 @@ export default class extends React.Component<Props, State> {
     return (
       <div className="c-assignRoutes-accordion">
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">End address</div>
+          <div className="font-heading">{Localization.operationsValue("Dispatch_EndAddress")}</div>
           <div>{route.endAddress.primary}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">End time</div>
+          <div className="font-heading">{Localization.operationsValue("Dispatch_EndTime")}</div>
           <div>{Localization.formatDateTime(route.endDateTime)}</div>
         </div>
         <div className="c-assignRoutes-accordionInfo">
-          <div className="font-heading">Vehicle</div>
+          <div className="font-heading">{Localization.sharedValue("Vehicle")}</div>
           <div>{route.vehicleType.name}</div>
         </div>
       </div>

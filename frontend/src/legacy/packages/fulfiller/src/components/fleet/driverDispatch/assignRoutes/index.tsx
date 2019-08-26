@@ -45,7 +45,7 @@ export default class AssignRoutesComponent extends React.Component<
 > {
   constructor(props: Props) {
     super(props);
-    document.title = "Assign prebookings to routes";
+    document.title = Localization.operationsValue("Dispatch_AssignRoutes_Title");
 
     this.state = {
       origin: this.props.match.params.origin,
@@ -67,7 +67,7 @@ export default class AssignRoutesComponent extends React.Component<
               title: Localization.operationsValue("Dispatch_Title"),
               href: FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
             },
-            { title: "Assign drivers to routes" }
+            { title: Localization.operationsValue("Dispatch_AssignRoutes_Title") }
           ]}
         >
           <div
@@ -185,7 +185,8 @@ export default class AssignRoutesComponent extends React.Component<
     if (response !== undefined) {
       if (response.filter(r => !r.isAssigned).length === 0) {
         driverDispatchService.toast = {
-          message: `${response.length} routes have been assigned`,
+          message: Localization.operationsValue("Dispatch_AssignRoutes_Success")
+                    .replace("{number}", response.length.toString()),
           type: "ok"
         }
         this.props.history.goBack();
@@ -198,7 +199,8 @@ export default class AssignRoutesComponent extends React.Component<
             type={ToastType.Success}
             remove={() => this.setState({ toasts: this.state.toasts.filter(t => t.key === "successToast") })}
           >
-            {`${response.filter(r => r.isAssigned).length} routes have been assigned`}
+            {Localization.operationsValue("Dispatch_AssignRoutes_Success")
+                    .replace("{number}", response.filter(r => r.isAssigned).length.toString())}
           </Toast>
         )
 
@@ -208,7 +210,8 @@ export default class AssignRoutesComponent extends React.Component<
             type={ToastType.Alert}
             remove={() => this.setState({ toasts: this.state.toasts.filter(t => t.key === "alertToast") })}
           >
-            {`${response.filter(r => !r.isAssigned).length} routes failed to be assigned to the chosen drivers.`}
+            {Localization.operationsValue("Dispatch_AssignRoutes_Failure")
+              .replace("{number}", response.filter(r => !r.isAssigned).length.toString())}
           </Toast>
         )
 
@@ -318,15 +321,15 @@ export default class AssignRoutesComponent extends React.Component<
 
   private getHeaders(): { key: string, content: string }[] {
     return [
-      { key: "customer", content: "Customer" },
-      { key: "datetime-interval", content: "Datetime interval" },
-      { key: "starting-address", content: "Starting address" },
-      { key: "end-address", content: "End address" },
-      { key: "driver", content: "Driver" },
-      { key: "driver-phone", content: "Phone" },
-      { key: "vehicle", content: "Vehicle" },
-      { key: "stops", content: "Stops" },
-      { key: "complexity", content: "Complexity" }
+      { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
+      { key: "datetime-interval", content: Localization.operationsValue("Dispatch_StartTimeInterval") },
+      { key: "starting-address", content: Localization.operationsValue("Dispatch_StartingAddress") },
+      { key: "end-address", content: Localization.operationsValue("Dispatch_EndAddress") },
+      { key: "driver", content: Localization.sharedValue("User_Driver") },
+      { key: "driver-phone", content: Localization.sharedValue("Phone") },
+      { key: "vehicle", content: Localization.sharedValue("Vehicle") },
+      { key: "stops", content: Localization.sharedValue("Stops") },
+      { key: "complexity", content: Localization.sharedValue("Complexity") }
     ];
   }
 

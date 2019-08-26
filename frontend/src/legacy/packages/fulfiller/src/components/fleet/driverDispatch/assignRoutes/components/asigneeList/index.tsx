@@ -76,17 +76,21 @@ export default class extends React.Component<Props, State> {
         <InfoBox
           data={this.state.state === "prebookings" ?
           [
-            { name: "Prebookings", value: this.state.prebookings.length }
+            { name: Localization.operationsValue("Dispatch_Prebookings"), value: this.state.prebookings.length }
           ] :
           [
-            { name: "Drivers", value: this.state.drivers.length }
+            { name: Localization.operationsValue("Drivers_Title"), value: this.state.drivers.length }
           ]}
         />
         <div className="c-assignRoutes-assigneeState">
           <Input
             className="c-assignRoutes-search"
-            headline={this.state.state === "drivers" ? "Search for specific drivers" : "Search for specific prebookings"}
-            placeholder={this.props.prebookingIds ? "Type queries seperated by spaces ..." : Localization.sharedValue("Search_TypeToSearch")}
+            headline={this.state.state === "drivers" ?
+                        Localization.operationsValue("Dispatch_AssignRoutes_SearchDrivers") :
+                        Localization.operationsValue("Dispatch_AssignRoutes_SearchPrebookings")}
+            placeholder={this.props.prebookingIds ?
+                          Localization.operationsValue("Dispatch_AssignRoutes_SearchHint") :
+                          Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
               if (event) {
                 event.persist();
@@ -99,8 +103,8 @@ export default class extends React.Component<Props, State> {
           {!this.props.prebookingIds && (
             <InputRadioGroup
               radioButtons={[
-                { value: "prebookings", headline: "Prebookings" },
-                { value: "drivers", headline: "Drivers" }
+                { value: "prebookings", headline: Localization.operationsValue("Dispatch_Prebookings") },
+                { value: "drivers", headline: Localization.operationsValue("Drivers_Title") }
               ]}
               onChange={value => {
                 if (value !== this.state.state) {
@@ -209,11 +213,11 @@ export default class extends React.Component<Props, State> {
           key: "select",
           content: ""
         },
-        { key: "customer", content: "Customer" },
-        { key: "datetime", content: "Datetime" },
-        { key: "start-address", content: "Start address" },
-        { key: "driver", content: "Driver" },
-        { key: "phone", content: "phone" }
+        { key: "customer", content: Localization.sharedValue("User_Fulfilee") },
+        { key: "datetime", content: Localization.operationsValue("Dispatch_DateTime") },
+        { key: "start-address", content: Localization.operationsValue("Dispatch_StartingAddress") },
+        { key: "driver", content: Localization.sharedValue("User_Driver") },
+        { key: "phone", content: Localization.sharedValue("Phone") }
       ];
     } else {
       return [
@@ -221,9 +225,9 @@ export default class extends React.Component<Props, State> {
           key: "select",
           content: ""
         },
-        { key: "driver", content: "Driver" },
-        { key: "phone", content: "phone" },
-        { key: "haulier", content: "Haulier" }
+        { key: "driver", content: Localization.sharedValue("User_Driver") },
+        { key: "phone", content: Localization.sharedValue("Phone") },
+        { key: "haulier", content: Localization.sharedValue("Haulier") }
       ];
     }
   }

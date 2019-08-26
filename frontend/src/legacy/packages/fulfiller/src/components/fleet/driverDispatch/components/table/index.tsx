@@ -235,7 +235,7 @@ export default class extends React.Component<Props> {
               }
             }}
           >
-            Actions
+            {Localization.operationsValue("Dispatch_Actions")}
           </Button>
         </div>
       </>

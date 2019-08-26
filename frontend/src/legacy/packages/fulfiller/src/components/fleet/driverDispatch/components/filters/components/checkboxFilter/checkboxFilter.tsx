@@ -1,6 +1,7 @@
 import React from "react";
 import "./checkboxFilter.scss";
 import { InputCheckbox, Input } from "shared/src/webKit";
+import Localization from '../../../../../../../../../shared/src/localization/index';
 
 interface Props {
   data: { label: string; value: string | number; checked?: boolean }[];
@@ -44,7 +45,9 @@ export default class extends React.Component<Props, State> {
         }}
         className={classNames}
       >
-        {this.state.collapsed ? "Show more" : "Show less"}
+        {this.state.collapsed ?
+          Localization.sharedValue("RouteDetails_Stops_Stop_Accordion_ShowMore") :
+          Localization.sharedValue("RouteDetails_Stops_Stop_Accordion_ShowLess")}
         <span />
       </h4>
     );
@@ -133,8 +136,8 @@ export default class extends React.Component<Props, State> {
     return (
       <>
         <Input
-          headline="Name or id"
-          placeholder="Type a name or id here"
+          headline={Localization.operationsValue("Dispatch_FilterSearch__Headline")}
+          placeholder={Localization.operationsValue("Dispatch_FilterSearch__Placeholder")}
           value={this.state.query}
           onEnter={() => {
             if (this.state.query) {

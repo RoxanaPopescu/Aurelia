@@ -12,6 +12,7 @@ import {
 import { DateTime } from "luxon";
 import TimeComponent from "shared/src/webKit/date/time";
 import { SelectOptionValue } from "shared/src/webKit/select";
+import Localization from '../../../../../../../shared/src/localization/index';
 import {
   ButtonType,
   ButtonSize
@@ -72,7 +73,7 @@ export default class extends React.Component<Props, State> {
   render() {
     return (
       <div className="c-driverDispatch-filters">
-        <Slider headline="Generelle indstillinger">
+        <Slider headline={Localization.operationsValue("Dispatch_GeneralSettings")}>
           <Button
             type={ButtonType.Light}
             size={ButtonSize.Small}
@@ -91,7 +92,7 @@ export default class extends React.Component<Props, State> {
           </Button>
           <div className="c-driverDispatch-filters-datetime">
             <DateComponent
-              headline="Start date"
+              headline={Localization.operationsValue("Dispatch_DateStart")}
               date={driverDispatchService.startDate}
               onChange={date => {
                 var temp = driverDispatchService.startDate.set({
@@ -114,7 +115,7 @@ export default class extends React.Component<Props, State> {
               }}
             />
             <DateComponent
-              headline="End date"
+              headline={Localization.operationsValue("Dispatch_DateEnd")}
               date={driverDispatchService.endDate}
               onChange={date => {
                 var temp = driverDispatchService.endDate.set({
@@ -139,7 +140,7 @@ export default class extends React.Component<Props, State> {
           </div>
           <div className="c-driverDispatch-filters-datetime">
             <TimeComponent
-              headline="Start time"
+              headline={Localization.operationsValue("Dispatch_TimeStart")}
               seconds={this.state.startTimeInSeconds}
               onChange={seconds => {
                 var temp = DateTime.local().startOf("day");
@@ -177,7 +178,7 @@ export default class extends React.Component<Props, State> {
               interval={60}
             />
             <TimeComponent
-              headline="End time"
+              headline={Localization.operationsValue("Dispatch_TimeEnd")}
               seconds={this.state.endTimeInSeconds}
               onChange={seconds => {
                 var temp = DateTime.local().startOf("day");
@@ -243,7 +244,7 @@ export default class extends React.Component<Props, State> {
           )}
         </Slider>
         {driverDispatchService.fulfillees.length > 0 && (
-          <Slider collapsible={true} headline="Kunde">
+          <Slider collapsible={true} headline={Localization.sharedValue("User_Fulfillee")}>
             <CheckboxFilter
               data={driverDispatchService.fulfillees.map(f => {
                 return {
@@ -268,7 +269,7 @@ export default class extends React.Component<Props, State> {
             DispatchState.map.prebooking.slug) && (
           <>
             {driverDispatchService.drivers.length > 0 && (
-              <Slider collapsible={true} headline="Chauffør">
+              <Slider collapsible={true} headline={Localization.sharedValue("User_Driver")}>
                 <CheckboxFilter
                   data={driverDispatchService.drivers.map(d => {
                     return {
@@ -291,11 +292,11 @@ export default class extends React.Component<Props, State> {
             )}
 
             {driverDispatchService.hauliers.length > 0 && (
-              <Slider collapsible={true} headline="Vognmand">
+              <Slider collapsible={true} headline={Localization.sharedValue("Haulier")}>
                 <CheckboxFilter
                   data={driverDispatchService.hauliers.map(h => {
                     return {
-                      label: `${h.name}`,
+                      label: h.name,
                       value: h.id,
                       checked:
                         driverDispatchService.haulierFilters.filter(
