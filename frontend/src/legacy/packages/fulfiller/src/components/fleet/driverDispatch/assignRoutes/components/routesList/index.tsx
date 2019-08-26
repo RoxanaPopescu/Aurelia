@@ -119,8 +119,8 @@ export default class extends React.Component<Props, State> {
 
     if (this.state.selectedPrebooking) {
       var prebookingResponse = await driverDispatchService.fetchUnassignedRoutes(
-        this.state.selectedPrebooking.forecast.timePeriod.from,
-        this.state.selectedPrebooking.forecast.timePeriod.to,
+        this.state.selectedPrebooking.forecast.timePeriod.from!.startOf("day"),
+        this.state.selectedPrebooking.forecast.timePeriod.to!.endOf("day"),
         this.state.selectedPrebooking.forecast.timePeriod.from,
         this.state.selectedPrebooking.forecast.timePeriod.to,
         []);
