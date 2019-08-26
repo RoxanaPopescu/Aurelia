@@ -84,7 +84,9 @@ export default class extends React.Component<Props, State> {
             { name: Localization.operationsValue("Dispatch_Prebookings"), value: this.state.prebookings.length - this.state.matchedAssignees.length }
           ] :
           [
-            { name: Localization.operationsValue("Drivers_Title"), value: this.state.drivers.length - this.state.matchedAssignees.length }
+            {
+              name: Localization.operationsValue("Drivers_Title"),
+              value: this.state.drivers.length === 0 ? 0 : this.state.drivers.length - this.state.matchedAssignees.length }
           ]}
         />
         <div className="c-assignRoutes-assigneeState">

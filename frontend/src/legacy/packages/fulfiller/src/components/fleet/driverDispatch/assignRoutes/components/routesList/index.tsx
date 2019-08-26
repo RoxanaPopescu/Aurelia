@@ -74,7 +74,9 @@ export default class extends React.Component<Props, State> {
         <div className="c-assignRoutes-routes">
           <InfoBox
             data={[
-              { name: "Unassigned routes", value: this.state.routes.length - this.state.matchedRoutes.length }
+              {
+                name: "Unassigned routes",
+                value: this.state.routes.length === 0 ? 0 : this.state.routes.length - this.state.matchedRoutes.length }
             ]}
           />
           <Input
