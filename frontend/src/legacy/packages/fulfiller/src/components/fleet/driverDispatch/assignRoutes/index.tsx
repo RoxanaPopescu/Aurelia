@@ -140,7 +140,7 @@ export default class AssignRoutesComponent extends React.Component<
                 }
               }}
             >
-              Pair
+              {Localization.operationsValue("Dispatch_AssignRoutes_Pair")}
             </Button>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default class AssignRoutesComponent extends React.Component<
               this.assignDrivers()
             }}
           >
-            Assign drivers
+            {Localization.sharedValue("Approve")}
           </Button>
         </div>
       </PageContentComponent>
@@ -310,7 +310,7 @@ export default class AssignRoutesComponent extends React.Component<
           }}
           type={ButtonType.Light}
         >
-          Remove pairing
+          {Localization.operationsValue("Dispatch_AssignRoutes_RemovePairing")}
         </Button>
       </>
       );

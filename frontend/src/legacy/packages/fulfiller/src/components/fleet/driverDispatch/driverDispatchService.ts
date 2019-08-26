@@ -385,7 +385,7 @@ export class DriverDispatchService {
     this.toast = {
       message: Localization.operationsValue("Dispatch_Forecasts_CreateSuccess")
                 .replace("{customer}", forecast.fulfillee.companyName!)
-                .replace("date", Localization.formatDateTimeRange(forecast.timePeriod)),
+                .replace("{date}", Localization.formatDateTimeRange(forecast.timePeriod)),
       type: "ok"
     };
   }

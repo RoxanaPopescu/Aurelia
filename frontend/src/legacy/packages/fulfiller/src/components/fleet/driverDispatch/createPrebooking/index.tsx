@@ -340,7 +340,7 @@ export default class CreatePrebookingComponent extends React.Component<
           <InfoBox data={this.infoBoxData} />
           <Input
             className="c-createPrebooking-search"
-            headline="Search for specific drivers"
+            headline={Localization.operationsValue("Dispatch_AssignRoutes_SearchDrivers")}
             placeholder={Localization.sharedValue("Search_TypeToSearch")}
             onChange={(value, event) => {
               if (event) {

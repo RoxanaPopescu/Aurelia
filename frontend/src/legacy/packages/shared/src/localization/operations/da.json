@@ -35,6 +35,8 @@
   "Dispatch_Assign": "Tildel",
   "Dispatch_AssignedRoutes": "Tildelte ruter",
   "Dispatch_AssignRoutes_Failure": "{number} ruter mislykkedes med at blive tildelt til de valgte chauffører",
+  "Dispatch_AssignRoutes_Pair": "Tildel",
+  "Dispatch_AssignRoutes_RemovePairing": "Fjern tildeling",
   "Dispatch_AssignRoutes_SearchDrivers": "Søg efter specifikke chauffører",
   "Dispatch_AssignRoutes_SearchHint": "Indtast søgeord adskildt med mellemrum ...",
   "Dispatch_AssignRoutes_SearchPrebookings": "Søg efter specifikke præbookinger",

@@ -202,7 +202,7 @@ export default class extends React.Component<Props, State> {
       },
       { key: "customer", content: Localization.sharedValue("User_Fulfillee") },
       { key: "date-start", content: Localization.operationsValue("Dispatch_DateStart") },
-      { key: "time-period", content: Localization.operationsValue("TimePeriod") },
+      { key: "time-period", content: Localization.sharedValue("TimePeriod") },
       { key: "starting-addresse", content: Localization.operationsValue("Dispatch_StartingAddress") },
       { key: "driver", content: Localization.operationsValue("Dispatch_Driver") },
       { key: "vehicle", content: Localization.sharedValue("Vehicle") }

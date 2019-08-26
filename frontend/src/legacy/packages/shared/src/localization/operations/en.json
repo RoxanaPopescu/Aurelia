@@ -35,6 +35,8 @@
   "Dispatch_Assign": "Assign",
   "Dispatch_AssignedRoutes": "Assigned routes",
   "Dispatch_AssignRoutes_Failure": "{number} routes failed to be assigned to the chosen drivers",
+  "Dispatch_AssignRoutes_Pair": "Pair",
+  "Dispatch_AssignRoutes_RemovePairing": "Remove pairing",
   "Dispatch_AssignRoutes_SearchDrivers": "Search for specific drivers",
   "Dispatch_AssignRoutes_SearchHint": "Type queries separated by spaces ...",
   "Dispatch_AssignRoutes_SearchPrebookings": "Search for specific prebookings",
