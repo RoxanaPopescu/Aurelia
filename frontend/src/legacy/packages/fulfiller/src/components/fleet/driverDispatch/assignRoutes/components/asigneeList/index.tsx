@@ -8,7 +8,6 @@ import { Driver } from "shared/src/model/logistics/order/driver";
 import { TableComponent, Input, InputRadioGroup } from "shared/src/webKit";
 import InfoBox from "../../../components/infoBox";
 import Localization from "shared/src/localization";
-import { DateTimeRange } from "../../../../../../../../shared/src/model/general/dateTimeRange";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 
 interface Props {
@@ -152,19 +151,7 @@ export default class extends React.Component<Props, State> {
     } else {
       if (this.state.selectedRoute) {
         if (this.state.state === "drivers") {
-          var driverResponse = await driverDispatchService.fetchDrivers({
-            date: this.state.selectedRoute.startDateTime,
-            search: this.state.search ? this.state.search : "",
-            period: new DateTimeRange({
-              from: this.state.selectedRoute.startDateTime,
-              to: this.state.selectedRoute.endDateTime
-            }),
-            driverIds: []
-          });
-
-          if (driverResponse) {
-            drivers = driverResponse.drivers;
-          }
+          this.fetchDrivers(this.state.selectedRoute)
         } else {
           var prebookingResponse = await driverDispatchService.fetchPrebookings(
             this.state.selectedRoute.startDateTime,
