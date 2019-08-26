@@ -41,12 +41,16 @@ export default class extends React.Component<Props, State> {
 
   componentWillReceiveProps(props: Props) {
     if (props.selectedPrebooking) {
+      console.log("hej")
       this.setState({
         selectedPrebooking: props.selectedPrebooking,
         selectedRoute: props.selectedRoute,
         matchedRoutes: props.matchedRoutes
       }, () => {
-        this.fetchData();
+        if (!this.props.selectedPrebooking ||
+            this.props.selectedPrebooking.id !== props.selectedPrebooking!.id) {
+          this.fetchData()
+        }
       })
     } else {
       if (!this.props.ids && this.state.routes.length > 0) {

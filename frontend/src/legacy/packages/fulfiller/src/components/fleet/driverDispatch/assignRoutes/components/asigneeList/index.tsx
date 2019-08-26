@@ -51,7 +51,12 @@ export default class extends React.Component<Props, State> {
         selectedRoute: props.selectedRoute,
         selectedAssignee: props.selectedAssignee,
         matchedAssignees: props.matchedAssignees
-      }, () => this.fetchData())
+      }, () => {
+        if (!this.props.selectedRoute ||
+            this.props.selectedRoute.id !== props.selectedRoute!.id) {
+          this.fetchData()
+        }
+      })
     } else {
       if (!this.props.prebookingIds && (this.state.drivers.length > 0 || this.state.prebookings.length > 0)) {
         this.setState({
