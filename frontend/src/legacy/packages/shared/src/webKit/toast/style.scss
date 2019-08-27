@@ -11,7 +11,6 @@ $speed: 300ms;
   top: $top;
   min-width: 660px;
   max-width: 1200px;
-  animation: moveInToast $speed;
   display: flex;
   align-items: center;
   background-color: white;
@@ -91,17 +90,7 @@ $speed: 300ms;
     }
   }
 }
-@keyframes moveInToast {
-  0% {
-    opacity: 0;
-    top: $start;
-  }
 
-  100% {
-    opacity: 1;
-    top: $top;
-  }
-}
 @media (min-width: $mediaIpadV) and (max-width: $mediaIpadH) {
   .c-toast {
     max-width: 85vw;

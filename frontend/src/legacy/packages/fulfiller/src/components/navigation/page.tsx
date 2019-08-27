@@ -188,11 +188,7 @@ export namespace FulfillerSubPage {
       Base.isProduction &&
       (page === FulfillerSubPage.OrderGroupList ||
         page === FulfillerSubPage.OrderGroupDetails ||
-        page === FulfillerSubPage.OrderGroupCreate ||
-        page === FulfillerSubPage.DriverDispatch ||
-        page === FulfillerSubPage.Forecasts ||
-        page === FulfillerSubPage.CreatePrebooking ||
-        page === FulfillerSubPage.AssignRoutes)
+        page === FulfillerSubPage.OrderGroupCreate)
     ) {
       return false;
     }
