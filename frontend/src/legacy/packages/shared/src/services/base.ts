@@ -63,11 +63,7 @@ export default class BaseService {
     if (Base.isProduction) {
       return "https://consignor-bff.mover.dk/";
     } else {
-      if (process.env.REACT_APP_DEBUG_LOCALHOST) {
-        return "http://localhost:5000/";
-      } else {
-        return "https://bff-v1-test-mover.azurewebsites.net/";
-      }
+      return `${ENVIRONMENT.apiBaseUrl}v1/`;
     }
   }
 }
