@@ -302,6 +302,19 @@ export default class GeneralComponent extends React.Component<Props> {
           Opret en route planlægning for hver afhentnings lokation
         </InputCheckbox>
         <DividerComponent />
+        <p className="font-large margin">Flow parametre</p>
+        <InputCheckbox
+          checked={
+            this.props.store.setting.parameters.flowParameters
+              .manuallyApproveRoutes
+          }
+          onChange={value =>
+            (this.props.store.setting.parameters.flowParameters.manuallyApproveRoutes = value)
+          }
+        >
+          Manual godkend ruter
+        </InputCheckbox>
+        <DividerComponent />
         <p className="font-large margin">Læssetider</p>
         <InputNumbers
           size={"medium"}
