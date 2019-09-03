@@ -2,7 +2,7 @@ import { observable } from "mobx";
 import { SpecialCondition } from "./specialCondition";
 import { LoadingTimes } from "./loadingTimes";
 import { Limitations } from "./limitations";
-import { FlowParameters } from "./FlowParameters";
+import { FlowParameters } from "./flowParameters";
 
 /**
  * Represents the parameters to use when planning a route.
