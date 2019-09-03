@@ -26,6 +26,9 @@ export class RoutePlanningSettingsStore {
   currentDrawing?: google.maps.Polygon;
 
   @observable
+  editingSpecialCondition?: SpecialCondition;
+
+  @observable
   hiddenConditions: SpecialCondition[] = [];
 
   @observable
@@ -61,6 +64,15 @@ export class RoutePlanningSettingsStore {
   }
 
   @action
+  hideOrShowAllCondition() {
+    if (this.hiddenConditions.length > 0) {
+      this.hiddenConditions = [];
+    } else {
+      this.hiddenConditions = this.setting.parameters.specialConditions.slice();
+    }
+  }
+
+  @action
   addCondition(condition: SpecialCondition) {
     let positions = this.currentDrawing!.getPath()
       .getArray()
@@ -76,6 +88,17 @@ export class RoutePlanningSettingsStore {
     condition.area = positions;
     this.setting.parameters.specialConditions.push(condition);
     this.updateSetting();
+  }
+
+  @action
+  updateCondition(condition: SpecialCondition) {
+    for (let specialCondition of this.setting.parameters.specialConditions) {
+      if (specialCondition.id === condition.id) {
+        Object.assign(specialCondition, condition);
+        this.updateSetting();
+        break;
+      }
+    }
   }
 
   @action
@@ -184,6 +207,7 @@ export class RoutePlanningSettingsStore {
       }
     }
 
+    this.editingSpecialCondition = undefined;
     this.mode = "idle";
     this.clearDrawing();
     this.saving = false;

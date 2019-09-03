@@ -16,90 +16,82 @@ import DateComponent from "shared/src/webKit/date/date";
 import { DateTime } from "luxon";
 import Localization from "shared/src/localization";
 import { OptionValue } from "react-selectize";
+import { observable } from "aurelia-binding";
+
+type SpecialConditionChangeType = "update" | "add";
 
 interface Props {
   store: RoutePlanningSettingsStore;
-}
-
-interface State {
-  startDate?: DateTime;
-  endDate?: DateTime;
-  days?: number[];
-  additionalLoadingTime?: number;
-  additionalTraffic?: number;
-  isBlocked: boolean;
-  validationFailed: boolean;
+  updateCondition?: SpecialCondition;
 }
 
 @observer
 export default class AreaPropertiesComponent extends React.Component<
-  Props,
-  State
+  Props
 > {
+  @observable validationFailed = false;
+  condition: SpecialCondition;
+  type: SpecialConditionChangeType;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       isBlocked: false,
       validationFailed: false
     };
+
+    if (props.updateCondition) {
+      this.condition = Object.assign(new SpecialCondition(), this.props.updateCondition);
+      this.type = "update";
+    } else {
+      this.condition = new SpecialCondition();
+      this.type = "add";
+    }
   }
 
   validate() {
     let validationFailed = false;
 
-    if (!this.state.days) {
+    if (!this.condition.days || this.condition.days.length <= 0) {
       validationFailed = true;
     }
 
     if (
-      (this.state.startDate || this.state.endDate) &&
-      (!this.state.startDate || !this.state.endDate)
+      (this.condition.startDate || this.condition.endDate) &&
+      (!this.condition.startDate || !this.condition.endDate)
     ) {
       validationFailed = true;
     }
 
     if (
-      this.state.isBlocked === false &&
-      !this.state.additionalLoadingTime &&
-      !this.state.additionalTraffic
+      this.condition.isBlocked === false &&
+      !this.condition.additionalLoadingTime &&
+      !this.condition.additionalTrafficPercentage
     ) {
       validationFailed = true;
     }
 
     if (validationFailed) {
-      this.setState({ validationFailed });
+      this.validationFailed = true;
     } else {
       this.create();
     }
   }
 
   create() {
-    let area = new SpecialCondition();
-
-    area.startDate = this.state.startDate;
-    area.endDate = this.state.endDate;
-    area.days = this.state.days!;
-    if (this.state.isBlocked) {
-      area.isBlocked = this.state.isBlocked;
-      area.additionalTrafficPercentage = 0.5;
-      area.additionalLoadingTime = 1;
+    if (this.type == "add") {
+      this.props.store.addCondition(this.condition);
     } else {
-      if (this.state.additionalTraffic) {
-        area.additionalTrafficPercentage = this.state.additionalTraffic / 100;
-      }
-
-      area.additionalLoadingTime = this.state.additionalLoadingTime;
+      this.props.store.updateCondition(this.condition);
     }
-
-    this.props.store.addCondition(area);
   }
 
   formatWeekdays(): OptionValue[] | undefined {
-    if (!this.state.days) {
+    if (!this.condition.days) {
       return undefined;
     }
 
-    let days = Localization.weekdaysFromIds(this.state.days);
+    let days = Localization.weekdaysFromIds(this.condition.days);
 
     return days.map(day => {
       return { label: day.short, value: day.number };
@@ -118,12 +110,12 @@ export default class AreaPropertiesComponent extends React.Component<
             onChange={values => {
               if (values) {
                 const days = values.map(object => object.value);
-                this.setState({ days: days });
+                this.condition.days = days;
               } else {
-                this.setState({ days: undefined });
+                this.condition.days = [];
               }
             }}
-            error={this.state.validationFailed && !this.state.days}
+            error={this.validationFailed && !this.condition.days}
             options={Localization.allWeekdays.map(weekday => {
               return { label: weekday.short, value: weekday.number };
             })}
@@ -136,13 +128,13 @@ export default class AreaPropertiesComponent extends React.Component<
               headline="FRA DATO"
               placeholder="Vælg fra"
               onChange={date => {
-                this.setState({ startDate: date });
+                this.condition.startDate = date;
               }}
-              date={this.state.startDate}
+              date={this.condition.startDate}
               error={
-                this.state.validationFailed &&
-                this.state.startDate === undefined &&
-                this.state.endDate !== undefined
+                this.validationFailed &&
+                this.condition.startDate === undefined &&
+                this.condition.endDate !== undefined
               }
               minimum={DateTime.local()}
             />
@@ -151,13 +143,13 @@ export default class AreaPropertiesComponent extends React.Component<
               headline="TIL DATO"
               placeholder="Vælg til"
               onChange={date => {
-                this.setState({ endDate: date });
+                this.condition.endDate = date;
               }}
-              date={this.state.endDate}
+              date={this.condition.endDate}
               error={
-                this.state.validationFailed &&
-                this.state.endDate === undefined &&
-                this.state.startDate !== undefined
+                this.validationFailed &&
+                this.condition.endDate === undefined &&
+                this.condition.startDate !== undefined
               }
               minimum={DateTime.local()}
             />
@@ -171,19 +163,17 @@ export default class AreaPropertiesComponent extends React.Component<
             valueDescription="sec"
             placeholder="Skriv sekunder"
             onChange={additionalLoadingTime => {
-              this.setState({
-                additionalLoadingTime: additionalLoadingTime
-              });
+              this.condition.additionalLoadingTime = additionalLoadingTime;
             }}
             maxlength={6}
-            value={this.state.additionalLoadingTime}
+            value={this.condition.additionalLoadingTime}
             error={
-              this.state.validationFailed &&
-              this.state.isBlocked === false &&
-              !this.state.additionalLoadingTime &&
-              !this.state.additionalTraffic
+              this.validationFailed &&
+              this.condition.isBlocked === false &&
+              !this.condition.additionalLoadingTime &&
+              !this.condition.additionalTrafficPercentage
             }
-            disabled={this.state.isBlocked}
+            disabled={this.condition.isBlocked}
           />
           <InputNumbers
             size={"medium"}
@@ -192,29 +182,34 @@ export default class AreaPropertiesComponent extends React.Component<
             placeholder="Skriv procent"
             onChange={value => {
               if (value) {
-                this.setState({
-                  additionalTraffic: value
-                });
+                this.condition.additionalTrafficPercentage = value / 100;
+              } else {
+                this.condition.additionalTrafficPercentage = undefined;
               }
             }}
-            value={this.state.additionalTraffic}
+            value={
+              this.condition.additionalTrafficPercentage ?
+              Math.round(this.condition.additionalTrafficPercentage * 100) :
+              undefined
+            }
             maxlength={3}
             error={
-              this.state.validationFailed &&
-              this.state.isBlocked === false &&
-              !this.state.additionalLoadingTime &&
-              !this.state.additionalTraffic
+              this.validationFailed &&
+              this.condition.isBlocked === false &&
+              !this.condition.additionalLoadingTime &&
+              !this.condition.additionalTrafficPercentage
             }
-            disabled={this.state.isBlocked}
+            disabled={this.condition.isBlocked}
           />
           <InputCheckbox
             error={
-              this.state.validationFailed &&
-              this.state.isBlocked === false &&
-              !this.state.additionalLoadingTime &&
-              !this.state.additionalTraffic
+              this.validationFailed &&
+              this.condition.isBlocked === false &&
+              !this.condition.additionalLoadingTime &&
+              !this.condition.additionalTrafficPercentage
             }
-            onChange={blocked => this.setState({ isBlocked: blocked })}
+            onChange={blocked => this.condition.isBlocked = blocked}
+            checked={this.condition.isBlocked}
           >
             Blokeret område
           </InputCheckbox>
@@ -225,7 +220,7 @@ export default class AreaPropertiesComponent extends React.Component<
             disabled={this.props.store.saving}
             loading={this.props.store.saving}
           >
-            Opret område med indstilling
+            {this.type == "update" ? "Opdater område" : "Opret område med indstilling"}
           </Button>
         </div>
       </div>

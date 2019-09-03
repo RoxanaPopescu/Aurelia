@@ -107,7 +107,7 @@ export default class AreasComponent extends React.Component<Props> {
           {this.props.store.setting.parameters.specialConditions.length <=
             0 && (
             <InfoComponent
-              title="Indtegn et område på kortet du ønsker at 
+              title="Indtegn et område på kortet du ønsker at
 tilføje indstillinger til."
               image={require("./assets/drawArea.svg")}
             />

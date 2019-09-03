@@ -4,6 +4,7 @@ import ItemComponent from "./item";
 import { SpecialCondition } from "shared/src/model/logistics/routePlanning/settings";
 import { RoutePlanningSettingsStore } from "../../../store";
 import { observer } from "mobx-react";
+import { Icon } from "shared/src/webKit";
 
 interface Props {
   index: number;
@@ -43,15 +44,15 @@ export default class ListElementComponent extends React.Component<Props> {
           title="BEGRÆNSNING"
           content={this.props.condition.limitationTitle}
         />
-        <div
-          className="c-routePlanSettings-listElement-Remove"
-          onClick={() => {
+        <div className="c-autoDispatch-rule-actions">
+          <Icon className="c-rpc-icon" name="edit" onClick={() => {
+            this.props.store.editingSpecialCondition = this.props.condition;
+          }}/>
+          <Icon className="c-rpc-icon" name="delete" onClick={() => {
             if (window.confirm("Sikker på du vil fjerne dette areal?")) {
               this.props.store.removeCondition(this.props.condition);
             }
-          }}
-        >
-          <img src={require("shared/src/assets/interaction/removeDark.svg")} />
+          }}/>
         </div>
       </div>
     );

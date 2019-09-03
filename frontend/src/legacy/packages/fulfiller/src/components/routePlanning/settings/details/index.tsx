@@ -13,7 +13,8 @@ import {
   Button,
   ButtonType,
   Toast,
-  ToastType
+  ToastType,
+  ButtonSize
 } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
@@ -96,7 +97,20 @@ export default class RoutePlanningSettingsComponent extends React.Component<
           onTabChange={tab => {
             this.tab = tab;
           }}
-        />
+        >
+          { this.tab !== "settings" &&
+            <Button
+            onClick={() => {
+              this.store.hideOrShowAllCondition();
+            }}
+            key="hide-show-all"
+            type={ButtonType.Action}
+            size={ButtonSize.Medium}
+          >
+            { this.store.hiddenConditions.length > 0 ? "Vis alle områder" : "Skjul alle områder" }
+          </Button>
+        }
+        </PageHeaderComponent>
 
         <PageContentComponent>
           <div className="c-routePlanning-settings-details-container">
@@ -106,16 +120,20 @@ export default class RoutePlanningSettingsComponent extends React.Component<
           </div>
         </PageContentComponent>
 
-        {this.store.mode === "assigningSettings" && (
+        {(this.store.mode === "assigningSettings" || this.store.editingSpecialCondition) && (
           <Dialog
             title="Tidspunkter og Begrænsninger"
-            verifyCancel="Sikker på du vil annullere? Du skal oprette tegningen igen"
+            verifyCancel={this.store.editingSpecialCondition ? undefined : "Sikker på du vil annullere? Du skal oprette tegningen igen"}
             closeOnClickOutside={true}
             onClose={() => {
               this.store.clearDrawing();
+              this.store.editingSpecialCondition = undefined;
             }}
           >
-            <ConditionsPropertiesComponent store={this.store} />
+            <ConditionsPropertiesComponent
+              store={this.store}
+              updateCondition={this.store.editingSpecialCondition}
+            />
           </Dialog>
         )}
 

@@ -91,7 +91,7 @@ class Map extends React.Component<Props> {
               options={{
                 geodesic: false,
                 strokeColor: strokeColor,
-                fillColor: "rgba(0, 22, 46, 0.9)",
+                fillColor: "rgba(0, 22, 46, 0.6)",
                 strokeWeight: 3,
                 zIndex: index
               }}
