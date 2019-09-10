@@ -39,12 +39,12 @@ data-table-pager
         }
     }
 
-    .data-table-pager-page-size select
+    .data-table-pager-page-size select-input
     {
-        width: 17rem;
+        width: 19rem;
     }
 
-    .data-table-pager-page input
+    .data-table-pager-page number-input
     {
         width: 14rem;
         text-align: center;

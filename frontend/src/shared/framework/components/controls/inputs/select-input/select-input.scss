@@ -1,0 +1,27 @@
+select-input
+{
+    display: block;
+
+    > text-input
+    {
+        &.input > .input-control > .input-control-inner .input-input
+        {
+            // Remove padding at the end closest to the toggle icon.
+            padding-right: 0;
+        }
+
+        dropdown-icon
+        {
+            // Apply input padding.
+            padding: var(--input-padding);
+        }
+    }
+
+    > text-input > .input-control > .input-control-inner .input-input.--readonly,
+    &:not(.--open) > text-input > .input-control > .input-control-inner .input-input,
+    &:not(.--filter) > text-input > .input-control > .input-control-inner .input-input
+    {
+        // Use cursor to indicate the element is clickable, when not accepting text input.
+        cursor: pointer;
+    }
+}

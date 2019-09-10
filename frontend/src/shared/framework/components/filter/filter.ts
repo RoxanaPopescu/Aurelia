@@ -21,7 +21,7 @@ export abstract class FilterCustomElement<TEntity>
      * function, such as the `filter` value converter, to react to the change.
      */
     @bindable({ defaultBindingMode: bindingMode.fromView })
-    public filterFunc: FilterFunc<TEntity>;
+    public filterFunc: FilterFunc<TEntity> = this.filter.bind(this);
 
     /**
      * Called by the framework when a property changes.

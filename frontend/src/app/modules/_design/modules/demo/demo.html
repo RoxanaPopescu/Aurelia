@@ -4,11 +4,14 @@
     <require from="../../components/design-row/design-row"></require>
     <require from="../../components/design-column/design-column"></require>
 
+    <require from="./demo.scss"></require>
+
     <div class="app-modules-design-modules-demo">
 
         <div class="app-modules-design-toolbar">
 
-            <label>Surface
+            <label>
+                <span>Surface</span>
                 <select value.bind="surface">
                     <option value="base" default>base</option>
                     <option value="card">card</option>
@@ -16,7 +19,8 @@
                 </select>
             </label>
 
-            <label>Font size
+            <label>
+                <span>Font size</span>
                 <select value.bind="fontSize">
                     <option value="small" default>small</option>
                     <option value="base">base</option>
@@ -26,17 +30,439 @@
                 </select>
             </label>
 
+            <label>
+                <span>Label position</span>
+                <select value.bind="labelPosition">
+                    <option value="above" default>above</option>
+                    <option value="inline">inline</option>
+                </select>
+            </label>
+
         </div>
 
         <div surface.bind="surface & attr" class="font-${fontSize}">
 
-            <design-item heading="inputs with dropdowns">
+            <design-item heading="time-input">
 
-                <design-row heading="item-input">
+                <design-row heading="time-input">
+
+                    <design-column heading="enabled">
+
+                        <time-input
+                            label="above"
+                            value.bind="timeValue"
+                            focused-value.bind="timeFocusedValue"
+                            filter="auto"
+                            min="10:00"
+                            max="18:00">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </time-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <time-input
+                            disabled.bind="true"
+                            label="above"
+                            value.bind="timeValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </time-input>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${timeFocusedValue | time}</div>
+                        <div>comitted: ${timeValue | time}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="date-picker">
+
+                <design-row heading="date-picker">
 
                     <design-column>
 
-                        <item-input label="above" value.bind="value" display-value.bind="value.name" allow-filtering.bind="true" filter-value.bind="filterValue">
+                        <date-picker
+                            value.bind="dateValue"
+                            focused-value.bind="dateFocusedValue"
+                            min.bind="minDate"
+                            max.bind="maxDate">
+                        </date-picker>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${dateFocusedValue | dateTime}</div>
+                        <div>comitted: ${dateValue | dateTime}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="date-input">
+
+                <design-row heading="date-input">
+
+                    <design-column heading="enabled">
+
+                        <date-input
+                            label="above"
+                            value.bind="dateValue"
+                            focused-value.bind="dateFocusedValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </date-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <date-input
+                            disabled.bind="true"
+                            label="above"
+                            value.bind="dateValue"
+                            focused-value.bind="dateFocusedValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </date-input>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${dateFocusedValue | dateTime}</div>
+                        <div>comitted: ${dateValue | dateTime}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="item-picker">
+
+                <design-row heading="item-picker">
+
+                    <design-column heading="enabled">
+
+                        <item-picker
+                            style="max-height: 60rem; overflow: scroll;"
+                            value.bind="selectValue"
+                            focused-value.bind="selectFocusedValue">
+
+                            <item repeat.for="item of filteredItems" model.bind="item">
+
+                                ${item.name}
+
+                                <div class="font-small opacity-faded">
+                                    value: ${item.value}
+                                </div>
+
+                            </item>
+
+                        </item-picker>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${selectFocusedValue.value}</div>
+                        <div>comitted: ${selectValue.value}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="select-input">
+
+                <design-row heading="select-input">
+
+                    <design-column heading="enabled">
+
+                        <select-input
+                            label="above"
+                            value.bind="selectValue"
+                            display-value.bind="selectValue.name"
+                            focused-value.bind="selectFocusedValue"
+                            filter="custom"
+                            filter-value.bind="filterValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose an option
+                            </span>
+
+                            <item repeat.for="item of filteredItems" model.bind="item">
+
+                                ${item.name}
+
+                                <div class="font-small opacity-faded">
+                                    value: ${item.value}
+                                </div>
+
+                            </item>
+
+                        </select-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <select-input
+                            disabled.bind="true"
+                            label="above"
+                            value.bind="selectValue"
+                            display-value.bind="selectValue.name"
+                            focused-value.bind="selectFocusedValue"
+                            filter="custom"
+                            filter-value.bind="filterValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose an option
+                            </span>
+
+                            <item repeat.for="item of filteredItems" model.bind="item">
+
+                                ${item.name}
+
+                                <div class="font-small opacity-faded">
+                                    value: ${item.value}
+                                </div>
+
+                            </item>
+
+                        </select-input>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${selectFocusedValue.value}</div>
+                        <div>comitted: ${selectValue.value}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="tags-input">
+
+                <design-row heading="tags-input">
+
+                    <design-column heading="enabled">
+
+                        <tags-input
+                            label="above"
+                            value.bind="tagsValue"
+                            focused-value.bind="tagsFocusedValue"
+                            filter="auto">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose tags
+                            </span>
+
+                            <div slot="value" translate>
+                                <tag accent="primary" model.bind="tag" repeat.for="tag of tagsValue">
+                                    ${tag}
+                                </tag>
+                            </div>
+
+                            <item repeat.for="tag of remainingTags" model.bind="tag">
+                                ${tag}
+                            </item>
+
+                        </tags-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <tags-input
+                            disabled.bind="true"
+                            label="above"
+                            value.bind="tagsValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose an option
+                            </span>
+
+                            <div slot="value" translate>
+                                <tag accent="primary" repeat.for="tag of tagsValue">
+                                    ${tag}
+                                </tag>
+                            </div>
+
+                        </tags-input>
+
+                    </design-column>
+
+                    <design-column heading="Values">
+                        <div>focused: ${tagsFocusedValue | time}</div>
+                        <div>comitted: ${tagsValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="number-input">
+
+                <design-row heading="Number input">
+
+                    <design-column heading="enabled">
+
+                        <number-input value.bind="numberValue" label.bind="labelPosition & attr">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                        </number-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <number-input value.bind="numberValue" label.bind="labelPosition & attr" disabled.bind="true">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                        </number-input>
+
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="text-input">
+
+                <design-row heading="Single-line text input">
+
+                    <design-column heading="enabled">
+
+                        <text-input value.bind="textValue1" label.bind="labelPosition & attr">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="textValue1">
+
+                                    <template replace-part="invalid" translate>
+                                        This is required
+                                    </template>
+
+                                </required-validator>
+
+                                <length-validator
+                                    value.bind="textValue1"
+                                    min.bind="3">
+                                </length-validator>
+
+                            </div>
+
+                        </text-input>
+
+                        <button click.trigger="submit()">Submit</button>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <text-input value.bind="textValue1" label.bind="labelPosition & attr" disabled.bind="true">
 
                             <div slot="heading" translate>
                                 Heading
@@ -47,22 +473,199 @@
                             </div>
 
                             <div slot="placeholder" translate>
-                                Choose an option
+                                Placeholder
                             </div>
 
-                            <!--
-                            <item repeat.for="item of items | filter: 'name' : filterValue" model.bind="item">
-                                ${item.name}
-                            </item>
-                            -->
+                        </text-input>
 
-                            <item model.bind="{ name: 'a' }">First option</item>
-                            <item model.bind="{ name: 'b' }">Second option</item>
-                            <item model.bind="{ name: 'c' }">Third option, which is much longer than the others</item>
+                    </design-column>
 
-                        </item-input>
+                </design-row>
 
-                    <design-column>
+                <design-row heading="Multi-line input">
+
+                    <design-column heading="enabled">
+
+                        <text-input value.bind="textValue2" label.bind="labelPosition & attr" lines.bind="4">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description description description description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="textValue2">
+
+                                    <template replace-part="invalid" translate>
+                                        This is required
+                                    </template>
+
+                                </required-validator>
+
+                                <length-validator
+                                    value.bind="textValue2"
+                                    min.bind="3">
+                                </length-validator>
+
+                            </div>
+
+                        </text-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <text-input value.bind="textValue2" label.bind="labelPosition & attr" disabled.bind="true" lines.bind="4">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description description description description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                        </text-input>
+
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="input with before and after content">
+
+                <design-row heading="Number input with select-input before and text after">
+
+                    <design-column heading="enabled">
+
+                        <number-input value.bind="numberValue" label.bind="labelPosition & attr">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Placeholder
+                            </span>
+
+                            <div slot="before">
+                                <select-input>
+
+                                    <span slot="placeholder" translate>
+                                        Choose
+                                    </span>
+
+                                </select-input>
+                            </div>
+
+                            <span slot="after" class="opacity-faded">
+                                &nbsp;kg
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="numberValue">
+
+                                    <template replace-part="invalid" translate>
+                                        This is required
+                                    </template>
+
+                                </required-validator>
+
+                                <length-validator
+                                    value.bind="numberValue"
+                                    min.bind="3">
+                                </length-validator>
+
+                                <length-validator
+                                    value.bind="numberValue"
+                                    max.bind="5"
+                                    trigger="input">
+                                </length-validator>
+
+                            </div>
+
+                        </number-input>
+
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="validation">
+
+                <design-row heading="Slug input, validated partially before submit, and fully after">
+
+                    <design-column heading="enabled" validation validation.ref="validation">
+
+                        <slug-input value.bind="textValue1" label.bind="labelPosition & attr">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                3-5 characters required
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="textValue1">
+
+                                    <template replace-part="invalid" translate>
+                                        This is required
+                                    </template>
+
+                                </required-validator>
+
+                                <length-validator
+                                    active.bind="true"
+                                    value.bind="textValue1"
+                                    min.bind="3"
+                                    trigger="change">
+                                </length-validator>
+
+                                <length-validator
+                                    active.bind="true"
+                                    value.bind="textValue1"
+                                    max.bind="5"
+                                    trigger="input">
+                                </length-validator>
+
+                            </div>
+
+                        </slug-input>
+
+                        <button appearance="solid" accent="primary" class="margin-top" click.trigger="submit()">
+                            Submit
+                        </button>
+
+                    </design-column>
 
                 </design-row>
 
@@ -572,6 +1175,28 @@
                                     <option>X</option>
                                 </optgroup>
                             </select>
+                        </label>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="textarea">
+
+                <design-row heading="Textarea within label">
+
+                    <design-column heading="enabled">
+                        <label>
+                            X
+                            <textarea placeholder="Placeholder" autocomplete="off"></textarea>
+                        </label>
+                    </design-column>
+
+                    <design-column heading="disabled">
+                        <label disabled>
+                            X
+                            <textarea placeholder="Placeholder" autocomplete="off"></textarea>
                         </label>
                     </design-column>
 

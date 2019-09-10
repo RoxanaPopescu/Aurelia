@@ -60,7 +60,13 @@
 
                 <toolbar class="margin-bottom" scroll-fade="0.2">
 
-                    <input type="search" placeholder.translate="Find..." value.bind="textFilter & debounce: 200">
+                    <search-input value.bind="textFilter & debounce: 200">
+
+                        <span slot="placeholder" translate>
+                            Find...
+                        </span>
+
+                    </search-input>
 
                 </toolbar>
 
@@ -71,28 +77,40 @@
 
                     <data-table-headers>
 
-                        <data-table-cell translate>
-                            ID
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                ID
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="pickup-date" translate>
-                            Pickup date
+                        <data-table-cell name="pickup-date">
+                            <span class="text-truncate" translate>
+                                Pickup date
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="pickup-time" translate>
-                            Pickup timeframe
+                        <data-table-cell name="pickup-time">
+                            <span class="text-truncate" translate>
+                                Pickup timeframe
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="pickup-address" translate>
-                            Pickup address
+                        <data-table-cell name="pickup-address">
+                            <span class="text-truncate" translate>
+                                Pickup address
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="delivery-address" translate>
-                            Deliverey address
+                        <data-table-cell name="delivery-address">
+                            <span class="text-truncate" translate>
+                                Deliverey address
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell align="right" translate>
-                            Status
+                        <data-table-cell align="right">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -104,29 +122,41 @@
                             href="/orders/details/${order.slug}">
 
                             <data-table-cell class="font-monospaced">
-                                ${order.slug}
+                                <span class="text-truncate">
+                                    ${order.slug}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${order.earliestPickupDate | date: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${order.earliestPickupDate | date: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${order.earliestPickupTime | time: 'narrow'}
-                                –
-                                ${order.latestPickupTime | time: 'narrow'}
+                                <span class="text-truncate">
+                                    ${order.earliestPickupTime | time: 'narrow'}
+                                    –
+                                    ${order.latestPickupTime | time: 'narrow'}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${order.pickupLocation.address}
+                                <span class="text-truncate">
+                                    ${order.pickupLocation.address}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${order.deliveryLocation.address}
+                                <span class="text-truncate">
+                                    ${order.deliveryLocation.address}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                ${order.status.name}
+                                <span class="text-truncate">
+                                    ${order.status.name}
+                                </span>
                             </data-table-cell>
 
                         </data-table-row>

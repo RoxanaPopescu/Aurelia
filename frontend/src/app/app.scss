@@ -156,20 +156,7 @@ react-module
     // Default padding for cards.
     // TODO: Should we define variables for standard margin and padding instead?
     --card-padding: 3.5rem 3rem;
-}
-
-[surface="base"]
-{
-    --dropdown-min-width: var(--input-min-width);
-    --dropdown-max-width: none;
-    --dropdown-min-height: 0;
-    --dropdown-max-height: 100rem;
-    --dropdown-border-width: var(--border-width-thin);
-    --dropdown-border-radius: var(--border-radius-large);
-    --dropdown-border-color: var(--color-surface-border);
-    --dropdown-surface-color: var(--color-surface);
-    --dropdown-surface-text-color: var(--color-surface-text);
-    --dropdown-shadow: rgba(0, 0, 0, 0.1) 0 1rem 2.75rem
+    --card-padding-large: 12.5rem 13rem;
 }
 
 .button-row

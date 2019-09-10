@@ -1,0 +1,68 @@
+body
+{
+    /// The color of the surface of the component.
+    --tag-surface-color: var(--palette-color-neutral-lighter);
+
+    /// The color of the text on the surface of the component.
+    --tag-surface-text-color: inherit;
+
+    /// The color of the border of the component.
+    --tag-border-color: var(--input-border-color);
+
+    /// The width of the border of the component.
+    --tag-border-width: var(--border-width-thin);
+
+    /// The radius of the border of the component.
+    --tag-border-radius: var(--border-radius-small);
+
+    /// The padding of the component.
+    --tag-padding: 0.5rem 2rem;
+
+    /// The default width of the component.
+    --tag-width: 40rem;
+
+    /// The min-height of the component, if it allows resizing.
+    --tag-min-height: 10rem;
+
+    /// The max-height of the component, if it allows resizing.
+    --tag-max-height: none;
+}
+
+tag
+{
+    // Use Horizontal flex layout.
+    display: flex;
+    align-items: center;
+
+    // Apply margin between tags.
+
+    margin-top: 1.5rem;
+
+    &:not(:last-child)
+    {
+        margin-right: 1.5rem;
+    }
+
+    // Apply padding.
+    padding: var(--tag-padding);
+
+    // Truncate text content with an ellipsis.
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    // Apply a border around the component.
+    border: var(--input-border-width) solid;
+    border-radius: var(--tag-border-radius);
+
+    // Apply component style.
+    border-color: var(--tag-border-color);
+    background: var(--tag-surface-color);
+    color: var(--tag-surface-text-color);
+
+    icon
+    {
+        margin-left: var(--size-inline-spacing);
+        cursor: pointer;
+    }
+}

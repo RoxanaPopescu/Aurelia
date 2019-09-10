@@ -89,5 +89,7 @@ export function textSplit(text: string, fromTextCase: TextCase, preserveWhitespa
     return textSplitFunc(text, preserveWhitespace);
 }
 
-export { textJoin } from "./text-join";
 export { TextCase } from "./text-case";
+export { textJoin } from "./text-join";
+export { slugify } from "./slugify";
+export { escapeHtml } from "./escape-html";

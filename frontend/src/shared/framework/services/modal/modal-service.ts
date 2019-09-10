@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Type } from "shared/types";
 import { Modal } from "./modal";
+import { ModalCloseReason } from "shared/framework/components/modals/modal-close-reason";
 
 /**
  * Represents the type of the object passed to the `activate` life cycle method of a component.
@@ -120,7 +121,7 @@ export class ModalService
      * @returns A promise that will be resolved with true if all modals accepted the close request,
      * or false if one of them rejected it with a reason other than an `Error` instance.
      */
-    public async closeAll(reason?: any): Promise<boolean>
+    public async closeAll(reason: ModalCloseReason): Promise<boolean>
     {
         console.info("Attempting to close all modals.", { modals: this.modals, reason });
 

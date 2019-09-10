@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { LocaleService } from "../../services/locale";
-import { DateTime, LocaleOptions, DateTimeFormatOptions } from "luxon";
+import { DateTime, LocaleOptions, DateTimeFormatOptions, Duration } from "luxon";
 import { TimeOfDay } from "shared/types";
 
 /**
@@ -28,14 +28,16 @@ export class TimeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTime | TimeOfDay | undefined | null, convert = true): string | null | undefined
+    public toView(value: DateTime | Duration | TimeOfDay | undefined | null, convert = true): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const valueToFormat = value instanceof DateTime && convert ? value.toLocal() : value;
+        const valueToFormat =
+            value instanceof Duration ? DateTime.local().startOf("day").plus(value) :
+            value instanceof DateTime && convert ? value.toLocal() : value;
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {

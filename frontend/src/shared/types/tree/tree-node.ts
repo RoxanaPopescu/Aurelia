@@ -1,4 +1,5 @@
 import { computedFrom } from "aurelia-binding";
+import { Id, slugify } from "shared/utilities";
 
 /**
  * Represents the data for a node in a tree.
@@ -173,5 +174,62 @@ export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements IT
         }
 
         return undefined;
+    }
+
+    /**
+     * Renames the node.
+     * @param name The new name for the node.
+     */
+    public rename(name: string): void
+    {
+        this.name = name;
+
+        // Create the new slug based on the name, or default to a random ID.
+        this.slug = slugify(name, true) || Id.alphaNumeric(10);
+    }
+
+    /**
+     * Detaches this node from its parent node.
+     */
+    public detach(): void
+    {
+        if (this.parent == null)
+        {
+            throw new Error("Cannot detach a node that has no parent node.");
+        }
+
+        const index = this.parent.children!.indexOf(this as any);
+        this.parent.children!.splice(index, 1);
+
+        this.parent = undefined;
+    }
+
+    /**
+     * Attaches this node as a child of the specified parent node.
+     * @param node The node that should become the parent node of this node.
+     */
+    public attach(parent: TreeNode): void
+    {
+        if (parent.children == null)
+        {
+            throw new Error("Cannot attach a node to a parent node with no child collection.");
+        }
+
+        parent.children.push(this as any);
+
+        this.parent = parent as any;
+    }
+
+    /**
+     * Gets the data representing this instance.
+     * @returns The data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            name: this.name,
+            slug: this.slug,
+            children: this.children != null ? this.children.map(f => f.toJSON()) : undefined
+        };
     }
 }

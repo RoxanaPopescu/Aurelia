@@ -2,6 +2,7 @@ import { Container, BindingEngine } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
 import { Type } from "shared/types";
 import { PromiseController } from "shared/utilities";
+import { ModalCloseReason } from "shared/framework";
 
 /**
  * Represents a modal on the stack.
@@ -20,7 +21,7 @@ export class Modal<TModel = any, TResult = any>
         this.viewModel = viewModel;
         this.model = model;
 
-        const bindingEngine = Container.instance.get(BindingEngine) as BindingEngine;
+        const bindingEngine = Container.instance.get(BindingEngine);
         const handle = bindingEngine.propertyObserver(this, "compose").subscribe((newValue: any) =>
         {
             handle.dispose();
@@ -51,7 +52,8 @@ export class Modal<TModel = any, TResult = any>
 
     /**
      * True if the modal is busy, false if the modal is not busy, or null
-     * if the modal is technically not busy, but should still appear as busy.
+     * if the modal is technically not busy, but should still appear as busy, e.g.
+     * because it is in the process of closing.
      * Note that all interaction with the modal is blocked when this is not false.
      */
     public busy: boolean | null  = false;
@@ -70,7 +72,7 @@ export class Modal<TModel = any, TResult = any>
      * @returns A promise that will be resolved with true if all modals accepted the close request,
      * or false if one of them rejected it with a reason other than an `Error` instance.
      */
-    public async closeAll(reason?: any): Promise<boolean>
+    public async closeAll(reason?: ModalCloseReason): Promise<boolean>
     {
         console.info("Attempting to close all modals, starting from this.", { modal: this, reason, modals: this._modals });
 
@@ -92,10 +94,11 @@ export class Modal<TModel = any, TResult = any>
     /**
      * Closes the modal.
      * @param reason The reason for closing the modal, which may affect how the modal responds.
+     * Standard reasons include "backdrop-clicked" and "navigation", but it may be anything.
      * @returns A promise that will be resolved with true if the modal accepted the close request,
      * or false if it rejected it with a reason other than an `Error` instance.
      */
-    public async close(reason?: any): Promise<boolean>
+    public async close(reason?: ModalCloseReason): Promise<boolean>
     {
         if (this._closed)
         {

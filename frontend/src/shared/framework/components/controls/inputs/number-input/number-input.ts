@@ -1,4 +1,5 @@
 import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framework";
+import { Id } from "shared/utilities";
 import { AutocompleteHint, EnterKeyHint } from "../input";
 
 /**
@@ -8,12 +9,17 @@ import { AutocompleteHint, EnterKeyHint } from "../input";
 export class NumberInputCustomElement
 {
     /**
+     * The unique ID of the control.
+     */
+    protected id = Id.sequential();
+
+    /**
      * The input element.
      */
     protected inputElement: HTMLInputElement;
 
     /**
-     * Gets the input value.
+     * Gets the input value, based on the value.
      */
     @computedFrom("value")
     protected get inputValue(): string
@@ -22,20 +28,23 @@ export class NumberInputCustomElement
     }
 
     /**
-     * Sets the input value.
+     * Sets the value, based on the input value.
+     * Note that the value is only set if the input value can be parsed successfully.
      */
     protected set inputValue(value: string)
     {
-        if (value === "")
+        if (value)
+        {
+            const number = parseFloat(value);
+
+            if (!isNaN(number))
+            {
+                this.value = number;
+            }
+        }
+        else
         {
             this.value = undefined;
-        }
-
-        const number = Number.parseFloat(value);
-
-        if (!Number.isNaN(number))
-        {
-            this.value = number;
         }
     }
 
@@ -49,7 +58,7 @@ export class NumberInputCustomElement
      * True if the input is disabled, otherwise false.
      */
     @bindable({ defaultValue: false })
-    public disabled: string;
+    public disabled: boolean;
 
     /**
      * True if the input is readonly, otherwise false.
@@ -58,14 +67,13 @@ export class NumberInputCustomElement
     public readonly: boolean;
 
     /**
-     * The autocomplete mode to use,
-     * or undefined to use the default behavior.
+     * The autocomplete mode to use, or undefined to use the default behavior.
      */
     @bindable({ defaultValue: "off" })
     public autocomplete: AutocompleteHint;
 
     /**
-     * True to select the contents when the input is focused, otherwise false.
+     * True to select the content when the input is focused, otherwise false.
      */
     @bindable({ defaultValue: false })
     public autoselect: boolean;
@@ -76,12 +84,6 @@ export class NumberInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public enterkey: EnterKeyHint | undefined;
-
-    /**
-     * The max number of digits to allow, or undefined to apply no limit.
-     */
-    @bindable({ defaultValue: undefined })
-    public maxdigits: number;
 
     /**
      * The amount by which the value should increment or decrement for each step.
@@ -102,15 +104,15 @@ export class NumberInputCustomElement
     public max: number | undefined;
 
     /**
-     * True to constrain keyboard input to enforce the specified `min`, `max`, `step` and `maxdigits`.
+     * True to constrain keyboard input to enforce the specified `min`, `max` and `step`.
      * Note that this does not prevent an invalid value from being pasted into the input.
      */
     @bindable({ defaultValue: false })
     public constrain: boolean;
 
     /**
-     * Called when the input receives focus.
-     * Selects the contents of the input, if `autoselect` is enabled.
+     * Called when the input element receives focus.
+     * Selects the content of the input element, if `autoselect` is enabled.
      */
     protected onFocus(): void
     {
@@ -121,8 +123,8 @@ export class NumberInputCustomElement
     }
 
     /**
-     * Called when the input looses focus.
-     * Reassigns the input value, to remove any trailing decimal separators.
+     * Called when the input element looses focus.
+     * Sets the value of the input element, to remove any trailing decimal separators.
      */
     protected onBlur(): void
     {
@@ -139,6 +141,12 @@ export class NumberInputCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
+        // Never block special keys or key combinations.
+        if (event.key.length > 1 || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        {
+            return true;
+        }
+
         // Prevent the user from entering '+'.
         if (event.key === "+")
         {
@@ -152,7 +160,7 @@ export class NumberInputCustomElement
         }
 
         // Prevent the user from entering something other than a digit or '-' at the beginning of the value.
-        if (/\d-/.test(event.key) && this.inputElement.selectionStart === 0)
+        if (!/\d|-/.test(event.key) && this.inputElement.selectionStart === 0)
         {
             return false;
         }
@@ -163,15 +171,21 @@ export class NumberInputCustomElement
             return false;
         }
 
+        // Prevent the user from entering something other than a decimal separator if the value begins with a zero.
+        if (!/\d/.test(event.key) && this.inputElement.selectionStart! === 1 && this.inputElement.value.startsWith("0"))
+        {
+            return false;
+        }
+
         if (this.constrain)
         {
-            // Prevent the user from entering negative numbers if `min` is larger than zero.
+            // Prevent the user from entering negative numbers if `min` is more than zero.
             if (event.key === "-" && this.min != null && this.min >= 0)
             {
                 return false;
             }
 
-            // Prevent the user from entering positive numbers if `max` is less than than zero.
+            // Prevent the user from entering positive numbers if `max` is less than zero.
             if (event.key !== "-" && this.max != null && this.max < 0 && this.inputElement.selectionStart === 0)
             {
                 return false;
@@ -179,12 +193,6 @@ export class NumberInputCustomElement
 
             // Prevent the user from entering a decimal point if `step` is a whole number.
             if (this.step % 1 === 0 && !/\d-/.test(event.key))
-            {
-                return false;
-            }
-
-            // Prevent the user from entering numbers with more digits than `maxdigits`.
-            if (this.inputElement.value.replace(/[^0-9]/g, "").length > this.maxdigits)
             {
                 return false;
             }

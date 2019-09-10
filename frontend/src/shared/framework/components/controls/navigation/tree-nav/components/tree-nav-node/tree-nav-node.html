@@ -16,14 +16,60 @@
         dragleave.trigger="onDragLeave()"
         drop.trigger="onDrop($event, model)">
 
-        <md-icon-stack>
-            <md-icon name="folder" click.trigger="onClick(true, $event)"></md-icon>
-            <md-icon name.bind="iconName" click.trigger="onClick(true, $event)"></md-icon>
-        </md-icon-stack>
+        <icon class="tree-nav-node-icon">
+            <icon name="md-folder" click.trigger="onClick(true, $event)"></icon>
+            <icon name.bind="iconName" click.trigger="onClick(true, $event)"></icon>
+        </icon>
 
-        <span class="tree-nav-node-title">
-            ${model.name}
-        </span>
+        <div class="tree-nav-node-title">
+
+            <div class="text-truncate ${renaming ? 'visibility-hidden' : ''}">
+                ${model.name}
+            </div>
+
+            <text-input if.bind="renaming"
+                value.to-view="model.name"
+                autoselect.bind="true"
+                autofocus
+                focusout.trigger="onTextInputBlur($event)"
+                keydown.trigger="onTextInputKeyDown($event)">
+            </text-input>
+
+        </div>
+
+        <div if.bind="tree.editable" class="tree-nav-node-actions ${renaming ? 'visibility-hidden' : ''}">
+
+            <icon name="md-settings"></icon>
+
+            <div if.bind="!renaming">
+
+                <icon
+                    if.bind="folderLike && tree.createNode != null"
+                    title.translate="New folder"
+                    name="md-new-folder"
+                    tabindex="0"
+                    click.trigger="onNewFolderClick($event)">
+                </icon>
+
+                <icon
+                    if.bind="model.parent != null"
+                    title.translate="Delete"
+                    name="md-delete"
+                    tabindex="0"
+                    click.trigger="onDeleteClick($event)">
+                </icon>
+
+                <icon
+                    if.bind="model.parent != null"
+                    title.translate="Rename"
+                    name="md-edit"
+                    tabindex="0"
+                    click.trigger="onRenameClick($event)">
+                </icon>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -32,6 +78,7 @@
         if.bind="expandable && model.expanded"
         tree.bind="tree"
         select-children.bind="tree.selectChildren"
+        editable.bind="tree.editable"
         model.bind="model.children"
         tabindex="-1"
         class="${descendentsActive ? '--descendents-active' : ''}">

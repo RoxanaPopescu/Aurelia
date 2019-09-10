@@ -1,15 +1,15 @@
 :root
 {
-    --dropdown-min-width: var(--input-min-width);
+    --dropdown-min-width: 100%;
     --dropdown-max-width: none;
     --dropdown-min-height: 0;
-    --dropdown-max-height: 100rem;
+    --dropdown-max-height: 75rem;
     --dropdown-border-width: var(--border-width-thin);
     --dropdown-border-radius: var(--border-radius-large);
     --dropdown-border-color: var(--palette-color-neutral);
     --dropdown-surface-color: var(--palette-color-whitepoint);
     --dropdown-surface-text-color: var(--palette-color-blackpoint);
-    --dropdown-shadow: rgba(0, 0, 0, 0.1) 0 1rem 2.75rem
+    --dropdown-shadow: rgba(0, 0, 0, 0.1) 0 1rem 2.75rem;
 }
 
 dropdown
@@ -32,7 +32,7 @@ dropdown
     min-height: var(--dropdown-min-height);
     max-height: var(--dropdown-max-height);
 
-    // Style to appears as a dropdown.
+    // Style to appear as a dropdown.
     border: var(--dropdown-border-width) solid var(--dropdown-border-color);
     border-radius: var(--dropdown-border-radius);
     background: var(--dropdown-surface-color);

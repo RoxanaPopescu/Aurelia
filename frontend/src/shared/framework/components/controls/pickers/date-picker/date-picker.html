@@ -1,0 +1,65 @@
+<template
+    tabindex="0"
+    class="--view-${view} ${hoverable ? '--hoverable' : ''}"
+    mousemove.trigger="onMouseMove()">
+
+    <require from="./date-picker.scss"></require>
+
+    <div class="date-picker-header">
+
+        <button tabindex="-1" appearance="icon" disabled.bind="model.isPreviousDisabled" click.trigger="model.onPreviousClick()">
+            <icon name="md-arrow-back-ios" title.translate="Previous"></icon>
+        </button>
+
+        <div>
+            <button tabindex="-1" appearance="text" click.trigger="zoom()">
+                ${model.title}
+            </button>
+        </div>
+
+        <button tabindex="-1" appearance="icon" disabled.bind="model.isNextDisabled" click.trigger="model.onNextClick()">
+            <icon name="md-arrow-forward-ios" title.translate="Next"></icon>
+        </button>
+
+    </div>
+
+    <div if.bind="view === 'dates'" class="date-picker-weekdays font-small">
+
+        <div repeat.for="weekday of weekdays">
+            ${weekday}
+        </div>
+
+    </div>
+
+    <div class="date-picker-items">
+
+        <button
+            if.bind="view === 'dates'"
+            disabled.bind="model.isTodayDisabled"
+            tabindex="-1"
+            appearance="text"
+            class="date-picker-today"
+            click.trigger="model.onTodayClick()"
+            translate>
+            Today
+        </button>
+
+        <button
+            repeat.for="item of model.items"
+            tabindex="-1"
+            appearance="icon"
+            disabled.bind="item.isDisabled"
+            click.trigger="model.onItemClick(item)"
+            class="
+                ${item.isToday ? '--today' : ''}
+                ${item.isDisabled ? '--disabled' : ''}
+                ${item.isSelected ? '--selected' : ''}
+                ${item.isOutsideRange ? '--outside-range' : ''}">
+
+            ${item.displayValue}
+
+        </button>
+
+    </div>
+
+</template>

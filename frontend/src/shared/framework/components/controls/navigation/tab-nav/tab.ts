@@ -28,6 +28,12 @@ export class TabCustomElement
     public name: string | undefined;
 
     /**
+     * True to disable the tab, otherwise false.
+     */
+    @bindable
+    public disabled: boolean | undefined;
+
+    /**
      * True to indicate that the state of the tab is invalid, otherwise false.
      */
     @bindable
@@ -38,6 +44,19 @@ export class TabCustomElement
      */
     protected onClick(): void
     {
+        // Call the change callback, if specified.
+        if (this.tabNav.change != null)
+        {
+            const allowChange = this.tabNav.change({ newValue: this.name, oldValue: this.tabNav.value });
+
+            // Did the callback cancel the change?
+            if (allowChange === false)
+            {
+                return;
+            }
+        }
+
+        // Change the of the `tab-nav` value.
         this.tabNav.value = this.name;
     }
 }

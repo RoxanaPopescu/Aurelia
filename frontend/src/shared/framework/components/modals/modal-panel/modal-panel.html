@@ -1,11 +1,13 @@
 <template
-    class="focus-hidden ${modal != null && modal.busy !== false ? '--busy' : ''}"
+    class="focus-hidden"
     inert.bind="modal != null && modal.busy !== false"
     keydown.trigger="onKeyDown($event)"
     tabindex="-1"
     trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
 
     <require from="./modal-panel.scss"></require>
+
+    <busy-overlay if.bind="modal != null && modal.busy !== false" delay.bind="true"></busy-overlay>
 
     <form class="modal-panel-content">
 

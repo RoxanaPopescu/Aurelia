@@ -1,7 +1,8 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
-import { Operation, AbortError } from "shared/types";
+import { AbortError } from "shared/types";
+import { Operation } from "shared/utilities";
 
 interface IExpressRouteStop
 {

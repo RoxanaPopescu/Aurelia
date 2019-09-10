@@ -1,0 +1,49 @@
+////
+/// @group framework/modifiers/text-skeleton
+////
+
+/// Modifier class that applies a skeleton animation to the element.
+/// Note that this modifies the `background` and `border-radius` properties,
+/// and is only intended for use on text elements that do not yet have content.
+$__summary: comment;
+
+@import "resources/index";
+
+
+.text-skeleton
+{
+    // Apply border.
+    border-radius: var(--border-radius-medium);
+
+    // Apply animated background.
+
+    background-size: 200%;
+    background-image: linear-gradient(
+        105deg,
+        rgba(0, 0, 0, 0.015) 9%,
+        rgba(0, 0, 0, 0) 23%,
+        rgba(0, 0, 0, 0) 25%,
+        rgba(0, 0, 0, 0.015) 40%,
+        rgba(0, 0, 0, 0.015) 59%,
+        rgba(0, 0, 0, 0) 73%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0.015) 90%
+    );
+
+    animation: text-skeleton ease infinite;
+    animation-duration: var(--animation-duration-skeleton);
+    animation-delay: calc(var(--animation-duration-skeleton) / 3);
+}
+
+@keyframes text-skeleton
+{
+    0%
+    {
+        background-position: 0;
+    }
+
+    60%, 100%
+    {
+        background-position: -100%;
+    }
+}

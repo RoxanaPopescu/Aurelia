@@ -26,6 +26,12 @@ export class TreeNavCustomElement
     public value: TreeNode | undefined;
 
     /**
+     * True to allow the user to edit the tree, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public editable: boolean;
+
+    /**
      * True to indicate that the selected node includes its subtree,
      * false to indicate that the selected node excludes its subtree,
      * or undefined to indicate that the selected node includes its
@@ -40,7 +46,7 @@ export class TreeNavCustomElement
      * @param params The parameters available for binding.
      */
     @bindable
-    public drop: (params:
+    public drop: undefined | ((params:
     {
         /**
          * The drag event.
@@ -52,14 +58,14 @@ export class TreeNavCustomElement
          */
         node: TreeNode;
 
-    }) => void;
+    }) => void);
 
     /**
      * Called when an element is dragged over a node.
      * @param params The parameters available for binding.
      */
     @bindable
-    public dragOver: (params:
+    public dragOver: undefined | ((params:
     {
         /**
          * The drag event.
@@ -71,14 +77,14 @@ export class TreeNavCustomElement
          */
         node: TreeNode;
 
-    }) => void;
+    }) => void);
 
     /**
      * Called when the value changes, or when the expanded state of the value changes.
      * @param params The parameters available for binding.
      */
     @bindable
-    public change: (params:
+    public change: undefined | ((params:
     {
         /**
          * The new value.
@@ -90,7 +96,76 @@ export class TreeNavCustomElement
          */
         oldValue: TreeNode | undefined;
 
-    }) => void;
+    }) => void);
+
+    /**
+     * Called when a new folder-like node should be created.
+     * @returns The new node to be added.
+     */
+    @bindable
+    public createNode: undefined | (() => TreeNode);
+
+    /**
+     * Called after a new folder-like node was added.
+     * @param params The parameters available for binding.
+     */
+    @bindable
+    public nodeCreated: undefined | ((params:
+    {
+        /**
+         * The node that was added.
+         */
+        node: TreeNode;
+
+    }) => void);
+
+    /**
+     * Called after a node was renamed.
+     * @param params The parameters available for binding.
+     */
+    @bindable
+    public nodeRenamed: undefined | ((params:
+    {
+        /**
+         * The node that was renamed.
+         */
+        node: TreeNode;
+
+    }) => void);
+
+    /**
+     * Called when a node is being deleted.
+     * @param params The parameters available for binding.
+     * @returns A promise that will be resolved with true if the operation should continue, otherwise false.
+     */
+    @bindable
+    public deleteNode: undefined | ((params:
+    {
+        /**
+         * The node being deleted.
+         */
+        node: TreeNode;
+
+    }) => Promise<boolean>);
+
+    /**
+     * Called after a node was deleted.
+     * @param params The parameters available for binding.
+     */
+    @bindable
+    public nodeDeleted: undefined | ((params:
+    {
+        /**
+         * The node that was deleted.
+         */
+        node: TreeNode;
+
+        /**
+         * The parent node from which the node was detached.
+         */
+        parentNode: TreeNode;
+
+    }) => void);
 
     /**
      * Navigates to the specified node.

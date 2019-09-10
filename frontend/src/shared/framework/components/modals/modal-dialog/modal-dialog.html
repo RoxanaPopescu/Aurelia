@@ -1,11 +1,13 @@
 <template
-    class="focus-hidden ${modal != null && modal.busy !== false ? '--busy' : ''} --accent-${accent || 'default'}"
+    class="focus-hidden --accent-${accent || 'default'}"
     inert.bind="modal != null && modal.busy !== false"
     keydown.trigger="onKeyDown($event)"
     tabindex="-1"
     trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
 
     <require from="./modal-dialog.scss"></require>
+
+    <busy-overlay if.bind="modal != null && modal.busy !== false" delay.bind="true"></busy-overlay>
 
     <div class="modal-dialog-actions">
 

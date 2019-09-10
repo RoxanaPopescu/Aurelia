@@ -11,14 +11,20 @@ tree-nav-node
 
     .tree-nav-node
     {
-
+        position: relative;
         display: flex;
         padding: calc(1rem - var(--border-width-medium)) 3rem;
-        line-height: 8rem;
+        height: 10rem;
         align-items: center;
         border: var(--border-width-medium) solid transparent;
         border-radius: var(--border-radius-medium);
         cursor: pointer;
+
+        &:focus
+        {
+            // Ensure the focus outline is not covered by other items.
+            z-index: 1;
+        }
 
         &:not(.--active):hover,
         .focus-visible &:not(.--active):focus,
@@ -27,7 +33,7 @@ tree-nav-node
             color: var(--color-surface-nav-link-surface-text--hover);
             background: var(--color-surface-nav-link-surface--hover);
 
-            md-icon
+            .tree-nav-node-icon > icon
             {
                 color: var(--color-surface-nav-link-surface-icon--hover);
             }
@@ -38,7 +44,7 @@ tree-nav-node
             color: var(--color-surface-nav-link-surface-text--active);
             background: var(--color-surface-nav-link-surface--active);
 
-            md-icon
+            .tree-nav-node-icon > icon
             {
                 color: var(--color-surface-nav-link-surface-icon--active);
             }
@@ -52,13 +58,126 @@ tree-nav-node
 
     .tree-nav-node-title
     {
-        white-space: nowrap;
+        position: relative;
+        flex-grow: 1;
+        min-width: 0;
+
+        text-input
+        {
+            position: absolute;
+            top: 0;
+            left: -1.5rem;
+            right: -2.5rem;
+            bottom: 0;
+
+            --input-min-height: 1em;
+            --input-padding: 0 0 0 1.5rem;
+            --input-border-width: 0;
+            --input-surface-color: transparent;
+            --input-surface-color--hover: transparent;
+            --input-surface-color--focus: transparent;
+            --input-surface-text-color: currentColor;
+            --input-surface-text-color--hover: currentColor;
+            --input-surface-text-color--focus: currentColor;
+
+            input
+            {
+                // TODO: Remove when old form styles no longer mess with this.
+                min-height: 1em;
+            }
+        }
+    }
+
+    .tree-nav-node-actions
+    {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin-left: auto;
+        margin-right: -2rem;
+        font-size: 4rem;
+        visibility: hidden;
+        background: inherit;
+
+        icon
+        {
+            margin-left: var(--size-inline-spacing);
+        }
+
+        > icon
+        {
+            margin-right: 2rem;
+            color: var(--color-surface-nav-link-surface-icon);
+        }
+
+        > div
+        {
+            pointer-events: none;
+            display: flex;
+            position: absolute;
+            top: 0;
+            right: 1rem;
+            bottom: 0;
+            padding-right: 1rem;
+            align-items: center;
+            color: var(--color-surface-nav-link-surface-icon--active);
+            background: inherit;
+            cursor: default;
+            opacity: 0;
+            max-width: 0;
+
+            &::before
+            {
+                content: "";
+
+                position: absolute;
+                top: 0;
+                left: -2rem;
+                bottom: 0;
+                width: 2rem;
+                background: inherit;
+                mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+            }
+        }
+    }
+
+    body:not(.focus-visible) & .tree-nav-node:hover .tree-nav-node-actions,
+    body.focus-visible & .tree-nav-node:focus .tree-nav-node-actions,
+    body.focus-visible & .tree-nav-node:focus-within .tree-nav-node-actions
+    {
+        visibility: visible;
+    }
+
+    .tree-nav-node-actions:hover,
+    body.focus-visible & .tree-nav-node-actions:focus-within
+    {
+        > icon
+        {
+            transition: opacity var(--animation-duration-short);
+            transition-delay: var(--animation-delay-hover);
+            opacity: 0;
+        }
+
+        > div
+        {
+            pointer-events: auto;
+            transition: opacity var(--animation-duration-short), max-width 0s;
+            transition-delay: var(--animation-delay-hover);
+            opacity: 1;
+            max-width: 100rem;
+
+            icon
+            {
+                cursor: pointer;
+            }
+        }
     }
 
     $icon-size-folder: 5.5rem;
     $icon-size-file: 4rem;
 
-    md-icon
+    .tree-nav-node-icon
     {
         margin-right: calc(#{($icon-size-folder - $icon-size-file) / 2} + #{$icon-size-folder / $icon-size-file} * var(--size-inline-spacing));
         margin-left: ($icon-size-folder - $icon-size-file) / 2;
@@ -68,26 +187,26 @@ tree-nav-node
         color: var(--color-surface-nav-link-surface-icon);
     }
 
-    md-icon:last-child
+    .tree-nav-node-icon > icon:last-child
     {
         opacity: 0;
     }
 
-    .--folder-like md-icon
+    .--folder-like .tree-nav-node-icon
     {
         margin-left: 0;
         margin-right: var(--size-inline-spacing);
         font-size: $icon-size-folder;
     }
 
-    > .tree-nav-node.--active md-icon:first-child,
-    > tree-nav-subtree.--descendents-active .tree-nav-node md-icon:first-child
+    > .tree-nav-node.--active .tree-nav-node-icon > icon:first-child,
+    > tree-nav-subtree.--descendents-active .tree-nav-node .tree-nav-node-icon > icon:first-child
     {
         opacity: 0.1;
     }
 
-    > .tree-nav-node.--active md-icon:last-child,
-    > tree-nav-subtree.--descendents-active .tree-nav-node md-icon:last-child,
+    > .tree-nav-node.--active .tree-nav-node-icon > icon:last-child,
+    > tree-nav-subtree.--descendents-active .tree-nav-node .tree-nav-node-icon > icon:last-child,
     {
         color: var(--color-surface-nav-link-surface-icon--active);
         opacity: 1;

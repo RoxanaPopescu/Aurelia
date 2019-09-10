@@ -2,19 +2,24 @@
 
     <require from="./data-table-pager.scss"></require>
 
-    <div class="data-table-pager-page-size" if.bind="value.pageSize != null">
+    <div class="data-table-pager-page-size" if.bind="pageSize != null">
 
         <div translate>
             Page size
         </div>
 
-        <select
-            ref="pageSizeSelectElement"
+        <select-input
             disabled.bind="value == null"
-            value.to-view="value.pageSize"
-            change.trigger="onPageSizeChange()">
-            <option repeat.for="size of pageSizes" model.bind="size">${size}</option>
-        </select>
+            value.bind="pageSize"
+            none.bind="false">
+
+            <div slot="placeholder">
+                ${pageSize}
+            </div>
+
+            <item repeat.for="size of pageSizes" model.bind="size">${size}</item>
+
+        </select-input>
 
     </div>
 
@@ -24,17 +29,16 @@
             Page
         </div>
 
-        <input
-            ref="pageInputElement"
-            type="number"
-            min="1"
+        <number-input
+            min.bind="1"
             max.bind="computedPageCount"
-            step="1"
-            value.to-view="value.page"
+            step.bind="1"
+            value.bind="pageNumber"
             disabled.bind="value == null"
-            focus.trigger="onPageInputFocus($event)"
-            blur.trigger="onPageInputBlur()"
+            autoselect.bind="true"
+            focusout.trigger="onPageInputFocusOut()"
             keydown.trigger="onPageInputKeydown($event)">
+        </number-input>
 
         <div if.bind="computedPageCount != null" translate>
             of ${computedPageCount | number}

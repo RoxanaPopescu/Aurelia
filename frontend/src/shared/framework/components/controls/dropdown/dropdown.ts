@@ -8,6 +8,10 @@ import { EventManager } from "shared/utilities";
 @autoinject
 export class DropdownCustomElement
 {
+    /**
+     * Creates a new instance of the type.
+     * @param element The element representing the component.
+     */
     public constructor(element: Element)
     {
         this._element = element as HTMLElement;
@@ -15,8 +19,9 @@ export class DropdownCustomElement
 
     private readonly _element: HTMLElement;
     private readonly _eventManager = new EventManager(this);
-    private _classMutationObserver: MutationObserver;
+    private _mutationObserver: MutationObserver;
     private _popper: Popper | undefined;
+    private _attached = false;
     private _visible: boolean;
 
     /**
@@ -24,43 +29,55 @@ export class DropdownCustomElement
      * This is typically the input or button to which the dropdown is attached.
      * If not specified, this will be the parent element of the dropdown.
      */
-    @bindable
+    @bindable({ changeHandler: "createPopper" })
     public owner: HTMLElement | SVGElement;
 
     /**
-     * The function function to call when the dropdown closes.
+     * True to used `fixed` positioning, otherwise false.
+     * This may be needed if the dropdown is placed within a container that
+     * hides overflowing content, but note that it has a performance cost.
      */
-    @bindable
-    public close: () => boolean | void;
+    @bindable({ changeHandler: "createPopper", defaultValue: false })
+    public fixed: boolean;
 
     /**
-     * Called by the framework when the component is binding.
+     * The function to call when the dropdown wants to close.
      */
-    public bind(): void
+    @bindable
+    public close: (params:
     {
-        if (this.owner == null)
-        {
-            this.owner = this._element.parentElement!;
-        }
-    }
+        // True if closing because the `Escape` key was pressed, otherwise false.
+        escape: boolean;
+
+    }) => void;
 
     /**
      * Called by the framework when the component is attached.
      */
     public attached(): void
     {
+        // If no owner element is set, use the parent element.
+        if (this.owner == null)
+        {
+            this.owner = this._element.parentElement!;
+        }
+
         // Listen for interaction events, that might indicate that the dropdown should close.
         this._eventManager.addEventListener(document.documentElement, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
         this._eventManager.addEventListener(document.documentElement, "mousedown", event => this.onInteractionAnywhere(event), { capture: true });
         this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true });
         this._eventManager.addEventListener(document.documentElement, "focusin", event => this.onInteractionAnywhere(event), { capture: true });
 
-        // Observe for mutations of the class list, that might affect the visibility or position.
-        this._classMutationObserver = new MutationObserver(() => this.updateVisibilityAndPosition());
-        this._classMutationObserver.observe(this._element, { attributes: true, attributeFilter: ["class"] });
+        // Listen for mutations within the dropdown or its owner, that might affect the visibility, size or position of the dropdown.
+        this._mutationObserver = new MutationObserver(() => this.updateVisibilityAndPosition());
+        this._mutationObserver.observe(this._element, { attributes: true, attributeFilter: ["class"], childList: true, subtree: true, characterData: true });
+        this._mutationObserver.observe(this.owner, { attributes: true, attributeFilter: ["class"], childList: true, subtree: true, characterData: true });
 
-        this.ownerChanged();
-        this.updateVisibilityAndPosition();
+        // Indicate that the component is attached.
+        this._attached = true;
+
+        // Create the `Popper`instance.
+        this.createPopper();
     }
 
     /**
@@ -72,7 +89,7 @@ export class DropdownCustomElement
         this._eventManager.removeEventListeners();
 
         // Dispose mutation observers.
-        this._classMutationObserver.disconnect();
+        this._mutationObserver.disconnect();
 
         // Dispose the `Popper` instance.
         if (this._popper)
@@ -81,15 +98,23 @@ export class DropdownCustomElement
             this._popper = undefined;
         }
 
-        // Reset the visibility state.
+        // Reset the state.
         this._visible = false;
+        this._attached = false;
     }
 
     /**
-     * Called by the framework when the `owner` property changes.
+     * Called when the component is attached, and when the `owner` or `fixed` properties change
+     * Creates a new `Popper` instance, then updates visibility and position.
      */
-    protected ownerChanged(): void
+    protected createPopper(): void
     {
+        // Don't do anything while binding.
+        if (!this._attached)
+        {
+            return;
+        }
+
         // Dispose the `Popper` instance for the previous owner, if any.
         if (this._popper != null)
         {
@@ -100,7 +125,7 @@ export class DropdownCustomElement
         this._popper = new Popper(this.owner, this._element,
         {
             placement: "bottom-start",
-            positionFixed: true,
+            positionFixed: this.fixed,
             modifiers:
             {
                 preventOverflow:
@@ -109,11 +134,14 @@ export class DropdownCustomElement
                 }
             }
         });
+
+        // Update the visibility and position.
+        this.updateVisibilityAndPosition();
     }
 
     /**
-     * Called when the component is attached, and when the class list of the element changes.
-     * Updates the visibility to reflect the state of the element in the DOM.
+     * Called when a new `Popper` instance is created, and when the class list of the element changes.
+     * Determines whether the dropdown is visible, and if it is, updates its position.
      */
     protected updateVisibilityAndPosition(): void
     {
@@ -126,7 +154,7 @@ export class DropdownCustomElement
             (!style.display || style.display !== "none") &&
             (!style.opacity || style.opacity !== "0");
 
-        // If the element is visible, update the position.
+        // If the element is visible, update its position.
         if (this._visible)
         {
             this._popper!.update();
@@ -142,18 +170,7 @@ export class DropdownCustomElement
     {
         if (this._visible && !event.defaultPrevented && event.key === "Escape")
         {
-            // Call the `close` callback method, which handles the actual closing of the dropdown.
-            const canClose = this.close();
-
-            // If the callback returned true, indicating that the dropdown was closed, blur the currently focused element.
-            if (canClose !== false)
-            {
-                // Only blur if the focused element is related to the dropdown or its owner.
-                if (this._element.contains(document.activeElement) || this.owner.contains(document.activeElement))
-                {
-                    (document.activeElement as HTMLElement | SVGElement).blur();
-                }
-            }
+            this.close({ escape: true });
         }
     }
 
@@ -168,7 +185,7 @@ export class DropdownCustomElement
 
         if (this._visible && !this._element.contains(target) && !this.owner.contains(target))
         {
-            this.close();
+            this.close({ escape: false });
         }
     }
 }

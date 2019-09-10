@@ -63,8 +63,8 @@ body
         // Prevent the page from scrolling.
         overflow: hidden;
 
-        // Prevent rubber-band effect when dragging the page on a touch device.
-        position: fixed;
+        // Prevent pull-to-refresh.
+        overscroll-behavior-y: none;
     }
 }
 

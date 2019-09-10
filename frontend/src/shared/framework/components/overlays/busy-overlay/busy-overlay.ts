@@ -150,6 +150,11 @@ export class BusyOverlayCustomElement
      */
     private getVisibleWidth(): number
     {
+        if (this._xScrollElement === this._element.parentElement)
+        {
+            return this._xScrollElement.offsetWidth;
+        }
+
         const scrollElementWidth = this._xScrollElement.offsetWidth;
         const scrollElementLeftToElementLeft = Math.max(this._element.parentElement!.getBoundingClientRect().left, 0);
         const scrollElementLeftToElementRight = Math.max(Math.min(this._element.parentElement!.getBoundingClientRect().right, scrollElementWidth), 0);
@@ -162,6 +167,11 @@ export class BusyOverlayCustomElement
      */
     private getVisibleHeight(): number
     {
+        if (this._yScrollElement === this._element.parentElement)
+        {
+            return this._yScrollElement.offsetHeight;
+        }
+
         const scrollElementHeight = this._yScrollElement.offsetHeight;
         const scrollElementTopToElementTop = Math.max(this._element.parentElement!.getBoundingClientRect().top, 0);
         const scrollElementTopToElementBottom = Math.max(Math.min(this._element.parentElement!.getBoundingClientRect().bottom, scrollElementHeight), 0);

@@ -23,7 +23,7 @@ export class ResponseStubInterceptor implements Interceptor
         {
             const invalidStubs: any[] = [];
 
-            for (const key in this._stubs)
+            for (const key of Object.keys(this._stubs))
             {
                 if (!/^[A-Z]+ \/\/?/.test(key) || (this._stubs[key].body != null && this._stubs[key].data != null))
                 {
@@ -48,7 +48,7 @@ export class ResponseStubInterceptor implements Interceptor
     /**
      * Called when a request is intercepted.
      * @param request The request that was intercepted.
-     * @returns The request to send, or the stubbed response, if available.
+     * @returns A promise that will be resolved with the request to send, or the stubbed response, if available.
      */
     public async request(request: Request): Promise<Request | Response>
     {
@@ -82,7 +82,7 @@ export class ResponseStubInterceptor implements Interceptor
 
             } as MapObject<string>;
 
-            await delay(totalDelay);
+            await delay(totalDelay, request.signal);
 
             return new Response(body,
             {

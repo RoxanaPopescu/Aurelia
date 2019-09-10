@@ -3,39 +3,27 @@ text-input
     // Set the default resize mode.
     resize: vertical;
 
-    > label > .input-control > .input-control-inner
+    &.--autosize
     {
-        input,
-        textarea
+        > .input-control > .input-control-inner .input-input
         {
-            // Remove the default browser styling.
-            appearance: none;
-            border: none;
-            border-radius: 0;
-            background: transparent;
-            color: inherit;
-
-            // Inherit font-size and line-height, to ensure correct vertical alignment.
-            font-size: inherit;
-            line-height: inherit;
+            // Position the input on top of the autosized element.
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            resize: none !important;
         }
 
-        textarea
+        > .input-control > .input-control-inner .input-autosize
         {
-            // Constrain resizing by the user.
-            min-height: calc(var(--input-min-height) - 2 * var(--input-border-width));
-            min-width: calc(var(--input-min-width) - 2 * var(--input-border-width));
-            max-height: 100%;
-            max-width: 100%;
+            // Style the content as if it was a textarea.
+            visibility: hidden;
+            padding: var(--input-padding);
+            overflow: hidden;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
         }
-    }
-
-    > label,
-    > label > .input-control,
-    > label > .input-control > .input-control-inner,
-    > label > .input-control > .input-control-inner > textarea
-    {
-        // Inherit the resize mode.
-        resize: inherit;
     }
 }

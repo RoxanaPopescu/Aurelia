@@ -1,5 +1,5 @@
 [
-    { "slug": "mover", "name": "Mover" },
-    { "slug": "coop", "name": "Coop" },
-    { "slug": "lingu", "name": "Lingu" }
+    { "slug": "mover", "name": "Mover", "color": "#f00" },
+    { "slug": "coop", "name": "Coop", "color": "#f00" },
+    { "slug": "lingu", "name": "Lingu", "color": "#0646a6" }
 ]

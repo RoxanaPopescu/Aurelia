@@ -1,0 +1,11 @@
+<template
+    tabindex="-1"
+    keydown.trigger="onKeyDown($event)"
+    mousedown.trigger="onMouseDown()"
+    click.trigger="onClick()">
+
+    <require from="./dropdown-icon.scss"></require>
+
+    <icon name.bind="open ? 'md-expand-less' : 'md-expand-more'"></icon>
+
+</template>

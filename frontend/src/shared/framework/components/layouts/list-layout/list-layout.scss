@@ -15,11 +15,8 @@ list-layout
         display: flex;
         flex-direction: column;
 
-        // Apply negative margins to compensate for the row gap.
-        margin-bottom: calc(-1 * var(--list-layout-row-gap));
-
         // Set the row gap.
-        > *
+        > :not(:last-child)
         {
             margin-bottom: var(--list-layout-row-gap);
         }

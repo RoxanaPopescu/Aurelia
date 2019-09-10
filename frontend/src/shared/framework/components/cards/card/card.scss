@@ -117,7 +117,7 @@ card
                 margin-bottom: 2rem;
 
                 // Fade the items so they are barely visible.
-                opacity: var(--opacity-faded-most);
+                opacity: var(--opacity-faded-more);
 
                 &, icon
                 {
@@ -125,7 +125,8 @@ card
                     color: var(--color-surface-neutral-icon);
                 }
 
-                &:hover
+                &:hover,
+                body.focus-visible &:focus
                 {
                     // Highlight when hovered.
                     opacity: var(--opacity-faded-more);

@@ -2,7 +2,8 @@
 
 modal-section
 {
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     .modal-section-header
     {
@@ -18,6 +19,16 @@ modal-section
         transition:
             color var(--animation-duration-medium),
             opacity var(--animation-duration-medium);
+    }
+
+    .modal-section-content
+    {
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     &.--toggle .modal-section-header

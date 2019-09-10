@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Id } from "shared/utilities";
 import { AutocompleteHint, EnterKeyHint } from "../input";
 
 /**
@@ -7,6 +8,11 @@ import { AutocompleteHint, EnterKeyHint } from "../input";
 @autoinject
 export class UrlInputCustomElement
 {
+    /**
+     * The unique ID of the control.
+     */
+    protected id = Id.sequential();
+
     /**
      * The input element.
      */
@@ -36,7 +42,7 @@ export class UrlInputCustomElement
     @computedFrom("value")
     protected get validationTrigger(): string | undefined
     {
-        return this.value != null && ("http://".startsWith(this.value) || "https://".startsWith(this.value)) ? "blur" : undefined;
+        return this.value != null && ("http://".startsWith(this.value) || "https://".startsWith(this.value)) ? "change" : undefined;
     }
 
     /**
@@ -49,7 +55,7 @@ export class UrlInputCustomElement
      * True if the input is disabled, otherwise false.
      */
     @bindable({ defaultValue: false })
-    public disabled: string;
+    public disabled: boolean;
 
     /**
      * True if the input is readonly, otherwise false.

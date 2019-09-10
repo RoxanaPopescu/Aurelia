@@ -87,7 +87,7 @@ a
         color: inherit;
 
         &:any-link:hover,
-        .focus-visible > &:any-link:focus
+        .focus-visible &:any-link:focus
         {
             // If a neutral accent is applied, highlight when hovered or focused.
             color: var(--color-surface-primary-text--hover);
@@ -132,8 +132,8 @@ a[appearance]
         // Style to appear as a button.
         padding: 0 3.5rem;
         min-width: 10rem;
-        line-height: calc(10rem - 2 * var(--button-border-width));
-        border: var(--button-border-width) solid;
+        min-height: 10rem;
+        border: var(--border-width-medium) solid;
         border-radius: var(--border-radius-medium);
         border-color: transparent;
         text-align: center;
@@ -185,7 +185,7 @@ a[appearance]
         }
     }
 
-    // Style for the `icon` type.
+    // Style for the `icon` appearance.
     &[appearance="icon"]
     {
         display: flex;
@@ -193,9 +193,19 @@ a[appearance]
         align-items: center;
         border-radius: 50%;
         min-width: 0;
+        min-height: 0;
         padding: 0.25em;
         background: transparent;
         border-color: transparent;
+        line-height: 1;
+
+        &::before
+        {
+            // Hack to ensure the height matches the width.
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
 
         &:not([accent])
         {
@@ -212,12 +222,12 @@ a[appearance]
         }
     }
 
-    // Style for the `outline` type.
+    // Style for the `outline` appearance, and the `text` appearance when focused or hovered.
     &[appearance="outline"],
     &:not([appearance]):hover,
-    &:not([appearance]):focus,
+    .focus-visible &:not([appearance]):focus,
     &[appearance="text"]:hover,
-    &[appearance="text"]:focus
+    .focus-visible &[appearance="text"]:focus
     {
         background: transparent;
 
@@ -238,10 +248,10 @@ a[appearance]
         }
     }
 
-    // Style for the `solid` type.
+    // Style for the `solid` appearance, and the `icon` appearance when focused or hovered.
     &[appearance="solid"],
-    &[appearance="icon"]:hover,
-    &[appearance="icon"]:focus
+    .focus-visible &[appearance="icon"]:focus,
+    &[appearance="icon"]:hover
     {
         &:not([accent])
         {
@@ -262,139 +272,6 @@ a[appearance]
         }
     }
 }
-
-
-// label
-// Label which should be used to wrap any inputs that need a description.
-// ----------------------------------------------------------------------------------------------------
-
-label
-{
-    display: flex;
-    align-items: center;
-
-    // Ensure consistent cursor.
-    cursor: pointer;
-
-    &[appearance="input"]
-    {
-        cursor: text;
-    }
-
-    > span
-    {
-        // Prevent text from shrinking, as it causes unwanted wrapping.
-        flex-shrink: 0;
-    }
-}
-
-
-// select, textarea, and inputs (text-like)
-// Controls which resemble text inputs, meaning that they can be styled as rectangles.
-// ----------------------------------------------------------------------------------------------------
-
-label[appearance="input"],
-select,
-textarea,
-input:not([type]),
-input[type="color"],
-input[type="date"],
-input[type="datetime-local"],
-input[type="email"],
-input[type="month"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="text"],
-input[type="time"],
-input[type="url"],
-input[type="week"]
-{
-    // Remove the default browser styling.
-    appearance: none;
-    margin: 0;
-    padding: 0 3rem;
-    max-width: 100%;
-    min-height: 10rem;
-    border: var(--input-border-width) solid var(--color-surface-input-border);
-    border-radius: var(--border-radius-medium);
-    font-size: inherit;
-    line-height: inherit;
-    color: var(--color-surface-input-surface-text);
-    background: var(--color-surface-input-surface);
-
-    // Expand to fill the available width by default.
-    width: 100%;
-
-    &:not(label)
-    {
-        display: block;
-    }
-
-    label[appearance="input"] > &
-    {
-        // Remove padding and border, as the label will have it too.
-        padding-left: 0;
-        padding-right: 0;
-
-        // Reduce the min-height to compensate for the border on the label.
-        min-height: calc(10rem - 2 * var(--input-border-width));
-
-        // Reduce the min-width to prevent overflow.
-        min-width: 10rem;
-    }
-}
-
-input[type="number"]
-{
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button
-    {
-        // Remove spin buttons in inputs of type `number`.
-        appearance: none;
-        margin: 0;
-    }
-}
-
-textarea
-{
-    // Set the default height.
-    min-height: 20rem;
-
-    // Set the default min-width to prevent horizontal resizing.
-    min-width: 100%;
-
-    // Ensure consistent padding.
-    padding-top: 2.25rem;
-    padding-bottom: 2.25rem;
-}
-
-select
-{
-    // Remove the default browser styling.
-    appearance: none;
-
-    // Ensure consistent cursor.
-    cursor: pointer;
-
-    // Ensure consistent appearance of the dropdown arrow.
-    padding-right: 2em;
-    background-position: right -1.25em center;
-    background-repeat: no-repeat;
-    background-size: 1em;
-    background-origin: content-box;
-
-    /* stylelint-disable indentation */
-    background-image: url(
-        "data:image/svg+xml;utf8," +
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>" +
-            "<path d='M128.4 160L96 192.3 256 352l160-159.7-32.4-32.3L256 287.3z' stroke='red'/>" +
-        "</svg>"
-    );
-    /* stylelint-enable */
-}
-
 
 // input (checkbox)
 // Checkbox supporting the checked, unchecked and indeterminate state.
@@ -570,5 +447,139 @@ input[type="radio"]
     {
         // Ensure proper spacing between the label and the control.
         margin-right: var(--size-inline-spacing);
+    }
+}
+
+.use-form-styles
+{
+    // label
+    // Label which should be used to wrap any inputs that need a description.
+    // ----------------------------------------------------------------------------------------------------
+
+    label
+    {
+        display: flex;
+        align-items: center;
+
+        // Ensure consistent cursor.
+        cursor: pointer;
+
+        &[appearance="input"]
+        {
+            cursor: text;
+        }
+
+        > span
+        {
+            // Prevent text from shrinking, as it causes unwanted wrapping.
+            flex-shrink: 0;
+        }
+    }
+
+
+    // select, textarea, and inputs (text-like)
+    // Controls which resemble text inputs, meaning that they can be styled as rectangles.
+    // ----------------------------------------------------------------------------------------------------
+
+    label[appearance="input"],
+    select,
+    textarea,
+    input:not([type]),
+    input[type="color"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="email"],
+    input[type="month"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="text"],
+    input[type="time"],
+    input[type="url"],
+    input[type="week"]
+    {
+        // Remove the default browser styling.
+        appearance: none;
+        margin: 0;
+        padding: 0 3rem;
+        max-width: 100%;
+        min-height: 10rem;
+        border: var(--border-width-thin) solid var(--color-surface-input-border);
+        border-radius: var(--border-radius-medium);
+        font-size: inherit;
+        line-height: inherit;
+        color: var(--color-surface-input-surface-text);
+        background: var(--color-surface-input-surface);
+
+        // Expand to fill the available width by default.
+        width: 100%;
+
+        &:not(label)
+        {
+            display: block;
+        }
+
+        label[appearance="input"] > &
+        {
+            // Remove padding and border, as the label will have it too.
+            padding-left: 0;
+            padding-right: 0;
+
+            // Reduce the min-height to compensate for the border on the label.
+            min-height: calc(10rem - 2 * var(--border-width-thin));
+
+            // Reduce the min-width to prevent overflow.
+            min-width: 10rem;
+        }
+    }
+
+    input[type="number"]
+    {
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button
+        {
+            // Remove spin buttons in inputs of type `number`.
+            appearance: none;
+            margin: 0;
+        }
+    }
+
+    textarea
+    {
+        // Set the default height.
+        min-height: 20rem;
+
+        // Set the default min-width to prevent horizontal resizing.
+        min-width: 100%;
+
+        // Ensure consistent padding.
+        padding-top: 2.25rem;
+        padding-bottom: 2.25rem;
+    }
+
+    select
+    {
+        // Remove the default browser styling.
+        appearance: none;
+
+        // Ensure consistent cursor.
+        cursor: pointer;
+
+        // Ensure consistent appearance of the dropdown arrow.
+        padding-right: 2em;
+        background-position: right -1.25em center;
+        background-repeat: no-repeat;
+        background-size: 1em;
+        background-origin: content-box;
+
+        /* stylelint-disable indentation */
+        background-image: url(
+            "data:image/svg+xml;utf8," +
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>" +
+                "<path d='M128.4 160L96 192.3 256 352l160-159.7-32.4-32.3L256 287.3z' stroke='red'/>" +
+            "</svg>"
+        );
+        /* stylelint-enable */
     }
 }

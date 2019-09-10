@@ -1,6 +1,8 @@
 <template class="
     ${name == tabNav.value ? '--active' : ''}
-    ${invalid ? '--invalid' : ''}">
+    ${disabled ? '--disabled' : ''}
+    ${invalid ? '--invalid' : ''}"
+    inert.bind="disabled">
 
     <require from="./tab.scss"></require>
 

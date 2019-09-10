@@ -7,6 +7,8 @@
 
     <require from="./modal-overlay.scss"></require>
 
+    <busy-overlay if.bind="modal != null && modal.busy !== false" delay.bind="true"></busy-overlay>
+
     <form class="modal-overlay-content">
 
         <slot></slot>

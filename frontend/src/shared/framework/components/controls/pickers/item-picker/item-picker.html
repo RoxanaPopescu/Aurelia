@@ -1,7 +1,35 @@
-<template class="${hoverEnabled ? '--hover-enabled' : ''}" mousemove.trigger="onMouseMove()" mouseleave.trigger="onMouseLeave()">
+<template
+    tabindex="0"
+    class="${hoverable ? '--hoverable' : ''}"
+    mousemove.trigger="onMouseMove()"
+    mouseleave.trigger="onMouseLeave()">
+
+    <require from="./item"></require>
 
     <require from="./item-picker.scss"></require>
 
-    <slot></slot>
+    <div ref="itemsElement">
+
+        <item if.bind="none">
+
+            <template replaceable part="none">
+                <div class="item-picker-none" translate>
+                    None
+                </div>
+            </template>
+
+        </item>
+
+        <slot></slot>
+
+    </div>
+
+    <div if.bind="empty" class="item-picker-empty">
+
+        <template replaceable part="empty" translate>
+            No items
+        </template>
+
+    </div>
 
 </template>

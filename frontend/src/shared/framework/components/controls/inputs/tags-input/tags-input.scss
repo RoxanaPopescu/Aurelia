@@ -1,0 +1,69 @@
+tags-input
+{
+    display: block;
+
+    > text-input
+    {
+        &.input > .input-control > .input-control-inner .input-input
+        {
+            // Remove padding at the end closest to the toggle icon.
+            padding-right: 0;
+        }
+
+        dropdown-icon
+        {
+            // Apply input padding.
+            padding: var(--input-padding);
+        }
+    }
+
+    > text-input > .input-control > .input-control-inner .input-input.--readonly,
+    &:not(.--open) > text-input > .input-control > .input-control-inner .input-input,
+    &:not(.--filter) > text-input > .input-control > .input-control-inner .input-input
+    {
+        // Use cursor to indicate the element is clickable, when not accepting text input.
+        cursor: pointer;
+    }
+
+    > text-input.--readonly > .input-control > .input-control-inner
+    {
+        height: 0;
+        padding: var(--input-padding);
+        padding-top: 0;
+        visibility: hidden;
+    }
+
+    .input-control
+    {
+        flex-wrap: wrap;
+    }
+
+    [slot="before"],
+    [slot="value"],
+    tag
+    {
+        max-width: 100%;
+    }
+
+    [slot="value"]:not(:empty)
+    {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding-left: 1.5rem;
+    }
+
+    > text-input > .input-control > .input-control-inner
+    {
+        flex-grow: 1;
+        width: auto !important;
+        min-width: 35rem;
+        margin-right: 42px;
+    }
+
+    [slot="after"]
+    {
+        position: relative;
+        margin-left: -42px;
+    }
+}

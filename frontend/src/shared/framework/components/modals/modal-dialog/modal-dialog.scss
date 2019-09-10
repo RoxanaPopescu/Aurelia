@@ -36,15 +36,6 @@ modal-dialog
     background: var(--color-surface);
     color: var(--color-surface-text);
 
-    &.--busy
-    {
-        > *
-        {
-            // Make content appear disabled while busy.
-            opacity: var(--opacity-disabled) !important;
-        }
-    }
-
     .modal-dialog-content
     {
         position: relative;

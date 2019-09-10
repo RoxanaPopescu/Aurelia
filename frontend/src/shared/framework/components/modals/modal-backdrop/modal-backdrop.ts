@@ -26,7 +26,7 @@ export class ModalBackdropCustomElement
     private readonly _modal: Modal | undefined;
 
     /**
-     * True to close the modal on when the backdrop is clicked, false to do nothing, or the name of a modal group to
+     * True to close the modal when the backdrop is clicked, false to do nothing, or the name of a modal group to
      * The modal close action to take when the overlay is clicked, where `top` attempts to close
      * the modal at the top, `all` attempts to close all modals, and `none` does nothing.
      * The default is `top`.

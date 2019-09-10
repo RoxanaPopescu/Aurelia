@@ -1,4 +1,4 @@
-import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framework";
+import { autoinject, bindable, computedFrom, bindingMode, observable } from "aurelia-framework";
 import { IPaging } from "shared/types";
 
 /**
@@ -8,14 +8,15 @@ import { IPaging } from "shared/types";
 export class DataTablePagerCustomElement
 {
     /**
-     * The page number input element.
+     * The value of the page number input element.
      */
-    protected pageInputElement: HTMLInputElement;
+    protected pageNumber: number = 1;
 
     /**
-     * The page size select element.
+     * The value of the page size input element.
      */
-    protected pageSizeSelectElement: HTMLInputElement;
+    @observable
+    protected pageSize: number = 10;
 
     /**
      * The total number of pages, or undefined if unknown.
@@ -69,21 +70,12 @@ export class DataTablePagerCustomElement
     public disabled: boolean;
 
     /**
-     * Called when the page input receives focus.
-     * Selects all content in the input.
-     */
-    protected onPageInputFocus(): void
-    {
-        setTimeout(() => this.pageInputElement.setSelectionRange(0, this.pageInputElement.value.length));
-    }
-
-    /**
      * Called when the page input loses focus.
      * Ensures the number shown in the input matches the current page number.
      */
-    protected onPageInputBlur(): void
+    protected onPageInputFocusOut(): void
     {
-        this.pageInputElement.valueAsNumber = this.value.page;
+        this.pageNumber = this.value.page;
     }
 
     /**
@@ -95,7 +87,7 @@ export class DataTablePagerCustomElement
     {
         if (event.key === "Enter")
         {
-            const page = this.pageInputElement.valueAsNumber || this.value.page;
+            const page = this.pageNumber || this.value.page;
             this.value =
             {
                 ...this.value,
@@ -110,13 +102,22 @@ export class DataTablePagerCustomElement
      * Called when the page size is changed.
      * Sets the page size and commits the change.
      */
-    protected onPageSizeChange(): void
+    protected pageSizeChanged(): void
     {
         this.value =
         {
             ...this.value,
-            pageSize: parseInt(this.pageSizeSelectElement.value)
+            pageSize: this.pageSize
         };
+    }
+
+    /**
+     * Called when the value is changed.
+     * Sets the value of the page number input.
+     */
+    protected valueChanged(): void
+    {
+        this.pageNumber = this.value.page;
     }
 
     /**

@@ -13,6 +13,20 @@ export class TabNavCustomElement
     public value: string | undefined;
 
     /**
+     * Called when the value is about to change.
+     * @param context.newValue The new value.
+     * @param oldValue The old value.
+     * @returns False to prevent the change, otherwise true.
+     */
+    @bindable({ defaultValue: undefined })
+    public change: undefined | ((params:
+    {
+        newValue: string | undefined;
+        oldValue: string | undefined;
+
+    }) => void | boolean);
+
+    /**
      * The appearance to use for the tabs.
      */
     @bindable

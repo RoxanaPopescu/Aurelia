@@ -35,11 +35,11 @@ export class ScrollCustomAttribute implements IScroll
      */
     public constructor(element: Element)
     {
-        this._element = element;
+        this._element = element as HTMLElement | SVGElement;
         this._eventManager = new EventManager(this);
     }
 
-    private readonly _element: Element;
+    private readonly _element: HTMLElement | SVGElement;
     private readonly _eventManager: EventManager;
 
     /**

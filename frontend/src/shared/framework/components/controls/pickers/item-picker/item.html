@@ -1,4 +1,7 @@
-<template class="${model === itemPicker.focusedValue ? '--active' : ''}" click.trigger="onClick()">
+<template
+    show.bind="visible"
+    class="${disabled ? '--disabled' : ''} ${active ? '--active' : ''}"
+    click.trigger="onClick()">
 
     <require from="./item.scss"></require>
 

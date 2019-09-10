@@ -1,6 +1,7 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { IScroll, ModalService } from "shared/framework";
-import { Operation, ISorting } from "shared/types";
+import { ISorting } from "shared/types";
+import { Operation } from "shared/utilities";
 import { ExpressRouteService, DriverRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
 import { Workspace } from "../../services/workspace";

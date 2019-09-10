@@ -1,4 +1,4 @@
-import { Container, autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Container, inject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { ValidationCustomAttribute } from "./validation";
 import { ValidationTrigger, ValidationReason } from "./validation-trigger";
 
@@ -69,7 +69,8 @@ export interface IValidator
  * Validators are custom elements that represent input validation requirements,
  * encapsulating the validation logic and the rendering of validation messages.
  */
-@autoinject
+// TODO: Use autoinject once https://github.com/aurelia/dependency-injection/pull/186 is released
+@inject(Container)
 export abstract class Validator implements IValidator
 {
     /**
@@ -78,7 +79,7 @@ export abstract class Validator implements IValidator
      */
     public constructor(container: Container)
     {
-        this.element = container.get(Element);
+        this.element = container.get(Element) as HTMLElement;
 
         // Try to get the validation to which this validator belongs.
         if (container.hasResolver(ValidationCustomAttribute, true))

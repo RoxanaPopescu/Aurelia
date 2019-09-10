@@ -96,7 +96,7 @@ export class ValidationCustomAttribute implements IValidation
      */
     public constructor(container: Container)
     {
-        this.element = container.get(Element);
+        this.element = container.get(Element) as HTMLElement;
 
         // Try to get the parent validation of this validation.
         if (container.parent.hasResolver(ValidationCustomAttribute, true))

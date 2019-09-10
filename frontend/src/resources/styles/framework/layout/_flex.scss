@@ -24,6 +24,19 @@ $__summary: comment;
     flex-grow: 1;
 }
 
+.flex-constrain
+{
+    .flex-row &
+    {
+        min-width: 0;
+    }
+
+    .flex-column &
+    {
+        min-height: 0;
+    }
+}
+
 .flex-center
 {
     margin-top: auto;

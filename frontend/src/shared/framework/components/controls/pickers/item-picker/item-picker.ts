@@ -8,18 +8,39 @@ import { EventManager } from "shared/utilities";
 @autoinject
 export class ItemPickerCustomElement
 {
+    /**
+     * Creates a new instance of the type.
+     * @param element The element representing the component.
+     */
+    public constructor(element: Element)
+    {
+        this._element = element as HTMLElement;
+    }
+
+    private readonly _element: HTMLElement;
     private readonly _eventManager = new EventManager(this);
-    private readonly _items: ItemCustomElement[] = [];
+    private _items: ItemCustomElement[] = [];
 
     /**
-     * True to show a hover effect when the mouse is over an item, otherwise false.
+     * The element into which items will be projected.
      */
-    protected hoverEnabled = false;
+    protected itemsElement: HTMLElement;
 
     /**
-     * The element that has focus, if different from the element representing this component.
+     * True if the picker contains no items, otherwise false.
      */
-    @bindable
+    protected empty = true;
+
+    /**
+     * True to highlight items when hovered, otherwise false.
+     */
+    protected hoverable = false;
+
+    /**
+     * The element that has input focus.
+     * This must be set to enable keyboard navigation.
+     */
+    @bindable({ defaultValue: undefined })
     public focusedElement: HTMLElement;
 
     /**
@@ -35,43 +56,81 @@ export class ItemPickerCustomElement
     public focusedValue: any;
 
     /**
+     * True to enable keyboard navigation, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public keyboard: boolean;
+
+    /**
+     * True to show the `None` option, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public none: boolean;
+
+    /**
      * The text to filter the items by, or undefined to apply no filter.
      */
-    @bindable
-    public filter: string | undefined;
+    @bindable({ defaultValue: undefined })
+    public filterValue: string | undefined;
 
     /**
      * Called when the user picks an item.
      */
-    @bindable
-    public change: () => void;
+    @bindable({ defaultValue: undefined })
+    public pick: () => void;
 
     /**
-     * Called by the framework when the component is attached.
+     * Called by the framework when the component is binding.
      */
-    public attached(): void
+    public bind(): void
     {
-        // Listen for interaction events, that might indicate that the dropdown should close.
-        this._eventManager.addEventListener(this.focusedElement, "keydown", event => this.onKeyDown(event as KeyboardEvent));
+        this.focusedElement = this.focusedElement || this._element;
     }
 
     /**
-     * Called by the framework when the component is detached.
+     * Called by the framework when the component is attached.
+     * Ensures keyboard listeners are attached.
      */
-    public detached(): void
+    public attached(): void
     {
-        // Dispose event listeners.
-        this._eventManager.removeEventListeners();
+        this.keyboardChanged();
     }
 
     /**
      * Called when a child item is attached.
-     * Adds the item as a child of this item picker.
+     * Updates the collection of attached items to match the items present in the DOM.
+     * This approach is needed, because we cannot rely on the order in which items are attached.
      * @param item The child item to attach.
      */
     public attachItem(item: ItemCustomElement): void
     {
-        this._items.push(item);
+        const newItems: ItemCustomElement[] = [];
+
+        // Find all descendent elements of type `item`.
+        const itemElements = this.itemsElement.querySelectorAll("item");
+
+        // Iterate through the elements, in the order they appear in the DOM.
+        itemElements.forEach((itemElement: any) =>
+        {
+            // Does the element have an `Aurelia` controller?
+            if (itemElement.au != null && itemElement.au.controller != null)
+            {
+                const itemViewModel = itemElement.au.controller.viewModel;
+
+                // Is the view model for the element of the expected type?
+                if (itemViewModel instanceof ItemCustomElement)
+                {
+                    // Add the view model to the new list of items.
+                    newItems.push(itemViewModel);
+                }
+            }
+        });
+
+        // Replace the list of items.
+        this._items = newItems;
+
+        // Update the `empty` state.
+        this.empty = !this._items.some(i => i.visible);
     }
 
     /**
@@ -81,32 +140,99 @@ export class ItemPickerCustomElement
      */
     public detachItem(item: ItemCustomElement): void
     {
-        this._items.splice(this._items.indexOf(item), 1);
+        // Try to find the item in the list of items.
+        const index = this._items.indexOf(item);
+
+        // Do nothing if the item was not found.
+        if (index > -1)
+        {
+            // Remove the item from the list of items.
+            this._items.splice(this._items.indexOf(item), 1);
+
+            // Update the `empty` state.
+            this.empty = !this._items.some(i => i.visible);
+        }
     }
 
     /**
-     * Sets the specified value as the value of the item picker,
-     * and calls the `change` callback, if specified.
+     * Changes the value of the item picker to the specified value and dispatches an `input` event,
+     * and if the user picked the value, dispatches a `change` event and calls the `pick` callback.
+     * @param value The new value.
+     * @param pick True if the user picked the value, otherwise false.
      */
-    public setValue(value: any): void
+    public changeValue(value: any, pick = false): void
     {
-        // Set the value of the item picker.
-        this.value = value;
+        // Set the focused value to match the new value.
+        this.focusedValue = value;
 
-        // Call the `change` callback of the item picker, if specified.
-        if (this.change != null)
+        // Dispatch the `input` event to indicate that the focused value, and possibly the value, has changed.
+        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
+
+        // Did the user pick the value?
+        if (pick)
         {
-            this.change();
+            // Set the value.
+            this.value = value;
+
+            // Dispatch the `change` event to indicate that the comitted value, has changed.
+            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value } }));
+
+            // If the user picked the value, call the `pick` callback.
+            if (this.pick != null)
+            {
+                // HACK: Delay the callback so the new value has a chance to propagate through the bindings.
+                // tslint:disable-next-line: no-floating-promises
+                Promise.resolve().then(() => this.pick()).catch(error => console.error(error));
+            }
+        }
+    }
+
+    /**
+     * Called by the framework when the `keyboard` property changes.
+     * Adds or removes keyboard event listeners.
+     */
+    protected keyboardChanged(): void
+    {
+        // Dispose event listeners.
+        this._eventManager.removeEventListeners();
+
+        if (this.keyboard)
+        {
+            // Listen for keyboard events.
+            this._eventManager.addEventListener(this.focusedElement, "keydown", event => this.onKeyDown(event as KeyboardEvent));
         }
     }
 
     /**
      * Called by the framework when the `value` property changes.
-     * Updates the `focusedValue`to match the `value`.
+     * Updates the `focusedValue` to match the `value`.
      */
     protected valueChanged(): void
     {
         this.focusedValue = this.value;
+    }
+
+    /**
+     * Called by the framework when the `focusedValue` property changes.
+     * Focuses the item representing the value.
+     */
+    protected focusedValueChanged(): void
+    {
+        const item = this._items.find(i => i.model === this.focusedValue);
+
+        if (item != null)
+        {
+            item.focus();
+        }
+    }
+
+    /**
+     * Called by the framework when the `filterValue` property changes.
+     * Updates the `empty` state to match the visibility of the items.
+     */
+    protected filterValueChanged(): void
+    {
+        this.empty = !this._items.some(i => i.visible);
     }
 
     /**
@@ -118,7 +244,7 @@ export class ItemPickerCustomElement
     protected onMouseMove(): boolean
     {
         // The user is using the mouse, so enable hover effects.
-        this.hoverEnabled = true;
+        this.hoverable = true;
 
         return true;
     }
@@ -132,7 +258,7 @@ export class ItemPickerCustomElement
     protected onMouseLeave(): boolean
     {
         // The user is not using the mouse, so disable hover effects.
-        this.hoverEnabled = false;
+        this.hoverable = false;
 
         return true;
     }
@@ -140,19 +266,19 @@ export class ItemPickerCustomElement
     /**
      * Called when a key is pressed within the focused element.
      * Switches to keyboard mode, where hover effects are disabled.
-     * Moves the selection to the next or previous item if the `ArrowUp` or `ArrowDown` keys are pressed.
+     * Moves the selection to the next or previous enabled item if the `ArrowUp` or `ArrowDown` keys are pressed.
      * Sets the value of the picker if the `Enter` key is pressed.
      * @param event The keyboard event.
      */
     private onKeyDown(event: KeyboardEvent): void
     {
         // The user is using the keyboard, so disable hover effects.
-        this.hoverEnabled = false;
+        this.hoverable = false;
 
         // Sets the value of the picker if the `Enter` key is pressed.
-        if (event.key === "Enter")
+        if (event.key === "Enter" && !event.defaultPrevented)
         {
-            this.setValue(this.focusedValue);
+            this.changeValue(this.focusedValue, true);
 
             event.preventDefault();
 
@@ -168,15 +294,32 @@ export class ItemPickerCustomElement
 
         if (offset)
         {
+            let index: number | undefined;
+
             if (this.focusedValue != null)
             {
-                const currentIndex = this._items.findIndex(i => i.model === this.focusedValue);
-                const newIndex = Math.min(Math.max(currentIndex + offset, 0), this._items.length - 1);
-                this._items[newIndex].focus();
+                index = this._items.findIndex(i => i.model === this.focusedValue);
             }
-            else if (this._items.length > 0)
+            else if (this.none)
             {
-                this._items[0].focus();
+                index = 0;
+            }
+
+            if (index == null)
+            {
+                index = offset === 1 ? -1 : this._items.length;
+            }
+
+            do
+            {
+                index += offset;
+            }
+            while (this._items[index] != null && (this._items[index].disabled || !this._items[index].visible ||
+                (this.filterValue && !this._items[index].contains(this.filterValue))));
+
+            if (this._items[index] != null)
+            {
+                this._items[index].focus();
             }
 
             event.preventDefault();

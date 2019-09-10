@@ -13,4 +13,9 @@ export interface ITheme
      * The name of the theme.
      */
     name: string;
+
+    /**
+     * The primary color of the theme, as an RGB HEX value.
+     */
+    color: string;
 }

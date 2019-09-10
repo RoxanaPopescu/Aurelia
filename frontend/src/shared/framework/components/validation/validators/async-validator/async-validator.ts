@@ -1,7 +1,7 @@
 import { bindable, containerless } from "aurelia-framework";
+import { Operation } from "shared/utilities";
 import { Validator } from "../../validator";
 import { ValidationReason } from "../../validation-trigger";
-import { Operation } from "shared/types";
 
 /**
  * Represents a validator that validates by calling a function.

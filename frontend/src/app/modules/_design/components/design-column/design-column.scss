@@ -3,6 +3,8 @@ design-column
     display: inline-block;
     vertical-align: top;
     padding-right: 6rem;
+    min-width: 40rem;
+    max-width: 90rem;
 
     &:not(:first-child)
     {

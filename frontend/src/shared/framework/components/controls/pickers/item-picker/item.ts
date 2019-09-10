@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { ItemPickerCustomElement } from "./item-picker";
 
 /**
@@ -17,17 +17,47 @@ export class ItemCustomElement
     }
 
     private readonly _element: HTMLElement;
+    private _itemPicker: ItemPickerCustomElement | undefined;
 
     /**
-     * The item picker to which this component belongs.
+     * True if this item represents the focused value of the item picker, otherwise false.
      */
-    protected itemPicker: ItemPickerCustomElement;
+    @computedFrom("_itemPicker.focusedValue")
+    protected get active(): boolean
+    {
+        if (this._itemPicker != null)
+        {
+            return this._itemPicker.focusedValue === this.model;
+        }
+
+        return false;
+    }
+
+    /**
+     * True if this item should be visible, false if it should be hidden due to filtering.
+     */
+    @computedFrom("_itemPicker.filterValue")
+    public get visible(): boolean
+    {
+        if (this._itemPicker != null && this._itemPicker.filterValue)
+        {
+            return this.contains(this._itemPicker.filterValue);
+        }
+
+        return true;
+    }
 
     /**
      * The value associated with the element.
      */
     @bindable
     public model: any;
+
+    /**
+     * True if the item is disabled, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public disabled: boolean;
 
     /**
      * Called by the framework when the component is attached.
@@ -44,44 +74,79 @@ export class ItemCustomElement
         }
 
         // Get the view model for the item picker
-        this.itemPicker = (itemPickerElement as any).au.controller.viewModel;
+        this._itemPicker = (itemPickerElement as any).au.controller.viewModel;
 
-        // Attach the item to the item picker.
-        this.itemPicker.attachItem(this);
+        // If the item is not disabled, attach the item to the item picker.
+        this._itemPicker!.attachItem(this);
 
-        // If the item is selected, ensure it is scrolled into view.
-        if (this.model === this.itemPicker.value)
+        // If the item is focused, ensure it is scrolled into view.
+        if (this.model === this._itemPicker!.value)
         {
-            this._element.scrollIntoView({ block: "center" });
+            this._element.scrollIntoView({ block: "nearest" });
         }
     }
 
     /**
      * Called by the framework when the component is detached.
+     * Detaches the item from the item picker.
      */
     public detached(): void
     {
-        // Dettach the item from the item picker.
-        this.itemPicker.detachItem(this);
+        this._itemPicker!.detachItem(this);
     }
 
     /**
-     * Sets this item as the focused item in the item picker,
+     * Sets the model of this item as the focused value of the item picker,
      * scrolling it into view if needed.
      */
     public focus(): void
     {
-        this.itemPicker.focusedValue = this.model;
+        this._itemPicker!.changeValue(this.model);
         this._element.scrollIntoView({ block: "nearest" });
+    }
+
+    /**
+     * Queries the DOM for the item, to determine whether it includes the specified text.
+     * Note that the comparison is case insensitive, and that any whitespace is collapsed to a single space.
+     * @param text The text to look for in the item.
+     * @returns True if the item contains the specified text, otherwise false.
+     */
+    public contains(text: string): boolean
+    {
+        const elements: Element[] = [this._element];
+
+        let innerText = "";
+
+        while (elements.length > 0)
+        {
+            const element = elements.shift()!;
+
+            if (element.textContent)
+            {
+                innerText += ` ${element.textContent}`;
+            }
+
+            elements.push(...Array.from(element.children));
+        }
+
+        const searchText = text.replace(/([^\w]|_)+/g, " ").trim().toLowerCase();
+        innerText = innerText.replace(/([^\w]|_)+/g, " ").trim().toLowerCase();
+
+        return innerText.includes(searchText);
     }
 
     /**
      * Called when the item is clicked.
      * Selects this item and sets its model as the value of the item picker.
+     * @returns False to prevent default.
      */
-    protected onClick(): void
+    protected onClick(): boolean
     {
-        // Set the value of the item picker.
-        this.itemPicker.setValue(this.model);
+        if (!this.disabled)
+        {
+            this._itemPicker!.changeValue(this.model, true);
+        }
+
+        return false;
     }
 }

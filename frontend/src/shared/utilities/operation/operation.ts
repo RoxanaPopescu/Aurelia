@@ -1,5 +1,5 @@
 import { computedFrom } from "aurelia-binding";
-import { AbortError } from "../errors/abort-error";
+import { AbortError } from "shared/types";
 
 /**
  * Represents an async operation, that may succeede, fail with an error, or be aborted.
@@ -22,12 +22,12 @@ export class Operation<TResult = void>
         this.promise
             .catch(error =>
             {
-                // Store the error on the operation.
-                this._error = error;
-
                 // Throw if not caused by an abort.
-                if (!(error instanceof AbortError))
+                if (!(error instanceof AbortError) || !this._aborted)
                 {
+                    // Store the error on the operation.
+                    this._error = error;
+
                     throw error;
                 }
             })
@@ -49,6 +49,11 @@ export class Operation<TResult = void>
     private _pending = true;
 
     /**
+     * True if the operation was aborted, otherwise false.
+     */
+    private _aborted = true;
+
+    /**
      * The error that occurred, or undefined if the operation is pending or succeeded.
      */
     private _error: Error;
@@ -68,6 +73,15 @@ export class Operation<TResult = void>
     }
 
     /**
+     * True if the operation was aborted, otherwise false.
+     */
+    @computedFrom("_aborted")
+    public get aborted(): boolean
+    {
+        return this._aborted;
+    }
+
+    /**
      * The error that occurred, or undefined if the operation is pending or succeeded.
      */
     @computedFrom("_error")
@@ -82,5 +96,6 @@ export class Operation<TResult = void>
     public abort(): void
     {
         this._abortController.abort();
+        this._aborted = true;
     }
 }

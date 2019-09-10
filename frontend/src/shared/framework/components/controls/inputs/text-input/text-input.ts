@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Id } from "shared/utilities";
 import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, SpellcheckHint } from "../input";
 
 /**
@@ -7,6 +8,11 @@ import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, Sp
 @autoinject
 export class TextInputCustomElement
 {
+    /**
+     * The unique ID of the control.
+     */
+    protected id = Id.sequential();
+
     /**
      * The input element.
      */
@@ -39,7 +45,7 @@ export class TextInputCustomElement
      * True if the input is disabled, otherwise false.
      */
     @bindable({ defaultValue: false })
-    public disabled: string;
+    public disabled: boolean;
 
     /**
      * True if the input is readonly, otherwise false.
@@ -92,6 +98,12 @@ export class TextInputCustomElement
     public lines: number | undefined;
 
     /**
+     * True to allow the input to grow to fit the content, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public autosize: boolean;
+
+    /**
      * The max length of the value, or undefined to use the max supported length.
      */
     @bindable({ defaultValue: undefined })
@@ -105,13 +117,18 @@ export class TextInputCustomElement
 
     /**
      * Called when the input receives focus.
-     * Selects the contents of the input, if `autoselect` is enabled.
+     * Selects the contents of the input, if `autoselect` is enabled, or if the input contains
+     * line breaks, ensures the cursor is positioned at the beginning of the text.
      */
     protected onFocus(): void
     {
         if (this.autoselect)
         {
             setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+        }
+        else if (this.value && this.value.includes("\n"))
+        {
+            this.inputElement.setSelectionRange(0, 0);
         }
     }
 

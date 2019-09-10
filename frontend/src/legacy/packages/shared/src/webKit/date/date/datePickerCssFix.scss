@@ -23,6 +23,11 @@
   }
 
   .react-datepicker__navigation {
+
+    padding: 0;
+    min-width: 0;
+    min-height: 0;
+
     line-height: 1.7em;
     border: .45em solid transparent;
 

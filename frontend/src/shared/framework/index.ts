@@ -17,23 +17,25 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
-        PLATFORM.moduleName("./components/icons/badge/badge"),
-        PLATFORM.moduleName("./components/icons/icon/icon"),
-        PLATFORM.moduleName("./components/icons/md-icon/md-icon"),
-        PLATFORM.moduleName("./components/icons/md-icon/md-icon-stack"),
         PLATFORM.moduleName("./components/controls/dropdown/dropdown"),
+        PLATFORM.moduleName("./components/controls/dropdown/dropdown-icon"),
+        PLATFORM.moduleName("./components/controls/inputs/date-input/date-input"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
-        PLATFORM.moduleName("./components/controls/inputs/item-input/item-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
+        PLATFORM.moduleName("./components/controls/inputs/select-input/select-input"),
         PLATFORM.moduleName("./components/controls/inputs/slug-input/slug-input"),
+        PLATFORM.moduleName("./components/controls/inputs/tags-input/tags-input"),
+        PLATFORM.moduleName("./components/controls/inputs/tags-input/tag"),
         PLATFORM.moduleName("./components/controls/inputs/text-input/text-input"),
+        PLATFORM.moduleName("./components/controls/inputs/time-input/time-input"),
         PLATFORM.moduleName("./components/controls/inputs/url-input/url-input"),
         PLATFORM.moduleName("./components/controls/navigation/path-nav/path-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
         PLATFORM.moduleName("./components/controls/navigation/tree-nav/tree-nav"),
+        PLATFORM.moduleName("./components/controls/pickers/date-picker/date-picker"),
         PLATFORM.moduleName("./components/controls/pickers/item-picker/item-picker"),
         PLATFORM.moduleName("./components/controls/pickers/item-picker/item"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar"),
@@ -45,6 +47,10 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/data-table/data-table-row"),
         PLATFORM.moduleName("./components/data-table/data-table-details"),
         PLATFORM.moduleName("./components/file-dropzone/file-dropzone"),
+        PLATFORM.moduleName("./components/icons/badge/badge"),
+        PLATFORM.moduleName("./components/icons/icon/icon"),
+        PLATFORM.moduleName("./components/icons/md-icon/md-icon"),
+        PLATFORM.moduleName("./components/icons/md-icon/md-icon-stack"),
         PLATFORM.moduleName("./components/indicators/busy-indicator/busy-indicator"),
         PLATFORM.moduleName("./components/indicators/empty-indicator/empty-indicator"),
         PLATFORM.moduleName("./components/layouts/grid-layout/grid-layout"),
@@ -93,23 +99,25 @@ export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/trap-focus/trap-focus";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
-export * from "./components/icons/badge/badge";
-export * from "./components/icons/icon/icon";
-export * from "./components/icons/md-icon/md-icon";
-export * from "./components/icons/md-icon/md-icon-stack";
 export * from "./components/controls/dropdown/dropdown";
+export * from "./components/controls/dropdown/dropdown-icon";
+export * from "./components/controls/inputs/date-input/date-input";
 export * from "./components/controls/inputs/email-input/email-input";
-export * from "./components/controls/inputs/item-input/item-input";
 export * from "./components/controls/inputs/number-input/number-input";
 export * from "./components/controls/inputs/password-input/password-input";
 export * from "./components/controls/inputs/search-input/search-input";
+export * from "./components/controls/inputs/select-input/select-input";
 export * from "./components/controls/inputs/slug-input/slug-input";
+export * from "./components/controls/inputs/tags-input/tags-input";
+export * from "./components/controls/inputs/tags-input/tag";
 export * from "./components/controls/inputs/text-input/text-input";
+export * from "./components/controls/inputs/time-input/time-input";
 export * from "./components/controls/inputs/url-input/url-input";
 export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
 export * from "./components/controls/navigation/tree-nav/tree-nav";
+export * from "./components/controls/pickers/date-picker/date-picker";
 export * from "./components/controls/pickers/item-picker/item-picker";
 export * from "./components/controls/pickers/item-picker/item";
 export * from "./components/controls/toolbar/toolbar";
@@ -122,6 +130,10 @@ export * from "./components/data-table/data-table-row";
 export * from "./components/data-table/data-table-details";
 export * from "./components/file-dropzone/file-dropzone";
 export * from "./components/filter/filter";
+export * from "./components/icons/badge/badge";
+export * from "./components/icons/icon/icon";
+export * from "./components/icons/md-icon/md-icon";
+export * from "./components/icons/md-icon/md-icon-stack";
 export * from "./components/indicators/busy-indicator/busy-indicator";
 export * from "./components/indicators/empty-indicator/empty-indicator";
 export * from "./components/layouts/grid-layout/grid-layout";
@@ -133,6 +145,7 @@ export * from "./components/modals/modal-overlay/modal-overlay";
 export * from "./components/modals/modal-panel/modal-panel";
 export * from "./components/modals/modal-section/modal-section";
 export * from "./components/modals/modal-view/modal-view";
+export * from "./components/modals/modal-close-reason";
 export * from "./components/overlays/busy-overlay/busy-overlay";
 export * from "./components/page/page/page";
 export * from "./components/page/page-content/page-content";

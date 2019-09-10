@@ -1,5 +1,6 @@
 import { Uuid } from "./uuid";
 import { Sequential } from "./sequential";
+import { AlphaNumeric } from "./random";
 
 // tslint:disable: no-namespace
 
@@ -30,5 +31,15 @@ export namespace Id
     export function sequential(): number
     {
         return Sequential.next();
+    }
+
+    /**
+     * Generates a random alpha-numeric ID.
+     * @param length The desired length of the ID.
+     * @returns A string representing the generated ID.
+     */
+    export function alphaNumeric(length: number): string
+    {
+        return AlphaNumeric.next(length);
     }
 }

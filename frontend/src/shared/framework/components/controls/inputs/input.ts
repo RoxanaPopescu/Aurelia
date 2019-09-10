@@ -1,4 +1,4 @@
-// NOTE:
+// Note:
 // The input components in this folder depend on the patch
 // "src/shared/patches/browser/placeholder-shown-api", which
 // provides support for reliable input placeholder detection.

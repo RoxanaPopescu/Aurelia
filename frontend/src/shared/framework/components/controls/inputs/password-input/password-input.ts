@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Id } from "shared/utilities";
 import { EnterKeyHint } from "../input";
 
 /**
@@ -7,6 +8,11 @@ import { EnterKeyHint } from "../input";
 @autoinject
 export class PasswordInputCustomElement
 {
+    /**
+     * The unique ID of the control.
+     */
+    protected id = Id.sequential();
+
     /**
      * The input element.
      */
@@ -39,7 +45,7 @@ export class PasswordInputCustomElement
      * True if the input is disabled, otherwise false.
      */
     @bindable({ defaultValue: false })
-    public disabled: string;
+    public disabled: boolean;
 
     /**
      * True if the input is readonly, otherwise false.

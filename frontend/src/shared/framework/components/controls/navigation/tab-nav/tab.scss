@@ -20,6 +20,12 @@ tab
         color: var(--color-surface-negative-text);
     }
 
+    &.--disabled
+    {
+        // Reduce opacity when disabled.
+        opacity: var(--opacity-disabled);
+    }
+
     tab-nav[appearance="text"] &
     {
         &:not(:last-child)

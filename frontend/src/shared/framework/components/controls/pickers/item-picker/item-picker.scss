@@ -1,4 +1,27 @@
 item-picker
 {
     display: block;
+
+    .item-picker-empty
+    {
+        // Apply padding.
+        padding: var(--item-padding);
+
+        // Truncate text content with an ellipsis.
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        // Apply colors.
+
+        background: var(--item-surface-color);
+        color: var(--item-surface-text-color);
+
+        opacity: var(--opacity-faded);
+    }
+
+    .item-picker-none
+    {
+        opacity: var(--opacity-faded);
+    }
 }

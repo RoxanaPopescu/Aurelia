@@ -1,0 +1,16 @@
+dropdown-icon
+{
+    // Use flex layout.
+    display: flex;
+
+    // Center content.
+    align-items: center;
+    justify-content: center;
+
+    // Set icon size and line height.
+    line-height: 1;
+    font-size: 1.286em;
+
+    // Use cursor to indicate the element is clickable.
+    cursor: pointer;
+}

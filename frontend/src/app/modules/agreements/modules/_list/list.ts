@@ -1,5 +1,6 @@
 import { autoinject, observable } from "aurelia-framework";
-import { Operation, ISorting, IPaging, SortingDirection } from "shared/types";
+import { ISorting, IPaging, SortingDirection } from "shared/types";
+import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { AgreementService } from "app/model/agreement";

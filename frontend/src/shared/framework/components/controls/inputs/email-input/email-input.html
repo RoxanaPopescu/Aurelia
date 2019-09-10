@@ -11,73 +11,72 @@
     <require from="../input.scss"></require>
     <require from="./email-input.scss"></require>
 
-    <label>
+    <label class="input-label" for="input-${id}">
 
-        <div class="input-label">
-
-            <div class="input-heading">
-                <slot name="heading"></slot>
-            </div>
-
-            <div class="input-description font-small opacity-faded">
-                <slot name="description"></slot>
-            </div>
-
+        <div class="input-heading">
+            <slot name="heading"></slot>
         </div>
 
-        <div class="input-control">
-
-            <slot name="before"></slot>
-
-            <div class="input-control-inner">
-
-                <input
-                    if.bind="lines == null"
-                    ref="inputElement"
-                    class="input-input"
-                    type="email"
-                    value.bind="inputValue"
-                    autocomplete.bind="autocomplete"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="off"
-                    mozactionhint.bind="enterkey"
-                    enterkeyhint.bind="enterkey"
-                    maxlength.bind="maxlength || 524288"
-                    disabled.bind="disabled"
-                    readonly.bind="readonly"
-                    focus.trigger="onFocus()"
-                    blur.trigger="onBlur()"
-                    keydown.trigger="onKeyDown($event)"
-                    placeholder=" ">
-
-                <div class="input-placeholder text-truncate">
-                    <slot name="placeholder"></slot>
-                </div>
-
-            </div>
-
-            <slot name="after"></slot>
-
-        </div>
-
-        <div class="input-validation font-small">
-
-            <input-validator
-                active.bind="true"
-                input.bind="inputElement"
-                trigger.bind="validationTrigger">
-
-                <template replace-part="invalid" translate>
-                    Please provide a valid email.
-                </template>
-
-            </input-validator>
-
-            <slot name="validation"></slot>
-
+        <div class="input-description font-small opacity-faded">
+            <slot name="description"></slot>
         </div>
 
     </label>
+
+    <div class="input-control">
+
+        <slot name="before"></slot>
+
+        <div class="input-control-inner">
+
+            <input
+                if.bind="lines == null"
+                ref="inputElement"
+                id="input-${id}"
+                class="input-input"
+                type="email"
+                value.bind="inputValue"
+                autocomplete.bind="autocomplete"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="off"
+                mozactionhint.bind="enterkey"
+                enterkeyhint.bind="enterkey"
+                maxlength.bind="maxlength || 524288"
+                disabled.bind="disabled"
+                readonly.bind="readonly"
+                focus.trigger="onFocus()"
+                blur.trigger="onBlur()"
+                keydown.trigger="onKeyDown($event)"
+                placeholder=" ">
+
+            <div class="input-placeholder">
+                <slot name="placeholder"></slot>
+            </div>
+
+        </div>
+
+        <slot name="after"></slot>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="input-validation font-small">
+
+        <input-validator
+            active.bind="true"
+            input.bind="inputElement"
+            trigger.bind="validationTrigger">
+
+            <template replace-part="invalid" translate>
+                Please provide a valid email.
+            </template>
+
+        </input-validator>
+
+        <slot name="validation"></slot>
+
+    </div>
 
 </template>

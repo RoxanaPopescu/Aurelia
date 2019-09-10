@@ -11,19 +11,13 @@ modal-overlay
     // Apply the z-index for modals.
     z-index: var(--z-index-modal);
 
+    // Hide overflow by default.
+    overflow: hidden;
+
     // Apply surface style.
     border-color: var(--color-surface-border);
     background: var(--color-surface);
     color: var(--color-surface-text);
-
-    &.--busy
-    {
-        > *
-        {
-            // Make content appear disabled while busy.
-            opacity: var(--opacity-disabled) !important;
-        }
-    }
 
     .modal-overlay-content
     {
@@ -59,7 +53,7 @@ modal-overlay
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
             padding-top: 10rem;
-            padding-bottom: 7.5rem;
+            padding-bottom: 7rem;
         }
 
         > footer
@@ -69,9 +63,12 @@ modal-overlay
 
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
-            padding-top: 7.5rem;
+            padding-top: 7rem;
             padding-bottom: 10rem;
+        }
 
+        > footer
+        {
             // Push the footer to the bottom by default.
             margin-top: auto;
         }

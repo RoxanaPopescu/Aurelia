@@ -8,7 +8,7 @@ export class TreeNavNodeCustomElement
     /**
      * True if the node supports having child nodes, i.e. whether the node is folder-like, otherwise false.
      */
-    @computedFrom("node.children.length")
+    @computedFrom("model.children.length")
     protected get folderLike(): boolean
     {
         return this.model.children != null;
@@ -17,7 +17,7 @@ export class TreeNavNodeCustomElement
     /**
      * True if the node is folder-like and has at least one child node, otherwise false.
      */
-    @computedFrom("node.children.length")
+    @computedFrom("model.children.length")
     protected get expandable(): boolean
     {
         return this.model.children != null && this.model.children.length > 0;
@@ -75,36 +75,41 @@ export class TreeNavNodeCustomElement
         if (!this.active)
         {
             // Filled icon, when the node is not active.
-            return "folder";
+            return "md-folder";
         }
 
         if (!this.folderLike || !this.expandable)
         {
              // Filled icon, if the node is not folder-like or expandable.
-             return "folder";
+             return "md-folder";
         }
 
         if (this.tree.selectSubtree === true)
         {
             // Filled icon, indicating that child nodes are included.
-            return "folder";
+            return "md-folder";
         }
 
         if (this.tree.selectSubtree === false)
         {
             // Outline icon, indicating that child nodes are excluded.
-            return "folder_open";
+            return "md-folder-open";
         }
 
         if (this.model.expanded)
         {
             // Filled icon, indicating that child nodes are included.
-            return "folder";
+            return "md-folder";
         }
 
         // Outline icon, indicating that child nodes are excluded.
-        return "folder_open";
+        return "md-folder-open";
     }
+
+    /**
+     * True if the node is being renamed, otherwise false.
+     */
+    protected renaming = false;
 
     /**
      * True if an entity is being dragged over the node, otherwise false.
@@ -130,16 +135,129 @@ export class TreeNavNodeCustomElement
      */
     protected onClick(toggle: boolean, event: MouseEvent): void
     {
-        if (this.expandable && (toggle || this.active || !this.model.expanded))
+        if (!event.defaultPrevented && !this.renaming)
         {
-            this.tree.navigate(this.model, true, !this.model.expanded);
-        }
-        else
-        {
-            this.tree.navigate(this.model, true);
+            if (this.expandable && (toggle || this.active || !this.model.expanded))
+            {
+                this.tree.navigate(this.model, true, !this.model.expanded);
+            }
+            else
+            {
+                this.tree.navigate(this.model, true);
+            }
         }
 
         event.stopPropagation();
+    }
+
+    /**
+     * Called when the rename option is clicked.
+     * @param event The click event.
+     */
+    protected onNewFolderClick(event: MouseEvent): void
+    {
+        // Get the new node.
+        const newNode = this.tree.createNode!();
+
+        // Add the new node as a child of this node.
+        newNode.attach(this.model);
+
+        // Get the new node.
+        if (this.tree.nodeCreated != null)
+        {
+            this.tree.nodeCreated({ node: newNode });
+        }
+
+        event.stopPropagation();
+    }
+
+    /**
+     * Called when the rename option is clicked.
+     * @param event The click event.
+     */
+    protected async onDeleteClick(event: MouseEvent): Promise<void>
+    {
+        const parentNode = this.model.parent;
+        let confirmed = true;
+
+        if (this.tree.deleteNode != null)
+        {
+            confirmed = await this.tree.deleteNode({ node: this.model });
+        }
+
+        if (confirmed)
+        {
+            this.model.detach();
+
+            if (this.tree.nodeDeleted != null)
+            {
+                this.tree.nodeDeleted({ node: this.model, parentNode });
+            }
+        }
+
+        event.stopPropagation();
+    }
+
+    /**
+     * Called when the rename option is clicked.
+     * @param event The click event.
+     */
+    protected onRenameClick(event: MouseEvent): void
+    {
+        this.renaming = true;
+
+        event.stopPropagation();
+    }
+
+    /**
+     * Called when the text input used for renaming looses focus.
+     * @param event The click event.
+     */
+    protected onTextInputBlur(event: FocusEvent): void
+    {
+        const inputElement = event.target as HTMLInputElement;
+
+        if (inputElement.value && inputElement.value !== this.model.name)
+        {
+            this.model.rename(inputElement.value);
+
+            if (this.tree.nodeRenamed != null)
+            {
+                this.tree.nodeRenamed({ node: this.model });
+            }
+        }
+
+        this.renaming = false;
+
+    }
+
+    /**
+     * Called when a key is pressed while the text input used for renaming has focus.
+     * Allows the changes to be committed by pressing the `Enter` key, or discarded
+     * by pressing the `Escape` key.
+     * @returns True to not prevent default, otherwise false.
+     */
+    protected onTextInputKeyDown(event: KeyboardEvent): boolean
+    {
+        if (event.key === "Enter" && !event.defaultPrevented)
+        {
+            this.renaming = false;
+
+            return false;
+        }
+
+        if (event.key === "Escape" && !event.defaultPrevented)
+        {
+            const inputElement = event.target as HTMLInputElement;
+
+            inputElement.value = this.model.name;
+
+            this.renaming = false;
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -173,7 +291,7 @@ export class TreeNavNodeCustomElement
      */
     protected onDrop(event: DragEvent): void
     {
-        if (this.tree != null && this.tree.dragOver != null)
+        if (this.tree != null && this.tree.drop != null)
         {
             this.tree.drop({ event, node: this.model });
         }

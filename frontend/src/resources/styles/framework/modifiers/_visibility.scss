@@ -11,13 +11,13 @@ $__summary: comment;
 /// Modifier class that makes the element invisible using `visibility: hidden`.
 .visibility-hidden
 {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 
 /// Modifier class that makes the element invisible using `visibility: collapse`.
 .visibility-collapse
 {
-    visibility: collapse;
+    visibility: collapse !important;
 }
 
 /// Modifier class that visually hides the element, but keeps it accessible to screen readers.

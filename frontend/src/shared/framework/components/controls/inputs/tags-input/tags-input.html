@@ -1,0 +1,87 @@
+<template
+    class="${open ? '--open' : ''} ${filter != 'none' ? '--filter' : ''}"
+    inert.bind="disabled || readonly"
+    validation
+    forward-focus>
+
+    <require from="./tags-input.scss"></require>
+
+    <text-input
+        ref="inputElement"
+        value.bind="inputValue"
+        label.bind="label & attr"
+        disabled.bind="disabled"
+        readonly.bind="readonly"
+        autocomplete.bind="autocomplete"
+        autoselect.bind="autoselect"
+        keydown.trigger="onInputKeyDown($event)"
+        mousedown.trigger="onInputMouseDown($event)"
+        focusin.trigger="onInputFocusIn($event)"
+        change.trigger="onInputChange($event)">
+
+        <slot name="heading" slot="heading"></slot>
+        <slot name="description" slot="description"></slot>
+        <slot name="validation" slot="validation"></slot>
+
+        <div slot="placeholder">
+
+            <div show.bind="!readonly && (!open || filter === 'none')">
+
+                <slot name="placeholder" translate>
+                    Choose an item
+                </slot>
+
+            </div>
+
+            <div show.bind="open && filter !== 'none'">
+                Type to filter...
+            </div>
+
+        </div>
+
+        <div slot="before">
+            <slot name="before"></slot>
+            <slot name="value">
+                <tag repeat.for="tag of value">
+                    ${tag}
+                </tag>
+            </slot>
+        </div>
+
+        <div slot="after">
+
+            <slot name="after"></slot>
+
+            <dropdown-icon
+                if.bind="!readonly"
+                ref="toggleElement"
+                open.bind="open"
+                toggle.call="toggleDropdown()">
+            </dropdown-icon>
+
+        </div>
+
+        <dropdown
+            show.bind="open"
+            close.call="closeDropdown(escape, !escape)"
+            mousedown.trigger="onDropdownMouseDown($event)"
+            scroll>
+
+            <item-picker
+                focused-value.bind="focusedValue"
+                filter-value.bind="filterValue"
+                focused-element.bind="inputElement"
+                keyboard.bind="open"
+                none.bind="false"
+                pick.call="closeDropdown(true, true)"
+                tabindex="-1">
+
+                <slot></slot>
+
+            </item-picker>
+
+        </dropdown>
+
+    </text-input>
+
+</template>

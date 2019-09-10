@@ -2,7 +2,8 @@
 
 [scroll]
 {
-    overflow: overlay;
+    overflow-y: overlay;
+    overflow-x: hidden;
 
     [scroll-fade]
     {
@@ -13,7 +14,7 @@
     -webkit-overflow-scrolling: touch;
 
     // Prevent pull-to-refresh.
-    overscroll-behavior: contain;
+    overscroll-behavior-y: none;
 
     &.disable-hover *
     {
