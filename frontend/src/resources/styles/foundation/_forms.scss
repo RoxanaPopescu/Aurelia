@@ -273,6 +273,20 @@ a[appearance]
     }
 }
 
+
+
+// label, select, textarea, input
+// Normalize styling across browsers.
+// ----------------------------------------------------------------------------------------------------
+
+label,
+select,
+textarea,
+input
+{
+    font: inherit;
+}
+
 // input (checkbox)
 // Checkbox supporting the checked, unchecked and indeterminate state.
 // ----------------------------------------------------------------------------------------------------

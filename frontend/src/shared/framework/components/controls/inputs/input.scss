@@ -373,10 +373,7 @@
         border-radius: 0;
         background: transparent;
         color: inherit;
-
-        // Inherit font-size and line-height, to ensure correct vertical alignment.
-        font-size: inherit;
-        line-height: inherit;
+        font: inherit;
     }
 
     textarea.input-input

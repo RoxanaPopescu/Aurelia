@@ -15,14 +15,14 @@ $__summary: comment;
     {
         // State: normal
         --color-surface-input-border: var(--palette-color-neutral);
-        --color-surface-input-surface: var(--palette-whitepoint);
+        --color-surface-input-surface: var(--palette-color-whitepoint);
 
         // State: hover
         --color-surface-input-border--hover: var(--palette-color-neutral);
-        --color-surface-input-surface--hover: var(--palette-whitepoint);
+        --color-surface-input-surface--hover: var(--palette-color-whitepoint);
 
         // State: focus
         --color-surface-input-border--focus: var(--palette-color-neutral);
-        --color-surface-input-surface--focus: var(--palette-whitepoint);
+        --color-surface-input-surface--focus: var(--palette-color-whitepoint);
     }
 }

@@ -12,11 +12,11 @@ $__summary: comment;
 :root
 {
     --palette-color-whitepoint: white;
-    --palette-color-neutral-lighter: #{hsl(240, 14%, 99%)};
-    --palette-color-neutral-hover: #{hsl(240, 24%, 98%)};
+    --palette-color-neutral-lighter: hsl(240, 14%, 99%);
+    --palette-color-neutral-hover: hsl(240, 24%, 98%);
     --palette-color-neutral-light: hsl(230, 14%, 96%);
     --palette-color-neutral: hsl(220, 14%, 87%);
-    --palette-color-neutral-dark: #{hsl(210, 6%, 43%)};
+    --palette-color-neutral-dark: hsl(210, 6%, 43%);
     --palette-color-neutral-darker: hsl(353, 15%, 20%);
     --palette-color-blackpoint: black;
 }
@@ -39,9 +39,9 @@ $__summary: comment;
 /// The accent color indicating information.
 :root
 {
-    --palette-color-info-lighter: #{hsl(249, 100%, 94%)};
+    --palette-color-info-lighter: hsl(249, 100%, 94%);
     --palette-color-info-light: hotpink;
-    --palette-color-info: #{hsl(249, 46%, 54%)};
+    --palette-color-info: hsl(249, 46%, 54%);
     --palette-color-info-dark: hotpink;
     --palette-color-info-darker: hotpink;
 }
@@ -49,9 +49,9 @@ $__summary: comment;
 /// The accent color indicating that something is good or safe.
 :root
 {
-    --palette-color-positive-lighter: #{hsl(134, 100%, 94%)};
+    --palette-color-positive-lighter: hsl(134, 100%, 94%);
     --palette-color-positive-light: hotpink;
-    --palette-color-positive: #{hsl(134, 61%, 41%)};
+    --palette-color-positive: hsl(134, 61%, 41%);
     --palette-color-positive-dark: hotpink;
     --palette-color-positive-darker: hotpink;
 }
@@ -59,9 +59,9 @@ $__summary: comment;
 /// The accent color indicating that something requires attention.
 :root
 {
-    --palette-color-attention-lighter: #{hsl(40, 100%, 94%)};
+    --palette-color-attention-lighter: hsl(40, 100%, 94%);
     --palette-color-attention-light: hotpink;
-    --palette-color-attention: #{hsl(40, 100%, 50%)};
+    --palette-color-attention: hsl(40, 100%, 50%);
     --palette-color-attention-dark: hotpink;
     --palette-color-attention-darker: hotpink;
 }
@@ -69,9 +69,9 @@ $__summary: comment;
 /// The accent color indicating that something is bad or unsafe.
 :root
 {
-    --palette-color-negative-lighter: #{hsl(350, 100%, 94%)};
+    --palette-color-negative-lighter: hsl(350, 100%, 94%);
     --palette-color-negative-light: hotpink;
-    --palette-color-negative: #{hsl(355, 70%, 47%)};
+    --palette-color-negative: hsl(355, 70%, 47%);
     --palette-color-negative-dark: hotpink;
     --palette-color-negative-darker: hotpink;
 }
