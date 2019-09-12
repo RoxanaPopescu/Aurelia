@@ -83,7 +83,7 @@
     &[label="before"]
     {
         // Define the grid with the label inline with the control.
-        grid-template-columns: 1fr 1.5fr;
+        grid-template-columns: 0.4fr 0.6fr;
         grid-template-rows: 1fr min-content;
         grid-template-areas:
             "label control"
@@ -105,7 +105,7 @@
     &[label="after"]
     {
         // Define the grid with the label inline with the control.
-        grid-template-columns: 1.5fr 1fr;
+        grid-template-columns: 0.6fr 0.4fr;
         grid-template-rows: 1fr min-content;
         grid-template-areas:
             "control label"
@@ -153,9 +153,6 @@
         // Use horizontal flex layout.
         display: flex;
         align-items: stretch;
-
-        // Expand to fill the available height.
-        height: 100%;
 
         // Set the min-height.
         min-height: var(--input-min-height);
@@ -378,6 +375,12 @@
             opacity: 0;
         }
     }
+}
+
+.input > .input-control dropdown
+{
+    // Ensure the dropdown width matches the input width.
+    min-width: calc(var(--dropdown-min-width) + 2 * var(--input-border-width));
 }
 
 // Apply basic styling to native controls, so we won't have to repeat this in every component.

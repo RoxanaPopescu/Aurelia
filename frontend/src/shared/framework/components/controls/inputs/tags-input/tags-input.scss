@@ -58,12 +58,13 @@ tags-input
         flex-grow: 1;
         width: auto !important;
         min-width: 35rem;
-        margin-right: 42px;
+        padding-right: 42px;
     }
 
     [slot="after"]
     {
-        position: relative;
-        margin-left: -42px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
     }
 }
