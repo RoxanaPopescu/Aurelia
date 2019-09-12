@@ -40,9 +40,3 @@ export type SpellcheckHint =
  */
 export type EnterKeyHint =
     "enter" | "done" | "go" | "previous" | "next" | "search" | "send";
-
-/**
- * Represents the position of the label, relative to the input.
- */
-export type LabelPosition =
-    "inline" | "above";

@@ -1,0 +1,40 @@
+<template class="
+    ${toggle ? '--toggle' : ''}
+    ${expanded ? '--expanded' : ''}
+    ${invalid || invalid == null && validation.invalid ? '--invalid' : ''}
+    ${headerSlotEmpty ? '--header-slot-empty' : ''}"
+    validation
+    validation.ref="validation">
+
+    <require from="./page-section.scss"></require>
+
+    <button
+        appearance="none"
+        class="page-section-header font-large"
+        disabled.bind="headerSlotEmpty !== false"
+        click.trigger="onHeaderClick()">
+
+        <div empty.bind="headerSlotEmpty">
+            <slot name="header"></slot>
+        </div>
+
+        <div
+            if.bind="toggle"
+            class="page-section-toggle ${expanded ? 'opacity-faded-more' : ''}"
+            accent.bind="expanded ? 'neutral' : 'primary' & attr">
+
+            <span if.bind="!expanded" class="font-small" translate>
+                Expand
+            </span>
+
+            <icon name="md-expand-${expanded ? 'less' : 'more'}"></icon>
+
+        </div>
+
+    </button>
+
+    <div show.bind="expanded" class="page-section-content">
+        <slot></slot>
+    </div>
+
+</template>

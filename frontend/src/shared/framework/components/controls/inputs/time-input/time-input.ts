@@ -1,6 +1,7 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
 import { TimeValueConverter } from "shared/localization";
+import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 
 // The items to choose from in the dropdown.
@@ -181,7 +182,7 @@ export class TimeInputCustomElement
      * The position of the label, or undefined to show no label.
      */
     @bindable({ defaultValue: undefined })
-    public label: "above" | "inline" | undefined;
+    public label: LabelPosition | undefined;
 
     /**
      * The time picked by the user, null if the entered value could not be parsed,

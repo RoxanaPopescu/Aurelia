@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 import { DateTime } from "luxon";
 
@@ -140,7 +141,7 @@ export class DateInputCustomElement
      * The position of the label, or undefined to show no label.
      */
     @bindable({ defaultValue: undefined })
-    public label: "above" | "inline" | undefined;
+    public label: LabelPosition | undefined;
 
     /**
      * The date picked by the user, null if the entered value could not be parsed,

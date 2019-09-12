@@ -34,13 +34,137 @@
                 <span>Label position</span>
                 <select value.bind="labelPosition">
                     <option value="above" default>above</option>
-                    <option value="inline">inline</option>
+                    <option value="before">before</option>
+                    <option value="after">after</option>
                 </select>
             </label>
 
         </div>
 
         <div surface.bind="surface & attr" class="font-${fontSize}">
+
+            <design-item heading="radio-toggle">
+
+                <design-row heading="radio-toggle">
+
+                    <design-column heading="enabled">
+
+                        <toggle-group value.bind="toggleValue">
+
+                            <radio-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-1">
+
+                                <div slot="heading" translate>
+                                    Heading 1
+                                </div>
+
+                            </radio-toggle>
+
+                            <radio-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-2">
+
+                                <div slot="heading" translate>
+                                    Heading 2
+                                </div>
+
+                            </radio-toggle>
+
+                        </toggle-group>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <toggle-group value.bind="toggleValue">
+
+                            <radio-toggle
+                                disabled.bind="true"
+                                label.bind="labelPosition & attr"
+                                model="toggle-1">
+
+                                <div slot="heading" translate>
+                                    Heading 1
+                                </div>
+
+                                <div slot="description" translate>
+                                    Description
+                                </div>
+
+                            </radio-toggle>
+
+                            <radio-toggle
+                                disabled.bind="true"
+                                label.bind="labelPosition & attr"
+                                model="toggle-2">
+
+                                <div slot="heading" translate>
+                                    Heading 2
+                                </div>
+
+                                <div slot="description" translate>
+                                    Description
+                                </div>
+
+                            </radio-toggle>
+
+                        </toggle-group>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>value: ${toggleValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="check-toggle">
+
+                <design-row heading="check-toggle">
+
+                    <design-column heading="enabled">
+
+                        <check-toggle
+                            label.bind="labelPosition & attr"
+                            value.bind="toggleValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                        </check-toggle>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <check-toggle
+                            disabled.bind="true"
+                            label.bind="labelPosition & attr"
+                            value.bind="toggleValue">
+
+                            <div slot="heading" translate>
+                                Heading
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </check-toggle>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>value: ${toggleValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
 
             <design-item heading="time-input">
 
@@ -49,7 +173,7 @@
                     <design-column heading="enabled">
 
                         <time-input
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="timeValue"
                             focused-value.bind="timeFocusedValue"
                             filter="auto"
@@ -72,7 +196,7 @@
 
                         <time-input
                             disabled.bind="true"
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="timeValue">
 
                             <div slot="heading" translate>
@@ -87,7 +211,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${timeFocusedValue | time}</div>
                         <div>comitted: ${timeValue | time}</div>
                     </design-column>
@@ -111,7 +235,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${dateFocusedValue | dateTime}</div>
                         <div>comitted: ${dateValue | dateTime}</div>
                     </design-column>
@@ -127,7 +251,7 @@
                     <design-column heading="enabled">
 
                         <date-input
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="dateValue"
                             focused-value.bind="dateFocusedValue">
 
@@ -147,7 +271,7 @@
 
                         <date-input
                             disabled.bind="true"
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="dateValue"
                             focused-value.bind="dateFocusedValue">
 
@@ -163,7 +287,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${dateFocusedValue | dateTime}</div>
                         <div>comitted: ${dateValue | dateTime}</div>
                     </design-column>
@@ -179,7 +303,7 @@
                     <design-column heading="enabled">
 
                         <item-picker
-                            style="max-height: 60rem; overflow: scroll;"
+                            style="max-height: 60rem;"
                             value.bind="selectValue"
                             focused-value.bind="selectFocusedValue">
 
@@ -197,7 +321,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${selectFocusedValue.value}</div>
                         <div>comitted: ${selectValue.value}</div>
                     </design-column>
@@ -213,7 +337,7 @@
                     <design-column heading="enabled">
 
                         <select-input
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="selectValue"
                             display-value.bind="selectValue.name"
                             focused-value.bind="selectFocusedValue"
@@ -250,7 +374,7 @@
 
                         <select-input
                             disabled.bind="true"
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="selectValue"
                             display-value.bind="selectValue.name"
                             focused-value.bind="selectFocusedValue"
@@ -283,7 +407,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${selectFocusedValue.value}</div>
                         <div>comitted: ${selectValue.value}</div>
                     </design-column>
@@ -299,7 +423,7 @@
                     <design-column heading="enabled">
 
                         <tags-input
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="tagsValue"
                             focused-value.bind="tagsFocusedValue"
                             filter="auto">
@@ -334,7 +458,7 @@
 
                         <tags-input
                             disabled.bind="true"
-                            label="above"
+                            label.bind="labelPosition"
                             value.bind="tagsValue">
 
                             <div slot="heading" translate>
@@ -359,7 +483,7 @@
 
                     </design-column>
 
-                    <design-column heading="Values">
+                    <design-column heading="values">
                         <div>focused: ${tagsFocusedValue | time}</div>
                         <div>comitted: ${tagsValue}</div>
                     </design-column>

@@ -80,7 +80,7 @@
         }
     }
 
-    &[label="inline"]
+    &[label="before"]
     {
         // Define the grid with the label inline with the control.
         grid-template-columns: 1fr 1.5fr;
@@ -99,6 +99,28 @@
 
             // Apply spacing between the label and the control.
             margin-right: var(--size-inline-spacing-large);
+        }
+    }
+
+    &[label="after"]
+    {
+        // Define the grid with the label inline with the control.
+        grid-template-columns: 1.5fr 1fr;
+        grid-template-rows: 1fr min-content;
+        grid-template-areas:
+            "control label"
+            "validation validation";
+
+        > .input-label
+        {
+            // Show the label.
+            display: block;
+
+            // Center vertically.
+            align-self: center;
+
+            // Apply spacing between the label and the control.
+            margin-left: var(--size-inline-spacing-large);
         }
     }
 

@@ -1,0 +1,198 @@
+@import "resources/index";
+
+body
+{
+    /// The color of the text on the surface of the component.
+    --toggle-surface-icon-color: var(--color-surface-neutral-icon);
+    --toggle-surface-icon-color--active: var(--color-surface-primary-icon);
+    --toggle-surface-icon-color--invalid: var(--color-surface-negative-icon);
+
+    /// The width of the border of the component.
+    --toggle-border-width: var(--border-width-thin);
+
+    /// The radius of the border of the component.
+    --toggle-border-radius: var(--border-radius-medium);
+
+    /// The min-height of the component.
+    --toggle-height: 1.75em;
+}
+
+.toggle
+{
+    // Use grid layout.
+    display: grid;
+
+    // Align items with the top.
+    align-items: flex-start;
+
+    // By default, define the grid without the label.
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+    grid-template-areas:
+        "control"
+        "validation";
+
+    &[label="above"]
+    {
+        // Define the grid with the label above the control.
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content 1fr min-content;
+        grid-template-areas:
+            "label"
+            "control"
+            "validation";
+
+        > .toggle-label
+        {
+            // Show the label.
+            display: block;
+
+            // Apply spacing between the label and the control.
+            margin-bottom: var(--font-current-margin-bottom);
+
+            .toggle-description > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-top: var(--font-current-margin-top);
+            }
+        }
+    }
+
+    &[label="before"]
+    {
+        // Define the grid with the label inline with the control.
+        grid-template-columns: 1fr min-content;
+        grid-template-rows: 1fr min-content;
+        grid-template-areas:
+            "label control"
+            "validation validation";
+
+        > .toggle-label
+        {
+            // Show the label.
+            display: block;
+
+            // Center vertically.
+            align-self: center;
+
+            // Apply spacing between the label and the control.
+            padding-right: var(--size-inline-spacing);
+        }
+    }
+
+    &[label="after"]
+    {
+        // Define the grid with the label inline with the control.
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: 1fr min-content;
+        grid-template-areas:
+            "control label"
+            "validation validation";
+
+        > .toggle-label
+        {
+            // Show the label.
+            display: block;
+
+            // Center vertically.
+            align-self: center;
+
+            // Apply spacing between the label and the control.
+            padding-left: var(--size-inline-spacing);
+        }
+    }
+
+    > .toggle-label
+    {
+        // Position the element within the grid.
+        grid-area: label;
+
+        // Only shown if the `label` attribute is specified.
+        display: none;
+
+        // Use cursor to indicate the element is clickable.
+        cursor: pointer;
+    }
+
+    > .toggle-control
+    {
+        // Position the element within the grid.
+        grid-area: control;
+
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
+        // Use horizontal flex layout.
+        display: flex;
+        align-items: stretch;
+
+        // Expand to fill the available height.
+        height: 100%;
+
+        // Set the min-height.
+        min-height: var(--toggle-height);
+
+        // Apply component style for the normal state.
+        color: var(--toggle-surface-icon-color);
+
+        // Use cursor to indicate the element is clickable.
+        cursor: pointer;
+    }
+
+    > .toggle-validation
+    {
+        // Position the element within the grid.
+        grid-area: validation;
+
+        validation-message
+        {
+            // Apply spacing above the validation messages.
+            margin-top: 1.5rem;
+        }
+    }
+
+    &.--disabled
+    {
+        // Reduce opacity when disabled.
+        opacity: var(--opacity-disabled);
+
+        > .toggle-label,
+        > .toggle-control
+        {
+            // Use default cursor.
+            cursor: default;
+        }
+    }
+
+    &:not(.--invalid).--active
+    {
+        > .toggle-control
+        {
+            // Apply style for the active state.
+            color: var(--toggle-surface-icon-color--active);
+        }
+    }
+
+    &:not(.--disabled):not(.--readonly).--invalid
+    {
+        > .toggle-control
+        {
+            // Apply style for the invalid state.
+            color: var(--toggle-surface-icon-color--invalid);
+        }
+    }
+}
+
+// Apply basic styling to native controls, so we won't have to repeat this in every component.
+
+// stylelint-disable-next-line no-duplicate-selectors
+.toggle > .toggle-control
+{
+    input
+    {
+        appearance: none;
+        margin: 0;
+        opacity: 0;
+        cursor: inherit;
+    }
+}

@@ -1,0 +1,48 @@
+<template class="
+    toggle
+    ${disabled || toggleGroup.disabled ? '--disabled' : ''}
+    ${readonly || toggleGroup.readonly ? '--readonly' : ''}
+    ${value === true ? '--active' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    forward-focus
+    validation
+    validation.ref="validation">
+
+    <require from="../toggle.scss"></require>
+    <require from="./radio-toggle.scss"></require>
+
+    <label class="toggle-label" for="toggle-${id}">
+
+        <div class="toggle-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="toggle-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <div class="toggle-control">
+
+        <input
+            id="toggle-${id}"
+            type="radio"
+            disabled.bind="disabled || toggleGroup.disabled"
+            readonly.bind="readonly || toggleGroup.readonly"
+            name.bind="toggleGroup.id"
+            checked.to-view="value"
+            change.trigger="value = !value">
+
+        <icon if.bind="value === true" name="md-radio-toggle-checked" accent.bind="accent & attr"></icon>
+        <icon if.bind="value !== true" name="md-radio-toggle-unchecked" accent.bind="accent & attr"></icon>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="toggle-validation font-small">
+        <slot name="validation"></slot>
+    </div>
+
+</template>

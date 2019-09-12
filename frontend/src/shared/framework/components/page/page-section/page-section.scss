@@ -1,0 +1,85 @@
+@import "resources/index";
+
+page-section
+{
+    display: flex;
+    flex-direction: column;
+
+    // Apply margin to the section.
+    margin: 7rem 9rem;
+
+    .page-section-header
+    {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: inherit;
+    }
+
+    .page-section-toggle
+    {
+        margin-left: auto;
+        transition:
+            color var(--animation-duration-medium),
+            opacity var(--animation-duration-medium);
+    }
+
+    .page-section-content
+    {
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &.--toggle .page-section-header
+    {
+        cursor: pointer;
+
+        &:hover .page-section-toggle
+        {
+            color: var(--color-surface-primary-text);
+            opacity: 1 !important;
+        }
+    }
+
+    &:not(.--header-slot-empty) .page-section-content
+    {
+        margin-top: var(--font-large-margin-top);
+    }
+
+    &:not(.--expanded).--invalid
+    {
+        // Use negative accent color if the section is invalid.
+        // Note that this will be overridden if the section is expanded.
+        color: var(--color-surface-negative-text);
+    }
+
+    &.margin
+    {
+        &, &-top
+        {
+            margin-top: var(--font-large-margin-top);
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: var(--font-large-margin-bottom);
+        }
+    }
+
+    &.margin-double
+    {
+        &, &-top
+        {
+            margin-top: calc(2 * var(--font-large-margin-top));
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: calc(2 * var(--font-large-margin-bottom));
+        }
+    }
+}

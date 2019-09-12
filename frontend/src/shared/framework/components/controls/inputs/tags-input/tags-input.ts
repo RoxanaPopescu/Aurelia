@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 
 /**
@@ -61,7 +62,7 @@ export class TagsInputCustomElement
      * The position of the label, or undefined to show no label.
      */
     @bindable({ defaultValue: undefined })
-    public label: "above" | "inline" | undefined;
+    public label: LabelPosition | undefined;
 
     /**
      * The value of the item picked by the user, or undefined if no item has been picked.

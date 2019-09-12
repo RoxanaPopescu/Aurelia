@@ -287,185 +287,185 @@ input
     font: inherit;
 }
 
-// input (checkbox)
-// Checkbox supporting the checked, unchecked and indeterminate state.
-// ----------------------------------------------------------------------------------------------------
-
-input[type="checkbox"]
-{
-    $size: 1.5em;
-    $offset: ($size - 1em) / 2;
-
-    // Remove the default browser styling.
-    appearance: none;
-    position: relative;
-    margin: 0 $offset 0 0;
-    border: none;
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    line-height: inherit;
-    font-size: inherit;
-    background: none;
-    cursor: pointer;
-
-    // Animate color changes.
-    transition: color var(--animation-duration-short);
-
-    &:not([accent])
-    {
-        color: var(--color-surface-neutral-icon);
-    }
-
-    // Add accent color support.
-    @each $accent in $accents
-    {
-        &[accent="#{$accent}"]
-        {
-            color: var(--color-surface-#{$accent}-icon);
-        }
-    }
-
-    &::after
-    {
-        content: "";
-        position: absolute;
-        left: ($offset * -1);
-        top: ($offset * -1);
-        width: $size;
-        height: $size;
-        mask-size: $size;
-        mask-repeat: no-repeat;
-        background: currentColor;
-
-        /* stylelint-disable indentation */
-        mask-image: url(
-            "data:image/svg+xml;utf8," +
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
-                "<path d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/>" +
-                "<path d='M0 0h24v24H0z' fill='none'/>" +
-            "</svg>"
-        );
-        /* stylelint-enable */
-    }
-
-    &:checked::after
-    {
-        /* stylelint-disable indentation */
-        mask-image: url(
-            "data:image/svg+xml;utf8," +
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
-                "<path d='M0 0h24v24H0z' fill='none'/>" +
-                "<path d='M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/>" +
-            "</svg>"
-        );
-        /* stylelint-enable */
-    }
-
-    &:indeterminate::after
-    {
-        /* stylelint-disable indentation */
-        mask-image: url(
-            "data:image/svg+xml;utf8," +
-            "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 24 24' width='24' height='24'>" +
-                "<path d='M0 0h24v24H0z' fill='none'/>" +
-                "<path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z'/>" +
-            "</svg>"
-        );
-        /* stylelint-enable */
-    }
-
-    label > &
-    {
-        // Ensure proper spacing between the label and the control.
-        margin-right: var(--size-inline-spacing);
-    }
-}
-
-// input (radio)
-// Radio button supporting the checked and unchecked state.
-// ----------------------------------------------------------------------------------------------------
-
-input[type="radio"]
-{
-    $size: 1.5em;
-    $offset: ($size - 1em) / 2;
-
-    // Remove the default browser styling.
-    appearance: none;
-    position: relative;
-    margin: 0 $offset 0 0;
-    border: none;
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    line-height: inherit;
-    font-size: inherit;
-    background: none;
-    cursor: pointer;
-
-    // Animate color changes.
-    transition: color var(--animation-duration-short);
-
-    &:not([accent])
-    {
-        color: var(--color-surface-neutral-icon);
-    }
-
-    // Add accent color support.
-    @each $accent in $accents
-    {
-        &[accent="#{$accent}"]
-        {
-            color: var(--color-surface-#{$accent}-icon);
-        }
-    }
-
-    &::after
-    {
-        content: "";
-        position: absolute;
-        left: ($offset * -1);
-        top: ($offset * -1);
-        width: $size;
-        height: $size;
-        mask-size: $size;
-        mask-repeat: no-repeat;
-        background: currentColor;
-
-        /* stylelint-disable indentation */
-        mask-image: url(
-            "data:image/svg+xml;utf8," +
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
-                "<path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/>" +
-                "<path d='M0 0h24v24H0z' fill='none'/>" +
-            "</svg>"
-        );
-        /* stylelint-enable */
-    }
-
-    &:checked::after
-    {
-        /* stylelint-disable indentation */
-        mask-image: url(
-            "data:image/svg+xml;utf8," +
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
-                "<path d='M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/>" +
-                "<path d='M0 0h24v24H0z' fill='none'/>" +
-            "</svg>"
-        );
-        /* stylelint-enable */
-    }
-
-    label > &
-    {
-        // Ensure proper spacing between the label and the control.
-        margin-right: var(--size-inline-spacing);
-    }
-}
-
 .use-form-styles
 {
+    // input (checkbox)
+    // Checkbox supporting the checked, unchecked and indeterminate state.
+    // ----------------------------------------------------------------------------------------------------
+
+    input[type="checkbox"]
+    {
+        $size: 1.5em;
+        $offset: ($size - 1em) / 2;
+
+        // Remove the default browser styling.
+        appearance: none;
+        position: relative;
+        margin: 0 $offset 0 0;
+        border: none;
+        padding: 0;
+        width: 1em;
+        height: 1em;
+        line-height: inherit;
+        font-size: inherit;
+        background: none;
+        cursor: pointer;
+
+        // Animate color changes.
+        transition: color var(--animation-duration-short);
+
+        &:not([accent])
+        {
+            color: var(--color-surface-neutral-icon);
+        }
+
+        // Add accent color support.
+        @each $accent in $accents
+        {
+            &[accent="#{$accent}"]
+            {
+                color: var(--color-surface-#{$accent}-icon);
+            }
+        }
+
+        &::after
+        {
+            content: "";
+            position: absolute;
+            left: ($offset * -1);
+            top: ($offset * -1);
+            width: $size;
+            height: $size;
+            mask-size: $size;
+            mask-repeat: no-repeat;
+            background: currentColor;
+
+            /* stylelint-disable indentation */
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                    "<path d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/>" +
+                    "<path d='M0 0h24v24H0z' fill='none'/>" +
+                "</svg>"
+            );
+            /* stylelint-enable */
+        }
+
+        &:checked::after
+        {
+            /* stylelint-disable indentation */
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                    "<path d='M0 0h24v24H0z' fill='none'/>" +
+                    "<path d='M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/>" +
+                "</svg>"
+            );
+            /* stylelint-enable */
+        }
+
+        &:indeterminate::after
+        {
+            /* stylelint-disable indentation */
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 24 24' width='24' height='24'>" +
+                    "<path d='M0 0h24v24H0z' fill='none'/>" +
+                    "<path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z'/>" +
+                "</svg>"
+            );
+            /* stylelint-enable */
+        }
+
+        label > &
+        {
+            // Ensure proper spacing between the label and the control.
+            margin-right: var(--size-inline-spacing);
+        }
+    }
+
+    // input (radio)
+    // Radio button supporting the checked and unchecked state.
+    // ----------------------------------------------------------------------------------------------------
+
+    input[type="radio"]
+    {
+        $size: 1.5em;
+        $offset: ($size - 1em) / 2;
+
+        // Remove the default browser styling.
+        appearance: none;
+        position: relative;
+        margin: 0 $offset 0 0;
+        border: none;
+        padding: 0;
+        width: 1em;
+        height: 1em;
+        line-height: inherit;
+        font-size: inherit;
+        background: none;
+        cursor: pointer;
+
+        // Animate color changes.
+        transition: color var(--animation-duration-short);
+
+        &:not([accent])
+        {
+            color: var(--color-surface-neutral-icon);
+        }
+
+        // Add accent color support.
+        @each $accent in $accents
+        {
+            &[accent="#{$accent}"]
+            {
+                color: var(--color-surface-#{$accent}-icon);
+            }
+        }
+
+        &::after
+        {
+            content: "";
+            position: absolute;
+            left: ($offset * -1);
+            top: ($offset * -1);
+            width: $size;
+            height: $size;
+            mask-size: $size;
+            mask-repeat: no-repeat;
+            background: currentColor;
+
+            /* stylelint-disable indentation */
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                    "<path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/>" +
+                    "<path d='M0 0h24v24H0z' fill='none'/>" +
+                "</svg>"
+            );
+            /* stylelint-enable */
+        }
+
+        &:checked::after
+        {
+            /* stylelint-disable indentation */
+            mask-image: url(
+                "data:image/svg+xml;utf8," +
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                    "<path d='M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/>" +
+                    "<path d='M0 0h24v24H0z' fill='none'/>" +
+                "</svg>"
+            );
+            /* stylelint-enable */
+        }
+
+        label > &
+        {
+            // Ensure proper spacing between the label and the control.
+            margin-right: var(--size-inline-spacing);
+        }
+    }
+
     // label
     // Label which should be used to wrap any inputs that need a description.
     // ----------------------------------------------------------------------------------------------------
