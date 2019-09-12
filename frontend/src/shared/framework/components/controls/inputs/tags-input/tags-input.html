@@ -40,12 +40,12 @@
         </div>
 
         <div slot="before">
+
             <slot name="before"></slot>
-            <slot name="value">
-                <tag repeat.for="tag of value">
-                    ${tag}
-                </tag>
-            </slot>
+
+            <!-- NOTE: Whitespace matters here. -->
+            <slot name="value"><div slot="value"><tag repeat.for="tag of value">${tag}</tag></div>
+
         </div>
 
         <div slot="after">
