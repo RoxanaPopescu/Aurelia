@@ -433,17 +433,8 @@ export class MergeColumnCustomElement
             await this.updateEstimates(signal);
 
             // HACK: Force a full update of the map.
-
-            const newDriverStops = this.workspace.newDriverStops;
-            const remainingExpressStops = this.workspace.remainingExpressStops;
-            this.workspace.newDriverStops = [];
-            this.workspace.remainingExpressStops = [];
-
-            setTimeout(() =>
-            {
-                this.workspace.newDriverStops = newDriverStops;
-                this.workspace.remainingExpressStops = remainingExpressStops;
-            });
+            this.workspace.newDriverStops = [...this.workspace.newDriverStops!];
+            this.workspace.remainingExpressStops = [...this.workspace.remainingExpressStops!];
         });
 
         // Sort the express stops.
@@ -458,37 +449,29 @@ export class MergeColumnCustomElement
             return 0;
         });
 
-        // HACK: Force a full update of the map.
+        let i = 0;
 
-        this.workspace.newDriverStops = [];
-        this.workspace.remainingExpressStops = [];
-
-        setTimeout(() =>
+        this.workspace.newDriverStops = this.driverStops.map(stop =>
         {
-            let i = 0;
+            stop.stop.newStopNumber = ++i;
 
-            this.workspace.newDriverStops = this.driverStops.map(stop =>
-            {
-                stop.stop.newStopNumber = ++i;
-
-                return stop.stop;
-            });
-
-            const expressStopMap = new Map<string, ExpressRouteStop[]>();
-
-            const sortedExpressStops = this.expressStops.slice().sort((a, b) => a.stop.stopNumber - b.stop.stopNumber);
-
-            for (const stop of sortedExpressStops)
-            {
-                stop.stop.newStopNumber = undefined;
-
-                const stops = expressStopMap.get(stop.route.slug) || [];
-                stops.push(stop.stop);
-                expressStopMap.set(stop.route.slug, stops);
-            }
-
-            this.workspace.remainingExpressStops = Array.from(expressStopMap.values());
+            return stop.stop;
         });
+
+        const expressStopMap = new Map<string, ExpressRouteStop[]>();
+
+        const sortedExpressStops = this.expressStops.slice().sort((a, b) => a.stop.stopNumber - b.stop.stopNumber);
+
+        for (const stop of sortedExpressStops)
+        {
+            stop.stop.newStopNumber = undefined;
+
+            const stops = expressStopMap.get(stop.route.slug) || [];
+            stops.push(stop.stop);
+            expressStopMap.set(stop.route.slug, stops);
+        }
+
+        this.workspace.remainingExpressStops = Array.from(expressStopMap.values());
     }
 
     private async updateEstimates(signal: AbortSignal): Promise<void>
