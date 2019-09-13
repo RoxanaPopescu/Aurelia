@@ -73,7 +73,11 @@
 
         </div>
 
-        <dropdown if.bind="open" close.call="closeDropdown(escape, !escape)" scroll>
+        <dropdown
+            if.bind="open"
+            close.call="closeDropdown(escape, !escape)"
+            fixed.bind="fixed"
+            scroll>
 
             <date-picker
                 value.bind="value"

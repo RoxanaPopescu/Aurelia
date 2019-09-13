@@ -252,6 +252,14 @@ export class TimeInputCustomElement
     public autoselect: boolean;
 
     /**
+     * True to used `fixed` positioning for the dropdown, otherwise false.
+     * This may be needed if the dropdown is placed within a container that
+     * hides overflowing content, but note that it has a performance cost.
+     */
+    @bindable({ defaultValue: false })
+    public fixed: boolean;
+
+    /**
      * Called by the framework when the component is binding.
      */
     public bind(): void

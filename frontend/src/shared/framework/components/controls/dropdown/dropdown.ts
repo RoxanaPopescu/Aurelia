@@ -159,6 +159,18 @@ export class DropdownCustomElement
         {
             this._popper!.update();
         }
+
+        // If using fixed positioning, set min-width to match the owner.
+
+        if (this.fixed)
+        {
+            const ownerStyle = getComputedStyle(this.owner);
+            this._element.style.minWidth = ownerStyle.width;
+        }
+        else
+        {
+            this._element.style.minWidth = null;
+        }
     }
 
     /**

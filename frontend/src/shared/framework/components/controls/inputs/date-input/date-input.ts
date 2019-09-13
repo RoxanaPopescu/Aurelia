@@ -205,6 +205,14 @@ export class DateInputCustomElement
     public autoselect: boolean;
 
     /**
+     * True to used `fixed` positioning for the dropdown, otherwise false.
+     * This may be needed if the dropdown is placed within a container that
+     * hides overflowing content, but note that it has a performance cost.
+     */
+    @bindable({ defaultValue: false })
+    public fixed: boolean;
+
+    /**
      * Opens the dropdown and optionally focuses the input element.
      * @param focusInput True to focus the input element, otherwise false.
      */
