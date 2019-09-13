@@ -16,7 +16,7 @@ body
     --tag-border-radius: var(--border-radius-small);
 
     /// The padding of the component.
-    --tag-padding: 0.5rem 2rem;
+    --tag-padding: 1rem 2rem;
 
     /// The default width of the component.
     --tag-width: 40rem;
@@ -36,11 +36,11 @@ tag
 
     // Apply margin between tags.
 
-    margin-top: 1.5rem;
+    margin-top: 0.75rem;
 
     &:not(:last-child)
     {
-        margin-right: 1.5rem;
+        margin-right: 1rem;
     }
 
     // Apply padding.

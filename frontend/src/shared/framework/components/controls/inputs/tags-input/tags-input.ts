@@ -291,13 +291,23 @@ export class TagsInputCustomElement
     }
 
     /**
+     * Called when the value is clicked.
+     * Prevents the click from focusing the input and opening the dropdown.
+     * @returns False to prevent default.
+     */
+    protected onValueMouseDown(): boolean
+    {
+        return false;
+    }
+
+    /**
      * Called when the input, or an element within the input, receives focus.
      * Opens the dropdown if the focused element is not the toggle icon.
      * @param event The mouse event.
      */
     protected onInputFocusIn(event: FocusEvent): void
     {
-        if (event.target !== this.toggleElement && event.target !== this.toggleElement && !this.open)
+        if (!event.defaultPrevented && event.target !== this.toggleElement && !this.open)
         {
             this.openDropdown(false);
         }

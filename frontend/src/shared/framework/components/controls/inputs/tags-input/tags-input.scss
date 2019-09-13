@@ -25,17 +25,19 @@ tags-input
         cursor: pointer;
     }
 
-    > text-input.--readonly > .input-control > .input-control-inner
-    {
-        height: 0;
-        padding: var(--input-padding);
-        padding-top: 0;
-        visibility: hidden;
-    }
-
     .input-control
     {
         flex-wrap: wrap;
+        padding-right: 1.5rem;
+    }
+
+    > text-input.--readonly > .input-control > .input-control-inner
+    {
+        height: 0;
+        margin-right: -1.5rem;
+        padding: var(--input-padding);
+        padding-top: 0;
+        visibility: hidden;
     }
 
     [slot="before"],
@@ -50,7 +52,7 @@ tags-input
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        padding-left: 1.5rem;
+        padding-left: 0.75rem;
     }
 
     > text-input > .input-control > .input-control-inner
@@ -66,5 +68,30 @@ tags-input
         position: absolute;
         right: 0;
         bottom: 0;
+    }
+
+    .tags-input-value
+    {
+        width: 100%;
+    }
+
+    &.--stretch
+    {
+        [slot="before"],
+        [slot="value"]:not(:empty)
+        {
+            width: 100%;
+        }
+
+        tag
+        {
+            margin-right: 0;
+            width: 100%;
+
+            icon
+            {
+                margin-left: auto;
+            }
+        }
     }
 }
