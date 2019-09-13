@@ -31,13 +31,31 @@ tags-input
         padding-right: 1.5rem;
     }
 
-    > text-input.--readonly > .input-control > .input-control-inner
+    &.--readonly > text-input > .input-control > .input-control-inner
     {
-        height: 0;
-        margin-right: -1.5rem;
-        padding: var(--input-padding);
-        padding-top: 0;
-        visibility: hidden;
+        width: 0 !important;
+        min-width: 0 !important;
+
+        input
+        {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            width: 0 !important;
+            min-width: 0 !important;
+        }
+
+        .input-placeholder
+        {
+            display: none !important;
+        }
+    }
+
+    &.--readonly > text-input > .input-control
+    {
+        dropdown-icon
+        {
+            display: none !important;
+        }
     }
 
     [slot="before"],

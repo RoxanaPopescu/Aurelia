@@ -1,5 +1,7 @@
-<template
-    class="${open ? '--open' : ''} ${filter != 'none' ? '--filter' : ''}"
+<template class="
+    ${open ? '--open' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${filter != 'none' ? '--filter' : ''}"
     inert.bind="disabled || readonly"
     validation
     forward-focus>
