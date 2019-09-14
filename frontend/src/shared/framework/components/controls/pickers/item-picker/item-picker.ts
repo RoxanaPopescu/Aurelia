@@ -188,6 +188,19 @@ export class ItemPickerCustomElement
     }
 
     /**
+     * Scrolls the item representing the focused value into view.
+     */
+    public scrollToFocusedValue(): void
+    {
+        const item = this._items.find(i => i.model === this.focusedValue);
+
+        if (item != null)
+        {
+            item.scrollIntoView();
+        }
+    }
+
+    /**
      * Called by the framework when the `keyboard` property changes.
      * Adds or removes keyboard event listeners.
      */

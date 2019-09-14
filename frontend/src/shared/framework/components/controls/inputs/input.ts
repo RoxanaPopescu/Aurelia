@@ -13,7 +13,12 @@ export type AutocompleteHint =
     "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" |
     "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" |
     "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" |
-    "tel-local" | "tel-extension" | "impp" | "url" | "photo";
+    "tel-local" | "tel-extension" | "impp" | "url" | "photo" |
+
+    // Custom value that forces autofill off.
+    // This is needed because some browsers ignore `off`.
+    // See: https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
+    "autofill-off";
 
 /**
  * Represents the type of autocorrection to use for an input.

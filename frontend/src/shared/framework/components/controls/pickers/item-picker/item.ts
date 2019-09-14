@@ -18,6 +18,7 @@ export class ItemCustomElement
 
     private readonly _element: HTMLElement;
     private _itemPicker: ItemPickerCustomElement | undefined;
+    private _itemPickerElement: HTMLElement;
 
     /**
      * True if this item represents the focused value of the item picker, otherwise false.
@@ -65,16 +66,16 @@ export class ItemCustomElement
     public attached(): void
     {
         // Find the closest item picker.
-        const itemPickerElement = this._element.closest("item-picker");
+        this._itemPickerElement = this._element.closest("item-picker") as HTMLElement;
 
         // Ensure the item picker element was found.
-        if (itemPickerElement == null)
+        if (this._itemPickerElement == null)
         {
             throw new Error("An 'item' must be placed within an 'item-picker'.");
         }
 
         // Get the view model for the item picker
-        this._itemPicker = (itemPickerElement as any).au.controller.viewModel;
+        this._itemPicker = (this._itemPickerElement as any).au.controller.viewModel;
 
         // If the item is not disabled, attach the item to the item picker.
         this._itemPicker!.attachItem(this);
@@ -82,7 +83,7 @@ export class ItemCustomElement
         // If the item is focused, ensure it is scrolled into view.
         if (this.model === this._itemPicker!.value)
         {
-            this._element.scrollIntoView({ block: "nearest" });
+            this.scrollIntoView();
         }
     }
 
@@ -102,7 +103,7 @@ export class ItemCustomElement
     public focus(): void
     {
         this._itemPicker!.changeValue(this.model);
-        this._element.scrollIntoView({ block: "nearest" });
+        this.scrollIntoView();
     }
 
     /**
@@ -136,8 +137,26 @@ export class ItemCustomElement
     }
 
     /**
+     * Scrolls the item into view.
+     */
+    public scrollIntoView(): void
+    {
+        const top = this._element.offsetTop - this._element.parentElement!.offsetTop;
+
+        if (top < this._itemPickerElement.scrollTop)
+        {
+            this._itemPickerElement.scrollTo({ top });
+        }
+        else if (top + this._element.offsetHeight > this._itemPickerElement.scrollTop + this._itemPickerElement.offsetHeight)
+        {
+            this._itemPickerElement.scrollTo({ top: top - this._itemPickerElement.offsetHeight + this._element.offsetHeight });
+        }
+    }
+
+    /**
      * Called when the item is clicked.
-     * Selects this item and sets its model as the value of the item picker.
+     * Selects this item, setting its model as the value of the item picker,
+     * and scrolling it into view if needed.
      * @returns False to prevent default.
      */
     protected onClick(): boolean
@@ -146,6 +165,8 @@ export class ItemCustomElement
         {
             this._itemPicker!.changeValue(this.model, true);
         }
+
+        this.scrollIntoView();
 
         return false;
     }

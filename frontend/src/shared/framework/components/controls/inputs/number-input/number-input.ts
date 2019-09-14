@@ -69,7 +69,7 @@ export class NumberInputCustomElement
     /**
      * The autocomplete mode to use, or undefined to use the default behavior.
      */
-    @bindable({ defaultValue: "off" })
+    @bindable({ defaultValue: "autofill-off" })
     public autocomplete: AutocompleteHint;
 
     /**

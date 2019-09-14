@@ -56,7 +56,7 @@ export class SearchInputCustomElement
     /**
      * The autocomplete mode to use.
      */
-    @bindable({ defaultValue: "off" })
+    @bindable({ defaultValue: "autofill-off" })
     public autocomplete: AutocompleteHint;
 
     /**

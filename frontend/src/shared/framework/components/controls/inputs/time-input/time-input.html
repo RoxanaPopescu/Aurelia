@@ -77,10 +77,10 @@
             show.bind="open"
             close.call="closeDropdown(escape, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
-            fixed.bind="fixed"
-            scroll>
+            fixed.bind="fixed">
 
             <item-picker
+                view-model.ref="itemPicker"
                 value.bind="value"
                 focused-value.bind="focusedValue"
                 filter-value.bind="filterValue"
@@ -88,7 +88,8 @@
                 keyboard.bind="open"
                 none.bind="none"
                 pick.call="closeDropdown(true, true)"
-                tabindex="-1">
+                tabindex="-1"
+                scroll>
 
                 <item
                     repeat.for="item of items"

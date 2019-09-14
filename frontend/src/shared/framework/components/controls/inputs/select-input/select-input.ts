@@ -1,6 +1,7 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
+import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 
 /**
  * Custom element representing an input for picking a single item from a list.
@@ -28,6 +29,11 @@ export class SelectInputCustomElement
      * The element representing the toggle icon.
      */
     protected toggleElement: HTMLElement;
+
+    /**
+     * The view model for the item picker.
+     */
+    protected itemPicker: ItemPickerCustomElement;
 
     /**
      * Gets the input value.
@@ -139,7 +145,7 @@ export class SelectInputCustomElement
      * The autocomplete mode to use,
      * or undefined to use the default behavior.
      */
-    @bindable({ defaultValue: "off" })
+    @bindable({ defaultValue: "autofill-off" })
     public autocomplete: AutocompleteHint;
 
     /**
@@ -164,6 +170,8 @@ export class SelectInputCustomElement
     {
         this.open = true;
         this.focusedValue = this.value;
+
+        setTimeout(() => this.itemPicker.scrollToFocusedValue());
 
         if (focusInput)
         {

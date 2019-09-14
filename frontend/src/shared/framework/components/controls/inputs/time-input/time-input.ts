@@ -3,6 +3,7 @@ import { Duration } from "luxon";
 import { TimeValueConverter } from "shared/localization";
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
+import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 
 // The items to choose from in the dropdown.
 const timeItems: Duration[] = [];
@@ -94,6 +95,11 @@ export class TimeInputCustomElement
      * The value entered by the user, or undefined.
      */
     protected enteredValue: string | undefined;
+
+    /**
+     * The view model for the item picker.
+     */
+    protected itemPicker: ItemPickerCustomElement;
 
     /**
      * Gets the input value.
@@ -242,7 +248,7 @@ export class TimeInputCustomElement
      * The autocomplete mode to use,
      * or undefined to use the default behavior.
      */
-    @bindable({ defaultValue: "off" })
+    @bindable({ defaultValue: "autofill-off" })
     public autocomplete: AutocompleteHint;
 
     /**
@@ -285,6 +291,8 @@ export class TimeInputCustomElement
     {
         this.open = true;
         this.focusedValue = this.value;
+
+        setTimeout(() => this.itemPicker.scrollToFocusedValue());
 
         if (focusInput)
         {

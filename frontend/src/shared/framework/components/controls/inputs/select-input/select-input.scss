@@ -10,6 +10,16 @@ select-input
             padding-right: 0;
         }
 
+        dropdown
+        {
+            display: flex;
+        }
+
+        item-picker
+        {
+            flex-grow: 1;
+        }
+
         dropdown-icon
         {
             // Apply input padding.
