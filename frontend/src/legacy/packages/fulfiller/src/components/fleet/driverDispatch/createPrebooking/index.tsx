@@ -87,7 +87,7 @@ export default class CreatePrebookingComponent extends React.Component<
       date: forecast.date,
       search: query ? query : "",
       driverIds: [],
-      period: forecast.timePeriod
+      period: forecast.timeFrame
     });
   }
 
@@ -123,7 +123,7 @@ export default class CreatePrebookingComponent extends React.Component<
             src={require("../assets/icons/company.svg")}
           />
           <h4>{`${forecast ? forecast.fulfillee.name : "--"}, ${
-            forecast ? forecast.startingLocation.address.primary : "--"
+            forecast ? forecast.startLocation.address.primary : "--"
           }`}</h4>
         </div>
         <div className="c-createPrebooking-infoContainer">
@@ -140,7 +140,7 @@ export default class CreatePrebookingComponent extends React.Component<
           />
           <h4>
             {forecast
-              ? Localization.formatDateRange(forecast.timePeriod)
+              ? Localization.formatDateRange(forecast.timeFrame)
               : "--"}
           </h4>
         </div>

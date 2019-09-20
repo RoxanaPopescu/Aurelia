@@ -14,10 +14,10 @@ export class Forecast {
     this.ownerOutfitId = data.ownerOutfitId;
     this.fulfillee = data.fulfillee;
     this.date = DateTime.fromISO(data.date);
-    this.timePeriod = new DateTimeRange(data.timePeriod, {
+    this.timeFrame = new DateTimeRange(data.timeFrame, {
       setZone: true
     });
-    this.startingLocation = new Location(data.startingAddress);
+    this.startLocation = new Location(data.startLocation);
     this.vehicleType = VehicleType.get(data.vehicleTypeId);
     this.slots = {
       total: data.slots.total,
@@ -53,12 +53,12 @@ export class Forecast {
   /**
    * The time frame related to this forecast
    */
-  public readonly timePeriod: DateTimeRange;
+  public readonly timeFrame: DateTimeRange;
 
   /**
    * The address for this forecast's starting position
    */
-  public readonly startingLocation: Location;
+  public readonly startLocation: Location;
 
   /**
    * The vehicle type related to this forecast

@@ -318,8 +318,8 @@ export class DriverDispatchService {
             id: uf.forecast.id,
             fulfilleeId: uf.forecast.ownerOutfitId,
             date: uf.forecast.date,
-            timePeriod: uf.forecast.timePeriod,
-            startingAddress: uf.forecast.startingLocation,
+            timeFrame: uf.forecast.timeFrame,
+            startLocation: uf.forecast.startLocation,
             vehicleTypeId: uf.forecast.vehicleType.id,
             slots: uf.newTotalSlots
           };
@@ -364,8 +364,8 @@ export class DriverDispatchService {
       BaseService.defaultConfig({
         fulfilleeId: forecast.fulfillee.id,
         date: forecast.date,
-        timePeriod: forecast.timeFrame,
-        startingAddress: forecast.startLocation,
+        timeFrame: forecast.timeFrame,
+        startLocation: forecast.startLocation,
         vehicleTypeId: forecast.vehicleTypeId,
         slots: forecast.slots
       })
@@ -475,8 +475,8 @@ export class DriverDispatchService {
           id: forecast.id,
           fulfilleeId: forecast.ownerOutfitId,
           date: forecast.date,
-          timePeriod: forecast.timePeriod,
-          startingAddress: forecast.startingLocation,
+          timeFrame: forecast.timeFrame,
+          startLocation: forecast.startLocation,
           vehicleTypeId: forecast.vehicleType.id,
           slots: forecast.slots.total
         },

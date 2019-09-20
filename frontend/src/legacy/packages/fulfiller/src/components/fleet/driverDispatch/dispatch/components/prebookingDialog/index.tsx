@@ -129,7 +129,7 @@ export default class extends React.Component<Props, State> {
             className="c-driverDispatch-prebookingDialog-icon"
             src={require("../../../assets/icons/watch.svg")}
           />
-          {`${Localization.formatTimeRange(prebooking.forecast.timePeriod)}`}
+          {`${Localization.formatTimeRange(prebooking.forecast.timeFrame)}`}
         </h4>
         <h4 className="font-larger">
           <img
@@ -147,8 +147,8 @@ export default class extends React.Component<Props, State> {
       <div className="c-driverDispatch-prebookingDialog-information">
         <div className="c-driverDispatch-prebookingDialog-infobox">
           <h4 className="font-heading">{Localization.operationsValue("Dispatch_StartingAddress")}</h4>
-          <h4>{`${prebooking.forecast.startingLocation.address.primary}, ${
-            prebooking.forecast.startingLocation.address.secondary
+          <h4>{`${prebooking.forecast.startLocation.address.primary}, ${
+            prebooking.forecast.startLocation.address.secondary
           }`}</h4>
         </div>
         <div className="c-driverDispatch-prebookingDialog-infobox">
@@ -232,8 +232,8 @@ export default class extends React.Component<Props, State> {
         />,
         p.forecast.fulfillee.name,
         Localization.formatDate(p.forecast.date),
-        Localization.formatTimeRange(p.forecast.timePeriod),
-        p.forecast.startingLocation.address.primary,
+        Localization.formatTimeRange(p.forecast.timeFrame),
+        p.forecast.startLocation.address.primary,
         `${p.driver.formattedName} (${p.driver.phone.number})`,
         p.forecast.vehicleType.name
       ];

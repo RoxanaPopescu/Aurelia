@@ -317,8 +317,8 @@ export default class extends React.Component<Props, State> {
               checkedValue={this.state.selectedAssignee instanceof Prebooking && this.state.selectedAssignee.id}
             />,
             p.forecast.fulfillee.name,
-            Localization.formatDateTimeRange(p.forecast.timePeriod),
-            p.forecast.startingLocation.address.formattedString(),
+            Localization.formatDateTimeRange(p.forecast.timeFrame),
+            p.forecast.startLocation.address.formattedString(),
             this.assigneeName(p),
             this.assigneePhone(p)
           ];

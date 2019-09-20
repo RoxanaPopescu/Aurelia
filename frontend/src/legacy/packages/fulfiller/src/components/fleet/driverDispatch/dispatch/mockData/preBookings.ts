@@ -5,7 +5,7 @@ export default [
     fulfilleeName: "Coop Mad",
     fulfilleeId: "892359",
     date: "2019-06-01T14:00:00",
-    timePeriod: {
+    timeFrame: {
       from: "2019-06-19T06:00:00",
       to: "2019-06-19T09:00:00"
     },
@@ -25,7 +25,7 @@ export default [
     fulfilleeName: "Coop Mad",
     fulfilleeId: "892359",
     date: "2019-06-01T14:00:00",
-    timePeriod: {
+    timeFrame: {
       from: "2019-06-19T13:00:00",
       to: "2019-06-19T20:00:00"
     },
@@ -45,7 +45,7 @@ export default [
     fulfilleeName: "Coop Logistik",
     fulfilleeId: "892360",
     date: "2019-06-01T14:00:00",
-    timePeriod: {
+    timeFrame: {
       from: "2019-06-19T06:00:00",
       to: "2019-06-19T09:00:00"
     },
