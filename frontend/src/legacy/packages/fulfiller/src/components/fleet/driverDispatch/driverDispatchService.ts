@@ -352,8 +352,8 @@ export class DriverDispatchService {
   public async createForecast(forecast: {
     fulfillee: Outfit;
     date: DateTime;
-    timePeriod: DateTimeRange;
-    startingAddress: Location;
+    timeFrame: DateTimeRange;
+    startLocation: Location;
     vehicleTypeId: string;
     slots: number;
   }): Promise<void> {
@@ -364,8 +364,8 @@ export class DriverDispatchService {
       BaseService.defaultConfig({
         fulfilleeId: forecast.fulfillee.id,
         date: forecast.date,
-        timePeriod: forecast.timePeriod,
-        startingAddress: forecast.startingAddress,
+        timePeriod: forecast.timeFrame,
+        startingAddress: forecast.startLocation,
         vehicleTypeId: forecast.vehicleTypeId,
         slots: forecast.slots
       })
@@ -385,7 +385,7 @@ export class DriverDispatchService {
     this.toast = {
       message: Localization.operationsValue("Dispatch_Forecasts_CreateSuccess")
                 .replace("{customer}", forecast.fulfillee.companyName!)
-                .replace("{date}", Localization.formatDateTimeRange(forecast.timePeriod)),
+                .replace("{date}", Localization.formatDateTimeRange(forecast.timeFrame)),
       type: "ok"
     };
   }

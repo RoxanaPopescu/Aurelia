@@ -86,11 +86,11 @@ export default class ForecastsComponent extends React.Component<Props, State> {
               driverDispatchService.createForecast({
                 fulfillee: forecast.fulfillee,
                 date: forecast.dateFrom,
-                timePeriod: new DateTimeRange({
+                timeFrame: new DateTimeRange({
                   from: forecast.dateTimeFrom,
                   to: forecast.dateTimeTo
                 }),
-                startingAddress: forecast.startingLocation,
+                startLocation: forecast.startLocation,
                 vehicleTypeId: forecast.vehicleType.toString(),
                 slots: forecast.totalSlots
               });
