@@ -1,0 +1,7 @@
+<template show.bind="visible" class="${selected ? '--selected' : ''}">
+
+    <check-toggle label="after" value.bind="selected">
+        <slot slot="heading"></slot>
+    </check-toggle>
+
+</template>

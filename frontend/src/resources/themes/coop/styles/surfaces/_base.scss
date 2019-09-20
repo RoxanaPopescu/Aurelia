@@ -32,4 +32,9 @@ $__summary: comment;
      * The width of the border of the input.
      */
     --input-border-width: var(--border-width-thin);
+
+    /**
+     * The color of toggles when not selected.
+     */
+    --toggle-surface-icon-color: var(--palette-color-neutral);
 }

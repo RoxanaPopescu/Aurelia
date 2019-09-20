@@ -27,7 +27,7 @@ export class ItemPickerCustomElement
     protected itemsElement: HTMLElement;
 
     /**
-     * True if the picker contains no items, otherwise false.
+     * True if the picker contains no visible items, otherwise false.
      */
     protected empty = true;
 
@@ -147,7 +147,7 @@ export class ItemPickerCustomElement
         if (index > -1)
         {
             // Remove the item from the list of items.
-            this._items.splice(this._items.indexOf(item), 1);
+            this._items.splice(index, 1);
 
             // Update the `empty` state.
             this.empty = !this._items.some(i => i.visible);

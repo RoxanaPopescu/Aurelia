@@ -1,0 +1,35 @@
+<template class="${filterValue ? '--filtering' : ''} ${showAll ? '--show-all' : ''}">
+
+    <require from="./check-filter.scss"></require>
+
+    <search-input value.bind="filterValue" autoselect.bind="true" class="margin-bottom" ref="inputElement">
+        <slot name="placeholder" slot="placeholder"></slot>
+    </search-input>
+
+    <div class="check-filter-items" ref="itemsElement">
+        <slot></slot>
+    </div>
+
+    <div class="link-row margin-top">
+
+        <a if.bind="showAllVisible" click.trigger="showAll = !showAll">
+            <span if.bind="!showAll" translate>Show all</span>
+            <span if.bind="showAll" translate>Show less</span>
+        </a>
+
+        <a if.bind="value.length > 0 && !filterValue" click.trigger="resetClick()" translate>
+            Reset
+        </a>
+
+    </div>
+
+
+    <div if.bind="empty" class="check-filter-empty">
+
+        <template replaceable part="empty" translate>
+            No items
+        </template>
+
+    </div>
+
+</template>

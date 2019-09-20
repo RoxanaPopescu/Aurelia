@@ -1,0 +1,87 @@
+<check-filter get-items.call="getItems(query, signal)" value.bind="selectedItems">
+
+    <span slot="placeholder" translate>
+        Name or reference
+    </span>
+
+</check-filter>
+
+
+
+<check-filter items.bind="filteredItems" filter-value.bind="filterValue" value.bind="selectedItems">
+
+    <span slot="placeholder" translate>
+        Name or reference
+    </span>
+
+</check-filter>
+
+
+
+<check-filter value.bind="selectedItems">
+
+    <span slot="placeholder" translate>
+        Name or reference
+    </span>
+
+    <check-filter-item repeat.for="item of filteredItems" model.bind="item">
+        ${item.name}
+    </check-filter-item>
+
+</check-filter>
+
+
+
+
+<template>
+
+    <text-input value.bind="filterValue">
+        <slot name="placeholder" slot="placeholder"></slot>
+    </text-input>
+
+    <slot></slot>
+
+</template>
+
+
+<template>
+
+    <check-toggle model.bind="model">
+        <slot name="heading" slot="heading"></slot>
+    </check-toggle>
+
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template>
+
+    <text-input value.bind="filterValue">
+        <slot name="placeholder" slot="placeholder"></slot>
+    </text-input>
+
+    <check-toggle repeat.for="item of items">
+
+        <div slot="heading" translate>
+            ${item}
+        </div>
+
+    </check-toggle>
+
+</template>

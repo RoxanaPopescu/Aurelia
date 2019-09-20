@@ -159,13 +159,41 @@ react-module
     --card-padding-large: 12.5rem 13rem;
 }
 
-.button-row
+page-sidebar
+{
+    page-section:not(.--header-slot-empty) .page-section-header
+    {
+        margin: 0 -9rem 0 -9rem;
+        padding: 2rem 5rem 2rem 9rem;
+        width: auto;
+        font-size: inherit;
+        background: var(--palette-color-neutral-light) !important;
+        color: var(--palette-color-neutral-dark);
+    }
+
+    .page-section-toggle
+    {
+        display: flex;
+    }
+}
+
+.control-row
 {
     display: flex;
 
-    > button:not(:last-child)
+    > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing)
+    }
+}
+
+.link-row
+{
+    display: flex;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large)
     }
 }
 
