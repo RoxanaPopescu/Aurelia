@@ -473,7 +473,7 @@ export class DriverDispatchService {
       BaseService.defaultConfig({
         forecast: {
           id: forecast.id,
-          fulfilleeId: forecast.ownerOutfitId,
+          fulfilleeId: forecast.fulfillee.id,
           date: forecast.date,
           timeFrame: forecast.timeFrame,
           startLocation: forecast.startLocation,
