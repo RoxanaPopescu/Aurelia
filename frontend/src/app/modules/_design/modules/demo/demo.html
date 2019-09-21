@@ -43,33 +43,65 @@
 
         <div surface.bind="surface & attr" class="font-${fontSize}">
 
-            <design-item heading="radio-toggle">
+            <h1 class="font-largest margin">
+                Custom controls
+            </h1>
 
-                <design-row heading="radio-toggle">
+            <design-item heading="toggle-group">
+
+                <design-row heading="toggle-group">
 
                     <design-column heading="enabled">
 
-                        <toggle-group value.bind="toggleValue">
+                        <toggle-group class="flex-column" value.bind="toggleGroupValue">
 
                             <radio-toggle
                                 label.bind="labelPosition & attr"
-                                model="toggle-1">
+                                model="toggle-1"
+                                value.one-time="false"
+                                class="margin-bottom">
 
                                 <div slot="heading" translate>
-                                    Heading 1
+                                    Toggle 1
                                 </div>
 
                             </radio-toggle>
 
                             <radio-toggle
                                 label.bind="labelPosition & attr"
-                                model="toggle-2">
+                                model="toggle-2"
+                                value.one-time="false"
+                                class="margin-bottom">
 
                                 <div slot="heading" translate>
-                                    Heading 2
+                                    Toggle 2
                                 </div>
 
                             </radio-toggle>
+
+                            <check-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-3"
+                                value.one-time="false"
+                                class="margin-bottom">
+
+                                <div slot="heading" translate>
+                                    Toggle 3
+                                </div>
+
+                            </check-toggle>
+
+                            <check-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-4"
+                                value.one-time="false"
+                                class="margin-bottom">
+
+                                <div slot="heading" translate>
+                                    Toggle 4
+                                </div>
+
+                            </check-toggle>
 
                         </toggle-group>
 
@@ -77,44 +109,107 @@
 
                     <design-column heading="disabled">
 
-                        <toggle-group value.bind="toggleValue">
+                        <toggle-group class="flex-column" value.bind="toggleGroupValue" disabled.bind="true">
 
                             <radio-toggle
-                                disabled.bind="true"
                                 label.bind="labelPosition & attr"
-                                model="toggle-1">
+                                model="toggle-1"
+                                value.one-time="false"
+                                class="margin-bottom">
 
                                 <div slot="heading" translate>
-                                    Heading 1
-                                </div>
-
-                                <div slot="description" translate>
-                                    Description
+                                    Toggle 1
                                 </div>
 
                             </radio-toggle>
 
                             <radio-toggle
-                                disabled.bind="true"
                                 label.bind="labelPosition & attr"
-                                model="toggle-2">
+                                model="toggle-2"
+                                value.one-time="false"
+                                class="margin-bottom">
 
                                 <div slot="heading" translate>
-                                    Heading 2
-                                </div>
-
-                                <div slot="description" translate>
-                                    Description
+                                    Toggle 2
                                 </div>
 
                             </radio-toggle>
+
+                            <check-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-3"
+                                value.one-time="false"
+                                class="margin-bottom">
+
+                                <div slot="heading" translate>
+                                    Toggle 3
+                                </div>
+
+                            </check-toggle>
+
+                            <check-toggle
+                                label.bind="labelPosition & attr"
+                                model="toggle-4"
+                                value.one-time="false"
+                                class="margin-bottom">
+
+                                <div slot="heading" translate>
+                                    Toggle 4
+                                </div>
+
+                            </check-toggle>
 
                         </toggle-group>
 
                     </design-column>
 
                     <design-column heading="values">
-                        <div>value: ${toggleValue}</div>
+                        <div>value: ${toggleGroupValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="radio-toggle">
+
+                <design-row heading="radio-toggle">
+
+                    <design-column heading="enabled">
+
+                        <radio-toggle
+                            label.bind="labelPosition & attr"
+                            value.bind="radioToggleValue">
+
+                            <div slot="heading" translate>
+                                Heading 1
+                            </div>
+
+                        </radio-toggle>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <radio-toggle
+                            disabled.bind="true"
+                            label.bind="labelPosition & attr"
+                            value.bind="radioToggleValue">
+
+                            <div slot="heading" translate>
+                                Heading 1
+                            </div>
+
+                            <div slot="description" translate>
+                                Description
+                            </div>
+
+                        </radio-toggle>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>value: ${radioToggleValue}</div>
                     </design-column>
 
                 </design-row>
@@ -129,7 +224,7 @@
 
                         <check-toggle
                             label.bind="labelPosition & attr"
-                            value.bind="toggleValue">
+                            value.bind="checkToggleValue">
 
                             <div slot="heading" translate>
                                 Heading
@@ -144,7 +239,7 @@
                         <check-toggle
                             disabled.bind="true"
                             label.bind="labelPosition & attr"
-                            value.bind="toggleValue">
+                            value.bind="checkToggleValue">
 
                             <div slot="heading" translate>
                                 Heading
@@ -159,7 +254,7 @@
                     </design-column>
 
                     <design-column heading="values">
-                        <div>value: ${toggleValue}</div>
+                        <div>value: ${checkToggleValue}</div>
                     </design-column>
 
                 </design-row>
@@ -1136,6 +1231,10 @@
 
             </design-item>
 
+            <h1 class="font-largest margin">
+                Native controls
+            </h1>
+
             <design-item heading="input (checkbox)">
 
                 <design-row heading="Checkbox input within label">
@@ -1273,7 +1372,7 @@
                     <design-column heading="enabled">
                         <label>
                             X
-                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle)">
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle);">
                                 <option value="" disabled selected hidden>Placeholder</option>
                                 <option>X</option>
                                 <option>X</option>
@@ -1289,7 +1388,7 @@
                     <design-column heading="disabled">
                         <label disabled>
                             X
-                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle)">
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle);">
                                 <option value="" disabled selected hidden>Placeholder</option>
                                 <option>X</option>
                                 <option>X</option>

@@ -7,4 +7,8 @@ import { customElement } from "aurelia-framework";
 @customElement("check-toggle")
 export class CheckToggleCustomElement extends ToggleCustomElement
 {
+    /**
+     * True if the toggle is a single-select toggle, otherwise false.
+     */
+    public readonly single = false;
 }

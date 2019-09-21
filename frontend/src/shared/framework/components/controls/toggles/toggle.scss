@@ -118,6 +118,7 @@ body
     {
         // Position the element within the grid.
         grid-area: control;
+        justify-self: flex-start;
 
         // Allow content to be positioned relative to this element.
         position: relative;

@@ -3,8 +3,7 @@ import { Id } from "shared/utilities";
 import { ToggleCustomElement } from "../toggle";
 
 /**
- * Custom element representing a group of toggles,
- * in which at most one toggle may be active.
+ * Custom element representing a group of toggles.
  */
 @autoinject
 export class ToggleGroupCustomElement
@@ -33,6 +32,11 @@ export class ToggleGroupCustomElement
      */
     @bindable({ defaultValue: false })
     public readonly: boolean;
+
+    /**
+     * True while toggle values are being updated, otherwise false.
+     */
+    public isUpdatingToggles = false;
 
     /**
      * Called when a toggle is attached.
@@ -70,23 +74,105 @@ export class ToggleGroupCustomElement
     }
 
     /**
-     * Changes the value of the toggle group to the specified value.
-     * @param value The new value.
+     * Called when the specified toggle is activated.
+     * Updates the group value to match the new state.
+     * @param toggle The toggle being activated.
      */
-    public changeValue(value: any): void
+    public onToggleActivated(toggle: ToggleCustomElement): void
     {
-        this.value = value;
+        if (toggle.single)
+        {
+            this.value = toggle.model;
+        }
+        else if (this.value instanceof Array)
+        {
+            this.value = [...this.value, toggle.model];
+        }
+        else
+        {
+            this.value = [toggle.model];
+        }
+    }
+
+    /**
+     * Called when the specified toggle is deactivated.
+     * Updates the group value to match the new state.
+     * @param toggle The toggle being deactivated.
+     */
+    public onToggleDeactivated(toggle: ToggleCustomElement): void
+    {
+        if (toggle.model === this.value)
+        {
+            this.value = undefined;
+        }
+        else if (this.value instanceof Array)
+        {
+            const index = this.value.indexOf(toggle.model);
+
+            if (index > -1)
+            {
+                if (this.value.length > 1)
+                {
+                    const newValue = [...this.value];
+                    newValue.splice(index, 1);
+                    this.value = newValue;
+                }
+                else
+                {
+                    this.value = undefined;
+                }
+            }
+        }
+    }
+
+    /**
+     * Called when the model of a toggle changes.
+     * If the toggle is active, updates the group value to match the new model.
+     * @param newModel The new toggle model.
+     * @param oldModel The old toggle model.
+     */
+    public onToggleModelChanged(newModel: any, oldModel: any): void
+    {
+        if (this.value === oldModel)
+        {
+            this.value = newModel;
+        }
+        else if (this.value instanceof Array)
+        {
+            const index = this.value.indexOf(oldModel);
+
+            if (index > -1)
+            {
+                const newValue = [...this.value];
+                newValue.splice(index, 1, newModel);
+                this.value = newValue;
+            }
+        }
     }
 
     /**
      * Called by the framework when the `value` property changes.
-     * Updates the active state of the attached toggles.
+     * Updates the state of the attached toggles.
      */
     protected valueChanged(): void
     {
-        for (const toggle of this._toggles)
+        this.isUpdatingToggles = true;
+
+        if (this.value instanceof Array)
         {
-            toggle.value = this.value === toggle.model;
+            for (const toggle of this._toggles)
+            {
+                toggle.value = this.value.includes(toggle.model);
+            }
         }
+        else
+        {
+            for (const toggle of this._toggles)
+            {
+                toggle.value = this.value === toggle.model;
+            }
+        }
+
+        this.isUpdatingToggles = false;
     }
 }

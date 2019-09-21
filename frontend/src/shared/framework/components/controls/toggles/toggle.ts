@@ -33,6 +33,11 @@ export class ToggleCustomElement
     protected id = Id.sequential();
 
     /**
+     * True if the toggle is a single-select toggle, otherwise false.
+     */
+    public readonly single: boolean;
+
+    /**
      * The model associated with the toggle.
      */
     @bindable({ defaultValue: undefined })
@@ -90,30 +95,34 @@ export class ToggleCustomElement
 
     /**
      * Called by the framework when the `value` property changes.
-     * If the toggle is active, sets its model as the value of the toggle group.
+     * Updates the group value to match the new state.
      */
-    public valueChanged(): void
+    protected valueChanged(): void
     {
-        if (this.toggleGroup != null)
+        if (this.toggleGroup != null && !this.toggleGroup.isUpdatingToggles)
         {
-            this.toggleGroup.changeValue(this.value ? this.model : undefined);
+            if (this.value)
+            {
+                this.toggleGroup.onToggleActivated(this);
+            }
+            else
+            {
+                this.toggleGroup.onToggleDeactivated(this);
+            }
         }
     }
 
     /**
      * Called by the framework when the `model` property changes.
-     * If the toggle is active, sets its model as the value of the toggle group.
+     * Updates the group value to match the new state.
      * @param newValue The new property value.
      * @param oldValue The old property value.
      */
-    public modelChanged(newValue: any, oldValue: any): void
+    protected modelChanged(newValue: any, oldValue: any): void
     {
         if (this.toggleGroup != null)
         {
-            if (this.toggleGroup.value === oldValue)
-            {
-                this.toggleGroup.changeValue(newValue);
-            }
+            this.toggleGroup.onToggleModelChanged(newValue, oldValue);
         }
     }
 }
