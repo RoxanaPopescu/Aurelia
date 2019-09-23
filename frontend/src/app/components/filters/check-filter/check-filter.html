@@ -10,6 +10,14 @@
         <slot></slot>
     </div>
 
+    <div if.bind="empty" class="check-filter-empty">
+
+        <template replaceable part="empty" translate>
+            No items
+        </template>
+
+    </div>
+
     <div class="link-row margin-top">
 
         <a if.bind="showAllVisible" click.trigger="showAll = !showAll">
@@ -20,15 +28,6 @@
         <a if.bind="value.length > 0 && !filterValue" click.trigger="resetClick()" translate>
             Reset
         </a>
-
-    </div>
-
-
-    <div if.bind="empty" class="check-filter-empty">
-
-        <template replaceable part="empty" translate>
-            No items
-        </template>
 
     </div>
 

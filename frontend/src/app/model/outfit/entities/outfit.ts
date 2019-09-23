@@ -1,5 +1,6 @@
 import { Phone } from "app/model/shared";
 import { OutfitType } from "./outfit-type";
+import { computedFrom } from "aurelia-binding";
 
 /**
  * Represents a base type for entities such as a Consignor and Consignee.
@@ -13,7 +14,7 @@ export class Outfit
     public constructor(data: any)
     {
         const type = (data.type || data.typeName || "").toLowerCase();
-        this.type = type ? new OutfitType(type) : undefined;
+        this.type = new OutfitType(type);
 
         this.id = data.id;
         this.slug = data.publicId;
@@ -31,7 +32,7 @@ export class Outfit
     /**
      * The name of outfit type, if known.
      */
-    public readonly type: OutfitType | undefined;
+    public readonly type: OutfitType;
 
     /**
      * The ID of the outfit.
@@ -76,6 +77,7 @@ export class Outfit
     /**
      * Gets the primary name of the outfit.
      */
+    @computedFrom("companyName", "personName")
     public get primaryName(): string
     {
         return this.companyName ? this.companyName : this.personName!;
@@ -84,6 +86,7 @@ export class Outfit
     /**
      * Gets the secondary name of the outfit.
      */
+    @computedFrom("companyName", "personName")
     public get secondaryName(): string | undefined
     {
         return this.companyName ? this.personName : undefined;

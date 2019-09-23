@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { ApiClient } from "shared/infrastructure";
+import { DateTime } from "luxon";
 import { IPaging, ISorting } from "shared/types";
+import { ApiClient } from "shared/infrastructure";
 import { OrderStatusSlug } from "../entities/order-status";
 import { OrderInfo } from "../entities/order-info";
 import { Order } from "../entities/order";
@@ -25,24 +26,38 @@ export class OrderService
 
     /**
      * Gets all orders visible to the current user.
-     * @param statusFilter The order status to filter by, or undefined to apply no status filter.
+     * @param fromDate The first date for which orders should be returned, or undefined to apply no limit.
+     * @param toDate The last date for which orders should be returned, or undefined to apply no limit.
+     * @param statusFilter The order statuses to filter by, or undefined to apply no status filter.
+     * @param consignorFilter The consignors for which orders should be returned, or undefined to disable this filter.
      * @param textFilter The order text to filter by, or undefined to apply no text filter.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the orders.
      */
-    public async getAll(statusFilter?: OrderStatusSlug, textFilter?: string, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orders: OrderInfo[]; orderCount: number }>
+    public async getAll(
+        fromDate?: DateTime,
+        toDate?: DateTime,
+        statusFilter?: OrderStatusSlug[],
+        consignors?: string[],
+        textFilter?: string,
+        sorting?: ISorting,
+        paging?: IPaging,
+        signal?: AbortSignal): Promise<{ orders: OrderInfo[]; orderCount: number }>
     {
         const result = await this._apiClient.post("orderlist",
         {
             body:
             {
-                page: paging ? paging.page : undefined,
-                pageSize: paging ? paging.pageSize : undefined,
+                fromDate,
+                toDate,
+                status: statusFilter ? statusFilter.map(s => getLegacyOrderStatus(s)) : undefined,
+                consignors,
+                filter: textFilter ? [textFilter] : undefined,
                 sorting: sorting ? [{ field: getLegacyOrderSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) }] : [],
-                status: statusFilter ? [getLegacyOrderStatus(statusFilter)] : undefined,
-                filter: textFilter ? [textFilter] : undefined
+                page: paging ? paging.page : undefined,
+                pageSize: paging ? paging.pageSize : undefined
             },
             signal
         });

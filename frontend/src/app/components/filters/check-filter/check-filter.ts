@@ -67,9 +67,8 @@ export class CheckFilterCustomElement<TModel = any>
      * Called when a child item is attached.
      * Updates the collection of attached items to match the items present in the DOM.
      * This approach is needed, because we cannot rely on the order in which items are attached.
-     * @param item The child item to attach.
      */
-    public attachItem(item: CheckFilterItemCustomElement<TModel>): void
+    public attachItem(): void
     {
         const newItems: CheckFilterItemCustomElement<TModel>[] = [];
 

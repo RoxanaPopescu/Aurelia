@@ -51,7 +51,7 @@ react-module
     --font-label-base-font-size: 3.5rem;
     --font-label-base-margin-top: 3rem;
     --font-label-base-margin-bottom: 3rem;
-    --font-label-base-font-weight: 600;
+    --font-label-base-font-weight: 500;
 
     /// Text style for base text.
     /// Use for base-sized labels, such as the text on buttons or tabs.
@@ -104,7 +104,7 @@ react-module
     // Change page header to better match the new pages.
     .pageHeader
     {
-        padding: 9rem 9rem 0 9rem;
+        padding: 8.5rem 9rem 0 9rem;
         border-bottom: var(--border-width-thin) solid var(--color-surface-border);
 
         --colorNeutralDark: var(--color-surface-neutral-surface);
@@ -113,6 +113,7 @@ react-module
         .pageHeader-top
         {
             height: auto;
+            margin-bottom: 5.5rem;
 
             .pageHeader-path,
             .pageHeader-path-segment
@@ -131,6 +132,11 @@ react-module
             }
         }
 
+        .pageHeader-toolbar:not(:empty)
+        {
+            margin-bottom: 7rem;
+        }
+
         .pageHeader-tabs
         {
             border: var(--border-width-medium) solid var(--color-surface-neutral-border);
@@ -143,9 +149,44 @@ react-module
                 &.active
                 {
                     color: inherit;
+                    background: var(--color-surface-neutral-surface)
                 }
             }
         }
+    }
+
+    .inputContainer .inputWrapper input:not(.noBorder),
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control,
+    .buttonContainer.moverButton.buttonLight,
+    .c-checkboxContainer:not(.checked) .c-checkbox
+    {
+        &, &:hover, &:focus
+        {
+            border-color: var(--color-surface-input-border);
+        }
+    }
+
+    .c-checkboxContainer.checked .c-checkbox
+    {
+        &, &:hover, &:focus
+        {
+            border-color: transparent;
+        }
+    }
+
+    .c-divider :first-child, .c-divider :last-child
+    {
+        border-color: var(--color-surface-border);
+    }
+
+    .buttonContainer.moverButton .moverButtonText.font-label-base
+    {
+        font-weight: var(--font-label-base-font-weight)
+    }
+
+    .buttonContainer.moverButton .moverButtonText.font-label-small
+    {
+        font-weight: var(--font-label-small-font-weight)
     }
 }
 
@@ -157,6 +198,72 @@ react-module
     // TODO: Should we define variables for standard margin and padding instead?
     --card-padding: 3.5rem 3rem;
     --card-padding-large: 12.5rem 13rem;
+}
+
+// HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.
+.input[label="above"] > .input-label
+{
+    margin-bottom: calc(var(--font-small-margin-bottom) / 2);
+
+    .input-heading
+    {
+        opacity: var(--opacity-faded);
+    }
+
+    .input-description > *
+    {
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+    }
+}
+
+page-section
+{
+    &:not(.--expanded)
+    {
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+    }
+}
+
+page-section:not(.--expanded) + page-section.--expanded
+{
+    margin-top: .5rem;
+}
+
+.page-section-toggle
+{
+    > span
+    {
+        line-height: var(--font-base-line-height);
+        display: none;
+    }
+
+    > icon
+    {
+        margin-left: calc(var(--size-inline-spacing) /2);
+
+        // Set icon size and line height.
+        line-height: 1;
+        font-size: 1.286em;
+    }
+}
+
+.modal-section-toggle
+{
+    > span
+    {
+        line-height: var(--font-base-line-height);
+    }
+
+    > icon
+    {
+        margin-left: calc(var(--size-inline-spacing) /2);
+
+        // Set icon size and line height.
+        line-height: 1;
+        font-size: 1.286em;
+    }
 }
 
 page-sidebar
@@ -193,7 +300,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-right: var(--size-inline-spacing-large)
+        margin-right: calc(var(--size-inline-spacing-large) * 2)
     }
 }
 

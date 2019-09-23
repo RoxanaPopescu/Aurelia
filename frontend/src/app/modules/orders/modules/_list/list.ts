@@ -1,9 +1,12 @@
 import { autoinject, observable } from "aurelia-framework";
+import { DateTime } from "luxon";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
+import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
+import { Consignor } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -14,7 +17,7 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    statusFilter?: OrderStatusSlug;
+    statusFilter?: string;
     textFilter?: string;
 }
 
@@ -28,16 +31,19 @@ export class ListPage
      * Creates a new instance of the class.
      * @param orderService The `RouteService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param agreementService The `AgreementService` instance.
      */
-    public constructor(orderService: OrderService, historyHelper: HistoryHelper)
+    public constructor(orderService: OrderService, historyHelper: HistoryHelper, agreementService: AgreementService)
     {
         this._orderService = orderService;
         this._historyHelper = historyHelper;
+        this._agreementService = agreementService;
         this._constructed = true;
     }
 
     private readonly _orderService: OrderService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _agreementService: AgreementService;
     private readonly _constructed;
 
     /**
@@ -71,16 +77,34 @@ export class ListPage
     };
 
     /**
-     * The name identifying the selected status tab.
-     */
-    @observable({ changeHandler: "update" })
-    protected statusFilter: OrderStatusSlug | undefined;
-
-    /**
      * The text in the filter text input.
      */
     @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
+
+    /**
+     * The name identifying the selected status tab.
+     */
+    @observable({ changeHandler: "update" })
+    protected statusFilter: OrderStatusSlug[] | undefined;
+
+    /**
+     * The consignors for which orders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected consignorFilter: any[] = [];
+
+    /**
+     * The min date for whichorders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected fromDateFilter: DateTime | undefined = DateTime.local().startOf("day");
+
+    /**
+     * The min date for which orders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected toDateFilter: DateTime | undefined;
 
     /**
      * The total number of items matching the query, or undefined if unknown.
@@ -93,6 +117,11 @@ export class ListPage
     protected orders: OrderInfo[];
 
     /**
+     * The consignors to show in the filter.
+     */
+    protected consignors: Consignor[];
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The order parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -103,8 +132,11 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
-        this.statusFilter = params.statusFilter || this.statusFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.textFilter = params.textFilter || this.textFilter;
+
+        const agreements = await this._agreementService.getAll();
+        this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
 
         this.update();
     }
@@ -119,6 +151,30 @@ export class ListPage
         if (this.updateOperation != null)
         {
             this.updateOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the from date changes.
+     * Ensures the to date remains valid.
+     */
+    protected onFromDateChanged(): void
+    {
+        if (this.fromDateFilter && this.toDateFilter && this.toDateFilter.valueOf() < this.fromDateFilter.valueOf())
+        {
+            this.toDateFilter = this.fromDateFilter;
+        }
+    }
+
+    /**
+     * Called when the from date changes.
+     * Ensures the to date remains valid.
+     */
+    protected onToDateChanged(): void
+    {
+        if (this.fromDateFilter && this.toDateFilter && this.toDateFilter.valueOf() < this.fromDateFilter.valueOf())
+        {
+            this.fromDateFilter = this.toDateFilter;
         }
     }
 
@@ -146,7 +202,10 @@ export class ListPage
         {
             // Fetch the data.
             const result = await this._orderService.getAll(
+                this.fromDateFilter,
+                this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
                 this.statusFilter,
+                this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
                 this.textFilter,
                 this.sorting,
                 this.paging,

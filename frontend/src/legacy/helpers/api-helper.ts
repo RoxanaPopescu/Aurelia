@@ -55,6 +55,7 @@ export function getLegacyOrderSortProperty(property: string): number | undefined
     switch (property)
     {
         case "slug": return 1;
+        case "status": return 20;
         case "pickup-date": return 14;
         case "pickup-time": return 7;
         case "pickup-address": return 3;

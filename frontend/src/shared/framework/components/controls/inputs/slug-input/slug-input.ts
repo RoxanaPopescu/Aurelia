@@ -56,7 +56,7 @@ export class SlugInputCustomElement
     /**
      * The autocomplete mode to use.
      */
-    @bindable({ defaultValue: "autofill-off" })
+    @bindable({ defaultValue: "off" })
     public autocomplete: AutocompleteHint;
 
     /**

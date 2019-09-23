@@ -15,7 +15,7 @@ $__summary: comment;
     --color-surface-subtle: var(--palette-color-neutral-dark);
     --color-surface-text: var(--palette-color-neutral-darker);
     --color-surface-icon: var(--palette-color-neutral-dark);
-    --color-surface-border: var(--palette-color-neutral);
+    --color-surface-border: var(--palette-color-neutral-lit);
     --color-surface-heading: var(--palette-color-neutral-dark);
 
     // State: hover
@@ -23,21 +23,21 @@ $__summary: comment;
     --color-surface-subtle--hover: var(--palette-color-neutral-dark);
     --color-surface-text--hover: var(--palette-color-neutral-darker);
     --color-surface-icon--hover: var(--palette-color-neutral-darker);
-    --color-surface-border--hover: var(--palette-color-neutral);
+    --color-surface-border--hover: var(--palette-color-neutral-lit);
 
     // State: focus
     --color-surface--focus: var(--palette-color-whitepoint);
     --color-surface-subtle--focus: var(--palette-color-neutral-dark);
     --color-surface-text--focus: var(--palette-color-neutral-darker);
     --color-surface-icon--focus: var(--palette-color-neutral-darker);
-    --color-surface-border--focus: var(--palette-color-neutral);
+    --color-surface-border--focus: var(--palette-color-neutral-lit);
 
     // State: active
     --color-surface--active: var(--palette-color-whitepoint);
     --color-surface-subtle--active: var(--palette-color-neutral-dark);
     --color-surface-text--active: var(--palette-color-neutral-darker);
     --color-surface-icon--active: var(--palette-color-neutral-darker);
-    --color-surface-border--active: var(--palette-color-neutral);
+    --color-surface-border--active: var(--palette-color-neutral-lit);
 
     // Neutral elements on the surface.
     &

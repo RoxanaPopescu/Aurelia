@@ -4,9 +4,6 @@ check-filter
 
     .check-filter-empty
     {
-        // Apply padding.
-        padding: var(--item-padding);
-
         // Truncate text content with an ellipsis.
         white-space: nowrap;
         overflow: hidden;

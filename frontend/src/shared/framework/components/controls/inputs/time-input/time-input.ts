@@ -248,7 +248,7 @@ export class TimeInputCustomElement
      * The autocomplete mode to use,
      * or undefined to use the default behavior.
      */
-    @bindable({ defaultValue: "autofill-off" })
+    @bindable({ defaultValue: "off" })
     public autocomplete: AutocompleteHint;
 
     /**

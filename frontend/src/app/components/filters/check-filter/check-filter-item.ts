@@ -88,7 +88,7 @@ export class CheckFilterItemCustomElement<TModel = any>
      */
     public attached(): void
     {
-        this._checkFilter.attachItem(this);
+        this._checkFilter.attachItem();
     }
 
     /**

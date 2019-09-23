@@ -17,7 +17,7 @@ page-content
     > header
     {
         // Apply default padding.
-        padding: 9rem 9rem 5rem 9rem;
+        padding: 7rem 9rem;
 
         // Add a border below the header.
         border-bottom: var(--border-width-thin) solid var(--color-surface-border);
@@ -25,22 +25,23 @@ page-content
         // Apply surface color, so the header covers the page content when scrolled.
         background: var(--color-surface);
 
-        h1
+        h1.font-largest
         {
-            // HACK: Apply margin to the title.
-            margin-bottom: 5rem;
+            line-height: 10rem;
 
             &.margin-bottom
             {
-                // HACK: Apply more margin to the title.
-                margin-bottom: 7rem;
+                margin-bottom: 4rem;
             }
         }
 
-        toolbar button
+        toolbar
         {
-            // HACK: Ensure min-width of buttons match that of the tabs.
-            min-width: 30rem !important;
+            button
+            {
+                // HACK: Ensure min-width of buttons match that of the tabs.
+                min-width: 30rem !important;
+            }
         }
     }
 

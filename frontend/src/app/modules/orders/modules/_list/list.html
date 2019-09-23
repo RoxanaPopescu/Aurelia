@@ -1,12 +1,134 @@
 <template>
 
+    <require from="app/components/filters/check-filter/check-filter"></require>
+    <require from="app/components/filters/check-filter/check-filter-item"></require>
     <require from="./list.scss"></require>
 
     <page name="list">
 
+        <page-sidebar scroll>
+
+            <page-section>
+
+                <search-input value.bind="textFilter & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find orders...
+                    </span>
+
+                </search-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Date range
+                </div>
+
+                <div class="control-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="fromDateFilter" change.trigger="onFromDateChanged()">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                    </date-input>
+
+                    <date-input label="above" fixed.bind="true" value.bind="toDateFilter" change.trigger="onToDateChanged()">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                    </date-input>
+
+                </div>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Order status
+                </div>
+
+                <toggle-group class="flex-column" value.bind="statusFilter">
+
+                    <check-toggle label="after" model="placed" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Placed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="ready" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Ready
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="delivered" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Delivered
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Cancelled
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="deleted" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Deleted
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Consignors ${consignors.lenght}
+                </div>
+
+                <check-filter value.bind="consignorFilter">
+
+                    <div slot="placeholder" translate>
+                        Consignors
+                    </div>
+
+                    <check-filter-item repeat.for="consignor of consignors" model.bind="consignor">
+                        ${consignor.primaryName}
+                    </check-filter-item>
+
+                </check-filter>
+
+            </page-section>
+
+        </page-sidebar>
+
         <page-content scroll scroll.ref="scroll">
 
-            <header scroll-fade>
+            <header scroll-fade class="flex-row">
 
                 <h1 class="font-largest">
                     <path-nav>
@@ -18,57 +140,15 @@
                     </path-nav>
                 </h1>
 
-                <toolbar>
-
-                    <tab-nav appearance="solid" value.bind="statusFilter">
-
-                        <tab name.bind="undefined" translate>
-                            All
-                        </tab>
-
-                        <tab name="placed" translate>
-                            Placed
-                        </tab>
-
-                        <tab name="ready" translate>
-                            Ready
-                        </tab>
-
-                        <tab name="delivered" translate>
-                            Delivered
-                        </tab>
-
-                        <tab name="cancelled" translate>
-                            Cancelled
-                        </tab>
-
-                        <tab name="deleted" translate>
-                            Deleted
-                        </tab>
-
-                    </tab-nav>
-
-                    <button class="flex-push-right" appearance="solid" accent="neutral" page-href="path: /orders/create" translate>
+                <toolbar class="flex-push-right">
+                    <button appearance="solid" accent="neutral" page-href="path: /orders/create" translate>
                         Create order
                     </button>
-
                 </toolbar>
 
             </header>
 
             <section>
-
-                <toolbar class="margin-bottom" scroll-fade="0.2">
-
-                    <search-input value.bind="textFilter & debounce: 200">
-
-                        <span slot="placeholder" translate>
-                            Find...
-                        </span>
-
-                    </search-input>
-
-                </toolbar>
 
                 <data-table
                     appearance="rows"
@@ -107,7 +187,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell align="right">
+                        <data-table-cell name="status" align="right">
                             <span class="text-truncate" translate>
                                 Status
                             </span>

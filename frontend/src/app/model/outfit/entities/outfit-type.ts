@@ -14,7 +14,7 @@ export class OutfitType
      */
     public constructor(slug: OutfitTypeSlug)
     {
-        this.slug = slug;
+        this.slug = slug || "unknown";
         Object.assign(this, OutfitType.values[this.slug]);
     }
 
@@ -38,6 +38,10 @@ export class OutfitType
         "system":
         {
             name: "System"
+        },
+        "unknown":
+        {
+            name: "Unknown"
         }
     };
 }

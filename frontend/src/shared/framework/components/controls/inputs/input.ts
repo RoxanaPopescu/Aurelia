@@ -16,7 +16,9 @@ export type AutocompleteHint =
     "tel-local" | "tel-extension" | "impp" | "url" | "photo" |
 
     // Custom value that forces autofill off.
-    // This is needed because some browsers ignore `off`.
+    // This is needed because some browsers do not respect `off` when autofilling forms.
+    // Note, however, that while this disables autofill, it also enables autocomplete,
+    // which means users may see suggestions based on previous input.
     // See: https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
     "autofill-off";
 

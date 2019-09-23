@@ -11,6 +11,9 @@ dropdown-icon
     line-height: 1;
     font-size: 1.286em;
 
+    // Apply opacity to de-emphasize the icon.
+    opacity: var(--opacity-faded);
+
     // Use cursor to indicate the element is clickable.
     cursor: pointer;
 }
