@@ -37,6 +37,11 @@ export class App
         // Remove the 'x-powered-by' header.
         this._app.disable("x-powered-by");
 
+        // Always trust the first value in 'X-Forwarded-*' headers, so requests contain the original
+        // client IP address and request protocol, host and port, even when hosted behind proxies.
+        // Note that this does not prevent the client from spoofing this information.
+        this._app.enable("trust proxy");
+
         // Configure server plugins.
         this._app.use(compression());
         this._app.use(cookieParser());
