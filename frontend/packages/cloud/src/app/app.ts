@@ -87,7 +87,7 @@ export class App
             // Resolve the theme to use, ensure the cookie is set,
             // and rewrite the request to serve the correct resources.
 
-            const themeSlugFromCookie = request.cookies["theme-DISABLED_UNTIL_PROXY_IS_FIXED"];
+            const themeSlugFromCookie = request.cookies["theme"];
             response.locals.themeSlug = themeSlugFromCookie || hostSettings.themeSlug;
 
             if (!themeSlugFromCookie)
@@ -102,7 +102,7 @@ export class App
             // Resolve the locale to use, ensure the cookie is set,
             // and rewrite the request so we serve the correct build.
 
-            const localeCodeFromCookie = request.cookies["locale-DISABLED_UNTIL_PROXY_IS_FIXED"];
+            const localeCodeFromCookie = request.cookies["locale"];
             response.locals.localeCode = localeCodeFromCookie || hostSettings.localeCode;
 
             if (!localeCodeFromCookie)
@@ -114,7 +114,7 @@ export class App
 
             // Resolve the currency to use and ensure the cookie is set.
 
-            const currencyCodeFromCookie = request.cookies["currency-DISABLED_UNTIL_PROXY_IS_FIXED"];
+            const currencyCodeFromCookie = request.cookies["currency"];
             response.locals.currencyCode = currencyCodeFromCookie || hostSettings.currencyCode;
 
             if (!currencyCodeFromCookie)
