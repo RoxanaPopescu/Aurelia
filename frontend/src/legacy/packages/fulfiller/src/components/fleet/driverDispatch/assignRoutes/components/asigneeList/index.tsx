@@ -52,10 +52,7 @@ export default class extends React.Component<Props, State> {
         selectedAssignee: props.selectedAssignee,
         matchedAssignees: props.matchedAssignees
       }, () => {
-        if (!this.props.selectedRoute ||
-            this.props.selectedRoute.id !== props.selectedRoute!.id) {
-          this.fetchData()
-        }
+        this.fetchData()
       })
     } else {
       if (!this.props.prebookingIds && (this.state.drivers.length > 0 || this.state.prebookings.length > 0)) {
@@ -159,11 +156,12 @@ export default class extends React.Component<Props, State> {
           this.fetchDrivers(this.state.selectedRoute)
         } else {
           var prebookingResponse = await driverDispatchService.fetchPrebookings(
-            this.state.selectedRoute.startDateTime,
-            this.state.selectedRoute.endDateTime,
+            this.state.selectedRoute.startDateTime.startOf("day"),
+            this.state.selectedRoute.endDateTime.endOf("day"),
             this.state.selectedRoute.startDateTime,
             this.state.selectedRoute.endDateTime
           );
+          console.log(prebookingResponse)
 
           if (prebookingResponse.length > 0) {
             prebookings = prebookingResponse;

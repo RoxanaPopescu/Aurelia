@@ -46,10 +46,7 @@ export default class extends React.Component<Props, State> {
         selectedRoute: props.selectedRoute,
         matchedRoutes: props.matchedRoutes
       }, () => {
-        if (!this.props.selectedPrebooking ||
-            this.props.selectedPrebooking.id !== props.selectedPrebooking!.id) {
-          this.fetchData()
-        }
+        this.fetchData();
       })
     } else {
       if (!this.props.ids && this.state.routes.length > 0) {

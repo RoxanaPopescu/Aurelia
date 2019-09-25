@@ -24,10 +24,10 @@ export class Route {
       data.fulfiller != null ? new Fulfiller(data.fulfiller) : undefined;
     this.startDateTime = DateTime.fromISO(data.startDate, {
       setZone: true
-    });
+    }).toLocal();
     this.endDateTime = DateTime.fromISO(data.endDate, {
       setZone: true
-    });
+    }).toLocal();
     this.startAddress = new Address({ primary: data.startAddress });
     this.endAddress = new Address({ primary: data.endAddress });
     this.stopCount = data.stopCount;
