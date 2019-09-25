@@ -75,13 +75,13 @@
 {
     // Apply size constraints.
     max-width: 300px !important;
-    max-height: 300px !important;
+    max-height: 500px !important;
 
     // Apply padding inside the scroll container.
     padding: 10px 12px;
 
-    // Use overlay scroll bars.
-    overflow: overlay;
+    // Allow vertical scrolling.
+    overflow-y: auto;
 
     // Ensure the correct font weight is used.
     line-height: var(--font-small-line-height);
