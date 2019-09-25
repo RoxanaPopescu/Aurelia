@@ -7,8 +7,8 @@ export class Phone {
   /* tslint:disable-next-line: no-any */
   public constructor(data?: any) {
     if (data != null) {
-      this.countryPrefix = data.countryPrefix;
-      this.number = data.number;
+      this.countryPrefix = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
+            this.number = data.number ? data.number.replace(/\s/g, "").match(/.{1,2}/g).join(" ") : "";
     } else {
       this.countryPrefix = "45";
     }
@@ -42,11 +42,6 @@ export class Phone {
    * including the country prefix.
    */
   public toString(): string {
-    const formattedNumber = this.number ?
-      this.number.match(/.{1,2}/g)!.join(" ") :
-      "";
-    return this.countryPrefix ?
-      `${this.countryPrefix} ${formattedNumber}` :
-      formattedNumber;
+    return this.countryPrefix ? `+${this.countryPrefix} ${this.number}` : this.number;
   }
 }

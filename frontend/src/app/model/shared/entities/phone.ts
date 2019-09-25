@@ -11,8 +11,8 @@ export class Phone
     {
         if (data != null)
         {
-            this.countryPrefix = data.countryPrefix;
-            this.number = data.number;
+            this.countryPrefix = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
+            this.number = data.number ? data.number.replace(/\s/g, "").match(/.{1,2}/g).join(" ") : "";
         }
     }
 
@@ -43,12 +43,6 @@ export class Phone
      */
     public toString(): string
     {
-        const formattedNumber = this.number
-            ? this.number.match(/.{1,2}/g)!.join(" ")
-            : "";
-
-        return this.countryPrefix
-            ? `${this.countryPrefix} ${formattedNumber}`
-            : formattedNumber;
+        return this.countryPrefix ? `+${this.countryPrefix} ${this.number}` : this.number;
     }
 }
