@@ -1,6 +1,8 @@
 import { DateTime } from "luxon";
 import { DepotRouteRemark } from "./depotRouteRemark";
 import { remarks } from "./data/depotRouteRemarks";
+import { Phone } from "shared/src/model/general/phone";
+import { PersonName } from "app/model/shared";
 
 export class DepotRoute {
   // tslint:disable-next-line:no-any
@@ -21,6 +23,16 @@ export class DepotRoute {
     this.colliTotal = data.colliTotal;
     this.driverListReady = data.driverListReady;
     this.driverListUrl = data.driverListUrl;
+
+    if (data.driver) {
+      this.driver =
+      {
+        id: data.driver.id,
+        name: new PersonName(data.driver.name),
+        phone: new Phone(data.driver.phone),
+        pictureUrl: data.pictureUrl
+      };
+    }
 
     if (data.remarks != null) {
       this.remarks = data.remarks.remarkCodes.map(
@@ -50,6 +62,13 @@ export class DepotRoute {
   public readonly id: string;
   public readonly slug: string;
   public readonly reference: string;
+  public readonly driver:
+  {
+      id: number;
+      name: PersonName;
+      phone: Phone
+      pictureUrl: string
+  };
   public readonly gate: string;
   public readonly driverId: string;
   public readonly fulfillerName: string;

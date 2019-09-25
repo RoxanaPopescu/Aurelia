@@ -90,6 +90,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
             headers: [
               { key: "route", content: "Rute" },
               { key: "reference", content: "Reference" },
+              { key: "driver", content: "Chauffør" },
               { key: "port", content: "Port" },
               { key: "fulfiller", content: "Logistikpartner" },
               { key: "planned-arrival", content: "Planlagt ankomst" },
@@ -170,6 +171,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
           {route.slug}
         </a>,
         route.reference ? route.reference : "--",
+        route.driver ? route.driver.name.toString() : "--",
         route.gate ? route.gate : "--",
         route.fulfillerName,
         Localization.formatTime(route.plannedArrival),
