@@ -12,23 +12,40 @@ express-route-map
   height: 100%;
 }
 
-.express-route-map-fit-button
+.express-route-map-buttons
 {
   position: absolute !important;
   top: 10px !important;
-  height: 40px !important;
-  min-width: 80px !important;
-  z-index: 999 !important;
   left: 168px !important;
-  border: none !important;
-  border-radius: 2px !important;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
-  color: #333 !important;
+  z-index: 999 !important;
+  display: flex;
+
+  .moverButton
+  {
+    height: 40px !important;
+    min-width: 80px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
+    color: #333 !important;
+    margin-right: 10px;
+
+    &.--active
+    {
+      color: var(--palette-color-primary-lighter) !important;
+      background: var(--palette-color-primary) !important;
+    }
+  }
 
   .moverButtonText
   {
     font-weight: 400 !important;
   }
+}
+
+.express-route-map-show-routes-button
+{
+
 }
 
 .express-route-map-connect-info

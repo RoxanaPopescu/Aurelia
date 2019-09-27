@@ -53,6 +53,12 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     @observable
     private isConnecting = false;
 
+    @observable
+    private showAllDrivers = true;
+
+    @observable
+    private showAllRoutes = true;
+
     public render()
     {
         this.fitBoundsOnLoad();
@@ -60,9 +66,30 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
         return (
             <div className="express-route-map">
 
-                <Button className="express-route-map-fit-button" type={ButtonType.Light} onClick={() => this.tryFitBounds()}>
-                    Zoom to fit
-                </Button>
+                <div className="express-route-map-buttons">
+
+                    <Button
+                        className="express-route-map-fit-button"
+                        type={ButtonType.Light}
+                        onClick={() => this.tryFitBounds()}>
+                        Zoom to fit
+                    </Button>
+
+                    {!this.props.isMerging && <Button
+                        className={this.showAllRoutes ? "--active" : ""}
+                        type={ButtonType.Light}
+                        onClick={() => this.showAllRoutes = !this.showAllRoutes}>
+                        Show all routes
+                    </Button>}
+
+                    {!this.props.isMerging && <Button
+                        className={this.showAllDrivers ? "--active" : ""}
+                        type={ButtonType.Light}
+                        onClick={() => this.showAllDrivers = !this.showAllDrivers}>
+                        Show all drivers
+                    </Button>}
+
+                </div>
 
                 {this.isConnecting &&
                 <div className="express-route-map-connect-info">
@@ -84,29 +111,33 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         this.fitBoundsOnLoad();
                     }}>
 
-                    {!this.props.isMerging && this.props.driverRoutes && this.props.driverRoutes.map(route =>
-                        <DriverRouteLayer
-                            key={`DriverRouteLayer-${route.driver.id}-${route.selected}`}
-                            route={route}
-                            onClick={() =>
-                            {
-                                this.props.onDriverRouteClick(route);
-                                this.forceUpdate();
-                            }}
-                        />
+                    {!this.props.isMerging && this.props.driverRoutes && this.props.driverRoutes
+                        .filter(route => route.selected || this.showAllDrivers)
+                        .map(route =>
+                            <DriverRouteLayer
+                                key={`DriverRouteLayer-${route.driver.id}-${route.selected}`}
+                                route={route}
+                                onClick={() =>
+                                {
+                                    this.props.onDriverRouteClick(route);
+                                    this.forceUpdate();
+                                }}
+                            />
                     )}
 
-                    {!this.props.isMerging && this.props.expressRoutes && this.props.expressRoutes.map(route =>
-                        <ExpressRouteLayer
-                            key={`ExpressRouteLayer-${route.id}-${route.selected}`}
-                            route={route}
-                            onClick={() =>
-                            {
-                                this.props.onExpressRouteClick(route);
-                                this.forceUpdate();
-                            }}
-                        />
-                    )}
+                    {!this.props.isMerging && this.props.expressRoutes && this.props.expressRoutes
+                        .filter(route => route.selected || this.showAllRoutes)
+                        .map(route =>
+                            <ExpressRouteLayer
+                                key={`ExpressRouteLayer-${route.id}-${route.selected}`}
+                                route={route}
+                                onClick={() =>
+                                {
+                                    this.props.onExpressRouteClick(route);
+                                    this.forceUpdate();
+                                }}
+                            />
+                        )}
 
                     {this.props.isMerging && this.props.newDriverStops && this.props.newDriverStops.map(stop =>
                         stop instanceof DriverRouteStop
