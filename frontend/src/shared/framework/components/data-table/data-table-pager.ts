@@ -20,9 +20,9 @@ export class DataTablePagerCustomElement
 
     /**
      * The total number of pages, or undefined if unknown.
-     * This is computed from `listSize` and `pageSize`, with `pageCount` used as fallback.
+     * This is computed from `listSize` and `value.pageSize`, with `pageCount` used as fallback.
      */
-    @computedFrom("listSize", "model.pageSize", "pageCount")
+    @computedFrom("listSize", "value.pageSize", "pageCount")
     protected get computedPageCount(): number | undefined
     {
         if (this.value == null)
@@ -118,6 +118,7 @@ export class DataTablePagerCustomElement
     protected valueChanged(): void
     {
         this.pageNumber = this.value.page;
+        this.pageSize = this.value.pageSize;
     }
 
     /**
