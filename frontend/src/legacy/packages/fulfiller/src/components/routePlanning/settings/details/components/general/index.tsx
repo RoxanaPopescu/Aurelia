@@ -5,7 +5,8 @@ import {
   InputNumbers,
   ButtonType,
   Input,
-  MultiSelect
+  MultiSelect,
+  Select
 } from "shared/src/webKit";
 import DividerComponent from "shared/src/webKit/divider";
 import { ButtonSize, Button } from "shared/src/webKit/button";
@@ -17,6 +18,7 @@ import { Outfit } from "shared/src/model/logistics/outfit";
 import { AgreementsService } from "shared/src/services/agreementsService";
 import { OptionValue } from "react-selectize";
 import InputCheckbox from "shared/src/webKit/input/checkbox";
+import { RoutePlanStrategy } from "shared/src/model/logistics/routePlanning/settings/strategy";
 
 interface Props {
   store: RoutePlanningSettingsStore;
@@ -312,8 +314,25 @@ export default class GeneralComponent extends React.Component<Props> {
             (this.props.store.setting.parameters.flowParameters.manuallyApproveRoutes = value)
           }
         >
-          Manual godkend ruter
+          Godkend ruter manuelt
         </InputCheckbox>
+        <DividerComponent />
+        <p className="font-large margin">Strategi</p>
+        <Select
+          value={
+            this.props.store.setting.parameters.strategy ? this.props.store.setting.parameters.strategy.slug : undefined
+          }
+          options={this.props.store.availableStrategies.map(s => {
+            return { label: s.name, value: s.slug }
+          })}
+          onSelect={option => {
+            if (option) {
+              this.props.store.setting.parameters.strategy = new RoutePlanStrategy(option.value);
+            }
+          }}
+        >
+          Godkend ruter manuelt
+        </Select>
         <DividerComponent />
         <p className="font-large margin">Læssetider</p>
         <InputNumbers

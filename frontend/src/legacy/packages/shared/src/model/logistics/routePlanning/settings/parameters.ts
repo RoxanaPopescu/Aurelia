@@ -3,6 +3,7 @@ import { SpecialCondition } from "./specialCondition";
 import { LoadingTimes } from "./loadingTimes";
 import { Limitations } from "./limitations";
 import { FlowParameters } from "./flowParameters";
+import { RoutePlanStrategy } from "./strategy";
 
 /**
  * Represents the parameters to use when planning a route.
@@ -15,6 +16,7 @@ export class Parameters {
       this.limitations = new Limitations(data.limitations);
       this.specialConditions = data.specialConditions.map(c => new SpecialCondition(c));
       this.flowParameters = new FlowParameters(data.flowParameters);
+      this.strategy = new RoutePlanStrategy(data.strategy.name);
     } else {
       this.specialConditions = [];
       this.loadingTimes = new LoadingTimes();
@@ -47,4 +49,10 @@ export class Parameters {
    */
   @observable
   public specialConditions: SpecialCondition[];
+
+  /**
+   * The strategy for this setting.
+   */
+  @observable
+  public strategy: RoutePlanStrategy;
 }

@@ -48,6 +48,7 @@ export default class RoutePlanningSettingsComponent extends React.Component<
       this.store.loading = false;
     } else {
       this.store.fetch(this.props.match.params.id);
+      this.store.fetchStrategies();
     }
   }
 

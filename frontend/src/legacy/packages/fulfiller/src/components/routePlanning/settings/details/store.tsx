@@ -7,6 +7,7 @@ import {
 import { Position } from "shared/src/model/general/position";
 import Base from "shared/src/services/base";
 import Localization from "shared/src/localization";
+import { RoutePlanStrategy } from "shared/src/model/logistics/routePlanning/settings/strategy";
 
 export class RoutePlanningSettingsStore {
   @observable
@@ -36,6 +37,9 @@ export class RoutePlanningSettingsStore {
 
   @observable
   setting: RoutePlanSetting = new RoutePlanSetting();
+
+  @observable
+  availableStrategies: RoutePlanStrategy[] = [];
 
   @observable
   mode: "idle" | "drawing" | "drawingComplete" | "assigningSettings" = "idle";
@@ -156,6 +160,27 @@ export class RoutePlanningSettingsStore {
   }
 
   @action
+  async fetchStrategies() {
+    this.loading = true;
+    this.error = undefined;
+
+    let response = await fetch(
+      Base.url("RoutePlanning/settings/strategies/list"),
+      Base.defaultConfig()
+    );
+
+    if (response.ok) {
+      let responseJson = await response.json();
+      this.availableStrategies = responseJson.map(s => new RoutePlanStrategy(s.name));
+    } else {
+      this.error = Localization.sharedValue("Error_General");
+    }
+
+    this.loading = false;
+    this.zoom();
+  }
+
+  @action
   zoom() {
     // tslint:disable-next-line:no-any
     let map: any = this.map;
@@ -184,7 +209,7 @@ export class RoutePlanningSettingsStore {
     if (this.setting.id) {
       let response = await fetch(
         Base.url("RoutePlanning/settings/Update"),
-        Base.defaultConfig(this.setting)
+        Base.defaultConfig({ ...this.setting, parameters: { ...this.setting.parameters, strategy: this.setting.parameters.strategy.value } })
       );
 
       if (!response.ok) {
