@@ -29,7 +29,7 @@ export class OrderService
      * @param fromDate The first date for which orders should be returned, or undefined to apply no limit.
      * @param toDate The last date for which orders should be returned, or undefined to apply no limit.
      * @param statusFilter The order statuses to filter by, or undefined to apply no status filter.
-     * @param consignorFilter The consignors for which orders should be returned, or undefined to disable this filter.
+     * @param consignorFilter The IDs of the consignors for which orders should be returned, or undefined to disable this filter.
      * @param textFilter The order text to filter by, or undefined to apply no text filter.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
@@ -40,7 +40,7 @@ export class OrderService
         fromDate?: DateTime,
         toDate?: DateTime,
         statusFilter?: OrderStatusSlug[],
-        consignors?: string[],
+        consignorFilter?: string[],
         textFilter?: string,
         sorting?: ISorting,
         paging?: IPaging,
@@ -53,7 +53,7 @@ export class OrderService
                 fromDate,
                 toDate,
                 status: statusFilter ? statusFilter.map(s => getLegacyOrderStatus(s)) : undefined,
-                consignors,
+                consignorIds: consignorFilter,
                 filter: textFilter ? [textFilter] : undefined,
                 sorting: sorting ? [{ field: getLegacyOrderSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) }] : [],
                 page: paging ? paging.page : undefined,
