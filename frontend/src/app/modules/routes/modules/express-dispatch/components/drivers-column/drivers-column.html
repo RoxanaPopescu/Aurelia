@@ -146,7 +146,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.completionTime">
+                        <data-table-cell title.bind="item.completionTime | time: false">
                             <span class="text-truncate">
                                 ${item.completionTime | time: false}
                             </span>

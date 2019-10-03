@@ -74,7 +74,7 @@
                                         <div class="flex-row flex-push-right">
                                             <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
                                             <div>
-                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
                                             </div>
                                         </div>
                                     </div>
@@ -140,13 +140,13 @@
                                         <div class="flex-row flex-push-right">
                                             <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
                                             <div>
-                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange}
+                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
                                             </div>
                                             <div if.bind="stop.stop.arrivalTime == null">
                                                 &nbsp;&nbsp;(--:--)
                                             </div>
                                             <div if.bind="stop.stop.arrivalTime != null">
-                                                &nbsp;&nbsp;(${stop.stop.arrivalTime | time})
+                                                &nbsp;&nbsp;(${stop.stop.arrivalTime | time: false})
                                             </div>
                                         </div>
                                     </div>

@@ -173,9 +173,9 @@ export class ExpressRoute implements IRouteReference
      */
     public get earliestDeliveryDate(): DateTime | undefined
     {
-        const pickupStop = this.stops[0];
+        const deliveryStop = this.stops[this.stops.length - 1];
 
-        return pickupStop.arrivalTimeFrame.from;
+        return deliveryStop.arrivalTimeFrame.from;
     }
 
     /**
@@ -183,9 +183,9 @@ export class ExpressRoute implements IRouteReference
      */
     public get latestDeliveryDate(): DateTime | undefined
     {
-        const pickupStop = this.stops[0];
+        const deliveryStop = this.stops[this.stops.length - 1];
 
-        return pickupStop.arrivalTimeFrame.to;
+        return deliveryStop.arrivalTimeFrame.to;
     }
 
     /**
