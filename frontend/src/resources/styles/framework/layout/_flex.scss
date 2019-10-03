@@ -76,3 +76,23 @@ $__summary: comment;
 {
     margin-top: auto;
 }
+
+.flex-basis-1-of-1
+{
+    flex-basis: 100%;
+}
+
+.flex-basis-1-of-2
+{
+    flex-basis: 50%;
+}
+
+.flex-basis-1-of-3
+{
+    flex-basis: calc(100% / 3);
+}
+
+.flex-basis-1-of-4
+{
+    flex-basis: 25%;
+}

@@ -162,13 +162,13 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.earliestPickupDate | time">
+                        <data-table-cell title.bind="item.earliestPickupDate | time: false">
                             <span class="text-truncate">
                                 ${item.earliestPickupDate | time: false}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestPickupDate | time">
+                        <data-table-cell title.bind="item.latestPickupDate | time: false">
                             <span class="text-truncate">
                                 ${item.latestPickupDate | time: false}
                             </span>
@@ -186,13 +186,13 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.earliestDeliveryDate | time">
+                        <data-table-cell title.bind="item.earliestDeliveryDate | time: false">
                             <span class="text-truncate">
                                 ${item.earliestDeliveryDate | time: false}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestDeliveryDate | time" align="right">
+                        <data-table-cell title.bind="item.latestDeliveryDate | time: false" align="right">
                             <span class="text-truncate">
                                 ${item.latestDeliveryDate | time: false}
                             </span>
