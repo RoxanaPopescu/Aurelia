@@ -1,4 +1,5 @@
 import { observer } from "mobx-react";
+import H from "history";
 import Localization from "shared/src/localization";
 import React from "react";
 import KpiTableComponent from "../components/table";
@@ -13,7 +14,9 @@ import { PageContentComponent } from "../../pageContent";
 
 export const consignorKpiStore = new KpiStore();
 
-interface Props {}
+interface Props {
+  history?: H.History;
+}
 
 @observer
 export default class ConsignorKpiComponent extends React.Component<Props> {
@@ -135,9 +138,8 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
     return (
       <>
         <PageHeaderComponent
-          path={[
-            { title: "KPIs" }
-          ]}
+          path={[{ title: "KPI", href: "/kpi" }, { title: "Consignors" }]}
+          history={this.props.history}
           tabs={tabs}
           tab={tabs ? tabs[consignorKpiStore.activeOutfitIndex].name : undefined}
           onTabChange={(tab, index) => {

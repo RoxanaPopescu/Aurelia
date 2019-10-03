@@ -41,7 +41,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-settings/_list/list"),
                 title: routeTitles.settingsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "missing"
             },
             {
                 name: "settings-details",
@@ -59,15 +59,15 @@ export class RoutePlanningModule
                 name: "order-groups-list",
                 route: "order-groups/list",
                 moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
-                title: routeTitles.orderGroupList,
+                title: routeTitles.orderGroupsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "missing"
             },
             {
                 name: "order-groups-details",
                 route: "order-groups/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/details/details"),
-                title: routeTitles.orderGroupDetails
+                moduleId: PLATFORM.moduleName("./modules/order-groups/_details/details"),
+                title: routeTitles.orderGroupsDetails
             },
             {
                 name: "simulations-list",
@@ -75,7 +75,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/_list/list"),
                 title: routeTitles.simulationsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "missing"
             },
             {
                 name: "simulations-details",

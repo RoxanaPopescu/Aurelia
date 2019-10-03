@@ -1,0 +1,240 @@
+<template>
+
+    <require from="./details.scss"></require>
+    <require from="app/components/info-card/info-card"></require>
+
+    <page name="order-groups-details">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/route-planning" translate>
+                            Route planning
+                        </a>
+
+                        <a accent="inherit" href="/route-planning/order-groups/list" translate>
+                            Order groups
+                        </a>
+
+                        <span translate>
+                            New order group
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="solid" accent="primary" translate>
+                        Create order group
+                    </button>
+
+                </toolbar>
+
+            </header>
+
+            <section>
+                <card accent="attention">&nbsp;&nbsp;This order group is currently paused.</card>
+            </section>
+
+            <section class="flex-row">
+
+                <div class="flex-basis-1-of-4">
+
+                    <text-input label="above" autofocus>
+
+                        <div slot="heading" translate>
+                            Name
+                        </div>
+
+                        <span slot="placeholder" translate>
+                            New order group
+                        </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="name">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+            </section>
+
+            <hr class="hr-line margin-larger">
+
+            <section class="order-group-criteria margin-top flex-row">
+
+                <div class="flex-basis-1-of-2 margin-large-right">
+
+                    <h2 class="font-larger margin-bottom">
+                        Match criteria
+                    </h2>
+
+                    <p class="opacity-faded">
+                        These are the criteria an order must fulfill, to be marked as part of this group.
+                    </p>
+
+                    <data-table
+                        appearance="rows"
+                        sorting.bind="sorting"
+                        busy.bind="updateOperation.pending">
+
+                        <data-table-headers>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Consignor
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Tags
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <!-- Icons -->
+                            </data-table-cell>
+
+                        </data-table-headers>
+
+                        <template repeat.for="orderGroup of orderGroups">
+
+                            <data-table-row>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${orderGroup.consignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${orderGroup.zipRanges | list: 'short'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell align="right">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary">
+                                            <icon name="md-edit"></icon>
+                                        </button>
+
+                                        <button appearance="none" accent="primary">
+                                            <icon name="md-delete"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                            </data-table-row>
+
+                        </template>
+
+                    </data-table>
+
+                    <busy-indicator if.bind="orderGroups == null" class="margin-largest"></busy-indicator>
+
+                    <empty-indicator if.bind="orderGroups.length == 0" class="margin-largest" translate>
+                        No results
+                    </empty-indicator>
+
+                    <button if.bind="orderGroups != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                        Add criteria
+                    </button>
+
+                </div>
+
+                <div class="order-group-schedule flex-basis-1-of-2 margin-large-left">
+
+                    <h2 class="font-larger margin-bottom">
+                        Schedule
+                    </h2>
+
+                    <p class="opacity-faded">
+                        These are the times that do something, but I have no idea what, exactly.
+                    </p>
+
+                    <data-table
+                        appearance="rows"
+                        sorting.bind="sorting"
+                        busy.bind="updateOperation.pending">
+
+                        <data-table-headers>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Delivery day
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Delivery time
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Planning day
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Planning time
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Next planning
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell translate>
+                                <span class="text-truncate">
+                                    Next execution
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <!-- Icons -->
+                            </data-table-cell>
+
+                        </data-table-headers>
+
+                    </data-table>
+
+                    <busy-indicator if.bind="executionTimes == null" class="margin-largest"></busy-indicator>
+
+                    <empty-indicator if.bind="executionTimes.length == 0" class="margin-largest" translate>
+                        No results
+                    </empty-indicator>
+
+                    <button if.bind="executionTimes != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                        Add execution time
+                    </button>
+
+                </div>
+
+            </section>
+
+        </page-content>
+
+    </page>
+
+</template>

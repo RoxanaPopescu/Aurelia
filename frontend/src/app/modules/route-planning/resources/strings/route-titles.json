@@ -4,8 +4,8 @@
     "settingsList": "Settings",
     "settingsDetails": "Setting",
     "settingsCreate": "Create setting",
-    "orderGroupList": "Order groups",
-    "orderGroupDetails": "Order group",
+    "orderGroupsList": "Order groups",
+    "orderGroupsDetails": "Order group",
     "simulationsList": "Simulations",
     "simulationsDetails": "Simulation"
 }

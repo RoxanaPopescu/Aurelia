@@ -1,4 +1,5 @@
 import { observer } from "mobx-react";
+import H from "history";
 import Localization from "shared/src/localization";
 import React from "react";
 import KpiTableComponent from "../../components/table";
@@ -11,7 +12,9 @@ import { KpiStore } from "../../store";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
 
-interface Props {}
+interface Props {
+  history?: H.History;
+}
 
 @observer
 export default class FulfillersKpiComponent extends React.Component<Props> {
@@ -172,7 +175,8 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
     return (
       <>
         <PageHeaderComponent
-          path={[{ title: "KPIs" }]}
+          path={[{ title: "KPI", href: "/kpi" }, { title: "Fulfillers" }]}
+          history={this.props.history}
           tabs={tabs}
           tab={
             tabs
