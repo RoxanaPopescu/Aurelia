@@ -294,6 +294,17 @@ page-sidebar
     }
 }
 
+.icon-row
+{
+    display: flex;
+    line-height: 1;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large)
+    }
+}
+
 .link-row
 {
     display: flex;

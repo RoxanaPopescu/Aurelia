@@ -1,7 +1,7 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
-import { DateTime } from "luxon";
+import { DateTime, Zone } from "luxon";
 
 /**
  * Provides info about the date format for the current locale.
@@ -142,6 +142,12 @@ export class DateInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public label: LabelPosition | undefined;
+
+    /**
+     * The IANA Time Zone Identifier to use, "local" to use the local zone, or "utc" to use the UTC zone.
+     */
+    @bindable({ defaultValue: "local" })
+    public zone: string | Zone;
 
     /**
      * The date picked by the user, null if the entered value could not be parsed,

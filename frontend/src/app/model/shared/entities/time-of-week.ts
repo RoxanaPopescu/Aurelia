@@ -1,0 +1,50 @@
+import { Duration } from "luxon";
+import { DayOfWeek } from "../types/day-of-week";
+
+/**
+ * Represents a day and time during the week.
+ */
+export class TimeOfWeek
+{
+    /**
+     * Creates a new instance of the type.
+     * @param data The response data from which the instance should be created.
+     */
+    public constructor(data?: any)
+    {
+        if (data != null)
+        {
+            this.dayOfWeek = data.dayOfWeek;
+
+            if (typeof data.timeOfDay === "number")
+            {
+                this.timeOfDay = Duration.fromObject({ seconds: data.timeOfDay });
+            }
+            else
+            {
+                this.timeOfDay = Duration.fromISO(data.timeOfDay);
+            }
+        }
+    }
+
+    /**
+     * The day of the week.
+     */
+    public dayOfWeek: DayOfWeek;
+
+    /**
+     * The time of the day.
+     */
+    public timeOfDay: Duration;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            dayOfWeek: this.dayOfWeek,
+            timeOfDay: this.timeOfDay.as("seconds")
+        };
+    }
+}

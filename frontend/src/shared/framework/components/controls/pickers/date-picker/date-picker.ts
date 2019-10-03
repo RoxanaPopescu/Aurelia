@@ -1,5 +1,5 @@
 import { autoinject, bindable, bindingMode, observable } from "aurelia-framework";
-import { DateTime, Info } from "luxon";
+import { DateTime, Info, Zone } from "luxon";
 import { EventManager } from "shared/utilities";
 import { DatesModel } from "./model/dates-model";
 import { MonthsModel } from "./model/months-model";
@@ -56,6 +56,12 @@ export class DatePickerCustomElement
     public cursor: DateTime;
 
     /**
+     * The IANA Time Zone Identifier to use, "local" to use the local zone, or "utc" to use the UTC zone.
+     */
+    @bindable({ defaultValue: "local" })
+    public zone: string | Zone;
+
+    /**
      * The picked date, or undefined if no date has been picked.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
@@ -108,18 +114,18 @@ export class DatePickerCustomElement
     public bind(): void
     {
         this.focusedElement = this.focusedElement || this._element;
-        this.today = DateTime.local().startOf("day");
+        this.today = DateTime.local().setZone(this.zone).startOf("day");
         this.cursor = (this.value || this.today).startOf("day");
         this.focusedValue = this.value;
 
         if (typeof this.min === "string")
         {
-            this.min = this.min === "today" ? this.today : DateTime.fromISO(this.min);
+            this.min = this.min === "today" ? this.today : DateTime.fromISO(this.min).setZone(this.zone);
         }
 
         if (typeof this.max === "string")
         {
-            this.max = this.max === "today" ? this.today : DateTime.fromISO(this.max);
+            this.max = this.max === "today" ? this.today : DateTime.fromISO(this.max).setZone(this.zone);
         }
 
         this.view = "dates";
@@ -141,7 +147,7 @@ export class DatePickerCustomElement
      * @param value The new value.
      * @param pick True if the user picked the value, otherwise false.
      */
-    public changeValue(value: DateTime | undefined, pick = false): void
+    public changeValue(value: DateTime | undefined, pick = false): void
     {
         // Set the focused value to match the new value.
         this.focusedValue = value;
