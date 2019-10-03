@@ -26,7 +26,8 @@ export class RoutePlanningModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/route-plans/_list/list"),
-                title: routeTitles.list
+                title: routeTitles.list,
+                nav: false
             },
             {
                 name: "details",
@@ -38,7 +39,9 @@ export class RoutePlanningModule
                 name: "settings-list",
                 route: "settings/list",
                 moduleId: PLATFORM.moduleName("./modules/route-settings/_list/list"),
-                title: routeTitles.settingsList
+                title: routeTitles.settingsList,
+                nav: true,
+                icon: "auto-dispatch"
             },
             {
                 name: "settings-details",
@@ -56,7 +59,9 @@ export class RoutePlanningModule
                 name: "order-groups-list",
                 route: "order-groups/list",
                 moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
-                title: routeTitles.orderGroupList
+                title: routeTitles.orderGroupList,
+                nav: true,
+                icon: "auto-dispatch"
             },
             {
                 name: "order-groups-details",
@@ -68,7 +73,9 @@ export class RoutePlanningModule
                 name: "simulations-list",
                 route: "simulations/list",
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/_list/list"),
-                title: routeTitles.simulationsList
+                title: routeTitles.simulationsList,
+                nav: true,
+                icon: "auto-dispatch"
             },
             {
                 name: "simulations-details",
