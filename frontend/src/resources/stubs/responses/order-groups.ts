@@ -5,7 +5,7 @@ const orderGroup =
     name: "Order group 1",
     paused: false,
     timeZone: "Europe/Copenhagen",
-    criteria:
+    matchingCriterias:
     [
         {
             consignors:
@@ -23,7 +23,7 @@ const orderGroup =
             tags: ["tag-1", "tag-2", "tag-3"]
         }
     ],
-    schedule:
+    routePlanningTimes:
     [
         {
             delivery:
@@ -39,12 +39,12 @@ const orderGroup =
 
 export default
 {
-    "POST /order-groups/tags":
+    "POST /api/v1/order-groups/tags":
     {
         data: ["tag-1", "tag-2", "tag-3", "tag-4", "tag-5", "tag-6"]
     },
 
-    "POST /order-groups/list":
+    "POST /api/v1/order-groups/list":
     {
         data:
         {
@@ -53,27 +53,27 @@ export default
         }
     },
 
-    "POST /order-groups/get/1":
+    "POST /api/v1/order-groups/get":
     {
         data: orderGroup
     },
 
-    "POST /order-groups/create":
+    "POST /api/v1/order-groups/create":
     {
         data: orderGroup
     },
 
-    "POST /order-groups/update":
+    "POST /api/v1/order-groups/update":
     {
         data: orderGroup
     },
 
-    "POST /order-groups/pause":
+    "POST /api/v1/order-groups/pause":
     {
         status: 201
     },
 
-    "POST /order-groups/unpause":
+    "POST /api/v1/order-groups/unpause":
     {
         status: 201
     }

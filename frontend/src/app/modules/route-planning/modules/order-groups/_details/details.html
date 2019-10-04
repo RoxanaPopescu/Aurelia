@@ -20,8 +20,12 @@
                             Order groups
                         </a>
 
-                        <span translate>
+                        <span if.bind="!orderGroup.id" translate>
                             New order group
+                        </span>
+
+                        <span if.bind="orderGroup.name" translate>
+                            ${orderGroup.name}
                         </span>
 
                     </path-nav>
@@ -29,8 +33,12 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="solid" accent="primary" translate>
+                    <button if.bind="!orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
                         Create order group
+                    </button>
+
+                    <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                        Save order group
                     </button>
 
                 </toolbar>
@@ -108,19 +116,19 @@
 
                         </data-table-headers>
 
-                        <template repeat.for="orderGroup of orderGroups">
+                        <template repeat.for="matchingCriteria of orderGroup.matchingCriterias">
 
                             <data-table-row>
 
                                 <data-table-cell>
                                     <span class="text-truncate">
-                                        ${orderGroup.consignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                        ${matchingCriteria.consignors | map: 'primaryName' | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
                                     <span class="text-truncate">
-                                        ${orderGroup.zipRanges | list: 'short'}
+                                        ${matchingCriteria.tags | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
@@ -146,13 +154,13 @@
 
                     </data-table>
 
-                    <busy-indicator if.bind="orderGroups == null" class="margin-largest"></busy-indicator>
+                    <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                    <empty-indicator if.bind="orderGroups.length == 0" class="margin-largest" translate>
+                    <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin-largest" translate>
                         No results
                     </empty-indicator>
 
-                    <button if.bind="orderGroups != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                    <button if.bind="orderGroup.matchingCriterias != null" appearance="outline" accent="primary" class="margin-large-top" translate>
                         Add criteria
                     </button>
 
@@ -161,11 +169,11 @@
                 <div class="order-group-schedule flex-basis-1-of-2 margin-large-left">
 
                     <h2 class="font-larger margin-bottom">
-                        Schedule
+                        Planning schedule
                     </h2>
 
                     <p class="opacity-faded">
-                        These are the times that do something, but I have no idea what, exactly.
+                        These are the rules that control when route planning runs for orders in the group.
                     </p>
 
                     <data-table
@@ -205,12 +213,6 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Next execution
-                                </span>
-                            </data-table-cell>
-
                             <data-table-cell align="right">
                                 <!-- Icons -->
                             </data-table-cell>
@@ -219,14 +221,14 @@
 
                     </data-table>
 
-                    <busy-indicator if.bind="executionTimes == null" class="margin-largest"></busy-indicator>
+                    <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                    <empty-indicator if.bind="executionTimes.length == 0" class="margin-largest" translate>
+                    <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin-largest" translate>
                         No results
                     </empty-indicator>
 
-                    <button if.bind="executionTimes != null" appearance="outline" accent="primary" class="margin-large-top" translate>
-                        Add execution time
+                    <button if.bind="orderGroup.routePlanningTimes != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                        Add rule
                     </button>
 
                 </div>

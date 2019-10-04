@@ -1,6 +1,6 @@
 @import "resources/index";
 
-page[name="orders"] page[name="order-groups-details"]
+page[name="route-planning"] page[name="order-groups-details"]
 {
     .order-group-criteria
     {
@@ -14,7 +14,7 @@ page[name="orders"] page[name="order-groups-details"]
     {
         data-table
         {
-            --data-table-columns: 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+            --data-table-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
         }
     }
 }
