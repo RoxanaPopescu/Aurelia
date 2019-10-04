@@ -41,7 +41,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-settings/_list/list"),
                 title: routeTitles.settingsList,
                 nav: true,
-                icon: "missing"
+                icon: "md-settings"
             },
             {
                 name: "settings-details",
@@ -61,7 +61,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
                 title: routeTitles.orderGroupsList,
                 nav: true,
-                icon: "missing"
+                icon: "md-all-inbox"
             },
             {
                 name: "order-groups-details",
@@ -75,7 +75,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/_list/list"),
                 title: routeTitles.simulationsList,
                 nav: true,
-                icon: "missing"
+                icon: "md-play"
             },
             {
                 name: "simulations-details",
