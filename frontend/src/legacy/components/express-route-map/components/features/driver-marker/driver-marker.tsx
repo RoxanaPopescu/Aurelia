@@ -1,9 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
-import { Marker } from "shared/src/components/worldMap";
+import { Marker, Popup } from "shared/src/components/worldMap";
 import { DriverRoute } from "app/model/express-route";
 import "./driver-marker.scss";
+import Localization from "shared/src/localization";
 
 export interface DriverMarkerProps {
   route: DriverRoute;
@@ -60,6 +61,32 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
     );
   }
 
+  protected renderPopup() {
+    return (
+      <Popup
+        position={this.props.route.driverPosition!.toGoogleLatLng()}
+        options={{
+          disableAutoPan: true,
+          disableCloseButton: true,
+          pixelOffset: new google.maps.Size(0, -11)
+        }}
+        onMouseOver={() => this.showPopup()}
+        onMouseOut={() => this.hidePopup()}
+      >
+
+        <div className="c-liveTracking-routeDriverMarker-popup user-select-text">
+
+          {this.renderDriverInfo()}
+
+          {this.props.route.driverVehicle &&
+          this.renderVehicleInfo()}
+
+        </div>
+
+      </Popup>
+    );
+  }
+
   private getMarkerModifier(): string {
 
     let modifierClass = "";
@@ -70,5 +97,76 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
           " expressRoutes-driverMarker--offline";
 
     return modifierClass;
+  }
+
+  private renderDriverInfo() {
+
+    return (
+      <React.Fragment>
+
+        <div className="c-worldMap-popup-header">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_Heading")}</div>
+        </div>
+
+        <div className="c-worldMap-popup-title">{this.props.route.driver!.name.toString()}</div>
+
+        <div className="c-worldMap-popup-section">
+
+          <div className="c-worldMap-popup-section-row">
+            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverId")}</div>
+            <div>{this.props.route.driver!.id.toString()}</div>
+          </div>
+
+          <div className="c-worldMap-popup-section-row">
+            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
+            <div>{this.props.route.driver!.phone.toString()}</div>
+          </div>
+
+        </div>
+
+        {!this.props.route.driverOnline &&
+        <div className="c-worldMap-popup-section">
+
+          <div className="c-worldMap-popup-section-row c-routeDetails-color-negative">
+            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
+          </div>
+
+        </div>}
+
+      </React.Fragment>
+    );
+  }
+
+  private renderVehicleInfo() {
+
+    return (
+      <div className="c-worldMap-popup-section c-worldMap-popup-section--border">
+
+        <div className="c-worldMap-popup-section-title">
+          {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Heading")}
+        </div>
+
+        <div className="c-worldMap-popup-section-row">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Type")}</div>
+          <div>{this.props.route.driverVehicle!.vehicleType.name}</div>
+        </div>
+
+        <div className="c-worldMap-popup-section-row">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel")}</div>
+          <div>{this.props.route.driverVehicle!.makeAndModel}</div>
+        </div>
+
+        <div className="c-worldMap-popup-section-row">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Color")}</div>
+          <div>{this.props.route.driverVehicle!.color}</div>
+        </div>
+
+        <div className="c-worldMap-popup-section-row">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_LicensePlate")}</div>
+          <div>{this.props.route.driverVehicle!.licensePlate}</div>
+        </div>
+
+      </div>
+    );
   }
 }
