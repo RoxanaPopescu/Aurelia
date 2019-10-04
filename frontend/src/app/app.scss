@@ -203,6 +203,11 @@ react-module
     --card-padding-large: 12.5rem 13rem;
 }
 
+path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-child)::after
+{
+    mask-size: 1em;
+}
+
 // HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.
 .input[label="above"] > .input-label
 {
