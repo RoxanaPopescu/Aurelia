@@ -16,6 +16,7 @@ export default class extends React.Component<{}> {
       <PageHeaderComponent
         actionElements={<>{this.props.children}</>}
         path={[
+          { title: Localization.operationsValue("RoutePlanning_Title") },
           { title: Localization.operationsValue("Dispatch_Title") },
           { title: driverDispatchService.state.name }
         ]}

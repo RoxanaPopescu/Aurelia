@@ -78,10 +78,15 @@ export default class RoutePlanningSettingsComponent extends React.Component<
             {
               title: "Ruteplanlægning",
               href: FulfillerSubPage.path(
+                FulfillerSubPage.RoutePlanningList
+              )
+            },
+            { title: "Indstillinger",
+              href: FulfillerSubPage.path(
                 FulfillerSubPage.RoutePlanningSettingList
               )
             },
-            { title: "Indstillinger" }
+            { title: this.store.setting.name || "Ny indstilling" }
           ]}
           tabs={[
             {

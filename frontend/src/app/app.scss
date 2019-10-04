@@ -145,6 +145,9 @@ react-module
             .pageHeader-tabs-tab
             {
                 line-height: calc(10rem - 2 * var(--border-width-medium));
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
 
                 &.active
                 {

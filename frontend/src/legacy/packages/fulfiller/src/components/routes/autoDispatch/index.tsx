@@ -68,6 +68,7 @@ export default class AutoDispatchComponent extends React.Component {
       <>
         <PageHeaderComponent
           path={[
+            { title: "Ruter" },
             { title: Localization.operationsValue("Routes_AutoDispatch_Title") }
           ]}
         />
