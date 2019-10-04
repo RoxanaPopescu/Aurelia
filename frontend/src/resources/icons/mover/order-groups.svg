@@ -1,0 +1,11 @@
+<svg width="24px" height="24px" viewBox="0 0 24 24">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g fill="currentColor">
+            <g transform="translate(4.000000, 4.000000)">
+                <polygon points="3.5001 -0.0002 0.0001 2.0008 0.0001 5.9998 3.5001 7.9998 7.0001 5.9998 7.0001 2.0008"></polygon>
+                <polygon points="12.5001 -0.0002 9.0001 2.0008 9.0001 5.9998 12.5001 7.9998 16.0001 5.9998 16.0001 2.0008"></polygon>
+                <polygon points="4.5 9.9997 4.5 13.9997 8 15.9997 11.5 13.9997 11.5 9.9997 8 7.9997"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
