@@ -52,7 +52,7 @@ export class RoutePlanningModule
             {
                 name: "settings-create",
                 route: "settings/create",
-                moduleId: PLATFORM.moduleName("./modules/route-settings/create/create"),
+                moduleId: PLATFORM.moduleName("./modules/route-settings/details/details"),
                 title: routeTitles.settingsCreate
             },
             {

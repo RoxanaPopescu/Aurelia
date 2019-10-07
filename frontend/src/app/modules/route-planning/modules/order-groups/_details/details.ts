@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { OrderGroupService, OrderGroup } from "app/model/_order-group";
-import { IValidation } from "shared/framework";
+import { OrderGroupService, OrderGroup, MatchingCriteria } from "app/model/_order-group";
+import { ModalService, IValidation } from "shared/framework";
+import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 
 /**
  * Represents the route parameters for the page.
@@ -18,13 +19,16 @@ export class DetailsPage
 {
     /**
      * Creates a new instance of the class.
+     * @param modalService The `ModalService` instance.
      * @param orderGroupsService The `OrderGroupService` instance.
      */
-    public constructor(orderGroupsService: OrderGroupService)
+    public constructor(modalService: ModalService, orderGroupsService: OrderGroupService)
     {
+        this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
     }
 
+    private readonly _modalService: ModalService;
     private readonly _orderGroupsService: OrderGroupService;
 
     /**
@@ -115,6 +119,21 @@ export class DetailsPage
     }
 
     /**
+     * Called when the add matching criteria button is clicked.
+     * Opens the new matching criteria dialog.
+     */
+    protected async onAddMatchingCriteriaClick(): Promise<void>
+    {
+        const matchingCriteria = new MatchingCriteria();
+        const result = await this._modalService.open(MatchingCriteriaDialog, matchingCriteria).promise;
+
+        if (result)
+        {
+            this.orderGroup.matchingCriterias.push(matchingCriteria);
+        }
+    }
+
+    /**
      * Called when the remove icon on a matching criteria is clicked.
      * Removes the matching criteria from the model.
      * @param index The index of the matching criteria to remove.
@@ -125,6 +144,31 @@ export class DetailsPage
     }
 
     /**
+     * Called when the edit icon on a matching criteria is clicked.
+     * Opens the edit matching criteria dialog.
+     * @param index The index of the matching criteria to edit.
+     */
+    protected async onEditMatchingCriteriaClick(index: number): Promise<void>
+    {
+        const matchingCriteria = this.orderGroup.matchingCriterias[index].clone();
+        const result = await this._modalService.open(MatchingCriteriaDialog, matchingCriteria).promise;
+
+        if (result)
+        {
+            this.orderGroup.matchingCriterias.splice(index, 1, matchingCriteria);
+        }
+    }
+
+    /**
+     * Called when the add route planning time button is clicked.
+     * Opens the new route planning time dialog.
+     */
+    protected onAddRoutePlanningTimeClick(): void
+    {
+
+    }
+
+    /**
      * Called when the remove icon on a route planning time is clicked.
      * Removes the route planning time from the model.
      * @param index The index of the route planning time to remove.
@@ -132,5 +176,15 @@ export class DetailsPage
     protected onRemoveRoutePlanningTimeClick(index: number): void
     {
         this.orderGroup.routePlanningTimes.splice(index, 1);
+    }
+
+    /**
+     * Called when the edit icon on a route planning time is clicked.
+     * Opens the edit route planning time dialog.
+     * @param index The index of the route planning time to edit.
+     */
+    protected onEditRoutePlanningTimeClick(index: number): void
+    {
+
     }
 }

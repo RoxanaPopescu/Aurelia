@@ -11,11 +11,14 @@ export class RoutePlanningTime
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        this.delivery = new TimeOfWeekRange(data.delivery);
-        this.planning = new TimeOfWeek(data.planning);
-        this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true });
+        if (data != null)
+        {
+            this.delivery = new TimeOfWeekRange(data.delivery);
+            this.planning = new TimeOfWeek(data.planning);
+            this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true });
+        }
     }
 
     /**

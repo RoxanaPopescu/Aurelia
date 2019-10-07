@@ -1,5 +1,5 @@
 import { IANAZone } from "luxon";
-import { MatchingCriterias as MatchingCriteria } from "./matching-criteria";
+import { MatchingCriteria as MatchingCriteria } from "./matching-criteria";
 import { RoutePlanningTime } from "./route-planning-time";
 
 /**

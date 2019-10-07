@@ -164,7 +164,13 @@
                         No items
                     </empty-indicator>
 
-                    <button if.bind="orderGroup != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                    <button
+                        if.bind="orderGroup != null"
+                        appearance="outline"
+                        accent="primary"
+                        class="margin-large-top"
+                        click.trigger="onAddMatchingCriteriaClick()"
+                        translate>
                         <icon name="md-add" class="font-larger line-height-1">
                     </button>
 
@@ -284,7 +290,13 @@
                         No items
                     </empty-indicator>
 
-                    <button if.bind="orderGroup != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                    <button
+                        if.bind="orderGroup != null"
+                        appearance="outline"
+                        accent="primary"
+                        class="margin-large-top"
+                        click.trigger="onAddRoutePlanningTimeClick()"
+                        translate>
                         <icon name="md-add" class="font-larger line-height-1">
                     </button>
 

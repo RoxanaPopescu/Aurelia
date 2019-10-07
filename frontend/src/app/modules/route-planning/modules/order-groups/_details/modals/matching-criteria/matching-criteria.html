@@ -1,0 +1,77 @@
+<template>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="add-fulfiller-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <header>
+
+            <h1 class="font-larger">
+
+                <span if.bind="create" translate>
+                    New matching criteria
+                </span>
+
+                <span if.bind="!create" translate>
+                    Edit matching criteria
+                </span>
+
+            </h1>
+
+        </header>
+
+        <section validation validation.ref="validation">
+
+            <tags-input value.bind="model.consignors" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Consignors
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.consignors">
+                    </required-validator>
+
+                </div>
+
+            </tags-input>
+
+            <tags-input value.bind="model.tags" label="above">
+
+                <div slot="heading" translate>
+                    Tags
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.tags">
+                    </required-validator>
+
+                </div>
+
+            </tags-input>
+
+        </section>
+
+        <footer>
+
+            <button appearance="solid" accent="primary" click.delegate="onSaveClick()">
+
+                <span if.bind="create" translate>
+                    Create
+                </span>
+
+                <span if.bind="!create" translate>
+                    Accept changes
+                </span>
+
+            </button>
+
+        </footer>
+
+    </modal-dialog>
+
+</template>
