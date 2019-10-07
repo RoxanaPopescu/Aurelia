@@ -1,6 +1,8 @@
-import { IANAZone } from "luxon";
+import { IANAZone, DateTime } from "luxon";
 import { MatchingCriterias as MatchingCriteria } from "./matching-criteria";
 import { RoutePlanningTime } from "./route-planning-time";
+import { computedFrom } from "aurelia-framework";
+import { Consignor } from "app/model/outfit";
 
 /**
  * Represents an order group used for route planning.
@@ -56,4 +58,40 @@ export class OrderGroup
      * The consignors to which the order group applies.
      */
     public readonly routePlanningTimes: RoutePlanningTime[];
+
+    /**
+     * Gets a list of consignors associated with the order group.
+     */
+    @computedFrom("matchingCriterias")
+    public get allConsignors(): Consignor[]
+    {
+        let consignors: Consignor[] = [];
+        this.matchingCriterias.forEach(m => consignors = [...new Set(consignors.concat(m.consignors))]);
+
+        return consignors;
+    }
+
+    /**
+     * Gets a list of tags associated with the order group.
+     */
+    @computedFrom("matchingCriterias")
+    public get allTags(): string[]
+    {
+        let tags: string[] = [];
+        this.matchingCriterias.forEach(m => tags = [...new Set(tags.concat(m.tags))]);
+
+        return tags;
+    }
+
+    /**
+     * Gets the next time route planning will execute for this order group.
+     */
+    @computedFrom("routePlanningTimes")
+    public get nextPlanningTime(): DateTime
+    {
+        let dateTimes = this.routePlanningTimes.map(t => t.nextPlanning);
+        dateTimes = dateTimes.sort((a, b) => a.toMillis() - b.toMillis());
+
+        return dateTimes[0];
+    }
 }
