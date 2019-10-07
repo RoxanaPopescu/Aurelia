@@ -29,7 +29,7 @@ export class OrderGroupService
      */
     public async getAllTags(filter?: IOrderGroupFilter, signal?: AbortSignal): Promise<string[]>
     {
-        const result = await this._apiClient.get("order-groups/tags",
+        const result = await this._apiClient.post("order-groups/tags",
         {
             body:
             {
@@ -51,7 +51,7 @@ export class OrderGroupService
      */
     public async getAll(filter?: IOrderGroupFilter, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroup[]; orderGroupCount: number }>
     {
-        const result = await this._apiClient.get("order-groups/list",
+        const result = await this._apiClient.post("order-groups/list",
         {
             body:
             {
@@ -76,7 +76,7 @@ export class OrderGroupService
      */
     public async get(id: string, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.get("order-groups/get",
+        const result = await this._apiClient.post("order-groups/get",
         {
             body: { id },
             signal
@@ -93,7 +93,7 @@ export class OrderGroupService
      */
     public async create(orderGroup: Partial<OrderGroup>, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.get("order-groups/create",
+        const result = await this._apiClient.post("order-groups/create",
         {
             body: orderGroup,
             signal
@@ -110,7 +110,7 @@ export class OrderGroupService
      */
     public async update(orderGroup: OrderGroup, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.get("order-groups/update",
+        const result = await this._apiClient.post("order-groups/update",
         {
             body: orderGroup,
             signal

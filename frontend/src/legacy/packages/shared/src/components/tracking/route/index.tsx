@@ -512,6 +512,7 @@ export default class TrackingRoute extends React.Component<Props> {
 
         <PageHeaderComponent
           path={[
+            { title: "Ruter" },
             { title: "Chauffør tracking" }
           ]}
         >

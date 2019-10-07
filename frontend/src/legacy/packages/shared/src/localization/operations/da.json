@@ -267,6 +267,7 @@
   "RoutePlanning_Settings_List_Title": "Routeplan indstillinger",
   "RoutePlanning_Settings_List_TotalCount": "Indstillinger {count}",
   "RoutePlanning_Simulations_List_TotalCount": "{count} simulationer",
+  "RoutePlanning_Title": "Ruteplanlægning",
   "Routes_AutoDispatch_AddRule": "Tilføj regel",
   "Routes_AutoDispatch_EditRule_EditTitle": "Rediger tildelingsregel",
   "Routes_AutoDispatch_EditRule_NewTitle": "Ny tildelingsregel",

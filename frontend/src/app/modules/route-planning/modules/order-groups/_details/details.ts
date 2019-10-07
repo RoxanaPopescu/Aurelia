@@ -1,18 +1,12 @@
-import { autoinject, observable } from "aurelia-framework";
-import { ISorting, IPaging, SortingDirection } from "shared/types";
-import { Operation } from "shared/utilities";
-import { IScroll } from "shared/framework";
-import { OrderGroupService, OrderGroupInfo } from "app/model/order-group";
+import { autoinject } from "aurelia-framework";
+import { OrderGroupService, OrderGroup } from "app/model/_order-group";
 
 /**
  * Represents the route parameters for the page.
  */
 interface IRouteParams
 {
-    page?: number;
-    pageSize?: number;
-    sortProperty?: string;
-    sortDirection?: SortingDirection;
+    id?: string;
 }
 
 /**
@@ -28,51 +22,14 @@ export class DetailsPage
     public constructor(orderGroupsService: OrderGroupService)
     {
         this._orderGroupsService = orderGroupsService;
-        this._constructed = true;
     }
 
     private readonly _orderGroupsService: OrderGroupService;
-    private readonly _constructed;
 
     /**
-     * The scroll manager for the page.
+     * The order group to present or edit.
      */
-    protected scroll: IScroll;
-
-    /**
-     * The most recent update operation.
-     */
-    protected updateOperation: Operation;
-
-    /**
-     * The sorting to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected sorting: ISorting =
-    {
-        property: "created",
-        direction: "descending"
-    };
-
-    /**
-     * The paging to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected paging: IPaging =
-    {
-        page: 1,
-        pageSize: 20
-    };
-
-    /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected orderGroupCount: number | undefined;
-
-    /**
-     * The items to present in the table.
-     */
-    protected orderGroups: OrderGroupInfo[];
+    protected orderGroup: OrderGroup;
 
     /**
      * Called by the framework when the module is activated.
@@ -81,12 +38,11 @@ export class DetailsPage
      */
     public async activate(params: IRouteParams): Promise<void>
     {
-        this.paging.page = params.page || this.paging.page;
-        this.paging.pageSize = params.pageSize || this.paging.pageSize;
-        this.sorting.property = params.sortProperty || this.sorting.property;
-        this.sorting.direction = params.sortDirection || this.sorting.direction;
-
-        this.update();
+        if (params.id)
+        {
+            // Fetch the data.
+            this.orderGroup = await this._orderGroupsService.get(params.id);
+        }
     }
 
     /**
@@ -95,53 +51,24 @@ export class DetailsPage
      */
     public deactivate(): void
     {
-        // Abort any existing operation.
-        if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
+        // TODO: Ask to save changes.
     }
 
     /**
-     * Updates the page by fetching the latest data.
+     * Called when the `Create order group` button is clicked.
+     * Creates the order group.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected async onCreateClick(): Promise<void>
     {
-        // Return if the object is not constructed.
-        // This is needed because the `observable` decorator calls the change handler when the
-        // initial property value is set, which happens before the constructor is called.
-        if (!this._constructed)
-        {
-            return;
-        }
+        await this._orderGroupsService.create(this.orderGroup);
+    }
 
-        // Abort any existing operation.
-        if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
-
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            // Fetch the data.
-            const result = await this._orderGroupsService.getAll(
-                this.sorting,
-                this.paging,
-                signal);
-
-            // Update the state.
-            this.orderGroups = result.orderGroups;
-            this.orderGroupCount = result.orderGroupCount;
-
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
-            }
-
-            // Scroll to top.
-            this.scroll.reset();
-        });
+    /**
+     * Called when the `Save order group` button is clicked.
+     * Saves the order group.
+     */
+    protected async onSaveClick(): Promise<void>
+    {
+        await this._orderGroupsService.update(this.orderGroup);
     }
 }

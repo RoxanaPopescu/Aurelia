@@ -203,6 +203,19 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
               </div>
             </div>
           )}
+
+          {this.props.routeStop.driverInstructions && (
+            <div className="c-worldMap-popup-section-row">
+              <div>
+                {Localization.sharedValue(
+                    "RouteDetails_Map_RouteStopMarker_DriverInstructions"
+                )}
+              </div>
+              <div>
+                {this.props.routeStop.driverInstructions}
+              </div>
+            </div>
+          )}
         </div>
 
         {this.props.routeStop.isDelayed && (

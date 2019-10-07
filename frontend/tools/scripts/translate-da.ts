@@ -14,19 +14,19 @@ const importFileContents = JSON.parse(fs.readFileSync(importFilePath).toString()
 
 for (const key of Object.keys(exportFileContents))
 {
-    if (importFileContents["./"][key] == null)
+    if (importFileContents[key] == null)
     {
-        importFileContents["./"][key] = exportFileContents[key].content;
+        importFileContents[key] = exportFileContents[key].content;
     }
 }
 
-for (const key of Object.keys(importFileContents["./"]))
+for (const key of Object.keys(importFileContents))
 {
     if (exportFileContents[key] == null)
     {
         // tslint:disable-next-line: no-dynamic-delete
-        delete importFileContents["./"][key];
+        delete importFileContents[key];
     }
 }
 
-fs.writeFileSync(importFilePath, JSON.stringify(importFileContents, null, 2) + "\n");
+fs.writeFileSync(importFilePath, `${JSON.stringify(importFileContents, null, 2)}\n`);

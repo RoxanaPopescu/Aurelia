@@ -29,7 +29,7 @@ export default class SimulationResultComponent extends React.Component<Props> {
 
   @observable
   private routeSimulationResult: RouteSimulationResult;
-  
+
   @observable
   private selectedIndex: number;
 
@@ -68,6 +68,7 @@ export default class SimulationResultComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
+            { title: "Ruteplanlægning", href: FulfillerSubPage.path(FulfillerSubPage.RoutePlanningList) },
             { title: "Simulationer", href: FulfillerSubPage.path(FulfillerSubPage.SimulationList) },
             { title: "Resultat af simulation" }
           ]}
@@ -82,7 +83,7 @@ export default class SimulationResultComponent extends React.Component<Props> {
             <div className="c-routeSimulation-result-comparison">
 
               <div className="c-routeSimulation-result-comparison-column">
-                
+
                 <div/>
                 <div>Status</div>
                 <div>Samlet tid</div>

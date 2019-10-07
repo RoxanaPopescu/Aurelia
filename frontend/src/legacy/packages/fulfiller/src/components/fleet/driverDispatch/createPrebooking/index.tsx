@@ -324,6 +324,10 @@ export default class CreatePrebookingComponent extends React.Component<
         <PageHeaderComponent
           path={[
             {
+              title: Localization.operationsValue("RoutePlanning_Title"),
+              href: FulfillerSubPage.path(FulfillerSubPage.RoutePlanningList)
+            },
+            {
               title: Localization.operationsValue("Dispatch_Title"),
               href: FulfillerSubPage.path(FulfillerSubPage.DriverDispatch)
             },
