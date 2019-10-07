@@ -36,7 +36,7 @@
     "express": "^4.17.1",
     "focus-trap": "^5.0.2",
     "inert-polyfill": "^0.2.5",
-    "luxon": "^1.17.2",
+    "luxon": "^1.19.3",
     "popper.js": "^1.15.0",
     "tslib": "^1.10.0",
     "uuid": "^3.3.2"

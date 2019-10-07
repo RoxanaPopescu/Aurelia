@@ -2,8 +2,9 @@
 
     <require from="./details.scss"></require>
     <require from="app/components/info-card/info-card"></require>
+    <require from="app/components/status-message/status-message"></require>
 
-    <page name="order-groups-details">
+    <page name="order-groups-details" validation validation.ref="validation">
 
         <page-content scroll scroll.ref="scroll">
 
@@ -20,12 +21,16 @@
                             Order groups
                         </a>
 
-                        <span if.bind="!orderGroup.id" translate>
-                            New order group
-                        </span>
+                        <span>
 
-                        <span if.bind="orderGroup.name" translate>
-                            ${orderGroup.name}
+                            <span if.bind="!orderGroupName" translate>
+                                New order group
+                            </span>
+
+                            <span if.bind="orderGroupName">
+                                ${orderGroupName}
+                            </span>
+
                         </span>
 
                     </path-nav>
@@ -45,28 +50,28 @@
 
             </header>
 
-            <section>
-                <card accent="attention">&nbsp;&nbsp;This order group is currently paused.</card>
-            </section>
+            <status-message if.bind="orderGroup.paused">
+
+                <span translate>
+                    This order group is currently paused.
+                </span>
+
+            </status-message>
 
             <section class="flex-row">
 
                 <div class="flex-basis-1-of-4">
 
-                    <text-input label="above" autofocus>
+                    <text-input label="above" value.bind="orderGroup.name" autofocus>
 
                         <div slot="heading" translate>
-                            Name
+                            Order group name
                         </div>
-
-                        <span slot="placeholder" translate>
-                            New order group
-                        </span>
 
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="name">
+                                value.bind="orderGroup.name">
                             </required-validator>
 
                         </div>
@@ -79,22 +84,21 @@
 
             <hr class="hr-line margin-larger">
 
-            <section class="order-group-criteria margin-top flex-row">
+            <section class="margin-top flex-row">
 
-                <div class="flex-basis-1-of-2 margin-large-right">
+                <div class="order-group-criteria flex-basis-1-of-2 margin-large-right">
 
                     <h2 class="font-larger margin-bottom">
                         Match criteria
                     </h2>
 
                     <p class="opacity-faded">
-                        These are the criteria an order must fulfill, to be marked as part of this group.
+                        These are the criteria an order must fulfill to be included in this group.
                     </p>
 
                     <data-table
                         appearance="rows"
-                        sorting.bind="sorting"
-                        busy.bind="updateOperation.pending">
+                        busy.bind="orderGroup == null">
 
                         <data-table-headers>
 
@@ -140,7 +144,7 @@
                                             <icon name="md-edit"></icon>
                                         </button>
 
-                                        <button appearance="none" accent="primary">
+                                        <button appearance="none" accent="primary" click.trigger="onRemoveMatchingCriteriaClick($index)">
                                             <icon name="md-delete"></icon>
                                         </button>
 
@@ -156,12 +160,12 @@
 
                     <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                    <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin-largest" translate>
-                        No results
+                    <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin" translate>
+                        No items
                     </empty-indicator>
 
-                    <button if.bind="orderGroup.matchingCriterias != null" appearance="outline" accent="primary" class="margin-large-top" translate>
-                        Add criteria
+                    <button if.bind="orderGroup != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                        <icon name="md-add" class="font-larger line-height-1">
                     </button>
 
                 </div>
@@ -178,8 +182,7 @@
 
                     <data-table
                         appearance="rows"
-                        sorting.bind="sorting"
-                        busy.bind="updateOperation.pending">
+                        busy.bind="orderGroup == null">
 
                         <data-table-headers>
 
@@ -219,16 +222,70 @@
 
                         </data-table-headers>
 
+                        <template repeat.for="routePlanningTime of orderGroup.routePlanningTimes">
+
+                            <data-table-row>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${routePlanningTime.delivery.from.dayOfWeek | weekday} - ${routePlanningTime.delivery.to.dayOfWeek | weekday}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${routePlanningTime.delivery.from.timeOfDay | time: false} - ${routePlanningTime.delivery.to.timeOfDay | time: false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${routePlanningTime.planning.dayOfWeek | weekday}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${routePlanningTime.planning.timeOfDay | time: false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${routePlanningTime.nextPlanning | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell align="right">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary">
+                                            <icon name="md-edit"></icon>
+                                        </button>
+
+                                        <button appearance="none" accent="primary" click.trigger="onRemoveRoutePlanningTimeClick($index)">
+                                            <icon name="md-delete"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                            </data-table-row>
+
+                        </template>
+
                     </data-table>
 
                     <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                    <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin-largest" translate>
-                        No results
+                    <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin" translate>
+                        No items
                     </empty-indicator>
 
-                    <button if.bind="orderGroup.routePlanningTimes != null" appearance="outline" accent="primary" class="margin-large-top" translate>
-                        Add rule
+                    <button if.bind="orderGroup != null" appearance="outline" accent="primary" class="margin-large-top" translate>
+                        <icon name="md-add" class="font-larger line-height-1">
                     </button>
 
                 </div>
