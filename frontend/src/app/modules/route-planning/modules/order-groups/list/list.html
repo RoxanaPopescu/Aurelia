@@ -1,10 +1,108 @@
 <template>
 
-    <require from="legacy/wrappers/route-planning/order-groups/list" as="react-module"></require>
+    <require from="./list.scss"></require>
 
     <page name="order-groups-list">
 
-        <react-module></react-module>
+        <page-content scroll scroll.ref="scroll">
+
+            <header scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Order groups
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+            </header>
+
+            <section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="consignors" translate>
+                            Consignors
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="tags" translate>
+                            Tags
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="next-route-planning" translate>
+                            Next route planning
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="status" translate>
+                            Status
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="orderGroup of orderGroups">
+
+                        <data-table-row>
+
+                            <data-table-cell>
+                                ${orderGroup.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${orderGroup.allConsignors | map: 'primaryName' | list: 'short' : 'unit'}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${orderGroup.allTags | list: 'short' : 'unit'}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${orderGroup.nextPlanningTime}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${orderGroup.allTags.length}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="orderGroups == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="orderGroups.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <!--
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="orderGroups.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="orderGroupCount">
+                    </data-table-pager>
+
+                </div>
+                -->
+
+            </section>
+
+        </page-content>
 
     </page>
 
