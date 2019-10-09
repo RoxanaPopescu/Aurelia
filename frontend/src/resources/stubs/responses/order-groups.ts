@@ -28,10 +28,10 @@ const orderGroup =
         {
             delivery:
             {
-                from: { dayOfWeek: 0, timeOfDay: "06:00" },
+                from: { dayOfWeek: 1, timeOfDay: "06:00" },
                 to: { dayOfWeek: 5, timeOfDay: "22:00" }
             },
-            planning: { dayOfWeek: 0, timeOfDay: "03:00" },
+            planning: { dayOfWeek: 1, timeOfDay: "03:00" },
             nextPlanning: "2019-10-15T03:00+02:00"
         }
     ]

@@ -101,7 +101,7 @@ export class App
             }
 
             request.url = request.url.replace(
-                /^\/resources\/themes\/default\//,
+                /^\/resources\/themes\/mover\//,
                 `/resources/themes/${response.locals.themeSlug}/`);
 
             // Resolve the locale to use, ensure the cookie is set,
