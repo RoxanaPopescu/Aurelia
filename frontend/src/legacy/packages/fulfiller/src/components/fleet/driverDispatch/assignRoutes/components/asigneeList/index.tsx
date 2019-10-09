@@ -377,14 +377,15 @@ export default class extends React.Component<Props, State> {
     } else if (this.state.selectedRoute) {
       this.setState({
         search: query
-      });
-      if (this.state.state === "drivers") {
-        if (!isNaN(Number(query))) {
-          this.fetchDriverById(Number(query));
-        } else {
-          this.fetchDrivers(this.state.selectedRoute);
+      }, () => {
+        if (this.state.state === "drivers") {
+          if (!isNaN(Number(query))) {
+            this.fetchDriverById(Number(query));
+          } else if (query === undefined || query.length >= 3) {
+            this.fetchDrivers(this.state.selectedRoute!);
+          }
         }
-      }
+      });
     }
   }
 }
