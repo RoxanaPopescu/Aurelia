@@ -267,7 +267,8 @@ export class TableComponent extends React.Component<TableProps, TableState> {
                       <div
                         onClick={() => {
                           var content: JSX.Element | undefined = undefined;
-                          if (!this.state.accordionContent) {
+                          if (this.state.accordionContent !== undefined &&
+                              this.state.accordionContent.content === undefined) {
                             content = this.props.accordionRows!(index);
                           } else {
                             this.props.accordionRows!(undefined);
@@ -298,7 +299,9 @@ export class TableComponent extends React.Component<TableProps, TableState> {
           ) {
             rowClassName += " disabledRow";
           }
-          if (this.state.accordionContent && this.state.accordionContent.rowIndex === index) {
+          if (this.state.accordionContent !== undefined &&
+              this.state.accordionContent.content !== undefined &&
+              this.state.accordionContent.rowIndex === index) {
             rowClassName += " accordionOpen";
           }
 
