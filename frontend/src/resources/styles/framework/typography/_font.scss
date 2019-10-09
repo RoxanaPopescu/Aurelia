@@ -73,7 +73,7 @@ $__summary: comment;
 .font-heading-large
 {
     @include font("heading-large");
-    color: var(--color-surface-heading);
+    color: var(--surface-heading-color);
 }
 
   /// Text style for headings.
@@ -81,7 +81,7 @@ $__summary: comment;
 .font-heading
 {
     @include font("heading");
-    color: var(--color-surface-heading);
+    color: var(--surface-heading-color);
 }
 
 /// Text style for code, identifiers, or similar monospaced text.

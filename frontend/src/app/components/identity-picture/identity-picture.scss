@@ -27,8 +27,8 @@ identity-picture
     text-transform: uppercase;
 
     // Apply surface style.
-    background: var(--color-surface-primary-surface);
-    color: var(--color-surface-primary-surface-text);
+    background: var(--surface-primary-surface-color);
+    color: var(--surface-primary-surface-text-color);
 
     // Clip the content.
     overflow: hidden;

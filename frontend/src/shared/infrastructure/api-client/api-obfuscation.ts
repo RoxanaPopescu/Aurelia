@@ -22,7 +22,7 @@ const base64Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123
  */
 export function obfuscate(plaintext: string, cipherAlphabet: string): string
 {
-    const cipherChars: any[] = [];
+    const cipherChars: string[] = [];
 
     for (const char of Base64.encode(plaintext, true))
     {
@@ -40,7 +40,7 @@ export function obfuscate(plaintext: string, cipherAlphabet: string): string
  */
 export function deobfuscate(ciphertext: string, cipherAlphabet: string): string
 {
-    const base64Chars: any[] = [];
+    const base64Chars: string[] = [];
 
     for (const char of ciphertext)
     {

@@ -4,7 +4,7 @@
 
     <page-content scroll scroll.ref="scroll">
 
-        <header scroll-fade>
+        <page-header scroll-fade>
 
             <h1 class="font-largest">
                 <path-nav>
@@ -24,9 +24,9 @@
                 </path-nav>
             </h1>
 
-        </header>
+        </page-header>
 
-        <section>
+        <page-section>
 
             <h2 class="font-larger margin-large-bottom" translate>
                 Selected driver
@@ -117,7 +117,7 @@
 
                         <data-table-cell title.bind="item.completionTime">
                             <span class="text-truncate">
-                                ${item.completionTime | time: false}
+                                ${item.completionTime | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
@@ -133,9 +133,9 @@
 
             </data-table>
 
-        </section>
+        </page-section>
 
-        <section>
+        <page-section>
 
             <h2 class="font-larger margin-large-bottom" translate>
                 Selected routes
@@ -266,15 +266,15 @@
                         </data-table-cell>
                         -->
 
-                        <data-table-cell title.bind="item.earliestPickupDate | time">
+                        <data-table-cell title.bind="item.earliestPickupDate | time: 'narrow' : false">
                             <span class="text-truncate">
-                                ${item.earliestPickupDate | time: false}
+                                ${item.earliestPickupDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestPickupDate | time">
+                        <data-table-cell title.bind="item.latestPickupDate | time: 'narrow' : false">
                             <span class="text-truncate">
-                                ${item.latestPickupDate | time: false}
+                                ${item.latestPickupDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
@@ -292,15 +292,15 @@
                         </data-table-cell>
                         -->
 
-                        <data-table-cell title.bind="item.earliestDeliveryDate | time: false">
+                        <data-table-cell title.bind="item.earliestDeliveryDate | time: 'narrow' : false">
                             <span class="text-truncate">
-                                ${item.earliestDeliveryDate | time: false}
+                                ${item.earliestDeliveryDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: false" align="right">
+                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false" align="right">
                             <span class="text-truncate">
-                                ${item.latestDeliveryDate | time: false}
+                                ${item.latestDeliveryDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
@@ -310,7 +310,7 @@
 
             </data-table>
 
-        </section>
+        </page-section>
 
     </page-content>
 

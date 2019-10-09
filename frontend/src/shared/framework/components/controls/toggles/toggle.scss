@@ -2,19 +2,16 @@
 
 body
 {
-    /// The color of the text on the surface of the component.
-    --toggle-surface-icon-color: var(--color-surface-neutral-icon);
-    --toggle-surface-icon-color--active: var(--color-surface-primary-icon);
-    --toggle-surface-icon-color--invalid: var(--color-surface-negative-icon);
-
-    /// The width of the border of the component.
-    --toggle-border-width: var(--border-width-thin);
-
-    /// The radius of the border of the component.
-    --toggle-border-radius: var(--border-radius-medium);
-
     /// The min-height of the component.
     --toggle-height: 2em;
+
+    /// The color of the indicator on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --toggle-surface-indicator-color: var(--surface-toggle-surface-indicator-color);
+    --toggle-surface-indicator-color--hover: var(--surface-toggle-surface-indicator-color--hover);
+    --toggle-surface-indicator-color--focus: var(--surface-toggle-surface-indicator-color--focus);
+    --toggle-surface-indicator-color--active: var(--surface-toggle-surface-indicator-color--active);
+    --toggle-surface-indicator-color--invalid: var(--surface-toggle-color--invalid--surface-indicator);
 }
 
 .toggle
@@ -134,7 +131,7 @@ body
         min-height: var(--toggle-height);
 
         // Apply component style for the normal state.
-        color: var(--toggle-surface-icon-color);
+        color: var(--toggle-surface-indicator-color);
 
         // Use cursor to indicate the element is clickable.
         cursor: pointer;
@@ -165,12 +162,30 @@ body
         }
     }
 
+    &:not(.--disabled):not(.--readonly):not(.--invalid):not(.--active):hover
+    {
+        > .toggle-control
+        {
+            // Apply style for the hover state.
+            color: var(--toggle-surface-indicator-color--hover);
+        }
+    }
+
+    &:not(.--disabled):not(.--readonly):not(.--invalid):not(.--active):focus-within
+    {
+        > .toggle-control
+        {
+            // Apply style for the focus state.
+            color: var(--toggle-surface-indicator-color--focus);
+        }
+    }
+
     &:not(.--invalid).--active
     {
         > .toggle-control
         {
             // Apply style for the active state.
-            color: var(--toggle-surface-icon-color--active);
+            color: var(--toggle-surface-indicator-color--active);
         }
     }
 
@@ -179,7 +194,7 @@ body
         > .toggle-control
         {
             // Apply style for the invalid state.
-            color: var(--toggle-surface-icon-color--invalid);
+            color: var(--toggle-surface-indicator-color--invalid);
         }
     }
 }

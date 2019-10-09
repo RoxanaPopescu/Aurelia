@@ -14,16 +14,16 @@ page-content
     // Allow the element to shrink.
     min-width: 0;
 
-    > header
+    page-header
     {
         // Apply default padding.
         padding: 7rem 9rem;
 
         // Add a border below the header.
-        border-bottom: var(--border-width-thin) solid var(--color-surface-border);
+        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
 
         // Apply surface color, so the header covers the page content when scrolled.
-        background: var(--color-surface);
+        background: var(--surface-color);
 
         h1.font-largest
         {
@@ -45,11 +45,23 @@ page-content
         }
     }
 
-    > section,
-    > footer
+    page-section,
+    page-footer
     {
         // Apply default margin.
         margin: 8rem 9rem;
+    }
+
+    .page-content-back-to-top
+    {
+        position: fixed;
+        top: 3rem;
+        right: 1.5rem;
+
+        &:not(:hover) icon
+        {
+            opacity: var(--opacity-faded-more);
+        }
     }
 }
 
@@ -80,10 +92,10 @@ page-content.page-content-center
         padding: 8rem 9rem;
 
         // Apply surface color, so the footer covers the page content when scrolled.
-        background: var(--color-surface);
+        background: var(--surface-color);
 
         // Add a border above the footer.
-        border-top: var(--border-width-thin) solid var(--color-surface-border);
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
     }
 }
 

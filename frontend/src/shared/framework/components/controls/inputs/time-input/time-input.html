@@ -26,7 +26,7 @@
 
         <slot name="placeholder" slot="placeholder">
             <span class="opacity-faded-more">
-                ${formatInfo.format | case: 'upper'}
+                ${timeFormat.displayFormat}
             </span>
         </slot>
 
@@ -51,7 +51,7 @@
                 trigger="change">
 
                 <template replace-part="invalid" translate>
-                    Please provide a valid time, formatted as <kbd>${formatInfo.format | case: 'upper'}</kbd>.
+                    Please provide a valid time, formatted as <kbd>${timeFormat.displayFormat}</kbd>.
                 </template>
 
             </custom-validator>
@@ -59,12 +59,12 @@
             <pattern-validator
                 enabled.bind="open"
                 active.bind="true"
-                pattern.bind="formatInfo.partialPattern"
+                pattern.bind="timeFormat.inputPattern"
                 trigger="input"
                 value.bind="enteredValue">
 
                 <template replace-part="invalid" translate>
-                   Please provide a valid time, formatted as <kbd>${formatInfo.format | case: 'upper'}</kbd>.
+                   Please provide a valid time, formatted as <kbd>${timeFormat.displayFormat}</kbd>.
                 </template>
 
             </pattern-validator>
@@ -96,7 +96,7 @@
                     model.bind="item"
                     show.bind="item == null || (item.valueOf() >= min.valueOf() && item.valueOf() <= max.valueOf())"
                     disabled.bind="item != null && (item.valueOf() < min.valueOf() || item.valueOf() > max.valueOf())">
-                    ${item | time}
+                    ${item | time: 'narrow' : false}
                 </item>
 
             </item-picker>

@@ -8,7 +8,7 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <header scroll-fade class="flex-row">
+            <page-header scroll-fade class="flex-row">
 
                 <h1 class="font-largest">
                     <path-nav>
@@ -48,7 +48,7 @@
 
                 </toolbar>
 
-            </header>
+            </page-header>
 
             <status-message if.bind="orderGroup.paused">
 
@@ -58,251 +58,257 @@
 
             </status-message>
 
-            <section class="flex-row">
+            <page-section>
 
-                <div class="flex-basis-1-of-4">
+                <div class="flex-row">
 
-                    <text-input label="above" value.bind="orderGroup.name" autofocus>
+                    <div class="flex-basis-1-of-4">
 
-                        <div slot="heading" translate>
-                            Order group name
-                        </div>
+                        <text-input label="above" value.bind="orderGroup.name" autofocus>
 
-                        <div slot="validation">
+                            <div slot="heading" translate>
+                                Order group name
+                            </div>
 
-                            <required-validator
-                                value.bind="orderGroup.name">
-                            </required-validator>
+                            <div slot="validation">
 
-                        </div>
+                                <required-validator
+                                    value.bind="orderGroup.name">
+                                </required-validator>
 
-                    </text-input>
+                            </div>
+
+                        </text-input>
+
+                    </div>
 
                 </div>
 
-            </section>
+            </page-section>
 
             <hr class="hr-line margin-larger">
 
-            <section class="margin-top flex-row">
+            <page-section class="margin-top">
 
-                <div class="order-group-criteria flex-basis-1-of-2 margin-large-right">
+                <div class="flex-row">
 
-                    <h2 class="font-larger margin-bottom">
-                        Match criteria
-                    </h2>
+                    <div class="order-group-criteria flex-basis-1-of-2 margin-large-right">
 
-                    <p class="opacity-faded">
-                        These are the criteria an order must fulfill to be included in this group.
-                    </p>
+                        <h2 class="font-larger margin-bottom">
+                            Match criteria
+                        </h2>
 
-                    <data-table
-                        appearance="rows"
-                        busy.bind="orderGroup == null">
+                        <p class="opacity-faded">
+                            These are the criteria an order must fulfill to be included in this group.
+                        </p>
 
-                        <data-table-headers>
+                        <data-table
+                            appearance="rows"
+                            busy.bind="orderGroup == null">
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Consignor
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Tags
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell align="right">
-                                <!-- Icons -->
-                            </data-table-cell>
-
-                        </data-table-headers>
-
-                        <template repeat.for="matchingCriteria of orderGroup.matchingCriterias">
-
-                            <data-table-row>
+                            <data-table-headers>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${matchingCriteria.consignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                    <span class="text-truncate" translate>
+                                        Consignor
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${matchingCriteria.tags | list: 'short' : 'unit'}
+                                    <span class="text-truncate" translate>
+                                        Tags
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell align="right">
-
-                                    <div class="icon-row">
-
-                                        <button appearance="none" accent="primary">
-                                            <icon name="md-edit"></icon>
-                                        </button>
-
-                                        <button appearance="none" accent="primary" click.trigger="onRemoveMatchingCriteriaClick($index)">
-                                            <icon name="md-delete"></icon>
-                                        </button>
-
-                                    </div>
-
+                                    <!-- Icons -->
                                 </data-table-cell>
 
-                            </data-table-row>
+                            </data-table-headers>
 
-                        </template>
+                            <template repeat.for="matchingCriteria of orderGroup.matchingCriterias">
 
-                    </data-table>
+                                <data-table-row>
 
-                    <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${matchingCriteria.consignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                        </span>
+                                    </data-table-cell>
 
-                    <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin" translate>
-                        No items
-                    </empty-indicator>
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${matchingCriteria.tags | list: 'short' : 'unit'}
+                                        </span>
+                                    </data-table-cell>
 
-                    <button
-                        if.bind="orderGroup != null"
-                        appearance="outline"
-                        accent="primary"
-                        class="margin-large-top"
-                        click.trigger="onAddMatchingCriteriaClick()"
-                        translate>
-                        <icon name="md-add" class="font-larger line-height-1">
-                    </button>
+                                    <data-table-cell align="right">
 
-                </div>
+                                        <div class="icon-row">
 
-                <div class="order-group-schedule flex-basis-1-of-2 margin-large-left">
+                                            <button appearance="none" accent="primary">
+                                                <icon name="md-edit"></icon>
+                                            </button>
 
-                    <h2 class="font-larger margin-bottom">
-                        Planning schedule
-                    </h2>
+                                            <button appearance="none" accent="primary" click.trigger="onRemoveMatchingCriteriaClick($index)">
+                                                <icon name="md-delete"></icon>
+                                            </button>
 
-                    <p class="opacity-faded">
-                        These are the rules that control when route planning runs for orders in the group.
-                    </p>
+                                        </div>
 
-                    <data-table
-                        appearance="rows"
-                        busy.bind="orderGroup == null">
+                                    </data-table-cell>
 
-                        <data-table-headers>
+                                </data-table-row>
 
-                            <data-table-cell>
-                                <span class="text-truncate"  translate>
-                                    Delivery day
-                                </span>
-                            </data-table-cell>
+                            </template>
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Delivery time
-                                </span>
-                            </data-table-cell>
+                        </data-table>
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Planning day
-                                </span>
-                            </data-table-cell>
+                        <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Planning time
-                                </span>
-                            </data-table-cell>
+                        <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin" translate>
+                            No items
+                        </empty-indicator>
 
-                            <data-table-cell>
-                                <span class="text-truncate" translate>
-                                    Next planning
-                                </span>
-                            </data-table-cell>
+                        <button
+                            if.bind="orderGroup != null"
+                            appearance="outline"
+                            accent="primary"
+                            class="margin-large-top"
+                            click.trigger="onAddMatchingCriteriaClick()">
+                            <icon name="md-add" class="font-larger line-height-1">
+                        </button>
 
-                            <data-table-cell align="right">
-                                <!-- Icons -->
-                            </data-table-cell>
+                    </div>
 
-                        </data-table-headers>
+                    <div class="order-group-schedule flex-basis-1-of-2 margin-large-left">
 
-                        <template repeat.for="routePlanningTime of orderGroup.routePlanningTimes">
+                        <h2 class="font-larger margin-bottom">
+                            Planning schedule
+                        </h2>
 
-                            <data-table-row>
+                        <p class="opacity-faded">
+                            These are the rules that control when route planning runs for orders in the group.
+                        </p>
+
+                        <data-table
+                            appearance="rows"
+                            busy.bind="orderGroup == null">
+
+                            <data-table-headers>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${routePlanningTime.delivery.from.dayOfWeek | weekday} - ${routePlanningTime.delivery.to.dayOfWeek | weekday}
+                                    <span class="text-truncate"  translate>
+                                        Delivery day
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${routePlanningTime.delivery.from.timeOfDay | time: false} - ${routePlanningTime.delivery.to.timeOfDay | time: false}
+                                    <span class="text-truncate" translate>
+                                        Delivery time
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${routePlanningTime.planning.dayOfWeek | weekday}
+                                    <span class="text-truncate" translate>
+                                        Planning day
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${routePlanningTime.planning.timeOfDay | time: false}
+                                    <span class="text-truncate" translate>
+                                        Planning time
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${routePlanningTime.nextPlanning | dateTime: 'narrow' : false}
+                                    <span class="text-truncate" translate>
+                                        Next planning
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell align="right">
-
-                                    <div class="icon-row">
-
-                                        <button appearance="none" accent="primary">
-                                            <icon name="md-edit"></icon>
-                                        </button>
-
-                                        <button appearance="none" accent="primary" click.trigger="onRemoveRoutePlanningTimeClick($index)">
-                                            <icon name="md-delete"></icon>
-                                        </button>
-
-                                    </div>
-
+                                    <!-- Icons -->
                                 </data-table-cell>
 
-                            </data-table-row>
+                            </data-table-headers>
 
-                        </template>
+                            <template repeat.for="routePlanningTime of orderGroup.routePlanningTimes">
 
-                    </data-table>
+                                <data-table-row>
 
-                    <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${routePlanningTime.delivery.from.dayOfWeek | weekday} - ${routePlanningTime.delivery.to.dayOfWeek | weekday}
+                                        </span>
+                                    </data-table-cell>
 
-                    <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin" translate>
-                        No items
-                    </empty-indicator>
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${routePlanningTime.delivery.from.timeOfDay | time: 'narrow' : false} - ${routePlanningTime.delivery.to.timeOfDay | time: 'narrow' : false}
+                                        </span>
+                                    </data-table-cell>
 
-                    <button
-                        if.bind="orderGroup != null"
-                        appearance="outline"
-                        accent="primary"
-                        class="margin-large-top"
-                        click.trigger="onAddRoutePlanningTimeClick()"
-                        translate>
-                        <icon name="md-add" class="font-larger line-height-1">
-                    </button>
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${routePlanningTime.planning.dayOfWeek | weekday}
+                                        </span>
+                                    </data-table-cell>
+
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${routePlanningTime.planning.timeOfDay | time: 'narrow' : false}
+                                        </span>
+                                    </data-table-cell>
+
+                                    <data-table-cell>
+                                        <span class="text-truncate">
+                                            ${routePlanningTime.nextPlanning | dateTime: 'narrow' : false}
+                                        </span>
+                                    </data-table-cell>
+
+                                    <data-table-cell align="right">
+
+                                        <div class="icon-row">
+
+                                            <button appearance="none" accent="primary">
+                                                <icon name="md-edit"></icon>
+                                            </button>
+
+                                            <button appearance="none" accent="primary" click.trigger="onRemoveRoutePlanningTimeClick($index)">
+                                                <icon name="md-delete"></icon>
+                                            </button>
+
+                                        </div>
+
+                                    </data-table-cell>
+
+                                </data-table-row>
+
+                            </template>
+
+                        </data-table>
+
+                        <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
+
+                        <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin" translate>
+                            No items
+                        </empty-indicator>
+
+                        <button
+                            if.bind="orderGroup != null"
+                            appearance="outline"
+                            accent="primary"
+                            class="margin-large-top"
+                            click.trigger="onAddRoutePlanningTimeClick()">
+                            <icon name="md-add" class="font-larger line-height-1">
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </section>
+            </page-section>
 
         </page-content>
 

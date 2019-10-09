@@ -31,7 +31,7 @@ user-identity
             border-radius: 50%;
 
             // Use surface color suitable for the app-sidebar.
-            background: var(--color-surface-nav-link-surface--active);
+            background: var(--surface-nav-link-surface-color--active);
 
             // Apply a border to ensure acceptable contrast.
             border: var(--border-width-thin) solid transparent;

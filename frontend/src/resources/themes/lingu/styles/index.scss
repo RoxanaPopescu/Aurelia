@@ -17,3 +17,18 @@ $__summary: comment;
 // Export the settings.
 // Settings define theme specific overrides to the base settings.
 @import "./settings/font";
+
+// HACK: Override default styles.
+
+body
+{
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-border-width: var(--border-width-medium);
+
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
+}

@@ -1,24 +1,24 @@
-@import "resources/index";
-
-:root
+body
 {
-    /// The color of the surface of the component.
-    --input-surface-color: unset;
-    --input-surface-color--hover: unset;
-    --input-surface-color--focus: unset;
-    --input-surface-color--invalid: unset;
+    // TODO: Add --input-heading-font.
+    // TODO: Add --input-description-font.
+    // TODO: What about label-related margins?
+    // TODO: What about label-related colors or opacity?
 
-    /// The color of the text on the surface of the component.
-    --input-surface-text-color: unset;
-    --input-surface-text-color--hover: unset;
-    --input-surface-text-color--focus: unset;
-    --input-surface-text-color--invalid: unset;
+    /// The default width of the component.
+    /// The default ensures a reasonable width when no width is specified.
+    --input-width: 36rem;
 
-    /// The color of the border of the component.
-    --input-border-color: unset;
-    --input-border-color--hover: unset;
-    --input-border-color--focus: unset;
-    --input-border-color--invalid: unset;
+    /// The min-height of the component, if resizing is allowed.
+    /// The default prevents resizing to less than the height of a single-line input.
+    --input-min-height: 10rem;
+
+    /// The max-height of the component, if resizing is allowed.
+    /// The default allows resizing to fit any content.
+    --input-max-height: none;
+
+    /// The padding of the component.
+    --input-padding: 2.25rem 3rem;
 
     /// The width of the border of the component.
     --input-border-width: var(--border-width-thin);
@@ -26,17 +26,26 @@
     /// The radius of the border of the component.
     --input-border-radius: var(--border-radius-medium);
 
-    /// The padding of the component.
-    --input-padding: 2.25rem 3rem;
+    /// The color of the border of the component.
+    /// TODO: This should be customized for each theme surface.
+    --input-border-color: var(--surface-input-border-color);
+    --input-border-color--hover: var(--surface-input-border-color--hover);
+    --input-border-color--focus: var(--surface-input-border-color--focus);
+    --input-border-color--invalid: var(--surface-input-border-color--invalid);
 
-    /// The default width of the component.
-    --input-width: 36rem;
+    /// The color of the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --input-surface-color: var(--surface-input-surface-color);
+    --input-surface-color--hover: var(--surface-input-surface-color--hover);
+    --input-surface-color--focus: var(--surface-input-surface-color--focus);
+    --input-surface-color--invalid: var(--surface-input-surface-color--invalid);
 
-    /// The min-height of the component, if it allows resizing.
-    --input-min-height: 10rem;
-
-    /// The max-height of the component, if it allows resizing.
-    --input-max-height: none;
+    /// The color of the text on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --input-surface-text-color: var(--surface-input-surface-text-color);
+    --input-surface-text-color--hover: var(--surface-input-surface-text-color--hover);
+    --input-surface-text-color--focus: var(--surface-input-surface-text-color--focus);
+    --input-surface-text-color--invalid: var(--surface-input-surface-text-color--invalid);
 }
 
 .input
@@ -308,41 +317,45 @@
         opacity: var(--opacity-disabled);
     }
 
-    &:not(.--disabled):not(.--readonly):not(.--invalid):hover
+    &:not(.--disabled):not(.--readonly)
     {
-        > .input-control
+        &:hover
         {
-            // Apply style for the hover state.
-            border-color: var(--input-border-color--hover);
-            background: var(--input-surface-color--hover);
-            color: var(--input-surface-text-color--hover);
-        }
-    }
-
-    &:not(.--disabled):not(.--readonly):focus-within
-    {
-        > .input-control
-        {
-            // Apply style for the focus state.
-            border-color: var(--input-border-color--focus);
-            background: var(--input-surface-color--focus);
-            color: var(--input-surface-text-color--focus);
-        }
-    }
-
-    &:not(.--disabled):not(.--readonly).--invalid
-    {
-        > .input-control
-        {
-            // Apply style for the invalid state.
-            border-color: var(--input-border-color--invalid);
-            background: var(--input-surface-color--invalid);
+            > .input-control
+            {
+                // Apply style for the hover state.
+                border-color: var(--input-border-color--hover);
+                background: var(--input-surface-color--hover);
+                color: var(--input-surface-text-color--hover);
+            }
         }
 
-        &:not(.--empty) > .input-control > .input-control-inner
+        &:focus-within
         {
-            // Apply the color for the invalid state only if the input is not empty.
-            color: var(--input-surface-text-color--invalid);
+            > .input-control
+            {
+                // Apply style for the focus state.
+                border-color: var(--input-border-color--focus);
+                background: var(--input-surface-color--focus);
+                color: var(--input-surface-text-color--focus);
+            }
+        }
+
+        &.--invalid
+        {
+            > .input-control
+            {
+                // Apply style for the invalid state.
+                border-color: var(--input-border-color--invalid);
+                background: var(--input-surface-color--invalid);
+                color: var(--input-surface-text-color);
+            }
+
+            &:not(.--empty) > .input-control > .input-control-inner
+            {
+                // Apply the color for the invalid state only if the input is not empty.
+                color: var(--input-surface-text-color--invalid);
+            }
         }
     }
 

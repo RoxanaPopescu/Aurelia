@@ -7,8 +7,8 @@ const dateStyles =
 {
     "narrow": { ...DateTime.DATE_SHORT, month: "2-digit", day: "2-digit" },
     "short": DateTime.DATE_MED,
-    "long": DateTime.DATE_FULL,
-    "full": DateTime.DATE_HUGE
+    "medium": DateTime.DATE_FULL,
+    "long": DateTime.DATE_HUGE
 };
 
 /**
@@ -38,7 +38,7 @@ export class DateValueConverter
      * Converts the value for use in the view,
      * formatting the date component of the specified value as a localized date string, using the specified style.
      * @param value The value to format.
-     * @param style The style to use. The default is `short`.
+     * @param style The style to use. The default is `narrow`.
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
@@ -53,8 +53,8 @@ export class DateValueConverter
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
-            locale: this._localeService.locale.code,
-            ...dateStyles[style || "short"]
+            ...dateStyles[style || "narrow"],
+            locale: `${this._localeService.locale.code}-u-ca-iso8601`
         };
 
         return valueToFormat.toLocaleString(formatOptions);

@@ -2,23 +2,86 @@
 
 page-section
 {
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use vertical flex layout.
     display: flex;
     flex-direction: column;
+
+    // Fill the available height.
+    flex-grow: 1;
+
+    // Allow the element to shrink.
+    min-height: 0;
 
     // Apply margin to the section.
     margin: 7rem 9rem;
 
     .page-section-header
     {
+        // Use horizontal flex layout.
         display: flex;
         align-items: center;
+
+        // Fill the available width.
         width: 100%;
+
+        // Ensure full opacity, even when the button is disabled.
+        opacity: 1;
+
+        // Use default cursor, unless toggling is enabled.
         cursor: inherit;
     }
 
-    .page-section-toggle
+    &.--sticky .page-section-header
     {
+        // Make the header stick to the top.
+        position: sticky;
+        top: var(--font-current-margin-bottom);
+
+        // Apply the z-index for sticky elements.
+        z-index: var(--z-index-sticky);
+
+        // Ensure the background can overflow the button.
+        overflow: visible;
+
+        &::before
+        {
+            content: "";
+
+            // Position the background behind the header content.
+            position: absolute;
+            top: calc(-1 * var(--font-current-margin-bottom));
+            bottom: calc(-1 * var(--font-current-margin-bottom));
+            width: 100%;
+            z-index: -1;
+
+            // Apply the surface color.
+            background: var(--surface-color);
+
+            // Apply fade effect to the background.
+            mask-image: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.99) 0%,
+                rgba(255, 255, 255, 0.98) 95%,
+                rgba(255, 255, 255, 0.25) 100%
+            );
+        }
+    }
+
+    .page-section-header-content
+    {
+        // Fill the available width.
+        flex-grow: 1;
+    }
+
+    .page-section-header-toggle
+    {
+        // Push to the right.
         margin-left: auto;
+
+        // Animate changes.
         transition:
             color var(--animation-duration-medium),
             opacity var(--animation-duration-medium);
@@ -29,24 +92,33 @@ page-section
         // Allow content to be positioned relative to this element.
         position: relative;
 
+        // Fill the available height.
         flex-grow: 1;
+
+        // Allow the element to shrink.
+        min-height: 0;
+
+        // Use vertical flex layout.
         display: flex;
         flex-direction: column;
     }
 
     &.--toggle .page-section-header
     {
+        // Use cursor to indicate the header is clickable.
         cursor: pointer;
 
-        &:hover .page-section-toggle
+        &:hover .page-section-header-toggle
         {
-            color: var(--color-surface-primary-text);
+            // Highlight toggle when hovered.
+            color: var(--surface-primary-text-color);
             opacity: 1 !important;
         }
     }
 
     &:not(.--header-slot-empty) .page-section-content
     {
+        // Apply spacing between the header and the content.
         margin-top: var(--font-large-margin-top);
     }
 
@@ -54,7 +126,7 @@ page-section
     {
         // Use negative accent color if the section is invalid.
         // Note that this will be overridden if the section is expanded.
-        color: var(--color-surface-negative-text);
+        color: var(--surface-negative-text-color);
     }
 
     &.margin
@@ -66,7 +138,7 @@ page-section
 
         &, &-bottom
         {
-            margin-bottom: var(--font-large-margin-bottom);
+            margin-bottom: var(--font-large-margin-top);
         }
     }
 
@@ -79,7 +151,7 @@ page-section
 
         &, &-bottom
         {
-            margin-bottom: calc(2 * var(--font-large-margin-bottom));
+            margin-bottom: calc(2 * var(--font-large-margin-top));
         }
     }
 }

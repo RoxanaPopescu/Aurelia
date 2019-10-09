@@ -51,3 +51,7 @@ export * from "./converters/weekday/weekday";
 // Services.
 export * from "./services/locale";
 export * from "./services/currency";
+
+// Types.
+export * from "./types/date-format";
+export * from "./types/time-format";

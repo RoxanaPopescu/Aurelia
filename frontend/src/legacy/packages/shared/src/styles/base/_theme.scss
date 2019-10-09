@@ -1,7 +1,7 @@
 @import "../../webKit/constants.scss";
 
 // Surface theme
-:root
+react-module
 {
     --surface-color: white;
     --surface-text-color: #{var(--textDarkPrimary)};
@@ -9,6 +9,6 @@
     --surface-heading-color: var(--surface-subtle-color);
 
     --surface-primary-text-color: #{var(--colorInteractivePrimary)};
-    
+
     --surface-mark-color: yellow;
 }

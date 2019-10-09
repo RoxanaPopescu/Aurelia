@@ -41,7 +41,7 @@
 
         </div>
 
-        <div surface.bind="surface & attr" class="font-${fontSize}">
+        <div surface.bind="surface" class="font-${fontSize}">
 
             <h1 class="font-largest margin">
                 Custom controls
@@ -307,8 +307,8 @@
                     </design-column>
 
                     <design-column heading="values">
-                        <div>focused: ${timeFocusedValue | time}</div>
-                        <div>comitted: ${timeValue | time}</div>
+                        <div>focused: ${timeFocusedValue | time: 'narrow' : false}</div>
+                        <div>comitted: ${timeValue | time: 'narrow' : false}</div>
                     </design-column>
 
                 </design-row>
@@ -536,7 +536,7 @@
                             </span>
 
                             <div slot="value">
-                                <tag accent="primary" model.bind="tag" repeat.for="tag of tagsValue">
+                                <tag model.bind="tag" repeat.for="tag of tagsValue">
                                     ${tag}
                                 </tag>
                             </div>
@@ -569,7 +569,7 @@
                             </span>
 
                             <div slot="value">
-                                <tag accent="primary" repeat.for="tag of tagsValue">
+                                <tag repeat.for="tag of tagsValue">
                                     ${tag}
                                 </tag>
                             </div>
@@ -579,7 +579,7 @@
                     </design-column>
 
                     <design-column heading="values">
-                        <div>focused: ${tagsFocusedValue | time}</div>
+                        <div>focused: ${tagsFocusedValue}</div>
                         <div>comitted: ${tagsValue}</div>
                     </design-column>
 
@@ -1372,7 +1372,7 @@
                     <design-column heading="enabled">
                         <label>
                             X
-                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle);">
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--surface-input-surface-subtle-color);">
                                 <option value="" disabled selected hidden>Placeholder</option>
                                 <option>X</option>
                                 <option>X</option>
@@ -1388,7 +1388,7 @@
                     <design-column heading="disabled">
                         <label disabled>
                             X
-                            <select onchange="this.style.color = 'inherit'" style="color: var(--color-surface-input-surface-subtle);">
+                            <select onchange="this.style.color = 'inherit'" style="color: var(--surface-input-surface-subtle-color);">
                                 <option value="" disabled selected hidden>Placeholder</option>
                                 <option>X</option>
                                 <option>X</option>

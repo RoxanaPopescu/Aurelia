@@ -1,5 +1,6 @@
 <template class="
     ${toggle ? '--toggle' : ''}
+    ${sticky ? '--sticky' : ''}
     ${expanded ? '--expanded' : ''}
     ${invalid || invalid == null && validation.invalid ? '--invalid' : ''}
     ${headerSlotEmpty ? '--header-slot-empty' : ''}"
@@ -14,13 +15,13 @@
         disabled.bind="headerSlotEmpty !== false"
         click.trigger="onHeaderClick()">
 
-        <div empty.bind="headerSlotEmpty">
+        <div class="page-section-header-content" empty.bind="headerSlotEmpty">
             <slot name="header"></slot>
         </div>
 
         <div
             if.bind="toggle"
-            class="page-section-toggle ${expanded ? 'opacity-faded-more' : ''}"
+            class="page-section-header-toggle ${expanded ? 'opacity-faded-more' : ''}"
             accent.bind="expanded ? 'neutral' : 'primary' & attr">
 
             <span if.bind="!expanded" class="font-small" translate>

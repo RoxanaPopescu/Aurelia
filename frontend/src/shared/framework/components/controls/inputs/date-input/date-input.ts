@@ -2,38 +2,7 @@ import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framewo
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 import { DateTime, Zone } from "luxon";
-
-/**
- * Provides info about the date format for the current locale.
- */
-namespace DateFormatInfo
-{
-    /**
-     * The date format for the current locale.
-     */
-    export const format = DateTime
-        .fromISO("3333-11-22").toLocaleString(DateTime.DATE_SHORT)
-        .replace("3333", "yyyy").replace("11", "MM").replace("22", "dd");
-
-    /**
-     * The date pattern, matching a partial or complete date.
-     */
-    export const partialPattern = new RegExp(
-        `^${[...format].reverse().reduce((s, c) => `(${c}${s})?`, "")
-        .replace(/\\/g, "\\\\").replace(/y|M|d/g, "\\d")}$`);
-
-    /**
-     * The date pattern, matching a only a complete date.
-     */
-    export const completePattern = new RegExp(
-        `^${format.replace(/\\/g, "\\\\").replace(/y|M|d/g, "\\d")}$`);
-
-    /**
-     * The pattern matching the characters allowed in the pattern.
-     */
-    export const keyPattern = new RegExp(
-        `\\d|${[...format.replace(/y|M|d/g, "")].join("|").replace(/\\/g, "\\\\")}`);
-}
+import { DateFormat } from "shared/localization";
 
 /**
  * Custom element representing an input for picking a date.
@@ -53,9 +22,9 @@ export class DateInputCustomElement
     private readonly _element: HTMLElement;
 
     /**
-     * The format info for the current locale.
+     * The date format for the current locale.
      */
-    protected formatInfo = DateFormatInfo;
+    protected dateFormat = new DateFormat();
 
     /**
      * The element representing the text input.
@@ -94,7 +63,7 @@ export class DateInputCustomElement
             // If open with a focused value, format and return that.
             if (this.focusedValue != null)
             {
-                return this.focusedValue.toFormat(this.formatInfo.format);
+                return this.focusedValue.toFormat(this.dateFormat.inputFormat);
             }
         }
         else
@@ -102,7 +71,7 @@ export class DateInputCustomElement
             // If closed with a comitted value, format and return that.
             if (this.value != null)
             {
-                return this.value.toFormat(this.formatInfo.format);
+                return this.value.toFormat(this.dateFormat.inputFormat);
             }
         }
 
@@ -121,7 +90,7 @@ export class DateInputCustomElement
         if (value)
         {
             // Try to parse the value.
-            const date = DateTime.fromFormat(value, this.formatInfo.format);
+            const date = DateTime.fromFormat(value, this.dateFormat.inputFormat);
 
             // Update the focused value.
             this.focusedValue = date.isValid ? date : null;
@@ -319,13 +288,13 @@ export class DateInputCustomElement
         }
 
         // Never block special keys or key combinations.
-        if (event.key.length > 1 || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        if (event.key.length > 1 || event.metaKey || event.ctrlKey)
         {
             return true;
         }
 
         // Prevent the user from entering characters that are not part of the pattern.
-        if (!this.formatInfo.keyPattern.test(event.key))
+        if (!this.dateFormat.keyPattern.test(event.key))
         {
             return false;
         }

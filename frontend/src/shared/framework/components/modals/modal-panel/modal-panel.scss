@@ -20,11 +20,11 @@ modal-panel
     overflow: hidden;
 
     // Apply surface style.
-    background: var(--color-surface);
-    color: var(--color-surface-text);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     // Apply a shadow to the panel.
-    box-shadow: var(--modal-shadow);
+    box-shadow: var(--shadow-modal);
 
     .modal-panel-content
     {
@@ -46,27 +46,21 @@ modal-panel
 
         // Provide defaults for sectioning elements.
 
-        > header,
-        > section,
-        > footer
+        modal-header,
+        modal-section,
+        modal-footer
         {
             // Prevent shrinking by default.
             flex-shrink: 0;
         }
 
-        > header
+        modal-header
         {
             // Apply default margin.
             margin-bottom: 9rem;
-
-            h1.font-largest.margin-bottom
-            {
-                // HACK: Add a bit more spacing below the modal title.
-                margin-bottom: 6rem;
-            }
         }
 
-        > footer
+        modal-footer
         {
             // Push the footer to the bottom by default.
             margin-top: auto;

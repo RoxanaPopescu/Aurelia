@@ -1,0 +1,37 @@
+@import "resources/index";
+
+page-footer
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use vertical flex layout.
+    display: flex;
+    flex-direction: column;
+
+    &.margin
+    {
+        &, &-top
+        {
+            margin-top: var(--font-large-margin-top);
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: var(--font-large-margin-top);
+        }
+    }
+
+    &.margin-double
+    {
+        &, &-top
+        {
+            margin-top: calc(2 * var(--font-large-margin-top));
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: calc(2 * var(--font-large-margin-top));
+        }
+    }
+}

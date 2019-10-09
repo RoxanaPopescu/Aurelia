@@ -54,8 +54,8 @@ page[name="routes"] page[name="express-dispatch"] merge-column
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        background: var(--color-surface);
-        border: var(--border-width-thin) solid var(--color-border);
+        background: var(--surface-color);
+        border: var(--border-width-thin) solid var(--border-color);
         border-radius: var(--border-radius-medium);
 
         .express-stops-dropzone
@@ -78,7 +78,7 @@ page[name="routes"] page[name="express-dispatch"] merge-column
             {
                 width: 100%;
                 height: 100%;
-                border: var(--border-width-medium) dashed var(--color-surface-primary-border);
+                border: var(--border-width-medium) dashed var(--surface-primary-border-color);
                 border-radius: var(--border-radius-medium);
             }
         }
@@ -99,7 +99,7 @@ page[name="routes"] page[name="express-dispatch"] merge-column
             > div
             {
                 height: var(--stop-card-height);
-                border: var(--border-width-medium) dashed var(--color-surface-primary-border);
+                border: var(--border-width-medium) dashed var(--surface-primary-border-color);
                 border-radius: var(--border-radius-medium);
             }
         }
@@ -116,7 +116,7 @@ page[name="routes"] page[name="express-dispatch"] merge-column
             > div
             {
                 height: var(--stop-card-height);
-                border: var(--border-width-medium) dashed var(--color-surface-primary-border);
+                border: var(--border-width-medium) dashed var(--surface-primary-border-color);
                 border-radius: var(--border-radius-medium);
             }
         }

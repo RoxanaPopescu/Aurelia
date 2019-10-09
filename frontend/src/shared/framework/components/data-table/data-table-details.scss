@@ -15,7 +15,7 @@ data-table-details
     {
         &[accent="#{$accent}"]
         {
-            --data-table-row-edge-color: var(--color-surface-#{$accent}-border);
+            --data-table-row-edge-color: var(--surface-#{$accent}-border-color);
         }
     }
 

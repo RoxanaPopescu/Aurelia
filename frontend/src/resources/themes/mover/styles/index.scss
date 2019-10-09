@@ -23,9 +23,23 @@ $__summary: comment;
 // Surfaces define theme specific overrides to the base surfaces.
 @import "./surfaces/index";
 
-// HACK: Override default border on buttons.
+// HACK: Override default styles.
+
 button[appearance="outline"]
 {
-    border-width: 1px !important;
+    border-width: var(--border-width-thin) !important;
     border-color: var(--palette-color-neutral) !important;
+}
+
+body
+{
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-border-width: var(--border-width-medium);
+
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
 }

@@ -16,8 +16,8 @@ app-sidebar
     flex-shrink: 0;
 
     // Apply the surface style.
-    background: var(--color-surface);
-    color: var(--color-surface-text);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     app-logo
     {
@@ -76,7 +76,7 @@ app-sidebar
 
             // Apply the surface color to the header and footer,
             // so they cover any content scrolling under them.
-            background-color: var(--color-surface);
+            background-color: var(--surface-color);
 
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
@@ -141,7 +141,7 @@ app-sidebar
 
             // Apply the surface color to the header and footer,
             // so they cover any content scrolling under them.
-            background-color: var(--color-surface);
+            background-color: var(--surface-color);
 
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
@@ -246,7 +246,7 @@ app-sidebar
         font-size: 2.25rem;
         line-height: 6.5rem;
         text-align: center;
-        background-color: var(--color-surface-nav-link-surface--hover);
+        background-color: var(--surface-nav-link-surface-color--hover);
 
         span
         {
@@ -272,24 +272,24 @@ app-sidebar
 
     // Apply theme colors.
 
-    color: var(--color-surface-nav-link-surface-text);
-    background-color: var(--color-surface-nav-link-surface);
-    border-color: var(--color-surface-nav-link-border);
+    color: var(--surface-nav-link-surface-text-color);
+    background-color: var(--surface-nav-link-surface-color);
+    border-color: var(--surface-nav-link-border-color);
 
     &:hover
     {
-        color: var(--color-surface-nav-link-surface-text--hover);
-        background-color: var(--color-surface-nav-link-surface--hover);
-        border-color: var(--color-surface-nav-link-border--hover);
+        color: var(--surface-nav-link-surface-text-color--hover);
+        background-color: var(--surface-nav-link-surface-color--hover);
+        border-color: var(--surface-nav-link-border-color--hover);
 
         > icon
         {
-            color: var(--color-surface-nav-link-surface-icon--hover);
+            color: var(--surface-nav-link-surface-icon-color--hover);
         }
 
         > span
         {
-            color: var(--color-surface-nav-link-surface-text--hover);
+            color: var(--surface-nav-link-surface-text-color--hover);
         }
     }
 
@@ -297,25 +297,25 @@ app-sidebar
     {
         font-weight: 600;
 
-        color: var(--color-surface-nav-link-surface-text--active);
-        background-color: var(--color-surface-nav-link-surface--active);
-        border-color: var(--color-surface-nav-link-border--active);
+        color: var(--surface-nav-link-surface-text-color--active);
+        background-color: var(--surface-nav-link-surface-color--active);
+        border-color: var(--surface-nav-link-border-color--active);
 
         > icon
         {
-            color: var(--color-surface-nav-link-surface-icon--active);
+            color: var(--surface-nav-link-surface-icon-color--active);
         }
 
         > span
         {
-            color: var(--color-surface-nav-link-surface-text--active);
+            color: var(--surface-nav-link-surface-text-color--active);
         }
     }
 
     > icon
     {
         font-size: 6rem;
-        color: var(--color-surface-nav-link-surface-icon);
+        color: var(--surface-nav-link-surface-icon-color);
     }
 
     > span
@@ -328,7 +328,7 @@ app-sidebar
 .sidebar-child-link-container
 {
     padding: 2rem 0;
-    background: var(--color-surface-nav-child-surface);
+    background: var(--surface-nav-child-surface-color);
 }
 
 .sidebar-child-link
@@ -342,31 +342,31 @@ app-sidebar
 
     // Apply theme colors.
 
-    color: var(--color-surface-nav-child-link-surface-text);
-    background-color: var(--color-surface-nav-child-link-surface);
-    border-color: var(--color-surface-nav-child-link-border);
+    color: var(--surface-nav-child-link-surface-text-color);
+    background-color: var(--surface-nav-child-link-surface-color);
+    border-color: var(--surface-nav-child-link-border-color);
 
     icon
     {
         font-size: 4rem;
-        color: var(--color-surface-nav-child-link-surface-icon);
+        color: var(--surface-nav-child-link-surface-icon-color);
         margin-right: 4rem;
     }
 
     &:hover
     {
-        color: var(--color-surface-nav-child-link-surface-text--hover);
-        background-color: var(--color-surface-nav-child-link-surface--hover);
-        border-color: var(--color-surface-nav-child-link-border--hover);
+        color: var(--surface-nav-child-link-surface-text-color--hover);
+        background-color: var(--surface-nav-child-link-surface-color--hover);
+        border-color: var(--surface-nav-child-link-border-color--hover);
 
         > icon
         {
-            color: var(--color-surface-nav-child-link-surface-icon--hover);
+            color: var(--surface-nav-child-link-surface-icon-color--hover);
         }
 
         > span
         {
-            color: var(--color-surface-nav-child-link-surface-text--hover);
+            color: var(--surface-nav-child-link-surface-text-color--hover);
         }
     }
 
@@ -376,18 +376,18 @@ app-sidebar
 
         opacity: 1;
 
-        color: var(--color-surface-nav-child-link-surface-text--active);
-        background-color: var(--color-surface-nav-child-link-surface--active);
-        border-color: var(--color-surface-nav-child-link-border--active);
+        color: var(--surface-nav-child-link-surface-text-color--active);
+        background-color: var(--surface-nav-child-link-surface-color--active);
+        border-color: var(--surface-nav-child-link-border-color--active);
 
         > icon
         {
-            color: var(--color-surface-nav-child-link-surface-icon--active);
+            color: var(--surface-nav-child-link-surface-icon-color--active);
         }
 
         > span
         {
-            color: var(--color-surface-nav-child-link-surface-text--active);
+            color: var(--surface-nav-child-link-surface-text-color--active);
         }
     }
 }

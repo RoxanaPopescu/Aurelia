@@ -1,5 +1,5 @@
 ////
-/// @group themes/mover/palettes/color
+/// @group resources/themes/lingu/palettes/color
 ////
 
 /// Theme specific color palette.
@@ -12,10 +12,9 @@ $__summary: comment;
 :root
 {
     --palette-color-whitepoint: white;
-    --palette-color-neutral-lighter: hsl(240, 14%, 99%);
-    --palette-color-neutral-hover: hsl(240, 24%, 98%);
+    --palette-color-neutral-lightest: hsl(240, 14%, 99%);
+    --palette-color-neutral-lighter: hsl(240, 24%, 98%);
     --palette-color-neutral-light: hsl(230, 14%, 96%);
-    --palette-color-neutral-lit: hsl(230, 14%, 94%);
     --palette-color-neutral: hsl(220, 14%, 87%);
     --palette-color-neutral-dark: hsl(210, 6%, 43%);
     --palette-color-neutral-darker: #172b4d; //hsl(0, 0%, 13%);
@@ -28,13 +27,14 @@ $__summary: comment;
     --palette-color-primary-lighter: hsl(216, 100%, 94%);
     --palette-color-primary-light: hsl(218, 47%, 65%);
     --palette-color-primary: hsl(216, 92%, 34%);
-    --palette-color-primary-dark: hsl(217, 86%, 28%);
-    --palette-color-primary-hover: rgba(10, 57, 133, 0.6);
-    --palette-color-primary-darker: hsl(218, 54%, 20%);
+    --palette-color-primary-dark: hsl(216, 91%, 30%);
+    --palette-color-primary-darker: hsl(217, 86%, 26%);
+    --palette-color-primary-darkest: hsl(218, 54%, 20%);
 
-    --palette-color-primary--hover: #07449b;
+    --palette-color-primary--hover: #06449a;
     --palette-color-primary--active: #084091;
-    --palette-color-primary-dark--hover: #0d3473;
+    --palette-color-primary--child: #0a3985;
+    --palette-color-primary--child-hover: #0b3678;
 }
 
 /// The accent color indicating information.

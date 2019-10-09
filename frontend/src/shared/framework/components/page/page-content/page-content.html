@@ -2,6 +2,18 @@
 
     <require from="./page-content.scss"></require>
 
+    <button
+        if.bind="element.scrollTop > 176"
+        title.translate="Back to top"
+        appearance="icon"
+        class="page-content-back-to-top font-base au-animate animation-fade-in-medium animation-fade-out-medium"
+        click.trigger="onBackToTopClick()"
+        tabindex="-1">
+
+        <icon name="md-arrow-upward"></icon>
+
+    </button>
+
     <slot></slot>
 
 </template>

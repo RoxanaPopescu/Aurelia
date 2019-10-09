@@ -5,7 +5,7 @@ design-row
     &:not(:first-child)
     {
         padding-top: 6rem;
-        border-top: var(--border-width-thin) solid var(--color-surface-border);
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
     }
 
     &:not(:last-child)

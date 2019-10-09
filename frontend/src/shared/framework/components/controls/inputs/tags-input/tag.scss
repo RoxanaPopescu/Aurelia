@@ -1,13 +1,10 @@
 body
 {
-    /// The color of the surface of the component.
-    --tag-surface-color: var(--palette-color-neutral-lighter);
+    // TODO: What about hover and focused states?
 
-    /// The color of the text on the surface of the component.
-    --tag-surface-text-color: inherit;
-
-    /// The color of the border of the component.
-    --tag-border-color: var(--input-border-color);
+    /// The padding of the component.
+    /// The default is chosen so the tag fits within an input control.
+    --tag-padding: 1rem 2rem;
 
     /// The width of the border of the component.
     --tag-border-width: var(--border-width-thin);
@@ -15,17 +12,22 @@ body
     /// The radius of the border of the component.
     --tag-border-radius: var(--border-radius-small);
 
-    /// The padding of the component.
-    --tag-padding: 1rem 2rem;
+    /// The color of the border of the component.
+    /// TODO: This should be customized for each theme surface.
+    --tag-border-color: var(--surface-input-surface-tag-border-color);
 
-    /// The default width of the component.
-    --tag-width: 40rem;
+    /// The color of the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --tag-surface-color: var(--surface-input-surface-tag-surface-color);
 
-    /// The min-height of the component, if it allows resizing.
-    --tag-min-height: 10rem;
+    /// The color of text on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --tag-surface-text-color: var(--surface-input-surface-tag-surface-text-color);
 
-    /// The max-height of the component, if it allows resizing.
-    --tag-max-height: none;
+    /// The color of icons on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --tag-surface-icon-color: var(--surface-input-surface-tag-surface-icon-color);
+    --tag-surface-icon-color--hover: var(--surface-input-surface-tag-surface-icon-color--hover);
 }
 
 tag
@@ -52,7 +54,7 @@ tag
     text-overflow: ellipsis;
 
     // Apply a border around the component.
-    border: var(--input-border-width) solid;
+    border: var(--tag-border-width) solid;
     border-radius: var(--tag-border-radius);
 
     // Apply component style.
@@ -63,6 +65,12 @@ tag
     icon
     {
         margin-left: var(--size-inline-spacing);
+        color: var(--tag-surface-icon-color);
         cursor: pointer;
+
+        &:hover
+        {
+            color: var(--tag-surface-icon-color--hover);
+        }
     }
 }

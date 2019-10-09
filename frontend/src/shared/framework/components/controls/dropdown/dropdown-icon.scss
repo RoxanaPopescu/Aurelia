@@ -7,8 +7,10 @@ dropdown-icon
     align-items: center;
     justify-content: center;
 
-    // Set icon size and line height.
+    // Set line height to ensure correct vertical alignment.
     line-height: 1;
+
+    // Set the size of the icon, in proportion to the text.
     font-size: 1.286em;
 
     // Apply opacity to de-emphasize the icon.

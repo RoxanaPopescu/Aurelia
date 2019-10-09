@@ -5,9 +5,9 @@ status-message
     display: flex;
     align-items: center;
     padding: var(--card-padding);
-    background: var(--color-surface);
-    color: var(--color-surface-text);
-    border-bottom: var(--border-width-thin) solid var(--color-border);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
+    border-bottom: var(--border-width-thin) solid var(--border-color);
 
     > icon
     {

@@ -35,7 +35,7 @@ export class RelativeDateValueConverter
 
         const formatOptions: ToRelativeOptions =
         {
-            locale: this._localeService.locale.code
+            locale: `${this._localeService.locale.code}-u-ca-iso8601`
         };
 
         return value.toRelativeCalendar(formatOptions);

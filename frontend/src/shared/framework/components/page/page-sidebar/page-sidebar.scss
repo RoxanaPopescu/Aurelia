@@ -12,12 +12,12 @@ page-sidebar
     border-right: var(--border-width-thin) solid;
 
     // Apply surface style.
-    background: var(--color-surface);
-    border-color: var(--color-border);
+    background: var(--surface-color);
+    border-color: var(--border-color);
 
-    > header,
-    > section,
-    > footer
+    page-header,
+    page-section,
+    page-footer
     {
         // Apply margin to content.
         margin: 9rem 9rem;
@@ -35,7 +35,7 @@ page-sidebar
             font-size: 6rem;
 
             // Apply the primary icon color.
-            color: var(--color-surface-primary-icon);
+            color: var(--surface-primary-icon-color);
         }
     }
 

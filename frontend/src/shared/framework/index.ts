@@ -14,6 +14,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/empty/empty"),
         PLATFORM.moduleName("./components/behaviors/forward-focus/forward-focus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
+        PLATFORM.moduleName("./components/behaviors/surface/surface"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
@@ -60,6 +61,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/layouts/list-layout/list-layout"),
         PLATFORM.moduleName("./components/modals/modal-backdrop/modal-backdrop"),
         PLATFORM.moduleName("./components/modals/modal-dialog/modal-dialog"),
+        PLATFORM.moduleName("./components/modals/modal-footer/modal-footer"),
+        PLATFORM.moduleName("./components/modals/modal-header/modal-header"),
         PLATFORM.moduleName("./components/modals/modal-href/modal-href"),
         PLATFORM.moduleName("./components/modals/modal-overlay/modal-overlay"),
         PLATFORM.moduleName("./components/modals/modal-panel/modal-panel"),
@@ -68,6 +71,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/overlays/busy-overlay/busy-overlay"),
         PLATFORM.moduleName("./components/page/page/page"),
         PLATFORM.moduleName("./components/page/page-content/page-content"),
+        PLATFORM.moduleName("./components/page/page-footer/page-footer"),
+        PLATFORM.moduleName("./components/page/page-header/page-header"),
         PLATFORM.moduleName("./components/page/page-href/page-href"),
         PLATFORM.moduleName("./components/page/page-section/page-section"),
         PLATFORM.moduleName("./components/page/page-sidebar/page-sidebar"),
@@ -100,6 +105,7 @@ export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/empty/empty";
 export * from "./components/behaviors/forward-focus/forward-focus";
 export * from "./components/behaviors/scroll/scroll";
+export * from "./components/behaviors/surface/surface";
 export * from "./components/behaviors/trap-focus/trap-focus";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
@@ -150,6 +156,8 @@ export * from "./components/layouts/grid-layout/grid-layout";
 export * from "./components/layouts/list-layout/list-layout";
 export * from "./components/modals/modal-backdrop/modal-backdrop";
 export * from "./components/modals/modal-dialog/modal-dialog";
+export * from "./components/modals/modal-footer/modal-footer";
+export * from "./components/modals/modal-header/modal-header";
 export * from "./components/modals/modal-href/modal-href";
 export * from "./components/modals/modal-overlay/modal-overlay";
 export * from "./components/modals/modal-panel/modal-panel";
@@ -159,6 +167,8 @@ export * from "./components/modals/modal-close-reason";
 export * from "./components/overlays/busy-overlay/busy-overlay";
 export * from "./components/page/page/page";
 export * from "./components/page/page-content/page-content";
+export * from "./components/page/page-footer/page-footer";
+export * from "./components/page/page-header/page-header";
 export * from "./components/page/page-href/page-href";
 export * from "./components/page/page-section/page-section";
 export * from "./components/page/page-sidebar/page-sidebar";

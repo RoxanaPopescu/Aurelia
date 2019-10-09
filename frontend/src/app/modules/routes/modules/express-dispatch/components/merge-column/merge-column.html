@@ -4,7 +4,7 @@
 
     <page-content scroll scroll.ref="scroll">
 
-        <header scroll-fade>
+        <page-header scroll-fade>
 
             <div class="flex-row">
 
@@ -31,146 +31,150 @@
 
             </div>
 
-        </header>
+        </page-header>
 
-        <section class="stop-lists ${isDragging ? '--dragging' : ''}">
+        <page-section>
 
-            <div class="stop-list-container">
+            <div class="stop-lists ${isDragging ? '--dragging' : ''}">
 
-                <h2 class="font-larger margin-bottom" translate>
-                    Stops to be added
-                </h2>
+                <div class="stop-list-container">
 
-                <div
-                    class="stop-list express-stops padding-medium"
-                    surface="card"
-                    scroll
-                    dragover.trigger="onExpressStopsDragOver($event)"
-                    dragleave.trigger="onExpressStopsDragLeave($event)"
-                    drop.trigger="onExpressStopsDrop($event)">
+                    <h2 class="font-larger margin-bottom" translate>
+                        Stops to be added
+                    </h2>
 
                     <div
-                        repeat.for="stop of expressStops"
-                        class="stop-list-item express-route-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
-                        draggable="true"
-                        dragstart.trigger="onExpressStopsDragStart($event, stop)"
-                        dragend.trigger="onExpressStopsDragEnd($event, stop)">
+                        class="stop-list express-stops padding-medium"
+                        surface="card"
+                        scroll
+                        dragover.trigger="onExpressStopsDragOver($event)"
+                        dragleave.trigger="onExpressStopsDragLeave($event)"
+                        drop.trigger="onExpressStopsDrop($event)">
 
-                        <card accent.bind="stop.route.colorIndex & attr">
+                        <div
+                            repeat.for="stop of expressStops"
+                            class="stop-list-item express-route-stop margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}"
+                            draggable="true"
+                            dragstart.trigger="onExpressStopsDragStart($event, stop)"
+                            dragend.trigger="onExpressStopsDragEnd($event, stop)">
 
-                            <div class="flex-row">
-                                <div class="stop-icon">
-                                    <div>${stop.stop.stopNumber}</div>
-                                </div>
-                                <div>
-                                    <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
-                                    <div class="margin-smallest-top">${stop.stop.location.address}</div>
-                                </div>
-                                <div class="flex-push-right text-align-right">
-                                    <div>
-                                        &nbsp;${stop.stop.orderIds | list: 'narrow'}
+                            <card accent.bind="stop.route.colorIndex & attr">
+
+                                <div class="flex-row">
+                                    <div class="stop-icon">
+                                        <div>${stop.stop.stopNumber}</div>
                                     </div>
-                                    <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
-                                        <div class="flex-row flex-push-right">
-                                            <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
-                                            <div>
-                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
+                                    <div>
+                                        <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
+                                        <div class="margin-smallest-top">${stop.stop.location.address}</div>
+                                    </div>
+                                    <div class="flex-push-right text-align-right">
+                                        <div>
+                                            &nbsp;${stop.stop.orderIds | list: 'narrow'}
+                                        </div>
+                                        <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
+                                            <div class="flex-row flex-push-right">
+                                                <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
+                                                <div>
+                                                    &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <icon name="drag-handle" class="opacity-faded-more"></icon>
                                 </div>
-                                <icon name="drag-handle" class="opacity-faded-more"></icon>
-                            </div>
 
-                        </card>
+                            </card>
 
-                    </div>
+                        </div>
 
-                    <div class="express-stops-dropzone ${expressStopsDragover ? '--dragover' : ''}">
-                        <div></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="stop-list-container">
-
-                <h2 class="font-larger margin-bottom" translate>
-                    Stops on driver route
-                </h2>
-
-                <div
-                    class="stop-list driver-stops padding-medium"
-                    surface="card"
-                    scroll
-                    ref="driverStopsElement">
-
-                    <div
-                        repeat.for="stop of driverStops"
-                        draggable="true"
-                        dragstart.trigger="onDriverStopsDragStart($event, stop)"
-                        dragend.trigger="onDriverStopsDragEnd($event, stop)"
-                        class="stop-list-item ${stop.type} margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}">
-
-                        <div
-                            if.bind="!stop.dragstart"
-                            class="stop-dropzone"
-                            dragover.trigger="onDriverStopsDragOver($event, stop)"
-                            dragleave.trigger="onDriverStopsDragLeave($event, stop)"
-                            drop.trigger="onDriverStopsDrop($event, stop)">
+                        <div class="express-stops-dropzone ${expressStopsDragover ? '--dragover' : ''}">
                             <div></div>
                         </div>
 
-                        <card accent.bind="(stop.type == 'express-route-stop' ? stop.route.colorIndex : undefined) & attr">
+                    </div>
 
-                            <div class="flex-row">
-                                <div class="stop-icon">
-                                    <div>${$index + 1}</div>
-                                </div>
-                                <div>
-                                    <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
-                                    <div class="margin-smallest-top">${stop.stop.location.address}</div>
-                                </div>
-                                <div class="flex-push-right text-align-right">
-                                    <div>
-                                        &nbsp;${stop.stop.orderIds | list: 'narrow'}
+                </div>
+
+                <div class="stop-list-container">
+
+                    <h2 class="font-larger margin-bottom" translate>
+                        Stops on driver route
+                    </h2>
+
+                    <div
+                        class="stop-list driver-stops padding-medium"
+                        surface="card"
+                        scroll
+                        ref="driverStopsElement">
+
+                        <div
+                            repeat.for="stop of driverStops"
+                            draggable="true"
+                            dragstart.trigger="onDriverStopsDragStart($event, stop)"
+                            dragend.trigger="onDriverStopsDragEnd($event, stop)"
+                            class="stop-list-item ${stop.type} margin-bottom ${stop.dragover ? '--dragover' : ''} ${stop.dragged ? '--dragged' : ''}">
+
+                            <div
+                                if.bind="!stop.dragstart"
+                                class="stop-dropzone"
+                                dragover.trigger="onDriverStopsDragOver($event, stop)"
+                                dragleave.trigger="onDriverStopsDragLeave($event, stop)"
+                                drop.trigger="onDriverStopsDrop($event, stop)">
+                                <div></div>
+                            </div>
+
+                            <card accent.bind="(stop.type == 'express-route-stop' ? stop.route.colorIndex : undefined) & attr">
+
+                                <div class="flex-row">
+                                    <div class="stop-icon">
+                                        <div>${$index + 1}</div>
                                     </div>
-                                    <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
-                                        <div class="flex-row flex-push-right">
-                                            <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
-                                            <div>
-                                                &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
-                                            </div>
-                                            <div if.bind="stop.stop.arrivalTime == null">
-                                                &nbsp;&nbsp;(--:--)
-                                            </div>
-                                            <div if.bind="stop.stop.arrivalTime != null">
-                                                &nbsp;&nbsp;(${stop.stop.arrivalTime | time: false})
+                                    <div>
+                                        <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
+                                        <div class="margin-smallest-top">${stop.stop.location.address}</div>
+                                    </div>
+                                    <div class="flex-push-right text-align-right">
+                                        <div>
+                                            &nbsp;${stop.stop.orderIds | list: 'narrow'}
+                                        </div>
+                                        <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
+                                            <div class="flex-row flex-push-right">
+                                                <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
+                                                <div>
+                                                    &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
+                                                </div>
+                                                <div if.bind="stop.stop.arrivalTime == null">
+                                                    &nbsp;&nbsp;(--:--)
+                                                </div>
+                                                <div if.bind="stop.stop.arrivalTime != null">
+                                                    &nbsp;&nbsp;(${stop.stop.arrivalTime | time: 'narrow' : false})
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <icon name="drag-handle" class="opacity-faded-more"></icon>
                                 </div>
-                                <icon name="drag-handle" class="opacity-faded-more"></icon>
-                            </div>
 
-                        </card>
+                            </card>
 
-                    </div>
+                        </div>
 
-                    <div
-                        class="driver-stops-dropzone ${driverStopsDragover ? '--dragover' : ''}"
-                        dragover.trigger="onDriverStopsDragOver($event)"
-                        dragleave.trigger="onDriverStopsDragLeave($event)"
-                        drop.trigger="onDriverStopsDrop($event)">
-                        <div></div>
+                        <div
+                            class="driver-stops-dropzone ${driverStopsDragover ? '--dragover' : ''}"
+                            dragover.trigger="onDriverStopsDragOver($event)"
+                            dragleave.trigger="onDriverStopsDragLeave($event)"
+                            drop.trigger="onDriverStopsDrop($event)">
+                            <div></div>
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-        </section>
+        </page-section>
 
     </page-content>
 

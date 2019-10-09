@@ -30,29 +30,29 @@ tree-nav-node
         .focus-visible &:not(.--active):focus,
         &.--dragover
         {
-            color: var(--color-surface-nav-link-surface-text--hover);
-            background: var(--color-surface-nav-link-surface--hover);
+            color: var(--surface-nav-link-surface-text-color--hover);
+            background: var(--surface-nav-link-surface-color--hover);
 
             .tree-nav-node-icon > icon
             {
-                color: var(--color-surface-nav-link-surface-icon--hover);
+                color: var(--surface-nav-link-surface-icon-color--hover);
             }
         }
 
         &.--active
         {
-            color: var(--color-surface-nav-link-surface-text--active);
-            background: var(--color-surface-nav-link-surface--active);
+            color: var(--surface-nav-link-surface-text-color--active);
+            background: var(--surface-nav-link-surface-color--active);
 
             .tree-nav-node-icon > icon
             {
-                color: var(--color-surface-nav-link-surface-icon--active);
+                color: var(--surface-nav-link-surface-icon-color--active);
             }
         }
 
         &.--dragover
         {
-            border-color: var(--color-surface-primary-border);
+            border-color: var(--surface-primary-border-color);
         }
     }
 
@@ -60,7 +60,10 @@ tree-nav-node
     {
         position: relative;
         flex-grow: 1;
-        min-width: 0;
+
+        // TODO: Enable this to truncate the title when the width
+        // of the tree reaches the width of its container.
+        // min-width: 0;
 
         text-input
         {
@@ -108,7 +111,7 @@ tree-nav-node
         > icon
         {
             margin-right: 2rem;
-            color: var(--color-surface-nav-link-surface-icon);
+            color: var(--surface-nav-link-surface-icon-color);
         }
 
         > div
@@ -121,7 +124,7 @@ tree-nav-node
             bottom: 0;
             padding-right: 1rem;
             align-items: center;
-            color: var(--color-surface-nav-link-surface-icon--active);
+            color: var(--surface-nav-link-surface-icon-color--active);
             background: inherit;
             cursor: default;
             opacity: 0;
@@ -184,7 +187,7 @@ tree-nav-node
         font-size: $icon-size-file;
         vertical-align: middle;
         font-weight: 700;
-        color: var(--color-surface-nav-link-surface-icon);
+        color: var(--surface-nav-link-surface-icon-color);
     }
 
     .tree-nav-node-icon > icon:last-child
@@ -208,7 +211,7 @@ tree-nav-node
     > .tree-nav-node.--active .tree-nav-node-icon > icon:last-child,
     > tree-nav-subtree.--descendents-active .tree-nav-node .tree-nav-node-icon > icon:last-child,
     {
-        color: var(--color-surface-nav-link-surface-icon--active);
+        color: var(--surface-nav-link-surface-icon-color--active);
         opacity: 1;
     }
 }

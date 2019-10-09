@@ -16,14 +16,14 @@ card-skeleton
     background-size: 200%;
     background-image: linear-gradient(
         105deg,
-        var(--color-surface) 9%,
-        var(--color-surface-transparent) 23%,
-        var(--color-surface-transparent) 25%,
-        var(--color-surface) 40%,
-        var(--color-surface) 59%,
-        var(--color-surface-transparent) 73%,
-        var(--color-surface-transparent) 75%,
-        var(--color-surface) 90%
+        var(--surface-color) 9%,
+        var(--surface-transparent-color) 23%,
+        var(--surface-transparent-color) 25%,
+        var(--surface-color) 40%,
+        var(--surface-color) 59%,
+        var(--surface-transparent-color) 73%,
+        var(--surface-transparent-color) 75%,
+        var(--surface-color) 90%
     );
 
     animation: card-skeleton ease infinite;

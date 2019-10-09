@@ -58,7 +58,7 @@ icon
     {
         &[accent="#{$accent}"]
         {
-            color: var(--color-surface-#{$accent}-icon);
+            color: var(--surface-#{$accent}-icon-color);
         }
     }
 }
@@ -88,5 +88,5 @@ icon:not([class*="md-"])
     stroke: none;
 
     // Used for elements inside a filled icon to give the impression of transparency.
-    fill: var(--color-surface);
+    fill: var(--surface-color);
 }

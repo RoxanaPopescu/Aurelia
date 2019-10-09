@@ -105,10 +105,10 @@ react-module
     .pageHeader
     {
         padding: 8.5rem 9rem 0 9rem;
-        border-bottom: var(--border-width-thin) solid var(--color-surface-border);
+        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
 
-        --colorNeutralDark: var(--color-surface-neutral-surface);
-        --colorInteractivePrimary: var(--color-surface-primary-text);
+        --colorNeutralDark: var(--surface-neutral-surface-color);
+        --colorInteractivePrimary: var(--surface-primary-text-color);
 
         .pageHeader-top
         {
@@ -139,7 +139,7 @@ react-module
 
         .pageHeader-tabs
         {
-            border: var(--border-width-medium) solid var(--color-surface-neutral-border);
+            border: var(--border-width-medium) solid var(--surface-neutral-border-color);
             border-radius: var(--border-radius-medium);
 
             .pageHeader-tabs-tab
@@ -152,7 +152,7 @@ react-module
                 &.active
                 {
                     color: inherit;
-                    background: var(--color-surface-neutral-surface)
+                    background: var(--surface-neutral-surface-color)
                 }
             }
         }
@@ -165,7 +165,7 @@ react-module
     {
         &, &:hover, &:focus
         {
-            border-color: var(--color-surface-input-border);
+            border-color: var(--surface-input-border-color);
         }
     }
 
@@ -179,7 +179,7 @@ react-module
 
     .c-divider :first-child, .c-divider :last-child
     {
-        border-color: var(--color-surface-border);
+        border-color: var(--surface-separator-color);
     }
 
     .buttonContainer.moverButton .moverButtonText.font-label-base
@@ -239,7 +239,7 @@ page-section:not(.--expanded) + page-section.--expanded
     margin-top: .5rem;
 }
 
-.page-section-toggle
+.page-section-header-toggle
 {
     > span
     {
@@ -286,7 +286,7 @@ page-sidebar
         color: var(--palette-color-neutral-dark);
     }
 
-    .page-section-toggle
+    .page-section-header-toggle
     {
         display: flex;
     }
@@ -299,6 +299,16 @@ page-sidebar
     > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing)
+    }
+}
+
+.button-row
+{
+    display: flex;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large)
     }
 }
 

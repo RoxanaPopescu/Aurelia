@@ -1,13 +1,34 @@
-:root
+body
 {
-    // The gap between items in the grid.
-    --date-picker-item-gap: 1rem;
+    // The default width of the component.
+    --date-picker-width: 84.5rem;
 
     // The padding of the component.
     --date-picker-padding: 4rem;
 
-    // The default width of the component.
-    --date-picker-width: 84.5rem;
+    // The gap between items in the grid.
+    --date-picker-item-gap: 1rem;
+
+    /// The color of the border of the items within the component.
+    /// TODO: This should be customized for each theme surface.
+    --date-picker-surface-item-border-color: var(--surface-date-picker-surface-item-border-color);
+    --date-picker-surface-item-border-color--hover: var(--surface-date-picker-surface-item-border-color--hover);
+    --date-picker-surface-item-border-color--active: var(--surface-date-picker-surface-item-border-color--active);
+    --date-picker-surface-item-border-color--today: var(--surface-date-picker-surface-item-color--today--border);
+
+    /// The color of the surface of items within the component.
+    /// TODO: This should be customized for each theme surface.
+    --date-picker-surface-item-surface-color: var(--surface-date-picker-surface-item-surface-color);
+    --date-picker-surface-item-surface-color--hover: var(--surface-date-picker-surface-item-surface-color--hover);
+    --date-picker-surface-item-surface-color--active: var(--surface-date-picker-surface-item-surface-color--active);
+    --date-picker-surface-item-surface-color--today: var(--surface-date-picker-surface-item-color--today--surface);
+
+    /// The color of the text on the surface of items within the component.
+    /// TODO: This should be customized for each theme surface.
+    --date-picker-surface-item-surface-text-color: var(--surface-date-picker-surface-item-surface-text-color);
+    --date-picker-surface-item-surface-text-color--hover: var(--surface-date-picker-surface-item-surface-text-color--hover);
+    --date-picker-surface-item-surface-text-color--active: var(--surface-date-picker-surface-item-surface-text-color--active);
+    --date-picker-surface-item-surface-text-color--today: var(--surface-date-picker-surface-item-color--today--surface-text);
 }
 
 date-picker
@@ -86,6 +107,12 @@ date-picker
         // Add bottom margin to compensate for the missing row gap.
         margin-bottom: var(--date-picker-row-gap);
 
+        // Use small font size.
+        font-size: var(--font-small-font-size);
+
+        // Fade the weekdays.
+        opacity: var(--opacity-faded);
+
         > ::before
         {
             // Hack to ensure the height matches the width.
@@ -105,21 +132,35 @@ date-picker
         row-gap: var(--date-picker-row-gap);
         column-gap: var(--date-picker-column-gap);
 
-        > *
+        > button[appearance="icon"]
         {
+            // Apply item style for the normal state.
+            border-color: var(--date-picker-surface-item-border-color) !important;
+            background: var(--date-picker-surface-item-surface-color) !important;
+            color: var(--date-picker-surface-item-surface-text-color) !important;
+
+            &:hover
+            {
+                // Apply item style for the hover state.
+                border-color: var(--date-picker-surface-item-border-color--hover) !important;
+                background: var(--date-picker-surface-item-surface-color--hover) !important;
+                color: var(--date-picker-surface-item-surface-text-color--hover) !important;
+            }
+
             &.--today
             {
-                // Apply outline style to highlight today.
-                color: var(--color-surface-primary-text) !important;
-                border-color: var(--color-surface-primary-border) !important;
+                // Apply item style for the today state.
+                border-color: var(--date-picker-surface-item-border-color--today) !important;
+                background: var(--date-picker-surface-item-surface-color--today) !important;
+                color: var(--date-picker-surface-item-surface-text-color--today) !important;
             }
 
             &.--selected
             {
-                // Apply solid style to highlight the selected item.
-                background: var(--color-surface-primary-surface) !important;
-                color: var(--color-surface-primary-surface-text) !important;
-                border-color: var(--color-surface-primary-border) !important;
+                // Apply item style for the selected state.
+                border-color: var(--date-picker-surface-item-border-color--active) !important;
+                background: var(--date-picker-surface-item-surface-color--active) !important;
+                color: var(--date-picker-surface-item-surface-text-color--active) !important;
             }
 
             &:not(.--selected)
@@ -181,14 +222,6 @@ date-picker
         }
     }
 
-    &:not(.--hoverable) .date-picker-items button[appearance="icon"]:hover
-    {
-        // Override the hover style for the buttons to prevent hover effects while in keyboard mode.
-        color: var(--color-surface-neutral-text);
-        border-color: transparent;
-        background: transparent;
-    }
-
     .date-picker-today
     {
         // Position at the bottom right corner of the grid.
@@ -211,11 +244,9 @@ date-picker
         height: calc((100% - 5 * var(--date-picker-row-gap)) / 6);
     }
 
-    .date-picker-weekdays,
-    .date-picker-today button
+    &:not(.--hoverable) .date-picker-items button[appearance="icon"]
     {
-        // Use a slightly heavier font weight.
-        font-size: var(--font-small-font-size);
-        opacity: var(--opacity-faded);
+        // Prevent hover effects while in keyboard mode.
+        pointer-events: none;
     }
 }

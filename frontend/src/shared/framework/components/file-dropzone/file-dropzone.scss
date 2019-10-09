@@ -6,8 +6,8 @@ file-dropzone
         padding: 10rem;
         width: 100rem;
         height: 60rem;
-        background: var(--color-surface);
-        border: var(--border-width-medium) dashed var(--color-border);
+        background: var(--surface-color);
+        border: var(--border-width-medium) dashed var(--border-color);
         border-radius: var(--border-radius-large);
 
         .dz-preview
@@ -16,7 +16,7 @@ file-dropzone
             {
                 .dz-image
                 {
-                    //background: var(--color-surface-negative-icon);
+                    //background: var(--surface-negative-icon-color);
                 }
 
                 .dz-error-mark
@@ -25,7 +25,7 @@ file-dropzone
 
                     g
                     {
-                        fill: var(--color-surface-negative-icon) !important;
+                        fill: var(--surface-negative-icon-color) !important;
                     }
                 }
             }

@@ -4,7 +4,7 @@
 
     <modal-dialog name="add-consignor-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
 
-        <header>
+        <modal-header>
 
             <h1 class="font-larger margin-bottom" translate>
                 Add consignor agreement
@@ -14,9 +14,9 @@
                 Note that an invitation will be sent to the specified contact person.
             </div>
 
-        </header>
+        </modal-header>
 
-        <section validation validation.ref="validation">
+        <modal-section validation validation.ref="validation">
 
             <text-input value.bind="model.outfitName" label="above" class="margin-medium-bottom">
 
@@ -145,15 +145,15 @@
 
             </number-input>
 
-        </section>
+        </modal-section>
 
-        <footer>
+        <modal-footer>
 
             <button appearance="solid" accent="primary" click.delegate="onInviteClick()" translate>
                 Add agreement
             </button>
 
-        </footer>
+        </modal-footer>
 
     </modal-dialog>
 

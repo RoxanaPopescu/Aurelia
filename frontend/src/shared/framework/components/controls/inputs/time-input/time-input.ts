@@ -1,6 +1,6 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
-import { TimeValueConverter } from "shared/localization";
+import { TimeValueConverter, TimeFormat } from "shared/localization";
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
@@ -14,36 +14,6 @@ for (let hour = 0; hour < 24; hour++)
     {
         timeItems.push(Duration.fromObject({ hour, minute }));
     }
-}
-
-/**
- * Provides info about the date format for the current locale.
- */
-namespace TimeFormatInfo
-{
-    /**
-     * The date format for the current locale.
-     */
-    export const format = "HH:mm";
-
-    /**
-     * The date pattern, matching a partial or complete date.
-     */
-    export const partialPattern = new RegExp(
-        `^${[...format].reverse().reduce((s, c) => `(${c}${s})?`, "")
-        .replace(/\\/g, "\\\\").replace(/H|m/g, "\\d")}$`);
-
-    /**
-     * The date pattern, matching a only a complete date.
-     */
-    export const completePattern = new RegExp(
-        `^${format.replace(/\\/g, "\\\\").replace(/H|m/g, "\\d")}$`);
-
-    /**
-     * The pattern matching the characters allowed in the pattern.
-     */
-    export const keyPattern = new RegExp(
-        `\\d|${[...format.replace(/H|m/g, "")].join("|").replace(/\\/g, "\\\\")}`);
 }
 
 /**
@@ -69,7 +39,7 @@ export class TimeInputCustomElement
     /**
      * The format info for the current locale.
      */
-    protected formatInfo = TimeFormatInfo;
+    protected timeFormat = new TimeFormat();
 
     /**
      * The element representing the input.
@@ -402,7 +372,7 @@ export class TimeInputCustomElement
         }
 
         // Prevent the user from entering characters that are not part of the pattern.
-        if (!this.formatInfo.keyPattern.test(event.key))
+        if (!this.timeFormat.keyPattern.test(event.key))
         {
             return false;
         }

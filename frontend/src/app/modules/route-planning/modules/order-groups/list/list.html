@@ -6,7 +6,7 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <header scroll-fade>
+            <page-header scroll-fade>
 
                 <h1 class="font-largest">
                     <path-nav>
@@ -18,9 +18,9 @@
                     </path-nav>
                 </h1>
 
-            </header>
+            </page-header>
 
-            <section>
+            <page-section>
 
                 <data-table
                     appearance="rows"
@@ -53,7 +53,7 @@
 
                     <template repeat.for="orderGroup of orderGroups">
 
-                        <data-table-row>
+                        <data-table-row href="/route-planning/order-groups/details/${orderGroup.id}">
 
                             <data-table-cell>
                                 ${orderGroup.name}
@@ -71,14 +71,14 @@
                                 ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
                             </data-table-cell>
 
-                            <data-table-cell translate>
+                            <data-table-cell>
                                 <span if.bind="orderGroup.paused" class="opacity-faded order-group-status">
                                     <icon name="pause"></icon>
-                                    Paused
+                                    <span translate>Paused</span>
                                 </span>
                                 <span if.bind="!orderGroup.paused" class="order-group-status" accent="positive">
                                     <icon name="play"></icon>
-                                    Active
+                                    <span translate>Active</span>
                                 </span>
                             </data-table-cell>
 
@@ -107,7 +107,7 @@
                 </div>
                 -->
 
-            </section>
+            </page-section>
 
         </page-content>
 

@@ -128,7 +128,7 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <header scroll-fade class="flex-row">
+            <page-header scroll-fade class="flex-row">
 
                 <h1 class="font-largest">
                     <path-nav>
@@ -146,9 +146,9 @@
                     </button>
                 </toolbar>
 
-            </header>
+            </page-header>
 
-            <section>
+            <page-section>
 
                 <data-table
                     appearance="rows"
@@ -215,9 +215,9 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${order.earliestPickupTime | time: 'narrow'}
+                                    ${order.earliestPickupTime | time: 'narrow' : false}
                                     –
-                                    ${order.latestPickupTime | time: 'narrow'}
+                                    ${order.latestPickupTime | time: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
@@ -262,7 +262,7 @@
 
                 </div>
 
-            </section>
+            </page-section>
 
         </page-content>
 

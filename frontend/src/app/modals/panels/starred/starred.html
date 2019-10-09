@@ -6,47 +6,60 @@
 
     <modal-panel name="starred" close-button.bind="true" close-shortcut.bind="true" scroll>
 
-        <header scroll-fade>
+        <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" translate>
-                Pinned and recent
+                Starred and recent
             </h1>
 
-            <input type="text" placeholder.translate="Type to find..." autofocus>
+            <search-input value.bind="textFilter" autofocus>
 
-        </header>
+                <span slot="before" class="opacity-faded">
+                    <icon name="md-search" class="font-larger"></icon>
+                </span>
 
-        <div>
+                <span slot="placeholder" translate>
+                    Type to filter…
+                </span>
 
-            <section class="margin-bottom">
+            </search-input>
 
-                <h2 class="font-large margin-bottom" translate>Pinned items</h2>
+        </modal-header>
 
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
+        <modal-section
+            class="margin-bottom"
+            toggle.bind="true">
 
-                <a href="#" translate>Show more</a>
+            <div slot="header" translate>
+                Starred items
+            </div>
 
-            </section>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
 
-            <section class="margin-bottom">
+            <a href="#" translate>Show more</a>
 
-                <h2 class="font-large margin-bottom" translate>Recent items</h2>
+        </modal-section>
 
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
-                <div style="background: #efefef; height: 40px;" class="margin"></div>
+        <modal-section
+            toggle.bind="true">
 
-                <a href="#" translate>Show more</a>
+            <div slot="header" translate>
+                Recent items
+            </div>
 
-            </section>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
+            <div style="background: #efefef; height: 40px;" class="margin-bottom"></div>
 
-        </div>
+            <a href="#" translate>Show more</a>
+
+        </modal-section>
 
     </modal-panel>
 

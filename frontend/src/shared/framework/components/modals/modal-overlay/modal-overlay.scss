@@ -15,9 +15,9 @@ modal-overlay
     overflow: hidden;
 
     // Apply surface style.
-    border-color: var(--color-surface-border);
-    background: var(--color-surface);
-    color: var(--color-surface-text);
+    border-color: var(--border-color);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     .modal-overlay-content
     {
@@ -40,37 +40,31 @@ modal-overlay
 
         // Provide defaults for sectioning elements.
 
-        > header,
-        > section,
-        > footer
+        modal-header,
+        modal-section,
+        modal-footer
         {
             // Prevent shrinking by default.
             flex-shrink: 0;
         }
 
-        > header
+        modal-header
         {
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
-            padding-top: 10rem;
-            padding-bottom: 7rem;
+            padding-top: 11rem;
+            padding-bottom: 9rem;
         }
 
-        > footer
+        modal-footer
         {
             // Push the footer to the bottom by default.
             margin-top: auto;
 
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
-            padding-top: 7rem;
-            padding-bottom: 10rem;
-        }
-
-        > footer
-        {
-            // Push the footer to the bottom by default.
-            margin-top: auto;
+            padding-top: 9rem;
+            padding-bottom: 11rem;
         }
     }
 

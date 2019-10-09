@@ -37,7 +37,7 @@ export class RelativeTimeValueConverter
 
         const formatOptions: ToRelativeOptions =
         {
-            locale: this._localeService.locale.code,
+            locale: `${this._localeService.locale.code}-u-ca-iso8601`,
             padding: padding != null ? padding : 100
         };
 

@@ -35,8 +35,8 @@ export class TimeRangeValueConverter
             return value;
         }
 
-        const from = this._dateValueConverter.toView(value.from, convert);
-        const to = this._dateValueConverter.toView(value.to, convert);
+        const from = this._dateValueConverter.toView(value.from, "narrow", convert);
+        const to = this._dateValueConverter.toView(value.to, "narrow", convert);
 
         return `${from || ""} – ${to || ""}`.trim();
     }

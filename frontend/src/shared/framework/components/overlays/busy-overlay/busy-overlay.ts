@@ -1,4 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { IDisposable } from "shared/types";
+import { EventManager } from "shared/utilities";
 
 /**
  * Represents a busy overlay that covers its parent element, and optionally hides its contents.
@@ -16,11 +18,13 @@ export class BusyOverlayCustomElement
         this._element = element as HTMLElement;
     }
 
+    private readonly _eventManager = new EventManager(this);
     private readonly _element: HTMLElement;
     private _parentElement: HTMLElement;
     private _xScrollElement: HTMLElement;
     private _yScrollElement: HTMLElement;
     private _scheduledUpdateHandle: any;
+    private _eventSubscription: IDisposable;
 
     /**
      * The element containing the busy indicator.
@@ -80,6 +84,9 @@ export class BusyOverlayCustomElement
         // Stop scheduling size updates.
         cancelAnimationFrame(this._scheduledUpdateHandle);
 
+        // Dispose event listeners.
+        this._eventManager.removeEventListeners();
+
         // Allow interaction with the parent element.
         this._parentElement.inert = false;
     }
@@ -93,6 +100,35 @@ export class BusyOverlayCustomElement
         {
             this.busyOverlayContainerElement.style.height = `${this.getVisibleHeight()}px`;
             this.busyOverlayContainerElement.style.width = `${this.getVisibleWidth()}px`;
+
+            if (this._xScrollElement === this._element.parentElement)
+            {
+                this._element.style.top = `${this._xScrollElement.scrollTop}px`;
+                this._element.style.height = `${this.getVisibleHeight()}px`;
+                this.blockScrolling();
+            }
+            else
+            {
+                this._element.style.top = null;
+                this._element.style.height = null;
+            }
+
+            if (this._yScrollElement === this._element.parentElement)
+            {
+                this._element.style.left = `${this._xScrollElement.scrollLeft}px`;
+                this._element.style.width = `${this.getVisibleWidth()}px`;
+                this.blockScrolling();
+            }
+            else
+            {
+                this._element.style.left = null;
+                this._element.style.width = null;
+            }
+
+            if (this._xScrollElement !== this._element.parentElement && this._yScrollElement !== this._element.parentElement)
+            {
+                this.unblockScrolling();
+            }
 
             this.beginUpdatingSize();
         });
@@ -177,5 +213,29 @@ export class BusyOverlayCustomElement
         const scrollElementTopToElementBottom = Math.max(Math.min(this._element.parentElement!.getBoundingClientRect().bottom, scrollElementHeight), 0);
 
         return scrollElementTopToElementBottom - scrollElementTopToElementTop;
+    }
+
+    /**
+     * Block scrolling by preventing default on the relevant DOM events.
+     */
+    private blockScrolling(): void
+    {
+        if (this._eventSubscription == null)
+        {
+            // Add event listener to prevent scrolling.
+            this._eventSubscription = this._eventManager.addEventListener(this._element, ["wheel", "touchstart", "pointerdown"],
+                (event: Event) => event.preventDefault(), { capture: true });
+        }
+    }
+
+    /**
+     * Unblocks scrolling by disposing the relevant event subscriptions.
+     */
+    private unblockScrolling(): void
+    {
+        if (this._eventSubscription != null)
+        {
+            this._eventSubscription.dispose();
+        }
     }
 }

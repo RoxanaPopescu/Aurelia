@@ -11,8 +11,8 @@ badge
     min-width: 1.5em;
     padding: 0 0.4em;
     border-radius: 0.75em;
-    background: var(--color-surface-badge-surface);
-    color: var(--color-surface-badge-surface-text);
+    background: var(--surface-badge-surface-color);
+    color: var(--surface-badge-surface-text-color);
     text-align: center;
 
     &:empty

@@ -17,7 +17,7 @@ $__summary: comment;
 {
     [accent="#{$accent}"]
     {
-        color: var(--color-surface-#{$accent}-text, inherit);
+        color: var(--surface-#{$accent}-text,-color inherit);
     }
 }
 
@@ -28,10 +28,10 @@ $__summary: comment;
 body
 {
     // Set the base foreground color.
-    background: var(--color-surface);
+    background: var(--surface-color);
 
     // Set the base background color.
-    color: var(--color-surface-text);
+    color: var(--surface-text-color);
 
     // Set the base line height and font.
     line-height: var(--font-base-line-height);
@@ -270,7 +270,7 @@ a
     text-decoration: none;
 
     // Ensure consistent foreground color.
-    color: var(--color-surface-primary-text);
+    color: var(--surface-primary-text-color);
 
     // Ensure consistent pointer.
     cursor: pointer;
@@ -459,7 +459,7 @@ mark
     color: inherit;
 
     // Ensure consistent background color.
-    background: var(--color-surface-mark);
+    background: var(--surface-mark-color);
 }
 
 
@@ -487,7 +487,7 @@ code, var, kbd, samp
 kbd
 {
     // Style to resemble keys on a keyboard.
-    background: var(--color-surface-neutral-surface);
+    background: var(--surface-neutral-surface-color);
     padding: 0.2em 0.55em;
     border-radius: 0.25em;
 }

@@ -11,7 +11,7 @@ check-toggle
 
     input
     {
-        min-width: calc(var(--toggle-height) - 2 * var(--toggle-border-width));
+        min-width: var(--toggle-height);
         width: 100%;
         height: 100%;
     }

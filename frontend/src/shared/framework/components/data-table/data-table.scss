@@ -58,15 +58,15 @@ data-table[appearance="rows"]
     --data-table-header-border-color: var(--data-table-row-border-color);
     --data-table-cell-padding: 4rem 5rem;
     --data-table-cell-background: transparent;
-    --data-table-cell-background--hover: var(--color-surface--hover);
-    --data-table-cell-background--active: var(--color-surface--active);
+    --data-table-cell-background--hover: var(--surface-color--hover);
+    --data-table-cell-background--active: var(--surface-color--active);
     --data-table-row-gap: 2rem;
     --data-table-row-edge-width: var(--border-width-thick);
     --data-table-row-edge-color: transparent;
     --data-table-row-border-width: var(--border-width-thin);
     --data-table-row-border-radius: var(--border-radius-medium);
-    --data-table-row-border-color: var(--color-border);
-    --data-table-row-border-color--hover: var(--color-border--hover);
+    --data-table-row-border-color: var(--border-color);
+    --data-table-row-border-color--hover: var(--border-color--hover);
     --data-table-row-border-color--active: #edeff2;
 }
 
@@ -77,15 +77,15 @@ data-table[appearance="cards"]
     --data-table-header-border-width: var(--border-width-thin);
     --data-table-header-border-color: rgba(255, 255, 255, 0.95);
     --data-table-cell-padding: 4rem 5rem;
-    --data-table-cell-background: var(--color-surface);
-    --data-table-cell-background--hover: var(--color-surface--hover);
-    --data-table-cell-background--active: var(--color-surface--active);
+    --data-table-cell-background: var(--surface-color);
+    --data-table-cell-background--hover: var(--surface-color--hover);
+    --data-table-cell-background--active: var(--surface-color--active);
     --data-table-row-gap: 2rem;
     --data-table-row-edge-width: var(--border-width-thick);
-    --data-table-row-edge-color: var(--color-surface-neutral-surface);
+    --data-table-row-edge-color: var(--surface-neutral-surface-color);
     --data-table-row-border-width: var(--border-width-thin);
     --data-table-row-border-radius: var(--border-radius-medium);
-    --data-table-row-border-color: var(--color-border);
-    --data-table-row-border-color--hover: var(--color-border--hover);
-    --data-table-row-border-color--active: var(--color-border--active);
+    --data-table-row-border-color: var(--border-color);
+    --data-table-row-border-color--hover: var(--border-color--hover);
+    --data-table-row-border-color--active: var(--border-color--active);
 }

@@ -9,7 +9,7 @@ design-column
     &:not(:first-child)
     {
         padding-left: 6rem;
-        border-left: var(--border-width-thin) solid var(--color-surface-border);
+        border-left: var(--border-width-thin) solid var(--surface-separator-color);
     }
 
     .design-column-heading

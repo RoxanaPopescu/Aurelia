@@ -26,6 +26,12 @@ export class PageSectionCustomElement
     public toggle: boolean;
 
     /**
+     * True to use a sticky header, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public sticky: boolean;
+
+    /**
      * True to indicate that the state of the section is invalid,
      * false to indicate that the state of the section is valid,
      * or undefined to set the validity based on input validation.

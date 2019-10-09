@@ -4,7 +4,7 @@
 
     <modal-dialog name="add-fulfiller-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
 
-        <header>
+        <modal-header>
 
             <h1 class="font-larger">
 
@@ -18,9 +18,9 @@
 
             </h1>
 
-        </header>
+        </modal-header>
 
-        <section validation validation.ref="validation">
+        <modal-section validation validation.ref="validation">
 
             <tags-input value.bind="model.consignors" label="above" class="margin-medium-bottom">
 
@@ -54,23 +54,27 @@
 
             </tags-input>
 
-        </section>
+        </modal-section>
 
-        <footer>
+        <modal-footer>
 
-            <button appearance="solid" accent="primary" click.delegate="onSaveClick()">
+            <div class="button-row flex-push-right">
 
-                <span if.bind="create" translate>
-                    Create
-                </span>
+                <button appearance="solid" accent="primary" click.delegate="onSaveClick()">
 
-                <span if.bind="!create" translate>
-                    Accept changes
-                </span>
+                    <span if.bind="create" translate>
+                        Create
+                    </span>
 
-            </button>
+                    <span if.bind="!create" translate>
+                        Save changes
+                    </span>
 
-        </footer>
+                </button>
+
+            </div>
+
+        </modal-footer>
 
     </modal-dialog>
 

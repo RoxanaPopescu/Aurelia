@@ -14,40 +14,40 @@ nav-links
 
         &, &:link, &:active
         {
-            color: var(--color-surface-nav-link-surface-text);
-            background-color: var(--color-surface-nav-link-surface);
-            border-color: var(--color-surface-nav-link-border);
+            color: var(--surface-nav-link-surface-text-color);
+            background-color: var(--surface-nav-link-surface-color);
+            border-color: var(--surface-nav-link-border-color);
         }
 
         icon
         {
             margin-right: size(2.5);
             font-size: size(6);
-            color: var(--color-surface-nav-link-surface-icon);
+            color: var(--surface-nav-link-surface-icon-color);
         }
 
         &:hover
         {
-            color: var(--color-surface-nav-link-surface-text--hover);
-            background-color: var(--color-surface-nav-link-surface--hover);
-            border-color: var(--color-surface-nav-link-border--hover);
+            color: var(--surface-nav-link-surface-text-color--hover);
+            background-color: var(--surface-nav-link-surface-color--hover);
+            border-color: var(--surface-nav-link-border-color--hover);
 
             icon
             {
-                color: var(--color-surface-nav-link-surface-icon--hover);
+                color: var(--surface-nav-link-surface-icon-color--hover);
             }
         }
 
         &.--active
         {
             cursor: default;
-            color: var(--color-surface-nav-link-surface-text--active);
-            background-color: var(--color-surface-nav-link-surface--active);
-            border-color: var(--color-surface-nav-link-border--active);
+            color: var(--surface-nav-link-surface-text-color--active);
+            background-color: var(--surface-nav-link-surface-color--active);
+            border-color: var(--surface-nav-link-border-color--active);
 
             icon
             {
-                color: var(--color-surface-nav-link-surface-icon--active);
+                color: var(--surface-nav-link-surface-icon-color--active);
             }
 
             &.--nav-back-only

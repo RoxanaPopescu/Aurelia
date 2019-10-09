@@ -26,7 +26,7 @@
 
         <slot name="placeholder" slot="placeholder">
             <span class="opacity-faded-more">
-                ${formatInfo.format | case: 'upper'}
+                ${dateFormat.displayFormat}
             </span>
         </slot>
 
@@ -51,7 +51,7 @@
                 trigger="change">
 
                 <template replace-part="invalid" translate>
-                    Please provide a valid date, formatted as <kbd>${formatInfo.format | case: 'upper'}</kbd>.
+                    Please provide a valid date, formatted as <kbd>${dateFormat.displayFormat}</kbd>.
                 </template>
 
             </custom-validator>
@@ -59,12 +59,12 @@
             <pattern-validator
                 enabled.bind="open"
                 active.bind="true"
-                pattern.bind="formatInfo.partialPattern"
+                pattern.bind="dateFormat.inputPattern"
                 trigger="input"
                 value.bind="enteredValue">
 
                 <template replace-part="invalid" translate>
-                   Please provide a valid date, formatted as <kbd>${formatInfo.format | case: 'upper'}</kbd>.
+                   Please provide a valid date, formatted as <kbd>${dateFormat.displayFormat}</kbd>.
                 </template>
 
             </pattern-validator>

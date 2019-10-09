@@ -23,18 +23,18 @@ modal-dialog
     max-width: var(--modal-dialog-max-width);
 
     // Apply a border to the dialog.
-    border: 0 solid var(--color-surface-border);
+    border: 0 solid var(--border-color);
     border-radius: var(--border-radius-large);
 
     // Hide overflow by default, so we get rounded borders.
     overflow: hidden;
 
     // Apply a shadow to the dialog.
-    box-shadow: var(--modal-shadow);
+    box-shadow: var(--shadow-modal);
 
     // Apply surface style.
-    background: var(--color-surface);
-    color: var(--color-surface-text);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     .modal-dialog-content
     {
@@ -46,8 +46,8 @@ modal-dialog
 
         // Provide defaults for sectioning elements.
 
-        > header,
-        > footer
+        modal-header,
+        modal-footer
         {
             // Apply padding to header and footer.
             // Note that we use padding instead of margin,
@@ -61,35 +61,51 @@ modal-dialog
             }
         }
 
-        > header
+        modal-header
         {
             // Stick to the top.
             position: sticky;
             top: 0;
+            z-index: 1;
 
-            // Apply the surface color to the header and footer,
-            // so they cover any content scrolling under them.
-            background-color: var(--color-surface);
+            &::before
+            {
+                content: "";
 
-            // Apply a mask to fade out the background.
-            mask-image: linear-gradient(
-                to bottom,
-                #ffffff 0%,
-                rgba(#ffffff, 0.95) 65%,
-                rgba(#ffffff, 0.8) 80%,
-                rgba(#ffffff, 0) 100%
-            );
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 200%;
+                height: 100%;
+                z-index: -1;
+
+                // Apply the surface color to the header and footer,
+                // so they cover any content scrolling under them.
+                background-color: var(--surface-color);
+
+                // Apply a mask to fade out the background.
+                mask-image: linear-gradient(
+                    to bottom,
+                    #ffffff 0%,
+                    rgba(#ffffff, 0.95) 65%,
+                    rgba(#ffffff, 0.8) 80%,
+                    rgba(#ffffff, 0) 100%
+                );
+            }
         }
 
-        > section
+        modal-section
         {
+            // Ensure the element clears the actions at the top of the dialog.
+            clear: both;
+
             // Apply horizontal padding to sections.
             padding: 0 7rem 0 8rem;
         }
 
-        > footer
+        modal-footer
         {
-            // TODO: Why do we need this?
+            // Ensure the element clears the actions at the top of the dialog.
             clear: both;
 
             // Stick to the bottom.
@@ -98,7 +114,7 @@ modal-dialog
 
             // Apply the surface color to the header and footer,
             // so they cover any content scrolling under them.
-            background-color: var(--color-surface);
+            background-color: var(--surface-color);
 
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
@@ -108,20 +124,6 @@ modal-dialog
                 rgba(#ffffff, 0.8) 80%,
                 rgba(#ffffff, 0) 100%
             );
-
-            // Use horizontal flex layout.
-            display: flex;
-            justify-content: flex-end;
-
-            // Center items vertically.
-            align-items: center;
-
-
-            > *
-            {
-                // Provide default item spacing.
-                margin-left: 3rem;
-            }
         }
     }
 
@@ -130,7 +132,7 @@ modal-dialog
         // Position at the top-right corner of the dialog.
         position: sticky;
         top: 0;
-        z-index: 1;
+        z-index: 2;
         float: right;
 
         // Use horizontal flex layout.
@@ -170,7 +172,7 @@ modal-dialog
     {
         &[accent="#{$accent}"]
         {
-            border-color: var(--color-surface-#{$accent}-border);
+            border-color: var(--surface-#{$accent}-border-color);
         }
     }
 }

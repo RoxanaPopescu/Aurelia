@@ -14,26 +14,30 @@
         </div>
         -->
 
-        <header>
+        <modal-header>
 
             <h1 class="font-larger focus-hidden" tabindex="-1" autofocus>
                 Are you sure you want to delete <b>something</b>?
             </h1>
 
-        </header>
+        </modal-header>
 
-        <section>
+        <modal-section>
 
             This action cannot be undone.
 
-        </section>
+        </modal-section>
 
-        <footer>
+        <modal-footer>
 
-            <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)">Delete</button>
-            <button appearance="solid" accent="neutral" click.delegate="onButtonClick(false)">Cancel</button>
+            <div class="button-row flex-push-right">
 
-        </footer>
+                <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)">Delete</button>
+                <button appearance="solid" accent="neutral" click.delegate="onButtonClick(false)">Cancel</button>
+
+            </div>
+
+        </modal-footer>
 
     </modal-dialog>
 

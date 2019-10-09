@@ -37,16 +37,14 @@ card
     {
         &:hover
         {
-            border-color: var(--color-border--hover);
-            background: var(--color-surface--hover);
-            color: var(--color-surface-text--hover);
+            border-color: var(--border-color--hover);
+            background: var(--surface-color--hover);
         }
 
         &:focus
         {
-            border-color: var(--color-border--focus);
-            background: var(--color-surface--focus);
-            color: var(--color-surface-text--focus);
+            border-color: var(--border-color--focus);
+            background: var(--surface-color--focus);
         }
     }
 
@@ -70,9 +68,9 @@ card
         border-radius: var(--border-radius-medium);
 
         // Apply surface style.
-        border-color: var(--color-border);
-        background: var(--color-surface);
-        color: var(--color-surface-text);
+        border-color: var(--border-color);
+        background: var(--surface-color);
+        color: var(--surface-text-color);
 
         > .card-edge
         {
@@ -122,7 +120,7 @@ card
                 &, icon
                 {
                     // Apply surface style.
-                    color: var(--color-surface-neutral-icon);
+                    color: var(--surface-neutral-icon-color);
                 }
 
                 &:hover,
@@ -134,7 +132,7 @@ card
                     &, icon
                     {
                         // Apply surface style.
-                        color: var(--color-surface-icon--hover);
+                        color: var(--surface-icon-color--hover);
                     }
                 }
 
@@ -147,7 +145,7 @@ card
                     &, icon
                     {
                         // Apply surface style.
-                        color: var(--color-surface-icon--active);
+                        color: var(--surface-icon-color--active);
                     }
                 }
             }

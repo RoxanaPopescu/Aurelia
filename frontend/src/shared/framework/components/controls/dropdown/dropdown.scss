@@ -1,15 +1,41 @@
-:root
+body
 {
+    // TODO: Should we also have a property for shadow?
+
+    /// The min-width of the component.
+    /// The default ensures it grows to the width of its container, which is usually an input control.
+    /// Note that if fixed positioning is enabled, this must be changed to a reasonable value.
     --dropdown-min-width: 100%;
+
+    /// The max-width of the component.
+    /// The default allows it to grow to fit any content.
     --dropdown-max-width: none;
+
+    /// The min-height of the component.
+    /// The default allows it to shrink to fit any content.
     --dropdown-min-height: 0;
+
+    /// The max-height of the component.
+    /// The default allows it to grow, up to a reasonable limit.
     --dropdown-max-height: 75rem;
+
+    /// The width of the border of the component.
     --dropdown-border-width: var(--border-width-thin);
+
+    /// The radius of the border of the component.
     --dropdown-border-radius: var(--border-radius-large);
-    --dropdown-border-color: var(--palette-color-neutral);
-    --dropdown-surface-color: var(--palette-color-whitepoint);
-    --dropdown-surface-text-color: var(--palette-color-blackpoint);
-    --dropdown-shadow: rgba(0, 0, 0, 0.1) 0 1rem 2.75rem;
+
+    /// The color of the border of the component.
+    /// TODO: This should be customized for each theme surface.
+    --dropdown-border-color: var(--surface-dropdown-border-color);
+
+    /// The color of the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --dropdown-surface-color: var(--surface-dropdown-surface-color);
+
+    /// The color of the text on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --dropdown-surface-text-color: var(--surface-dropdown-surface-text-color);
 }
 
 dropdown
@@ -37,5 +63,14 @@ dropdown
     border-radius: var(--dropdown-border-radius);
     background: var(--dropdown-surface-color);
     color: var(--dropdown-surface-text-color);
-    box-shadow: var(--dropdown-shadow);
+
+    &[x-placement*="bottom"]
+    {
+        box-shadow: var(--shadow-dropdown-below);
+    }
+
+    &[x-placement*="top"]
+    {
+        box-shadow: var(--shadow-dropdown-above);
+    }
 }

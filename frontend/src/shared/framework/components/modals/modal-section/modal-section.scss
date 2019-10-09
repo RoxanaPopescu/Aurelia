@@ -2,20 +2,38 @@
 
 modal-section
 {
+    // Use vertical flex layout.
     display: flex;
     flex-direction: column;
 
     .modal-section-header
     {
+        // Use horizontal flex layout.
         display: flex;
         align-items: center;
+
+        // Fill the available width.
         width: 100%;
+
+        // Ensure full opacity, even when the button is disabled.
+        opacity: 1;
+
+        // Use default cursor, unless toggling is enabled.
         cursor: inherit;
     }
 
-    .modal-section-toggle
+    .modal-section-header-content
     {
+        // Fill the available width.
+        flex-grow: 1;
+    }
+
+    .modal-section-header-toggle
+    {
+        // Push to the right.
         margin-left: auto;
+
+        // Animate changes.
         transition:
             color var(--animation-duration-medium),
             opacity var(--animation-duration-medium);
@@ -26,24 +44,30 @@ modal-section
         // Allow content to be positioned relative to this element.
         position: relative;
 
+        // Fill the available width.
         flex-grow: 1;
+
+        // Use vertical flex layout.
         display: flex;
         flex-direction: column;
     }
 
     &.--toggle .modal-section-header
     {
+        // Use cursor to indicate the header is clickable.
         cursor: pointer;
 
-        &:hover .modal-section-toggle
+        &:hover .modal-section-header-toggle
         {
-            color: var(--color-surface-primary-text);
+            // Highlight toggle when hovered.
+            color: var(--surface-primary-text-color);
             opacity: 1 !important;
         }
     }
 
     &:not(.--header-slot-empty) .modal-section-content
     {
+        // Apply spacing between the header and the content.
         margin-top: var(--font-large-margin-top);
     }
 
@@ -51,7 +75,7 @@ modal-section
     {
         // Use negative accent color if the section is invalid.
         // Note that this will be overridden if the section is expanded.
-        color: var(--color-surface-negative-text);
+        color: var(--surface-negative-text-color);
     }
 
     &.margin
@@ -63,7 +87,7 @@ modal-section
 
         &, &-bottom
         {
-            margin-bottom: var(--font-large-margin-bottom);
+            margin-bottom: var(--font-large-margin-top);
         }
     }
 
@@ -76,7 +100,7 @@ modal-section
 
         &, &-bottom
         {
-            margin-bottom: calc(2 * var(--font-large-margin-bottom));
+            margin-bottom: calc(2 * var(--font-large-margin-top));
         }
     }
 }

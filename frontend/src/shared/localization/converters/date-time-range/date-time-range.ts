@@ -48,7 +48,7 @@ export class DateTimeRangeValueConverter
 
         const to = includeToDate
             ? this._dateTimeValueConverter.toView(value.to, style, convert)
-            : this._timeValueConverter.toView(value.to, convert);
+            : this._timeValueConverter.toView(value.to, "narrow", convert);
 
         return `${from || ""} – ${to || ""}`.trim();
     }

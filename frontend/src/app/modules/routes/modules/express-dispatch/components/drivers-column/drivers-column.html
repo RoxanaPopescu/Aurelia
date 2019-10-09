@@ -4,7 +4,7 @@
 
     <page-content scroll scroll.ref="scroll">
 
-        <header scroll-fade>
+        <page-header scroll-fade>
 
             <div class="flex-row">
 
@@ -39,9 +39,9 @@
 
             </div>
 
-        </header>
+        </page-header>
 
-        <section>
+        <page-section>
 
             <h2 class="font-larger margin-large-bottom" translate>
                 Drivers on contract
@@ -146,9 +146,9 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.completionTime | time: false">
+                        <data-table-cell title.bind="item.completionTime | time: 'narrow' : false">
                             <span class="text-truncate">
-                                ${item.completionTime | time: false}
+                                ${item.completionTime | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
@@ -170,7 +170,7 @@
                 No results
             </empty-indicator>
 
-        </section>
+        </page-section>
 
     </page-content>
 

@@ -2,10 +2,10 @@ design-item
 {
     display: block;
     border-radius: var(--border-radius-medium);
-    border: var(--border-width-thin) solid var(--color-border, transparent);
+    border: var(--border-width-thin) solid var(--border-color, transparent);
     border-left-width: var(--border-width-thick);
-    background: var(--color-surface);
-    color: var(--color-surface-text);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     &:not(:last-child)
     {
@@ -14,30 +14,30 @@ design-item
 
     .app-modules-design-content [surface="base"] &
     {
-        border-color: var(--color-border, var(--color-surface-border));
+        border-color: var(--border-color, var(--surface-separator-color));
     }
 
     .app-modules-design-content [surface="card"] &
     {
         &:hover
         {
-            border-color: var(--color-border--hover);
-            background: var(--color-surface--hover);
-            color: var(--color-surface-text--hover);
+            border-color: var(--border-color--hover);
+            background: var(--surface-color--hover);
+            color: var(--surface-text-color--hover);
         }
 
         &:focus
         {
-            border-color: var(--color-border--focus);
-            background: var(--color-surface--focus);
-            color: var(--color-surface-text--focus);
+            border-color: var(--border-color--focus);
+            background: var(--surface-color--focus);
+            color: var(--surface-text-color--focus);
         }
 
         &.--active
         {
-            border-color: var(--color-border--active);
-            background: var(--color-surface--active);
-            color: var(--color-surface-text--active);
+            border-color: var(--border-color--active);
+            background: var(--surface-color--active);
+            color: var(--surface-text-color--active);
         }
     }
 
@@ -49,7 +49,7 @@ design-item
 
     .design-item-content
     {
-        border-top: var(--border-width-thin) solid var(--color-surface-border);
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
         padding: 6rem;
     }
 }

@@ -5,23 +5,24 @@ item-picker
     .item-picker-empty
     {
         // Apply padding.
-        padding: var(--item-padding);
+        padding: var(--item-picker-surface-item-padding);
 
         // Truncate text content with an ellipsis.
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
 
-        // Apply colors.
+        // Apply component style for the normal state.
+        background: var(--item-picker-surface-item-surface-color);
+        color: var(--item-picker-surface-item-surface-text-color);
 
-        background: var(--item-surface-color);
-        color: var(--item-surface-text-color);
-
+        // Reduce opacity, as if disabled.
         opacity: var(--opacity-faded);
     }
 
     .item-picker-none
     {
-        opacity: var(--opacity-faded);
+        // Fade the item slightly, relative to other items.
+        opacity: var(--opacity-faded-less);
     }
 }

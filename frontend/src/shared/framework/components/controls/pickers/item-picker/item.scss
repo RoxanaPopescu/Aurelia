@@ -1,12 +1,21 @@
 body
 {
-    --item-padding: var(--input-padding);
-    --item-surface-color: var(---color-surface);
-    --item-surface-text-color: var(---color-surface-text);
-    --item-surface-color--hover: var(--color-surface-neutral-surface);
-    --item-surface-text-color--hover: var(--color-surface-neutral-surface-text);
-    --item-surface-color--active: var(--color-surface-primary-surface);
-    --item-surface-text-color--active: var(--color-surface-primary-surface-text);
+    // TODO: What about border width, color and radius?
+
+    /// The padding of the component.
+    --item-picker-surface-item-padding: var(--input-padding);
+
+    /// The color of the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --item-picker-surface-item-surface-color: var(--surface-item-picker-surface-item-surface-color);
+    --item-picker-surface-item-surface-color--hover: var(--surface-item-picker-surface-item-surface-color--hover);
+    --item-picker-surface-item-surface-color--active: var(--surface-item-picker-surface-item-surface-color--active);
+
+    /// The color of the text on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --item-picker-surface-item-surface-text-color: var(--surface-item-picker-surface-item-surface-text-color);
+    --item-picker-surface-item-surface-text-color--hover: var(--surface-item-picker-surface-item-surface-text-color--hover);
+    --item-picker-surface-item-surface-text-color--active: var(--surface-item-picker-surface-item-surface-text-color--active);
 }
 
 item
@@ -14,20 +23,20 @@ item
     display: block;
 
     // Apply padding.
-    padding: var(--item-padding);
+    padding: var(--item-picker-surface-item-padding);
 
     // Truncate text content with an ellipsis.
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    // Apply colors.
-
-    background: var(--item-surface-color);
-    color: var(--item-surface-text-color);
+    // Apply component style for the normal state.
+    background: var(--item-picker-surface-item-surface-color);
+    color: var(--item-picker-surface-item-surface-text-color);
 
     &.--disabled
     {
+        // Reduce opacity when disabled.
         opacity: var(--opacity-faded);
     }
 
@@ -39,13 +48,15 @@ item
 
     item-picker.--hoverable &:not(.--disabled):not(.--active):hover
     {
-        background: var(--item-surface-color--hover);
-        color: var(--item-surface-text-color--hover);
+        // Apply component style for the hover state.
+        background: var(--item-picker-surface-item-surface-color--hover);
+        color: var(--item-picker-surface-item-surface-text-color--hover);
     }
 
     item-picker &:not(.--disabled).--active
     {
-        background: var(--item-surface-color--active);
-        color: var(--item-surface-text-color--active);
+        // Apply component style for the active state.
+        background: var(--item-picker-surface-item-surface-color--active);
+        color: var(--item-picker-surface-item-surface-text-color--active);
     }
 }

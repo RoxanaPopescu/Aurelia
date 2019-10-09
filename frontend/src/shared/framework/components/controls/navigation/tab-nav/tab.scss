@@ -17,7 +17,7 @@ tab
     {
         // Use negative accent color if the tab is invalid.
         // Note that this will be overridden if the tab is active.
-        color: var(--color-surface-negative-text);
+        color: var(--surface-negative-text-color);
     }
 
     &.--disabled
@@ -37,7 +37,7 @@ tab
         &.--active
         {
             // Highlight the active tab.
-            color: var(--color-surface-neutral-text);
+            color: var(--surface-neutral-text-color);
         }
     }
 
@@ -67,14 +67,14 @@ tab
             width: 100%;
 
             // Compensate for the border along the bottom of the tabs.
-            line-height: calc(10rem - var(--button-border-width));
+            line-height: calc(10rem - var(--tab-border-width));
         }
 
         &.--active button
         {
             // Highlight the active tab.
-            background: var(--color-surface-neutral-surface);
-            color: var(--color-surface-neutral-text);
+            background: var(--surface-neutral-surface-color);
+            color: var(--surface-neutral-text-color);
             border-top-left-radius: var(--border-radius-medium);
             border-top-right-radius: var(--border-radius-medium);
         }
@@ -88,20 +88,20 @@ tab
             flex-grow: 1;
 
             // Compensate for the border around the tabs.
-            line-height: calc(10rem - 2 * var(--button-border-width));
+            line-height: calc(10rem - 2 * var(--tab-border-width));
         }
 
         &:not(:last-child) button
         {
             // Apply a border between the tabs.
-            border-right: var(--button-border-width) solid var(--color-surface-neutral-border);
+            border-right: var(--tab-border-width) solid var(--surface-neutral-border-color);
         }
 
         &.--active button
         {
             // Highlight the active tab.
-            background: var(--color-surface-neutral-surface);
-            color: var(--color-surface-neutral-text);
+            background: var(--surface-neutral-surface-color);
+            color: var(--surface-neutral-text-color);
         }
     }
 
@@ -110,18 +110,18 @@ tab
         button
         {
             // Apply a border around the tab.
-            border: var(--button-border-width) solid transparent;
+            border: var(--tab-border-width) solid transparent;
             border-radius: var(--border-radius-medium);
 
             // Compensate for the border around the tab.
-            line-height: calc(10rem - 2 * var(--button-border-width));
+            line-height: calc(10rem - 2 * var(--tab-border-width));
         }
 
         &.--active button
         {
             // Highlight the active tab.
-            border-color: var(--color-surface-neutral-border);
-            color: var(--color-surface-neutral-text);
+            border-color: var(--surface-neutral-border-color);
+            color: var(--surface-neutral-text-color);
         }
     }
 }
