@@ -123,7 +123,7 @@ export default class CreatePrebookingComponent extends React.Component<
             src={require("../assets/icons/company.svg")}
           />
           <h4>{`${forecast ? forecast.fulfillee.name : "--"}, ${
-            forecast ? forecast.startLocation.address.primary : "--"
+            forecast ? forecast.startLocation.address.formattedString() : "--"
           }`}</h4>
         </div>
         <div className="c-createPrebooking-infoContainer">

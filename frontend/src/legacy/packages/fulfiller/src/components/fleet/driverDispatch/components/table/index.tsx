@@ -301,7 +301,7 @@ export default class extends React.Component<Props> {
             f.fulfillee.name,
             Localization.formatDate(f.date),
             Localization.formatTimeRange(f.timeFrame),
-            f.startLocation.address.primary,
+            f.startLocation.address.formattedString(),
             f.vehicleType.name,
             `${f.slots.assigned}/${f.slots.total}`,
             this.getForecastAction(f)
@@ -311,7 +311,7 @@ export default class extends React.Component<Props> {
             f.fulfillee.name,
             Localization.formatDate(f.date),
             Localization.formatTimeRange(f.timeFrame),
-            f.startLocation.address.primary,
+            f.startLocation.address.formattedString(),
             f.vehicleType.name,
             this.getForecastAction(f)
           ];
@@ -333,7 +333,7 @@ export default class extends React.Component<Props> {
           p.forecast.fulfillee.name,
           Localization.formatDate(p.forecast.date),
           Localization.formatTimeRange(p.forecast.timeFrame),
-          p.forecast.startLocation.address.primary,
+          p.forecast.startLocation.address.formattedString(),
           // tslint:disable-next-line: jsx-wrap-multiline
           <Link
             to={FulfillerSubPage.path(FulfillerSubPage.DriverEdit).replace(

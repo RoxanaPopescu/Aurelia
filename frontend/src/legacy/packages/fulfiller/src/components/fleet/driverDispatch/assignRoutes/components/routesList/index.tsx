@@ -111,7 +111,7 @@ export default class extends React.Component<Props, State> {
               return <></>;
             }}
             loading={driverDispatchService.loading}
-            gridTemplateColumns="min-content auto auto 60rem auto auto"
+            gridTemplateColumns="min-content auto auto auto auto auto"
           />
         </div>
       </>
@@ -216,18 +216,9 @@ export default class extends React.Component<Props, State> {
           }}
           checkedValue={this.state.selectedRoute && this.state.selectedRoute.id}
         />,
-        // tslint:disable-next-line: jsx-wrap-multiline
-        <div
-          key={`${r.fulfiller ? r.fulfiller.companyName : ""}-fulfiller`}
-          className="c-assignRoutes-ellipsis"
-        >
-          {r.consignorNames}
-        </div>,
+        r.consignorNames,
         Localization.formatDateTime(r.startDateTime),
-        // tslint:disable-next-line: jsx-wrap-multiline
-        <div key={`${r.id}-address`} className="c-assignRoutes-ellipsis">
-          {r.startAddress.primary}
-        </div>,
+        r.startAddress.formattedString(),
         "--",
         this.renderComplexity(r)
       ];
