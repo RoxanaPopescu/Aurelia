@@ -165,8 +165,8 @@ export default class extends React.Component<Props, State> {
           var prebookingResponse = await driverDispatchService.fetchPrebookings(
             this.state.selectedRoute.startDateTime.startOf("day"),
             this.state.selectedRoute.endDateTime.endOf("day"),
-            this.state.selectedRoute.startDateTime,
-            this.state.selectedRoute.endDateTime
+            this.state.selectedRoute.startDateTime.startOf("day"),
+            this.state.selectedRoute.endDateTime.endOf("day"),
           );
 
           if (prebookingResponse.length > 0) {
