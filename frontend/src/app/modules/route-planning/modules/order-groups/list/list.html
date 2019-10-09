@@ -68,11 +68,18 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.nextPlanningTime}
+                                ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
                             </data-table-cell>
 
-                            <data-table-cell>
-                                ${orderGroup.allTags.length}
+                            <data-table-cell translate>
+                                <span if.bind="orderGroup.paused" class="opacity-faded order-group-status">
+                                    <icon name="pause"></icon>
+                                    Paused
+                                </span>
+                                <span if.bind="!orderGroup.paused" class="order-group-status" accent="positive">
+                                    <icon name="play"></icon>
+                                    Active
+                                </span>
                             </data-table-cell>
 
                         </data-table-row>

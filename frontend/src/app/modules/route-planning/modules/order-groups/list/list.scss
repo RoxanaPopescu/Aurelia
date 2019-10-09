@@ -5,5 +5,15 @@ page[name="route-planning"] page[name="order-groups-list"]
     data-table
     {
         --data-table-columns: 1fr 1fr 2fr 2fr 0.5fr;
+
+        .order-group-status
+        {
+            display: flex;
+
+            icon
+            {
+                margin-right: var(--size-inline-spacing);
+            }
+        }
     }
 }
