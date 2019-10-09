@@ -284,8 +284,8 @@ export default class TrackingRoute extends React.Component<Props> {
     let from = store.fromTime.clone();
     let to = store.toTime.clone();
 
-    from.add(-1, "hours");
-    to.add(-1, "hours");
+    from.add(-2, "hours");
+    to.add(-2, "hours");
 
     Service.driverLocationHistory(
       store.driverId,
@@ -297,7 +297,7 @@ export default class TrackingRoute extends React.Component<Props> {
 
         if (data.coordinates.length > 0) {
           data.coordinates.map(location => {
-            let timestamp = Moment(location.timestamp).add(1, "hours");
+            let timestamp = Moment(location.timestamp).add(2, "hours");
             location.timestamp = timestamp;
 
             markers.push(
