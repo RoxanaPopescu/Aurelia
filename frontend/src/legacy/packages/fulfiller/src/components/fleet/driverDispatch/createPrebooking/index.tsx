@@ -140,7 +140,7 @@ export default class CreatePrebookingComponent extends React.Component<
           />
           <h4>
             {forecast
-              ? Localization.formatDateRange(forecast.timeFrame)
+              ? Localization.formatTimeRange(forecast.timeFrame)
               : "--"}
           </h4>
         </div>
