@@ -41,7 +41,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-settings/_list/list"),
                 title: routeTitles.settingsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "settings"
             },
             {
                 name: "settings-details",
@@ -52,22 +52,24 @@ export class RoutePlanningModule
             {
                 name: "settings-create",
                 route: "settings/create",
-                moduleId: PLATFORM.moduleName("./modules/route-settings/create/create"),
+                moduleId: PLATFORM.moduleName("./modules/route-settings/details/details"),
                 title: routeTitles.settingsCreate
             },
             {
                 name: "order-groups-list",
                 route: "order-groups/list",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
-                title: routeTitles.orderGroupList,
+                moduleId: ENVIRONMENT.name === "development" ?
+                            PLATFORM.moduleName("./modules/order-groups/list/list") :
+                            PLATFORM.moduleName("./modules/order-groups/_list/list"),
+                title: routeTitles.orderGroupsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "order-groups"
             },
             {
                 name: "order-groups-details",
                 route: "order-groups/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/details/details"),
-                title: routeTitles.orderGroupDetails
+                moduleId: PLATFORM.moduleName("./modules/order-groups/_details/details"),
+                title: routeTitles.orderGroupsDetails
             },
             {
                 name: "simulations-list",
@@ -75,7 +77,7 @@ export class RoutePlanningModule
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/_list/list"),
                 title: routeTitles.simulationsList,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "simulations"
             },
             {
                 name: "simulations-details",

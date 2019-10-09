@@ -22,3 +22,10 @@ $__summary: comment;
 // Export the surfaces.
 // Surfaces define theme specific overrides to the base surfaces.
 @import "./surfaces/index";
+
+// HACK: Override default border on buttons.
+button[appearance="outline"]
+{
+    border-width: 1px !important;
+    border-color: var(--palette-color-neutral) !important;
+}

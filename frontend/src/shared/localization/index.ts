@@ -24,7 +24,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/relative-time/relative-time"),
         PLATFORM.moduleName("./converters/select/select"),
         PLATFORM.moduleName("./converters/time/time"),
-        PLATFORM.moduleName("./converters/time-range/time-range")
+        PLATFORM.moduleName("./converters/time-range/time-range"),
+        PLATFORM.moduleName("./converters/weekday/weekday")
     ]);
 }
 
@@ -45,6 +46,7 @@ export * from "./converters/relative-time/relative-time";
 export * from "./converters/select/select";
 export * from "./converters/time/time";
 export * from "./converters/time-range/time-range";
+export * from "./converters/weekday/weekday";
 
 // Services.
 export * from "./services/locale";

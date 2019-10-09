@@ -47,12 +47,19 @@ export default class extends React.Component<Props, State> {
 
   componentWillReceiveProps(props: Props) {
     if (props.selectedRoute) {
+      let tempRoute = this.props.selectedRoute;
       this.setState({
         selectedRoute: props.selectedRoute,
         selectedAssignee: props.selectedAssignee,
         matchedAssignees: props.matchedAssignees
       }, () => {
-        this.fetchData()
+        if (this.props.prebookingIds === undefined &&
+            props.selectedRoute !== undefined &&
+            (tempRoute === undefined ||
+              tempRoute !== undefined &&
+              tempRoute.id !== props.selectedRoute.id)) {
+          this.fetchData();
+        }
       })
     } else {
       if (!this.props.prebookingIds && (this.state.drivers.length > 0 || this.state.prebookings.length > 0)) {
@@ -161,7 +168,6 @@ export default class extends React.Component<Props, State> {
             this.state.selectedRoute.startDateTime,
             this.state.selectedRoute.endDateTime
           );
-          console.log(prebookingResponse)
 
           if (prebookingResponse.length > 0) {
             prebookings = prebookingResponse;
@@ -282,7 +288,7 @@ export default class extends React.Component<Props, State> {
             key={d.id}
             onChange={value => {
               if (
-                !this.state.selectedAssignee ||
+                this.state.selectedAssignee === undefined ||
                 d.id !== this.state.selectedAssignee.id
               ) {
                 this.props.onAssigneeSelection(d);
@@ -306,7 +312,7 @@ export default class extends React.Component<Props, State> {
               key={p.id}
               onChange={value => {
                 if (
-                  !this.state.selectedAssignee ||
+                  this.state.selectedAssignee === undefined ||
                   p.id !== this.state.selectedAssignee.id
                 ) {
                   this.props.onAssigneeSelection(p);
@@ -330,7 +336,7 @@ export default class extends React.Component<Props, State> {
               key={p.id}
               onChange={value => {
                 if (
-                  !this.state.selectedAssignee ||
+                  this.state.selectedAssignee === undefined ||
                   p.id !== this.state.selectedAssignee.id
                 ) {
                   this.props.onAssigneeSelection(p);
@@ -377,14 +383,15 @@ export default class extends React.Component<Props, State> {
     } else if (this.state.selectedRoute) {
       this.setState({
         search: query
-      });
-      if (this.state.state === "drivers") {
-        if (!isNaN(Number(query))) {
-          this.fetchDriverById(Number(query));
-        } else {
-          this.fetchDrivers(this.state.selectedRoute);
+      }, () => {
+        if (this.state.state === "drivers") {
+          if (!isNaN(Number(query))) {
+            this.fetchDriverById(Number(query));
+          } else if (query === undefined || query.length >= 3) {
+            this.fetchDrivers(this.state.selectedRoute!);
+          }
         }
-      }
+      });
     }
   }
 }

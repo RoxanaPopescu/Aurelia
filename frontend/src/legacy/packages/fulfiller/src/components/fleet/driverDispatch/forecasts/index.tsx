@@ -3,7 +3,6 @@ import Localization from "shared/src/localization";
 import { observer } from "mobx-react";
 import Filters from "../components/filters/filters";
 import Table from "../components/table";
-import Header from "../components/header";
 import H from "history";
 import { driverDispatchService, DispatchState } from "../driverDispatchService";
 import CreateForecastDialog from "./components/createForecastDialog";
@@ -15,6 +14,7 @@ import {
   ButtonType,
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
+import { PageHeaderComponent } from "shared/src/components/pageHeader";
 
 interface Props {
   history: H.History;
@@ -116,30 +116,37 @@ export default class ForecastsComponent extends React.Component<Props, State> {
           }}
         />
         <div className="c-driverDispatch-main">
-          <Header>
-            <Button
-              onClick={async () => {
-                this.setState({
-                  createForecastDialogOpen: true
-                });
-              }}
-              type={ButtonType.Light}
-              size={ButtonSize.Medium}
-            >
-              {Localization.operationsValue("Dispatch_Forecasts__Create")}
-            </Button>
-            <Button
-              onClick={async () => {
-                await driverDispatchService.updateForecasts(this.forecasts);
-                driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
-              }}
-              type={ButtonType.Action}
-              size={ButtonSize.Medium}
-              disabled={driverDispatchService.forecasts.length === 0}
-            >
-              {Localization.operationsValue("Dispatch_Forecasts__UpdateAll")}
-            </Button>
-          </Header>
+          <PageHeaderComponent
+            path={[
+              { title: Localization.operationsValue("RoutePlanning_Title") },
+              { title: driverDispatchService.state.name }
+            ]}
+            actionElements={
+            <>
+              <Button
+                onClick={async () => {
+                  this.setState({
+                    createForecastDialogOpen: true
+                  });
+                }}
+                type={ButtonType.Light}
+                size={ButtonSize.Medium}
+              >
+                {Localization.operationsValue("Dispatch_Forecasts__Create")}
+              </Button>
+              <Button
+                onClick={async () => {
+                  await driverDispatchService.updateForecasts(this.forecasts);
+                  driverDispatchService.forecasts = await driverDispatchService.fetchForecasts();
+                }}
+                type={ButtonType.Action}
+                size={ButtonSize.Medium}
+                disabled={driverDispatchService.forecasts.length === 0}
+              >
+                {Localization.operationsValue("Dispatch_Forecasts__UpdateAll")}
+              </Button>
+            </>}
+          />
           <Table
             onForecastEnter={async (forecast, newValue) => {
               await driverDispatchService.updateForecasts([

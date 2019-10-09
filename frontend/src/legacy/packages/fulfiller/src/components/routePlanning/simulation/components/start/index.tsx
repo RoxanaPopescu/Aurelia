@@ -57,6 +57,7 @@ export default class SimulationStartComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
+            { title: "Ruteplanlægning", href: FulfillerSubPage.path(FulfillerSubPage.RoutePlanningList) },
             { title: "Simulationer", href: FulfillerSubPage.path(FulfillerSubPage.SimulationList) },
             { title: "Ny simulation" }
           ]}
@@ -79,7 +80,7 @@ export default class SimulationStartComponent extends React.Component<Props> {
           >
             Start simulation
           </Button>
-            
+
         </PageHeaderComponent>
 
         <PageContentComponent>

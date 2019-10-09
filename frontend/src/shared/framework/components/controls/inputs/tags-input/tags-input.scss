@@ -4,6 +4,8 @@ tags-input
 
     > text-input
     {
+        width: 100%;
+
         &.input > .input-control > .input-control-inner .input-input
         {
             // Remove padding at the end closest to the toggle icon.

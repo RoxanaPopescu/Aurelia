@@ -1,0 +1,30 @@
+@import "resources/index";
+
+page[name="route-planning"] page[name="order-groups-details"]
+{
+    .order-group-criteria
+    {
+        data-table
+        {
+            --data-table-columns: 1.25fr 1fr 0.5fr;
+        }
+
+        > button
+        {
+            width: 100%;
+        }
+    }
+
+    .order-group-schedule
+    {
+        data-table
+        {
+            --data-table-columns: 1.25fr 1fr 1fr 1fr 1.25fr 0.5fr;
+        }
+
+        > button
+        {
+            width: 100%;
+        }
+    }
+}

@@ -58,7 +58,8 @@ const expressRoutes =
                     "loadingTime": 420,
                     "waitingTime": 0,
                     "completionTime": "2019-03-18T09:33:55+01:00"
-                }
+                },
+                "driverInstructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             },
             {
                 "hidden": false,
@@ -188,7 +189,8 @@ const driverRoutes =
                     "loadingTime": 120,
                     "waitingTime": 0,
                     "completionTime": "2019-03-18T09:38:05+01:00"
-                }
+                },
+                "driverInstructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             },
             {
                 "hidden": false,

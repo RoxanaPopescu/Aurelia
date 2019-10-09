@@ -20,9 +20,19 @@ export class TimeOfWeek
             {
                 this.timeOfDay = Duration.fromObject({ seconds: data.timeOfDay });
             }
-            else
+            else if (data.timeOfDay.startsWith("P"))
             {
                 this.timeOfDay = Duration.fromISO(data.timeOfDay);
+            }
+            else
+            {
+                const parts = data.timeOfDay.split(/:/g);
+                this.timeOfDay = Duration.fromObject(
+                {
+                    hours: parseInt(parts[0] || "0"),
+                    minutes: parseInt(parts[1] || "0"),
+                    seconds: parseFloat(parts[2] || "0")
+                });
             }
         }
     }

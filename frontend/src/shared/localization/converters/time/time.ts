@@ -36,7 +36,7 @@ export class TimeValueConverter
         }
 
         const valueToFormat =
-            value instanceof Duration ? DateTime.local().startOf("day").plus(value) :
+            value instanceof Duration ? DateTime.local().startOf("day").plus({ milliseconds: value.as("milliseconds") }) :
             value instanceof DateTime && convert ? value.toLocal() : value;
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =

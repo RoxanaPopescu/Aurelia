@@ -145,6 +145,9 @@ react-module
             .pageHeader-tabs-tab
             {
                 line-height: calc(10rem - 2 * var(--border-width-medium));
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
 
                 &.active
                 {
@@ -198,6 +201,11 @@ react-module
     // TODO: Should we define variables for standard margin and padding instead?
     --card-padding: 3.5rem 3rem;
     --card-padding-large: 12.5rem 13rem;
+}
+
+path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-child)::after
+{
+    mask-size: 1em;
 }
 
 // HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.
