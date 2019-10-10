@@ -3,7 +3,7 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "shared/src/components/login/index";
+import Component from "shared/src/components/activation/index";
 import { Profile } from "shared/src/model/profile";
 
 @noView
