@@ -30,7 +30,7 @@
 
         <modal-section class="margin-bottom">
 
-            <div class="margin-bottom">
+            <div class="margin-bottom" translate>
                 For orders to be delivered...
             </div>
 
@@ -44,11 +44,11 @@
                     filter="auto"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         Day of week
                     </div>
 
-                    <span slot="placeholder">
+                    <span slot="placeholder" translate>
                         Choose a day
                     </span>
 
@@ -73,7 +73,7 @@
                     max.bind="model.routePlanningTime.delivery.to.timeOfDay"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         From time
                     </div>
 
@@ -88,7 +88,7 @@
                             max.bind="model.routePlanningTime.delivery.to.timeOfDay">
 
                             <template replace-part="invalid-max" translate>
-                                Please choose a time before the from time.
+                                Please choose a time before the to time.
                             </template>
 
                         </range-validator>
@@ -104,7 +104,7 @@
                     min.bind="model.routePlanningTime.delivery.from.timeOfDay"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         To time
                     </div>
 
@@ -134,7 +134,7 @@
 
         <modal-section class="margin-bottom">
 
-            <div class="margin-bottom">
+            <div class="margin-bottom" translate>
                 Schedule route planning to run...
             </div>
 
@@ -148,11 +148,11 @@
                     filter="auto"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         Day of week
                     </div>
 
-                    <span slot="placeholder">
+                    <span slot="placeholder" translate>
                         Choose a day
                     </span>
 
@@ -176,7 +176,7 @@
                     none.bind="false"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         Time
                     </div>
 
@@ -196,7 +196,7 @@
 
         <modal-section>
 
-            <div class="margin-bottom">
+            <div class="margin-bottom" translate>
                 Schedule the next route planning to run...
             </div>
 
@@ -209,7 +209,7 @@
                     zone.bind="model.timeZone"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         Date
                     </div>
 
@@ -229,7 +229,7 @@
                     none.bind="false"
                     fixed.bind="true">
 
-                    <div slot="heading">
+                    <div slot="heading" translate>
                         Time
                     </div>
 

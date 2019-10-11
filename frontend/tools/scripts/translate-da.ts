@@ -10,23 +10,19 @@ const importFilePath = paths.resources.translations.replace("{locale}", "da");
 // Process the export file to create an import file.
 
 const exportFileContents = JSON.parse(fs.readFileSync(exportFilePath).toString());
-const importFileContents = JSON.parse(fs.readFileSync(importFilePath).toString());
+const oldImportFileContents = JSON.parse(fs.readFileSync(importFilePath).toString());
+const newImportFileContents = {} as any;
 
 for (const key of Object.keys(exportFileContents))
 {
-    if (importFileContents[key] == null)
+    if (oldImportFileContents[key] == null)
     {
-        importFileContents[key] = exportFileContents[key].content;
+        newImportFileContents[key] = exportFileContents[key].content;
+    }
+    else
+    {
+        newImportFileContents[key] = oldImportFileContents[key];
     }
 }
 
-for (const key of Object.keys(importFileContents))
-{
-    if (exportFileContents[key] == null)
-    {
-        // tslint:disable-next-line: no-dynamic-delete
-        delete importFileContents[key];
-    }
-}
-
-fs.writeFileSync(importFilePath, `${JSON.stringify(importFileContents, null, 2)}\n`);
+fs.writeFileSync(importFilePath, `${JSON.stringify(newImportFileContents, null, 2)}\n`);
