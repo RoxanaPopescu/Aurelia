@@ -87,7 +87,11 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         priority: 1
                     }
                 }
-            }
+            },
+
+            // TODO: Find a better solution to the "Cannot determine default view strategy for object." bug,
+            // caused by modals referenced by class.
+            concatenateModules: false
         },
         performance:
         {
