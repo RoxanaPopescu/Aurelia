@@ -13,7 +13,7 @@ $__summary: comment;
     --surface-subtle-color: var(--palette-color-primary-light);
     --surface-text-color: var(--palette-color-primary-lighter);
     --surface-icon-color: var(--palette-color-primary-lighter);
-    --surface-separator-color: var(--palette-color-primary-darker);
+    --surface-separator-color: var(--palette-color-primary-dark);
 
     // Needed for proper gradients.
     --surface-transparent-color: #{hsla(216, 92%, 34%, 0)};
