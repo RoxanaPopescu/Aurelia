@@ -240,6 +240,18 @@ react-module
                 position: absolute;
                 right: 0;
                 top: 7px;
+
+                .c-orderDetails-tab
+                {
+                    background: transparent !important;
+                    color: var(--palette-color-primary) !important;
+                }
+
+                .c-orderDetails-tab.active
+                {
+                    background: var(--palette-color-neutral) !important;
+                    color: var(--palette-color-neutral-dark) !important;
+                }
             }
         }
     }

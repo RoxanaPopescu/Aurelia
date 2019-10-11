@@ -16,6 +16,7 @@ export class RoutePlanningTime
     {
         if (data != null)
         {
+            this._timeZone = timeZone;
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
             this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
@@ -26,6 +27,8 @@ export class RoutePlanningTime
             this.planning = new TimeOfWeek();
         }
     }
+
+    private readonly _timeZone: IANAZone;
 
     /**
      * The delivery times of week for which this route planning time should be used.
@@ -48,6 +51,6 @@ export class RoutePlanningTime
      */
     public clone(): any
     {
-        return new RoutePlanningTime(JSON.parse(JSON.stringify(this)));
+        return new RoutePlanningTime(this._timeZone, JSON.parse(JSON.stringify(this)));
     }
 }
