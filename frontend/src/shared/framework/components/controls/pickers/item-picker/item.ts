@@ -37,12 +37,20 @@ export class ItemCustomElement
     /**
      * True if this item should be visible, false if it should be hidden due to filtering.
      */
-    @computedFrom("_itemPicker.filterValue")
+    @computedFrom("model", "_itemPicker.excludeValues", "_itemPicker.filterValue")
     public get visible(): boolean
     {
-        if (this._itemPicker != null && this._itemPicker.filterValue)
+        if (this._itemPicker != null)
         {
-            return this.contains(this._itemPicker.filterValue);
+            if (this._itemPicker.excludeValues && this._itemPicker.excludeValues.includes(this.model))
+            {
+                return false;
+            }
+
+            if (this._itemPicker.filterValue && !this.contains(this._itemPicker.filterValue))
+            {
+                return false;
+            }
         }
 
         return true;

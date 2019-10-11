@@ -6,7 +6,7 @@
 
         <modal-header>
 
-            <h1 class="font-larger">
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false">
 
                 <span if.bind="create" translate>
                     New matching criteria
@@ -29,6 +29,7 @@
             <tags-input
                 value.bind="model.matchingCriteria.consignors"
                 label="above"
+                filter="auto"
                 fixed.bind="true">
 
                 <div slot="heading" translate>
@@ -70,6 +71,7 @@
             <tags-input
                 value.bind="model.matchingCriteria.tags"
                 label="above"
+                filter="auto"
                 fixed.bind="true">
 
                 <div slot="heading" translate>

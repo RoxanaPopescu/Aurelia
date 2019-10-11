@@ -71,7 +71,7 @@ export class TagsInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The values of the items picked by the user, or undefined if no items have been picked.
+     * The models associated with the items picked by the user, or undefined if no items have been picked.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public value: any[] = [];
@@ -142,8 +142,10 @@ export class TagsInputCustomElement
      */
     public deselectItem(model: any): void
     {
-        const index = this.value.indexOf(model);
-        this.value.splice(index, 1);
+        const value = [...this.value];
+        const index = value.indexOf(model);
+        value.splice(index, 1);
+        this.value = value;
 
         // Dispatch the `input` event to indicate that the comitted value, has changed.
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
@@ -187,7 +189,9 @@ export class TagsInputCustomElement
 
         if (pick && this.focusedValue)
         {
-            this.value.push(this.focusedValue);
+            const value = [...this.value];
+            value.push(this.focusedValue);
+            this.value = value;
 
             // Dispatch the `input` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));

@@ -62,8 +62,8 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/modals/panels/notifications/notifications")
             },
             {
-                name: "confirm",
-                moduleId: PLATFORM.moduleName("app/modals/dialogs/confirm/confirm")
+                name: "confirm-discard",
+                moduleId: PLATFORM.moduleName("app/modals/dialogs/confirm-discard/confirm-discard")
             }
         ];
 

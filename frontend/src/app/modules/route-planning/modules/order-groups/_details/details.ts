@@ -77,15 +77,6 @@ export class DetailsPage
     }
 
     /**
-     * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
-     */
-    public deactivate(): void
-    {
-        // TODO: Ask to save changes.
-    }
-
-    /**
      * Called when the `Create order group` button is clicked.
      * Creates the order group.
      */

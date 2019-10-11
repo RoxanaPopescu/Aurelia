@@ -74,6 +74,12 @@ export class ItemPickerCustomElement
     public filterValue: string | undefined;
 
     /**
+     * The values of the items that should be excluded from the list.
+     */
+    @bindable({ defaultValue: undefined })
+    public excludeValues: any[] | undefined;
+
+    /**
      * Called when the user picks an item.
      */
     @bindable({ defaultValue: undefined })
@@ -274,6 +280,16 @@ export class ItemPickerCustomElement
         this.hoverable = false;
 
         return true;
+    }
+
+    /**
+     * Called by the framework when the `excludeValues` property changes.
+     * Updates the empty state, based on the visibility of the items.
+     */
+    protected excludeValuesChanged(): void
+    {
+        // Update the `empty` state.
+        this.empty = !this._items.some(i => i.visible);
     }
 
     /**

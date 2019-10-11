@@ -1,0 +1,36 @@
+<template>
+
+    <require from="./confirm-discard.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="confirm-discard" accent="negative" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false">
+                Are you sure you want to leave without saving your changes?
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            This action cannot be undone.
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)">Discard changes</button>
+                <button appearance="solid" accent="neutral" click.delegate="onButtonClick(false)">Cancel</button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

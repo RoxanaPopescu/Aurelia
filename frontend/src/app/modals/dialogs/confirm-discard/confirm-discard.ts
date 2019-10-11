@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 
 @autoinject
-export class ConfirmDialogCustomElement
+export class ConfirmDiscardDialogCustomElement
 {
     /**
      * Creates a new instance of the type.
@@ -17,22 +17,11 @@ export class ConfirmDialogCustomElement
     private _result = false;
 
     /**
-     * Called by the framework when the modal is activated.
-     * @param model The model to use for the modal.
-     */
-    public activate(model: any): void
-    {
-        console.log("activate", model);
-    }
-
-    /**
      * Called by the framework when the modal is deactivated.
-     * @returns The result of the modal.
+     * @returns True if changes should be discarded, otherwise false.
      */
     public deactivate(): boolean
     {
-        console.log("deactivate", this._result);
-
         return this._result;
     }
 
