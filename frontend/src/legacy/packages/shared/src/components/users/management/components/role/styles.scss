@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-role-outerContainer {
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.8);
   top: 0;

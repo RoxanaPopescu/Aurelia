@@ -7,12 +7,12 @@
   position: sticky;
   top: 0;
   z-index: 2000;
-  background-color: #ebebeb;
+  background-color: var(--colorNeutralExtraLight);
 }
 
 .c-routePlanning-routes-list-headerContent-background {
   position: absolute;
-  background-color: #ebebeb;
+  background-color: var(--colorNeutralExtraLight);
   left: 0;
   top: 0;
   width: 100%;
@@ -24,7 +24,7 @@
   align-items: center;
   height: 100%;
   padding: 0;
-  background-color: #ebebeb;
+  background-color: var(--colorNeutralExtraLight);
 }
 
 .c-routePlanning-routes-list-headerContentTime {

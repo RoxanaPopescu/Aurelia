@@ -1,7 +1,7 @@
 .c-depots-scannedColli-infoContainer {
   width: 150px;
   height: 101px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--colorNeutralRegular);;
   display: flex;
   flex-direction: column;
 }
@@ -13,7 +13,7 @@
   align-items: center;
   justify-items: center;
   justify-content: center;
-  background-color: #e9e9e9;
+  background-color: var(--colorNeutralExtraLight);
 }
 
 .c-depots-scannedColli-infoDescription {

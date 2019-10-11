@@ -23,7 +23,7 @@ react-module
 {
     // Import legacy styles.
     @import "../legacy/packages/shared/src/webKit/LEGACY";
-    // @import "../legacy/constants";
+    @import "../legacy/constants";
 
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
@@ -190,6 +190,70 @@ react-module
     .buttonContainer.moverButton .moverButtonText.font-label-small
     {
         font-weight: var(--font-label-small-font-weight)
+    }
+
+    .c-routeDetails-info,
+    .c-orderDetails-meta,
+    .c-driverDispatch-filters
+    {
+        background-color: var(--palette-color-neutral-lightest);
+        border-right: 0.25rem solid var(--palette-color-neutral-light);
+    }
+
+    .c-driverDispatch-filters-slider-header
+    {
+        background-color: var(--palette-color-neutral-light);
+        font: inherit;
+    }
+
+    .radioGroup .radioLabel .radioButton
+    {
+        border-color: var(--toggle-surface-indicator-color--focus);
+    }
+
+    .c-orderDetails-meta,
+    .c-routeDetails-info
+    {
+        padding-top: 0;
+
+        .c-orderDetails-headline,
+        .c-routeDetails-info-section-heading
+        {
+            margin: 0 -8rem var(--font-large-margin-top) -8rem;
+            padding: 2rem 5rem 2rem 9rem;
+            font: inherit;
+            background: var(--palette-color-neutral-light) !important;
+            color: var(--palette-color-neutral-dark);
+            text-transform: none;
+        }
+
+        .c-orderDetails-section,
+        .c-routeDetails-info-section
+        {
+            position: relative;
+            overflow: visible;
+            padding-top: 0 !important;
+            border-bottom: none !important;
+
+            .c-orderDetails-tabs
+            {
+                position: absolute;
+                right: 0;
+                top: 7px;
+            }
+        }
+    }
+
+    .multiSelectContainer.selectContainer .selectWrapper .react-selectize .react-selectize-control
+    .react-selectize-search-field-and-selected-values .value-wrapper .simple-value > span
+    {
+        font-weight: normal;
+    }
+
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control .react-selectize-placeholder,
+    .inputContainer .inputWrapper input::placeholder
+    {
+        color: var(--surface-subtle-color);
     }
 }
 

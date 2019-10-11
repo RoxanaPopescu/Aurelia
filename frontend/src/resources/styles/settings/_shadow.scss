@@ -8,15 +8,18 @@ $__summary: comment;
 
 :root
 {
-    /// The large shadow,
-    /// used for elements elevated high above the page, such as e.g. modals.
-    --shadow-large: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+    /// The shadow to use for tooltips.
+    --shadow-tooltip: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
 
-    /// The medium shadow,
-    /// used for elements elevated slightly above the page, such as e.g. dropdowns.
-    --shadow-medium: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    /// The shadow to use for popovers.
+    --shadow-popover: 0 0 2rem 0 rgba(0, 0, 0, 0.1);
 
-    /// The small shadow,
-    /// used for elements elevated just above the page, such as e.g. tooltips.
-    --shadow-small: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+    /// The shadow to use for dropdowns, when positioned above the owner element.
+    --shadow-dropdown-above: 0 -0.5rem 2rem 0 rgba(0, 0, 0, 0.1);
+
+    /// The shadow to use for dropdowns, when positioned below the owner element.
+    --shadow-dropdown-below: 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.1);
+
+    // The shadow to use for modals.
+    --shadow-modal: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 0 25rem 0 rgba(0, 0, 0, 0.1);
 }

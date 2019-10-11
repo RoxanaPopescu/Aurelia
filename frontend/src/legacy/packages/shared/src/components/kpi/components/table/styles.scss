@@ -48,16 +48,9 @@
           margin-right: 7px;
         }
 
-        &:hover {
-          background-color: var(--colorNeutralRegular);
-          border-color: var(--colorNeutralRegular);
-          color: white;
-        }
-
         &.active {
-          background-color: var(--colorNeutralSemiDark);
-          border-color: var(--colorNeutralSemiDark);
-          color: white;
+          background-color: var(--colorNeutralLight);
+          border-color: var(--colorNeutralLight);
         }
       }
     }
@@ -136,7 +129,7 @@
         &.c-fulfillerKpi-kpiColumn-head {
           border-top: 1px solid var(--colorNeutralLight);
           border-bottom: 1px solid var(--colorNeutralLight);
-          color: var(--colorNeutralRegular);
+          color: var(--colorNeutralRegularDarken);
         }
 
         &.c-fulfillerKpi-kpiGroupHeadline,

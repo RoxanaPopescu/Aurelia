@@ -6,9 +6,6 @@
 $__summary: comment;
 
 
-// Export the legacy variables.
-@import "./legacy";
-
 // Export the palettes.
 // Palettes define the standard values used within the theme.
 @import "./palettes/color";
