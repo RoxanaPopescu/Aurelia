@@ -126,7 +126,7 @@
 
                             </data-table-headers>
 
-                            <template repeat.for="matchingCriteria of orderGroup.matchingCriterias">
+                            <template repeat.for="matchingCriteria of orderGroup.matchingCriteria">
 
                                 <data-table-row>
 
@@ -166,7 +166,7 @@
 
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="orderGroup.matchingCriterias.length == 0" class="margin" translate>
+                        <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" class="margin" translate>
                             No items
                         </empty-indicator>
 

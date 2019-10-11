@@ -38,8 +38,8 @@
 
                 <select-input
                     label="above"
-                    value.bind="model.delivery.from.dayOfWeek"
-                    display-value.bind="model.delivery.from.dayOfWeek | weekday"
+                    value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
+                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday"
                     none.bind="false"
                     filter="auto"
                     fixed.bind="true">
@@ -59,7 +59,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.delivery.from.dayOfWeek">
+                            value.bind="model.routePlanningTime.delivery.from.dayOfWeek">
                         </required-validator>
 
                     </div>
@@ -68,9 +68,9 @@
 
                 <time-input
                     label="above"
-                    value.bind="model.delivery.from.timeOfDay"
+                    value.bind="model.routePlanningTime.delivery.from.timeOfDay"
                     none.bind="false"
-                    max.bind="model.delivery.to.timeOfDay"
+                    max.bind="model.routePlanningTime.delivery.to.timeOfDay"
                     fixed.bind="true">
 
                     <div slot="heading">
@@ -80,12 +80,12 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.delivery.from.timeOfDay">
+                            value.bind="model.routePlanningTime.delivery.from.timeOfDay">
                         </required-validator>
 
                         <range-validator
-                            value.bind="model.delivery.from.timeOfDay"
-                            max.bind="model.delivery.to.timeOfDay">
+                            value.bind="model.routePlanningTime.delivery.from.timeOfDay"
+                            max.bind="model.routePlanningTime.delivery.to.timeOfDay">
 
                             <template replace-part="invalid-max" translate>
                                 Please choose a time before the from time.
@@ -99,9 +99,9 @@
 
                 <time-input
                     label="above"
-                    value.bind="model.delivery.to.timeOfDay"
+                    value.bind="model.routePlanningTime.delivery.to.timeOfDay"
                     none.bind="false"
-                    min.bind="model.delivery.from.timeOfDay"
+                    min.bind="model.routePlanningTime.delivery.from.timeOfDay"
                     fixed.bind="true">
 
                     <div slot="heading">
@@ -111,12 +111,12 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.delivery.to.timeOfDay">
+                            value.bind="model.routePlanningTime.delivery.to.timeOfDay">
                         </required-validator>
 
                         <range-validator
-                            value.bind="model.delivery.to.timeOfDay"
-                            min.bind="model.delivery.from.timeOfDay">
+                            value.bind="model.routePlanningTime.delivery.to.timeOfDay"
+                            min.bind="model.routePlanningTime.delivery.from.timeOfDay">
 
                             <template replace-part="invalid-min" translate>
                                 Please choose a time after the from time.
@@ -142,8 +142,8 @@
 
                 <select-input
                     label="above"
-                    value.bind="model.planning.dayOfWeek"
-                    display-value.bind="model.planning.dayOfWeek | weekday"
+                    value.bind="model.routePlanningTime.planning.dayOfWeek"
+                    display-value.bind="model.routePlanningTime.planning.dayOfWeek | weekday"
                     none.bind="false"
                     filter="auto"
                     fixed.bind="true">
@@ -163,7 +163,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.planning.dayOfWeek">
+                            value.bind="model.routePlanningTime.planning.dayOfWeek">
                         </required-validator>
 
                     </div>
@@ -172,7 +172,7 @@
 
                 <time-input
                     label="above"
-                    value.bind="model.planning.timeOfDay"
+                    value.bind="model.routePlanningTime.planning.timeOfDay"
                     none.bind="false"
                     fixed.bind="true">
 
@@ -183,7 +183,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.planning.timeOfDay">
+                            value.bind="model.routePlanningTime.planning.timeOfDay">
                         </required-validator>
 
                     </div>
@@ -204,8 +204,9 @@
 
                 <date-input
                     label="above"
-                    value.bind="model.nextPlanning"
+                    value.bind="nextPlanningDate"
                     min="today"
+                    zone.bind="model.timeZone"
                     fixed.bind="true">
 
                     <div slot="heading">
@@ -215,7 +216,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.nextPlanning">
+                            value.bind="nextPlanningDate">
                         </required-validator>
 
                     </div>
@@ -224,7 +225,7 @@
 
                 <time-input
                     label="above"
-                    value.bind="TODO"
+                    value.bind="nextPlanningTime"
                     none.bind="false"
                     fixed.bind="true">
 
@@ -235,7 +236,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="TODO">
+                            value.bind="nextPlanningTime">
                         </required-validator>
 
                     </div>

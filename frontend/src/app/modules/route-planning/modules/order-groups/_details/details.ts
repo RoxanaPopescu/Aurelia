@@ -140,7 +140,7 @@ export class DetailsPage
 
         if (result)
         {
-            this.orderGroup.matchingCriterias.push(matchingCriteria);
+            this.orderGroup.matchingCriteria.push(matchingCriteria);
         }
     }
 
@@ -151,7 +151,7 @@ export class DetailsPage
      */
     protected onRemoveMatchingCriteriaClick(index: number): void
     {
-        this.orderGroup.matchingCriterias.splice(index, 1);
+        this.orderGroup.matchingCriteria.splice(index, 1);
     }
 
     /**
@@ -161,7 +161,7 @@ export class DetailsPage
      */
     protected async onEditMatchingCriteriaClick(index: number): Promise<void>
     {
-        const matchingCriteria = this.orderGroup.matchingCriterias[index].clone();
+        const matchingCriteria = this.orderGroup.matchingCriteria[index].clone();
         const result = await this._modalService.open(MatchingCriteriaDialog,
         {
             matchingCriteria,
@@ -171,7 +171,7 @@ export class DetailsPage
 
         if (result)
         {
-            this.orderGroup.matchingCriterias.splice(index, 1, matchingCriteria);
+            this.orderGroup.matchingCriteria.splice(index, 1, matchingCriteria);
         }
     }
 
@@ -181,8 +181,12 @@ export class DetailsPage
      */
     protected async onAddRoutePlanningTimeClick(): Promise<void>
     {
-        const routePlanningTime = new RoutePlanningTime();
-        const result = await this._modalService.open(RoutePlanningTimeDialog, routePlanningTime).promise;
+        const routePlanningTime = new RoutePlanningTime(this.orderGroup.timeZone);
+        const result = await this._modalService.open(RoutePlanningTimeDialog,
+        {
+            routePlanningTime,
+            timeZone: this.orderGroup.timeZone
+        }).promise;
 
         if (result)
         {
@@ -208,7 +212,11 @@ export class DetailsPage
     protected async onEditRoutePlanningTimeClick(index: number): Promise<void>
     {
         const routePlanningTime = this.orderGroup.routePlanningTimes[index].clone();
-        const result = await this._modalService.open(RoutePlanningTimeDialog, routePlanningTime).promise;
+        const result = await this._modalService.open(RoutePlanningTimeDialog,
+        {
+            routePlanningTime,
+            timeZone: this.orderGroup.timeZone
+        }).promise;
 
         if (result)
         {

@@ -5,7 +5,7 @@ const orderGroup =
     name: "Order group 1",
     paused: false,
     timeZone: "Europe/Copenhagen",
-    matchingCriterias:
+    matchingCriteria:
     [
         {
             consignors:

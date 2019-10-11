@@ -18,8 +18,8 @@ export class OrderGroup
         this.name = data.name;
         this.paused = data.paused;
         this.timeZone = IANAZone.create(data.timeZone);
-        this.matchingCriterias = data.matchingCriterias.map(d => new MatchingCriteria(d));
-        this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(d));
+        this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
+        this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(this.timeZone, d));
     }
 
     /**
@@ -50,7 +50,7 @@ export class OrderGroup
     /**
      * The matching criteria for the group.
      */
-    public readonly matchingCriterias: MatchingCriteria[];
+    public readonly matchingCriteria: MatchingCriteria[];
 
     /**
      * The consignors to which the order group applies.

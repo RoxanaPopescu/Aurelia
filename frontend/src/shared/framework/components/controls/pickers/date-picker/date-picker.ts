@@ -23,6 +23,7 @@ export class DatePickerCustomElement
     private readonly _element: HTMLElement;
     private readonly _eventManager = new EventManager(this);
     private _isSettingValueInternally = false;
+    private _todayTimeoutHandle: any;
 
     /**
      * The model for the current view.
@@ -124,6 +125,17 @@ export class DatePickerCustomElement
 
         this.view = "dates";
         this.viewChanged();
+
+        this.scheduleTodayRefresh();
+    }
+
+    /**
+     * Called by the framework when the component is unbinding.
+     */
+    public unbind(): void
+    {
+        // Stop refreshing the `today` value.
+        clearInterval(this._todayTimeoutHandle);
     }
 
     /**
@@ -233,7 +245,7 @@ export class DatePickerCustomElement
         if (this.value != null)
         {
             // Update the cursor to match the new value.
-            this.cursor = this.value.startOf("day");
+            this.cursor = this.value.setZone(this.zone).startOf("day");
 
             // If the value was set from outside the component, navigate to the `dates` view.
             if (!this._isSettingValueInternally)
@@ -251,9 +263,21 @@ export class DatePickerCustomElement
      */
     protected minChanged(): void
     {
-        if (typeof this.min === "string")
+        if (this.min == null)
         {
-            this.minValue = this.min === "today" ? this.today : DateTime.fromISO(this.min).setZone(this.zone);
+            this.minValue = undefined;
+        }
+        else if (this.min === "today")
+        {
+            this.minValue = this.today;
+        }
+        else if (typeof this.min === "string")
+        {
+            this.minValue = DateTime.fromISO(this.min).setZone(this.zone);
+        }
+        else
+        {
+            this.minValue = this.min.setZone(this.zone);
         }
 
         this.viewChanged();
@@ -264,9 +288,21 @@ export class DatePickerCustomElement
      */
     protected maxChanged(): void
     {
-        if (typeof this.max === "string")
+        if (this.max == null)
         {
-            this.maxValue = this.max === "today" ? this.today : DateTime.fromISO(this.max).setZone(this.zone);
+            this.maxValue = undefined;
+        }
+        else if (this.max === "today")
+        {
+            this.maxValue = this.today;
+        }
+        else if (typeof this.max === "string")
+        {
+            this.maxValue = DateTime.fromISO(this.max).setZone(this.zone);
+        }
+        else
+        {
+            this.maxValue = this.max.setZone(this.zone);
         }
 
         this.viewChanged();
@@ -283,7 +319,7 @@ export class DatePickerCustomElement
             const cursorBefore = this.cursor;
 
             // Update the cursor to match the new value.
-            this.cursor = this.focusedValue.startOf("day");
+            this.cursor = this.focusedValue.setZone(this.zone).startOf("day");
 
             // Re-rendering is expensive, so avoid doing it too often.
             if (!this.cursor.hasSame(cursorBefore, "month"))
@@ -368,5 +404,18 @@ export class DatePickerCustomElement
         }
 
         this.model.onKeyDown(event);
+    }
+
+    /**
+     * Schedules updates of the `today` value at the end of each day.
+     */
+    private scheduleTodayRefresh(): void
+    {
+        this._todayTimeoutHandle = setTimeout(() =>
+        {
+            this.today = DateTime.local().setZone(this.zone).startOf("day");
+            this.scheduleTodayRefresh();
+
+        }, this.today.endOf("day").diffNow().as("milliseconds"));
     }
 }

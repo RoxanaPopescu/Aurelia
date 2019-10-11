@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime, IANAZone } from "luxon";
 import { TimeOfWeek, TimeOfWeekRange } from "app/model/shared";
 
 /**
@@ -9,15 +9,16 @@ export class RoutePlanningTime
 {
     /**
      * Creates a new instance of the type.
+     * @param timeZone The IANA Time Zone Identifier for the time zone associated with the order group.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data?: any)
+    public constructor(timeZone: IANAZone, data?: any)
     {
         if (data != null)
         {
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
-            this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true });
+            this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
         }
         else
         {
