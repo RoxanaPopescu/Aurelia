@@ -376,8 +376,8 @@ export class ValidationCustomAttribute implements IValidation
                     // Always run if the validation run was triggered programmatically.
                     reason == null ||
 
-                    // Only run active validators in response to events.
-                    validator.computedActive &&
+                    // Only run validators that are enabled and active in response to events.
+                    validator.computedEnabled && validator.computedActive &&
                     (
                         // Run if the trigger matches a trigger specified on,
                         // or inherited by, the validator.
@@ -448,7 +448,7 @@ export class ValidationCustomAttribute implements IValidation
         this.invalid = undefined;
 
         // Note:
-        // Resetting the validators will trigger the nessesary tree update.
+        // Resetting the validators will trigger the necessary tree update.
     }
 
     /**

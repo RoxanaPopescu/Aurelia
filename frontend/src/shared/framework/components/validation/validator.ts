@@ -271,7 +271,7 @@ export abstract class Validator implements IValidator
         }
 
         // Note:
-        // Changing the validity state will trigger the nessesary tree update.
+        // Changing the validity state will trigger the necessary tree update.
     }
 
     /**

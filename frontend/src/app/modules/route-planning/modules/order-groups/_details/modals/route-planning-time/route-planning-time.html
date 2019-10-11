@@ -83,6 +83,16 @@
                             value.bind="model.delivery.from.timeOfDay">
                         </required-validator>
 
+                        <range-validator
+                            value.bind="model.delivery.from.timeOfDay"
+                            max.bind="model.delivery.to.timeOfDay">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time before the from time.
+                            </template>
+
+                        </range-validator>
+
                     </div>
 
                 </time-input>
@@ -103,6 +113,16 @@
                         <required-validator
                             value.bind="model.delivery.to.timeOfDay">
                         </required-validator>
+
+                        <range-validator
+                            value.bind="model.delivery.to.timeOfDay"
+                            min.bind="model.delivery.from.timeOfDay">
+
+                            <template replace-part="invalid-min" translate>
+                                Please choose a time after the from time.
+                            </template>
+
+                        </range-validator>
 
                     </div>
 
