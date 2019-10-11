@@ -216,6 +216,9 @@ export class DateInputCustomElement
         {
             this.value = this.isValid ? this.focusedValue : null;
 
+            // Dispatch the `input` event to indicate that the comitted value, has changed.
+            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
@@ -317,7 +320,7 @@ export class DateInputCustomElement
 
     /**
      * Called when a `change` event is triggered on the input.
-     * Prevents the event from bubbling further, as the date input dispatches its own event.
+     * Prevents the event from bubbling further, as this input dispatches its own event.
      * @param event The mouse event.
      */
     protected onInputChange(event: Event): void

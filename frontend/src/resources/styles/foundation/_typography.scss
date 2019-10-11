@@ -17,7 +17,7 @@ $__summary: comment;
 {
     [accent="#{$accent}"]
     {
-        color: var(--surface-#{$accent}-text,-color inherit);
+        color: var(--surface-#{$accent}-text-color, inherit);
     }
 }
 

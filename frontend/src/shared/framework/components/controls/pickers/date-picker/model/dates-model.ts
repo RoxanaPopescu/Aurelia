@@ -47,7 +47,7 @@ export class DatesModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isPreviousDisabled(): boolean
     {
         const date = this._datePicker.cursor.startOf("month").minus({ day: 1 });
@@ -59,7 +59,7 @@ export class DatesModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isNextDisabled(): boolean
     {
         const date = this._datePicker.cursor.startOf("month").plus({ month: 1 });
@@ -71,7 +71,7 @@ export class DatesModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.today", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.today", "_datePicker.minValue", "_datePicker.maxValue")
     public get isTodayDisabled(): boolean
     {
         const item = new DateItem(this._datePicker, this._datePicker.today);
@@ -229,12 +229,12 @@ export class DateItem
     /**
      * True if the date is disabled, otherwise false.
      */
-    @computedFrom("_datePicker.min", "_datePicker.max", "date")
+    @computedFrom("_datePicker.minValue", "_datePicker.maxValue", "date")
     public get isDisabled(): boolean
     {
         return (
-            this._datePicker.min != null && this.date.startOf("day").diff(this._datePicker.min.startOf("day")).valueOf() < 0 ||
-            this._datePicker.max != null && this.date.startOf("day").diff(this._datePicker.max.startOf("day")).valueOf() > 0
+            this._datePicker.minValue != null && this.date.startOf("day").diff(this._datePicker.minValue.startOf("day")).valueOf() < 0 ||
+            this._datePicker.maxValue != null && this.date.startOf("day").diff(this._datePicker.maxValue.startOf("day")).valueOf() > 0
         );
     }
 }

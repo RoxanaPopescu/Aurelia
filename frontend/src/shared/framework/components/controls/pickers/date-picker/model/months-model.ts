@@ -47,7 +47,7 @@ export class MonthsModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isPreviousDisabled(): boolean
     {
         const date = this._datePicker.cursor.startOf("year").minus({ months: 1 });
@@ -59,7 +59,7 @@ export class MonthsModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isNextDisabled(): boolean
     {
         const date = this._datePicker.cursor.startOf("year").plus({ year: 1 });
@@ -213,12 +213,12 @@ class MonthItem
     /**
      * True if the month is disabled, otherwise false.
      */
-    @computedFrom("_datePicker.min", "_datePicker.max", "date")
+    @computedFrom("_datePicker.minValue", "_datePicker.maxValue", "date")
     public get isDisabled(): boolean
     {
         return (
-            this._datePicker.min != null && this.date.startOf("month").diff(this._datePicker.min.startOf("month")).valueOf() < 0 ||
-            this._datePicker.max != null && this.date.startOf("month").diff(this._datePicker.max.startOf("month")).valueOf() > 0
+            this._datePicker.minValue != null && this.date.startOf("month").diff(this._datePicker.minValue.startOf("month")).valueOf() < 0 ||
+            this._datePicker.maxValue != null && this.date.startOf("month").diff(this._datePicker.maxValue.startOf("month")).valueOf() > 0
         );
     }
 }

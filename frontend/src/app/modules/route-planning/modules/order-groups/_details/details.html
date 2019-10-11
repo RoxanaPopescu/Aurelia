@@ -42,7 +42,7 @@
                         Create order group
                     </button>
 
-                    <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                    <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                         Save order group
                     </button>
 
@@ -146,7 +146,7 @@
 
                                         <div class="icon-row">
 
-                                            <button appearance="none" accent="primary">
+                                            <button appearance="none" accent="primary" click.trigger="onEditMatchingCriteriaClick($index)">
                                                 <icon name="md-edit"></icon>
                                             </button>
 
@@ -239,7 +239,7 @@
 
                                     <data-table-cell>
                                         <span class="text-truncate">
-                                            ${routePlanningTime.delivery.from.dayOfWeek | weekday} - ${routePlanningTime.delivery.to.dayOfWeek | weekday}
+                                            ${routePlanningTime.delivery.from.dayOfWeek | weekday}
                                         </span>
                                     </data-table-cell>
 
@@ -271,7 +271,7 @@
 
                                         <div class="icon-row">
 
-                                            <button appearance="none" accent="primary">
+                                            <button appearance="none" accent="primary" click.trigger="onEditRoutePlanningTimeClick($index)">
                                                 <icon name="md-edit"></icon>
                                             </button>
 

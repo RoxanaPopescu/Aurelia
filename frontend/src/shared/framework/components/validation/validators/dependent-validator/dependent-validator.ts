@@ -3,7 +3,7 @@ import { Validator } from "../../validator";
 import { ValidationReason } from "../../validation-trigger";
 
 /**
- * Represents a dependent validator that should run when this validator runs.
+ * Represents a validator that runs a dependent validator whenever this validator runs.
  * Use this to trigger validation of dependencies between inputs.
  */
 @noView
@@ -11,10 +11,17 @@ import { ValidationReason } from "../../validation-trigger";
 export class DependentValidatorCustomElement extends Validator
 {
     /**
-     * The dependent validator that should be run when this validator runs.
+     * The dependent validator, or validators, that should be run when this validator runs.
+     * If any dependent validator is invalid, this validator will become invalid too.
      */
     @bindable
-    public validator: Validator | undefined;
+    public validators: Validator | Validator[] | undefined;
+
+    /**
+     * True to set the validity of this validator, based on the validity of the dependent validators, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public setValidity: boolean;
 
     /**
      * Called by the validation when this validator should run.
@@ -23,9 +30,25 @@ export class DependentValidatorCustomElement extends Validator
      */
     public async validate(reason: ValidationReason): Promise<boolean>
     {
-        if (this.validator != null)
+        let invalid = true;
+
+        if (this.validators == null)
         {
-            await this.validator.validate("dependency");
+            invalid = false;
+        }
+        else if (this.validators instanceof Validator)
+        {
+            invalid = await this.validators.validate("dependency");
+        }
+        else
+        {
+            const results = await Promise.all(this.validators.map(v => v.validate("dependency")));
+            invalid = results.some(r => !r);
+        }
+
+        if (this.setValidity)
+        {
+            this.invalid = invalid;
         }
 
         return true;

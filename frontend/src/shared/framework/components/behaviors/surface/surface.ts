@@ -75,8 +75,6 @@ export class SurfaceCustomAttribute
      */
     public attached(): void
     {
-        console.log(this.value);
-
         if (this.parent != null)
         {
             this.parent.attachChild(this);

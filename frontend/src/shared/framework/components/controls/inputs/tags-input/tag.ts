@@ -26,13 +26,12 @@ export class TagCustomElement
 
     /**
      * Called when the remove icon is clicked.
-     * Removes the tag from teh tag input value.
+     * Removes the tag from the input value.
      * @returns False to prevent default.
      */
     protected onRemoveMouseDown(): boolean
     {
-        const index = this._tagsInput!.value.indexOf(this.model);
-        this._tagsInput!.value.splice(index, 1);
+        this._tagsInput!.deselectItem(this.model);
 
         return false;
     }

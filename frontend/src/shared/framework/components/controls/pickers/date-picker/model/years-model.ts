@@ -50,7 +50,7 @@ export class YearsModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isPreviousDisabled(): boolean
     {
         const startYear = Math.floor(this._datePicker.cursor.year / 10) * 10 - 1;
@@ -63,7 +63,7 @@ export class YearsModel
     /**
      * True if today is outside the selectable range, otherwise false.
      */
-    @computedFrom("_datePicker.cursor", "_datePicker.min", "_datePicker.max")
+    @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isNextDisabled(): boolean
     {
         const startYear = Math.floor(this._datePicker.cursor.year / 10) * 10 - 1;
@@ -221,12 +221,12 @@ class YearItem
     /**
      * True if the year is disabled, otherwise false.
      */
-    @computedFrom("_datePicker.min", "_datePicker.max", "date")
+    @computedFrom("_datePicker.minValue", "_datePicker.maxValue", "date")
     public get isDisabled(): boolean
     {
         return (
-            this._datePicker.min != null && this.date.startOf("year").diff(this._datePicker.min.startOf("year")).valueOf() < 0 ||
-            this._datePicker.max != null && this.date.startOf("year").diff(this._datePicker.max.startOf("year")).valueOf() > 0
+            this._datePicker.minValue != null && this.date.startOf("year").diff(this._datePicker.minValue.startOf("year")).valueOf() < 0 ||
+            this._datePicker.maxValue != null && this.date.startOf("year").diff(this._datePicker.maxValue.startOf("year")).valueOf() > 0
         );
     }
 }

@@ -16,6 +16,11 @@ export class MatchingCriteria
             this.consignors = data.consignors.map(d => new Consignor(d));
             this.tags = data.tags;
         }
+        else
+        {
+            this.consignors = [];
+            this.tags = [];
+        }
     }
 
     /**
@@ -40,10 +45,14 @@ export class MatchingCriteria
     }
 
     /**
-     * Gets a new instance, representing a deep clone of this instance.
+     * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
     {
-        return new MatchingCriteria(JSON.parse(JSON.stringify(this)));
+        const entity = new MatchingCriteria();
+        entity.tags = [...this.tags];
+        entity.consignors = [...this.consignors];
+
+        return entity;
     }
 }

@@ -72,6 +72,19 @@ export class TimeInputCustomElement
     protected itemPicker: ItemPickerCustomElement;
 
     /**
+     * Gets the items that satisfy the min and max constraints.
+     */
+    @computedFrom("items", "min", "max")
+    protected get filteredItems(): Duration[]
+    {
+        return this.items.filter(item => item == null ||
+        (
+            (this.min == null || item.valueOf() >= this.min.valueOf()) &&
+            (this.max == null || item.valueOf() <= this.max.valueOf()))
+        );
+    }
+
+    /**
      * Gets the input value.
      */
     @computedFrom("open", "focusedValue", "value")
@@ -121,7 +134,7 @@ export class TimeInputCustomElement
             {
                 if (isNaN(hour) || hour < 0 || hour > 23 || isNaN(minute) || minute < 0 || minute > 59)
                 {
-                    throw new Error("invalid time of day.");
+                    throw new Error("Invalid time of day.");
                 }
 
                 const duration = Duration.fromObject({ hour, minute });
@@ -177,7 +190,7 @@ export class TimeInputCustomElement
     /**
      * The earliest time that can be selected, or undefined to disable this constraint.
      * Note that for the initial binding, this can be an ISO8601 time-of-day string,
-     * but once the component is bound, only `DateTime` instances are valid.
+     * but once the component is bound, only `Duration` instances are valid.
      */
     @bindable({ defaultValue: undefined })
     public min: Duration | undefined;
@@ -185,7 +198,7 @@ export class TimeInputCustomElement
     /**
      * The latest time that can be selected, or undefined to disable this constraint.
      * Note that for the initial binding, this can be an ISO8601 time-of-day string,
-     * but once the component is bound, only `DateTime` instances are valid.
+     * but once the component is bound, only `Duration` instances are valid.
      */
     @bindable({ defaultValue: undefined })
     public max: Duration | undefined;
@@ -271,11 +284,7 @@ export class TimeInputCustomElement
     }
 
     /**
-     * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
-     * @param focusToggle True to focus the toggle icon, otherwise false.
-     */
-    /**
-     * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
+     * Closes the dropdown and optionally focuses the toggle icon.
      * Also reverts the focused value if no value was picked.
      * @param focusToggle True to focus the toggle icon, otherwise false.
      * @param pick True if the user picked a value, otherwise false.
@@ -294,6 +303,9 @@ export class TimeInputCustomElement
                 this.isValid = true;
             }
 
+            // Dispatch the `input` event to indicate that the comitted value, has changed.
+            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
@@ -311,7 +323,7 @@ export class TimeInputCustomElement
     }
 
     /**
-     * Called when the toggle icon is clicked, and if filtering is disabled, when the input element is clicked.
+     * Called when the toggle icon or the input element is clicked.
      * Toggles the dropdown between its open and closed state, focusing either the input element or toggle icon.
      */
     protected toggleDropdown(): void
@@ -405,7 +417,7 @@ export class TimeInputCustomElement
 
     /**
      * Called when a `change` event is triggered on the input.
-     * Prevents the event from bubbling further, as the date input dispatches its own event.
+     * Prevents the event from bubbling further, as this input dispatches its own event.
      * @param event The mouse event.
      */
     protected onInputChange(event: Event): void

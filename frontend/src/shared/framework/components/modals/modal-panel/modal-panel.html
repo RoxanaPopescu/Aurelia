@@ -9,11 +9,11 @@
 
     <busy-overlay if.bind="modal != null && modal.busy !== false" delay.bind="true"></busy-overlay>
 
-    <form class="modal-panel-content">
+    <div class="modal-panel-content">
 
         <slot></slot>
 
-    </form>
+    </div>
 
     <div class="modal-panel-actions">
 

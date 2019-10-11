@@ -1,0 +1,251 @@
+<template>
+
+    <require from="./route-planning-time.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog
+        name="route-planning-time"
+        close-button.bind="true"
+        close-shortcut.bind="true"
+        scroll
+        validation
+        validation.ref="validation">
+
+        <modal-header>
+
+            <h1 class="font-larger">
+
+                <span if.bind="create" translate>
+                    New route planning time
+                </span>
+
+                <span if.bind="!create" translate>
+                    Edit route planning time
+                </span>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="margin-bottom">
+                For orders to be delivered...
+            </div>
+
+            <div class="control-row">
+
+                <select-input
+                    label="above"
+                    value.bind="model.delivery.from.dayOfWeek"
+                    display-value.bind="model.delivery.from.dayOfWeek | weekday"
+                    none.bind="false"
+                    filter="auto"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        Day of week
+                    </div>
+
+                    <span slot="placeholder">
+                        Choose a day
+                    </span>
+
+                    <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
+                        ${dayOfWeek | weekday}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.delivery.from.dayOfWeek">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <time-input
+                    label="above"
+                    value.bind="model.delivery.from.timeOfDay"
+                    none.bind="false"
+                    max.bind="model.delivery.to.timeOfDay"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        From time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.delivery.from.timeOfDay">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+                <time-input
+                    label="above"
+                    value.bind="model.delivery.to.timeOfDay"
+                    none.bind="false"
+                    min.bind="model.delivery.from.timeOfDay"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        To time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.delivery.to.timeOfDay">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-bottom">
+
+            <div class="margin-bottom">
+                Schedule route planning to run...
+            </div>
+
+            <div class="control-row">
+
+                <select-input
+                    label="above"
+                    value.bind="model.planning.dayOfWeek"
+                    display-value.bind="model.planning.dayOfWeek | weekday"
+                    none.bind="false"
+                    filter="auto"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        Day of week
+                    </div>
+
+                    <span slot="placeholder">
+                        Choose a day
+                    </span>
+
+                    <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
+                        ${dayOfWeek | weekday}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.planning.dayOfWeek">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <time-input
+                    label="above"
+                    value.bind="model.planning.timeOfDay"
+                    none.bind="false"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        Time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.planning.timeOfDay">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section>
+
+            <div class="margin-bottom">
+                Schedule the next route planning to run...
+            </div>
+
+            <div class="control-row">
+
+                <date-input
+                    label="above"
+                    value.bind="model.nextPlanning"
+                    min="today"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        Date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.nextPlanning">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+                <time-input
+                    label="above"
+                    value.bind="TODO"
+                    none.bind="false"
+                    fixed.bind="true">
+
+                    <div slot="heading">
+                        Time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="TODO">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="solid" accent="primary" click.delegate="onSaveClick()">
+
+                    <span if.bind="create" translate>
+                        Create
+                    </span>
+
+                    <span if.bind="!create" translate>
+                        Save changes
+                    </span>
+
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

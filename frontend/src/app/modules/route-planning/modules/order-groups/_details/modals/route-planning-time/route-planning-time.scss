@@ -1,0 +1,16 @@
+modal-dialog[name="route-planning-time"]
+{
+    .control-row
+    {
+        > select-input,
+        > date-input
+        {
+            width: 64.5rem;
+        }
+
+        > time-input
+        {
+            width: 33.25rem;
+        }
+    }
+}

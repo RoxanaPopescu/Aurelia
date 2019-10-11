@@ -2,7 +2,7 @@
 
     <modal-backdrop close-modal.bind="true"></modal-backdrop>
 
-    <modal-dialog name="add-fulfiller-agreement" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-dialog name="matching-criteria" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
         <modal-header>
 
@@ -20,39 +20,93 @@
 
         </modal-header>
 
-        <modal-section validation validation.ref="validation">
+        <modal-section class="margin-bottom">
 
-            <tags-input value.bind="model.consignors" label="above" class="margin-medium-bottom">
+            <div class="margin-bottom">
+                For orders from one of those consignors...
+            </div>
+
+            <tags-input
+                value.bind="model.matchingCriteria.consignors"
+                label="above"
+                fixed.bind="true">
 
                 <div slot="heading" translate>
                     Consignors
                 </div>
 
+                <span slot="placeholder">
+                    Choose consignors
+                </span>
+
+                <div slot="value">
+                    <tag repeat.for="consignor of model.matchingCriteria.consignors">
+                        ${consignor.primaryName}
+                    </tag>
+                </div>
+
+                <item repeat.for="consignor of model.consignors" model.bind="consignor">
+                    ${consignor.primaryName}
+                </item>
+
                 <div slot="validation">
 
-                    <required-validator
-                        value.bind="model.consignors">
-                    </required-validator>
+                    <dependent-validator
+                        validators.bind="notEmptyValidator">
+                    </dependent-validator>
 
                 </div>
 
             </tags-input>
 
-            <tags-input value.bind="model.tags" label="above">
+        </modal-section>
+
+        <modal-section>
+
+            <div class="margin-bottom">
+                Match if the order has all the tags...
+            </div>
+
+            <tags-input
+                value.bind="model.matchingCriteria.tags"
+                label="above"
+                fixed.bind="true">
 
                 <div slot="heading" translate>
                     Tags
                 </div>
 
+                <span slot="placeholder">
+                    Choose tags
+                </span>
+
+                <item repeat.for="tag of model.tags" model.bind="tag">
+                    ${tag}
+                </item>
+
                 <div slot="validation">
 
-                    <required-validator
-                        value.bind="model.tags">
-                    </required-validator>
+                    <dependent-validator
+                        validators.bind="notEmptyValidator">
+                    </dependent-validator>
 
                 </div>
 
             </tags-input>
+
+            <div class="${notEmptyValidator.invalid ? 'margin-large-top' : ''}">
+
+                <custom-validator
+                    view-model.ref="notEmptyValidator"
+                    valid.bind="model.matchingCriteria.consignors.length > 0 || model.matchingCriteria.tags.length > 0">
+
+                    <template replace-part="invalid" translate>
+                        Please choose at least one consignor or tag.
+                    </template>
+
+                </custom-validator>
+
+            </div>
 
         </modal-section>
 

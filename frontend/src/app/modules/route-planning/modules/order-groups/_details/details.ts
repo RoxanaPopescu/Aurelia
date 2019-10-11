@@ -1,7 +1,10 @@
 import { autoinject } from "aurelia-framework";
-import { OrderGroupService, OrderGroup, MatchingCriteria } from "app/model/_order-group";
 import { ModalService, IValidation } from "shared/framework";
+import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/_order-group";
+import { AgreementService } from "app/model/agreement";
+import { Consignor } from "app/model/outfit";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
+import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
 
 /**
  * Represents the route parameters for the page.
@@ -21,15 +24,20 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
      * @param orderGroupsService The `OrderGroupService` instance.
+     * @param agreementService The `AgreementService` instance.
      */
-    public constructor(modalService: ModalService, orderGroupsService: OrderGroupService)
+    public constructor(modalService: ModalService, orderGroupsService: OrderGroupService, agreementService: AgreementService)
     {
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
+        this._agreementService = agreementService;
     }
 
     private readonly _modalService: ModalService;
     private readonly _orderGroupsService: OrderGroupService;
+    private readonly _agreementService: AgreementService;
+    private availableConsignors: Consignor[];
+    private availableTags: string[];
 
     /**
      * The original name of the order group.
@@ -59,6 +67,13 @@ export class DetailsPage
             this.orderGroup = await this._orderGroupsService.get(params.id);
             this.orderGroupName = this.orderGroup.name;
         }
+
+        // Fetch available consignors.
+        const agreements = await this._agreementService.getAll();
+        this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+
+        // Fetch available tags.
+        this.availableTags = await this._orderGroupsService.getAllTags();
     }
 
     /**
@@ -125,7 +140,12 @@ export class DetailsPage
     protected async onAddMatchingCriteriaClick(): Promise<void>
     {
         const matchingCriteria = new MatchingCriteria();
-        const result = await this._modalService.open(MatchingCriteriaDialog, matchingCriteria).promise;
+        const result = await this._modalService.open(MatchingCriteriaDialog,
+        {
+            matchingCriteria,
+            tags: this.availableTags,
+            consignors: this.availableConsignors
+        }).promise;
 
         if (result)
         {
@@ -151,7 +171,12 @@ export class DetailsPage
     protected async onEditMatchingCriteriaClick(index: number): Promise<void>
     {
         const matchingCriteria = this.orderGroup.matchingCriterias[index].clone();
-        const result = await this._modalService.open(MatchingCriteriaDialog, matchingCriteria).promise;
+        const result = await this._modalService.open(MatchingCriteriaDialog,
+        {
+            matchingCriteria,
+            tags: this.availableTags,
+            consignors: this.availableConsignors
+        }).promise;
 
         if (result)
         {
@@ -163,9 +188,15 @@ export class DetailsPage
      * Called when the add route planning time button is clicked.
      * Opens the new route planning time dialog.
      */
-    protected onAddRoutePlanningTimeClick(): void
+    protected async onAddRoutePlanningTimeClick(): Promise<void>
     {
+        const routePlanningTime = new RoutePlanningTime();
+        const result = await this._modalService.open(RoutePlanningTimeDialog, routePlanningTime).promise;
 
+        if (result)
+        {
+            this.orderGroup.routePlanningTimes.push(routePlanningTime);
+        }
     }
 
     /**
@@ -183,8 +214,14 @@ export class DetailsPage
      * Opens the edit route planning time dialog.
      * @param index The index of the route planning time to edit.
      */
-    protected onEditRoutePlanningTimeClick(index: number): void
+    protected async onEditRoutePlanningTimeClick(index: number): Promise<void>
     {
+        const routePlanningTime = this.orderGroup.routePlanningTimes[index].clone();
+        const result = await this._modalService.open(RoutePlanningTimeDialog, routePlanningTime).promise;
 
+        if (result)
+        {
+            this.orderGroup.routePlanningTimes.splice(index, 1, routePlanningTime);
+        }
     }
 }

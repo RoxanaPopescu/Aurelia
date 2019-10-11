@@ -73,11 +73,12 @@
 
         </div>
 
+        <slot></slot>
+
         <dropdown
             if.bind="open"
             close.call="closeDropdown(escape, !escape)"
-            fixed.bind="fixed"
-            scroll>
+            fixed.bind="fixed">
 
             <date-picker
                 zone.bind="zone"
@@ -89,8 +90,6 @@
                 keyboard.bind="isValid"
                 pick.call="closeDropdown(true, true)"
                 tabindex="-1">
-
-                <slot></slot>
 
             </date-picker>
 

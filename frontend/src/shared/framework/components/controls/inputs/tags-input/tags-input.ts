@@ -4,7 +4,7 @@ import { AutocompleteHint } from "../input";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 
 /**
- * Custom element representing an input for picking a single item from a list.
+ * Custom element representing an input for picking one or more items from a list.
  */
 @autoinject
 export class TagsInputCustomElement
@@ -71,7 +71,7 @@ export class TagsInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The value of the item picked by the user, or undefined if no item has been picked.
+     * The values of the items picked by the user, or undefined if no items have been picked.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public value: any[] = [];
@@ -136,6 +136,23 @@ export class TagsInputCustomElement
     public fixed: boolean;
 
     /**
+     * Called by an item when it wants to remove itself from the value.
+     * Removes the model associated with the item from the value.
+     * @param model The model associated with the item.
+     */
+    public deselectItem(model: any): void
+    {
+        const index = this.value.indexOf(model);
+        this.value.splice(index, 1);
+
+        // Dispatch the `input` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+        // Dispatch the `input` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+    }
+
+    /**
      * Opens the dropdown and optionally focuses the input element.
      * @param focusInput True to focus the input element, otherwise false.
      */
@@ -152,10 +169,6 @@ export class TagsInputCustomElement
         }
     }
 
-    /**
-     * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
-     * @param focusToggle True to focus the toggle icon, otherwise false.
-     */
     /**
      * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
      * Also reverts the focused value if no value was picked.
@@ -175,6 +188,9 @@ export class TagsInputCustomElement
         if (pick && this.focusedValue)
         {
             this.value.push(this.focusedValue);
+
+            // Dispatch the `input` event to indicate that the comitted value, has changed.
+            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
 
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
@@ -323,7 +339,7 @@ export class TagsInputCustomElement
 
     /**
      * Called when a `change` event is triggered on the input.
-     * Prevents the event from bubbling further, as the date input dispatches its own event.
+     * Prevents the event from bubbling further, as this input dispatches its own event.
      * @param event The mouse event.
      */
     protected onInputChange(event: Event): void

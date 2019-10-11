@@ -55,6 +55,9 @@ export class DatePickerCustomElement
      */
     public cursor: DateTime;
 
+    public minValue: DateTime | undefined;
+    public maxValue: DateTime | undefined;
+
     /**
      * The IANA Time Zone Identifier to use, "local" to use the local zone, or "utc" to use the UTC zone.
      */
@@ -75,19 +78,17 @@ export class DatePickerCustomElement
 
     /**
      * The earliest date that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO 8601 string or "today",
-     * but once the component is bound, only `DateTime` instances are valid.
+     * Note that for can be an ISO 8601 string, "today", or a `DateTime` instance.
      */
     @bindable({ defaultValue: undefined })
-    public min: DateTime | undefined;
+    public min: string | DateTime | undefined;
 
     /**
      * The latest date that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO 8601 string or "today",
-     * but once the component is bound, only `DateTime` instances are valid.
+     * Note that for can be an ISO 8601 string, "today", or a `DateTime` instance.
      */
     @bindable({ defaultValue: undefined })
-    public max: DateTime | undefined;
+    public max: string | DateTime | undefined;
 
     /**
      * The element that has input focus.
@@ -118,15 +119,8 @@ export class DatePickerCustomElement
         this.cursor = (this.value || this.today).startOf("day");
         this.focusedValue = this.value;
 
-        if (typeof this.min === "string")
-        {
-            this.min = this.min === "today" ? this.today : DateTime.fromISO(this.min).setZone(this.zone);
-        }
-
-        if (typeof this.max === "string")
-        {
-            this.max = this.max === "today" ? this.today : DateTime.fromISO(this.max).setZone(this.zone);
-        }
+        this.minChanged();
+        this.maxChanged();
 
         this.view = "dates";
         this.viewChanged();
@@ -250,6 +244,32 @@ export class DatePickerCustomElement
 
         // Reset the flag used to prevent navigation to the `dates` view when the value changes.
         this._isSettingValueInternally = false;
+    }
+
+    /**
+     * Called by the framework when the `min` property changes.
+     */
+    protected minChanged(): void
+    {
+        if (typeof this.min === "string")
+        {
+            this.minValue = this.min === "today" ? this.today : DateTime.fromISO(this.min).setZone(this.zone);
+        }
+
+        this.viewChanged();
+    }
+
+    /**
+     * Called by the framework when the `max` property changes.
+     */
+    protected maxChanged(): void
+    {
+        if (typeof this.max === "string")
+        {
+            this.maxValue = this.max === "today" ? this.today : DateTime.fromISO(this.max).setZone(this.zone);
+        }
+
+        this.viewChanged();
     }
 
     /**

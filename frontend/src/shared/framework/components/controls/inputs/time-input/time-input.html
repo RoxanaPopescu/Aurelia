@@ -73,8 +73,10 @@
 
         </div>
 
+        <slot></slot>
+
         <dropdown
-            show.bind="open"
+            if.bind="open"
             close.call="closeDropdown(escape, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
             fixed.bind="fixed">
@@ -92,10 +94,8 @@
                 scroll>
 
                 <item
-                    repeat.for="item of items"
-                    model.bind="item"
-                    show.bind="item == null || (item.valueOf() >= min.valueOf() && item.valueOf() <= max.valueOf())"
-                    disabled.bind="item != null && (item.valueOf() < min.valueOf() || item.valueOf() > max.valueOf())">
+                    repeat.for="item of filteredItems"
+                    model.bind="item">
                     ${item | time: 'narrow' : false}
                 </item>
 

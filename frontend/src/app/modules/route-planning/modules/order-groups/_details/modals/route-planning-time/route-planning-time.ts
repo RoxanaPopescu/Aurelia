@@ -1,17 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { Modal, IValidation } from "shared/framework";
-import { MatchingCriteria } from "app/model/_order-group";
-import { Consignor } from "app/model/outfit";
-
-interface IModel
-{
-    matchingCriteria: MatchingCriteria;
-    tags: string[];
-    consignors: Consignor[];
-}
+import { RoutePlanningTime } from "app/model/_order-group";
 
 @autoinject
-export class MatchingCriteriaDialog
+export class RoutePlanningTimeDialog
 {
     /**
      * Creates a new instance of the type.
@@ -33,13 +25,13 @@ export class MatchingCriteriaDialog
     /**
      * The model for the modal.
      */
-    protected model: IModel;
+    protected model: RoutePlanningTime;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use for the modal.
      */
-    public activate(model: IModel): void
+    public activate(model: RoutePlanningTime): void
     {
         this.model = model;
     }
@@ -58,6 +50,9 @@ export class MatchingCriteriaDialog
      */
     protected async onSaveClick(): Promise<void>
     {
+        // The to and from day are always the same.
+        this.model.delivery.to!.dayOfWeek = this.model.delivery.from!.dayOfWeek;
+
         this.validation.active = true;
 
         if (!await this.validation.validate())

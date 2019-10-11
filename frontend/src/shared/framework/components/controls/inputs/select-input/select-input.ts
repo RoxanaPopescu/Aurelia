@@ -181,10 +181,6 @@ export class SelectInputCustomElement
 
     /**
      * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
-     * @param focusToggle True to focus the toggle icon, otherwise false.
-     */
-    /**
-     * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
      * Also reverts the focused value if no value was picked.
      * @param focusToggle True to focus the toggle icon, otherwise false.
      * @param pick True if the user picked a value, otherwise false.
@@ -197,6 +193,9 @@ export class SelectInputCustomElement
         if (pick)
         {
             this.value = this.focusedValue;
+
+            // Dispatch the `input` event to indicate that the comitted value, has changed.
+            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
 
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
@@ -276,7 +275,7 @@ export class SelectInputCustomElement
 
     /**
      * Called when a `change` event is triggered on the input.
-     * Prevents the event from bubbling further, as the date input dispatches its own event.
+     * Prevents the event from bubbling further, as this input dispatches its own event.
      * @param event The mouse event.
      */
     protected onInputChange(event: Event): void

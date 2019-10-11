@@ -9,24 +9,32 @@ export class TimeOfWeekRange
      * Creates a new instance of the class.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        if (data.from instanceof TimeOfWeek)
+        if (data != null)
         {
-            this.from = data.from;
-        }
-        else if (data.from != null)
-        {
-            this.from = new TimeOfWeek(data.from);
-        }
+            if (data.from instanceof TimeOfWeek)
+            {
+                this.from = data.from;
+            }
+            else if (data.from != null)
+            {
+                this.from = new TimeOfWeek(data.from);
+            }
 
-        if (data.to instanceof TimeOfWeek)
-        {
-            this.to = data.to;
+            if (data.to instanceof TimeOfWeek)
+            {
+                this.to = data.to;
+            }
+            else if (data.to != null)
+            {
+                this.to = new TimeOfWeek(data.to);
+            }
         }
-        else if (data.to != null)
+        else
         {
-            this.to = new TimeOfWeek(data.to);
+            this.from = new TimeOfWeek();
+            this.to = new TimeOfWeek();
         }
     }
 
@@ -41,15 +49,4 @@ export class TimeOfWeekRange
      * or undefined if the range has no end.
      */
     public to?: TimeOfWeek;
-
-    /**
-     * Gets the data representing this instance.
-     */
-    public toJSON(): any
-    {
-        return {
-            from: this.from ? this.from.toString() : undefined,
-            to: this.to ? this.to.toString() : undefined
-        };
-    }
 }
