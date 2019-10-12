@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { escapeRegExp } from "shared/utilities";
 import * as formatTokens from "../resources/strings/format-tokens.json";
 
 // The date used when resolving format parts.
@@ -45,8 +46,8 @@ export class TimeFormat
                 default:
                 {
                     part.token = part.value;
-                    part.inputPattern = [part.value.replace(/(.)/g, "($1"), part.value.replace(/./g, ")?")];
-                    part.keyPattern = [...part.value].join("|");
+                    part.inputPattern = [part.value.replace(/./g, $0 => `(${escapeRegExp($0)}`), part.value.replace(/./g, ")?")];
+                    part.keyPattern = [...part.value].map(c => escapeRegExp(c)).join("|");
                     break;
                 }
             }

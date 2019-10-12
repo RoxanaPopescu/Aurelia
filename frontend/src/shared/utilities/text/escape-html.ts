@@ -1,5 +1,5 @@
 /**
- * Escapes the specified text, so it can safely be set as the inner HTML of an element.
+ * Escapes the specified text, so it can safely be used as the inner HTML of an element.
  * @param text The text to escape.
  * @returns The escaped text.
  */

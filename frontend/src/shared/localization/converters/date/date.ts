@@ -5,7 +5,7 @@ import { DateTime, LocaleOptions, DateTimeFormatOptions } from "luxon";
 // The available formats.
 const dateStyles =
 {
-    "narrow": { ...DateTime.DATE_SHORT, month: "2-digit", day: "2-digit" },
+    "narrow": DateTime.DATE_SHORT,
     "short": DateTime.DATE_MED,
     "medium": DateTime.DATE_FULL,
     "long": DateTime.DATE_HUGE

@@ -93,3 +93,4 @@ export { TextCase } from "./text-case";
 export { textJoin } from "./text-join";
 export { slugify } from "./slugify";
 export { escapeHtml } from "./escape-html";
+export { escapeRegExp } from "./escape-regexp";
