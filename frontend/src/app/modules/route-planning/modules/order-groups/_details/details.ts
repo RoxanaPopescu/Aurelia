@@ -223,4 +223,42 @@ export class DetailsPage
             this.orderGroup.routePlanningTimes.splice(index, 1, routePlanningTime);
         }
     }
+
+    /**
+     * Called when the pause button is clicked.
+     * Pauses the order group.
+     */
+    protected async onPauseClick(): Promise<void>
+    {
+        try
+        {
+            await this._orderGroupsService.pause(this.orderGroup.id);
+
+            this.orderGroup.paused = true;
+        }
+        catch (error)
+        {
+            // TODO: Show proper error message.
+            alert(`Could not pause order group: ${error}`);
+        }
+    }
+
+    /**
+     * Called when the unpause button is clicked.
+     * Unpauses the order group.
+     */
+    protected async onUnpauseClick(): Promise<void>
+    {
+        try
+        {
+            await this._orderGroupsService.unpause(this.orderGroup.id);
+
+            this.orderGroup.paused = false;
+        }
+        catch (error)
+        {
+            // TODO: Show proper error message.
+            alert(`Could not unpause order group: ${error}`);
+        }
+    }
 }

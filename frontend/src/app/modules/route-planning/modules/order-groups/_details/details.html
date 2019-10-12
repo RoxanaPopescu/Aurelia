@@ -38,12 +38,20 @@
 
                 <toolbar class="flex-push-right">
 
+                    <button if.bind="!orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                        Pause
+                    </button>
+
+                    <button if.bind="orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
+                        Unpause
+                    </button>
+
                     <button if.bind="!orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
-                        Create order group
+                        Create
                     </button>
 
                     <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                        Save order group
+                        Save changes
                     </button>
 
                 </toolbar>

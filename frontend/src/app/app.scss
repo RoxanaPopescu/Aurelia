@@ -301,6 +301,15 @@ path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-c
     }
 }
 
+button[appearance],
+a[appearance]
+{
+    &:not([appearance="none"]):not([appearance="icon"])
+    {
+        min-width: 30rem;;
+    }
+}
+
 page-section
 {
     &:not(.--expanded)

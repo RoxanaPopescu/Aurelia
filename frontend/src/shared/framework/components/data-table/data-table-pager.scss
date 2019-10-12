@@ -61,6 +61,11 @@ data-table-pager
             vertical-align: middle;
         }
 
+        button
+        {
+            min-width: 10rem !important;
+        }
+
         button:first-child
         {
             border-right: none;

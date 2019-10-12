@@ -40,7 +40,7 @@ export class OrderGroup
     /**
      * True if the order group is paused, otherwise false.
      */
-    public readonly paused: boolean;
+    public paused: boolean;
 
     /**
      * The IANA Time Zone Identifier for the time zone associated with the order group.
