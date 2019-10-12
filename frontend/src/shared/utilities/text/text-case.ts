@@ -21,7 +21,7 @@ export namespace TextCaseFuncs
     /**
      * Formats and joins the specified strings using 'space case' rules,
      * meaning that no changes will be made to the strings.
-     * The strings will then be joined using a single as separator, except if
+     * The strings will then be joined using a single space as separator, except if
      * the previous string is all whitespace, in which case no separator will be inserted.
      * @param strings The strings to join, which may be either words or whitespace.
      * @param localized True to use the rules of the current locale when upper-casing or lower-casing, otherwise false.

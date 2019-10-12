@@ -1,5 +1,6 @@
 import { computedFrom } from "aurelia-binding";
 import { DateTime, DurationObject } from "luxon";
+import { textCase } from "shared/utilities";
 import { DatePickerCustomElement } from "../date-picker";
 
 /**
@@ -24,7 +25,7 @@ export class DatesModel
     @computedFrom("_datePicker.cursor")
     public get title(): string
     {
-        return this._datePicker.cursor.toFormat("MMM yyyy");
+        return textCase([this._datePicker.cursor.toFormat("MMM yyyy")], "sentence");
     }
 
     /**
