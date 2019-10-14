@@ -5,7 +5,6 @@ import { RemoteSelect } from "shared/src/webKit";
 import { OptionGroup, Option } from "shared/src/webKit/select/remoteSelect";
 import Localization from "../../localization";
 import { Location } from "shared/src/model/general/location";
-
 import LocationService from "./service";
 import { debounce } from "throttle-debounce";
 import { Address } from "shared/src/model/general/address";
