@@ -43,46 +43,46 @@ export class FleetModule
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
                 title: routeTitles.create
             },
+            {
+                name: "dispatch-default",
+                route: "dispatch",
+                redirect: "dispatch/forecasts"
+            },
+            {
+                name: "dispatch",
+                route: "dispatch/*state",
+                moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
+                title: routeTitles.dispatch,
+                nav: true,
+                href: "/fleet-management/dispatch",
+                icon: "dispatch"
+            },
+            {
+                name: "assign-routes",
+                route: "assign-routes/:origin/:ids",
+                moduleId: PLATFORM.moduleName("./modules/assign-routes/assign-routes"),
+                title: routeTitles.assignRoutes
+            },
+            {
+                name: "create-prebooking",
+                route: "create-prebooking/:id",
+                moduleId: PLATFORM.moduleName("./modules/create-prebooking/create-prebooking"),
+                title: routeTitles.createPrebooking
+            },
+            {
+                name: "forecasts",
+                route: "forecasts",
+                moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),
+                title: routeTitles.forecasts,
+                nav: true,
+                href: "/fleet-management/forecasts",
+                icon: "forecast"
+            },
 
             ...
             ENVIRONMENT.name === "development" ?
-            [
-                {
-                    name: "dispatch-default",
-                    route: "dispatch",
-                    redirect: "dispatch/forecasts"
-                },
-                {
-                    name: "dispatch",
-                    route: "dispatch/*state",
-                    moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
-                    title: routeTitles.dispatch,
-                    nav: true,
-                    href: "/fleet-management/dispatch",
-                    icon: "dispatch"
-                },
-                {
-                    name: "assign-routes",
-                    route: "assign-routes/:origin/:ids",
-                    moduleId: PLATFORM.moduleName("./modules/assign-routes/assign-routes"),
-                    title: routeTitles.assignRoutes
-                },
-                {
-                    name: "create-prebooking",
-                    route: "create-prebooking/:id",
-                    moduleId: PLATFORM.moduleName("./modules/create-prebooking/create-prebooking"),
-                    title: routeTitles.createPrebooking
-                },
-                {
-                    name: "forecasts",
-                    route: "forecasts",
-                    moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),
-                    title: routeTitles.forecasts,
-                    nav: true,
-                    href: "/fleet-management/forecasts",
-                    icon: "forecast"
-                }
-            ] : []
+            [] :
+            []
         ]);
     }
 }
