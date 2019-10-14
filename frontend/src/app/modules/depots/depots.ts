@@ -25,7 +25,7 @@ export class DepotsModule
             {
                 name: "list",
                 route: "list",
-                moduleId: PLATFORM.moduleName("./modules/_list/list"),
+                moduleId: PLATFORM.moduleName("./modules/list/list"),
                 title: routeTitles.list
             },
             {

@@ -1,10 +1,96 @@
 <template>
 
-    <require from="legacy/wrappers/agreements/list" as="react-module"></require>
+    <require from="./list.scss"></require>
 
     <page name="list">
 
-        <react-module></react-module>
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Agreements
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="solid" modal-href="modal: add-fulfiller-agreement" translate>
+                        Add fulfiller agreement
+                    </button>
+
+                    <button appearance="solid" modal-href="modal: add-consignor-agreement" translate>
+                        Add consignor agreement
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-type="type" translate>
+                            Type
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="agreement of agreements">
+
+                        <data-table-row>
+
+                            <data-table-cell>
+                                ${agreement.primaryName}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${agreement.type.name}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="agreements == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="agreements.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <!--
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="agreements.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="agreementCount">
+                    </data-table-pager>
+
+                </div>
+                -->
+
+            </page-section>
+
+        </page-content>
 
     </page>
 

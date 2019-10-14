@@ -1,70 +1,8 @@
 <template>
 
-    <require from="app/components/filters/check-filter/check-filter"></require>
-    <require from="app/components/filters/check-filter/check-filter-item"></require>
     <require from="./list.scss"></require>
 
     <page name="order-groups-list">
-
-        <page-sidebar scroll>
-
-            <page-section>
-
-                <search-input value.bind="textFilter & debounce: 200">
-
-                    <span slot="before" class="opacity-faded font-larger line-height-1">
-                        <icon name="md-search"></icon>
-                    </span>
-
-                    <span slot="placeholder" translate>
-                        Find order groups...
-                    </span>
-
-                </search-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Consignors
-                </div>
-
-                <check-filter value.bind="consignorFilter">
-
-                    <div slot="placeholder" translate>
-                        Type to filter...
-                    </div>
-
-                    <check-filter-item repeat.for="consignor of consignors" model.bind="consignor">
-                        ${consignor.primaryName}
-                    </check-filter-item>
-
-                </check-filter>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Tags
-                </div>
-
-                <check-filter value.bind="tagFilter">
-
-                    <div slot="placeholder" translate>
-                        Type to filter...
-                    </div>
-
-                    <check-filter-item repeat.for="tag of tags" model.bind="tag">
-                        ${tag}
-                    </check-filter-item>
-
-                </check-filter>
-
-            </page-section>
-
-        </page-sidebar>
 
         <page-content scroll scroll.ref="scroll">
 
@@ -72,6 +10,10 @@
 
                 <h1 class="font-largest">
                     <path-nav>
+
+                        <a accent="inherit" href="/route-planning" translate>
+                            Route planning
+                        </a>
 
                         <span translate>
                             Order groups
@@ -95,53 +37,38 @@
                             Name
                         </data-table-cell>
 
+                        <data-table-cell DISABLED-name="zip-range" translate>
+                            Zip range
+                        </data-table-cell>
+
                         <data-table-cell DISABLED-name="consignors" translate>
                             Consignors
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="tags" translate>
-                            Tags
-                        </data-table-cell>
-
-                        <data-table-cell DISABLED-name="next-route-planning" translate>
-                            Next route planning
-                        </data-table-cell>
-
-                        <data-table-cell DISABLED-name="status" translate>
-                            Status
+                        <data-table-cell DISABLED-name="criterias" align="right" translate>
+                            Criterias
                         </data-table-cell>
 
                     </data-table-headers>
 
                     <template repeat.for="orderGroup of orderGroups">
 
-                        <data-table-row href="/route-planning/order-groups/details/${orderGroup.id}">
+                        <data-table-row>
 
                             <data-table-cell>
                                 ${orderGroup.name}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.allConsignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                ${orderGroup.zipRanges | list: 'short'}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.allTags | list: 'short' : 'unit'}
+                                ${orderGroup.consignors | map: 'primaryName' | list: 'short' : 'unit'}
                             </data-table-cell>
 
-                            <data-table-cell>
-                                ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span if.bind="orderGroup.paused" class="opacity-faded order-group-status">
-                                    <icon name="pause"></icon>
-                                    <span translate>Paused</span>
-                                </span>
-                                <span if.bind="!orderGroup.paused" class="order-group-status" accent="positive">
-                                    <icon name="play"></icon>
-                                    <span translate>Active</span>
-                                </span>
+                            <data-table-cell align="right">
+                                ${orderGroup.matchCriteria.length}
                             </data-table-cell>
 
                         </data-table-row>

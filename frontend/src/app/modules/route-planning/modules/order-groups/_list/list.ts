@@ -3,7 +3,9 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { OrderGroupService, OrderGroupInfo } from "app/model/order-group";
+import { OrderGroupService, OrderGroup } from "app/model/_order-group";
+import { AgreementService } from "app/model/agreement";
+import { Consignor } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -26,16 +28,19 @@ export class ListPage
      * Creates a new instance of the class.
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param agreementService The `AgreementService` instance.
      */
-    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper)
+    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper, agreementService: AgreementService)
     {
         this._orderGroupsService = orderGroupsService;
         this._historyHelper = historyHelper;
+        this._agreementService = agreementService;
         this._constructed = true;
     }
 
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _agreementService: AgreementService;
     private readonly _constructed;
 
     /**
@@ -69,6 +74,24 @@ export class ListPage
     };
 
     /**
+     * The text in the filter text input.
+     */
+    @observable({ changeHandler: "update" })
+    protected textFilter: string | undefined;
+
+    /**
+     * The consignors for which order groups should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected consignorFilter: Consignor[] = [];
+
+    /**
+     * The tags for which order groups should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected tagFilter: string[] = [];
+
+    /**
      * The total number of items matching the query, or undefined if unknown.
      */
     protected orderGroupCount: number | undefined;
@@ -76,14 +99,24 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected orderGroups: OrderGroupInfo[];
+    protected orderGroups: OrderGroup[];
+
+    /**
+     * The consignors to show in the filter.
+     */
+    protected consignors: Consignor[];
+
+    /**
+     * The tags to show in the filter.
+     */
+    protected tags: string[];
 
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -91,6 +124,17 @@ export class ListPage
         this.sorting.direction = params.sortDirection || this.sorting.direction;
 
         this.update();
+
+        // Execute tasks that should not block rendering.
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            const agreements = await this._agreementService.getAll();
+            this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+
+            this.tags = await this._orderGroupsService.getAllTags();
+        })();
     }
 
     /**
@@ -130,6 +174,11 @@ export class ListPage
         {
             // Fetch the data.
             const result = await this._orderGroupsService.getAll(
+                {
+                    text: this.textFilter,
+                    consignorIds: this.consignorFilter.map(c => c.id),
+                    tags: this.tagFilter
+                },
                 this.sorting,
                 this.paging,
                 signal);
