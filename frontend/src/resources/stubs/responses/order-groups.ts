@@ -46,6 +46,7 @@ export default
 
     "POST /api/v1/order-groups/list":
     {
+        delay: 1000,
         data:
         {
             orderGroups: [orderGroup],

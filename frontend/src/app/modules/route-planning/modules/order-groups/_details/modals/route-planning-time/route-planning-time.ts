@@ -74,18 +74,18 @@ export class RoutePlanningTimeDialog
      */
     protected async onSaveClick(): Promise<void>
     {
-        // Set the next planning date based on the separate date and time properties.
-        this.model.routePlanningTime.nextPlanning = this.nextPlanningDate.plus(this.nextPlanningTime);
-
-        // The to and from day are always the same.
-        this.model.routePlanningTime.delivery.to!.dayOfWeek = this.model.routePlanningTime.delivery.from!.dayOfWeek;
-
         this.validation.active = true;
 
         if (!await this.validation.validate())
         {
             return;
         }
+
+        // Set the next planning date based on the separate date and time properties.
+        this.model.routePlanningTime.nextPlanning = this.nextPlanningDate.plus(this.nextPlanningTime);
+
+        // The to and from day are always the same.
+        this.model.routePlanningTime.delivery.to!.dayOfWeek = this.model.routePlanningTime.delivery.from!.dayOfWeek;
 
         this.result = true;
         await this._modal.close();
