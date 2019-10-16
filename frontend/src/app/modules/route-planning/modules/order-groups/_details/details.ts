@@ -68,12 +68,22 @@ export class DetailsPage
             this.orderGroupName = this.orderGroup.name;
         }
 
-        // Fetch available consignors.
-        const agreements = await this._agreementService.getAll();
-        this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+        // Execute tasks that should not block rendering.
 
-        // Fetch available tags.
-        this.availableTags = await this._orderGroupsService.getAllTags();
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            // Fetch available consignors.
+            const agreements = await this._agreementService.getAll();
+            this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+        })();
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            // Fetch available tags.
+            this.availableTags = await this._orderGroupsService.getAllTags();
+        })();
     }
 
     /**

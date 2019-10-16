@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { OrderGroupService, OrderGroup } from "app/model/_order-group";
+import { OrderGroupService, OrderGroupInfo } from "app/model/order-group";
 
 /**
  * Represents the route parameters for the page.
@@ -76,7 +76,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected orderGroups: OrderGroup[];
+    protected orderGroups: OrderGroupInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -130,7 +130,6 @@ export class ListPage
         {
             // Fetch the data.
             const result = await this._orderGroupsService.getAll(
-                undefined,
                 this.sorting,
                 this.paging,
                 signal);

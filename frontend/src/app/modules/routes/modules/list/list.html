@@ -1,10 +1,186 @@
 <template>
 
-    <require from="legacy/wrappers/routes/list" as="react-module"></require>
+    <require from="./list.scss"></require>
 
     <page name="list">
 
-        <react-module></react-module>
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <span translate>
+                            Routes
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value.bind="statusFilter">
+
+                        <!--
+                        <tab name.bind="undefined" translate>
+                            All
+                        </tab>
+                        -->
+
+                        <tab name="requested" translate>
+                            Unassigned
+                        </tab>
+
+                        <tab name="assigned" translate>
+                            Assigned
+                        </tab>
+
+                        <tab name="started" translate>
+                            Started
+                        </tab>
+
+                        <tab name="completed" translate>
+                            Completed
+                        </tab>
+
+                        <tab name="cancelled" translate>
+                            Cancelled
+                        </tab>
+
+                    </tab-nav>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <toolbar class="margin-bottom" scroll-fade="0.2">
+
+                    <search-input value.bind="textFilter & debounce: 200">
+
+                        <span slot="placeholder" translate>
+                            Find...
+                        </span>
+
+                    </search-input>
+
+                </toolbar>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                ID
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="reference">
+                            <span class="text-truncate" translate>
+                                Reference
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="start-date">
+                            <span class="text-truncate" translate>
+                                Start date
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="start-address">
+                            <span class="text-truncate" translate>
+                                Start address
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="stops" align="right">
+                            <span class="text-truncate" translate>
+                                Stops
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="status" align="right">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="route of routes">
+
+                        <data-table-row
+                            accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
+                            href="/routes/details/${route.slug}">
+
+                            <data-table-cell class="font-monospaced">
+                                <span class="text-truncate">
+                                    ${route.slug}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell class="font-monospaced">
+                                <span class="text-truncate">
+                                    ${route.reference}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${route.startDateTime | dateTime: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${route.startAddress}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${route.stopCount}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${route.status.name}
+                                </span>
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="routes == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="routes.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="routes.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="routeCount">
+                    </data-table-pager>
+
+                </div>
+
+            </page-section>
+
+        </page-content>
 
     </page>
 

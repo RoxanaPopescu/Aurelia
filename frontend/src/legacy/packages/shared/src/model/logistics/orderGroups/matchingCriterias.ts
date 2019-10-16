@@ -3,7 +3,7 @@ import { Consignor } from "../consignor";
 export class MatchingCriterias {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
-    this.zipRanges = this.getZips(data.zipRanges);
+    this.zipRanges = this.getZips(data.zipRanges || []);
     this.consignors = data.consignors.map(c => new Consignor(c));
     this.tags = data.tags;
   }

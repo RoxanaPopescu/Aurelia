@@ -11,7 +11,7 @@ export class MatchingCriterias
      */
     public constructor(data: any)
     {
-        this.zipRanges = this.getZipRangeString(data.zipRanges);
+        this.zipRanges = this.getZipRangeString(data.zipRanges || []);
         this.consignors = data.consignors.map(c => new Consignor(c));
         this.tags = data.tags;
     }

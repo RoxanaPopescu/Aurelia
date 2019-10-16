@@ -5,7 +5,6 @@ import { RemoteSelect } from "shared/src/webKit";
 import { OptionGroup, Option } from "shared/src/webKit/select/remoteSelect";
 import Localization from "../../localization";
 import { Location } from "shared/src/model/general/location";
-
 import LocationService from "./service";
 import { debounce } from "throttle-debounce";
 import { Address } from "shared/src/model/general/address";
@@ -27,6 +26,8 @@ interface State {
   disabled?: boolean;
 }
 
+var SearchCount = 0;
+
 export default class AddressSearchComponent extends React.Component<
   Props,
   State
@@ -43,7 +44,7 @@ export default class AddressSearchComponent extends React.Component<
       value: props.value
     };
 
-    this.onSearchChange = debounce(210, false, this.onSearchChange);
+    this.onSearchChange = debounce(280, false, this.onSearchChange);
   }
 
   componentWillReceiveProps(props: Props) {
@@ -139,8 +140,18 @@ export default class AddressSearchComponent extends React.Component<
       return;
     }
 
+    SearchCount++;
+    let localSearchCount = SearchCount;
+
     LocationService.addresses(value)
       .then(addresses => {
+        let newestCompletion = localSearchCount === SearchCount;
+
+        if (newestCompletion == false) {
+          // Only return newest completions
+          return;
+        }
+
         if (this.props.locationRequired) {
           addresses = addresses.filter(a => a.id !== undefined);
         }
