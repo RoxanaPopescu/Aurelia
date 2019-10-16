@@ -38,6 +38,13 @@ export default class DispatchComponent extends React.Component<Props, State> {
   }
 
   componentWillMount() {
+    driverDispatchService.selectedItemIds = [];
+    driverDispatchService.driverFilters = [];
+    driverDispatchService.fulfilleeFilters = [];
+    driverDispatchService.haulierFilters = [];
+  }
+
+  componentDidMount() {
     this.handleStateChange();
   }
 
@@ -49,32 +56,31 @@ export default class DispatchComponent extends React.Component<Props, State> {
           driverDispatchService.state.slug
         )
       );
-    } else if (
-      this.props.match.params.state === DispatchState.map.forecast.slug
-    ) {
-      driverDispatchService.state = new DispatchState("forecast");
-    } else if (
-      this.props.match.params.state === DispatchState.map.prebooking.slug
-    ) {
-      driverDispatchService.state = new DispatchState("prebooking");
-    } else if (
-      this.props.match.params.state === DispatchState.map.assignedRoute.slug
-    ) {
-      driverDispatchService.state = new DispatchState("assignedRoute");
-    } else if (
-      this.props.match.params.state === DispatchState.map.unassignedRoute.slug
-    ) {
-      driverDispatchService.state = new DispatchState("unassignedRoute");
     }
+    if (this.props.match.params.state !== driverDispatchService.state.slug) {
+      if (
+        this.props.match.params.state === DispatchState.map.forecast.slug
+      ) {
+        driverDispatchService.state = new DispatchState("forecast");
+      } else if (
+        this.props.match.params.state === DispatchState.map.prebooking.slug
+      ) {
+        driverDispatchService.state = new DispatchState("prebooking");
+      } else if (
+        this.props.match.params.state === DispatchState.map.assignedRoute.slug
+      ) {
+        driverDispatchService.state = new DispatchState("assignedRoute");
+      } else if (
+        this.props.match.params.state === DispatchState.map.unassignedRoute.slug
+      ) {
+        driverDispatchService.state = new DispatchState("unassignedRoute");
+      }
 
-    this.fetchOverviewData();
+      this.fetchOverviewData();
+    }
   }
 
   private async fetchOverviewData(): Promise<void> {
-    driverDispatchService.selectedItemIds = [];
-    driverDispatchService.driverFilters = [];
-    driverDispatchService.fulfilleeFilters = [];
-    driverDispatchService.haulierFilters = [];
     await driverDispatchService.fetchOverview();
 
     this.fetchData();
