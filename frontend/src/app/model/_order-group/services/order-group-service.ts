@@ -28,7 +28,7 @@ export class OrderGroupService
      */
     public async getAllTags(signal?: AbortSignal): Promise<string[]>
     {
-        const result = await this._apiClient.post("order-groups/tags",
+        const result = await this._apiClient.post("ordergroups/tags",
         {
             signal
         });
@@ -46,7 +46,7 @@ export class OrderGroupService
      */
     public async getAll(filter?: IOrderGroupFilter, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroup[]; orderGroupCount: number }>
     {
-        const result = await this._apiClient.post("order-groups/list",
+        const result = await this._apiClient.post("ordergroups/list",
         {
             body:
             {
@@ -71,7 +71,7 @@ export class OrderGroupService
      */
     public async get(id: string, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("order-groups/get",
+        const result = await this._apiClient.post("ordergroups/get",
         {
             body: { id },
             signal
@@ -88,7 +88,7 @@ export class OrderGroupService
      */
     public async create(orderGroup: Partial<OrderGroup>, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("order-groups/create",
+        const result = await this._apiClient.post("ordergroups/create",
         {
             body: orderGroup,
             signal
@@ -105,7 +105,7 @@ export class OrderGroupService
      */
     public async update(orderGroup: OrderGroup, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("order-groups/update",
+        const result = await this._apiClient.post("ordergroups/update",
         {
             body: orderGroup,
             signal
@@ -121,7 +121,7 @@ export class OrderGroupService
      */
     public async pause(id: string): Promise<void>
     {
-        await this._apiClient.post("order-groups/pause",
+        await this._apiClient.post("ordergroups/pause",
         {
             body: { id }
         });
@@ -134,7 +134,7 @@ export class OrderGroupService
      */
     public async unpause(id: string): Promise<void>
     {
-        await this._apiClient.post("order-groups/unpause",
+        await this._apiClient.post("ordergroups/unpause",
         {
             body: { id }
         });

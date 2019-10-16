@@ -39,12 +39,12 @@ const orderGroup =
 
 export default
 {
-    "POST /api/v1/order-groups/tags":
+    "POST /api/v1/ordergroups/tags":
     {
         data: ["tag-1", "tag-2", "tag-3", "tag-4", "tag-5", "tag-6"]
     },
 
-    "POST /api/v1/order-groups/list":
+    "POST /api/v1/ordergroups/list":
     {
         delay: 1000,
         data:
@@ -54,27 +54,27 @@ export default
         }
     },
 
-    "POST /api/v1/order-groups/get":
+    "POST /api/v1/ordergroups/get":
     {
         data: orderGroup
     },
 
-    "POST /api/v1/order-groups/create":
+    "POST /api/v1/ordergroups/create":
     {
         data: orderGroup
     },
 
-    "POST /api/v1/order-groups/update":
+    "POST /api/v1/ordergroups/update":
     {
         data: orderGroup
     },
 
-    "POST /api/v1/order-groups/pause":
+    "POST /api/v1/ordergroups/pause":
     {
         status: 201
     },
 
-    "POST /api/v1/order-groups/unpause":
+    "POST /api/v1/ordergroups/unpause":
     {
         status: 201
     }
