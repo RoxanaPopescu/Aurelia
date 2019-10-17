@@ -14,9 +14,13 @@
                         appearance="solid"
                         accent="primary"
                         disabled.bind="workspace.selectedDriverRoutes.length != 1"
-                        click.trigger="onMergeClick()"
-                        translate>
-                        Add selected routes to driver route
+                        click.trigger="onMergeClick()">
+                        <span if.bind="workspace.selectedExpressRoutes.length == 0" translate>
+                            Modify selected driver route
+                        </span>
+                        <span if.bind="workspace.selectedExpressRoutes.length > 0" translate>
+                            Add selected routes to driver route
+                        </span>
                     </button>
                     <button
                         appearance="outline"
