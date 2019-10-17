@@ -13,7 +13,7 @@
                     <button
                         appearance="solid"
                         accent="primary"
-                        disabled.bind="workspace.selectedExpressRoutes.length == 0 || workspace.selectedDriverRoutes.length != 1"
+                        disabled.bind="workspace.selectedDriverRoutes.length != 1"
                         click.trigger="onMergeClick()"
                         translate>
                         Add selected routes to driver route
