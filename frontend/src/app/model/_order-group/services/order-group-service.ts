@@ -71,7 +71,7 @@ export class OrderGroupService
      */
     public async get(id: string, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("ordergroups/get",
+        const result = await this._apiClient.post("ordergroups/details",
         {
             body: { id },
             signal
