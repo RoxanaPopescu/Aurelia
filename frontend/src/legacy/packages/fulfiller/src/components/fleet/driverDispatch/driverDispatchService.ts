@@ -533,8 +533,7 @@ export class DriverDispatchService {
         endDate: endDate ? endDate : this.endDate,
         startTime: startTime ? startTime : this.startTime,
         endTime: endTime ? endTime : this.endTime,
-        consignorIds: fulfileeIds ? fulfileeIds : this.fulfilleeFilters.map(ff => ff.id),
-        fulfillerIds: [],
+        fulfilleeIds: fulfileeIds ? fulfileeIds : this.fulfilleeFilters.map(ff => ff.id),
         page: 1, // Temporary
         pageSize: 2000 // Temporary
       })
@@ -614,8 +613,7 @@ export class DriverDispatchService {
         endDate: this.endDate,
         startTime: this.startTime,
         endTime: this.endTime,
-        consignorIds: this.fulfilleeFilters.map(ff => ff.id),
-        fulfillerIds: [],
+        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id),
         page: 1, // Temporary
         pageSize: 2000 // Temporary
       })
