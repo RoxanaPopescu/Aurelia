@@ -19,8 +19,8 @@ export function sortingMiddleware(): Middleware
 
             context.sorting =
             {
-                sortProperty: context.request.query.sortProperty,
-                sortDirection: context.request.query.sortDirection
+                property: context.request.query.sortProperty,
+                direction: context.request.query.sortDirection
             };
         }
         else if (context.request.body.sorting != null)

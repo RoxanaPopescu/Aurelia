@@ -336,7 +336,7 @@ export class ApiClient
     {
         let current = request;
 
-        for await (const interceptor of this._interceptors)
+        for (const interceptor of this._interceptors)
         {
             if (interceptor.request != null)
             {
@@ -365,7 +365,7 @@ export class ApiClient
     {
         let current = response;
 
-        for await (const interceptor of this._interceptors)
+        for (const interceptor of this._interceptors)
         {
             if (interceptor.response != null)
             {

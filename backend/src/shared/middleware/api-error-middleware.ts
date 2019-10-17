@@ -27,16 +27,16 @@ export function apiErrorMiddleware(): Middleware
             // Was the error caused by an upstream request?
             if (error instanceof ApiError)
             {
-                context.body = `Upstream request failed: ${error.message}`;
-
                 // Do we have a response for the upstream request,
                 // and should we forward that status downstream?
-                if (error.response && !context.state.internal)
+                if (error.response)
                 {
-                    context.status = error.response.status;
+                    context.body = `Upstream request for ${error.request.url} failed with status ${error.response.status}:\n${error.message}`;
+                    context.status = context.state.internal ? 500 : error.response.status;
                 }
                 else
                 {
+                    context.body = `Upstream request for ${error.request.url} failed:\n${error.message}`;
                     context.status = 500;
                 }
             }
