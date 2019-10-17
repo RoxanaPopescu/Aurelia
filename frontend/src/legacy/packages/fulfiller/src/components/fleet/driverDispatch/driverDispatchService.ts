@@ -15,6 +15,7 @@ import {
 } from "shared/src/model/general/sorting";
 import { Route } from "shared/src/components/routes/list/models/route";
 import { Outfit } from "shared/src/model/logistics/outfit";
+import { AgreementsService } from "shared/src/services/agreementsService";
 
 export class DispatchState {
   public static readonly map = {
@@ -234,38 +235,46 @@ export class DriverDispatchService {
       this.state.value !== "assignedRoute"
     ) {
       url = `dispatch/${this.state.value}/listfulfillees`;
-    } else {
-      if (this.state.value === "assignedRoute") {
-        url = `dispatch/route/assigned/listfulfillees`;
-      } else if (this.state.value === "unassignedRoute") {
-        url = `dispatch/route/unassigned/listfulfillees`;
+
+      const response = await fetch(
+        BaseService.url(url),
+        BaseService.defaultConfig({
+          startDate: this.startDate,
+          endDate: this.endDate,
+          startTime: this.startTime,
+          endTime: this.endTime,
+          fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
+        })
+      );
+
+      if (response.status === 404) {
+        this.toast = { message: "404 not found", type: "error" };
+        return;
       }
-    }
-    const response = await fetch(
-      BaseService.url(url),
-      BaseService.defaultConfig({
-        startDate: this.startDate,
-        endDate: this.endDate,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        fulfilleeIds: this.fulfilleeFilters.map(ff => ff.id)
-      })
-    );
+      if (!response.ok) {
+        this.toast = { message: "The operation failed", type: "error" };
+        return;
+      }
 
-    if (response.status === 404) {
-      this.toast = { message: "404 not found", type: "error" };
-      return;
-    }
-    if (!response.ok) {
-      this.toast = { message: "The operation failed", type: "error" };
-      return;
-    }
+      try {
+        let responseJson = await response.json();
+        fulfillees = responseJson.filter(r => r.name !== "unknown");
+      } catch {
+        this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
+      }
+    } else {
 
-    try {
-      let responseJson = await response.json();
-      fulfillees = responseJson.filter(r => r.name !== "unknown");
-    } catch {
-      this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
+      try {
+        let response = await AgreementsService.fulfilees();
+        fulfillees = response.map(o => {
+          return {
+            name: o.companyName ? o.companyName : "",
+            id: o.id
+          }
+        });
+      } catch {
+        this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
+      }
     }
 
     this.fulfillees = fulfillees;
