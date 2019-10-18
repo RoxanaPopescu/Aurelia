@@ -8,6 +8,7 @@ const expressRoutes =
         "reference": "0910-165A-MV",
         "criticality": "medium",
         "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
+        "totalWeightRange": { "from": 10, "to": 20 },
         "pickupPostalCode": "2600",
         "deliveryPostalCode": "2600",
         "timeToDeadline": 600,
