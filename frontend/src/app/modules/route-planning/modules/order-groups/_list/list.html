@@ -115,7 +115,10 @@
 
                     <template repeat.for="orderGroup of orderGroups">
 
-                        <data-table-row href="/route-planning/order-groups/details/${orderGroup.id}">
+                        <data-table-row
+                            href="/route-planning/order-groups/details/${orderGroup.id}"
+                            faded.bind="orderGroup.paused"
+                            accent.bind="orderGroup.paused ? 'neutral' : 'positive'">
 
                             <data-table-cell>
                                 ${orderGroup.name}
@@ -134,14 +137,8 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span if.bind="orderGroup.paused" class="opacity-faded order-group-status">
-                                    <icon name="pause"></icon>
-                                    <span translate>Paused</span>
-                                </span>
-                                <span if.bind="!orderGroup.paused" class="order-group-status" accent="positive">
-                                    <icon name="play"></icon>
-                                    <span translate>Active</span>
-                                </span>
+                                <span if.bind="orderGroup.paused" translate>Paused</span>
+                                <span if.bind="!orderGroup.paused" translate>Active</span>
                             </data-table-cell>
 
                         </data-table-row>

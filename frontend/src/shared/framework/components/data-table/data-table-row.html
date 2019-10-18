@@ -2,7 +2,7 @@
 
     <require from="./data-table-row.scss"></require>
 
-    <a class="data-table-row ${selected ? '--selected' : ''}" href.bind="href" accent.bind="accent & attr" click.delegate="onClick($event)">
+    <a class="data-table-row ${selected ? '--selected' : ''} ${faded ? '--opacity-faded' : ''}" href.bind="href" accent.bind="accent & attr" click.delegate="onClick($event)">
 
         <data-table-cell if.bind="dataTable.selection === 'multiple'" click.trigger="onToggle($event)">
             <input type="checkbox" class="pointer-events-none" disabled.bind="!selectable" checked.to-view="selected">
