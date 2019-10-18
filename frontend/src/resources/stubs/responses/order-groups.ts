@@ -54,7 +54,7 @@ export default
         }
     },
 
-    "POST /api/v1/ordergroups/get":
+    "POST /api/v1/ordergroups/details":
     {
         data: orderGroup
     },
