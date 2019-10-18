@@ -3,6 +3,7 @@ import { Route as RouteBase } from "../route";
 import { RouteStopBase } from "../routeStopBase";
 import { RouteStop } from "./routeStop";
 import { RoutePrice } from "./routePrice";
+import { WeightRange } from "app/model/shared";
 
 /**
  * Represents the live status of a route.
@@ -20,10 +21,19 @@ export class Route extends RouteBase<RouteStop> {
     this.driverListUrl = data.driverListUrl;
     this.allowAssignment = data.allowAssignment;
 
+    if (data.totalWeightRange) {
+      this.totalWeightRange = new WeightRange(data.totalWeightRange);
+    }
+
     if (data.priceOverview) {
       this.priceOverview = new RoutePrice(data.priceOverview);
     }
   }
+
+  /**
+   * The total weight range for the colli in the order.
+   */
+  public readonly totalWeightRange?: WeightRange;
 
   /**
    * The price overview for the route.

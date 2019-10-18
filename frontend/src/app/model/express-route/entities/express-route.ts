@@ -1,6 +1,6 @@
 import { DateTime, Duration } from "luxon";
 import { SearchModel } from "app/model/search-model";
-import { Location } from "app/model/shared";
+import { Location, WeightRange } from "app/model/shared";
 import { Outfit } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
 import { IRouteReference, RouteCriticality } from "app/model/route";
@@ -30,6 +30,11 @@ export class ExpressRoute implements IRouteReference
         this.timeToDeadline = Duration.fromObject({ seconds: data.timeToDeadline });
 
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
+
+        if (data.totalWeightRange != null)
+        {
+            this.totalWeightRange = new WeightRange(data.totalWeightRange);
+        }
 
         if (data.expires != null)
         {
@@ -74,6 +79,11 @@ export class ExpressRoute implements IRouteReference
      * The type of vehicle required for the route.
      */
     public readonly vehicleType: VehicleType;
+
+    /**
+     * The total weight range for the colli in the order.
+     */
+    public readonly totalWeightRange?: WeightRange;
 
     /**
      * The stops at which the driver must either pick up or deliver colli.

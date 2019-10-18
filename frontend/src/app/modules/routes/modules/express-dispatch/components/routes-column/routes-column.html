@@ -72,6 +72,12 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="Weight" name="totalWeightRange">
+                        <span class="text-truncate" translate>
+                            Weight
+                        </span>
+                    </data-table-cell>
+
                     <data-table-cell title.translate="Pickup address" name="pickupLocation.address">
                         <span class="text-truncate" translate>
                             Pickup address
@@ -155,6 +161,12 @@
                         <data-table-cell title.bind="item.vehicleType.name">
                             <span class="text-truncate">
                                 ${item.vehicleType.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.from | number} kg">
+                            <span if.bind="item.totalWeightRange != null" class="text-truncate">
+                                ${item.totalWeightRange.from | number} – ${item.totalWeightRange.from | number} kg
                             </span>
                         </data-table-cell>
 

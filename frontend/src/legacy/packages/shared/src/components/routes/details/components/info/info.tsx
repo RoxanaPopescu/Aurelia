@@ -69,6 +69,15 @@ export default class extends React.Component<{ service: RouteDetailsService }> {
           </div>
           <div>{route.vehicleType.name}</div>
         </div>
+
+        {route.totalWeightRange &&
+        <div className="c-routeDetails-info-section-row">
+          <div>
+            {Localization.sharedValue("RouteDetails_RouteOverview_TotalWeightRange")}
+          </div>
+          <div>{route.totalWeightRange.from} – {route.totalWeightRange.to} kg</div>
+        </div>}
+
       </div>
     );
   }
