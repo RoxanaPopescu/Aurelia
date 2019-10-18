@@ -235,16 +235,9 @@ export class SelectInputCustomElement
      */
     protected onInputMouseDown(event: MouseEvent): boolean
     {
-        if (!event.defaultPrevented)
+        if (!event.defaultPrevented && !this.open)
         {
-            if (this.filter !== "none" && !this.open)
-            {
-                this.openDropdown(true);
-            }
-            else
-            {
-                this.toggleDropdown();
-            }
+            this.openDropdown(true);
         }
 
         return true;

@@ -294,13 +294,9 @@ export class TagsInputCustomElement
             }
             else
             {
-                if (this.filter !== "none" && !this.open)
+                if (!this.open)
                 {
                     this.openDropdown(true);
-                }
-                else
-                {
-                    this.toggleDropdown();
                 }
             }
         }

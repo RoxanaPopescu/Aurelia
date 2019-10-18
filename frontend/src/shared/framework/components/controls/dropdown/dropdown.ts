@@ -63,7 +63,7 @@ export class DropdownCustomElement
         }
 
         // Listen for interaction events, that might indicate that the dropdown should close.
-        this._eventManager.addEventListener(document.documentElement, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
+        this._eventManager.addEventListener(this.owner, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
         this._eventManager.addEventListener(document.documentElement, "mousedown", event => this.onInteractionAnywhere(event), { capture: true });
         this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true });
         this._eventManager.addEventListener(document.documentElement, "focusin", event => this.onInteractionAnywhere(event), { capture: true });
@@ -182,6 +182,7 @@ export class DropdownCustomElement
     {
         if (this._visible && !event.defaultPrevented && event.key === "Escape")
         {
+            event.preventDefault();
             this.close({ escape: true });
         }
     }
@@ -197,6 +198,7 @@ export class DropdownCustomElement
 
         if (this._visible && !this._element.contains(target) && !this.owner.contains(target))
         {
+            event.preventDefault();
             this.close({ escape: false });
         }
     }
