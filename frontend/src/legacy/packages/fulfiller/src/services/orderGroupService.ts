@@ -9,13 +9,12 @@ export default class OrderGroupService {
   static async getOrderGroups() {
     let response = await fetch(
       Base.url("ordergroups/list", {}),
-      Base.defaultConfig()
+      Base.defaultConfig({})
     );
 
     if (response.ok) {
       let responseJson = await response.json();
-
-      return responseJson.map(orderGroup => new OrderGroup(orderGroup));
+      return responseJson.orderGroups.map(orderGroup => new OrderGroup(orderGroup));
     } else {
       throw new Error(Localization.sharedValue("Error_General"));
     }

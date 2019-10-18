@@ -5,7 +5,8 @@ export class OrderGroup {
   public constructor(data: any) {
     this.id = data.id;
     this.name = data.name;
-    this.matchingCriterias = data.matchingCriterias.map(
+    console.log(data.matchingCriterias)
+    this.matchingCriterias = data.matchingCriteria.map(
       criteria => new MatchingCriterias(criteria)
     );
   }
