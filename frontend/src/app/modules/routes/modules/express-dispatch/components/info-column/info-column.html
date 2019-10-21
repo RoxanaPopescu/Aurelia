@@ -17,8 +17,12 @@
                         Express dispatch
                     </a>
 
-                    <span translate>
+                    <span if.bind="workspace.selectedExpressRoutes.length > 0" translate>
                         Add stops to driver
+                    </span>
+
+                    <span if.bind="workspace.selectedExpressRoutes.length == 0" translate>
+                        Modify driver route
                     </span>
 
                 </path-nav>
@@ -135,7 +139,7 @@
 
         </page-section>
 
-        <page-section>
+        <page-section if.bind="workspace.selectedExpressRoutes.length > 0">
 
             <h2 class="font-larger margin-large-bottom" translate>
                 Selected routes
@@ -166,6 +170,12 @@
                     <data-table-cell title.translate="Vehicle">
                         <span class="text-truncate" translate>
                             Vehicle
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Weight" name="totalWeightRange">
+                        <span class="text-truncate" translate>
+                            Weight
                         </span>
                     </data-table-cell>
 
@@ -249,6 +259,12 @@
                         <data-table-cell title.bind="item.vehicleType.name">
                             <span class="text-truncate">
                                 ${item.vehicleType.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg">
+                            <span if.bind="item.totalWeightRange != null" class="text-truncate">
+                                ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
                             </span>
                         </data-table-cell>
 

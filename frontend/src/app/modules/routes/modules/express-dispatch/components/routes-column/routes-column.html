@@ -164,9 +164,9 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.from | number} kg">
+                        <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg">
                             <span if.bind="item.totalWeightRange != null" class="text-truncate">
-                                ${item.totalWeightRange.from | number} – ${item.totalWeightRange.from | number} kg
+                                ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
                             </span>
                         </data-table-cell>
 
