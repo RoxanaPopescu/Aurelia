@@ -29,14 +29,19 @@ export class OrderGroupService
      */
     public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroupInfo[]; orderGroupCount: number }>
     {
-        const result = await this._apiClient.get("ordergroups/list",
+        const result = await this._apiClient.post("ordergroups/list",
         {
+            body:
+            {
+                paging,
+                sorting
+            },
             signal
         });
 
         return {
-            orderGroups: result.data.map((data: any) => new OrderGroupInfo(data)),
-            orderGroupCount: result.data.length
+            orderGroups: result.data.orderGroups.map((data: any) => new OrderGroupInfo(data)),
+            orderGroupCount: result.data.orderGroupCount
         };
     }
 }

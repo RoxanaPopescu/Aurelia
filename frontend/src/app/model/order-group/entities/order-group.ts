@@ -14,7 +14,7 @@ export class OrderGroupInfo
     {
         this.id = data.id;
         this.name = data.name;
-        this.matchingCriterias = data.matchingCriterias.map(mc => new MatchingCriteria(mc));
+        this.matchingCriterias = data.matchingCriteria.map(mc => new MatchingCriteria(mc));
 
         const consignors: Consignor[] = [];
 
