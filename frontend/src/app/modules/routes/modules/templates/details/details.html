@@ -1,0 +1,264 @@
+<template>
+
+    <require from="./details.scss"></require>
+
+    <page name="templates-details">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/routes" translate>
+                            Routes
+                        </a>
+
+                        <a accent="inherit" href="/routes/templates/list" translate>
+                            Templates
+                        </a>
+
+                        <span translate>
+                            New template
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+                    <button appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                        Create template
+                    </button>
+                </toolbar>
+
+            </page-header>
+
+            <div class="flex-row">
+
+                <div class="route-template-details-column">
+
+                    <page-section>
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Route information
+                        </h2>
+
+                        <text-input label="above" class="margin-large-bottom">
+
+                            <div slot="heading">
+                                Route reference
+                            </div>
+
+                        </text-input>
+
+                        <select-input label="above" none.bind="false" class="margin-large-bottom">
+
+                            <div slot="heading">
+                                Consignor
+                            </div>
+
+                        </select-input>
+
+                        <number-input label="above" class="margin-large-bottom">
+
+                            <div slot="heading">
+                                Pris
+                            </div>
+
+                            <span slot="after" class="opacity-faded">
+                                kr
+                            </span>
+
+                        </number-input>
+
+                        <select-input label="above" none.bind="false" class="margin-large-bottom">
+
+                            <div slot="heading">
+                                Time of route creation
+                            </div>
+
+                            <item>
+                                1 month before
+                            </item>
+
+                        </select-input>
+
+                        <div class="control-row margin-large-bottom">
+
+                            <date-input label="above" class="flex-grow">
+
+                                <div slot="heading">
+                                    From date
+                                </div>
+
+                            </date-input>
+
+                            <date-input label="above" class="flex-grow">
+
+                                <div slot="heading">
+                                    To date
+                                </div>
+
+                            </date-input>
+
+                        </div>
+
+                        <text-input label="above" lines.bind="4">
+
+                            <div slot="heading">
+                                Instructions
+                            </div>
+
+                        </text-input>
+
+                    </page-section>
+
+                    <page-section>
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Route recurrence
+                        </h2>
+
+                        <div class="control-row margin-large-bottom">
+
+                            <check-toggle label="after" value.bind="false" style="width: 40rem">
+
+                                <div slot="heading">
+                                    All days
+                                </div>
+
+                            </check-toggle>
+
+                            <select-input label="above" none.bind="false" class="flex-grow">
+
+                                <div slot="heading">
+                                    Driver
+                                </div>
+
+                            </select-input>
+
+                            <select-input label="above" none.bind="false" class="flex-grow">
+
+                                <div slot="heading">
+                                    Status
+                                </div>
+
+                            </select-input>
+
+                        </div>
+
+                        <hr class="hr-line margin-large-bottom">
+
+                        <div repeat.for="weekday of 6" class="control-row margin-bottom">
+
+                            <check-toggle label="after" value.bind="false" style="width: 40rem">
+
+                                <div slot="heading">
+                                    ${weekday + 1 | weekday}
+                                </div>
+
+                            </check-toggle>
+
+                            <select-input none.bind="false" class="flex-grow">
+
+                            </select-input>
+
+                            <select-input none.bind="false" class="flex-grow">
+
+                            </select-input>
+
+                        </div>
+
+                    </page-section>
+
+                </div>
+
+                <div class="route-template-details-column">
+
+                    <page-section>
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Stop på ruten
+                        </h2>
+
+                        <data-table
+                            appearance="rows"
+                            sorting.bind="sorting"
+                            busy.bind="updateOperation.pending">
+
+                            <data-table-headers>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Stop
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Address
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Type
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Consignee phone
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Requirements
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Port
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        Start time
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        End time
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell align="right">
+                                    <!-- Icons -->
+                                </data-table-cell>
+
+                            </data-table-headers>
+
+                        </data-table>
+
+                        <busy-indicator if.bind="stops == null" class="margin-largest"></busy-indicator>
+
+                        <empty-indicator if.bind="stops.length == 0" class="margin-largest" translate>
+                            No results
+                        </empty-indicator>
+
+                    </page-section>
+
+                </div>
+
+            </div>
+
+        </page-content>
+
+    </page>
+
+</template>

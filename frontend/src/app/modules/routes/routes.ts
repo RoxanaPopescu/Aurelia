@@ -53,6 +53,12 @@ export class RoutesModule
                 icon: "driver-tracking"
             },
             {
+                name: "templates-create",
+                route: "templates/create",
+                moduleId: PLATFORM.moduleName("./modules/templates/details/details"),
+                title: routeTitles.newTemplate
+            },
+            {
                 name: "auto-dispatch",
                 route: "auto-dispatch",
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
@@ -67,7 +73,25 @@ export class RoutesModule
                 title: routeTitles.dispatch,
                 nav: true,
                 icon: "express-dispatch"
-            }
+            },
+
+            ...
+            ENVIRONMENT.name === "development" ?
+            [
+                {
+                    name: "templates-list",
+                    route: "templates/list",
+                    moduleId: PLATFORM.moduleName("./modules/templates/list/list"),
+                    title: routeTitles.templates,
+                    nav: true,
+                    icon: "missing"
+                },
+                {
+                    name: "templates-details",
+                    route: "templates/details/:id",
+                    moduleId: PLATFORM.moduleName("./modules/templates/details/details")
+                }
+            ] : []
         ]);
     }
 }

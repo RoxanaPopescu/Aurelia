@@ -3,6 +3,8 @@
     "details": "Details",
     "routeTracking": "Live tracking",
     "driverTracking": "Driver tracking",
+    "templates": "Templates",
+    "newTemplate": "New template",
     "autoDispatch": "Auto dispatch",
     "dispatch": "Express dispatch"
 }

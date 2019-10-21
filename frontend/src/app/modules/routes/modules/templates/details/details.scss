@@ -1,0 +1,22 @@
+@import "resources/index";
+
+page[name="routes"] page[name="templates-details"]
+{
+    .route-template-details-column
+    {
+        &:nth-child(1)
+        {
+            flex-basis: 37%;
+        }
+
+        &:nth-child(2)
+        {
+            flex-basis: 63%;
+        }
+    }
+
+    data-table
+    {
+        --data-table-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+}

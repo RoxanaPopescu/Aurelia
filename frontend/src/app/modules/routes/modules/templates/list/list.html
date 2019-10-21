@@ -1,0 +1,135 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="templates-list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/routes" translate>
+                            Routes
+                        </a>
+
+                        <span translate>
+                            Templates
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+                    <button appearance="solid" accent="neutral" page-href="path: /orders/templates/create" translate>
+                        New template
+                    </button>
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Reference
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Consignor
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Start date
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                End date
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="template of templates">
+
+                        <data-table-row
+                            href="/routes/templates/details/${template.id}">
+
+                            <data-table-cell class="font-monospaced">
+                                <span class="text-truncate">
+                                    ${template.reference}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${template.consignor.primaryName}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${template.startDateTime | dateTime: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${template.endDateTime | dateTime: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onEditClick($index)">
+                                        <icon name="md-edit"></icon>
+                                    </button>
+
+                                    <button appearance="none" accent="primary" click.trigger="onDeleteClick($index)">
+                                        <icon name="md-delete"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="templates == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="templates.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>
