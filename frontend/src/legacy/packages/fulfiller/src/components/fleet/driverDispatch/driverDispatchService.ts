@@ -277,6 +277,8 @@ export class DriverDispatchService {
       }
     }
 
+    // FIXME: Remove when this filter works correctly again
+    fulfillees = [];
     this.fulfillees = fulfillees;
 
     var drivers: { name: string; id: string }[] = [];
