@@ -18,23 +18,28 @@ export class IdentityService
      */
     public get identity(): Identity | undefined
     {
-        if (!Profile.isAuthenticated)
+        if (!Profile.isAuthenticated || Session.userInfo == null)
         {
             this._identity = undefined;
 
             return undefined;
         }
 
-        return this._identity || new Identity(
+        if (this._identity == null || this._identity.username !== Session.userInfo.username)
         {
-            username: Session.userInfo.username,
-            fullName: Session.userInfo.fullName,
-            preferredName: Session.userInfo.firstName,
-            pictureUrl: undefined,
-            outfit: Session.outfit,
-            claims: getUserClaims(),
-            tokens: Profile.tokens
-        });
+            this._identity = new Identity(
+            {
+                username: Session.userInfo.username,
+                fullName: Session.userInfo.fullName,
+                preferredName: Session.userInfo.firstName,
+                pictureUrl: undefined,
+                outfit: Session.outfit,
+                claims: getUserClaims(),
+                tokens: Profile.tokens
+            });
+        }
+
+        return this._identity;
     }
 
     /**
