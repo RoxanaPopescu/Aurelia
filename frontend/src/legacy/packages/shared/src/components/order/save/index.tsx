@@ -490,61 +490,64 @@ export default class SaveOrderComponent extends React.Component<Props> {
           history={this.props.history}
           path={[
             { title: "Ordrer", href: SubPage.path(SubPage.OrderList) },
-            { title: "Ny ordre" }
+            { title: !this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId ? "Ny ordre" : "Rediger ordre" }
           ]}
-        >
-
-          <Button
-            onClick={() => this.saveOrdersStore.addOrder()}
-            type={ButtonType.Light}
-            size={ButtonSize.Medium}
-            disabled={this.saveOrdersStore.loading}
-          >
-            {Localization.consignorValue(
-              "Order_Create_AddAdditional_Button"
-            )}
-          </Button>
-
-          <div className="pageHeader-actions-separator"/>
-
-          <Button
-            onClick={() => this.placeOrder()}
-            size={ButtonSize.Medium}
-            type={ButtonType.Action}
-            disabled={
-              this.saveOrdersStore.loading ||
-              this.saveOrdersStore.empty
-            }
-            className="c-order-create-summary-order"
-          >
-            {Localization.consignorValue(
-              "Order_Create_Complete_Button"
-            )}
-          </Button>
-
-          {this.saveOrdersStore.orderDetails && this.saveOrdersStore.orderId &&
+          actionElements={<>
+            {!this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId &&
             <Button
+              onClick={() => this.saveOrdersStore.addOrder()}
+              type={ButtonType.Light}
+              size={ButtonSize.Medium}
+              disabled={this.saveOrdersStore.loading}
+            >
+              {Localization.consignorValue(
+                "Order_Create_AddAdditional_Button"
+              )}
+            </Button>}
+
+            {(this.saveOrdersStore.orderDetails === undefined || this.saveOrdersStore.orderId === undefined) &&
+            <Button
+              onClick={() => this.saveOrdersStore.clear()}
+              size={ButtonSize.Medium}
+              type={ButtonType.Light}
+              loading={this.saveOrdersStore.loading}
+              disabled={
+                this.saveOrdersStore.loading || this.saveOrdersStore.empty
+              }
+            >
+              {Localization.consignorValue("Order_Create_Actions_ClearOrders_Button")}
+            </Button>}
+
+            <div className="pageHeader-actions-separator"/>
+
+            {!this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId &&
+            <Button
+              onClick={() => this.placeOrder()}
               size={ButtonSize.Medium}
               type={ButtonType.Action}
-              loading={this.saveOrdersStore.loading}
-              onClick={() => this.editOrder()}
+              disabled={
+                this.saveOrdersStore.loading ||
+                this.saveOrdersStore.empty
+              }
+              className="c-order-create-summary-order"
             >
-              Opdater ordre
-            </Button>
-          }
+              {Localization.consignorValue(
+                "Order_Create_Complete_Button"
+              )}
+            </Button>}
 
-          {(this.saveOrdersStore.orderDetails === undefined || this.saveOrdersStore.orderId === undefined) &&
-          <Button
-            onClick={() => this.saveOrdersStore.clear()}
-            size={ButtonSize.Medium}
-            type={ButtonType.Light}
-            loading={this.saveOrdersStore.loading}
-            disabled={
-              this.saveOrdersStore.loading || this.saveOrdersStore.empty
+            {this.saveOrdersStore.orderDetails && this.saveOrdersStore.orderId &&
+              <Button
+                size={ButtonSize.Medium}
+                type={ButtonType.Action}
+                loading={this.saveOrdersStore.loading}
+                onClick={() => this.editOrder()}
+              >
+                Opdater ordre
+              </Button>
             }
-          >
-            {Localization.consignorValue("Order_Create_Actions_ClearOrders_Button")}
-          </Button>}
+          </>}
+        >
 
         </PageHeaderComponent>
 
