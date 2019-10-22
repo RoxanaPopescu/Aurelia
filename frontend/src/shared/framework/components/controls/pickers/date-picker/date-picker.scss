@@ -229,19 +229,22 @@ date-picker
         right: 0;
         bottom: 0;
 
-        // TODO: Should we enable this?
-        // Set the width of the button, so it spans two columns.
-        // --date-picker-item-size-small: calc((100% - 6 * var(--date-picker-item-gap)) / 7);
-        // width: calc(2 * var(--date-picker-item-size-small) + var(--date-picker-item-gap));
-
         // Reduce padding to align with column content.
         padding: 0 2.5rem !important;
 
-        // Shrink to match the row height.
-        min-height: 0 !important;
+        // The computed width of a single item in the grid.
+        --date-picker-item-width-small: calc((100% - 6 * var(--date-picker-column-gap)) / 7);
+
+        // The computed height of a single item in the grid.
+        --date-picker-item-height-small: calc((100% - 5 * var(--date-picker-row-gap)) / 6);
+
+        // Match the width of two grid columns.
+        min-width: 0 !important;
+        width: calc(2 * var(--date-picker-item-width-small) + var(--date-picker-column-gap));
 
         // Match the height of the grid rows.
-        height: calc((100% - 5 * var(--date-picker-row-gap)) / 6);
+        min-height: 0 !important;
+        height: var(--date-picker-item-height-small);
     }
 
     &:not(.--hoverable) .date-picker-items button[appearance="icon"]
