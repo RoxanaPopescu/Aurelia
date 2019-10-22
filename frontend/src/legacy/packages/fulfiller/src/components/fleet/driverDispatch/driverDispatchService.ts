@@ -263,7 +263,6 @@ export class DriverDispatchService {
         this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
       }
     } else {
-
       try {
         let response = await AgreementsService.fulfilees();
         fulfillees = response.map(o => {

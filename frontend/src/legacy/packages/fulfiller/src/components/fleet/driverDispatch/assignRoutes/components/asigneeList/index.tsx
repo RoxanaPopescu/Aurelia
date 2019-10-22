@@ -89,7 +89,7 @@ export default class extends React.Component<Props, State> {
         <InfoBox
           data={this.state.state === "prebookings" ?
           [
-            { name: Localization.operationsValue("Dispatch_Prebookings"), value: this.state.prebookings.length - this.state.matchedAssignees.length }
+            { name: Localization.operationsValue("Dispatch_Prebookings"), value: Math.max(this.state.prebookings.length - this.state.matchedAssignees.length, 0) }
           ] :
           [
             {
