@@ -60,5 +60,8 @@ ENV PORT 8008
 ## Expose the port to which server binds.
 EXPOSE 8008
 
+## Install the PM2 process manager.
+RUN npm install pm2 -g
+
 ## Start the server.
-CMD npm start
+CMD pm2-runtime -i -1 "artifacts/build/index.js"
