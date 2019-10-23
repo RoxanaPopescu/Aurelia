@@ -98,7 +98,7 @@ export class ListPage
      * The min date for whichorders should be shown.
      */
     @observable({ changeHandler: "update" })
-    protected fromDateFilter: DateTime | undefined = DateTime.local().startOf("day");
+    protected fromDateFilter: DateTime | undefined;
 
     /**
      * The min date for which orders should be shown.
