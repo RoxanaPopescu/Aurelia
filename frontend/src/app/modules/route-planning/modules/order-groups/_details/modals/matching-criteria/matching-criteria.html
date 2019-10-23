@@ -70,6 +70,7 @@
 
             <tags-input
                 value.bind="model.matchingCriteria.tags"
+                filter-value.bind="filterValue"
                 label="above"
                 filter="auto"
                 fixed.bind="true">
@@ -81,6 +82,22 @@
                 <span slot="placeholder" translate>
                     Choose tags
                 </span>
+
+                <item if.bind="filterValue && !model.tags.includes(filterValue)" model.bind="filterValue">
+
+                    <div class="flex-row">
+
+                        <div>
+                            ${filterValue}
+                        </div>
+
+                        <div class="opacity-faded flex-push-right" translate>
+                            New item
+                        </div>
+
+                    </div>
+
+                </item>
 
                 <item repeat.for="tag of model.tags" model.bind="tag">
                     ${tag}

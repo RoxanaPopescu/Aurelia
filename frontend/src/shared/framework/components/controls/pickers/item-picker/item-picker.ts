@@ -251,7 +251,11 @@ export class ItemPickerCustomElement
      */
     protected filterValueChanged(): void
     {
-        this.empty = !this._items.some(i => i.visible);
+        // Delay updating the empty state, in case some bindings need time to update.
+        // This is specifically needed for the case where the content of an item is bound
+        // to the filter value, thereby making it represent a 'New item'.
+        // tslint:disable-next-line: no-floating-promises
+        Promise.resolve().then(() => this.empty = !this._items.some(i => i.visible));
     }
 
     /**
