@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g transform="translate(2.000000, 1.000000)">
-            <path d="M0.7498,12.8412 C0.7498,19.1142 5.8348,24.1992 12.1078,24.1992 C18.3808,24.1992 23.4658,19.1142 23.4658,12.8412 C23.4658,6.5692 18.3808,1.4842 12.1078,1.4842 C9.2148,1.4842 6.5748,2.5652 4.5698,4.3452" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M17.0823,13.2099 L10.0393,17.5199 C9.7743,17.6809 9.4363,17.4909 9.4363,17.1809 L9.4363,8.5629 C9.4363,8.2529 9.7743,8.0629 10.0393,8.2239 L17.0823,12.5339 C17.3343,12.6889 17.3343,13.0549 17.0823,13.2099" fill="currentColor"></path>
-            <polyline stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="8.4021 5.6752 3.4771 5.6752 3.4771 0.7502"></polyline>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M12,1a1,1,0,0,0,0,2,9,9,0,1,1-9,9A8.89,8.89,0,0,1,4,7.91V10a1,1,0,0,0,2,0V6A1,1,0,0,0,5,5H1A1,1,0,0,0,1,7H2.21A11,11,0,1,0,12,1Z" fill="currentColor"/>
+    <path d="M8.5,16.86A1,1,0,0,0,9,17a1,1,0,0,0,.5-.13l7-4a1,1,0,0,0,0-1.74l-7-4a1,1,0,0,0-1,0A1,1,0,0,0,8,8v8A1,1,0,0,0,8.5,16.86ZM10,9.72,14,12l-4,2.28Z" fill="currentColor"/>
+  </g>
 </svg>

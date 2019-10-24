@@ -84,7 +84,7 @@ export class RoutesModule
                     moduleId: PLATFORM.moduleName("./modules/templates/list/list"),
                     title: routeTitles.templates,
                     nav: true,
-                    icon: "missing"
+                    icon: "templates"
                 },
                 {
                     name: "templates-details",

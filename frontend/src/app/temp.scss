@@ -8,6 +8,16 @@
     --card-padding-large: 12.5rem 13rem;
 }
 
+app-sidebar
+{
+    section .nav-link icon,
+    footer .nav-link icon.icon-sidebar-expand
+    {
+        margin: 0.5rem;
+        font-size: 5rem;
+    }
+}
+
 path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-child)::after
 {
     mask-size: 1em;

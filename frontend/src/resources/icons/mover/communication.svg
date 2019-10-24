@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-    <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.67 14.63a10.07 10.07 0 1 1 9.34 6.32H.77l3.9-6.32z"/>
-        <circle cx="8.8" cy="10.85" r="1.49" fill="currentColor" fill-rule="nonzero"/>
-        <circle cx="14.02" cy="10.85" r="1.49" fill="currentColor" fill-rule="nonzero"/>
-        <circle cx="19.23" cy="10.85" r="1.49" fill="currentColor" fill-rule="nonzero"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M12.5,0A12.33,12.33,0,0,0,11,.06,11.5,11.5,0,0,0,2.67,17.44a.59.59,0,0,1-.07.7L.13,22A.57.57,0,0,0,.57,23h11.6A11.72,11.72,0,0,0,24,12.16,11.5,11.5,0,0,0,12.5,0ZM22,12A9.67,9.67,0,0,1,12.17,21h-9l1-1.65a2.6,2.6,0,0,0,.16-2.92,9.5,9.5,0,0,1,6.9-14.35A9.87,9.87,0,0,1,12.5,2,9.49,9.49,0,0,1,22,12Z" fill="currentColor"/>
+    <circle cx="7.5" cy="11.47" r="1.5" fill="currentColor"/>
+    <circle cx="12.5" cy="11.47" r="1.5" fill="currentColor"/>
+    <circle cx="17.5" cy="11.47" r="1.5" fill="currentColor"/>
+  </g>
 </svg>

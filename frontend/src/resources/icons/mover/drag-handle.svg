@@ -1,9 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g transform="translate(12.000000, 1.000000)" fill="currentColor">
-            <circle cx="2" cy="2" r="2"></circle>
-            <circle cx="2" cy="13" r="2"></circle>
-            <circle cx="2" cy="24" r="2"></circle>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <circle cx="12" cy="2" r="1.5" fill="currentColor"/>
+    <path d="M12,1a1,1,0,1,1-1,1,1,1,0,0,1,1-1m0-1a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z" fill="currentColor"/>
+  </g>
+  <g>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <path d="M12,11a1,1,0,1,1-1,1,1,1,0,0,1,1-1m0-1a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z" fill="currentColor"/>
+  </g>
+  <g>
+    <circle cx="12" cy="22" r="1.5" fill="currentColor"/>
+    <path d="M12,21a1,1,0,1,1-1,1,1,1,0,0,1,1-1m0-1a2,2,0,1,0,2,2,2,2,0,0,0-2-2Z" fill="currentColor"/>
+  </g>
 </svg>

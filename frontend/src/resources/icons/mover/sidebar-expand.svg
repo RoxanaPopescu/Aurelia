@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16.7166,13.7896 L26.5246,13.7896" stroke="currentColor" stroke-width="1.5"></path>
-        <polyline stroke="currentColor" stroke-width="1.5" points="22.1013 8.7501 27.1413 13.7901 22.1013 18.8301"></polyline>
-        <path d="M11.1751,13.7896 L1.3661,13.7896" stroke="currentColor" stroke-width="1.5"></path>
-        <polyline stroke="currentColor" stroke-width="1.5" points="5.7898 18.8297 0.7498 13.7897 5.7898 8.7497"></polyline>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M10,11H3.39L5.66,8.7A1,1,0,0,0,4.24,7.3l-3.95,4h0l0,.06a.9.9,0,0,0-.17.26h0c0,.07,0,.14,0,.2A1.13,1.13,0,0,0,0,12H0a1.13,1.13,0,0,0,0,.18c0,.07,0,.13,0,.2h0a1,1,0,0,0,.17.25l0,.06h0l4,4A1,1,0,0,0,5,17a1,1,0,0,0,.71-1.7L3.39,13H10a1,1,0,0,0,0-2Z" fill="currentColor"/>
+    <path d="M24,12a1.13,1.13,0,0,0,0-.18c0-.06,0-.13,0-.2h0a.9.9,0,0,0-.17-.26l0-.06h0l-3.95-4a1,1,0,1,0-1.42,1.4L20.61,11H14a1,1,0,0,0,0,2h6.61l-2.27,2.3a1,1,0,0,0,.71,1.7,1,1,0,0,0,.71-.3l3.95-4h0l0-.06a1,1,0,0,0,.17-.25h0c0-.07,0-.13,0-.2A1.13,1.13,0,0,0,24,12Z" fill="currentColor"/>
+  </g>
 </svg>
