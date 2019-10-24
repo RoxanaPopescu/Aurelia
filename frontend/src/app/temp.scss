@@ -1,0 +1,206 @@
+@import "resources/index";
+
+:root
+{
+    // Default padding for cards.
+    // TODO: Should we define variables for standard margin and padding instead?
+    --card-padding: 3.5rem 3rem;
+    --card-padding-large: 12.5rem 13rem;
+}
+
+path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-child)::after
+{
+    mask-size: 1em;
+}
+
+// HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.
+.input[label="above"] > .input-label
+{
+    margin-bottom: calc(var(--font-small-margin-bottom) / 2);
+
+    .input-heading
+    {
+        opacity: var(--opacity-faded);
+    }
+
+    .input-description > *
+    {
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+    }
+}
+
+button[appearance],
+a[appearance]
+{
+    &:not([appearance="none"]):not([appearance="icon"])
+    {
+        min-width: 30rem;;
+    }
+}
+
+page-section
+{
+    &:not(.--expanded)
+    {
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+    }
+}
+
+page-section:not(.--expanded) + page-section.--expanded
+{
+    margin-top: .5rem;
+}
+
+.page-section-header-toggle
+{
+    > span
+    {
+        line-height: var(--font-base-line-height);
+        display: none;
+    }
+
+    > icon
+    {
+        margin-left: calc(var(--size-inline-spacing) /2);
+
+        // Set icon size and line height.
+        line-height: 1;
+        font-size: 1.286em;
+    }
+}
+
+.modal-section-toggle
+{
+    > span
+    {
+        line-height: var(--font-base-line-height);
+    }
+
+    > icon
+    {
+        margin-left: calc(var(--size-inline-spacing) /2);
+
+        // Set icon size and line height.
+        line-height: 1;
+        font-size: 1.286em;
+    }
+}
+
+page-sidebar
+{
+    page-section:not(.--header-slot-empty) .page-section-header
+    {
+        margin: 0 -9rem 0 -9rem;
+        padding: 2rem 5rem 2rem 9rem;
+        width: auto;
+        font-size: inherit;
+        background: var(--palette-color-neutral-light) !important;
+        color: var(--palette-color-neutral-dark);
+    }
+
+    .page-section-header-toggle
+    {
+        display: flex;
+    }
+}
+
+.control-row
+{
+    display: flex;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing)
+    }
+}
+
+.button-row
+{
+    display: flex;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large)
+    }
+}
+
+.icon-row
+{
+    display: flex;
+    line-height: 1;
+
+    > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large)
+    }
+}
+
+.link-row
+{
+    display: flex;
+
+    > :not(:last-child)
+    {
+        margin-right: calc(var(--size-inline-spacing-large) * 2)
+    }
+}
+
+toolbar
+{
+    // Use a small default width for search inputs, and expand them when focused.
+    search-input
+    {
+        --input-min-width: 0;
+        width: 10vw;
+        transition: width var(--animation-duration-long);
+
+        // Delay transition so it's possible to click the clear icon within the input.
+        transition-delay: 0.1s;
+
+        &:focus-within,
+        &:not(.--empty)
+        {
+            width: 80rem;
+        }
+    }
+
+    // Use a small default width for search inputs, and expand them when focused.
+    input[type="text"],
+    input[type="search"]
+    {
+        width: 10vw;
+        min-width: 30rem;
+        max-width: 80rem;
+        transition: width var(--animation-duration-long);
+
+        // Delay transition so it's possible to click the clear icon within the input.
+        transition-delay: 0.1s;
+
+        &:focus,
+        &:not(:placeholder-shown)
+        {
+            width: 80rem;
+        }
+    }
+
+    select
+    {
+        width: auto;
+        min-width: 30rem;
+    }
+}
+
+data-table-cell icon + span
+{
+    margin-left: var(--size-inline-spacing);
+}
+
+@media ($media-smallest-max)
+{
+    app-sidebar.--expanded
+    {
+        width: 100vw !important;
+    }
+}

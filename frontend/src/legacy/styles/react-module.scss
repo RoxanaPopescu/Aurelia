@@ -1,0 +1,253 @@
+@import "resources/index";
+
+react-module
+{
+    // Import legacy styles.
+    @import "../packages/shared/src/webKit/LEGACY";
+
+    // Import legacy constants.
+    @import "./constants";
+
+    // Ensure react modules fill the content area of the viewport.
+    // We must use absoliute positioning to do this, due to the legacy styles.
+    position: absolute;
+    height: 100vh;
+
+    width: calc(100vw - var(--size-app-sidebar-width-expanded));
+
+    .sideMenu--collapsed &
+    {
+        width: calc(100vw - var(--size-app-sidebar-width));
+        left: 0;
+    }
+
+    // Use vertical flex layout.
+    display: flex;
+    flex-direction: column;
+
+    // Ensure react modules never overlap any app elements.
+    // We can't set it to less than 1 though, as modal backdrops need to overlap
+    // the top and bottom of the app-sidebar.
+    z-index: 1;
+
+    --font-label-base-line-height: 5rem;
+    --font-label-base-font-size: 3.5rem;
+    --font-label-base-margin-top: 3rem;
+    --font-label-base-margin-bottom: 3rem;
+    --font-label-base-font-weight: 500;
+
+    /// Text style for base text.
+    /// Use for base-sized labels, such as the text on buttons or tabs.
+    .font-label-base {
+        line-height: var(--font-label-base-line-height);
+        font-size: var(--font-label-base-font-size);
+        font-weight: var(--font-label-base-font-weight);
+
+        // Define the current text margins.
+        --font-current-margin-top: var(--font-label-base-margin-top);
+        --font-current-margin-bottom: var(--font-label-base-margin-bottom);
+
+        .margin-within & {
+            margin-top: var(--font-current-margin-top);
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+
+    --font-label-small-line-height: 4rem;
+    --font-label-small-font-size: 3rem;
+    --font-label-small-margin-top: 2rem;
+    --font-label-small-margin-bottom: 2rem;
+    --font-label-small-font-weight: 600;
+
+    /// Text style for small text.
+    /// Use for small-sized labels, such as column headers in a table.
+    .font-label-small {
+        line-height: var(--font-label-small-line-height);
+        font-size: var(--font-label-small-font-size);
+        font-weight: var(--font-label-small-font-weight);
+
+        // Define the current text margins.
+        --font-current-margin-top: var(--font-label-small-margin-top);
+        --font-current-margin-bottom: var(--font-label-small-margin-bottom);
+
+        .margin-within & {
+            margin-top: var(--font-current-margin-top);
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+
+    .c-login-outerContainer,
+    .c-activation-outerContainer
+    {
+        position: fixed;
+        left: 0;
+        right: 0;
+    }
+
+    // Change page header to better match the new pages.
+    .pageHeader
+    {
+        padding: 8.5rem 9rem 0 9rem;
+        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+
+        --colorNeutralDark: var(--surface-neutral-surface-color);
+        --colorInteractivePrimary: var(--surface-primary-text-color);
+
+        .pageHeader-top
+        {
+            height: auto;
+            margin-bottom: 5.5rem;
+
+            .pageHeader-path,
+            .pageHeader-path-segment
+            {
+                line-height: var(--font-largest-line-height);
+                font-size: var(--font-largest-font-size);
+                font-weight: var(--font-largest-font-weight);
+                --font-current-margin-top: var(--font-largest-margin-top);
+                --font-current-margin-bottom: var(--font-largest-margin-bottom);
+
+                .icon
+                {
+                    margin-top: 1px;
+                    font-size: 23px;
+                }
+            }
+        }
+
+        .pageHeader-toolbar:not(:empty)
+        {
+            margin-bottom: 7rem;
+        }
+
+        .pageHeader-tabs
+        {
+            border: var(--border-width-medium) solid var(--surface-neutral-border-color);
+            border-radius: var(--border-radius-medium);
+
+            .pageHeader-tabs-tab
+            {
+                line-height: calc(10rem - 2 * var(--border-width-medium));
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+
+                &.active
+                {
+                    color: inherit;
+                    background: var(--surface-neutral-surface-color)
+                }
+            }
+        }
+    }
+
+    .inputContainer .inputWrapper input:not(.noBorder),
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control,
+    .buttonContainer.moverButton.buttonLight,
+    .c-checkboxContainer:not(.checked) .c-checkbox
+    {
+        &, &:hover, &:focus
+        {
+            border-color: var(--surface-input-border-color);
+        }
+    }
+
+    .c-checkboxContainer.checked .c-checkbox
+    {
+        &, &:hover, &:focus
+        {
+            border-color: transparent;
+        }
+    }
+
+    .c-divider :first-child, .c-divider :last-child
+    {
+        border-color: var(--surface-separator-color);
+    }
+
+    .buttonContainer.moverButton .moverButtonText.font-label-base
+    {
+        font-weight: var(--font-label-base-font-weight)
+    }
+
+    .buttonContainer.moverButton .moverButtonText.font-label-small
+    {
+        font-weight: var(--font-label-small-font-weight)
+    }
+
+    .c-routeDetails-info,
+    .c-orderDetails-meta,
+    .c-driverDispatch-filters
+    {
+        background-color: var(--palette-color-neutral-lightest);
+        border-right: 0.25rem solid var(--palette-color-neutral-light);
+    }
+
+    .c-driverDispatch-filters-slider-header
+    {
+        background-color: var(--palette-color-neutral-light);
+        font: inherit;
+    }
+
+    .radioGroup .radioLabel .radioButton
+    {
+        border-color: var(--toggle-surface-indicator-color--focus);
+    }
+
+    .c-orderDetails-meta,
+    .c-routeDetails-info
+    {
+        padding-top: 0;
+
+        .c-orderDetails-headline,
+        .c-routeDetails-info-section-heading
+        {
+            margin: 0 -8rem var(--font-large-margin-top) -8rem;
+            padding: 2rem 5rem 2rem 9rem;
+            font: inherit;
+            background: var(--palette-color-neutral-light) !important;
+            color: var(--palette-color-neutral-dark);
+            text-transform: none;
+        }
+
+        .c-orderDetails-section,
+        .c-routeDetails-info-section
+        {
+            position: relative;
+            overflow: visible;
+            padding-top: 0 !important;
+            border-bottom: none !important;
+
+            .c-orderDetails-tabs
+            {
+                position: absolute;
+                right: 0;
+                top: 7px;
+
+                .c-orderDetails-tab
+                {
+                    background: transparent !important;
+                    color: var(--palette-color-primary) !important;
+                }
+
+                .c-orderDetails-tab.active
+                {
+                    background: var(--palette-color-neutral) !important;
+                    color: var(--palette-color-neutral-dark) !important;
+                }
+            }
+        }
+    }
+
+    .multiSelectContainer.selectContainer .selectWrapper .react-selectize .react-selectize-control
+    .react-selectize-search-field-and-selected-values .value-wrapper .simple-value > span
+    {
+        font-weight: normal;
+    }
+
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control .react-selectize-placeholder,
+    .inputContainer .inputWrapper input::placeholder
+    {
+        color: var(--surface-subtle-color);
+    }
+}
