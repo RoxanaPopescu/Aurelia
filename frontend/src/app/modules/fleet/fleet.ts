@@ -29,7 +29,7 @@ export class FleetModule
                 title: routeTitles.list,
                 nav: false,
                 href: "/fleet-management/drivers",
-                icon: "drivers"
+                icon: "fleet"
             },
             {
                 name: "details",
