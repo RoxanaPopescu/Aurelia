@@ -61,11 +61,13 @@ export class AsyncValidatorCustomElement extends Validator
                 }
                 catch (error)
                 {
-                    this.invalid = undefined;
+                    this.invalid = true;
 
                     throw error;
                 }
             });
+
+            await this.operation.promise.catch(() => undefined);
         }
 
         return !this.invalid;
