@@ -17,7 +17,7 @@ export class VehicleType
         this.maxHeight = data.maxHeight;
         this.maxWidth = data.maxWidth;
         this.maxWeight = data.maxWeight;
-        this.name = data.name.da;
+        this.name = data.name;
         this.images = data.images;
     }
 

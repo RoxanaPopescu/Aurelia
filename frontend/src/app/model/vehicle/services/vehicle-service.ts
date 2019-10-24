@@ -26,7 +26,7 @@ export class VehicleService
      */
     public async getTypes(): Promise<VehicleType[]>
     {
-        return Session.vehicleTypes;
+        return Session.vehicleTypes.map(vt => new VehicleType(vt));
     }
 
     /**
