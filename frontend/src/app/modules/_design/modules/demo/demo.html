@@ -47,6 +47,60 @@
                 Custom controls
             </h1>
 
+            <design-item heading="address-input">
+
+                <design-row heading="address-input">
+
+                    <design-column heading="enabled">
+
+                        <address-input
+                            label.bind="labelPosition"
+                            value.bind="placeValue"
+                            focused-value.bind="placeFocusedValue"
+                            filter="auto"
+                            min="10:00"
+                            max="18:00">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </address-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <address-input
+                            disabled.bind="true"
+                            label.bind="labelPosition"
+                            value.bind="placeValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </address-input>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>focused: ${placeFocusedValue}</div>
+                        <div>comitted: ${placeValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="toggle-group">
 
                 <design-row heading="toggle-group">
