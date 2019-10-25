@@ -7,8 +7,7 @@ import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 import { AddressService } from "./services/address-service/address-service";
 
 /**
- * Custom element representing an input for picking a place in the world,
- * using Google Places to provide suggestions and place details.
+ * Custom element representing an input for picking an address.
  */
 @autoinject
 export class AddressInputCustomElement
@@ -55,12 +54,12 @@ export class AddressInputCustomElement
     /**
      * Gets the items that match the entered address.
      */
-    protected items: Address[];
+    protected items: Address[] = [];
 
     /**
      * Gets the input value.
      */
-    @computedFrom("open", "focusedValue", "value")
+    @computedFrom("open", "focusedValue", "enteredValue", "value")
     protected get inputValue(): string
     {
         // If the user entered a value, return that.
@@ -103,7 +102,7 @@ export class AddressInputCustomElement
 
         try
         {
-            // Fetch places matching the input value.
+            // Fetch addresses matching the input value.
             this.fetchItems(value);
         }
         catch (error)
@@ -120,13 +119,13 @@ export class AddressInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The place picked by the user, or undefined if no place has been picked.
+     * The address picked by the user, or undefined if no address has been picked.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public value: Address | undefined;
 
     /**
-     * The place that is focused, but not yet picked, or undefined if no place has been focused.
+     * The address that is focused, but not yet picked, or undefined if no address has been focused.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public focusedValue: Address | undefined;
@@ -191,6 +190,11 @@ export class AddressInputCustomElement
         {
             setTimeout(() => this.inputElement.focus());
         }
+
+        if (this.value != null)
+        {
+            this.fetchItems(this.value.toString());
+        }
     }
 
     /**
@@ -216,6 +220,7 @@ export class AddressInputCustomElement
             if (this.value !== null)
             {
                 this.enteredValue = undefined;
+                this.items = [];
             }
 
             // Dispatch the `input` event to indicate that the comitted value, has changed.
@@ -228,6 +233,7 @@ export class AddressInputCustomElement
         {
             this.focusedValue = this.value;
             this.enteredValue = undefined;
+            this.items = [];
         }
 
         if (focusToggle)
@@ -342,7 +348,5 @@ export class AddressInputCustomElement
         {
             this.items = await this._addressService.getAddresses(query, signal);
         });
-
-        //this.items = ["place-1", "place-2", "place-3"].filter(p => p.includes(query));
     }
 }

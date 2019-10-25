@@ -24,8 +24,21 @@
         <slot name="heading" slot="heading"></slot>
         <slot name="description" slot="description"></slot>
         <slot name="validation" slot="validation"></slot>
-        <slot slot="placeholder" slot="placeholder"></slot>
         <slot slot="before" slot="before"></slot>
+
+        <div slot="placeholder">
+
+            <div show.bind="!readonly && !open">
+
+                <slot name="placeholder"></slot>
+
+            </div>
+
+            <div show.bind="open" translate>
+                Type an address…
+            </div>
+
+        </div>
 
         <div slot="after">
 
@@ -37,6 +50,11 @@
                 open.bind="open"
                 toggle.call="toggleDropdown()">
             </dropdown-icon>
+
+            <busy-indicator
+                if.bind="!readonly && fetchOperation.pending"
+                class="animation-fade-in-short animation-fade-out-short">
+            </busy-indicator>
 
         </div>
 
@@ -54,14 +72,17 @@
                 filter-value.bind="filterValue"
                 focused-element.bind="inputElement"
                 keyboard.bind="open"
-                none.bind="none"
+                none.bind="false"
                 pick.call="closeDropdown(true, true)"
                 tabindex="-1"
                 scroll>
 
                 <item repeat.for="item of items" model.bind="item">
-                    <div>${item.primary}</div>
-                    <div>${item.secondary}</div>
+                    <icon name="map-pin"></icon>
+                    <div>
+                        <div>${item.primary}</div>
+                        <div>${item.secondary}</div>
+                    </div>
                 </item>
 
             </item-picker>

@@ -27,6 +27,11 @@ export class AddressService
      */
     public async getAddresses(query: string, signal?: AbortSignal): Promise<Address[]>
     {
+        if (!query)
+        {
+            return [];
+        }
+
         const result = await this._apiClient.post("locations/addressautocomplete",
         {
             body: { query },
