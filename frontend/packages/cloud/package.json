@@ -10,7 +10,7 @@
     "url": "https://bitbucket.org/moversystems/platform.git"
   },
   "engines": {
-    "node": ">=10.13.0 <12.0.0",
+    "node": ">=10.13.0 <14.0.0",
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
@@ -22,27 +22,27 @@
     "chalk": "^2.4.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
-    "cross-env": "^5.2.0",
+    "cross-env": "^6.0.3",
     "express": "^4.17.1",
-    "luxon": "^1.17.2",
+    "luxon": "^1.19.3",
     "pkg-dir": "^4.2.0",
+    "prerender-node": "^3.2.5",
     "tslib": "^1.10.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "peerDependencies": {},
   "devDependencies": {
-    "@types/compression": "0.0.36",
-    "@types/cookie-parser": "^1.4.1",
-    "@types/express": "^4.17.0",
+    "@types/compression": "^1.0.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.1",
     "@types/luxon": "^1.15.2",
-    "@types/node": "^12.6.9",
-    "@types/pkg-dir": "^2.0.1",
+    "@types/node": "^12.11.7",
     "@types/uuid": "^3.4.5",
     "cpx": "^1.5.0",
-    "nodemon": "^1.19.1",
-    "rimraf": "^2.6.3",
-    "ts-node": "8.3.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
+    "nodemon": "^1.19.4",
+    "rimraf": "^3.0.0",
+    "ts-node": "8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
   }
 }

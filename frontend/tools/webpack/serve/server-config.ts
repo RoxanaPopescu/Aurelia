@@ -42,7 +42,6 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
             paths.legacyFolder
         ],
         watchContentBase: true,
-        filename: compilerConfig.output!.filename,
 
         // Configure logging.
         clientLogLevel: "none",

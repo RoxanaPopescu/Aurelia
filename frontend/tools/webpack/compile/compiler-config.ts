@@ -118,7 +118,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         },
                         {
                             loader: "sass-loader",
-                            options: { sourceMap: true, includePaths: paths.styleFolders }
+                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
                         }
                     ]
                 },
@@ -138,7 +138,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         },
                         {
                             loader: "sass-loader",
-                            options: { sourceMap: true, includePaths: paths.styleFolders }
+                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
                         }
                     ],
                     issuer: /\.tsx?$/i
@@ -158,7 +158,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         },
                         {
                             loader: "sass-loader",
-                            options: { sourceMap: true, includePaths: paths.styleFolders }
+                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
                         }
                     ],
                     issuer: /\.html$/i
