@@ -2,7 +2,7 @@ import WebpackDevServer from "webpack-dev-server";
 import { Format } from "../helpers";
 
 // tslint:disable:no-require-imports no-var-requires
-const open = require("opn");
+const open = require("open");
 
 /**
  * Called when the server is ready, logging server info to the console, and optionally opening the browser.
@@ -16,9 +16,7 @@ export function serverCallback(compilerConfig: WebpackDevServer.Configuration, e
     {
         const protocol = compilerConfig.https ? "https" : "http";
 
-        const host = compilerConfig.public
-            ? `${protocol}://${compilerConfig.public}`
-            : `${protocol}://${compilerConfig.host}:${compilerConfig.port}`;
+        const host = `${protocol}://${compilerConfig.host}:${compilerConfig.port}`;
 
         // Log the host at which the server can be accessed.
         console.log(`${Format.info("i")} Server listening on ${Format.info(host)}`);

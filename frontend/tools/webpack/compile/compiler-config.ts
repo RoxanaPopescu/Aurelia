@@ -62,8 +62,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             path: buildFolder,
             publicPath: compilerOptions.environment.appBaseUrl,
             filename: compilerOptions.environment.optimize ? "[name].[chunkhash].bundle.js" : "[name].[hash].bundle.js",
-            sourceMapFilename: compilerOptions.environment.optimize ? "[name].[chunkhash].bundle.map" : "[name].[hash].bundle.map",
             chunkFilename: compilerOptions.environment.optimize ? "[name].[chunkhash].chunk.js" : "[name].[hash].chunk.js",
+            sourceMapFilename: compilerOptions.environment.optimize ? "[file].map" : "[file].map",
 
             // Only apply hashes to source file names if needed.
             // See: https://www.mistergoodcat.com/post/the-joy-that-is-source-maps-with-vuejs-and-typescript
@@ -89,15 +89,16 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 }
             },
 
-            // TODO: Find a better solution to the "Cannot determine default view strategy for object." bug,
-            // caused by modals referenced by class.
+            // TODO: Find a solution that does not require this optimization to be disabled.
+            // Needed to avoid an "Cannot determine default view strategy for object."
+            // errors when opening modals referenced by class.
             concatenateModules: false
         },
         performance:
         {
             hints: false
         },
-        devtool: compilerOptions.environment.optimize ? "nosources-source-map" : "cheap-module-eval-source-map",
+        devtool: compilerOptions.environment.optimize ? "source-map" : "eval-source-map",
         module:
         {
             rules:
@@ -105,7 +106,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.scss` files defining themes, one of which will be loaded during app start.
                 // Note that we need `style-loader` to inject the these.
                 {
-                    test: /[\\/]themes[\\/].+\.scss$/,
+                    test: /\.s?css$/,
+                    include: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
                         "style-loader",
@@ -124,7 +126,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.scss` files required in `.ts` or `.tsx` files.
                 // Note that we need `style-loader` to inject the these.
                 {
-                    test: /\.scss$/,
+                    test: /\.s?css$/,
+                    exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
                         "style-loader",
@@ -144,7 +147,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.scss` files required in `.html` files.
                 // Note that we do not need `style-loader` to inject the these, as Aurelia handles that itself.
                 {
-                    test: /\.scss$/,
+                    test: /\.s?css$/,
+                    exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
                         "css-loader",
@@ -158,22 +162,6 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         }
                     ],
                     issuer: /\.html$/i
-                },
-
-                // Loader for `.css` files required in `.ts` files.
-                // Note that we need `style-loader` to inject the these.
-                {
-                    test: /\.css$/,
-                    use:
-                    [
-                        "style-loader",
-                        "css-loader",
-                        {
-                            loader: "postcss-loader",
-                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
-                        }
-                    ],
-                    issuer: /\.tsx?$/i
                 },
 
                 // Loader for `.html` files.
@@ -298,10 +286,11 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 new BundleAnalyzerPlugin(
                 {
                     analyzerMode: "static",
-                    reportFilename: "bundle-analysis.html",
+                    reportFilename: paths.artifacts.bundleAnalysis.replace("{locale}", localeCode),
                     defaultSizes: "parsed",
                     openAnalyzer: false,
-                    generateStatsFile: false
+                    generateStatsFile: false,
+                    logLevel: "warn"
                 })
             ] : []
         ]

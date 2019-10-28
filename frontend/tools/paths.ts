@@ -104,6 +104,11 @@ export const paths =
         translatables: resolve("artifacts/translation/export.json"),
 
         /**
+         * The path for the folder representing the `bundle-analysis` artifact.
+         */
+        bundleAnalysis: resolve("artifacts/build/{locale}/bundle-analysis.html"),
+
+        /**
          * The path for the folder in the `frontend-desktop` package,
          * representing the copy of the `build` artifact from the `frontend` package.
          */

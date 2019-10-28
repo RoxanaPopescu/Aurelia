@@ -3,6 +3,7 @@ import fs from "fs";
 import globs from "globs";
 import { Plugin } from "gulp-translate/lib/plugin/plugin";
 import { translateConfig } from "../translate";
+import { Format } from "../webpack/helpers";
 
 // Get the source file paths.
 const filePaths = globs.sync(translateConfig.includedFilePaths,
@@ -27,3 +28,5 @@ for (const filePath of filePaths)
 // Finalize the export task.
 task.finalize()
     .catch(reason => console.error(reason));
+
+console.info(`Translatables saved to:\n${Format.info(translateConfig.exportFilePath!)}\n`);

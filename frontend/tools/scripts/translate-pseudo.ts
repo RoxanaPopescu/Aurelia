@@ -4,6 +4,7 @@ import path from "path";
 import { Plugin } from "gulp-translate/lib/plugin/plugin";
 import { translateConfig } from "../translate";
 import { paths } from "../paths";
+import { Format } from "../webpack/helpers";
 
 // The path for the export file that should be translated.
 const exportFilePath = paths.artifacts.translatables;
@@ -25,3 +26,5 @@ fs.mkdirSync(path.dirname(importFilePath), { recursive: true });
 task.process(file)
     .then(f => fs.writeFileSync(importFilePath, f.contents))
     .catch(reason => console.error(reason));
+
+console.info(`Pseudo-translations saved to:\n${Format.info(importFilePath)}\n`);

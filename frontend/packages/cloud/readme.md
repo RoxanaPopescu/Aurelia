@@ -32,6 +32,14 @@
 
    > Note that the app is automatically restarted after each build.
 
+   > Note that source maps are protected in all environments except `development`.
+   >
+   > To enable debugging with protected source maps, set a cookie named `debug-token`,
+   > with the secret token value `not-to-be-shared`.
+   >
+   > To enable serving of source maps to e.g. an error logging service, this token can also
+   > be provided in an HTTP header named `x-debug-token` in the source map requests.
+
 4. **The app should now be available on http://localhost:8080**
 
    Use `Google Chrome` to test and debug the client, and `Visual Studio Code` to debug the server.

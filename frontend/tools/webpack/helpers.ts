@@ -13,7 +13,7 @@ export function logTaskInfo(compilerOptions: ICompilerOptions): void
         " Building for" +
         ` environment '${Format.info(compilerOptions.environment.name)}',` +
         ` platform '${Format.info(compilerOptions.environment.platform)}',` +
-        ` locale '${Format.info(compilerOptions.environment.locale)}'...\n`);
+        ` locale '${Format.info(compilerOptions.environment.locale)}'\n`);
 
     // tslint: enable
 }

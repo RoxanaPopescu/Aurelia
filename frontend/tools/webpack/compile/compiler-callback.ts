@@ -1,6 +1,8 @@
+import path from "path";
 import webpack from "webpack";
 import { Format } from "../helpers";
 import { ICompilerOptions } from "./compiler-options";
+import { paths } from "../../paths";
 
 /**
  * Called every time a compilation ends.
@@ -56,7 +58,22 @@ export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpa
     // Log the build status, making sure it appears after any other build messages.
     if (!error && !stats.hasErrors())
     {
-        setTimeout(() => console.info(`${Format.positive("Build succeeded")}`), 0);
+        setTimeout(() =>
+        {
+            if (!compilerOptions.watch)
+            {
+                const bundleArtifactPath = path.join(paths.artifacts.buildFolder, compilerOptions.environment.locale);
+                console.info(`Build artifact saved to:\n${Format.info(bundleArtifactPath)}\n`);
+            }
+
+            if (compilerOptions.analyze)
+            {
+                const bundleAnalysisPath = paths.artifacts.bundleAnalysis.replace("{locale}", compilerOptions.environment.locale);
+                console.info(`Bundle analysis saved to:\n${Format.info(bundleAnalysisPath)}\n`);
+            }
+
+            console.info(`${Format.positive("Build succeeded")}`);
+        }, 0);
     }
     else
     {

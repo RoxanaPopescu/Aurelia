@@ -40,13 +40,13 @@ const compilerOptions: ICompilerOptions =
         debug: true,
         optimize: false,
         obfuscate: false,
-        apiBaseUrl: "/api/",
 
         // Platform-specific configuration.
 
         pushState: true,
         publicPath: "./",
         appBaseUrl: "/",
+        apiBaseUrl: "/api/",
 
         // Environment-specific configuration.
 

@@ -5,8 +5,8 @@ import pkgDir from "pkg-dir";
 import express from "express";
 import compression from "compression";
 import cookieParser from "cookie-parser";
-import settings from "../resources/settings";
 import { environment } from "../env";
+import settings from "../resources/settings";
 
 // The secret debug token, which if present in the `x-debug-token` header,
 // enables serving of otherwise protected content, such as source maps.
@@ -42,7 +42,7 @@ export class App
         // Note that this does not prevent the client from spoofing this information.
         this._app.enable("trust proxy");
 
-        // Configure server plugins.
+        // Configure server middleware.
         this._app.use(compression());
         this._app.use(cookieParser());
 
@@ -51,7 +51,7 @@ export class App
         {
             this._app.get(/^[/]debug$|\.map$/i, (request, response, next) =>
             {
-                if (request.header("x-debug-token") === debugToken)
+                if (request.header("x-debug-token") || request.cookies["debug-token"] === debugToken)
                 {
                     next();
                 }
@@ -66,15 +66,15 @@ export class App
         this._app.get(/^[/]debug$/i, (request, response) =>
         {
             response.json(
+            {
+                "environment": environment.name,
+                "request":
                 {
-                    "environment": environment.name,
-                    "request":
-                    {
-                        "method": request.method,
-                        "url": request.originalUrl,
-                        "headers": request.headers
-                    }
-                });
+                    "method": request.method,
+                    "url": request.originalUrl,
+                    "headers": request.headers
+                }
+            });
         });
 
         // Resolve host settings, set cookies, and rewrite the request.
@@ -134,21 +134,33 @@ export class App
         this._app.use(express.static(clientFolderPath,
         {
             index: false,
-            redirect: false
+            redirect: false,
+
+            // Set the max-age of the response.
+            maxAge: environment.name === "production" ? settings.app.maxAge.artifact * 1000 : 0
         }));
 
         // Serve static assets.
         this._app.use(express.static(staticFolderPath,
         {
             index: false,
-            redirect: false
+            redirect: false,
+
+            // Set the max-age of the response.
+            maxAge: environment.name === "production" ? settings.app.maxAge.static * 1000 : 0
         }));
 
-        // Serve the localized `index.html` for any page request.
+        // Serve the localized `index.html` file for any page request.
         // We ignore requests where the last path segment contains a `.`, as those are for files that do not exist.
         this._app.get(/(^|\/)[^/.]*$/i, (request, response) =>
         {
             const indexFilePath = path.join(clientFolderPath, response.locals.localeCode, "index.html");
+
+            // Set the max-age of the response.
+            if (environment.name === "production")
+            {
+                response.setHeader("cache-control", `public, max-age=${settings.app.maxAge.index}`);
+            }
 
             response.sendFile(indexFilePath);
         });
