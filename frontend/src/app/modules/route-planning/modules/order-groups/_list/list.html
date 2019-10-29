@@ -94,23 +94,33 @@
                     <data-table-headers>
 
                         <data-table-cell DISABLED-name="name" translate>
-                            Name
+                            <span class="text-truncate">
+                                Name
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="consignors" translate>
-                            Consignors
+                            <span class="text-truncate">
+                                Consignors
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="tags" translate>
-                            Tags
+                            <span class="text-truncate">
+                                Tags
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="next-route-planning" translate>
-                            Next route planning
+                            <span class="text-truncate">
+                                Next route planning
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="status" translate>
-                            Status
+                            <span class="text-truncate">
+                                Status
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -123,19 +133,27 @@
                             accent.bind="orderGroup.paused ? 'neutral' : 'positive'">
 
                             <data-table-cell>
-                                ${orderGroup.name}
+                                <span class="text-truncate">
+                                    ${orderGroup.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.allConsignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                <span class="text-truncate">
+                                    ${orderGroup.allConsignors | map: 'primaryName' | list: 'short' : 'unit'}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.allTags | list: 'short' : 'unit'}
+                                <span class="text-truncate">
+                                    ${orderGroup.allTags | list: 'short' : 'unit'}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
