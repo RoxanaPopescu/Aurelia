@@ -34,7 +34,7 @@ html
         user-select: none;
 
         // Prevent pull-to-refresh.
-        overscroll-behavior: none;
+        overscroll-behavior-y: none;
     }
 }
 

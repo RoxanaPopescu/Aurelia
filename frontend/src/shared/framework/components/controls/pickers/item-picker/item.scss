@@ -4,7 +4,10 @@ body
 
     /// The padding of the component.
     --item-picker-surface-item-padding: var(--input-padding);
+}
 
+item
+{
     /// The color of the surface of the component.
     /// TODO: This should be customized for each theme surface.
     --item-picker-surface-item-surface-color: var(--surface-item-picker-surface-item-surface-color);

@@ -57,27 +57,46 @@ export class ScrollCustomAttribute implements IScroll
         // TODO: Why is this needed? It shouldn't be...
         this._element.setAttribute("scroll", "");
 
+        let isScrollingUp: boolean | undefined;
         let timeoutHandle: any;
         let fadeTargets: any[] | undefined;
 
         this._eventManager.addEventListener(this._element, "scroll", () =>
         {
+            // Get the scroll position only once, as it triggers layout.
+            // We need to limit this to 0, as the offset may become negative due to scroll bouncing.
+            const scrollTop = Math.max(this._element.scrollTop, 0);
+            const scrollLeft = Math.max(this._element.scrollLeft, 0);
+
             // Only handle events that represent actual changes in the scroll position.
             // This is needed because the class changes may trigger unexpected scroll events.
-            if (this.position == null ||
-                this._element.scrollTop !== this.position.top ||
-                this._element.scrollLeft !== this.position.left)
+            if (this.position == null || scrollTop !== this.position.top || scrollLeft !== this.position.left)
             {
+                // Is the user scrolling towards the top?
+                const newIsScrollingUp = this.position != null && scrollTop < this.position.top!;
+
+                // Has the scroll direction changed?
+                if (newIsScrollingUp !== isScrollingUp)
+                {
+                    isScrollingUp = newIsScrollingUp;
+
+                    // Set the fade duration and timing function, to ensure smooth fading
+                    // when scrolling down, and minimal flashing when scrolling back up.
+                    this._element.style.setProperty("--fade-duration", isScrollingUp ? `${0}s` : `${0.067}s`);
+                    this._element.style.setProperty("--fade-timing-function", isScrollingUp ? "ease-in" : "ease-out");
+                }
+
                 // Update the bindable scroll position.
                 this.position =
                 {
                     // Preserve any existing scroll options.
                     ...this.position,
 
-                    top: this._element.scrollTop,
-                    left: this._element.scrollLeft
+                    top: scrollTop,
+                    left: scrollLeft
                 };
 
+                // Is this the first scroll event in a sequence?
                 if (timeoutHandle == null)
                 {
                     // Disable hover effects while scrolling.
@@ -93,6 +112,7 @@ export class ScrollCustomAttribute implements IScroll
                 }
                 else
                 {
+                    // Still scrolling, so the ending of the sequence should be rescheduled.
                     clearTimeout(timeoutHandle);
                 }
 
@@ -100,12 +120,17 @@ export class ScrollCustomAttribute implements IScroll
                 for (const fadeTarget of fadeTargets!)
                 {
                     fadeTarget.element.style.opacity =
-                        Math.max(0, 1 - (Math.max(0, this._element.scrollTop) / fadeTarget.height) * fadeTarget.fadeFactor);
+                        Math.max(0, 1 - (Math.max(0, scrollTop) / fadeTarget.height) * fadeTarget.fadeFactor);
                 }
 
+                // Clean up when the sequence ends.
                 timeoutHandle = setTimeout(() =>
                 {
+                    // Clear timeout handle.
                     timeoutHandle = undefined;
+
+                    // Clear the current scroll direction.
+                    isScrollingUp = undefined;
 
                     // Clean up any references to faded elements.
                     fadeTargets = undefined;
@@ -129,6 +154,7 @@ export class ScrollCustomAttribute implements IScroll
      */
     public detached(): void
     {
+        // Remove event listeners.
         this._eventManager.removeEventListeners();
     }
 

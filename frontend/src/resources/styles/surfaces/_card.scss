@@ -360,16 +360,16 @@ $__summary: comment;
         &
         {
             // State: normal
-            --item-picker-surface-item-surface-color: transparent;
-            --item-picker-surface-item-surface-text-color: inherit;
+            --surface-item-picker-surface-item-surface-color: transparent;
+            --surface-item-picker-surface-item-surface-text-color: inherit;
 
             // State: hover
-            --item-picker-surface-item-surface-color--hover: var(--surface-neutral-surface-color);
-            --item-picker-surface-item-surface-text-color--hover: var(--surface-neutral-surface-text-color);
+            --surface-item-picker-surface-item-surface-color--hover: var(--surface-neutral-surface-color);
+            --surface-item-picker-surface-item-surface-text-color--hover: var(--surface-neutral-surface-text-color);
 
             // State: focus
-            --item-picker-surface-item-surface-color--active: var(--surface-primary-surface-color);
-            --item-picker-surface-item-surface-text-color--active: var(--surface-primary-surface-text-color);
+            --surface-item-picker-surface-item-surface-color--active: var(--surface-primary-surface-color);
+            --surface-item-picker-surface-item-surface-text-color--active: var(--surface-primary-surface-text-color);
         }
     }
 
@@ -395,9 +395,9 @@ $__summary: comment;
             --surface-date-picker-surface-item-surface-text-color--active: var(--surface-primary-surface-text-color);
 
             // State: today
-            --surface-date-picker-surface-item-color--today--border: var(--surface-primary-border-color);
-            --surface-date-picker-surface-item-color--today--surface: transparent;
-            --surface-date-picker-surface-item-color--today--surface-text: var(--surface-primary-text-color);
+            --surface-date-picker-surface-item-border-color--today: var(--surface-primary-border-color);
+            --surface-date-picker-surface-item-surface-color--today: transparent;
+            --surface-date-picker-surface-item-surface-text-color--today: var(--surface-primary-text-color);
         }
     }
 }

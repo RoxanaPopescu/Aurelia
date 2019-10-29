@@ -1,12 +1,12 @@
-<template surface="card">
+<template surface="card" class="${active ? '--active' : ''}">
 
     <require from="./card.scss"></require>
 
     <a href.bind="href" target.bind="target" draggable="false">
 
-        <div class="card-edge"></div>
-
         <slot></slot>
+
+        <div class="card-edge"></div>
 
         <slot name="actions"></slot>
 

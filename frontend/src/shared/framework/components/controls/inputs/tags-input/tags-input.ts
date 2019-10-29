@@ -298,6 +298,10 @@ export class TagsInputCustomElement
                 {
                     this.openDropdown(true);
                 }
+                else if (this.filter === "none")
+                {
+                    this.closeDropdown(false);
+                }
             }
         }
 

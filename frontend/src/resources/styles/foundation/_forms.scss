@@ -69,7 +69,7 @@ fieldset
 
 ::placeholder
 {
-    color: var(--surface-subtle-color);
+    color: var(--surface-input-surface-subtle-color);
 }
 
 
@@ -274,7 +274,6 @@ a[appearance]
 }
 
 
-
 // label, select, textarea, input
 // Normalize styling across browsers.
 // ----------------------------------------------------------------------------------------------------
@@ -287,8 +286,14 @@ input
     font: inherit;
 }
 
+
+// TODO: This should be removed as soon as possible.
+// Styles targeting native element.
+// ====================================================================================================
+
 .use-form-styles
 {
+
     // input (checkbox)
     // Checkbox supporting the checked, unchecked and indeterminate state.
     // ----------------------------------------------------------------------------------------------------
@@ -384,6 +389,7 @@ input
         }
     }
 
+
     // input (radio)
     // Radio button supporting the checked and unchecked state.
     // ----------------------------------------------------------------------------------------------------
@@ -465,6 +471,7 @@ input
             margin-right: var(--size-inline-spacing);
         }
     }
+
 
     // label
     // Label which should be used to wrap any inputs that need a description.
@@ -596,4 +603,5 @@ input
         );
         /* stylelint-enable */
     }
+
 }

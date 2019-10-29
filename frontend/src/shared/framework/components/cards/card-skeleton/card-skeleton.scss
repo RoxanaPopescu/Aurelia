@@ -4,6 +4,13 @@ card-skeleton
 {
     display: block;
 
+    // Darken the skeleton slightly, so its perceived
+    // brightness is closer to that of a card.
+    filter: brightness(99.75%);
+
+    // Apply the card skeleton opacity, or default to 1.
+    opacity: var(--card-skeleton-opacity, 1);
+
     // Apply the card size set by the layout.
     width: var(--card-width);
     min-height: var(--card-height);

@@ -4,14 +4,17 @@ body
 {
     /// The min-height of the component.
     --toggle-height: 2em;
+}
 
+.toggle
+{
     /// The color of the indicator on the surface of the component.
     /// TODO: This should be customized for each theme surface.
     --toggle-surface-indicator-color: var(--surface-toggle-surface-indicator-color);
     --toggle-surface-indicator-color--hover: var(--surface-toggle-surface-indicator-color--hover);
     --toggle-surface-indicator-color--focus: var(--surface-toggle-surface-indicator-color--focus);
     --toggle-surface-indicator-color--active: var(--surface-toggle-surface-indicator-color--active);
-    --toggle-surface-indicator-color--invalid: var(--surface-toggle-color--invalid--surface-indicator);
+    --toggle-surface-indicator-color--invalid: var(--surface-toggle-surface-indicator-color--invalid);
 }
 
 .toggle
@@ -210,5 +213,43 @@ body
         margin: 0;
         opacity: 0;
         cursor: inherit;
+    }
+}
+
+check-toggle,
+redio-toggle
+{
+    &[label="before"]
+    {
+        icon svg
+        {
+            // The icon does not fill its viewbox, so to ensure the right edge
+            // edge aligns with other controls, we translate the icon right.
+            transform: translateX(0.75rem);
+        }
+
+        &[label="before"] > .toggle-label
+        {
+            // Apply reduced spacing between the label and the control,
+            // to compensate for the translation of the icon.
+            padding-left: calc(var(--size-inline-spacing) - 0.75rem);
+        }
+    }
+
+    &[label="after"]
+    {
+        icon svg
+        {
+            // The icon does not fill its viewbox, so to ensure the left edge
+            // edge aligns with other controls, we translate the icon left.
+            transform: translateX(-0.75rem);
+        }
+
+        &[label="before"] > .toggle-label
+        {
+            // Apply reduced spacing between the label and the control,
+            // to compensate for the translation of the icon.
+            padding-right: calc(var(--size-inline-spacing) - 0.75rem);
+        }
     }
 }

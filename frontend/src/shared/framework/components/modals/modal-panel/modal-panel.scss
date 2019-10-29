@@ -2,8 +2,22 @@
 
 modal-panel
 {
-    // Allow content to be positioned relative to this element.
-    position: relative;
+    // Position the panel, and allow content to be positioned relative to this element.
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &.--left
+    {
+        // Position on the right side of the viewport.
+        left: 0;
+    }
+
+    &.--right
+    {
+        // Position on the right side of the viewport.
+        right: 0;
+    }
 
     // Apply the z-index for modals.
     z-index: var(--z-index-modal);
@@ -41,9 +55,6 @@ modal-panel
         display: flex;
         flex-direction: column;
 
-        // Apply padding.
-        padding: 9rem 12rem 9rem var(--modal-panel-actions-width);
-
         // Provide defaults for sectioning elements.
 
         modal-header,
@@ -67,6 +78,18 @@ modal-panel
         }
     }
 
+    &.--left .modal-panel-content
+    {
+        // Apply padding, making room for the actions.
+        padding: 9rem 12rem 9rem var(--modal-panel-actions-width);
+    }
+
+    &.--right .modal-panel-content
+    {
+        // Apply padding, making room for the actions.
+        padding: 9rem var(--modal-panel-actions-width) 9rem 12rem;
+    }
+
     .modal-panel-actions
     {
         // Keep the actions in place when panel is scrolled.
@@ -87,10 +110,11 @@ modal-panel
         // Apply padding.
         padding: 7.5rem 5rem;
 
-        > *
+        > *,
+        > [slot="actions"] > *
         {
             // Provide default item spacing.
-            margin-bottom: 4rem;
+            margin-bottom: 4.5rem;
         }
 
         button[appearance="icon"]
@@ -99,23 +123,44 @@ modal-panel
             font-size: 6rem;
         }
     }
+
+    &.--left .modal-panel-actions
+    {
+        // Position on the right side of the panel.
+        float: left;
+    }
+
+    &.--right .modal-panel-actions
+    {
+        // Position on the right side of the panel.
+        float: right;
+    }
 }
 
 // Animate the panel.
 
 modal-panel
 {
-    // The transform to apply to the panel before it enters and after it leaves.
-    --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
+    &.--left
+    {
+        // The transform to apply to the panel before it enters and after it leaves.
+        --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
+    }
 
-    // Hint that animation will be applied.
-    will-change: opacity, transform, filter;
+    &.--right
+    {
+        // The transform to apply to the panel before it enters and after it leaves.
+        --modal-panel-origin-transform: translateX(calc(+100% + var(--size-app-sidebar-width) * 0.5));
+    }
 
     modal-view compose.au-enter &
     {
         transform: var(--modal-panel-origin-transform);
         opacity: 0;
         overflow: hidden;
+
+        // Hint that animation will be applied.
+        will-change: opacity, transform, filter;
     }
 
     modal-view compose.au-enter-active &
@@ -136,6 +181,9 @@ modal-panel
     {
         // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
         box-shadow: var(--modal-panel-afterglow);
+
+        // Hint that animation will be applied.
+        will-change: opacity, transform, filter;
     }
 
     modal-view compose.au-leave-active &

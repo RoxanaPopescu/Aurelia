@@ -25,7 +25,10 @@ body
 
     /// The radius of the border of the component.
     --input-border-radius: var(--border-radius-medium);
+}
 
+.input
+{
     /// The color of the border of the component.
     /// TODO: This should be customized for each theme surface.
     --input-border-color: var(--surface-input-border-color);
@@ -79,12 +82,18 @@ body
             display: block;
 
             // Apply spacing between the label and the control.
-            margin-bottom: var(--font-current-margin-bottom);
+            margin-bottom: calc(var(--font-current-margin-bottom) - var(--font-small-margin-top));
+
+            .input-heading > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-bottom: var(--font-small-margin-top);
+            }
 
             .input-description > *
             {
                 // Apply spacing between the heading and the description.
-                margin-top: var(--font-current-margin-top);
+                margin-bottom: var(--font-small-margin-top);
             }
         }
     }
@@ -277,7 +286,14 @@ body
                 // Ignore pointer events.
                 pointer-events: none;
 
-                > span
+                [slot="placeholder"]
+                {
+                    // Allow the element, which is a flex child, to shrink to less than
+                    // the width of its children, thus enabling text truncation.
+                    min-width: 0;
+                }
+
+                span[slot="placeholder"]
                 {
                     // Truncate text content with an ellipsis.
                     display: block;
@@ -353,7 +369,7 @@ body
 
             &:not(.--empty) > .input-control > .input-control-inner
             {
-                // Apply the color for the invalid state only if the input is not empty.
+                // Apply the text color for the invalid state only if the input is not empty.
                 color: var(--input-surface-text-color--invalid);
             }
         }

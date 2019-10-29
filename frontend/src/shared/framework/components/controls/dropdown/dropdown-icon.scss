@@ -1,3 +1,9 @@
+:root
+{
+    // The size of the dropdown icon.
+    --dropdown-icon-size: 1.286em;
+}
+
 dropdown-icon
 {
     // Use flex layout.
@@ -11,7 +17,7 @@ dropdown-icon
     line-height: 1;
 
     // Set the size of the icon, in proportion to the text.
-    font-size: 1.286em;
+    font-size: var(--dropdown-icon-size);
 
     // Apply opacity to de-emphasize the icon.
     opacity: var(--opacity-faded);

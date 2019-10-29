@@ -127,7 +127,7 @@ export class TimeInputCustomElement
 
         if (value)
         {
-            const [hour, minute] = value.split(":").map(s => parseInt(s));
+            const [hour = 0, minute = 0] = value.split(":", 2).map(s => s ? parseInt(s) : 0);
 
             // Try to parse the value.
             try
@@ -137,7 +137,11 @@ export class TimeInputCustomElement
                     throw new Error("Invalid time of day.");
                 }
 
-                const duration = Duration.fromObject({ hour, minute });
+                let duration = Duration.fromObject({ hour, minute });
+
+                // If the input value is an exact match for one of the items, use the item.
+                // This is needed to ensure the item is highlighted in the item-picker.
+                duration = timeItems.find(d => d.valueOf() === duration.valueOf()) || duration;
 
                 // Update the focused value.
                 this.focusedValue = duration;

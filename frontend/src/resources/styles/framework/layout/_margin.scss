@@ -2,11 +2,20 @@
 /// @group framework/modifiers/margin
 ////
 
-/// Modifier classes that apply standard margins.
+/// Modifier classes for applying margin.
 $__summary: comment;
 
 @import "resources/index";
 
+.margin-left
+{
+    margin-left: var(--size-inline-spacing-large);
+}
+
+.margin-right
+{
+    margin-right: var(--size-inline-spacing-large);
+}
 
 /// Modifier class that applies the largest margin.
 .margin-largest

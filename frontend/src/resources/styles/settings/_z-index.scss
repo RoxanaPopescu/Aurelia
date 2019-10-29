@@ -9,17 +9,17 @@ $__summary: comment;
 
 :root
 {
-    /// The z-index used for tooltips.
-    --z-index-tooltip: 700;
-
-    /// The z-index used for popovers.
-    --z-index-popover: 600;
-
     /// The z-index used for modals.
-    --z-index-modal: 500;
+    --z-index-modal: 700;
 
     /// The z-index used for the backdrop of modals.
-    --z-index-backdrop: 400;
+    --z-index-backdrop: 600;
+
+    /// The z-index used for tooltips.
+    --z-index-tooltip: 500;
+
+    /// The z-index used for popovers.
+    --z-index-popover: 400;
 
     /// The z-index used for dropdown panels.
     --z-index-dropdown: 300;

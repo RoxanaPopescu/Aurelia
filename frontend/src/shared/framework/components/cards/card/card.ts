@@ -19,4 +19,10 @@ export class CardCustomElement
      */
     @bindable({ defaultValue: "_self" })
     public target: "_blank" | "_parent" | "_self" | "_top";
+
+    /**
+     * True if the card is active, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public active: boolean;
 }

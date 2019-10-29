@@ -11,7 +11,10 @@ body
 
     /// The radius of the border of the component.
     --tag-border-radius: var(--border-radius-small);
+}
 
+tag
+{
     /// The color of the border of the component.
     /// TODO: This should be customized for each theme surface.
     --tag-border-color: var(--surface-input-surface-tag-border-color);

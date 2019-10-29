@@ -9,86 +9,90 @@ $__summary: comment;
 @import "resources/index";
 
 
-@mixin font($variant)
+/// Defines a font class and custom property the specified font.
+/// @param {string} $name The name of the font.
+@mixin define-font($variant)
 {
-    line-height: var(--font-#{$variant}-line-height);
-    font-size: var(--font-#{$variant}-font-size);
-    font-weight: var(--font-#{$variant}-font-weight);
-
-    // Define the current text margins.
-    --font-current-margin-top: var(--font-#{$variant}-margin-top);
-    --font-current-margin-bottom: var(--font-#{$variant}-margin-bottom);
-
-    .margin-within &
+    .font-#{$variant}
     {
-        margin-top: var(--font-current-margin-top);
-        margin-bottom: var(--font-current-margin-bottom);
+        line-height: var(--font-#{$variant}-line-height);
+        font-size: var(--font-#{$variant}-font-size);
+        font-weight: var(--font-#{$variant}-font-weight);
+
+        @content;
+
+        // Define the current text margins.
+        --font-current-margin-top: var(--font-#{$variant}-margin-top);
+        --font-current-margin-bottom: var(--font-#{$variant}-margin-bottom);
+
+        .margin-within &
+        {
+            margin-top: var(--font-current-margin-top);
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+
+    body
+    {
+        --font-#{$variant}:
+            var(--font-#{$variant}-font-weight)
+            var(--font-#{$variant}-font-size) /
+            var(--font-#{$variant}-line-height)
+            var(--font-family-sans-serif);
     }
 }
 
 /// Text style for the title of a view.
 /// Use for extra large titles, such as the title of the dashboard overlay.
-.font-title
-{
-    @include font("title");
-}
+@include define-font("title");
 
 /// Text style for the largest headings.
 /// Use for primary headings, such as the title of the page.
-.font-largest
-{
-    @include font("largest");
-}
+@include define-font("largest");
 
 /// Text style for the larger headings.
 /// Use for secondary headings, such as the subtitle of the page and section headings.
-.font-larger
-{
-    @include font("larger");
-}
+@include define-font("larger");
 
 /// Text style for the large headings.
 /// Use for tertiary headings, such as subsection and collection headings.
-.font-large
-{
-    @include font("large");
-}
+@include define-font("large");
 
 /// Text style for the base text.
 /// Use to restore the text style to match the base document style.
-.font-base
-{
-    @include font("base");
-}
+@include define-font("base");
 
 /// Text style for small text.
 /// Use for e.g. input labels, validation messages, and helpful notes.
-.font-small
-{
-    @include font("small");
-}
+@include define-font("small");
 
 /// Text style for large headings.
 /// Use for headings above sections that present data.
-.font-heading-large
+@include define-font("heading-large")
 {
-    @include font("heading-large");
     color: var(--surface-heading-color);
 }
 
-  /// Text style for headings.
-  /// Use for headings above sections that present data.
-.font-heading
+/// Text style for headings.
+/// Use for headings above sections that present data.
+@include define-font("heading")
 {
-    @include font("heading");
     color: var(--surface-heading-color);
 }
 
 /// Text style for code, identifiers, or similar monospaced text.
 /// Note that whitespace preservation must be enabled separately,
 /// and that the font size should be set on an ancestor element.
+
 .font-monospaced
 {
     font-size: var(--font-monospaced-font-size);
     font-family: var(--font-family-monospaced);
+}
+
+body
+{
+    --font-monospaced:
+        var(--font-monospaced-font-size)
+        var(--font-family-monospaced);
 }

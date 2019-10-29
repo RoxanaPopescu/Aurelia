@@ -8,7 +8,7 @@ $__summary: comment;
 @import "resources/index";
 
 
-/// Modifier class that fades the element to make it appear slightly de-emphasized.
+/// Modifier class that fades the element to make it appear less de-emphasized.
 .opacity-faded-less
 {
     opacity: var(--opacity-faded-less);
@@ -20,13 +20,13 @@ $__summary: comment;
     opacity: var(--opacity-faded);
 }
 
-/// Modifier class that fades the element to make it appear significantly de-emphasized.
+/// Modifier class that fades the element to make it appear more de-emphasized.
 .opacity-faded-more
 {
     opacity: var(--opacity-faded-more);
 }
 
-/// Modifier class that fades the element to make it appear as just barely visible.
+/// Modifier class that fades the element to make it appear as barely visible.
 .opacity-faded-most
 {
     opacity: var(--opacity-faded-most);

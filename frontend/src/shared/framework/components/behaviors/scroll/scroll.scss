@@ -5,9 +5,18 @@
     overflow-y: overlay;
     overflow-x: hidden;
 
+    // The duration to use for opacity transitions.
+    // This will be set programatically, depending on the scroll direction.
+    --fade-duration: 0.68;
+
+    // The timing function to use for opacity transitions.
+    // This will be set programatically, depending on the scroll direction.
+    --fade-timing-function: ease-out;
+
     [scroll-fade]
     {
-        transition: opacity 0.1s;
+        transition: opacity var(--fade-duration);
+        transition-timing-function: var(--fade-timing-function);
     }
 
     // Enable momentum-based scrolling.

@@ -18,10 +18,16 @@ date-input
         }
     }
 
-    > text-input > .input-control > .input-control-inner .input-input.--readonly,
+    &:not(.--open) > text-input
     {
         // Use cursor to indicate the element is clickable, when not accepting text input.
         cursor: pointer;
+
+        > .input-control > .input-control-inner
+        {
+            // Disable pointer events to prevent unwanted text selection on double click.
+            pointer-events: none;
+        }
     }
 
     dropdown

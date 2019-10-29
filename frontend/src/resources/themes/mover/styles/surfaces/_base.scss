@@ -8,7 +8,8 @@ $__summary: comment;
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
-[surface="base"]
+[surface="base"],
+[surface$="/base"]
 {
     --surface-heading-color: var(--palette-color-neutral-dark);
 

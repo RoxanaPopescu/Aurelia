@@ -46,6 +46,12 @@ export class ModalPanelCustomElement
     public closeButton: boolean;
 
     /**
+     * The position of the panel relative to the viewport.
+     */
+    @bindable({ defaultValue: "left" })
+    public position: "left" | "right";
+
+    /**
      * True to close when the `Escape` key is pressed, otherwise false.
      */
     @bindable({ defaultValue: true })

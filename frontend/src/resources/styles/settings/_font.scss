@@ -213,19 +213,37 @@ $__summary: comment;
 
     &
     {
+        /// The line height of the heading text.
         --font-heading-line-height: 4rem;
+
+        /// The font size of the heading text.
         --font-heading-font-size: 3rem;
+
+        /// The margin above the heading text.
         --font-heading-margin-top: 2rem;
+
+        /// The margin below the heading text.
         --font-heading-margin-bottom: 2rem;
+
+        /// The font weight of the heading text.
         --font-heading-font-weight: 500;
     }
 
     &
     {
+        /// The line height of the large heading text.
         --font-heading-large-line-height: 4rem;
+
+        /// The font size of the large heading text.
         --font-heading-large-font-size: 4rem;
+
+        /// The margin above the large heading text.
         --font-heading-large-margin-top: 2rem;
+
+        /// The margin below the large heading text.
         --font-heading-large-margin-bottom: 2rem;
+
+        /// The font weight of the large heading text.
         --font-heading-large-font-weight: 500;
     }
 }

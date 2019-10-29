@@ -16,6 +16,18 @@ card
     {
         // Ensure the accent only affects the edge, and not the content.
         color: inherit;
+
+        &:not([accent="none"])
+        {
+            padding-left: var(--border-width-thick);
+
+            > a
+            {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-left-width: 0;
+            }
+        }
     }
 
     // Add accent color support.
@@ -28,12 +40,25 @@ card
         }
     }
 
+    // Add support for the 'none' accent.
+    &[accent="none"] > a > .card-edge
+    {
+        // Apply transparent background color.
+        background: transparent;
+    }
+
+    &.--active > a
+    {
+        background: var(--surface-color--active);
+        border-color: var(--border-color--active);
+    }
+
     &.--non-clickable > a
     {
         cursor: default;
     }
 
-    &:not(.--non-clickable) > a
+    &:not(.--active):not(.--non-clickable) > a
     {
         &:hover
         {
@@ -72,6 +97,12 @@ card
         background: var(--surface-color);
         color: var(--surface-text-color);
 
+        // Animate color changes.
+        transition:
+            background-color var(--animation-duration-medium),
+            border-color var(--animation-duration-medium),
+            color var(--animation-duration-medium);
+
         > .card-edge
         {
             // Position along the left edge of the card.
@@ -86,6 +117,9 @@ card
             // Set the border radius to match that of the card.
             border-top-left-radius: var(--border-radius-medium);
             border-bottom-left-radius: var(--border-radius-medium);
+
+            // Animate color changes.
+            transition: background-color var(--animation-duration-short);
         }
 
         > footer
@@ -102,6 +136,9 @@ card
             right: 3rem;
             bottom: 3rem;
 
+            // Disable pointer events so the container does not block clicks.
+            pointer-events: none;
+
             icon
             {
                 // Set the icon size.
@@ -110,6 +147,9 @@ card
 
             > *,
             {
+                // Enable pointer events for each action.
+                pointer-events: all;
+
                 // Provide vertical layout for items.
                 display: block;
                 margin-bottom: 2rem;
@@ -117,36 +157,26 @@ card
                 // Fade the items so they are barely visible.
                 opacity: var(--opacity-faded-more);
 
-                &, icon
-                {
-                    // Apply surface style.
-                    color: var(--surface-neutral-icon-color);
-                }
+                // Apply surface style.
+                color: var(--surface-neutral-icon-color);
 
                 &:hover,
                 body.focus-visible &:focus
                 {
-                    // Highlight when hovered.
+                    // Highlight when hovered or focused.
                     opacity: var(--opacity-faded-more);
 
-                    &, icon
-                    {
-                        // Apply surface style.
-                        color: var(--surface-icon-color--hover);
-                    }
+                    // Apply surface style.
+                    color: var(--surface-icon-color--hover);
                 }
 
                 &.--active
                 {
                     // Highlight when active.
-
                     opacity: var(--opacity-faded-less);
 
-                    &, icon
-                    {
-                        // Apply surface style.
-                        color: var(--surface-icon-color--active);
-                    }
+                    // Apply surface style.
+                    color: var(--surface-icon-color--active);
                 }
             }
         }

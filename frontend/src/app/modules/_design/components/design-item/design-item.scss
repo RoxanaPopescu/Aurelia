@@ -12,12 +12,12 @@ design-item
         margin-bottom: 3rem;
     }
 
-    .app-modules-design-content [surface="base"] &
+    .app-modules-design-content [surface$="/base"] &
     {
         border-color: var(--border-color, var(--surface-separator-color));
     }
 
-    .app-modules-design-content [surface="card"] &
+    .app-modules-design-content [surface$="/card"] &
     {
         &:hover
         {
