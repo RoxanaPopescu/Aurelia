@@ -102,7 +102,7 @@ export class HistoryHelper
 
     /**
      * The current history state.
-     * Note that this will be undefined until the initial navigation succedes.
+     * Note that this will be undefined until the initial navigation succeedes.
      */
     @computedFrom("_state")
     public get state(): IHistoryState

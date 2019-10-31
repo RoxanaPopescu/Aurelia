@@ -25,5 +25,9 @@ $__summary: comment;
         // State: focus
         --surface-input-border-color--focus: var(--palette-color-neutral);
         --surface-input-surface-color--focus: var(--palette-color-whitepoint);
+
+        // State: invalid
+        --surface-input-border-color--invalid: var(--palette-color-neutral);
+        --surface-input-surface-color--invalid: var(--palette-color-whitepoint);
     }
 }

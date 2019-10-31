@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="users"] page[name="list"]
+{
+    data-table
+    {
+        --data-table-columns: 1fr 1fr 1fr 0.5fr;
+    }
+}

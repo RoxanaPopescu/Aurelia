@@ -1,0 +1,18 @@
+.role-item-details
+{
+    tag
+    {
+        min-width: 60rem;
+    }
+}
+
+.role-item-name-input
+{
+    margin: -3.25rem;
+    min-width: 80rem;
+
+    &.--invalid
+    {
+        margin-top: -2.5rem;
+    }
+}

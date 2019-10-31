@@ -25,6 +25,11 @@
     {
         --data-table-row-edge-color: var(--palette-color-neutral);
     }
+
+    &.--clickable
+    {
+        cursor: pointer;
+    }
 }
 
 data-table[appearance="rows"]
@@ -36,7 +41,7 @@ data-table[appearance="rows"]
             position: relative;
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-child:before
+            &:first-of-type:before
             {
                 content: "";
                 position: absolute;
@@ -45,7 +50,7 @@ data-table[appearance="rows"]
                 bottom: 0;
             }
 
-            &:first-child:before,
+            &:first-of-type:before,
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
             }
@@ -89,7 +94,7 @@ data-table[appearance="cards"]
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
             border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-child:before
+            &:first-of-type:before
             {
                 content: "";
                 position: absolute;
@@ -98,15 +103,15 @@ data-table[appearance="cards"]
                 bottom: calc(-1 * var(--data-table-row-border-width));
             }
 
-            &:first-child,
-            &:first-child:before,
+            &:first-of-type,
+            &:first-of-type:before,
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
                 border-top-left-radius: var(--data-table-row-border-radius);
                 border-bottom-left-radius: var(--data-table-row-border-radius);
             }
 
-            &:last-child
+            &:last-of-type
             {
                 border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
                 border-top-right-radius: var(--data-table-row-border-radius);

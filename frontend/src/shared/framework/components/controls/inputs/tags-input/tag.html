@@ -4,6 +4,8 @@
 
     <slot></slot>
 
-    <icon name="md-clear" click.trigger="onRemoveMouseDown()"></icon>
+    <div if.bind="remove || tagsInput" class="tag-remove">
+        <icon name="md-clear" click.trigger="onRemoveMouseDown()"></icon>
+    </div>
 
 </template>

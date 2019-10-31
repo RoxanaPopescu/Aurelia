@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, Container } from "aurelia-framework";
 import { TagsInputCustomElement } from "./tags-input";
 
 /**
@@ -9,14 +9,20 @@ export class TagCustomElement
 {
     /**
      * Creates a new instance of the class.
-     * @param element The element representing the component.
+     * @param container The `Container` instance associated with the component.
      */
-    public constructor(tagsInput: TagsInputCustomElement)
+    public constructor(container: Container)
     {
-        this._tagsInput = tagsInput;
+        if (container.hasResolver(TagsInputCustomElement, true))
+        {
+            this.tagsInput = container.get(TagsInputCustomElement);
+        }
     }
 
-    private readonly _tagsInput: TagsInputCustomElement | undefined;
+    /**
+     * The `tags-input` associated with the tag, if any.
+     */
+    protected readonly tagsInput: TagsInputCustomElement | undefined;
 
     /**
      * The value associated with the element.
@@ -26,12 +32,26 @@ export class TagCustomElement
 
     /**
      * Called when the remove icon is clicked.
+     */
+    @bindable
+    public remove: () => void;
+
+    /**
+     * Called when the remove icon is clicked.
      * Removes the tag from the input value.
      * @returns False to prevent default.
      */
     protected onRemoveMouseDown(): boolean
     {
-        this._tagsInput!.deselectItem(this.model);
+        if (this.remove != null)
+        {
+            this.remove();
+        }
+
+        if (this.tagsInput != null)
+        {
+            this.tagsInput.deselectItem(this.model);
+        }
 
         return false;
     }

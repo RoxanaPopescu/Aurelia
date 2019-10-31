@@ -1,0 +1,109 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Users
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="solid" accent="neutral" page-href="path: /users/create" translate>
+                        New user
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-type="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="username" translate>
+                            Username
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-type="role" translate>
+                            Role
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-type="status" translate>
+                            Status
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="user of users">
+
+                        <data-table-row href="users/details/${user.id}" accent.bind="user.status.accent">
+
+                            <data-table-cell>
+                                ${user.firstName} ${user.lastName}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${user.username}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${user.role.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${user.status.name}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="users == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="users.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+                <!--
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="users.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="userCount">
+                    </data-table-pager>
+
+                </div>
+                -->
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

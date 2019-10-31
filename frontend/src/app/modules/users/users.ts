@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
+import routeTitles from "./resources/strings/route-titles.json";
 
 /**
  * Represents the module.
@@ -24,26 +25,33 @@ export class UsersModule
             {
                 name: "list",
                 route: "management/users",
-                moduleId: PLATFORM.moduleName("./modules/users/users"),
-                title: "Users"
+                moduleId: ENVIRONMENT.name === "development" ?
+                    PLATFORM.moduleName("./modules/_list/list") :
+                    PLATFORM.moduleName("./modules/users/users"),
+                title: routeTitles.list,
+                nav: false
             },
             {
                 name: "roles",
                 route: "management/roles",
-                moduleId: PLATFORM.moduleName("./modules/roles/roles"),
-                title: "Roles"
+                moduleId: ENVIRONMENT.name === "development" ?
+                    PLATFORM.moduleName("./modules/_roles/roles") :
+                    PLATFORM.moduleName("./modules/roles/roles"),
+                title: routeTitles.roles,
+                nav: true,
+                icon: "roles"
             },
             {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
-                title: "Details"
+                title: routeTitles.details
             },
             {
                 name: "create",
                 route: "create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
-                title: "Create"
+                title: routeTitles.create
             }
         ]);
     }

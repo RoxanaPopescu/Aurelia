@@ -39,13 +39,15 @@ tag
     display: flex;
     align-items: center;
 
-    // Apply margin between tags.
-
-    margin-top: 1rem;
-
-    &:not(:last-child)
+    // Apply margin between tags, if placed within a tag-input.
+    tags-input &
     {
-        margin-right: 1rem;
+        margin-top: 1rem;
+
+        &:not(:last-child)
+        {
+            margin-right: 1rem;
+        }
     }
 
     // Apply padding.
@@ -64,6 +66,16 @@ tag
     border-color: var(--tag-border-color);
     background: var(--tag-surface-color);
     color: var(--tag-surface-text-color);
+
+    .tag-remove
+    {
+        // Use Horizontal flex layout.
+        display: flex;
+        align-items: center;
+
+        // Push to the right.
+        margin-left: auto;
+    }
 
     icon
     {

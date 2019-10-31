@@ -71,6 +71,13 @@ export class DataTableRowCustomElement
     public selectable: boolean;
 
     /**
+     * False to explicitly make the row non-clickable, true to explicitly make it clickable,
+     * and undefined to infer clickability based on the existence of a `href` or `onClick` value.
+     */
+    @bindable({ defaultValue: undefined })
+    public clickable: boolean | undefined;
+
+    /**
      * Called by the framework when the component is attached.
      */
     public attached(): void
@@ -148,12 +155,12 @@ export class DataTableRowCustomElement
     }
 
     /**
-     * Called when the selected state of the row is toggled.
-     * @param event The event that caused the toggle.
+     * Called when the row is clicked.
+     * @param event The click event.
      */
     protected onClick(event: MouseEvent): void
     {
-        if (!event.defaultPrevented && this.click)
+        if (this.clickable !== false && !event.defaultPrevented && !(event as any).__ignoreRowClick && this.click)
         {
             this.click({ event });
         }

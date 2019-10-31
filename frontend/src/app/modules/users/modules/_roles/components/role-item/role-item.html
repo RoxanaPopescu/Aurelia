@@ -1,0 +1,96 @@
+<template>
+
+    <require from="./role-item.scss"></require>
+
+    <data-table-row click.call="onItemClick()" clickable.bind="!expanded || !edit" selected.bind="expanded" accent.bind="expanded ? 'neutral' : undefined" validation validation.ref="validation">
+
+        <data-table-cell>
+
+            <template if.bind="!edit">
+
+                ${roleInfo.name || role.name}
+
+            </template>
+
+            <template if.bind="edit" class="button-row">
+
+                <text-input value.bind="editModel.name" class="role-item-name-input" autofocus>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="editModel.name">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </template>
+
+        </data-table-cell>
+
+        <data-table-cell align="right">
+
+            <div class="link-row">
+
+                <template if.bind="!edit">
+
+                    <a click.trigger="onEditClick()" translate>
+                        Edit
+                    </a>
+
+                </template>
+
+                <template if.bind="edit" class="button-row">
+
+                    <a click.trigger="onSaveClick()" translate>
+                        Save
+                    </a>
+
+                    <a click.trigger="onCancelClick()"translate>
+                        Cancel
+                    </a>
+
+                </template>
+
+            </div>
+
+        </data-table-cell>
+
+        <data-table-details if.bind="expanded && role" accent="neutral" class="role-item-details">
+
+            <tags-input
+                label="above"
+                filter="auto"
+                fixed.bind="true"
+                readonly.bind="!edit"
+                value.bind="editModel.claimGroups">
+
+                <div slot="description" translate>
+                    Functions
+                </div>
+
+                <div slot="value">
+
+                    <tag repeat.for="claimGroup of editModel.claimGroups" model.bind="claimGroup">
+                        <span class="text-truncate">
+                            ${claimGroup.name}
+                        </span>
+                    </tag>
+
+                </div>
+
+                <item repeat.for="claimGroup of filteredAvailableClaimGroups" model.bind="claimGroup">
+                    <span class="text-truncate">
+                        ${claimGroup.name}
+                    </span>
+                </item>
+
+            </tags-input>
+
+        </data-table-details>
+
+    </data-table-row>
+
+</template>

@@ -5,7 +5,7 @@ import { Route } from "shared/src/model/logistics/routes/tracking";
 import { RouteCriticality, RouteStatus } from "shared/src/model/logistics/routes";
 import { routeFlagService } from "./routeFlagService";
 
-const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] = 
+const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
   ["requested", "accepted", "assigned", "started", "completed", "cancelled"];
 
 /**
@@ -27,7 +27,7 @@ export class RoutesService {
   /* tslint:disable-next-line: no-any */
   private pollTimeout: any;
   private pollSession = 0;
-  
+
   @observable
   public _routes: Route[] | undefined;
 
@@ -75,7 +75,7 @@ export class RoutesService {
    */
   @observable
   public selectedRouteStopId: string | undefined;
-  
+
   /**
    * The routes being tracked.
    * Note that this array will be replaced after each poll.
@@ -106,7 +106,7 @@ export class RoutesService {
       // Sort by slug.
       if (b.slug < a.slug) { return -1; }
       if (b.slug > a.slug) { return 1; }
-      
+
       return 0;
     }) : undefined;
   }
@@ -141,7 +141,7 @@ export class RoutesService {
 
   /**
    * Starts polling for route data.
-   * @returns A promise that will be resolved when the initial request succedes.
+   * @returns A promise that will be resolved when the initial request succeedes.
    */
   public async startPolling(): Promise<void> {
     const restart = this.polling;
@@ -163,10 +163,10 @@ export class RoutesService {
     this.polling = false;
     this.pollSession++;
   }
-  
+
   /**
    * Fetches the tracked routes, then schedules the next poll.
-   * @returns A promise that will be resolved when the poll succedes.
+   * @returns A promise that will be resolved when the poll succeedes.
    */
   private async poll(): Promise<void> {
     clearTimeout(this.pollTimeout);
@@ -192,7 +192,7 @@ export class RoutesService {
 
             if (this.selectedRouteId != null) {
               const selectedRoute = this._routes.find(r => r.id === this.selectedRouteId);
-              
+
               if (selectedRoute != null) {
                 this.selectedRoute = selectedRoute;
               }
@@ -224,7 +224,7 @@ export class RoutesService {
     const isDemo = location.hash === "#demo";
 
     let routes: Route[];
-    
+
     if (isDemo) {
       routes = this.fetchDemo();
     } else {
@@ -240,9 +240,9 @@ export class RoutesService {
       }
 
       const data = await response.json();
-      
+
       routes = [];
-      
+
       for (let route of data) {
         try {
           routes.push(new Route(route));
@@ -278,7 +278,7 @@ export class RoutesService {
   private fetchDemo(): Route[] {
     const second = new Date().getSeconds();
     const offset = (second % 10) / 50;
-    
+
     const data = require("../_routesMockData.json");
     const result: Route[] = [];
     let lat = data[0].driverPosition.latitude;
@@ -314,7 +314,7 @@ export class RoutesService {
 
       }
     }
-    
+
     return result.filter(r =>
       this.filter.criticality == null ||
       this.filter.criticality.includes(r.criticality.slug));

@@ -38,7 +38,7 @@ export class RouteDetailsService {
    * @param routeSlug The slug identifying the route for which details should be fetched,
    * or undefined to resume polling using the most recent route route slug.
    * @param waitTime The time in milliseconds to wait before polling starts.
-   * @returns A promise that will be resolved when the initial request succedes.
+   * @returns A promise that will be resolved when the initial request succeedes.
    */
   public async startPolling(
     routeSlug?: string,
@@ -79,7 +79,7 @@ export class RouteDetailsService {
   /**
    * Fetches the details for the specified route, then schedules the next poll.
    * @param routeSlug The slug identifying the route for which details should be fetched.
-   * @returns A promise that will be resolved when the poll succedes.
+   * @returns A promise that will be resolved when the poll succeedes.
    */
   private async poll(routeSlug: string, initial: boolean): Promise<void> {
     const isDemo = location.hash === "#demo";

@@ -50,21 +50,8 @@ tags-input
 
     &.--readonly > text-input > .input-control > .input-control-inner
     {
-        width: 0 !important;
-        min-width: 0 !important;
-
-        input
-        {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            width: 0 !important;
-            min-width: 0 !important;
-        }
-
-        .input-placeholder
-        {
-            display: none !important;
-        }
+        visibility: hidden;
+        height: 1rem;
     }
 
     &.--readonly > text-input > .input-control
@@ -72,6 +59,11 @@ tags-input
         dropdown-icon
         {
             display: none !important;
+        }
+
+        .tag-remove
+        {
+            display: none;
         }
     }
 

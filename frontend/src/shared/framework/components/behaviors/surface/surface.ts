@@ -12,7 +12,7 @@ export class SurfaceCustomAttribute
     /**
      * Creates a new instance of the type.
      * @param element The element to which the attribute is applied.
-     * @param container The container associated with the component.
+     * @param container The `Container` instance associated with the component.
      */
     public constructor(element: Element, container: Container)
     {
