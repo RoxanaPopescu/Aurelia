@@ -378,15 +378,15 @@ $__summary: comment;
 
             // State: hover
             // --surface-input-surface-tag-border-color--hover: var(--palette-color-neutral);
-            // --surface-input-surface-tag-surface-color--hover: var(--palette-color-neutral);
-            // --surface-input-surface-tag-surface-text-color--hover: var(--palette-color-neutral-lightest);
+            // --surface-input-surface-tag-surface-color--hover: var(--palette-color-neutral-lightest);
+            // --surface-input-surface-tag-surface-text-color--hover: var(--palette-color-neutral-darker);
             --surface-input-surface-tag-surface-icon-color--hover: var(--palette-color-neutral-dark);
 
             // State: focus
             // --surface-input-surface-tag-border-color--focus: var(--palette-color-neutral-neutral);
-            // --surface-input-surface-tag-surface-color--focus: var(--palette-color-neutral-neutral);
-            // --surface-input-surface-tag-surface-text-color--focus: var(--palette-color-neutral-lightest);
-            // --surface-input-surface-tag-surface-icon-color--focus: var(--palette-color-neutral-dark);
+            // --surface-input-surface-tag-surface-color--focus: var(--palette-color-neutral-neutral-lightest);
+            // --surface-input-surface-tag-surface-text-color--focus: var(--palette-color-neutral-darker);
+            --surface-input-surface-tag-surface-icon-color--focus: var(--palette-color-neutral-dark);
         }
     }
 
