@@ -242,7 +242,7 @@ export class DetailsPage
     {
         try
         {
-            await this._orderGroupsService.pause(this.orderGroup.id);
+            await this._orderGroupsService.pause(this.orderGroup);
 
             this.orderGroup.paused = true;
         }
@@ -261,7 +261,7 @@ export class DetailsPage
     {
         try
         {
-            await this._orderGroupsService.unpause(this.orderGroup.id);
+            await this._orderGroupsService.unpause(this.orderGroup);
 
             this.orderGroup.paused = false;
         }

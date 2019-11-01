@@ -116,27 +116,27 @@ export class OrderGroupService
 
     /**
      * Pauses the specified order group.
-     * @param id The ID of the order group to pause.
+     * @param orderGroup The order group to pause.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async pause(id: string): Promise<void>
+    public async pause(orderGroup: OrderGroup): Promise<void>
     {
         await this._apiClient.post("ordergroups/pause",
         {
-            body: { id }
+            body: { id: orderGroup.id, etag: orderGroup.etag }
         });
     }
 
     /**
      * Pauses the specified order group.
-     * @param id The ID of the order group to pause.
+     * @param orderGroup The order group to unpause.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async unpause(id: string): Promise<void>
+    public async unpause(orderGroup: OrderGroup): Promise<void>
     {
         await this._apiClient.post("ordergroups/unpause",
         {
-            body: { id }
+            body: { id: orderGroup.id, etag: orderGroup.etag }
         });
     }
 }
