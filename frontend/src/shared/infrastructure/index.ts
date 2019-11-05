@@ -13,6 +13,7 @@ export function configure(use: FrameworkConfiguration): void
 
 export * from "./api-client";
 export * from "./cookies";
+export * from "./logging";
 export * from "./history";
 export * from "./templating";
 export * from "./workers";
