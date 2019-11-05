@@ -124,6 +124,9 @@ pre
 
     // Preserve whitespace.
     white-space: pre;
+
+    // Allow horizontal scrolling by default.
+    overflow-x: auto;
 }
 
 

@@ -144,7 +144,7 @@ modal-dialog
         // Apply padding.
         padding: 5.5rem;
 
-        > *
+        button:not(:first-of-type)
         {
             // Provide default item spacing.
             margin-left: 3rem;
