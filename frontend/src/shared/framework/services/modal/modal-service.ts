@@ -68,17 +68,10 @@ export class ModalService
     /**
      * Opens a modal of the specified type.
      * @param viewModel The type of the modal.
-     * @returns A promise that will be resolved when the modal is closed.
-     */
-    public open<TModal = any>(viewModel: Type<TModal>): Modal<undefined, Result<TModal>>;
-
-    /**
-     * Opens a modal of the specified type.
-     * @param viewModel The type of the modal.
      * @param model The model to pass to the `activate` life cycle method of the component.
      * @returns A promise that will be resolved when the modal is closed.
      */
-    public open<TModal = any>(viewModel: Type<TModal>, model: Model<TModal>): Modal<Model<TModal>, Result<TModal>>;
+    public open<TModal = any>(viewModel: Type<TModal>, model?: Model<TModal>): Modal<Model<TModal>, Result<TModal>>;
 
     /**
      * Opens the modal with the specified name.
