@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { ApiClient, ApiError } from "shared/infrastructure";
+import { ApiClient, ApiError, Log } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
 import { UserInvite } from "../entities/user-invite";
 import { User } from "../entities/user";
@@ -78,12 +78,12 @@ export class UserService
             {
                 if (error.response.status === 409)
                 {
-                    alert("User already exists");
+                    Log.error("User already exists");
                 }
 
                 if (error.response.status === 402)
                 {
-                    alert("Outfit does not exist");
+                    Log.error("Outfit does not exist");
                 }
             }
 

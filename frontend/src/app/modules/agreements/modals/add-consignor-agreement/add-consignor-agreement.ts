@@ -1,6 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal, IValidation } from "shared/framework";
 import { AgreementService, ConsignorAgreementInvite } from "app/model/agreement";
+import { Log } from "shared/infrastructure";
 
 @autoinject
 export class AddConsignorAgreementDialogCustomElement
@@ -72,8 +73,7 @@ export class AddConsignorAgreementDialogCustomElement
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Failed to create agreement: ${error}`);
+            Log.error("Failed to create agreement", error);
         }
     }
 }

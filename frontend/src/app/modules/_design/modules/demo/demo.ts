@@ -1,6 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { DateTime } from "luxon";
+import { Log } from "shared/infrastructure";
 
 const items: any[] = [];
 
@@ -34,7 +35,7 @@ export class DemoPage
     {
         this.validation.active = true;
 
-        alert(`Validation result: ${await this.validation.validate()}`);
+        Log.info(`Validation result: ${await this.validation.validate()}`);
     }
 
     @computedFrom("items", "filterValue")

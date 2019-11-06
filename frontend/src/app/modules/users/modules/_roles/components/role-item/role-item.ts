@@ -2,6 +2,7 @@ import { containerless, bindable, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { IValidation } from "shared/framework";
 import { Role, RoleService, ClaimGroup } from "app/model/role";
+import { Log } from "shared/infrastructure";
 
 @containerless
 export class RoleItemCustomElement
@@ -183,8 +184,7 @@ export class RoleItemCustomElement
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Failed to create role: ${error}`);
+            Log.error("Failed to create role", error);
         }
     }
 

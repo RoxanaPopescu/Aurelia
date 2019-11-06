@@ -6,6 +6,7 @@ import { ExpressRouteService, DriverRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
 import { Workspace } from "../../services/workspace";
 import { ConfirmReleaseRouteDialog } from "./modals/confirm-release-route/confirm-release-route";
+import { Log } from "shared/infrastructure";
 
 /**
  * The time between each update of the list.
@@ -248,7 +249,7 @@ export class DriversColumnCustomElement
         }
         catch (error)
         {
-            alert(error.message);
+            Log.error("Could not release route", error);
         }
         finally
         {

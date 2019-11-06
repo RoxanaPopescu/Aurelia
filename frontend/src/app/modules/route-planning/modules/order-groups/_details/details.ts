@@ -5,6 +5,7 @@ import { AgreementService } from "app/model/agreement";
 import { Consignor } from "app/model/outfit";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
+import { Log } from "shared/infrastructure";
 
 /**
  * Represents the route parameters for the page.
@@ -105,8 +106,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Could not create order group: ${error}`);
+            Log.error("Could not create order group", error);
         }
     }
 
@@ -129,8 +129,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Could not save order group: ${error}`);
+            Log.error("Could not save order group", error);
         }
     }
 
@@ -248,8 +247,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Could not pause order group: ${error}`);
+            Log.error("Could not pause order group", error);
         }
     }
 
@@ -267,8 +265,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            // TODO: Show proper error message.
-            alert(`Could not unpause order group: ${error}`);
+            Log.error("Could not unpause order group", error);
         }
     }
 }

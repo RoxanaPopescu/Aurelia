@@ -3,6 +3,7 @@ import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } 
 import { Workspace } from "../../services/workspace";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
+import { Log } from "shared/infrastructure";
 
 interface IExpressRouteStop
 {
@@ -346,7 +347,7 @@ export class MergeColumnCustomElement
         }
         catch (error)
         {
-            alert("Could not save driver route changes.");
+            Log.error("Could not save driver route changes", error);
         }
         finally
         {
@@ -513,7 +514,7 @@ export class MergeColumnCustomElement
         {
             if (!(error instanceof AbortError))
             {
-                alert("Could not re-estimate route.");
+                Log.error("Could not re-estimate route", error);
             }
         }
     }
