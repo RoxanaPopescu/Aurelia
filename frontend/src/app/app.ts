@@ -1,6 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep } from "aurelia-router";
-import { ModalService } from "shared/framework";
+import { ToastService, ModalService } from "shared/framework";
 import { AuthorizationService } from "./services/authorization";
 import { IdentityService } from "./services/identity";
 import routeTitles from "./resources/strings/route-titles.json";
@@ -14,15 +14,28 @@ export class AppModule
     /**
      * Creates a new instance of the type.
      * @param identityService The `IdentityService` instance.
+     * @param toastService The `ToastService` instance.
      * @param modalService The `ModalService` instance.
      */
-    public constructor(identityService: IdentityService, modalService: ModalService)
+    public constructor(identityService: IdentityService, toastService: ToastService, modalService: ModalService)
     {
-        this.modalService = modalService;
         this.identityService = identityService;
+        this.modalService = modalService;
+        this.toastService = toastService;
 
+        this.configureToasts();
         this.configureModals();
     }
+
+    /**
+     * The `IdentityService` instance.
+     */
+    protected readonly identityService: IdentityService;
+
+    /**
+     * The `ToastService` instance.
+     */
+    protected readonly toastService: ToastService;
 
     /**
      * The `ModalService` instance.
@@ -30,9 +43,29 @@ export class AppModule
     protected readonly modalService: ModalService;
 
     /**
-     * The `IdentityService` instance.
+     * Called to configure the toasts for the app.
      */
-    protected readonly identityService: IdentityService;
+    public configureToasts(): void
+    {
+        const toastConfigs =
+        [
+            {
+                name: "error",
+                moduleId: PLATFORM.moduleName("app/toasts/error/error")
+            },
+            {
+                name: "warning",
+                moduleId: PLATFORM.moduleName("app/toasts/warning/warning")
+            },
+            {
+                name: "info",
+                moduleId: PLATFORM.moduleName("app/toasts/info/info")
+            }
+        ];
+
+        // Configure the toasts.
+        toastConfigs.forEach(config => this.toastService.register(config.name, config.moduleId));
+    }
 
     /**
      * Called to configure the modals for the app.

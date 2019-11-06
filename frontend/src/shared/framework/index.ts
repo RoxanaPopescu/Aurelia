@@ -77,6 +77,11 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/page/page-href/page-href"),
         PLATFORM.moduleName("./components/page/page-section/page-section"),
         PLATFORM.moduleName("./components/page/page-sidebar/page-sidebar"),
+        PLATFORM.moduleName("./components/toasts/toast/toast"),
+        PLATFORM.moduleName("./components/toasts/toast-footer/toast-footer"),
+        PLATFORM.moduleName("./components/toasts/toast-header/toast-header"),
+        PLATFORM.moduleName("./components/toasts/toast-section/toast-section"),
+        PLATFORM.moduleName("./components/toasts/toast-view/toast-view"),
         PLATFORM.moduleName("./components/validation/validation"),
         PLATFORM.moduleName("./components/validation/validators/async-validator/async-validator"),
         PLATFORM.moduleName("./components/validation/validators/custom-validator/custom-validator"),
@@ -90,6 +95,7 @@ export function configure(use: FrameworkConfiguration): void
 
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
+        PLATFORM.moduleName("./converters/json/json"),
         PLATFORM.moduleName("./converters/map/map"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
         PLATFORM.moduleName("./converters/skip/skip"),
@@ -174,6 +180,12 @@ export * from "./components/page/page-header/page-header";
 export * from "./components/page/page-href/page-href";
 export * from "./components/page/page-section/page-section";
 export * from "./components/page/page-sidebar/page-sidebar";
+export * from "./components/toasts/toast/toast";
+export * from "./components/toasts/toast-footer/toast-footer";
+export * from "./components/toasts/toast-header/toast-header";
+export * from "./components/toasts/toast-section/toast-section";
+export * from "./components/toasts/toast-view/toast-view";
+export * from "./components/toasts/toast-close-reason";
 export * from "./components/validation/validation";
 export * from "./components/validation/validators/async-validator/async-validator";
 export * from "./components/validation/validators/custom-validator/custom-validator";
@@ -187,6 +199,7 @@ export * from "./components/validation/validators/required-validator/required-va
 
 // Converters
 export * from "./converters/filter/filter";
+export * from "./converters/json/json";
 export * from "./converters/map/map";
 export * from "./converters/reverse/reverse";
 export * from "./converters/skip/skip";
@@ -197,3 +210,4 @@ export * from "./converters/trim/trim";
 export * from "./services/focus";
 export * from "./services/modal";
 export * from "./services/theme";
+export * from "./services/toast";

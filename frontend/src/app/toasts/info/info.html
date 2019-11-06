@@ -1,0 +1,33 @@
+<template>
+
+    <require from="./info.scss"></require>
+
+    <toast name="info" accent="info" close-button.bind="true" scroll mousedown.capture="cancelScheduledClose()">
+
+        <toast-header>
+
+            <h1 class="font-large ${model.body ? 'margin-bottom' : ''}">
+                ${model.heading}
+            </h1>
+
+            <div if.bind="model.body" translate>
+                ${model.body}
+            </div>
+
+        </toast-header>
+
+        <toast-section if.bind="model.details" toggle.bind="true" expanded.one-time="false" class="margin-bottom">
+
+            <div slot="header" translate>
+                Details
+            </div>
+
+            <div class="font-small margin">
+                ${model.details}
+            </div>
+
+        </toast-section>
+
+    </toast>
+
+</template>

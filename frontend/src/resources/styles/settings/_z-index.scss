@@ -9,6 +9,9 @@ $__summary: comment;
 
 :root
 {
+    /// The z-index used for toasts.
+    --z-index-toast: 800;
+
     /// The z-index used for modals.
     --z-index-modal: 700;
 

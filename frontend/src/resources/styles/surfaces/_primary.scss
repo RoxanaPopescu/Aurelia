@@ -364,8 +364,8 @@ $__summary: comment;
         // State: invalid
         --surface-input-border-color--invalid: var(--palette-color-neutral-light);
         --surface-input-surface-color--invalid: var(--palette-color-neutral-light);
-        --surface-input-surface-text-color--invalid: var(--surface-negative-text-color);
-        --surface-input-surface-icon-color--invalid: var(--surface-negative-text-color);
+        --surface-input-surface-text-color--invalid: var(--palette-color-negative);
+        --surface-input-surface-icon-color--invalid: var(--palette-color-negative);
 
         // Items on the surface of inputs on the surface.
         &

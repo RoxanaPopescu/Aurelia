@@ -1,0 +1,46 @@
+<template>
+
+    <require from="./error.scss"></require>
+
+    <toast name="error" accent="negative" close-button.bind="true" scroll mousedown.capture="cancelScheduledClose()">
+
+        <toast-header>
+
+            <h1 class="font-large ${!model.message || model.error ? 'margin-bottom' : ''}">
+
+                <span if.bind="!model.message" translate>
+                    Oops! Something went wrong
+                </span>
+
+                <span if.bind="model.message">
+                    ${model.message}
+                </span>
+
+            </h1>
+
+            <div if.bind="!model.message || model.error" translate>
+                The error has been logged, and will be investigated asap.
+            </div>
+
+        </toast-header>
+
+        <toast-section if.bind="model.error || model.context" toggle.bind="true" expanded.one-time="false" class="margin-bottom">
+
+            <div slot="header" translate>
+                Details
+            </div>
+
+            <div if.bind="model.error" class="font-small margin" accent="negative">
+                <pre class="white-space-pre-wrap">${model.error}</pre>
+            </div>
+
+            <div if.bind="model.context" class="font-small margin">
+                <pre>context:</pre>
+                <pre class="white-space-pre-wrap">${model.context | json}</pre>
+            </div>
+
+        </toast-section>
+
+    </toast>
+
+</template>

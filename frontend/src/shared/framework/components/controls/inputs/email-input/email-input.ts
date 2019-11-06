@@ -42,7 +42,7 @@ export class EmailInputCustomElement
     @computedFrom("value")
     protected get validationTrigger(): string | undefined
     {
-        return this.value != null && !/.@./.test(this.value) ? "change" : undefined;
+        return this.value != null && (!/.@./.test(this.value) || /[@.]$/.test(this.value)) ? "change" : undefined;
     }
 
     /**

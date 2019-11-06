@@ -1,0 +1,28 @@
+<template scroll>
+
+    <require from="./toast-view.scss"></require>
+
+    <div
+        if.bind="toastService.toasts.length > 0"
+        click.delegate="toastService.closeAll('close-all')"
+        class="toast-view-clear-all au-animate animation-fade-in-long animation-fade-out-medium"
+        scroll-fade="1.2">
+
+        <button appearance="none">
+            <span translate>
+                Clear all
+            </span>
+            <icon name="close"></icon>
+        </button>
+
+    </div>
+
+    <compose
+        repeat.for="toast of toastService.toasts"
+        view-model.one-time="toast.viewModel"
+        view-model.ref="$compose"
+        model.one-time="getModel(toast, $compose)"
+        class="au-animate">
+    </compose>
+
+</template>

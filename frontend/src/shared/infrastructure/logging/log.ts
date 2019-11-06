@@ -1,4 +1,6 @@
+import { Container } from "aurelia-framework";
 import { MapObject } from "shared/types";
+import { ToastService } from "shared/framework";
 
 /**
  * Represents the type of a log entry.
@@ -111,7 +113,8 @@ export abstract class Log
 
         if (method === "error")
         {
-            alert(message || "An error occurred.\nSee the console for details.");
+            const toastService = Container.instance.get(ToastService);
+            toastService.open("error", { message, error, context });
         }
     }
 }

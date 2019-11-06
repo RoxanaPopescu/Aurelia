@@ -1,42 +1,35 @@
 @import "resources/index";
 
-modal-dialog
+toast
 {
     // Allow content to be positioned relative to this element.
     position: relative;
 
-    // Apply the z-index for modals.
-    z-index: var(--z-index-modal);
+    // Limit the size of the toast.
+    min-height: var(--toast-min-height);
+    max-height: var(--toast-max-height);
+    min-width: var(--toast-min-width);
+    max-width: var(--toast-max-width);
 
-    // Center the dialog.
-    margin: 0 auto;
-    align-self: center;
+    // Add spacing between toasts.
+    margin-top: var(--toast-margin-top);
+    margin-right: var(--toast-margin-right);
 
-    // Offset the dialog according to its margin.
-    top: calc(var(--modal-dialog-margin-top) - var(--modal-dialog-margin-bottom));
-    left: calc(var(--modal-dialog-margin-left) - var(--modal-dialog-margin-right));
-
-    // Limit the size of the dialog.
-    min-height: var(--modal-dialog-min-height);
-    max-height: var(--modal-dialog-max-height);
-    min-width: var(--modal-dialog-min-width);
-    max-width: var(--modal-dialog-max-width);
-
-    // Apply a border to the dialog.
+    // Apply a border to the toast.
     border: 0 solid var(--border-color);
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-medium);
 
     // Hide overflow by default, so we get rounded borders.
     overflow: hidden;
 
-    // Apply a shadow to the dialog.
-    box-shadow: var(--shadow-modal);
+    // Apply a shadow to the toast.
+    box-shadow: var(--shadow-toast);
 
     // Apply surface style.
     background: var(--surface-color);
     color: var(--surface-text-color);
 
-    .modal-dialog-content
+    .toast-content
     {
         position: relative;
 
@@ -46,8 +39,8 @@ modal-dialog
 
         // Provide defaults for sectioning elements.
 
-        modal-header,
-        modal-footer
+        toast-header,
+        toast-footer
         {
             // Apply padding to header and footer.
             // Note that we use padding instead of margin,
@@ -61,7 +54,7 @@ modal-dialog
             }
         }
 
-        modal-header
+        toast-header
         {
             // Stick to the top.
             position: sticky;
@@ -94,18 +87,18 @@ modal-dialog
             }
         }
 
-        modal-section
+        toast-section
         {
-            // Ensure the element clears the actions at the top of the dialog.
+            // Ensure the element clears the actions at the top of the toast.
             clear: both;
 
             // Apply horizontal padding to sections.
             padding: 0 7rem 0 8rem;
         }
 
-        modal-footer
+        toast-footer
         {
-            // Ensure the element clears the actions at the top of the dialog.
+            // Ensure the element clears the actions at the top of the toast.
             clear: both;
 
             // Stick to the bottom.
@@ -127,9 +120,9 @@ modal-dialog
         }
     }
 
-    .modal-dialog-actions
+    .toast-actions
     {
-        // Position at the top-right corner of the dialog.
+        // Position at the top-right corner of the toast.
         position: sticky;
         top: 0;
         z-index: 2;
@@ -153,13 +146,13 @@ modal-dialog
         button[appearance="icon"]
         {
             // Provide default icon size.
-            font-size: 6rem;
+            font-size: 4rem;
         }
     }
 
     &[accent]
     {
-        // Apply an edge to the dialog.
+        // Apply an edge to the toast.
         border-left-width: var(--border-width-thicker);
 
         // Ensure the accent only affects the edge, and not the content.
@@ -177,66 +170,94 @@ modal-dialog
     }
 }
 
-// Animate the dialog.
+// Animate the toast.
 
-modal-dialog
+toast
 {
-    modal-view &
+    toast-view &
     {
         // Hint that animation will be applied.
-        will-change: opacity;
+        will-change: opacity, transform, margin-top;
 
         // Prevent glitches at the ends of the animation.
         animation-fill-mode: both !important;
     }
 
-    modal-view compose.au-enter &
+    toast-view compose.au-enter &
     {
         opacity: 0;
+        margin-top: calc(-1 * var(--toast-max-height));
+        transform: translateX(var(--toast-max-width));
         overflow: hidden;
     }
 
-    modal-view compose.au-enter-active &
+    toast-view compose.au-enter-active &
     {
-        animation: modal-dialog-enter cubic-bezier(0.2, 0, 0, 1);
-        animation-duration: var(--animation-duration-medium);
+        animation: toast-enter cubic-bezier(0.2, 0, 0.1, 1);
+        animation-duration: var(--animation-duration-long);
     }
 
-    modal-view compose.au-leave &
+    toast-view compose.au-leave &
     {
         // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
-        box-shadow: var(--modal-dialog-afterglow);
+        box-shadow: var(--toast-afterglow);
     }
 
-    modal-view compose.au-leave-active &
+    toast-view compose.au-leave-active &
     {
-        animation: modal-dialog-leave cubic-bezier(0.2, 0, 0, 1);
-        animation-duration: var(--animation-duration-medium);
+        animation: toast-leave cubic-bezier(0.2, 0, 0.2, 0.5);
+        animation-duration: var(--animation-duration-long);
     }
 }
 
-@keyframes modal-dialog-enter
+@keyframes toast-enter
 {
-    5%
+    0%
     {
-        opacity: 0;
+        margin-top: calc(-1 * var(--toast-max-height));
     }
 
-    100%
+    15%
+    {
+        opacity: 0;
+        margin-top: var(--toast-margin-top);
+    }
+
+    40%
     {
         opacity: 1;
     }
+
+    60%, to
+    {
+        margin-top: var(--toast-margin-top);
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-@keyframes modal-dialog-leave
+@keyframes toast-leave
 {
+    20%
+    {
+        opacity: 1;
+    }
+
+    40%
+    {
+        margin-top: var(--toast-margin-top);
+    }
+
     50%
     {
         opacity: 0;
+        transform: translateX(var(--toast-max-width));
     }
 
-    100%
+    55%, to
     {
+        margin-top: calc(-1 * var(--toast-max-height));
         opacity: 0;
+        transform: translateX(var(--toast-max-width));
     }
 }
