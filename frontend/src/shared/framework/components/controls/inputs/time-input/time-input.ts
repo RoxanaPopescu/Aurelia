@@ -16,6 +16,8 @@ for (let hour = 0; hour < 24; hour++)
     }
 }
 
+timeItems.push(Duration.fromObject({ hour: 24, milliseconds: -1 }));
+
 /**
  * Custom element representing an input for picking a single item from a list.
  */
@@ -79,9 +81,9 @@ export class TimeInputCustomElement
     {
         return this.items.filter(item => item == null ||
         (
-            (this.min == null || item.valueOf() >= this.min.valueOf()) &&
-            (this.max == null || item.valueOf() <= this.max.valueOf()))
-        );
+            (this.min == null || (this.minInclusive ? item.valueOf() >= this.min.valueOf() : item.valueOf() > this.min.valueOf())) &&
+            (this.max == null || (this.minInclusive ? item.valueOf() <= this.max.valueOf() : item.valueOf() < this.max.valueOf()))
+        ));
     }
 
     /**
@@ -206,6 +208,18 @@ export class TimeInputCustomElement
      */
     @bindable({ defaultValue: undefined })
     public max: Duration | undefined;
+
+    /**
+     * True to include the min value as a valid value, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public minInclusive: boolean | undefined;
+
+    /**
+     * True to include the max value as a valid value, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public maxInclusive: boolean | undefined;
 
     /**
      * True to show the `None` option, otherwise false.

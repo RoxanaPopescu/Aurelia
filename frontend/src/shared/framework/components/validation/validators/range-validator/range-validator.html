@@ -4,19 +4,19 @@
 
         <validation-message if.bind="min && max" accent="negative">
             <template replaceable part="invalid-min-max" translate>
-                Please provide a value between ${min} and ${max}.
+                Please provide a value <kbd>${minInclusive ? '≤' : '<'} ${min}</kbd> and <kbd>${maxInclusive ? '≥' : '>'} ${max}</kbd>.
             </template>
         </validation-message>
 
         <validation-message if.bind="min && !max" accent="negative">
             <template replaceable part="invalid-min" translate>
-                Please provide a value of at least ${min}.
+                Please provide a value <kbd>${minInclusive ? '≤' : '<'} ${min}</kbd>.
             </template>
         </validation-message>
 
         <validation-message if.bind="!min && max" accent="negative">
             <template replaceable part="invalid-max" translate>
-                Please provide a value of at most ${max}.
+                Please provide a value <kbd>${maxInclusive ? '≥' : '>'} ${max}</kbd>.
             </template>
         </validation-message>
 

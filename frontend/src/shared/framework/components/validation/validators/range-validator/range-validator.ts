@@ -37,6 +37,18 @@ export class RangeValidatorCustomElement extends Validator
     public step: { valueOf(): number } | undefined;
 
     /**
+     * True to include the min value as a valid value, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public minInclusive: boolean | undefined;
+
+    /**
+     * True to include the max value as a valid value, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public maxInclusive: boolean | undefined;
+
+    /**
      * Called by the validation when this validator should run.
      * @param reason The reason for the validation run.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
@@ -52,8 +64,8 @@ export class RangeValidatorCustomElement extends Validator
             const value = this.value.valueOf();
 
             this.invalid =
-                this.min != null && value < this.min.valueOf() ||
-                this.max != null && value > this.max.valueOf() ||
+                this.min != null && (this.minInclusive ? value <= this.min.valueOf() : value < this.min.valueOf()) ||
+                this.max != null && (this.maxInclusive ? value >= this.max.valueOf() : value > this.max.valueOf()) ||
                 this.step != null && value % this.step.valueOf() !== 0;
         }
 

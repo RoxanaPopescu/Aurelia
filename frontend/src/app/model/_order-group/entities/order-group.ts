@@ -94,4 +94,19 @@ export class OrderGroup
 
         return dateTimes[0];
     }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            etag: this.etag,
+            id: this.id,
+            name: this.name,
+            timeZone: this.timeZone.name,
+            matchingCriteria: this.matchingCriteria,
+            routePlanningTimes: this.routePlanningTimes
+        };
+    }
 }
