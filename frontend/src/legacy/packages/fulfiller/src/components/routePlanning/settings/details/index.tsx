@@ -44,11 +44,11 @@ export default class RoutePlanningSettingsComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.store.fetchStrategies();
     if (!this.props.match.params.id) {
       this.store.loading = false;
     } else {
       this.store.fetch(this.props.match.params.id);
-      this.store.fetchStrategies();
     }
   }
 
