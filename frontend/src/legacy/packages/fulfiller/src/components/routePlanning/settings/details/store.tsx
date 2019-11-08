@@ -220,7 +220,7 @@ export class RoutePlanningSettingsStore {
     } else {
       let response = await fetch(
         Base.url("RoutePlanning/settings/Create"),
-        Base.defaultConfig(this.setting)
+        Base.defaultConfig({ ...this.setting, parameters: { ...this.setting.parameters, strategy: this.setting.parameters.strategy.value } })
       );
 
       if (response.ok) {
