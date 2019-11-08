@@ -3,10 +3,10 @@
 react-module
 {
     // Import legacy styles.
-    @import "../packages/shared/src/webKit/LEGACY";
+@import "../packages/shared/src/webKit/LEGACY";
 
-    // Import legacy constants.
-    @import "./constants";
+// Import legacy constants.
+@import "./constants";
 
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
@@ -141,8 +141,8 @@ react-module
         }
     }
 
-    .inputContainer .inputWrapper input:not(.noBorder),
-    .selectContainer .selectWrapper .react-selectize .react-selectize-control,
+    .inputContainer:not(.error) .inputWrapper input:not(.noBorder),
+    .selectContainer:not(.error) .selectWrapper .react-selectize .react-selectize-control,
     .buttonContainer.moverButton.buttonLight,
     .c-checkboxContainer:not(.checked) .c-checkbox
     {
