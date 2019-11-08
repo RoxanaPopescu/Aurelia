@@ -1,6 +1,6 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { IScroll } from "shared/framework";
-import { ISorting } from "shared/types";
+import { ISorting, AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { ExpressRouteService, ExpressRoute } from "app/model/express-route";
 import { Duration, DateTime } from "luxon";
@@ -184,6 +184,13 @@ export class RoutesColumnCustomElement
 
                 // Indicate that the initial load succeeded.
                 this.loading = false;
+            }
+            catch (error)
+            {
+                if (!(error instanceof AbortError))
+                {
+                    throw error;
+                }
             }
             finally
             {
