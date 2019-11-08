@@ -47,11 +47,6 @@
         </script>
         <% } %>
 
-        <!-- Google Maps -->
-        <%if (environment.integrations.googleMaps) { %>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%- environment.integrations.googleMaps.key %>&libraries=drawing,geometry"></script>
-        <% } %>
-
         <!-- Injected content -->
 
     </head>
@@ -118,6 +113,14 @@
                 "environment": "<%- environment.name %>"
             });
         </script>
+        <% } %>
+
+        <!-- Polyfills -->
+        <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.<%- environment.locale %>"></script>
+
+        <!-- Google Maps -->
+        <%if (environment.integrations.googleMaps) { %>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%- environment.integrations.googleMaps.key %>&libraries=drawing,geometry"></script>
         <% } %>
 
         <!-- Injected content -->
