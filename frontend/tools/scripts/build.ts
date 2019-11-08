@@ -27,6 +27,8 @@ const compilerOptions: ICompilerOptions =
     analyze: true,
     environment:
     {
+        commit: process.env.COMMIT_SHA,
+
         name: commander.environment,
         platform: commander.platform,
         locale: commander.locale,

@@ -35,6 +35,12 @@ declare type ClientPlatformName = "cloud" | "desktop";
 declare interface IClientEnvironment
 {
     /**
+     * The hash identifying the commit associated with the build,
+     * or undefined if no commit info is available.
+     */
+    commit?: string;
+
+    /**
      * The name identifying the environment.
      */
     name: ClientEnvironmentName;

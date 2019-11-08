@@ -2,10 +2,13 @@ import { Container } from "aurelia-framework";
 import { MapObject } from "shared/types";
 import { ToastService } from "shared/framework";
 
+// The global Sentry instance.
+declare const Sentry: any;
+
 /**
- * Represents the type of a log entry.
+ * Represents the severity of a log entry.
  */
-export type LogType = "debug" | "info" | "warn" | "error";
+export type LogLevel = "debug" | "info" | "warning" | "error";
 
 /**
  * Represents a log to which messages and errors may be logged.
@@ -13,12 +16,35 @@ export type LogType = "debug" | "info" | "warn" | "error";
 export abstract class Log
 {
     /**
+     * Sets the username that should be associated with log entries.
+     * @param username The username that should be associated with log entries.
+     */
+    public static setUsername(username: string | undefined): void
+    {
+        if (Sentry != null)
+        {
+            Sentry.setUser({ username });
+        }
+    }
+
+    /**
+     * Sets the tags that should be associated with log entries.
+     * @param tags The tags that should be associated with log entries.
+     */
+    public static setTags(tags: MapObject): void
+    {
+        if (Sentry != null)
+        {
+            Sentry.setTags(tags);
+        }
+    }
+
+    /**
      * Logs the specified debug message, optionally with additional context.
      * @param message The message to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async debug(message: string, context?: MapObject): Promise<void>
+    public static debug(message: string, context?: MapObject): void
     {
         return Log.log("debug", message, undefined, context);
     }
@@ -27,9 +53,8 @@ export abstract class Log
      * Logs the specified info message, optionally with additional context.
      * @param message The message to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async info(message: string, context?: MapObject): Promise<void>
+    public static info(message: string, context?: MapObject): void
     {
         return Log.log("info", message, undefined, context);
     }
@@ -38,39 +63,35 @@ export abstract class Log
      * Logs the specified warning message, optionally with additional context.
      * @param message The message to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async warn(message: string, context?: MapObject): Promise<void>
+    public static warn(message: string, context?: MapObject): void
     {
-        return Log.log("warn", message, undefined, context);
+        return Log.log("warning", message, undefined, context);
     }
 
     /**
      * Logs the specified error message, optionally with additional context.
      * @param message The message to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async error(message: string, context?: MapObject): Promise<void>;
+    public static error(message: string, context?: MapObject): void;
 
     /**
      * Logs the specified error, optionally with additional context.
      * @param error The error to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async error(error: Error, context?: MapObject): Promise<void>;
+    public static error(error: Error, context?: MapObject): void;
 
     /**
      * Logs the specified message and error, optionally with additional context.
      * @param message The message to log.
      * @param error The error to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    public static async error(message: string, error: string | Error, context?: MapObject): Promise<void>;
+    public static error(message: string, error: string | Error, context?: MapObject): void;
 
-    public static async error(...args: any[]): Promise<void>
+    public static error(...args: any[]): void
     {
         let message: string | undefined;
         let error: Error | undefined;
@@ -100,21 +121,59 @@ export abstract class Log
     }
 
     /**
-     * Safely invokes the specified method with the specified arguments on each of the providers, catching and logging any exceptions that occur to the console.
-     * @param method The method that should be invoked on each provider.
+     * Logs the specified message and/or error.
+     * @param level The severity of the log entry.
      * @param message The message to log.
      * @param error The error to log.
      * @param context The additional context to associate with the log entry.
-     * @returns A promise that will be resolved when the entry has been successfully logged to all log providers.
      */
-    private static async log(method: LogType, message?: string, error?: Error, context?: MapObject): Promise<void>
+    private static log(level: LogLevel, message?: string, error?: Error, context?: MapObject): void
     {
-        console[method](...[message, error, context].filter(a => a !== undefined));
+        const consoleMethod = level === "warning" ? "warn" : level;
+        const consoleArgs = [message, error, context].filter(a => a !== undefined);
 
-        if (method === "error")
+        if (level === "error")
         {
-            const toastService = Container.instance.get(ToastService);
-            toastService.open("error", { message, error, context });
+            try
+            {
+                if (Sentry != null)
+                {
+                    Sentry.withScope((scope: any) =>
+                    {
+                        scope.setLevel(level);
+
+                        if (context != null)
+                        {
+                            for (const key of Object.keys(context))
+                            {
+                                scope.setExtra(key, context[key]);
+                            }
+                        }
+
+                        if (error instanceof Error)
+                        {
+                            Sentry.captureException(error);
+                        }
+                        else
+                        {
+                            Sentry.captureMessage((message || error || "Error").toString());
+                        }
+                    });
+                }
+                else
+                {
+                    console[consoleMethod](...consoleArgs);
+                }
+            }
+            finally
+            {
+                const toastService = Container.instance.get(ToastService);
+                toastService.open("error", { message, error, context });
+            }
+        }
+        else
+        {
+            console[consoleMethod](...consoleArgs);
         }
     }
 }

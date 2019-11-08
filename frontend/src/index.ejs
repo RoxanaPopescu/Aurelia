@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="<%- htmlWebpackPlugin.options.environment.locale %>" env="<%- htmlWebpackPlugin.options.environment.name %>" class="app">
+
+<% var environment = htmlWebpackPlugin.options.environment; %>
+
+<html lang="<%- environment.locale %>" env="<%- environment.name %>" class="app">
 
     <head>
 
         <!-- Technical metadata -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-        <base href="<%- htmlWebpackPlugin.options.environment.appBaseUrl %>">
+        <base href="<%- environment.appBaseUrl %>">
 
         <!-- Crawler metadata -->
         <meta name="robots" content="noindex,nofollow">
@@ -34,19 +37,19 @@
         <meta name="msapplication-navbutton-color" content="#0747a6">
 
         <!-- Analytics -->
-        <% if (htmlWebpackPlugin.options.environment.integrations.googleAnalytics) { %>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=<%- htmlWebpackPlugin.options.environment.integrations.googleAnalytics.id %>"></script>
+        <% if (environment.integrations.googleAnalytics) { %>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=<%- environment.integrations.googleAnalytics.id %>"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){ dataLayer.push(arguments); }
             gtag("js", new Date());
-            gtag("config", "<%- htmlWebpackPlugin.options.environment.integrations.googleAnalytics.id %>");
+            gtag("config", "<%- environment.integrations.googleAnalytics.id %>");
         </script>
         <% } %>
 
         <!-- Google Maps -->
-        <%if (htmlWebpackPlugin.options.environment.integrations.googleMaps) { %>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%- htmlWebpackPlugin.options.environment.integrations.googleMaps.key %>&libraries=drawing,geometry"></script>
+        <%if (environment.integrations.googleMaps) { %>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%- environment.integrations.googleMaps.key %>&libraries=drawing,geometry"></script>
         <% } %>
 
         <!-- Injected content -->
@@ -88,10 +91,32 @@
         </main>
 
         <!-- Logging -->
-        <% if (htmlWebpackPlugin.options.environment.integrations.sentry) { %>
-        <script src="https://browser.sentry-cdn.com/4.6.6/bundle.min.js" crossorigin="anonymous"></script>
+        <% if (environment.integrations.sentry) { %>
+        <script
+            src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js"
+            integrity="sha384-KMv6bBTABABhv0NI+rVWly6PIRvdippFEgjpKyxUcpEmDWZTkDOiueL5xW+cztZZ"
+            crossorigin="anonymous">
+        </script>
         <script>
-            Sentry.init({ dsn: "<%- htmlWebpackPlugin.options.environment.integrations.sentry.dsn %>" });
+            Sentry.init(
+            {
+                attachStacktrace: true,
+                environment: "<%- environment.name %>",
+                release: "<%- environment.commit ? `frontend@${environment.commit.substring(0, 7)}` : `frontend` %>",
+                dsn: "<%- environment.integrations.sentry.dsn %>",
+                beforeSend: (event, hint) =>
+                {
+                    const consoleMethod = event.level === "warning" ? "warn" : event.level;
+                    console[consoleMethod](hint.originalException || hint.syntheticException);
+                    return event;
+                }
+            });
+            Sentry.setTags(
+            {
+                "platform": "<%- environment.platform %>",
+                "locale": "<%- environment.locale %>",
+                "environment": "<%- environment.name %>"
+            });
         </script>
         <% } %>
 

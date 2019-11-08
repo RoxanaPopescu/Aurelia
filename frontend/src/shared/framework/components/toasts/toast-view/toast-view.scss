@@ -55,21 +55,31 @@ toast-view
         font-size: var(--font-large-font-size);
         line-height: 1;
 
+        // Apply half the padding applied to the toasts.
+        padding: 3.5rem 3.5rem 3.5rem 4rem;
+
         // Align the clear icon with the close icons of the toasts.
-        padding-top: var(--toast-margin-top);
+        margin-top: var(--toast-margin-top);
         margin-right: var(--toast-margin-right);
 
-        // Set the color of the clear all button.
-        color: var(--toast-clear-all-color);
+        // Apply a border to the toast.
+        border: 0 solid var(--border-color);
+        border-radius: var(--border-radius-medium);
 
-        // Animate color changes.
-        transition: color var(--animation-duration-medium);
+        // Apply a shadow to the toast.
+        box-shadow: var(--shadow-toast);
+
+        // Apply surface style.
+        background: var(--surface-color);
+        color: var(--surface-text-color);
 
         // Apply the z-index for toasts.
         z-index: var(--z-index-toast);
 
         button
         {
+            overflow: visible;
+
             // Allow positioning using z-index.
             position: relative;
 
@@ -77,7 +87,7 @@ toast-view
             z-index: var(--z-index-toast);
 
             // Align with the close icons on the toasts.
-            padding-right: 7rem;
+            padding: 0 3.5rem;
         }
 
         span
