@@ -33,14 +33,14 @@ path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-c
 {
     margin-bottom: calc(var(--font-small-margin-bottom) / 2);
 
-    .input-heading
+    .input-heading > *
     {
+        margin-bottom: 0.75rem;
         opacity: var(--opacity-faded);
     }
 
     .input-description > *
     {
-        margin-top: .5rem;
         margin-bottom: .5rem;
     }
 }
