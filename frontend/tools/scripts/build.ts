@@ -83,6 +83,11 @@ const compilerOptions: ICompilerOptions =
                 googleMaps:
                 {
                     key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
+                },
+
+                sentry:
+                {
+                    dsn: "https://e1c6cac2640e4683b490730936816c46@sentry.io/1430333"
                 }
             }
         }

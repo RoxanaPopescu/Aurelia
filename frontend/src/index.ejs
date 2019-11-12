@@ -13,6 +13,8 @@
 
         <!-- Crawler metadata -->
         <meta name="robots" content="noindex,nofollow">
+        <meta name="fragment" content="!">
+        <meta name="prerender-status-code" content="504">
 
         <!-- Content metadata -->
         <title>Mover</title>
@@ -84,36 +86,6 @@
             </div>
 
         </main>
-
-        <!-- Logging -->
-        <% if (environment.integrations.sentry) { %>
-        <script
-            src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js"
-            integrity="sha384-KMv6bBTABABhv0NI+rVWly6PIRvdippFEgjpKyxUcpEmDWZTkDOiueL5xW+cztZZ"
-            crossorigin="anonymous">
-        </script>
-        <script>
-            Sentry.init(
-            {
-                attachStacktrace: true,
-                environment: "<%- environment.name %>",
-                release: "<%- environment.commit ? `frontend@${environment.commit.substring(0, 7)}` : `frontend` %>",
-                dsn: "<%- environment.integrations.sentry.dsn %>",
-                beforeSend: (event, hint) =>
-                {
-                    const consoleMethod = event.level === "warning" ? "warn" : event.level;
-                    console[consoleMethod](hint.originalException || hint.syntheticException);
-                    return event;
-                }
-            });
-            Sentry.setTags(
-            {
-                "platform": "<%- environment.platform %>",
-                "locale": "<%- environment.locale %>",
-                "environment": "<%- environment.name %>"
-            });
-        </script>
-        <% } %>
 
         <!-- Polyfills -->
         <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.<%- environment.locale %>"></script>

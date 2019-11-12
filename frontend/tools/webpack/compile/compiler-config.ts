@@ -1,6 +1,7 @@
 import path from "path";
 import autoprefixer from "autoprefixer";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import PreloadWebpackPlugin from "preload-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import DuplicatePackageCheckerPlugin from "duplicate-package-checker-webpack-plugin";
 import { AureliaPlugin, ModuleDependenciesPlugin } from "aurelia-webpack-plugin";
@@ -55,7 +56,11 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         },
         entry:
         {
-            app: ["aurelia-bootstrapper"]
+            app:
+            [
+                path.join(paths.srcFolder, "sentry.ts"),
+                "aurelia-bootstrapper"
+            ]
         },
         output:
         {
@@ -270,6 +275,13 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                         collapseWhitespace: true
                     }
                 } : {}
+            }),
+
+            new PreloadWebpackPlugin(
+            {
+                rel: "preload",
+                include: "initial",
+                fileBlacklist: [/\.map$/, /\.hot-update\.js$/]
             }),
 
             new CopyWebpackPlugin(paths.resources.includeGlobs.map(includeGlob =>

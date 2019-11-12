@@ -6,8 +6,8 @@ import "inert-polyfill";
 
 // Configure and start the app.
 
-import { Aurelia, Container, PLATFORM } from "aurelia-framework";
-import { Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
+import { Aurelia, Container, PLATFORM, LogManager } from "aurelia-framework";
+import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
 import { LocaleService, ILocale, CurrencyService, ICurrency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
@@ -23,13 +23,18 @@ import Localization from "shared/src/localization";
  */
 export async function configure(aurelia: Aurelia): Promise<void>
 {
+    console.group("Configuration");
+
+    // Configure the log manager.
+    LogManager.addAppender(new LogAppender());
+    LogManager.setLevel(ENVIRONMENT.debug ? LogManager.logLevel.debug : LogManager.logLevel.warn);
+
     // Create the visitor.
     aurelia.container.get(Visitor);
 
     // Configure the framework.
     aurelia.use
-        .standardConfiguration()
-        .developmentLogging(ENVIRONMENT.debug ? "debug" : "warn");
+        .standardConfiguration();
 
     // Add plugins.
     aurelia.use
@@ -53,21 +58,21 @@ export async function configure(aurelia: Aurelia): Promise<void>
 
         // Configure features.
 
-        const cookies = aurelia.container.get(Cookies) as Cookies;
+        const cookies = aurelia.container.get(Cookies);
         cookies.configure(settings.infrastructure.cookies);
 
-        const apiClient = aurelia.container.get(ApiClient) as ApiClient;
+        const apiClient = aurelia.container.get(ApiClient);
         apiClient.configure(settings.infrastructure.api);
 
-        const localeService = aurelia.container.get(LocaleService) as LocaleService;
+        const localeService = aurelia.container.get(LocaleService);
         localeService.configure(settings.app.locales, setLocale);
         await localeService.setLocale(getLocaleCode());
 
-        const currencyService = aurelia.container.get(CurrencyService) as CurrencyService;
+        const currencyService = aurelia.container.get(CurrencyService);
         currencyService.configure(settings.app.currencies, setCurrency);
         await currencyService.setCurrency(getCurrencyCode());
 
-        const themeService = aurelia.container.get(ThemeService) as ThemeService;
+        const themeService = aurelia.container.get(ThemeService);
         themeService.configure(settings.app.themes, setTheme);
         await themeService.setTheme(getThemeSlug());
 
@@ -75,23 +80,43 @@ export async function configure(aurelia: Aurelia): Promise<void>
 
         Localization.configure(localeService.locale.code, localeService.locale.code);
 
-        // Import style resources.
-        await import("resources/styles/index.scss" as any);
-        await import(`resources/themes/${themeService.theme.slug}/styles/index.scss`);
-
-        // Import icon resources.
-        await import("resources/icons");
-
-        // Attempt to reauthenticate using a token stored on the device.
-        const identityService = aurelia.container.get(IdentityService) as IdentityService;
-        await identityService.reauthenticate();
+        // Execute network requests concurrently.
+        await Promise.all(
+        [
+            async () =>
+            {
+                // Import style resources.
+                await import("resources/styles/index.scss" as any);
+                await import(`resources/themes/${themeService.theme.slug}/styles/index.scss`);
+            },
+            async () =>
+            {
+                // Import icon resources.
+                await import("resources/icons");
+            },
+            async () =>
+            {
+                // Attempt to reauthenticate using a token stored on the device.
+                const identityService = aurelia.container.get(IdentityService);
+                await identityService.reauthenticate();
+            }
+        ]
+        .map(f => f()));
     });
 
     // Start the framework.
     await aurelia.start();
 
+    console.info("Configuration completed");
+    console.groupEnd();
+
     // Set the root component and compose the app.
     await aurelia.setRoot(PLATFORM.moduleName("app/app"));
+
+    // TODO: The value we set here should depend on whether the page actually rendered successfully.
+    // Set the status code that should be returned to crawlers.
+    const prerenderStatusCodeElement = document.head.querySelector('meta[name="prerender-status-code"]') as HTMLMetaElement;
+    prerenderStatusCodeElement.setAttribute("content", "200");
 }
 
 /**
@@ -114,7 +139,7 @@ async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
 {
     if (oldLocale != null)
     {
-        const cookies = Container.instance.get(Cookies) as Cookies;
+        const cookies = Container.instance.get(Cookies);
 
         cookies.set("locale", newLocale.code);
 
@@ -132,7 +157,7 @@ async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
 function getCurrencyCode(): string
 {
     const url = new URL(location.href);
-    const cookies = Container.instance.get(Cookies) as Cookies;
+    const cookies = Container.instance.get(Cookies);
 
     // Try to get the currency from the URL.
     // This is intended as an override to be used for testing.
@@ -149,7 +174,7 @@ function getCurrencyCode(): string
     // If a currency was specified, verify that it exists.
     if (currencyCode)
     {
-        const currencyService = Container.instance.get(CurrencyService) as CurrencyService;
+        const currencyService = Container.instance.get(CurrencyService);
 
         try
         {
@@ -176,7 +201,7 @@ function setCurrency(newCurrency: ICurrency, oldCurrency: ICurrency): void
 {
     if (oldCurrency != null)
     {
-        const cookies = Container.instance.get(Cookies) as Cookies;
+        const cookies = Container.instance.get(Cookies);
 
         cookies.set("currency", newCurrency.code);
     }
@@ -190,7 +215,7 @@ function setCurrency(newCurrency: ICurrency, oldCurrency: ICurrency): void
 function getThemeSlug(): string
 {
     const url = new URL(location.href);
-    const cookies = Container.instance.get(Cookies) as Cookies;
+    const cookies = Container.instance.get(Cookies);
 
     // Try to get the theme from the URL.
     // This is intended as an override to be used for testing.
@@ -207,7 +232,7 @@ function getThemeSlug(): string
     // If a theme was specified, verify that it exists.
     if (themeSlug)
     {
-        const themeService = Container.instance.get(ThemeService) as ThemeService;
+        const themeService = Container.instance.get(ThemeService);
 
         try
         {
@@ -235,7 +260,7 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme): Promise<void>
 {
     if (oldTheme != null)
     {
-        const cookies = Container.instance.get(Cookies) as Cookies;
+        const cookies = Container.instance.get(Cookies);
 
         cookies.set("theme", newTheme.slug);
 

@@ -1,5 +1,6 @@
 import { FrameworkConfiguration } from "aurelia-framework";
 import { HistoryHelper } from "./history";
+import { LogNavigation } from "./logging";
 
 /**
  * Configures the feature.
@@ -9,6 +10,9 @@ export function configure(use: FrameworkConfiguration): void
 {
     // Instantiate the history helper, as it needs to track router events.
     use.container.get(HistoryHelper);
+
+    // Instantiate the navigation logger, as it needs to track router events.
+    use.container.get(LogNavigation);
 }
 
 export * from "./api-client";
