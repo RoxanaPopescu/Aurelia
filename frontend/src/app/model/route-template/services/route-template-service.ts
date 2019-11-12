@@ -44,13 +44,15 @@ export class RouteTemplateService
     /**
      * Gets the specified route template.
      * @param id The ID identifying the route template.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route template.
      */
-    public async get(routeSlug: string): Promise<RouteTemplate>
+    public async get(id: string, signal?: AbortSignal): Promise<RouteTemplate>
     {
-        const result = await this._apiClient.get("route-templates/details",
+        const result = await this._apiClient.post("route-templates/details",
         {
-            query: { routeSlug }
+            body: { id },
+            signal
         });
 
         return new RouteTemplate(result.data);

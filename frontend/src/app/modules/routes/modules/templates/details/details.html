@@ -19,17 +19,27 @@
                             Templates
                         </a>
 
-                        <span translate>
+                        <span if.bind="!template.id" translate>
                             New template
+                        </span>
+
+                        <span if.bind="!template.id" translate>
+                            ${template.reference}
                         </span>
 
                     </path-nav>
                 </h1>
 
                 <toolbar class="flex-push-right">
-                    <button appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+
+                    <button if.bind="!template.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
                         Create template
                     </button>
+
+                    <button if.bind="template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        Save template
+                    </button>
+
                 </toolbar>
 
             </page-header>
@@ -44,57 +54,57 @@
                             Route information
                         </h2>
 
-                        <text-input label="above" class="margin-large-bottom">
+                        <div class="control-row margin-large-bottom">
 
-                            <div slot="heading" translate>
-                                Route reference
-                            </div>
+                            <text-input label="above" class="flex-grow" value.bind="template.reference">
 
-                        </text-input>
+                                <div slot="heading" translate>
+                                    Route reference
+                                </div>
 
-                        <text-input label="above" class="margin-large-bottom">
+                            </text-input>
 
-                            <div slot="heading" translate>
-                                Consignor
-                            </div>
+                            <select-input label="above" class="flex-grow" value.bind="template.consignor">
 
-                        </text-input>
+                                <div slot="heading" translate>
+                                    Consignor
+                                </div>
 
-                        <number-input label="above" class="margin-large-bottom">
+                            </select-input>
 
-                            <div slot="heading" translate>
-                                Price
-                            </div>
-
-                            <span slot="after" class="opacity-faded">
-                                kr
-                            </span>
-
-                        </number-input>
-
-                        <select-input label="above" none.bind="false" class="margin-large-bottom">
-
-                            <div slot="heading" translate>
-                                Time of route creation
-                            </div>
-
-                            <div slot="description" translate>
-                                This is the time of route creation
-                            </div>
-
-                            <div slot="placeholder" translate>
-
-                            </div>
-
-                            <item>
-                                1 month before
-                            </item>
-
-                        </select-input>
+                        </div>
 
                         <div class="control-row margin-large-bottom">
 
-                            <date-input label="above" class="flex-grow">
+                            <number-input label="above" class="flex-grow" value.bind="template.price.amount">
+
+                                <div slot="heading" translate>
+                                    Price ex. VAT
+                                </div>
+
+                                <span slot="after" class="opacity-faded">
+                                    ${template.price.currency.currencyCode}
+                                </span>
+
+                            </number-input>
+
+                            <select-input label="above" none.bind="false" class="flex-grow" value.bind="template.routeCreationTime">
+
+                                <div slot="heading" translate>
+                                    Time of route creation
+                                </div>
+
+                                <item>
+                                    1 month before
+                                </item>
+
+                            </select-input>
+
+                        </div>
+
+                        <div class="control-row margin-large-bottom">
+
+                            <date-input label="above" class="flex-grow" value.bind="template.startDateTime">
 
                                 <div slot="heading" translate>
                                     From date
@@ -102,7 +112,7 @@
 
                             </date-input>
 
-                            <date-input label="above" class="flex-grow">
+                            <date-input label="above" class="flex-grow" value.bind="template.endDateTime">
 
                                 <div slot="heading" translate>
                                     To date
@@ -112,7 +122,7 @@
 
                         </div>
 
-                        <text-input label="above" lines.bind="4">
+                        <text-input label="above" lines.bind="3" value.bind="template.instructions">
 
                             <div slot="heading" translate>
                                 Instructions
@@ -122,15 +132,15 @@
 
                     </page-section>
 
-                    <page-section>
+                    <page-section class="route-recurrence-section">
 
                         <h2 class="font-larger margin-bottom" translate>
                             Route recurrence
                         </h2>
 
-                        <div class="control-row margin-large-bottom">
+                        <div class="control-row margin-large-bottom --all-days">
 
-                            <check-toggle label="after" value.bind="false" style="width: 40rem">
+                            <check-toggle label="after" value.bind="false">
 
                                 <div slot="heading" translate>
                                     All days
@@ -146,6 +156,8 @@
 
                             </select-input>
 
+                            <span translate>or</span>
+
                             <select-input label="above" none.bind="false" class="flex-grow">
 
                                 <div slot="heading" translate>
@@ -160,7 +172,7 @@
 
                         <div repeat.for="weekday of 6" class="control-row margin-bottom">
 
-                            <check-toggle label="after" value.bind="false" style="width: 40rem">
+                            <check-toggle label="after" value.bind="false">
 
                                 <div slot="heading">
                                     ${weekday + 1 | weekday}
@@ -171,6 +183,8 @@
                             <select-input none.bind="false" class="flex-grow">
 
                             </select-input>
+
+                            <span translate>or</span>
 
                             <select-input none.bind="false" class="flex-grow">
 

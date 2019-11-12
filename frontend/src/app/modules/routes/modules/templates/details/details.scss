@@ -19,4 +19,26 @@ page[name="routes"] page[name="templates-details"]
     {
         --data-table-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
+
+    .route-recurrence-section
+    {
+        check-toggle
+        {
+            width: 40rem;
+        }
+
+        .control-row
+        {
+            &.--all-days > check-toggle,
+            &.--all-days > span
+            {
+                margin-top: 6.75rem;
+            }
+
+            > span
+            {
+                line-height: 10rem;
+            }
+        }
+    }
 }

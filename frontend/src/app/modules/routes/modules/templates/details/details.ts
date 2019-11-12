@@ -1,7 +1,14 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
-import { IScroll } from "shared/framework";
-import { RouteTemplateService, RouteTemplateInfo } from "app/model/route-template";
+import { RouteTemplateService, RouteTemplateInfo, RouteTemplate } from "app/model/route-template";
+
+/**
+ * Represents the route parameters for the page.
+ */
+interface IRouteParams
+{
+    id?: string;
+}
 
 /**
  * Represents the page.
@@ -21,39 +28,34 @@ export class DetailsPage
     private readonly _routeTemplateService: RouteTemplateService;
 
     /**
-     * The scroll manager for the page.
-     */
-    protected scroll: IScroll;
-
-    /**
      * The most recent update operation.
      */
     protected fetchOperation: Operation;
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * The template to present.
      */
-    protected templateCount: number | undefined;
-
-    /**
-     * The items to present in the table.
-     */
-    protected templates: RouteTemplateInfo[];
+    protected template: Partial<RouteTemplateInfo>;
 
     /**
      * Called by the framework when the module is activated.
+     * @param params The route parameters from the URL.
      */
-    public activate(): void
+    public activate(params: IRouteParams): void
     {
-        // Create and execute the new operation.
-        this.fetchOperation = new Operation(async signal =>
+        if (params.id)
         {
-            // Fetch the data.
-            const result = await this._routeTemplateService.getAll(signal);
-
-            // Update the state.
-            this.templates = result.templates;
-        });
+            // Create and execute the new operation.
+            this.fetchOperation = new Operation(async signal =>
+            {
+                // Fetch the data.
+                this.template = await this._routeTemplateService.get(params.id!, signal);
+            });
+        }
+        else
+        {
+            this.template = new RouteTemplate();
+        }
     }
 
     /**

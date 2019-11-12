@@ -87,6 +87,11 @@ export class RoutesModule
                     icon: "templates"
                 },
                 {
+                    name: "templates-create",
+                    route: "templates/create",
+                    moduleId: PLATFORM.moduleName("./modules/templates/details/details")
+                },
+                {
                     name: "templates-details",
                     route: "templates/details/:id",
                     moduleId: PLATFORM.moduleName("./modules/templates/details/details")
