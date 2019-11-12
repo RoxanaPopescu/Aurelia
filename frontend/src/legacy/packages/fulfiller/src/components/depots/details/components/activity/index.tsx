@@ -19,6 +19,7 @@ import { Dialog } from "shared/src/components/dialog/dialog";
 import { observable } from "mobx";
 import "./index.scss";
 import { SubPage } from "shared/src/utillity/page";
+import { Log } from "shared/infrastructure";
 
 interface Props {
   depotId: string;
@@ -239,7 +240,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
       this.openRoute = undefined;
       this.service.resumePolling();
     } catch (error) {
-      alert("Could not save remarks for route");
+      Log.error("Could not save remarks for route", error);
     }
   }
 }

@@ -24,6 +24,7 @@ import "./index.scss";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
 import { ButtonSize } from "../../../../../shared/src/webKit/button/index";
+import { Log } from "shared/infrastructure";
 
 @observer
 export default class AutoDispatchComponent extends React.Component {
@@ -177,7 +178,7 @@ export default class AutoDispatchComponent extends React.Component {
       try {
         await this.autoDispatchService.deleteRule(rule);
       } catch (error) {
-        alert("Error: Could not delete rule.");
+        Log.error("Could not delete rule", error);
       }
     }
   }
@@ -194,7 +195,7 @@ export default class AutoDispatchComponent extends React.Component {
       this.selectedRule = this.openRule;
       this.openRule = undefined;
     } catch (error) {
-      alert("Error: Could not save rule.");
+      Log.error("Could not save rule", error);
     }
   }
 

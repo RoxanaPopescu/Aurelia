@@ -15,6 +15,7 @@ import { Vehicle } from "../../models/vehicle";
 import { VehicleList } from "./components/vehicleList/vehicleList";
 import { VehicleForm } from "./components/vehicleForm/vehicleForm";
 import "./driverVehicles.scss";
+import { Log } from "shared/infrastructure";
 
 export interface DriverProfileProps {
   vehicleService: VehicleService;
@@ -85,7 +86,7 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
       this.validate = false;
     } catch (error) {
       this.validate = true;
-      alert(Localization.operationsValue("Driver_Vehicles_CouldNotAddVehicle"));
+      Log.error(Localization.operationsValue("Driver_Vehicles_CouldNotAddVehicle"), error);
     }
   }
 
@@ -96,9 +97,7 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
         this.props.driverService.driver!.id!
       );
     } catch (error) {
-      alert(
-        Localization.operationsValue("Driver_Vehicles_CouldNotRemoveVehicle")
-      );
+      Log.error(Localization.operationsValue("Driver_Vehicles_CouldNotRemoveVehicle"), error);
     }
   }
 }

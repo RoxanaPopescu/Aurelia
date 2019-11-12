@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Input, Button, ButtonType, ButtonSize } from "shared/src/webKit";
 import { observable } from "mobx";
 import { AgreementsService } from "shared/src/services/agreementsService";
+import { Log } from "shared/infrastructure";
 
 export interface Props {
   added: () => void;
@@ -31,7 +32,7 @@ export class InviteFulfiller extends React.Component<Props> {
         this.props.added();
       })
       .catch(error => {
-        window.alert("Der skete desværre en fejl: " + error.message);
+        Log.error(error);
         this.loading = false;
       });
   }

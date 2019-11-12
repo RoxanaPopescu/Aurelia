@@ -26,7 +26,7 @@ export class DepotRouteService {
     this.routes = undefined;
     this.depotId = depotId;
     this.date = date;
-    
+
     this.resumePolling();
   }
 
@@ -46,7 +46,7 @@ export class DepotRouteService {
       try {
         this.fetchRoutes(this.depotId, this.date);
       } catch (error) {
-        console.warn("Error: Could not get routes for depot.", error);
+        console.warn("Could not get routes for depot", error);
       }
     }, 10000);
   }

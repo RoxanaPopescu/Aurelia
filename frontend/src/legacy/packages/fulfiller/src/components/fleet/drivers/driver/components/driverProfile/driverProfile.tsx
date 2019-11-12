@@ -10,6 +10,7 @@ import H from "history";
 import "./driverProfile.scss";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 import { Dialog } from "shared/src/components/dialog/dialog";
+import { Log } from "shared/infrastructure";
 
 export interface DriverProfileProps {
   history: H.History;
@@ -117,7 +118,7 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
       this.validate = true;
     } catch (error) {
       this.validate = true;
-      alert(Localization.operationsValue("Driver_Profile_CouldNotSaveDriver"));
+      Log.error(Localization.operationsValue("Driver_Profile_CouldNotSaveDriver"), error);
     }
   }
 
@@ -129,7 +130,7 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
       await this.props.driverService.deleteDriver();
       this.props.history.push(FulfillerSubPage.path(FulfillerSubPage.DriverList));
     } catch (error) {
-      alert(Localization.operationsValue("Driver_Profile_CouldNotDeleteDriver"));
+      Log.error(Localization.operationsValue("Driver_Profile_CouldNotDeleteDriver"), error);
     }
   }
 
@@ -141,7 +142,7 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
     try {
       await this.props.driverService.setPassword(newPassword);
     } catch (error) {
-      alert(Localization.operationsValue("Driver_Profile_CouldNotSetPassword"));
+      Log.error(Localization.operationsValue("Driver_Profile_CouldNotSetPassword"), error);
     }
     this.newPassword = undefined;
     this.changePassword = false;

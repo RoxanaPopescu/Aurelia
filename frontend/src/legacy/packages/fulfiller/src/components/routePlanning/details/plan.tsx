@@ -18,6 +18,7 @@ import RoutePlanningUnscheduledStopsComponent from "./unscheduledStops";
 import H from "history";
 import { FulfillerSubPage } from "../../navigation/page";
 import RoutePlanningOrderIdsComponent from "./header/orderIds";
+import { Log } from "shared/infrastructure";
 
 interface Props {
   history: H.History;
@@ -183,7 +184,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
 
   render() {
     if (this.props.store.plan.meta.timeFrame.duration.as("days") >= 7) {
-      alert("Incorrect data of route plan. The duration is over 7 days");
+      Log.error("Incorrect data of route plan. The duration is over 7 days");
       return <div />;
     }
 

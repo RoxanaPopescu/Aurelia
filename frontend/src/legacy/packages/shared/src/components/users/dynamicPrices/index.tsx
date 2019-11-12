@@ -10,6 +10,7 @@ import Templates from "./templates";
 import Rule from "./rule";
 import Terms from "./terms";
 import { Button, ButtonType } from "shared/src/webKit";
+import { Log } from "shared/infrastructure";
 
 @observer
 export default class DynamicPrice extends React.Component {
@@ -34,7 +35,7 @@ export default class DynamicPrice extends React.Component {
         this.store.selectedTemplate = true;
         break;
       case DynamicPricePage.Terms:
-        alert("missing...");
+        Log.error("Missing...");
         break;
       case DynamicPricePage.Rules:
         this.store.selectedRules = true;

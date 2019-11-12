@@ -16,6 +16,7 @@ import { Driver } from "./components/driver/driver";
 import "./splitRoutePanel.scss";
 import Localization from "shared/src/localization";
 import { VehicleType } from "shared/src/model/logistics/vehicleType";
+import { Log } from "shared/infrastructure";
 
 export interface SplitRoutePanelProps {
   routesService: RoutesService;
@@ -125,9 +126,7 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
     try {
       this.drivers = await this.routeSplitService.getDrivers();
     } catch (error) {
-      alert(
-        Localization.sharedValue("LiveTracking_RouteSplit_CouldNotGetDrivers")
-      );
+      Log.error(Localization.sharedValue("LiveTracking_RouteSplit_CouldNotGetDrivers"), error);
     }
   }
 
@@ -178,7 +177,7 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
         this.props.selectedStops.map(s => s.id)
       );
 
-      alert(
+      Log.info(
         Localization.operationsValue("LiveTracking_RouteSplit_Success")
           .replace(
             "{stops}",
@@ -192,8 +191,9 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
       this.reset();
       this.props.onBackClick();
     } catch (error) {
-      alert(
-        Localization.sharedValue("LiveTracking_RouteSplit_CouldNotSplitRoute")
+      Log.error(
+        Localization.sharedValue("LiveTracking_RouteSplit_CouldNotSplitRoute"),
+        error
       );
     }
   }

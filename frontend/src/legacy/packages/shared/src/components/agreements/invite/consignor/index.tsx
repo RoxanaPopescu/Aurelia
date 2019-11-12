@@ -4,6 +4,7 @@ import { Input, Button, ButtonType, ButtonSize, InputPhone, InputNumbers } from 
 import { observable } from "mobx";
 import { AgreementsService } from "shared/src/services/agreementsService";
 import { Phone } from "shared/src/model/general/phone";
+import { Log } from "shared/infrastructure";
 
 export interface Props {
   added: () => void;
@@ -40,7 +41,7 @@ export class InviteConsignor extends React.Component<Props> {
         this.props.added();
       })
       .catch(error => {
-        window.alert("Der skete desværre en fejl: " + error.message);
+        Log.error(error);
         this.loading = false;
       });
   }
@@ -141,7 +142,7 @@ export class InviteConsignor extends React.Component<Props> {
           minlength={2}
           value={this.phoneCountryPrefix ? parseInt(this.phoneCountryPrefix) : undefined}
         />
-        
+
         <Button
           type={ButtonType.Action}
           size={ButtonSize.Medium}

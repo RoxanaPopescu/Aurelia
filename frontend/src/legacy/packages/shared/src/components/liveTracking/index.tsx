@@ -14,6 +14,7 @@ import { RoutePanel } from "./components/panels/routePanel/routePanel";
 import { SplitRoutePanel } from "./components/panels/splitRoutePanel/splitRoutePanel";
 import "./components/panels/panel.scss";
 import "./index.scss";
+import { Log } from "shared/infrastructure";
 
 @observer
 export default class LiveTrackingComponent extends React.Component {
@@ -222,7 +223,7 @@ export default class LiveTrackingComponent extends React.Component {
 
   private onConfirmSplitClick(): void {
     this.selectedStops = undefined;
-    alert(Localization.sharedValue("LiveTracking_RouteSplit_Completed"));
+    Log.info(Localization.sharedValue("LiveTracking_RouteSplit_Completed"));
     history.back();
   }
 }

@@ -6,6 +6,7 @@ import Localization from "shared/src/localization";
 import { Button, ButtonType } from "shared/src/webKit";
 import { AutoDispatchRule, AutoDispatchRulePolygon } from "../../services/autoDispatchService";
 import "./editRuleLayer.scss";
+import { Log } from "shared/infrastructure";
 
 export interface Props {
   rule: AutoDispatchRule;
@@ -27,7 +28,7 @@ export class EditRuleLayerComponent extends React.Component<Props> {
       this.reset();
     }
   }
-  
+
   public render() {
 
     return (
@@ -56,9 +57,9 @@ export class EditRuleLayerComponent extends React.Component<Props> {
             }
           }}
         />}
-        
+
         <div className="c-autoDispatch-editRuleLayer-actions">
-          
+
           {this.mode === "ready" &&
           <Button type={ButtonType.Action} onClick={() => this.onDrawNewArea()}>
             {Localization.operationsValue("Routes_AutoDispatch_Map_DrawNewArea")}
@@ -89,12 +90,12 @@ export class EditRuleLayerComponent extends React.Component<Props> {
 
     this.props.rule.conditions.polygons = this.polygons
       .map(p => new AutoDispatchRulePolygon(p));
-    
+
     try {
       await this.props.onSave();
       this.reset();
     } catch (error) {
-      alert("Error: Could not save the new area.");
+      Log.error("Could not save the new area", error);
       this.props.rule.conditions.polygons = originalPolygons;
     }
   }
