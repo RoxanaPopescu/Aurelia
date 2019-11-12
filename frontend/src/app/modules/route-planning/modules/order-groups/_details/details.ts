@@ -102,7 +102,7 @@ export class DetailsPage
 
         try
         {
-            await this._orderGroupsService.create(this.orderGroup);
+            this.orderGroup = await this._orderGroupsService.create(this.orderGroup);
         }
         catch (error)
         {
@@ -125,7 +125,7 @@ export class DetailsPage
 
         try
         {
-            await this._orderGroupsService.update(this.orderGroup);
+            this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
         }
         catch (error)
         {
@@ -241,8 +241,9 @@ export class DetailsPage
     {
         try
         {
-            await this._orderGroupsService.pause(this.orderGroup);
+            const result = await this._orderGroupsService.pause(this.orderGroup);
 
+            this.orderGroup.etag = result.etag;
             this.orderGroup.paused = true;
         }
         catch (error)
@@ -259,8 +260,9 @@ export class DetailsPage
     {
         try
         {
-            await this._orderGroupsService.unpause(this.orderGroup);
+            const result = await this._orderGroupsService.unpause(this.orderGroup);
 
+            this.orderGroup.etag = result.etag;
             this.orderGroup.paused = false;
         }
         catch (error)

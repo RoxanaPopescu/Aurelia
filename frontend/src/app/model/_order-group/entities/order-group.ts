@@ -27,7 +27,7 @@ export class OrderGroup
     /**
      * The entity tag used for optimistic concurrency control.
      */
-    public readonly etag: string;
+    public etag: string;
 
     /**
      * The ID of the order group.
