@@ -14,9 +14,18 @@ $__summary: comment;
     user-select: none;
 }
 
+/// Modifier class that prevents user selection starting within the element.
+.user-select-auto
+{
+    user-select: auto;
+}
+
 /// Modifier class that allows user selection with no constraints.
 .user-select-text
 {
+    // Fallback for browsers that do not support `text`.
+    user-select: auto;
+
     user-select: text;
 }
 
@@ -27,7 +36,7 @@ $__summary: comment;
     @include mark-experimental;
 
     // Fallback for browsers that do not support `contain`.
-    user-select: text;
+    user-select: auto;
 
     user-select: contain;
 }
@@ -36,5 +45,8 @@ $__summary: comment;
 /// but enforces that the content must all be selected atomically.
 .user-select-all
 {
+    // Fallback for browsers that do not support `all`.
+    user-select: auto;
+
     user-select: all;
 }

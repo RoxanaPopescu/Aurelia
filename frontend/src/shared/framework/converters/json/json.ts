@@ -8,16 +8,24 @@ export class JsonValueConverter
      * @param value The value to convert to a JSON string.
      * @param replacer The replacer function to use.
      * @param space The number of spaces to use when indenting.
+     * @param breakBeforeBlock True to add a line break before an opening brace or bracket, otherwise false.
      * @returns The JSON string representing the value.
      */
-    public toView(value: any, replacer?: (this: any, key: string, value: any) => any, space = 4): string
+    public toView(value: any, replacer?: (this: any, key: string, value: any) => any, space = 4, breakBeforeBlock = true): string
     {
         if (value === undefined)
         {
             return value;
         }
 
-        return JSON.stringify(value, replacer, space);
+        let json = JSON.stringify(value, replacer, space);
+
+        if (breakBeforeBlock)
+        {
+            json = json.replace(/^(\s*)(.*?:) (\{|\[)$/m, "$1$2\n$1$3");
+        }
+
+        return json;
     }
 
     /**

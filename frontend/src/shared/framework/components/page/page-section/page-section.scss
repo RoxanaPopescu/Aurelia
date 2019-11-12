@@ -85,6 +85,9 @@ page-section
         transition:
             color var(--animation-duration-medium),
             opacity var(--animation-duration-medium);
+
+        // Prevent selection.
+        user-select: none;
     }
 
     .page-section-content

@@ -58,9 +58,11 @@ export class InfoToast
     /**
      * Called when a mousedown event occurs within the toast.
      */
-    protected cancelScheduledClose(): void
+    protected cancelScheduledClose(): boolean
     {
         // Prevents the toast from closing automatically.
         clearTimeout(this._closeTimeouthandle);
+
+        return true;
     }
 }
