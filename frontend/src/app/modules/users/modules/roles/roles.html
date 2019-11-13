@@ -1,10 +1,76 @@
 <template>
 
-    <require from="legacy/wrappers/users/roles" as="react-module"></require>
+    <require from="./components/role-item/role-item"></require>
+    <require from="./roles.scss"></require>
 
     <page name="roles">
 
-        <react-module></react-module>
+        <page-content scroll>
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/users/management/users" translate>
+                            Users
+                        </a>
+
+                        <span translate>
+                            Roles
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="solid" accent="neutral" click.trigger="create = true" translate>
+                        New role
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="cards"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <!-- Actions -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <role-item if="condition.bind: create; cache: false;" on-created.call="activate()" on-canceled.call="create = false()"></role-item>
+
+                    <template repeat.for="role of roles">
+
+                        <role-item role-info.bind="role"></role-item>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="roles == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="roles.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
 
     </page>
 

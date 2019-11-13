@@ -25,18 +25,14 @@ export class UsersModule
             {
                 name: "list",
                 route: "management/users",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/_list/list") :
-                    PLATFORM.moduleName("./modules/users/users"),
+                moduleId: PLATFORM.moduleName("./modules/list/list"),
                 title: routeTitles.list,
                 nav: false
             },
             {
                 name: "roles",
                 route: "management/roles",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/_roles/roles") :
-                    PLATFORM.moduleName("./modules/roles/roles"),
+                moduleId: PLATFORM.moduleName("./modules/roles/roles"),
                 title: routeTitles.roles,
                 nav: true,
                 icon: "roles"
