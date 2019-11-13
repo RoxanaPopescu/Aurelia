@@ -33,7 +33,7 @@ const compilerOptions: ICompilerOptions =
     analyze: false,
     environment:
     {
-        commit: process.env.COMMIT_SHA,
+        commit: undefined,
 
         name: commander.environment,
         platform: "cloud",

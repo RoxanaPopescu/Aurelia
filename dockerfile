@@ -4,6 +4,10 @@ FROM node:10-alpine as build-frontend-stage
 
 ## Setup default build variables.
 ARG ENVIRONMENT=development
+ARG COMMIT_SHA
+
+## Set the node environment for the build process.
+ENV NODE_ENV build
 
 ## Add additional packages.
 RUN apk add --no-cache git
@@ -51,14 +55,17 @@ WORKDIR /usr/app/frontend
 ## Start the build.
 RUN npm run translate-export
 RUN npm run translate-pseudo
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=x-pseudo
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da --commit=${COMMIT_SHA}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US --commit=${COMMIT_SHA}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=x-pseudo --commit=${COMMIT_SHA}
 
 
 # Stage 2: Build the `frontend-cloud` package.
 
 FROM node:10-alpine as build-frontend-cloud-stage
+
+## Set the node environment for the build process.
+ENV NODE_ENV build
 
 ## Add additional packages.
 RUN apk add --no-cache git
@@ -95,6 +102,9 @@ RUN npm run build
 # Stage 3: Run
 
 FROM node:10-alpine as run-stage
+
+## Set the node environment for the build process.
+ENV NODE_ENV ${ENVIRONMENT}
 
 ## Add additional packages.
 RUN apk add --no-cache git

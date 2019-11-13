@@ -19,6 +19,9 @@ commander
     .option("--api <url>",
         "The base URL to use for API requests")
 
+    .option("--commit <sha>",
+        "The SHA identifying the commit being built")
+
     .parse(process.argv);
 
 const compilerOptions: ICompilerOptions =
@@ -27,7 +30,7 @@ const compilerOptions: ICompilerOptions =
     analyze: true,
     environment:
     {
-        commit: process.env.COMMIT_SHA,
+        commit: commander.commit,
 
         name: commander.environment,
         platform: commander.platform,
