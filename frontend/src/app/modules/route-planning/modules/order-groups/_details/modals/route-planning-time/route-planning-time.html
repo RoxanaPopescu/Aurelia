@@ -53,7 +53,7 @@
                     </span>
 
                     <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
-                        ${dayOfWeek | weekday}
+                        ${dayOfWeek | weekday | case: 'sentence'}
                     </item>
 
                     <div slot="validation">
@@ -161,7 +161,7 @@
                     </span>
 
                     <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
-                        ${dayOfWeek | weekday}
+                        ${dayOfWeek | weekday | case: 'sentence'}
                     </item>
 
                     <div slot="validation">

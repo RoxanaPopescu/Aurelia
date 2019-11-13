@@ -247,7 +247,7 @@
 
                                     <data-table-cell>
                                         <span class="text-truncate">
-                                            ${routePlanningTime.delivery.from.dayOfWeek | weekday}
+                                            ${routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'}
                                         </span>
                                     </data-table-cell>
 
@@ -259,7 +259,7 @@
 
                                     <data-table-cell>
                                         <span class="text-truncate">
-                                            ${routePlanningTime.planning.dayOfWeek | weekday}
+                                            ${routePlanningTime.planning.dayOfWeek | weekday | case: 'sentence'}
                                         </span>
                                     </data-table-cell>
 
