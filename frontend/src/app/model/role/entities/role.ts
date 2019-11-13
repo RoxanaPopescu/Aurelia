@@ -37,7 +37,7 @@ export class Role extends RoleInfo
         const role = new Role();
         role.id = this.id;
         role.name = this.name;
-        role.claimGroups = this.claimGroups;
+        role.claimGroups = [...this.claimGroups];
 
         return role;
     }

@@ -52,6 +52,7 @@ identity-picture
     {
         // Center the content.
         position: absolute;
+        padding-top: 0.08em; // HACK: Needed because the Nunito font is not exactly well aligned..
 
         // Ensure the content appears on top of the surface.
         z-index: 1;

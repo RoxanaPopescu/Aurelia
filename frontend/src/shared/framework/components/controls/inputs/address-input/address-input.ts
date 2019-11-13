@@ -184,7 +184,7 @@ export class AddressInputCustomElement
         this.open = true;
         this.focusedValue = this.value;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue());
+        setTimeout(() => this.itemPicker.scrollToFocusedValue(), 100);
 
         if (focusInput)
         {
