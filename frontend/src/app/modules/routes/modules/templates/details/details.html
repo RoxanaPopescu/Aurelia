@@ -160,7 +160,7 @@
 
                         <div class="control-row margin-large-bottom --all-days">
 
-                            <check-toggle label="after" value.bind="false">
+                            <check-toggle label="after" value.bind="allDays.enabled" change.trigger="onAllDaysRecurrenceChanged('enabled')">
 
                                 <div slot="heading" translate>
                                     All days
@@ -168,21 +168,49 @@
 
                             </check-toggle>
 
-                            <select-input label="above" none.bind="false" class="flex-grow">
+                            <select-input
+                                label="above"
+                                value.bind="allDays.driver"
+                                display-value.bind="allDays.driver.id"
+                                none.bind="false"
+                                change.trigger="onAllDaysRecurrenceChanged('driver')"
+                                class="flex-grow">
 
                                 <div slot="heading" translate>
                                     Driver
                                 </div>
 
+                                <item model.bind="{ id: 'driver-1' }">
+                                    driver-1
+                                </item>
+
+                                <item model.bind="{ id: 'driver-2' }">
+                                    driver-2
+                                </item>
+
                             </select-input>
 
                             <span translate>or</span>
 
-                            <select-input label="above" none.bind="false" class="flex-grow">
+                            <select-input
+                                label="above"
+                                value.bind="allDays.status"
+                                display-value.bind="allDays.status.slug"
+                                none.bind="false"
+                                change.trigger="onAllDaysRecurrenceChanged('status')"
+                                class="flex-grow">
 
                                 <div slot="heading" translate>
                                     Status
                                 </div>
+
+                                <item model.bind="{ slug: 'status-1' }">
+                                    status-1
+                                </item>
+
+                                <item model.bind="{ slug: 'status-2' }">
+                                    status-2
+                                </item>
 
                             </select-input>
 
@@ -190,23 +218,54 @@
 
                         <hr class="hr-line margin-large-bottom">
 
-                        <div repeat.for="weekday of 6" class="control-row margin-bottom">
+                        <div repeat.for="i of 6" class="control-row margin-bottom">
 
-                            <check-toggle label="after" value.bind="false">
+                            <check-toggle
+                                label="after"
+                                value.bind="template.recurrence[i].enabled"
+                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'enabled')">
 
                                 <div slot="heading">
-                                    ${weekday + 1 | weekday}
+                                    ${i + 1 | weekday}
                                 </div>
 
                             </check-toggle>
 
-                            <select-input none.bind="false" class="flex-grow">
+                            <select-input
+                                disabled.bind="!template.recurrence[i].enabled"
+                                none.bind="false"
+                                value.bind="template.recurrence[i].driver"
+                                display-value.bind="template.recurrence[i].driver.id"
+                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'driver')"
+                                class="flex-grow">
+
+                                <item model.bind="{ id: 'driver-1' }">
+                                    driver-1
+                                </item>
+
+                                <item model.bind="{ id: 'driver-2' }">
+                                    driver-2
+                                </item>
 
                             </select-input>
 
                             <span translate>or</span>
 
-                            <select-input none.bind="false" class="flex-grow">
+                            <select-input
+                                disabled.bind="!template.recurrence[i].enabled"
+                                none.bind="false"
+                                value.bind="template.recurrence[i].status"
+                                display-value.bind="template.recurrence[i].status.slug"
+                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'status')"
+                                class="flex-grow">
+
+                                <item model.bind="{ slug: 'status-1' }">
+                                    status-1
+                                </item>
+
+                                <item model.bind="{ slug: 'status-2' }">
+                                    status-2
+                                </item>
 
                             </select-input>
 
