@@ -1,8 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { LocaleService } from "../../services/locale";
 
-// The cache in which number formats will be stored.
-const pluralFormatCache = new Map<string, Intl.PluralFormat>();
+// The cache in which plural rules will be stored.
+const pluralRulesCache = new Map<string, Intl.PluralRules>();
 
 /**
  * Represents a value converter that selects the appropiate form of a string, based on the plural category of a number.
@@ -35,7 +35,7 @@ export class PluralValueConverter
             return value;
         }
 
-        const pluralRules = this.getPluralFormat(this._localeService.locale.code);
+        const pluralRules = this.getPluralRules(this._localeService.locale.code);
         const pluralCategories = pluralRules.resolvedOptions().pluralCategories;
 
         if (strings.length !== pluralCategories.length)
@@ -50,21 +50,21 @@ export class PluralValueConverter
     }
 
     /**
-     * Gets or creates the specified plural format.
+     * Gets or creates the specified plural rules.
      * @param localeCode The locale code to use.
-     * @returns The specified plural format.
+     * @returns The specified plural rules.
      */
-    private getPluralFormat(localeCode: string): Intl.PluralFormat
+    private getPluralRules(localeCode: string): Intl.PluralRules
     {
         const cacheKey = `${localeCode}`;
-        let pluralFormat = pluralFormatCache.get(cacheKey);
+        let pluralRules = pluralRulesCache.get(cacheKey);
 
-        if (pluralFormat == null)
+        if (pluralRules == null)
         {
-            pluralFormat = new Intl.PluralFormat(localeCode);
-            pluralFormatCache.set(cacheKey, pluralFormat);
+            pluralRules = new Intl.PluralRules(localeCode);
+            pluralRulesCache.set(cacheKey, pluralRules);
         }
 
-        return pluralFormat;
+        return pluralRules;
     }
 }

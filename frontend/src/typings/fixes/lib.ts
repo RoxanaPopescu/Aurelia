@@ -22,56 +22,6 @@ declare namespace Intl
     function getCanonicalLocales(localeCodes: string | string[]): string[];
 
     /**
-     * Represents an object specifying options for language-sensitive plural form selection.
-     */
-    interface PluralFormatOptions
-    {
-        /**
-         * The locale matching algorithm to use.
-         * Possible values are `lookup` and `best fit`.
-         * The default is `best fit`.
-         */
-        localeMatcher?: "lookup" | "best-fit";
-
-        /**
-         * The type to use. Possible values are:
-         * `cardinal` for cardinal numbers (refering to the quantity of things). This is the default value.
-         * `ordinal` for ordinal number (refering to the ordering or ranking of things, e.g. "1st", "2nd", "3rd" in English).
-         */
-        type?: "cardinal" | "ordinal";
-    }
-
-    /**
-     * Represents an object specifying the resolved options for language-sensitive plural form selection.
-     */
-    interface ResolvedPluralFormatOptions extends PluralFormatOptions
-    {
-        /**
-         * An array of plural categories used by the given language.
-         */
-        pluralCategories: string[];
-    }
-
-    /**
-     * Represents an object that enable language-sensitive list formatting.
-     */
-    interface PluralFormat
-    {
-        select(number: number): string;
-        resolvedOptions(): ResolvedPluralFormatOptions;
-    }
-
-    /**
-     * The `Intl.PluralFormat` object is a constructor for objects that enable language-sensitive list formatting.
-     */
-    const PluralFormat:
-    {
-        new(locales?: string | string[], options?: PluralFormatOptions): PluralFormat;
-        (locales?: string | string[], options?: PluralFormatOptions): PluralFormat;
-        supportedLocalesOf(locales: string | string[], options?: PluralFormatOptions): string[];
-    };
-
-    /**
      * Represents an object specifying options for language-sensitive list formatting.
      */
     interface ListFormatOptions

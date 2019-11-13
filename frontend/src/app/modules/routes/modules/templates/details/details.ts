@@ -1,6 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
+import { AgreementService } from "app/model/agreement";
 import { RouteTemplateService, RouteTemplateInfo, RouteTemplate } from "app/model/route-template";
+import { Consignor } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -19,13 +21,16 @@ export class DetailsPage
     /**
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
+     * @param agreementService The `AgreementService` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService)
+    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService)
     {
         this._routeTemplateService = routeTemplateService;
+        this._agreementService = agreementService;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
+    private readonly _agreementService: AgreementService;
 
     /**
      * The most recent update operation.
@@ -36,6 +41,11 @@ export class DetailsPage
      * The template to present.
      */
     protected template: Partial<RouteTemplateInfo>;
+
+    /**
+     * The consignors to show in the filter.
+     */
+    protected consignors: Consignor[];
 
     /**
      * Called by the framework when the module is activated.
@@ -56,6 +66,16 @@ export class DetailsPage
         {
             this.template = new RouteTemplate();
         }
+
+        // Execute tasks that should not block rendering.
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            const agreements = await this._agreementService.getAll();
+            this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+
+        })();
     }
 
     /**

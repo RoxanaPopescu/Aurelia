@@ -64,11 +64,21 @@
 
                             </text-input>
 
-                            <select-input label="above" class="flex-grow" value.bind="template.consignor">
+                            <select-input
+                                label="above"
+                                class="flex-grow"
+                                value.bind="template.consignor"
+                                display-value.bind="template.consignor.primaryName"
+                                none.bind="false"
+                                filter="auto">
 
                                 <div slot="heading" translate>
                                     Consignor
                                 </div>
+
+                                <item repeat.for="consignor of consignors" model.bind="consignor">
+                                    ${consignor.primaryName}
+                                </item>
 
                             </select-input>
 
@@ -83,19 +93,29 @@
                                 </div>
 
                                 <span slot="after" class="opacity-faded">
-                                    ${template.price.currency.currencyCode}
+                                    ${template.price.currencyCode}
                                 </span>
 
                             </number-input>
 
-                            <select-input label="above" none.bind="false" class="flex-grow" value.bind="template.routeCreationTime">
+                            <select-input
+                                label="above"
+                                class="flex-grow"
+                                value.bind="template.routeCreationTime"
+                                display-value.translate="${template.routeCreationTime} ${template.routeCreationTime | plural: 'day in advance' : 'days in advance'}"
+                                none.bind="false"
+                                filter="auto">
 
                                 <div slot="heading" translate>
-                                    Time of route creation
+                                    Route creation time
                                 </div>
 
-                                <item>
-                                    1 month before
+                                <item model.bind="1">
+                                    1 day in advance
+                                </item>
+
+                                <item model.bind="7">
+                                    7 days in advance
                                 </item>
 
                             </select-input>
@@ -107,7 +127,7 @@
                             <date-input label="above" class="flex-grow" value.bind="template.startDateTime">
 
                                 <div slot="heading" translate>
-                                    From date
+                                    Recurrence start
                                 </div>
 
                             </date-input>
@@ -115,7 +135,7 @@
                             <date-input label="above" class="flex-grow" value.bind="template.endDateTime">
 
                                 <div slot="heading" translate>
-                                    To date
+                                    Recurrence end
                                 </div>
 
                             </date-input>

@@ -12,7 +12,7 @@ const routeTemplate =
         address: null,
         contactPhone: null
     },
-    price: { amount: 100, currency: "DKK" },
+    price: { amount: 100, currencyCode: "DKK" },
     startDateTime: "2019-10-21T00:00+02:00",
     endDateTime: "2019-11-01T00:00+02:00",
     instructions: "Lorem ipsum dolor sit amet"
