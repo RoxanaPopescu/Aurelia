@@ -58,9 +58,7 @@ export class RoutePlanningModule
             {
                 name: "order-groups-list",
                 route: "order-groups/list",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/order-groups/_list/list") :
-                    PLATFORM.moduleName("./modules/order-groups/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
                 title: routeTitles.orderGroupsList,
                 nav: true,
                 icon: "order-groups"
