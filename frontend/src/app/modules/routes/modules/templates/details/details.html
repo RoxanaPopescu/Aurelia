@@ -118,6 +118,10 @@
                                     7 days in advance
                                 </item>
 
+                                <item model.bind="30">
+                                    30 days in advance
+                                </item>
+
                             </select-input>
 
                         </div>
@@ -195,7 +199,7 @@
                             <select-input
                                 label="above"
                                 value.bind="allDays.status"
-                                display-value.bind="allDays.status.slug"
+                                display-value.bind="allDays.status.name"
                                 none.bind="false"
                                 change.trigger="onAllDaysRecurrenceChanged('status')"
                                 class="flex-grow">
@@ -204,12 +208,8 @@
                                     Status
                                 </div>
 
-                                <item model.bind="{ slug: 'status-1' }">
-                                    status-1
-                                </item>
-
-                                <item model.bind="{ slug: 'status-2' }">
-                                    status-2
+                                <item repeat.for="status of statuses" model.bind="status">
+                                    ${status.name}
                                 </item>
 
                             </select-input>
@@ -223,7 +223,7 @@
                             <check-toggle
                                 label="after"
                                 value.bind="template.recurrence[i].enabled"
-                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'enabled')">
+                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'enabled')">
 
                                 <div slot="heading">
                                     ${i + 1 | weekday}
@@ -236,7 +236,7 @@
                                 none.bind="false"
                                 value.bind="template.recurrence[i].driver"
                                 display-value.bind="template.recurrence[i].driver.id"
-                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'driver')"
+                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'driver')"
                                 class="flex-grow">
 
                                 <item model.bind="{ id: 'driver-1' }">
@@ -255,16 +255,12 @@
                                 disabled.bind="!template.recurrence[i].enabled"
                                 none.bind="false"
                                 value.bind="template.recurrence[i].status"
-                                display-value.bind="template.recurrence[i].status.slug"
-                                change.trigger="onSingleDayRecurrenceChanged(template.recurrence[i], 'status')"
+                                display-value.bind="template.recurrence[i].status.name"
+                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'status')"
                                 class="flex-grow">
 
-                                <item model.bind="{ slug: 'status-1' }">
-                                    status-1
-                                </item>
-
-                                <item model.bind="{ slug: 'status-2' }">
-                                    status-2
+                                <item repeat.for="status of statuses" model.bind="status">
+                                    ${status.name}
                                 </item>
 
                             </select-input>

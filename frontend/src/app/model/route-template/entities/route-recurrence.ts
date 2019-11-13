@@ -1,5 +1,5 @@
-import { RouteStatus } from "app/model/route/entities/route-status";
 import { Driver } from "app/model/driver";
+import { RouteStatus } from "./route-status";
 
 /**
  * Represents the recurrence settings to use for a template.
@@ -23,7 +23,7 @@ export class RouteRecurrence
 
             if (data.status != null)
             {
-                this.status = new RouteStatus(data.driver);
+                this.status = new RouteStatus(data.status);
             }
         }
         else

@@ -16,6 +16,7 @@ export class RouteTemplateInfo
             this.reference = data.reference;
             this.consignor = new Fulfiller(data.consignor);
             this.price = data.price;
+            this.routeCreationTime = data.routeCreationTime;
             this.startDateTime = DateTime.fromISO(data.startDateTime, { setZone: true });
             this.endDateTime = DateTime.fromISO(data.endDateTime, { setZone: true });
             this.instructions = data.instructions;

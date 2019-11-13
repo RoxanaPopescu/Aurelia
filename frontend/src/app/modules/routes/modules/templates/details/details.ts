@@ -1,15 +1,17 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { AgreementService } from "app/model/agreement";
-import { RouteTemplateService, RouteTemplate } from "app/model/route-template";
+import { RouteTemplateService, RouteTemplate, RouteRecurrence, RouteStatus } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
-import { RouteRecurrence } from "app/model/route-template/entities/route-recurrence";
 
 /**
  * Represents the route parameters for the page.
  */
 interface IRouteParams
 {
+    /**
+     * The ID of the route template.
+     */
     id?: string;
 }
 
@@ -44,9 +46,14 @@ export class DetailsPage
     protected template: Partial<RouteTemplate>;
 
     /**
-     * The consignors to show in the filter.
+     * The available consignors.
      */
     protected consignors: Consignor[];
+
+    /**
+     * The available statuses.
+     */
+    protected statuses = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
 
     /**
      * The route recurrence representing the "All days" options.
@@ -99,26 +106,42 @@ export class DetailsPage
         }
     }
 
+    /**
+     * Called when a change is made to the recurrence settings for "All days".
+     * Ensures driver and status are not both selected, and sets the weekday settings for each weekday.
+     * @param property The property that changed.
+     */
     protected onAllDaysRecurrenceChanged(property: "enabled" | "driver" | "status"): void
     {
         let setDriverAndStatus = false;
 
-        if (property === "enabled")
+        switch (property)
         {
-            for (const recurrence of this.template.recurrence!)
+            case "enabled":
             {
-                recurrence.enabled = this.allDays.enabled;
+                for (const recurrence of this.template.recurrence!)
+                {
+                    recurrence.enabled = this.allDays.enabled;
+                }
+
+                break;
             }
-        }
-        else if (property === "driver")
-        {
-            this.allDays.status = undefined;
-            setDriverAndStatus = true;
-        }
-        else if (property === "status")
-        {
-            this.allDays.driver = undefined;
-            setDriverAndStatus = true;
+
+            case "driver":
+            {
+                this.allDays.status = undefined;
+                setDriverAndStatus = true;
+
+                break;
+            }
+
+            case "status":
+            {
+                this.allDays.driver = undefined;
+                setDriverAndStatus = true;
+
+                break;
+            }
         }
 
         if (setDriverAndStatus)
@@ -131,28 +154,36 @@ export class DetailsPage
         }
     }
 
-    protected onSingleDayRecurrenceChanged(recurrence: RouteRecurrence, property: "enabled" | "driver" | "status"): void
+    /**
+     * Called when a change is made to the recurrence settings for a specific weekday.
+     * Ensures driver and status are not both selected, and triggers an update of the "All days" settings.
+     * @param property The property that changed.
+     */
+    protected onWeekdayRecurrenceChanged(recurrence: RouteRecurrence, property: "enabled" | "driver" | "status"): void
     {
-        if (property === "enabled")
+        switch (property)
         {
-            if (!recurrence.enabled)
+            case "driver":
             {
-                // recurrence.driver = undefined;
-                // recurrence.status = undefined;
+                recurrence.status = undefined;
+
+                break;
             }
-        }
-        else if (property === "driver")
-        {
-            recurrence.status = undefined;
-        }
-        else if (property === "status")
-        {
-            recurrence.driver = undefined;
+
+            case "status":
+            {
+                recurrence.driver = undefined;
+
+                break;
+            }
         }
 
         this.updateAllDay();
     }
 
+    /**
+     * Sets the recurrence settings for "All days", based on the settings for the weekdays.
+     */
     protected updateAllDay(): void
     {
         this.allDays.enabled = this.template.recurrence!.every(r => r.enabled);
