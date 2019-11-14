@@ -19,12 +19,12 @@
                             Templates
                         </a>
 
-                        <span if.bind="!template.id" translate>
+                        <span if.bind="template && !template.id" translate>
                             New template
                         </span>
 
-                        <span if.bind="!template.id" translate>
-                            ${template.reference}
+                        <span if.bind="template && template.id" translate>
+                            ${originalReference}
                         </span>
 
                     </path-nav>
@@ -32,11 +32,15 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if.bind="!template.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                    <button if.bind="template && template.id" appearance="solid" accent="neutral" click.trigger="onDeleteClick()" translate>
+                        Delete template
+                    </button>
+
+                    <button if.bind="template && !template.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
                         Create template
                     </button>
 
-                    <button if.bind="template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                    <button if.bind="template && template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                         Save template
                     </button>
 

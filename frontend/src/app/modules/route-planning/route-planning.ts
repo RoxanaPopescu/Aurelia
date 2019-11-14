@@ -70,6 +70,12 @@ export class RoutePlanningModule
                 title: routeTitles.orderGroupsDetails
             },
             {
+                name: "order-groups-create",
+                route: "order-groups/create",
+                moduleId: PLATFORM.moduleName("./modules/order-groups/_details/details"),
+                title: routeTitles.orderGroupsDetails
+            },
+            {
                 name: "simulations-list",
                 route: "simulations/list",
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/list/list"),

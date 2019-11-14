@@ -36,6 +36,11 @@ export class DetailsPage
     private readonly _agreementService: AgreementService;
 
     /**
+     * The original reference for the template.
+     */
+    protected originalReference: string | undefined;
+
+    /**
      * The most recent update operation.
      */
     protected fetchOperation: Operation;
@@ -73,6 +78,7 @@ export class DetailsPage
             {
                 // Fetch the data.
                 this.template = await this._routeTemplateService.get(params.id!, signal);
+                this.originalReference = this.template.reference;
 
                 this.updateAllDay();
             });

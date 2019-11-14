@@ -68,6 +68,10 @@ export class DetailsPage
             this.orderGroup = await this._orderGroupsService.get(params.id);
             this.orderGroupName = this.orderGroup.name;
         }
+        else
+        {
+            this.orderGroup = new OrderGroup();
+        }
 
         // Execute tasks that should not block rendering.
 

@@ -63,10 +63,6 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell align="right">
-                            <!-- Icons -->
-                        </data-table-cell>
-
                     </data-table-headers>
 
                     <template repeat.for="template of templates">
@@ -96,22 +92,6 @@
                                 <span class="text-truncate">
                                     ${template.endDateTime | dateTime: 'narrow' : false}
                                 </span>
-                            </data-table-cell>
-
-                            <data-table-cell align="right">
-
-                                <div class="icon-row">
-
-                                    <button appearance="none" accent="primary" click.trigger="onEditClick($index)">
-                                        <icon name="md-edit"></icon>
-                                    </button>
-
-                                    <button appearance="none" accent="primary" click.trigger="onDeleteClick($index)">
-                                        <icon name="md-delete"></icon>
-                                    </button>
-
-                                </div>
-
                             </data-table-cell>
 
                         </data-table-row>

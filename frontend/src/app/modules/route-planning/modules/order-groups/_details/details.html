@@ -38,11 +38,11 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if.bind="!orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                    <button if.bind="orderGroup.id && !orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
                         Pause
                     </button>
 
-                    <button if.bind="orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
+                    <button if.bind="orderGroup.id && orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
                         Unpause
                     </button>
 

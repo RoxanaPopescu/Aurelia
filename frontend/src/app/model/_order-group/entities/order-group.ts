@@ -13,15 +13,24 @@ export class OrderGroup
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        this.etag = data.etag;
-        this.id = data.id;
-        this.name = data.name;
-        this.paused = data.paused;
-        this.timeZone = IANAZone.create(data.timeZone);
-        this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
-        this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(this.timeZone, d));
+        if (data != null)
+        {
+            this.etag = data.etag;
+            this.id = data.id;
+            this.name = data.name;
+            this.paused = data.paused;
+            this.timeZone = IANAZone.create(data.timeZone);
+            this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
+            this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(this.timeZone, d));
+        }
+        else
+        {
+            this.timeZone = IANAZone.create("Europe/Copenhagen");
+            this.matchingCriteria = [];
+            this.routePlanningTimes = [];
+        }
     }
 
     /**
