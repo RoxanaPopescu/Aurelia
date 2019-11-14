@@ -53,4 +53,16 @@ export class RoutePlanningTime
     {
         return new RoutePlanningTime(this._timeZone, JSON.parse(JSON.stringify(this)));
     }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            delivery: this.delivery,
+            planning: this.planning,
+            nextPlanning: this.nextPlanning
+        };
+    }
 }

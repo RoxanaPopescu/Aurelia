@@ -189,6 +189,8 @@ export class TagsInputCustomElement
 
         if (pick && this.focusedValue)
         {
+            // To ensuere a binding update is triggered, replace the
+            // value with a new array including the picked value.
             const value = [...this.value];
             value.push(this.focusedValue);
             this.value = value;
@@ -216,7 +218,7 @@ export class TagsInputCustomElement
     {
         if (this.open)
         {
-            this.closeDropdown(true);
+            this.closeDropdown(true, true);
         }
         else
         {

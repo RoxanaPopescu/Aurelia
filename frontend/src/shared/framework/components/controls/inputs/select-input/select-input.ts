@@ -219,7 +219,7 @@ export class SelectInputCustomElement
     {
         if (this.open)
         {
-            this.closeDropdown(true);
+            this.closeDropdown(true, true);
         }
         else
         {

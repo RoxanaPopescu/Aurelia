@@ -348,7 +348,7 @@ export class TimeInputCustomElement
     {
         if (this.open)
         {
-            this.closeDropdown(true);
+            this.closeDropdown(true, true);
         }
         else
         {

@@ -129,16 +129,22 @@ export class DetailsPage
 
             case "driver":
             {
-                this.allDays.status = undefined;
-                setDriverAndStatus = true;
+                if (this.allDays.driver != null)
+                {
+                    this.allDays.status = undefined;
+                    setDriverAndStatus = true;
+                }
 
                 break;
             }
 
             case "status":
             {
-                this.allDays.driver = undefined;
-                setDriverAndStatus = true;
+                if (this.allDays.status != null)
+                {
+                    this.allDays.driver = undefined;
+                    setDriverAndStatus = true;
+                }
 
                 break;
             }

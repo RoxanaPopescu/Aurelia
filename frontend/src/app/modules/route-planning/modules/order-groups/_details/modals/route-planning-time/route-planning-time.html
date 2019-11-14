@@ -39,7 +39,7 @@
                 <select-input
                     label="above"
                     value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
-                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday"
+                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'"
                     none.bind="false"
                     filter="auto"
                     fixed.bind="true">
@@ -147,7 +147,7 @@
                 <select-input
                     label="above"
                     value.bind="model.routePlanningTime.planning.dayOfWeek"
-                    display-value.bind="model.routePlanningTime.planning.dayOfWeek | weekday"
+                    display-value.bind="model.routePlanningTime.planning.dayOfWeek | weekday | case: 'sentence'"
                     none.bind="false"
                     filter="auto"
                     fixed.bind="true">
