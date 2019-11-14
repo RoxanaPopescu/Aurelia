@@ -10,7 +10,7 @@ export class ModalSectionCustomElement
     /**
      * True if the header slot is empty, otherwise false.
      */
-    protected headerSlotEmpty: any;
+    protected headerSlotEmpty = true;
 
     /**
      * True if the section is expanded, otherwise false.
