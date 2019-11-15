@@ -1,9 +1,7 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { LabelPosition, AutocompleteHint, ItemPickerCustomElement } from "shared/framework";
 import { Operation } from "shared/utilities";
 import { Address } from "app/model/shared";
-import { LabelPosition } from "../../control";
-import { AutocompleteHint } from "../input";
-import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 import { AddressService } from "./services/address-service/address-service";
 
 /**

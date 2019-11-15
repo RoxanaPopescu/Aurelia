@@ -49,3 +49,13 @@ body
      */
     --input-border-width: var(--border-width-thin);
 }
+
+dropdown-icon
+{
+    opacity: 1;
+}
+
+:root
+{
+    --modal-backdrop-color: rgba(171, 190, 199, 0.5);
+}

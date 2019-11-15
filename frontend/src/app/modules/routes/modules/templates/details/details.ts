@@ -3,6 +3,11 @@ import { Operation } from "shared/utilities";
 import { AgreementService } from "app/model/agreement";
 import { RouteTemplateService, RouteTemplate, RouteRecurrence, RouteStatus } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
+import { ConfirmDeleteTemplateDialog } from "./modals/confirm-delete-template/confirm-delete-template";
+import { Log } from "shared/infrastructure";
+import { AppRouter } from "aurelia-router";
+import { ModalService } from "shared/framework";
+import { StopDetailsPanelCustomElement as StopDetailsPanel } from "./modals/stop-details/stop-details";
 
 /**
  * Represents the route parameters for the page.
@@ -25,15 +30,21 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
      * @param agreementService The `AgreementService` instance.
+     * @param modalService The `ModalService` instance.
+     * @param router The `AppRouter` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService)
+    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService, modalService: ModalService, router: AppRouter)
     {
         this._routeTemplateService = routeTemplateService;
         this._agreementService = agreementService;
+        this._modalService = modalService;
+        this._router = router;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _agreementService: AgreementService;
+    private readonly _modalService: ModalService;
+    private readonly _router: AppRouter;
 
     /**
      * The original reference for the template.
@@ -110,6 +121,52 @@ export class DetailsPage
         {
             this.fetchOperation.abort();
         }
+    }
+
+    /**
+     * Called when the "Delete template" button is clicked.
+     * Deletes the template.
+     */
+    protected async onDeleteClick(): Promise<void>
+    {
+        if (!await this._modalService.open(ConfirmDeleteTemplateDialog).promise)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeTemplateService.delete(this.template.id!);
+        }
+        catch (error)
+        {
+            Log.error("Could not delete template", error);
+        }
+
+        this._router.navigate("/routes/templates/list");
+    }
+
+    /**
+     * Called when the "Add stop" button is clicked.
+     * Opens at modal for creating a new stop.
+     */
+    protected async onAddStopClick(): Promise<void>
+    {
+        const newStop = await this._modalService.open(StopDetailsPanel).promise;
+
+        if (newStop != null)
+        {
+            this.template.stops!.push(newStop);
+        }
+    }
+
+    /**
+     * Called when the "Remove stop" icon is clicked on a stop.
+     * Removes the stop from teh template.
+     */
+    protected onRemoveStopClick(index: number): void
+    {
+        this.template.stops!.splice(index, 1);
     }
 
     /**
@@ -196,7 +253,7 @@ export class DetailsPage
     /**
      * Sets the recurrence settings for "All days", based on the settings for the weekdays.
      */
-    protected updateAllDay(): void
+    private updateAllDay(): void
     {
         this.allDays.enabled = this.template.recurrence!.every(r => r.enabled);
 

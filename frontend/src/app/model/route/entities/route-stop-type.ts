@@ -1,4 +1,3 @@
-import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
 
 /**
@@ -23,7 +22,6 @@ export class RouteStopType
 
     public slug: RouteStopTypeSlug;
     public name: string;
-    public accent: Accent;
 
     public static readonly values =
     {

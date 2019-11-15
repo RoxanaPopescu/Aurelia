@@ -1,5 +1,4 @@
-import { RouteStopBase } from "app/model/route";
-import { RouteStopType } from "./route-stop-type";
+import { RouteStopBase, RouteStopType } from "app/model/route";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.

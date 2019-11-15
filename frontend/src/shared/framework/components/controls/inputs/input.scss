@@ -49,6 +49,13 @@ body
     --input-surface-text-color--hover: var(--surface-input-surface-text-color--hover);
     --input-surface-text-color--focus: var(--surface-input-surface-text-color--focus);
     --input-surface-text-color--invalid: var(--surface-input-surface-text-color--invalid);
+
+    /// The color of icons on the surface of the component.
+    /// TODO: This should be customized for each theme surface.
+    --input-surface-icon-color: var(--surface-input-surface-icon-color);
+    --input-surface-icon-color--hover: var(--surface-input-surface-icon-color--hover);
+    --input-surface-icon-color--focus: var(--surface-input-surface-icon-color--focus);
+    --input-surface-icon-color--invalid: var(--surface-input-surface-icon-color--invalid);
 }
 
 .input
@@ -412,6 +419,38 @@ body
     min-width: calc(var(--dropdown-min-width) + 2 * var(--input-border-width));
 }
 
+.input
+{
+    > .input-control dropdown-icon
+    {
+        color: var(--input-surface-icon-color);
+    }
+
+    &:hover
+    {
+        > .input-control dropdown-icon
+        {
+            color: var(--input-surface-icon-color--hover);
+        }
+    }
+
+    &:focus-within
+    {
+        > .input-control dropdown-icon
+        {
+            color: var(--input-surface-icon-color--focus);
+        }
+    }
+
+    &.--invalid
+    {
+        > .input-control dropdown-icon
+        {
+            color: var(--input-surface-icon-color--invalid);
+        }
+    }
+}
+
 // Apply basic styling to native controls, so we won't have to repeat this in every component.
 
 // stylelint-disable-next-line no-duplicate-selectors
@@ -436,4 +475,6 @@ body
         min-height: calc(var(--input-min-height) - 2 * var(--input-border-width));
         max-height: calc(var(--input-max-height) - 2 * var(--input-border-width));
     }
+
+
 }

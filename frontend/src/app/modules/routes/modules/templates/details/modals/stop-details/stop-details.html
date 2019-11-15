@@ -1,0 +1,300 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./stop-details.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="stop-details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Edit stop
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input label="above" none.bind="false" value.bind="model.type" display-value.bind="model.type.name" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Type
+                    </span>
+
+                    <item model.bind="{ slug: 'pickup', name: 'Pickup' }">
+                        Pickup
+                    </item>
+
+                    <item model.bind="{ slug: 'delivery', name: 'Delivery' }">
+                        Delivery
+                    </item>
+
+                    <item model.bind="{ slug: 'return', name: 'Return' }">
+                        Return
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.type">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <div class="control-row flex-basis-1-of-2">
+
+                    <time-input label="above" value.bind="model.arrivalTime" class="flex-basis-1-of-2">
+
+                        <span slot="heading" translate>
+                            Arrival time
+                        </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.arrivalTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                    <time-input label="above" value.bind="model.departureTime" class="flex-basis-1-of-2">
+
+                        <span slot="heading" translate>
+                            Departure time
+                        </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.departureTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                </div>
+
+            </div>
+
+            <hr class="hr-line margin-large-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Address
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.location.address">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+                <select-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Port
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.port">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.consignee.firstName" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        First name
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.consignee.firstName">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.consignee.firstName" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Last name
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.consignee.firstName">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.consignee.companyName" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Company name
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.consignee.companyName">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.consignee.contactPhone" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Phone number
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.consignee.contactPhone">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <text-input label="above" lines.bind="3" value.bind="model.instructions" class="flex-basis-1-of-1">
+
+                    <span slot="heading" translate>
+                        Instructions
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Type any instructions that might help the driver
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.instructions">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-double-bottom">
+
+            <div slot="header" translate>
+                Requirements
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <check-toggle label="after" value.bind="model.requirements.photo" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Photo
+                    </span>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Customer signature
+                    </span>
+
+                </check-toggle>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <check-toggle label="after" value.bind="model.requirements.scanColli" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Scan colli
+                    </span>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Verify timeframe
+                    </span>
+
+                </check-toggle>
+
+            </div>
+
+            <div class="control-row">
+
+                <check-toggle label="after" value.bind="model.requirements.customerCode" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Customer code
+                    </span>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="model.requirements.acceptInstruction" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Accept instruction
+                    </span>
+
+                </check-toggle>
+
+            </div>
+
+        </modal-section>
+
+        <button appearance="solid" accent="primary" click.delegate="onCreateClick()" translate>
+            Create stop
+        </button>
+
+    </modal-panel>
+
+</template>

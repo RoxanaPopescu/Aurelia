@@ -24,7 +24,6 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
-        PLATFORM.moduleName("./components/controls/inputs/address-input/address-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
         PLATFORM.moduleName("./components/controls/inputs/select-input/select-input"),
         PLATFORM.moduleName("./components/controls/inputs/slug-input/slug-input"),
@@ -124,7 +123,6 @@ export * from "./components/controls/inputs/date-input/date-input";
 export * from "./components/controls/inputs/email-input/email-input";
 export * from "./components/controls/inputs/number-input/number-input";
 export * from "./components/controls/inputs/password-input/password-input";
-export * from "./components/controls/inputs/address-input/address-input";
 export * from "./components/controls/inputs/search-input/search-input";
 export * from "./components/controls/inputs/select-input/select-input";
 export * from "./components/controls/inputs/slug-input/slug-input";

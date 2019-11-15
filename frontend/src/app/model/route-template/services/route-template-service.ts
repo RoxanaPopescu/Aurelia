@@ -57,4 +57,17 @@ export class RouteTemplateService
 
         return new RouteTemplate(result.data);
     }
+
+    /**
+     * Deletes the specified route template.
+     * @param id The ID identifying the route template.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async delete(id: string): Promise<void>
+    {
+        await this._apiClient.post("route-templates/delete",
+        {
+            body: { id }
+        });
+    }
 }

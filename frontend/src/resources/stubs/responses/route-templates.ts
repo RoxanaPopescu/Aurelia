@@ -27,6 +27,27 @@ const routeTemplate =
         { enabled: true, status: "requested" },
         { enabled: false },
         { enabled: false }
+    ],
+    stops:
+    [
+        {
+            location: { address: { primary: "Some Street 123, Some City" } },
+            type: "pickup",
+            consignee: { companyName: "Some Company", contactPhone: { countryPrefix: "45", number: "12345678" } },
+            requirements: ["foo", "bar"],
+            port: 42,
+            arrivalTime: 12 * 3600,
+            departureTime: 12.25 * 3600
+        },
+        {
+            location: { address: { primary: "Other Street 456, Other City" } },
+            type: "delivery",
+            consignee: { companyName: "Other Company", contactPhone: { countryPrefix: "45", number: "87654321" } },
+            requirements: [],
+            port: undefined,
+            arrivalTime: 13 * 3600,
+            departureTime: 13.25 * 3600
+        }
     ]
 };
 

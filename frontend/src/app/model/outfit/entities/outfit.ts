@@ -11,7 +11,7 @@ export class Outfit
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
         const type = (data.type || data.typeName || "").toLowerCase();
         this.type = new OutfitType(type);
@@ -23,7 +23,7 @@ export class Outfit
         this.contactEmail = data.contactEmail;
         this.address = data.address;
 
-        if (data.contactPhone != null)
+        if (data != null && data.contactPhone != null)
         {
             this.contactPhone = new Phone(data.contactPhone);
         }

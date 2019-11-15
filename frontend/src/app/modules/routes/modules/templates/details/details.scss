@@ -6,18 +6,18 @@ page[name="routes"] page[name="templates-details"]
     {
         &:nth-child(1)
         {
-            flex-basis: 37%;
+            flex-basis: 35%;
         }
 
         &:nth-child(2)
         {
-            flex-basis: 63%;
+            flex-basis: 65%;
         }
     }
 
     data-table
     {
-        --data-table-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        --data-table-columns: 0.5fr 1fr 0.5fr 1fr 0.75fr 0.5fr 0.6fr 0.6fr 0.5fr;
     }
 
     .route-recurrence-section

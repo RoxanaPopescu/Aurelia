@@ -19,18 +19,22 @@ $__summary: comment;
         // State: normal
         --surface-input-border-color: var(--palette-color-neutral);
         --surface-input-surface-color: var(--palette-color-whitepoint);
+        --surface-input-surface-icon-color: var(--palette-color-primary);
 
         // State: hover
         --surface-input-border-color--hover: var(--palette-color-neutral);
         --surface-input-surface-color--hover: var(--palette-color-whitepoint);
+        --surface-input-surface-icon-color--hover: var(--palette-color-primary);
 
         // State: focus
         --surface-input-border-color--focus: var(--palette-color-neutral);
         --surface-input-surface-color--focus: var(--palette-color-whitepoint);
+        --surface-input-surface-icon-color--focus: var(--palette-color-primary);
 
         // State: invalid
         --surface-input-border-color--invalid: var(--palette-color-neutral);
         --surface-input-surface-color--invalid: var(--palette-color-whitepoint);
+        --surface-input-surface-icon-color--invalid: var(--surface-negative-text-color);
 
         // Items on the surface of inputs on the surface.
         &

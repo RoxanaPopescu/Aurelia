@@ -3,10 +3,10 @@
 react-module
 {
     // Import legacy styles.
-@import "../packages/shared/src/webKit/LEGACY";
+    @import "../packages/shared/src/webKit/LEGACY";
 
-// Import legacy constants.
-@import "./constants";
+    // Import legacy constants.
+    @import "./constants";
 
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
@@ -249,5 +249,13 @@ react-module
     .inputContainer .inputWrapper input::placeholder
     {
         color: var(--surface-subtle-color);
+    }
+
+    .gridTable-container-old .c-gridTable .c-gridTable-header.font-heading
+    {
+        font-size: var(--font-base-font-size);
+        font-weight: 500;
+        line-height: var(--font-base-line-height);
+        color: inherit;
     }
 }

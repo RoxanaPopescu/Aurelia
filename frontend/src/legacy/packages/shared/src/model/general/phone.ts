@@ -15,7 +15,7 @@ export class Phone {
   }
 
   /**
-   * The prefix identifying the country to which the phone number belongs.
+   * The number prefix identifying the country to which the phone number belongs.
    */
   @observable
   public countryPrefix: string;

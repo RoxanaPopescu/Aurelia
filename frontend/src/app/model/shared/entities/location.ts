@@ -12,11 +12,14 @@ export class Location
      */
     public constructor(data: any)
     {
-        this.address = new Address(data.address);
-
-        if (data.position != null)
+        if (data != null)
         {
-            this.position = new Position(data.position);
+            this.address = new Address(data.address);
+
+            if (data.position != null)
+            {
+                this.position = new Position(data.position);
+            }
         }
     }
 

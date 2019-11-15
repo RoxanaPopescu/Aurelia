@@ -1,5 +1,5 @@
-import { Location, Address } from "app/model/shared";
 import { autoinject } from "aurelia-framework";
+import { Location, Address } from "app/model/shared";
 import { ApiClient } from "shared/infrastructure";
 
 /**

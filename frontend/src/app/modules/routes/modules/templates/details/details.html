@@ -328,13 +328,13 @@
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
-                                        Start time
+                                        Arrival
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
-                                        End time
+                                        Departure
                                     </span>
                                 </data-table-cell>
 
@@ -344,13 +344,90 @@
 
                             </data-table-headers>
 
+                            <data-table-row repeat.for="stop of template.stops">
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${$index + 1}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.location.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.type.name}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.consignee.contactPhone}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.requirements | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.port}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.arrivalTime | time}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate" translate>
+                                        ${stop.departureTime | time}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell align="right">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick($index)">
+                                            <icon name="md-edit"></icon>
+                                        </button>
+
+                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
+                                            <icon name="md-delete"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                            </data-table-row>
+
                         </data-table>
 
-                        <busy-indicator if.bind="stops == null" class="margin-largest"></busy-indicator>
+                        <busy-indicator if.bind="template.stops == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="stops.length == 0" class="margin-largest" translate>
-                            No results
+                        <empty-indicator if.bind="template.stops.length == 0" class="margin-largest" translate>
+                            No stops
                         </empty-indicator>
+
+                        <button
+                            if.bind="template.stops != null"
+                            appearance="outline"
+                            accent="primary"
+                            class="margin-large-top"
+                            click.trigger="onAddStopClick()">
+                            <icon name="md-add" class="font-larger line-height-1">
+                        </button>
 
                     </page-section>
 
