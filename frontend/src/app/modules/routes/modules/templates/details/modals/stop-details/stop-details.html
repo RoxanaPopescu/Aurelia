@@ -10,7 +10,7 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
                 Edit stop
             </h1>
 
@@ -18,7 +18,7 @@
 
         <modal-section class="margin-bottom">
 
-            <div class="control-row margin-large-bottom">
+            <div class="control-row margin-larger-bottom">
 
                 <select-input label="above" none.bind="false" value.bind="model.type" display-value.bind="model.type.name" class="flex-basis-1-of-2">
 
@@ -86,7 +86,7 @@
 
             </div>
 
-            <hr class="hr-line margin-large-bottom">
+            <hr class="hr-line margin-larger-bottom">
 
             <div class="control-row margin-large-bottom">
 
@@ -106,7 +106,7 @@
 
                 </address-input>
 
-                <select-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+                <number-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Port
@@ -120,7 +120,7 @@
 
                     </div>
 
-                </select-input>
+                </number-input>
 
             </div>
 

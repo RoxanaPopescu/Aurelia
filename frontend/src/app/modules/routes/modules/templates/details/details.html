@@ -90,18 +90,6 @@
 
                         <div class="control-row margin-large-bottom">
 
-                            <number-input label="above" class="flex-grow" value.bind="template.price.amount">
-
-                                <div slot="heading" translate>
-                                    Price ex. VAT
-                                </div>
-
-                                <span slot="after" class="opacity-faded">
-                                    ${template.price.currencyCode}
-                                </span>
-
-                            </number-input>
-
                             <select-input
                                 label="above"
                                 class="flex-grow"
@@ -127,6 +115,18 @@
                                 </item>
 
                             </select-input>
+
+                            <number-input label="above" class="flex-grow" value.bind="template.price.amount">
+
+                                <div slot="heading" translate>
+                                    Price ex. VAT
+                                </div>
+
+                                <span slot="after" class="opacity-faded">
+                                    ${template.price.currencyCode}
+                                </span>
+
+                            </number-input>
 
                         </div>
 
