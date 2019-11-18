@@ -1,11 +1,12 @@
 import { autoinject } from "aurelia-framework";
+import { AppRouter } from "aurelia-router";
+import { Log } from "shared/infrastructure";
 import { ModalService, IValidation } from "shared/framework";
-import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/_order-group";
-import { AgreementService } from "app/model/agreement";
 import { Consignor } from "app/model/outfit";
+import { AgreementService } from "app/model/agreement";
+import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/_order-group";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
-import { Log } from "shared/infrastructure";
 
 /**
  * Represents the route parameters for the page.
@@ -26,17 +27,20 @@ export class DetailsPage
      * @param modalService The `ModalService` instance.
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param agreementService The `AgreementService` instance.
+     * @param router The `AppRouter` instance.
      */
-    public constructor(modalService: ModalService, orderGroupsService: OrderGroupService, agreementService: AgreementService)
+    public constructor(modalService: ModalService, orderGroupsService: OrderGroupService, agreementService: AgreementService, router: AppRouter)
     {
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
         this._agreementService = agreementService;
+        this._router = router;
     }
 
     private readonly _modalService: ModalService;
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _agreementService: AgreementService;
+    private readonly _router: AppRouter;
     private availableConsignors: Consignor[];
     private availableTags: string[];
 
@@ -130,6 +134,8 @@ export class DetailsPage
         try
         {
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
+
+            this._router.navigate("/route-planning/order-groups/list");
         }
         catch (error)
         {
