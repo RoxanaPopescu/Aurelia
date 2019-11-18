@@ -1,7 +1,8 @@
 import { Duration } from "luxon";
-import { Location, Address } from "app/model/shared";
+import { Location } from "app/model/shared";
 import { Consignee } from "app/model/outfit";
 import { RouteStopType } from "app/model/route";
+import requirementNames from "./resources/strings/requirement-names.json"
 
 /**
  * Represents a stop defined in a route template.
@@ -27,9 +28,17 @@ export class RouteTemplateStop
         }
         else
         {
-            this.location = new Location({ address: new Address() });
+            this.location = new Location();
             this.consignee = new Consignee();
-            this.requirements = [];
+            this.requirements =
+            {
+                photo: false,
+                signature: false,
+                scanColli: false,
+                verifyTimeframe: false,
+                customerCode: false,
+                acceptInstructions: false
+            };
         }
     }
 
@@ -51,7 +60,15 @@ export class RouteTemplateStop
     /**
      * The requirements associated with the stop.
      */
-    public requirements: string[];
+    public requirements:
+    {
+        photo: boolean;
+        signature: boolean;
+        scanColli: boolean;
+        verifyTimeframe: boolean;
+        customerCode: boolean;
+        acceptInstructions: boolean;
+    };
 
     /**
      * The instructions associated with the stop.
@@ -74,13 +91,21 @@ export class RouteTemplateStop
     public departureTime: Duration | undefined;
 
     /**
+     * Gets the localized names of the active requirements.
+     */
+    public get activeRequirementNames(): string[]
+    {
+        return Object.keys(this.requirements).filter(key => this.requirements[key]).map(key => requirementNames[key]);
+    }
+
+    /**
      * Gets the data representing this instance.
      */
     public toJSON(): any
     {
         return {
             location: this.location,
-            type: this.type,
+            type: this.type.slug,
             consigneeId: this.consignee.id,
             requirements: this.requirements,
             port: this.port,

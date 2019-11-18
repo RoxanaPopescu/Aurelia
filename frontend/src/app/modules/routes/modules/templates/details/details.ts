@@ -1,12 +1,12 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { AgreementService } from "app/model/agreement";
-import { RouteTemplateService, RouteTemplate, RouteRecurrence, RouteStatus } from "app/model/route-template";
+import { RouteTemplateService, RouteTemplate, RouteRecurrence, RouteStatus, RouteTemplateStop } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
 import { ConfirmDeleteTemplateDialog } from "./modals/confirm-delete-template/confirm-delete-template";
 import { Log } from "shared/infrastructure";
 import { AppRouter } from "aurelia-router";
-import { ModalService } from "shared/framework";
+import { ModalService, IValidation } from "shared/framework";
 import { StopDetailsPanelCustomElement as StopDetailsPanel } from "./modals/stop-details/stop-details";
 
 /**
@@ -59,7 +59,7 @@ export class DetailsPage
     /**
      * The template to present.
      */
-    protected template: Partial<RouteTemplate>;
+    protected template: RouteTemplate;
 
     /**
      * The available consignors.
@@ -75,6 +75,11 @@ export class DetailsPage
      * The route recurrence representing the "All days" options.
      */
     protected allDays = new RouteRecurrence();
+
+    /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
 
     /**
      * Called by the framework when the module is activated.
@@ -136,14 +141,50 @@ export class DetailsPage
 
         try
         {
-            await this._routeTemplateService.delete(this.template.id!);
+            await this._routeTemplateService.delete(this.template.id);
+
+            this._router.navigate("/routes/templates/list");
         }
         catch (error)
         {
             Log.error("Could not delete template", error);
         }
 
-        this._router.navigate("/routes/templates/list");
+    }
+
+    /**
+     * Called when the "Save template" button is clicked.
+     * Saves the template.
+     */
+    protected async onSaveClick(): Promise<void>
+    {
+        // Activate validation so any further changes will be validated immediately.
+        this.validation.active = true;
+
+        // Validate the form.
+        if (!await this.validation.validate())
+        {
+            return;
+        }
+
+        try
+        {
+            if (!this.template.id)
+            {
+                await this._routeTemplateService.create(this.template);
+            }
+            else
+            {
+                await this._routeTemplateService.save(this.template);
+            }
+
+            this._router.navigate("/routes/templates/list");
+        }
+        catch (error)
+        {
+            Log.error("Could not save template", error);
+        }
+
     }
 
     /**
@@ -156,17 +197,52 @@ export class DetailsPage
 
         if (newStop != null)
         {
-            this.template.stops!.push(newStop);
+            this.template.stops.push(newStop);
         }
+    }
+
+    /**
+     * Called when the "Edit stop" icon is clicked on a stop.
+     * Opens at modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onEditStopClick(stop: RouteTemplateStop): Promise<void>
+    {
+        await this._modalService.open(StopDetailsPanel, stop).promise;
+    }
+
+    /**
+     * Called when the "Move up" icon is clicked on a stop.
+     * Moves the stop up.
+     * @param index The index of teh stop to move.
+     */
+    protected onMoveStopUpClick(index: number): void
+    {
+        const stop = this.template.stops[index];
+        this.template.stops.splice(index, 1);
+        this.template.stops.splice(index - 1, 0, stop);
+    }
+
+    /**
+     * Called when the "Move down" icon is clicked on a stop.
+     * Moves the stop down.
+     * @param index The index of teh stop to move.
+     */
+    protected onMoveStopDownClick(index: number): void
+    {
+        const stop = this.template.stops[index];
+        this.template.stops.splice(index, 1);
+        this.template.stops.splice(index + 1, 0, stop);
     }
 
     /**
      * Called when the "Remove stop" icon is clicked on a stop.
      * Removes the stop from teh template.
+     * @param index The index of teh stop to remove.
      */
     protected onRemoveStopClick(index: number): void
     {
-        this.template.stops!.splice(index, 1);
+        this.template.stops.splice(index, 1);
     }
 
     /**
@@ -182,7 +258,7 @@ export class DetailsPage
         {
             case "enabled":
             {
-                for (const recurrence of this.template.recurrence!)
+                for (const recurrence of this.template.recurrence)
                 {
                     recurrence.enabled = this.allDays.enabled;
                 }
@@ -215,7 +291,7 @@ export class DetailsPage
 
         if (setDriverAndStatus)
         {
-            for (const recurrence of this.template.recurrence!)
+            for (const recurrence of this.template.recurrence)
             {
                 recurrence.driver = this.allDays.driver;
                 recurrence.status = this.allDays.status;
@@ -255,12 +331,12 @@ export class DetailsPage
      */
     private updateAllDay(): void
     {
-        this.allDays.enabled = this.template.recurrence!.every(r => r.enabled);
+        this.allDays.enabled = this.template.recurrence.every(r => r.enabled);
 
-        const driverIds = new Set(this.template.recurrence!.map(r => r.driver && r.driver.id));
-        this.allDays.driver = driverIds.size === 1 ? this.template.recurrence![0].driver : undefined;
+        const driverIds = new Set(this.template.recurrence.map(r => r.driver && r.driver.id));
+        this.allDays.driver = driverIds.size === 1 ? this.template.recurrence[0].driver : undefined;
 
-        const statusSlugs = new Set(this.template.recurrence!.map(r => r.status && r.status.slug));
-        this.allDays.status = statusSlugs.size === 1 ? this.template.recurrence![0].status : undefined;
+        const statusSlugs = new Set(this.template.recurrence.map(r => r.status && r.status.slug));
+        this.allDays.status = statusSlugs.size === 1 ? this.template.recurrence[0].status : undefined;
     }
 }

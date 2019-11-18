@@ -59,6 +59,32 @@ export class RouteTemplateService
     }
 
     /**
+     * Creates the specified route template.
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async create(routeTemplate: Partial<RouteTemplate>): Promise<void>
+    {
+        await this._apiClient.post("route-templates/create",
+        {
+            body: routeTemplate
+        });
+    }
+
+    /**
+     * Saves the specified route template.
+     * @param routeTemplate The route template to save.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async save(routeTemplate: RouteTemplate): Promise<void>
+    {
+        await this._apiClient.post("route-templates/update",
+        {
+            body: routeTemplate
+        });
+    }
+
+    /**
      * Deletes the specified route template.
      * @param id The ID identifying the route template.
      * @returns A promise that will be resolved when the operation succeedes.

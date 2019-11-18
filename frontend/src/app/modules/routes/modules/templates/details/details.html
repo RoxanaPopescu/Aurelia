@@ -2,9 +2,9 @@
 
     <require from="./details.scss"></require>
 
-    <page name="templates-details">
+    <page name="templates-details" validation validation.ref="validation">
 
-        <page-content scroll scroll.ref="scroll">
+        <page-content scroll>
 
             <page-header scroll-fade class="flex-row">
 
@@ -66,6 +66,14 @@
                                     Route reference
                                 </div>
 
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.reference">
+                                    </required-validator>
+
+                                </div>
+
                             </text-input>
 
                             <select-input
@@ -83,6 +91,14 @@
                                 <item repeat.for="consignor of consignors" model.bind="consignor">
                                     ${consignor.primaryName}
                                 </item>
+
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.consignor">
+                                    </required-validator>
+
+                                </div>
 
                             </select-input>
 
@@ -114,6 +130,14 @@
                                     30 days in advance
                                 </item>
 
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.routeCreationTime">
+                                    </required-validator>
+
+                                </div>
+
                             </select-input>
 
                             <number-input label="above" class="flex-grow" value.bind="template.price.amount">
@@ -126,24 +150,70 @@
                                     ${template.price.currencyCode}
                                 </span>
 
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.price.amount">
+                                    </required-validator>
+
+                                </div>
+
                             </number-input>
 
                         </div>
 
                         <div class="control-row margin-large-bottom">
 
-                            <date-input label="above" class="flex-grow" value.bind="template.startDateTime">
+                            <date-input label="above" class="flex-grow" value.bind="template.startDateTime" max.bind="template.endDateTime" max-inclusive.bind="false">
 
                                 <div slot="heading" translate>
                                     Recurrence start
                                 </div>
 
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.startDateTime">
+                                    </required-validator>
+
+                                    <range-validator
+                                        value.bind="template.startDateTime"
+                                        max.bind="template.endDateTime"
+                                        max-inclusive.bind="false">
+
+                                        <template replace-part="invalid-max" translate>
+                                            Please choose a time before the end time.
+                                        </template>
+
+                                    </range-validator>
+
+                                </div>
+
                             </date-input>
 
-                            <date-input label="above" class="flex-grow" value.bind="template.endDateTime">
+                            <date-input label="above" class="flex-grow" value.bind="template.endDateTime" min.bind="template.startDateTime" min-inclusive.bind="false">
 
                                 <div slot="heading" translate>
                                     Recurrence end
+                                </div>
+
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.endDateTime">
+                                    </required-validator>
+
+                                    <range-validator
+                                        value.bind="template.endDateTime"
+                                        min.bind="template.startDateTime"
+                                        min-inclusive.bind="false">
+
+                                        <template replace-part="invalid-max" translate>
+                                            Please choose a time after the start time.
+                                        </template>
+
+                                    </range-validator>
+
                                 </div>
 
                             </date-input>
@@ -284,11 +354,15 @@
                         </h2>
 
                         <data-table
-                            appearance="rows"
+                            appearance="cards"
                             sorting.bind="sorting"
                             busy.bind="updateOperation.pending">
 
                             <data-table-headers>
+
+                                <data-table-cell>
+                                    <!-- Icons -->
+                                </data-table-cell>
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
@@ -320,7 +394,7 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell>
+                                <data-table-cell align="right">
                                     <span class="text-truncate" translate>
                                         Port
                                     </span>
@@ -347,9 +421,25 @@
                             <data-table-row repeat.for="stop of template.stops">
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+
+                                    <div class="icon-column">
+
+                                        <button appearance="none" accent="primary" disabled.bind="$index === 0" click.trigger="onMoveStopUpClick($index)">
+                                            <icon name="md-arrow-upward"></icon>
+                                        </button>
+
+                                        <button appearance="none" accent="primary" disabled.bind="$index === template.stops.length - 1" click.trigger="onMoveStopDownClick($index)">
+                                            <icon name="md-arrow-downward"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <div class="route-template-stop-number">
                                         ${$index + 1}
-                                    </span>
+                                    </div>
                                 </data-table-cell>
 
                                 <data-table-cell>
@@ -372,11 +462,11 @@
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
-                                        ${stop.requirements | list: 'short' : 'unit'}
+                                        ${stop.activeRequirementNames | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell>
+                                <data-table-cell align="right">
                                     <span class="text-truncate" translate>
                                         ${stop.port}
                                     </span>
@@ -398,7 +488,7 @@
 
                                     <div class="icon-row">
 
-                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick($index)">
+                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
                                             <icon name="md-edit"></icon>
                                         </button>
 
@@ -414,9 +504,7 @@
 
                         </data-table>
 
-                        <busy-indicator if.bind="template.stops == null" class="margin-largest"></busy-indicator>
-
-                        <empty-indicator if.bind="template.stops.length == 0" class="margin-largest" translate>
+                        <empty-indicator if.bind="template.stops.length == 0" class="margin-large-top" translate>
                             No stops
                         </empty-indicator>
 

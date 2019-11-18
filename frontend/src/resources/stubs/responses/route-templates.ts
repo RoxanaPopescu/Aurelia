@@ -31,22 +31,55 @@ const routeTemplate =
     stops:
     [
         {
-            location: { address: { primary: "Some Street 123, Some City" } },
+            location: { address: { primary: "Foo Street 123, Foo City" } },
             type: "pickup",
-            consignee: { companyName: "Some Company", contactPhone: { countryPrefix: "45", number: "12345678" } },
-            requirements: ["foo", "bar"],
+            consignee: { companyName: "Foo Company", contactPhone: { countryPrefix: "45", number: "11111111" } },
+            requirements:
+            {
+                photo: true,
+                signature: false,
+                scanColli: false,
+                verifyTimeframe: false,
+                customerCode: false,
+                acceptInstructions: false
+            },
             port: 42,
             arrivalTime: 12 * 3600,
             departureTime: 12.25 * 3600
         },
         {
-            location: { address: { primary: "Other Street 456, Other City" } },
+            location: { address: { primary: "Bar Street 456, Bar City" } },
             type: "delivery",
-            consignee: { companyName: "Other Company", contactPhone: { countryPrefix: "45", number: "87654321" } },
-            requirements: [],
+            consignee: { companyName: "Bar Company", contactPhone: { countryPrefix: "45", number: "22222222" } },
+            requirements:
+            {
+                photo: false,
+                signature: false,
+                scanColli: false,
+                verifyTimeframe: false,
+                customerCode: false,
+                acceptInstructions: false
+            },
             port: undefined,
             arrivalTime: 13 * 3600,
             departureTime: 13.25 * 3600
+        },
+        {
+            location: { address: { primary: "baz Street 456, baz City" } },
+            type: "delivery",
+            consignee: { companyName: "baz Company", contactPhone: { countryPrefix: "45", number: "33333333" } },
+            requirements:
+            {
+                photo: false,
+                signature: true,
+                scanColli: false,
+                verifyTimeframe: false,
+                customerCode: false,
+                acceptInstructions: false
+            },
+            port: undefined,
+            arrivalTime: 14 * 3600,
+            departureTime: 14.25 * 3600
         }
     ]
 };
@@ -70,11 +103,16 @@ export default
 
     "POST /api/v1/route-templates/create":
     {
-        data: routeTemplate
+        status: 204
     },
 
     "POST /api/v1/route-templates/update":
     {
-        data: routeTemplate
+        status: 204
+    },
+
+    "POST /api/v1/route-templates/delete":
+    {
+        status: 204
     }
 };

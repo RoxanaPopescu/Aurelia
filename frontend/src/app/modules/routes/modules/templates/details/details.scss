@@ -15,9 +15,20 @@ page[name="routes"] page[name="templates-details"]
         }
     }
 
+    .route-template-stop-number
+    {
+
+        border-radius: 50%;
+        width: 9rem;
+        line-height: 9rem;
+        text-align: center;
+        color: var(--surface-color);
+        background: gray;
+    }
+
     data-table
     {
-        --data-table-columns: 0.5fr 1fr 0.5fr 1fr 0.75fr 0.5fr 0.6fr 0.6fr 0.5fr;
+        --data-table-columns: 9rem 19rem 1fr 0.5fr 1fr 0.75fr 0.4fr 0.6fr 0.6fr 0.5fr;
     }
 
     .route-recurrence-section

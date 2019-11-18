@@ -6,12 +6,20 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="stop-details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel name="stop-details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
-                Edit stop
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <span if.bind="isNew" translate>
+                    New stop
+                </span>
+
+                <span if.bind="!isNew" translate>
+                    Edit stop
+                </span>
+
             </h1>
 
         </modal-header>
@@ -26,16 +34,8 @@
                         Type
                     </span>
 
-                    <item model.bind="{ slug: 'pickup', name: 'Pickup' }">
-                        Pickup
-                    </item>
-
-                    <item model.bind="{ slug: 'delivery', name: 'Delivery' }">
-                        Delivery
-                    </item>
-
-                    <item model.bind="{ slug: 'return', name: 'Return' }">
-                        Return
+                    <item repeat.for="type of types" model.bind="type">
+                        ${type.name}
                     </item>
 
                     <div slot="validation">
@@ -56,14 +56,6 @@
                             Arrival time
                         </span>
 
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.arrivalTime">
-                            </required-validator>
-
-                        </div>
-
                     </time-input>
 
                     <time-input label="above" value.bind="model.departureTime" class="flex-basis-1-of-2">
@@ -71,14 +63,6 @@
                         <span slot="heading" translate>
                             Departure time
                         </span>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.departureTime">
-                            </required-validator>
-
-                        </div>
 
                     </time-input>
 
@@ -112,14 +96,6 @@
                         Port
                     </span>
 
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.port">
-                        </required-validator>
-
-                    </div>
-
                 </number-input>
 
             </div>
@@ -135,6 +111,7 @@
                     <div slot="validation">
 
                         <required-validator
+                            if.bind="model.consignee.lastName"
                             value.bind="model.consignee.firstName">
                         </required-validator>
 
@@ -142,7 +119,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.consignee.firstName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.consignee.lastName" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Last name
@@ -151,7 +128,8 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.consignee.firstName">
+                            if.bind="model.consignee.firstName"
+                            value.bind="model.consignee.lastName">
                         </required-validator>
 
                     </div>
@@ -169,14 +147,6 @@
                         Company name
                     </span>
 
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.consignee.companyName">
-                        </required-validator>
-
-                    </div>
-
                 </text-input>
 
                 <text-input label="above" value.bind="model.consignee.contactPhone" class="flex-basis-1-of-2">
@@ -184,14 +154,6 @@
                     <span slot="heading" translate>
                         Phone number
                     </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.consignee.contactPhone">
-                        </required-validator>
-
-                    </div>
 
                 </text-input>
 
@@ -209,21 +171,13 @@
                         Type any instructions that might help the driver
                     </span>
 
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.instructions">
-                        </required-validator>
-
-                    </div>
-
                 </text-input>
 
             </div>
 
         </modal-section>
 
-        <modal-section class="margin-double-bottom">
+        <modal-section>
 
             <div slot="header" translate>
                 Requirements
@@ -279,7 +233,7 @@
 
                 </check-toggle>
 
-                <check-toggle label="after" value.bind="model.requirements.acceptInstruction" class="flex-basis-1-of-2">
+                <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Accept instruction
@@ -291,7 +245,7 @@
 
         </modal-section>
 
-        <button appearance="solid" accent="primary" click.delegate="onCreateClick()" translate>
+        <button if.bind="isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
             Create stop
         </button>
 

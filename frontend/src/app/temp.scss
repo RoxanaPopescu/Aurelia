@@ -152,6 +152,18 @@ page-sidebar
     }
 }
 
+.icon-column
+{
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+
+    > :not(:last-child)
+    {
+        margin-bottom: var(--size-inline-spacing-large)
+    }
+}
+
 .link-row
 {
     display: flex;
