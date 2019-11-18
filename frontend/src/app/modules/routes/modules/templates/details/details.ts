@@ -82,6 +82,18 @@ export class DetailsPage
     protected validation: IValidation;
 
     /**
+     * True if the first stop is not a pickup stop,
+     * or undefined if not yet validated.
+     */
+    protected hasInvalidFirstStop: boolean;
+
+    /**
+     * True if any stop other than the last is a return stop,
+     * or undefined if not yet validated.
+     */
+    protected hasInvalidReturnStop: boolean;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
@@ -161,6 +173,11 @@ export class DetailsPage
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;
 
+        this.hasInvalidFirstStop = this.template.stops[0] == null || this.template.stops[0].type.slug !== "pickup";
+
+        const returnStopIndex = this.template.stops != null ? this.template.stops.findIndex(s => s.type.slug === "return") : -1;
+        this.hasInvalidReturnStop = returnStopIndex >= 0 && returnStopIndex !== this.template.stops.length - 1;
+
         // Validate the form.
         if (!await this.validation.validate())
         {
@@ -208,7 +225,12 @@ export class DetailsPage
      */
     protected async onEditStopClick(stop: RouteTemplateStop): Promise<void>
     {
-        await this._modalService.open(StopDetailsPanel, stop).promise;
+        const newStop = await this._modalService.open(StopDetailsPanel, stop).promise;
+
+        if (newStop != null)
+        {
+            this.template.stops.splice(this.template.stops.indexOf(stop), 1, newStop);
+        }
     }
 
     /**

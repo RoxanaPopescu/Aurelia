@@ -44,8 +44,7 @@ const routeTemplate =
                 acceptInstructions: false
             },
             port: 42,
-            arrivalTime: 12 * 3600,
-            departureTime: 12.25 * 3600
+            arrivalTimeFrame: { from: 12 * 3600, to: 12.25 * 3600 }
         },
         {
             location: { address: { primary: "Bar Street 456, Bar City" } },
@@ -61,13 +60,12 @@ const routeTemplate =
                 acceptInstructions: false
             },
             port: undefined,
-            arrivalTime: 13 * 3600,
-            departureTime: 13.25 * 3600
+            arrivalTimeFrame: { from: 13 * 3600, to: 13.25 * 3600 }
         },
         {
-            location: { address: { primary: "baz Street 456, baz City" } },
+            location: { address: { primary: "Baz Street 456, Baz City" } },
             type: "delivery",
-            consignee: { companyName: "baz Company", contactPhone: { countryPrefix: "45", number: "33333333" } },
+            consignee: { companyName: "Baz Company", contactPhone: { countryPrefix: "45", number: "33333333" } },
             requirements:
             {
                 photo: false,
@@ -78,8 +76,7 @@ const routeTemplate =
                 acceptInstructions: false
             },
             port: undefined,
-            arrivalTime: 14 * 3600,
-            departureTime: 14.25 * 3600
+            arrivalTimeFrame: { from: 14 * 3600, to: 14.25 * 3600 }
         }
     ]
 };

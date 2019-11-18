@@ -1,8 +1,8 @@
-import { Duration } from "luxon";
-import { Location } from "app/model/shared";
+import { TimeRange } from "shared/types/index";
 import { Consignee } from "app/model/outfit";
+import { Location } from "app/model/shared";
 import { RouteStopType } from "app/model/route";
-import requirementNames from "./resources/strings/requirement-names.json"
+import requirementNames from "./resources/strings/requirement-names.json";
 
 /**
  * Represents a stop defined in a route template.
@@ -23,8 +23,7 @@ export class RouteTemplateStop
             this.requirements = data.requirements;
             this.instructions = data.instructions;
             this.port = data.port;
-            this.arrivalTime = Duration.fromObject({ seconds: data.arrivalTime });
-            this.departureTime = Duration.fromObject({ seconds: data.departureTime });
+            this.arrivalTimeFrame = new TimeRange(data.arrivalTimeFrame);
         }
         else
         {
@@ -39,6 +38,7 @@ export class RouteTemplateStop
                 customerCode: false,
                 acceptInstructions: false
             };
+            this.arrivalTimeFrame = new TimeRange();
         }
     }
 
@@ -81,14 +81,9 @@ export class RouteTemplateStop
     public port: number | undefined;
 
     /**
-     * The time at which the driver is expected to arrive at the stop.
+     * The time frame within which the driver is should arrive at the stop.
      */
-    public arrivalTime: Duration | undefined;
-
-    /**
-     * The time at which the driver is expected to depart from the stop.
-     */
-    public departureTime: Duration | undefined;
+    public arrivalTimeFrame: TimeRange | undefined;
 
     /**
      * Gets the localized names of the active requirements.
@@ -108,9 +103,26 @@ export class RouteTemplateStop
             type: this.type.slug,
             consigneeId: this.consignee.id,
             requirements: this.requirements,
+            instructions: this.instructions,
             port: this.port,
-            arrivalTime: this.arrivalTime,
-            departureTime: this.departureTime
+            arrivalTimeFrame: this.arrivalTimeFrame
         };
+    }
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return new RouteTemplateStop(JSON.parse(JSON.stringify(
+        {
+            location: this.location,
+            type: this.type.slug,
+            consignee: this.consignee,
+            requirements: this.requirements,
+            instructions: this.instructions,
+            port: this.port,
+            arrivalTimeFrame: this.arrivalTimeFrame
+        })));
     }
 }

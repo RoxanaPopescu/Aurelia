@@ -45,7 +45,7 @@ export class StopDetailsPanelCustomElement
     public activate(model?: RouteTemplateStop): void
     {
         this.isNew = model == null;
-        this.model = model || new RouteTemplateStop();
+        this.model = model != null ? model.clone() : new RouteTemplateStop();
     }
 
     /**
@@ -54,7 +54,12 @@ export class StopDetailsPanelCustomElement
      */
     public async deactivate(): Promise<RouteTemplateStop | undefined>
     {
-        if (!this.isNew || this._result != null)
+        if (!this.isNew)
+        {
+            this._result = this.model;
+        }
+
+        if (this._result != null)
         {
             // Activate validation so any further changes will be validated immediately.
             this.validation.active = true;

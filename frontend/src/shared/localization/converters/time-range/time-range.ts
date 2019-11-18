@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { DateTimeRange } from "shared/types";
+import { DateTimeRange, TimeRange } from "shared/types";
 import { TimeValueConverter } from "../time/time";
 
 /**
@@ -11,14 +11,14 @@ export class TimeRangeValueConverter
 {
     /**
      * Creates a new instance of the type.
-     * @param dateValueConverter The `TimeValueConverter` instance.
+     * @param timeValueConverter The `TimeValueConverter` instance.
      */
-    public constructor(dateValueConverter: TimeValueConverter)
+    public constructor(timeValueConverter: TimeValueConverter)
     {
-        this._dateValueConverter = dateValueConverter;
+        this._timeValueConverter = timeValueConverter;
     }
 
-    private readonly _dateValueConverter: TimeValueConverter;
+    private readonly _timeValueConverter: TimeValueConverter;
 
     /**
      * Converts the value for use in the view,
@@ -28,15 +28,15 @@ export class TimeRangeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTimeRange, convert?: boolean): string | null | undefined
+    public toView(value: DateTimeRange | TimeRange, convert?: boolean): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const from = this._dateValueConverter.toView(value.from, "narrow", convert);
-        const to = this._dateValueConverter.toView(value.to, "narrow", convert);
+        const from = this._timeValueConverter.toView(value.from, "narrow", convert);
+        const to = this._timeValueConverter.toView(value.to, "narrow", convert);
 
         return `${from || ""} – ${to || ""}`.trim();
     }

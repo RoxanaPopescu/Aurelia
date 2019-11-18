@@ -150,14 +150,6 @@
                                     ${template.price.currencyCode}
                                 </span>
 
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.price.amount">
-                                    </required-validator>
-
-                                </div>
-
                             </number-input>
 
                         </div>
@@ -198,10 +190,6 @@
                                 </div>
 
                                 <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.endDateTime">
-                                    </required-validator>
 
                                     <range-validator
                                         value.bind="template.endDateTime"
@@ -402,13 +390,7 @@
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
-                                        Arrival
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Departure
+                                        Arrival time
                                     </span>
                                 </data-table-cell>
 
@@ -474,13 +456,7 @@
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
-                                        ${stop.arrivalTime | time}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        ${stop.departureTime | time}
+                                        ${stop.arrivalTimeFrame | timeRange}
                                     </span>
                                 </data-table-cell>
 
@@ -503,6 +479,28 @@
                             </data-table-row>
 
                         </data-table>
+
+                        <div if.bind="hasInvalidFirstStop || hasInvalidReturnStop" class="margin-top">
+
+                            <invalid-validator
+                                if.bind="hasInvalidFirstStop">
+
+                                <template replace-part="invalid"translate>
+                                    First stop must be a pickup stop
+                                </template>
+
+                            </invalid-validator>
+
+                            <invalid-validator
+                                if.bind="hasInvalidReturnStop">
+
+                                <template replace-part="invalid"translate>
+                                    Only the last stop can be a return stop
+                                </template>
+
+                            </invalid-validator>
+
+                        </div>
 
                         <empty-indicator if.bind="template.stops.length == 0" class="margin-large-top" translate>
                             No stops

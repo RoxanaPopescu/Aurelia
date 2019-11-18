@@ -50,19 +50,35 @@
 
                 <div class="control-row flex-basis-1-of-2">
 
-                    <time-input label="above" value.bind="model.arrivalTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-2">
 
                         <span slot="heading" translate>
-                            Arrival time
+                            Arrival from
                         </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.arrivalTimeFrame.from">
+                            </required-validator>
+
+                        </div>
 
                     </time-input>
 
-                    <time-input label="above" value.bind="model.departureTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="model.arrivalTimeFrame.to" class="flex-basis-1-of-2">
 
                         <span slot="heading" translate>
-                            Departure time
+                            Arrival to
                         </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.arrivalTimeFrame.to">
+                            </required-validator>
+
+                        </div>
 
                     </time-input>
 
@@ -74,7 +90,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-2">
+                <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-1">
 
                     <span slot="heading" translate>
                         Address
@@ -90,66 +106,31 @@
 
                 </address-input>
 
-                <number-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
-
-                    <span slot="heading" translate>
-                        Port
-                    </span>
-
-                </number-input>
-
             </div>
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.consignee.firstName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.consignee.personName" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
-                        First name
+                        Name
                     </span>
 
-                    <div slot="validation">
-
-                        <required-validator
-                            if.bind="model.consignee.lastName"
-                            value.bind="model.consignee.firstName">
-                        </required-validator>
-
-                    </div>
-
                 </text-input>
-
-                <text-input label="above" value.bind="model.consignee.lastName" class="flex-basis-1-of-2">
-
-                    <span slot="heading" translate>
-                        Last name
-                    </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            if.bind="model.consignee.firstName"
-                            value.bind="model.consignee.lastName">
-                        </required-validator>
-
-                    </div>
-
-                </text-input>
-
-            </div>
-
-
-            <div class="control-row margin-large-bottom">
 
                 <text-input label="above" value.bind="model.consignee.companyName" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
-                        Company name
+                        Company
                     </span>
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.consignee.contactPhone" class="flex-basis-1-of-2">
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.consignee.contactPhone.number" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Phone number
@@ -157,6 +138,13 @@
 
                 </text-input>
 
+                <number-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Port
+                    </span>
+
+                </number-input>
             </div>
 
             <div class="control-row">
@@ -196,7 +184,7 @@
                 <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
-                        Customer signature
+                        Signature
                     </span>
 
                 </check-toggle>

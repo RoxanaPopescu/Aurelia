@@ -91,4 +91,21 @@ export class Outfit
     {
         return this.companyName ? this.personName : undefined;
     }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            type: this.type.slug,
+            id: this.id,
+            slug: this.slug,
+            companyName: this.companyName,
+            contactPerson: this.personName,
+            contactPhone: this.contactPhone,
+            contactEmail: this.contactEmail,
+            address: this.address
+        };
+    }
 }
