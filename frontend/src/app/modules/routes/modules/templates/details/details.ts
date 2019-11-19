@@ -8,6 +8,7 @@ import { Log } from "shared/infrastructure";
 import { AppRouter } from "aurelia-router";
 import { ModalService, IValidation } from "shared/framework";
 import { StopDetailsPanelCustomElement as StopDetailsPanel } from "./modals/stop-details/stop-details";
+import { Driver, DriverService } from "app/model/driver";
 
 /**
  * Represents the route parameters for the page.
@@ -30,19 +31,22 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
      * @param agreementService The `AgreementService` instance.
+     * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
      * @param router The `AppRouter` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService, modalService: ModalService, router: AppRouter)
+    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: AppRouter)
     {
         this._routeTemplateService = routeTemplateService;
         this._agreementService = agreementService;
+        this._driverService = driverService;
         this._modalService = modalService;
         this._router = router;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _agreementService: AgreementService;
+    private readonly _driverService: DriverService;
     private readonly _modalService: ModalService;
     private readonly _router: AppRouter;
 
@@ -67,6 +71,11 @@ export class DetailsPage
     protected consignors: Consignor[];
 
     /**
+     * The available drivers.
+     */
+    protected drivers: Driver[];
+
+    /**
      * The available statuses.
      */
     protected statuses = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
@@ -82,10 +91,22 @@ export class DetailsPage
     protected validation: IValidation;
 
     /**
+     * True if the number of stops is less than two,
+     * or undefined if not yet validated.
+     */
+    protected hasInvalidStopCount: boolean;
+
+    /**
      * True if the first stop is not a pickup stop,
      * or undefined if not yet validated.
      */
     protected hasInvalidFirstStop: boolean;
+
+    /**
+     * True if the last stop is a pickup stop,
+     * or undefined if not yet validated.
+     */
+    protected hasInvalidLastStop: boolean;
 
     /**
      * True if any stop other than the last is a return stop,
@@ -121,8 +142,16 @@ export class DetailsPage
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
-            const agreements = await this._agreementService.getAll();
-            this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+            const response = await this._agreementService.getAll();
+            this.consignors = response.agreements.filter(c => c.type.slug === "consignor");
+
+        })();
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            const response = await this._driverService.getAll();
+            this.drivers = response.drivers;
 
         })();
     }
@@ -173,13 +202,8 @@ export class DetailsPage
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;
 
-        this.hasInvalidFirstStop = this.template.stops[0] == null || this.template.stops[0].type.slug !== "pickup";
-
-        const returnStopIndex = this.template.stops != null ? this.template.stops.findIndex(s => s.type.slug === "return") : -1;
-        this.hasInvalidReturnStop = returnStopIndex >= 0 && returnStopIndex !== this.template.stops.length - 1;
-
         // Validate the form.
-        if (!await this.validation.validate())
+        if (!await this.validate())
         {
             return;
         }
@@ -215,6 +239,11 @@ export class DetailsPage
         if (newStop != null)
         {
             this.template.stops.push(newStop);
+
+            if (this.validation.active)
+            {
+                this.validate().catch();
+            }
         }
     }
 
@@ -230,6 +259,11 @@ export class DetailsPage
         if (newStop != null)
         {
             this.template.stops.splice(this.template.stops.indexOf(stop), 1, newStop);
+
+            if (this.validation.active)
+            {
+                this.validate().catch();
+            }
         }
     }
 
@@ -243,6 +277,11 @@ export class DetailsPage
         const stop = this.template.stops[index];
         this.template.stops.splice(index, 1);
         this.template.stops.splice(index - 1, 0, stop);
+
+        if (this.validation.active)
+        {
+            this.validate().catch();
+        }
     }
 
     /**
@@ -255,6 +294,11 @@ export class DetailsPage
         const stop = this.template.stops[index];
         this.template.stops.splice(index, 1);
         this.template.stops.splice(index + 1, 0, stop);
+
+        if (this.validation.active)
+        {
+            this.validate().catch();
+        }
     }
 
     /**
@@ -265,6 +309,11 @@ export class DetailsPage
     protected onRemoveStopClick(index: number): void
     {
         this.template.stops.splice(index, 1);
+
+        if (this.validation.active)
+        {
+            this.validate().catch();
+        }
     }
 
     /**
@@ -360,5 +409,26 @@ export class DetailsPage
 
         const statusSlugs = new Set(this.template.recurrence.map(r => r.status && r.status.slug));
         this.allDays.status = statusSlugs.size === 1 ? this.template.recurrence[0].status : undefined;
+    }
+
+    /**
+     * Validates the page.
+     * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
+     */
+    private async validate(): Promise<boolean | undefined>
+    {
+        this.hasInvalidStopCount = this.template.stops.length < 2;
+
+        const firstStop = this.template.stops[0];
+        this.hasInvalidFirstStop = firstStop != null && firstStop.type.slug !== "pickup";
+
+        const lastStop = this.template.stops[this.template.stops.length - 1];
+        this.hasInvalidLastStop = lastStop != null && lastStop.type.slug === "pickup";
+
+        const returnStopIndex = this.template.stops != null ? this.template.stops.findIndex(s => s.type.slug === "return") : -1;
+        this.hasInvalidReturnStop = returnStopIndex >= 0 && returnStopIndex !== this.template.stops.length - 1;
+
+        // Validate the form.
+        return this.validation.validate();
     }
 }

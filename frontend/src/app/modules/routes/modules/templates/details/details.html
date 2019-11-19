@@ -118,15 +118,15 @@
                                     Route creation time
                                 </div>
 
-                                <item model.bind="1">
+                                <item model.bind="1" translate>
                                     1 day in advance
                                 </item>
 
-                                <item model.bind="7">
+                                <item model.bind="7" translate>
                                     7 days in advance
                                 </item>
 
-                                <item model.bind="30">
+                                <item model.bind="30" translate>
                                     30 days in advance
                                 </item>
 
@@ -237,7 +237,7 @@
                             <select-input
                                 label="above"
                                 value.bind="allDays.driver"
-                                display-value.bind="allDays.driver.id"
+                                display-value.bind="allDays.driver.name"
                                 none.bind="false"
                                 change.trigger="onAllDaysRecurrenceChanged('driver')"
                                 class="flex-grow">
@@ -246,12 +246,8 @@
                                     Driver
                                 </div>
 
-                                <item model.bind="{ id: 'driver-1' }">
-                                    driver-1
-                                </item>
-
-                                <item model.bind="{ id: 'driver-2' }">
-                                    driver-2
+                                <item repeat.for="driver of drivers" model.bind="driver">
+                                    ${driver.name}
                                 </item>
 
                             </select-input>
@@ -297,16 +293,12 @@
                                 disabled.bind="!template.recurrence[i].enabled"
                                 none.bind="false"
                                 value.bind="template.recurrence[i].driver"
-                                display-value.bind="template.recurrence[i].driver.id"
+                                display-value.bind="template.recurrence[i].driver.name"
                                 change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'driver')"
                                 class="flex-grow">
 
-                                <item model.bind="{ id: 'driver-1' }">
-                                    driver-1
-                                </item>
-
-                                <item model.bind="{ id: 'driver-2' }">
-                                    driver-2
+                                <item repeat.for="driver of drivers" model.bind="driver">
+                                    ${driver.name}
                                 </item>
 
                             </select-input>
@@ -425,37 +417,37 @@
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.location.address}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.type.name}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.consignee.contactPhone}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.activeRequirementNames | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell align="right">
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.port}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell>
-                                    <span class="text-truncate" translate>
+                                    <span class="text-truncate">
                                         ${stop.arrivalTimeFrame | timeRange}
                                     </span>
                                 </data-table-cell>
@@ -480,25 +472,43 @@
 
                         </data-table>
 
-                        <div if.bind="hasInvalidFirstStop || hasInvalidReturnStop" class="margin-top">
+                        <div if.bind="hasInvalidStopCount || hasInvalidFirstStop || hasInvalidLastStop || hasInvalidReturnStop" class="font-small margin-top">
 
-                            <invalid-validator
-                                if.bind="hasInvalidFirstStop">
+                            <custom-validator
+                                valid.bind="!hasInvalidStopCount">
 
-                                <template replace-part="invalid"translate>
-                                    First stop must be a pickup stop
+                                <template replace-part="invalid" translate>
+                                    The route must have at least two stops.
                                 </template>
 
-                            </invalid-validator>
+                            </custom-validator>
 
-                            <invalid-validator
-                                if.bind="hasInvalidReturnStop">
+                            <custom-validator
+                                valid.bind="!hasInvalidFirstStop || hasInvalidStopCount">
 
-                                <template replace-part="invalid"translate>
-                                    Only the last stop can be a return stop
+                                <template replace-part="invalid" translate>
+                                    The first stop must be a pickup stop.
                                 </template>
 
-                            </invalid-validator>
+                            </custom-validator>
+
+                            <custom-validator
+                                valid.bind="!hasInvalidLastStop || hasInvalidStopCount">
+
+                                <template replace-part="invalid" translate>
+                                    The last stop cannot be a pickup stop.
+                                </template>
+
+                            </custom-validator>
+
+                            <custom-validator
+                                valid.bind="!hasInvalidReturnStop || hasInvalidStopCount">
+
+                                <template replace-part="invalid" translate>
+                                    Only the last stop can be a return stop.
+                                </template>
+
+                            </custom-validator>
 
                         </div>
 
