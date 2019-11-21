@@ -97,6 +97,7 @@ jobs:
           command: az acr build
             -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
+            --build-arg COMMIT=${CIRCLE_SHA1}
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
@@ -159,6 +160,7 @@ jobs:
             -t ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
             --build-arg ENVIRONMENT=production
+            --build-arg COMMIT=${CIRCLE_SHA1}
       - run:
           name: Create workspace folder
           command: mkdir -p workspace

@@ -169,7 +169,7 @@ export class DropdownCustomElement
         }
         else
         {
-            this._element.style.minWidth = null;
+            this._element.style.minWidth = "";
         }
     }
 

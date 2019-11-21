@@ -23,7 +23,7 @@ if (ENVIRONMENT.integrations.sentry != null)
         environment: ENVIRONMENT.name,
 
         // Associate entries with the current release, if any.
-        release: ENVIRONMENT.commit ? `frontend@${ENVIRONMENT.commit.substring(0, 7)}` : undefined,
+        release: ENVIRONMENT.commit ? ENVIRONMENT.commit : undefined,
 
         // Configure integrations.
         integrations:
