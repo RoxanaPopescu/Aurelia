@@ -1,5 +1,9 @@
 version: 2.1
 
+orbs:
+  azure-cli: circleci/azure-cli@1.0.3
+  sentry-release: adhawk/sentry-release@0.0.3
+
 jobs:
   setup-test-proxy:
     executor: azure-cli/azure-docker
@@ -224,6 +228,9 @@ jobs:
             -n client-platform-prod-mover
             -s staging
             --action swap
+      - adhawk/sentry_release:
+          sentry-environment: production
+          sentry-project: platform
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
@@ -328,5 +335,3 @@ commands:
       - run:
           name: Set defaults
           command: az configure --defaults group=<< parameters.resource-group >>
-orbs:
-  azure-cli: circleci/azure-cli@1.0.3
