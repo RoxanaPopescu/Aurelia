@@ -228,7 +228,7 @@ jobs:
             -n client-platform-prod-mover
             -s staging
             --action swap
-      - adhawk/sentry_release:
+      - sentry-release/sentry_release:
           sentry-environment: production
           sentry-project: platform
       - run:
