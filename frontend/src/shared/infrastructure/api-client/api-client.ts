@@ -4,7 +4,7 @@ import { once, delay } from "shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
 import { IApiRequestOptions } from "./api-request-options";
 import { apiRequestDefaults } from "./api-request-defaults";
-import { ApiError, ApiAbortError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
+import { ApiAbortError, ApiError, ApiOriginError, ApiValidationError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
 import { ApiResult } from "./api-result";
 
 // TODO: We should ideally refactor those dependencies out,
@@ -62,11 +62,11 @@ export class ApiClient
      * Sends a `HEAD` request to the specified endpoint.
      * This should get a response identical to that of a `GET` request, but without the response body.
      * Note that a `HEAD` request cannot have a body.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async head<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async head<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
@@ -80,11 +80,11 @@ export class ApiClient
      * Sends a `GET` request to the specified endpoint.
      * This should get the entity at the specified resource.
      * Note that a `GET` request cannot have a body.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async get<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async get<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
@@ -97,11 +97,11 @@ export class ApiClient
     /**
      * Sends a `PUT` request to the specified endpoint.
      * This should replace the entity at the specified resource.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async put<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async put<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         return this.fetch<T>("PUT", path, { retry: 0, ...options });
     }
@@ -109,11 +109,11 @@ export class ApiClient
     /**
      * Sends a `POST` request to the specified endpoint.
      * This should add an entity to the specified resource, or if the resource is an action, execute it.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async post<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async post<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         return this.fetch<T>("POST", path, { retry: 0, ...options });
     }
@@ -121,11 +121,11 @@ export class ApiClient
     /**
      * Sends a `PATCH` request to the specified endpoint.
      * This should partially update the entity at the specified resource.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async patch<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async patch<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         return this.fetch<T>("PATCH", path, { retry: 0, ...options });
     }
@@ -134,11 +134,11 @@ export class ApiClient
      * Sends a `DELETE` request to the specified endpoint.
      * This should delete the entity at the specified resource.
      * Note that a `DELETE` request cannot have a body.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async delete<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async delete<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
@@ -151,20 +151,23 @@ export class ApiClient
     /**
      * Fetches the response from the specified endpoint.
      * @param method The HTTP method to use.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use.
      * @returns A promise that will be resolved with the result of the request.
      */
-    private async fetch<T>(method: string, path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    private async fetch<T>(method: string, path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
+        // Get the endpoint path.
+        const endpointPath = path instanceof Array ? path.join("/") : path;
+
         // Get the endpoint settings.
-        const endpointSettings = this.getEndpointSettings(path);
+        const endpointSettings = this.getEndpointSettings(endpointPath);
 
         // Get the request options to use.
         const requestOptions = this.getRequestOptions(options);
 
         // Get the request URL.
-        const requestUrl = this.getRequestUrl(path, requestOptions, endpointSettings);
+        const requestUrl = this.getRequestUrl(endpointPath, requestOptions, endpointSettings);
 
         // Create the request.
         const request = this.getRequest(method, requestUrl, requestOptions, endpointSettings);
@@ -181,7 +184,7 @@ export class ApiClient
         // Throw an `ApiError` if the request was unsuccessful.
         if (!response.ok && !(resourceMissing && requestOptions.optional))
         {
-            throw new ApiError(false, request, response, undefined, responseBody);
+            throw this.createApiError(false, request, response, undefined, responseBody);
         }
 
         // Return the result of the request.
@@ -217,7 +220,7 @@ export class ApiClient
 
     /**
      * Gets the settings for the endpoint with the specified path.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @returns The settings to use for the endpoint.
      */
     private getEndpointSettings(path: string): IApiEndpointSettings
@@ -259,7 +262,7 @@ export class ApiClient
 
     /**
      * Gets the URL to be used for the request.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use.
      * @param endpointSettings The endpoint settings to use.
      * @returns The URL to be used for the request.
@@ -348,7 +351,7 @@ export class ApiClient
         {
             // Determine whether the request body should be stringified as JSON.
             const contentType = options.headers ? options.headers["content-type"] : undefined;
-            const hasJsonBody = contentType && /^application\/(.+\+)?json(;|$)/.test(contentType);
+            const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
             // Stringify the request body, if needed.
             const body = hasJsonBody ? JSON.stringify(options.body) : options.body as any;
@@ -389,7 +392,7 @@ export class ApiClient
                 // Does the response represent a transient error?
                 if (transientHttpStatusCodes.includes(fetchResponse.status))
                 {
-                    throw new ApiError(true, fetchRequest, fetchResponse);
+                    throw this.createApiError(true, fetchRequest, fetchResponse);
                 }
 
                 break;
@@ -405,13 +408,13 @@ export class ApiClient
                 // Throw an `ApiError` if the error is non-transient.
                 if (error.transient !== true)
                 {
-                    throw new ApiError(false, fetchRequest, fetchResponse, error.message);
+                    throw this.createApiError(false, fetchRequest, fetchResponse, error.message);
                 }
 
                 // Throw an `ApiError` if the error is transient and the retry attempts have been exhausted.
                 if (attempt === options.retry)
                 {
-                    throw new ApiError(true, fetchRequest, fetchResponse, error.message);
+                    throw this.createApiError(true, fetchRequest, fetchResponse, error.message);
                 }
 
                 try
@@ -443,7 +446,7 @@ export class ApiClient
     {
         // Determine whether the response body can be parsed as JSON.
         const contentType = fetchResponse.headers.get("content-type");
-        const hasJsonBody = contentType && /^application\/(.+\+)?json(;|$)/.test(contentType);
+        const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
         // Deserialize the response body, if enabled.
         if (options.deserialize && hasJsonBody)
@@ -451,17 +454,46 @@ export class ApiClient
             // Await the response body.
             let text = await fetchResponse.text();
 
-            // Deobfuscate the body, if enabled.
-            if (endpointSettings.obfuscate)
+            if (text.length > 0)
             {
-                text = deobfuscate(text, this._settings.cipher);
-            }
+                // Deobfuscate the body, if enabled.
+                if (endpointSettings.obfuscate)
+                {
+                    text = deobfuscate(text, this._settings.cipher);
+                }
 
-            // Deserialize the body, using the configured JSON reviver.
-            return JSON.parse(text, options.jsonReviver);
+                // Deserialize the body, using the configured JSON reviver.
+                return JSON.parse(text, options.jsonReviver);
+            }
         }
 
         return undefined;
+    }
+
+    /**
+     * Creates the appropiate error for the specified response.
+     * @param transient True if the error is a transient error, otherwise false.
+     * @param request The request sent to the server.
+     * @param response The response received from the server.
+     * @param message The message describing the error.
+     * @param data The deserialized response body, if available.
+     */
+    private createApiError(transient: boolean, request: Request, response?: Response, message?: string, data?: any): ApiError
+    {
+        // Does the response conform to the RFC-7807 specification,
+        // indicating it came from the origin server?
+        if (response != null && response.headers.get("content-type") === "application/problem+json")
+        {
+            // Does the error represent a validation error?
+            if (data.status || response.status === 400 && data.errors)
+            {
+                return new ApiValidationError(transient, request, response, message, data);
+            }
+
+            return new ApiOriginError(transient, request, response, message, data);
+        }
+
+        return new ApiError(transient, request, response, message, data);
     }
 
     /**
