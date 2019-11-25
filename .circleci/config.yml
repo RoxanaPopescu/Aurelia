@@ -234,9 +234,9 @@ jobs:
   
   release-production-sentry:
     steps:
-      - sentry-release/sentry_release:
-        sentry-environment: production
-        sentry-project: platform
+      - adhawk/sentry_release:
+          sentry-environment: production
+          sentry-project: platform
     
   rollback:
     executor: azure-cli/azure-docker
