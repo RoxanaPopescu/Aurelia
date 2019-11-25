@@ -168,8 +168,6 @@ export class AppModule
                     outfits: ["fulfiller", "consignor"],
                     claims:
                     [
-                        "create-order",
-                        "edit-order",
                         "view-orders"
                     ]
                 },
@@ -187,7 +185,6 @@ export class AppModule
                     outfits: ["fulfiller", "consignor"],
                     claims:
                     [
-                        "edit-routes",
                         "view-routes"
                     ]
                 },
@@ -205,12 +202,8 @@ export class AppModule
                     outfits: ["fulfiller"],
                     claims:
                     [
-                        "edit-routeplan",
-                        "edit-routeplan-settings",
                         "view-routeplans",
-                        "view-routeplan-settings",
-                        "create-routeplan",
-                        "create-routeplan-settings"
+                        "view-routeplan-settings"
                     ]
                 },
                 title: routeTitles.routePlanning,
@@ -227,9 +220,7 @@ export class AppModule
                     outfits: ["fulfiller"],
                     claims:
                     [
-                        "create-depot",
-                        "view-depot",
-                        "edit-depot"
+                        "view-depot"
                     ]
                 },
                 title: routeTitles.depots,
@@ -246,10 +237,7 @@ export class AppModule
                     outfits: ["fulfiller"],
                     claims:
                     [
-                        "invite-driver",
                         "view-drivers",
-                        "edit-vehicle",
-                        "create-vehicle",
                         "view-vehicles"
                     ]
                 },
@@ -280,8 +268,6 @@ export class AppModule
                     outfits: ["fulfiller", "consignor"],
                     claims:
                     [
-                        "create-departments",
-                        "edit-departments",
                         "view-departments"
                     ]
                 },
@@ -312,8 +298,6 @@ export class AppModule
                     outfits: ["fulfiller", "consignor"],
                     claims:
                     [
-                        "create-user",
-                        "edit-user",
                         "view-users"
                     ]
                 },
