@@ -301,7 +301,7 @@ workflows:
           requires:
             - build-production
             - production-approval
-      - adhawk/sentry_release:
+      - sentry-release/sentry-release:
           requires:
             - deploy-production
             - production-approval
