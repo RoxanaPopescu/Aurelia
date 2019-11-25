@@ -228,12 +228,15 @@ jobs:
             -n client-platform-prod-mover
             -s staging
             --action swap
-      - sentry-release/sentry_release:
-          sentry-environment: production
-          sentry-project: platform
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
+  
+  release-production-sentry:
+    steps:
+      - sentry-release/sentry_release:
+        sentry-environment: production
+        sentry-project: platform
     
   rollback:
     executor: azure-cli/azure-docker
@@ -304,7 +307,11 @@ workflows:
           requires:
             - build-production
             - production-approval
-  
+      - release-production-sentry:
+          requires:
+            - deploy-production
+            - production-approval
+            
   rollback:
     jobs:
       - approval:
