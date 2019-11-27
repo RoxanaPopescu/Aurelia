@@ -43,7 +43,7 @@ export class Identity
     public readonly preferredName: string;
 
     /**
-     * The emailo of the user.
+     * The email of the user.
      */
     public readonly email: string;
 

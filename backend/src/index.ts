@@ -1,19 +1,19 @@
 import { environment } from "./env";
-import { container, ApiClient, CorrelationIdInterceptor, StubInterceptor } from "./shared/infrastructure";
-import { getCorrelationId } from "./shared/middleware/correlation-id-middleware";
+import { container, ApiClient, RequestHeadersInterceptor, ResponseStubInterceptor } from "./shared/infrastructure";
+import { getRequestHeaders } from "./shared/middleware/headers-middleware";
 import { App } from "./app/app";
 import { AppRouter } from "./app/app-router";
 import settings from "./resources/settings/settings";
 
 // Add and configure the interceptors used by the API client.
 
-settings.infrastructure.api.interceptors!.push(new CorrelationIdInterceptor(() => getCorrelationId()));
+settings.infrastructure.api.interceptors!.push(new RequestHeadersInterceptor(() => getRequestHeaders()));
 
 if (environment.stubs)
 {
     // tslint:disable-next-line: no-require-imports no-var-requires
     const { stubs } = require("./resources/stubs");
-    settings.infrastructure.api.interceptors!.push(new StubInterceptor(stubs));
+    settings.infrastructure.api.interceptors!.push(new ResponseStubInterceptor(stubs));
 }
 
 // Add and configure the API client.

@@ -1,4 +1,4 @@
-import { IApiClientSettings, ICookieOptions } from "shared/infrastructure";
+import { IApiClientSettings, ICookieOptions, CorrelationHeaderInterceptor } from "shared/infrastructure";
 import locales from "./locales.json";
 import currencies from "./currencies.json";
 import themes from "./themes.json";
@@ -72,7 +72,10 @@ export default
             {
                 "": { version: "1", obfuscate: false }
             },
-            interceptors: []
+            interceptors:
+            [
+                new CorrelationHeaderInterceptor("x-correlation")
+            ]
 
         } as IApiClientSettings
     }

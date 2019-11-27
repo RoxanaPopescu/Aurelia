@@ -106,13 +106,13 @@ export class IdentityService
         {
             settings.infrastructure.api.defaults!.headers!["authorization"] = `Bearer ${this.identity.tokens.access}`;
             settings.infrastructure.api.defaults!.headers!["refresh-token"] = this.identity.tokens.refresh;
-            Log.setUsername(this._identity);
+            Log.setUser(this._identity);
         }
         else
         {
             delete settings.infrastructure.api.defaults!.headers!["authorization"];
             delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
-            Log.setUsername(undefined);
+            Log.setUser(undefined);
         }
         // tslint:disable
     }
