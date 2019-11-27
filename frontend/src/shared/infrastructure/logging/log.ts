@@ -9,6 +9,27 @@ declare const Sentry: any;
 const unwrappedConsole = ((window as any)._console || console) as typeof console;
 
 /**
+ * Represents the user info to associate with a log entry.
+ */
+interface ILogUser
+{
+    /**
+     * The ID of the user.
+     */
+    readonly id?: string;
+
+    /**
+     * The username identifying the user.
+     */
+    readonly username?: string;
+
+    /**
+     * The emailo of the user.
+     */
+    readonly email?: string;
+}
+
+/**
  * Represents the severity of a log entry.
  */
 export type LogLevel = "debug" | "info" | "warning" | "error";
@@ -20,13 +41,13 @@ export namespace Log
 {
     /**
      * Sets the username that should be associated with log entries.
-     * @param username The username that should be associated with log entries.
+     * @param user The user that should be associated with log entries.
      */
-    export function setUsername(username: string | undefined): void
+    export function setUsername(user: ILogUser | undefined): void
     {
         if ("Sentry" in window)
         {
-            Sentry.setUser({ username });
+            Sentry.setUser(user);
         }
     }
 
