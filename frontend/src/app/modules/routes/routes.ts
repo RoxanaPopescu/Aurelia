@@ -53,12 +53,6 @@ export class RoutesModule
                 icon: "driver-tracking"
             },
             {
-                name: "templates-create",
-                route: "templates/create",
-                moduleId: PLATFORM.moduleName("./modules/templates/details/details"),
-                title: routeTitles.newTemplate
-            },
-            {
                 name: "auto-dispatch",
                 route: "auto-dispatch",
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
@@ -87,14 +81,16 @@ export class RoutesModule
                     icon: "templates"
                 },
                 {
-                    name: "templates-create",
-                    route: "templates/create",
-                    moduleId: PLATFORM.moduleName("./modules/templates/details/details")
-                },
-                {
                     name: "templates-details",
                     route: "templates/details/:id",
-                    moduleId: PLATFORM.moduleName("./modules/templates/details/details")
+                    moduleId: PLATFORM.moduleName("./modules/templates/details/details"),
+                    title: routeTitles.templateDetails
+                },
+                {
+                    name: "templates-create",
+                    route: "templates/create",
+                    moduleId: PLATFORM.moduleName("./modules/templates/details/details"),
+                    title: routeTitles.newTemplate
                 }
             ] : []
         ]);

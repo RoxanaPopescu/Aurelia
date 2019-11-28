@@ -77,12 +77,7 @@ export class FleetModule
                 nav: true,
                 href: "/fleet-management/forecasts",
                 icon: "forecast"
-            },
-
-            ...
-            ENVIRONMENT.name === "development" ?
-            [] :
-            []
+            }
         ]);
     }
 }

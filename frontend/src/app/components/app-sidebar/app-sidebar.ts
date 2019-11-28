@@ -26,7 +26,10 @@ export class AppSidebarCustomElement
     protected get navModels(): NavModel[]
     {
         return this._router.navigation
-            .filter(m => this._authorizationService.isAuthorizedForRoute(m.config.settings));
+            .filter(m => this._authorizationService.isAuthorizedForRoute(
+            [
+                m.config.settings
+            ]));
     }
 
     @computedFrom("_router.currentInstruction")
@@ -46,7 +49,11 @@ export class AppSidebarCustomElement
         }
 
         return childRouter.navigation
-            .filter(m => this._authorizationService.isAuthorizedForRoute(m.config.settings));
+            .filter(m => this._authorizationService.isAuthorizedForRoute(
+            [
+                this._router.currentInstruction.config.settings,
+                m.config.settings
+            ]));
     }
 
     /**
