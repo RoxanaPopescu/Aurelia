@@ -46,7 +46,7 @@
                 class="nav-link ${navModel.isActive ? '--active' : ''}"
                 page-href="path.bind: navModel.href">
 
-                <icon name.bind="navModel.config.icon"></icon>
+                <icon title.bind="navModel.config.title" name.bind="navModel.config.icon"></icon>
 
                 <span>${navModel.config.title}</span>
 
@@ -61,7 +61,7 @@
                     class="sidebar-child-link ${navModel.isActive ? '--active' : ''}"
                     page-href="path.bind: navModel.href">
 
-                    <icon name.bind="navModel.config.icon"></icon>
+                    <icon title.bind="navModel.config.title" name.bind="navModel.config.icon"></icon>
 
                     <span if.bind="expanded">${navModel.config.title}</span>
 
@@ -104,7 +104,7 @@
 
         <a class="nav-link" click.trigger="toggleWidth()">
 
-            <icon if.bind="expanded" name="sidebar-collapse"></icon>
+            <icon if.bind="expanded" title.translate="Collapse menu" name="sidebar-collapse"></icon>
             <span if.bind="expanded" translate>Collapse menu</span>
 
             <icon if.bind="!expanded" title.translate="Expand menu" name="sidebar-expand"></icon>

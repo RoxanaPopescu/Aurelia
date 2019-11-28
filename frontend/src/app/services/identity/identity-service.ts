@@ -4,6 +4,7 @@ import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
 import { getUserClaims } from "legacy/helpers/identity-helper";
 import settings from "resources/settings";
+import { Log } from "shared/infrastructure";
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -20,7 +21,12 @@ export class IdentityService
     {
         if (!Profile.isAuthenticated || Session.userInfo == null)
         {
-            this._identity = undefined;
+            if (this._identity != null)
+            {
+                this._identity = undefined;
+
+                this.configureInfrastructure();
+            }
 
             return undefined;
         }
@@ -37,6 +43,8 @@ export class IdentityService
                 claims: getUserClaims(),
                 tokens: Profile.tokens
             });
+
+            this.configureInfrastructure();
         }
 
         return this._identity;
@@ -47,7 +55,7 @@ export class IdentityService
      */
     public authenticated(): void
     {
-        this.configureApiClient();
+        this.configureInfrastructure();
     }
 
     /**
@@ -56,9 +64,14 @@ export class IdentityService
      */
     public async reauthenticate(): Promise<boolean>
     {
-        await Profile.autoLogin();
-
-        this.configureApiClient();
+        try
+        {
+            await Profile.autoLogin();
+        }
+        finally
+        {
+            this.configureInfrastructure();
+        }
 
         return Promise.resolve(this.identity != null);
     }
@@ -69,28 +82,37 @@ export class IdentityService
      */
     public async unauthenticate(): Promise<boolean>
     {
-        Profile.logout();
-
-        this.configureApiClient();
+        try
+        {
+            Profile.logout();
+        }
+        finally
+        {
+            this.configureInfrastructure();
+        }
 
         return Promise.resolve(true);
     }
 
     /**
-     * Adds or removes the tokens to the set of default headers used by the `ApiClient`.
+     * Configures the infrastructure.
+     * Adds or removes the tokens to the set of default headers used by the `ApiClient`,
+     * and sets the user associated with log entries.
      */
-    private configureApiClient(): void
+    private configureInfrastructure(): void
     {
         // tslint:disable: no-string-literal no-dynamic-delete
         if (this.identity != null)
         {
             settings.infrastructure.api.defaults!.headers!["authorization"] = `Bearer ${this.identity.tokens.access}`;
             settings.infrastructure.api.defaults!.headers!["refresh-token"] = this.identity.tokens.refresh;
+            Log.setUsername(this._identity);
         }
         else
         {
             delete settings.infrastructure.api.defaults!.headers!["authorization"];
             delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
+            Log.setUsername(undefined);
         }
         // tslint:disable
     }

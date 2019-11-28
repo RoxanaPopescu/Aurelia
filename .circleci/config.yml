@@ -1,5 +1,9 @@
 version: 2.1
 
+orbs:
+  azure-cli: circleci/azure-cli@1.0.3
+  sentry-release: adhawk/sentry-release@0.0.3
+
 jobs:
   setup-test-proxy:
     executor: azure-cli/azure-docker
@@ -97,6 +101,7 @@ jobs:
           command: az acr build
             -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
+            --build-arg COMMIT=${CIRCLE_SHA1}
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
@@ -159,6 +164,7 @@ jobs:
             -t ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${PROJECT_NAME}_client:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
             --build-arg ENVIRONMENT=production
+            --build-arg COMMIT=${CIRCLE_SHA1}
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
@@ -295,7 +301,13 @@ workflows:
           requires:
             - build-production
             - production-approval
-  
+      - sentry-release/sentry-release:
+          requires:
+            - deploy-production
+            - production-approval
+          sentry-environment: production
+          sentry-project: platform
+            
   rollback:
     jobs:
       - approval:
@@ -326,5 +338,3 @@ commands:
       - run:
           name: Set defaults
           command: az configure --defaults group=<< parameters.resource-group >>
-orbs:
-  azure-cli: circleci/azure-cli@1.0.3

@@ -109,8 +109,8 @@ export class BusyOverlayCustomElement
             }
             else
             {
-                this._element.style.top = null;
-                this._element.style.height = null;
+                this._element.style.top = "";
+                this._element.style.height = "";
             }
 
             if (this._yScrollElement === this._element.parentElement)
@@ -121,8 +121,8 @@ export class BusyOverlayCustomElement
             }
             else
             {
-                this._element.style.left = null;
-                this._element.style.width = null;
+                this._element.style.left = "";
+                this._element.style.width = "";
             }
 
             if (this._xScrollElement !== this._element.parentElement && this._yScrollElement !== this._element.parentElement)

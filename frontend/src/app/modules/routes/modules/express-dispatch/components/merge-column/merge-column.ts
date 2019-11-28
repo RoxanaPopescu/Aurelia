@@ -144,7 +144,7 @@ export class MergeColumnCustomElement
         {
             stop.dragged = false;
             this.isDragging = false;
-            this.driverStopsElement.style.height = null;
+            this.driverStopsElement.style.height = "";
         });
     }
 
@@ -200,7 +200,7 @@ export class MergeColumnCustomElement
         this.expressStops.push(draggedStop as IExpressRouteStop);
         draggedStop.dragged = false;
         this.isDragging = false;
-        this.driverStopsElement.style.height = null;
+        this.driverStopsElement.style.height = "";
 
         this.updateWorkspace();
     }
@@ -245,7 +245,7 @@ export class MergeColumnCustomElement
             this.driverStopsDragover = false;
             stop.dragged = false;
             this.isDragging = false;
-            this.driverStopsElement.style.height = null;
+            this.driverStopsElement.style.height = "";
         });
     }
 
@@ -323,7 +323,7 @@ export class MergeColumnCustomElement
         this.driverStops.splice(targetStopIndex, 0, draggedStop);
         draggedStop.dragged = false;
         this.isDragging = false;
-        this.driverStopsElement.style.height = null;
+        this.driverStopsElement.style.height = "";
 
         this.updateWorkspace();
     }

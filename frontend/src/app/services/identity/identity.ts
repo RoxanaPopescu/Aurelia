@@ -11,14 +11,21 @@ export class Identity
      */
     public constructor(data: any)
     {
+        this.id = data.id;
         this.username = data.username;
         this.fullName = data.fullName;
-        this.preferredName = data.preferredName;
+        this.preferredName = data.firstName;
+        this.email = data.email;
         this.pictureUrl = data.pictureUrl;
         this.outfit = new Outfit(data.outfit);
         this.claims = new Set<string>(data.claims);
         this.tokens = data.tokens;
     }
+
+    /**
+     * The ID of the user.
+     */
+    public readonly id: string;
 
     /**
      * The username identifying the user.
@@ -34,6 +41,11 @@ export class Identity
      * The preferred name of the user.
      */
     public readonly preferredName: string;
+
+    /**
+     * The emailo of the user.
+     */
+    public readonly email: string;
 
     /**
      * The URL for the user picture.
@@ -53,5 +65,5 @@ export class Identity
     /**
      * The the tokens to use when accessing the API.
      */
-    public readonly tokens: { refresh: string, access: string };
+    public readonly tokens: { refresh: string; access: string };
 }
