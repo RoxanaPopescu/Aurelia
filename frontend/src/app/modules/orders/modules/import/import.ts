@@ -7,5 +7,13 @@ import { ImportService } from "./services/import-service";
 @autoinject
 export class ImportModule
 {
+    /**
+     * Creates a new instance of the type.
+     * @param element The element representing the component.
+     */
+    public constructor()
+    {
+        this.service.currentPage = "upload";
+    }
     protected service = new ImportService();
 }

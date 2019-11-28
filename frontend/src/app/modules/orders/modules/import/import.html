@@ -1,15 +1,12 @@
 <template>
     <require from="./components/import-upload/import-upload"></require>
-    <require from="./components/import-success/import-success"></require>
     <require from="./components/import-failed/import-failed"></require>
+    <require from="./import.scss"></require>
 
-    <page-content class="page-content-stretch">
+    <page-content class="page-content-stretch import-order">
 
-        <page-section>
-            <import-upload service.bind="service" if.bind="service.currentPage === 'upload'"></import-upload>
-            <import-success value.bind="service" if.bind="service.currentPage === 'success'"></import-success>
-            <import-failed value.bind="service" if.bind="service.currentPage === 'failed'"></import-failed>
-        </page-section>
+    <import-upload service.bind="service" if.bind="service.currentPage === 'upload'"></import-upload>
+    <import-failed service.bind="service" if.bind="service.currentPage === 'failed'"></import-failed>
 
     </page-content>
 
