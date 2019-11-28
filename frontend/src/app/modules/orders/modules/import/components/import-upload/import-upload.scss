@@ -1,0 +1,34 @@
+import-upload
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+
+    file-dropzone.dropzone
+    {
+        width: 50%;
+        height: 95rem;
+        margin-bottom: 10rem;
+
+        .dz-message
+        {
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .upload-text
+            {
+                line-height: 8rem;
+            }
+
+            .upload-icon
+            {
+                width: 22rem;
+                margin-top: 10rem;
+            }
+        }
+    }
+}

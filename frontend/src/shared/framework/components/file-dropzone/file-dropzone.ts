@@ -37,9 +37,9 @@ export class FileDropzoneCustomElement
     public options: Dropzone.DropzoneOptions;
 
     /**
-     * Called by the framework when the component is attached.
+     * Called by the framework when the component is binding.
      */
-    public attached(): void
+    public bind(): void
     {
         if (this.dropzone == null)
         {

@@ -1,13 +1,20 @@
 <template>
-    <section class="centered">
-        <h1 class="font-largest margin-bottom" translate>
-            Upload excel ark
-        </h1>
-            
-        <p class="font-large" translate>
-            You can drop the excel file into the field below
-        </p>
 
-        <button appearance="solid" accent="primary" click.trigger="upload()">Upload</button>
-    </section>
+    <require from="./import-upload.scss"></require>
+
+    <file-dropzone
+        dropzone.bind="dropzone"
+        options.bind="dropzoneOptions"
+    >
+
+        <div class="upload-text">
+            Du kan trække XLSX filen direkte over i  dette vindue<br />
+            eller klikke her for at finde filen på din computer.
+        </div>
+        <img class="upload-icon" src="./resources/images/upload-excel.svg" />
+
+    </file-dropzone>
+
+    <button appearance="solid" accent="primary" click.trigger="upload()">Upload</button>
+
 </template>

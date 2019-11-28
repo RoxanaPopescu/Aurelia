@@ -2,32 +2,85 @@ file-dropzone
 {
     &.dropzone
     {
-        display: block;
+        display: flex;
         padding: 10rem;
         width: 100rem;
         height: 60rem;
         background: var(--surface-color);
-        border: var(--border-width-medium) dashed var(--border-color);
-        border-radius: var(--border-radius-large);
+        border: var(--border-width-thin) dashed var(--palette-color-primary);
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 100ms;
 
-        .dz-preview
+        .dz-message
         {
-            &.dz-error
+            pointer-events: none;
+            font-size: var(--font-largest-font-size);
+        }
+        .dz-preview.dz-file-preview, .dz-preview.dz-error
+        {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+
+            .dz-image
             {
-                .dz-image
+                height: 35rem;
+                width: 35rem;
+                border-radius: var(--border-radius-large);
+                background: none;
+                border: var(--border-width-thin) solid var(--border-color);
+                background-color: white;
+                box-shadow: 0 2px 4px 0 #edf2f9;
+                background-image: url(./resources/images/data-file-icon.svg);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 50% auto;
+
+                img
                 {
-                    //background: var(--surface-negative-icon-color);
+                    display: none;
+                }
+            }
+
+            .dz-details
+            {
+                position: static;
+                padding: 0;
+                margin-top: 2.5rem;
+                opacity: 1;
+
+                .dz-size
+                {
+                    display: none;
                 }
 
-                .dz-error-mark
+                .dz-filename
                 {
-                    //display: none;
-
-                    g
+                    span
                     {
-                        fill: var(--surface-negative-icon-color) !important;
+                        background-color: transparent;
+                        padding: 0;
+                        margin: 0;
+                        border: 0;
                     }
                 }
+            }
+
+            .dz-error-message
+            {
+                display: none;
+            }
+
+            .dz-error-mark, .dz-success-mark
+            {
+                display: none;
+            }
+
+            &.dz-error
+            {
             }
 
             .dz-size
@@ -43,6 +96,16 @@ file-dropzone
                 {
                     border: none;
                 }
+            }
+        }
+        &.dz-drag-hover
+        {
+            background-color: var(--palette-color-neutral-lighter);
+            border-style: dashed;
+
+            .dz-message
+            {
+                opacity: initial;
             }
         }
     }
