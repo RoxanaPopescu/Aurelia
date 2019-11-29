@@ -92,7 +92,7 @@
           ],
           "properties": {
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
-            "WEBSITES_PORT": 8080,
+            "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
@@ -129,7 +129,7 @@
               ],
               "properties": {
                 "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
-                "WEBSITES_PORT": 8080,
+                "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
                 "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
@@ -170,7 +170,7 @@
               ],
               "properties": {
                 "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId(parameters('environment'), 'microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]",
-                "WEBSITES_PORT": 8080,
+                "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
                 "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
