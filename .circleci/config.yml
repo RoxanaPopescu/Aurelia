@@ -366,6 +366,10 @@ workflows:
           requires:
             - client-approve-proxy-production
 
+  bff-build-and-deploy:
+    jobs:
+      - bff-build-test
+
   client-build-and-deploy:
     jobs:
       - client-build-test
