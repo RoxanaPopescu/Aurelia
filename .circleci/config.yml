@@ -5,7 +5,7 @@ orbs:
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
-  bff-setup-test-azure:
+  bff-setup-test:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -25,6 +25,54 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="bff"
 
+  bff-setup-production:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-bff-v2"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file .circleci/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="prod"
+            serviceName=${BACKEND_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
+            type="bff"
+
+  bff-build-test:
+    executor: azure-cli/azure-docker
+
+    steps:
+
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-bff-v2"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${DOCKER_RESOURCE_GROUP_TEST} acr=${DOCKER_REGISTRY_TEST}
+      - run:
+          name: Build docker image
+          command: az acr build
+            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -f backend/dockerfile .
+      - run:
+          name: Create workspace folder
+          command: mkdir -p workspace
+      - run:
+          name: Prepare docker image file for workspace
+          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - docker-image
+            
   client-setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
@@ -45,7 +93,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  client-setup-test-azure:
+  client-setup-test:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -85,7 +133,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  client-setup-production-azure:
+  client-setup-production:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -285,13 +333,18 @@ workflows:
     jobs:
       - bff-approve-test:
           type: approval
-      - bff-setup-test-azure:
+      - bff-setup-test:
           requires:
             - bff-approve-test
+      - bff-approve-production:
+          type: approval
+      - bff-setup-production:
+          requires:
+            - bff-approve-production
 
       - client-approve-test:
           type: approval
-      - client-setup-test-azure:
+      - client-setup-test:
           requires:
             - client-approve-test
 
@@ -303,7 +356,7 @@ workflows:
 
       - client-approve-production:
           type: approval
-      - client-setup-production-azure:
+      - client-setup-production:
           requires:
             - client-approve-production
 
