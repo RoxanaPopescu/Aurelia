@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Input } from "shared/src/webKit";
 import { Driver } from "../../../../models/driver";
 import Localization from "shared/src/localization";
+import { Profile } from "shared/src/model/profile";
 
 export interface DriverFormProps {
   driver: Driver;
@@ -22,6 +23,7 @@ export class DriverForm extends React.Component<DriverFormProps> {
           onChange={value => (this.props.driver.name.first = value)}
           error={this.props.validate && this.props.driver.name.first === undefined}
           value={this.props.driver.name.first}
+          readonly={!Profile.claims.has("edit-driver")}
         />
         <Input
           size={"medium"}
@@ -30,6 +32,7 @@ export class DriverForm extends React.Component<DriverFormProps> {
           onChange={value => (this.props.driver.name.last = value)}
           error={this.props.validate && this.props.driver.name.last === undefined}
           value={this.props.driver.name.last}
+          readonly={!Profile.claims.has("edit-driver")}
         />
         <Input
           size={"medium"}
@@ -40,6 +43,7 @@ export class DriverForm extends React.Component<DriverFormProps> {
           error={this.props.validate &&
             (this.props.driver.email === undefined || !/^[^@]+@[^@]+\.[^@]+$/.test(this.props.driver.email))}
           value={this.props.driver.email}
+          readonly={!Profile.claims.has("edit-driver")}
         />
         <div>
           <Input
@@ -50,6 +54,7 @@ export class DriverForm extends React.Component<DriverFormProps> {
             onChange={value => (this.props.driver.phone.number = value)}
             error={this.props.validate && !this.props.driver.phone.isValid}
             value={this.props.driver.phone.number}
+            readonly={!Profile.claims.has("edit-driver")}
           />
         </div>
       </div>

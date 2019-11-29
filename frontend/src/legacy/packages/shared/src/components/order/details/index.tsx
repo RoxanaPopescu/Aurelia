@@ -23,6 +23,7 @@ import AssignFulfillerButton from "./components/assignFulfiller/assignFulfiller"
 import OrderService from "../service";
 import { WorldMap } from "../../worldMap/worldMap";
 import { PageHeaderComponent } from "../../pageHeader";
+import { Profile } from "shared/src/model/profile";
 
 export const orderDetailsStore = new OrderDetailsStore();
 
@@ -134,38 +135,41 @@ export default class OrderDetailsComponent extends React.Component<Props> {
         ]}
       >
 
-        {orderDetailsStore.order!.state.canBeEdited && (
-          <Button
-            onClick={() => {
-              this.props.history!.push(
-                SubPage.path(SubPage.OrderUpdate).replace(
-                  ":id",
-                  orderDetailsStore.orderId
-                )
-              );
-            }}
-            type={ButtonType.Light}
-            size={ButtonSize.Medium}
-            loading={orderDetailsStore.loading}
-          >
-            Rediger ordre
-          </Button>
-        )}
+        {Profile.claims.has("edit-order") &&
+        <>
+          {orderDetailsStore.order!.state.canBeEdited && (
+            <Button
+              onClick={() => {
+                this.props.history!.push(
+                  SubPage.path(SubPage.OrderUpdate).replace(
+                    ":id",
+                    orderDetailsStore.orderId
+                  )
+                );
+              }}
+              type={ButtonType.Light}
+              size={ButtonSize.Medium}
+              loading={orderDetailsStore.loading}
+            >
+              Rediger ordre
+            </Button>
+          )}
 
-        <AssignFulfillerButton order={orderDetailsStore.order!} />
-        
-        {orderDetailsStore.order!.state.canBeCancelled && (
-          <Button
-            onClick={() => {
-              this.cancelOrder();
-            }}
-            type={ButtonType.Light}
-            size={ButtonSize.Medium}
-            loading={orderDetailsStore.loading}
-          >
-            {Localization.sharedValue("Trip_CancelButton")}
-          </Button>
-        )}
+          <AssignFulfillerButton order={orderDetailsStore.order!} />
+
+          {orderDetailsStore.order!.state.canBeCancelled && (
+            <Button
+              onClick={() => {
+                this.cancelOrder();
+              }}
+              type={ButtonType.Light}
+              size={ButtonSize.Medium}
+              loading={orderDetailsStore.loading}
+            >
+              {Localization.sharedValue("Trip_CancelButton")}
+            </Button>
+          )}
+        </>}
 
       </PageHeaderComponent>
     );

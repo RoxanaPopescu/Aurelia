@@ -7,6 +7,7 @@ import { ButtonSize } from "shared/src/webKit/button";
 import { PortComponent } from "./components/port";
 import GUID from "../../../../../../../shared/src/webKit/utillity/guid";
 import { Availability } from "shared/src/model/logistics/depots";
+import { Profile } from "shared/src/model/profile";
 
 interface Props {
   store: DepotStore;
@@ -31,6 +32,7 @@ export default class DepotPortsComponent extends React.Component<Props> {
             }}
           />
         ))}
+        {Profile.claims.has("edit-depot") &&
         <Button
           className="c-depotPort-add"
           size={ButtonSize.Medium}
@@ -38,7 +40,7 @@ export default class DepotPortsComponent extends React.Component<Props> {
           type={ButtonType.Action}
         >
           + Tilføj porte
-        </Button>
+        </Button>}
       </div>
     );
   }

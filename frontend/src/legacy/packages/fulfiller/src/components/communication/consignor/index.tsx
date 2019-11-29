@@ -20,6 +20,7 @@ import { CommunicationSettings } from "./services/models/communicationSettings";
 import { observable } from "mobx";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
+import { Profile } from "shared/src/model/profile";
 
 @observer
 export default class CommunicationConsignorComponent extends React.Component {
@@ -55,7 +56,7 @@ export default class CommunicationConsignorComponent extends React.Component {
           ]}
         >
 
-            {this.service.settings != null && !this.service.busy &&
+            {this.service.settings != null && !this.service.busy && Profile.claims.has("edit-communication") &&
             <Button
               type={ButtonType.Action}
               size={ButtonSize.Medium}
@@ -71,7 +72,7 @@ export default class CommunicationConsignorComponent extends React.Component {
         </PageHeaderComponent>
 
         <PageContentComponent className="c-communication-consignor">
-        
+
           {this.renderContent()}
 
         </PageContentComponent>
@@ -125,6 +126,7 @@ export default class CommunicationConsignorComponent extends React.Component {
               maxlength={11}
               value={this.service.settings.senderName}
               onChange={value => (this.service.settings!.senderName = value)}
+              readonly={!Profile.claims.has("edit-communication")}
             />
 
             {this.service.settings && (
@@ -180,6 +182,7 @@ export default class CommunicationConsignorComponent extends React.Component {
           <InputCheckbox
             checked={settings.routeStarted.isActive}
             onChange={value => (settings.routeStarted.isActive = value)}
+            readonly={!Profile.claims.has("edit-communication")}
           >
             {Localization.operationsValue(
               "Communication_Consignor_Event_Start_Title"
@@ -214,6 +217,7 @@ export default class CommunicationConsignorComponent extends React.Component {
               onChange={value =>
                 (settings.routeStarted.messageTemplate = value || "")
               }
+              readonly={!Profile.claims.has("edit-communication")}
             />
           </div>
         )}
@@ -228,6 +232,7 @@ export default class CommunicationConsignorComponent extends React.Component {
           <InputCheckbox
             checked={settings.notifyDeliveryTime.isActive}
             onChange={value => (settings.notifyDeliveryTime.isActive = value)}
+            readonly={!Profile.claims.has("edit-communication")}
           >
             {Localization.operationsValue(
               "Communication_Consignor_Event_Delivery_Title"
@@ -262,6 +267,7 @@ export default class CommunicationConsignorComponent extends React.Component {
               onChange={value =>
                 (settings.notifyDeliveryTime.messageTemplate = value || "")
               }
+              readonly={!Profile.claims.has("edit-communication")}
             />
 
             <div className="c-communication-form-row">
@@ -277,6 +283,7 @@ export default class CommunicationConsignorComponent extends React.Component {
                 onChange={value =>
                   (settings.notifyDeliveryTime.timeBeforeDeliveryToSend = value || 0)
                 }
+                readonly={!Profile.claims.has("edit-communication")}
               />
             </div>
           </div>
@@ -292,6 +299,7 @@ export default class CommunicationConsignorComponent extends React.Component {
           <InputCheckbox
             checked={settings.notifyDeliveryDelay.isActive}
             onChange={value => (settings.notifyDeliveryDelay.isActive = value)}
+            readonly={!Profile.claims.has("edit-communication")}
           >
             {Localization.operationsValue(
               "Communication_Consignor_Event_Delay_Title"
@@ -326,6 +334,7 @@ export default class CommunicationConsignorComponent extends React.Component {
               onChange={value =>
                 (settings.notifyDeliveryDelay.messageTemplate = value || "")
               }
+              readonly={!Profile.claims.has("edit-communication")}
             />
 
             <div className="c-communication-form-row">
@@ -341,6 +350,7 @@ export default class CommunicationConsignorComponent extends React.Component {
                 onChange={value =>
                   (settings.notifyDeliveryDelay.estimatePadding = value || 0)
                 }
+                readonly={!Profile.claims.has("edit-communication")}
               />
 
               <Input
@@ -357,6 +367,7 @@ export default class CommunicationConsignorComponent extends React.Component {
                 onChange={value =>
                   (settings.notifyDeliveryDelay.timeBeforeDeliveryToSend = value || 0)
                 }
+                readonly={!Profile.claims.has("edit-communication")}
               />
 
               <Input
@@ -371,6 +382,7 @@ export default class CommunicationConsignorComponent extends React.Component {
                 onChange={value =>
                   (settings.notifyDeliveryDelay.delayBeforeSending = value || 0)
                 }
+                readonly={!Profile.claims.has("edit-communication")}
               />
             </div>
           </div>
@@ -386,6 +398,7 @@ export default class CommunicationConsignorComponent extends React.Component {
           <InputCheckbox
             checked={settings.orderDelivered.isActive}
             onChange={value => (settings.orderDelivered.isActive = value)}
+            readonly={!Profile.claims.has("edit-communication")}
           >
             {Localization.operationsValue(
               "Communication_Consignor_Event_Delivered_Title"
@@ -420,6 +433,7 @@ export default class CommunicationConsignorComponent extends React.Component {
               onChange={value =>
                 (settings.orderDelivered.messageTemplate = value || "")
               }
+              readonly={!Profile.claims.has("edit-communication")}
             />
           </div>
         )}

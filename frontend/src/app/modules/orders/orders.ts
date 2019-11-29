@@ -56,6 +56,13 @@ export class OrdersModule
                     name: "import",
                     route: "import",
                     moduleId: PLATFORM.moduleName("./modules/import/import"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "create-order"
+                        ]
+                    },
                     title: routeTitles.import,
                     nav: true,
                     href: "/orders/import",

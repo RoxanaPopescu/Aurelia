@@ -6,6 +6,7 @@ import { ButtonSize, Button } from "shared/src/webKit/button";
 import AddressSearchComponent from "shared/src/components/addressSearch";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
+import { Profile } from "shared/src/model/profile";
 
 interface Props {
   store: DepotStore;
@@ -35,6 +36,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           onChange={name => (this.props.store.depot.name = name)}
           error={this.validate && !this.props.store.depot.name}
           value={this.props.store.depot.name}
+          readonly={!Profile.claims.has("edit-depot")}
         />
         <AddressSearchComponent
           headline="ADRESSE"
@@ -45,6 +47,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           value={this.props.store.depot.location}
           placeholder="Indskriv terminal lokation..."
           locationRequired={true}
+          disabled={!Profile.claims.has("edit-depot")}
         />
         <InputNumbers
           size={"medium"}
@@ -63,7 +66,9 @@ export default class DepotGeneralComponent extends React.Component<Props> {
               ? this.props.store.depot.slotInterval / 60
               : undefined
           }
+          readonly={!Profile.claims.has("edit-depot")}
         />
+        {Profile.claims.has("edit-depot") &&
         <Button
           size={ButtonSize.Medium}
           onClick={() => this.validateInput()}
@@ -72,7 +77,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           disabled={this.props.store.saving}
         >
           {this.props.store.depot.id ? "Opdater" : "Opret"}
-        </Button>
+        </Button>}
       </div>
     );
   }

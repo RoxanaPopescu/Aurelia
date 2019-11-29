@@ -11,6 +11,7 @@ import "./driverProfile.scss";
 import { FulfillerSubPage } from "fulfiller/src/components/navigation/page";
 import { Dialog } from "shared/src/components/dialog/dialog";
 import { Log } from "shared/infrastructure";
+import { Profile } from "shared/src/model/profile";
 
 export interface DriverProfileProps {
   history: H.History;
@@ -43,33 +44,36 @@ export class DriverProfile extends React.Component<DriverProfileProps> {
 
           <DriverForm validate={this.validate} driver={this.props.driverService.driver}/>
 
-          <Button
-            size={ButtonSize.Medium}
-            type={ButtonType.Action}
-            disabled={!this.props.driverService.driver.isValid}
-            onClick={() => this.onSaveDriver()}
-          >
-            {this.props.driverService.driver.id != null ?
-              Localization.operationsValue("Driver_Profile_SaveChanges") :
-              Localization.operationsValue("Driver_Profile_AddDriver")}
-          </Button>
+          {Profile.claims.has("edit-driver") &&
+          <>
+            <Button
+              size={ButtonSize.Medium}
+              type={ButtonType.Action}
+              disabled={!this.props.driverService.driver.isValid}
+              onClick={() => this.onSaveDriver()}
+            >
+              {this.props.driverService.driver.id != null ?
+                Localization.operationsValue("Driver_Profile_SaveChanges") :
+                Localization.operationsValue("Driver_Profile_AddDriver")}
+            </Button>
 
-          <Button
-            size={ButtonSize.Medium}
-            type={ButtonType.Light}
-            onClick={() => this.onChangePassword()}
-          >
-            {Localization.operationsValue("Driver_Profile_ChangePassword")}
-          </Button>
+            <Button
+              size={ButtonSize.Medium}
+              type={ButtonType.Light}
+              onClick={() => this.onChangePassword()}
+            >
+              {Localization.operationsValue("Driver_Profile_ChangePassword")}
+            </Button>
 
-          {this.props.driverService.driver.id != null &&
-          <Button
-            size={ButtonSize.Medium}
-            type={ButtonType.Light}
-            onClick={() => this.onDeleteDriver()}
-          >
-            {Localization.operationsValue("Driver_Profile_DeleteDriver")}
-          </Button>}
+            {this.props.driverService.driver.id != null &&
+            <Button
+              size={ButtonSize.Medium}
+              type={ButtonType.Light}
+              onClick={() => this.onDeleteDriver()}
+            >
+              {Localization.operationsValue("Driver_Profile_DeleteDriver")}
+            </Button>}
+          </>}
 
         </div>}
 

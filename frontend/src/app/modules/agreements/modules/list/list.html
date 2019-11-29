@@ -20,13 +20,17 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="solid" modal-href="modal: add-fulfiller-agreement" translate>
-                        Add fulfiller agreement
-                    </button>
+                    <template if-claims="create-agreement">
 
-                    <button appearance="solid" modal-href="modal: add-consignor-agreement" translate>
-                        Add consignor agreement
-                    </button>
+                        <button appearance="solid" modal-href="modal: add-fulfiller-agreement" translate>
+                            Add fulfiller agreement
+                        </button>
+
+                        <button appearance="solid" modal-href="modal: add-consignor-agreement" translate>
+                            Add consignor agreement
+                        </button>
+
+                    </template>
 
                 </toolbar>
 

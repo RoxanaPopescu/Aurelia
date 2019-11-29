@@ -5,6 +5,7 @@ import { Availability } from "shared/src/model/logistics/depots/availability";
 import Localization from "../../../../../../../../../shared/src/localization/index";
 import { DateHelper } from "../../../../../../../../../shared/src/utillity/dateHelper";
 import { observer } from "mobx-react";
+import { Profile } from "shared/src/model/profile";
 
 export interface Props {
   port: Availability;
@@ -34,7 +35,8 @@ export class PortComponent extends React.Component<Props> {
         <br />I dagene{" "}
         {Localization.formatWeekdays(this.props.port.daysOfWeek!)}
         <div className="c-depotsPort-rule-actions">
-          <Icon name="edit" onClick={() => this.props.onEdit()} />
+          {Profile.claims.has("edit-depot") &&
+          <Icon name="edit" onClick={() => this.props.onEdit()} />}
         </div>
       </div>
     );

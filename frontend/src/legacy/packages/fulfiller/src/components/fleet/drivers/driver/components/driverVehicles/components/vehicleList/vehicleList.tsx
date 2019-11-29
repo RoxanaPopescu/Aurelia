@@ -5,6 +5,7 @@ import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Vehicle } from "../../../../models/vehicle";
 import "./vehicleList.scss";
 import { Icon } from "shared/src/webKit";
+import { Profile } from "shared/src/model/profile";
 
 export interface VehiclesProps {
   vehicles: ReadonlyArray<Vehicle> | undefined;
@@ -51,9 +52,11 @@ export class VehicleList extends React.Component<VehiclesProps> {
         <div>{vehicle.model}</div>
         <div>{vehicle.color}</div>
         <div>{vehicle.year}</div>
+        {Profile.claims.has("edit-vehicle") ?
         <div onClick={() => this.props.onRemove(vehicle)}>
           <Icon name="delete"/>
-        </div>
+        </div> :
+        <div></div>}
       </div>
     );
   }

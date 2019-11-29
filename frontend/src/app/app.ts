@@ -255,7 +255,11 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
-                    outfits: ["fulfiller"]
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "view-communication"
+                    ]
                 },
                 title: routeTitles.communication,
                 nav: true,

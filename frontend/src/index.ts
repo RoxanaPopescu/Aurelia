@@ -50,6 +50,12 @@ export async function configure(aurelia: Aurelia): Promise<void>
         .feature(PLATFORM.moduleName("shared/localization/index"))
         .feature(PLATFORM.moduleName("shared/framework/index"));
 
+    // Register global resources.
+    aurelia.use.globalResources(
+    [
+        PLATFORM.moduleName("app/components/if-claims/if-claims")
+    ]);
+
     // Add task that will run after all plugins and features have been loaded.
     aurelia.use.postTask(async () =>
     {
