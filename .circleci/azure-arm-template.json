@@ -43,7 +43,7 @@
     "type": {
       "type": "string",
       "defaultValue": "client",
-      "allowedValues": ["proxy", "client"],
+      "allowedValues": ["proxy", "client", "bff"],
       "metadata": {
         "description": "What type is this"
       }
@@ -52,7 +52,8 @@
   "variables": {
     "webappNameProxy": "[concat('client-proxy-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "webappNameClient": "[concat('client-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
-    "webappName": "[if(equals(parameters('type'), 'proxy'), variables('webappNameProxy'), variables('webappNameClient'))]",
+    "webappNameBFF": "[concat(parameters('serviceName'), '-', parameters('environment'), '-mover')]",
+    "webappName": "[if(equals(parameters('type'), 'bff'), variables('webappNameBFF'), if(equals(parameters('type'), 'proxy'), variables('webappNameProxy'), variables('webappNameClient')))]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNameBuild": "build",

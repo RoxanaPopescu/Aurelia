@@ -5,6 +5,26 @@ orbs:
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
+  bff-setup-test-azure:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-bff-v2"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file .circleci/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="test"
+            serviceName=${BACKEND_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY_TEST}
+            dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
+            type="bff"
+
   client-setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
@@ -15,7 +35,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
@@ -35,7 +55,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|empty"
             environment="test"
@@ -55,7 +75,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="prod"
@@ -75,7 +95,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|empty"
             environment="prod"
@@ -263,6 +283,12 @@ jobs:
 workflows:
   setup-azure:
     jobs:
+      - bff-approve-test:
+          type: approval
+      - bff-setup-test-azure:
+          requires:
+            - bff-approve-test
+
       - client-approve-test:
           type: approval
       - client-setup-test-azure:
