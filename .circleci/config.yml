@@ -5,7 +5,7 @@ orbs:
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
-  setup-test-proxy:
+  client-setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -25,7 +25,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  setup-test-azure:
+  client-setup-test-azure:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -45,7 +45,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="client"
 
-  setup-production-proxy:
+  client-setup-production-proxy:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -65,7 +65,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  setup-production-azure:
+  client-setup-production-azure:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -85,10 +85,12 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="client"
 
-  build-test:
+  client-build-test:
     executor: azure-cli/azure-docker
 
     steps:
+      - setup-command:
+          changes-in-folder: "frontend"
       - setup-azure-command:
           account: "Test"
           resource-group: "test-client-platform"
@@ -113,7 +115,7 @@ jobs:
           paths:
             - docker-image
 
-  deploy-test:
+  client-deploy-test:
     executor: azure-cli/azure-docker
 
     steps:
@@ -147,10 +149,12 @@ jobs:
           name: Stop staging slot
           command: az webapp stop -s staging
 
-  build-production:
+  client-build-production:
     executor: azure-cli/azure-docker
 
     steps:
+      - setup-command:
+          changes-in-folder: "frontend"
       - setup-azure-command:
           account: "Production"
           resource-group: "prod-client-platform"
@@ -176,7 +180,7 @@ jobs:
           paths:
             - docker-image
 
-  deploy-build-production:
+  client-deploy-build-production:
     executor: azure-cli/azure-docker
 
     steps:
@@ -198,7 +202,7 @@ jobs:
             -s build
             -i $(cat /tmp/workspace/docker-image)
 
-  deploy-production:
+  client-deploy-production:
     executor: azure-cli/azure-docker
 
     steps:
@@ -232,7 +236,7 @@ jobs:
           name: Stop staging slot
           command: az webapp stop -s staging
     
-  rollback:
+  client-rollback:
     executor: azure-cli/azure-docker
 
     steps:
@@ -259,65 +263,83 @@ jobs:
 workflows:
   setup-azure:
     jobs:
-      - approve-test:
+      - client-approve-test:
           type: approval
-      - setup-test-azure:
+      - client-setup-test-azure:
           requires:
-            - approve-test
+            - client-approve-test
 
-      - approve-proxy-test:
+      - client-approve-proxy-test:
           type: approval
-      - setup-test-proxy:
+      - client-setup-test-proxy:
           requires:
-            - approve-proxy-test
+            - client-approve-proxy-test
 
-      - approve-production:
+      - client-approve-production:
           type: approval
-      - setup-production-azure:
+      - client-setup-production-azure:
           requires:
-            - approve-production
+            - client-approve-production
 
-      - approve-proxy-production:
+      - client-approve-proxy-production:
           type: approval
-      - setup-production-proxy:
+      - client-setup-production-proxy:
           requires:
-            - approve-proxy-production
+            - client-approve-proxy-production
 
-  build-and-deploy:
+  client-build-and-deploy:
     jobs:
-      - build-test
-      - deploy-test:
+      - client-build-test
+      - client-deploy-test:
           requires:
-            - build-test
-      - build-production
-      - deploy-build-production:
+            - client-build-test
+      - client-build-production
+      - client-deploy-build-production:
           requires:
-            - build-production
-      - production-approval:
+            - client-build-production
+      - client-production-approval:
           type: approval
           requires:
-            - build-production
-      - deploy-production:
+            - client-build-production
+      - client-deploy-production:
           requires:
-            - build-production
-            - production-approval
+            - client-build-production
+            - client-production-approval
       - sentry-release/sentry-release:
           requires:
-            - deploy-production
-            - production-approval
+            - client-deploy-production
+            - client-production-approval
           sentry-environment: production
           sentry-project: platform
             
   rollback:
     jobs:
-      - approval:
+      - client-approval:
           type: approval
-      - rollback:
+      - client-rollback:
           requires:
-            - approval
-
+            - client-approval
 
 commands:
+  setup-command:
+    description: "General setup"
+    parameters:
+      changes-in-folder:
+        description: "What folder to check for changes"
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - run:
+          name: Setup git
+          command: git config --global user.email "buildserver@usemover.com" && git config --global user.name "Buildserver"
+      - when:
+          condition: << parameters.changes-in-folder >>
+          steps:
+            - run:
+                name: Verify changes to app path
+                command: git diff --name-only --diff-filter=ADMR @~..@ << parameters.changes-in-folder >> | grep . && echo “Changes in directory found, continuing…“ || exit 1
+
   setup-azure-command:
     description: "Deploy to azure"
     parameters:
