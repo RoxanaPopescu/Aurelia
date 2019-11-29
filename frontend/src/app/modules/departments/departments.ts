@@ -26,12 +26,26 @@ export class DepartmentsModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-departments"
+                    ]
+                },
                 title: routeTitles.list
             },
             {
                 name: "details",
                 route: ":id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-departments"
+                    ]
+                },
                 title: routeTitles.details
             }
         ]);

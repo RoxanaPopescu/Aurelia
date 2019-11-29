@@ -28,7 +28,7 @@ export class RuleComponent extends React.Component<Props> {
 
         <div className="c-autoDispatch-rule-actions">
 
-          {Profile.claims.has("edit-route") &&
+          {Profile.claims.has("edit-routes") &&
           <>
             <Icon name="edit" onClick={() => this.props.onEdit()}/>
 

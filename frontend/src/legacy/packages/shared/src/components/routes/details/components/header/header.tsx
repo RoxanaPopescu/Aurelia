@@ -44,7 +44,7 @@ export default class extends React.Component<Props> {
           {Localization.sharedValue("RouteDetails_PrintDriverList")}
         </Button>}
 
-        {Profile.claims.has("edit-route") &&
+        {Profile.claims.has("edit-routes") &&
         <>
           {isFulfiller &&
           <AssignFulfillerButton route={this.props.detailsService.routeDetails!}/>}

@@ -90,7 +90,7 @@ export default class AutoDispatchComponent extends React.Component {
                 />
               ))}
 
-              {Profile.claims.has("edit-route") &&
+              {Profile.claims.has("edit-routes") &&
               <div className="c-autoDispatch-actions">
                 <Button
                   type={ButtonType.Action}

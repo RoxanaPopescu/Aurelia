@@ -26,6 +26,13 @@ export class UsersModule
                 name: "list",
                 route: "management/users",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-users"
+                    ]
+                },
                 title: routeTitles.list,
                 nav: false
             },
@@ -33,6 +40,13 @@ export class UsersModule
                 name: "roles",
                 route: "management/roles",
                 moduleId: PLATFORM.moduleName("./modules/roles/roles"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-users"
+                    ]
+                },
                 title: routeTitles.roles,
                 nav: true,
                 icon: "roles"
@@ -41,12 +55,26 @@ export class UsersModule
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-users"
+                    ]
+                },
                 title: routeTitles.details
             },
             {
                 name: "create",
                 route: "create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
+                settings:
+                {
+                    claims:
+                    [
+                        "create-user"
+                    ]
+                },
                 title: routeTitles.create
             }
         ]);

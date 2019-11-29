@@ -37,6 +37,13 @@ export class AgreementsModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-agreements"
+                    ]
+                },
                 title: routeTitles.list
             }
         ]);

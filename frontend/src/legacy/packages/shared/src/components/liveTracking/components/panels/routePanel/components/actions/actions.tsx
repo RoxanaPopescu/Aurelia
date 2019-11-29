@@ -37,7 +37,7 @@ export class Actions extends React.Component<ActionsProps> {
         </a>
 
         <div className="c-liveTracking-routePanel-actions-group">
-          {Profile.claims.has("edit-route") &&
+          {Profile.claims.has("edit-routes") &&
             this.isFulfiller &&
             this.props.route.status.slug !== "completed" &&
             this.props.route.status.slug !== "cancelled" && (

@@ -26,18 +26,39 @@ export class DepotsModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-depot"
+                    ]
+                },
                 title: routeTitles.list
             },
             {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-depot"
+                    ]
+                },
                 title: routeTitles.details
             },
             {
                 name: "create",
                 route: "create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
+                settings:
+                {
+                    claims:
+                    [
+                        "create-depot"
+                    ]
+                },
                 title: routeTitles.create
             }
         ]);

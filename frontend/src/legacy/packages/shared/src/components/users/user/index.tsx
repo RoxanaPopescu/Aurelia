@@ -199,7 +199,7 @@ export default class UserComponent extends React.Component<Props> {
           >
             {Localization.operationsValue("Users_Update:Button")}
           </Button>}
-          { Profile.claims.has("edit-user") && userStore.user && userStore.user.canDeactivate &&
+          { Profile.claims.has("deactivate-user") && userStore.user && userStore.user.canDeactivate &&
             <Button
               type={ButtonType.Neutral}
               size={ButtonSize.Medium}
@@ -210,7 +210,7 @@ export default class UserComponent extends React.Component<Props> {
               Deaktiver brugeren
             </Button>
           }
-          { Profile.claims.has("edit-user") && userStore.user &&
+          { Profile.claims.has("reset-user-password") && userStore.user &&
             <Button
               type={ButtonType.Neutral}
               size={ButtonSize.Medium}
