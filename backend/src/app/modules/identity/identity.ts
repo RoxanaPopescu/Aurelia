@@ -10,6 +10,9 @@ import { identityService } from "./services/identity";
  */
 export class IdentityModule extends AppModule
 {
+    /**
+     * Configures the module.
+     */
     public configure(): void
     {
         /**
@@ -17,13 +20,14 @@ export class IdentityModule extends AppModule
          * @param body.username The username for the user.
          * @param body.password The password for the user.
          * @param body.remember True to return persistent token cookies.
-         * @returns 200: The authenticated user.
+         * @returns 204: No content.
          */
-        this.router.post("/identity/authenticate", async context =>
+        this.router.post("/v2/identity/authenticate", async context =>
         {
-            // Get the username and password from the request.
+            // Try to get the username and password from the request.
             const username = context.request.body.username as string | undefined;
             const password = context.request.body.password as string | undefined;
+            const remember = context.request.body.remember as boolean | undefined;
 
             // Verify that a username and password was provided.
             if (!username || !password)
@@ -46,27 +50,34 @@ export class IdentityModule extends AppModule
                 throw new AuthenticationError("Invalid password.");
             }
 
-            // Create and set the refresh token.
-            const refreshJwt = await identityService.createRefreshToken(identity);
-            this.setRefreshTokenCookie(context, refreshJwt);
+            // Should we return a refresh token?
+            if (remember)
+            {
+                // Create and set the refresh token.
+                const refreshJwt = await identityService.createRefreshToken(identity);
+                this.setRefreshTokenCookie(context, refreshJwt);
+            }
+            else
+            {
+                this.setRefreshTokenCookie(context, undefined);
+            }
 
             // Create and set the access token.
             const accessJwt = await identityService.createAccessToken(identity);
             this.setAccessTokenCookie(context, accessJwt);
 
-            // Return the identity.
-            context.body = identity;
-            context.status = 200;
+            // Return nothing.
+            context.status = 204;
         });
 
         /**
          * Authenticates the user using the refresh token cookie.
-         * @returns 200: The authenticated user.
+         * @returns 204: No content.
          */
-        this.router.post("/identity/reauthenticate", async context =>
+        this.router.post("/v2/identity/reauthenticate", async context =>
         {
-            // Get the username from the request.
-            const refreshJwt = context.cookies.get("refreshToken");
+            // Try to get the refresh token from the request.
+            const refreshJwt = this.getRefreshTokenCookie(context);
 
             // Verify that a refresh token was provided.
             if (!refreshJwt)
@@ -96,18 +107,24 @@ export class IdentityModule extends AppModule
             const accessJwt = await identityService.createAccessToken(identity);
             this.setAccessTokenCookie(context, accessJwt);
 
-            // Return the identity.
-            context.body = identity;
-            context.status = 200;
+            // Return nothing.
+            context.status = 204;
         });
 
         /**
          * Deauthenticates the user identified by the JWT token in the request.
-         * @returns 204
+         * @returns 204: No content.
          */
-        this.router.post("/identity/deauthenticate", async context =>
+        this.router.post("/v2/identity/deauthenticate", async context =>
         {
-            // TODO: Should we also revoke the refresh token?
+            // Try to get the refresh token from the request.
+            const refreshJwt = this.getRefreshTokenCookie(context);
+
+            // If a refresh token was provided, revoke it.
+            if (refreshJwt)
+            {
+                await identityService.revokeRefreshToken(refreshJwt);
+            }
 
             // Clear the tokens.
             this.setRefreshTokenCookie(context, undefined);
@@ -115,6 +132,35 @@ export class IdentityModule extends AppModule
 
             // Return nothing.
             context.status = 204;
+        });
+    }
+
+    /**
+     * Gets the value of the cookie containing the refresh token.
+     * @param context The context for which the cookie should be set.
+     * @returns The refresh token, or undefined it not provided.
+     */
+    private getRefreshTokenCookie(context: ParameterizedContext): string | undefined
+    {
+        return context.cookies.get(settings.middleware.identity.refreshToken.cookie);
+    }
+
+    /**
+     * Sets the cookie containing the refresh token.
+     * @param context The context for which the cookie should be set.
+     * @param refreshJwt The refresh token, or undefined to clear the cookie.
+     */
+    private setRefreshTokenCookie(context: ParameterizedContext, refreshJwt: string | undefined): void
+    {
+        const maxAge = refreshJwt && context.request.body.remember
+            ? settings.middleware.identity.refreshToken.expiresIn.as("milliseconds")
+            : undefined;
+
+        context.cookies.set(settings.middleware.identity.refreshToken.cookie, refreshJwt,
+        {
+            ...settings.infrastructure.cookies,
+            httpOnly: true,
+            maxAge
         });
     }
 
@@ -129,31 +175,9 @@ export class IdentityModule extends AppModule
             ? settings.middleware.identity.accessToken.expiresIn.as("milliseconds")
             : undefined;
 
-        context.cookies.set("access-token", accessJwt,
+        context.cookies.set(settings.middleware.identity.accessToken.cookie, accessJwt,
         {
             ...settings.infrastructure.cookies,
-            maxAge
-        });
-
-        // TODO: Maybe we should have a separate permission cookie, and then the access token should just contain a hash of that?
-        // That way, the access token can be httpOnly, while the client can still read the permissions.
-    }
-
-    /**
-     * Sets the cookie containing the refresh token.
-     * @param context The context for which the cookie should be set.
-     * @param refreshJwt The refresh token, or undefined to clear the cookie.
-     */
-    private setRefreshTokenCookie(context: ParameterizedContext, refreshJwt: string | undefined): void
-    {
-        const maxAge = refreshJwt && context.request.body.remember
-            ? settings.middleware.identity.refreshToken.expiresIn.as("milliseconds")
-            : undefined;
-
-        context.cookies.set("refresh-token", refreshJwt,
-        {
-            ...settings.infrastructure.cookies,
-            httpOnly: true,
             maxAge
         });
     }

@@ -37,7 +37,6 @@ export class Identity
         this.id = data.id;
         this.username = data.username;
         this.password = data.password;
-        this.googleId = data.googleId;
         this.permissions = data.permissions || [];
         this.refreshTokens = (data.refreshTokens || []).map((t: any) => new RefreshToken(t));
     }
@@ -47,8 +46,6 @@ export class Identity
     public username: string;
 
     public password: string;
-
-    public googleId: string;
 
     public refreshTokens: RefreshToken[];
 
