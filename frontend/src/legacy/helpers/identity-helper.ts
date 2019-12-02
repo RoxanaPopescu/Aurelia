@@ -43,7 +43,7 @@ export function getUserClaims(): string[]
         "View Route Templates",
         "Create Route Template",
         "Edit Route Template",
-        "View Routeplan Simulation",
+        "View Routeplan Simulations",
         "Create Routeplan Simulation",
     );
 
