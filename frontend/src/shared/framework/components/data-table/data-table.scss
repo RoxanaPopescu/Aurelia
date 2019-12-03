@@ -29,6 +29,14 @@ data-table
         }
     }
 
+    &.--move
+    {    
+        data-table-cell:last-of-type
+        {
+            cursor: ns-resize;
+        }
+    }
+
     data-table-headers
     {
         font-weight: 500;
