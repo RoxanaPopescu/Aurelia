@@ -24,6 +24,7 @@ export class IfClaimsCustomAttribute extends If
     }
 
     private readonly _identityService: IdentityService;
+    private _bound = false;
 
     /**
      * The condition, represented as a comma-separated list of claims that must
@@ -54,6 +55,16 @@ export class IfClaimsCustomAttribute extends If
         this.updateCondition();
 
         super.bind(bindingContext, overrideContext);
+
+        this._bound = true;
+    }
+
+    /**
+     * Called by the framework when the component is unbinding.
+     */
+    public unbind(): void
+    {
+        this._bound = false;
     }
 
     /**
@@ -62,9 +73,12 @@ export class IfClaimsCustomAttribute extends If
      */
     public conditionChanged(newValue: any): void
     {
-        this.updateCondition();
+        if (this._bound)
+        {
+            this.updateCondition();
 
-        super.conditionChanged(newValue);
+            super.conditionChanged(newValue);
+        }
     }
 
     /**
