@@ -9,7 +9,8 @@
         ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}"
         href.bind="clickable !== false ? href : undefined"
         accent.bind="accent & attr"
-        click.delegate="onClick($event)">
+        click.delegate="onClick($event)"
+        mouseenter.trigger="onMouseEnter($event)">
 
         <data-table-cell if.bind="dataTable.selection === 'multiple'" click.trigger="onToggle($event)">
             <input type="checkbox" class="pointer-events-none" disabled.bind="!selectable" checked.to-view="selected">
@@ -21,6 +22,9 @@
 
         <slot></slot>
 
+        <data-table-cell mousedown.trigger="onMouseDown($event)">
+            <icon if.bind="dataTable.move != null && model != null" name="drag-handle" class="opacity-faded-more">
+        </data-table-cell>
     </a>
 
 </template>

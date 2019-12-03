@@ -14,6 +14,11 @@ export class DataTableCustomElement
     public readonly rows = new Set<DataTableRowCustomElement>();
 
     /**
+     * The model for the rows currently being dragged, if any.
+     */
+    public draggedModel: number | undefined;
+
+    /**
      * The selection mode to use.
      */
     @bindable({ defaultValue: "none" })
@@ -24,6 +29,12 @@ export class DataTableCustomElement
      */
     @bindable
     public toggleAll: ((context: { value: boolean }) => void) | undefined;
+
+    /**
+     * Called when one or more rows are moved to a new position in the list.
+     */
+    @bindable
+    public move: ((context: { source: any; target: any }) => void) | undefined;
 
     /**
      * True if the select all option is checked, otherwise false.
