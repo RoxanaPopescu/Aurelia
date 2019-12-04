@@ -1,0 +1,18 @@
+////
+/// @group framework/modifiers/float
+////
+
+/// Modifier classes for applying float layout.
+$__summary: comment;
+
+@import "resources/index";
+
+.float-left
+{
+    float: left;
+}
+
+.float-right
+{
+    float: right;
+}
