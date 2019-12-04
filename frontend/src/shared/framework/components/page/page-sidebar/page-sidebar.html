@@ -7,7 +7,7 @@
     <slot></slot>
 
     <button appearance="icon" class="page-sidebar-edge-icon" click.trigger="onEdgeClick($event)">
-        <icon name="md-chevron-${expanded ? 'left' : 'right'}"></icon>
+        <icon name="${expanded ? 'md-arrow-backward-ios' : 'md-arrow-forward-ios'}"></icon>
     </button>
 
 </template>
