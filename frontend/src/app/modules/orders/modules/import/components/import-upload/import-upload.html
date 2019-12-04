@@ -11,10 +11,11 @@
             Du kan trække XLSX filen direkte over i  dette vindue<br />
             eller klikke her for at finde filen på din computer.
         </div>
+
         <img class="upload-icon" src="./resources/images/upload-excel.svg" />
 
     </file-dropzone>
 
-    <button appearance="solid" accent="primary" click.trigger="upload()">Upload</button>
+    <button disabled.bind="file == undefined || error == true" appearance="solid" accent="primary" click.trigger="upload()">Upload</button>
 
 </template>

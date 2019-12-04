@@ -18,6 +18,7 @@ export class ImportUploadCustomElement
         acceptedFiles: ".xlsx"
     };
     public file: DropzoneFile | undefined = undefined;
+    public error: boolean = false;
 
     /**
      * Fill out
@@ -25,8 +26,18 @@ export class ImportUploadCustomElement
     public attached(): void
     {
         this.dropzone.on("addedfile", file => this.onFileAdded(file));
-        this.dropzone.on("success", (file, response) => console.log(file, response));
-        this.dropzone.on("error", (file, message) => console.log(file, message.valueOf()));
+        this.dropzone.on("success", (file, response, hej) =>
+        {
+            console.log("success", file);
+            console.log("success", response);
+            console.log("success", hej);
+            this.error = false;
+        });
+        this.dropzone.on("error", (file, message) =>
+        {
+            console.log("error", file, message.toString());
+            this.error = true;
+        });
     }
 
     /**
