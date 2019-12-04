@@ -2,19 +2,21 @@ import { autoinject } from "aurelia-framework";
 import { IdentityService } from "../identity";
 
 /**
- * Represents the route settings that affect authorization.
+ * Represents the authorization settings for a route.
  */
-interface IRouteSettings
+interface IAuthorizationSettings
 {
     /**
-     * The types of outfits the user must be associated with, if any.
+     * The outfit types, or sets of outfit types, of which at least one must be satisfied,
+     * or undefined to authorize regardless of outfits.
      */
-    outfits?: string[];
+    outfits?: (string | string[])[];
 
     /**
-     * The claims the user must have, if any.
+     * The claims, or sets of claims, of which at least one must be satisfied,
+     * or undefined to authorize regardless of claims.
      */
-    claims?: string[];
+    claims?: (string | string[])[];
 }
 
 /**
@@ -36,31 +38,36 @@ export class AuthorizationService
 
     /**
      * Determines whether the visitor is authorized to access the route with the specified settings.
-     * @param routeSettings The settings for the route to test.
+     * @param routeSettings The authorization settings associated with the route, all of which must be satisfied.
      * @returns True if authorized, otherwise false.
      */
-    public isAuthorizedForRoute(routeSettings: IRouteSettings | undefined): boolean
+    public isAuthorizedForRoute(routeSettings: (IAuthorizationSettings | undefined)[]): boolean
     {
         const identity = this._identityService.identity;
 
-        if (routeSettings == null)
+        for (const settings of routeSettings)
         {
-            return true;
-        }
-
-        if (routeSettings.outfits != null && routeSettings.outfits.length > 0)
-        {
-            if (identity == null || !routeSettings.outfits.some(outfitType => identity.outfit.type!.slug === outfitType))
+            if (settings == null)
             {
-                return false;
+                continue;
             }
-        }
 
-        if (routeSettings.claims != null && routeSettings.claims.length > 0)
-        {
-            if (identity == null || !routeSettings.claims.every(role => identity.claims.has(role)))
+            if (settings.outfits != null)
             {
-                return false;
+                if (identity == null || !settings.outfits.some(o1 =>
+                    o1 instanceof Array ? o1.every(o2 => identity.outfit.type.slug === o2) : identity.outfit.type.slug === o1))
+                {
+                    return false;
+                }
+            }
+
+            if (settings.claims != null)
+            {
+                if (identity == null || !settings.claims.some(c1 =>
+                    c1 instanceof Array ? c1.every(c2 => identity.claims.has(c2)) : identity.claims.has(c1)))
+                {
+                    return false;
+                }
             }
         }
 

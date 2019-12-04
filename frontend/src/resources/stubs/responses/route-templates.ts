@@ -20,9 +20,9 @@ const routeTemplate =
     instructions: "Lorem ipsum dolor sit amet",
     recurrence:
     [
-        { enabled: true, driver: { id: "driver-1"} },
-        { enabled: true, driver: { id: "driver-1"} },
-        { enabled: true, driver: { id: "driver-1"} },
+        { enabled: true, driver: { id: "driver-1", name: { first: "Driver", last: "1" } } },
+        { enabled: true, driver: { id: "driver-1", name: { first: "Driver", last: "1" } } },
+        { enabled: true, driver: { id: "driver-1", name: { first: "Driver", last: "1" } } },
         { enabled: true, status: "requested" },
         { enabled: true, status: "requested" },
         { enabled: false },

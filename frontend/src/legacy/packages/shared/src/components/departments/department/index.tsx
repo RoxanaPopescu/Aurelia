@@ -12,6 +12,7 @@ import { Session } from "../../../model/session/session";
 import { PageHeaderComponent } from "../../pageHeader";
 import { PageContentComponent } from "../../pageContent";
 import { SubPage } from "shared/src/utillity/page";
+import { Profile } from "shared/src/model/profile";
 
 const departmentStore = new DepartmentStore();
 
@@ -160,7 +161,8 @@ export default class DepartmentComponent extends React.Component<Props> {
             { title: "Ny afdeling" }
           ]}
         >
-        
+
+          {Profile.claims.has("edit-department") &&
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -182,12 +184,12 @@ export default class DepartmentComponent extends React.Component<Props> {
               : Localization.consignorValue(
                   "Departments_Create_CreateDepartment"
                 )}
-          </Button>
+          </Button>}
 
         </PageHeaderComponent>
 
         <PageContentComponent className="c-departments-create">
-        
+
           <Input
             className="c-departments-input"
             size={"medium"}
@@ -202,6 +204,7 @@ export default class DepartmentComponent extends React.Component<Props> {
               departmentStore.validate &&
               departmentStore.departmentName === undefined
             }
+            readonly={!Profile.claims.has("edit-department")}
           />
           <Input
             className="c-departments-input"
@@ -255,7 +258,7 @@ export default class DepartmentComponent extends React.Component<Props> {
           )}
 
         </PageContentComponent>
-        
+
         {departmentStore.error && (
           <Toast
             remove={() => (departmentStore.error = undefined)}
@@ -264,7 +267,7 @@ export default class DepartmentComponent extends React.Component<Props> {
             {departmentStore.error}
           </Toast>
         )}
-        
+
         {departmentStore.success && (
           <Toast
             remove={() => (departmentStore.success = undefined)}
@@ -273,7 +276,7 @@ export default class DepartmentComponent extends React.Component<Props> {
             {departmentStore.success}
           </Toast>
         )}
-        
+
         {departmentStore.success && (
           <Toast
             remove={() => (departmentStore.success = undefined)}

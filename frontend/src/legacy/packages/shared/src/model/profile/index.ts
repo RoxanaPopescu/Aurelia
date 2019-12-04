@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 import { Session } from "../session";
+import { getUserClaims } from "legacy/helpers/identity-helper";
 
 const enum Path {
   AccessToken = "access-token",
@@ -14,6 +15,7 @@ interface Tokens {
 
 // tslint:disable-next-line:class-name
 export class _Profile {
+  @observable claims = new Set<string>();
   @observable tokens?: Tokens;
   @observable isAuthenticated = false;
 
@@ -39,6 +41,7 @@ export class _Profile {
     localStorage.setItem(Path.RefreshToken, refreshToken);
     localStorage.setItem(Path.AccessToken, accessToken);
     this.tokens = { access: accessToken, refresh: refreshToken };
+    this.claims = new Set(getUserClaims());
   }
 
   public async autoLogin() {
@@ -55,9 +58,10 @@ export class _Profile {
 
     localStorage.removeItem(Path.AccessToken);
     localStorage.removeItem(Path.RefreshToken);
+    this.claims = new Set();
   }
 
-  logout() {
+  public logout() {
     this.reset();
   }
 }

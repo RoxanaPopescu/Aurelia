@@ -16,6 +16,7 @@ import { VehicleList } from "./components/vehicleList/vehicleList";
 import { VehicleForm } from "./components/vehicleForm/vehicleForm";
 import "./driverVehicles.scss";
 import { Log } from "shared/infrastructure";
+import { Profile } from "shared/src/model/profile";
 
 export interface DriverProfileProps {
   vehicleService: VehicleService;
@@ -53,24 +54,27 @@ export class DriverVehicles extends React.Component<DriverProfileProps> {
             onRemove={vehicle => this.onRemoveVehicle(vehicle)}
           />
 
-          <Divider />
+          {Profile.claims.has("create-vehicle") &&
+          <>
+            <Divider />
 
-          <div className="font-large">
-            {Localization.operationsValue("Driver_Vehicles_AddVehicleTitle")}
-          </div>
+            <div className="font-large">
+              {Localization.operationsValue("Driver_Vehicles_AddVehicleTitle")}
+            </div>
 
-          <VehicleForm validate={this.validate} vehicle={this.newVehicle} />
+            <VehicleForm validate={this.validate} vehicle={this.newVehicle} />
 
-          <div className="c-driver-driverVehicles-actions">
-            <Button
-              size={ButtonSize.Medium}
-              type={ButtonType.Action}
-              disabled={!this.newVehicle.isValid}
-              onClick={() => this.onAddVehicle(this.newVehicle)}
-            >
-              {Localization.operationsValue("Driver_Vehicles_AddVehicle")}
-            </Button>
-          </div>
+            <div className="c-driver-driverVehicles-actions">
+              <Button
+                size={ButtonSize.Medium}
+                type={ButtonType.Action}
+                disabled={!this.newVehicle.isValid}
+                onClick={() => this.onAddVehicle(this.newVehicle)}
+              >
+                {Localization.operationsValue("Driver_Vehicles_AddVehicle")}
+              </Button>
+            </div>
+          </>}
         </div>
       </>
     );

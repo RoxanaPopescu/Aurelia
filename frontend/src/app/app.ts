@@ -152,7 +152,10 @@ export class AppModule
                 settings:
                 {
                     outfits: ["fulfiller", "consignor"],
-                    claims: ["view-kpis"]
+                    claims:
+                    [
+                        "view-kpis"
+                    ]
                 },
                 title: routeTitles.kpi,
                 nav: true,
@@ -252,7 +255,11 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
-                    outfits: ["fulfiller"]
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "view-communication"
+                    ]
                 },
                 title: routeTitles.communication,
                 nav: true,
@@ -282,7 +289,11 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
                 settings:
                 {
-                    outfits: ["fulfiller"]
+                    outfits: ["fulfiller"],
+                    claims:
+                    [
+                        "view-agreements"
+                    ]
                 },
                 title: routeTitles.agreements,
                 nav: true,
@@ -365,16 +376,8 @@ class AuthorizePipelineStep implements PipelineStep
      */
     public async run(navigationInstruction: NavigationInstruction, next: Next): Promise<any>
     {
-        const resolvedRouteSettings =
-        {
-            outfits: navigationInstruction.getAllInstructions()
-                .reduce((outfits, i) => i.config.settings.outfit ? outfits.concat(i.config.settings.outfit) : outfits, [] as string[]),
-
-            claims: navigationInstruction.getAllInstructions()
-                .reduce((claims, i) => i.config.settings.claims ? claims.concat(i.config.settings.claims) : claims, [] as string[])
-        };
-
-        const authorized = this._authorizationService.isAuthorizedForRoute(resolvedRouteSettings);
+        const routeSettings = navigationInstruction.getAllInstructions().map(i => i.config.settings);
+        const authorized = this._authorizationService.isAuthorizedForRoute(routeSettings);
 
         if (!authorized)
         {

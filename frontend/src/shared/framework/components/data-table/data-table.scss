@@ -12,12 +12,29 @@ data-table
 
     &:not(.--selection)
     {
-        grid-template-columns: var(--data-table-columns);
+        grid-template-columns: var(--data-table-columns) min-content;
     }
 
     &.--selection
     {
-        grid-template-columns: 15rem var(--data-table-columns);
+        grid-template-columns: 15rem var(--data-table-columns) min-content;
+    }
+
+    &:not(.--move)
+    {    
+        data-table-cell:last-of-type
+        {
+            visibility: hidden;
+            padding: 0;
+        }
+    }
+
+    &.--move
+    {    
+        data-table-cell:last-of-type
+        {
+            cursor: ns-resize;
+        }
     }
 
     data-table-headers

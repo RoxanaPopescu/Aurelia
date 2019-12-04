@@ -6,8 +6,9 @@ import "inert-polyfill";
 
 // Configure and start the app.
 
-import { Aurelia, Container, PLATFORM, LogManager } from "aurelia-framework";
-import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
+import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
+import { Settings as LuxonSettings } from "luxon";
+import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log } from "shared/infrastructure";
 import { LocaleService, ILocale, CurrencyService, ICurrency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
@@ -25,12 +26,15 @@ export async function configure(aurelia: Aurelia): Promise<void>
 {
     console.group("Configuration");
 
+    // Create the visitor.
+    const visitor = aurelia.container.get(Visitor);
+
+    // Attach the visitor info to log entries.
+    Log.setTags({ visitor: visitor.visitorId, session: visitor.sessionId });
+
     // Configure the log manager.
     LogManager.addAppender(new LogAppender());
     LogManager.setLevel(ENVIRONMENT.debug ? LogManager.logLevel.debug : LogManager.logLevel.warn);
-
-    // Create the visitor.
-    aurelia.container.get(Visitor);
 
     // Configure the framework.
     aurelia.use
@@ -45,6 +49,12 @@ export async function configure(aurelia: Aurelia): Promise<void>
         .feature(PLATFORM.moduleName("shared/infrastructure/index"))
         .feature(PLATFORM.moduleName("shared/localization/index"))
         .feature(PLATFORM.moduleName("shared/framework/index"));
+
+    // Register global resources.
+    aurelia.use.globalResources(
+    [
+        PLATFORM.moduleName("app/components/if-claims/if-claims")
+    ]);
 
     // Add task that will run after all plugins and features have been loaded.
     aurelia.use.postTask(async () =>
@@ -137,6 +147,7 @@ function getLocaleCode(): string
  */
 async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
 {
+    // If this is a user-initiated change, set the `locale` cookie and reload the app.
     if (oldLocale != null)
     {
         const cookies = Container.instance.get(Cookies);
@@ -145,8 +156,16 @@ async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
 
         location.reload();
 
+        // The app is reloading, so return a promise that will never be resolved.
         return new Promise(() => undefined);
     }
+
+    // Set the default locale to use for the Luxon package.
+    LuxonSettings.defaultLocale = newLocale.code;
+
+    // Set the `locale` header to use for the `ApiClient`.
+    // tslint:disable-next-line: no-string-literal
+    settings.infrastructure.api.defaults!.headers!["x-locale"] = newLocale.code;
 }
 
 /**
@@ -199,12 +218,17 @@ function getCurrencyCode(): string
  */
 function setCurrency(newCurrency: ICurrency, oldCurrency: ICurrency): void
 {
+    // If this is a user-initiated change, set the `currency` cookie.
     if (oldCurrency != null)
     {
         const cookies = Container.instance.get(Cookies);
 
         cookies.set("currency", newCurrency.code);
     }
+
+    // Set the `currency` header to use for the `ApiClient`.
+    // tslint:disable-next-line: no-string-literal
+    settings.infrastructure.api.defaults!.headers!["x-currency"] = newCurrency.code;
 }
 
 /**
@@ -258,6 +282,7 @@ function getThemeSlug(): string
  */
 async function setTheme(newTheme: ITheme, oldTheme: ITheme): Promise<void>
 {
+    // If this is a user-initiated change, set the `theme` cookie and reload the app.
     if (oldTheme != null)
     {
         const cookies = Container.instance.get(Cookies);
@@ -266,6 +291,7 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme): Promise<void>
 
         location.reload();
 
+        // The app is reloading, so return a promise that will never be resolved.
         return new Promise(() => undefined);
     }
 }

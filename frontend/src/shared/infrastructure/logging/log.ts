@@ -24,7 +24,7 @@ interface ILogUser
     readonly username?: string;
 
     /**
-     * The emailo of the user.
+     * The email of the user.
      */
     readonly email?: string;
 }
@@ -40,10 +40,10 @@ export type LogLevel = "debug" | "info" | "warning" | "error";
 export namespace Log
 {
     /**
-     * Sets the username that should be associated with log entries.
-     * @param user The user that should be associated with log entries.
+     * Sets the user that should be associated with log entries.
+     * @param user The user that should be associated with log entries, or undefined to associate no user.
      */
-    export function setUsername(user: ILogUser | undefined): void
+    export function setUser(user: ILogUser | undefined): void
     {
         if ("Sentry" in window)
         {
@@ -53,7 +53,7 @@ export namespace Log
 
     /**
      * Sets the tags that should be associated with log entries.
-     * @param tags The tags that should be associated with log entries.
+     * @param tags The tags to merge into the tags that should be associated with log entries.
      */
     export function setTags(tags: MapObject): void
     {

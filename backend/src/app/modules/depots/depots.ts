@@ -5,6 +5,9 @@ import { AppModule } from "../../app-module";
  */
 export class DepotsModule extends AppModule
 {
+    /**
+     * Configures the module.
+     */
     public configure(): void
     {
         /**
@@ -12,7 +15,7 @@ export class DepotsModule extends AppModule
          * @param context.params.id The ID of the depot to get.
          * @returns The depot with the specified ID.
          */
-        this.router.get("/depots/:id", async context =>
+        this.router.get("/v2/depots/:id", async context =>
         {
             context.authorize("view-depots");
 

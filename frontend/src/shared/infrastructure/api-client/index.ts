@@ -4,3 +4,4 @@ export * from "./api-request-options";
 export * from "./api-errors";
 export * from "./api-result";
 export * from "./interceptors/response-stub-interceptor";
+export * from "./interceptors/correlation-header-interceptor";

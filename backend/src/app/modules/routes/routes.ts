@@ -12,7 +12,7 @@ export class RoutesModule extends AppModule
          * @param context.params.id The ID of the route to get.
          * @returns The route with the specified ID.
          */
-        this.router.get("/routes/:id", async context =>
+        this.router.get("/v2/routes/:id", async context =>
         {
             context.authorize("view-routes");
 
@@ -35,7 +35,7 @@ export class RoutesModule extends AppModule
          * Gets the routes relevant to the user.
          * @returns The routes relevant to the user.
          */
-        this.router.get("/routes", async context =>
+        this.router.get("/v2/routes", async context =>
         {
             context.authorize("view-routes");
 
@@ -72,7 +72,7 @@ export class RoutesModule extends AppModule
          * Gets the routes matching the specified query.
          * @returns The routes matching the specified query.
          */
-        this.router.post("/routes/query", async context =>
+        this.router.post("/v2/routes/query", async context =>
         {
             context.authorize("view-routes");
 

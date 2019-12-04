@@ -5,6 +5,7 @@
     "driverTracking": "Driver tracking",
     "templates": "Templates",
     "newTemplate": "New template",
+    "templateDetails": "Details",
     "autoDispatch": "Auto dispatch",
     "dispatch": "Express dispatch"
 }

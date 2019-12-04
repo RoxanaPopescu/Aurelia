@@ -7,6 +7,7 @@ import { Route } from "shared/src/model/logistics/routes/tracking";
 import { Icon } from "shared/src/webKit";
 import "./actions.scss";
 import { RouteStop } from "shared/src/model/logistics/routes";
+import { Profile } from "shared/src/model/profile";
 
 export interface ActionsProps {
   route: Route;
@@ -36,7 +37,8 @@ export class Actions extends React.Component<ActionsProps> {
         </a>
 
         <div className="c-liveTracking-routePanel-actions-group">
-          {this.isFulfiller &&
+          {Profile.claims.has("edit-routes") &&
+            this.isFulfiller &&
             this.props.route.status.slug !== "completed" &&
             this.props.route.status.slug !== "cancelled" && (
               <a

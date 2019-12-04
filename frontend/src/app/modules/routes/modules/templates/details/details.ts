@@ -268,37 +268,16 @@ export class DetailsPage
     }
 
     /**
-     * Called when the "Move up" icon is clicked on a stop.
-     * Moves the stop up.
-     * @param index The index of teh stop to move.
+     * Called when a stop is moved to a new position in the list.
+     * @param source The stop being moved.
+     * @param target The stop currently occupying the target position.
      */
-    protected onMoveStopUpClick(index: number): void
+    protected onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): void
     {
-        const stop = this.template.stops[index];
-        this.template.stops.splice(index, 1);
-        this.template.stops.splice(index - 1, 0, stop);
+        const sourceIndex = this.template.stops.indexOf(source);
+        const targetIndex = this.template.stops.indexOf(target);
 
-        if (this.validation.active)
-        {
-            this.validate().catch();
-        }
-    }
-
-    /**
-     * Called when the "Move down" icon is clicked on a stop.
-     * Moves the stop down.
-     * @param index The index of teh stop to move.
-     */
-    protected onMoveStopDownClick(index: number): void
-    {
-        const stop = this.template.stops[index];
-        this.template.stops.splice(index, 1);
-        this.template.stops.splice(index + 1, 0, stop);
-
-        if (this.validation.active)
-        {
-            this.validate().catch();
-        }
+        this.template.stops.splice(targetIndex, 0, ...this.template.stops.splice(sourceIndex, 1));
     }
 
     /**

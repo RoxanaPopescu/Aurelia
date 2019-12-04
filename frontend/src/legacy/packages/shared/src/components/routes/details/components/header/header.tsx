@@ -14,6 +14,7 @@ import AssignFulfillerButton from "./components/assignFulfiller/assignFulfiller"
 import SetStatusButton from "./components/setStatus/setStatus";
 import ReloadRouteButton from "./components/reloadRoute/reloadRoute";
 import "./header.scss";
+import { Profile } from "shared/src/model/profile";
 
 interface Props {
   detailsService: RouteDetailsService;
@@ -43,17 +44,20 @@ export default class extends React.Component<Props> {
           {Localization.sharedValue("RouteDetails_PrintDriverList")}
         </Button>}
 
-        {isFulfiller &&
-        <AssignFulfillerButton route={this.props.detailsService.routeDetails!}/>}
+        {Profile.claims.has("edit-routes") &&
+        <>
+          {isFulfiller &&
+          <AssignFulfillerButton route={this.props.detailsService.routeDetails!}/>}
 
-        {isFulfiller &&
-        <AssignDriverButton route={this.props.detailsService.routeDetails!}/>}
+          {isFulfiller &&
+          <AssignDriverButton route={this.props.detailsService.routeDetails!}/>}
 
-        {isFulfiller &&
-        <SetStatusButton route={this.props.detailsService.routeDetails!}/>}
+          {isFulfiller &&
+          <SetStatusButton route={this.props.detailsService.routeDetails!}/>}
 
-        {isFulfiller && ["started"].includes(this.props.detailsService.routeDetails!.status.slug) &&
-        <ReloadRouteButton route={this.props.detailsService.routeDetails!}/>}
+          {isFulfiller && ["started"].includes(this.props.detailsService.routeDetails!.status.slug) &&
+          <ReloadRouteButton route={this.props.detailsService.routeDetails!}/>}
+        </>}
 
       </PageHeaderComponent>
     );

@@ -20,6 +20,7 @@ import { Session } from "shared/src/model/session";
 import { PageHeaderComponent } from "../../pageHeader";
 import { SubPage } from "shared/src/utillity/page";
 import { PageContentComponent } from "../../pageContent";
+import { Profile } from "shared/src/model/profile";
 
 export const userStore = new UserStore();
 
@@ -188,6 +189,7 @@ export default class UserComponent extends React.Component<Props> {
             { title:  userTitle}
           ]}
         >
+          {Profile.claims.has("edit-user") &&
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -196,8 +198,8 @@ export default class UserComponent extends React.Component<Props> {
             disabled={userStore.loading}
           >
             {Localization.operationsValue("Users_Update:Button")}
-          </Button>
-          { userStore.user && userStore.user.canDeactivate && 
+          </Button>}
+          { Profile.claims.has("deactivate-user") && userStore.user && userStore.user.canDeactivate &&
             <Button
               type={ButtonType.Neutral}
               size={ButtonSize.Medium}
@@ -206,9 +208,9 @@ export default class UserComponent extends React.Component<Props> {
               disabled={userStore.loading}
             >
               Deaktiver brugeren
-            </Button> 
+            </Button>
           }
-          { userStore.user && 
+          { Profile.claims.has("reset-user-password") && userStore.user &&
             <Button
               type={ButtonType.Neutral}
               size={ButtonSize.Medium}
@@ -217,11 +219,11 @@ export default class UserComponent extends React.Component<Props> {
               disabled={userStore.loading}
             >
               Nulstil password
-            </Button> 
+            </Button>
           }
         </PageHeaderComponent>
         <PageContentComponent className="c-users-user">
-        
+
           <Select
             size={"medium"}
             headline={Localization.operationsValue(
@@ -258,6 +260,7 @@ export default class UserComponent extends React.Component<Props> {
                 userStore.role = undefined;
               }
             }}
+            readonly={!Profile.claims.has("edit-user")}
           />
           <Input
             headline={Localization.operationsValue("Users_Create_FirstName")}

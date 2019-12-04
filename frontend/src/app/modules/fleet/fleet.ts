@@ -26,6 +26,13 @@ export class FleetModule
                 name: "list",
                 route: "drivers",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-drivers"
+                    ]
+                },
                 title: routeTitles.list,
                 nav: false,
                 href: "/fleet-management/drivers",
@@ -35,12 +42,27 @@ export class FleetModule
                 name: "details",
                 route: "drivers/edit/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-drivers",
+                        "view-vehicles"
+                    ]
+                },
                 title: routeTitles.details
             },
             {
                 name: "create",
                 route: "drivers/create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
+                settings:
+                {
+                    claims:
+                    [
+                        "invite-driver"
+                    ]
+                },
                 title: routeTitles.create
             },
             {
@@ -52,6 +74,13 @@ export class FleetModule
                 name: "dispatch",
                 route: "dispatch/*state",
                 moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
+                settings:
+                {
+                    claims:
+                    [
+                        ["view-forecast", "view-prebooking", "view-routes"]
+                    ]
+                },
                 title: routeTitles.dispatch,
                 nav: true,
                 href: "/fleet-management/dispatch",
@@ -61,28 +90,44 @@ export class FleetModule
                 name: "assign-routes",
                 route: "assign-routes/:origin/:ids",
                 moduleId: PLATFORM.moduleName("./modules/assign-routes/assign-routes"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-routes"
+                    ]
+                },
                 title: routeTitles.assignRoutes
             },
             {
                 name: "create-prebooking",
                 route: "create-prebooking/:id",
                 moduleId: PLATFORM.moduleName("./modules/create-prebooking/create-prebooking"),
+                settings:
+                {
+                    claims:
+                    [
+                        "create-prebooking"
+                    ]
+                },
                 title: routeTitles.createPrebooking
             },
             {
                 name: "forecasts",
                 route: "forecasts",
                 moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-forecast"
+                    ]
+                },
                 title: routeTitles.forecasts,
                 nav: true,
                 href: "/fleet-management/forecasts",
                 icon: "forecast"
-            },
-
-            ...
-            ENVIRONMENT.name === "development" ?
-            [] :
-            []
+            }
         ]);
     }
 }

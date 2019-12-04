@@ -7,7 +7,7 @@ import settings from "../resources/settings/settings";
 import { environment } from "../env";
 import { inject } from "../shared/infrastructure";
 import { apiErrorMiddleware } from "../shared/middleware/api-error-middleware";
-import { correlationIdMiddleware } from "../shared/middleware/correlation-id-middleware";
+import { headersMiddleware } from "../shared/middleware/headers-middleware";
 import { authorizeMiddleware } from "../shared/middleware/authorize-middleware";
 import { pagingMiddleware } from "../shared/middleware/paging-middleware";
 import { sortingMiddleware } from "../shared/middleware/sorting-middleware";
@@ -46,7 +46,7 @@ export class App extends Koa<any, IAppContext>
         this.use(koaBodyparser());
 
         // Add custom middleware.
-        this.use(correlationIdMiddleware());
+        this.use(headersMiddleware());
         this.use(apiErrorMiddleware());
         this.use(authorizeMiddleware(settings.middleware.identity.accessToken));
         this.use(pagingMiddleware());

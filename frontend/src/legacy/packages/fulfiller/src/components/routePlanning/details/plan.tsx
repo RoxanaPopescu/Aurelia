@@ -19,6 +19,7 @@ import H from "history";
 import { FulfillerSubPage } from "../../navigation/page";
 import RoutePlanningOrderIdsComponent from "./header/orderIds";
 import { Log } from "shared/infrastructure";
+import { Profile } from "shared/src/model/profile";
 
 interface Props {
   history: H.History;
@@ -278,6 +279,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               </div>
             </div>
           </div>
+          {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
             <Button
               type={ButtonType.Neutral}
@@ -291,7 +293,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
             >
               Simulation with different settings
             </Button>
-          </div>
+          </div>}
           <div
             className="c-routePlanning-routes-list-resize"
             onMouseDown={() => this.startDrag()}

@@ -5,7 +5,109 @@ orbs:
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
-  setup-test-proxy:
+  bff-setup-test:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-bff-v2"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file .circleci/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="test"
+            serviceName=${BACKEND_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY_TEST}
+            dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
+            type="bff"
+
+  bff-setup-production:
+    executor: azure-cli/azure-docker
+    steps:
+      - setup-azure-command:
+          account: "Production"
+          resource-group: "prod-bff-v2"
+      - run:
+          name: Create resources
+          command: az group deployment create
+            -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
+            --template-file .circleci/azure-arm-template.json
+            --parameters
+            dockerImage="DOCKER|empty"
+            environment="prod"
+            serviceName=${BACKEND_NAME}
+            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
+            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
+            type="bff"
+
+  bff-build-test:
+    executor: azure-cli/azure-docker
+
+    steps:
+
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-bff-v2"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults group=${DOCKER_RESOURCE_GROUP_TEST} acr=${DOCKER_REGISTRY_TEST}
+      - run:
+          name: Build docker image
+          command: az acr build
+            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -f backend/dockerfile .
+      - run:
+          name: Create workspace folder
+          command: mkdir -p workspace
+      - run:
+          name: Prepare docker image file for workspace
+          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - docker-image
+  
+  bff-deploy-test:
+    executor: azure-cli/azure-docker
+
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup-azure-command:
+          account: "Test"
+          resource-group: "test-bff-v2"
+      - run:
+          name: Set defaults
+          command: az configure
+            --defaults web="bff-v2-test-mover"
+      - run:
+          name: Add docker image to webapp
+          command: az webapp config container set
+            -u ${DOCKER_REGISTRY_TEST}
+            -p ${DOCKER_REGISTRY_PASSWORD_TEST}
+            -r ${DOCKER_REGISTRY_TEST}.azurecr.io
+            -s staging
+            -i $(cat /tmp/workspace/docker-image)
+      - run:
+          name: Start staging slot
+          command: az webapp start -s staging
+      - run:
+          name: Swap slot with production
+          command: az webapp deployment slot swap
+            -n bff-v2-test-mover
+            -s staging
+            --action swap
+      - run:
+          name: Stop staging slot
+          command: az webapp stop -s staging
+            
+  client-setup-test-proxy:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -15,7 +117,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="test"
@@ -25,7 +127,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  setup-test-azure:
+  client-setup-test:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -35,7 +137,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|empty"
             environment="test"
@@ -45,7 +147,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="client"
 
-  setup-production-proxy:
+  client-setup-production-proxy:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -55,7 +157,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
             environment="prod"
@@ -65,7 +167,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="proxy"
 
-  setup-production-azure:
+  client-setup-production:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
@@ -75,7 +177,7 @@ jobs:
           name: Create resources
           command: az group deployment create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file frontend/packages/cloud/azure-arm-template.json
+            --template-file .circleci/azure-arm-template.json
             --parameters
             dockerImage="DOCKER|empty"
             environment="prod"
@@ -85,10 +187,12 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="client"
 
-  build-test:
+  client-build-test:
     executor: azure-cli/azure-docker
 
     steps:
+      - setup-command:
+          changes-in-folder: "frontend"
       - setup-azure-command:
           account: "Test"
           resource-group: "test-client-platform"
@@ -113,7 +217,7 @@ jobs:
           paths:
             - docker-image
 
-  deploy-test:
+  client-deploy-test:
     executor: azure-cli/azure-docker
 
     steps:
@@ -147,10 +251,12 @@ jobs:
           name: Stop staging slot
           command: az webapp stop -s staging
 
-  build-production:
+  client-build-production:
     executor: azure-cli/azure-docker
 
     steps:
+      - setup-command:
+          changes-in-folder: "frontend"
       - setup-azure-command:
           account: "Production"
           resource-group: "prod-client-platform"
@@ -176,7 +282,7 @@ jobs:
           paths:
             - docker-image
 
-  deploy-build-production:
+  client-deploy-build-production:
     executor: azure-cli/azure-docker
 
     steps:
@@ -198,7 +304,7 @@ jobs:
             -s build
             -i $(cat /tmp/workspace/docker-image)
 
-  deploy-production:
+  client-deploy-production:
     executor: azure-cli/azure-docker
 
     steps:
@@ -232,7 +338,7 @@ jobs:
           name: Stop staging slot
           command: az webapp stop -s staging
     
-  rollback:
+  client-rollback:
     executor: azure-cli/azure-docker
 
     steps:
@@ -259,65 +365,101 @@ jobs:
 workflows:
   setup-azure:
     jobs:
-      - approve-test:
+      - bff-approve-test:
           type: approval
-      - setup-test-azure:
+      - bff-setup-test:
           requires:
-            - approve-test
-
-      - approve-proxy-test:
+            - bff-approve-test
+      - bff-approve-production:
           type: approval
-      - setup-test-proxy:
+      - bff-setup-production:
           requires:
-            - approve-proxy-test
+            - bff-approve-production
 
-      - approve-production:
+      - client-approve-test:
           type: approval
-      - setup-production-azure:
+      - client-setup-test:
           requires:
-            - approve-production
+            - client-approve-test
 
-      - approve-proxy-production:
+      - client-approve-proxy-test:
           type: approval
-      - setup-production-proxy:
+      - client-setup-test-proxy:
           requires:
-            - approve-proxy-production
+            - client-approve-proxy-test
 
-  build-and-deploy:
+      - client-approve-production:
+          type: approval
+      - client-setup-production:
+          requires:
+            - client-approve-production
+
+      - client-approve-proxy-production:
+          type: approval
+      - client-setup-production-proxy:
+          requires:
+            - client-approve-proxy-production
+
+  bff-build-and-deploy:
     jobs:
-      - build-test
-      - deploy-test:
+      - bff-build-test
+      - bff-deploy-test:
           requires:
-            - build-test
-      - build-production
-      - deploy-build-production:
+            - bff-build-test
+
+  client-build-and-deploy:
+    jobs:
+      - client-build-test
+      - client-deploy-test:
           requires:
-            - build-production
-      - production-approval:
+            - client-build-test
+      - client-build-production
+      - client-deploy-build-production:
+          requires:
+            - client-build-production
+      - client-production-approval:
           type: approval
           requires:
-            - build-production
-      - deploy-production:
+            - client-build-production
+      - client-deploy-production:
           requires:
-            - build-production
-            - production-approval
+            - client-build-production
+            - client-production-approval
       - sentry-release/sentry-release:
           requires:
-            - deploy-production
-            - production-approval
+            - client-deploy-production
+            - client-production-approval
           sentry-environment: production
           sentry-project: platform
             
   rollback:
     jobs:
-      - approval:
+      - client-approval:
           type: approval
-      - rollback:
+      - client-rollback:
           requires:
-            - approval
-
+            - client-approval
 
 commands:
+  setup-command:
+    description: "General setup"
+    parameters:
+      changes-in-folder:
+        description: "What folder to check for changes"
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - run:
+          name: Setup git
+          command: git config --global user.email "buildserver@usemover.com" && git config --global user.name "Buildserver"
+      - when:
+          condition: << parameters.changes-in-folder >>
+          steps:
+            - run:
+                name: Verify changes to app path
+                command: git diff --name-only --diff-filter=ADMR @~..@ << parameters.changes-in-folder >> | grep . && echo “Changes in directory found, continuing…“ || exit 1
+
   setup-azure-command:
     description: "Deploy to azure"
     parameters:

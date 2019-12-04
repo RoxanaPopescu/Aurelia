@@ -36,7 +36,7 @@ export namespace identityService
 
     export async function createRefreshToken(identity: Identity): Promise<string>
     {
-        const refreshToken = new RefreshToken(
+        const createdRefreshToken = new RefreshToken(
         {
             id: crypto.randomBytes(64).toString("hex"),
             userId: identity.id
@@ -49,9 +49,9 @@ export namespace identityService
             audience: settings.middleware.identity.refreshToken.audience
         };
 
-        const refreshJwt = jwt.sign(refreshToken, settings.middleware.identity.refreshToken.secret, signOptions);
+        const refreshJwt = jwt.sign(createdRefreshToken, settings.middleware.identity.refreshToken.secret, signOptions);
 
-        identity.refreshTokens.push(refreshToken);
+        identity.refreshTokens.push(createdRefreshToken);
 
         return refreshJwt;
     }
@@ -67,20 +67,35 @@ export namespace identityService
         try
         {
             const data = jwt.verify(refreshJwt, settings.middleware.identity.refreshToken.secret, verifyOptions);
-            const refreshToken = new RefreshToken(data);
+            const parsedRefreshToken = new RefreshToken(data);
 
-            const foundAndValid = refreshTokens.some(t => t.id === refreshToken.id && !t.revoked);
+            const foundAndValid = refreshTokens.some(t => t.id === parsedRefreshToken.id && !t.revoked);
 
             if (!foundAndValid)
             {
                 return undefined;
             }
 
-            return refreshToken;
+            return parsedRefreshToken;
         }
         catch
         {
             return undefined;
+        }
+    }
+
+    export async function revokeRefreshToken(refreshJwt: string): Promise<void>
+    {
+        const parsedRefreshToken = await parseRefreshToken(refreshJwt);
+
+        if (parsedRefreshToken != null)
+        {
+            const storedRefreshToken = refreshTokens.find(t => t.id === parsedRefreshToken.id && !t.revoked);
+
+            if (storedRefreshToken != null)
+            {
+                storedRefreshToken.revoked = true;
+            }
         }
     }
 
@@ -115,9 +130,9 @@ export namespace identityService
         try
         {
             const data = jwt.verify(accessJwt, settings.middleware.identity.accessToken.secret, verifyOptions);
-            const accessToken = new AccessToken(data);
+            const parsedAccessToken = new AccessToken(data);
 
-            return accessToken;
+            return parsedAccessToken;
         }
         catch
         {

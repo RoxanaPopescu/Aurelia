@@ -26,7 +26,7 @@ export class DataTableRowCustomElement
     /**
      * The selected model, used when binding the radio button in `single` selection model.
      */
-    protected selectedModel: this | undefined;
+    protected selectedModel: any | this | undefined;
 
     /**
      * The URL to navigate to when the row is clicked, or undefined to do nothing.
@@ -51,6 +51,18 @@ export class DataTableRowCustomElement
      */
     @bindable
     public click: ((context: { event: MouseEvent }) => void) | undefined;
+
+    /**
+     * The model associated with the row.
+     */
+    @bindable
+    public model: any | undefined;
+
+    /**
+     * Called when the row is moved to a new model.
+     */
+    @bindable
+    public move: ((context: { oldmodel: boolean; newmodel: number }) => void) | undefined;
 
     /**
      * True if the row is selected, otherwise false.
@@ -101,7 +113,7 @@ export class DataTableRowCustomElement
         if (this.selected)
         {
             // Set the selected model, used when binding a radio button.
-            this.selectedModel = this;
+            this.selectedModel = this.model != null ? this.model : this;
         }
         else
         {
@@ -163,6 +175,49 @@ export class DataTableRowCustomElement
         if (this.clickable !== false && !event.defaultPrevented && !(event as any).__ignoreRowClick && this.click)
         {
             this.click({ event });
+        }
+    }
+
+    /**
+     * Called when the pointer is pressed on the row.
+     * @param event The click event.
+     */
+    protected onMouseDown(event: MouseEvent): void
+    {
+        if (!event.defaultPrevented && this.model != null && this.dataTable.move != null)
+        {
+            document.addEventListener("mouseup", this.onMouseUpAnywhere, { capture: true });
+
+            this.dataTable.draggedModel = this.model;
+        }
+    }
+
+    /**
+     * Called when the pointer enters the row.
+     * @param event The click event.
+     */
+    protected onMouseEnter(event: MouseEvent): void
+    {
+        if (!event.defaultPrevented && this.model != null && this.dataTable.move != null)
+        {
+            if (this.dataTable.draggedModel != null && this.dataTable.draggedModel !== this.model)
+            {
+                this.dataTable.move({ source: this.dataTable.draggedModel, target: this.model });
+            }
+        }
+    }
+
+    /**
+     * Called when the pointer is released anywhere.
+     * @param event The click event.
+     */
+    protected onMouseUpAnywhere = (event: MouseEvent) =>
+    {
+        document.removeEventListener("mouseup", this.onMouseUpAnywhere, { capture: true });
+
+        if (!event.defaultPrevented)
+        {
+            this.dataTable.draggedModel = undefined;
         }
     }
 }

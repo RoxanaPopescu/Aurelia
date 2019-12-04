@@ -7,7 +7,7 @@ import { Request, Response } from "node-fetch";
  * Represents an interceptor that responds with a stubbed response,
  * if one is available for the request.
  */
-export class StubInterceptor implements IApiInterceptor
+export class ResponseStubInterceptor implements IApiInterceptor
 {
     /**
      * Creates a new instance of the type.

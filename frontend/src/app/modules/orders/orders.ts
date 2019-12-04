@@ -26,6 +26,13 @@ export class OrdersModule
                 name: "list",
                 route: "list",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-orders"
+                    ]
+                },
                 title: routeTitles.list,
                 nav: false,
                 href: "/orders/list"
@@ -34,18 +41,39 @@ export class OrdersModule
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-orders"
+                    ]
+                },
                 title: routeTitles.details
             },
             {
                 name: "edit",
                 route: "edit/:id",
                 moduleId: PLATFORM.moduleName("./modules/edit/edit"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-order"
+                    ]
+                },
                 title: routeTitles.edit
             },
             {
                 name: "create",
                 route: "create",
                 moduleId: PLATFORM.moduleName("./modules/create/create"),
+                settings:
+                {
+                    claims:
+                    [
+                        "create-order"
+                    ]
+                },
                 title: routeTitles.create
             },
 
@@ -56,6 +84,13 @@ export class OrdersModule
                     name: "import",
                     route: "import",
                     moduleId: PLATFORM.moduleName("./modules/import/import"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "create-order"
+                        ]
+                    },
                     title: routeTitles.import,
                     nav: true,
                     href: "/orders/import",

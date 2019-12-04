@@ -14,7 +14,7 @@ export class Identity
         this.id = data.id;
         this.username = data.username;
         this.fullName = data.fullName;
-        this.preferredName = data.firstName;
+        this.preferredName = data.preferredName;
         this.email = data.email;
         this.pictureUrl = data.pictureUrl;
         this.outfit = new Outfit(data.outfit);
@@ -43,7 +43,7 @@ export class Identity
     public readonly preferredName: string;
 
     /**
-     * The emailo of the user.
+     * The email of the user.
      */
     public readonly email: string;
 

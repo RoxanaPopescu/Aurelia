@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Icon } from "shared/src/webKit";
 import { AutoDispatchService, AutoDispatchRule } from "../../services/autoDispatchService";
 import "./rule.scss";
+import { Profile } from "shared/src/model/profile";
 
 export interface Props {
   service: AutoDispatchService;
@@ -27,9 +28,12 @@ export class RuleComponent extends React.Component<Props> {
 
         <div className="c-autoDispatch-rule-actions">
 
-          <Icon name="edit" onClick={() => this.props.onEdit()}/>
+          {Profile.claims.has("edit-routes") &&
+          <>
+            <Icon name="edit" onClick={() => this.props.onEdit()}/>
 
-          <Icon name="delete" onClick={() => this.props.onDelete()}/>
+            <Icon name="delete" onClick={() => this.props.onDelete()}/>
+          </>}
 
         </div>
 

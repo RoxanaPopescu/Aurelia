@@ -54,7 +54,7 @@ export default class Main extends React.Component<Props, State> {
         } else {
           claims = verifiedJwt.parsedBody;
         }
-        this.setState({ claims: claims });
+        this.setState({ claims });
       });
     } else {
       this.setState({ claims: undefined });

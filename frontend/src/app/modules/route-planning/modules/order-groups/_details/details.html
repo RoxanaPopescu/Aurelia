@@ -38,21 +38,25 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if.bind="orderGroup.id && !orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
-                        Pause
-                    </button>
+                    <template if-claims="edit-order-group">
 
-                    <button if.bind="orderGroup.id && orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
-                        Unpause
-                    </button>
+                        <button if.bind="orderGroup.id && !orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                            Pause
+                        </button>
 
-                    <button if.bind="!orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
-                        Create
-                    </button>
+                        <button if.bind="orderGroup.id && orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
+                            Unpause
+                        </button>
 
-                    <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                        Save changes
-                    </button>
+                        <button if.bind="!orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                            Create
+                        </button>
+
+                        <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Save changes
+                        </button>
+
+                    </template>
 
                 </toolbar>
 
@@ -66,7 +70,7 @@
 
             </status-message>
 
-            <page-section>
+            <page-section if-claims="edit-order-group">
 
                 <div class="flex-row">
 
@@ -94,7 +98,7 @@
 
             </page-section>
 
-            <hr class="hr-line margin-larger">
+            <hr class="hr-line margin-larger" if-claims="edit-order-group">
 
             <page-section class="margin-top">
 
@@ -152,7 +156,7 @@
 
                                     <data-table-cell align="right">
 
-                                        <div class="icon-row">
+                                        <div class="icon-row" if-claims="edit-order-group">
 
                                             <button appearance="none" accent="primary" click.trigger="onEditMatchingCriteriaClick($index)">
                                                 <icon name="md-edit"></icon>
@@ -178,14 +182,16 @@
                             No items
                         </empty-indicator>
 
-                        <button
-                            if.bind="orderGroup != null"
-                            appearance="outline"
-                            accent="primary"
-                            class="margin-large-top"
-                            click.trigger="onAddMatchingCriteriaClick()">
-                            <icon name="md-add" class="font-larger line-height-1">
-                        </button>
+                        <template if-claims="edit-order-group">
+                            <button
+                                if.bind="orderGroup != null"
+                                appearance="outline"
+                                accent="primary"
+                                class="margin-large-top"
+                                click.trigger="onAddMatchingCriteriaClick()">
+                                <icon name="md-add" class="font-larger line-height-1">
+                            </button>
+                        </template>
 
                     </div>
 
@@ -277,7 +283,7 @@
 
                                     <data-table-cell align="right">
 
-                                        <div class="icon-row">
+                                        <div class="icon-row" if-claims="edit-order-group">
 
                                             <button appearance="none" accent="primary" click.trigger="onEditRoutePlanningTimeClick($index)">
                                                 <icon name="md-edit"></icon>
@@ -303,14 +309,16 @@
                             No items
                         </empty-indicator>
 
-                        <button
-                            if.bind="orderGroup != null"
-                            appearance="outline"
-                            accent="primary"
-                            class="margin-large-top"
-                            click.trigger="onAddRoutePlanningTimeClick()">
-                            <icon name="md-add" class="font-larger line-height-1">
-                        </button>
+                        <template if-claims="edit-order-group">
+                            <button
+                                if.bind="orderGroup != null"
+                                appearance="outline"
+                                accent="primary"
+                                class="margin-large-top"
+                                click.trigger="onAddRoutePlanningTimeClick()">
+                                <icon name="md-add" class="font-larger line-height-1">
+                            </button>
+                        </template>
 
                     </div>
 

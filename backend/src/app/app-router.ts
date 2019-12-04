@@ -28,7 +28,7 @@ export class AppRouter extends KoaRouter<any, IAppContext>
             {
                 const moduleFileInstance = require(moduleFilePath);
 
-                // tslint:disable-next-line: forin
+                // tslint:disable-next-line: no-for-in
                 for (const key in moduleFileInstance)
                 {
                     if (key.endsWith("Module"))

@@ -104,7 +104,7 @@ export default class AddressSearchComponent extends React.Component<
         iconUrl={require("./assets/marker.svg")}
         className="c-addressSearch"
         size={"medium"}
-        disabled={this.state.disabled}
+        disabled={this.state.disabled || this.props.disabled}
         optionGroups={this.state.results}
         placeholder={this.props.placeholder}
         defaultTexts={{

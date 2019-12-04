@@ -276,7 +276,7 @@
 
                         <hr class="hr-line margin-large-bottom">
 
-                        <div repeat.for="i of 6" class="control-row margin-bottom">
+                        <div repeat.for="i of 7" class="control-row margin-bottom">
 
                             <check-toggle
                                 label="after"
@@ -336,13 +336,10 @@
                         <data-table
                             appearance="cards"
                             sorting.bind="sorting"
-                            busy.bind="updateOperation.pending">
+                            busy.bind="updateOperation.pending"
+                            move.call="onMoveStop(source, target)">
 
                             <data-table-headers>
-
-                                <data-table-cell>
-                                    <!-- Icons -->
-                                </data-table-cell>
 
                                 <data-table-cell>
                                     <span class="text-truncate" translate>
@@ -392,23 +389,7 @@
 
                             </data-table-headers>
 
-                            <data-table-row repeat.for="stop of template.stops">
-
-                                <data-table-cell>
-
-                                    <div class="icon-column">
-
-                                        <button appearance="none" accent="primary" disabled.bind="$index === 0" click.trigger="onMoveStopUpClick($index)">
-                                            <icon name="md-arrow-upward"></icon>
-                                        </button>
-
-                                        <button appearance="none" accent="primary" disabled.bind="$index === template.stops.length - 1" click.trigger="onMoveStopDownClick($index)">
-                                            <icon name="md-arrow-downward"></icon>
-                                        </button>
-
-                                    </div>
-
-                                </data-table-cell>
+                            <data-table-row repeat.for="stop of template.stops" model.bind="stop">
 
                                 <data-table-cell>
                                     <div class="route-template-stop-number">

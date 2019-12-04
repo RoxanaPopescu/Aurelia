@@ -3,8 +3,7 @@ import { Interceptor, json } from "aurelia-fetch-client";
 import { delay } from "shared/utilities";
 
 /**
- * Represents an interceptor that responds with a stubbed response,
- * if one is available for the request.
+ * Represents an interceptor that responds with a stubbed response, if one is available for the request.
  */
 export class ResponseStubInterceptor implements Interceptor
 {

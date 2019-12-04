@@ -25,6 +25,7 @@ import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
 import { ButtonSize } from "../../../../../shared/src/webKit/button/index";
 import { Log } from "shared/infrastructure";
+import { Profile } from "shared/src/model/profile";
 
 @observer
 export default class AutoDispatchComponent extends React.Component {
@@ -89,6 +90,7 @@ export default class AutoDispatchComponent extends React.Component {
                 />
               ))}
 
+              {Profile.claims.has("edit-routes") &&
               <div className="c-autoDispatch-actions">
                 <Button
                   type={ButtonType.Action}
@@ -96,7 +98,7 @@ export default class AutoDispatchComponent extends React.Component {
                 >
                   {Localization.operationsValue("Routes_AutoDispatch_AddRule")}
                 </Button>
-              </div>
+              </div>}
             </div>
 
             <div className="c-autoDispatch-map">
