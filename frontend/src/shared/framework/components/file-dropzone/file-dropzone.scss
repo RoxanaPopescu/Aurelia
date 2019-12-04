@@ -69,6 +69,21 @@ file-dropzone
                 }
             }
 
+            .dz-progress
+            {
+                position: static;
+                margin: 0;
+                margin-top: 2rem;
+                border-radius: var(--border-radius-medium);
+                height: 1rem;
+                width: 100%;
+
+                .dz-upload {
+                    background: none;
+                    background-color: var(--colorBackgroundPrimary)
+                }
+            }
+
             .dz-error-message
             {
                 display: none;
