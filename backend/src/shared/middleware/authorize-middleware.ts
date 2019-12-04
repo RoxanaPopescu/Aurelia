@@ -9,6 +9,7 @@ export interface IAuthorizeMiddlewareOptions
 {
     issuer: string;
     audience: string;
+    header: string;
     cookie: string;
     secret: string;
 }
@@ -30,7 +31,9 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             if (context.state.jwt === undefined)
             {
                 // Try to get the JWT from the request.
-                const jwtString = context.cookies.get(options.cookie);
+                const jwtString =
+                    context.headers[options.header] ||
+                    context.cookies.get(options.cookie);
 
                 if (jwtString)
                 {
