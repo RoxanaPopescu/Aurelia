@@ -124,7 +124,7 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To" name="latestDeliveryDate" align="right">
+                    <data-table-cell title.translate="To" name="latestDeliveryDate">
                         <span class="text-truncate" translate>
                             To
                         </span>
@@ -216,7 +216,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false" align="right">
+                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false">
                             <span class="text-truncate">
                                 ${item.latestDeliveryDate | time: 'narrow' : false}
                             </span>
