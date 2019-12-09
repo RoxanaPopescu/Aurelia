@@ -1,13 +1,36 @@
 <template>
+
     <require from="./components/import-upload/import-upload"></require>
     <require from="./components/import-failed/import-failed"></require>
     <require from="./import.scss"></require>
 
-    <page-content class="page-content-stretch import-order">
+    <page name="import">
 
-    <import-upload service.bind="service" if.bind="service.currentPage === 'upload'"></import-upload>
-    <import-failed service.bind="service" if.bind="service.currentPage === 'failed'"></import-failed>
+        <page-content class="page-content-stretch import-order">
 
-    </page-content>
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/orders" translate>
+                            Orders
+                        </a>
+
+                        <span translate>
+                            Import Excel
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+            </page-header>
+
+            <import-upload service.bind="service" if.bind="service.currentPage === 'upload'"></import-upload>
+            <import-failed service.bind="service" if.bind="service.currentPage === 'failed'"></import-failed>
+
+        </page-content>
+
+    </page>
 
 </template>

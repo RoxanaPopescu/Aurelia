@@ -24,6 +24,7 @@ file-dropzone
             align-items: center;
             flex-direction: column;
             margin: 0;
+            background-color: transparent;
 
             .dz-image
             {
@@ -113,6 +114,7 @@ file-dropzone
                 }
             }
         }
+
         &.dz-drag-hover
         {
             background-color: var(--palette-color-neutral-lighter);

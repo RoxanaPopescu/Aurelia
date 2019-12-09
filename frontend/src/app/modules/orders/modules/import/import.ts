@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { ImportService } from "./services/import-service";
+import { ImportOrdersService } from "./services/import-service";
 
 /**
  * Represents the module.
@@ -13,7 +13,8 @@ export class ImportModule
      */
     public constructor()
     {
-        this.service.currentPage = "failed";
+        this.service.currentPage = "upload";
     }
-    protected service = new ImportService();
+
+    protected service = new ImportOrdersService();
 }

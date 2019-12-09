@@ -1,6 +1,8 @@
-import { autoinject, bindable } from "aurelia-framework";
-import { ImportService } from "../../services/import-service";
+import { autoinject } from "aurelia-framework";
+import { ImportOrdersService } from "../../services/import-service";
 import { DropzoneFile, DropzoneOptions } from "dropzone";
+import { Log } from "shared/infrastructure";
+import { ImportService } from "app/model/import";
 
 /**
  * Represents the module.
@@ -8,47 +10,111 @@ import { DropzoneFile, DropzoneOptions } from "dropzone";
 @autoinject
 export class ImportUploadCustomElement
 {
-    @bindable protected service: ImportService;
+    /**
+     * Creates a new instance of the class.
+     * @param importOrdersService The `ImportOrdersService` instance.
+     * @param importService The `ImportService` instance.
+     */
+    public constructor(importOrdersService: ImportOrdersService, importService: ImportService)
+    {
+        this._importOrdersService = importOrdersService;
+        this._importService = importService;
+    }
+
+    private readonly _importOrdersService: ImportOrdersService;
+    private readonly _importService: ImportService;
 
     protected dropzone: Dropzone;
     protected dropzoneOptions: DropzoneOptions =
     {
         maxFiles: 1,
-        url: "/upload",
+        url: "/api/v1/upload/excel",
         acceptedFiles: ".xlsx"
     };
     public file: DropzoneFile | undefined = undefined;
-    public error: boolean = false;
+    public dropzoneError: "type" | "unknown" | undefined = undefined;
+    public uploadComplete: boolean = false;
+    public fileId: string | undefined = undefined;
+    public consignorId: string | undefined = undefined;
 
     /**
-     * Fill out
+     * Triggers when the dropzone element is attached
      */
     public attached(): void
     {
         this.dropzone.on("addedfile", file => this.onFileAdded(file));
-        this.dropzone.on("success", (file, response, hej) =>
+
+        this.dropzone.on("success", (file, response) =>
         {
-            console.log("success", file);
-            console.log("success", response);
-            console.log("success", hej);
-            this.error = false;
+            // TODO: Get fileId from the response
+            this.dropzoneError = undefined;
         });
+
         this.dropzone.on("error", (file, message) =>
         {
-            console.log("error", file, message.toString());
-            this.error = true;
+            if (message.toString().toLowerCase().indexOf("of this type") > -1)
+            {
+                this.dropzoneError = "type";
+            }
+            else
+            {
+                this.dropzoneError = "unknown";
+            }
         });
     }
 
     /**
-     * Fill out
+     * Triggers when a file is added to the dropzone element
      */
     public onFileAdded(file: DropzoneFile): void
     {
+        this.dropzoneError = undefined;
         if (this.file !== undefined)
         {
             this.dropzone.removeFile(this.file);
         }
         this.file = file;
+    }
+
+    /**
+     * Gets the file extension from a file in dropzone
+     */
+    public get fileExtension(): string
+    {
+        if (this.file != null)
+        {
+            const name = this.file.name.split(".");
+
+            return `.${name[name.length - 1]}`;
+        }
+
+        return "File not found.";
+    }
+
+    /**
+     * Uploads a file and a consignorId to attach with it
+     */
+    public async onUploadClick(): Promise<void>
+    {
+        if (this.fileId !== undefined && this.consignorId !== undefined)
+        {
+            try
+            {
+                const response = await this._importService.createOrdersFromFile(this.fileId, this.consignorId);
+                if (response.response.status === 204)
+                {
+                    this.uploadComplete = true;
+                }
+                else
+                {
+                    this._importOrdersService.importErrors = response.data;
+                    this._importOrdersService.currentPage = "failed";
+                }
+            }
+            catch (error)
+            {
+                Log.error("File upload failed", error);
+            }
+        }
     }
 }

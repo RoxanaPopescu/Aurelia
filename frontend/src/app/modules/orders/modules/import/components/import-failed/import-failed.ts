@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ImportService } from "../../services/import-service";
+import { ImportOrdersService } from "../../services/import-service";
 
 /**
  * Represents the module.
@@ -7,5 +7,5 @@ import { ImportService } from "../../services/import-service";
 @autoinject
 export class ImportFailedCustomElement
 {
-    @bindable protected service: ImportService;
+    @bindable protected service: ImportOrdersService;
 }

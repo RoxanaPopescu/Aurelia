@@ -30,5 +30,32 @@ import-upload
                 margin-top: 10rem;
             }
         }
+
+        &.--error-filetype
+        {
+            border-color: var(--surface-negative-border-color);
+            flex-direction: column;
+
+            .error-message
+            {
+                line-height: 1;
+
+                icon
+                {
+                    margin-right: 1.5rem;
+                }
+            }
+
+            .dz-message
+            {
+                display: flex;
+                margin-top: 0;
+            }
+
+            .dz-preview
+            {
+                display: none;
+            }
+        }
     }
 }

@@ -5,17 +5,32 @@
     <file-dropzone
         dropzone.bind="dropzone"
         options.bind="dropzoneOptions"
+        class="${dropzoneError == 'type' ? '--error-filetype' : ''}"
     >
 
-        <div class="upload-text">
-            Du kan trække XLSX filen direkte over i  dette vindue<br />
-            eller klikke her for at finde filen på din computer.
+        <div if.bind="!uploadComplete" class="upload-text">
+            <span translate>You can drop the excel (.xlsx) file here</span><br />
+            <span translate>or click this window to find the file on your computer</span>
         </div>
 
-        <img class="upload-icon" src="./resources/images/upload-excel.svg" />
+        <div if.bind="uploadComplete" class="upload-complete-headline" translate>
+            Your orders have been received in the system
+        </div>
+
+        <div if.bind="uploadComplete" class="upload-complete-text" translate>
+            Note that it can take several minutes to create the orders
+        </div>
+
+        <img if.bind="dropzoneError == null" class="upload-icon margin-top" src="./resources/images/upload-excel.svg" />
+        <img if.bind="dropzoneError == 'type' && file != null" class="upload-icon" src="./resources/images/wrong-file.svg" />
+
+        <div if.bind="dropzoneError == 'type' && file != null" slot="error-message" class="error-message margin-top" accent="negative">
+            <icon name="warning"></icon>
+            <span translate>The chosen filetype ${fileExtension} is incorrect. The file has to be ${dropzoneOptions.acceptedFiles}.</span>
+        </div>
 
     </file-dropzone>
 
-    <button disabled.bind="file == undefined || error == true" appearance="solid" accent="primary" click.trigger="upload()">Upload</button>
+    <button disabled.bind="file == null || dropzoneError != null" appearance="solid" accent="primary" click.trigger="onUploadClick()" translate>Upload</button>
 
 </template>
