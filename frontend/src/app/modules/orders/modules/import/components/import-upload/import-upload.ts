@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { ImportOrdersService } from "../../services/import-service";
 import { DropzoneFile, DropzoneOptions } from "dropzone";
 import { Log } from "shared/infrastructure";
@@ -79,6 +79,7 @@ export class ImportUploadCustomElement
     /**
      * Gets the file extension from a file in dropzone
      */
+    @computedFrom("file")
     public get fileExtension(): string
     {
         if (this.file != null)
