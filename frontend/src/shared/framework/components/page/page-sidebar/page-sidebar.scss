@@ -32,7 +32,7 @@ page-sidebar
         icon
         {
             // Set the icon size.
-            font-size: 6rem;
+            font-size: calc(var(--font-largest-font-size) * 0.75);;
 
             // Apply the primary icon color.
             color: var(--surface-primary-icon-color);

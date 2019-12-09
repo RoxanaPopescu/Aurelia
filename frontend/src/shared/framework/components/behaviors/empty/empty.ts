@@ -57,6 +57,6 @@ export class EmptyCustomAttribute
             ? this._element.innerText.trim()
             : this._element.innerText;
 
-        this.value = this._element.children.length === 0 && innerText === "";
+        this.value = !Array.from(this._element.children).some(e => e.nodeType !== 8) || innerText === "";
     }
 }

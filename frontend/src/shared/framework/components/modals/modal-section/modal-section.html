@@ -11,10 +11,10 @@
     <button
         appearance="none"
         class="modal-section-header font-large"
-        disabled.bind="headerSlotEmpty !== false"
+        disabled.bind="headerSlotEmpty"
         click.trigger="onHeaderClick()">
 
-        <div class="modal-section-header-content" empty.bind="headerSlotEmpty">
+        <div class="modal-section-header-content">
             <slot name="header"></slot>
         </div>
 
@@ -33,7 +33,7 @@
 
     </button>
 
-    <div show.bind="expanded" class="modal-section-content">
+    <div show.bind="expanded && !defaultSlotEmpty" class="modal-section-content">
         <slot></slot>
     </div>
 

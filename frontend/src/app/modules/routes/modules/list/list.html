@@ -105,7 +105,11 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="status" align="right">
+                        <data-table-cell>
+                            <!-- Spacing -->
+                        </data-table-cell>
+
+                        <data-table-cell name="status">
                             <span class="text-truncate" translate>
                                 Status
                             </span>
@@ -119,13 +123,13 @@
                             accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
                             href="/routes/details/${route.slug}">
 
-                            <data-table-cell class="font-monospaced">
+                            <data-table-cell>
                                 <span class="text-truncate">
                                     ${route.slug}
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell class="font-monospaced">
+                            <data-table-cell>
                                 <span class="text-truncate">
                                     ${route.reference}
                                 </span>
@@ -149,7 +153,11 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell align="right">
+                            <data-table-cell>
+                                <!-- Spacing -->
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 <span class="text-truncate">
                                     ${route.status.name}
                                 </span>

@@ -95,7 +95,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.slug" class="font-monospaced">
+                        <data-table-cell title.bind="item.slug">
                             <a class="text-truncate" href="/fleet-management/drivers/edit/${item.driver.id}">
                                 ${item.driver.id}
                             </a>
@@ -225,7 +225,7 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To" align="right">
+                    <data-table-cell title.translate="To">
                         <span class="text-truncate" translate>
                             To
                         </span>
@@ -244,7 +244,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.slug" class="font-monospaced">
+                        <data-table-cell title.bind="item.slug">
                             <span class="text-truncate">
                                 ${item.slug}
                             </span>
@@ -314,7 +314,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false" align="right">
+                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false">
                             <span class="text-truncate">
                                 ${item.latestDeliveryDate | time: 'narrow' : false}
                             </span>
