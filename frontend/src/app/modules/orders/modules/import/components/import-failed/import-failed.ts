@@ -80,7 +80,7 @@ export class ImportFailedCustomElement
     /**
      * Checks if the user is on the last error type
      */
-    @computedFrom("_importOrdersService.importErrors, currentErrorTypeIndex")
+    @computedFrom("_importOrdersService.importErrors", "currentErrorTypeIndex")
     public get lastErrorType(): boolean
     {
         if (this._importOrdersService.importErrors != null)
@@ -97,7 +97,7 @@ export class ImportFailedCustomElement
     /**
      * Checks if the user is on the last error
      */
-    @computedFrom("_importOrdersService.importErrors, currentErrorTypeIndex, currentErrorIndex")
+    @computedFrom("_importOrdersService.importErrors", "currentErrorTypeIndex, currentErrorIndex")
     public get lastError(): boolean
     {
         if (this._importOrdersService.importErrors != null)

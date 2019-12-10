@@ -62,24 +62,52 @@
 
     <div class="error-button-container">
 
-        <button disabled.bind="currentErrorTypeIndex === 0" click.trigger="onErrorTypeIndexChange('previous')" appearance="outline" accent="primary" class="line-height-1">
+        <button
+            disabled.bind="currentErrorTypeIndex === 0"
+            click.trigger="onErrorTypeIndexChange('previous')"
+            appearance="outline"
+            accent="primary"
+            class="line-height-1">
+
             <icon name="md-arrow-backward-double-ios" class="float-left margin-right"></icon>
             <span translate>Previous error type</span>
+
         </button>
 
-        <button disabled.bind="currentErrorIndex === 0" click.trigger="onErrorIndexChange('previous')" appearance="outline" accent="primary" class="line-height-1">
+        <button
+            disabled.bind="currentErrorTypeIndex === 0 && currentErrorIndex === 0"
+            click.trigger="onErrorIndexChange('previous')"
+            appearance="outline"
+            accent="primary"
+            class="line-height-1">
+
             <icon name="md-arrow-backward-ios" class="float-left"></icon>
             <span translate>Previous</span>
+
         </button>
 
-        <button click.trigger="onErrorIndexChange('next')" appearance="outline" accent="primary" class="line-height-1">
+        <button
+            disabled.bind="lastErrorType && lastError"
+            click.trigger="onErrorIndexChange('next')"
+            appearance="outline"
+            accent="primary"
+            class="line-height-1">
+
             <span translate>Next</span>
             <icon name="md-arrow-forward-ios" class="float-right"></icon>
+
         </button>
 
-        <button click.trigger="onErrorTypeIndexChange('next')" appearance="outline" accent="primary" class="line-height-1">
+        <button
+            disabled.bind="lastErrorType"
+            click.trigger="onErrorTypeIndexChange('next')"
+            appearance="outline"
+            accent="primary"
+            class="line-height-1">
+
             <span translate>Next error type</span>
             <icon name="md-arrow-forward-double-ios" class="float-right margin-left"></icon>
+
         </button>
 
     </div>
