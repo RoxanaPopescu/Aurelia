@@ -22,7 +22,7 @@
 
         <slot></slot>
 
-        <data-table-cell mousedown.trigger="onMouseDown($event)">
+        <data-table-cell class="data-table-row-drag-handle" mousedown.trigger="onMouseDown($event)">
             <icon if.bind="dataTable.move != null && model != null" name="drag-handle" class="opacity-faded-more">
         </data-table-cell>
 

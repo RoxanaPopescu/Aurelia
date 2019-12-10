@@ -28,7 +28,7 @@ export class RelativeTimeValueConverter
      * @param padding The padding in milliseconds, used when determining when to round the result up or down. The default is 100.
      * @returns A localized string representing the value, relative to the current time.
      */
-    public toView(value: DateTime | undefined | null, unit: ToRelativeUnit, padding?: number): string | null | undefined
+    public toView(value: DateTime | undefined | null, unit?: ToRelativeUnit, padding?: number): string | null | undefined
     {
         if (value == null)
         {
@@ -38,6 +38,7 @@ export class RelativeTimeValueConverter
         const formatOptions: ToRelativeOptions =
         {
             locale: `${this._localeService.locale.code}-u-ca-iso8601`,
+            unit,
             padding: padding != null ? padding : 100
         };
 

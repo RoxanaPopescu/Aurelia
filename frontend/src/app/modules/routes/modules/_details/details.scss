@@ -1,0 +1,19 @@
+@import "resources/index";
+
+page[name="routes"] page[name="details"]
+{
+    data-table
+    {
+        --data-table-columns: min-content 2fr 1fr 1fr 1fr 1fr 1fr min-content;
+    }
+
+    .route-details-stop-number
+    {
+        border-radius: 50%;
+        width: 9rem;
+        line-height: 9rem;
+        text-align: center;
+        color: var(--surface-color);
+        background: gray;
+    }
+}

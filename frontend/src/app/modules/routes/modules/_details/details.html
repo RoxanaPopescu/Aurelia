@@ -1,0 +1,537 @@
+<template>
+
+    <require from="app/components/page-sidebar-value/page-sidebar-value"></require>
+    <require from="./details.scss"></require>
+
+    <page name="details">
+
+        <page-sidebar scroll>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Overview
+                </div>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        ID
+                    </div>
+
+                    <div slot="value">
+                        ${route.slug}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Reference
+                    </div>
+
+                    <div slot="value">
+                        ${route.reference}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Status
+                    </div>
+
+                    <div slot="value">
+                        ${route.status.name}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Vehicle
+                    </div>
+
+                    <div slot="value">
+                        ${route.vehicleType.name}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        Weight
+                    </div>
+
+                    <div slot="value">
+                        [weight]
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Time frame
+                </div>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Starts
+                    </div>
+
+                    <div slot="value">
+                        ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        Ends
+                    </div>
+
+                    <div slot="value">
+                        ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    First pickup
+                </div>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                    <div slot="value">
+                        ${route.stops[0].location.address}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section if.bind="route.fulfiller != null" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Driver
+                </div>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Fulfiller
+                    </div>
+
+                    <div slot="value">
+                        ${route.fulfiller.primaryName}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value if.bind="route.driver != null" class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Driver name
+                    </div>
+
+                    <div slot="value">
+                        ${route.driver.name}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value if.bind="route.driver != null" class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Driver ID
+                    </div>
+
+                    <div slot="value">
+                        ${route.driver.id}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        Phone
+                    </div>
+
+                    <div slot="value">
+                        ${route.driver.phone || route.fulfiller.contactPhone}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section if.bind="route.driverVehicle != null" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Vehicle
+                </div>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Type
+                    </div>
+
+                    <div slot="value">
+                        ${route.driverVehicle.vehicleType.name}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Make and model
+                    </div>
+
+                    <div slot="value">
+                        ${route.driverVehicle.makeAndModel}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Color
+                    </div>
+
+                    <div slot="value">
+                        ${route.driverVehicle.color}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        License plate
+                    </div>
+
+                    <div slot="value">
+                        ${route.licensePlate}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+        </page-sidebar>
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+
+                        <a accent="inherit" href="/routes" translate>
+                            Routes
+                        </a>
+
+                        <span translate>
+                            ${route.slug}
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="solid" accent="neutral" translate>
+                        [action]
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <div class="control-row">
+
+                    <card class="flex-basis-1-of-4 text-align-center">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                           Status
+                        </div>
+
+                        <div style="margin: auto; display: flex; align-items: center; justify-content: center; width: 35rem; height: 35rem; border-radius: 50%; border: 2rem solid var(--surface-positive-surface-color);">
+
+                            <div>
+
+                                <div class="font-small margin-bottom opacity-faded" translate>
+                                    Status
+                                </div>
+
+                                <div class="font-largest">
+                                    5/18
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </card>
+
+                    <card class="flex-basis-1-of-4 text-align-center">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Colli picked up
+                        </div>
+
+                        <div class="font-largest">
+                            122
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            All colli picked up
+                        </div>
+
+                        <hr class="hr-line margin">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Colli delivered
+                        </div>
+
+                        <div class="font-largest">
+                            37
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            3 missing colli
+                        </div>
+
+                    </card>
+
+                    <card class="flex-basis-1-of-4 text-align-center">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Start date
+                        </div>
+
+                        <div class="font-largest">
+                            ${route.plannedTimeFrame.from | date: 'narrow' : false}
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            &nbsp;
+                        </div>
+
+                        <hr class="hr-line margin">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Start time
+                        </div>
+
+                        <div class="font-largest">
+                            ${route.plannedTimeFrame.from | time: 'narrow' : false}
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            &nbsp;
+                        </div>
+
+                    </card>
+
+                    <card class="flex-basis-1-of-4 text-align-center">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Estimated completion time
+                        </div>
+
+                        <div class="font-largest">
+                            ${route.completionTime | time: 'narrow' : false}
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            &nbsp;
+                        </div>
+
+                        <hr class="hr-line margin">
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Time remaining
+                        </div>
+
+                        <div class="font-largest">
+                            --:--
+                        </div>
+
+                        <div class="font-small margin-top" translate>
+                            &nbsp;
+                        </div>
+
+                    </card>
+
+                </div>
+
+            </page-section>
+
+            <page-section>
+
+                <div slot="header" translate>
+                    Stop overview
+                </div>
+
+                <data-table
+                    appearance="cards"
+                    move.call="onMoveStop(source, target)">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Stop
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Address
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Reference
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Arrival date
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Arrival time
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Time frame
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Loading time
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="stop of route.stops">
+
+                        <data-table-row
+                            model.bind="stop"
+                            accent="positive">
+
+                            <data-table-cell>
+                                <span class="route-details-stop-number text-truncate">
+                                    ${stop.stopNumber}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.location.address}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.reference}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.arrivalTime || stop.arrivalTimeFrame.from | date: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.arrivalTimeFrame | timeRange: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.arrivalTime | time: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.loadingTime | duration}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                            <icon name="md-edit"></icon>
+                                        </button>
+
+                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
+                                            <icon name="md-delete"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </span>
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <empty-indicator if.bind="route.stops.length == 0" class="margin-largest" translate>
+                    No stops
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

@@ -30,6 +30,11 @@
     {
         cursor: pointer;
     }
+
+    .data-table-row-drag-handle
+    {
+        padding-left: 0;
+    }
 }
 
 data-table[appearance="rows"]

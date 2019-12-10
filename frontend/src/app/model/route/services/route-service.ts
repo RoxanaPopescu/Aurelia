@@ -56,13 +56,15 @@ export class RouteService
     /**
      * Gets the specified route.
      * @param routeSlug The slug identifying the route.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route.
      */
-    public async get(routeSlug: string): Promise<Route>
+    public async get(routeSlug: string, signal?: AbortSignal): Promise<Route>
     {
         const result = await this._apiClient.get("routes/details",
         {
-            query: { routeSlug }
+            query: { routeSlug },
+            signal
         });
 
         return new Route(result.data);

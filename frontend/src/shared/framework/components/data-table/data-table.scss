@@ -6,7 +6,7 @@ data-table
 
     // Define the grid columns.
     // Note that this should be customized as needed for each table.
-    --data-table-columns: repeat(6, 1fr);
+    --data-table-columns: repeat(1, 1fr);
 
     transition: opacity var(--animation-duration-medium);
 
@@ -21,7 +21,7 @@ data-table
     }
 
     &:not(.--move)
-    {    
+    {
         data-table-cell:last-of-type
         {
             visibility: hidden;
@@ -30,7 +30,7 @@ data-table
     }
 
     &.--move
-    {    
+    {
         data-table-cell:last-of-type
         {
             cursor: ns-resize;

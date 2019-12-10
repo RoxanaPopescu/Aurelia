@@ -119,6 +119,19 @@ page-sidebar
     {
         display: flex;
     }
+
+    > page-section
+    {
+        &:first-of-type:not(.--header-slot-empty)
+        {
+            margin-top: 0;
+        }
+
+        &:last-of-type
+        {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .control-row

@@ -6,7 +6,7 @@ page[name="route-planning"] page[name="order-groups-details"]
     {
         data-table
         {
-            --data-table-columns: 1.25fr 1fr 0.5fr;
+            --data-table-columns: 1.25fr 1fr min-content;
         }
 
         > button
@@ -19,7 +19,7 @@ page[name="route-planning"] page[name="order-groups-details"]
     {
         data-table
         {
-            --data-table-columns: 1.25fr 1fr 1fr 1fr 1.25fr 0.5fr;
+            --data-table-columns: 1.25fr 1fr 1fr 1fr 1.25fr min-content;
         }
 
         > button
