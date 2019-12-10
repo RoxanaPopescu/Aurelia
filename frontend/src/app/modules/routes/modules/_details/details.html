@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/page-sidebar-value/page-sidebar-value"></require>
+    <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -270,127 +271,7 @@
 
             </page-header>
 
-            <page-section>
-
-                <div class="control-row">
-
-                    <card class="flex-basis-1-of-4 text-align-center">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                           Status
-                        </div>
-
-                        <div style="margin: auto; display: flex; align-items: center; justify-content: center; width: 35rem; height: 35rem; border-radius: 50%; border: 2rem solid var(--surface-positive-surface-color);">
-
-                            <div>
-
-                                <div class="font-small margin-bottom opacity-faded" translate>
-                                    Status
-                                </div>
-
-                                <div class="font-largest">
-                                    5/18
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </card>
-
-                    <card class="flex-basis-1-of-4 text-align-center">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Colli picked up
-                        </div>
-
-                        <div class="font-largest">
-                            122
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            All colli picked up
-                        </div>
-
-                        <hr class="hr-line margin">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Colli delivered
-                        </div>
-
-                        <div class="font-largest">
-                            37
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            3 missing colli
-                        </div>
-
-                    </card>
-
-                    <card class="flex-basis-1-of-4 text-align-center">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Start date
-                        </div>
-
-                        <div class="font-largest">
-                            ${route.plannedTimeFrame.from | date: 'narrow' : false}
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            &nbsp;
-                        </div>
-
-                        <hr class="hr-line margin">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Start time
-                        </div>
-
-                        <div class="font-largest">
-                            ${route.plannedTimeFrame.from | time: 'narrow' : false}
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            &nbsp;
-                        </div>
-
-                    </card>
-
-                    <card class="flex-basis-1-of-4 text-align-center">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Estimated completion time
-                        </div>
-
-                        <div class="font-largest">
-                            ${route.completionTime | time: 'narrow' : false}
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            &nbsp;
-                        </div>
-
-                        <hr class="hr-line margin">
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Time remaining
-                        </div>
-
-                        <div class="font-largest">
-                            --:--
-                        </div>
-
-                        <div class="font-small margin-top" translate>
-                            &nbsp;
-                        </div>
-
-                    </card>
-
-                </div>
-
-            </page-section>
+            <route-overview route.bind="route"></route-overview>
 
             <page-section>
 

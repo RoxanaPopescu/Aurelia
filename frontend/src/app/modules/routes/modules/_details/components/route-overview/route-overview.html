@@ -1,0 +1,151 @@
+<template>
+
+    <require from="./route-overview.scss"></require>
+
+    <page-section>
+
+        <div class="control-row">
+
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="font-small margin-bottom opacity-faded" translate>
+                Status
+                </div>
+
+                <div style="margin: auto; display: flex; align-items: center; justify-content: center; width: 35rem; height: 35rem; border-radius: 50%; border: 2rem solid var(--surface-positive-surface-color);">
+
+                    <div>
+
+                        <div class="font-small margin-bottom opacity-faded" translate>
+                            Status
+                        </div>
+
+                        <div class="font-largest">
+                            5/18
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </card>
+
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section-top card-section">
+
+                    <div class="font-small margin-bottom opacity-faded" translate>
+                        Colli picked up
+                    </div>
+
+                    <div class="font-largest">
+                        ${pickedUpColliCount}
+                    </div>
+
+                    <div class="font-small margin-top" translate>
+
+                        <span if.bind="pickedUpColliCount === totalColliCount">All colli picked up</span>
+                        <span if.bind="pickedUpColliCount !== totalColliCount">${pickedUpColliCount}/${totalColliCount} has been picked up</span>
+
+                    </div>
+
+                </div>
+
+                <div class="card-section-bottom card-section">
+
+                    <div class="font-small margin-bottom opacity-faded" translate>
+                        Colli delivered
+                    </div>
+
+                    <div class="font-largest">
+                        ${deliveredColliCount}
+                    </div>
+
+                    <div class="font-small margin-top" translate>
+
+                        <span if.bind="deliveredColliCount === totalColliCount">Every colli has been delivered</span>
+                        <span if.bind="deliveredColliCount !== totalColliCount">${deliveredColliCount}/${totalColliCount} has been delivered</span>
+
+                    </div>
+
+                </div>
+
+            </card>
+
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section-top card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Start date
+                    </div>
+
+                    <div class="font-largest">
+                        ${route.plannedTimeFrame.from | date: 'narrow' : false}
+                    </div>
+
+                    <div class="font-small" translate>
+                        &nbsp;
+                    </div>
+
+                </div>
+
+                <div class="card-section-bottom card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Start time
+                    </div>
+
+                    <div class="font-largest">
+                        ${route.plannedTimeFrame.from | time: 'narrow' : false}
+                    </div>
+
+                    <div class="font-small" translate>
+                        &nbsp;
+                    </div>
+
+                </div>
+
+            </card>
+
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section-top card-section">
+
+                    <div class="font-small margin-bottom opacity-faded" translate>
+                        Estimated completion time
+                    </div>
+
+                    <div class="font-largest">
+                        ${route.completionTime | time: 'narrow' : false}
+                    </div>
+
+                    <div class="font-small margin-top" translate>
+                        &nbsp;
+                    </div>
+
+                </div>
+
+                <div class="card-section-bottom card-section">
+
+                    <div class="font-small margin-bottom opacity-faded" translate>
+                        Time remaining
+                    </div>
+
+                    <div class="font-largest">
+                        --:--
+                    </div>
+
+                    <div class="font-small margin-top" translate>
+                        &nbsp;
+                    </div>
+
+                </div>
+
+            </card>
+
+        </div>
+
+    </page-section>
+
+</template>

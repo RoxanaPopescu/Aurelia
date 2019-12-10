@@ -1,0 +1,23 @@
+// @import "resources/index";
+
+.flex-basis-1-of-4
+{
+    .card-section
+    {
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &.card-section-top
+        {
+            padding-bottom: 4rem;
+        }
+
+        &.card-section-bottom
+        {
+            padding-top: 4rem;
+            border-top: 0.25rem solid var(--surface-separator-color);
+        }
+    }
+}

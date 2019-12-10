@@ -147,7 +147,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     /**
      * The stops at which the driver must either pick up or deliver colli.
      */
-    public readonly stops: (RouteStopBase | RouteStopInfo)[];
+    public readonly stops: (TRouteStop | RouteStopInfo)[];
 
     /**
      * The model representing the searchable text in the entity.

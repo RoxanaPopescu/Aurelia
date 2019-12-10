@@ -54,7 +54,7 @@ export class DetailsModule
     /**
      * The route to present.
      */
-    protected route: Route;
+    protected route: Route | undefined;
 
     /**
      * Called by the framework when the module is activated.
