@@ -8,7 +8,7 @@ const enum Path {
   Locale = "locale"
 }
 
-interface Tokens {
+export interface Tokens {
   access: string;
   refresh: string;
 }
@@ -25,6 +25,7 @@ export class _Profile {
 
     if (accessToken && refreshToken) {
       this.tokens = { access: accessToken, refresh: refreshToken };
+      this.claims = new Set(getUserClaims(this.tokens));
     }
   }
 

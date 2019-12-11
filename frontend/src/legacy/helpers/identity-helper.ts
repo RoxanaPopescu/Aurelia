@@ -1,13 +1,15 @@
-import { Profile } from "shared/src/model/profile";
+import { Profile, Tokens } from "shared/src/model/profile";
 import njwt from "njwt";
 
 /**
  * Gets the claims for the currently authenticated user.
  * @returns The claims for the currently authenticated user.
  */
-export function getUserClaims(): string[]
+export function getUserClaims(currentTokens?: Tokens): string[]
 {
-    if (Profile.tokens == null)
+    let tokens: Tokens | undefined = currentTokens ? currentTokens : Profile.tokens;
+
+    if (tokens == null)
     {
         throw new Error("Cannot get claims when the user is not authenticated.");
     }
@@ -16,7 +18,7 @@ export function getUserClaims(): string[]
 
     try
     {
-        const jwt = njwt.verify(Profile.tokens.access);
+        const jwt = njwt.verify(tokens.access);
 
         parsedBody = jwt.parsedBody;
     }
