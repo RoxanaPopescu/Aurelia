@@ -1,6 +1,6 @@
 /**
  * Represents the reason a modal is being closed.
- * Note that additional reasons may be defined for specific modals or areas of the app.
+ * Note that additional reasons may be defined for specific modals or scenarios.
  *
  * @example
  *

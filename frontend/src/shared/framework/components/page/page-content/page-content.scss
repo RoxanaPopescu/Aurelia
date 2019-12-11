@@ -56,7 +56,8 @@ page-content
     {
         position: fixed;
         top: 3rem;
-        right: 1.5rem;
+        right: 6rem;
+        z-index: var(--z-index-fixed);
 
         &:not(:hover) icon
         {

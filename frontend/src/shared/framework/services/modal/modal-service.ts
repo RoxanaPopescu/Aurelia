@@ -116,6 +116,11 @@ export class ModalService
      */
     public async closeAll(reason: ModalCloseReason): Promise<boolean>
     {
+        if (this.modals.length === 0)
+        {
+            return true;
+        }
+
         console.info("Attempting to close all modals.", { modals: this.modals, reason });
 
         for (const modal of this.modals.slice().reverse())

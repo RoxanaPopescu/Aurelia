@@ -6,5 +6,6 @@
  *
  * // The user is attempting to close all toasts.
  * "close-all"
+ *
  */
 export type ToastCloseReason = "close-all" | any;

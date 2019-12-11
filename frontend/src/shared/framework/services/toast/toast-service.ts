@@ -116,6 +116,11 @@ export class ToastService
      */
     public async closeAll(reason: ToastCloseReason): Promise<boolean>
     {
+        if (this.toasts.length === 0)
+        {
+            return true;
+        }
+
         console.info("Attempting to close all toasts.", { toasts: this.toasts, reason });
 
         const promises: Promise<boolean>[] = [];

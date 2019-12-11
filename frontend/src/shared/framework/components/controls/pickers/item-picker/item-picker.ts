@@ -308,8 +308,14 @@ export class ItemPickerCustomElement
         // The user is using the keyboard, so disable hover effects.
         this.hoverable = false;
 
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        {
+            return;
+        }
+
         // Sets the value of the picker if the `Enter` key is pressed.
-        if (event.key === "Enter" && !event.defaultPrevented)
+        if (event.key === "Enter")
         {
             this.changeValue(this.focusedValue, true);
 

@@ -137,6 +137,9 @@ toast
         // Apply padding.
         padding: 5.5rem;
 
+        // Prevent selection.
+        user-select: none;
+
         button:not(:first-of-type)
         {
             // Provide default item spacing.

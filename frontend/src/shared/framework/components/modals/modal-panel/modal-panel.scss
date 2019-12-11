@@ -110,6 +110,9 @@ modal-panel
         // Apply padding.
         padding: 7.5rem 5rem;
 
+        // Prevent selection.
+        user-select: none;
+
         > *,
         > [slot="actions"] > *
         {
