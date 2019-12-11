@@ -73,7 +73,8 @@ const serverOptions: IServerOptions =
         {
             pathRewrite: { "^/api/v1/": "" },
             changeOrigin: true,
-            target: commander.api
+            target: commander.api,
+            secure: false
         }
     },
     public: commander.public
