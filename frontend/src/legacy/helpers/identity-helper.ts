@@ -30,22 +30,7 @@ export function getUserClaims(): string[]
         parsedBody = error.parsedBody;
     }
 
-    const claims = Object.keys(parsedBody).filter(claim => parsedBody[claim] === "true");
-
-    // HACK: Add claims currently missing in the backend.
-    claims.push(
-        "Create Agreement",
-        "View Communication",
-        "Edit Communication",
-        "View Order Groups",
-        "Create Order Group",
-        "Edit Order Group",
-        "View Route Templates",
-        "Create Route Template",
-        "Edit Route Template",
-        "View Routeplan Simulations",
-        "Create Routeplan Simulation",
-    );
-
-    return claims.map(claim => claim.toLowerCase().replace(/\s/g, "-"));
+    return Object.keys(parsedBody)
+        .filter(claim => parsedBody[claim] === "true")
+        .map(claim => claim.toLowerCase().replace(/\s/g, "-"));
 }
