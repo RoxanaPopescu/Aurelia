@@ -9,7 +9,7 @@
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
                 <div class="font-small margin-bottom opacity-faded" translate>
-                Status
+                    Status
                 </div>
 
                 <div style="margin: auto; display: flex; align-items: center; justify-content: center; width: 35rem; height: 35rem; border-radius: 50%; border: 2rem solid var(--surface-positive-surface-color);">
@@ -21,12 +21,22 @@
                         </div>
 
                         <div class="font-largest">
-                            5/18
+                            ${completedStops}/${route.stops.length}
                         </div>
 
                     </div>
 
                 </div>
+
+                <!-- <svg class="donut-graph" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+
+                    <g>
+
+                        <circle style="stroke-dasharray: 440;stroke-dashoffset: ${440 - (percentageDone/100) * 440};" r="69.85699" cy="81" cx="81" stroke-width="8" fill="none"/>
+
+                    </g>
+
+                </svg> -->
 
             </card>
 
@@ -45,7 +55,7 @@
                     <div class="font-small margin-top" translate>
 
                         <span if.bind="pickedUpColliCount === totalColliCount">All colli picked up</span>
-                        <span if.bind="pickedUpColliCount !== totalColliCount">${pickedUpColliCount}/${totalColliCount} has been picked up</span>
+                        <span if.bind="pickedUpColliCount !== completedColliCount">${pickedUpColliCount}/${totalColliCount} has been picked up</span>
 
                     </div>
 
@@ -64,7 +74,7 @@
                     <div class="font-small margin-top" translate>
 
                         <span if.bind="deliveredColliCount === totalColliCount">Every colli has been delivered</span>
-                        <span if.bind="deliveredColliCount !== totalColliCount">${deliveredColliCount}/${totalColliCount} has been delivered</span>
+                        <span if.bind="deliveredColliCount !== completedColliCount">${deliveredColliCount}/${totalColliCount} has been delivered</span>
 
                     </div>
 
@@ -77,11 +87,11 @@
                 <div class="card-section-top card-section">
 
                     <div class="font-small opacity-faded" translate>
-                        Start date
+                        Route start time
                     </div>
 
                     <div class="font-largest">
-                        ${route.plannedTimeFrame.from | date: 'narrow' : false}
+                        ${route.stops[0].arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
                     <div class="font-small" translate>
@@ -93,11 +103,11 @@
                 <div class="card-section-bottom card-section">
 
                     <div class="font-small opacity-faded" translate>
-                        Start time
+                        Route duration
                     </div>
 
                     <div class="font-largest">
-                        ${route.plannedTimeFrame.from | time: 'narrow' : false}
+                        ${routeDuration | duration}
                     </div>
 
                     <div class="font-small" translate>
@@ -120,8 +130,8 @@
                         ${route.completionTime | time: 'narrow' : false}
                     </div>
 
-                    <div class="font-small margin-top" translate>
-                        &nbsp;
+                    <div if.bind="routeDelay != null" class="font-small margin-top" translate>
+                        ${routeDelay | duration} delay
                     </div>
 
                 </div>
