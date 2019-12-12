@@ -1,13 +1,15 @@
-import { Profile } from "shared/src/model/profile";
+import { Profile, Tokens } from "shared/src/model/profile";
 import njwt from "njwt";
 
 /**
  * Gets the claims for the currently authenticated user.
  * @returns The claims for the currently authenticated user.
  */
-export function getUserClaims(): string[]
+export function getUserClaims(currentTokens?: Tokens): string[]
 {
-    if (Profile.tokens == null)
+    let tokens: Tokens | undefined = currentTokens ? currentTokens : Profile.tokens;
+
+    if (tokens == null)
     {
         throw new Error("Cannot get claims when the user is not authenticated.");
     }
@@ -16,7 +18,7 @@ export function getUserClaims(): string[]
 
     try
     {
-        const jwt = njwt.verify(Profile.tokens.access);
+        const jwt = njwt.verify(tokens.access);
 
         parsedBody = jwt.parsedBody;
     }
@@ -30,22 +32,7 @@ export function getUserClaims(): string[]
         parsedBody = error.parsedBody;
     }
 
-    const claims = Object.keys(parsedBody).filter(claim => parsedBody[claim] === "true");
-
-    // HACK: Add claims currently missing in the backend.
-    claims.push(
-        "Create Agreement",
-        "View Communication",
-        "Edit Communication",
-        "View Order Groups",
-        "Create Order Group",
-        "Edit Order Group",
-        "View Route Templates",
-        "Create Route Template",
-        "Edit Route Template",
-        "View Routeplan Simulations",
-        "Create Routeplan Simulation",
-    );
-
-    return claims.map(claim => claim.toLowerCase().replace(/\s/g, "-"));
+    return Object.keys(parsedBody)
+        .filter(claim => parsedBody[claim] === "true")
+        .map(claim => claim.toLowerCase().replace(/\s/g, "-"));
 }

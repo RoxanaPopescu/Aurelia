@@ -126,7 +126,7 @@ export class RoutePlanningModule
                 {
                     claims:
                     [
-                        "create-order-groups"
+                        "create-order-group"
                     ]
                 },
                 title: routeTitles.orderGroupsDetails

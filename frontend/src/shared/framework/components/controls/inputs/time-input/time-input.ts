@@ -129,7 +129,7 @@ export class TimeInputCustomElement
 
         if (value)
         {
-            const [hour = 0, minute = 0] = value.split(":", 2).map(s => s ? parseInt(s) : 0);
+            const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
 
             // Try to parse the value.
             try
