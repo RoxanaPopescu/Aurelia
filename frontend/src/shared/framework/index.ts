@@ -18,6 +18,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
         PLATFORM.moduleName("./components/cards/card/card"),
         PLATFORM.moduleName("./components/cards/card-skeleton/card-skeleton"),
+        PLATFORM.moduleName("./components/controls/buttons/select-button/select-button"),
         PLATFORM.moduleName("./components/controls/dropdown/dropdown"),
         PLATFORM.moduleName("./components/controls/dropdown/dropdown-icon"),
         PLATFORM.moduleName("./components/controls/inputs/date-input/date-input"),
@@ -116,6 +117,7 @@ export * from "./components/behaviors/trap-focus/trap-focus";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
 export * from "./components/controls/control";
+export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/dropdown/dropdown";
 export * from "./components/controls/dropdown/dropdown-icon";
 export * from "./components/controls/inputs/input";

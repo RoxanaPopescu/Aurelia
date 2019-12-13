@@ -1,0 +1,50 @@
+<template
+    class="${open ? '--open' : ''} ${filter != 'none' ? '--filter' : ''}"
+    inert.bind="disabled"
+    validation
+    forward-focus>
+
+    <require from="./select-button.scss"></require>
+
+    <button
+        ref="buttonElement"
+        disabled.bind="disabled"
+        appearance.bind="appearance & attr"
+        accent.bind="accent & attr"
+        mousedown.trigger="toggleDropdown()">
+
+        <slot name="label"></slot>
+
+        <slot name="icon">
+
+            <dropdown-icon
+                open.bind="open">
+            </dropdown-icon>
+
+        </slot>
+
+        <dropdown
+            show.bind="open"
+            close.call="closeDropdown(escape, !escape)"
+            mousedown.trigger="onDropdownMouseDown($event)"
+            fixed.bind="fixed">
+
+            <item-picker
+                view-model.ref="itemPicker"
+                focused-value.to-view="null"
+                focused-element.bind="buttonElement"
+                keyboard.bind="open"
+                none.bind="none"
+                pick.call="closeDropdown(true, true)"
+                tabindex="-1"
+                scroll>
+
+                <slot></slot>
+
+            </item-picker>
+
+        </dropdown>
+
+    </text-input>
+
+</template>
