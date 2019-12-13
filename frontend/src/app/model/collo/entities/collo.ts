@@ -12,6 +12,7 @@ export class Collo
      */
     public constructor(data: any, orderId: string)
     {
+        this.id = data.id;
         this.orderId = orderId;
         this.orderSlug = data.consignorOrderId;
         this.consignorId = data.consignorId;
@@ -19,6 +20,11 @@ export class Collo
         this.status = new ColloStatus(data.status);
         this.origin = new ColloOrigin(data.origin);
     }
+
+    /**
+     * The ID of the collo.
+     */
+    public readonly id: string;
 
     /**
      * The ID of the order to which the collo belongs.
@@ -43,7 +49,7 @@ export class Collo
     /**
      * The status of the collo.
      */
-    public readonly status: ColloStatus;
+    public status: ColloStatus;
 
     /**
      * The origin of the collo.
