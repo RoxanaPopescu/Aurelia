@@ -25,7 +25,13 @@ app-sidebar
 
 path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-child)::after
 {
-    mask-size: 1em;
+    mask-size: 0.8334em;
+    mask-position: center;
+}
+
+page-sidebar .page-sidebar-edge-icon icon
+{
+    font-size: calc(var(--font-largest-font-size) * 0.8334);
 }
 
 // HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.
