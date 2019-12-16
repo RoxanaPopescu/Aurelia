@@ -1,0 +1,22 @@
+
+
+.linear-meter
+{
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+
+    &-bar
+    {
+        width: 5rem;
+        height: .75rem;
+        background-color: var(--surface-neutral-surface-color);
+        margin-right: .5rem;
+    }
+
+    &-fill
+    {
+        height: 100%;
+        background-color: var(--surface-primary-surface-color);
+    }
+}

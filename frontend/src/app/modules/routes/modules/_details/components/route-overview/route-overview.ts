@@ -2,7 +2,7 @@ import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { Route, RouteStop } from "app/model/route";
 import { ColloStatus } from "app/model/collo";
 import { RouteStopStatus } from "../../../../../../../legacy/packages/shared/src/model/logistics/routes/routeStopStatus";
-import { RouteStatus } from '../../../../../../../legacy/packages/shared/src/model/logistics/routes/routeStatus';
+import { RouteStatus } from "../../../../../../../legacy/packages/shared/src/model/logistics/routes/routeStatus";
 import { DateTime, Duration } from "luxon";
 
 /**
@@ -173,5 +173,67 @@ export class RouteOverview
         }
 
         return undefined;
+    }
+
+    /**
+     * Calculates the duration of the route
+     */
+    @computedFrom("route.stops.length")
+    public get driverOnline(): boolean | undefined
+    {
+        if (this.route != null)
+        {
+            return this.route.driverOnline;
+        }
+
+        return undefined;
+    }
+
+    /**
+     * Calculates the duration of the route
+     */
+    @computedFrom("route.stops.length")
+    public get totalLoadingDuration(): Duration
+    {
+        const totalLoadingDuration = Duration.fromMillis(0);
+        if (this.route != null)
+        {
+            this.route.stops
+                .filter(s => s instanceof RouteStop)
+                .forEach((s: RouteStop) => {
+                    if (s.status === new RouteStopStatus("completed"))
+                    {
+                        totalLoadingDuration.plus(s.loadingTime);
+                    }
+                });
+        }
+
+        return totalLoadingDuration;
+    }
+
+    /**
+     * Calculates the duration of the route
+     */
+    @computedFrom("route.status")
+    public get delayedStart(): Duration
+    {
+        if (this.route != null && this.route.stops[0] instanceof RouteStop)
+        {
+            if (this.route.stops[0].arrivalTime != null)
+            {
+                if (this.route.stops[0].arrivalTimeFrame.from != null &&
+                    this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.from).as("second") < 0)
+                {
+                    return this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.from);
+                }
+                if (this.route.stops[0].arrivalTimeFrame.to != null &&
+                    this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.to).as("second") > 0)
+                {
+                    return this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.to);
+                }
+            }
+        }
+
+        return Duration.fromMillis(0);
     }
 }
