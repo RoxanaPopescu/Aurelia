@@ -1,9 +1,12 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
-import { RouteStatusSlug } from "../entities/route-status";
+import { RouteStatusSlug, RouteStatus } from "../entities/route-status";
 import { RouteInfo } from "../entities/route-info";
 import { Route } from "../entities/route";
+import { RouteStopStatusSlug, RouteStopStatus } from "../entities/route-stop-status";
+import { RouteStop } from "../entities/route-stop";
+import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { getLegacyRouteSortProperty, getLegacySortDirection, getLegacyRouteStatus } from "legacy/helpers/api-helper";
 
 /**
@@ -68,5 +71,98 @@ export class RouteService
         });
 
         return new Route(result.data);
+    }
+
+    /**
+     * Saves the specified route.
+     * @param route The route to save.
+     * @returns A promise that will be resolved with the route.
+     */
+    public async save(route: Route): Promise<Route>
+    {
+        const result = await this._apiClient.post("routes/update",
+        {
+            body: route
+        });
+
+        return new Route(result.data);
+    }
+
+    /**
+     * Changes the status of the specified route to the specified status.
+     * @param route The route for which the status should be set.
+     * @param routeStatusSlug The slug identifying the new status.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async setRouteStatus(route: Route, routeStatusSlug: RouteStatusSlug): Promise<void>
+    {
+        await this._apiClient.post("routes/setRouteStatus",
+        {
+            body:
+            {
+                routeId: route.id,
+                status: routeStatusSlug
+            }
+        });
+
+        route.status = new RouteStatus(routeStatusSlug);
+    }
+
+    /**
+     * Changes the status of the specified route stop to the specified status.
+     * @param route The route owning the route stop.
+     * @param routeStop The route stop for which the status should be set.
+     * @param routeStopStatusSlug The slug identifying the new status.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async setRouteStopStatus(route: Route, routeStop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
+    {
+        await this._apiClient.post("routes/setStopStatus",
+        {
+            body:
+            {
+                routeId: route.id,
+                routeStopId: routeStop.id,
+                status: routeStopStatusSlug
+            }
+        });
+
+        routeStop.status = new RouteStopStatus(routeStopStatusSlug);
+    }
+
+    /**
+     * Changes the status of the specified collo to the specified status.
+     * @param collo The collo for which the status should be set.
+     * @param colloStatusSlug The slug identifying the new status.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async setColloStatus(collo: Collo, colloStatusSlug: ColloStatusSlug): Promise<void>
+    {
+        await this._apiClient.post("routes/setColloStatus",
+        {
+            body:
+            {
+                colloBarcode: collo.id,
+                status: colloStatusSlug
+            }
+        });
+
+        collo.status = new ColloStatus(colloStatusSlug);
+    }
+
+    /**
+     * Reloads the specified route in the driver app.
+     * @param routeId The ID of the route to reload.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async reloadRoute(routeId: string): Promise<void>
+    {
+        await this._apiClient.post("routes/reloadRouteInApp",
+        {
+            body:
+            {
+                routeId
+            }
+        });
     }
 }

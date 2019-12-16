@@ -56,7 +56,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * The status of this route stop.
      */
-    public readonly status: RouteStopStatus;
+    public status: RouteStopStatus;
 
     /**
      * The consignee/consignor at this stop.

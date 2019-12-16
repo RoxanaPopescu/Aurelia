@@ -118,6 +118,12 @@ export class UrlInputCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.key.length > 1 || event.metaKey || event.ctrlKey)
+        {
+            return true;
+        }
+
         return event.key !== " ";
     }
 }

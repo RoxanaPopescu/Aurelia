@@ -46,6 +46,9 @@ toast-view
     flex-direction: column;
     align-items: flex-end;
 
+    // Disable pointer events so the container does not block clicks.
+    pointer-events: none;
+
     .toast-view-clear-all
     {
         // Allow content to be positioned relative to this element.

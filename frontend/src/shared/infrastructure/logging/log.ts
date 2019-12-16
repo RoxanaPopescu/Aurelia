@@ -11,7 +11,7 @@ const unwrappedConsole = ((window as any)._console || console) as typeof console
 /**
  * Represents the user info to associate with a log entry.
  */
-interface ILogUser
+export interface ILogUser
 {
     /**
      * The ID of the user.

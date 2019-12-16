@@ -54,6 +54,12 @@ a[appearance]
     }
 }
 
+select-button button[appearance]
+{
+    // HACK: Ensure select-button, which may be icon-only, is not too wide.
+    min-width: 0 !important;
+}
+
 page-section
 {
     &:not(.--expanded)

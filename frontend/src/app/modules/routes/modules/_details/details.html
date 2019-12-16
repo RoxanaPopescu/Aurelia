@@ -249,7 +249,6 @@
                 <h1 class="font-largest">
                     <path-nav>
 
-
                         <a accent="inherit" href="/routes" translate>
                             Routes
                         </a>
@@ -266,6 +265,18 @@
                     <button appearance="solid" accent="neutral" translate>
                         [action]
                     </button>
+
+                    <select-button appearance="solid" accent="neutral">
+
+                        <div slot="icon">
+                            <icon name="more"></icon>
+                        </div>
+
+                        <item model.bind="1">Foo</item>
+
+                        <item model.bind="2">Bar</item>
+
+                    </select-button>
 
                 </toolbar>
 

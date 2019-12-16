@@ -108,6 +108,12 @@ export class SlugInputCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
-        return /[-a-z0-9]/.test(event.key);
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.key.length > 1 || event.metaKey || event.ctrlKey)
+        {
+            return true;
+        }
+
+        return /^[-a-z0-9]$/.test(event.key);
     }
 }

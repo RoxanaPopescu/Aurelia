@@ -142,7 +142,7 @@ export class NumberInputCustomElement
     protected onKeyDown(event: KeyboardEvent): boolean
     {
         // Never block special keys or key combinations.
-        if (event.key.length > 1 || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        if (event.key.length > 1 || event.metaKey || event.ctrlKey)
         {
             return true;
         }

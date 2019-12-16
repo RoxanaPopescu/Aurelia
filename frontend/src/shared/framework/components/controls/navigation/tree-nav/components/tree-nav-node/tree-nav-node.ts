@@ -239,14 +239,20 @@ export class TreeNavNodeCustomElement
      */
     protected onTextInputKeyDown(event: KeyboardEvent): boolean
     {
-        if (event.key === "Enter" && !event.defaultPrevented)
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        {
+            return true;
+        }
+
+        if (event.key === "Enter")
         {
             this.renaming = false;
 
             return false;
         }
 
-        if (event.key === "Escape" && !event.defaultPrevented)
+        if (event.key === "Escape")
         {
             const inputElement = event.target as HTMLInputElement;
 

@@ -29,6 +29,9 @@ modal-backdrop
     // Prevent glitches at the ends of the animation.
     animation-fill-mode: both !important;
 
+    // Prevent selection.
+    user-select: none;
+
     compose.au-enter &
     {
         opacity: 0;

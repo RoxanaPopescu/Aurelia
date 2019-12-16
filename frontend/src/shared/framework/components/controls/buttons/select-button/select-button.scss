@@ -1,0 +1,64 @@
+select-button
+{
+    position: relative;
+    display: block;
+
+    > button
+    {
+        display: flex;
+
+        dropdown
+        {
+            display: flex;
+            text-align: left;
+        }
+
+        item-picker
+        {
+            flex-grow: 1;
+        }
+
+        dropdown-icon
+        {
+            // Push to the right.
+            margin-left: auto;
+        }
+
+        [slot="label"]
+        {
+            // Apply spacing between padding.
+            margin-right: var(--size-inline-spacing-large);
+        }
+
+        [slot="icon"]
+        {
+            // Use flex layout.
+            display: flex;
+
+            // Center content.
+            align-items: center;
+            justify-content: center;
+
+            // Set line height to ensure correct vertical alignment.
+            line-height: 1;
+
+            // Set the size of the icon, in proportion to the text.
+            font-size: var(--dropdown-icon-size);
+
+            // Apply opacity to de-emphasize the icon.
+            opacity: var(--opacity-faded);;
+        }
+    }
+
+    &:not(.--open) > text-input
+    {
+        // Use cursor to indicate the element is clickable, when not accepting text input.
+        cursor: pointer;
+
+        > .input-control > .input-control-inner
+        {
+            // Disable pointer events to prevent unwanted text selection on double click.
+            pointer-events: none;
+        }
+    }
+}
