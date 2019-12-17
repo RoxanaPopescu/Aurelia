@@ -1,7 +1,7 @@
 // tslint:disable
 export default
 {
-    "GET /api/v1/orders/upload":
+    "POST /api/v1/orders/upload":
     {
         delay: 1000,
         // status: 204,

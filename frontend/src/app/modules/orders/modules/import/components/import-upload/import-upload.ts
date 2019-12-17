@@ -3,6 +3,8 @@ import { ImportOrdersService } from "../../services/import-service";
 import { DropzoneFile, DropzoneOptions } from "dropzone";
 import { Log } from "shared/infrastructure";
 import { ImportService } from "app/model/import";
+import { Consignor } from "app/model/outfit";
+import { AgreementService } from "app/model/agreement";
 
 /**
  * Represents the module.
@@ -15,14 +17,25 @@ export class ImportUploadCustomElement
      * @param importOrdersService The `ImportOrdersService` instance.
      * @param importService The `ImportService` instance.
      */
-    public constructor(importOrdersService: ImportOrdersService, importService: ImportService)
+    public constructor(importOrdersService: ImportOrdersService, importService: ImportService, agreementService: AgreementService)
     {
         this._importOrdersService = importOrdersService;
         this._importService = importService;
+        this._agreementService = agreementService;
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            // Fetch available consignors.
+            const agreements = await this._agreementService.getAll();
+            this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+        })();
     }
 
     private readonly _importOrdersService: ImportOrdersService;
     private readonly _importService: ImportService;
+    private readonly _agreementService: AgreementService;
+    protected availableConsignors: Consignor[];
 
     protected dropzone: Dropzone;
     protected dropzoneOptions: DropzoneOptions =
@@ -35,7 +48,7 @@ export class ImportUploadCustomElement
     public dropzoneError: "type" | "unknown" | undefined = undefined;
     public uploadComplete: boolean = false;
     public fileId: string | undefined = undefined;
-    public consignorId: string | undefined = undefined;
+    public selectedConsignor: Consignor | undefined = undefined;
 
     /**
      * Triggers when the dropzone element is attached
@@ -97,11 +110,11 @@ export class ImportUploadCustomElement
      */
     public async onUploadClick(): Promise<void>
     {
-        if (this.fileId !== undefined && this.consignorId !== undefined)
+        if (this.fileId !== undefined && this.selectedConsignor !== undefined)
         {
             try
             {
-                const response = await this._importService.createOrdersFromFile(this.fileId, this.consignorId);
+                const response = await this._importService.createOrdersFromFile(this.fileId, this.selectedConsignor.id);
                 if (response.response.status === 204)
                 {
                     this.uploadComplete = true;

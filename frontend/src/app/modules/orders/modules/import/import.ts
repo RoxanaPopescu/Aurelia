@@ -13,7 +13,7 @@ export class ImportModule
      */
     public constructor()
     {
-        this.service.currentPage = "failed";
+        this.service.currentPage = "upload";
     }
 
     protected service = new ImportOrdersService();

@@ -2,6 +2,34 @@
 
     <require from="./import-upload.scss"></require>
 
+    <select-input
+        value.bind="selectedConsignor"
+        label="above"
+        filter="auto"
+        display-value.bind="selectedConsignor.primaryName">
+
+        <div slot="heading" translate>
+            Upload for
+        </div>
+
+        <span slot="placeholder" translate>
+            Choose consignors
+        </span>
+
+        <item repeat.for="consignor of availableConsignors" model.bind="consignor">
+            ${consignor.primaryName}
+        </item>
+
+        <div slot="validation">
+
+            <dependent-validator
+                validators.bind="notEmptyValidator">
+            </dependent-validator>
+
+        </div>
+
+    </select-input>
+
     <file-dropzone
         dropzone.bind="dropzone"
         options.bind="dropzoneOptions"
