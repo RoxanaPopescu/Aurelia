@@ -263,8 +263,24 @@
                 <toolbar class="flex-push-right">
 
                     <button appearance="solid" accent="neutral" translate>
-                        [action]
+                        Assign fulfiller
                     </button>
+
+                    <button appearance="solid" accent="neutral" translate>
+                        Assign driver
+                    </button>
+
+                    <select-button appearance="solid" accent="neutral" translate>
+
+                        <div slot="label">
+                            Change status
+                        </div>
+
+                        <item repeat.for="status of statusValues" mousedown.capture="onChooseStatus(status.slug)">
+                            ${status.name}
+                        </item>
+
+                    </select-button>
 
                     <select-button appearance="solid" accent="neutral">
 

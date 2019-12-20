@@ -27,7 +27,7 @@ export class SelectButtonCustomElement
     /**
      * True to show the `None` option, otherwise false.
      */
-    @bindable({ defaultValue: true })
+    @bindable({ defaultValue: false })
     public none: boolean;
 
     /**
