@@ -175,10 +175,10 @@ export class ItemPickerCustomElement
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
 
         // Did the user pick the value?
-        if (pick)
+        if (pick && this.focusedValue !== this.value)
         {
             // Set the value.
-            this.value = value;
+            this.value = this.focusedValue;
 
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value } }));
@@ -308,8 +308,14 @@ export class ItemPickerCustomElement
         // The user is using the keyboard, so disable hover effects.
         this.hoverable = false;
 
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        {
+            return;
+        }
+
         // Sets the value of the picker if the `Enter` key is pressed.
-        if (event.key === "Enter" && !event.defaultPrevented)
+        if (event.key === "Enter")
         {
             this.changeValue(this.focusedValue, true);
 

@@ -118,6 +118,12 @@ export class EmailInputCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
-        return event.key !== " ";
+        // Never block special keys or key combinations.
+        if (event.defaultPrevented || event.key.length > 1 || event.metaKey || event.ctrlKey)
+        {
+            return true;
+        }
+
+        return !/\s/.test(event.key);
     }
 }

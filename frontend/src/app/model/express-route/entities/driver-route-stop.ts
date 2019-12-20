@@ -1,4 +1,4 @@
-import { RouteStopBase, RouteStopType } from "app/model/route";
+import { RouteStopBase } from "app/model/route";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -13,14 +13,8 @@ export class DriverRouteStop extends RouteStopBase
     {
         super(data, stopNumber);
 
-        this.type = new RouteStopType(data.type);
         this.orderIds = data.orderIds;
     }
-
-    /**
-     * The type of stop.
-     */
-    public type: RouteStopType;
 
     /**
      * The IDs of the orders associated with this stop.

@@ -1,0 +1,32 @@
+<template>
+
+    <require from="./circular-meter.scss"></require>
+
+    <svg accent.bind="meterAccent & attr" viewbox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <circle
+                css="stroke-dasharray: ${dashArraySize};"
+                cx="70"
+                cy="70"
+                r="64"
+                stroke-width="9"
+                stroke="var(--surface-neutral-surface-color)"
+                fill="none"/>
+            <circle
+                css="stroke-dasharray: ${dashArraySize}; stroke-dashoffset: ${dashArraySize - percentage * dashArraySize / 100};"
+                cx="70"
+                cy="70"
+                r="64"
+                stroke-width="10"
+                stroke="currentColor"
+                fill="none"/>
+        </g>
+    </svg>
+
+    <div class="circular-meter-text">
+
+        <slot></slot>
+
+    </div>
+
+</template>

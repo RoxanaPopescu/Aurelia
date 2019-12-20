@@ -58,7 +58,7 @@
                             dragstart.trigger="onExpressStopsDragStart($event, stop)"
                             dragend.trigger="onExpressStopsDragEnd($event, stop)">
 
-                            <card accent.bind="stop.route.colorIndex & attr">
+                            <card accent.bind="stop.route.colorIndex">
 
                                 <div class="flex-row">
                                     <div class="stop-icon">
@@ -124,7 +124,7 @@
                                 <div></div>
                             </div>
 
-                            <card accent.bind="(stop.type == 'express-route-stop' ? stop.route.colorIndex : undefined) & attr">
+                            <card accent.bind="stop.type == 'express-route-stop' ? stop.route.colorIndex : undefined">
 
                                 <div class="flex-row">
                                     <div class="stop-icon">

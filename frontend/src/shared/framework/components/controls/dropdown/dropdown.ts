@@ -33,7 +33,7 @@ export class DropdownCustomElement
     public owner: HTMLElement | SVGElement;
 
     /**
-     * True to used `fixed` positioning, otherwise false.
+     * True to use `fixed` positioning, otherwise false.
      * This may be needed if the dropdown is placed within a container that
      * hides overflowing content, but note that it has a performance cost.
      */

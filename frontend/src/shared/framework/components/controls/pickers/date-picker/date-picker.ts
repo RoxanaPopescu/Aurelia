@@ -162,7 +162,7 @@ export class DatePickerCustomElement
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
 
         // Did the user pick the value?
-        if (pick)
+        if (pick && this.focusedValue !== this.value)
         {
             // Set the flag used to prevent navigation to the `dates` view when the value changes.
             this._isSettingValueInternally = true;

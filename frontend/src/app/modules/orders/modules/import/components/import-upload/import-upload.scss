@@ -6,6 +6,12 @@ import-upload
     flex-direction: column;
     flex: 1;
 
+    select-input
+    {
+        width: 105rem;
+        margin-bottom: 10rem;
+    }
+
     file-dropzone.dropzone
     {
         width: 50%;

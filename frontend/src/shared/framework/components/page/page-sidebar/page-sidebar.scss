@@ -27,12 +27,12 @@ page-sidebar
     {
         // Position near the top.
         position: absolute;
-        top: 8.5rem;
+        top: 8rem;
 
         icon
         {
             // Set the icon size.
-            font-size: calc(var(--font-largest-font-size) * 0.75);;
+            font-size: calc(var(--font-largest-font-size) * 0.75);
 
             // Apply the primary icon color.
             color: var(--surface-primary-icon-color);

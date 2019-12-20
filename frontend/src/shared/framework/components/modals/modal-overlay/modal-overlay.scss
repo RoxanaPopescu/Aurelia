@@ -88,6 +88,9 @@ modal-overlay
         // Apply padding.
         padding: 8.75rem 5rem;
 
+        // Prevent selection.
+        user-select: none;
+
         > *
         {
             // Provide default item spacing.

@@ -249,7 +249,6 @@
                 <h1 class="font-largest">
                     <path-nav>
 
-
                         <a accent="inherit" href="/routes" translate>
                             Routes
                         </a>
@@ -264,8 +263,36 @@
                 <toolbar class="flex-push-right">
 
                     <button appearance="solid" accent="neutral" translate>
-                        [action]
+                        Assign fulfiller
                     </button>
+
+                    <button appearance="solid" accent="neutral" translate>
+                        Assign driver
+                    </button>
+
+                    <select-button appearance="solid" accent="neutral" translate>
+
+                        <div slot="label">
+                            Change status
+                        </div>
+
+                        <item repeat.for="status of statusValues" mousedown.capture="onChooseStatus(status.slug)">
+                            ${status.name}
+                        </item>
+
+                    </select-button>
+
+                    <select-button appearance="solid" accent="neutral">
+
+                        <div slot="icon">
+                            <icon name="more"></icon>
+                        </div>
+
+                        <item model.bind="1">Foo</item>
+
+                        <item model.bind="2">Bar</item>
+
+                    </select-button>
 
                 </toolbar>
 

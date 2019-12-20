@@ -27,7 +27,12 @@ export class DropdownIconCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
-        if (event.key === "Enter" && !event.defaultPrevented)
+        if (event.defaultPrevented)
+        {
+            return true;
+        }
+
+        if (event.key === "Enter" && !(event.altKey || event.metaKey || event.shiftKey || event.ctrlKey))
         {
             if (this.toggle != null)
             {

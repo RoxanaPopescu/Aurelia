@@ -1,10 +1,12 @@
 import { autoinject } from "aurelia-framework";
-import { Operation } from "shared/utilities";
-import { AgreementService } from "app/model/agreement";
-import { RouteService, Route } from "app/model/route";
 import { AppRouter } from "aurelia-router";
+import { Operation } from "shared/utilities";
+import { Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
+import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
+import { AgreementService } from "app/model/agreement";
 import { DriverService } from "app/model/driver";
+import { RouteStopPanel } from "./modals/route-stop/route-stop";
 
 /**
  * Represents the route parameters for the page.
@@ -57,6 +59,11 @@ export class DetailsModule
     protected route: Route | undefined;
 
     /**
+     * The available route status values.
+     */
+    protected statusValues = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
@@ -80,6 +87,43 @@ export class DetailsModule
         if (this.fetchOperation != null)
         {
             this.fetchOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the "Edit" icon is clicked on a route stop.
+     * Opens at modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onEditStopClick(stop: RouteStop): Promise<void>
+    {
+        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
+
+        if (newStop != null)
+        {
+            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
+        }
+    }
+
+    /**
+     * Called when the user changes the status of the route.
+     * Sets the new status.
+     * @param status The new status value.
+     */
+    protected async onChooseStatus(status: RouteStatusSlug): Promise<void>
+    {
+        if (status === this.route!.status.slug)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeService.setRouteStatus(this.route!, status);
+        }
+        catch (error)
+        {
+            Log.error("Could not change route status", error);
         }
     }
 }

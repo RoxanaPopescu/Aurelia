@@ -259,7 +259,7 @@ export class TimeInputCustomElement
     public autoselect: boolean;
 
     /**
-     * True to used `fixed` positioning for the dropdown, otherwise false.
+     * True to use `fixed` positioning for the dropdown, otherwise false.
      * This may be needed if the dropdown is placed within a container that
      * hides overflowing content, but note that it has a performance cost.
      */
@@ -311,7 +311,7 @@ export class TimeInputCustomElement
     {
         this.open = false;
 
-        if (pick)
+        if (pick && this.focusedValue !== this.value)
         {
             this.value = this.focusedValue;
 

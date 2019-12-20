@@ -33,6 +33,7 @@
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.3.3",
     "aurelia-fetch-client": "^1.8.2",
+    "clone": "^2.1.2",
     "compression": "^1.7.4",
     "dropzone": "^5.5.1",
     "express": "^4.17.1",
@@ -47,6 +48,7 @@
   "peerDependencies": {},
   "devDependencies": {
     "@types/autoprefixer": "^9.6.1",
+    "@types/clone": "^0.1.30",
     "@types/compression": "^1.0.1",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/dropzone": "^5.0.6",

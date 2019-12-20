@@ -180,7 +180,7 @@ export class DateInputCustomElement
     public autoselect: boolean;
 
     /**
-     * True to used `fixed` positioning for the dropdown, otherwise false.
+     * True to use `fixed` positioning for the dropdown, otherwise false.
      * This may be needed if the dropdown is placed within a container that
      * hides overflowing content, but note that it has a performance cost.
      */
@@ -214,13 +214,18 @@ export class DateInputCustomElement
 
         if (pick)
         {
-            this.value = this.isValid ? this.focusedValue : null;
+            const value = this.isValid ? this.focusedValue : null;
 
-            // Dispatch the `input` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+            if (this.focusedValue !== value)
+            {
+                this.value = value;
 
-            // Dispatch the `change` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
+                // Dispatch the `input` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+                // Dispatch the `change` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
+            }
         }
         else
         {

@@ -34,7 +34,7 @@ export class TagCustomElement
      * Called when the remove icon is clicked.
      */
     @bindable
-    public remove: () => void;
+    public remove: (() => void) | undefined;
 
     /**
      * Called when the remove icon is clicked.
