@@ -1,0 +1,237 @@
+<template>
+
+    <modal-header scroll-fade>
+
+        <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+            <span if.bind="isNew" translate>
+                New stop
+            </span>
+
+            <path-nav if.bind="!isNew">
+                <div translate>
+                    Stop ${model.stopNumber}
+                </div>
+                <div translate>
+                    Edit
+                </div>
+            </path-nav>
+
+        </h1>
+
+    </modal-header>
+
+    <modal-section class="margin-bottom">
+
+        <div class="control-row margin-larger-bottom">
+
+            <select-input label="above" none.bind="false" value.bind="model.type" display-value.bind="model.type.name" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Type
+                </span>
+
+                <item repeat.for="type of types" model.bind="type">
+                    ${type.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.type">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <div class="control-row flex-basis-1-of-2">
+
+                <time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Arrival from
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.arrivalTimeFrame.from">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+                <time-input label="above" value.bind="model.arrivalTimeFrame.to" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Arrival to
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.arrivalTimeFrame.to">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+        </div>
+
+        <hr class="hr-line margin-larger-bottom">
+
+        <div class="control-row margin-large-bottom">
+
+            <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-1">
+
+                <span slot="heading" translate>
+                    Address
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.location.address">
+                    </required-validator>
+
+                </div>
+
+            </address-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <text-input label="above" value.bind="model.consignee.personName" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Name
+                </span>
+
+            </text-input>
+
+            <text-input label="above" value.bind="model.consignee.companyName" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Company
+                </span>
+
+            </text-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <text-input label="above" value.bind="model.consignee.contactPhone.number" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Phone number
+                </span>
+
+            </text-input>
+
+            <text-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Port
+                </span>
+
+            </text-input>
+        </div>
+
+        <div class="control-row">
+
+            <text-input label="above" lines.bind="3" value.bind="model.instructions" class="flex-basis-1-of-1">
+
+                <span slot="heading" translate>
+                    Instructions
+                </span>
+
+                <span slot="placeholder" translate>
+                    Type any instructions that might help the driver
+                </span>
+
+            </text-input>
+
+        </div>
+
+    </modal-section>
+
+    <modal-section>
+
+        <div slot="header" translate>
+            Requirements
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <check-toggle label="after" value.bind="model.requirements.photo" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Photo
+                </span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Signature
+                </span>
+
+            </check-toggle>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <check-toggle label="after" value.bind="model.requirements.scanColli" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Scan colli
+                </span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Verify timeframe
+                </span>
+
+            </check-toggle>
+
+        </div>
+
+        <div class="control-row">
+
+            <check-toggle label="after" value.bind="model.requirements.customerCode" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Customer code
+                </span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Accept instruction
+                </span>
+
+            </check-toggle>
+
+        </div>
+
+    </modal-section>
+
+    <button if.bind="isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
+        Create stop
+    </button>
+
+</template>

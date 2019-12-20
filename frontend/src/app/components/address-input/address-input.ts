@@ -211,7 +211,7 @@ export class AddressInputCustomElement
 
         this.open = false;
 
-        if (pick)
+        if (pick && this.focusedValue !== this.value)
         {
             this.value = this.focusedValue;
 

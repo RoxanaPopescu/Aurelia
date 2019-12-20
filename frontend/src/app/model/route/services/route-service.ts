@@ -74,18 +74,18 @@ export class RouteService
     }
 
     /**
-     * Saves the specified route.
-     * @param route The route to save.
-     * @returns A promise that will be resolved with the route.
+     * Saves the specified route stop.
+     * @param routeStop The route stop to save.
+     * @returns A promise that will be resolved with the route stop.
      */
-    public async save(route: Route): Promise<Route>
+    public async saveRouteStop(routeStop: RouteStop): Promise<RouteStop>
     {
-        const result = await this._apiClient.post("routes/update",
+        const result = await this._apiClient.post("routes/updateStop",
         {
-            body: route
+            body: routeStop
         });
 
-        return new Route(result.data);
+        return new RouteStop(result.data);
     }
 
     /**
@@ -110,18 +110,16 @@ export class RouteService
 
     /**
      * Changes the status of the specified route stop to the specified status.
-     * @param route The route owning the route stop.
      * @param routeStop The route stop for which the status should be set.
      * @param routeStopStatusSlug The slug identifying the new status.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async setRouteStopStatus(route: Route, routeStop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
+    public async setRouteStopStatus(routeStop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
     {
         await this._apiClient.post("routes/setStopStatus",
         {
             body:
             {
-                routeId: route.id,
                 routeStopId: routeStop.id,
                 status: routeStopStatusSlug
             }
@@ -142,7 +140,7 @@ export class RouteService
         {
             body:
             {
-                colloBarcode: collo.id,
+                colloId: collo.id,
                 status: colloStatusSlug
             }
         });

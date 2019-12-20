@@ -14,32 +14,35 @@ export abstract class RouteStopBase extends RouteStopInfo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, stopNumber: number)
+    public constructor(data?: any, stopNumber?: number)
     {
-        super(data, stopNumber);
-
-        this.id = data.id;
-        this.stopNumber = stopNumber;
-        this.status = new RouteStopStatus(data.status);
-        this.location = new Location(data.location);
-        this.port = data.port;
-        this.driverInstructions = data.driverInstructions;
-        this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
-        this.isDelayed = data.isDelayed;
-
-        if (data.outfit != null)
+        if (data != null)
         {
-            this.outfit = new Outfit(data.outfit);
+            super(data, stopNumber);
+
+            this.port = data.port;
+            this.driverInstructions = data.driverInstructions;
+            this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
+            this.isDelayed = data.isDelayed;
+
+            if (data.outfit != null)
+            {
+                this.outfit = new Outfit(data.outfit);
+            }
+
+            if (data.arrivalTime != null)
+            {
+                this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
+            }
+
+            if (data.loadingTime != null)
+            {
+                this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+            }
         }
-
-        if (data.arrivalTime != null)
+        else
         {
-            this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
-        }
-
-        if (data.loadingTime != null)
-        {
-            this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+            super();
         }
     }
 
