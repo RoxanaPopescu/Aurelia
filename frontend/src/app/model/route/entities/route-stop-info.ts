@@ -1,5 +1,6 @@
 import { Location } from "app/model/shared";
 import { RouteStopStatus } from "./route-stop-status";
+import { RouteStopType } from "./route-stop-type";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli,
@@ -11,12 +12,20 @@ export class RouteStopInfo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, stopNumber: number)
+    public constructor(data?: any, stopNumber?: number)
     {
-        this.id = data.id;
-        this.stopNumber = stopNumber;
-        this.status = new RouteStopStatus(data.status);
-        this.location = new Location(data.location);
+        if (data != null)
+        {
+            this.id = data.id;
+            this.type = new RouteStopType(data.type);
+            this.status = new RouteStopStatus(data.status);
+            this.location = new Location(data.location);
+        }
+
+        if (stopNumber != null)
+        {
+            this.stopNumber = stopNumber;
+        }
     }
 
     /**
@@ -25,9 +34,19 @@ export class RouteStopInfo
     public readonly id: string;
 
     /**
+     * The ID of the route stop.
+     */
+    public readonly reference: string;
+
+    /**
      * The number this stop has on the route.
      */
     public readonly stopNumber: number;
+
+    /**
+     * The type of stop.
+     */
+    public type: RouteStopType;
 
     /**
      * The status of this route stop.

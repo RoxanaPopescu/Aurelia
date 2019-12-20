@@ -13,6 +13,7 @@ export class Pickup
     public constructor(data: any)
     {
         this.orderId = data.orderId;
+        this.orderSlug = data.orderSlug;
         this.consignee = new Consignee(data.consignee);
         this.colli = data.colli.map(c => new Collo(c, data.orderId));
     }
@@ -21,6 +22,11 @@ export class Pickup
      * The ID of the order related to this pickup.
      */
     public orderId: string;
+
+    /**
+     * The slug identifying the order related to this pickup.
+     */
+    public orderSlug: string;
 
     /**
      * The party to whom the colli will be delivered.

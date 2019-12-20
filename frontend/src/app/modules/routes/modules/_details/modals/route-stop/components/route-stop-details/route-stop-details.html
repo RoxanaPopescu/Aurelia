@@ -1,0 +1,380 @@
+<template>
+
+    <modal-header scroll-fade>
+
+        <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
+            <div translate>
+                Stop ${model.stopNumber}
+            </div>
+            <div class="opacity-faded-more margin-left margin-right">
+                –
+            </div>
+            <div class="opacity-faded">
+                ${model.type.name}
+            </div>
+        </h1>
+
+    </modal-header>
+
+    <modal-section if.bind="true" class="margin-bottom">
+
+        <!--
+        <div class="flex-row margin-bottom">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded flex-basis-1-of-2" translate>
+                    Stop type
+                </div>
+                <div>
+                    ${model.type.name}
+                </div>
+            </div>
+
+        </div>
+        -->
+
+        <div class="flex-row margin-bottom">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded flex-basis-1-of-2" translate>
+                    Planned arrival
+                </div>
+                <div>
+                    ${model.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                </div>
+            </div>
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
+                    Planned loading time
+                </div>
+                <div>
+                    ${model.loadingTime | time: 'narrow' : false}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-row">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded flex-basis-1-of-2" translate>
+                    Actual arrival
+                </div>
+                <div>
+                    ${model.arrivalTime | dateTime: 'narrow' : false}
+                </div>
+            </div>
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
+                    Actual loading time
+                </div>
+                <div>
+                    ${model.loadingTime | time: 'narrow' : false}
+                </div>
+            </div>
+
+        </div>
+
+    </modal-section>
+
+    <modal-section if.bind="false" class="margin-bottom">
+
+        <div class="flex-row margin-bottom">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded margin-right" translate>
+                    Stop type
+                </div>
+                <div>
+                    ${model.type.name}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-row margin-bottom">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded margin-right" translate>
+                    Planned arrival
+                </div>
+                <div>
+                    ${model.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                </div>
+            </div>
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded margin-right" translate>
+                    Actual arrival
+                </div>
+                <div>
+                    ${model.arrivalTime | dateTime: 'narrow' : false}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-row">
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded margin-right" translate>
+                    Planned loading time
+                </div>
+                <div>
+                    ${model.loadingTime | time: 'narrow' : false}
+                </div>
+            </div>
+
+            <div class="flex-row flex-basis-1-of-2">
+                <div class="opacity-faded margin-right" translate>
+                    Actual loading time
+                </div>
+                <div>
+                    ${model.loadingTime | time: 'narrow' : false}
+                </div>
+            </div>
+
+        </div>
+
+    </modal-section>
+
+    <modal-section class="margin-bottom">
+
+        <div class="flex-row">
+
+            <select-input
+                label="above"
+                none.bind="false"
+                filter="auto"
+                value.to-view="model.type"
+                display-value.bind="model.status.name"
+                change.trigger="onStopStatusChange($event.detail.value.slug)"
+                class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Status
+                </span>
+
+                <item repeat.for="status of stopStatusValues" model.bind="status">
+                    ${status.name}
+                </item>
+
+            </select-input>
+
+        </div>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Consignee
+        </div>
+
+        <div if.bind="model.location.address" class="flex-row">
+            <div class="opacity-faded flex-basis-1-of-4" translate>
+                Address
+            </div>
+            <span>
+                ${model.location.address}
+            </span>
+        </div>
+
+        <div if.bind="model.outfit.companyName" class="flex-row margin-top">
+            <div class="opacity-faded flex-basis-1-of-4" translate>
+                Company
+            </div>
+            <span>
+                ${model.outfit.companyName}
+            </span>
+        </div>
+
+        <div if.bind="model.outfit.personName" class="flex-row margin-top">
+            <div class="opacity-faded flex-basis-1-of-4" translate>
+                Name
+            </div>
+            <span>
+                ${model.outfit.personName}
+            </span>
+        </div>
+
+        <div if.bind="model.outfit.contactPhone" class="flex-row margin-top">
+            <div class="opacity-faded flex-basis-1-of-4" translate>
+                Phone
+            </div>
+            <a href="tel: ${model.outfit.contactPhone}">
+                ${model.outfit.contactPhone}
+            </a>
+        </div>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Instructions
+        </div>
+
+        <div if.bind="!model.driverInstructions" class="opacity-faded" translate>
+            No instructions at this stop
+        </div>
+
+        <div if.bind="model.driverInstructions">
+            ${model.driverInstructions}
+        </div>
+
+    </modal-section>
+
+    <!--
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Missing colli
+        </div>
+
+        <div class="opacity-faded" translate>
+            No missing colli at this stop
+        </div>
+
+    </modal-section>
+    -->
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Deliveries
+        </div>
+
+        <div if.bind="model.deliveries.length == 0" class="opacity-faded" translate>
+            No deliveries at this stop
+        </div>
+
+        <card repeat.for="delivery of model.deliveries" class="margin-bottom --non-clickable">
+
+            <div class="margin-smaller-bottom" translate>
+                <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${delivery.orderSlug}</a>
+            </div>
+
+            <div class="margin-smaller-bottom" translate>
+                Colli
+            </div>
+
+            <div repeat.for="collo of delivery.colli" class="flex-row">
+
+                <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
+                    ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
+                </a>
+
+                <div>
+                    ${collo.status.name}
+                </div>
+
+                <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'delivered')" translate>
+                    Mark as delivered
+                </button>
+
+            </div>
+
+        </card>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Pickups
+        </div>
+
+        <div if.bind="model.pickups.length == 0" class="opacity-faded" translate>
+            No pickups at this stop
+        </div>
+
+        <card repeat.for="pickup of model.pickups" class="margin-bottom --non-clickable">
+
+            <div class="margin-smaller-bottom" translate>
+                <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${pickup.orderSlug}</a>
+            </div>
+
+            <div class="margin-smaller-bottom" translate>
+                Colli
+            </div>
+
+            <div repeat.for="collo of pickup.colli" class="flex-row">
+
+                <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
+                    ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
+                </a>
+
+                <div>
+                    ${collo.status.name}
+                </div>
+
+                <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'picked-up')" translate>
+                    Mark as picked up
+                </button>
+
+            </div>
+
+        </card>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Proof of delivery
+        </div>
+
+        <div if.bind="!model.signature" class="opacity-faded" translate>
+            No proof of delivery
+        </div>
+
+        <template if.bind="model.signature.imageUrl">
+
+            <div>
+                ${model.signature.date | dateTime: 'narrow' : false}
+            </div>
+
+            <img if.bind="model.photo" class="image-thumbnail" href.bind="model.photo.imageUrl">
+
+        </template>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" class="margin-bottom">
+
+        <div slot="header" translate>
+            Signature
+        </div>
+
+        <div if.bind="!model.signature" class="opacity-faded" translate>
+            No signature
+        </div>
+
+        <template if.bind="model.signature">
+
+            <div>
+                ${model.signature.date | dateTime: 'narrow' : false}
+            </div>
+
+            <img class="image-thumbnail" href.bind="model.signature.imageUrl">
+
+        </template>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true">
+
+        <div slot="header" translate>
+            Driver verification
+        </div>
+
+        <div class="opacity-faded" translate>
+            No driver photos at this stop
+        </div>
+
+    </modal-section>
+
+</template>

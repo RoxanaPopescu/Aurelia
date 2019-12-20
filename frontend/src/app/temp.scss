@@ -13,6 +13,14 @@
     cursor: pointer;
 }
 
+.image-thumbnail
+{
+    width: 23rem;
+    width: 23rem;
+    border: 7px solid var(--surface-neutral-surface);
+    border-radius: 2rem;
+}
+
 app-sidebar
 {
     section .nav-link icon,
@@ -32,6 +40,11 @@ path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-c
 page-sidebar .page-sidebar-edge-icon icon
 {
     font-size: calc(var(--font-largest-font-size) * 0.8334);
+}
+
+modal-panel .modal-panel-content modal-header
+{
+    margin-bottom: 8rem;
 }
 
 // HACK: Adjust label styling to match the design - this should ideally be configurable using custom properties instead.

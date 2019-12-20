@@ -31,6 +31,7 @@ button[appearance="outline"]
     border-color: var(--palette-color-neutral) !important;
 }
 
+modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not([accent]),
 .modal-dialog-actions button[appearance="icon"]:not([accent]),
 .toast-actions
 {

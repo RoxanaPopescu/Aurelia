@@ -1,10 +1,11 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { AgreementService } from "app/model/agreement";
-import { RouteService, Route } from "app/model/route";
+import { RouteService, Route, RouteStop } from "app/model/route";
 import { AppRouter } from "aurelia-router";
 import { ModalService } from "shared/framework";
 import { DriverService } from "app/model/driver";
+import { RouteStopPanel } from "./modals/route-stop/route-stop";
 
 /**
  * Represents the route parameters for the page.
@@ -80,6 +81,21 @@ export class DetailsModule
         if (this.fetchOperation != null)
         {
             this.fetchOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the "Edit" icon is clicked on a route stop.
+     * Opens at modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onEditStopClick(stop: RouteStop): Promise<void>
+    {
+        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
+
+        if (newStop != null)
+        {
+            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
         }
     }
 }
