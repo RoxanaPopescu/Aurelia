@@ -2,7 +2,9 @@
 
 .flex-basis-1-of-4
 {
-    height: 62.5rem;
+    min-height: 62.5rem;
+    display: flex;
+    justify-content: space-between;
 
     .card-section
     {
@@ -21,6 +23,24 @@
         {
             padding-top: 3rem;
             border-top: 0.25rem solid var(--surface-separator-color);
+        }
+    }
+
+    circular-meter
+    {
+        height: 170px;
+        width: 170px;
+        align-self: center;
+
+        .circular-meter-text
+        {
+            > *
+            {
+                &:nth-child(2)
+                {
+                    margin: 2rem 0;
+                }
+            }
         }
     }
 }

@@ -2,37 +2,41 @@
 
     <require from="./route-overview.scss"></require>
     <require from="app/components/linear-meter/linear-meter"></require>
+    <require from="app/components/circular-meter/circular-meter"></require>
 
     <page-section>
 
         <div class="control-row">
 
+            <!-- 1st card -->
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
                 <div class="font-small margin-bottom opacity-faded" translate>
                     Status
                 </div>
 
-                <div style="margin: auto; display: flex; align-items: center; justify-content: center; width: 35rem; height: 35rem; border-radius: 50%; border: 2rem solid var(--surface-positive-surface-color);">
-
-                    <div>
-
-                        <div class="font-small margin-bottom opacity-faded" translate>
-                            Status
-                        </div>
-
-                        <div class="font-largest">
-                            ${completedStops}/${route.stops.length}
-                        </div>
-
+                <circular-meter meterAccent="positive" percentage.bind="66">
+                    <div class="font-small opacity-faded">
+                        Færdiggjorte stop
                     </div>
+                    <div class="font-largest" translate>
+                        5/18
+                    </div>
+                    <div class="font-small">
+                        &nbsp;
+                    </div>
+                </circular-meter>
 
+                <div class="font-small" translate>
+                    &nbsp;
                 </div>
 
             </card>
 
+            <!-- 2nd card -->
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
+                <!-- Top section -->
                 <div class="card-section-top card-section">
 
                     <div class="font-small margin-bottom opacity-faded">
@@ -58,6 +62,7 @@
 
                 </div>
 
+                <!-- Bottom section -->
                 <div class="card-section-bottom card-section">
 
                     <div class="font-small margin-bottom opacity-faded" translate>
@@ -82,8 +87,10 @@
 
             </card>
 
+            <!-- 3rd card -->
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
+                <!-- Top section -->
                 <div class="card-section-top card-section">
 
                     <div class="font-small opacity-faded">
@@ -111,6 +118,7 @@
 
                 </div>
 
+                <!-- Bottom section -->
                 <div class="card-section-bottom card-section">
 
                     <div class="font-small opacity-faded" translate>
@@ -129,8 +137,10 @@
 
             </card>
 
+            <!-- 4th card -->
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
+                <!-- Top section -->
                 <div class="card-section-top card-section">
 
                     <div class="font-small margin-bottom opacity-faded" translate>
@@ -144,12 +154,14 @@
 
                     </div>
 
-                    <div if.bind="routeDelay != null" class="font-small margin-top" translate>
-                        ${routeDelay | duration} delay
+                    <div class="font-small margin-top" translate>
+                        <span if.bind="routeDelay != null">${routeDelay | duration} delay</span if.bind="routeDelay != null">
+                        <span if.bind="routeDelay == null">&nbsp;</span if.bind="routeDelay != null">
                     </div>
 
                 </div>
 
+                <!-- Bottom section -->
                 <div if.bind="route.status.slug === 'started'" class="card-section-bottom card-section">
 
                     <div class="font-small margin-bottom opacity-faded" translate>
@@ -191,7 +203,7 @@
                         Difficulty
                     </div>
 
-                    <linear-meter if.bind="route.criticality != null" percentage.bind="66"></linear-meter>
+                    <linear-meter if.bind="route.criticality != null" percentage.bind="route.criticality"></linear-meter>
                     <div class="font-largest" if.bind="route.criticality == null">--</div>
 
                     <div class="font-small margin-top" translate>
@@ -199,6 +211,7 @@
                     </div>
 
                 </div>
+                <!-- Bottom section end -->
 
             </card>
 
