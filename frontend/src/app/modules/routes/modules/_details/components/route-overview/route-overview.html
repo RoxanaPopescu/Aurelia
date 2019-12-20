@@ -15,12 +15,12 @@
                     Status
                 </div>
 
-                <circular-meter meterAccent="positive" percentage.bind="66">
+                <circular-meter meterAccent="positive" percentage.bind="${completedStops * 100 / route.stops.length}">
                     <div class="font-small opacity-faded">
                         Færdiggjorte stop
                     </div>
                     <div class="font-largest" translate>
-                        5/18
+                        ${completedStops}/${route.stops.length}
                     </div>
                     <div class="font-small">
                         &nbsp;

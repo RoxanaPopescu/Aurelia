@@ -236,4 +236,23 @@ export class RouteOverview
 
         return Duration.fromMillis(0);
     }
+
+    /**
+     * Calculates the duration of the route
+     */
+    @computedFrom("route.stops.length")
+    public get routeStopsOkay(): boolean
+    {
+        if (this.route != null)
+        {
+            return this.route.stops.filter(s =>
+                                            s.status === new RouteStopStatus("cancelled") ||
+                                            s.status === new RouteStopStatus("cancelled-by-driver") ||
+                                            s.status === new RouteStopStatus("cancelled-by-system") ||
+                                            s.status === new RouteStopStatus("cancelled-by-user") ||
+                                            s.status === new RouteStopStatus("delivery-not-possible")).length === 0;
+        }
+
+        return false;
+    }
 }
