@@ -9,17 +9,6 @@ import { AccentColor } from "resources/styles";
 export class SelectButtonCustomElement
 {
     /**
-     * Creates a new instance of the type.
-     * @param element The element representing the component.
-     */
-    public constructor(element: Element)
-    {
-        this._element = element as HTMLElement;
-    }
-
-    private readonly _element: HTMLElement;
-
-    /**
      * The element representing the button.
      */
     protected buttonElement: HTMLElement;
@@ -98,16 +87,6 @@ export class SelectButtonCustomElement
     protected closeDropdown(focusToggle: boolean, pick = false): void
     {
         this.open = false;
-
-        if (pick)
-        {
-            // Dispatch the `button` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("button", { bubbles: true, detail: { value: this.focusedValue } }));
-
-            // Dispatch the `change` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.focusedValue } }));
-        }
-
         this.focusedValue = undefined;
 
         if (focusToggle)
