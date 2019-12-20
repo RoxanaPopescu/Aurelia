@@ -80,6 +80,14 @@ export class App
         // Resolve host settings, set cookies, and rewrite the request.
         this._app.get("*", (request, response, next) =>
         {
+            // Check for old browsers like IE
+            if (request.headers["user-agent"] && /msie|trident/i.test(request.headers["user-agent"])) {
+                const indexFilePath = path.join(staticFolderPath, "outdated-browsers/index.html");
+                response.sendFile(indexFilePath);
+
+                return;
+            }
+
             // Get the settings for the hostname specified in the request.
 
             const hostSettings = settings.hosts.find(s => s.hostname.test(request.hostname));

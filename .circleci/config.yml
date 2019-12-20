@@ -17,7 +17,7 @@ jobs:
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|empty"
+            dockerImage="DOCKER|nginx"
             environment="test"
             serviceName=${BACKEND_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY_TEST}
@@ -37,7 +37,7 @@ jobs:
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|empty"
+            dockerImage="DOCKER|nginx"
             environment="prod"
             serviceName=${BACKEND_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
@@ -139,7 +139,7 @@ jobs:
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|empty"
+            dockerImage="DOCKER|nginx"
             environment="test"
             serviceName=${PROJECT_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY_TEST}
@@ -179,7 +179,7 @@ jobs:
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
-            dockerImage="DOCKER|empty"
+            dockerImage="DOCKER|nginx"
             environment="prod"
             serviceName=${PROJECT_NAME}
             dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}

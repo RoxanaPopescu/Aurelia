@@ -1,6 +1,6 @@
 {
   "name": "@mover/frontend-cloud",
-  "author": "Thomas Darling",
+  "author": "Mover Systems ApS",
   "description": "Frontend for the Mover logistics platform, packaged as a cloud service.",
   "version": "0.0.0",
   "license": "UNLICENSED",

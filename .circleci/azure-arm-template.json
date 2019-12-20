@@ -66,11 +66,12 @@
       "type": "Microsoft.Web/sites",
       "kind": "app,linux,container",
       "name": "[variables('webappName')]",
-      "apiVersion": "2018-02-01",
+      "apiVersion": "2019-08-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "name": "[variables('webappName')]",
         "httpsOnly": true,
+        "clientAffinityEnabled": false,
         "kind": "app,linux,container",
         "serverFarmId": "[resourceId(concat(parameters('environment'), 'linux'), 'Microsoft.Web/serverfarms/', variables('servicePlanName'))]",
         "siteConfig": {
@@ -86,7 +87,7 @@
         {
           "name": "appsettings",
           "type": "config",
-          "apiVersion": "2018-02-01",
+          "apiVersion": "2019-08-01",
           "dependsOn": [
             "[concat('Microsoft.Web/sites/', variables('webappName'))]"
           ],
@@ -101,7 +102,7 @@
           }
         },
         {
-          "apiVersion": "2018-02-01",
+          "apiVersion": "2019-08-01",
           "name": "[variables('slotNameStaging')]",
           "type": "slots",
           "location": "[resourceGroup().location]",
@@ -123,7 +124,7 @@
             {
               "name": "appsettings",
               "type": "config",
-              "apiVersion": "2018-02-01",
+              "apiVersion": "2019-08-01",
               "dependsOn": [
                 "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNameStaging'))]"
               ],
@@ -140,7 +141,7 @@
           ]
         },
         {
-          "apiVersion": "2018-02-01",
+          "apiVersion": "2019-08-01",
           "name": "[variables('slotNameBuild')]",
           "condition": "[equals(parameters('environment'), 'prod')]",
           "type": "slots",
@@ -164,7 +165,7 @@
               "name": "appsettings",
               "type": "config",
               "condition": "[equals(parameters('environment'), 'prod')]",
-              "apiVersion": "2018-02-01",
+              "apiVersion": "2019-08-01",
               "dependsOn": [
                 "[resourceId('Microsoft.Web/sites/slots', variables('webappName'), variables('slotNameBuild'))]"
               ],
