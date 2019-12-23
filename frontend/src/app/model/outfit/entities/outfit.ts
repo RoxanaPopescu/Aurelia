@@ -23,7 +23,7 @@ export class Outfit
         this.contactEmail = data.contactEmail;
         this.address = data.address;
 
-        if (data != null && data.contactPhone != null)
+        if (data != null && data.contactPhone != null && data.contactPhone.number)
         {
             this.contactPhone = new Phone(data.contactPhone);
         }
