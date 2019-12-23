@@ -5,6 +5,6 @@ page-sidebar-value
     [slot="value"][empty="true"]::before
     {
         content: "--";
-        opacity: var(--opacity-faded-more);
+        opacity: var(--opacity-faded);
     }
 }
