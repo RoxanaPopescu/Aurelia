@@ -65,21 +65,6 @@ export class RouteStopPanel
             this._result = this.model;
         }
 
-        if (this._result != null)
-        {
-            // Activate validation so any further changes will be validated immediately.
-            this.validation.active = true;
-
-            // Validate the form.
-            if (!await this.validation.validate())
-            {
-                this._result = undefined;
-
-                // tslint:disable-next-line: no-string-throw
-                throw "Cannot close while validation errors exist.";
-            }
-        }
-
         return this._result;
     }
 
@@ -100,6 +85,15 @@ export class RouteStopPanel
     {
         try
         {
+            // Activate validation so any further changes will be validated immediately.
+            this.validation.active = true;
+
+            // Validate the form.
+            if (!await this.validation.validate())
+            {
+                return;
+            }
+
             await this._routeService.saveRouteStop(this.model);
 
             this.edit = false;
