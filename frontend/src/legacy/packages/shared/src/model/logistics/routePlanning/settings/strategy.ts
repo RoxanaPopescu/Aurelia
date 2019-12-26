@@ -34,5 +34,10 @@ export class RoutePlanStrategy
             name: "Korte ruter",
             value: 2
         },
+        "quick":
+        {
+            name: "Hurtig ruteoptimering",
+            value: 3
+        },
     };
 }
