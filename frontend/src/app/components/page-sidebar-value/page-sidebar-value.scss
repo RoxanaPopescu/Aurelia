@@ -1,5 +1,10 @@
 page-sidebar-value
 {
     display: block;
-    width: 100%;
+
+    [slot="value"][empty="true"]::before
+    {
+        content: "--";
+        opacity: var(--opacity-faded);
+    }
 }

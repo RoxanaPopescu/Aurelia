@@ -133,7 +133,7 @@ page-sidebar
     page-section:not(.--header-slot-empty) .page-section-header
     {
         margin: 0 -9rem 0 -9rem;
-        padding: 2rem 5rem 2rem 9rem;
+        padding: 2rem 8rem 2rem 9rem;
         width: auto;
         font-size: inherit;
         background: var(--palette-color-neutral-light) !important;
@@ -150,11 +150,6 @@ page-sidebar
         &:first-of-type:not(.--header-slot-empty)
         {
             margin-top: 0;
-        }
-
-        &:last-of-type
-        {
-            margin-bottom: 0;
         }
     }
 }

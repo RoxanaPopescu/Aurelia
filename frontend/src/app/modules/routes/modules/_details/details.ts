@@ -99,9 +99,19 @@ export class DetailsModule
     {
         const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
 
-        if (newStop != null)
+        // if (newStop != null)
+        // {
+        //     this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
+        // }
+
+        if (newStop != null && newStop !== stop)
         {
-            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
+            // Create and execute the new operation.
+            this.fetchOperation = new Operation(async signal =>
+            {
+                // Fetch the data.
+                this.route = await this._routeService.get(this.route!.id, signal);
+            });
         }
     }
 

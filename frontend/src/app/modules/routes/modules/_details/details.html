@@ -11,7 +11,7 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Overview
+                    Route info
                 </div>
 
                 <page-sidebar-value class="margin-bottom">
@@ -20,8 +20,20 @@
                         ID
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.slug}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Type
+                    </div>
+
+                    <div slot="value" empty>
+                        <!--TODO-->
                     </div>
 
                 </page-sidebar-value>
@@ -32,7 +44,7 @@
                         Reference
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.reference}
                     </div>
 
@@ -44,7 +56,7 @@
                         Status
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.status.name}
                     </div>
 
@@ -56,8 +68,20 @@
                         Vehicle
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.vehicleType.name}
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Weight
+                    </div>
+
+                    <div slot="value" empty>
+                        <!--TODO-->
                     </div>
 
                 </page-sidebar-value>
@@ -65,11 +89,11 @@
                 <page-sidebar-value>
 
                     <div slot="heading" translate>
-                        Weight
+                        Kolli
                     </div>
 
-                    <div slot="value">
-                        [weight]
+                    <div slot="value" empty>
+                        <!--TODO-->
                     </div>
 
                 </page-sidebar-value>
@@ -88,7 +112,7 @@
                         Starts
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
                     </div>
 
@@ -100,7 +124,7 @@
                         Ends
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
                     </div>
 
@@ -120,7 +144,7 @@
                         Address
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.stops[0].location.address}
                     </div>
 
@@ -128,43 +152,43 @@
 
             </page-section>
 
-            <page-section if.bind="route.fulfiller != null" toggle.bind="true">
+            <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Driver
+                    Fulfiller
                 </div>
 
                 <page-sidebar-value class="margin-bottom">
 
                     <div slot="heading" translate>
-                        Fulfiller
+                        Company
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.fulfiller.primaryName}
                     </div>
 
                 </page-sidebar-value>
 
-                <page-sidebar-value if.bind="route.driver != null" class="margin-bottom">
+                <page-sidebar-value class="margin-bottom">
 
                     <div slot="heading" translate>
-                        Driver name
+                        Driver
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.driver.name}
                     </div>
 
                 </page-sidebar-value>
 
-                <page-sidebar-value if.bind="route.driver != null" class="margin-bottom">
+                <page-sidebar-value class="margin-bottom">
 
                     <div slot="heading" translate>
                         Driver ID
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.driver.id}
                     </div>
 
@@ -173,18 +197,18 @@
                 <page-sidebar-value>
 
                     <div slot="heading" translate>
-                        Phone
+                        Driver phone
                     </div>
 
-                    <div slot="value">
-                        ${route.driver.phone || route.fulfiller.contactPhone}
+                    <div slot="value" empty>
+                        ${route.driver.phone}
                     </div>
 
                 </page-sidebar-value>
 
             </page-section>
 
-            <page-section if.bind="route.driverVehicle != null" toggle.bind="true">
+            <page-section toggle.bind="true">
 
                 <div slot="header" translate>
                     Vehicle
@@ -196,7 +220,7 @@
                         Type
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.driverVehicle.vehicleType.name}
                     </div>
 
@@ -208,7 +232,7 @@
                         Make and model
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.driverVehicle.makeAndModel}
                     </div>
 
@@ -220,7 +244,7 @@
                         Color
                     </div>
 
-                    <div slot="value">
+                    <div slot="value" empty>
                         ${route.driverVehicle.color}
                     </div>
 
@@ -232,8 +256,56 @@
                         License plate
                     </div>
 
-                    <div slot="value">
-                        ${route.licensePlate}
+                    <div slot="value" empty>
+                        ${route.drioverVehicle.licensePlate}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Price
+                </div>
+
+                <let p.bind="route.priceOverview"></let>
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Route price
+                    </div>
+
+                    <div slot="value" empty>
+                        ${p && { amount: p.price, currencyCode: p.currencyCode } | currency }
+                    </div>
+
+                </page-sidebar-value>
+
+                <page-sidebar-value>
+
+                    <div slot="heading" translate>
+                        VAT
+                    </div>
+
+                    <div slot="value" empty>
+                        ${p && { amount: p.vat, currencyCode: p.currencyCode } | currency }
+                    </div>
+
+                </page-sidebar-value>
+
+                <hr class="hr-line margin-bottom">
+
+                <page-sidebar-value class="margin-bottom">
+
+                    <div slot="heading" translate>
+                        Total price
+                    </div>
+
+                    <div slot="value" empty>
+                        ${p && { amount: p.totalPrice, currencyCode: p.currencyCode } | currency }
                     </div>
 
                 </page-sidebar-value>
@@ -307,7 +379,7 @@
                 </div>
 
                 <data-table
-                    appearance="cards"
+                    appearance="rows"
                     move.call="onMoveStop(source, target)">
 
                     <data-table-headers>

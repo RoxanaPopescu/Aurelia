@@ -17,7 +17,8 @@ export class EmptyCustomAttribute
     }
 
     private readonly _element: HTMLElement;
-    private readonly _mutationObserver = new MutationObserver(() => this.onContentChanged());
+    private readonly _childListMutationObserver = new MutationObserver(mutations => this.onChildListChanged(mutations));
+    private readonly _textNodeMutationObserver = new MutationObserver(mutations => this.onContentChanged());
 
     /**
      * True if the element is empty, otherwise false.
@@ -36,8 +37,17 @@ export class EmptyCustomAttribute
      */
     public attached(): void
     {
-        this._mutationObserver.observe(this._element, { childList: true });
+        this._childListMutationObserver.observe(this._element, { childList: true, characterData: true });
+
         this.onContentChanged();
+
+        this._element.childNodes.forEach(node =>
+        {
+            if (node.nodeType === 3)
+            {
+                this._textNodeMutationObserver.observe(node, { characterData: true });
+            }
+        });
     }
 
     /**
@@ -45,11 +55,43 @@ export class EmptyCustomAttribute
      */
     public detached(): void
     {
-        this._mutationObserver.disconnect();
+        this._childListMutationObserver.disconnect();
+        this._textNodeMutationObserver.disconnect();
     }
 
     /**
      * Called when the child list of the element changes.
+     * @param mutations The mutation records.
+     */
+    private onChildListChanged(mutations: MutationRecord[]): void
+    {
+        this.onContentChanged();
+
+        for (const mutation of mutations)
+        {
+            mutation.removedNodes.forEach(node =>
+            {
+                if (node.nodeType === 3)
+                {
+                    this._textNodeMutationObserver.disconnect();
+                }
+            });
+        }
+
+        for (const mutation of mutations)
+        {
+            mutation.addedNodes.forEach(node =>
+            {
+                if (node.nodeType === 3)
+                {
+                    this._textNodeMutationObserver.observe(node, { characterData: true });
+                }
+            });
+        }
+    }
+
+    /**
+     * Called when the text in a child node of the element changes.
      */
     private onContentChanged(): void
     {
@@ -57,6 +99,8 @@ export class EmptyCustomAttribute
             ? this._element.innerText.trim()
             : this._element.innerText;
 
-        this.value = !Array.from(this._element.children).some(e => e.nodeType !== 8) || innerText === "";
+        this.value = !(Array.from(this._element.children).some(e => e.nodeType !== 8) || innerText !== "");
+
+        this._element.setAttribute("empty", this.value.toString());
     }
 }
