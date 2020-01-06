@@ -4,6 +4,7 @@ import BaseService from "shared/src/services/base";
 import { Route } from "shared/src/model/logistics/routes/details";
 import mockData from "./_mockData";
 import { delay } from "shared/src/utillity/delay";
+import { RouteStatus } from "app/model/route";
 
 /**
  * Represents a service that manages the data for the route details view.
@@ -98,10 +99,16 @@ export class RouteDetailsService {
       }
       this.initialResultLoaded = true;
       this.loading = false;
-      this.pollTimeout = setTimeout(
-        () => this.poll(routeSlug, false),
-        isDemo ? 300 : 2000
-      );
+
+      if (
+        this.routeDetails.status.slug !== new RouteStatus("cancelled").slug &&
+        this.routeDetails.status.slug !== new RouteStatus("completed").slug
+      ) {
+        this.pollTimeout = setTimeout(
+          () => this.poll(routeSlug, false),
+          isDemo ? 300 : 2000
+        );
+      }
     } catch (error) {
       this.pollTimeout = setTimeout(() => this.poll(routeSlug, false), 2000);
       if (initial) {

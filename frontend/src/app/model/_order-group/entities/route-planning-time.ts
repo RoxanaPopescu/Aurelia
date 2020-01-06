@@ -47,6 +47,11 @@ export class RoutePlanningTime
     public nextPlanning: DateTime;
 
     /**
+     * The status of the planned schedule
+     */
+    public status: "processing" | "ready" = "ready";
+
+    /**
      * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
