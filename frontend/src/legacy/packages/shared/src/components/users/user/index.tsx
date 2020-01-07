@@ -210,7 +210,7 @@ export default class UserComponent extends React.Component<Props> {
               Deaktiver brugeren
             </Button>
           }
-          { Profile.claims.has("reset-user-password") && userStore.user &&
+          { Profile.claims.has("reset-user-password") && userStore.user && userStore.user.status === "Activated" &&
             <Button
               type={ButtonType.Neutral}
               size={ButtonSize.Medium}
