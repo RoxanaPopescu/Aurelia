@@ -34,7 +34,13 @@ export class RoutePlanningStore {
   @observable
   loading = true;
   @observable
+  approving = false;
+  @observable
+  initialError?: string;
+  @observable
   error?: string;
+  @observable
+  toastMessage?: string;
 
   @observable
   plan: RoutePlan;
@@ -72,7 +78,7 @@ export class RoutePlanningStore {
 
   async fetch(id: string) {
     this.loading = true;
-    this.error = undefined;
+    this.initialError = undefined;
 
     let items: { [Key: string]: string } = {
       id: id
@@ -100,7 +106,7 @@ export class RoutePlanningStore {
 
       this.listHeightCurrent = this.listHeight;
     } else {
-      this.error = Localization.sharedValue("Error_General");
+      this.initialError = Localization.sharedValue("Error_General");
     }
 
     this.loading = false;
@@ -560,5 +566,29 @@ export class RoutePlanningStore {
         value: route.meta.orderCount.toString()
       }
     ];
+  }
+
+  @action
+  async approvePlan() {
+    this.approving = true;
+    this.error = undefined;
+
+    let items: { [Key: string]: string } = {
+      id: this.plan.id
+    };
+
+    let response = await fetch(
+      Base.url("RoutePlanning/approve"),
+      Base.defaultConfig(items)
+    );
+
+    if (!response.ok) {
+      this.error = Localization.sharedValue("Error_General");
+    } else {
+      this.toastMessage = "Ruteplanen er godkendt";
+      this.plan.status = "Cancelled";
+    }
+
+    this.approving = false;
   }
 }

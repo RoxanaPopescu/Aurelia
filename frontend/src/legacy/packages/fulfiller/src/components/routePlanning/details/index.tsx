@@ -7,7 +7,9 @@ import {
   LoadingInline,
   ErrorInline,
   Button,
-  ButtonType
+  ButtonType,
+  Toast,
+  ToastType
 } from "shared/src/webKit";
 import H from "history";
 
@@ -41,9 +43,9 @@ export default class RoutePlanningDetailsComponent extends React.Component<
       );
     }
 
-    if (this.store.error) {
+    if (this.store.initialError) {
       return (
-        <ErrorInline description={this.store.error}>
+        <ErrorInline description={this.store.initialError}>
           <Button
             onClick={() => this.store.fetch(this.props.match.params.id)}
             type={ButtonType.Action}
@@ -54,6 +56,27 @@ export default class RoutePlanningDetailsComponent extends React.Component<
       );
     }
 
-    return <RoutePlanningPlanComponent history={this.props.history} store={this.store} />;
+    return (
+      <React.Fragment>
+        <RoutePlanningPlanComponent history={this.props.history} store={this.store} />
+
+        {this.store.error && (
+          <Toast
+            type={ToastType.Warning}
+            remove={() => (this.store.error = undefined)}
+          >
+            {this.store.error}
+          </Toast>
+        )}
+        {this.store.toastMessage && (
+          <Toast
+            type={ToastType.Success}
+            remove={() => (this.store.toastMessage = undefined)}
+          >
+            {this.store.toastMessage}
+          </Toast>
+        )}
+      </React.Fragment>
+    );
   }
 }

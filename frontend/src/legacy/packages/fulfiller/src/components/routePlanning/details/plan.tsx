@@ -16,7 +16,6 @@ import RoutePlanningTimeDividerComponent from "./route/timeDivider";
 import Localization from "../../../../../shared/src/localization/index";
 import RoutePlanningUnscheduledStopsComponent from "./unscheduledStops";
 import H from "history";
-import { FulfillerSubPage } from "../../navigation/page";
 import RoutePlanningOrderIdsComponent from "./header/orderIds";
 import { Log } from "shared/infrastructure";
 import { Profile } from "shared/src/model/profile";
@@ -281,18 +280,19 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           </div>
           {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            <Button
-              type={ButtonType.Neutral}
-              onClick={() =>
-                this.props.history.push(
-                  FulfillerSubPage.path(
-                    FulfillerSubPage.SimulationStart
-                  ).replace(":id", this.props.store.plan.id)
-                )
-              }
+            {this.props.store.plan.status === "WaitingForApproval" &&
+              <Button
+                loading={this.props.store.approving}
+                type={ButtonType.Action}
+                onClick={() => {
+                  if (confirm("Sikker på du vil godkende denne ruteplan?")) {
+                    this.props.store.approvePlan();
+                  }
+                }}
             >
-              Simulation with different settings
+              {this.props.store.approving ? "Godkender..." : "Godkend ruteplan"}
             </Button>
+          }
           </div>}
           <div
             className="c-routePlanning-routes-list-resize"
