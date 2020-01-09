@@ -59,7 +59,7 @@
 
                         <data-table-row
                             accent.bind="plan.status.accent"
-                            href="/route-planning/details/${plan.slug}">
+                            href.bind="detailsLink(plan)">
 
                             <data-table-cell>
                                 ${plan.timeFrame | dateTimeRange: 'narrow' : false}

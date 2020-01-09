@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+import { RoutePlanService, RoutePlanInfo, RoutePlanStatus } from "app/model/route-plan";
 
 /**
  * Represents the route parameters for the page.
@@ -91,6 +91,23 @@ export class ListPage
         this.sorting.direction = params.sortDirection || this.sorting.direction;
 
         this.update();
+    }
+
+    /**
+     * Called by the list when looping through the plans
+     * @returns The details link if not cancelled or failed.
+     */
+    public detailsLink(plan: RoutePlanInfo): string | undefined
+    {
+        if (
+            plan.status.slug === new RoutePlanStatus("Cancelled").slug ||
+            plan.status.slug === new RoutePlanStatus("FailedExternally").slug ||
+            plan.status.slug === new RoutePlanStatus("FailedInternally").slug
+        ) {
+            return undefined;
+        }
+
+        return `/route-planning/details/${plan.slug}`;
     }
 
     /**
