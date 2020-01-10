@@ -14,21 +14,17 @@
         disabled.bind="headerSlotEmpty"
         click.trigger="onHeaderClick()">
 
-        <div class="modal-section-header-content">
-            <slot name="header"></slot>
-        </div>
-
         <div
             if.bind="toggle"
-            class="modal-section-header-toggle ${expanded ? 'opacity-faded-more' : ''}"
-            accent.bind="expanded ? 'neutral' : 'primary' & attr">
+            class="modal-section-header-toggle">
 
-            <span if.bind="!expanded" class="font-small" translate>
-                Expand
-            </span>
+            <span></span>
+            <span></span>
 
-            <icon name="md-expand-${expanded ? 'less' : 'more'}"></icon>
+        </div>
 
+        <div class="modal-section-header-content">
+            <slot name="header"></slot>
         </div>
 
     </button>

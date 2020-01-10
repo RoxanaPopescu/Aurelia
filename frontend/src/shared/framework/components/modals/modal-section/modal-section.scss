@@ -58,16 +58,87 @@ modal-section
         flex-direction: column;
     }
 
-    &.--toggle .modal-section-header
+    &.--toggle
     {
-        // Use cursor to indicate the header is clickable.
-        cursor: pointer;
-
-        &:hover .modal-section-header-toggle
+        .modal-section-header
         {
-            // Highlight toggle when hovered.
-            color: var(--surface-primary-text-color);
-            opacity: 1 !important;
+            // Use cursor to indicate the header is clickable.
+            cursor: pointer;
+
+            &:hover .modal-section-header-toggle
+            {
+                // Highlight toggle when hovered.
+                color: var(--surface-primary-text-color);
+                opacity: 1 !important;
+            }
+
+            &-toggle
+            {
+                width: 6rem;
+                height: 6rem;
+                border-radius: var(--border-radius-large);
+                border: var(--border-width-thin) solid var(--surface-neutral-border-color);
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+
+                span
+                {
+                    background-color: var(--surface-primary-text-color);
+
+                    &:first-child
+                    {
+                        height: .5rem;
+                        width: 2.5rem;
+                    }
+
+                    &:last-child
+                    {
+                        width: .5rem;
+                        height: 2.5rem;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform-origin: center;
+                        transform: translateX(-50%) translateY(-50%);
+                    }
+                }
+            }
+
+            &-content
+            {
+                padding-left: 5rem;
+            }
+        }
+
+        &.--expanded
+        {
+            .modal-section-header
+            {
+                &-toggle
+                {
+                    span
+                    {
+                        &:first-child
+                        {
+                        }
+
+                        &:last-child
+                        {
+                            transform: rotate(90deg) translateX(-50%) translateY(-50%);
+                            opacity: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .modal-section-content
+        {
+            padding-left: 11rem;
         }
     }
 
