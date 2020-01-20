@@ -40,7 +40,7 @@
 
                     <template if-claims="edit-order-group">
 
-                        <button if.bind="orderGroup.id && !orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
                             Pause
                         </button>
 
@@ -52,7 +52,7 @@
                             Create
                         </button>
 
-                        <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
@@ -63,11 +63,15 @@
             </page-header>
 
             <status-message if.bind="orderGroup.paused">
-
                 <span translate>
                     This order group is currently paused.
                 </span>
+            </status-message>
 
+            <status-message if.bind="orderGroup.activeSchedulesCount">
+                <span translate>
+                    This ordergroup currently has ${orderGroup.activeSchedulesCount} active schedules and cannot be edited before they have completed.
+                </span>
             </status-message>
 
             <page-section if-claims="edit-order-group">
