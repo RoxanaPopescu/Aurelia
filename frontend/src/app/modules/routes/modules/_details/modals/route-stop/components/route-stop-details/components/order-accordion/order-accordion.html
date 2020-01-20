@@ -1,0 +1,78 @@
+<template>
+
+    <require from="./order-accordion.scss"></require>
+
+    <div
+        repeat.for="order of orders"
+        class="order-accordion-collo
+        ${order.orderId == expandedOrder.orderId ? '--expanded' : ''}">
+
+        <div class="order-accordion-collo-head" click.trigger="onOrderClick(order)">
+            <a class="font-large">${order.orderId}</a>
+            <div class="order-accordion-toggle"></div>
+        </div>
+        <div class="order-accordion-collo-content">
+            <data-table
+                appearance="rows">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Stop
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Address
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+                        <!-- Icons -->
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="collo of order.colli">
+
+                    <data-table-row
+                        model.bind="collo">
+
+                        <data-table-cell>
+                            <span class="order-collo text-truncate">
+                                ${collo.barcode}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${collo.status.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <span class="text-truncate">
+
+                                <!-- <div class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                        <icon name="md-edit"></icon>
+                                    </button>
+
+                                </div> -->
+
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+        </div>
+
+    </div>
+
+</template>
