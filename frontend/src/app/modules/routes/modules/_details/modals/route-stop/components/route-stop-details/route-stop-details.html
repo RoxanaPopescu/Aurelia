@@ -1,5 +1,7 @@
 <template>
 
+    <require from="./components/order-accordion/order-accordion"></require>
+
     <modal-header scroll-fade>
 
         <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
@@ -140,92 +142,79 @@
 
     </modal-section>
 
-    <modal-section class="margin-bottom">
+    <!-- Consignee -->
+    <template>
 
-        <div class="flex-row">
+        <hr class="hr-line margin-bottom margin-top">
 
-            <select-input
-                label="above"
-                none.bind="false"
-                filter="auto"
-                value.to-view="model.type"
-                display-value.bind="model.status.name"
-                change.trigger="onStopStatusChange($event.detail.value.slug)"
-                class="flex-basis-1-of-2">
+        <modal-section toggle.bind="true">
 
-                <span slot="heading" translate>
-                    Status
+            <div slot="header" translate>
+                Consignee
+            </div>
+
+            <div if.bind="model.location.address" class="flex-row">
+                <div class="opacity-faded flex-basis-1-of-4" translate>
+                    Address
+                </div>
+                <span>
+                    ${model.location.address}
                 </span>
-
-                <item repeat.for="status of stopStatusValues" model.bind="status">
-                    ${status.name}
-                </item>
-
-            </select-input>
-
-        </div>
-
-    </modal-section>
-
-    <modal-section toggle.bind="true" class="margin-bottom">
-
-        <div slot="header" translate>
-            Consignee
-        </div>
-
-        <div if.bind="model.location.address" class="flex-row">
-            <div class="opacity-faded flex-basis-1-of-4" translate>
-                Address
             </div>
-            <span>
-                ${model.location.address}
-            </span>
-        </div>
 
-        <div if.bind="model.outfit.companyName" class="flex-row margin-top">
-            <div class="opacity-faded flex-basis-1-of-4" translate>
-                Company
+            <div if.bind="model.outfit.companyName" class="flex-row margin-top">
+                <div class="opacity-faded flex-basis-1-of-4" translate>
+                    Company
+                </div>
+                <span>
+                    ${model.outfit.companyName}
+                </span>
             </div>
-            <span>
-                ${model.outfit.companyName}
-            </span>
-        </div>
 
-        <div if.bind="model.outfit.personName" class="flex-row margin-top">
-            <div class="opacity-faded flex-basis-1-of-4" translate>
-                Name
+            <div if.bind="model.outfit.personName" class="flex-row margin-top">
+                <div class="opacity-faded flex-basis-1-of-4" translate>
+                    Name
+                </div>
+                <span>
+                    ${model.outfit.personName}
+                </span>
             </div>
-            <span>
-                ${model.outfit.personName}
-            </span>
-        </div>
 
-        <div if.bind="model.outfit.contactPhone" class="flex-row margin-top">
-            <div class="opacity-faded flex-basis-1-of-4" translate>
-                Phone
+            <div if.bind="model.outfit.contactPhone" class="flex-row margin-top">
+                <div class="opacity-faded flex-basis-1-of-4" translate>
+                    Phone
+                </div>
+                <a href="tel: ${model.outfit.contactPhone}">
+                    ${model.outfit.contactPhone}
+                </a>
             </div>
-            <a href="tel: ${model.outfit.contactPhone}">
-                ${model.outfit.contactPhone}
-            </a>
-        </div>
 
-    </modal-section>
+        </modal-section>
 
-    <modal-section toggle.bind="true" class="margin-bottom">
+    </template>
 
-        <div slot="header" translate>
-            Instructions
-        </div>
+    <!-- Instructions -->
+    <template if.bind="!!model.driverInstructions">
 
-        <div if.bind="!model.driverInstructions" class="opacity-faded" translate>
-            No instructions at this stop
-        </div>
+        <hr class="hr-line margin-bottom margin-top">
 
-        <div if.bind="model.driverInstructions">
-            ${model.driverInstructions}
-        </div>
+        <modal-section toggle.bind="true">
 
-    </modal-section>
+            <div slot="header" translate>
+                Instructions
+            </div>
+
+            <div if.bind="!model.driverInstructions" class="opacity-faded" translate>
+                No instructions at this stop
+            </div>
+
+            <div if.bind="model.driverInstructions">
+                ${model.driverInstructions}
+            </div>
+
+        </modal-section>
+
+    </template>
 
     <!--
     <modal-section toggle.bind="true" class="margin-bottom">
@@ -241,140 +230,173 @@
     </modal-section>
     -->
 
-    <modal-section toggle.bind="true" class="margin-bottom">
+    <!-- Orders to be delivered -->
+    <template if.bind="model.deliveries.length != 0">
 
-        <div slot="header" translate>
-            Deliveries
-        </div>
+        <hr class="hr-line margin-bottom margin-top">
 
-        <div if.bind="model.deliveries.length == 0" class="opacity-faded" translate>
-            No deliveries at this stop
-        </div>
+        <modal-section toggle.bind="true">
 
-        <card repeat.for="delivery of model.deliveries" class="margin-bottom --non-clickable">
-
-            <div class="margin-smaller-bottom" translate>
-                <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${delivery.orderSlug}</a>
+            <div slot="header" translate>
+                Deliveries
             </div>
 
-            <div class="margin-smaller-bottom" translate>
-                Colli
-            </div>
+            <order-accordion orders.bind="model.deliveries"></order-accordion>
+            <!-- <card repeat.for="delivery of model.deliveries" class="margin-bottom --non-clickable">
 
-            <div repeat.for="collo of delivery.colli" class="flex-row">
-
-                <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
-                    ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
-                </a>
-
-                <div>
-                    ${collo.status.name}
+                <div class="margin-smaller-bottom" translate>
+                    <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${delivery.orderSlug}</a>
                 </div>
 
-                <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'delivered')" translate>
-                    Mark as delivered
-                </button>
-
-            </div>
-
-        </card>
-
-    </modal-section>
-
-    <modal-section toggle.bind="true" class="margin-bottom">
-
-        <div slot="header" translate>
-            Pickups
-        </div>
-
-        <div if.bind="model.pickups.length == 0" class="opacity-faded" translate>
-            No pickups at this stop
-        </div>
-
-        <card repeat.for="pickup of model.pickups" class="margin-bottom --non-clickable">
-
-            <div class="margin-smaller-bottom" translate>
-                <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${pickup.orderSlug}</a>
-            </div>
-
-            <div class="margin-smaller-bottom" translate>
-                Colli
-            </div>
-
-            <div repeat.for="collo of pickup.colli" class="flex-row">
-
-                <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
-                    ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
-                </a>
-
-                <div>
-                    ${collo.status.name}
+                <div class="margin-smaller-bottom" translate>
+                    Colli
                 </div>
 
-                <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'picked-up')" translate>
-                    Mark as picked up
-                </button>
+                <div repeat.for="collo of delivery.colli" class="flex-row">
 
+                    <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
+                        ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
+                    </a>
+
+                    <div>
+                        ${collo.status.name}
+                    </div>
+
+                    <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'delivered')" translate>
+                        Mark as delivered
+                    </button>
+
+                </div>
+
+            </card> -->
+
+        </modal-section>
+
+    </template>
+
+    <!-- Orders to pick up -->
+    <template if.bind="model.pickups.length != 0">
+
+        <hr class="hr-line margin-bottom margin-top">
+
+        <modal-section toggle.bind="true">
+
+            <div slot="header" translate>
+                Pickups
             </div>
 
-        </card>
-
-    </modal-section>
-
-    <modal-section toggle.bind="true" class="margin-bottom">
-
-        <div slot="header" translate>
-            Proof of delivery
-        </div>
-
-        <div if.bind="!model.signature" class="opacity-faded" translate>
-            No proof of delivery
-        </div>
-
-        <template if.bind="model.signature.imageUrl">
-
-            <div>
-                ${model.signature.date | dateTime: 'narrow' : false}
+            <div if.bind="model.pickups.length == 0" class="opacity-faded" translate>
+                No pickups at this stop
             </div>
 
-            <img if.bind="model.photo" class="image-thumbnail" href.bind="model.photo.imageUrl">
+            <order-accordion orders.bind="model.pickups"></order-accordion>
+            <!-- <card repeat.for="pickup of model.pickups" class="margin-bottom --non-clickable">
 
-        </template>
+                <div class="margin-smaller-bottom" translate>
+                    <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${pickup.orderSlug}</a>
+                </div>
 
-    </modal-section>
+                <div class="margin-smaller-bottom" translate>
+                    Colli
+                </div>
 
-    <modal-section toggle.bind="true" class="margin-bottom">
+                <div repeat.for="collo of pickup.colli" class="flex-row">
 
-        <div slot="header" translate>
-            Signature
-        </div>
+                    <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
+                        ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
+                    </a>
 
-        <div if.bind="!model.signature" class="opacity-faded" translate>
-            No signature
-        </div>
+                    <div>
+                        ${collo.status.name}
+                    </div>
 
-        <template if.bind="model.signature">
+                    <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'picked-up')" translate>
+                        Mark as picked up
+                    </button>
 
-            <div>
-                ${model.signature.date | dateTime: 'narrow' : false}
+                </div>
+
+            </card> -->
+
+        </modal-section>
+
+    </template>
+
+    <!-- Proof of delivery -->
+    <template if.bind="!!model.signature">
+
+        <hr class="hr-line margin-bottom margin-top">
+
+        <modal-section toggle.bind="true">
+
+            <div slot="header" translate>
+                Proof of delivery
             </div>
 
-            <img class="image-thumbnail" href.bind="model.signature.imageUrl">
+            <div if.bind="!model.signature" class="opacity-faded" translate>
+                No proof of delivery
+            </div>
 
-        </template>
+            <template if.bind="model.signature.imageUrl">
 
-    </modal-section>
+                <div>
+                    ${model.signature.date | dateTime: 'narrow' : false}
+                </div>
 
-    <modal-section toggle.bind="true">
+                <img if.bind="model.photo" class="image-thumbnail" href.bind="model.photo.imageUrl">
 
-        <div slot="header" translate>
-            Driver verification
-        </div>
+            </template>
 
-        <div class="opacity-faded" translate>
-            No driver photos at this stop
-        </div>
+        </modal-section>
 
-    </modal-section>
+    </template>
+
+    <!-- Signature -->
+    <template if.bind="!!model.signature">
+
+        <hr class="hr-line margin-bottom margin-top">
+
+        <modal-section toggle.bind="true">
+
+            <div slot="header" translate>
+                Signature
+            </div>
+
+            <div if.bind="!model.signature" class="opacity-faded" translate>
+                No signature
+            </div>
+
+            <template if.bind="model.signature">
+
+                <div>
+                    ${model.signature.date | dateTime: 'narrow' : false}
+                </div>
+
+                <img class="image-thumbnail" href.bind="model.signature.imageUrl">
+
+            </template>
+
+        </modal-section>
+
+    </template>
+
+    <!-- Driver verification -->
+    <template>
+
+        <hr class="hr-line margin-bottom margin-top">
+
+        <modal-section toggle.bind="true">
+
+            <div slot="header" translate>
+                Driver verification
+            </div>
+
+            <div class="opacity-faded" translate>
+                No driver photos at this stop
+            </div>
+
+        </modal-section>
+
+    </template>
 
 </template>

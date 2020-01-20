@@ -116,6 +116,31 @@ export class DetailsModule
     }
 
     /**
+     * Called when the "Edit" icon is clicked on a route stop.
+     * Opens at modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onStopClick(stop: RouteStop): Promise<void>
+    {
+        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
+
+        // if (newStop != null)
+        // {
+        //     this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
+        // }
+
+        if (newStop != null && newStop !== stop)
+        {
+            // Create and execute the new operation.
+            this.fetchOperation = new Operation(async signal =>
+            {
+                // Fetch the data.
+                this.route = await this._routeService.get(this.route!.id, signal);
+            });
+        }
+    }
+
+    /**
      * Called when the user changes the status of the route.
      * Sets the new status.
      * @param status The new status value.

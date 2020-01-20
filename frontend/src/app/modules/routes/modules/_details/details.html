@@ -436,7 +436,8 @@
 
                         <data-table-row
                             model.bind="stop"
-                            accent="positive">
+                            accent="positive"
+                            click.call="onStopClick(stop)">
 
                             <data-table-cell>
                                 <span class="route-details-stop-number text-truncate">
