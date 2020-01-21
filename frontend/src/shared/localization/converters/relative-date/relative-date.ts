@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { LocaleService } from "../../services/locale";
-import { DateTime, ToRelativeOptions } from "luxon";
+import { DateTime, ToRelativeCalendarOptions } from "luxon";
 
 /**
  * Represents a value converter that formats a date as a localized, relative date string.
@@ -33,7 +33,7 @@ export class RelativeDateValueConverter
             return value;
         }
 
-        const formatOptions: ToRelativeOptions =
+        const formatOptions: ToRelativeCalendarOptions =
         {
             locale: `${this._localeService.locale.code}-u-ca-iso8601`
         };

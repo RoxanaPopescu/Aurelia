@@ -34,6 +34,13 @@ export class AutofocusCustomAttribute
     public visible: boolean | undefined;
 
     /**
+     * The delay before the element is focused, or undefined to focus the element immediately.
+     * The default is undefined.
+     */
+    @bindable({ defaultValue: undefined })
+    public delay: number | undefined;
+
+    /**
      * Called by the framework when the component is attached.
      */
     public attached(): void
@@ -47,7 +54,7 @@ export class AutofocusCustomAttribute
 
             // Delay focusing the element, to prevent conflicts with the `trap-focus` attribute,
             // which if applied will also attempt to focus an element after a timeout.
-            setTimeout(() => setTimeout(() => this._element.focus(customFocusOptions)));
+            setTimeout(() => setTimeout(() => this._element.focus(customFocusOptions)), this.delay);
         }
     }
 }

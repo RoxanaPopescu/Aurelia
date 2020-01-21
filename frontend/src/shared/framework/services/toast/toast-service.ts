@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Type } from "shared/types";
 import { Toast } from "./toast";
-import { ToastCloseReason } from "shared/framework/components/toasts/toast-close-reason";
+import { ToastCloseReason } from "./toast-close-reason";
 
 /**
  * Represents the type of the object passed to the `activate` life cycle method of a component.

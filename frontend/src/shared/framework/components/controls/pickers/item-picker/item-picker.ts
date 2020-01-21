@@ -178,7 +178,7 @@ export class ItemPickerCustomElement
         if (pick && this.focusedValue !== this.value)
         {
             // Set the value.
-            this.value = this.focusedValue;
+            this.value = value;
 
             // Dispatch the `change` event to indicate that the comitted value, has changed.
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value } }));

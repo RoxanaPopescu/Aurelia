@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Type } from "shared/types";
 import { Modal } from "./modal";
-import { ModalCloseReason } from "shared/framework/components/modals/modal-close-reason";
+import { ModalCloseReason } from "./modal-close-reason";
 
 /**
  * Represents the type of the object passed to the `activate` life cycle method of a component.

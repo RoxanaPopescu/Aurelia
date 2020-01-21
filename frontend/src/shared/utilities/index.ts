@@ -6,4 +6,6 @@ export * from "./math/math";
 export * from "./operation/operation";
 export * from "./promise-controller/promise-controller";
 export * from "./text";
+export * from "./timing/debounce";
 export * from "./timing/delay";
+export * from "./timing/throttle";

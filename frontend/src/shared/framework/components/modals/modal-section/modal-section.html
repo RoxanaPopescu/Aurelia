@@ -1,6 +1,6 @@
 <template class="
     ${toggle ? '--toggle' : ''}
-    ${expanded || !toggle ? '--expanded' : ''}
+    ${expanded ? '--expanded' : ''}
     ${invalid || invalid == null && validation.invalid ? '--invalid' : ''}
     ${headerSlotEmpty ? '--header-slot-empty' : ''}"
     validation

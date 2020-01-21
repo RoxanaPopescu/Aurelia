@@ -35,7 +35,7 @@ declare namespace Intl
 
         /**
          * The length of the formated message.
-         * Possible values are: `long` (default, e.g., A, B, and C); `short` or `narrow`(e.g., A, B,C).
+         * Possible values are: `long` (default, e.g., A, B, and C); `short` or `narrow`(e.g., A, B, C).
          * When style is `narrow`, unit is the only allowed value for the `type` option.
          */
         style?: "narrow" | "short" | "long";

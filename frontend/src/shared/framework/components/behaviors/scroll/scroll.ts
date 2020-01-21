@@ -43,11 +43,17 @@ export class ScrollCustomAttribute implements IScroll
     private readonly _eventManager: EventManager;
 
     /**
-     * The current scroll position.
-     * Note that the element will scroll to this position when the attribute is attached.
+     * The current scroll position of the element.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public position: ScrollToOptions | undefined;
+    public position: undefined | ScrollToOptions &
+    {
+        /**
+         * True if this position was created as a result of a scroll event, false or undefined
+         * if the position represents a position to which the element should attempt to scroll.
+         */
+        internal?: boolean;
+    };
 
     /**
      * Called by the framework when the component is attached.
@@ -57,89 +63,74 @@ export class ScrollCustomAttribute implements IScroll
         // TODO: Why is this needed? It shouldn't be...
         this._element.setAttribute("scroll", "");
 
-        let isScrollingUp: boolean | undefined;
+        let fadeTargets: IFadeTarget[] = [];
         let timeoutHandle: any;
-        let fadeTargets: any[] | undefined;
+        let animationFrameHandle: any;
 
         this._eventManager.addEventListener(this._element, "scroll", () =>
         {
-            // Get the scroll position only once, as it triggers layout.
-            // We need to limit this to 0, as the offset may become negative due to scroll bouncing.
-            const scrollTop = Math.max(this._element.scrollTop, 0);
-            const scrollLeft = Math.max(this._element.scrollLeft, 0);
+            // Cancel any existing animation frame request.
+            cancelAnimationFrame(animationFrameHandle);
 
-            // Only handle events that represent actual changes in the scroll position.
-            // This is needed because the class changes may trigger unexpected scroll events.
-            if (this.position == null || scrollTop !== this.position.top || scrollLeft !== this.position.left)
+            // Request an animation frame.
+            animationFrameHandle = requestAnimationFrame(() =>
             {
-                // Is the user scrolling towards the top?
-                const newIsScrollingUp = this.position != null && scrollTop < this.position.top!;
+                // Get the scroll position only once, as it triggers layout.
+                // We need to limit this to 0, as the offset may become negative due to scroll bouncing.
+                const scrollTop = Math.max(this._element.scrollTop, 0);
+                const scrollLeft = Math.max(this._element.scrollLeft, 0);
 
-                // Has the scroll direction changed?
-                if (newIsScrollingUp !== isScrollingUp)
+                // Only handle events that represent actual changes in the scroll position.
+                // This is needed because the class changes may trigger unexpected scroll events.
+                if (this.position == null || scrollTop !== this.position.top || scrollLeft !== this.position.left)
                 {
-                    isScrollingUp = newIsScrollingUp;
+                    // Update the bindable scroll position.
+                    this.position =
+                    {
+                        // Preserve any existing scroll options.
+                        ...this.position,
 
-                    // Set the fade duration and timing function, to ensure smooth fading
-                    // when scrolling down, and minimal flashing when scrolling back up.
-                    this._element.style.setProperty("--fade-duration", isScrollingUp ? `${0}s` : `${0.067}s`);
-                    this._element.style.setProperty("--fade-timing-function", isScrollingUp ? "ease-in" : "ease-out");
+                        top: scrollTop,
+                        left: scrollLeft,
+
+                        internal: true
+                    };
+
+                    // Is this the first scroll event in a sequence?
+                    if (timeoutHandle == null)
+                    {
+                        if (fadeTargets == null)
+                        {
+                            // Get the fade targets immediately, as we otherwise have nothing to fade.
+                            fadeTargets = this.getFadeTargets();
+                        }
+                        else
+                        {
+                            // Get the fade targets in an animation frame, so we can fade the already known targets immediately.
+                            requestAnimationFrame(() =>
+                            {
+                                // Get any elements that should be faded.
+                                fadeTargets = this.getFadeTargets();
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // Still scrolling, so the end of the sequence should be rescheduled.
+                        clearTimeout(timeoutHandle);
+                    }
+
+                    // Fade elements relative to the scroll offset.
+                    for (const fadeTarget of fadeTargets)
+                    {
+                        fadeTarget.element.style.opacity =
+                            Math.max(0, 1 - (scrollTop / fadeTarget.height) * fadeTarget.fadeFactor).toString();
+                    }
+
+                    // Schedule the end of the sequernce.
+                    timeoutHandle = setTimeout(() => timeoutHandle = undefined, 300);
                 }
-
-                // Update the bindable scroll position.
-                this.position =
-                {
-                    // Preserve any existing scroll options.
-                    ...this.position,
-
-                    top: scrollTop,
-                    left: scrollLeft
-                };
-
-                // Is this the first scroll event in a sequence?
-                if (timeoutHandle == null)
-                {
-                    // Disable hover effects while scrolling.
-                    this._element.classList.add("disable-hover");
-
-                    // Get any elements that should be faded.
-                    fadeTargets = Array.from(this._element.querySelectorAll("[scroll-fade]")).map((element: HTMLElement) =>
-                    ({
-                        element,
-                        height: element.getBoundingClientRect().height,
-                        fadeFactor: +(element.getAttribute("scroll-fade") || ScrollCustomAttribute.fadeFactor)
-                    }));
-                }
-                else
-                {
-                    // Still scrolling, so the ending of the sequence should be rescheduled.
-                    clearTimeout(timeoutHandle);
-                }
-
-                // Fade elements relative to the scroll offset.
-                for (const fadeTarget of fadeTargets!)
-                {
-                    fadeTarget.element.style.opacity =
-                        Math.max(0, 1 - (Math.max(0, scrollTop) / fadeTarget.height) * fadeTarget.fadeFactor);
-                }
-
-                // Clean up when the sequence ends.
-                timeoutHandle = setTimeout(() =>
-                {
-                    // Clear timeout handle.
-                    timeoutHandle = undefined;
-
-                    // Clear the current scroll direction.
-                    isScrollingUp = undefined;
-
-                    // Clean up any references to faded elements.
-                    fadeTargets = undefined;
-
-                    // Enable hover effects.
-                    this._element.classList.remove("disable-hover");
-                },
-                200);
-            }
+            });
         });
 
         if (this.position)
@@ -182,10 +173,23 @@ export class ScrollCustomAttribute implements IScroll
      */
     protected positionChanged(): void
     {
-        if (this.position)
+        if (this.position && !this.position.internal)
         {
             this._element.scrollTo(this.position);
         }
+    }
+
+    /**
+     * Gets the fade targets.
+     */
+    private getFadeTargets(): IFadeTarget[]
+    {
+        return Array.from(this._element.querySelectorAll("[scroll-fade]")).map((element: HTMLElement | SVGElement) =>
+        ({
+            element,
+            height: element.getBoundingClientRect().height,
+            fadeFactor: +(element.getAttribute("scroll-fade") || ScrollCustomAttribute.fadeFactor)
+        }));
     }
 
     /**
@@ -194,4 +198,25 @@ export class ScrollCustomAttribute implements IScroll
      * specifying a value for the `scroll-fade` attribute.
      */
     public static fadeFactor = 1;
+}
+
+/**
+ * Represents a reference to an element that should fade during scroll.
+ */
+interface IFadeTarget
+{
+    /**
+     * The element that should be faded.
+     */
+    element: HTMLElement | SVGElement;
+
+    /**
+     * The height of the element.
+     */
+    height: number;
+
+    /**
+     * The fade factor associated with the element.
+     */
+    fadeFactor: number;
 }

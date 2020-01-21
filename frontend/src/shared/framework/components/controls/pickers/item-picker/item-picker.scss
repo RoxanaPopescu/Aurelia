@@ -2,6 +2,9 @@ item-picker
 {
     display: block;
 
+    // Use default cursor.
+    cursor: default;
+
     .item-picker-empty
     {
         // Apply padding.
