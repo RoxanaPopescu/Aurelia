@@ -161,4 +161,23 @@ export class DetailsModule
             Log.error("Could not change route status", error);
         }
     }
+
+    /**
+     * Called when the `Remove` icon is clicked on a route stop.
+     * Removes the stop from the route.
+     * @param status The new status value.
+     */
+    protected async onRemoveStopClick(stop: RouteStop): Promise<void>
+    {
+        try
+        {
+            await this._routeService.deleteRouteStatus(stop.id);
+
+            this.route!.stops.splice(this.route!.stops.findIndex(s => s.id === stop.id), 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not remove route stop", error);
+        }
+    }
 }

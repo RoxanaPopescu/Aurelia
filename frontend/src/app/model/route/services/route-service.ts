@@ -80,12 +80,28 @@ export class RouteService
      */
     public async saveRouteStop(routeStop: RouteStop): Promise<RouteStop>
     {
-        const result = await this._apiClient.post("routes/updateStop",
+        const result = await this._apiClient.post("routes/stop/update",
         {
             body: routeStop
         });
 
         return new RouteStop(result.data);
+    }
+
+    /**
+     * Deletes the specified route stop.
+     * @param routeStopId The ID of the route stop to remove.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async deleteRouteStatus(routeStopId: string): Promise<void>
+    {
+        await this._apiClient.post("routes/stop/delete",
+        {
+            body:
+            {
+                routeStopId
+            }
+        });
     }
 
     /**
