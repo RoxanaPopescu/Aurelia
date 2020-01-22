@@ -7,6 +7,7 @@ import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "ap
 import { AgreementService } from "app/model/agreement";
 import { DriverService } from "app/model/driver";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
+import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
 
 /**
  * Represents the route parameters for the page.
@@ -163,12 +164,19 @@ export class DetailsModule
     }
 
     /**
-     * Called when the `Remove` icon is clicked on a route stop.
-     * Removes the stop from the route.
+     * Called when the `Remove stop` icon is clicked on a route stop.
+     * Asks the user to confirm, then deletes the stop from the route.
      * @param status The new status value.
      */
     protected async onRemoveStopClick(stop: RouteStop): Promise<void>
     {
+        const confirmed = await this._modalService.open(ConfirmDeleteStopDialog, stop).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
         try
         {
             await this._routeService.deleteRouteStatus(stop.id);
