@@ -1,0 +1,105 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./assign-driver.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="assign-driver" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" translate>
+                Assign driver
+            </h1>
+
+            <search-input value.bind="queryText" autofocus ref="queryInputElement">
+
+                <span slot="before" class="opacity-faded">
+                    <icon name="md-search" class="font-larger"></icon>
+                </span>
+
+                <span slot="placeholder" translate>
+                    Type to search…
+                </span>
+
+            </search-input>
+
+        </modal-header>
+
+        <modal-section if.bind="true" class="margin-bottom">
+
+            <data-table appearance="rows">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <!-- picture -->
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            ID
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Name
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Vehicles
+                        </span>
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="driver of filteredDrivers">
+
+                    <data-table-row>
+
+                        <data-table-cell>
+                            <identity-picture src.bind="driver.pictureUrl">
+                                ${driver.name.initials}
+                            </identity-picture>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${driver.id}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${driver.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${driver.vehicleTypes | map: 'name' | list: 'narrow'}
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+            <busy-indicator if.bind="drivers == null" class="margin-largest"></busy-indicator>
+
+            <empty-indicator if.bind="filteredDrivers.length == 0" class="margin-largest" translate>
+                No results
+            </empty-indicator>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>
