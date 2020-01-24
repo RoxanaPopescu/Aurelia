@@ -17,6 +17,12 @@ export class OrderAccordionCustomElement
      * The model for the modal.
      */
     @bindable
+    protected tableExpanded: boolean = false;
+
+    /**
+     * The model for the modal.
+     */
+    @bindable
     protected expandedOrder: Delivery | Pickup | undefined;
 
     /**
@@ -26,13 +32,11 @@ export class OrderAccordionCustomElement
     protected orders: Delivery[] | Pickup[];
 
     /**
-     * Called when the user changes the status of the stop.
-     * Sets the new status.
-     * @param status The new status value.
+     * Test
+     * Test
      */
     protected expanded(order: Delivery | Pickup): boolean
     {
-        console.log("hej2", order.orderId)
         if (this.expandedOrder != null)
         {
             return order.orderId === this.expandedOrder.orderId;
@@ -42,19 +46,28 @@ export class OrderAccordionCustomElement
     }
 
     /**
-     * Called an order is clicked in the accordion.
+     * Called when an accordion head is clicked.
      * Toggles the accordion.
      */
-    protected onOrderClick(order: Delivery | Pickup): void
+    protected onAccordionHeadClick(order: Delivery | Pickup): void
     {
-        console.log("hej1", order.orderId)
         if (this.expandedOrder != null && order.orderId === this.expandedOrder.orderId)
         {
+            this.tableExpanded = false;
             this.expandedOrder = undefined;
         }
         else
         {
             this.expandedOrder = order;
         }
+    }
+
+    /**
+     * Called an order is clicked in the accordion.
+     * Expands and collapses the table.
+     */
+    protected onToggleTableClick(): void
+    {
+        this.tableExpanded = !this.tableExpanded;
     }
 }

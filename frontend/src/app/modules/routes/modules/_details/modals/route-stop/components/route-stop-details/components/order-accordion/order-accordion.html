@@ -4,33 +4,47 @@
 
     <div
         repeat.for="order of orders"
-        class="order-accordion-collo
+        class="order-accordion-card
         ${order.orderId == expandedOrder.orderId ? '--expanded' : ''}">
 
-        <div class="order-accordion-collo-head" click.trigger="onOrderClick(order)">
-            <a class="font-large">${order.orderId}</a>
+        <div class="order-accordion-card-head" click.trigger="onAccordionHeadClick(order)">
+            <a><span translate>Order:</span> ${order.colli[0].orderSlug}</a>
+            <div>${order.colli.length} <span translate>colli</span></div>
+            <div>7 <span translate>kg</span></div>
+            <div>12 <span translate>m³</span></div>
             <div class="order-accordion-toggle"></div>
         </div>
-        <div class="order-accordion-collo-content">
+        <div
+            class="order-accordion-card-content
+            ${tableExpanded ? '--expanded' : ''}">
+
             <data-table
                 appearance="rows">
 
                 <data-table-headers>
 
                     <data-table-cell>
-                        <span class="text-truncate" translate>
-                            Stop
+                        <span class="opacity-faded text-truncate font-small" translate>
+                            Collo ID
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate" translate>
-                            Address
+                        <span class="opacity-faded text-truncate font-small" translate>
+                            Scanning method
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell align="right">
-                        <!-- Icons -->
+                    <data-table-cell>
+                        <span class="opacity-faded text-truncate font-small" translate>
+                            Image
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="opacity-faded text-truncate font-small" translate>
+                            Status
+                        </span>
                     </data-table-cell>
 
                 </data-table-headers>
@@ -38,31 +52,33 @@
                 <template repeat.for="collo of order.colli">
 
                     <data-table-row
-                        model.bind="collo">
+                        model.bind="collo"
+                        clickable.bind="false">
 
                         <data-table-cell>
-                            <span class="order-collo text-truncate">
+                            <span
+                                class="order-collo text-truncate font-small"
+                                title="${collo.barcode}">
+                                ${collo.barcode}
+                            </span>
+                            <div if.bind="collo.origin.name != ''" class="opacity-faded font-small collo-origin">${collo.origin.name}</div>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="order-collo text-truncate font-small">
                                 ${collo.barcode}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
-                            <span class="text-truncate">
-                                ${collo.status.name}
+                            <span class="order-collo text-truncate font-small">
+                                ${collo.barcode}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell align="right">
-                            <span class="text-truncate">
-
-                                <!-- <div class="icon-row">
-
-                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
-                                        <icon name="md-edit"></icon>
-                                    </button>
-
-                                </div> -->
-
+                        <data-table-cell>
+                            <span class="text-truncate font-small">
+                                ${collo.status.name}
                             </span>
                         </data-table-cell>
 
@@ -71,6 +87,10 @@
                 </template>
 
             </data-table>
+            <a if.bind="order.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onToggleTableClick()">
+                <span if.bind="tableExpanded" translate>Show less</span>
+                <span if.bind="!tableExpanded" translate>Show more</span>
+            </a>
         </div>
 
     </div>
