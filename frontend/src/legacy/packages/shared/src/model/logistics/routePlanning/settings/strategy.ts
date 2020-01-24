@@ -39,5 +39,10 @@ export class RoutePlanStrategy
             name: "Hurtig ruteoptimering",
             value: 3
         },
+        "many-pickups-one-delivery":
+        {
+            name: "Afhetning til terminal",
+            value: 4
+        }
     };
 }
