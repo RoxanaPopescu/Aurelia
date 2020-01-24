@@ -13,7 +13,9 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/empty/empty"),
         PLATFORM.moduleName("./components/behaviors/forward-focus/forward-focus"),
+        PLATFORM.moduleName("./components/behaviors/return-focus/return-focus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
+        PLATFORM.moduleName("./components/behaviors/scroll/scroll-sentinel"),
         PLATFORM.moduleName("./components/behaviors/surface/surface"),
         PLATFORM.moduleName("./components/behaviors/trap-focus/trap-focus"),
         PLATFORM.moduleName("./components/cards/card/card"),
@@ -43,6 +45,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/toggles/toggle-group/toggle-group"),
         PLATFORM.moduleName("./components/controls/toggles/check-toggle/check-toggle"),
         PLATFORM.moduleName("./components/controls/toggles/radio-toggle/radio-toggle"),
+        PLATFORM.moduleName("./components/controls/toggles/switch-toggle/switch-toggle"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar-group"),
         PLATFORM.moduleName("./components/data-table/data-table"),
@@ -111,11 +114,14 @@ export function configure(use: FrameworkConfiguration): void
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/empty/empty";
 export * from "./components/behaviors/forward-focus/forward-focus";
+export * from "./components/behaviors/return-focus/return-focus";
 export * from "./components/behaviors/scroll/scroll";
+export * from "./components/behaviors/scroll/scroll-sentinel";
 export * from "./components/behaviors/surface/surface";
 export * from "./components/behaviors/trap-focus/trap-focus";
 export * from "./components/cards/card/card";
 export * from "./components/cards/card-skeleton/card-skeleton";
+export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/control";
 export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/dropdown/dropdown";
@@ -144,6 +150,7 @@ export * from "./components/controls/toggles/toggle";
 export * from "./components/controls/toggles/toggle-group/toggle-group";
 export * from "./components/controls/toggles/check-toggle/check-toggle";
 export * from "./components/controls/toggles/radio-toggle/radio-toggle";
+export * from "./components/controls/toggles/switch-toggle/switch-toggle";
 export * from "./components/controls/toolbar/toolbar";
 export * from "./components/controls/toolbar/toolbar-group";
 export * from "./components/data-table/data-table";
@@ -171,7 +178,6 @@ export * from "./components/modals/modal-overlay/modal-overlay";
 export * from "./components/modals/modal-panel/modal-panel";
 export * from "./components/modals/modal-section/modal-section";
 export * from "./components/modals/modal-view/modal-view";
-export * from "./components/modals/modal-close-reason";
 export * from "./components/overlays/busy-overlay/busy-overlay";
 export * from "./components/page/page/page";
 export * from "./components/page/page-content/page-content";
@@ -185,7 +191,6 @@ export * from "./components/toasts/toast-footer/toast-footer";
 export * from "./components/toasts/toast-header/toast-header";
 export * from "./components/toasts/toast-section/toast-section";
 export * from "./components/toasts/toast-view/toast-view";
-export * from "./components/toasts/toast-close-reason";
 export * from "./components/validation/validation";
 export * from "./components/validation/validators/async-validator/async-validator";
 export * from "./components/validation/validators/custom-validator/custom-validator";

@@ -47,6 +47,9 @@ date-picker
     // Limit to the width of the container.
     max-width: 100%;
 
+    // Use default cursor.
+    cursor: default;
+
     &.--view-dates
     {
         // Use 7 columns for the dates view.

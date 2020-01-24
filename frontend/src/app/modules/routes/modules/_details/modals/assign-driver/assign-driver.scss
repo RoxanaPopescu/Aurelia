@@ -1,0 +1,14 @@
+modal-panel[name="assign-driver"]
+{
+    --modal-panel-min-width: 200rem;
+
+    data-table
+    {
+        --data-table-columns: 23rem 1fr 2.5fr 2fr;
+    }
+
+    identity-picture
+    {
+        border-radius: 50%;
+    }
+}

@@ -1,0 +1,17 @@
+switch-toggle
+{
+    icon
+    {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        pointer-events: none;
+    }
+
+    input
+    {
+        min-width: calc(var(--toggle-height) * 2);
+    }
+}

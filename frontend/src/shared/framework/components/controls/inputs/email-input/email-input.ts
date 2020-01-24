@@ -119,7 +119,7 @@ export class EmailInputCustomElement
     protected onKeyDown(event: KeyboardEvent): boolean
     {
         // Never block special keys or key combinations.
-        if (event.defaultPrevented || event.key.length > 1 || event.metaKey || event.ctrlKey)
+        if (event.defaultPrevented || !event.key || event.key.length > 1 || event.metaKey || event.ctrlKey)
         {
             return true;
         }

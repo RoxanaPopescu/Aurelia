@@ -2,7 +2,7 @@ import { Container, BindingEngine } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
 import { Type } from "shared/types";
 import { PromiseController } from "shared/utilities";
-import { ModalCloseReason } from "shared/framework/components/modals/modal-close-reason";
+import { ModalCloseReason } from "./modal-close-reason";
 
 /**
  * Represents a modal on the stack.

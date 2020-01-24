@@ -73,6 +73,9 @@ body
         "control"
         "validation";
 
+    // Use default cursor.
+    cursor: default;
+
     &[label="above"]
     {
         // Define the grid with the label above the control.

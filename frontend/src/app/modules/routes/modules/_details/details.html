@@ -334,22 +334,34 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="solid" accent="neutral" translate>
+                    <button appearance="solid" accent="neutral" click.trigger="onAssignDriverClick()" translate>
                         Assign fulfiller
                     </button>
 
-                    <button appearance="solid" accent="neutral" translate>
+                    <button appearance="solid" accent="neutral" click.trigger="onAssignFulfillerClick()" translate>
                         Assign driver
                     </button>
 
-                    <select-button appearance="solid" accent="neutral" translate>
+                    <select-button appearance="solid" accent="neutral">
 
-                        <div slot="label">
+                        <div slot="label" translate>
                             Change status
                         </div>
 
-                        <item repeat.for="status of statusValues" mousedown.capture="onChooseStatus(status.slug)">
-                            ${status.name}
+                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.capture="onChooseStatus('not-started')" translate>
+                            Not started
+                        </item>
+
+                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.capture="onChooseStatus('started')" translate>
+                            Started
+                        </item>
+
+                        <item disabled.bind="['completed'].includes(route.status.slug)" click.capture="onChooseStatus('completed')" translate>
+                            Completed
+                        </item>
+
+                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.capture="onChooseStatus('cancelled')" translate>
+                            Cancelled
                         </item>
 
                     </select-button>
@@ -490,7 +502,7 @@
                                             <icon name="md-edit"></icon>
                                         </button>
 
-                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
+                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
                                             <icon name="md-delete"></icon>
                                         </button>
 

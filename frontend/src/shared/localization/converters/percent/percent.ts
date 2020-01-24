@@ -51,7 +51,7 @@ export class PercentValueConverter
 
     public toView(...args: any[]): string | null | undefined
     {
-        if (args[0] == null)
+        if (args[0] == null || isNaN(args[0]))
         {
             return args[0];
         }
