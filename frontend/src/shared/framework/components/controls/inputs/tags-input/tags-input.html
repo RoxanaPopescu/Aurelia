@@ -25,19 +25,19 @@
         <slot name="description" slot="description"></slot>
         <slot name="validation" slot="validation"></slot>
 
-        <div slot="placeholder">
+        <span slot="placeholder">
 
-            <div show.bind="!readonly && (!open || filter === 'none')">
+            <span show.bind="!readonly && (!open || filter === 'none')">
 
                 <slot name="placeholder"></slot>
 
-            </div>
+            </span>
 
-            <div show.bind="open && filter !== 'none'" translate>
+            <span show.bind="open && filter !== 'none'" translate>
                 Type to filter…
-            </div>
+            </span>
 
-        </div>
+        </span>
 
         <div slot="before">
 

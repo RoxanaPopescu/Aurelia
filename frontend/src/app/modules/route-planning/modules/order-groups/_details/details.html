@@ -40,7 +40,7 @@
 
                     <template if-claims="edit-order-group">
 
-                        <button if.bind="orderGroup.id && !orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
                             Pause
                         </button>
 
@@ -52,7 +52,7 @@
                             Create
                         </button>
 
-                        <button if.bind="orderGroup.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
@@ -63,11 +63,15 @@
             </page-header>
 
             <status-message if.bind="orderGroup.paused">
-
                 <span translate>
                     This order group is currently paused.
                 </span>
+            </status-message>
 
+            <status-message if.bind="orderGroup.activeSchedulesCount">
+                <span translate>
+                    This ordergroup currently has ${orderGroup.activeSchedulesCount} active schedules and cannot be edited before they have completed.
+                </span>
             </status-message>
 
             <page-section if-claims="edit-order-group">
@@ -104,7 +108,7 @@
 
                 <div class="flex-row">
 
-                    <div class="order-group-criteria flex-basis-1-of-2 margin-large-right">
+                    <div class="order-group-criteria flex-basis-1-of-3 margin-large-right">
 
                         <h2 class="font-larger margin-bottom" translate>
                             Match criteria
@@ -195,7 +199,7 @@
 
                     </div>
 
-                    <div class="order-group-schedule flex-basis-1-of-2 margin-large-left">
+                    <div class="order-group-schedule flex-basis-2-of-3 margin-large-left">
 
                         <h2 class="font-larger margin-bottom" translate>
                             Planning schedule

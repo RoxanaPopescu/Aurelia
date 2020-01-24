@@ -2,7 +2,7 @@ import { Container, BindingEngine } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
 import { Type } from "shared/types";
 import { PromiseController } from "shared/utilities";
-import { ToastCloseReason } from "shared/framework/components/toasts/toast-close-reason";
+import { ToastCloseReason } from "./toast-close-reason";
 
 /**
  * Represents a toast on the stack.

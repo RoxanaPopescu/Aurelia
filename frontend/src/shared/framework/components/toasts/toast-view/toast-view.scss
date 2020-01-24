@@ -91,6 +91,9 @@ toast-view
 
             // Align with the close icons on the toasts.
             padding: 0 3.5rem;
+
+            // Allow clicks on the button.
+            pointer-events: initial;
         }
 
         span

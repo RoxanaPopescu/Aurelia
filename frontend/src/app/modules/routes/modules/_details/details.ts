@@ -7,6 +7,8 @@ import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "ap
 import { AgreementService } from "app/model/agreement";
 import { DriverService } from "app/model/driver";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
+import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
+import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 
 /**
  * Represents the route parameters for the page.
@@ -16,7 +18,7 @@ interface IRouteParams
     /**
      * The ID of the route.
      */
-    id?: string;
+    id: string;
 }
 
 /**
@@ -69,12 +71,7 @@ export class DetailsModule
      */
     public activate(params: IRouteParams): void
     {
-        // Create and execute the new operation.
-        this.fetchOperation = new Operation(async signal =>
-        {
-            // Fetch the data.
-            this.route = await this._routeService.get(params.id!, signal);
-        });
+        this.fetchRoute(params.id);
     }
 
     /**
@@ -116,6 +113,59 @@ export class DetailsModule
     }
 
     /**
+     * Called when the "Edit" icon is clicked on a route stop.
+     * Opens at modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onStopClick(stop: RouteStop): Promise<void>
+    {
+        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
+
+        // if (newStop != null)
+        // {
+        //     this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
+        // }
+
+        if (newStop != null && newStop !== stop)
+        {
+            // Create and execute the new operation.
+            this.fetchOperation = new Operation(async signal =>
+            {
+                // Fetch the data.
+                this.route = await this._routeService.get(this.route!.id, signal);
+            });
+        }
+    }
+
+    /**
+     * Called when the `Assign driver` button is clicked.
+     * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignDriverClick(): Promise<void>
+    {
+        const driver = await this._modalService.open(AssignDriverPanel, this.route).promise;
+
+        if (driver != null)
+        {
+            this.fetchRoute(this.route!.id);
+        }
+    }
+
+    /**
+     * Called when the `Assign fulfiller` button is clicked.
+     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignFulfillerClick(): Promise<void>
+    {
+        const fulfiller = await this._modalService.open(AssignDriverPanel, this.route).promise;
+
+        if (fulfiller != null)
+        {
+            this.fetchRoute(this.route!.id);
+        }
+    }
+
+    /**
      * Called when the user changes the status of the route.
      * Sets the new status.
      * @param status The new status value.
@@ -135,5 +185,48 @@ export class DetailsModule
         {
             Log.error("Could not change route status", error);
         }
+    }
+
+    /**
+     * Called when the `Remove stop` icon is clicked on a route stop.
+     * Asks the user to confirm, then deletes the stop from the route.
+     * @param status The new status value.
+     */
+    protected async onRemoveStopClick(stop: RouteStop): Promise<void>
+    {
+        const confirmed = await this._modalService.open(ConfirmDeleteStopDialog, stop).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeService.deleteRouteStatus(stop.id);
+
+            this.route!.stops.splice(this.route!.stops.findIndex(s => s.id === stop.id), 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not remove route stop", error);
+        }
+    }
+
+    /**
+     * Fetches the route.
+     * @param routeId The ID of the route to fetch.
+     */
+    private fetchRoute(routeId: string): void
+    {
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
+
+        this.fetchOperation = new Operation(async signal =>
+        {
+            this.route = await this._routeService.get(routeId, signal);
+        });
     }
 }

@@ -131,7 +131,7 @@ export class TreeNavNodeCustomElement
     /**
      * Called when the node is clicked.
      * @param toggle True if the click should toggle the expanded state of the node.
-     * @param event The click event.
+     * @param event The mouse event.
      */
     protected onClick(toggle: boolean, event: MouseEvent): void
     {
@@ -152,7 +152,7 @@ export class TreeNavNodeCustomElement
 
     /**
      * Called when the rename option is clicked.
-     * @param event The click event.
+     * @param event The mouse event.
      */
     protected onNewFolderClick(event: MouseEvent): void
     {
@@ -173,7 +173,7 @@ export class TreeNavNodeCustomElement
 
     /**
      * Called when the rename option is clicked.
-     * @param event The click event.
+     * @param event The mouse event.
      */
     protected async onDeleteClick(event: MouseEvent): Promise<void>
     {
@@ -200,7 +200,7 @@ export class TreeNavNodeCustomElement
 
     /**
      * Called when the rename option is clicked.
-     * @param event The click event.
+     * @param event The mouse event.
      */
     protected onRenameClick(event: MouseEvent): void
     {
@@ -211,7 +211,7 @@ export class TreeNavNodeCustomElement
 
     /**
      * Called when the text input used for renaming looses focus.
-     * @param event The click event.
+     * @param event The mouse event.
      */
     protected onTextInputBlur(event: FocusEvent): void
     {

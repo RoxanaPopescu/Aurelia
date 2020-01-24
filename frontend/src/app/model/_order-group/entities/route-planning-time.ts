@@ -20,11 +20,13 @@ export class RoutePlanningTime
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
             this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
+            this.status = data.status;
         }
         else
         {
             this.delivery = new TimeOfWeekRange();
             this.planning = new TimeOfWeek();
+            this.status = "ready";
         }
     }
 
@@ -45,6 +47,11 @@ export class RoutePlanningTime
      * Note that the UTC offset for this date matches the offset of the zone associated with the order group.
      */
     public nextPlanning: DateTime;
+
+    /**
+     * The status of the planned schedule
+     */
+    public status: "processing" | "ready";
 
     /**
      * Gets a clone of this instance, suitable for editing.

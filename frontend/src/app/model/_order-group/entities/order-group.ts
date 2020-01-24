@@ -93,6 +93,24 @@ export class OrderGroup
     }
 
     /**
+     * Gets the number of active planning times
+     */
+    @computedFrom("routePlanningTimes")
+    public get activeSchedulesCount(): number
+    {
+        let activeCount = 0;
+        for (const planningTime of this.routePlanningTimes)
+        {
+            if (planningTime.status === "processing")
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
+
+    /**
      * Gets the next time route planning will execute for this order group.
      */
     @computedFrom("routePlanningTimes")

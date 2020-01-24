@@ -396,7 +396,7 @@ export class TimeInputCustomElement
         }
 
         // Never block special keys or key combinations.
-        if (event.key.length > 1 || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        if (!event.key || event.key.length > 1 || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
         {
             return true;
         }

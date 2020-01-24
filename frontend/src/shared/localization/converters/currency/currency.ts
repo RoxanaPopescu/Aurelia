@@ -66,7 +66,7 @@ export class CurrencyValueConverter
             return args[0];
         }
 
-        if (args[0].currencyCode == null || args[0].amount == null)
+        if (args[0].currencyCode == null || args[0].amount == null || isNaN(args[0].amount))
         {
             throw new Error("Invalid currency value.");
         }

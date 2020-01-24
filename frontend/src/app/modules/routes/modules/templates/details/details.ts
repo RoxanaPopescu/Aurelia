@@ -6,9 +6,10 @@ import { Consignor } from "app/model/outfit";
 import { ConfirmDeleteTemplateDialog } from "./modals/confirm-delete-template/confirm-delete-template";
 import { Log } from "shared/infrastructure";
 import { AppRouter } from "aurelia-router";
-import { ModalService, IValidation } from "shared/framework";
+import { ModalService, IValidation, ToastService } from "shared/framework";
 import { StopDetailsPanelCustomElement as StopDetailsPanel } from "./modals/stop-details/stop-details";
 import { Driver, DriverService } from "app/model/driver";
+import toast from "./resources/strings/toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -34,14 +35,22 @@ export class DetailsPage
      * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
      * @param router The `AppRouter` instance.
+     * @param toastService The `ToastService` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: AppRouter)
-    {
+    public constructor(
+        routeTemplateService: RouteTemplateService,
+        agreementService: AgreementService,
+        driverService: DriverService,
+        modalService: ModalService,
+        router: AppRouter,
+        toastService: ToastService
+    ){
         this._routeTemplateService = routeTemplateService;
         this._agreementService = agreementService;
         this._driverService = driverService;
         this._modalService = modalService;
         this._router = router;
+        this._toastService = toastService;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
@@ -49,6 +58,7 @@ export class DetailsPage
     private readonly _driverService: DriverService;
     private readonly _modalService: ModalService;
     private readonly _router: AppRouter;
+    private readonly _toastService: ToastService;
 
     /**
      * The original reference for the template.
@@ -210,16 +220,25 @@ export class DetailsPage
 
         try
         {
+            let toastHeading: string;
+
             if (!this.template.id)
             {
                 await this._routeTemplateService.create(this.template);
+                toastHeading = toast["heading-created"];
             }
             else
             {
                 await this._routeTemplateService.save(this.template);
+                toastHeading = toast["heading-updated"];
             }
 
-            this._router.navigate("/routes/templates/list");
+            this._toastService.open(
+                "info",
+                {
+                    "heading": toastHeading
+                }
+            );
         }
         catch (error)
         {

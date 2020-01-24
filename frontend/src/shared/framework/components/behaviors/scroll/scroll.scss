@@ -10,11 +10,9 @@
     overflow-x: hidden;
 
     // The duration to use for opacity transitions.
-    // This will be set programatically, depending on the scroll direction.
-    --fade-duration: 0.68;
+    --fade-duration: 0.3s;
 
     // The timing function to use for opacity transitions.
-    // This will be set programatically, depending on the scroll direction.
     --fade-timing-function: ease-out;
 
     [scroll-fade]
@@ -35,8 +33,6 @@
         // Disable pointer events to prevent hover effects while scrolling.
         pointer-events: none !important;
     }
-
-    /* Disabled due to incompatibility with app-sidebar
 
     html:not(.platform-macos):not(.platform-ios) &
     {
@@ -109,6 +105,4 @@
             display: none;
         }
     }
-
-    */
 }

@@ -7,6 +7,7 @@ export default class User {
   public outfitId: string;
   public role: Role;
   public canDeactivate: boolean;
+  public status: "Activated" | "Deactivated" | "Created";
 
   // tslint:disable-next-line:no-any
   constructor(json: any) {
@@ -22,6 +23,7 @@ export default class User {
       this.canDeactivate = false;
     }
     this.role = new Role({ id: json.roleId, name: json.roleName });
+    this.status = json.status.name;
   }
 
   public get fullName(): string {

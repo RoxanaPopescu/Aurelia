@@ -19,6 +19,7 @@ import { AgreementsService } from "shared/src/services/agreementsService";
 import { OptionValue } from "react-selectize";
 import InputCheckbox from "shared/src/webKit/input/checkbox";
 import { RoutePlanStrategy } from "shared/src/model/logistics/routePlanning/settings/strategy";
+import { Limitations } from 'shared/src/model/logistics/routePlanning/settings';
 
 interface Props {
   store: RoutePlanningSettingsStore;
@@ -220,35 +221,7 @@ export default class GeneralComponent extends React.Component<Props> {
                 .maximumColliCount
             }
           />
-          <InputNumbers
-            size={"medium"}
-            headline="MAX TID PR RUTE"
-            valueDescription="min"
-            value={
-              this.props.store.setting.parameters.limitations
-                .maximumTimePerRoute
-                ? Math.round(
-                    (this.props.store.setting.parameters.limitations
-                      .maximumTimePerRoute /
-                      60) *
-                      100
-                  ) / 100
-                : undefined
-            }
-            onChange={value => {
-              if (value) {
-                this.props.store.setting.parameters.limitations.maximumTimePerRoute =
-                  value * 60;
-              } else {
-                this.props.store.setting.parameters.limitations.maximumTimePerRoute = undefined;
-              }
-            }}
-            error={
-              this.validate &&
-              !this.props.store.setting.parameters.limitations
-                .maximumTimePerRoute
-            }
-          />
+          {this.renderMaxTime()}
           <InputNumbers
             size={"medium"}
             headline="MAX VÆGT"
@@ -444,6 +417,50 @@ export default class GeneralComponent extends React.Component<Props> {
             : "Opret indstillinger"}
         </Button>
       </div>
+    );
+  }
+
+  renderMaxTime(): JSX.Element {
+    let error = false;
+
+    if (this.validate) {
+        if (!this.props.store.setting.parameters.limitations
+          .maximumTimePerRoute) {
+            error = true;
+        } else {
+          if (this.props.store.setting.parameters.limitations
+            .maximumTimePerRoute / 60 > Limitations.maxMinutes) {
+              error = true;
+            }
+        }
+    }
+
+    return (
+      <InputNumbers
+          size={"medium"}
+          headline="MAX TID PR RUTE"
+          valueDescription="min"
+          value={
+            this.props.store.setting.parameters.limitations
+              .maximumTimePerRoute
+              ? Math.round(
+                  (this.props.store.setting.parameters.limitations
+                    .maximumTimePerRoute /
+                    60) *
+                    100
+                ) / 100
+              : undefined
+          }
+          onChange={value => {
+            if (value) {
+              this.props.store.setting.parameters.limitations.maximumTimePerRoute =
+                value * 60;
+            } else {
+              this.props.store.setting.parameters.limitations.maximumTimePerRoute = undefined;
+            }
+          }}
+          error={error}
+        />
     );
   }
 }

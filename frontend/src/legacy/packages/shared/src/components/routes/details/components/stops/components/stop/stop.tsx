@@ -49,10 +49,10 @@ export default class extends React.Component<Props> {
 
     for (const pickup of this.props.routeStop.pickups) {
       let additionalColli = [
-        ...pickup.colli.filter(c => c.status.accent.pickup === "neutral"),
-        ...pickup.colli.filter(c => c.status.accent.pickup === "positive")
+        ...pickup.colli.filter(c => c.status.accent.pickup === "neutral")
       ];
 
+      additionalColli.push(...pickup.colli.filter(c => c.status.accent.pickup === "positive"))
       additionalPickupColliCount += additionalColli.length;
 
       showExpandPickupsButton =
@@ -83,10 +83,10 @@ export default class extends React.Component<Props> {
 
     for (const delivery of this.props.routeStop.deliveries) {
       let additionalColli = [
-        ...delivery.colli.filter(c => c.status.accent.delivery === "neutral"),
-        ...delivery.colli.filter(c => c.status.accent.delivery === "positive")
+        ...delivery.colli.filter(c => c.status.accent.delivery === "neutral")
       ];
 
+      additionalColli.push(...delivery.colli.filter(c => c.status.accent.delivery === "positive"));
       additionalDeliveryColliCount += additionalColli.length;
 
       showExpandDeliveriesButton =

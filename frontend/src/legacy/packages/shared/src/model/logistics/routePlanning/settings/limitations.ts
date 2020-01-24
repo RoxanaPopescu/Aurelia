@@ -4,6 +4,8 @@ import { observable } from "mobx";
  * Represents the limitations to be taken into account when planning a route.
  */
 export class Limitations {
+  static maxMinutes = 1420;
+
   // tslint:disable-next-line:no-any
   constructor(data: any = undefined) {
     if (data) {
@@ -78,6 +80,10 @@ export class Limitations {
       !this.maximumRoutesCount ||
       !this.startCostOfAdditionalRoute
     ) {
+      return false;
+    }
+
+    if (this.maximumTimePerRoute / 60 > Limitations.maxMinutes) {
       return false;
     }
 

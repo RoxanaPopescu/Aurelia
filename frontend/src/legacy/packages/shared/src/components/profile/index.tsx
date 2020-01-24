@@ -51,6 +51,12 @@ export default class ProfilePage extends React.Component {
             </div>
             <div>{Session.userInfo.username}</div>
           </div>
+          <div className="c-profilePage-valueWrapper">
+            <div className="headline">
+              Id
+            </div>
+            <div className="c-profilePage-id">{Session.userInfo.id}</div>
+          </div>
         </div>
         <div className="c-profilePage-headline font-heading">
           {Localization.operationsValue("Profile_ContactInformation_Headline")}
