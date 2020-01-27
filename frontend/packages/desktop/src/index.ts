@@ -6,7 +6,7 @@ import { environment } from "./env";
 const localeCode = "en-US";
 
 // The path for the localized `build` artifact copied from the `frontend` package.
-const clientFolderPath = path.join(__dirname, "../client", localeCode);
+const clientFolderPath = path.join(__dirname, "./client", localeCode);
 
 let mainWindow: Electron.BrowserWindow | undefined;
 

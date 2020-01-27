@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-if (module.parent)
+const tslib_1 = require("tslib");
+if (module.parent) {
     module.paths.unshift(...module.parent.paths);
-const ts = require("typescript");
-const tslint = require("tslint/lib");
+}
+const ts = tslib_1.__importStar(require("typescript"));
+const tslint = tslib_1.__importStar(require("tslint/lib"));
 const OPTION_ALLOW_SINGLE_LINE_BLOCKS = "allow-single-line-blocks";
 class Rule extends tslint.Rules.AbstractRule {
     apply(sourceFile) {
@@ -11,13 +13,13 @@ class Rule extends tslint.Rules.AbstractRule {
         return this.applyWithWalker(oneLineWalker);
     }
 }
+exports.Rule = Rule;
 Rule.OPEN_BRACE_FAILURE_STRING = "misplaced opening brace";
 Rule.CLOSE_BRACE_FAILURE_STRING = "misplaced closing brace";
 Rule.CATCH_FAILURE_STRING = "misplaced 'catch'";
 Rule.FINALLY_FAILURE_STRING = "misplaced 'finally'";
 Rule.ELSE_FAILURE_STRING = "misplaced 'else'";
 Rule.WHILE_FAILURE_STRING = "misplaced 'while'";
-exports.Rule = Rule;
 class OneLineWalker extends tslint.RuleWalker {
     visitIfStatement(node) {
         const sourceFile = node.getSourceFile();

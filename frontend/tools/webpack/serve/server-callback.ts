@@ -7,22 +7,22 @@ const open = require("open");
 /**
  * Called when the server is ready, logging server info to the console, and optionally opening the browser.
  * Note that this will kill the process if the server failed to start.
- * @param compilerConfig The config used for the compilation.
+ * @param serverConfig The config used for the compilation.
  * @param error The error that occurred, if the server failed.
  */
-export function serverCallback(compilerConfig: WebpackDevServer.Configuration, error?: Error): void
+export function serverCallback(serverConfig: WebpackDevServer.Configuration, error?: Error): void
 {
     if (error == null)
     {
-        const protocol = compilerConfig.https ? "https" : "http";
+        const protocol = serverConfig.https ? "https" : "http";
 
-        const host = `${protocol}://${compilerConfig.host}:${compilerConfig.port}`;
+        const host = `${protocol}://${serverConfig.host}:${serverConfig.port}`;
 
         // Log the host at which the server can be accessed.
         console.log(`${Format.info("i")} Server listening on ${Format.info(host)}`);
 
         // Open the browser, if enabled.
-        if (compilerConfig.open)
+        if (serverConfig.open)
         {
             open(host).catch(() =>
             {

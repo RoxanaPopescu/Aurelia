@@ -222,12 +222,12 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 {
                     test: /\.woff2$/i,
                     loader: "url-loader",
-                    options: { limit: 10000, mimetype: "application/font-woff2" }
+                    options: { limit: 10000 }
                 },
                 {
                     test: /\.woff$/i,
                     loader: "url-loader",
-                    options: { limit: 10000, mimetype: "application/font-woff" }
+                    options: { limit: 10000 }
                 },
 
                 // Loader for files that should be fetched separately.

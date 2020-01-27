@@ -36,7 +36,12 @@ export default
         /**
          * The code identifying the default currency.
          */
-        defaultCurrencyCode: "DKK"
+        defaultCurrencyCode: "DKK",
+
+        /**
+         * The time in milliseconds before a toast, by default, disappears.
+         */
+        defaultToastTimeout: 10000
     },
 
     /**

@@ -26,7 +26,7 @@ export namespace Format
     /**
      * True if the console supports color, otherwise false.
      */
-    export const supportsColor = chalk.supportsColor.hasBasic;
+    export const supportsColor = chalk.supportsColor && chalk.supportsColor.hasBasic;
 
     /**
      * Formats the specified text using the `info` style, which is bold and blue.

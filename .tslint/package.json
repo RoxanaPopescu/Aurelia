@@ -1,5 +1,5 @@
 {
-  "name": "@mover/tslint-rules",
+  "name": "@lingu/tslint-rules",
   "author": "Thomas Darling",
   "description": "Custom rules for TSLint.",
   "version": "0.0.0",
@@ -7,25 +7,28 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://thomas_darling@bitbucket.org/moversystems/platform.git"
+    "url": "https://github.com/thomas-darling/lingu-io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thomas-darling/lingu-io/issues"
   },
   "engines": {
-    "node": ">=10.13.0 <12.0.0",
+    "node": ">=10.13.0 <13.0.0",
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
     "build": "cross-env tsc"
   },
   "peerDependencies": {
-    "tslib": "^1.9.3",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.1"
+    "tslib": "^1.10.0",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
-    "@types/node": "^10.12.20",
-    "cross-env": "^5.2.0",
-    "tslib": "^1.9.3",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.1"
+    "@types/node": "^13.5.0",
+    "cross-env": "^6.0.3",
+    "tslib": "^1.10.0",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
   }
 }

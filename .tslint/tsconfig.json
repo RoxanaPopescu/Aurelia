@@ -1,5 +1,4 @@
 {
-  "compileOnSave": true,
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "lib": [

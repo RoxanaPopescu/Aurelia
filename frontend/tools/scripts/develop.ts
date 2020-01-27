@@ -13,7 +13,7 @@ commander
         "en-US")
 
     .option("--api <url>",
-        "The URL to which API requests should be proxied",
+        "The URL to which API requests should be proxied, including a trailing `/`",
         "https://bff-v1-test-mover.azurewebsites.net/")
 
     .option("--port <number>",

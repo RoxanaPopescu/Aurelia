@@ -1,7 +1,10 @@
 // tslint:disable: no-submodule-imports file-name-casing
 
 // HACK: Pretend this module lives in the same `node_modules` folder as the running `tslint` instance.
-if (module.parent) module.paths.unshift(...module.parent.paths);
+if (module.parent)
+{
+    module.paths.unshift(...module.parent.paths);
+}
 
 import * as ts from "typescript";
 import * as tslint from "tslint/lib";

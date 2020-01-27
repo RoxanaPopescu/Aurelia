@@ -1,0 +1,22 @@
+# See: https://github.com/aurelia/templating-resources/issues/392
+
+diff --git a/node_modules/aurelia-templating/dist/native-modules/aurelia-templating.js b/node_modules/aurelia-templating/dist/native-modules/aurelia-templating.js
+index 11c5a38..c5e307a 100644
+--- a/node_modules/aurelia-templating/dist/native-modules/aurelia-templating.js
++++ b/node_modules/aurelia-templating/dist/native-modules/aurelia-templating.js
+@@ -1049,6 +1049,7 @@ export var ShadowSlot = function () {
+
+           if (_child.auOwnerView === view) {
+             _children.splice(i, 1);
++            this.children.splice(this.children.indexOf(_child), 1); // <<<<<<<<<<<<<<<<<<<< ADDED TO AVOID LEAKING
+             view.fragment.appendChild(_child);
+             i--;ii--;
+             this.projections--;
+@@ -1076,6 +1077,7 @@ export var ShadowSlot = function () {
+         var _children2 = found.auProjectionChildren;
+         for (var i = 0, ii = _children2.length; i < ii; ++i) {
+           var _child2 = _children2[i];
++          this.children.splice(this.children.indexOf(_child2), 1); // <<<<<<<<<<<<<<<<<<<< ADDED TO AVOID LEAKING
+           _child2.auOwnerView.fragment.appendChild(_child2);
+           this.projections--;
+         }
