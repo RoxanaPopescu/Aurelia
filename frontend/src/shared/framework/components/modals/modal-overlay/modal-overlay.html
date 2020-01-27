@@ -17,7 +17,7 @@
 
     <div class="modal-overlay-actions">
 
-        <button if.bind="closeButton && modal != null" appearance="icon" click.delegate="onCloseClick()">
+        <button if.bind="closeButton && modal != null" appearance="icon" click.trigger="onCloseClick()">
             <icon name="close"></icon>
         </button>
 

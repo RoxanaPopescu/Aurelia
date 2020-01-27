@@ -4,12 +4,12 @@
 import * as Sentry from "@sentry/browser";
 import * as Integrations from "@sentry/integrations";
 
+// Store a reference to an object with the original console methods on the window.
+// This allows the logging infrastructure of the app to log things without triggering Sentry.
+(window as any)._console = { ...console };
+
 if (ENVIRONMENT.integrations.sentry != null)
 {
-    // Store a reference to an object with the original console methods on the window.
-    // This allows the logging infrastructure of the app to log things without triggering Sentry.
-    (window as any)._console = { ...console };
-
     // HACK: Ensure unhandled promise rejections are logged in the console.
     // See: https://github.com/getsentry/sentry-javascript/issues/1909#issuecomment-552152624
     window.onunhandledrejection = () => true;

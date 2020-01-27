@@ -395,10 +395,13 @@ export class ApiClient
                     throw this.createApiError(true, fetchRequest, fetchResponse);
                 }
 
+                // Success, skip remaining retry attempts.
                 break;
             }
             catch (error)
             {
+                // TODO: Should we treat an error with no response as transient?
+
                 // Throw an `AbortError` if the request was intentionally aborted.
                 if (error.name === "AbortError")
                 {

@@ -2,13 +2,13 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { ILocale } from "./locale";
 
 /**
- * Represents a function that will be called before the locale changes.
- * Use this to preparing the app for the new locale.
+ * Represents a function that will be invoked before the locale changes.
+ * Use this to prepare the app for the new locale.
  * @param newLocale The new locale being set.
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new locale.
  */
-type LocaleChangeFunc = (newLocale: ILocale | undefined, oldLocale: ILocale) => void | Promise<void>;
+type LocaleChangeFunc = (newLocale: ILocale, oldLocale: ILocale | undefined) => void | Promise<void>;
 
 /**
  * Represents a service that manages locales.
@@ -41,7 +41,7 @@ export class LocaleService
     /**
      * Configures the instance.
      * @param locales The locales supported by the app.
-     * @param changeFunc The function that is invoked when setting the locale.
+     * @param changeFunc The function that is invoked before the locale changes.
      */
     public configure(locales: ILocale[], changeFunc?: LocaleChangeFunc): void
     {

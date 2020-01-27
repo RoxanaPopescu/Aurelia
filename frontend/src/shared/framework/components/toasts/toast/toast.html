@@ -12,13 +12,13 @@
 
         <slot name="actions"></slot>
 
-        <button if.bind="closeButton && toast != null" appearance="icon" click.delegate="onCloseClick()">
+        <button if.bind="closeButton && toast != null" appearance="icon" click.trigger="onCloseClick()">
             <icon name="close"></icon>
         </button>
 
     </div>
 
-    <div class="toast-content">
+    <div class="toast-content user-select-contain">
 
         <slot></slot>
 

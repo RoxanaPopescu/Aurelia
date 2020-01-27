@@ -3,13 +3,13 @@ import { ITheme } from "./theme";
 import { once } from "shared/utilities";
 
 /**
- * Represents a function that will be called before the theme changes.
- * Use this to preparing the app for the new theme.
+ * Represents a function that will be invoked before the theme changes.
+ * Use this to prepare the app for the new theme.
  * @param newTheme The new theme being set.
  * @param oldTheme The old theme, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new theme.
  */
-type ThemeChangeFunc = (newTheme: ITheme | undefined, oldTheme: ITheme) => void | Promise<void>;
+type ThemeChangeFunc = (newTheme: ITheme, oldTheme: ITheme | undefined) => void | Promise<void>;
 
 /**
  * Represents a service that manages themes.
@@ -43,7 +43,7 @@ export class ThemeService
      * Configures the instance.
      * @param themes The themes supported by the app.
      * @param themeFolderPath The path for the folder containing the themes.
-     * @param changeFunc The function that is invoked when setting the theme.
+     * @param changeFunc The function that is invoked before the theme changes.
      */
     @once
     public configure(themes: ITheme[], changeFunc: ThemeChangeFunc): void
