@@ -1,23 +1,27 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
+import { Operation } from "shared/utilities";
+import { Modal } from "shared/framework";
 import { RouteAssignmentService, Route } from "app/model/route";
 import { Driver, DriverService } from "app/model/driver";
-import { Operation } from "shared/utilities";
 
 @autoinject
 export class AssignDriverPanel
 {
     /**
      * Creates a new instance of the class.
-     * @param routeService The `RouteAssignmentService` instance.
+     * @param modal The `Modal` instance representing the modal.
+     * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param driverService The `DriverService` instance.
      */
-    public constructor(routeService: RouteAssignmentService, driverService: DriverService)
+    public constructor(modal: Modal, routeAssignmentService: RouteAssignmentService, driverService: DriverService)
     {
-        this._routeAssignmentService = routeService;
+        this._modal = modal;
+        this._routeAssignmentService = routeAssignmentService;
         this._driverService = driverService;
     }
 
+    private readonly _modal: Modal;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _driverService: DriverService;
     private _result: Driver | undefined;
@@ -97,17 +101,18 @@ export class AssignDriverPanel
     }
 
     /**
-     * Called when the "Save" icon is clicked.
-     * Saves changes and transitions the modal to its readonly mode.
+     * Called when a driver in the list of drivers is clicked.
+     * Assigns the driver to the route and closes the modal.
      */
-    protected async onSaveClick(): Promise<void>
+    protected async onDriverClick(driver: Driver): Promise<void>
     {
         try
         {
-            await this._routeAssignmentService.assignDriver(this.route, this.driver!);
+            await this._routeAssignmentService.assignDriver(this.route, driver);
 
-            this.route.driver = this.driver;
-            this._result = this.driver;
+            this._result = driver;
+
+            await this._modal.close();
         }
         catch (error)
         {

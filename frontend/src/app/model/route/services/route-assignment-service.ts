@@ -1,3 +1,4 @@
+import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { Route } from "../entities/route";
 import { Driver } from "app/model/driver";
@@ -7,6 +8,7 @@ import { Fulfiller } from "app/model/outfit";
 /**
  * Represents a service assigns routes to fulfillers or drivers.
  */
+@autoinject
 export class RouteAssignmentService
 {
     /**

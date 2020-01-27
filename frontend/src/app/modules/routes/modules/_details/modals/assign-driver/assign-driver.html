@@ -56,11 +56,17 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Phone
+                        </span>
+                    </data-table-cell>
+
                 </data-table-headers>
 
                 <template repeat.for="driver of filteredDrivers">
 
-                    <data-table-row>
+                    <data-table-row click.call="onDriverClick(driver)">
 
                         <data-table-cell>
                             <identity-picture src.bind="driver.pictureUrl">
@@ -83,6 +89,12 @@
                         <data-table-cell>
                             <span class="text-truncate">
                                 ${driver.vehicleTypes | map: 'name' | list: 'narrow'}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${driver.phone}
                             </span>
                         </data-table-cell>
 
