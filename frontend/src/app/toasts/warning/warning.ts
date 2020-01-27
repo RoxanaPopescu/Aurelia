@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { Toast } from "shared/framework/services/toast";
+import { Toast } from "shared/framework";
+import settings from "resources/settings";
 
 export interface IWarningToastModel
 {
@@ -17,6 +18,12 @@ export interface IWarningToastModel
      * The details to show, or undefined to show no details section.
      */
     details: string;
+
+    /**
+     * The time in milliseconds before the the toast is hidden,
+     * null to never hide the toast, or undefined to use the default.
+     */
+    timeout?: number | null;
 }
 
 /**
@@ -52,7 +59,10 @@ export class WarningToast
         this.model = model;
 
         // Schedule the toast to close automatically.
-        this._closeTimeouthandle = setTimeout(() => this._toast.close(), 20000);
+        if (this.model.timeout !== null)
+        {
+            this._closeTimeouthandle = setTimeout(() => this._toast.close(), this.model.timeout ?? settings.app.defaultToastTimeout);
+        }
     }
 
     /**

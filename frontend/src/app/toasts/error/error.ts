@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { Toast } from "shared/framework/services/toast";
+import { Toast } from "shared/framework";
 import { MapObject } from "shared/types";
+import settings from "resources/settings";
 
 export interface IErrorToastModel
 {
@@ -12,12 +13,18 @@ export interface IErrorToastModel
     /**
      * The error to show, or undefined if no error exists.
      */
-    error?: Error;
+    error?: Error | string;
 
     /**
      * The context associated with the error, or undefined if no error exists.
      */
     context?: MapObject;
+
+    /**
+     * The time in milliseconds before the the toast is hidden,
+     * null to never hide the toast, or undefined to use the default.
+     */
+    timeout?: number | null;
 }
 
 /**
@@ -44,6 +51,21 @@ export class ErrorToast
     protected model: IErrorToastModel;
 
     /**
+     * The error message.
+     */
+    protected errorMessage: string;
+
+    /**
+     * The error name
+     */
+    protected errorName: string;
+
+    /**
+     * The error stack trace
+     */
+    protected errorStack: string;
+
+    /**
      * Called by the framework when the toast is activated.
      * @param model The model to use for the toast.
      */
@@ -52,8 +74,40 @@ export class ErrorToast
         // Sets the model for the toast.
         this.model = model;
 
+        if (this.model.error instanceof Error)
+        {
+            // Get the name of the error.
+            this.errorName = this.model.error.name.trim();
+
+            // Get the error message, stripping out the name, if present.
+            this.errorMessage = this.model.error.message.trim();
+
+            // Get the error stack, stripping out the name and message, if present.
+
+            let errorStack = this.model.error.stack || this.model.error.toString();
+
+            if (errorStack.startsWith(this.errorName))
+            {
+                errorStack = errorStack.substring(this.errorName.length).replace(/^(\s*[:@]\s*)/, "");
+            }
+
+            if (errorStack.startsWith(this.errorMessage))
+            {
+                errorStack = errorStack.substring(this.errorMessage.length);
+            }
+
+            this.errorStack = errorStack.trim().split("\n").map(line => `   ${line.trim()}`).join("\n");
+        }
+        else if (this.model.error != null)
+        {
+            this.errorMessage = this.model.error.toString();
+        }
+
         // Schedule the toast to close automatically.
-        this._closeTimeouthandle = setTimeout(() => this._toast.close(), 20000);
+        if (this.model.timeout !== null)
+        {
+            this._closeTimeouthandle = setTimeout(() => this._toast.close(), this.model.timeout ?? settings.app.defaultToastTimeout);
+        }
     }
 
     /**
