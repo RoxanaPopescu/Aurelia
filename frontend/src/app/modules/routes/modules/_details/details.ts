@@ -9,6 +9,7 @@ import { DriverService } from "app/model/driver";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
+import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
 
 /**
  * Represents the route parameters for the page.
@@ -157,7 +158,7 @@ export class DetailsModule
      */
     protected async onAssignFulfillerClick(): Promise<void>
     {
-        const fulfiller = await this._modalService.open(AssignDriverPanel, this.route).promise;
+        const fulfiller = await this._modalService.open(AssignFulfillerPanel, this.route).promise;
 
         if (fulfiller != null)
         {

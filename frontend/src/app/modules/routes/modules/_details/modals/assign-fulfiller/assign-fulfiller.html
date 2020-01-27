@@ -1,0 +1,83 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./assign-fulfiller.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="assign-fulfiller" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" translate>
+                Assign fulfiller
+            </h1>
+
+            <search-input value.bind="queryText" autofocus ref="queryInputElement">
+
+                <span slot="before" class="opacity-faded">
+                    <icon name="md-search" class="font-larger"></icon>
+                </span>
+
+                <span slot="placeholder" translate>
+                    Type to search…
+                </span>
+
+            </search-input>
+
+        </modal-header>
+
+        <modal-section if.bind="true" class="margin-bottom">
+
+            <data-table appearance="rows">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Name
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Phone
+                        </span>
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="fulfiller of filteredFulfillers">
+
+                    <data-table-row click.call="onFulfillerClick(fulfiller)">
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${fulfiller.primaryName}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${fulfiller.contactPhone}
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+            <busy-indicator if.bind="fulfillers == null" class="margin-largest"></busy-indicator>
+
+            <empty-indicator if.bind="filteredFulfillers.length == 0" class="margin-largest" translate>
+                No results
+            </empty-indicator>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>
