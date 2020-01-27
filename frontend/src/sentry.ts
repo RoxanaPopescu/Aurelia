@@ -10,10 +10,6 @@ import * as Integrations from "@sentry/integrations";
 
 if (ENVIRONMENT.integrations.sentry != null)
 {
-    // HACK: Ensure unhandled promise rejections are logged in the console.
-    // See: https://github.com/getsentry/sentry-javascript/issues/1909#issuecomment-552152624
-    window.onunhandledrejection = () => true;
-
     // Initialize Sentry.
     Sentry.init(
     {
