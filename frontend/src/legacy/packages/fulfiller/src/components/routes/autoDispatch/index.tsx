@@ -57,6 +57,8 @@ export default class AutoDispatchComponent extends React.Component {
   @observable
   private error: Error;
 
+  @observable saving = false;
+
   public render() {
     if (this.error) {
       return <ErrorInline description={this.error.message} />;
@@ -153,7 +155,7 @@ export default class AutoDispatchComponent extends React.Component {
               <Button
                 type={ButtonType.Action}
                 size={ButtonSize.Medium}
-                disabled={!this.openRule.isValid}
+                disabled={!this.openRule.isValid || this.saving}
                 onClick={() => this.onSaveOpenRule()}
               >
                 {Localization.operationsValue(
@@ -191,12 +193,16 @@ export default class AutoDispatchComponent extends React.Component {
       return;
     }
 
+    this.saving = true;
+
     try {
       await this.autoDispatchService.saveRule(this.openRule!);
       this.validateOpenRule = false;
+      this.saving = false;
       this.selectedRule = this.openRule;
       this.openRule = undefined;
     } catch (error) {
+      this.saving = false;
       Log.error("Could not save rule", error);
     }
   }

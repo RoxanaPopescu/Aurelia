@@ -398,7 +398,7 @@
   "./app/resources/strings/route-titles:fleet": "Flåde",
   "./app/resources/strings/route-titles:communication": "Kommunikation",
   "./app/resources/strings/route-titles:departments": "Afdelinger",
-  "./app/resources/strings/route-titles:users": "Brugerer",
+  "./app/resources/strings/route-titles:users": "Brugere",
   "./app/resources/strings/route-titles:agreements": "Aftaler",
   "./app/resources/strings/route-titles:design": "Design",
   "./shared/localization/resources/strings/format-tokens:year": "Å",
