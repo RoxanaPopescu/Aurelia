@@ -16,8 +16,8 @@
                 </div>
 
                 <circular-meter meterAccent="positive" percentage.bind="completedStops * 100 / route.stops.length">
-                    <div class="font-small opacity-faded">
-                        Færdiggjorte stop
+                    <div class="font-small opacity-faded" translate>
+                        Completed stops
                     </div>
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
