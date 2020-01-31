@@ -1,6 +1,8 @@
-import { RouteBase as AbstractRoute, RouteStopInfo } from "app/model/route";
+import { RouteBase as AbstractRoute } from "./route-base";
+import { RouteStopInfo } from "./route-stop-info";
 import { RouteStop } from "./route-stop";
 import { RoutePrice } from "./route-price";
+import { WeightRange } from "app/model/shared";
 
 /**
  * Represents details about a route.
@@ -21,6 +23,12 @@ export class Route extends AbstractRoute<RouteStop>
         this.overallRating = data.overallRating;
         this.driverListUrl = data.driverListUrl;
         this.allowAssignment = data.allowAssignment;
+        this.tags = data.tags;
+
+        if (data.totalWeightRange != null)
+        {
+            this.totalWeightRange = new WeightRange(data.totalWeightRange);
+        }
 
         if (data.priceOverview != null)
         {
@@ -44,7 +52,29 @@ export class Route extends AbstractRoute<RouteStop>
     public readonly driverListUrl?: string;
 
     /**
+     * The tags associated with the route.
+     */
+    public readonly tags: string[];
+
+    /**
+     * The total weight range for the colli in the order.
+     */
+    public readonly totalWeightRange?: WeightRange;
+
+    /**
      * True if the route may be assigned to a fulfiller or driver, otherwise false.
      */
     public allowAssignment: boolean;
+
+    /**
+     * The total number colli associated with pickups on non-cancelled stops on the route.
+     */
+    public get totalColliCount(): number
+    {
+        return this.stops
+            .filter(s =>
+                !s.status.slug.startsWith("cancelled"))
+            .reduce((total, s) =>
+                total + (s as RouteStop).pickups.reduce((t, d) => t + d.colli.length, 0), 0);
+    }
 }

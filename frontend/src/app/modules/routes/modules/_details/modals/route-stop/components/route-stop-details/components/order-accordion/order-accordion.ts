@@ -1,39 +1,29 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { Delivery } from "../../../../../../../../../../../legacy/packages/shared/src/model/logistics/delivery";
-import { Pickup } from "../../../../../../../../../../../legacy/packages/shared/src/model/logistics/pickup";
+import { Pickup, Delivery } from "app/model/route";
 
 @autoinject
 export class OrderAccordionCustomElement
 {
     /**
-     * Creates a new instance of the class.
-     */
-    public constructor()
-    {
-        console.log(this.orders)
-    }
-
-    /**
-     * The model for the modal.
+     * True if the table is expanded, otherwise false.
      */
     @bindable
     protected tableExpanded: boolean = false;
 
     /**
-     * The model for the modal.
+     * The expanded pickup or delivery, if any.
      */
     @bindable
     protected expandedOrder: Delivery | Pickup | undefined;
 
     /**
-     * The model for the modal.
+     * The expanded pickups or deliveries to present.
      */
     @bindable
     protected orders: Delivery[] | Pickup[];
 
     /**
-     * Test
-     * Test
+     * TODO: WTF IS THIS?
      */
     protected expanded(order: Delivery | Pickup): boolean
     {

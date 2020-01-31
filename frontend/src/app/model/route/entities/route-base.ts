@@ -5,6 +5,7 @@ import { Fulfiller } from "app/model/outfit";
 import { Driver } from "app/model/driver";
 import { Vehicle, VehicleType } from "app/model/vehicle";
 import { SearchModel } from "app/model/search-model";
+import { ProductType } from "app/model/product";
 import { IRouteReference } from "./route-reference";
 import { RouteStatus } from "./route-status";
 import { RouteStopBase } from "./route-stop-base";
@@ -24,6 +25,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
+        this.productType = new ProductType(data.productType);
         this.reference = data.reference;
         this.criticality = new RouteCriticality(data.criticality);
         this.status = new RouteStatus(data.status);
@@ -73,6 +75,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The slug identifying the route.
      */
     public readonly slug: string;
+
+    /**
+     * The type of product associated with the route.
+     */
+    public readonly productType: ProductType;
 
     /**
      * The non-unique reference for the route,

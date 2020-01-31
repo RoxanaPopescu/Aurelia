@@ -1,6 +1,10 @@
 import { Signature, Photo } from "app/model/shared";
-import { RouteStopBase, Pickup, Delivery } from "app/model/route";
+import { RouteStopBase } from "./route-stop-base";
+import { Pickup } from "./pickup";
+import { Delivery } from "./delivery";
+import { RouteStopProblem } from "./route-stop-problem";
 import clone from "clone";
+import { RouteStopActions } from "./route-stop-actions";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -17,6 +21,11 @@ export class RouteStop extends RouteStopBase
         {
             super(data, stopNumber);
 
+            this.pickups = data.pickups.map(p => new Pickup(p));
+            this.deliveries = data.deliveries.map(d => new Delivery(d));
+            this.actions = new RouteStopActions(data.actions);
+            this.problems = data.problems.map(p => new RouteStopProblem(p));
+            this.selfies = data.selfies.map(p => new Photo(p));
             this.signatureRequired = data.signatureRequired;
             this.photoRequired = data.photoRequired;
 
@@ -30,15 +39,6 @@ export class RouteStop extends RouteStopBase
                 this.photo = new Photo(data.photo);
             }
 
-            if (data.pickups != null)
-            {
-                this.pickups = data.pickups.map(p => new Pickup(p));
-            }
-
-            if (data.deliveries != null)
-            {
-                this.deliveries = data.deliveries.map(d => new Delivery(d));
-            }
         }
         else
         {
@@ -50,26 +50,6 @@ export class RouteStop extends RouteStopBase
     }
 
     /**
-     * True if a signature is required, otherwise false.
-     */
-    public readonly signatureRequired: boolean;
-
-    /**
-     * The signature captured to prove that the stop was completed.
-     */
-    public readonly signature?: Signature;
-
-    /**
-     * True if a photo is required, otherwise false.
-     */
-    public readonly photoRequired: boolean;
-
-    /**
-     * The photo captured to prove that the deliveries were completed.
-     */
-    public readonly photo?: Photo;
-
-    /**
      * The pickups to be completed at this stop.
      */
     public readonly pickups: Pickup[];
@@ -78,6 +58,35 @@ export class RouteStop extends RouteStopBase
      * The deliveries to be completed at this stop.
      */
     public readonly deliveries: Delivery[];
+
+    /**
+     * The actions that are required to complete the stop.
+     */
+    public readonly actions: RouteStopActions;
+
+    /**
+     * The problems associated with the stop.
+     */
+    public readonly problems: RouteStopProblem[];
+
+    /**
+     * The selfies captured at the stop to verify the drivers identity and appearance.
+     */
+    public readonly selfies: Photo[];
+
+    /**
+     * The signature captured to prove that the stop was completed.
+     */
+    public readonly signature?: Signature;
+
+    /**
+     * The photo captured to prove that the deliveries were completed.
+     */
+    public readonly photo?: Photo;
+
+    // TODO: Should be removed - replaced by actions
+    public readonly signatureRequired: boolean;
+    public readonly photoRequired: boolean;
 
     /**
      * True if there is an alert for this route stop, otherwise false.
