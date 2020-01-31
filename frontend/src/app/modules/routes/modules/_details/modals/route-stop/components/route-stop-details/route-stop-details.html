@@ -1,58 +1,54 @@
 <template>
 
+    <require from="app/components/data-section/data-section"></require>
     <require from="./components/order-accordion/order-accordion"></require>
 
     <modal-header scroll-fade>
 
         <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
+
             <div translate>
                 Stop ${model.stopNumber}
             </div>
+
             <div class="opacity-faded-more margin-left margin-right">
                 –
             </div>
+
             <div class="opacity-faded">
-                ${model.type.name}
+                ${model.type.name}, ${model.status.name}
             </div>
+
         </h1>
 
     </modal-header>
 
-    <modal-section if.bind="true" class="margin-bottom">
-
-        <!--
-        <div class="flex-row margin-bottom">
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded flex-basis-1-of-2" translate>
-                    Stop type
-                </div>
-                <div>
-                    ${model.type.name}
-                </div>
-            </div>
-
-        </div>
-        -->
+    <data-section class="margin-bottom">
 
         <div class="flex-row margin-bottom">
 
             <div class="flex-row flex-basis-1-of-2">
+
                 <div class="opacity-faded flex-basis-1-of-2" translate>
                     Planned arrival
                 </div>
+
                 <div>
                     ${model.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                 </div>
+
             </div>
 
             <div class="flex-row flex-basis-1-of-2">
+
                 <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
                     Planned loading time
                 </div>
+
                 <div>
                     ${model.loadingTime | time: 'narrow' : false}
                 </div>
+
             </div>
 
         </div>
@@ -60,94 +56,39 @@
         <div class="flex-row">
 
             <div class="flex-row flex-basis-1-of-2">
+
                 <div class="opacity-faded flex-basis-1-of-2" translate>
                     Actual arrival
                 </div>
+
                 <div>
                     ${model.arrivalTime | dateTime: 'narrow' : false}
                 </div>
+
             </div>
 
             <div class="flex-row flex-basis-1-of-2">
+
                 <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
                     Actual loading time
                 </div>
+
                 <div>
                     ${model.loadingTime | time: 'narrow' : false}
                 </div>
+
             </div>
 
         </div>
 
-    </modal-section>
-
-    <modal-section if.bind="false" class="margin-bottom">
-
-        <div class="flex-row margin-bottom">
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded margin-right" translate>
-                    Stop type
-                </div>
-                <div>
-                    ${model.type.name}
-                </div>
-            </div>
-
-        </div>
-
-        <div class="flex-row margin-bottom">
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded margin-right" translate>
-                    Planned arrival
-                </div>
-                <div>
-                    ${model.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
-                </div>
-            </div>
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded margin-right" translate>
-                    Actual arrival
-                </div>
-                <div>
-                    ${model.arrivalTime | dateTime: 'narrow' : false}
-                </div>
-            </div>
-
-        </div>
-
-        <div class="flex-row">
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded margin-right" translate>
-                    Planned loading time
-                </div>
-                <div>
-                    ${model.loadingTime | time: 'narrow' : false}
-                </div>
-            </div>
-
-            <div class="flex-row flex-basis-1-of-2">
-                <div class="opacity-faded margin-right" translate>
-                    Actual loading time
-                </div>
-                <div>
-                    ${model.loadingTime | time: 'narrow' : false}
-                </div>
-            </div>
-
-        </div>
-
-    </modal-section>
+    </data-section>
 
     <!-- Consignee -->
     <template>
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Consignee
@@ -189,7 +130,7 @@
                 </a>
             </div>
 
-        </modal-section>
+        </data-section>
 
     </template>
 
@@ -198,7 +139,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Instructions
@@ -212,12 +153,12 @@
                 ${model.driverInstructions}
             </div>
 
-        </modal-section>
+        </data-section>
 
     </template>
 
     <!--
-    <modal-section toggle.bind="true" class="margin-bottom">
+    <data-section toggle.bind="true" class="margin-bottom">
 
         <div slot="header" translate>
             Missing colli
@@ -227,7 +168,7 @@
             No missing colli at this stop
         </div>
 
-    </modal-section>
+    </data-section>
     -->
 
     <!-- Orders to be delivered -->
@@ -235,7 +176,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Deliveries
@@ -270,7 +211,7 @@
 
             </card> -->
 
-        </modal-section>
+        </data-section>
 
     </template>
 
@@ -279,7 +220,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Pickups
@@ -318,7 +259,7 @@
 
             </card> -->
 
-        </modal-section>
+        </data-section>
 
     </template>
 
@@ -327,7 +268,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Proof of delivery
@@ -347,7 +288,7 @@
 
             </template>
 
-        </modal-section>
+        </data-section>
 
     </template>
 
@@ -356,7 +297,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Signature
@@ -376,7 +317,7 @@
 
             </template>
 
-        </modal-section>
+        </data-section>
 
     </template>
 
@@ -385,7 +326,7 @@
 
         <hr class="hr-line margin-bottom margin-top">
 
-        <modal-section toggle.bind="true">
+        <data-section toggle.bind="true">
 
             <div slot="header" translate>
                 Driver verification
@@ -395,7 +336,7 @@
                 No driver photos at this stop
             </div>
 
-        </modal-section>
+        </data-section>
 
     </template>
 

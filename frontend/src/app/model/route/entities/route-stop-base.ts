@@ -16,10 +16,10 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public constructor(data?: any, stopNumber?: number)
     {
+        super(data, stopNumber);
+
         if (data != null)
         {
-            super(data, stopNumber);
-
             this.port = data.port;
             this.driverInstructions = data.driverInstructions;
             this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
@@ -39,10 +39,6 @@ export abstract class RouteStopBase extends RouteStopInfo
             {
                 this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
             }
-        }
-        else
-        {
-            super();
         }
     }
 
@@ -109,7 +105,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * True if the route stop has been selected by the user, otherwise false.
      */
-    public selected: boolean;
+    public selected = false;
 
     /**
      * The delay at the stop, if the driver arrived late.

@@ -33,7 +33,7 @@
                     </div>
 
                     <div slot="value" empty>
-                        <!--TODO-->
+                        ${route.type.name}
                     </div>
 
                 </page-sidebar-value>
@@ -81,7 +81,7 @@
                     </div>
 
                     <div slot="value" empty>
-                        <!--TODO-->
+                        ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
                     </div>
 
                 </page-sidebar-value>
@@ -89,11 +89,11 @@
                 <page-sidebar-value>
 
                     <div slot="heading" translate>
-                        Kolli
+                        Colli
                     </div>
 
                     <div slot="value" empty>
-                        <!--TODO-->
+                        ${route.totalColliCount | number}
                     </div>
 
                 </page-sidebar-value>
@@ -348,19 +348,19 @@
                             Change status
                         </div>
 
-                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.capture="onChooseStatus('not-started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.capture="onStatusItemClick('not-started')" translate>
                             Not started
                         </item>
 
-                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.capture="onChooseStatus('started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.capture="onStatusItemClick('started')" translate>
                             Started
                         </item>
 
-                        <item disabled.bind="['completed'].includes(route.status.slug)" click.capture="onChooseStatus('completed')" translate>
+                        <item disabled.bind="['completed'].includes(route.status.slug)" click.capture="onStatusItemClick('completed')" translate>
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.capture="onChooseStatus('cancelled')" translate>
+                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.capture="onStatusItemClick('cancelled')" translate>
                             Cancelled
                         </item>
 

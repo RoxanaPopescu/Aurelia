@@ -76,16 +76,14 @@ export class RouteService
     /**
      * Saves the specified route stop.
      * @param routeStop The route stop to save.
-     * @returns A promise that will be resolved with the route stop.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async saveRouteStop(routeStop: RouteStop): Promise<RouteStop>
+    public async saveRouteStop(routeStop: RouteStop): Promise<void>
     {
-        const result = await this._apiClient.post("routes/stop/update",
+        await this._apiClient.post("routes/stop/update",
         {
             body: routeStop
         });
-
-        return new RouteStop(result.data);
     }
 
     /**

@@ -16,7 +16,6 @@ export class RouteStopPanel
     }
 
     private readonly _routeService: RouteService;
-
     private _result: RouteStop | undefined;
 
     /**
@@ -60,11 +59,6 @@ export class RouteStopPanel
      */
     public async deactivate(): Promise<RouteStop | undefined>
     {
-        if (!this.isNew)
-        {
-            this._result = this.model;
-        }
-
         return this._result;
     }
 
@@ -96,6 +90,7 @@ export class RouteStopPanel
 
             await this._routeService.saveRouteStop(this.model);
 
+            this._result = this.model;
             this.edit = false;
         }
         catch (error)

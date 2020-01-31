@@ -89,56 +89,6 @@ export class DetailsModule
     }
 
     /**
-     * Called when the "Edit" icon is clicked on a route stop.
-     * Opens at modal for editing the stop.
-     * @param stop The stop to edit.
-     */
-    protected async onEditStopClick(stop: RouteStop): Promise<void>
-    {
-        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
-
-        // if (newStop != null)
-        // {
-        //     this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
-        // }
-
-        if (newStop != null && newStop !== stop)
-        {
-            // Create and execute the new operation.
-            this.fetchOperation = new Operation(async signal =>
-            {
-                // Fetch the data.
-                this.route = await this._routeService.get(this.route!.id, signal);
-            });
-        }
-    }
-
-    /**
-     * Called when the "Edit" icon is clicked on a route stop.
-     * Opens at modal for editing the stop.
-     * @param stop The stop to edit.
-     */
-    protected async onStopClick(stop: RouteStop): Promise<void>
-    {
-        const newStop = await this._modalService.open(RouteStopPanel, stop).promise;
-
-        // if (newStop != null)
-        // {
-        //     this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, newStop);
-        // }
-
-        if (newStop != null && newStop !== stop)
-        {
-            // Create and execute the new operation.
-            this.fetchOperation = new Operation(async signal =>
-            {
-                // Fetch the data.
-                this.route = await this._routeService.get(this.route!.id, signal);
-            });
-        }
-    }
-
-    /**
      * Called when the `Assign driver` button is clicked.
      * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
      */
@@ -167,11 +117,11 @@ export class DetailsModule
     }
 
     /**
-     * Called when the user changes the status of the route.
-     * Sets the new status.
-     * @param status The new status value.
+     * Called when an item in the `Status` selector is clicked.
+     * Sets the new route status.
+     * @param status The slug identifying the new route status.
      */
-    protected async onChooseStatus(status: RouteStatusSlug): Promise<void>
+    protected async onStatusItemClick(status: RouteStatusSlug): Promise<void>
     {
         if (status === this.route!.status.slug)
         {
@@ -189,9 +139,46 @@ export class DetailsModule
     }
 
     /**
+     * Called when a route stop is clicked.
+     * Opens a modal showing the details of the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onStopClick(stop: RouteStop): Promise<void>
+    {
+        const savedStop = await this._modalService.open(RouteStopPanel, stop).promise;
+
+        if (savedStop != null)
+        {
+            // TODO: Do we need this, or should we only fetch the new route?
+            if (savedStop.id)
+            {
+                this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
+            }
+            else
+            {
+                // TODO: Insert stop at the correct index.
+                // this.route!.stops.push(savedStop);
+            }
+
+            this.fetchRoute(this.route!.id);
+        }
+    }
+
+    /**
+     * Called when the "Edit" icon is clicked on a route stop.
+     * Opens a modal for editing the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onEditStopClick(stop: RouteStop): Promise<void>
+    {
+        // TODO: Open directly in edit mode.
+        await this.onStopClick(stop);
+    }
+
+    /**
      * Called when the `Remove stop` icon is clicked on a route stop.
      * Asks the user to confirm, then deletes the stop from the route.
-     * @param status The new status value.
+     * @param stop The stop to remove.
      */
     protected async onRemoveStopClick(stop: RouteStop): Promise<void>
     {
@@ -212,10 +199,12 @@ export class DetailsModule
         {
             Log.error("Could not remove route stop", error);
         }
+
+        this.fetchRoute(this.route!.id);
     }
 
     /**
-     * Fetches the route.
+     * Fetches the specified route.
      * @param routeId The ID of the route to fetch.
      */
     private fetchRoute(routeId: string): void
