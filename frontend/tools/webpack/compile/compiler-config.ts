@@ -217,24 +217,25 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     test: /\.(png|gif|jpg|cur|svg)$/i,
                     exclude: paths.iconFolders,
                     loader: "url-loader",
-                    options: { limit: 10000 }
+                    options: { esModule: false, limit: 10000 }
                 },
                 {
                     test: /\.woff2$/i,
                     loader: "url-loader",
-                    options: { limit: 10000 }
+                    options: { esModule: false, limit: 10000 }
                 },
                 {
                     test: /\.woff$/i,
                     loader: "url-loader",
-                    options: { limit: 10000 }
+                    options: { esModule: false, limit: 10000 }
                 },
 
                 // Loader for files that should be fetched separately.
                 {
                     test: /\.(ttf|eot|otf)$/i,
                     exclude: paths.iconFolders,
-                    loader: "file-loader"
+                    loader: "file-loader",
+                    options: { esModule: false }
                 }
             ]
         },
