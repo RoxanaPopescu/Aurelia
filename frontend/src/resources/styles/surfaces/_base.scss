@@ -35,6 +35,18 @@ $__summary: comment;
     --border-color--active: var(--palette-color-neutral);
     --surface-color--active: var(--palette-color-whitepoint);
 
+    // Scrollbars on the surface.
+    &
+    {
+        // State: normal
+        --surface-scrollbar-track-color: rgba(0, 0, 0, 0.035);
+        --surface-scrollbar-thumb-color: var(--palette-color-neutral);
+
+        // State: hover
+        --surface-scrollbar-track-color--hover: rgba(0, 0, 0, 0.035);
+        --surface-scrollbar-thumb-color--hover: var(--palette-color-neutral-dark);
+    }
+
     // Markings on the surface.
     &
     {

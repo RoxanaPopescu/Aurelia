@@ -22,6 +22,18 @@ $__summary: comment;
     --border-color: var(--palette-color-primary);
     --surface-color: var(--palette-color-primary);
 
+    // Scrollbars on the surface.
+    &
+    {
+        // State: normal
+        --surface-scrollbar-track-color: rgba(0, 0, 0, 0.12);
+        --surface-scrollbar-thumb-color: var(--palette-color-primary--active);
+
+        // State: hover
+        --surface-scrollbar-track-color--hover: rgba(0, 0, 0, 0.12);
+        --surface-scrollbar-thumb-color--hover: var(--palette-color-primary--child);
+    }
+
     // Markings on the surface.
     &
     {
