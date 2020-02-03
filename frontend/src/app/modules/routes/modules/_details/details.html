@@ -81,7 +81,9 @@
                     </div>
 
                     <div slot="value" empty>
-                        ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
+                        <template if.bind="route.totalWeightRange != null">
+                            ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
+                        </template>
                     </div>
 
                 </page-sidebar-value>

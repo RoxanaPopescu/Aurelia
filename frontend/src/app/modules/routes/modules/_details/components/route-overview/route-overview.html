@@ -12,18 +12,12 @@
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
                 <div class="font-small margin-bottom opacity-faded" translate>
-                    Status
+                    Completed stops
                 </div>
 
                 <circular-meter meterAccent="positive" percentage.bind="completedStops * 100 / route.stops.length">
-                    <div class="font-small opacity-faded" translate>
-                        Completed stops
-                    </div>
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
-                    </div>
-                    <div class="font-small">
-                        &nbsp;
                     </div>
                 </circular-meter>
 

@@ -10,7 +10,7 @@ export class RouteStopActions
     public constructor(data: any)
     {
         this.instructionsAccept = data.instructionsAccept;
-        this.timeRangeVerification = data.timeRangeVerification;
+        this.timeFrameVerification = data.timeFrameVerification;
         this.scanColli = data.scanColli;
         this.scanAllColli = data.scanAllColli;
         this.signature = data.signature;
@@ -26,7 +26,7 @@ export class RouteStopActions
     /**
      * True if the time frame must be verified, otherwise false.
      */
-    public timeRangeVerification: boolean;
+    public timeFrameVerification: boolean;
 
     /**
      * True to enable colli scanning for the stop, otherwise false.
