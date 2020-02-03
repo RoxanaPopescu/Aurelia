@@ -1,6 +1,8 @@
 import { Container } from "aurelia-framework";
 import { MapObject } from "shared/types";
-import { ToastService } from "shared/framework";
+
+// TODO: This reference is technically not allowed, as `infrastructure` should reference `framework`.
+import { ToastService } from "shared/framework/services/toast";
 
 // The global Sentry instance, defined once Sentry has been initialized.
 declare const Sentry: any;
