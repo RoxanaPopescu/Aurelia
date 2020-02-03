@@ -286,6 +286,12 @@ input
     font: inherit;
 }
 
+input[type="search"]::-webkit-search-decoration
+{
+    // Prevent unwanted indentation of the placeholder and value in Safari.
+    -webkit-appearance: none;
+}
+
 
 // TODO: This should be removed as soon as possible.
 // Styles targeting native element.
