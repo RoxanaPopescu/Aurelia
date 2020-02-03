@@ -9,7 +9,7 @@ body
 .toggle
 {
     /// The color of the indicator on the surface of the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --toggle-surface-indicator-color: var(--surface-toggle-surface-indicator-color);
     --toggle-surface-indicator-color--hover: var(--surface-toggle-surface-indicator-color--hover);
     --toggle-surface-indicator-color--focus: var(--surface-toggle-surface-indicator-color--focus);

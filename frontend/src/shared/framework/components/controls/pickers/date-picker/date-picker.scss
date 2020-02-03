@@ -13,21 +13,21 @@ body
 date-picker
 {
     /// The color of the border of the items within the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --date-picker-surface-item-border-color: var(--surface-date-picker-surface-item-border-color);
     --date-picker-surface-item-border-color--hover: var(--surface-date-picker-surface-item-border-color--hover);
     --date-picker-surface-item-border-color--active: var(--surface-date-picker-surface-item-border-color--active);
     --date-picker-surface-item-border-color--today: var(--surface-date-picker-surface-item-border-color--today);
 
     /// The color of the surface of items within the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --date-picker-surface-item-surface-color: var(--surface-date-picker-surface-item-surface-color);
     --date-picker-surface-item-surface-color--hover: var(--surface-date-picker-surface-item-surface-color--hover);
     --date-picker-surface-item-surface-color--active: var(--surface-date-picker-surface-item-surface-color--active);
     --date-picker-surface-item-surface-color--today: var(--surface-date-picker-surface-item-surface-color--today);
 
     /// The color of the text on the surface of items within the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --date-picker-surface-item-surface-text-color: var(--surface-date-picker-surface-item-surface-text-color);
     --date-picker-surface-item-surface-text-color--hover: var(--surface-date-picker-surface-item-surface-text-color--hover);
     --date-picker-surface-item-surface-text-color--active: var(--surface-date-picker-surface-item-surface-text-color--active);

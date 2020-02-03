@@ -129,25 +129,30 @@ modal-dialog
 
     .modal-dialog-actions
     {
-        // Position at the top-right corner of the dialog.
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        float: right;
-
-        // Use horizontal flex layout.
-        display: flex;
-
-        // Center items vertically.
-        align-items: center;
-
         // Apply padding.
         padding: 5.5rem;
 
         // Prevent selection.
         user-select: none;
 
-        button:not(:first-of-type)
+        &,
+        > [slot="actions"]
+        {
+            // Position at the top-right corner of the dialog.
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            float: right;
+
+            // Use horizontal flex layout.
+            display: flex;
+
+            // Center items vertically.
+            align-items: center;
+        }
+
+        > *,
+        > [slot="actions"] > *
         {
             // Provide default item spacing.
             margin-left: 3rem;

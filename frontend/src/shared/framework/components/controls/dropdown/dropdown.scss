@@ -29,15 +29,15 @@ body
 dropdown
 {
     /// The color of the border of the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --dropdown-border-color: var(--surface-dropdown-border-color);
 
     /// The color of the surface of the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --dropdown-surface-color: var(--surface-dropdown-surface-color);
 
     /// The color of the text on the surface of the component.
-    /// TODO: This should be customized for each theme surface.
+    /// NOTE: This should be customized for each theme surface.
     --dropdown-surface-text-color: var(--surface-dropdown-surface-text-color);
 }
 

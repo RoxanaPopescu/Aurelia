@@ -12,7 +12,7 @@
 
         <slot name="actions"></slot>
 
-        <button if.bind="closeButton && toast != null" appearance="icon" click.trigger="onCloseClick()">
+        <button if.bind="closeButton && toast != null" title.translate="Close" appearance="icon" click.trigger="onCloseClick()">
             <icon name="close"></icon>
         </button>
 

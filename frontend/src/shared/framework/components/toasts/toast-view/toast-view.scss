@@ -131,6 +131,12 @@ toast-view
             animation-duration: var(--animation-duration-long);
 
             --private-toast-backdrop-opacity: var(--toast-backdrop-opacity);
+
+            *
+            {
+                // Prevent pointer events and hover effects while the toast is animating.
+                pointer-events: none !important;
+            }
         }
 
         &.au-leave-active
@@ -139,6 +145,12 @@ toast-view
             animation-duration: var(--animation-duration-long);
 
             --private-toast-backdrop-opacity: 0;
+
+            *
+            {
+                // Prevent pointer events and hover effects while the toast is animating.
+                pointer-events: none !important;
+            }
         }
 
         > *

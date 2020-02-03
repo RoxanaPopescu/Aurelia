@@ -2,6 +2,9 @@ import { autoinject } from "aurelia-framework";
 import { Toast } from "shared/framework";
 import settings from "resources/settings";
 
+/**
+ * Represents the model for a toast that notifies the user of an event or new info.
+ */
 export interface IInfoToastModel
 {
     /**

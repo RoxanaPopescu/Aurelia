@@ -61,10 +61,6 @@ tree-nav-node
         position: relative;
         flex-grow: 1;
 
-        // TODO: Enable this to truncate the title when the width
-        // of the tree reaches the width of its container.
-        // min-width: 0;
-
         text-input
         {
             position: absolute;
@@ -82,12 +78,6 @@ tree-nav-node
             --input-surface-text-color: currentColor;
             --input-surface-text-color--hover: currentColor;
             --input-surface-text-color--focus: currentColor;
-
-            input
-            {
-                // TODO: Remove when old form styles no longer mess with this.
-                min-height: 1em;
-            }
         }
     }
 

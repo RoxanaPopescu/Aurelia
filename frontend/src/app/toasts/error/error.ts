@@ -3,6 +3,9 @@ import { Toast } from "shared/framework";
 import { MapObject } from "shared/types";
 import settings from "resources/settings";
 
+/**
+ * Represents the model for a toast that notifies the user that an error has occurred.
+ */
 export interface IErrorToastModel
 {
     /**
