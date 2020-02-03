@@ -1,0 +1,12 @@
+{
+    "years,months": "${years} ${years | plural: \"year\" : \"years\"}, ${months} ${months | plural: \"month\" : \"months\"}",
+    "years": "${years} ${years | plural: \"year\" : \"years\"}",
+    "months,days": "${months} ${months | plural: \"month\" : \"months\"}, ${days} ${days | plural: \"day\" : \"days\"}",
+    "months": "${months} ${months | plural: \"month\" : \"months\"}",
+    "days,hours": "${days} ${days | plural: \"day\" : \"days\"}, ${hours} ${hours | plural: \"hour\" : \"hours\"}",
+    "hours,minutes": "${hours} ${hours | plural: \"hour\" : \"hours\"}, ${minutes} ${minutes | plural: \"minute\" : \"minutes\"}",
+    "hours": "${hours} ${hours | plural: \"hour\" : \"hours\"}, ${minutes} ${minutes | plural: \"minute\" : \"minutes\"}",
+    "minutes,seconds": "${minutes} ${minutes | plural: \"minute\" : \"minutes\"}, ${seconds} ${seconds | plural: \"second\" : \"seconds\"}",
+    "minutes": "${minutes} ${minutes | plural: \"minute\" : \"minutes\"}",
+    "seconds": "${seconds} ${seconds | plural: \"second\" : \"seconds\"}"
+}
