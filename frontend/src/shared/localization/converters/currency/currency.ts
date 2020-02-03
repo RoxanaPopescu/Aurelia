@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { LocaleService } from "../../services/locale";
-import { ICurrencyValue } from "../../../types/values/currency-value";
-import { roundNumber } from "../../../utilities";
+import { ICurrencyValue } from "shared/types";
+import { roundNumber } from "shared/utilities";
 
 // The cache in which number formats will be stored.
 const numberFormatCache = new Map<string, Intl.NumberFormat>();

@@ -1,8 +1,8 @@
-import { MapObject } from "shared/types";
 import { singleton, computedFrom } from "aurelia-framework";
 import { History } from "aurelia-history";
 import { AppRouter, PipelineResult } from "aurelia-router";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { MapObject } from "shared/types";
 
 // The separator used between segments of a route name.
 export const routeNameSeparator = "/";

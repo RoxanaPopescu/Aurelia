@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { LocaleService } from "../../services/locale";
 import { DateTime, LocaleOptions, DateTimeFormatOptions, Duration } from "luxon";
 import { TimeOfDay } from "shared/types";
+import { LocaleService } from "../../services/locale";
 
 // The available formats.
 const timeStyles =

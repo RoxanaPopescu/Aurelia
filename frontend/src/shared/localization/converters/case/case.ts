@@ -1,4 +1,4 @@
-import { textCase, TextCase } from "../../../utilities/text";
+import { textCase, TextCase } from "shared/utilities";
 
 /**
  * Represents a value converter that converts a string from one text case to another.

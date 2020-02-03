@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { LocaleService } from "../../services/locale";
 import { DateTime, LocaleOptions, DateTimeFormatOptions, Info } from "luxon";
+import { LocaleService } from "../../services/locale";
 
 /**
  * Represents the supported weekday style values.

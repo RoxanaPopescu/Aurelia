@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { LocaleService } from "../../services/locale";
 import { DateTime, ToRelativeCalendarOptions } from "luxon";
+import { LocaleService } from "../../services/locale";
 
 /**
  * Represents a value converter that formats a date as a localized, relative date string.

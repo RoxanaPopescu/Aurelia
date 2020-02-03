@@ -1,4 +1,4 @@
-import { MapObject } from "../../../types";
+import { MapObject } from "shared/types";
 
 /**
  * Represents a value converter that takes a key, and selects the corresponding value
