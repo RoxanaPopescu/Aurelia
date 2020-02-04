@@ -1,0 +1,184 @@
+////
+/// @group framework/modifiers/accent
+////
+
+/// Modifier classes that define one of the accents as the current 'accent' for the surface.
+$__summary: comment;
+
+@import "resources/index";
+
+
+/// Modifier class that defines the `neutral` accent as the current 'accent' for the surface.
+.accent-neutral
+{
+    --surface-accent-text-color: var(--surface-neutral-text-color);
+    --surface-accent-icon-color: var(--surface-neutral-icon-color);
+    --surface-accent-border-color: var(--surface-neutral-border-color);
+    --surface-accent-surface-color: var(--surface-neutral-surface-color);
+    --surface-accent-surface-text-color: var(--surface-neutral-surface-text-color);
+    --surface-accent-surface-icon-color: var(--surface-neutral-surface-icon-color);
+
+    // State: hover
+    --surface-accent-text-color--hover: var(--surface-neutral-text-color--hover);
+    --surface-accent-icon-color--hover: var(--surface-neutral-icon-color--hover);
+    --surface-accent-border-color--hover: var(--surface-neutral-border-color--hover);
+    --surface-accent-surface-color--hover: var(--surface-neutral-surface-color--hover);
+    --surface-accent-surface-text-color--hover: var(--surface-neutral-surface-text-color--hover);
+    --surface-accent-surface-icon-color--hover: var(--surface-neutral-surface-icon-color--hover);
+
+    // State: focus
+    --surface-accent-text-color--focus: var(--surface-neutral-text-color--focus);
+    --surface-accent-icon-color--focus: var(--surface-neutral-icon-color--focus);
+    --surface-accent-border-color--focus: var(--surface-neutral-border-color--focus);
+    --surface-accent-surface-color--focus: var(--surface-neutral-surface-color--focus);
+    --surface-accent-surface-text-color--focus: var(--surface-neutral-surface-text-color--focus);
+    --surface-accent-surface-icon-color--focus: var(--surface-neutral-surface-icon-color--focus);
+
+    // State: active
+    --surface-accent-text-color--active: var(--surface-neutral-text-color--active);
+    --surface-accent-icon-color--active: var(--surface-neutral-icon-color--active);
+    --surface-accent-border-color--active: var(--surface-neutral-border-color--active);
+    --surface-accent-surface-color--active: var(--surface-neutral-surface-color--active);
+    --surface-accent-surface-text-color--active: var(--surface-neutral-surface-text-color--active);
+    --surface-accent-surface-icon-color--active: var(--surface-neutral-surface-icon-color--active);
+}
+
+/// Modifier class that defines the `info` accent as the current 'accent' for the surface.
+.accent-info
+{
+    --surface-accent-text-color: var(--surface-info-text-color);
+    --surface-accent-icon-color: var(--surface-info-icon-color);
+    --surface-accent-border-color: var(--surface-info-border-color);
+    --surface-accent-surface-color: var(--surface-info-surface-color);
+    --surface-accent-surface-text-color: var(--surface-info-surface-text-color);
+    --surface-accent-surface-icon-color: var(--surface-info-surface-icon-color);
+
+    // State: hover
+    --surface-accent-text-color--hover: var(--surface-info-text-color--hover);
+    --surface-accent-icon-color--hover: var(--surface-info-icon-color--hover);
+    --surface-accent-border-color--hover: var(--surface-info-border-color--hover);
+    --surface-accent-surface-color--hover: var(--surface-info-surface-color--hover);
+    --surface-accent-surface-text-color--hover: var(--surface-info-surface-text-color--hover);
+    --surface-accent-surface-icon-color--hover: var(--surface-info-surface-icon-color--hover);
+
+    // State: focus
+    --surface-accent-text-color--focus: var(--surface-info-text-color--focus);
+    --surface-accent-icon-color--focus: var(--surface-info-icon-color--focus);
+    --surface-accent-border-color--focus: var(--surface-info-border-color--focus);
+    --surface-accent-surface-color--focus: var(--surface-info-surface-color--focus);
+    --surface-accent-surface-text-color--focus: var(--surface-info-surface-text-color--focus);
+    --surface-accent-surface-icon-color--focus: var(--surface-info-surface-icon-color--focus);
+
+    // State: active
+    --surface-accent-text-color--active: var(--surface-info-text-color--active);
+    --surface-accent-icon-color--active: var(--surface-info-icon-color--active);
+    --surface-accent-border-color--active: var(--surface-info-border-color--active);
+    --surface-accent-surface-color--active: var(--surface-info-surface-color--active);
+    --surface-accent-surface-text-color--active: var(--surface-info-surface-text-color--active);
+    --surface-accent-surface-icon-color--active: var(--surface-info-surface-icon-color--active);
+}
+
+/// Modifier class that defines the `positive` accent as the current 'accent' for the surface.
+.accent-positive
+{
+    --surface-accent-text-color: var(--surface-positive-text-color);
+    --surface-accent-icon-color: var(--surface-positive-icon-color);
+    --surface-accent-border-color: var(--surface-positive-border-color);
+    --surface-accent-surface-color: var(--surface-positive-surface-color);
+    --surface-accent-surface-text-color: var(--surface-positive-surface-text-color);
+    --surface-accent-surface-icon-color: var(--surface-positive-surface-icon-color);
+
+    // State: hover
+    --surface-accent-text-color--hover: var(--surface-positive-text-color--hover);
+    --surface-accent-icon-color--hover: var(--surface-positive-icon-color--hover);
+    --surface-accent-border-color--hover: var(--surface-positive-border-color--hover);
+    --surface-accent-surface-color--hover: var(--surface-positive-surface-color--hover);
+    --surface-accent-surface-text-color--hover: var(--surface-positive-surface-text-color--hover);
+    --surface-accent-surface-icon-color--hover: var(--surface-positive-surface-icon-color--hover);
+
+    // State: focus
+    --surface-accent-text-color--focus: var(--surface-positive-text-color--focus);
+    --surface-accent-icon-color--focus: var(--surface-positive-icon-color--focus);
+    --surface-accent-border-color--focus: var(--surface-positive-border-color--focus);
+    --surface-accent-surface-color--focus: var(--surface-positive-surface-color--focus);
+    --surface-accent-surface-text-color--focus: var(--surface-positive-surface-text-color--focus);
+    --surface-accent-surface-icon-color--focus: var(--surface-positive-surface-icon-color--focus);
+
+    // State: active
+    --surface-accent-text-color--active: var(--surface-positive-text-color--active);
+    --surface-accent-icon-color--active: var(--surface-positive-icon-color--active);
+    --surface-accent-border-color--active: var(--surface-positive-border-color--active);
+    --surface-accent-surface-color--active: var(--surface-positive-surface-color--active);
+    --surface-accent-surface-text-color--active: var(--surface-positive-surface-text-color--active);
+    --surface-accent-surface-icon-color--active: var(--surface-positive-surface-icon-color--active);
+}
+
+/// Modifier class that defines the `attention` accent as the current 'accent' for the surface.
+.accent-attention
+{
+    --surface-accent-text-color: var(--surface-attention-text-color);
+    --surface-accent-icon-color: var(--surface-attention-icon-color);
+    --surface-accent-border-color: var(--surface-attention-border-color);
+    --surface-accent-surface-color: var(--surface-attention-surface-color);
+    --surface-accent-surface-text-color: var(--surface-attention-surface-text-color);
+    --surface-accent-surface-icon-color: var(--surface-attention-surface-icon-color);
+
+    // State: hover
+    --surface-accent-text-color--hover: var(--surface-attention-text-color--hover);
+    --surface-accent-icon-color--hover: var(--surface-attention-icon-color--hover);
+    --surface-accent-border-color--hover: var(--surface-attention-border-color--hover);
+    --surface-accent-surface-color--hover: var(--surface-attention-surface-color--hover);
+    --surface-accent-surface-text-color--hover: var(--surface-attention-surface-text-color--hover);
+    --surface-accent-surface-icon-color--hover: var(--surface-attention-surface-icon-color--hover);
+
+    // State: focus
+    --surface-accent-text-color--focus: var(--surface-attention-text-color--focus);
+    --surface-accent-icon-color--focus: var(--surface-attention-icon-color--focus);
+    --surface-accent-border-color--focus: var(--surface-attention-border-color--focus);
+    --surface-accent-surface-color--focus: var(--surface-attention-surface-color--focus);
+    --surface-accent-surface-text-color--focus: var(--surface-attention-surface-text-color--focus);
+    --surface-accent-surface-icon-color--focus: var(--surface-attention-surface-icon-color--focus);
+
+    // State: active
+    --surface-accent-text-color--active: var(--surface-attention-text-color--active);
+    --surface-accent-icon-color--active: var(--surface-attention-icon-color--active);
+    --surface-accent-border-color--active: var(--surface-attention-border-color--active);
+    --surface-accent-surface-color--active: var(--surface-attention-surface-color--active);
+    --surface-accent-surface-text-color--active: var(--surface-attention-surface-text-color--active);
+    --surface-accent-surface-icon-color--active: var(--surface-attention-surface-icon-color--active);
+}
+
+/// Modifier class that defines the `negative` accent as the current 'accent' for the surface.
+.accent-negative
+{
+    --surface-accent-text-color: var(--surface-negative-text-color);
+    --surface-accent-icon-color: var(--surface-negative-icon-color);
+    --surface-accent-border-color: var(--surface-negative-border-color);
+    --surface-accent-surface-color: var(--surface-negative-surface-color);
+    --surface-accent-surface-text-color: var(--surface-negative-surface-text-color);
+    --surface-accent-surface-icon-color: var(--surface-negative-surface-icon-color);
+
+    // State: hover
+    --surface-accent-text-color--hover: var(--surface-negative-text-color--hover);
+    --surface-accent-icon-color--hover: var(--surface-negative-icon-color--hover);
+    --surface-accent-border-color--hover: var(--surface-negative-border-color--hover);
+    --surface-accent-surface-color--hover: var(--surface-negative-surface-color--hover);
+    --surface-accent-surface-text-color--hover: var(--surface-negative-surface-text-color--hover);
+    --surface-accent-surface-icon-color--hover: var(--surface-negative-surface-icon-color--hover);
+
+    // State: focus
+    --surface-accent-text-color--focus: var(--surface-negative-text-color--focus);
+    --surface-accent-icon-color--focus: var(--surface-negative-icon-color--focus);
+    --surface-accent-border-color--focus: var(--surface-negative-border-color--focus);
+    --surface-accent-surface-color--focus: var(--surface-negative-surface-color--focus);
+    --surface-accent-surface-text-color--focus: var(--surface-negative-surface-text-color--focus);
+    --surface-accent-surface-icon-color--focus: var(--surface-negative-surface-icon-color--focus);
+
+    // State: active
+    --surface-accent-text-color--active: var(--surface-positive-text-color--active);
+    --surface-accent-icon-color--active: var(--surface-positive-icon-color--active);
+    --surface-accent-border-color--active: var(--surface-positive-border-color--active);
+    --surface-accent-surface-color--active: var(--surface-positive-surface-color--active);
+    --surface-accent-surface-text-color--active: var(--surface-positive-surface-text-color--active);
+    --surface-accent-surface-icon-color--active: var(--surface-positive-surface-icon-color--active);
+}
