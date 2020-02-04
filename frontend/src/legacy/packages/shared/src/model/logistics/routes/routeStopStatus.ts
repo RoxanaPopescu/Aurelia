@@ -15,8 +15,8 @@ export class RouteStopStatus {
       name: Localization.sharedValue("Model_Logistics_RouteStopStatus:Arrived"),
       accent: "neutral"
     },
-    "delivery-not-possible": {
-      name: Localization.sharedValue("Model_Logistics_RouteStopStatus:DeliveryNotPossible"),
+    "failed": {
+      name: Localization.sharedValue("Model_Logistics_RouteStopStatus:Failed"),
       accent: "negative"
     },
     "completed": {

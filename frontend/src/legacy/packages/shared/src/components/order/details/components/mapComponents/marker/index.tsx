@@ -190,7 +190,7 @@ export class JourneyStopMarker extends Marker<JourneyStopMarkerProps> {
   //     // Use a opaque green icon if the stop has been visited.
   //     case "arrived":
   //     case "completed":
-  //     case "delivery-not-possible":
+  //     case "failed":
   //       return { fillColor: "#17C800", fillOpacity: 1 };
 
   //     // Use a opaque white icon if the stop has an unexpected status.

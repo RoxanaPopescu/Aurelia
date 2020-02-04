@@ -176,7 +176,7 @@
   "Model_Logistics_RouteStopStatus:Arrived": "Arrived",
   "Model_Logistics_RouteStopStatus:Cancelled": "Cancelled",
   "Model_Logistics_RouteStopStatus:Completed": "Completed",
-  "Model_Logistics_RouteStopStatus:DeliveryNotPossible": "Delivery not possible",
+  "Model_Logistics_RouteStopStatus:Failed": "Failed",
   "Model_Logistics_RouteStopStatus:NotVisited": "Not visited",
   "Name": "Name",
   "NoResultsFound": "No results found",

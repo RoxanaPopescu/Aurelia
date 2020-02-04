@@ -112,7 +112,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
 
             case "arrived":
             case "completed":
-            case "delivery-not-possible":
+            case "failed":
                 return "done";
 
             default:

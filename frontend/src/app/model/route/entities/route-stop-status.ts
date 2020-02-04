@@ -37,9 +37,9 @@ export class RouteStopStatus
             name: "Arrived",
             accent: "neutral"
         },
-        "delivery-not-possible":
+        "failed":
         {
-            name: "Delivery not possible",
+            name: "Failed",
             accent: "negative"
         },
         "completed":

@@ -107,7 +107,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
 
       case "arrived":
       case "completed":
-      case "delivery-not-possible":
+      case "failed":
         return "done";
 
       default:

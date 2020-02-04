@@ -116,7 +116,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
 
             case "arrived":
             case "completed":
-            case "delivery-not-possible":
+            case "failed":
                 return "done";
 
             default:

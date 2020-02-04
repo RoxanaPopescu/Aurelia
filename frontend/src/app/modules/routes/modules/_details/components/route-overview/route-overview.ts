@@ -247,7 +247,7 @@ export class RouteOverview
         {
             return this.route.stops.filter(s =>
                 s.status === new RouteStopStatus("cancelled") ||
-                s.status === new RouteStopStatus("delivery-not-possible")).length === 0;
+                s.status === new RouteStopStatus("failed")).length === 0;
         }
 
         return false;

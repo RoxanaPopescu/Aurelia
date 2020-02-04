@@ -114,7 +114,7 @@
     }
   }
 
-  &.delivery-not-possible {
+  &.failed {
     .c-routeDetails-stops-stop-marker {
       border-color: var(--colorOkDarken);
       .c-routeDetails-stops-stop-marker-circle {
