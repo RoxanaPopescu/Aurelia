@@ -108,9 +108,6 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                 return "arrived";
 
             case "cancelled":
-            case "cancelled-by-driver":
-            case "cancelled-by-system":
-            case "cancelled-by-user":
                 return "cancelled";
 
             case "arrived":

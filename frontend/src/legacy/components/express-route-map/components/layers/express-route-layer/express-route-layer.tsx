@@ -20,7 +20,7 @@ export class ExpressRouteLayer extends React.Component<ExpressRouteLayerProps> {
 
                 {this.props.route.stops
                     .filter(s =>
-                        !s.status.slug.startsWith("cancelled"))
+                        s.status.slug !== "cancelled")
                     .map((s, i, a) => i > 0 &&
                         <ExpressRouteDeliveryArrow
                             key={`ExpressRouteDeliveryArrow-${a[i - 1].id}-${s.id}`}

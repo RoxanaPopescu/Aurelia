@@ -26,7 +26,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
         {selectedRoute.stops
           .filter(s =>
-            !s.status.slug.startsWith("cancelled"))
+            s.status.slug !== "cancelled")
           .map((s, i, a) => i > 0 &&
           <RouteSegmentLine
             routeStops={[a[i - 1], s]}

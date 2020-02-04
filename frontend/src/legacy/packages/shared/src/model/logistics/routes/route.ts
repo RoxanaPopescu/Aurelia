@@ -162,7 +162,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    */
   public get totalStopCount(): number {
     return this.stops.filter(
-      s => s instanceof RouteStop && !s.status.slug.startsWith("cancelled")
+      s => s instanceof RouteStop && s.status.slug !== "cancelled"
     ).length;
   }
 
@@ -174,7 +174,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
     return this.stops.filter(
       s =>
         s instanceof RouteStop &&
-        !s.status.slug.startsWith("cancelled") &&
+        s.status.slug !== "cancelled" &&
         s.status.slug !== "not-visited"
     ).length;
   }
@@ -197,7 +197,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
   public get currentOrNextStop(): TRouteStop | undefined {
     return this.stops
       .filter(
-        s => s instanceof RouteStop && !s.status.slug.startsWith("cancelled")
+        s => s instanceof RouteStop && s.status.slug !== "cancelled"
       )
       .find(
         s => s.status.slug === "arrived" || s.status.slug === "not-visited"

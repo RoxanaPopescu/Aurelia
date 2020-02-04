@@ -31,7 +31,7 @@ export class DriverRouteLayer extends React.Component<DriverRouteLayerProps> {
 
                     {this.props.route.stops
                         .filter(s =>
-                            !s.status.slug.startsWith("cancelled"))
+                            s.status.slug !== "cancelled")
                         .map((s, i, a) => i > 0 &&
                             <DriverRouteSegmentLine
                                 key={`DriverRouteSegmentLine-${a[i - 1].id}-${s.id}`}

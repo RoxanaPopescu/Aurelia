@@ -103,9 +103,6 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
         return "arrived";
 
       case "cancelled":
-      case "cancelled-by-driver":
-      case "cancelled-by-system":
-      case "cancelled-by-user":
         return "cancelled";
 
       case "arrived":

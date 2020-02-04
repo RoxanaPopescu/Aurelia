@@ -100,7 +100,7 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled"))
+                s.status.slug !== "cancelled")
             .length;
     }
 
@@ -112,7 +112,7 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled") &&
+                s.status.slug !== "cancelled" &&
                 s.status.slug !== "not-visited")
             .length;
     }
@@ -125,7 +125,7 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled") &&
+                s.status.slug !== "cancelled" &&
                 s.status.slug === "not-visited")
             .length;
     }
@@ -147,7 +147,7 @@ export class DriverRoute
     {
         return this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled"))
+                s.status.slug !== "cancelled")
             .find(s =>
                 s.status.slug === "arrived" || s.status.slug === "not-visited");
     }
@@ -160,7 +160,7 @@ export class DriverRoute
     {
         const remainingStops = this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled"));
+                s.status.slug !== "cancelled");
 
         return remainingStops[remainingStops.length - 1];
     }

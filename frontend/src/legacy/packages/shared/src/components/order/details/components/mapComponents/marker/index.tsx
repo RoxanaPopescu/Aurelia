@@ -184,9 +184,7 @@ export class JourneyStopMarker extends Marker<JourneyStopMarkerProps> {
   //       return { fillColor: "gray", fillOpacity: 1 };
 
   //     // Use a transparent gray icon if the stop has been cancelled.
-  //     case "cancelled-by-driver":
-  //     case "cancelled-by-system":
-  //     case "cancelled-by-user":
+  //     case "cancelled":
   //       return { fillColor: "gray", fillOpacity: 0.5 };
 
   //     // Use a opaque green icon if the stop has been visited.

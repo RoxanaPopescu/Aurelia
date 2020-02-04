@@ -5,7 +5,7 @@ import { Accent } from "../../general/accent";
  * Represents the status of a route stop.
  */
 export class RouteStopStatus {
-  
+
   public static readonly map = {
     "not-visited": {
       name: Localization.sharedValue("Model_Logistics_RouteStopStatus:NotVisited"),
@@ -25,18 +25,6 @@ export class RouteStopStatus {
     },
     "cancelled": {
       name: Localization.sharedValue("Model_Logistics_RouteStopStatus:Cancelled"),
-      accent: "negative"
-    },
-    "cancelled-by-user": {
-      name: Localization.sharedValue("Model_Logistics_RouteStopStatus:CancelledByUser"),
-      accent: "negative"
-    },
-    "cancelled-by-driver": {
-      name: Localization.sharedValue("Model_Logistics_RouteStopStatus:CancelledByDriver"),
-      accent: "negative"
-    },
-    "cancelled-by-system": {
-      name: Localization.sharedValue("Model_Logistics_RouteStopStatus:CancelledBySystem"),
       accent: "neutral"
     }
   };
@@ -45,7 +33,7 @@ export class RouteStopStatus {
     this.slug = status;
     Object.assign(this, RouteStopStatus.map[status]);
   }
-  
+
   public slug: keyof typeof RouteStopStatus.map;
   public name: string;
   public accent: Accent;

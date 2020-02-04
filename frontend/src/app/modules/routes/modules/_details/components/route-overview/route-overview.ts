@@ -246,11 +246,8 @@ export class RouteOverview
         if (this.route != null)
         {
             return this.route.stops.filter(s =>
-                                            s.status === new RouteStopStatus("cancelled") ||
-                                            s.status === new RouteStopStatus("cancelled-by-driver") ||
-                                            s.status === new RouteStopStatus("cancelled-by-system") ||
-                                            s.status === new RouteStopStatus("cancelled-by-user") ||
-                                            s.status === new RouteStopStatus("delivery-not-possible")).length === 0;
+                s.status === new RouteStopStatus("cancelled") ||
+                s.status === new RouteStopStatus("delivery-not-possible")).length === 0;
         }
 
         return false;

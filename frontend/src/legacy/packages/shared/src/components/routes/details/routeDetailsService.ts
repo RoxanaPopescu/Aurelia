@@ -170,7 +170,7 @@ export class RouteDetailsService {
     }
 
     if (this.step >= 45) {
-      data.stops[3].status = "cancelled-by-system";
+      data.stops[3].status = "cancelled";
       delete data.stops[3].arrivalTime;
     }
 

@@ -170,7 +170,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         return this.stops
             .filter(s =>
                 s instanceof RouteStopBase &&
-                !s.status.slug.startsWith("cancelled"))
+                s.status.slug !== "cancelled")
             .length;
     }
 
@@ -183,7 +183,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         return this.stops
             .filter(s =>
                 s instanceof RouteStopBase &&
-                !s.status.slug.startsWith("cancelled") &&
+                s.status.slug !== "cancelled" &&
                 s.status.slug !== "not-visited")
             .length;
     }
@@ -209,7 +209,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         return this.stops
             .filter(s =>
                 s instanceof RouteStopBase &&
-                !s.status.slug.startsWith("cancelled"))
+                s.status.slug !== "cancelled")
             .find(s =>
                 s.status.slug === "arrived" || s.status.slug === "not-visited") as TRouteStop;
     }

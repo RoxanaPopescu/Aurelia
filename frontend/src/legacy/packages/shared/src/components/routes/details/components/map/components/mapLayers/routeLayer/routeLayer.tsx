@@ -1,11 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { RouteStop, Route } from "shared/src/model/logistics/routes";
-import { RouteStopMarker } 
+import { RouteStopMarker }
   from "shared/src/components/liveTracking/components/mapFeatures/routeStopMarker/routeStopMarker";
-import { RouteSegmentLine } 
+import { RouteSegmentLine }
   from "shared/src/components/liveTracking/components/mapFeatures/routeSegmentLine/routeSegmentLine";
-import { RouteDriverMarker } 
+import { RouteDriverMarker }
   from "shared/src/components/liveTracking/components/mapFeatures/routeDriverMarker/routeDriverMarker";
 import "./routeLayer.scss";
 import { RouteDetailsService } from "../../../../../routeDetailsService";
@@ -29,7 +29,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
         {route.stops
           .filter(s =>
-            !s.status.slug.startsWith("cancelled"))
+            s.status.slug !== "cancelled")
           .map((s, i, a) => i > 0 &&
           <RouteSegmentLine
             routeStops={[a[i - 1], s]}

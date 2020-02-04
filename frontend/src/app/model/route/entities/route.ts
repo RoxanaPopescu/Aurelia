@@ -73,7 +73,7 @@ export class Route extends AbstractRoute<RouteStop>
     {
         return this.stops
             .filter(s =>
-                !s.status.slug.startsWith("cancelled"))
+                s.status.slug !== "cancelled")
             .reduce((total, s) =>
                 total + (s as RouteStop).pickups.reduce((t, d) => t + d.colli.length, 0), 0);
     }

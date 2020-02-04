@@ -50,21 +50,6 @@ export class RouteStopStatus
         "cancelled":
         {
             name: "Cancelled",
-            accent: "negative"
-        },
-        "cancelled-by-user":
-        {
-            name: "Cancelled by user",
-            accent: "negative"
-        },
-        "cancelled-by-driver":
-        {
-            name: "Cancelled by driver",
-            accent: "negative"
-        },
-        "cancelled-by-system":
-        {
-            name: "Cancelled by system",
             accent: "neutral"
         }
     };
