@@ -13,7 +13,7 @@ export class Pickup
     public constructor(data: any)
     {
         this.orderId = data.orderId;
-        this.orderSlug = data.orderSlug;
+        this.orderSlug = data.orderSlug || data.consignorOrderId;
         this.consignee = new Consignee(data.consignee);
         this.colli = data.colli.map(c => new Collo(c, data.orderId));
     }

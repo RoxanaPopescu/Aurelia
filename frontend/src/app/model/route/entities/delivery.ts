@@ -13,10 +13,15 @@ export class Delivery
     public constructor(data: any)
     {
         this.orderId = data.orderId;
-        this.orderSlug = data.orderSlug;
+        this.orderSlug = data.orderSlug || data.consignorOrderId;
         this.consignor = new Consignor(data.consignor);
         this.colli = data.colli.map(c => new Collo(c, data.orderId));
     }
+
+    /**
+     * The ID of the consignor related to this delivery.
+     */
+    public consignorId: string;
 
     /**
      * The ID of the order related to this delivery.

@@ -15,7 +15,6 @@ order-accordion
         &-head
         {
             height: 10.5rem;
-            padding: 0 5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -26,8 +25,23 @@ order-accordion
                 background-color: var(--surface-neutral-surface-color-light);
             }
 
+            .order-accordion-card-head-content
+            {
+                flex-grow: 1;
+                display: grid;
+                grid-template-columns: 3fr 2fr 1.25fr 2fr;
+
+                > *
+                {
+                    min-width: 0;
+                    padding: 0 5rem;
+                }
+            }
+
             .order-accordion-toggle
             {
+                position: absolute;
+                right: 5rem;
                 height: 2rem;
                 width: 2rem;
                 border: 0;
@@ -48,7 +62,7 @@ order-accordion
 
             data-table[appearance="rows"]
             {
-                --data-table-columns: 1fr 1fr 1fr 1fr;
+                --data-table-columns: 3fr 2fr 1.25fr 2fr;
 
                 data-table-cell
                 {

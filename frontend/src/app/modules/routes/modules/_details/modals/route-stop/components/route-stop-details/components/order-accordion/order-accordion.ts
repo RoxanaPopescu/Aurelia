@@ -39,8 +39,13 @@ export class OrderAccordionCustomElement
      * Called when an accordion head is clicked.
      * Toggles the accordion.
      */
-    protected onAccordionHeadClick(order: Delivery | Pickup): void
+    protected onAccordionHeadClick(event: MouseEvent, order: Delivery | Pickup): void
     {
+        if (event.defaultPrevented)
+        {
+            return;
+        }
+
         if (this.expandedOrder != null && order.orderId === this.expandedOrder.orderId)
         {
             this.tableExpanded = false;

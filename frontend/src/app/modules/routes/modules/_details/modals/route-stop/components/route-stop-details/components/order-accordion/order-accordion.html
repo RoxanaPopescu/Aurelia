@@ -7,27 +7,31 @@
         class="order-accordion-card
         ${order.orderId == expandedOrder.orderId ? '--expanded' : ''}">
 
-        <div class="order-accordion-card-head" click.trigger="onAccordionHeadClick(order)">
+        <div class="order-accordion-card-head" click.trigger="onAccordionHeadClick($event, order)">
 
-            <div>
-                <span translate>
-                    Order:
-                </span>
-                <a href="/orders/details/${pickup.orderSlug}">
-                    ${delivery.orderSlug}
-                </a>
-            </div>
+            <div class="order-accordion-card-head-content">
 
-            <div translate>
-                ${order.colli.length | number} colli
-            </div>
+                <div class="flex-row">
+                    <span class="margin-right" translate>
+                        Order
+                    </span>
+                    <a page-href="path.bind: '/orders/details/' + order.orderSlug" class="text-truncate">
+                        ${order.orderSlug}
+                    </a>
+                </div>
 
-            <div translate>
-                TODO kg
-            </div>
+                <div translate>
+                    ${order.colli.length | number} colli
+                </div>
 
-            <div translate>
-                TODO m³
+                <div translate>
+                    ### kg
+                </div>
+
+                <div translate>
+                    ### m³
+                </div>
+
             </div>
 
             <div class="order-accordion-toggle"></div>
