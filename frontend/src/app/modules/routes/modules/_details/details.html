@@ -454,11 +454,11 @@
 
                         <data-table-row
                             model.bind="stop"
-                            accent="positive"
+                            accent.bind="stop.status.accent"
                             click.call="onStopClick(stop)">
 
                             <data-table-cell>
-                                <span class="route-details-stop-number text-truncate">
+                                <span class="route-details-stop-number text-truncate accent-${stop.status.accent}">
                                     ${stop.stopNumber}
                                 </span>
                             </data-table-cell>

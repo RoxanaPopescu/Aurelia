@@ -13,7 +13,7 @@ page[name="routes"] page[name="details"]
         width: 9rem;
         line-height: 9rem;
         text-align: center;
-        color: var(--surface-color);
-        background: gray;
+        color: var(--surface-accent-surface-text-color);
+        background: var(--surface-accent-surface-color);
     }
 }
