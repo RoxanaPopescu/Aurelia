@@ -1,3 +1,4 @@
+import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
 
 /**
@@ -16,7 +17,7 @@ export class ColloStatus
      */
     public constructor(slug: ColloStatusSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, ColloStatus.values[this.slug]);
     }
 

@@ -1,3 +1,4 @@
+import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
 
 /**
@@ -16,7 +17,7 @@ export class RoutePlanStatus
      */
     public constructor(slug: RoutePlanStatusSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, RoutePlanStatus.values[this.slug] || { name: slug, accent: "neutral" });
     }
 
@@ -27,32 +28,32 @@ export class RoutePlanStatus
 
     public static readonly values =
     {
-        "Processing":
+        "processing":
         {
             name: "Processing",
             accent: "neutral"
         },
-        "WaitingForApproval":
+        "waiting-for-approval":
         {
             name: "Waiting for approval",
             accent: "attention"
         },
-        "Completed":
+        "completed":
         {
             name: "Completed",
             accent: "positive"
         },
-        "FailedExternally":
+        "failed-externally":
         {
             name: "Failed externally",
             accent: "negative"
         },
-        "FailedInternally":
+        "failed-internally":
         {
             name: "Failed internally",
             accent: "negative"
         },
-        "Cancelled":
+        "cancelled":
         {
             name: "Cancelled",
             accent: "neutral"

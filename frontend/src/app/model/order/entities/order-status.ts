@@ -1,3 +1,4 @@
+import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
 
 /**
@@ -16,7 +17,7 @@ export class OrderStatus
      */
     public constructor(slug: OrderStatusSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, OrderStatus.values[this.slug]);
     }
 

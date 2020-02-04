@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo, RoutePlanStatus } from "app/model/route-plan";
+import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
 
 /**
  * Represents the route parameters for the page.
@@ -83,7 +83,7 @@ export class ListPage
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -99,11 +99,10 @@ export class ListPage
      */
     public detailsLink(plan: RoutePlanInfo): string | undefined
     {
-        if (
-            plan.status.slug === new RoutePlanStatus("Cancelled").slug ||
-            plan.status.slug === new RoutePlanStatus("FailedExternally").slug ||
-            plan.status.slug === new RoutePlanStatus("FailedInternally").slug
-        ) {
+        if (plan.status.slug === "cancelled" ||
+            plan.status.slug === "failed-externally" ||
+            plan.status.slug === "failed-internally")
+        {
             return undefined;
         }
 

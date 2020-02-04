@@ -1,3 +1,5 @@
+import { textCase } from "shared/utilities";
+
 /**
  * Represents the slug identifying a `SortingDirection`.
  */
@@ -10,7 +12,7 @@ export class SortingDirection
 {
     public constructor(slug: SortingDirectionSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, SortingDirection.values[this.slug]);
     }
 
