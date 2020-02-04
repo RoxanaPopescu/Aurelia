@@ -74,19 +74,6 @@ export class RouteService
     }
 
     /**
-     * Saves the specified route.
-     * @param route The route to save.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async saveRoute(route: Route): Promise<void>
-    {
-        await this._apiClient.post("routes/update",
-        {
-            body: { route }
-        });
-    }
-
-    /**
      * Changes the status of the specified route to the specified status.
      * @param route The route for which the status should be set.
      * @param routeStatusSlug The slug identifying the new status.
@@ -94,12 +81,16 @@ export class RouteService
      */
     public async setRouteStatus(route: Route, routeStatusSlug: RouteStatusSlug): Promise<void>
     {
-        route.status = new RouteStatus(routeStatusSlug);
-
-        await this._apiClient.post("routes/update",
+        await this._apiClient.post("routes/setRouteStatus",
         {
-            body: { route }
+            body:
+            {
+                routeId: route.id,
+                status: routeStatusSlug
+            }
         });
+
+        route.status = new RouteStatus(routeStatusSlug);
     }
 
     /**

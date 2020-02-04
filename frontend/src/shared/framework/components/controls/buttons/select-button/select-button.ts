@@ -1,6 +1,7 @@
 import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 import { AccentColor } from "resources/styles";
+import { Placement } from "popper.js";
 
 /**
  * Custom element representing an button for picking a single item from a list.
@@ -61,6 +62,12 @@ export class SelectButtonCustomElement
      */
     @bindable({ defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Opens the dropdown and optionally focuses the button element.

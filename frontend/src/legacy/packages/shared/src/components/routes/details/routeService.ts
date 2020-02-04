@@ -25,7 +25,7 @@ export class RouteService {
     );
 
     if (!response.ok) {
-      throw new Error("Could not reload the route.");
+      throw new Error("Could not set route status.");
     }
   }
 }

@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import Popper from "popper.js";
+import Popper, { Placement } from "popper.js";
 import { EventManager } from "shared/utilities";
 
 /**
@@ -39,6 +39,12 @@ export class DropdownCustomElement
      */
     @bindable({ changeHandler: "createPopper", defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ changeHandler: "createPopper", defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * The function to call when the dropdown wants to close.
@@ -124,7 +130,7 @@ export class DropdownCustomElement
         // Create the `Popper` instance for the new owner.
         this._popper = new Popper(this.owner, this._element,
         {
-            placement: "bottom-start",
+            placement: this.placement,
             positionFixed: this.fixed,
             modifiers:
             {

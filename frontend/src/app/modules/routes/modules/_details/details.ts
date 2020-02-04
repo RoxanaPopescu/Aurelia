@@ -117,6 +117,30 @@ export class DetailsModule
     }
 
     /**
+     * Called when the `Show driver list` button is clicked.
+     * Opens the driver list in a new tab.
+     */
+    protected onShowDriverListClick(): void
+    {
+        window.open(this.route?.driverListUrl, "_blank");
+    }
+    /**
+     * Called when the `Reload route in app` button is clicked.
+     * Notifies the driver appthat it should reload the route.
+     */
+    protected async onReloadRouteInAppClick(): Promise<void>
+    {
+        try
+        {
+            await this._routeService.reloadRoute(this.route!.id);
+        }
+        catch (error)
+        {
+            Log.error("Could not reload the route", error);
+        }
+    }
+
+    /**
      * Called when an item in the `Status` selector is clicked.
      * Sets the new route status.
      * @param status The slug identifying the new route status.
