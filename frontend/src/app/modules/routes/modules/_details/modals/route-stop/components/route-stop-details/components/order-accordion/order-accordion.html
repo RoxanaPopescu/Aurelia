@@ -82,18 +82,20 @@
                                 title="${collo.barcode}">
                                 ${collo.barcode}
                             </span>
-                            <div if.bind="collo.origin.name != ''" class="opacity-faded font-small collo-origin">${collo.origin.name}</div>
+                            <div if.bind="collo.origin.slug != 'regular'" class="opacity-faded font-small collo-origin">
+                                ${collo.origin.name}
+                            </div>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="order-collo text-truncate font-small">
-                                ${collo.barcode}
+                                ${collo.scanMethod.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="order-collo text-truncate font-small">
-                                ${collo.barcode}
+                                ${collo.scanImageUrl ? "YES" : "NO"}
                             </span>
                         </data-table-cell>
 

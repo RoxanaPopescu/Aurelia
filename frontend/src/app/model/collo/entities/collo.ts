@@ -1,5 +1,6 @@
 import { ColloStatus } from "./collo-status";
 import { ColloOrigin } from "./collo-origin";
+import { ColloScanMethod } from "./collo-scan-method";
 
 /**
  * Represents a single collo.
@@ -19,6 +20,12 @@ export class Collo
         this.barcode = data.barcode;
         this.status = new ColloStatus(data.status);
         this.origin = new ColloOrigin(data.origin);
+        this.scanImageUrl = data.scanImageUrl;
+
+        if (data.scanMethod != null)
+        {
+            this.scanMethod = new ColloScanMethod(data.scanMethod);
+        }
     }
 
     /**
@@ -55,4 +62,14 @@ export class Collo
      * The origin of the collo.
      */
     public readonly origin: ColloOrigin;
+
+    /**
+     * The method by which the collo was scanned.
+     */
+    public readonly scanMethod: ColloScanMethod;
+
+    /**
+     * The URL for the picture associated with the scanning of the collo, if any
+     */
+    public readonly scanImageUrl: string | undefined;
 }
