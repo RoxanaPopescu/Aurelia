@@ -74,31 +74,15 @@ export class RouteService
     }
 
     /**
-     * Saves the specified route stop.
-     * @param routeStop The route stop to save.
+     * Saves the specified route.
+     * @param route The route to save.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async saveRouteStop(routeStop: RouteStop): Promise<void>
+    public async saveRoute(route: Route): Promise<void>
     {
-        await this._apiClient.post("routes/stop/update",
+        await this._apiClient.post("routes/update",
         {
-            body: routeStop
-        });
-    }
-
-    /**
-     * Deletes the specified route stop.
-     * @param routeStopId The ID of the route stop to remove.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async deleteRouteStatus(routeStopId: string): Promise<void>
-    {
-        await this._apiClient.post("routes/stop/delete",
-        {
-            body:
-            {
-                routeStopId
-            }
+            body: { route }
         });
     }
 
@@ -110,36 +94,73 @@ export class RouteService
      */
     public async setRouteStatus(route: Route, routeStatusSlug: RouteStatusSlug): Promise<void>
     {
-        await this._apiClient.post("routes/setRouteStatus",
-        {
-            body:
-            {
-                routeId: route.id,
-                status: routeStatusSlug
-            }
-        });
-
         route.status = new RouteStatus(routeStatusSlug);
+
+        await this._apiClient.post("routes/update",
+        {
+            body: { route }
+        });
+    }
+
+    /**
+     * Adds the specified route stop at the specified index.
+     * @param routeId The ID of the route owning the stop.
+     * @param stop The route stop to add.
+     * @param atIndex The index at which the stop should be inserted.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async addRouteStop(routeId: string, stop: RouteStop, atIndex: number): Promise<void>
+    {
+        await this._apiClient.post("routes/stop/add",
+        {
+            body: { routeId, stop, atIndex }
+        });
+    }
+
+    /**
+     * Saves the specified route stop.
+     * @param routeId The ID of the route owning the stop.
+     * @param stop The route stop to save.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async saveRouteStop(routeId: string, stop: RouteStop): Promise<void>
+    {
+        await this._apiClient.post("routes/stop/update",
+        {
+            body: { routeId, stop }
+        });
+    }
+
+    /**
+     * Moves the specified route stop to the specified index.
+     * @param routeId The ID of the route owning the stop.
+     * @param stop The route stop to move.
+     * @param newIndex The index to which the stop should be moved.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async moveRouteStop(routeId: string, stop: RouteStop, newIndex: number): Promise<void>
+    {
+        await this._apiClient.post("routes/stop/move",
+        {
+            body: { routeId, stop, newIndex }
+        });
     }
 
     /**
      * Changes the status of the specified route stop to the specified status.
-     * @param routeStop The route stop for which the status should be set.
+     * @param routeId The ID of the route owning the stop.
+     * @param stop The route stop for which the status should be set.
      * @param routeStopStatusSlug The slug identifying the new status.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async setRouteStopStatus(routeStop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
+    public async setRouteStopStatus(routeId: string, stop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
     {
-        await this._apiClient.post("routes/setStopStatus",
-        {
-            body:
-            {
-                routeStopId: routeStop.id,
-                status: routeStopStatusSlug
-            }
-        });
+        stop.status = new RouteStopStatus(routeStopStatusSlug);
 
-        routeStop.status = new RouteStopStatus(routeStopStatusSlug);
+        await this._apiClient.post("routes/stops/update",
+        {
+            body: { routeId, stop }
+        });
     }
 
     /**

@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug } from "app/model/route";
+import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { Log } from "shared/infrastructure";
 
@@ -21,7 +21,7 @@ export class RouteStopDetailsCustomElement
      * The model for the modal.
      */
     @bindable
-    protected model: RouteStop;
+    protected model: { route: Route; routeStop: RouteStop };
 
     /**
      * The available stop status values.
@@ -40,14 +40,14 @@ export class RouteStopDetailsCustomElement
      */
     protected async onStopStatusChange(status: RouteStopStatusSlug): Promise<void>
     {
-        if (status === this.model.status.slug)
+        if (status === this.model.routeStop.status.slug)
         {
             return;
         }
 
         try
         {
-            await this._routeService.setRouteStopStatus(this.model, status);
+            await this._routeService.setRouteStopStatus(this.model.route.id, this.model.routeStop, status);
         }
         catch (error)
         {

@@ -145,7 +145,7 @@ export class DetailsModule
      */
     protected async onStopClick(stop: RouteStop): Promise<void>
     {
-        const savedStop = await this._modalService.open(RouteStopPanel, stop).promise;
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop }).promise;
 
         if (savedStop != null)
         {
@@ -191,7 +191,7 @@ export class DetailsModule
 
         try
         {
-            await this._routeService.deleteRouteStatus(stop.id);
+            await this._routeService.setRouteStopStatus(this.route!.id, stop, "cancelled");
 
             this.route!.stops.splice(this.route!.stops.findIndex(s => s.id === stop.id), 1);
         }

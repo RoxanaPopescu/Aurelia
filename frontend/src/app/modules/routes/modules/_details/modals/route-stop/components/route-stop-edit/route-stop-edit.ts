@@ -1,6 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStop } from "app/model/route";
+import { RouteStop, Route } from "app/model/route";
 
 @autoinject
 export class RouteStopEditCustomElement
@@ -9,7 +9,7 @@ export class RouteStopEditCustomElement
      * The model for the modal.
      */
     @bindable
-    protected model: RouteStop;
+    protected model: { route: Route; routeStop: RouteStop };
 
     /**
      * The validation for the modal.

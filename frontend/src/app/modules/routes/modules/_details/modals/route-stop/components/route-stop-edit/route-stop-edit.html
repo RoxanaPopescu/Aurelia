@@ -10,7 +10,7 @@
 
             <path-nav if.bind="!isNew">
                 <div translate>
-                    Stop ${model.stopNumber}
+                    Stop ${model.routeStop.stopNumber}
                 </div>
                 <div translate>
                     Edit
@@ -25,20 +25,20 @@
 
         <div class="control-row margin-larger-bottom">
 
-            <select-input label="above" none.bind="false" value.bind="model.type" display-value.bind="model.type.name" class="flex-basis-1-of-2">
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.type" display-value.bind="model.routeStop.type.name" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Type
                 </span>
 
-                <item repeat.for="type of types" model.bind="type">
+                <item repeat.for="type of types" model.routeStop.bind="type">
                     ${type.name}
                 </item>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.type">
+                        value.bind="model.routeStop.type">
                     </required-validator>
 
                 </div>
@@ -47,7 +47,7 @@
 
             <div class="control-row flex-basis-1-of-2">
 
-                <time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.from" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival from
@@ -56,14 +56,14 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.arrivalTimeFrame.from">
+                            value.bind="model.routeStop.arrivalTimeFrame.from">
                         </required-validator>
 
                     </div>
 
                 </time-input>
 
-                <time-input label="above" value.bind="model.arrivalTimeFrame.to" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.to" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival to
@@ -72,7 +72,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.arrivalTimeFrame.to">
+                            value.bind="model.routeStop.arrivalTimeFrame.to">
                         </required-validator>
 
                     </div>
@@ -87,7 +87,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-1">
+            <address-input label="above" value.bind="model.routeStop.location.address" class="flex-basis-1-of-1">
 
                 <span slot="heading" translate>
                     Address
@@ -96,7 +96,7 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.location.address.primary">
+                        value.bind="model.routeStop.location.address.primary">
                     </required-validator>
 
                 </div>
@@ -107,7 +107,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <text-input label="above" value.bind="model.outfit.personName" class="flex-basis-1-of-2">
+            <text-input label="above" value.bind="model.routeStop.outfit.personName" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Name
@@ -115,7 +115,7 @@
 
             </text-input>
 
-            <text-input label="above" value.bind="model.outfit.companyName" class="flex-basis-1-of-2">
+            <text-input label="above" value.bind="model.routeStop.outfit.companyName" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Company
@@ -127,7 +127,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <text-input label="above" value.bind="model.outfit.contactPhone.number" class="flex-basis-1-of-2">
+            <text-input label="above" value.bind="model.routeStop.outfit.contactPhone.number" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Phone number
@@ -135,7 +135,7 @@
 
             </text-input>
 
-            <text-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+            <text-input label="above" value.bind="model.routeStop.port" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Port
@@ -146,7 +146,7 @@
 
         <div class="control-row">
 
-            <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" class="flex-basis-1-of-1">
+            <text-input label="above" lines.bind="3" value.bind="model.routeStop.driverInstructions" class="flex-basis-1-of-1">
 
                 <span slot="heading" translate>
                     Instructions
@@ -170,7 +170,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="model.requirements.photo" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.photo" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Photo
@@ -178,7 +178,7 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.signature" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Signature
@@ -190,7 +190,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="model.requirements.scanColli" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.scanColli" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Scan colli
@@ -198,7 +198,7 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.verifyTimeframe" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Verify timeframe
@@ -210,7 +210,7 @@
 
         <div class="control-row">
 
-            <check-toggle label="after" value.bind="model.requirements.customerCode" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.customerCode" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Customer code
@@ -218,7 +218,7 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.requirements.acceptInstructions" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Accept instruction

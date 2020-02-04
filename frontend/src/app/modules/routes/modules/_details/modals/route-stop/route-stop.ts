@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStopType, RouteStop, RouteService } from "app/model/route";
+import { RouteStopType, RouteStop, RouteService, Route } from "app/model/route";
 import { Log } from "shared/infrastructure";
 
 @autoinject
@@ -31,7 +31,7 @@ export class RouteStopPanel
     /**
      * The model for the modal.
      */
-    protected model: RouteStop;
+    protected model: { route: Route; routeStop?: RouteStop };
 
     /**
      * The available types.
@@ -45,12 +45,12 @@ export class RouteStopPanel
 
     /**
      * Called by the framework when the modal is activated.
-     * @param model The stop to edit, or undefined to create a new stop.
+     * @param model The route and the stop to edit, or undefined to create a new stop.
      */
-    public activate(model?: RouteStop): void
+    public activate(model: { route: Route; routeStop?: RouteStop }): void
     {
-        this.isNew = model == null;
-        this.model = model != null ? model.clone() : new RouteStop();
+        this.isNew = model.routeStop == null;
+        this.model = { route: model.route, routeStop: model.routeStop?.clone() ?? new RouteStop() };
     }
 
     /**
@@ -88,9 +88,9 @@ export class RouteStopPanel
                 return;
             }
 
-            await this._routeService.saveRouteStop(this.model);
+            await this._routeService.saveRouteStop(this.model.route.id, this.model.routeStop!);
 
-            this._result = this.model;
+            this._result = this.model.routeStop;
             this.edit = false;
         }
         catch (error)

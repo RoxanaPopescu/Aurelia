@@ -8,7 +8,7 @@
         <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
 
             <div translate>
-                Stop ${model.stopNumber}
+                Stop ${model.routeStop.stopNumber}
             </div>
 
             <div class="opacity-faded-more margin-left margin-right">
@@ -16,7 +16,7 @@
             </div>
 
             <div class="opacity-faded">
-                ${model.type.name}, ${model.status.name}
+                ${model.routeStop.type.name}, ${model.routeStop.status.name}
             </div>
 
         </h1>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div>
-                    ${model.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                    ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                 </div>
 
             </div>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div>
-                    ${model.loadingTime | time: 'narrow' : false}
+                    ${model.routeStop.loadingTime | time: 'narrow' : false}
                 </div>
 
             </div>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div>
-                    ${model.arrivalTime | dateTime: 'narrow' : false}
+                    ${model.routeStop.arrivalTime | dateTime: 'narrow' : false}
                 </div>
 
             </div>
@@ -74,7 +74,7 @@
                 </div>
 
                 <div>
-                    ${model.loadingTime | time: 'narrow' : false}
+                    ${model.routeStop.loadingTime | time: 'narrow' : false}
                 </div>
 
             </div>
@@ -94,39 +94,39 @@
                 Consignee
             </div>
 
-            <div if.bind="model.location.address" class="flex-row">
+            <div if.bind="model.routeStop.location.address" class="flex-row">
                 <div class="opacity-faded flex-basis-1-of-4" translate>
                     Address
                 </div>
                 <span>
-                    ${model.location.address}
+                    ${model.routeStop.location.address}
                 </span>
             </div>
 
-            <div if.bind="model.outfit.companyName" class="flex-row margin-top">
+            <div if.bind="model.routeStop.outfit.companyName" class="flex-row margin-top">
                 <div class="opacity-faded flex-basis-1-of-4" translate>
                     Company
                 </div>
                 <span>
-                    ${model.outfit.companyName}
+                    ${model.routeStop.outfit.companyName}
                 </span>
             </div>
 
-            <div if.bind="model.outfit.personName" class="flex-row margin-top">
+            <div if.bind="model.routeStop.outfit.personName" class="flex-row margin-top">
                 <div class="opacity-faded flex-basis-1-of-4" translate>
                     Name
                 </div>
                 <span>
-                    ${model.outfit.personName}
+                    ${model.routeStop.outfit.personName}
                 </span>
             </div>
 
-            <div if.bind="model.outfit.contactPhone" class="flex-row margin-top">
+            <div if.bind="model.routeStop.outfit.contactPhone" class="flex-row margin-top">
                 <div class="opacity-faded flex-basis-1-of-4" translate>
                     Phone
                 </div>
-                <a href="tel: ${model.outfit.contactPhone}">
-                    ${model.outfit.contactPhone}
+                <a href="tel: ${model.routeStop.outfit.contactPhone}">
+                    ${model.routeStop.outfit.contactPhone}
                 </a>
             </div>
 
@@ -135,7 +135,7 @@
     </template>
 
     <!-- Instructions -->
-    <template if.bind="!!model.driverInstructions">
+    <template if.bind="!!model.routeStop.driverInstructions">
 
         <hr class="hr-line margin-bottom margin-top">
 
@@ -145,12 +145,12 @@
                 Instructions
             </div>
 
-            <div if.bind="!model.driverInstructions" class="opacity-faded" translate>
+            <div if.bind="!model.routeStop.driverInstructions" class="opacity-faded" translate>
                 No instructions at this stop
             </div>
 
-            <div if.bind="model.driverInstructions">
-                ${model.driverInstructions}
+            <div if.bind="model.routeStop.driverInstructions">
+                ${model.routeStop.driverInstructions}
             </div>
 
         </data-section>
@@ -172,7 +172,7 @@
     -->
 
     <!-- Orders to be delivered -->
-    <template if.bind="model.deliveries.length != 0">
+    <template if.bind="model.routeStop.deliveries.length != 0">
 
         <hr class="hr-line margin-bottom margin-top">
 
@@ -182,8 +182,8 @@
                 Deliveries
             </div>
 
-            <order-accordion orders.bind="model.deliveries"></order-accordion>
-            <!-- <card repeat.for="delivery of model.deliveries" class="margin-bottom --non-clickable">
+            <order-accordion orders.bind="model.routeStop.deliveries"></order-accordion>
+            <!-- <card repeat.for="delivery of model.routeStop.deliveries" class="margin-bottom --non-clickable">
 
                 <div class="margin-smaller-bottom" translate>
                     <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${delivery.orderSlug}</a>
@@ -216,7 +216,7 @@
     </template>
 
     <!-- Orders to pick up -->
-    <template if.bind="model.pickups.length != 0">
+    <template if.bind="model.routeStop.pickups.length != 0">
 
         <hr class="hr-line margin-bottom margin-top">
 
@@ -226,12 +226,12 @@
                 Pickups
             </div>
 
-            <div if.bind="model.pickups.length == 0" class="opacity-faded" translate>
+            <div if.bind="model.routeStop.pickups.length == 0" class="opacity-faded" translate>
                 No pickups at this stop
             </div>
 
-            <order-accordion orders.bind="model.pickups"></order-accordion>
-            <!-- <card repeat.for="pickup of model.pickups" class="margin-bottom --non-clickable">
+            <order-accordion orders.bind="model.routeStop.pickups"></order-accordion>
+            <!-- <card repeat.for="pickup of model.routeStop.pickups" class="margin-bottom --non-clickable">
 
                 <div class="margin-smaller-bottom" translate>
                     <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${pickup.orderSlug}</a>
@@ -264,7 +264,7 @@
     </template>
 
     <!-- Proof of delivery -->
-    <template if.bind="!!model.signature">
+    <template if.bind="!!model.routeStop.signature">
 
         <hr class="hr-line margin-bottom margin-top">
 
@@ -274,17 +274,17 @@
                 Proof of delivery
             </div>
 
-            <div if.bind="!model.signature" class="opacity-faded" translate>
+            <div if.bind="!model.routeStop.signature" class="opacity-faded" translate>
                 No proof of delivery
             </div>
 
-            <template if.bind="model.signature.imageUrl">
+            <template if.bind="model.routeStop.signature.imageUrl">
 
                 <div>
-                    ${model.signature.date | dateTime: 'narrow' : false}
+                    ${model.routeStop.signature.date | dateTime: 'narrow' : false}
                 </div>
 
-                <img if.bind="model.photo" class="image-thumbnail" href.bind="model.photo.imageUrl">
+                <img if.bind="model.routeStop.photo" class="image-thumbnail" href.bind="model.routeStop.photo.imageUrl">
 
             </template>
 
@@ -293,7 +293,7 @@
     </template>
 
     <!-- Signature -->
-    <template if.bind="!!model.signature">
+    <template if.bind="!!model.routeStop.signature">
 
         <hr class="hr-line margin-bottom margin-top">
 
@@ -303,17 +303,17 @@
                 Signature
             </div>
 
-            <div if.bind="!model.signature" class="opacity-faded" translate>
+            <div if.bind="!model.routeStop.signature" class="opacity-faded" translate>
                 No signature
             </div>
 
-            <template if.bind="model.signature">
+            <template if.bind="model.routeStop.signature">
 
                 <div>
-                    ${model.signature.date | dateTime: 'narrow' : false}
+                    ${model.routeStop.signature.date | dateTime: 'narrow' : false}
                 </div>
 
-                <img class="image-thumbnail" href.bind="model.signature.imageUrl">
+                <img class="image-thumbnail" href.bind="model.routeStop.signature.imageUrl">
 
             </template>
 
