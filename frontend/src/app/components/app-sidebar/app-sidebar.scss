@@ -71,7 +71,7 @@ app-sidebar
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            right: 2rem;
             bottom: -2rem;
 
             // Apply the surface color to the header and footer,
@@ -106,17 +106,7 @@ app-sidebar
 
         &::-webkit-scrollbar
         {
-            width: 5px;
-        }
-
-        &::-webkit-scrollbar-track
-        {
-            border-left: 1px solid rgba(black, .2);
-        }
-
-        &::-webkit-scrollbar-thumb
-        {
-            border-right: 4px solid rgba(black, .2);
+            --scrollbar-thickness: 2rem;
         }
     }
 
@@ -136,7 +126,7 @@ app-sidebar
             position: absolute;
             top: -2rem;
             left: 0;
-            right: 0;
+            right: 2rem;
             bottom: 0;
 
             // Apply the surface color to the header and footer,
