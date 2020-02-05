@@ -32,7 +32,7 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="fromDateFilter" change.trigger="onFromDateChanged()">
+                    <date-input label="above" fixed.bind="true" value.bind="fromDateFilter" change.trigger="onFromDateChanged()" class="flex-grow">
 
                         <div slot="heading" translate>
                             From
@@ -40,7 +40,7 @@
 
                     </date-input>
 
-                    <date-input label="above" fixed.bind="true" value.bind="toDateFilter" change.trigger="onToDateChanged()">
+                    <date-input label="above" fixed.bind="true" value.bind="toDateFilter" change.trigger="onToDateChanged()" class="flex-grow">
 
                         <div slot="heading" translate>
                             To
