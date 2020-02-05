@@ -171,7 +171,7 @@
                 Deliveries
             </div>
 
-            <order-accordion orders.bind="model.routeStop.deliveries"></order-accordion>
+            <order-accordion repeat.for="order of model.routeStop.deliveries" order.bind="order"></order-accordion>
 
         </data-section>
 
@@ -192,7 +192,7 @@
                 No pickups at this stop
             </div>
 
-            <order-accordion orders.bind="model.routeStop.pickups"></order-accordion>
+            <order-accordion repeat.for="order of model.routeStop.pickups" order.bind="order"></order-accordion>
 
         </data-section>
 

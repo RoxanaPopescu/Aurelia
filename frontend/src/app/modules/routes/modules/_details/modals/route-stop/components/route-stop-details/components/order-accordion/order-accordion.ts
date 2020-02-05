@@ -5,61 +5,52 @@ import { Pickup, Delivery } from "app/model/route";
 export class OrderAccordionCustomElement
 {
     /**
-     * The expanded pickup or delivery, if any.
+     * True if the component is expanded, otherwise false.
      */
-    protected expandedOrder: Delivery | Pickup | undefined;
+    @bindable
+    protected expanded: boolean = false;
 
     /**
      * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected tableExpanded: boolean = false;
+    protected showAllColli: boolean = false;
 
     /**
      * The pickups or deliveries to present.
      */
     @bindable
-    protected orders: Delivery[] | Pickup[];
+    protected order: Delivery | Pickup;
 
     /**
      * Called when the header is clicked.
-     * Toggles the compoennt between its expanded and collapsed state.
+     * Toggles the component between its expanded and collapsed state.
      */
-    protected onHeaderClick(event: MouseEvent, order: Delivery | Pickup): void
+    protected onHeaderClick(event: MouseEvent): void
     {
         if (event.defaultPrevented)
         {
             return;
         }
 
-        if (this.expandedOrder != null && order.orderId === this.expandedOrder.orderId)
-        {
-            this.tableExpanded = false;
-            this.expandedOrder = undefined;
-        }
-        else
-        {
-            this.expandedOrder = order;
-        }
+        this.expanded = !this.expanded;
     }
 
     /**
-     * Called when an order is clicked in the accordion.
-     * Expands and collapses the table.
+     * Called when the 'Show all' or 'Show less' button is clicked.
+     * Toggles between showing some or all colli.
      */
-    protected onToggleTableClick(): void
+    protected onShowAllColliToggle(event: MouseEvent): void
     {
-        this.tableExpanded = !this.tableExpanded;
+        this.showAllColli = !this.showAllColli;
     }
 
     /**
      * Called when the order slug is clicked in the accordion.
-     * Prevents the event from propagating to the accordion head.
-     * @param event The mouse event.
-     * @param order The order whose slug was clicked.
+     * Opens the order in a new window.
      */
-    protected onOrderSlugClick(order: Pickup | Delivery): void
+    protected onOrderSlugClick(): void
     {
-        window.open(`/orders/details/${order.orderSlug}`, "_blank");
+        window.open(`/orders/details/${this.order.orderSlug}`, "_blank");
     }
 }
