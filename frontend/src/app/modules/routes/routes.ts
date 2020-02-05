@@ -49,8 +49,7 @@ export class RoutesModule
                     [
                         "view-routes"
                     ]
-                },
-                title: routeTitles.details
+                }
             },
             {
                 name: "route-tracking",

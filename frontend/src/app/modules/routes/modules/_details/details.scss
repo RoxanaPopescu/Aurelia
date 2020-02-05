@@ -9,11 +9,17 @@ page[name="routes"] page[name="details"]
 
     .route-details-stop-number
     {
+        &.accent-neutral
+        {
+            --surface-accent-surface-color: var(--palette-color-neutral-dim);
+            --surface-accent-surface-text-color: var(--palette-color-whitepoint);
+        }
+
         border-radius: 50%;
         width: 8rem;
         line-height: 8rem;
         text-align: center;
-        color: var(--surface-accent-surface-text-color);
         background: var(--surface-accent-surface-color);
+        color: var(--surface-accent-surface-text-color);
     }
 }

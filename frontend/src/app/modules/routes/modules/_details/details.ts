@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { AppRouter } from "aurelia-router";
+import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
@@ -34,9 +34,9 @@ export class DetailsModule
      * @param agreementService The `AgreementService` instance.
      * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
-     * @param router The `AppRouter` instance.
+     * @param router The `Router` instance.
      */
-    public constructor(routeService: RouteService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: AppRouter)
+    public constructor(routeService: RouteService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: Router)
     {
         this._routeService = routeService;
         this._agreementService = agreementService;
@@ -49,7 +49,7 @@ export class DetailsModule
     protected readonly _agreementService: AgreementService;
     protected readonly _driverService: DriverService;
     protected readonly _modalService: ModalService;
-    protected readonly _router: AppRouter;
+    protected readonly _router: Router;
 
     /**
      * The most recent update operation.
@@ -241,6 +241,9 @@ export class DetailsModule
         this.fetchOperation = new Operation(async signal =>
         {
             this.route = await this._routeService.get(routeId, signal);
+
+            this._router.title = this.route.slug;
+            this._router.updateTitle();
         });
     }
 }

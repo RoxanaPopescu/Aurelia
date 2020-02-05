@@ -66,6 +66,7 @@ order-accordion
 
             data-table-cell
             {
+                min-height: calc(var(--font-large-line-height) + 2 * 3rem);
                 padding: 3rem 5rem;
             }
 
@@ -102,7 +103,7 @@ order-accordion
         {
             background-color: var(--surface-color--active);
 
-            .order-accordion-toggle
+            .order-accordion-header-toggle
             {
                 transform: rotate(-135deg);
             }
