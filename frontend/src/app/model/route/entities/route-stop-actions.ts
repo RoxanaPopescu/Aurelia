@@ -16,6 +16,7 @@ export class RouteStopActions
         this.signature = data.signature;
         this.photo = data.photo;
         this.verificationCode = data.verificationCode;
+        this.handoverVerification = data.handoverVerification;
     }
 
     /**
@@ -52,4 +53,9 @@ export class RouteStopActions
      * True if a verificatio code must be entered as proof of delivery, otherwise false.
      */
     public verificationCode: boolean;
+
+    /**
+     * True if handover verification is required. This is usually colli verification without barcodes.
+     */
+    public handoverVerification: boolean;
 }
