@@ -11,7 +11,7 @@
             <!-- 1st card -->
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
-                <div class="font-small margin-bottom opacity-faded" translate>
+                <div class="font-small opacity-faded" translate>
                     Completed stops
                 </div>
 
@@ -21,10 +21,6 @@
                     </div>
                 </circular-meter>
 
-                <div class="font-small" translate>
-                    &nbsp;
-                </div>
-
             </card>
 
             <!-- 2nd card -->
@@ -33,7 +29,7 @@
                 <!-- Top section -->
                 <div class="card-section-top card-section">
 
-                    <div class="font-small margin-bottom opacity-faded">
+                    <div class="font-small opacity-faded">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" translate>Total colli count</span>
                         <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" translate>Colli picked up</span>
@@ -47,9 +43,10 @@
 
                     </div>
 
-                    <div class="font-small margin-top">
+                    <div class="font-small">
 
-                        <span if.bind="pickedUpColliCount === totalColliCount" translate>All colli picked up</span>
+                        <span if.bind="totalColliCount === 0">&nbsp;</span>
+                        <span if.bind="pickedUpColliCount === totalColliCount && totalColliCount !== 0" translate>All colli picked up</span>
                         <span if.bind="pickedUpColliCount !== completedColliCount" translate>${pickedUpColliCount}/${totalColliCount} has been picked up</span>
 
                     </div>
@@ -59,7 +56,7 @@
                 <!-- Bottom section -->
                 <div class="card-section-bottom card-section">
 
-                    <div class="font-small margin-bottom opacity-faded" translate>
+                    <div class="font-small opacity-faded" translate>
                         Colli delivered
                     </div>
 
@@ -70,9 +67,10 @@
 
                     </div>
 
-                    <div class="font-small margin-top">
+                    <div class="font-small">
 
-                        <span if.bind="deliveredColliCount === totalColliCount" translate>Every colli has been delivered</span>
+                        <span if.bind="totalColliCount === 0">&nbsp;</span>
+                        <span if.bind="deliveredColliCount === totalColliCount && totalColliCount !== 0" translate>Every colli has been delivered</span>
                         <span if.bind="deliveredColliCount !== completedColliCount" translate>${deliveredColliCount}/${totalColliCount} has been delivered</span>
 
                     </div>
@@ -94,7 +92,9 @@
 
                     </div>
 
-                    <div class="font-largest">
+                    <div
+                        class="font-largest"
+                        accent="${((route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0) ? 'negative' : 'neutral'}">
                         ${route.stops[0].arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
@@ -103,8 +103,8 @@
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">&nbsp;</span>
                         <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0">
 
-                            <span if.bind="delayedStart.as('second') < 0" translate>Driver arrived ${delayedStart | duration} too early</span>
-                            <span if.bind="delayedStart.as('second') > 0" translate>Driver was delayed by ${delayedStart | duration}</span>
+                            <span if.bind="delayedStart.as('second') < 0" translate>Arrived ${delayedStart | duration} too early</span>
+                            <span if.bind="delayedStart.as('second') > 0" translate>Delayed by ${delayedStart | duration}</span>
 
                         </span>
 
@@ -137,7 +137,7 @@
                 <!-- Top section -->
                 <div class="card-section-top card-section">
 
-                    <div class="font-small margin-bottom opacity-faded" translate>
+                    <div class="font-small opacity-faded" translate>
                         Estimated completion time
                     </div>
 
@@ -148,7 +148,7 @@
 
                     </div>
 
-                    <div class="font-small margin-top" translate>
+                    <div class="font-small" translate>
                         <span if.bind="routeDelay != null">${routeDelay | duration} delay</span if.bind="routeDelay != null">
                         <span if.bind="routeDelay == null">&nbsp;</span if.bind="routeDelay != null">
                     </div>
@@ -158,7 +158,7 @@
                 <!-- Bottom section -->
                 <div if.bind="route.status.slug === 'started'" class="card-section-bottom card-section">
 
-                    <div class="font-small margin-bottom opacity-faded" translate>
+                    <div class="font-small opacity-faded" translate>
                         Driver status
                     </div>
 
@@ -169,7 +169,7 @@
 
                     </div>
 
-                    <div class="font-small margin-top" translate>
+                    <div class="font-small" translate>
                         &nbsp;
                     </div>
 
@@ -177,7 +177,7 @@
 
                 <div if.bind="route.status.slug === 'completed'" class="card-section-bottom card-section">
 
-                    <div class="font-small margin-bottom opacity-faded" translate>
+                    <div class="font-small opacity-faded" translate>
                         Rating
                     </div>
 
@@ -185,7 +185,7 @@
                         ${route.overallRating}/5
                     </div>
 
-                    <div class="font-small margin-top" translate>
+                    <div class="font-small" translate>
                         &nbsp;
                     </div>
 
@@ -193,14 +193,14 @@
 
                 <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" class="card-section-bottom card-section">
 
-                    <div class="font-small margin-bottom opacity-faded" translate>
+                    <div class="font-small opacity-faded" translate>
                         Difficulty
                     </div>
 
                     <linear-meter if.bind="route.criticality != null" percentage.bind="route.criticality"></linear-meter>
                     <div class="font-largest" if.bind="route.criticality == null">--</div>
 
-                    <div class="font-small margin-top" translate>
+                    <div class="font-small" translate>
                         &nbsp;
                     </div>
 

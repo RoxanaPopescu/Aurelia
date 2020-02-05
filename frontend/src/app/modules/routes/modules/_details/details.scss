@@ -4,16 +4,39 @@ page[name="routes"] page[name="details"]
 {
     data-table
     {
-        --data-table-columns: min-content 2fr 1fr 1fr 1fr 1fr 1fr min-content;
+        --data-table-columns: min-content 3fr 1.75fr 1.25fr 1fr 1.25fr 1.5fr 1.25fr min-content;
+
+        .data-table-row.--cancelled
+        {
+            > data-table-cell > *,
+            > data-table-cell::before
+            {
+                opacity: var(--opacity-faded-more);
+            }
+        }
+
+        .data-table-row.--failed
+        {
+            > *
+            {
+                color: var(--surface-negative-text-color) !important;
+            }
+        }
     }
 
     .route-details-stop-number
     {
+        &.accent-neutral
+        {
+            --surface-accent-surface-color: var(--palette-color-neutral-dim);
+            --surface-accent-surface-text-color: var(--palette-color-whitepoint);
+        }
+
         border-radius: 50%;
         width: 8rem;
         line-height: 8rem;
         text-align: center;
-        color: var(--surface-accent-surface-text-color);
         background: var(--surface-accent-surface-color);
+        color: var(--surface-accent-surface-text-color);
     }
 }

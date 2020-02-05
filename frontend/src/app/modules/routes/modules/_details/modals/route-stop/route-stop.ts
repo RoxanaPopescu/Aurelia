@@ -88,7 +88,7 @@ export class RouteStopPanel
                 return;
             }
 
-            await this._routeService.saveRouteStop(this.model.route.id, this.model.routeStop!);
+            await this._routeService.saveRouteStop(this.model.route, this.model.routeStop!);
 
             this._result = this.model.routeStop;
             this.edit = false;

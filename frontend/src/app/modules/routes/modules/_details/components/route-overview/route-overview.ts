@@ -1,8 +1,5 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { Route, RouteStop } from "app/model/route";
-import { ColloStatus } from "app/model/collo";
-import { RouteStopStatus } from "../../../../../../../legacy/packages/shared/src/model/logistics/routes/routeStopStatus";
-import { RouteStatus } from "../../../../../../../legacy/packages/shared/src/model/logistics/routes/routeStatus";
 import { DateTime, Duration } from "luxon";
 
 /**
@@ -28,12 +25,12 @@ export class RouteOverview
         {
             this.route.stops
                 .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status === new RouteStopStatus("completed"))
+                .filter((s: RouteStop) => s.status.slug === "completed")
                 .forEach((s: RouteStop) =>
                 {
                     s.pickups.forEach(p => p.colli.forEach(c =>
                         {
-                            if (c.status === new ColloStatus("picked-up"))
+                            if (c.status.slug === "picked-up")
                             {
                                 pickedUpColliCount++;
                             }
@@ -55,12 +52,12 @@ export class RouteOverview
         {
             this.route.stops
                 .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status === new RouteStopStatus("completed"))
+                .filter((s: RouteStop) => s.status.slug === "completed")
                 .forEach((s: RouteStop) =>
                 {
                     s.deliveries.forEach(p => p.colli.forEach(c =>
                         {
-                            if (c.status === new ColloStatus("delivered"))
+                            if (c.status.slug === "delivered")
                             {
                                 deliveredColliCount++;
                             }
@@ -102,7 +99,7 @@ export class RouteOverview
         {
             this.route.stops
                 .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status === new RouteStopStatus("completed"))
+                .filter((s: RouteStop) => s.status.slug === "completed")
                 .forEach((s: RouteStop) =>
                 {
                     s.pickups.forEach(p => totalColliCount += p.colli.length);
@@ -124,7 +121,7 @@ export class RouteOverview
         {
             completedStops = this.route.stops
                 .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status === new RouteStopStatus("completed")).length;
+                .filter((s: RouteStop) => s.status.slug === "completed").length;
         }
 
         return completedStops;
@@ -142,7 +139,7 @@ export class RouteOverview
         {
             const from = (this.route.stops[0] as RouteStop).arrivalTime;
 
-            if (this.route.status === new RouteStatus("completed"))
+            if (this.route.status.slug === "completed")
             {
                 duration = DateTime.local().diff(this.route.completionTime!);
             }
@@ -201,7 +198,7 @@ export class RouteOverview
             this.route.stops
                 .filter(s => s instanceof RouteStop)
                 .forEach((s: RouteStop) => {
-                    if (s.status === new RouteStopStatus("completed"))
+                    if (s.status.slug === "completed")
                     {
                         totalLoadingDuration.plus(s.loadingTime);
                     }
@@ -246,8 +243,8 @@ export class RouteOverview
         if (this.route != null)
         {
             return this.route.stops.filter(s =>
-                s.status === new RouteStopStatus("cancelled") ||
-                s.status === new RouteStopStatus("failed")).length === 0;
+                s.status.slug === "cancelled" ||
+                s.status.slug === "failed").length === 0;
         }
 
         return false;

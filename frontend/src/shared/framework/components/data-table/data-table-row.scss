@@ -35,6 +35,11 @@
     {
         padding-left: 0;
     }
+
+    &:not(.--movable) .data-table-row-drag-handle
+    {
+        pointer-events: none;
+    }
 }
 
 data-table[appearance="rows"]
