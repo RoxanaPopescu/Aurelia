@@ -7,7 +7,7 @@
         class="order-accordion-card
         ${order.orderId == expandedOrder.orderId ? '--expanded' : ''}">
 
-        <div class="order-accordion-card-head" click.trigger="onAccordionHeadClick($event, order)">
+        <div class="order-accordion-card-head" click.trigger="onHeaderClick($event, order)">
 
             <div class="order-accordion-card-head-content">
 
@@ -15,13 +15,13 @@
                     <span class="margin-right" translate>
                         Order
                     </span>
-                    <a page-href="path.bind: '/orders/details/' + order.orderSlug" class="text-truncate">
+                    <a href="/orders/details/${order.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
                         ${order.orderSlug}
                     </a>
                 </div>
 
                 <div translate>
-                    ${order.colli.length | number} colli
+                    ${order.colli.length | number} ${order.colli.length | plural "collo" : "colli"}
                 </div>
 
                 <div translate>
@@ -50,19 +50,19 @@
 
                     <data-table-cell>
                         <span class="opacity-faded text-truncate font-small" translate>
-                            Collo ID
+                            Collo barcode
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="opacity-faded text-truncate font-small" translate>
-                            Scanning method
+                            Scan method
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="opacity-faded text-truncate font-small" translate>
-                            Image
+                            Picture
                         </span>
                     </data-table-cell>
 
@@ -81,11 +81,12 @@
                         clickable.bind="false">
 
                         <data-table-cell>
-                            <span
+                            <a
                                 class="order-collo text-truncate font-small"
-                                title="${collo.barcode}">
+                                title="${collo.barcode}"
+                                href="/orders/details/${order.orderSlug}?collo=${collo.barcode}" target="_blank">
                                 ${collo.barcode}
-                            </span>
+                            </a>
                             <div if.bind="collo.origin.slug != 'regular'" class="opacity-faded font-small collo-origin">
                                 ${collo.origin.name}
                             </div>
@@ -98,9 +99,9 @@
                         </data-table-cell>
 
                         <data-table-cell>
-                            <span class="order-collo text-truncate font-small">
-                                ${collo.scanImageUrl ? "YES" : "NO"}
-                            </span>
+                            <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank">
+                                <icon name="md-photo" accent="primary" class="font-largest"></icon>
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell>

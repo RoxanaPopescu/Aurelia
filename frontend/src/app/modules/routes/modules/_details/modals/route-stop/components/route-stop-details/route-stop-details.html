@@ -74,11 +74,11 @@
                 <div>
 
                     <div class="margin-bottom">
-                        ${model.routeStop.loadingTime | time: 'narrow' : false}
+                        ${model.routeStop.loadingTime | duration: 'narrow'}
                     </div>
 
                     <div>
-                        ${model.routeStop.loadingTime | time: 'narrow' : false}
+                        ${model.routeStop.loadingTime | duration: 'narrow'}
                     </div>
 
                 </div>
@@ -215,9 +215,9 @@
 
             <template if.bind="model.routeStop.photo.imageUrl">
 
-                <div class="flex-row margin-bottom">
+                <div class="flex-row margin-large-bottom">
 
-                    <div class="margin-bottom margin-large-right opacity-faded" translate>
+                    <div class="margin-large-right opacity-faded" translate>
                         Date
                     </div>
 
@@ -227,7 +227,9 @@
 
                 </div>
 
-                <img if.bind="model.routeStop.photo" class="image-thumbnail" src.bind="model.routeStop.photo.imageUrl">
+                <a href.bind="model.routeStop.photo.imageUrl" target="_blank">
+                    <img if.bind="model.routeStop.photo" class="image-thumbnail" src.bind="model.routeStop.photo.imageUrl">
+                </a>
 
             </template>
 
@@ -252,7 +254,7 @@
 
             <template if.bind="model.routeStop.signature">
 
-                <div class="flex-row margin-bottom">
+                <div class="flex-row margin-large-bottom">
 
                     <div>
                         <div class="margin-bottom margin-large-right opacity-faded" translate>
@@ -274,7 +276,9 @@
 
                 </div>
 
-                <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
+                <a href.bind="model.routeStop.signature.imageUrl" target="_blank">
+                    <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
+                </a>
 
             </template>
 
@@ -293,9 +297,9 @@
                 Driver verification
             </div>
 
-            <div class="opacity-faded" translate>
-                No driver photos at this stop
-            </div>
+            <a repeat.for="selfie of model.routeStop.selfies" href.bind="selfie.imageUrl" target="_blank">
+                <img class="image-thumbnail" src.bind="selfie.imageUrl">
+            </a>
 
         </data-section>
 

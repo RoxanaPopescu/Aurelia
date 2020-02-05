@@ -169,13 +169,18 @@ export class DataTableRowCustomElement
     /**
      * Called when the row is clicked.
      * @param event The click event.
+     * @returns False to prevent default for the event, otherwise true.
      */
-    protected onClick(event: MouseEvent): void
+    protected onClick(event: MouseEvent): boolean
     {
         if (this.clickable !== false && !event.defaultPrevented && !(event as any).__ignoreRowClick && this.click)
         {
             this.click({ event });
+
+            return false;
         }
+
+        return true;
     }
 
     /**

@@ -5,41 +5,27 @@ import { Pickup, Delivery } from "app/model/route";
 export class OrderAccordionCustomElement
 {
     /**
-     * True if the table is expanded, otherwise false.
+     * The expanded pickup or delivery, if any.
+     */
+    protected expandedOrder: Delivery | Pickup | undefined;
+
+    /**
+     * True if the component is expanded, otherwise false.
      */
     @bindable
     protected tableExpanded: boolean = false;
 
     /**
-     * The expanded pickup or delivery, if any.
-     */
-    @bindable
-    protected expandedOrder: Delivery | Pickup | undefined;
-
-    /**
-     * The expanded pickups or deliveries to present.
+     * The pickups or deliveries to present.
      */
     @bindable
     protected orders: Delivery[] | Pickup[];
 
     /**
-     * TODO: WTF IS THIS?
+     * Called when the header is clicked.
+     * Toggles the compoennt between its expanded and collapsed state.
      */
-    protected expanded(order: Delivery | Pickup): boolean
-    {
-        if (this.expandedOrder != null)
-        {
-            return order.orderId === this.expandedOrder.orderId;
-        }
-
-        return false;
-    }
-
-    /**
-     * Called when an accordion head is clicked.
-     * Toggles the accordion.
-     */
-    protected onAccordionHeadClick(event: MouseEvent, order: Delivery | Pickup): void
+    protected onHeaderClick(event: MouseEvent, order: Delivery | Pickup): void
     {
         if (event.defaultPrevented)
         {
@@ -58,11 +44,22 @@ export class OrderAccordionCustomElement
     }
 
     /**
-     * Called an order is clicked in the accordion.
+     * Called when an order is clicked in the accordion.
      * Expands and collapses the table.
      */
     protected onToggleTableClick(): void
     {
         this.tableExpanded = !this.tableExpanded;
+    }
+
+    /**
+     * Called when the order slug is clicked in the accordion.
+     * Prevents the event from propagating to the accordion head.
+     * @param event The mouse event.
+     * @param order The order whose slug was clicked.
+     */
+    protected onOrderSlugClick(order: Pickup | Delivery): void
+    {
+        window.open(`/orders/details/${order.orderSlug}`, "_blank");
     }
 }
