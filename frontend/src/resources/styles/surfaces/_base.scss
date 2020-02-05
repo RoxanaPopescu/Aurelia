@@ -14,7 +14,7 @@ $__summary: comment;
     --surface-subtle-color: var(--palette-color-neutral-dark);
     --surface-text-color: var(--palette-color-neutral-darker);
     --surface-icon-color: var(--palette-color-neutral-dark);
-    --surface-separator-color: var(--palette-color-neutral-light);
+    --surface-separator-color: var(--palette-color-neutral);
 
     // Needed for proper gradients.
     --surface-transparent-color: #{hsla(240, 0, 100%, 0)};
