@@ -3,6 +3,8 @@
     <require from="app/components/data-section/data-section"></require>
     <require from="./components/order-accordion/order-accordion"></require>
 
+    <require from="./route-stop-details.scss"></require>
+
     <modal-header scroll-fade>
 
         <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
@@ -25,56 +27,60 @@
 
     <data-section class="margin-bottom">
 
-        <div class="flex-row margin-bottom">
-
-            <div class="flex-row flex-basis-1-of-2">
-
-                <div class="opacity-faded flex-basis-1-of-2" translate>
-                    Planned arrival
-                </div>
-
-                <div>
-                    ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
-                </div>
-
-            </div>
-
-            <div class="flex-row flex-basis-1-of-2">
-
-                <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
-                    Planned loading time
-                </div>
-
-                <div>
-                    ${model.routeStop.loadingTime | time: 'narrow' : false}
-                </div>
-
-            </div>
-
-        </div>
-
         <div class="flex-row">
 
             <div class="flex-row flex-basis-1-of-2">
 
-                <div class="opacity-faded flex-basis-1-of-2" translate>
-                    Actual arrival
+                <div class="margin-large-right">
+
+                    <div class="opacity-faded margin-bottom" translate>
+                        Planned arrival
+                    </div>
+
+                    <div class="opacity-faded" translate>
+                        Actual arrival
+                    </div>
+
                 </div>
 
                 <div>
-                    ${model.routeStop.arrivalTime | dateTime: 'narrow' : false}
+
+                    <div class="margin-bottom">
+                        ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                    </div>
+
+                    <div>
+                        ${model.routeStop.arrivalTime | dateTime: 'narrow' : false}
+                    </div>
+
                 </div>
 
             </div>
 
             <div class="flex-row flex-basis-1-of-2">
 
-                <div class="opacity-faded flex-basis-1-of-2 margin-largest-left" translate>
-                    Actual loading time
+                <div class="margin-large-right">
+
+                    <div class="opacity-faded margin-bottom" translate>
+                        Planned loading time
+                    </div>
+
+                    <div class="opacity-faded" translate>
+                        Actual loading time
+                    </div>
+
                 </div>
 
                 <div>
-                    ${model.routeStop.loadingTime | time: 'narrow' : false}
+
+                    <div class="margin-bottom">
+                        ${model.routeStop.loadingTime | duration: 'narrow'}
+                    </div>
+
+                    <div>
+                        ${model.routeStop.loadingTime | duration: 'narrow'}
+                    </div>
+
                 </div>
 
             </div>
@@ -84,62 +90,59 @@
     </data-section>
 
     <!-- Consignee -->
-    <template>
 
-        <hr class="hr-line margin-bottom margin-top">
+    <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+    <data-section class="margin-bottom" toggle.bind="true">
 
-            <div slot="header" translate>
-                Consignee
+        <div slot="header" translate>
+            Consignee
+        </div>
+
+        <div if.bind="model.routeStop.location.address" class="flex-row">
+            <div class="opacity-faded flex-grow" translate>
+                Address
             </div>
+            <span>
+                ${model.routeStop.location.address}
+            </span>
+        </div>
 
-            <div if.bind="model.routeStop.location.address" class="flex-row">
-                <div class="opacity-faded flex-basis-1-of-4" translate>
-                    Address
-                </div>
-                <span>
-                    ${model.routeStop.location.address}
-                </span>
+        <div if.bind="model.routeStop.outfit.companyName" class="flex-row margin-top">
+            <div class="opacity-faded flex-grow" translate>
+                Company
             </div>
+            <span>
+                ${model.routeStop.outfit.companyName}
+            </span>
+        </div>
 
-            <div if.bind="model.routeStop.outfit.companyName" class="flex-row margin-top">
-                <div class="opacity-faded flex-basis-1-of-4" translate>
-                    Company
-                </div>
-                <span>
-                    ${model.routeStop.outfit.companyName}
-                </span>
+        <div if.bind="model.routeStop.outfit.personName" class="flex-row margin-top">
+            <div class="opacity-faded flex-grow" translate>
+                Name
             </div>
+            <span>
+                ${model.routeStop.outfit.personName}
+            </span>
+        </div>
 
-            <div if.bind="model.routeStop.outfit.personName" class="flex-row margin-top">
-                <div class="opacity-faded flex-basis-1-of-4" translate>
-                    Name
-                </div>
-                <span>
-                    ${model.routeStop.outfit.personName}
-                </span>
+        <div if.bind="model.routeStop.outfit.contactPhone" class="flex-row margin-top">
+            <div class="opacity-faded flex-grow" translate>
+                Phone
             </div>
+            <a href="tel: ${model.routeStop.outfit.contactPhone}">
+                ${model.routeStop.outfit.contactPhone}
+            </a>
+        </div>
 
-            <div if.bind="model.routeStop.outfit.contactPhone" class="flex-row margin-top">
-                <div class="opacity-faded flex-basis-1-of-4" translate>
-                    Phone
-                </div>
-                <a href="tel: ${model.routeStop.outfit.contactPhone}">
-                    ${model.routeStop.outfit.contactPhone}
-                </a>
-            </div>
-
-        </data-section>
-
-    </template>
+    </data-section>
 
     <!-- Instructions -->
-    <template if.bind="!!model.routeStop.driverInstructions">
+    <template if.bind="model.routeStop.driverInstructions != null">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Instructions
@@ -157,59 +160,18 @@
 
     </template>
 
-    <!--
-    <data-section toggle.bind="true" class="margin-bottom">
-
-        <div slot="header" translate>
-            Missing colli
-        </div>
-
-        <div class="opacity-faded" translate>
-            No missing colli at this stop
-        </div>
-
-    </data-section>
-    -->
-
     <!-- Orders to be delivered -->
     <template if.bind="model.routeStop.deliveries.length != 0">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Deliveries
             </div>
 
-            <order-accordion orders.bind="model.routeStop.deliveries"></order-accordion>
-            <!-- <card repeat.for="delivery of model.routeStop.deliveries" class="margin-bottom --non-clickable">
-
-                <div class="margin-smaller-bottom" translate>
-                    <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${delivery.orderSlug}</a>
-                </div>
-
-                <div class="margin-smaller-bottom" translate>
-                    Colli
-                </div>
-
-                <div repeat.for="collo of delivery.colli" class="flex-row">
-
-                    <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
-                        ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
-                    </a>
-
-                    <div>
-                        ${collo.status.name}
-                    </div>
-
-                    <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'delivered')" translate>
-                        Mark as delivered
-                    </button>
-
-                </div>
-
-            </card> -->
+            <order-accordion repeat.for="order of model.routeStop.deliveries" order.bind="order"></order-accordion>
 
         </data-section>
 
@@ -218,9 +180,9 @@
     <!-- Orders to pick up -->
     <template if.bind="model.routeStop.pickups.length != 0">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Pickups
@@ -230,61 +192,44 @@
                 No pickups at this stop
             </div>
 
-            <order-accordion orders.bind="model.routeStop.pickups"></order-accordion>
-            <!-- <card repeat.for="pickup of model.routeStop.pickups" class="margin-bottom --non-clickable">
-
-                <div class="margin-smaller-bottom" translate>
-                    <a class="flex-grow" href="/orders/details/${pickup.orderSlug}">Order ${pickup.orderSlug}</a>
-                </div>
-
-                <div class="margin-smaller-bottom" translate>
-                    Colli
-                </div>
-
-                <div repeat.for="collo of pickup.colli" class="flex-row">
-
-                    <a class="flex-grow" href="/orders/details/${collo.orderSlug}?collo=${collo.barcode}">
-                        ${collo.barcode} ${collo.origin.name ? '(' + collo.origin.name + ')' : ''}
-                    </a>
-
-                    <div>
-                        ${collo.status.name}
-                    </div>
-
-                    <button if.bind="collo.status.slug == 'not-delivered'" appearance="outline" click.trigger="onColloStatusChange(collo, 'picked-up')" translate>
-                        Mark as picked up
-                    </button>
-
-                </div>
-
-            </card> -->
+            <order-accordion repeat.for="order of model.routeStop.pickups" order.bind="order"></order-accordion>
 
         </data-section>
 
     </template>
 
     <!-- Proof of delivery -->
-    <template if.bind="!!model.routeStop.signature">
+    <template if.bind="model.routeStop.photo != null">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Proof of delivery
             </div>
 
-            <div if.bind="!model.routeStop.signature" class="opacity-faded" translate>
+            <div if.bind="!model.routeStop.photo" class="opacity-faded" translate>
                 No proof of delivery
             </div>
 
-            <template if.bind="model.routeStop.signature.imageUrl">
+            <template if.bind="model.routeStop.photo.imageUrl">
 
-                <div>
-                    ${model.routeStop.signature.date | dateTime: 'narrow' : false}
+                <div class="flex-row margin-large-bottom">
+
+                    <div class="margin-large-right opacity-faded" translate>
+                        Date
+                    </div>
+
+                    <div>
+                        ${model.routeStop.photo.date | dateTime: 'narrow' : true}
+                    </div>
+
                 </div>
 
-                <img if.bind="model.routeStop.photo" class="image-thumbnail" href.bind="model.routeStop.photo.imageUrl">
+                <a href.bind="model.routeStop.photo.imageUrl" target="_blank">
+                    <img if.bind="model.routeStop.photo" class="image-thumbnail" src.bind="model.routeStop.photo.imageUrl">
+                </a>
 
             </template>
 
@@ -293,11 +238,11 @@
     </template>
 
     <!-- Signature -->
-    <template if.bind="!!model.routeStop.signature">
+    <template if.bind="model.routeStop.signature != null">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Signature
@@ -309,11 +254,31 @@
 
             <template if.bind="model.routeStop.signature">
 
-                <div>
-                    ${model.routeStop.signature.date | dateTime: 'narrow' : false}
+                <div class="flex-row margin-large-bottom">
+
+                    <div>
+                        <div class="margin-bottom margin-large-right opacity-faded" translate>
+                            Date
+                        </div>
+                        <div class="margin-large-right opacity-faded" translate>
+                            Name
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="margin-bottom">
+                            ${model.routeStop.signature.date | dateTime: 'narrow' : true}
+                        </div>
+                        <div>
+                            ${model.routeStop.signature.name}
+                        </div>
+                    </div>
+
                 </div>
 
-                <img class="image-thumbnail" href.bind="model.routeStop.signature.imageUrl">
+                <a href.bind="model.routeStop.signature.imageUrl" target="_blank">
+                    <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
+                </a>
 
             </template>
 
@@ -322,19 +287,19 @@
     </template>
 
     <!-- Driver verification -->
-    <template>
+    <template if.bind="model.routeStop.selfies.length > 0">
 
-        <hr class="hr-line margin-bottom margin-top">
+        <hr class="hr-line margin-bottom">
 
-        <data-section toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
                 Driver verification
             </div>
 
-            <div class="opacity-faded" translate>
-                No driver photos at this stop
-            </div>
+            <a repeat.for="selfie of model.routeStop.selfies" href.bind="selfie.imageUrl" target="_blank">
+                <img class="image-thumbnail" src.bind="selfie.imageUrl">
+            </a>
 
         </data-section>
 

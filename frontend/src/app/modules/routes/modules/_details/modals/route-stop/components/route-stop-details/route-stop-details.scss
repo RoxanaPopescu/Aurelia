@@ -1,0 +1,7 @@
+route-stop-details
+{
+    data-section:not(.--expanded)
+    {
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+}

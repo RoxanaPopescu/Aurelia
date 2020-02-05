@@ -1,118 +1,124 @@
-<template>
+<template class="${expanded ? '--expanded' : ''}" surface="card">
 
     <require from="./order-accordion.scss"></require>
 
-    <div
-        repeat.for="order of orders"
-        class="order-accordion-card
-        ${order.orderId == expandedOrder.orderId ? '--expanded' : ''}">
+    <div class="order-accordion-header" click.trigger="onHeaderClick($event, order)">
 
-        <div class="order-accordion-card-head" click.trigger="onAccordionHeadClick(order)">
+        <div class="order-accordion-header-content">
 
-            <div>
-                <span translate>
-                    Order:
+            <div class="flex-row">
+                <span class="margin-right" translate>
+                    Order
                 </span>
-                <a href="/orders/details/${pickup.orderSlug}">
-                    ${delivery.orderSlug}
+                <a href="/orders/details/${order.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
+                    ${order.orderSlug}
                 </a>
             </div>
 
             <div translate>
-                ${order.colli.length | number} colli
+                ${order.colli.length | number} ${order.colli.length | plural: "collo" : "colli"}
             </div>
 
             <div translate>
-                TODO kg
+                ### kg
             </div>
 
             <div translate>
-                TODO m³
+                ### m³
             </div>
 
-            <div class="order-accordion-toggle"></div>
-
         </div>
 
-        <div
-            if.bind="order.colli.length > 0"
-            class="order-accordion-card-content
-            ${tableExpanded ? '--expanded' : ''}">
+        <div class="order-accordion-header-toggle"></div>
 
-            <data-table
-                appearance="rows">
+    </div>
 
-                <data-table-headers>
+    <div
+        if.bind="expanded && order.colli.length > 0"
+        class="order-accordion-content
+        ${showAllColli ? '--expanded' : ''}">
+
+        <data-table appearance="rows">
+
+            <data-table-headers>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate font-small" translate>
+                        Collo barcode
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate font-small" translate>
+                        Scan method
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate font-small" translate>
+                        Picture
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate font-small" translate>
+                        Status
+                    </span>
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <template repeat.for="collo of order.colli">
+
+                <data-table-row model.bind="collo" clickable.bind="false">
 
                     <data-table-cell>
-                        <span class="opacity-faded text-truncate font-small" translate>
-                            Collo ID
+                        <a
+                            class="order-collo text-truncate font-small"
+                            title="${collo.barcode}"
+                            href="/orders/details/${order.orderSlug}?collo=${collo.barcode}" target="_blank">
+                            ${collo.barcode}
+                        </a>
+                        <div if.bind="collo.origin.slug != 'regular'" class="opacity-faded font-small collo-origin">
+                            ${collo.origin.name}
+                        </div>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="order-collo text-truncate font-small">
+                            ${collo.scanMethod.name}
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="opacity-faded text-truncate font-small" translate>
-                            Scanning method
-                        </span>
+                        <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
+                            <icon name="md-photo" accent="primary" class="font-larger"></icon>
+                        </a>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="opacity-faded text-truncate font-small" translate>
-                            Image
+                        <span class="text-truncate font-small">
+                            ${collo.status.name}
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
-                        <span class="opacity-faded text-truncate font-small" translate>
-                            Status
-                        </span>
-                    </data-table-cell>
+                </data-table-row>
 
-                </data-table-headers>
+            </template>
 
-                <template repeat.for="collo of order.colli">
+        </data-table>
 
-                    <data-table-row
-                        model.bind="collo"
-                        clickable.bind="false">
+        <a if.bind="order.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onShowAllColliToggle()">
 
-                        <data-table-cell>
-                            <span
-                                class="order-collo text-truncate font-small"
-                                title="${collo.barcode}">
-                                ${collo.barcode}
-                            </span>
-                            <div if.bind="collo.origin.name != ''" class="opacity-faded font-small collo-origin">${collo.origin.name}</div>
-                        </data-table-cell>
+            <span if.bind="showAllColli" translate>
+                Show less
+            </span>
 
-                        <data-table-cell>
-                            <span class="order-collo text-truncate font-small">
-                                ${collo.barcode}
-                            </span>
-                        </data-table-cell>
+            <span if.bind="!showAllColli" translate>
+                Show all
+            </span>
 
-                        <data-table-cell>
-                            <span class="order-collo text-truncate font-small">
-                                ${collo.barcode}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate font-small">
-                                ${collo.status.name}
-                            </span>
-                        </data-table-cell>
-
-                    </data-table-row>
-
-                </template>
-
-            </data-table>
-            <a if.bind="order.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onToggleTableClick()">
-                <span if.bind="tableExpanded" translate>Show less</span>
-                <span if.bind="!tableExpanded" translate>Show more</span>
-            </a>
-        </div>
+        </a>
 
     </div>
 

@@ -34,7 +34,8 @@
         pointer-events: none !important;
     }
 
-    html:not(.platform-macos):not(.platform-ios) &
+    html:not(.platform-macos):not(.platform-ios) &,
+    &.scroll--custom
     {
         // The thickness of the scrollbar.
         --scrollbar-thickness: 3rem;

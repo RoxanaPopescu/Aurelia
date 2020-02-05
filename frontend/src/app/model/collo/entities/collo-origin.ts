@@ -1,3 +1,5 @@
+import { textCase } from "shared/utilities";
+
 /**
  * Represents the slug identifying a `ColloOrigin`.
  */
@@ -14,7 +16,7 @@ export class ColloOrigin
      */
     public constructor(slug: ColloOriginSlug)
     {
-        this.slug = slug;
+        this.slug = textCase(slug, "pascal", "kebab") as any;
         Object.assign(this, ColloOrigin.values[this.slug]);
     }
 

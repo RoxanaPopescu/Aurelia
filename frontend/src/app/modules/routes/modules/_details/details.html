@@ -33,7 +33,7 @@
                     </div>
 
                     <div slot="value" empty>
-                        ${route.type.name}
+                        ${route.productType.name}
                     </div>
 
                 </page-sidebar-value>
@@ -454,11 +454,10 @@
 
                         <data-table-row
                             model.bind="stop"
-                            accent="positive"
                             click.call="onStopClick(stop)">
 
                             <data-table-cell>
-                                <span class="route-details-stop-number text-truncate">
+                                <span class="route-details-stop-number text-truncate accent-${stop.status.accent}">
                                     ${stop.stopNumber}
                                 </span>
                             </data-table-cell>
@@ -495,7 +494,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${stop.loadingTime | duration}
+                                    ${stop.loadingTime | duration: 'narrow'}
                                 </span>
                             </data-table-cell>
 

@@ -5,59 +5,52 @@ import { Pickup, Delivery } from "app/model/route";
 export class OrderAccordionCustomElement
 {
     /**
-     * True if the table is expanded, otherwise false.
+     * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected tableExpanded: boolean = false;
+    protected expanded: boolean = false;
 
     /**
-     * The expanded pickup or delivery, if any.
+     * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected expandedOrder: Delivery | Pickup | undefined;
+    protected showAllColli: boolean = false;
 
     /**
-     * The expanded pickups or deliveries to present.
+     * The pickups or deliveries to present.
      */
     @bindable
-    protected orders: Delivery[] | Pickup[];
+    protected order: Delivery | Pickup;
 
     /**
-     * TODO: WTF IS THIS?
+     * Called when the header is clicked.
+     * Toggles the component between its expanded and collapsed state.
      */
-    protected expanded(order: Delivery | Pickup): boolean
+    protected onHeaderClick(event: MouseEvent): void
     {
-        if (this.expandedOrder != null)
+        if (event.defaultPrevented)
         {
-            return order.orderId === this.expandedOrder.orderId;
+            return;
         }
 
-        return false;
+        this.expanded = !this.expanded;
     }
 
     /**
-     * Called when an accordion head is clicked.
-     * Toggles the accordion.
+     * Called when the 'Show all' or 'Show less' button is clicked.
+     * Toggles between showing some or all colli.
      */
-    protected onAccordionHeadClick(order: Delivery | Pickup): void
+    protected onShowAllColliToggle(event: MouseEvent): void
     {
-        if (this.expandedOrder != null && order.orderId === this.expandedOrder.orderId)
-        {
-            this.tableExpanded = false;
-            this.expandedOrder = undefined;
-        }
-        else
-        {
-            this.expandedOrder = order;
-        }
+        this.showAllColli = !this.showAllColli;
     }
 
     /**
-     * Called an order is clicked in the accordion.
-     * Expands and collapses the table.
+     * Called when the order slug is clicked in the accordion.
+     * Opens the order in a new window.
      */
-    protected onToggleTableClick(): void
+    protected onOrderSlugClick(): void
     {
-        this.tableExpanded = !this.tableExpanded;
+        window.open(`/orders/details/${this.order.orderSlug}`, "_blank");
     }
 }
