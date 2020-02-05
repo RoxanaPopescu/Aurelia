@@ -33,9 +33,9 @@ export class ProductType
         {
             name: "Curier Express"
         },
-        "solutions":
+        "solution":
         {
-            name: "Solutions"
+            name: "Solution"
         }
     };
 }

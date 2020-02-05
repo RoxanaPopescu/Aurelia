@@ -132,7 +132,7 @@ export class DetailsModule
     {
         try
         {
-            await this._routeService.reloadRoute(this.route!.id);
+            await this._routeService.reloadRoute(this.route!);
         }
         catch (error)
         {
@@ -215,13 +215,36 @@ export class DetailsModule
 
         try
         {
-            await this._routeService.setRouteStopStatus(this.route!.id, stop, "cancelled");
-
-            this.route!.stops.splice(this.route!.stops.findIndex(s => s.id === stop.id), 1);
+            await this._routeService.setRouteStopStatus(this.route!, stop, "cancelled");
         }
         catch (error)
         {
             Log.error("Could not remove route stop", error);
+        }
+
+        this.fetchRoute(this.route!.id);
+    }
+
+    /**
+     * Called when a stop is moved to a new position in the list.
+     * @param source The stop being moved.
+     * @param target The stop currently occupying the target position.
+     */
+    protected async onMoveStop(source: RouteStop, target: RouteStop): Promise<void>
+    {
+        try
+        {
+            const sourceIndex = this.route!.stops.indexOf(source);
+            const targetIndex = this.route!.stops.indexOf(target);
+
+            this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+
+            // TODO: Don't do this until after the user releases the mouse button.
+            //await this._routeService.moveRouteStop(this.route!, source, targetIndex);
+        }
+        catch (error)
+        {
+            Log.error("Could not move route stop", error);
         }
 
         this.fetchRoute(this.route!.id);

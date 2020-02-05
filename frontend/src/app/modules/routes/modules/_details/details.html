@@ -330,9 +330,11 @@
                             Routes
                         </a>
 
-                        <span translate>
+                        <span if.bind="route.slug != null"translate>
                             ${route.slug}
                         </span>
+
+                        <div if.bind="route.slug == null" class="text-skeleton" style="width: 60rem"></div>
 
                     </path-nav>
                 </h1>
@@ -465,6 +467,7 @@
                             model.bind="stop"
                             accent.bind="stop.status.accent"
                             click.call="onStopClick(stop)"
+                            movable.bind="stop.status.slug == 'not-visited'"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell>
@@ -516,21 +519,19 @@
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate">
 
-                                    <div class="icon-row">
+                                <div if.bind="stop.status.slug == 'not-visited'" class="icon-row">
 
-                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
-                                            <icon name="edit-small"></icon>
-                                        </button>
+                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                        <icon name="edit-small"></icon>
+                                    </button>
 
-                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
-                                            <icon name="delete-small"></icon>
-                                        </button>
+                                    <button appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
 
-                                    </div>
+                                </div>
 
-                                </span>
                             </data-table-cell>
 
                         </data-table-row>
@@ -542,6 +543,8 @@
                 <empty-indicator if.bind="route.stops.length == 0" class="margin-largest" translate>
                     No stops
                 </empty-indicator>
+
+                <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>
 
             </page-section>
 
