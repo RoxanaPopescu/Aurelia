@@ -147,7 +147,10 @@
                     </div>
 
                     <div slot="value" empty>
-                        ${route.stops[0].location.address}
+                        <span
+                            if.bind="route.stops[0].location.address"
+                            innerhtml.bind="route.stops[0].location.address.toHtmlString()">
+                        </span>
                     </div>
 
                 </page-sidebar-value>

@@ -13,8 +13,8 @@ export class Address
         {
             this.id = data.id;
             this.provider = data.provider;
-            this.primary = data.primary;
-            this.secondary = data.secondary;
+            this.primary = this.sanitize(data.primary);
+            this.secondary = data.secondary ? this.sanitize(data.secondary) : undefined;
         }
     }
 
@@ -39,10 +39,37 @@ export class Address
     public secondary?: string;
 
     /**
-     * Formats the address for presentation on a single line.
+     * Formats the address as a single-line string.
      */
     public toString(): string
     {
         return this.secondary ? `${this.primary}, ${this.secondary}` : this.primary;
+    }
+
+    /**
+     * Formats the address as a multi-line HTML string.
+     */
+    public toHtmlString(): string
+    {
+        return this.secondary ?
+            `${this.primary}<br>${this.secondary}` :
+            this.primary.replace(/^(.*),\s*(\d{4}\s+[^\d]+)$/, ($0, $1, $2) => $2 ? `${$1}<br>${$2}` : $1);
+    }
+
+    /**
+     * Sanitizes the specified address fragment.
+     * @param addressFragment The address fragment to sanitize.
+     * @returns The sanitized address fragment.
+     */
+    private sanitize(addressFragment: string): string
+    {
+        return addressFragment
+            .replace(/\s+/g, " ")
+            .replace(/,(?=[^ ])/g, ", ")
+            .replace(/\s,/g, ",")
+            .replace(/\s\./g, ".")
+            .replace(/,$/g, "")
+            .replace(/<|>/g, "")
+            .trim();
     }
 }
