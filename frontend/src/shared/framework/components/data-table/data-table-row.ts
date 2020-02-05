@@ -41,6 +41,12 @@ export class DataTableRowCustomElement
     public accent: AccentColor | undefined;
 
     /**
+     * The class names to apply to the row, if any.
+     */
+    @bindable
+    public class: string | undefined;
+
+    /**
      * Called when the row is selected or deselected.
      */
     @bindable

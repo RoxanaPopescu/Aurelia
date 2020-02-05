@@ -4,7 +4,24 @@ page[name="routes"] page[name="details"]
 {
     data-table
     {
-        --data-table-columns: min-content 2fr 1fr 1fr 1fr 1fr 1fr min-content;
+        --data-table-columns: min-content 3fr 1.75fr 1.25fr 1fr 1.25fr 1.5fr 1.25fr min-content;
+
+        .data-table-row.--cancelled
+        {
+            > data-table-cell > *,
+            > data-table-cell::before
+            {
+                opacity: var(--opacity-faded-more);
+            }
+        }
+
+        .data-table-row.--failed
+        {
+            > *
+            {
+                color: var(--surface-negative-text-color) !important;
+            }
+        }
     }
 
     .route-details-stop-number

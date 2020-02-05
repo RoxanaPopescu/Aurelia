@@ -425,7 +425,13 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
-                                Arrival date
+                                Type
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Colli
                             </span>
                         </data-table-cell>
 
@@ -458,7 +464,8 @@
                         <data-table-row
                             model.bind="stop"
                             accent.bind="stop.status.accent"
-                            click.call="onStopClick(stop)">
+                            click.call="onStopClick(stop)"
+                            class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell>
                                 <span class="route-details-stop-number text-truncate accent-${stop.status.accent}">
@@ -480,19 +487,25 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${stop.arrivalTime || stop.arrivalTimeFrame.from | date: 'narrow' : false}
+                                    ${stop.type.name}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${stop.arrivalTimeFrame | timeRange: 'narrow' : false}
+                                    ${stop.totalColliCount | number}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
                                     ${stop.arrivalTime | time: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.arrivalTimeFrame | timeRange: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 

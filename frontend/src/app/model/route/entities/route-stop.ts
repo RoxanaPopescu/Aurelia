@@ -3,8 +3,8 @@ import { RouteStopBase } from "./route-stop-base";
 import { Pickup } from "./pickup";
 import { Delivery } from "./delivery";
 import { RouteStopProblem } from "./route-stop-problem";
-import clone from "clone";
 import { RouteStopActions } from "./route-stop-actions";
+import clone from "clone";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -106,5 +106,13 @@ export class RouteStop extends RouteStopBase
     public clone(): any
     {
         return clone(this);
+    }
+
+    /**
+     * The total number colli associated with this stop.
+     */
+    public get totalColliCount(): number
+    {
+        return this.pickups.reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
     }
 }

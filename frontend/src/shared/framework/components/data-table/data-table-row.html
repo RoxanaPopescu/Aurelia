@@ -6,7 +6,8 @@
         data-table-row
         ${selected ? '--selected' : ''}
         ${faded ? '--opacity-faded' : ''}
-        ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}"
+        ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}
+        ${class}"
         href.bind="clickable !== false ? href : undefined"
         accent.bind="accent & attr"
         click.delegate="onClick($event)"
