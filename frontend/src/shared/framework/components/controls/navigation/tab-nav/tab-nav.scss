@@ -13,13 +13,13 @@ tab-nav
     &[appearance="tabs"]
     {
         // Apply a border along the bottom of the tabs.
-        border-bottom: var(--tab-border-width) solid var(--surface-neutral-border-color);
+        border-bottom: var(--tab-border-width) solid var(--tab-border-color);
     }
 
     &[appearance="solid"]
     {
         // Apply a border around the tabs.
-        border: var(--tab-border-width) solid var(--surface-neutral-border-color);
+        border: var(--tab-border-width) solid var(--tab-border-color);
         border-radius: var(--border-radius-medium);
     }
 }
