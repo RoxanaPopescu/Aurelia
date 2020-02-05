@@ -40,11 +40,11 @@
 
                     <template if-claims="edit-order-group">
 
-                        <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="solid" accent="neutral" click.trigger="onPauseClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
                             Pause
                         </button>
 
-                        <button if.bind="orderGroup.id && orderGroup.paused" appearance="solid" accent="neutral" click.trigger="onUnpauseClick()" translate>
+                        <button if.bind="orderGroup.id && orderGroup.paused" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
                             Unpause
                         </button>
 
