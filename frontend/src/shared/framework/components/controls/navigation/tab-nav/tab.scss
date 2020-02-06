@@ -94,7 +94,7 @@ tab
         &:not(:last-child) button
         {
             // Apply a border between the tabs.
-            border-right: var(--tab-border-width) solid var(--surface-neutral-border-color);
+            border-right: var(--tab-border-width) solid var(--tab-border-color);
         }
 
         &.--active button
@@ -120,7 +120,7 @@ tab
         &.--active button
         {
             // Highlight the active tab.
-            border-color: var(--surface-neutral-border-color);
+            border-color: var(--tab-border-color);
             color: var(--surface-neutral-text-color);
         }
     }

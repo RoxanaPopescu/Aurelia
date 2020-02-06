@@ -44,6 +44,10 @@ export class RouteStopProblem
         "denied-delivery":
         {
             name: "Delivery denied"
+        },
+        "wrong-address":
+        {
+            name: "Wrong address"
         }
     };
 }

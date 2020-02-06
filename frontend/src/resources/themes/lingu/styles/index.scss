@@ -20,6 +20,11 @@ $__summary: comment;
 body
 {
     /**
+     * The color of the border of tabs.
+     */
+     --tab-border-color: var(--palette-color-neutral-light);
+
+    /**
      * The width of the border of tabs.
      */
      --tab-border-width: var(--border-width-medium);
@@ -32,5 +37,5 @@ body
 
 button[appearance="outline"]
 {
-    border-color: var(--palette-color-neutral) !important;
+    border-color: var(--palette-color-neutral-light) !important;
 }

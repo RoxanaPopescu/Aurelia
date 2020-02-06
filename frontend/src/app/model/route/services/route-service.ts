@@ -95,62 +95,66 @@ export class RouteService
 
     /**
      * Adds the specified route stop at the specified index.
-     * @param routeId The ID of the route owning the stop.
+     * @param route The route owning the stop.
      * @param stop The route stop to add.
      * @param atIndex The index at which the stop should be inserted.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async addRouteStop(routeId: string, stop: RouteStop, atIndex: number): Promise<void>
+    public async addRouteStop(route: Route, stop: RouteStop, atIndex: number): Promise<void>
     {
         await this._apiClient.post("routes/stop/add",
         {
-            body: { routeId, stop, atIndex }
+            body: { routeId: route.id, stop, atIndex }
         });
     }
 
     /**
      * Saves the specified route stop.
-     * @param routeId The ID of the route owning the stop.
+     * @param route The route owning the stop.
      * @param stop The route stop to save.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async saveRouteStop(routeId: string, stop: RouteStop): Promise<void>
+    public async saveRouteStop(route: Route, stop: RouteStop): Promise<void>
     {
         await this._apiClient.post("routes/stop/update",
         {
-            body: { routeId, stop }
+            body: { routeId: route.id, stop }
         });
     }
 
     /**
      * Moves the specified route stop to the specified index.
-     * @param routeId The ID of the route owning the stop.
+     * @param route The route owning the stop.
      * @param stop The route stop to move.
      * @param newIndex The index to which the stop should be moved.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async moveRouteStop(routeId: string, stop: RouteStop, newIndex: number): Promise<void>
+    public async moveRouteStop(route: Route, stop: RouteStop, newIndex: number): Promise<void>
     {
+        const sourceIndex = route.stops.indexOf(stop);
+
         await this._apiClient.post("routes/stop/move",
         {
-            body: { routeId, stop, newIndex }
+            body: { routeId: route.id, stop, newIndex }
         });
+
+        route.stops.splice(newIndex, 0, ...route.stops.splice(sourceIndex, 1));
     }
 
     /**
      * Changes the status of the specified route stop to the specified status.
-     * @param routeId The ID of the route owning the stop.
+     * @param route The route owning the stop.
      * @param stop The route stop for which the status should be set.
      * @param routeStopStatusSlug The slug identifying the new status.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async setRouteStopStatus(routeId: string, stop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
+    public async setRouteStopStatus(route: Route, stop: RouteStop, routeStopStatusSlug: RouteStopStatusSlug): Promise<void>
     {
         stop.status = new RouteStopStatus(routeStopStatusSlug);
 
         await this._apiClient.post("routes/stops/update",
         {
-            body: { routeId, stop }
+            body: { routeId: route.id, stop }
         });
     }
 
@@ -164,11 +168,7 @@ export class RouteService
     {
         await this._apiClient.post("routes/setColloStatus",
         {
-            body:
-            {
-                colloId: collo.id,
-                status: colloStatusSlug
-            }
+            body: { colloId: collo.id, status: colloStatusSlug }
         });
 
         collo.status = new ColloStatus(colloStatusSlug);
@@ -179,14 +179,11 @@ export class RouteService
      * @param routeId The ID of the route to reload.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async reloadRoute(routeId: string): Promise<void>
+    public async reloadRoute(route: Route): Promise<void>
     {
         await this._apiClient.post("routes/reloadRouteInApp",
         {
-            body:
-            {
-                routeId
-            }
+            body: { routeId: route.id }
         });
     }
 }

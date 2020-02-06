@@ -41,9 +41,14 @@ modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not
 body
 {
     /**
+     * The color of the border of tabs.
+     */
+    --tab-border-color: var(--palette-color-neutral);
+
+    /**
      * The width of the border of tabs.
      */
-     --tab-border-width: var(--border-width-medium);
+     --tab-border-width: var(--border-width-thin);
 
     /**
      * The width of the border of inputs.

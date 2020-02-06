@@ -47,7 +47,7 @@ export class RouteStopDetailsCustomElement
 
         try
         {
-            await this._routeService.setRouteStopStatus(this.model.route.id, this.model.routeStop, status);
+            await this._routeService.setRouteStopStatus(this.model.route, this.model.routeStop, status);
         }
         catch (error)
         {

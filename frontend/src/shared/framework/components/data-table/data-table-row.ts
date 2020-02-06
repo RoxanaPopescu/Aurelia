@@ -41,6 +41,12 @@ export class DataTableRowCustomElement
     public accent: AccentColor | undefined;
 
     /**
+     * The class names to apply to the row, if any.
+     */
+    @bindable
+    public class: string | undefined;
+
+    /**
      * Called when the row is selected or deselected.
      */
     @bindable
@@ -62,7 +68,7 @@ export class DataTableRowCustomElement
      * Called when the row is moved to a new model.
      */
     @bindable
-    public move: ((context: { oldmodel: boolean; newmodel: number }) => void) | undefined;
+    public move: ((context: { oldModel: boolean; newModel: number }) => void) | undefined;
 
     /**
      * True if the row is selected, otherwise false.
@@ -88,6 +94,12 @@ export class DataTableRowCustomElement
      */
     @bindable({ defaultValue: undefined })
     public clickable: boolean | undefined;
+
+    /**
+     * False to disable moving of the row, if moving is enabled for the data-table, otherwise true.
+     */
+    @bindable({ defaultValue: true })
+    public movable: boolean;
 
     /**
      * Called by the framework when the component is attached.
