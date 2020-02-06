@@ -152,7 +152,7 @@ export class DriversColumnCustomElement
             try
             {
                 // Fetch the data.
-                const result = await this._expressRouteService.getDriverRoutes(signal);
+                const result = await this._expressRouteService.getDriverRoutes(this.workspace.dateFilter, signal);
 
                 // Migrate the state to the new routes.
                 if (this.workspace.driverRoutes != null)

@@ -4,7 +4,7 @@
 
     <page-content scroll scroll.ref="scroll">
 
-        <page-header scroll-fade>
+        <page-header class="flex-row" scroll-fade>
 
             <h1 class="font-largest">
                 <path-nav>
@@ -19,7 +19,11 @@
 
                 </path-nav>
             </h1>
-
+            
+            <div class="control-row" if.bind="!workspace.isMerging">
+                <date-input label="above" fixed.bind="true" value.bind="dateFilter" change.trigger="onDateChanged()" class="flex-grow">
+                </date-input>
+            </div>
         </page-header>
 
         <page-section>
