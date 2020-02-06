@@ -170,7 +170,7 @@
   "0a647d5b6": "Rutestart",
   "d4f6b94f2": "Chauffør ankom ${delayedStart | duration} for tidligt",
   "55cf21a94": "Chaufføren var forsinket med ${delayedStart | duration}",
-  "b28a668c2": "Rute varighed",
+  "b28a668c2": "Rutevarighed",
   "785ac6747": "Anslået gennemførelsestid",
   "6e2a31d27": "<span if.bind=\"routeDelay != null\">${routeDelay | duration} forsinket</span> <span if.bind=\"routeDelay == null\">&nbsp;</span>",
   "83f511192": "Chauffør status",

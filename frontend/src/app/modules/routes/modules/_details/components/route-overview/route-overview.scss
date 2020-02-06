@@ -31,17 +31,6 @@ route-overview
             height: 170px;
             width: 170px;
             align-self: center;
-
-            .circular-meter-text
-            {
-                > *
-                {
-                    &:nth-child(2)
-                    {
-                        margin: 2rem 0;
-                    }
-                }
-            }
         }
     }
 }
