@@ -1,6 +1,7 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { Route, RouteStop } from "app/model/route";
 import { DateTime, Duration } from "luxon";
+import { Collo } from "app/model/collo";
 
 /**
  * Represents the module.
@@ -237,6 +238,22 @@ export class RouteOverview
     /**
      * Calculates the duration of the route
      */
+    @computedFrom("route.status")
+    public get isRouteDelayed(): boolean
+    {
+        if (this.route != null)
+        {
+            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'started') && this.delayedStart.as('second') !== 0)
+            {
+                return  true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Calculates the duration of the route
+     */
     @computedFrom("route.stops.length")
     public get routeStopsOkay(): boolean
     {
@@ -248,5 +265,74 @@ export class RouteOverview
         }
 
         return false;
+    }
+
+    /**
+     * Calculates the amount of colli not picked up
+     */
+    @computedFrom("route.stops.length")
+    public get notPickedUpColli(): Collo[]
+    {
+        let notPickedUpColli: Collo[] = [];
+        if (this.route != null)
+        {
+            let completedPickupStops = this.route.stops.filter(s => s.type.slug === "pickup" &&
+                                                                s.status.slug === "completed" &&
+                                                                s instanceof RouteStop);
+            completedPickupStops.forEach((s: RouteStop) => {
+                s.pickups.forEach(p => {
+                    p.colli.forEach(c => {
+                        if (c.status.slug !== "picked-up")
+                        {
+                            notPickedUpColli.push(c);
+                        }
+                    });
+                });
+            });
+        }
+
+        return notPickedUpColli;
+    }
+
+    /**
+     * Calculates the amount of colli not delivered
+     */
+    @computedFrom("route.stops.length")
+    public get notDeliveredColli(): Collo[]
+    {
+        let notDeliveredColli: Collo[] = [];
+        if (this.route != null)
+        {
+            let completedPickupStops = this.route.stops.filter(s => s.type.slug === "delivery" &&
+                                                                s.status.slug === "completed" &&
+                                                                s instanceof RouteStop);
+            completedPickupStops.forEach((s: RouteStop) => {
+                s.pickups.forEach(p => {
+                    p.colli.forEach(c => {
+                        if (c.status.slug !== "delivered")
+                        {
+                            notDeliveredColli.push(c);
+                        }
+                    });
+                });
+            });
+        }
+
+        return notDeliveredColli;
+    }
+
+    /**
+     * Calculates the amount failed stops
+     */
+    @computedFrom("route.stops.length")
+    public get failedStops(): RouteStop[]
+    {
+        if (this.route != null)
+        {
+            return this.route.stops.filter(s => s instanceof RouteStop)
+                                    .filter((s: RouteStop) => s.status.slug === "failed" || s.status.slug === "cancelled") as RouteStop[];
+        }
+
+        return [];
     }
 }

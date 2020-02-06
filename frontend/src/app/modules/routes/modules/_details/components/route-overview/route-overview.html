@@ -15,10 +15,11 @@
                     Completed stops
                 </div>
 
-                <circular-meter meterAccent="positive" percentage.bind="completedStops * 100 / route.stops.length">
+                <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'positive' & attr" percentage.bind="completedStops * 100 / route.stops.length">
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
                     </div>
+                    <div if.bind="failedStops.length > 0" accent="negative" class="font-small">${failedStops.length} not completed</div>
                 </circular-meter>
 
             </card>
@@ -36,7 +37,7 @@
 
                     </div>
 
-                    <div class="font-largest">
+                    <div class="font-largest" accent.bind="notPickedUpColli.length > 0 ? 'negative' : 'neutral' & attr">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">${totalColliCount}</span>
                         <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'">${pickedUpColliCount}</span>
@@ -45,9 +46,9 @@
 
                     <div class="font-small">
 
-                        <span if.bind="totalColliCount === 0">&nbsp;</span>
-                        <span if.bind="pickedUpColliCount === totalColliCount && totalColliCount !== 0" translate>All colli picked up</span>
-                        <span if.bind="pickedUpColliCount !== completedColliCount" translate>${pickedUpColliCount}/${totalColliCount} has been picked up</span>
+                        <span if.bind="totalColliCount === 0 || notPickedUpColli.length === 0">&nbsp;</span>
+                        <span if.bind="notPickedUpColli.length === 0 && totalColliCount !== 0" translate>All colli picked up</span>
+                        <span if.bind="notPickedUpColli.length > 0" translate>${notPickedUpColli.length} has not been picked up</span>
 
                     </div>
 
@@ -60,7 +61,7 @@
                         Colli delivered
                     </div>
 
-                    <div class="font-largest">
+                    <div class="font-largest" accent.bind="notDeliveredColli.length > 0 ? 'negative' : 'neutral' & attr">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">${totalColliCount}</span>
                         <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'">${deliveredColliCount}</span>
@@ -69,9 +70,9 @@
 
                     <div class="font-small">
 
-                        <span if.bind="totalColliCount === 0">&nbsp;</span>
-                        <span if.bind="deliveredColliCount === totalColliCount && totalColliCount !== 0" translate>Every colli has been delivered</span>
-                        <span if.bind="deliveredColliCount !== completedColliCount" translate>${deliveredColliCount}/${totalColliCount} has been delivered</span>
+                        <span if.bind="totalColliCount === 0 || notDeliveredColli.length === 0">&nbsp;</span>
+                        <span if.bind="notDeliveredColli.length === 0 && totalColliCount !== 0" translate>Every colli has been delivered</span>
+                        <span if.bind="notDeliveredColli.length > 0" translate>${notDeliveredColli.length} has not been picked up</span>
 
                     </div>
 
@@ -92,21 +93,13 @@
 
                     </div>
 
-                    <div
-                        class="font-largest"
-                        accent="${((route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0) ? 'negative' : 'neutral'}">
+                    <div class="font-largest">
                         ${route.stops[0].arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
                     <div class="font-small">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">&nbsp;</span>
-                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0">
-
-                            <span if.bind="delayedStart.as('second') < 0" translate>Arrived ${delayedStart | duration} too early</span>
-                            <span if.bind="delayedStart.as('second') > 0" translate>Delayed by ${delayedStart | duration}</span>
-
-                        </span>
+                        <span>&nbsp;</span>
 
                     </div>
 
@@ -141,16 +134,25 @@
                         Estimated completion time
                     </div>
 
-                    <div class="font-largest">
+                    <div
+                        class="font-largest"
+                        accent.bind="isRouteDelayed ? 'negative' : 'neutral' & attr">
 
                         <span if.bind="route.status.slug === 'started'">${route.completionTime | time: 'narrow' : false}</span>
                         <span if.bind="route.status.slug !== 'started'">${route.completionTime | dateTime: 'narrow' : false}</span>
 
                     </div>
 
-                    <div class="font-small" translate>
-                        <span if.bind="routeDelay != null">${routeDelay | duration} delay</span if.bind="routeDelay != null">
-                        <span if.bind="routeDelay == null">&nbsp;</span if.bind="routeDelay != null">
+                    <div class="font-small">
+
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">&nbsp;</span>
+                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0">
+
+                            <span if.bind="delayedStart.as('second') < 0" translate>Arrived ${delayedStart | duration} too early</span>
+                            <span if.bind="delayedStart.as('second') > 0" translate>Delayed by ${delayedStart | duration}</span>
+
+                        </span>
+
                     </div>
 
                 </div>
