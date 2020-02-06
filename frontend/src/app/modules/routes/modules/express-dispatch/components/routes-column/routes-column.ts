@@ -152,7 +152,7 @@ export class RoutesColumnCustomElement
             try
             {
                 // Fetch the data.
-                const result = await this._expressRouteService.getExpressRoutes(signal);
+                const result = await this._expressRouteService.getExpressRoutes(this.workspace.dateFilter, signal);
 
                 // Migrate the state to the new routes.
                 if (this.workspace.expressRoutes != null)
@@ -229,5 +229,14 @@ export class RoutesColumnCustomElement
 
         this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
         this.workspace.selectedExpressRoutes = selected ? this.workspace.expressRoutes.slice() : [];
+    }
+
+    /**
+     * Called when the date changes.
+     */
+    protected onDateChanged(): void
+    {
+        this.workspace.clearAllData();
+        this.update();
     }
 }

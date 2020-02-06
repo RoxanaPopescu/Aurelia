@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { ExpressRoute } from "../entities/express-route";
 import { DriverRoute } from "../entities/driver-route";
+import { DateTime } from 'luxon';
 
 /**
  * Represents a service that manages dispatching of express routes.
@@ -25,10 +26,11 @@ export class ExpressRouteService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the routes.
      */
-    public async getExpressRoutes(signal?: AbortSignal): Promise<{ routes: ExpressRoute[]; routeCount: number }>
+    public async getExpressRoutes(date: DateTime, signal?: AbortSignal): Promise<{ routes: ExpressRoute[]; routeCount: number }>
     {
         const result = await this._apiClient.get("expressdispatch/newroutes",
         {
+            query: { date },
             signal
         });
 
@@ -44,10 +46,11 @@ export class ExpressRouteService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the routes.
      */
-    public async getDriverRoutes(signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
+    public async getDriverRoutes(date: DateTime,signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
     {
         const result = await this._apiClient.get("expressdispatch/driverroutes",
         {
+            query: { date },
             signal
         });
 

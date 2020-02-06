@@ -9,9 +9,7 @@
     <require from="./express-dispatch.scss"></require>
 
     <page name="express-dispatch" class="express-dispatch--${workspace.tab}" inert.bind="workspace.isBusy">
-
         <template if.bind="!workspace.isMerging">
-
             <tab-nav appearance="solid" value.bind="workspace.tab">
 
                 <tab name="routes">

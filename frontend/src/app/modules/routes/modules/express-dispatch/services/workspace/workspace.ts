@@ -1,4 +1,6 @@
+import { observable } from "aurelia-framework";
 import { ExpressRoute, DriverRoute, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
+import { DateTime } from 'luxon';
 
 export class Workspace
 {
@@ -14,4 +16,22 @@ export class Workspace
 
     public newDriverStops?: (DriverRouteStop | ExpressRouteStop)[];
     public remainingExpressStops?: ExpressRouteStop[][];
+
+    /**
+     * The selected date shown, defaults to today.
+     */
+    @observable({ changeHandler: "update" })
+    public dateFilter: DateTime = DateTime.local();
+
+    /**
+     * Will clear all data currently selected or fetched
+     */
+    clearAllData() {
+        this.expressRoutes = [];
+        this.selectedExpressRoutes = [];
+        this.driverRoutes = [];
+        this.selectedDriverRoutes = [];
+        this.newDriverStops = undefined;
+        this.remainingExpressStops = undefined;
+    }
 }
