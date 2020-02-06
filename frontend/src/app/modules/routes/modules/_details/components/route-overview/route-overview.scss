@@ -32,6 +32,12 @@ route-overview
                 padding-top: 3rem;
                 border-top: 0.25rem solid var(--surface-separator-color);
             }
+
+            .card-section-ratingStar
+            {
+                color: var(--surface-primary-text-color);
+                margin-bottom: .5rem;
+            }
         }
 
         circular-meter

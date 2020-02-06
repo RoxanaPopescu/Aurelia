@@ -183,12 +183,16 @@
                         Rating
                     </div>
 
-                    <div class="font-largest">
-                        ${route.overallRating}/5
+                    <div if.bind="route.overallRating != null" class="font-largest">
+                        <icon class="card-section-ratingStar" name="star"></icon>${route.overallRating}/5
+                    </div>
+                    <div if.bind="route.overallRating == null">
+                        <span class="font-largest">- -</span>
                     </div>
 
                     <div class="font-small" translate>
-                        &nbsp;
+                        <span if.bind="route.overallRating != null">&nbsp;</span>
+                        <a if.bind="route.overallRating == null" class="font-small">Rate the route</a>
                     </div>
 
                 </div>
@@ -199,8 +203,8 @@
                         Difficulty
                     </div>
 
-                    <linear-meter if.bind="route.criticality != null" percentage.bind="route.criticality"></linear-meter>
-                    <div class="font-largest" if.bind="route.criticality == null">--</div>
+                    <div if.bind="route.criticality != null">${route.criticality.name}</div>
+                    <div class="font-largest" if.bind="route.criticality == null">- -</div>
 
                     <div class="font-small" translate>
                         &nbsp;
