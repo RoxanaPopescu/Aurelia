@@ -47,6 +47,11 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
       return;
     }
 
+    if (this.availability.closingTime <= this.availability.openingTime) {
+      this.validate = true;
+      return;
+    }
+
     if (this.availability.created === false) {
       this.props.store.depot.availabilities.push(this.availability);
     }
@@ -95,17 +100,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
           error={this.validate && !this.availability.openingTime}
           disabled={false}
         />
-        <TimeComponent
-          headline="Lukketid"
-          placeholder="TT:MM"
-          size={"medium"}
-          onChange={seconds => {
-            this.availability.closingTime = seconds;
-          }}
-          seconds={this.availability.closingTime}
-          error={this.validate && !this.availability.closingTime}
-          disabled={false}
-        />
+        {this.renderClosingTime()}
         <Button
           size={ButtonSize.Medium}
           onClick={() => this.validateInput()}
@@ -115,6 +110,31 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
           {this.availability.created ? "Opdater" : "Opret"}
         </Button>
       </div>
+    );
+  }
+
+  renderClosingTime(): JSX.Element {
+    let error = false;
+    if (this.validate) {
+      if (!this.availability.closingTime) {
+        error = true;
+      } else if (this.availability.openingTime && this.availability.closingTime <= this.availability.openingTime) {
+        error = true;
+      }
+    }
+
+    return (
+      <TimeComponent
+          headline="Lukketid"
+          placeholder="TT:MM"
+          size={"medium"}
+          onChange={seconds => {
+            this.availability.closingTime = seconds;
+          }}
+          seconds={this.availability.closingTime}
+          error={error}
+          disabled={false}
+        />
     );
   }
 }
