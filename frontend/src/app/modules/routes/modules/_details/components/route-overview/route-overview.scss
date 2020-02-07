@@ -33,6 +33,14 @@ route-overview
                 border-top: 0.25rem solid var(--surface-separator-color);
             }
 
+            > *
+            {
+                &:not(:last-child)
+                {
+                    margin-bottom: 1rem;
+                }
+            }
+
             .card-section-ratingStar
             {
                 color: var(--surface-primary-text-color);
