@@ -20,7 +20,7 @@ export class OrderAccordionCustomElement
      * The pickups or deliveries to present.
      */
     @bindable
-    protected order: Delivery | Pickup;
+    protected model: Pickup | Delivery;
 
     /**
      * Called when the header is clicked.
@@ -51,6 +51,6 @@ export class OrderAccordionCustomElement
      */
     protected onOrderSlugClick(): void
     {
-        window.open(`/orders/details/${this.order.orderSlug}`, "_blank");
+        window.open(`/orders/details/${this.model.orderSlug}`, "_blank");
     }
 }

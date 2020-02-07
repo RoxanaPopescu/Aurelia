@@ -10,21 +10,21 @@
                 <span class="margin-right" translate>
                     Order
                 </span>
-                <a href="/orders/details/${order.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
-                    ${order.orderSlug}
+                <a href="/orders/details/${model.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
+                    ${model.orderSlug}
                 </a>
             </div>
 
             <div translate>
-                ${order.colli.length | number} ${order.colli.length | plural: "collo" : "colli"}
+                ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
             </div>
 
-            <div translate>
-                ### kg
+            <div>
+                <!-- TODO: # kg -->
             </div>
 
-            <div translate>
-                ### m³
+            <div>
+                <!-- TODO: # m³ -->
             </div>
 
         </div>
@@ -34,7 +34,7 @@
     </div>
 
     <div
-        if.bind="expanded && order.colli.length > 0"
+        if.bind="expanded && model.colli.length > 0"
         class="order-accordion-content
         ${showAllColli ? '--expanded' : ''}">
 
@@ -49,13 +49,13 @@
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="order.consignor != null" class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate font-small" translate>
                         Scan method
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="order.consignor != null" class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate font-small" translate>
                         Picture
                     </span>
                 </data-table-cell>
@@ -68,7 +68,7 @@
 
             </data-table-headers>
 
-            <template repeat.for="collo of order.colli">
+            <template repeat.for="collo of model.colli">
 
                 <data-table-row model.bind="collo" clickable.bind="false">
 
@@ -76,7 +76,7 @@
                         <a
                             class="order-collo text-truncate font-small"
                             title="${collo.barcode}"
-                            href="/orders/details/${order.orderSlug}?collo=${collo.barcode}" target="_blank">
+                            href="/orders/details/${model.orderSlug}?collo=${collo.barcode}" target="_blank">
                             ${collo.barcode}
                         </a>
                         <div if.bind="collo.origin.slug != 'regular'" class="opacity-faded font-small collo-origin">
@@ -85,13 +85,13 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span if.bind="order.consignor != null" class="order-collo text-truncate font-small">
+                        <span if.bind="model.consignor != null" class="order-collo text-truncate font-small">
                             ${collo.scanMethod.name}
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <a if.bind="order.consignor != null && collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
+                        <a if.bind="model.consignor != null && collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
                             <icon name="md-photo" accent="primary" class="font-larger"></icon>
                         </a>
                     </data-table-cell>
@@ -108,7 +108,7 @@
 
         </data-table>
 
-        <a if.bind="order.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onShowAllColliToggle()">
+        <a if.bind="model.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onShowAllColliToggle()">
 
             <span if.bind="showAllColli" translate>
                 Show less

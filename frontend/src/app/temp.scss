@@ -259,6 +259,11 @@ toolbar
     }
 }
 
+data-table.--reduce-header-whitespace
+{
+    margin-top: -3rem;
+}
+
 data-table-cell icon + span
 {
     margin-left: var(--size-inline-spacing);

@@ -27,7 +27,7 @@ order-accordion
         {
             flex-grow: 1;
             display: grid;
-            grid-template-columns: 3fr 2fr 1.25fr 2fr;
+            grid-template-columns: 3.5fr 2fr 1.25fr 2fr;
 
             > *
             {
@@ -60,7 +60,7 @@ order-accordion
 
         data-table
         {
-            --data-table-columns: 3fr 2fr 1.25fr 2fr;
+            --data-table-columns: 3.5fr 2fr 1.25fr 2fr;
 
             line-height: var(--font-large-line-height);
 
