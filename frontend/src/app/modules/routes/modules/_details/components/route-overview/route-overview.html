@@ -19,7 +19,7 @@
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
                     </div>
-                    <div if.bind="failedStops.length > 0" accent="neutral" class="font-small">${failedStops.length} issues</div>
+                    <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small">${failedCancelledStops.length} issues</div>
                 </circular-meter>
 
             </card>

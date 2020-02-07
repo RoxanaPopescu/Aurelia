@@ -330,6 +330,21 @@ export class RouteOverview
         if (this.route != null)
         {
             return this.route.stops.filter(s => s instanceof RouteStop)
+                                    .filter((s: RouteStop) => s.status.slug === "failed") as RouteStop[];
+        }
+
+        return [];
+    }
+
+    /**
+     * Calculates the amount failed stops
+     */
+    @computedFrom("route.stops.length")
+    public get failedCancelledStops(): RouteStop[]
+    {
+        if (this.route != null)
+        {
+            return this.route.stops.filter(s => s instanceof RouteStop)
                                     .filter((s: RouteStop) => s.status.slug === "failed" || s.status.slug === "cancelled") as RouteStop[];
         }
 
