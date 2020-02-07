@@ -138,7 +138,7 @@
     </data-section>
 
     <!-- Instructions -->
-    <template if.bind="model.routeStop.driverInstructions != null">
+    <template if.bind="model.routeStop.driverInstructions">
 
         <hr class="hr-line margin-bottom">
 
@@ -146,10 +146,6 @@
 
             <div slot="header" translate>
                 Instructions
-            </div>
-
-            <div if.bind="!model.routeStop.driverInstructions" class="opacity-faded" translate>
-                No instructions at this stop
             </div>
 
             <div if.bind="model.routeStop.driverInstructions">

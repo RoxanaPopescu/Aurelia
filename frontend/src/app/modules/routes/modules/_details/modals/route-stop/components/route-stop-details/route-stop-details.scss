@@ -4,4 +4,9 @@ route-stop-details
     {
         margin-bottom: var(--font-current-margin-bottom);
     }
+
+    data-section:last-child
+    {
+        margin-bottom: 0;
+    }
 }

@@ -49,13 +49,13 @@
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="order.consignor != null" class="opacity-faded text-truncate font-small" translate>
                         Scan method
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="order.consignor != null" class="opacity-faded text-truncate font-small" translate>
                         Picture
                     </span>
                 </data-table-cell>
@@ -85,13 +85,13 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="order-collo text-truncate font-small">
+                        <span if.bind="order.consignor != null" class="order-collo text-truncate font-small">
                             ${collo.scanMethod.name}
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
+                        <a if.bind="order.consignor != null && collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
                             <icon name="md-photo" accent="primary" class="font-larger"></icon>
                         </a>
                     </data-table-cell>

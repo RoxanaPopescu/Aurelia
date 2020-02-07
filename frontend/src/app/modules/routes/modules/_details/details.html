@@ -520,17 +520,13 @@
 
                             <data-table-cell align="right">
 
-                                <div if.bind="stop.status.slug == 'not-visited'" class="icon-row">
+                                <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                    <icon name="edit-small"></icon>
+                                </button>
 
-                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
-                                        <icon name="edit-small"></icon>
-                                    </button>
-
-                                    <button appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
-                                        <icon name="delete-small"></icon>
-                                    </button>
-
-                                </div>
+                                <button if.bind="stop.status.slug == 'not-visited'" class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                    <icon name="delete-small"></icon>
+                                </button>
 
                             </data-table-cell>
 

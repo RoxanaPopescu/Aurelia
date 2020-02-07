@@ -11,7 +11,7 @@ page[name="routes"] page[name="details"]
             > data-table-cell > *,
             > data-table-cell::before
             {
-                opacity: var(--opacity-faded-more);
+                opacity: var(--opacity-faded);
             }
         }
 
