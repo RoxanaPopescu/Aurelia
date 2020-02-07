@@ -15,16 +15,16 @@
                 </a>
             </div>
 
-            <div translate>
-                ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
-            </div>
-
             <div>
                 <!-- TODO: # kg -->
             </div>
 
             <div>
                 <!-- TODO: # m³ -->
+            </div>
+
+            <div translate>
+                ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
             </div>
 
         </div>
@@ -92,7 +92,7 @@
 
                     <data-table-cell>
                         <a if.bind="model.consignor != null && collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
-                            <icon name="md-photo" accent="primary" class="font-larger"></icon>
+                            <icon name="picture-small" accent="primary" class="font-larger"></icon>
                         </a>
                     </data-table-cell>
 

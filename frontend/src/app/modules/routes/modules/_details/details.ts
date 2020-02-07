@@ -50,6 +50,7 @@ export class DetailsModule
     protected readonly _driverService: DriverService;
     protected readonly _modalService: ModalService;
     protected readonly _router: Router;
+    private _isMovingStop = false;
 
     /**
      * The most recent update operation.
@@ -230,24 +231,36 @@ export class DetailsModule
      * @param source The stop being moved.
      * @param target The stop currently occupying the target position.
      */
-    protected async onMoveStop(source: RouteStop, target: RouteStop): Promise<void>
+    protected onMoveStop(event: MouseEvent, source: RouteStop, target: RouteStop): void
     {
-        try
+        const sourceIndex = this.route!.stops.indexOf(source);
+        const targetIndex = this.route!.stops.indexOf(target);
+
+        this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+
+        if (!this._isMovingStop)
         {
-            const sourceIndex = this.route!.stops.indexOf(source);
-            const targetIndex = this.route!.stops.indexOf(target);
+            this._isMovingStop = true;
 
-            this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+            document.addEventListener("mouseup", async () =>
+            {
+                try
+                {
+                    await this._routeService.moveRouteStop(this.route!, source, targetIndex)
 
-            // TODO: Don't do this until after the user releases the mouse button.
-            //await this._routeService.moveRouteStop(this.route!, source, targetIndex);
+                    this.fetchRoute(this.route!.id);
+                }
+                catch (error)
+                {
+                    Log.error("Could not move route stop", error);
+                }
+                finally
+                {
+                    this._isMovingStop = false;
+                }
+
+            }, { once: true });
         }
-        catch (error)
-        {
-            Log.error("Could not move route stop", error);
-        }
-
-        this.fetchRoute(this.route!.id);
     }
 
     /**

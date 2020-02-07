@@ -14,13 +14,8 @@
         disabled.bind="headerSlotEmpty"
         click.trigger="onHeaderClick()">
 
-        <div
-            if.bind="toggle"
-            class="data-section-header-toggle">
-
-            <span></span>
-            <span></span>
-
+        <div if.bind="toggle" class="data-section-header-toggle">
+            <icon name.bind="expanded ? 'minus-small' : 'plus-small'"></icon>
         </div>
 
         <div class="data-section-header-content">
