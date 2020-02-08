@@ -33,6 +33,11 @@ export class ListValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts a value for use in the View,
      * formatting the specified sequence of items as a localized list.
      * @param value The items to format as a list.

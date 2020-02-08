@@ -22,6 +22,11 @@ export class PluralValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * selecting the appropiate form of the specified string, based on the plural category of the specified number.
      * @param value The number for which the plural category will be determined.

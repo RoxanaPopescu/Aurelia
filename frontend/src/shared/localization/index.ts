@@ -1,4 +1,4 @@
-import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
+import { FrameworkConfiguration, PLATFORM, signalBindings } from "aurelia-framework";
 
 /**
  * Configures the feature.
@@ -27,6 +27,9 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/time-range/time-range"),
         PLATFORM.moduleName("./converters/weekday/weekday")
     ]);
+
+    // Signal time-dependent value converters to update every second.
+    setInterval(() => signalBindings("time-changed"), 1000);
 }
 
 // Converters.

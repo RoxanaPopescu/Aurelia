@@ -23,6 +23,11 @@ export class PercentValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the specified value as a localized percent string with default number of fraction digits.
      * @param value The value to format.
