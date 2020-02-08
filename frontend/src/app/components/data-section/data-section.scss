@@ -30,8 +30,8 @@ data-section
 
     .data-section-header-toggle
     {
-        // Push to the right.
-        margin-left: auto;
+        // Ensure line height is not affected.
+        position: absolute;
 
         // Ensure correct vertical alignment of text and icon.
         line-height: 1;
@@ -70,7 +70,7 @@ data-section
 
             .data-section-header-content
             {
-                padding-left: 5rem;
+                padding-left: 10rem;
             }
         }
 
