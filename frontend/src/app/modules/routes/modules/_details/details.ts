@@ -168,36 +168,16 @@ export class DetailsModule
      * Opens a modal showing the details of the stop.
      * @param stop The stop to edit.
      */
-    protected async onStopClick(stop: RouteStop): Promise<void>
+    protected async onStopClick(stop: RouteStop, edit: boolean): Promise<void>
     {
-        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop }).promise;
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit }).promise;
 
         if (savedStop != null)
         {
-            // TODO: Do we need this, or should we only fetch the new route?
-            if (savedStop.id)
-            {
-                this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
-            }
-            else
-            {
-                // TODO: Insert stop at the correct index.
-                // this.route!.stops.push(savedStop);
-            }
+            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
 
             this.fetchRoute(this.route!.id);
         }
-    }
-
-    /**
-     * Called when the "Edit" icon is clicked on a route stop.
-     * Opens a modal for editing the stop.
-     * @param stop The stop to edit.
-     */
-    protected async onEditStopClick(stop: RouteStop): Promise<void>
-    {
-        // TODO: Open directly in edit mode.
-        await this.onStopClick(stop);
     }
 
     /**
@@ -231,7 +211,7 @@ export class DetailsModule
      * @param source The stop being moved.
      * @param target The stop currently occupying the target position.
      */
-    protected onMoveStop(event: MouseEvent, source: RouteStop, target: RouteStop): void
+    protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
         const sourceIndex = this.route!.stops.indexOf(source);
         const targetIndex = this.route!.stops.indexOf(target);
@@ -260,6 +240,31 @@ export class DetailsModule
                 }
 
             }, { once: true });
+        }
+    }
+
+    /**
+     * Called when the `Add new stop` button is clicked, either at the bottom of the list, or between rows.
+     * @param index The index at which the stop should be inserted, or undefined to append it to the list.
+     */
+    protected async onAddStopClick(index?: number): Promise<void>
+    {
+        const newStop = new RouteStop(undefined, index);
+
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: newStop, edit: true }).promise;
+
+        if (savedStop != null)
+        {
+            if (index != null)
+            {
+                this.route!.stops.splice(index, 0, savedStop);
+            }
+            else
+            {
+                this.route!.stops.push(savedStop);
+            }
+
+            this.fetchRoute(this.route!.id);
         }
     }
 

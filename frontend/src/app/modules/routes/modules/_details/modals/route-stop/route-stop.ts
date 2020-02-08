@@ -31,7 +31,7 @@ export class RouteStopPanel
     /**
      * The model for the modal.
      */
-    protected model: { route: Route; routeStop?: RouteStop };
+    protected model: { route: Route; routeStop: RouteStop };
 
     /**
      * The available types.
@@ -45,12 +45,13 @@ export class RouteStopPanel
 
     /**
      * Called by the framework when the modal is activated.
-     * @param model The route and the stop to edit, or undefined to create a new stop.
+     * @param model The route and the stop to edit or create.
      */
-    public activate(model: { route: Route; routeStop?: RouteStop }): void
+    public activate(model: { route: Route; routeStop: RouteStop; edit: boolean }): void
     {
-        this.isNew = model.routeStop == null;
-        this.model = { route: model.route, routeStop: model.routeStop?.clone() ?? new RouteStop() };
+        this.isNew = model.routeStop?.id == null;
+        this.edit = this.isNew || model.edit;
+        this.model = { route: model.route, routeStop: model.routeStop?.clone() };
     }
 
     /**
@@ -88,7 +89,14 @@ export class RouteStopPanel
                 return;
             }
 
-            await this._routeService.saveRouteStop(this.model.route, this.model.routeStop!);
+            if (this.isNew)
+            {
+                await this._routeService.addRouteStop(this.model.route, this.model.routeStop!, this.model.routeStop!.stopNumber - 1);
+            }
+            else
+            {
+                await this._routeService.saveRouteStop(this.model.route, this.model.routeStop!);
+            }
 
             this._result = this.model.routeStop;
             this.edit = false;

@@ -467,7 +467,7 @@
                         <data-table-row
                             model.bind="stop"
                             accent.bind="stop.status.accent"
-                            click.call="onStopClick(stop)"
+                            click.call="onStopClick(stop, false)"
                             movable.bind="stop.status.slug == 'not-visited'"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
@@ -523,7 +523,7 @@
 
                                 <div class="icon-row">
 
-                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                    <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
                                         <icon name="edit-small"></icon>
                                     </button>
 
@@ -546,6 +546,18 @@
                 </empty-indicator>
 
                 <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>
+
+                <toolbar if.bind="route != null" class="margin-top">
+
+                    <button appearance="text" accent="primary" class="flex-row" click.trigger="onAddStopClick()">
+                        <icon name="add" class="font-large line-height-1"></icon>
+                        &nbsp;
+                        <span translate>
+                            Add new stop
+                        </span>
+                    </button>
+
+                </toolbar>
 
             </page-section>
 

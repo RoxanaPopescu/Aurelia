@@ -7,6 +7,7 @@ export * from "./entities/route-stop-info";
 export * from "./entities/route-stop-base";
 export * from "./entities/route-stop-type";
 export * from "./entities/route-stop-status";
+export * from "./entities/route-stop-problem";
 export * from "./entities/pickup";
 export * from "./entities/delivery";
 export * from "./entities/route";

@@ -138,6 +138,7 @@ export class RouteService
             body: { routeId: route.id, stop, newIndex }
         });
 
+        stop.stopNumber += newIndex + 1 - stop.stopNumber;
         route.stops.splice(newIndex, 0, ...route.stops.splice(sourceIndex, 1));
     }
 

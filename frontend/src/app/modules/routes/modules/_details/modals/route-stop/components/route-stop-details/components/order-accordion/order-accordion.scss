@@ -1,8 +1,14 @@
 order-accordion
 {
-    border: var(--border-width-thin) solid var(--border-color);
+    border: var(--border-width-thin) solid;
     border-radius: var(--border-radius-medium);
-    transition: background-color var(--animation-duration-medium);
+    border-color: var(--border-color);
+    transition: border-color var(--animation-duration-medium);
+
+    data-table data-table-headers
+    {
+        font-weight: 400;
+    }
 
     &:not(:first-child)
     {
@@ -16,6 +22,7 @@ order-accordion
         justify-content: space-between;
         padding: 3rem 0;
         background-color: var(--surface-color);
+        transition: background-color var(--animation-duration-medium);
         cursor: pointer;
 
         &:hover
@@ -40,15 +47,7 @@ order-accordion
         {
             position: absolute;
             right: 5rem;
-            height: 2rem;
-            width: 2rem;
-            border: 0;
-            border-bottom-width: var(--border-width-thin);
-            border-right-width: var(--border-width-thin);
-            border-style: solid;
-            border-color: var(--surface-primary-icon-color) !important;
-            transform: rotate(-45deg);
-            transition: transform var(--animation-duration-medium);
+            font-size: var(--font-larger-font-size);
         }
     }
 
@@ -102,11 +101,6 @@ order-accordion
         .order-accordion-header
         {
             background-color: var(--surface-color--active);
-
-            .order-accordion-header-toggle
-            {
-                transform: rotate(-135deg);
-            }
         }
 
         .order-accordion-content

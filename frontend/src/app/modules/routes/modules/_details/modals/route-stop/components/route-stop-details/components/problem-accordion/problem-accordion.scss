@@ -1,0 +1,28 @@
+problem-accordion
+{
+    --card-padding: 0;
+
+    .problem-accordion-header
+    {
+        padding: 3rem 5rem;
+        display: flex;
+    }
+
+    .problem-accordion-toggle
+    {
+        font-size: var(--font-larger-font-size);
+        margin-left: auto;
+    }
+
+    .problem-accordion-content
+    {
+        padding: 3rem 5rem;
+        background: var(--surface-color);
+        cursor: default;
+
+        > :not(:last-child)
+        {
+            margin-bottom: var(--font-current-margin-bottom);
+        }
+    }
+}
