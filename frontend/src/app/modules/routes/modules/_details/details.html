@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/page-sidebar-value/page-sidebar-value"></require>
+    <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
     <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
 
@@ -397,9 +398,27 @@
 
             <page-section>
 
-                <div slot="header" translate>
-                    Stop overview
+                <div slot="header" class="flex-row">
+
+                    <div translate>
+                        Route stops
+                    </div>
+
+                    <toolbar class="flex-push-right font-base">
+
+                        <switch-toggle label="before" value.bind="showMap">
+
+                            <div slot="heading" translate>
+                                Show map
+                            </div>
+
+                        </switch-toggle>
+
+                    </toolbar>
+
                 </div>
+
+                <route-details-map if.bind="showMap" route.bind="route"></route-details-map>
 
                 <data-table
                     appearance="rows"

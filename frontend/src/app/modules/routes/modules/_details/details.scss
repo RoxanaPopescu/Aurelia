@@ -24,6 +24,11 @@ page[name="routes"] page[name="details"]
         }
     }
 
+    .page-section-header toolbar
+    {
+        font-weight: 400;
+    }
+
     .route-details-stop-number
     {
         &.accent-neutral

@@ -2,13 +2,13 @@ import React from "react";
 import { observer } from "mobx-react";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import { Marker, Popup } from "shared/src/components/worldMap";
-import { DriverRoute } from "app/model/express-route";
+import { Route } from "app/model/route";
 import "./driver-marker.scss";
 import Localization from "shared/src/localization";
 
 export interface DriverMarkerProps {
-  route: DriverRoute;
-  onClick?: (route: DriverRoute) => void;
+  route: Route;
+  onClick?: (route: Route) => void;
   faded?: boolean;
 }
 
@@ -21,14 +21,14 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
     const position = this.props.route.driverPosition!.toGoogleLatLng();
 
-    const labelText = this.props.route.driver.name.initials;
+    const labelText = this.props.route.driver?.name.initials;
 
     return (
       <MarkerWithLabel
         icon=" "
         labelAnchor={new google.maps.Point(26, 17)}
         position={position}
-        zIndex={this.props.route.selected ? 104 : 4}
+        zIndex={104}
         onMouseOver={() => this.showPopup()}
         onMouseOut={() => this.hidePopup()}
         onClick={() => this.props.onClick && this.props.onClick(this.props.route)}
@@ -36,20 +36,20 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
         <React.Fragment>
 
-          <div className={`expressRoutes-driverMarker ${this.props.faded ? "--faded" : ""}`}>
+          <div className={`routeDetails-driverMarker ${this.props.faded ? "--faded" : ""}`}>
 
             <div
               className={`
-                expressRoutes-driverMarker-shape
-                expressRoutes-driverMarker--${this.getMarkerModifier()}`}
+                routeDetails-driverMarker-shape
+                routeDetails-driverMarker--${this.getMarkerModifier()}`}
             >
               {labelText}
 
               {this.props.route.status.accent === "negative" &&
-              <div className="expressRoutes-driverMarker-alert"/>}
+              <div className="routeDetails-driverMarker-alert"/>}
 
               {this.props.route.status.accent === "attention" &&
-              <div className="expressRoutes-driverMarker-warning"/>}
+              <div className="routeDetails-driverMarker-warning"/>}
 
             </div>
 
@@ -74,7 +74,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         onMouseOut={() => this.hidePopup()}
       >
 
-        <div className="expressRoutes-routeDriverMarker-popup user-select-text">
+        <div className="routeDetails-routeDriverMarker-popup user-select-text">
 
           {this.renderDriverInfo()}
 
@@ -93,8 +93,8 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
     modifierClass +=
       this.props.route.driverOnline ?
-        " expressRoutes-driverMarker--online" :
-          " expressRoutes-driverMarker--offline";
+        " routeDetails-driverMarker--online" :
+          " routeDetails-driverMarker--offline";
 
     return modifierClass;
   }
@@ -127,7 +127,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         {!this.props.route.driverOnline &&
         <div className="c-worldMap-popup-section">
 
-          <div className="c-worldMap-popup-section-row expressRoutes-color-negative">
+          <div className="c-worldMap-popup-section-row routeDetails-color-negative">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
           </div>
 

@@ -1,12 +1,12 @@
 <template draggable="true">
 
-    <require from="legacy/components/express-route-map/wrapper" as="react-express-route-map"></require>
+    <require from="legacy/components/express-route-map/wrapper" as="express-route-map"></require>
 
     <require from="./map-column.scss"></require>
 
     <page-content scroll>
 
-        <react-express-route-map
+        <express-route-map
             is-merging.bind="workspace.isMerging"
             express-routes.bind="workspace.expressRoutes"
             driver-routes.bind="workspace.driverRoutes"
@@ -17,7 +17,7 @@
             on-connected-stop-click.call="onConnectedStopClick(stop)"
             on-unconnected-stop-click.call="onUnconnectedStopClick(stop)"
             on-map-click.call="onMapClick()">
-        </react-express-route-map>
+        </express-route-map>
 
     </page-content>
 

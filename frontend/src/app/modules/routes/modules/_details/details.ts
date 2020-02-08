@@ -4,8 +4,6 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
-import { AgreementService } from "app/model/agreement";
-import { DriverService } from "app/model/driver";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
@@ -31,26 +29,26 @@ export class DetailsModule
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
-     * @param agreementService The `AgreementService` instance.
-     * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
      * @param router The `Router` instance.
      */
-    public constructor(routeService: RouteService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: Router)
+    public constructor(routeService: RouteService, modalService: ModalService, router: Router)
     {
         this._routeService = routeService;
-        this._agreementService = agreementService;
-        this._driverService = driverService;
         this._modalService = modalService;
         this._router = router;
     }
 
-    protected readonly _routeService: RouteService;
-    protected readonly _agreementService: AgreementService;
-    protected readonly _driverService: DriverService;
-    protected readonly _modalService: ModalService;
-    protected readonly _router: Router;
     private _isMovingStop = false;
+
+    private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+    private readonly _router: Router;
+
+    /**
+     * True to show the map, otherwise false.
+     */
+    protected showMap = false;
 
     /**
      * The most recent update operation.
