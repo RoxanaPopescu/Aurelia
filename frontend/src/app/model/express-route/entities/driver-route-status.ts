@@ -25,6 +25,17 @@ export class DriverRouteStatus
     public name: string;
     public accent: Accent;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "on-time":

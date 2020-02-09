@@ -21,6 +21,17 @@ export class OutfitType
     public slug: OutfitTypeSlug;
     public name: string;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "fulfiller":

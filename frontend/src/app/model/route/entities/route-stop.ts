@@ -101,6 +101,14 @@ export class RouteStop extends RouteStopBase
     }
 
     /**
+     * The total number colli associated with this stop.
+     */
+    public get totalColliCount(): number
+    {
+        return this.pickups.reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
+    }
+
+    /**
      * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
@@ -109,10 +117,19 @@ export class RouteStop extends RouteStopBase
     }
 
     /**
-     * The total number colli associated with this stop.
+     * Gets the data representing this instance.
      */
-    public get totalColliCount(): number
+    public toJSON(): any
     {
-        return this.pickups.reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
+        return {
+            status: this.status,
+            type: this.type,
+            arrivalTimeFrame: this.arrivalTimeFrame,
+            location: this.location,
+            outfit: this.outfit,
+            port: this.port,
+            driverInstructions: this.driverInstructions,
+            actions: this.actions
+        };
     }
 }
