@@ -22,7 +22,7 @@ export class SelectButtonCustomElement
     /**
      * The value of the item that is focused, but not yet picked, or undefined if no item has been focused.
      */
-    @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
+    @bindable({ defaultValue: null, defaultBindingMode: bindingMode.twoWay })
     public focusedValue: any | undefined;
 
     /**
@@ -94,7 +94,7 @@ export class SelectButtonCustomElement
     protected closeDropdown(focusToggle: boolean, pick = false): void
     {
         this.open = false;
-        this.focusedValue = undefined;
+        this.focusedValue = null;
 
         if (focusToggle)
         {

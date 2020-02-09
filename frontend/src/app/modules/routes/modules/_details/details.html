@@ -356,19 +356,19 @@
                             Change status
                         </div>
 
-                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('not-started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
                             Not started
                         </item>
 
-                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
                             Started
                         </item>
 
-                        <item disabled.bind="['completed'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('completed')" translate>
+                        <item disabled.bind="['completed'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('cancelled')" translate>
+                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
                             Cancelled
                         </item>
 
@@ -380,11 +380,11 @@
                             <icon name="more"></icon>
                         </div>
 
-                        <item disabled.bind="!route.driverListUrl" mousedown.capture="onShowDriverListClick()" translate>
+                        <item disabled.bind="!route.driverListUrl" click.trigger="onShowDriverListClick()" translate>
                             Show driver list
                         </item>
 
-                        <item mousedown.capture="onReloadRouteInAppClick()" translate>
+                        <item click.trigger="onReloadRouteInAppClick()" translate>
                             Reload route in app
                         </item>
 
