@@ -68,7 +68,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         options={{
           disableAutoPan: true,
           disableCloseButton: true,
-          pixelOffset: new google.maps.Size(0, -11)
+          pixelOffset: new google.maps.Size(0, -18)
         }}
         onMouseOver={() => this.showPopup()}
         onMouseOut={() => this.hidePopup()}

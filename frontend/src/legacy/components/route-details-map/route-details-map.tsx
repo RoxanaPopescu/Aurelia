@@ -1,17 +1,18 @@
 import React from "react";
+import { GoogleMap } from "react-google-maps";
 import { observer } from "mobx-react";
+import { Button, ButtonType } from "shared/src/webKit";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
-import { Route } from "app/model/route";
+import { Route, RouteStop } from "app/model/route";
 import { RouteLayer } from "./components/layers/route-layer/route-layer";
 import "./route-details-map.scss";
-import { GoogleMap } from "react-google-maps";
-import { Button, ButtonType } from "shared/src/webKit";
 
 export interface IRouteDetailsMapProps
 {
     route?: Route;
     onRouteClick: (route: Route) => void;
-    onMapClick: () => void;
+    onStopClick?: (route: Route, stop: RouteStop) => void;
+    onMapClick?: () => void;
 }
 
 /**
@@ -37,12 +38,12 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
         this.fitBoundsOnLoad();
 
         return (
-            <div className="route-details-map">
+            <div className="routeDetails-map">
 
-                <div className="route-details-map-buttons">
+                <div className="routeDetails-map-buttons">
 
                     <Button
-                        className="route-details-map-fit-button"
+                        className="routeDetails-map-fit-button"
                         type={ButtonType.Light}
                         onClick={() => this.tryFitBounds()}>
                         Zoom to fit
@@ -51,7 +52,8 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
                 </div>
 
                 <WorldMap
-                    options={{ scrollwheel: true }}
+                    options={{ scrollwheel: false }}
+                    onClick={() =>this.props.onMapClick?.()}
                     onMapReady={map =>
                     {
                         this.map = map;
@@ -62,6 +64,8 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
                     <RouteLayer
                         key={`RouteLayer-${this.props.route.driver?.id}`}
                         route={this.props.route}
+                        onRouteClick={(route) => this.props.onRouteClick?.(route)}
+                        onStopClick={(route, stop) => this.props.onStopClick?.(route, stop)}
                     />}
 
                 </WorldMap>

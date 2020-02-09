@@ -404,7 +404,7 @@
                         Route stops
                     </div>
 
-                    <toolbar class="flex-push-right font-base">
+                    <toolbar class="font-base">
 
                         <switch-toggle label="before" value.bind="showMap">
 
@@ -418,12 +418,13 @@
 
                 </div>
 
-                <route-details-map if.bind="showMap" route.bind="route"></route-details-map>
+                <route-details-map if="condition.bind: showMap; cache: false" route.bind="route" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></route-details-map>
 
                 <data-table
                     appearance="rows"
                     move.call="onMoveStop(source, target)"
-                    class="--reduce-header-whitespace">
+                    class="${!showMap ? '--reduce-header-whitespace' : ''}"
+                    element.ref="dataTableElement">
 
                     <data-table-headers>
 

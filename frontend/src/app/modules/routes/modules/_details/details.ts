@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { ModalService } from "shared/framework";
+import { ModalService, IScroll } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
@@ -44,6 +44,16 @@ export class DetailsModule
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _router: Router;
+
+    /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
+     * The data table element.
+     */
+    protected dataTableElement: HTMLElement;
 
     /**
      * True to show the map, otherwise false.
@@ -264,6 +274,17 @@ export class DetailsModule
 
             this.fetchRoute(this.route!.id);
         }
+    }
+
+    /**
+     * Called whrn a stop is clicked on the map.
+     * Scrolls to the stop that was clicked.
+     * @param stop The stop that was clicked.
+     */
+    protected onMapStopClick(stop: RouteStop): void
+    {
+        const element = this.dataTableElement.querySelectorAll(".route-details-stop-number")[stop.stopNumber - 2];
+        element.scrollIntoView();
     }
 
     /**

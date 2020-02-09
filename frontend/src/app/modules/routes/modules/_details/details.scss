@@ -26,6 +26,9 @@ page[name="routes"] page[name="details"]
 
     .page-section-header toolbar
     {
+        position: absolute;
+        right: 0.5rem;
+        top: -1rem;
         font-weight: 400;
     }
 

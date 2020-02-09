@@ -6,18 +6,18 @@ route-details-map
   height: 50vh;
 }
 
-.route-details-map
+.routeDetails-map
 {
   position: relative;
   height: 100%;
 }
 
-.route-details-map-buttons
+.routeDetails-map-buttons
 {
   position: absolute !important;
   top: 10px !important;
   left: 168px !important;
-  z-index: 999 !important;
+  z-index: 1 !important;
   display: flex;
 
   .moverButton
@@ -43,12 +43,22 @@ route-details-map
   }
 }
 
-.route-details-color-positive
+.routeDetails-color-positive
 {
   color: var(--colorOk) !important;
 }
 
-.route-details-color-negative
+.routeDetails-color-negative
 {
   color: var(--colorAlert) !important;
+}
+
+.routeDetails-routeStopMarker-warning
+{
+  background: var(--colorWarning);
+}
+
+.routeDetails-routeStopMarker-alert
+{
+  background: var(--colorAlert);
 }

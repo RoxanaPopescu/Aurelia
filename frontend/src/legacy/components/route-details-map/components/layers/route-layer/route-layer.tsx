@@ -8,7 +8,8 @@ import { Route, RouteStop } from "app/model/route";
 export interface RouteLayerProps
 {
     route: Route
-    onClick?: () => void;
+    onRouteClick?: (route: Route) => void;
+    onStopClick?: (route: Route, stop: RouteStop) => void;
 }
 
 @observer
@@ -25,7 +26,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                         <RouteSegmentLine
                             key={`RouteSegmentLine-driver-${this.props.route.stops[0].id}`}
                             routeStops={[this.props.route.driverPosition!, this.props.route.stops[0]]}
-                            onClick={() => this.onRouteClick()}
+                            onClick={() => this.props.onRouteClick?.(this.props.route)}
                         />}
 
                     {this.props.route.stops
@@ -35,7 +36,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                             <RouteSegmentLine
                                 key={`RouteSegmentLine-${a[i - 1].id}-${s.id}`}
                                 routeStops={[a[i - 1], s]}
-                                onClick={() => this.onRouteClick()}
+                                onClick={() => this.props.onRouteClick?.(this.props.route)}
                             />)}
 
                     {this.props.route.stops
@@ -43,7 +44,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                             <RouteStopMarker
                                 key={`RouteStopMarker-${s.id}`}
                                 routeStop={s}
-                                onClick={() => this.onRouteClick()}
+                                onClick={() => this.props.onStopClick?.(this.props.route, s)}
                             />)}
                 </>}
 
@@ -51,18 +52,10 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                     <DriverMarker
                         key={`DriverMarker-${this.props.route.driver?.id}`}
                         route={this.props.route}
-                        onClick={() => this.onRouteClick()}
+                        onClick={() => this.props.onRouteClick?.(this.props.route)}
                     />}
 
             </React.Fragment>
         );
-    }
-
-    private onRouteClick(): void
-    {
-        if (this.props.onClick != null)
-        {
-            this.props.onClick();
-        }
     }
 }

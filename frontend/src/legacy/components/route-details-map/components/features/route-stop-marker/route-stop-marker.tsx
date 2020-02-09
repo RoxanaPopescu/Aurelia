@@ -29,7 +29,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
         return (
             <MarkerWithLabel
                 icon=" "
-                labelAnchor={new google.maps.Point(26, 51)}
+                labelAnchor={new google.maps.Point(26, 17)}
                 position={position}
                 zIndex={this.props.routeStop.selected ? 103 : 3}
                 onMouseOver={() => this.showPopup()}
@@ -40,12 +40,14 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
 
                     <div className={`routeDetails-routeStopMarker ${this.props.faded ? "--faded" : ""}`}>
 
+                        {/*
                         <div className={`
                             routeDetails-routeStopMarker-info
                             ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
                             <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--:--"}</div>
                         </div>
+                        */}
 
                         <div className={`
                             routeDetails-routeStopMarker-shape
@@ -84,7 +86,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                 options={{
                     disableAutoPan: true,
                     disableCloseButton: true,
-                    pixelOffset: new google.maps.Size(-0.5, -8)
+                    pixelOffset: new google.maps.Size(0, -18)
                 }}
                 onMouseOver={() => this.showPopup()}
                 onMouseOut={() => this.hidePopup()}
