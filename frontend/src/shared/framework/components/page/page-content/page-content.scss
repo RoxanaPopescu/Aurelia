@@ -37,7 +37,8 @@ page-content
 
         toolbar
         {
-            button
+            button[appearance="solid"],
+            button[appearance="outline"]
             {
                 // HACK: Ensure min-width of buttons match that of the tabs.
                 min-width: 30rem !important;
