@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/page-sidebar-value/page-sidebar-value"></require>
+    <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
     <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
 
@@ -355,19 +356,19 @@
                             Change status
                         </div>
 
-                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('not-started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
                             Not started
                         </item>
 
-                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('started')" translate>
+                        <item disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
                             Started
                         </item>
 
-                        <item disabled.bind="['completed'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('completed')" translate>
+                        <item disabled.bind="['completed'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled'].includes(route.status.slug)" mousedown.capture="onStatusItemClick('cancelled')" translate>
+                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
                             Cancelled
                         </item>
 
@@ -379,11 +380,11 @@
                             <icon name="more"></icon>
                         </div>
 
-                        <item disabled.bind="!route.driverListUrl" mousedown.capture="onShowDriverListClick()" translate>
+                        <item disabled.bind="!route.driverListUrl" click.trigger="onShowDriverListClick()" translate>
                             Show driver list
                         </item>
 
-                        <item mousedown.capture="onReloadRouteInAppClick()" translate>
+                        <item click.trigger="onReloadRouteInAppClick()" translate>
                             Reload route in app
                         </item>
 
@@ -397,13 +398,33 @@
 
             <page-section>
 
-                <div slot="header" translate>
-                    Stop overview
+                <div slot="header" class="flex-row">
+
+                    <div translate>
+                        Route stops
+                    </div>
+
+                    <toolbar class="font-base">
+
+                        <switch-toggle label="before" value.bind="showMap">
+
+                            <div slot="heading" translate>
+                                Show map
+                            </div>
+
+                        </switch-toggle>
+
+                    </toolbar>
+
                 </div>
+
+                <route-details-map if="condition.bind: showMap; cache: false" route.bind="route" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></route-details-map>
 
                 <data-table
                     appearance="rows"
-                    move.call="onMoveStop(source, target)">
+                    move.call="onMoveStop(source, target)"
+                    class="${!showMap ? '--reduce-header-whitespace' : ''}"
+                    element.ref="dataTableElement">
 
                     <data-table-headers>
 
@@ -466,7 +487,7 @@
                         <data-table-row
                             model.bind="stop"
                             accent.bind="stop.status.accent"
-                            click.call="onStopClick(stop)"
+                            click.call="onStopClick(stop, false)"
                             movable.bind="stop.status.slug == 'not-visited'"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
@@ -520,13 +541,13 @@
 
                             <data-table-cell align="right">
 
-                                <div if.bind="stop.status.slug == 'not-visited'" class="icon-row">
+                                <div class="icon-row">
 
-                                    <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                                    <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
                                         <icon name="edit-small"></icon>
                                     </button>
 
-                                    <button appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                    <button if.bind="stop.status.slug == 'not-visited'" class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
                                         <icon name="delete-small"></icon>
                                     </button>
 
@@ -545,6 +566,18 @@
                 </empty-indicator>
 
                 <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>
+
+                <toolbar if.bind="route != null" class="margin-top">
+
+                    <button appearance="text" accent="primary" class="flex-row" click.trigger="onAddStopClick()">
+                        <icon name="add" class="font-large line-height-1"></icon>
+                        &nbsp;
+                        <span translate>
+                            Add new stop
+                        </span>
+                    </button>
+
+                </toolbar>
 
             </page-section>
 

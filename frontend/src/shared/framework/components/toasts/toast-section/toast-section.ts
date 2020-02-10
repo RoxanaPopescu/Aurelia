@@ -67,12 +67,17 @@ export class ToastSectionCustomElement
 
     /**
      * Toggles the expanded state of the section.
+     * @returns True to continue, false to prevent default.
      */
-    protected onHeaderClick(): void
+    protected onHeaderClick(): boolean
     {
         if (this.toggle)
         {
             this.expanded = !this.expanded;
+
+            return false;
         }
+
+        return true;
     }
 }

@@ -211,7 +211,7 @@ export class TreeNavNodeCustomElement
 
     /**
      * Called when the text input used for renaming looses focus.
-     * @param event The mouse event.
+     * @param event The focus event.
      */
     protected onTextInputBlur(event: FocusEvent): void
     {
@@ -235,6 +235,7 @@ export class TreeNavNodeCustomElement
      * Called when a key is pressed while the text input used for renaming has focus.
      * Allows the changes to be committed by pressing the `Enter` key, or discarded
      * by pressing the `Escape` key.
+     * @param event The keyboard event.
      * @returns True to not prevent default, otherwise false.
      */
     protected onTextInputKeyDown(event: KeyboardEvent): boolean

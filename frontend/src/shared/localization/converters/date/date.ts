@@ -35,6 +35,11 @@ export class DateValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the date component of the specified value as a localized date string, using the specified style.
      * @param value The value to format.

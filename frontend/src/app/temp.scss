@@ -8,6 +8,11 @@
     --card-padding-large: 12.5rem 13rem;
 }
 
+.page-content-back-to-top
+{
+    right: 3rem !important;
+}
+
 .clickable
 {
     cursor: pointer;
@@ -19,7 +24,7 @@
     height: 23rem;
     border: 7px solid var(--surface-neutral-surface-color);
     border-radius: 2rem;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
 }
 
@@ -105,7 +110,7 @@ page-section:not(.--expanded) + page-section.--expanded
 
     > icon
     {
-        margin-left: calc(var(--size-inline-spacing) /2);
+        margin-left: calc(var(--size-inline-spacing) / 2);
 
         // Set icon size and line height.
         line-height: 1;
@@ -211,6 +216,11 @@ page-sidebar
 
 toolbar
 {
+    & > :not(:last-child)
+    {
+        margin-right: var(--size-inline-spacing-large);
+    }
+
     // Use a small default width for search inputs, and expand them when focused.
     search-input
     {
@@ -252,6 +262,11 @@ toolbar
         width: auto;
         min-width: 30rem;
     }
+}
+
+data-table.--reduce-header-whitespace
+{
+    margin-top: -3rem;
 }
 
 data-table-cell icon + span

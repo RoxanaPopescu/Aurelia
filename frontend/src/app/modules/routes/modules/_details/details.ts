@@ -2,10 +2,8 @@ import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { ModalService } from "shared/framework";
+import { ModalService, IScroll } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
-import { AgreementService } from "app/model/agreement";
-import { DriverService } from "app/model/driver";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
@@ -31,25 +29,36 @@ export class DetailsModule
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
-     * @param agreementService The `AgreementService` instance.
-     * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
      * @param router The `Router` instance.
      */
-    public constructor(routeService: RouteService, agreementService: AgreementService, driverService: DriverService, modalService: ModalService, router: Router)
+    public constructor(routeService: RouteService, modalService: ModalService, router: Router)
     {
         this._routeService = routeService;
-        this._agreementService = agreementService;
-        this._driverService = driverService;
         this._modalService = modalService;
         this._router = router;
     }
 
-    protected readonly _routeService: RouteService;
-    protected readonly _agreementService: AgreementService;
-    protected readonly _driverService: DriverService;
-    protected readonly _modalService: ModalService;
-    protected readonly _router: Router;
+    private _isMovingStop = false;
+
+    private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+    private readonly _router: Router;
+
+    /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
+     * The data table element.
+     */
+    protected dataTableElement: HTMLElement;
+
+    /**
+     * True to show the map, otherwise false.
+     */
+    protected showMap = false;
 
     /**
      * The most recent update operation.
@@ -167,36 +176,16 @@ export class DetailsModule
      * Opens a modal showing the details of the stop.
      * @param stop The stop to edit.
      */
-    protected async onStopClick(stop: RouteStop): Promise<void>
+    protected async onStopClick(stop: RouteStop, edit: boolean): Promise<void>
     {
-        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop }).promise;
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit }).promise;
 
         if (savedStop != null)
         {
-            // TODO: Do we need this, or should we only fetch the new route?
-            if (savedStop.id)
-            {
-                this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
-            }
-            else
-            {
-                // TODO: Insert stop at the correct index.
-                // this.route!.stops.push(savedStop);
-            }
+            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
 
             this.fetchRoute(this.route!.id);
         }
-    }
-
-    /**
-     * Called when the "Edit" icon is clicked on a route stop.
-     * Opens a modal for editing the stop.
-     * @param stop The stop to edit.
-     */
-    protected async onEditStopClick(stop: RouteStop): Promise<void>
-    {
-        // TODO: Open directly in edit mode.
-        await this.onStopClick(stop);
     }
 
     /**
@@ -230,24 +219,72 @@ export class DetailsModule
      * @param source The stop being moved.
      * @param target The stop currently occupying the target position.
      */
-    protected async onMoveStop(source: RouteStop, target: RouteStop): Promise<void>
+    protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
-        try
+        const sourceIndex = this.route!.stops.indexOf(source);
+        const targetIndex = this.route!.stops.indexOf(target);
+
+        this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+
+        if (!this._isMovingStop)
         {
-            const sourceIndex = this.route!.stops.indexOf(source);
-            const targetIndex = this.route!.stops.indexOf(target);
+            this._isMovingStop = true;
 
-            this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+            document.addEventListener("mouseup", async () =>
+            {
+                try
+                {
+                    await this._routeService.moveRouteStop(this.route!, source, targetIndex)
 
-            // TODO: Don't do this until after the user releases the mouse button.
-            //await this._routeService.moveRouteStop(this.route!, source, targetIndex);
+                    this.fetchRoute(this.route!.id);
+                }
+                catch (error)
+                {
+                    Log.error("Could not move route stop", error);
+                }
+                finally
+                {
+                    this._isMovingStop = false;
+                }
+
+            }, { once: true });
         }
-        catch (error)
+    }
+
+    /**
+     * Called when the `Add new stop` button is clicked, either at the bottom of the list, or between rows.
+     * @param index The index at which the stop should be inserted, or undefined to append it to the list.
+     */
+    protected async onAddStopClick(index?: number): Promise<void>
+    {
+        const newStop = new RouteStop(undefined, index);
+
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: newStop, edit: true }).promise;
+
+        if (savedStop != null)
         {
-            Log.error("Could not move route stop", error);
-        }
+            if (index != null)
+            {
+                this.route!.stops.splice(index, 0, savedStop);
+            }
+            else
+            {
+                this.route!.stops.push(savedStop);
+            }
 
-        this.fetchRoute(this.route!.id);
+            this.fetchRoute(this.route!.id);
+        }
+    }
+
+    /**
+     * Called whrn a stop is clicked on the map.
+     * Scrolls to the stop that was clicked.
+     * @param stop The stop that was clicked.
+     */
+    protected onMapStopClick(stop: RouteStop): void
+    {
+        const element = this.dataTableElement.querySelectorAll(".route-details-stop-number")[stop.stopNumber - 2];
+        element.scrollIntoView();
     }
 
     /**

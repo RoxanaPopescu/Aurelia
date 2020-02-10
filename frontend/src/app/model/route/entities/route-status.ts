@@ -26,6 +26,17 @@ export class RouteStatus
     public accent: Accent;
     public value: number;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "requested":

@@ -2,6 +2,7 @@
 
     <require from="app/components/data-section/data-section"></require>
     <require from="./components/order-accordion/order-accordion"></require>
+    <require from="./components/problem-accordion/problem-accordion"></require>
 
     <require from="./route-stop-details.scss"></require>
 
@@ -13,7 +14,7 @@
                 Stop ${model.routeStop.stopNumber}
             </div>
 
-            <div class="opacity-faded-more margin-left margin-right">
+            <div class="opacity-faded-more margin-left-large margin-right-large">
                 –
             </div>
 
@@ -138,7 +139,7 @@
     </data-section>
 
     <!-- Instructions -->
-    <template if.bind="model.routeStop.driverInstructions != null">
+    <template if.bind="model.routeStop.driverInstructions">
 
         <hr class="hr-line margin-bottom">
 
@@ -148,13 +149,26 @@
                 Instructions
             </div>
 
-            <div if.bind="!model.routeStop.driverInstructions" class="opacity-faded" translate>
-                No instructions at this stop
-            </div>
-
             <div if.bind="model.routeStop.driverInstructions">
                 ${model.routeStop.driverInstructions}
             </div>
+
+        </data-section>
+
+    </template>
+
+    <!-- Problems -->
+    <template if.bind="model.routeStop.problems">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" class="flex-row" translate>
+                Problems
+            </div>
+
+            <problem-accordion model.bind="{ type: { name: 'Nobody at location' }, description: 'Nobody home, so I left packages at the door.', imageUrls: ['https://19jirr16m298e0p71wq8ut15-wpengine.netdna-ssl.com/wp-content/uploads/2019/12/19646406_web1_191204-VNE-package.jpg', 'https://wbbh.images.worldnow.com/images/19028766_G.jpeg'] }"></problem-accordion>
 
         </data-section>
 
@@ -171,7 +185,7 @@
                 Deliveries
             </div>
 
-            <order-accordion repeat.for="order of model.routeStop.deliveries" order.bind="order"></order-accordion>
+            <order-accordion repeat.for="delivery of model.routeStop.deliveries" model.bind="delivery"></order-accordion>
 
         </data-section>
 
@@ -192,7 +206,7 @@
                 No pickups at this stop
             </div>
 
-            <order-accordion repeat.for="order of model.routeStop.pickups" order.bind="order"></order-accordion>
+            <order-accordion repeat.for="pickup of model.routeStop.pickups" model.bind="pickup"></order-accordion>
 
         </data-section>
 
@@ -297,7 +311,7 @@
                 Driver verification
             </div>
 
-            <a repeat.for="selfie of model.routeStop.selfies" href.bind="selfie.imageUrl" target="_blank">
+            <a repeat.for="selfie of model.routeStop.selfies" href.bind="selfie.imageUrl" target="_blank" class="margin-right-large">
                 <img class="image-thumbnail" src.bind="selfie.imageUrl">
             </a>
 

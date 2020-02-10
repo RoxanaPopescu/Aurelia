@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, signalBindings } from "aurelia-framework";
 import { ICurrency } from "./currency";
 
 /**
@@ -84,6 +84,8 @@ export class CurrencyService
         await this._changeFunc(currency, this._currency);
 
         this._currency = currency;
+
+        signalBindings("currency-changed");
 
         return this._currency;
     }

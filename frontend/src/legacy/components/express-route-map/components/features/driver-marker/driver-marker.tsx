@@ -74,7 +74,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         onMouseOut={() => this.hidePopup()}
       >
 
-        <div className="c-liveTracking-routeDriverMarker-popup user-select-text">
+        <div className="expressRoutes-routeDriverMarker-popup user-select-text">
 
           {this.renderDriverInfo()}
 
@@ -127,7 +127,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         {!this.props.route.driverOnline &&
         <div className="c-worldMap-popup-section">
 
-          <div className="c-worldMap-popup-section-row c-routeDetails-color-negative">
+          <div className="c-worldMap-popup-section-row expressRoutes-color-negative">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
           </div>
 

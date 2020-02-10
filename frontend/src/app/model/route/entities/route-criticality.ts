@@ -27,6 +27,17 @@ export class RouteCriticality
     public rank: number;
     public accent: Accent;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "high":

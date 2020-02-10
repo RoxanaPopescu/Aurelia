@@ -26,6 +26,11 @@ export class WeekdayValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the date component of the specified value as a localized date string, using the specified style.
      * @param value The value to format, which may be a `DateTime` or an ISO weekday number in the range [1, 7].

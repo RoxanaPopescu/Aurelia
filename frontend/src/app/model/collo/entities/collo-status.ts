@@ -25,6 +25,17 @@ export class ColloStatus
     public name: string;
     public accent: { pickup: Accent, delivery: Accent };
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "not-delivered":

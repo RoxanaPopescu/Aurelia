@@ -275,7 +275,8 @@ export class DateInputCustomElement
     /**
      * Called when a key is pressed within the input element.
      * Prevents the user from entering some invalid values.
-     * @param event The mouse event.
+     * @param event The keyboard event.
+     * @returns True to continue, false to prevent default.
      */
     protected onInputKeyDown(event: KeyboardEvent): boolean
     {
@@ -313,7 +314,7 @@ export class DateInputCustomElement
     /**
      * Called when the input, or an element within the input, receives focus.
      * Opens the dropdown if the focused element is not the toggle icon.
-     * @param event The mouse event.
+     * @param event The focus event.
      */
     protected onInputFocusIn(event: FocusEvent): void
     {
@@ -326,7 +327,7 @@ export class DateInputCustomElement
     /**
      * Called when a `change` event is triggered on the input.
      * Prevents the event from bubbling further, as this input dispatches its own event.
-     * @param event The mouse event.
+     * @param event The change event.
      */
     protected onInputChange(event: Event): void
     {

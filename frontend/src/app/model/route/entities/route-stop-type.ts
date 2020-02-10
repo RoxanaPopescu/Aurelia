@@ -23,6 +23,17 @@ export class RouteStopType
     public slug: RouteStopTypeSlug;
     public name: string;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "pickup":

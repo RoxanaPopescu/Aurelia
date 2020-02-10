@@ -21,6 +21,11 @@ export class RelativeTimeValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed", "time-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the specified value as a localized, relative time string.
      * @param value The value to format.

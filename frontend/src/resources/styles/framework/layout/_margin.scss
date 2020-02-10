@@ -9,12 +9,28 @@ $__summary: comment;
 
 .margin-left
 {
-    margin-left: var(--size-inline-spacing-large);
+    &
+    {
+        margin-left: var(--size-inline-spacing-large);
+    }
+
+    &-large
+    {
+        margin-left: var(--size-inline-spacing-large);
+    }
 }
 
 .margin-right
 {
-    margin-right: var(--size-inline-spacing-large);
+    &
+    {
+        margin-right: var(--size-inline-spacing-large);
+    }
+
+    &-large
+    {
+        margin-right: var(--size-inline-spacing-large);
+    }
 }
 
 /// Modifier class that applies the largest margin.

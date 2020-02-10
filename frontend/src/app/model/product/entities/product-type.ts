@@ -23,6 +23,17 @@ export class ProductType
     public slug: ProductTypeSlug;
     public name: string;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "curier-eco":

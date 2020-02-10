@@ -11,7 +11,7 @@
         disabled.bind="disabled"
         appearance.bind="appearance & attr"
         accent.bind="accent & attr"
-        mousedown.trigger="toggleDropdown()">
+        click.trigger="toggleDropdown()">
 
         <slot name="label"></slot>
 
@@ -26,13 +26,13 @@
         <dropdown
             show.bind="open"
             close.call="closeDropdown(escape, !escape)"
-            mousedown.trigger="onDropdownMouseDown($event)"
+            click.trigger="onDropdownMouseDown($event)"
             fixed.bind="fixed"
             placement.bind="placement">
 
             <item-picker
                 view-model.ref="itemPicker"
-                focused-value.to-view="null"
+                focused-value.bind="focusedValue"
                 focused-element.bind="buttonElement"
                 keyboard.bind="open"
                 none.bind="none"

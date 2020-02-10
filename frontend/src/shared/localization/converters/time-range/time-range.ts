@@ -21,6 +21,11 @@ export class TimeRangeValueConverter
     private readonly _timeValueConverter: TimeValueConverter;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the specified value as a localized date and time range string, using the specified style.
      * @param value The value to format.

@@ -22,6 +22,17 @@ export class RoutePlanStrategy
     public name: string;
     public value: number;
 
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
+    }
+
+    /**
+     * The supported values.
+     */
     public static readonly values =
     {
         "long-routes":

@@ -19,7 +19,7 @@
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
                     </div>
-                    <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small">${failedCancelledStops.length} issues</div>
+                    <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top">${failedCancelledStops.length} issues</div>
                 </circular-meter>
 
             </card>
@@ -53,6 +53,8 @@
                     </div>
 
                 </div>
+
+                <hr class="hr-line margin">
 
                 <!-- Bottom section -->
                 <div class="card-section-bottom card-section">
@@ -105,6 +107,8 @@
 
                 </div>
 
+                <hr class="hr-line margin">
+
                 <!-- Bottom section -->
                 <div class="card-section-bottom card-section">
 
@@ -156,6 +160,8 @@
                     </div>
 
                 </div>
+
+                <hr class="hr-line margin">
 
                 <!-- Bottom section -->
                 <div if.bind="route.status.slug === 'started'" class="card-section-bottom card-section">

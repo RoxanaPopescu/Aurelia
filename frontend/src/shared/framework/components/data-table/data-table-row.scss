@@ -55,9 +55,9 @@ data-table[appearance="rows"]
             {
                 content: "";
                 position: absolute;
-                top: 0;
+                top: 0.5rem;
                 left: 0;
-                bottom: 0;
+                bottom: 0.5rem;
             }
 
             &:first-of-type:before,

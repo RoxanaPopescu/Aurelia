@@ -115,6 +115,7 @@ export class EmailInputCustomElement
     /**
      * Called when a key is pressed.
      * Prevents the user from entering invalid characters.
+     * @returns True to continue, false to prevent default.
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {

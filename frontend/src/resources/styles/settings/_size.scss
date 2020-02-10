@@ -27,9 +27,4 @@ $__summary: comment;
     /// The horizontal spacing to apply between an inline element and its neighbor.
     /// Use this to apply spacing between unrelated elements that need additional spacing.
     --size-inline-spacing-larger: 1.5em;
-
-    /// The vertical spacing to apply between two single-height lines of text.
-    /// Use this to apply spacing between a title and and its related subtitle,
-    /// such as e.g. the title and subtitle in an identity component.
-    --size-line-spacing: 1.5rem;
 }

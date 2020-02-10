@@ -36,6 +36,11 @@ export class TimeValueConverter
     private readonly _localeService: LocaleService;
 
     /**
+     * The signals that should trigger a binding update.
+     */
+    public readonly signals = ["locale-changed"];
+
+    /**
      * Converts the value for use in the view,
      * formatting the time component of the specified value as a localized time string.
      * @param value The value to format.

@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, signalBindings } from "aurelia-framework";
 import { ILocale } from "./locale";
 
 /**
@@ -84,6 +84,8 @@ export class LocaleService
         await this._changeFunc(locale, this._locale);
 
         this._locale = locale;
+
+        signalBindings("locale-changed");
 
         return this._locale;
     }
