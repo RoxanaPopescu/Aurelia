@@ -63,5 +63,6 @@ page[name="routes"] page[name="details"]
     {
         grid-column: 1/-2;
         display: flex;
+        border-bottom: none;
     }
 }
