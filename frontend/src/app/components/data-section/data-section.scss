@@ -90,7 +90,13 @@ data-section
     {
         // Use negative accent color if the section is invalid.
         // Note that this will be overridden if the section is expanded.
+
         color: var(--surface-negative-text-color);
+
+        .data-section-header-toggle
+        {
+            color: var(--surface-negative-icon-color);
+        }
     }
 
     &.margin

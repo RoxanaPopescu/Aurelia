@@ -162,13 +162,13 @@
 
         <hr class="hr-line margin-bottom">
 
-        <data-section class="margin-bottom" toggle.bind="true">
+        <data-section class="margin-bottom" toggle.bind="true" invalid.bind="model.routeStop.problems.length > 0">
 
             <div slot="header" class="flex-row" translate>
                 Problems
             </div>
 
-            <problem-accordion model.bind="{ type: { name: 'Nobody at location' }, description: 'Nobody home, so I left packages at the door.', imageUrls: ['https://19jirr16m298e0p71wq8ut15-wpengine.netdna-ssl.com/wp-content/uploads/2019/12/19646406_web1_191204-VNE-package.jpg', 'https://wbbh.images.worldnow.com/images/19028766_G.jpeg'] }"></problem-accordion>
+            <problem-accordion repeat.for="problem of model.routeStop.problems"model.bind="problem"></problem-accordion>
 
         </data-section>
 

@@ -15,7 +15,7 @@
         click.trigger="onHeaderClick()">
 
         <div if.bind="toggle" class="data-section-header-toggle">
-            <icon name.bind="expanded ? 'minus-small' : 'plus-small'"></icon>
+            <icon name.bind="expanded ? 'minus-small' : 'plus-small'" accent.bind="invalid ? 'negative' : 'primary'"></icon>
         </div>
 
         <div class="data-section-header-content">
