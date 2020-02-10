@@ -15,7 +15,7 @@
                     Completed stops
                 </div>
 
-                <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'positive' & attr" percentage.bind="completedStops * 100 / route.stops.length">
+                <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / route.stops.length">
                     <div class="font-largest" translate>
                         ${completedStops}/${route.stops.length}
                     </div>

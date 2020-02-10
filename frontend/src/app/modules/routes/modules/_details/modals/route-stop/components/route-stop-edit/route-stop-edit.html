@@ -21,6 +21,8 @@
 
     </modal-header>
 
+    <hr class="hr-line margin-larger-bottom">
+
     <modal-section class="margin-bottom">
 
         <div class="control-row margin-larger-bottom">
@@ -83,8 +85,6 @@
 
         </div>
 
-        <hr class="hr-line margin-larger-bottom">
-
         <div class="control-row margin-large-bottom">
 
             <address-input label="above" value.bind="model.routeStop.location.address" class="flex-basis-1-of-1">
@@ -107,18 +107,18 @@
 
         <div class="control-row margin-large-bottom">
 
-            <text-input label="above" value.bind="model.routeStop.outfit.personName" class="flex-basis-1-of-2">
-
-                <span slot="heading" translate>
-                    Name
-                </span>
-
-            </text-input>
-
             <text-input label="above" value.bind="model.routeStop.outfit.companyName" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Company
+                </span>
+
+            </text-input>
+
+            <text-input label="above" value.bind="model.routeStop.outfit.personName" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Name
                 </span>
 
             </text-input>
