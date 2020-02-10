@@ -16,7 +16,7 @@ export class RouteStopProblem
      */
     public constructor(data: any)
     {
-        this.slug = textCase(data.slug, "pascal", "kebab") as RouteStopProblemSlug;
+        this.slug = textCase(data.type, "pascal", "kebab") as RouteStopProblemSlug;
         Object.assign(this, RouteStopProblem.values[this.slug]);
         this.description = data.description;
         this.imageUrls = data.imageUrls;
@@ -50,7 +50,7 @@ export class RouteStopProblem
         },
         "other":
         {
-            name: "Other"
+            name: "Other problem"
         },
         "denied-delivery":
         {

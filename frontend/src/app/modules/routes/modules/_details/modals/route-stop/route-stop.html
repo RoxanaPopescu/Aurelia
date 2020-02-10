@@ -14,6 +14,7 @@
 
             <button
                 if.bind="!edit"
+                disabled.bind="['completed', 'arrived'].includes(model.routeStop.status.slug)"
                 appearance="icon"
                 title.translate="Edit stop"
                 click.trigger="onEditClick()">

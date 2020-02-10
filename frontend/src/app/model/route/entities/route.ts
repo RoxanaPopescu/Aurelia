@@ -22,8 +22,9 @@ export class Route extends AbstractRoute<RouteStop>
 
         this.overallRating = data.overallRating;
         this.driverListUrl = data.driverListUrl;
-        this.allowAssignment = data.allowAssignment;
+        this.driverInstructions = data.driverInstructions;
         this.tags = data.tags;
+        this.allowAssignment = data.allowAssignment;
 
         if (data.totalWeightRange != null)
         {
@@ -60,6 +61,11 @@ export class Route extends AbstractRoute<RouteStop>
      * The total weight range for the colli in the order.
      */
     public readonly totalWeightRange?: WeightRange;
+
+    /**
+     * The instructions the driver should follow, if any.
+     */
+    public readonly driverInstructions?: string;
 
     /**
      * True if the route may be assigned to a fulfiller or driver, otherwise false.

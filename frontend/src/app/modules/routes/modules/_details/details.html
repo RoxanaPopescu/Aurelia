@@ -263,10 +263,44 @@
                     </div>
 
                     <div slot="value" empty>
-                        ${route.drioverVehicle.licensePlate}
+                        ${route.driverVehicle.licensePlate}
                     </div>
 
                 </page-sidebar-value>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Instructions
+                </div>
+
+                <page-sidebar-value>
+
+                    <div slot="value" class="text-align-left" empty>
+                        ${route.driverInstructions}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Tags
+                </div>
+
+                <tags-input readonly.bind="true">
+
+                    <div slot="value">
+                        <tag repeat.for="tag of route.tags">
+                            ${tag}
+                        </tag>
+                    </div>
+
+                </tags-input>
 
             </page-section>
 
@@ -543,11 +577,11 @@
 
                                 <div class="icon-row">
 
-                                    <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
+                                    <button if.bind="!['completed', 'arrived'].includes(stop.status.slug)" appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
                                         <icon name="edit-small"></icon>
                                     </button>
 
-                                    <button if.bind="stop.status.slug == 'not-visited'" class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                    <button if.bind="['not-visited'].includes(stop.status.slug)" class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
                                         <icon name="delete-small"></icon>
                                     </button>
 
@@ -559,6 +593,20 @@
 
                     </template>
 
+                    <data-table-row click.call="onAddStopClick()">
+
+                        <data-table-cell class="data-table-add-button">
+                            <button appearance="none" accent="primary" class="flex-row">
+                                <icon name="add" class="font-large line-height-1"></icon>
+                                &nbsp;
+                                <span translate>
+                                    Add new stop
+                                </span>
+                            </button>
+                        </data-table-cell>
+
+                    </data-table-row>
+
                 </data-table>
 
                 <empty-indicator if.bind="route.stops.length == 0" class="margin-largest" translate>
@@ -566,18 +614,6 @@
                 </empty-indicator>
 
                 <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>
-
-                <toolbar if.bind="route != null" class="margin-top">
-
-                    <button appearance="text" accent="primary" class="flex-row" click.trigger="onAddStopClick()">
-                        <icon name="add" class="font-large line-height-1"></icon>
-                        &nbsp;
-                        <span translate>
-                            Add new stop
-                        </span>
-                    </button>
-
-                </toolbar>
 
             </page-section>
 
