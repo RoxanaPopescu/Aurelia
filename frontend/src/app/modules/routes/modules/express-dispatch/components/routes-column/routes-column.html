@@ -19,11 +19,11 @@
 
                 </path-nav>
             </h1>
-            
-            <div class="control-row" if.bind="!workspace.isMerging">
-                <date-input label="above" fixed.bind="true" value.bind="dateFilter" change.trigger="onDateChanged()" class="flex-grow">
+
+            <toolbar class="flex-push-right">
+                <date-input placement="right-start" fixed.bind="true" value.bind="dateFilter" change.trigger="onDateChanged()">
                 </date-input>
-            </div>
+            </toolbar>
         </page-header>
 
         <page-section>

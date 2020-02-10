@@ -3,6 +3,7 @@ import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
 import { DateTime, Zone } from "luxon";
 import { DateFormat } from "shared/localization";
+import { Placement } from "popper.js";
 
 /**
  * Custom element representing an input for picking a date.
@@ -45,6 +46,12 @@ export class DateInputCustomElement
      * The value entered by the user, or undefined.
      */
     protected enteredValue: string | undefined;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Gets the input value.

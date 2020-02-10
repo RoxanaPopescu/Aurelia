@@ -18,10 +18,6 @@ page[name="routes"] page[name="express-dispatch"] routes-column
     {
         --data-table-columns: 0.75fr 0.8fr 1fr 0.75fr 0.75fr 2fr 0.7fr 0.7fr 2fr 0.7fr 0.7fr;
     }
-    
-    page-header {
-        justify-content: space-between;
-    }
 
     .data-table-row.--selected + .data-table-row:not(.--selected)
     {
