@@ -1,6 +1,12 @@
 page-sidebar-value
 {
     display: block;
+    text-align: right;
+
+    .page-sidebar-value-label[empty="true"]
+    {
+        display: none;
+    }
 
     [slot="value"][empty="true"]::before
     {

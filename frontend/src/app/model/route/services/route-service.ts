@@ -135,7 +135,7 @@ export class RouteService
 
         await this._apiClient.post("routes/stop/move",
         {
-            body: { routeId: route.id, stop, newIndex }
+            body: { routeId: route.id, stopId: stop.id, newIndex }
         });
 
         stop.stopNumber += newIndex + 1 - stop.stopNumber;

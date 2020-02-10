@@ -20,6 +20,7 @@ export class RouteStopInfo
             this.type = new RouteStopType(data.type);
             this.status = new RouteStopStatus(data.status);
             this.location = new Location(data.location);
+            this.reference = data.reference;
         }
 
         if (stopNumber != null)

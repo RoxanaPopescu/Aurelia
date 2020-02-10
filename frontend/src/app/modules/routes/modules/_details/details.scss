@@ -47,4 +47,9 @@ page[name="routes"] page[name="details"]
         background: var(--surface-accent-surface-color);
         color: var(--surface-accent-surface-text-color);
     }
+
+    .data-table-add-button
+    {
+        grid-column: 1/-2;
+    }
 }
