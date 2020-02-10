@@ -48,8 +48,9 @@ page[name="routes"] page[name="details"]
         color: var(--surface-accent-surface-text-color);
     }
 
-    .data-table-add-button
+    .route-details-add-stop-button
     {
         grid-column: 1/-2;
+        display: flex;
     }
 }

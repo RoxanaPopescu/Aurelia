@@ -593,16 +593,14 @@
 
                     </template>
 
-                    <data-table-row click.call="onAddStopClick()">
+                    <data-table-row if.bind="route != null" click.call="onAddStopClick()">
 
-                        <data-table-cell class="data-table-add-button">
-                            <button appearance="none" accent="primary" class="flex-row">
-                                <icon name="add" class="font-large line-height-1"></icon>
-                                &nbsp;
-                                <span translate>
-                                    Add new stop
-                                </span>
-                            </button>
+                        <data-table-cell class="route-details-add-stop-button" accent="primary">
+                            <icon name="add" class="font-large line-height-1"></icon>
+                            &nbsp;
+                            <span translate>
+                                Add new stop
+                            </span>
                         </data-table-cell>
 
                     </data-table-row>

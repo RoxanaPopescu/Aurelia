@@ -8,7 +8,7 @@ export class ProblemAccordionCustomElement
      * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected expanded: boolean = false;
+    protected expanded: boolean = true;
 
     /**
      * The problem to present.

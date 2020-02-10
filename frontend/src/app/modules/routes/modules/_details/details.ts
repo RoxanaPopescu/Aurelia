@@ -40,6 +40,7 @@ export class DetailsModule
     }
 
     private _isMovingStop = false;
+    private _targetIndex: number | undefined;
 
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
@@ -222,9 +223,9 @@ export class DetailsModule
     protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
         const sourceIndex = this.route!.stops.indexOf(source);
-        const targetIndex = this.route!.stops.indexOf(target);
+        this._targetIndex = this.route!.stops.indexOf(target);
 
-        this.route!.stops.splice(targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+        this.route!.stops.splice(this._targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
 
         if (!this._isMovingStop)
         {
@@ -234,7 +235,7 @@ export class DetailsModule
             {
                 try
                 {
-                    await this._routeService.moveRouteStop(this.route!, source, targetIndex)
+                    await this._routeService.moveRouteStop(this.route!, source, this._targetIndex!)
 
                     this.fetchRoute(this.route!.id);
                 }
@@ -245,6 +246,7 @@ export class DetailsModule
                 finally
                 {
                     this._isMovingStop = false;
+                    this._targetIndex = undefined;
                 }
 
             }, { once: true });

@@ -133,13 +133,17 @@ export class RouteService
     {
         const sourceIndex = route.stops.indexOf(stop);
 
+        route.stops.splice(newIndex, 0, ...route.stops.splice(sourceIndex, 1));
+
+        for (let i = 0; i < route.stops.length; i++)
+        {
+            route.stops[i].stopNumber = i + 1;
+        }
+
         await this._apiClient.post("routes/stop/move",
         {
             body: { routeId: route.id, stopId: stop.id, newIndex }
         });
-
-        stop.stopNumber += newIndex + 1 - stop.stopNumber;
-        route.stops.splice(newIndex, 0, ...route.stops.splice(sourceIndex, 1));
     }
 
     /**
