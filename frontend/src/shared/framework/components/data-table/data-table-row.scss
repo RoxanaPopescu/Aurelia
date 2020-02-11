@@ -31,6 +31,66 @@
         cursor: pointer;
     }
 
+    .data-table-row-insert
+    {
+        display: none;
+    }
+
+    &:hover .data-table-row-insert
+    {
+        display: block;
+        grid-column: 1 / -1;
+        z-index: 1;
+        opacity: var(--opacity-faded-more);
+        transition: opacity var(--animation-duration-short);
+
+        &:hover
+        {
+            opacity: 1;
+        }
+
+        .data-table-row-insert-line
+        {
+            pointer-events: none;
+            position: absolute;
+            margin-left: -3rem;
+            width: calc(100% + 3rem);
+            height: 0.75rem;
+            background: var(--surface-primary-icon-color);
+            margin-top: -0.25rem;
+        }
+
+        .data-table-row-insert-action
+        {
+            position: absolute;
+            margin-left: -7.5rem;
+            margin-top: -3rem;
+            padding-right: 1.25rem;
+            height: 19.5rem;
+
+            button
+            {
+                border-color: var(--surface-primary-border-color);
+                background: var(--surface-primary-surface-color);
+                color: var(--surface-primary-surface-text-color);
+            }
+        }
+    }
+
+    &.data-table-append-action .data-table-row-insert
+    {
+        .data-table-row-insert-line
+        {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .data-table-row-insert-action
+        {
+            display: none;
+        }
+    }
+
     .data-table-row-drag-handle
     {
         padding-left: 0;

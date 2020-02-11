@@ -4,4 +4,18 @@
 
     <slot></slot>
 
+    <data-table-row show.bind="append != null" class="data-table-append-action" click.call="append($event)">
+
+        <data-table-cell accent="primary">
+            <icon name="add" class="font-larger line-height-1"></icon>
+            &nbsp;
+            <div>
+                <template replaceable part="append" translate>
+                    Add row
+                </template>
+            </div>
+        </data-table-cell>
+
+    </data-table-row>
+
 </template>

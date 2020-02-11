@@ -61,6 +61,21 @@ data-table
         --data-table-row-border-color: var(--data-table-row-border-color--active);
     }
 
+    .data-table-append-action
+    {
+        .data-table-row-drag-handle
+        {
+            display: none;
+        }
+
+        data-table-cell
+        {
+            grid-column: 1/-2;
+            display: flex;
+            border-bottom: none !important;
+        }
+    }
+
     &.--busy
     {
         opacity: var(--opacity-disabled);

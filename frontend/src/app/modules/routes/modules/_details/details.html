@@ -458,7 +458,8 @@
                     appearance="rows"
                     move.call="onMoveStop(source, target)"
                     class="${!showMap ? '--reduce-header-whitespace' : ''}"
-                    element.ref="dataTableElement">
+                    element.ref="dataTableElement"
+                    append.call="onAddStopClick()">
 
                     <data-table-headers>
 
@@ -522,6 +523,7 @@
                             model.bind="stop"
                             accent.bind="stop.status.accent"
                             click.call="onStopClick(stop, false)"
+                            insert.call="onAddStopClick($index)"
                             movable.bind="stop.status.slug == 'not-visited'"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
@@ -594,17 +596,9 @@
 
                     </template>
 
-                    <data-table-row if.bind="route != null" click.call="onAddStopClick()">
-
-                        <data-table-cell class="route-details-add-stop-button" accent="primary">
-                            <icon name="add" class="font-large line-height-1"></icon>
-                            &nbsp;
-                            <span translate>
-                                Add new stop
-                            </span>
-                        </data-table-cell>
-
-                    </data-table-row>
+                    <template replace-part="append">
+                        Add stop
+                    </template>
 
                 </data-table>
 

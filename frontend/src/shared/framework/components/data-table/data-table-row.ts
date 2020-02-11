@@ -59,6 +59,12 @@ export class DataTableRowCustomElement
     public click: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
+     * Called when the insert button above the row is clicked.
+     */
+    @bindable
+    public insert: ((context: { event: MouseEvent }) => void) | undefined;
+
+    /**
      * The model associated with the row.
      */
     @bindable
@@ -188,6 +194,23 @@ export class DataTableRowCustomElement
         if (this.clickable !== false && !event.defaultPrevented && !(event as any).__ignoreRowClick && this.click)
         {
             this.click({ event });
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Called when the insert button above a row is clicked.
+     * @param event The click event.
+     * @returns False to prevent default for the event, otherwise true.
+     */
+    protected onInsertClick(event: MouseEvent): boolean
+    {
+        if (this.insert != null && !event.defaultPrevented)
+        {
+            this.insert({ event });
 
             return false;
         }

@@ -14,6 +14,18 @@
         click.delegate="onClick($event)"
         mouseenter.trigger="onMouseEnter($event)">
 
+        <div class="data-table-row-insert" click.trigger="onInsertClick($event)">
+
+            <div class="data-table-row-insert-line"></div>
+
+            <div class="data-table-row-insert-action">
+                <button appearance="icon" accent="primary">
+                    <icon name="plus-small"></icon>
+                </button>
+            </div>
+
+        </div>
+
         <data-table-cell if.bind="dataTable.selection === 'multiple'" click.trigger="onToggle($event)">
             <input type="checkbox" class="pointer-events-none" disabled.bind="!selectable" checked.to-view="selected">
         </data-table-cell>

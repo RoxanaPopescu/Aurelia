@@ -37,6 +37,12 @@ export class DataTableCustomElement
     public move: ((context: { source: any; target: any }) => void) | undefined;
 
     /**
+     * Called when the add button below the last row is clicked.
+     */
+    @bindable
+    public append: ((context: { event: MouseEvent }) => void) | undefined;
+
+    /**
      * True if the select all option is checked, otherwise false.
      */
     @bindable({ defaultValue: false })
