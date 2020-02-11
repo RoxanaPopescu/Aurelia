@@ -23,8 +23,9 @@
             <toolbar class="flex-push-right">
 
                 <date-input
+                    fixed.bind="true"
                     placement="top-end"
-                    value.bind="dateFilter"
+                    value.bind="workspace.dateFilter"
                     change.trigger="onDateChanged()">
                 </date-input>
 
