@@ -31,7 +31,7 @@ export class RouteStopPanel
     /**
      * The model for the modal.
      */
-    protected model: { route: Route; routeStop: RouteStop };
+    protected model: { route: Route; routeStop: RouteStop; isNew: boolean };
 
     /**
      * The available types.
@@ -49,9 +49,9 @@ export class RouteStopPanel
      */
     public activate(model: { route: Route; routeStop: RouteStop; edit: boolean }): void
     {
-        this.isNew = model.routeStop?.id == null;
+        this.isNew = (model.routeStop?.id) == null;
         this.edit = this.isNew || model.edit;
-        this.model = { route: model.route, routeStop: model.routeStop?.clone() };
+        this.model = { route: model.route, routeStop: model.routeStop?.clone(), isNew: this.isNew };
     }
 
     /**

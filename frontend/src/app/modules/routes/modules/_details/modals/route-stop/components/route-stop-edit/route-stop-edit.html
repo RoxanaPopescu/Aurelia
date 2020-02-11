@@ -4,11 +4,11 @@
 
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
-            <span if.bind="isNew" translate>
+            <span if.bind="model.isNew" translate>
                 New stop
             </span>
 
-            <path-nav if.bind="!isNew">
+            <path-nav if.bind="!model.isNew">
                 <div translate>
                     Stop ${model.routeStop.stopNumber}
                 </div>
@@ -230,7 +230,7 @@
 
     </modal-section>
 
-    <button if.bind="isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
+    <button if.bind="model.isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
         Create stop
     </button>
 
