@@ -5,7 +5,7 @@ import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
-import { ConfirmDeleteStopDialog } from "./modals/confirm-delete-stop/confirm-delete-stop";
+import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
 
@@ -196,7 +196,7 @@ export class DetailsModule
      */
     protected async onRemoveStopClick(stop: RouteStop): Promise<void>
     {
-        const confirmed = await this._modalService.open(ConfirmDeleteStopDialog, stop).promise;
+        const confirmed = await this._modalService.open(CancelDeleteStopDialog, stop).promise;
 
         if (!confirmed)
         {

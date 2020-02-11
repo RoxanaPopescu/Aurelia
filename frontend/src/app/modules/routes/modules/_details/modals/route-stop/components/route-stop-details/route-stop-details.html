@@ -18,8 +18,8 @@
                 –
             </div>
 
-            <div class="opacity-faded">
-                ${model.routeStop.type.name}, ${model.routeStop.status.name}
+            <div class="${model.routeStop.status.accent == 'neutral' ? 'opacity-faded' : ''}" accent.bind="model.routeStop.status.accent & attr">
+                ${model.routeStop.status.name}
             </div>
 
         </h1>
@@ -35,6 +35,10 @@
                 <div class="margin-large-right">
 
                     <div class="opacity-faded margin-bottom" translate>
+                        Reference
+                    </div>
+
+                    <div class="opacity-faded margin-bottom" translate>
                         Planned arrival
                     </div>
 
@@ -45,6 +49,10 @@
                 </div>
 
                 <div>
+
+                    <div class="margin-bottom" empty>
+                        ${model.routeStop.reference}
+                    </div>
 
                     <div class="margin-bottom">
                         ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
@@ -63,6 +71,10 @@
                 <div class="margin-large-right">
 
                     <div class="opacity-faded margin-bottom" translate>
+                        Type
+                    </div>
+
+                    <div class="opacity-faded margin-bottom" translate>
                         Planned loading time
                     </div>
 
@@ -73,6 +85,10 @@
                 </div>
 
                 <div>
+
+                    <div class="margin-bottom">
+                        ${model.routeStop.type.name}
+                    </div>
 
                     <div class="margin-bottom">
                         ${model.routeStop.loadingTime | duration: 'narrow'}

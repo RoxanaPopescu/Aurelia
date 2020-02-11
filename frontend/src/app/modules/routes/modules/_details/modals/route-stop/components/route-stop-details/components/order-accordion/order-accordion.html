@@ -70,6 +70,7 @@
                 <data-table-row model.bind="collo" clickable.bind="false">
 
                     <data-table-cell>
+                        <icon if.bind="collo.status.accent == 'negative'" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
                         <a
                             class="order-collo text-truncate font-small"
                             title="${collo.barcode}"

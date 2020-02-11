@@ -3,7 +3,7 @@ import { Modal } from "shared/framework/services/modal";
 import { RouteStopBase } from "app/model/route";
 
 @autoinject
-export class ConfirmDeleteStopDialog
+export class CancelDeleteStopDialog
 {
     /**
      * Creates a new instance of the type.
@@ -22,7 +22,6 @@ export class ConfirmDeleteStopDialog
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
-     * @returns True if changes should be discarded, otherwise false.
      */
     public activate(model: RouteStopBase): void
     {
@@ -31,7 +30,7 @@ export class ConfirmDeleteStopDialog
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns True if changes should be discarded, otherwise false.
+     * @returns True if the stop should be cancelled, otherwise false.
      */
     public deactivate(): boolean
     {
