@@ -248,6 +248,18 @@ export class DataTableRowCustomElement
     }
 
     /**
+     * Called when the drag handle is clicked.
+     * Blocks the event from propagating.
+     * @param event The click event.
+     */
+    protected onDragHandleClick(event: MouseEvent): void
+    {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+    }
+
+    /**
      * Called when the pointer is released anywhere.
      * @param event The click event.
      */

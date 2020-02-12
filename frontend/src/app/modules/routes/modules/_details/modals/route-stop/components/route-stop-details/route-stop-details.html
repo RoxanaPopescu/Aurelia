@@ -6,7 +6,7 @@
 
     <require from="./route-stop-details.scss"></require>
 
-    <modal-header scroll-fade>
+    <modal-header scroll-fade="0.3">
 
         <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
 
@@ -26,7 +26,7 @@
 
     </modal-header>
 
-    <data-section class="margin-bottom">
+    <data-section class="margin-bottom"  scroll-fade="0.4">
 
         <div class="flex-row">
 
@@ -342,7 +342,7 @@
                 Tags
             </div>
 
-            <tags-input readonly.bind="true">
+            <tags-input readonly.bind="true" class="--tags-only">
 
                 <div slot="value">
                     <tag repeat.for="tag of model.routeStop.tags">
