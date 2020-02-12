@@ -59,7 +59,7 @@
                 background: var(--surface-primary-icon-color);
                 opacity: var(--opacity-faded-more);
                 transition: opacity var(--animation-duration-short);
-                box-shadow: 0.25rem 0.25rem 0 0.125rem var(--palette-color-whitepoint);
+                box-shadow: 0.25rem 0.25rem 0 0.125px rgba(255, 255, 255, 0.5);
             }
 
             pointer-events: none;
