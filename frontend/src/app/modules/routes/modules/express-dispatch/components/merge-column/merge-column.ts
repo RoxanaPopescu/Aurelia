@@ -46,6 +46,8 @@ export class MergeColumnCustomElement
     protected expressStopsDragover = false;
     protected updateOperation: Operation;
     protected canApply = false;
+    protected fetchingEstimate = false;
+    protected addingStops = false;
     protected isDragging = false;
 
     /**
@@ -340,12 +342,14 @@ export class MergeColumnCustomElement
         try
         {
             this.workspace.isBusy = true;
+            this.addingStops = true;
 
             await this._expressRouteService.updateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].routeId,
                 this.driverStops.map(s => s.stop.id));
 
             this.canApply = true;
+            this.addingStops = false;
             history.back();
         }
         catch (error)
@@ -495,6 +499,7 @@ export class MergeColumnCustomElement
 
         try
         {
+            this.fetchingEstimate = true;
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].routeId,
                 this.driverStops.map(s => s.stop.id),
@@ -511,6 +516,7 @@ export class MergeColumnCustomElement
                 }
             }
 
+            this.fetchingEstimate = false;
             this.canApply = this.expressStops.length === 0;
         }
         catch (error)

@@ -19,6 +19,14 @@
                         Save changes to driver route
                     </button>
 
+                    <span if.bind="fetchingEstimate" translate>
+                        Fetching estimate...
+                    </span>
+
+                    <span if.bind="addingStops" translate>
+                        Adding stops to route...
+                    </span>
+
                 </toolbar>
 
                 <h1 class="font-largest">
