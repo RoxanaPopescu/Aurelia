@@ -239,6 +239,39 @@ toolbar
     }
 }
 
+tags-input.--tags-only
+{
+    text-input
+    {
+        --input-min-height: 0;
+        --input-border-width: 0 !important;
+        --input-border-color: transparent !important;
+        --input-surface-color: transparent !important;
+        --input-padding: 0 !important;
+    }
+
+    tag
+    {
+        --tag-background-color: var(--surface-neutral-surface-color) !important;
+        --tag-border-color: var(--surface-neutral-border-color) !important;
+    }
+
+    [slot="value"]
+    {
+        padding-left: 0 !important;
+    }
+
+    .input-control
+    {
+        padding-right: 0 !important;
+    }
+
+    .input-control-inner
+    {
+        display: none !important;
+    }
+}
+
 data-table.--reduce-header-whitespace
 {
     margin-top: -3rem;
