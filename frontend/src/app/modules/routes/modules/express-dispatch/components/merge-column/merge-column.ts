@@ -498,7 +498,6 @@ export class MergeColumnCustomElement
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].driver.id,
                 this.driverStops.map(s => s.stop.id),
-                this.workspace.dateFilter,
                 signal);
 
             for (const estimatedStop of estimatedDriverRoute.stops)
