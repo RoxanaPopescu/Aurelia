@@ -19,6 +19,7 @@ export class DriverRoute
     {
         this.status = new DriverRouteStatus(data.status);
         this.driverOnline = data.driverOnline;
+        this.routeId = data.routeId;
 
         if (data.driver != null)
         {
@@ -53,6 +54,11 @@ export class DriverRoute
      * The driver assigned to the route.
      */
     public driver: Driver;
+
+    /**
+     * The routeId of the route.
+     */
+    public routeId: string;
 
     /**
      * The vehicle assiged to the route.

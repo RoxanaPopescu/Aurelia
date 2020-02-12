@@ -342,7 +342,7 @@ export class MergeColumnCustomElement
             this.workspace.isBusy = true;
 
             await this._expressRouteService.updateDriverRoute(
-                this.workspace.selectedDriverRoutes[0].driver.id,
+                this.workspace.selectedDriverRoutes[0].routeId,
                 this.driverStops.map(s => s.stop.id));
 
             this.canApply = true;
@@ -496,7 +496,7 @@ export class MergeColumnCustomElement
         try
         {
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
-                this.workspace.selectedDriverRoutes[0].driver.id,
+                this.workspace.selectedDriverRoutes[0].routeId,
                 this.driverStops.map(s => s.stop.id),
                 signal);
 

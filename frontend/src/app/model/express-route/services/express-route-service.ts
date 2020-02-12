@@ -67,11 +67,11 @@ export class ExpressRouteService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the estimated route.
      */
-    public async estimateDriverRoute(driverId: number, stopIds: string[], signal?: AbortSignal): Promise<DriverRoute>
+    public async estimateDriverRoute(routeId: string, stopIds: string[], signal?: AbortSignal): Promise<DriverRoute>
     {
         const result = await this._apiClient.post("expressdispatch/estimatedriverroute",
         {
-            body: { driverId, stopIds },
+            body: { routeId, stopIds },
             signal
         });
 
@@ -85,11 +85,11 @@ export class ExpressRouteService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the estimated route.
      */
-    public async updateDriverRoute(driverId: number, stopIds: string[], signal?: AbortSignal): Promise<void>
+    public async updateDriverRoute(routeId: string, stopIds: string[], signal?: AbortSignal): Promise<void>
     {
         await this._apiClient.post("expressdispatch/updatedriverroute",
         {
-            body: { driverId, stopIds },
+            body: { routeId, stopIds },
             signal
         });
     }
