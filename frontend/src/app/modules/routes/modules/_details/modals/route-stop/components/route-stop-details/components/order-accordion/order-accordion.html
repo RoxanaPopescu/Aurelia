@@ -7,6 +7,7 @@
         <div class="order-accordion-header-content">
 
             <div class="flex-row">
+                <icon if.bind="hasProblems" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
                 <a href="/orders/details/${model.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
                     ${model.orderSlug}
                 </a>

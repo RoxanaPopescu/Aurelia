@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Pickup, Delivery } from "app/model/route";
 
 @autoinject
@@ -21,6 +21,25 @@ export class OrderAccordionCustomElement
      */
     @bindable
     protected model: Pickup | Delivery;
+
+    /**
+     * True if one or more colli has a negative status, otherwise false.
+     */
+    @computedFrom("model.colli.length")
+    protected get hasProblems(): boolean
+    {
+        if (this.model instanceof Pickup)
+        {
+            return this.model.colli.some(c => c.status.accent.pickup === "negative");
+        }
+
+        if (this.model instanceof Delivery)
+        {
+            return this.model.colli.some(c => c.status.accent.delivery === "negative");
+        }
+
+        return false;
+    }
 
     /**
      * Called when the header is clicked.

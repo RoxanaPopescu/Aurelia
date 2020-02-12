@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { Log } from "shared/infrastructure";
@@ -32,6 +32,41 @@ export class RouteStopDetailsCustomElement
      * The available collo status values.
      */
     protected colloStatusValues = Object.keys(ColloStatus.values).map(slug => ({ slug, ...ColloStatus.values[slug] }));
+
+    /**
+     * True if one or more pickup colli has a negative status, otherwise false.
+     */
+    @computedFrom("model.routeStop.pickups.length")
+    protected get hasPickupProblems(): boolean
+    {
+        for (const pickup of this.model.routeStop.pickups)
+        {
+            if (pickup.colli.some(c => c.status.accent.pickup === "negative"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * True if one or more delivery colli has a negative status, otherwise false.
+     */
+    @computedFrom("model.routeStop.deliveries.length")
+    protected get hasDeliveryProblems(): boolean
+    {
+        for (const delivery of this.model.routeStop.deliveries)
+        {
+            if (delivery.colli.some(c => c.status.accent.delivery === "negative"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Called when the user changes the status of the stop.

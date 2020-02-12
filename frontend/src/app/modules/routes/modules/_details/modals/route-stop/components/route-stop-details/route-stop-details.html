@@ -191,7 +191,7 @@
     </template>
 
     <!-- Orders to be delivered -->
-    <template if.bind="model.routeStop.deliveries.length != 0">
+    <template if.bind="model.routeStop.deliveries.length != 0" invalid.bind="hasDeliveryProblems">
 
         <hr class="hr-line margin-bottom">
 
@@ -208,7 +208,7 @@
     </template>
 
     <!-- Orders to pick up -->
-    <template if.bind="model.routeStop.pickups.length != 0">
+    <template if.bind="model.routeStop.pickups.length != 0" invalid.bind="hasPickupProblems">
 
         <hr class="hr-line margin-bottom">
 

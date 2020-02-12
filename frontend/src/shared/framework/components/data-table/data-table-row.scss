@@ -68,11 +68,12 @@
             padding-right: 1.25rem;
             height: 19.5rem;
 
-            button
+            button[appearance="icon"]
             {
                 border-color: var(--surface-primary-border-color);
                 background: var(--surface-primary-surface-color);
                 color: var(--surface-primary-surface-text-color);
+                padding: 1rem;
             }
         }
     }
