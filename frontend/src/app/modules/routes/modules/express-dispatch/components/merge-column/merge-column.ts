@@ -335,6 +335,8 @@ export class MergeColumnCustomElement
             return;
         }
 
+        this.canApply = false;
+
         try
         {
             this.workspace.isBusy = true;
@@ -343,6 +345,7 @@ export class MergeColumnCustomElement
                 this.workspace.selectedDriverRoutes[0].driver.id,
                 this.driverStops.map(s => s.stop.id));
 
+            this.canApply = true;
             history.back();
         }
         catch (error)
