@@ -7,7 +7,7 @@ $__summary: comment;
 
 
 // Export the legacy variables.
-@import "legacy/packages/shared/src/webKit/assets/themes/coop/constants";
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
 
 // Export the palettes.
 // Palettes define the standard values used within the theme.
@@ -30,12 +30,19 @@ button[appearance="outline"]
     border-color: var(--palette-color-neutral) !important;
 }
 
+modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not([accent]),
+.modal-dialog-actions button[appearance="icon"]:not([accent]),
+.toast-actions
+{
+    color: var(--surface-primary-icon-color);
+}
+
 body
 {
     /**
      * The color of the border of tabs.
      */
-     --tab-border-color: var(--palette-color-neutral);
+    --tab-border-color: var(--palette-color-neutral);
 
     /**
      * The width of the border of tabs.
@@ -46,4 +53,14 @@ body
      * The width of the border of inputs.
      */
     --input-border-width: var(--border-width-thin);
+}
+
+dropdown-icon
+{
+    opacity: 1;
+}
+
+:root
+{
+    --modal-backdrop-color: rgba(9, 30, 66, 0.54);
 }

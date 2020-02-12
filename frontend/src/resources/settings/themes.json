@@ -1,5 +1,6 @@
 [
     { "slug": "mover", "name": "Mover", "color": "#f00" },
     { "slug": "coop", "name": "Coop", "color": "#f00" },
+    { "slug": "ikea", "name": "Ikea", "color": "#0051ba" },
     { "slug": "lingu", "name": "Lingu", "color": "#0646a6" }
 ]
