@@ -218,29 +218,25 @@
                 Pickups
             </div>
 
-            <div if.bind="model.routeStop.pickups.length == 0" class="opacity-faded" translate>
-                No pickups at this stop
-            </div>
-
             <order-accordion repeat.for="pickup of model.routeStop.pickups" model.bind="pickup"></order-accordion>
 
         </data-section>
 
     </template>
 
-    <!-- Proof of delivery -->
-    <template if.bind="model.routeStop.photo != null">
+    <!-- Photo of delivery -->
+    <template if.bind="model.routeStop.actions.photo || model.routeStop.photo != null">
 
         <hr class="hr-line margin-bottom">
 
         <data-section class="margin-bottom" toggle.bind="true">
 
             <div slot="header" translate>
-                Proof of delivery
+                Photo of delivery
             </div>
 
-            <div if.bind="!model.routeStop.photo" class="opacity-faded" translate>
-                No proof of delivery
+            <div if.bind="model.routeStop.actions.photo && !model.routeStop.photo" class="opacity-faded" translate>
+                Photo required, but not yet captured
             </div>
 
             <template if.bind="model.routeStop.photo.imageUrl">
@@ -268,7 +264,7 @@
     </template>
 
     <!-- Signature -->
-    <template if.bind="model.routeStop.signature != null">
+    <template if.bind="model.routeStop.actions.signature || model.routeStop.signature != null">
 
         <hr class="hr-line margin-bottom">
 
@@ -278,8 +274,8 @@
                 Signature
             </div>
 
-            <div if.bind="!model.routeStop.signature" class="opacity-faded" translate>
-                No signature
+            <div if.bind="model.routeStop.actions.signature && !model.routeStop.signature" class="opacity-faded" translate>
+                Signature required, but not yet captured
             </div>
 
             <template if.bind="model.routeStop.signature">
@@ -330,6 +326,31 @@
             <a repeat.for="selfie of model.routeStop.selfies" href.bind="selfie.imageUrl" target="_blank" class="margin-right-large">
                 <img class="image-thumbnail" src.bind="selfie.imageUrl">
             </a>
+
+        </data-section>
+
+    </template>
+
+    <!-- Tags -->
+    <template if.bind="model.routeStop.tags.length > 0">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" translate>
+                Tags
+            </div>
+
+            <tags-input readonly.bind="true">
+
+                <div slot="value">
+                    <tag repeat.for="tag of model.routeStop.tags">
+                        ${tag}
+                    </tag>
+                </div>
+
+            </tags-input>
 
         </data-section>
 

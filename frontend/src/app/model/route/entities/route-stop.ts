@@ -28,6 +28,7 @@ export class RouteStop extends RouteStopBase
             this.selfies = data.selfies.map(p => new Photo(p));
             this.signatureRequired = data.signatureRequired;
             this.photoRequired = data.photoRequired;
+            this.tags = data.tags;
 
             if (data.signature != null)
             {
@@ -83,6 +84,11 @@ export class RouteStop extends RouteStopBase
      * The photo captured to prove that the deliveries were completed.
      */
     public readonly photo?: Photo;
+
+    /**
+     * The tags associated with the stop.
+     */
+    public readonly tags: string[];
 
     // TODO: Should be removed - replaced by actions
     public readonly signatureRequired: boolean;
