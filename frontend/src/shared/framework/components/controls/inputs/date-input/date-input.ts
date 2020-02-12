@@ -223,7 +223,7 @@ export class DateInputCustomElement
         {
             const value = this.isValid ? this.focusedValue : null;
 
-            if (this.focusedValue !== value)
+            if (value !== this.value)
             {
                 this.value = value;
 
