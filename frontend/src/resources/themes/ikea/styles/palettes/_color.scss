@@ -1,0 +1,85 @@
+////
+/// @group themes/ikea/palettes/color
+////
+
+/// Theme specific color palette.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+/// The neutral color and its variations.
+:root
+{
+    --palette-color-whitepoint: white;
+    --palette-color-neutral-lightest: #f8f8f8;
+    --palette-color-neutral-lighter: #f3f3f3;
+    --palette-color-neutral-light: #ebebeb;
+    --palette-color-neutral: #e4e4e4;
+    --palette-color-neutral-dim: #c5c5c5;
+    --palette-color-neutral-dark: #686868;
+    --palette-color-neutral-darker: #052342;
+    --palette-color-blackpoint: black;
+}
+
+/// The primary color and its variations.
+:root
+{
+    --palette-color-primary-lighter: hsl(211, 63%, 97%);
+    --palette-color-primary-light: #619bdb;
+    --palette-color-primary: #0051ba;
+    --palette-color-primary-dark: #053d85;
+    --palette-color-primary-darker: #08336b;
+    --palette-color-primary-darkest: #042950;
+
+    --palette-color-primary--hover: hsl(214, 93%, 31%);
+    --palette-color-primary--active: hsl(214, 90%, 30%);
+    --palette-color-primary--child: hsl(216, 86%, 28%);
+    --palette-color-primary--child-hover: hsl(215, 83%, 26%);
+}
+
+/// The accent color indicating information.
+:root
+{
+    --palette-color-info-lighter: hsl(187, 100%, 94%);
+    --palette-color-info-light: hsl(187, 46%, 64%);
+    --palette-color-info: #1acce2;
+    --palette-color-info-dark: hsl(187, 46%, 44%);
+    --palette-color-info-darker: hsl(187, 46%, 34%);
+}
+
+/// The accent color indicating that something is good or safe.
+:root
+{
+    --palette-color-positive-lighter: hsl(113, 100%, 94%);
+    --palette-color-positive-light: hsl(113, 61%, 51%);;
+    --palette-color-positive: #17c800;
+    --palette-color-positive-dark: #137e12;
+    --palette-color-positive-darker: hsl(113, 61%, 21%);
+}
+
+/// The accent color indicating that something requires attention.
+:root
+{
+    --palette-color-attention-lighter: hsl(37, 100%, 94%);
+    --palette-color-attention-light: hsl(37, 100%, 60%);
+    --palette-color-attention: #e29310;
+    --palette-color-attention-dark: hsl(37, 100%, 40%);
+    --palette-color-attention-darker: hsl(37, 100%, 20%);
+}
+
+/// The accent color indicating that something is bad or unsafe.
+:root
+{
+    --palette-color-negative-lighter: hsl(10, 100%, 94%);
+    --palette-color-negative-light: #ff5555;
+    --palette-color-negative: #e6310d;
+    --palette-color-negative-dark: hsl(10, 70%, 37%);
+    --palette-color-negative-darker: hsl(10, 70%, 27%);
+}
+
+/// The color used to highlight text, e.g. because it matches a search query.
+:root
+{
+    --palette-color-mark: var(--palette-color-attention);
+}

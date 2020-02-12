@@ -6,10 +6,12 @@
 $__summary: comment;
 
 
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
 // Export the palettes.
 // Palettes define the standard values used within the theme.
 @import "./palettes/color";
-
 
 // Export the settings.
 // Settings define theme specific overrides to the base settings.
