@@ -234,9 +234,10 @@ export class RoutesColumnCustomElement
     /**
      * Called when the date changes.
      */
-    protected onDateChanged(): void
+    protected onDateChanged(value: DateTime): void
     {
         this.workspace.clearAllData();
+        this.workspace.dateFilter = value;
         this.update();
     }
 }
