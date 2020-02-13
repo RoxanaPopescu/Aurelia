@@ -1,6 +1,17 @@
 <template>
 
+    <require from="../order-accordion/order-accordion"></require>
+
+    <require from="./route-stop-edit.scss"></require>
+
     <modal-header scroll-fade>
+
+        <div class="margin-bottom">
+
+            <span class="opacity-faded" translate>Route ID:</span>
+            ${model.route.id}
+
+        </div>
 
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
@@ -20,8 +31,6 @@
         </h1>
 
     </modal-header>
-
-    <hr class="hr-line margin-larger-bottom">
 
     <modal-section class="margin-bottom">
 
@@ -85,7 +94,9 @@
 
         </div>
 
-        <div class="control-row margin-large-bottom">
+        <div class="font-larger margin-large-bottom" translate>General stop informations</div>
+
+        <div class="control-row margin-bottom">
 
             <address-input label="above" value.bind="model.routeStop.location.address" class="flex-basis-1-of-1">
 
@@ -162,6 +173,26 @@
 
     </modal-section>
 
+    <modal-section if.bind="!model.isNew" class="margin-larger-bottom">
+
+        <div class="font-large margin-bottom" translate>Orders</div>
+
+        <!-- Orders to be delivered -->
+        <template if.bind="model.routeStop.deliveries.length != 0" invalid.bind="hasDeliveryProblems">
+
+            <order-accordion repeat.for="delivery of model.routeStop.deliveries" model.bind="delivery"></order-accordion>
+
+        </template>
+
+        <!-- Orders to pick up -->
+        <template if.bind="model.routeStop.pickups.length != 0" invalid.bind="hasPickupProblems">
+
+            <order-accordion repeat.for="pickup of model.routeStop.pickups" model.bind="pickup"></order-accordion>
+
+        </template>
+
+    </modal-section>
+
     <modal-section>
 
         <div slot="header" translate>
@@ -230,8 +261,20 @@
 
     </modal-section>
 
-    <button if.bind="model.isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
-        Create stop
-    </button>
+    <div class="button-container margin-larger-top">
+
+        <button if.bind="model.isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
+            Create stop
+        </button>
+
+        <button if.bind="!model.isNew" appearance="outline" accent="primary" click.delegate="onCancel()" translate>
+            Cancel edit
+        </button>
+
+        <button if.bind="!model.isNew" appearance="solid" accent="primary" click.delegate="onSave()" translate>
+            Save changes
+        </button>
+
+    </div>
 
 </template>

@@ -67,9 +67,9 @@ export class RouteStopPanel
      * Called when the "Edit" icon is clicked.
      * Transitions the modal to its edit mode.
      */
-    protected onEditClick(): void
+    protected onEditToggle(): void
     {
-        this.edit = true;
+        this.edit = !this.edit;
     }
 
     /**

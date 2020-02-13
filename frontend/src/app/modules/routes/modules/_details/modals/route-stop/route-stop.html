@@ -8,7 +8,7 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="route-stop" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+    <modal-panel name="route-stop" position="right" close-button.bind="!edit && true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
         <div slot="actions">
 
@@ -17,23 +17,15 @@
                 disabled.bind="['completed', 'arrived'].includes(model.routeStop.status.slug)"
                 appearance="icon"
                 title.translate="Edit stop"
-                click.trigger="onEditClick()">
+                click.trigger="onEditToggle()">
                 <icon name="edit"></icon>
-            </button>
-
-            <button
-                if.bind="edit"
-                appearance="icon"
-                title.translate="Edit stop"
-                click.trigger="onSaveClick()">
-                <icon name="save"></icon>
             </button>
 
         </div>
 
         <route-stop-details if.bind="!edit" model.bind="model"></route-stop-details>
 
-        <route-stop-edit if.bind="edit" model.bind="model"></route-stop-edit>
+        <route-stop-edit if.bind="edit" model.bind="model" on-save.call="onSaveClick()" on-cancel.call="onEditToggle()"></route-stop-edit>
 
     </modal-panel>
 

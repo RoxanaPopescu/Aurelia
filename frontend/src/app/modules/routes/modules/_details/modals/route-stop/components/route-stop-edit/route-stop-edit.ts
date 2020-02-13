@@ -5,6 +5,12 @@ import { RouteStop, Route } from "app/model/route";
 @autoinject
 export class RouteStopEditCustomElement
 {
+    @bindable
+    public onSave: () => void;
+
+    @bindable
+    public onCancel: () => void;
+
     /**
      * The model for the modal.
      */
