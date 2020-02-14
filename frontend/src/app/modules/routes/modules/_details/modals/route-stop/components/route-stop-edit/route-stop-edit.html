@@ -36,6 +36,36 @@
 
         <div class="control-row margin-larger-bottom">
 
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Status
+                </span>
+
+                <item repeat.for="status of statuses" model.routeStop.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+    </modal-section>
+
+    <hr class="hr-line margin-bottom">
+
+    <modal-section class="margin-bottom">
+
+        <div class="control-row margin-larger-bottom">
+
             <select-input label="above" none.bind="false" value.bind="model.routeStop.type" display-value.bind="model.routeStop.type.name" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
