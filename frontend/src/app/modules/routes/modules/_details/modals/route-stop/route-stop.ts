@@ -76,7 +76,7 @@ export class RouteStopPanel
      * Called when the "Save" icon is clicked.
      * Saves changes and transitions the modal to its readonly mode.
      */
-    protected async onSaveClick(): Promise<void>
+    protected async onSaveClick(atIndex?: number): Promise<void>
     {
         try
         {
@@ -91,7 +91,8 @@ export class RouteStopPanel
 
             if (this.isNew)
             {
-                await this._routeService.addRouteStop(this.model.route, this.model.routeStop!, this.model.routeStop!.stopNumber - 1);
+                console.log(atIndex)
+                await this._routeService.addRouteStop(this.model.route, this.model.routeStop!, atIndex != null ? atIndex : this.model.routeStop!.stopNumber - 1);
             }
             else
             {

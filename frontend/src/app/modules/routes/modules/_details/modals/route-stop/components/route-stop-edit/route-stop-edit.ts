@@ -6,7 +6,7 @@ import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 export class RouteStopEditCustomElement
 {
     @bindable
-    public onSave: () => void;
+    public onSave: (atIndex?: number) => void;
 
     @bindable
     public onCancel: () => void;

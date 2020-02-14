@@ -16,7 +16,7 @@
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
             <span if.bind="model.isNew" translate>
-                New stop
+                Create stop between stop ${model.routeStop.stopNumber - 1} and ${model.routeStop.stopNumber}
             </span>
 
             <path-nav if.bind="!model.isNew">
@@ -301,15 +301,15 @@
 
     <div class="button-container margin-larger-top">
 
-        <button if.bind="model.isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
+        <button if.bind="model.isNew" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
             Create stop
         </button>
 
-        <button if.bind="!model.isNew" appearance="outline" accent="primary" click.delegate="onCancel()" translate>
+        <button if.bind="!model.isNew" appearance="outline" accent="primary" click.trigger="onCancel()" translate>
             Cancel edit
         </button>
 
-        <button if.bind="!model.isNew" appearance="solid" accent="primary" click.delegate="onSave()" translate>
+        <button if.bind="!model.isNew" appearance="solid" accent="primary" click.trigger="onSave()" translate>
             Save changes
         </button>
 
