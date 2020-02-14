@@ -205,6 +205,16 @@
                     Type any instructions that might help the driver
                 </span>
 
+                <custom-validator
+                    valid.bind="!model.routeStop.actions.instructionsAccept ||
+                                model.routeStop.actions.instructionsAccept && model.routeStop.driverInstructions != null">
+
+                    <template replace-part="invalid" translate>
+                        Please provide instructions for the driver.
+                    </template>
+
+                </custom-validator>
+
             </text-input>
 
         </div>
