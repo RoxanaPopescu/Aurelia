@@ -1,6 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStop, Route } from "app/model/route";
+import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 
 @autoinject
 export class RouteStopEditCustomElement
@@ -21,4 +21,9 @@ export class RouteStopEditCustomElement
      * The validation for the modal.
      */
     protected validation: IValidation;
+
+    /**
+     * The available statuses.
+     */
+    protected statuses = Object.keys(RouteStopStatus.values).map(slug => ({ slug, ...RouteStopStatus.values[slug] }));
 }
