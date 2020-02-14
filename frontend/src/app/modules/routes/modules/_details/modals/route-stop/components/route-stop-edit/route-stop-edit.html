@@ -32,9 +32,17 @@
 
     </modal-header>
 
-    <modal-section class="margin-bottom">
+    <modal-section>
 
         <div class="control-row margin-larger-bottom">
+
+            <text-input label="above" value.bind="model.routeStop.reference" class="flex-basis-1-of-2">
+
+                <span slot="heading" translate>
+                    Reference
+                </span>
+
+            </text-input>
 
             <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
 
@@ -60,7 +68,7 @@
 
     </modal-section>
 
-    <hr class="hr-line margin-bottom">
+    <hr class="hr-line margin-large-bottom">
 
     <modal-section class="margin-bottom">
 
