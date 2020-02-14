@@ -239,7 +239,7 @@
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.photo" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.photo" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Photo
@@ -247,7 +247,7 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.signature" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.signature" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Signature
@@ -259,15 +259,15 @@
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.scanColli" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.handoverVerification" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
-                    Scan colli
+                    Handover verification
                 </span>
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.verifyTimeframe" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Verify timeframe
@@ -279,15 +279,15 @@
 
         <div class="control-row">
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.customerCode" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.scanColli" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
-                    Customer code
+                    Scan colli
                 </span>
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.routeStop.requirements.acceptInstructions" class="flex-basis-1-of-2">
+            <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
 
                 <span slot="heading" translate>
                     Accept instruction
