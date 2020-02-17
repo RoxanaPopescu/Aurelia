@@ -5,12 +5,6 @@ import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 @autoinject
 export class RouteStopEditCustomElement
 {
-    @bindable
-    public onSave: (atIndex?: number) => void;
-
-    @bindable
-    public onCancel: () => void;
-
     /**
      * The model for the modal.
      */
@@ -26,4 +20,16 @@ export class RouteStopEditCustomElement
      * The available statuses.
      */
     protected statuses = Object.keys(RouteStopStatus.values).map(slug => ({ slug, ...RouteStopStatus.values[slug] }));
+
+    /**
+     * Called when the `Save` button is pressed.
+     */
+    @bindable
+    public onSave: (atIndex?: number) => void;
+
+    /**
+     * Called when the `Cancel` button is pressed.
+     */
+    @bindable
+    public onCancel: () => void;
 }

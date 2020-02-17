@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStopType, RouteStop, RouteService, Route } from "app/model/route";
 import { Log } from "shared/infrastructure";
+import { RouteStopType, RouteStop, RouteService, Route } from "app/model/route";
+import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
 @autoinject
 export class RouteStopPanel
@@ -9,13 +10,16 @@ export class RouteStopPanel
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param addressService The `AddressService` instance.
      */
-    public constructor(routeService: RouteService)
+    public constructor(routeService: RouteService, addressService: AddressService)
     {
         this._routeService = routeService;
+        this._addressService = addressService;
     }
 
     private readonly _routeService: RouteService;
+    private readonly _addressService: AddressService;
     private _result: RouteStop | undefined;
 
     /**
@@ -89,14 +93,26 @@ export class RouteStopPanel
                 return;
             }
 
+            try
+            {
+                // Resolve stop location.
+                this.model.routeStop.location = await this._addressService.getLocation(this.model.routeStop.location.address);
+            }
+            catch (error)
+            {
+                Log.error("Could not resolve address location.", error);
+
+                return;
+            }
+
             if (this.isNew)
             {
                 console.log(atIndex)
-                await this._routeService.addRouteStop(this.model.route, this.model.routeStop!, atIndex != null ? atIndex : this.model.routeStop!.stopNumber - 1);
+                await this._routeService.addRouteStop(this.model.route, this.model.routeStop, atIndex != null ? atIndex : this.model.routeStop.stopNumber - 1);
             }
             else
             {
-                await this._routeService.saveRouteStop(this.model.route, this.model.routeStop!);
+                await this._routeService.saveRouteStop(this.model.route, this.model.routeStop);
             }
 
             this._result = this.model.routeStop;
