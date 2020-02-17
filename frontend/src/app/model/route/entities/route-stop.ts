@@ -128,10 +128,12 @@ export class RouteStop extends RouteStopBase
     public toJSON(): any
     {
         return {
+            id: this.id,
+            reference: this.reference,
+            location: this.location,
             status: this.status,
             type: this.type,
             arrivalTimeFrame: this.arrivalTimeFrame,
-            location: this.location,
             outfit: this.outfit,
             port: this.port,
             driverInstructions: this.driverInstructions,

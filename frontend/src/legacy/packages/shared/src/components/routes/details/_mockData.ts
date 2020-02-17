@@ -313,7 +313,8 @@ export default {
     "id": "1bc49117-ddec-0038-fc9b-56c8ef996b1f",
     "licensePlate": "CW 55 798",
     "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
-    "makeAndModel": "Peugeout Boxer",
+    "make": "Peugeout",
+    "model": "Boxer",
     "color": "Hvis"
   },
   "driverOnline": true,

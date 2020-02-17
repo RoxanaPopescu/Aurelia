@@ -148,7 +148,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Type")}</div>
-          <div>{this.props.route.driverVehicle!.vehicleType.name}</div>
+          <div>{this.props.route.driverVehicle!.type.name}</div>
         </div>
 
         <div className="c-worldMap-popup-section-row">
