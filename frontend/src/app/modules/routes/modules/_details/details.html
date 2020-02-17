@@ -524,7 +524,7 @@
                             accent.bind="stop.status.accent"
                             click.call="onStopClick(stop, false)"
                             insert.call="onAddStopClick($index)"
-                            movable.bind="stop.status.slug == 'not-visited'"
+                            movable="true"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell>
@@ -580,11 +580,11 @@
 
                                 <div class="icon-row">
 
-                                    <button if.bind="!['completed', 'arrived'].includes(stop.status.slug)" appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
+                                    <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
                                         <icon name="edit-small"></icon>
                                     </button>
 
-                                    <button if.bind="['not-visited'].includes(stop.status.slug)" class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                    <button class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
                                         <icon name="delete-small"></icon>
                                     </button>
 
