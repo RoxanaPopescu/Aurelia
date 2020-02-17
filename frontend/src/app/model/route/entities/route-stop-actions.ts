@@ -16,7 +16,7 @@ export class RouteStopActions
         this.signature = data.signature;
         this.photo = data.photo;
         this.verificationCode = data.verificationCode;
-        this.handoverVerification = data.handoverVerification;
+        this.colliCountVerification = data.colliCountVerification;
     }
 
     /**
@@ -55,7 +55,7 @@ export class RouteStopActions
     public verificationCode: boolean;
 
     /**
-     * True if handover verification is required. This is usually colli verification without barcodes.
+     * True if verification colli count is required. This is usually colli verification without barcodes.
      */
-    public handoverVerification: boolean;
+    public colliCountVerification: boolean;
 }
