@@ -1,0 +1,18 @@
+<template>
+
+    <require from="./information.scss"></require>
+
+    <div class="information-container
+                ${position.toString()}">
+
+        <icon name="info-small"></icon>
+        <div class="information-window">
+
+            <div class="font-larger margin-smaller-bottom"><slot name="headline"></slot></div>
+            <div class="opacity-faded"><slot name="body"></slot></div>
+
+        </div>
+
+    </div>
+
+</template>
