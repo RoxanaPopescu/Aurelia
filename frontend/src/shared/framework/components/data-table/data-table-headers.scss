@@ -8,7 +8,7 @@ data-table-headers
     {
         position: sticky;
         top: 0;
-        z-index: 1;
+        z-index: 2;
         padding: var(--data-table-header-padding);
         border-bottom: var(--data-table-header-border-width) solid var(--data-table-header-border-color);
         background: var(--data-table-header-background);
