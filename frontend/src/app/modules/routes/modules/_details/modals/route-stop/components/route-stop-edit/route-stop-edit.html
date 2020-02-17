@@ -7,13 +7,6 @@
 
     <modal-header scroll-fade>
 
-        <div class="margin-bottom">
-
-            <span class="opacity-faded" translate>Route ID:</span>
-            ${model.route.id}
-
-        </div>
-
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
             <span if.bind="model.isNew" translate>
@@ -206,15 +199,14 @@
                     Type any instructions that might help the driver
                 </span>
 
-                <custom-validator
-                    valid.bind="!model.routeStop.actions.instructionsAccept ||
-                                model.routeStop.actions.instructionsAccept && model.routeStop.driverInstructions != null">
+                <span slot="validation">
 
-                    <template replace-part="invalid" translate>
-                        Please provide instructions for the driver.
-                    </template>
+                    <required-validator
+                        if.bind="model.routeStop.actions.instructionsAccept"
+                        value.bind="model.routeStop.driverInstructions">
+                    </required-validator>
 
-                </custom-validator>
+                </span>
 
             </text-input>
 
