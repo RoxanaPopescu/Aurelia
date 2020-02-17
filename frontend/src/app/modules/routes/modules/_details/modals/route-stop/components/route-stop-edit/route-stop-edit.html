@@ -1,18 +1,12 @@
 <template>
 
-    <require from="../order-accordion/order-accordion"></require>
+    <require from="app/components/address-input/address-input"></require>
     <require from="app/components/information/information"></require>
+    <require from="../order-accordion/order-accordion"></require>
 
     <require from="./route-stop-edit.scss"></require>
 
     <modal-header scroll-fade>
-
-        <div class="margin-bottom">
-
-            <span class="opacity-faded" translate>Route ID:</span>
-            ${model.route.id}
-
-        </div>
 
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
@@ -206,15 +200,14 @@
                     Type any instructions that might help the driver
                 </span>
 
-                <custom-validator
-                    valid.bind="!model.routeStop.actions.instructionsAccept ||
-                                model.routeStop.actions.instructionsAccept && model.routeStop.driverInstructions != null">
+                <span slot="validation">
 
-                    <template replace-part="invalid" translate>
-                        Please provide instructions for the driver.
-                    </template>
+                    <required-validator
+                        if.bind="model.routeStop.actions.instructionsAccept"
+                        value.bind="model.routeStop.driverInstructions">
+                    </required-validator>
 
-                </custom-validator>
+                </span>
 
             </text-input>
 
@@ -257,8 +250,8 @@
                     <span translate>Photo</span>
                     <information position="${'right'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 
@@ -273,8 +266,8 @@
                     <span translate>Signature</span>
                     <information position="${'left'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 
@@ -293,8 +286,8 @@
                     <span translate>Handover verification</span>
                     <information position="${'right'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 
@@ -309,8 +302,8 @@
                     <span translate>Verify timeframe</span>
                     <information position="${'left'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 
@@ -329,8 +322,8 @@
                     <span translate>Scan colli</span>
                     <information position="${'right'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 
@@ -345,8 +338,8 @@
                     <span translate>Accept instructions</span>
                     <information position="${'left'}">
 
-                        <span slot="headline">Hej</span>
-                        <span slot="body">dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Hej</span>
+                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
 
                     </information>
 

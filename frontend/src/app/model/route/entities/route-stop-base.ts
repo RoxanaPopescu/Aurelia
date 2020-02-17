@@ -55,7 +55,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * The address identifying the location of the stop.
      */
-    public readonly location: Location;
+    public location: Location;
 
     /**
      * The port to use at this stop.
