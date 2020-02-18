@@ -30,7 +30,7 @@
         <div class="input-control-inner">
 
             <div class="input-value user-select-contain">
-                ${value | number}
+                ${value | number: useGrouping}
             </div>
 
             <input
@@ -50,6 +50,7 @@
                 readonly.bind="readonly"
                 focus.trigger="onFocus()"
                 blur.trigger="onBlur()"
+                keydown.trigger="onKeyDown($event)"
                 placeholder=" ">
 
             <div class="input-placeholder">
