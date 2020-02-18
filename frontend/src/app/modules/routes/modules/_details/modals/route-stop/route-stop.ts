@@ -93,16 +93,19 @@ export class RouteStopPanel
                 return;
             }
 
-            try
+            if (this.model.routeStop.location.address.id != null && this.model.routeStop.location.position == null)
             {
-                // Resolve stop location.
-                this.model.routeStop.location = await this._addressService.getLocation(this.model.routeStop.location.address);
-            }
-            catch (error)
-            {
-                Log.error("Could not resolve address location.", error);
+                try
+                {
+                    // Resolve stop location.
+                    this.model.routeStop.location = await this._addressService.getLocation(this.model.routeStop.location.address);
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
 
-                return;
+                    return;
+                }
             }
 
             if (this.isNew)
