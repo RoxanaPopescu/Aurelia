@@ -312,6 +312,53 @@
 
     </template>
 
+    <!-- Actions -->
+    <template if.bind="model.routeStop.actions != null">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" translate>
+                Requirements
+            </div>
+
+            <div class="opacity-faded margin-bottom">
+                The following is required of the driver at this stop
+            </div>
+
+            <ul class="ul-disc">
+
+                <li if.bind="model.routeStop.actions.photo" translate>
+                    Photo
+                </li>
+
+                <li if.bind="model.routeStop.actions.signature" translate>
+                    Signature
+                </li>
+
+                <li if.bind="model.routeStop.actions.verificationCode" translate>
+                    Handover verification
+                </li>
+
+                <li if.bind="model.routeStop.actions.timeFrameVerification" translate>
+                    Verify timeframe
+                </li>
+
+                <li if.bind="model.routeStop.actions.scanColli" translate>
+                    Scan colli
+                </li>
+
+                <li if.bind="model.routeStop.actions.instructionsAccept" translate>
+                    Accept instructions
+                </li>
+
+            </ul>
+
+        </data-section>
+
+    </template>
+
     <!-- Driver verification -->
     <template if.bind="model.routeStop.selfies.length > 0">
 
