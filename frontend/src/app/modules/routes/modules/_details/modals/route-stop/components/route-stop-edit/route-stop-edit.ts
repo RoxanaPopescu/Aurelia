@@ -1,6 +1,7 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { RouteStop, Route, RouteStopStatus } from "app/model/route";
+import { RouteStopType } from '../../../../../../../../model/route/entities/route-stop-type';
 
 @autoinject
 export class RouteStopEditCustomElement
@@ -20,6 +21,11 @@ export class RouteStopEditCustomElement
      * The available statuses.
      */
     protected statuses = Object.keys(RouteStopStatus.values).map(slug => ({ slug, ...RouteStopStatus.values[slug] }));
+
+    /**
+     * The available stop types.
+     */
+    protected types = Object.keys(RouteStopType.values).map(slug => ({ slug, ...RouteStopType.values[slug] }));
 
     /**
      * Called when the `Save` button is pressed.

@@ -45,7 +45,7 @@
                     Status
                 </span>
 
-                <item repeat.for="status of statuses" model.routeStop.bind="status">
+                <item repeat.for="status of statuses" model.bind="status">
                     ${status.name}
                 </item>
 
@@ -75,7 +75,7 @@
                     Type
                 </span>
 
-                <item repeat.for="type of types" model.routeStop.bind="type">
+                <item repeat.for="type of types" model.bind="type">
                     ${type.name}
                 </item>
 
