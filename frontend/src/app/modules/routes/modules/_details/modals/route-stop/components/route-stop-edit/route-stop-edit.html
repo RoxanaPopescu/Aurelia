@@ -321,7 +321,7 @@
 
         </div>
 
-        <div class="control-row">
+        <div class="control-row margin-large-bottom">
 
             <check-toggle label="after" value.bind="model.routeStop.actions.scanColli" class="flex-basis-1-of-2">
 
@@ -359,12 +359,16 @@
 
             </check-toggle>
 
+        </div>
+
+        <div class="control-row">
+
             <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
 
                 <span slot="heading">
 
                     <span translate>Accept of instructions</span>
-                    <information position="${'left'}">
+                    <information position="${'right'}">
 
                         <span slot="headline" translate>Accept of instructions</span>
                         <span slot="body" translate>
