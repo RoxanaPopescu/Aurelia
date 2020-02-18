@@ -250,8 +250,10 @@
                     <span translate>Photo</span>
                     <information position="${'right'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Photo of delivery</span>
+                        <span slot="body" translate>
+                            Requiring the driver to take a picture of the delivery at the stop helps documenting the action.
+                        </span>
 
                     </information>
 
@@ -266,8 +268,10 @@
                     <span translate>Signature</span>
                     <information position="${'left'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Signature verification</span>
+                        <span slot="body" translate>
+                            Requiring the driver to get a signature from the consignee at the stop helps documenting the action.
+                        </span>
 
                     </information>
 
@@ -286,8 +290,10 @@
                     <span translate>Handover verification</span>
                     <information position="${'right'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Colli count verification</span>
+                        <span slot="body" translate>
+                            For the validation of colli without barcodes, you can require the driver to verify the colli count on the stop. This feature works best alongside "Signature Verification"
+                        </span>
 
                     </information>
 
@@ -302,8 +308,10 @@
                     <span translate>Verify timeframe</span>
                     <information position="${'left'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Timeframe verification</span>
+                        <span slot="body" translate>
+                            If the system determines that the driver will be late on the stop, we will make the driver extra aware on the situation.
+                        </span>
 
                     </information>
 
@@ -322,8 +330,10 @@
                     <span translate>Scan colli</span>
                     <information position="${'right'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Driver scan of colli</span>
+                        <span slot="body" translate>
+                            The driver has to scan colli on the stop, if they have barcodes.
+                        </span>
 
                     </information>
 
@@ -335,11 +345,31 @@
 
                 <span slot="heading">
 
-                    <span translate>Accept instructions</span>
+                    <span translate>Driver scan of all colli required</span>
                     <information position="${'left'}">
 
-                        <span slot="headline" translate>Hej</span>
-                        <span slot="body" translate>dspgj ggjs gjsgjds jgdsjg dsjgds jgjgødjsøgjsøgj øgjøgjsøgj dsgj djøgdsgøpdjsgøp  jdjg</span>
+                        <span slot="headline" translate>Driver scan of all colli required</span>
+                        <span slot="body" translate>
+                            The driver cannot complete the stop without scanning all the colli with barcodes.
+                        </span>
+
+                    </information>
+
+                </span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
+
+                <span slot="heading">
+
+                    <span translate>Accept of instructions</span>
+                    <information position="${'left'}">
+
+                        <span slot="headline" translate>Accept of instructions</span>
+                        <span slot="body" translate>
+                            To ensure that the driver has read the instructions, it will be shown to him on arrival.
+                        </span>
 
                     </information>
 
