@@ -43,11 +43,6 @@ export abstract class RouteStopBase extends RouteStopInfo
     }
 
     /**
-     * The ID of the route stop.
-     */
-    public readonly id: string;
-
-    /**
      * The status of this route stop.
      */
     public status: RouteStopStatus;

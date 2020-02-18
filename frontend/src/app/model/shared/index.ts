@@ -10,4 +10,5 @@ export * from "./entities/sort-direction";
 export * from "./entities/time-of-week";
 export * from "./entities/time-of-week-range";
 export * from "./entities/weight-range";
+export * from "./entities/dimensions";
 export * from "./types/day-of-week";

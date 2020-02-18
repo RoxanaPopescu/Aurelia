@@ -135,7 +135,8 @@ const driverRoutes =
             "id": 1332,
             "licensePlate": "CW62525",
             "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
-            "makeAndModel": "Mike Model",
+            "make": "Mike",
+            "model": "Model",
             "color": "Sort"
         },
         "driverOnline": false,
