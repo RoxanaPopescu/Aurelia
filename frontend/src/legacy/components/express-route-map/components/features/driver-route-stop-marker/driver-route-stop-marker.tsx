@@ -194,7 +194,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                         </div>
                     )}
 
-                    {this.props.routeStop.loadingTime && (
+                    {this.props.routeStop.taskTime && (
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
@@ -202,7 +202,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                                 )}
                             </div>
                             <div>
-                                {Localization.formatDuration(this.props.routeStop.loadingTime)}
+                                {Localization.formatDuration(this.props.routeStop.taskTime)}
                             </div>
                         </div>
                     )}

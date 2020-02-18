@@ -199,9 +199,9 @@ export class RouteOverview
             this.route.stops
                 .filter(s => s instanceof RouteStop)
                 .forEach((s: RouteStop) => {
-                    if (s.status.slug === "completed")
+                    if (s.status.slug === "completed" && s.taskTime != null)
                     {
-                        totalLoadingDuration.plus(s.loadingTime);
+                        totalLoadingDuration.plus(s.taskTime);
                     }
                 });
         }
