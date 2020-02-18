@@ -196,7 +196,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                         </div>
                     )}
 
-                    {this.props.routeStop.loadingTime && (
+                    {this.props.routeStop.taskTime && (
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
@@ -204,7 +204,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                                 )}
                             </div>
                             <div>
-                                {Localization.formatDuration(this.props.routeStop.loadingTime)}
+                                {Localization.formatDuration(this.props.routeStop.taskTime)}
                             </div>
                         </div>
                     )}

@@ -35,9 +35,13 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
             }
 
-            if (data.loadingTime != null)
+            if (data.taskTime != null)
             {
-                this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+                this.taskTime = Duration.fromObject({ seconds: data.taskTime });
+            }
+
+            if (data.waitingTime) {
+                this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
             }
         }
     }
@@ -71,7 +75,13 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The time spent loading and unloading at the stop.
      * If the stop is not yet completed, this will be an estimate.
      */
-    public readonly loadingTime: Duration;
+    public readonly taskTime?: Duration;
+
+    /**
+     * The time the driver waited before he could start the taskTime
+     * If the stop is not yet completed, this will be an estimate.
+     */
+    public readonly waitingTime?: Duration;
 
     /**
      * The timeframe within which the driver must arrive.
