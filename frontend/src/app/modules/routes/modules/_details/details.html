@@ -459,7 +459,7 @@
                     move.call="onMoveStop(source, target)"
                     class="${!showMap ? '--reduce-header-whitespace' : ''}"
                     element.ref="dataTableElement"
-                    append.call="onAddStopClick()">
+                    append.call="route != null ? onAddStopClick() : undefined">
 
                     <data-table-headers>
 
