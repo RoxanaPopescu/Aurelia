@@ -50,7 +50,7 @@ export class VehicleService
      * @param driverId The ID of the driver whose vehicles should be returned.
      * @returns A promise that will be resolved with the vehicles.
      */
-    public async getAll(driverId: string): Promise<Vehicle>
+    public async getAllFromDriver(driverId: string): Promise<Vehicle>
     {
         const result = await this._apiClient.get("drivers/vehicles",
         {
@@ -58,6 +58,20 @@ export class VehicleService
         });
 
         return new Vehicle(result.data);
+    }
+
+    /**
+     * Gets all vehicles associated with the specified fulfiller.
+     * @returns A promise that will be resolved with the vehicles.
+     */
+    public async getAll(signal?: AbortSignal): Promise<Vehicle[]>
+    {
+        const result = await this._apiClient.post("vehicles/list",
+        {
+            signal
+        });
+
+        return result.data.results.map(vehicle => new Vehicle(vehicle));
     }
 
     /**

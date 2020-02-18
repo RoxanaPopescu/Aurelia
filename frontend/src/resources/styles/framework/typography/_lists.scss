@@ -14,7 +14,7 @@ $__summary: comment;
 /// If inside a content context, text margin is applied.
 ul.ul-disc
 {
-    padding-left: calc(2 * var(--size-indent-spacing));
+    padding-left: var(--size-indent-spacing);
     list-style: disc outside;
 
     .margin-within &
