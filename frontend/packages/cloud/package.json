@@ -14,9 +14,9 @@
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
-    "build": "cross-env rimraf 'artifacts/build' && cpx '../../artifacts/build/**' 'artifacts/build/client' && tsc",
-    "start": "cross-env node 'artifacts/build/server/index'",
-    "lint": "cross-env tslint --project 'tsconfig.json'"
+    "build": "cross-env rimraf \"artifacts/build\" && cpx \"../../artifacts/build/**\" \"artifacts/build/client\" && tsc",
+    "start": "cross-env node \"artifacts/build/server/index\"",
+    "lint": "cross-env tslint --project \"tsconfig.json\""
   },
   "dependencies": {
     "chalk": "^3.0.0",

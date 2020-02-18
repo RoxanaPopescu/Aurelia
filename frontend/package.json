@@ -19,13 +19,13 @@
     "not dead"
   ],
   "scripts": {
-    "develop": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/develop'",
-    "clean": "cross-env rimraf 'artifacts/build'",
-    "build": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/build'",
-    "lint": "cross-env tslint --project 'tsconfig.json' && stylelint 'src/**/*.css' 'src/**/*.scss' --config '../stylelint.json'",
-    "translate-export": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-export'",
-    "translate-pseudo": "cross-env ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-pseudo'",
-    "translate": "cross-env npm run translate-export && ts-node --project 'tools/tsconfig.json' 'tools/scripts/translate-da'",
+    "develop": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/develop\"",
+    "clean": "cross-env rimraf \"artifacts/build\"",
+    "build": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/build\"",
+    "lint": "cross-env tslint --project \"tsconfig.json\" && stylelint \"src/**/*.css\" \"src/**/*.scss\" --config \"../stylelint.json\"",
+    "translate-export": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export\"",
+    "translate-pseudo": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
+    "translate": "cross-env npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-da\"",
     "postinstall": "patch-package"
   },
   "dependencies": {

@@ -16,10 +16,10 @@
   "main": "artifacts/build/index.js",
   "scripts": {
     "postinstall": "cross-env electron-builder install-app-deps",
-    "build": "cross-env rimraf 'artifacts/{build,client}' && cpx '../../artifacts/build/**' 'artifacts/build/client' && tsc",
-    "start": "cross-env electron 'artifacts/build/' --debug",
-    "lint": "cross-env tslint --project 'tsconfig.json'",
-    "release": "cross-env rimraf 'artifacts/release' && electron-builder --config 'tools/release.yml'"
+    "build": "cross-env rimraf \"artifacts/{build,client}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/client\" && tsc",
+    "start": "cross-env electron \"artifacts/build/\" --debug",
+    "lint": "cross-env tslint --project \"tsconfig.json\"",
+    "release": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\""
   },
   "dependencies": {},
   "peerDependencies": {},
