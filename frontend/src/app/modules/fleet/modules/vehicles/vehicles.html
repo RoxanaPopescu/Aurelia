@@ -1,0 +1,105 @@
+<template>
+
+    <require from="./vehicles.scss"></require>
+
+    <page name="vehicles">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Vehicles
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button if-claims="invite-vehicle" appearance="solid" page-href="path: /fleet-management/vehicles/create" translate>
+                        Add vehicle
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="id" translate>
+                            Id
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="type" translate>
+                            Type
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="make" translate>
+                            Make
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="model" translate>
+                            Brand
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="vehicle of vehicles">
+
+                        <data-table-row
+                            href="/fleet-management/vehicles/edit/${vehicle.id}">
+
+                            <data-table-cell>
+                                ${vehicle.id}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${vehicle.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${vehicle.type}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${driver.make}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${driver.model}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="vehicles == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="vehicles.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

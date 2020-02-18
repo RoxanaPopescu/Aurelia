@@ -66,6 +66,22 @@ export class FleetModule
                 title: routeTitles.create
             },
             {
+                name: "list-vehicles",
+                route: "vehicles",
+                moduleId: PLATFORM.moduleName("./modules/vehicles/vehicles"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-vehicles"
+                    ]
+                },
+                title: routeTitles.vehicleList,
+                nav: false,
+                href: "/fleet-management/vehicles",
+                icon: "fleet"
+            },
+            {
                 name: "dispatch-default",
                 route: "dispatch",
                 redirect: "dispatch/forecasts"
