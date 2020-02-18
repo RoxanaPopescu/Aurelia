@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService } from "shared/framework";
 import { Vehicle, VehicleService } from "app/model/vehicle";
+import { VehiclePanel } from "./modals/vehicle/vehicle";
 
 /**
  * Represents the page.
@@ -12,14 +13,17 @@ export class ListPage
     /**
      * Creates a new instance of the class.
      * @param vehicleService The `VehicleService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(vehicleService: VehicleService)
+    public constructor(vehicleService: VehicleService, modalService: ModalService)
     {
         this._vehicleService = vehicleService;
+        this._modalService = modalService;
         this._constructed = true;
     }
 
     private readonly _vehicleService: VehicleService;
+    private readonly _modalService: ModalService;
     private readonly _constructed;
 
     /**
@@ -45,9 +49,8 @@ export class ListPage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(): Promise<void>
+    public activate(): void
     {
         this.update();
     }
@@ -68,7 +71,7 @@ export class ListPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected update(): void
     {
         // Return if the object is not constructed.
         // This is needed because the `observable` decorator calls the change handler when the
@@ -96,5 +99,29 @@ export class ListPage
             // Scroll to top.
             this.scroll.reset();
         });
+    }
+
+    /**
+     * Called when a vehicle is clicked.
+     * Opens a modal for editing the vehicle.
+     * @param vehicle The vehicle to edit.
+     */
+    protected async onVehicleClick(vehicle: Vehicle): Promise<void>
+    {
+        await this._modalService.open(VehiclePanel, vehicle).promise;
+    }
+
+    /**
+     * Called when the `Add vehicle` button is clicked.
+     * Opens a modal for creating a vehicle.
+     */
+    protected async onAddVehicleClick(): Promise<void>
+    {
+        const vehicle = await this._modalService.open(VehiclePanel).promise;
+
+        if (vehicle != null)
+        {
+            this.vehicles.push(vehicle);
+        }
     }
 }

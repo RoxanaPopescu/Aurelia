@@ -1,0 +1,309 @@
+<template>
+
+    <require from="./vehicle.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="vehicle" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest">
+
+                <template if.bind="vehicle.id != null" translate>
+                    Vehicle
+                </template>
+
+                <template if.bind="vehicle.id == null" translate>
+                    New vehicle
+                </template>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-larger-bottom">
+
+            <div class="control-row">
+
+                <text-input label="above" value.bind="vehicle.name" class="flex-basis-1-of-1">
+
+                    <span slot="heading" translate>
+                        Name
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.name">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-larger-bottom">
+
+            <div slot="header" translate>
+                Vehicle information
+            </div>
+
+            <div class="control-row margin-larger-bottom">
+
+                <select-input label="above" none.bind="false" value.bind="vehicle.type" display-value.bind="vehicle.type.name" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Type
+                    </span>
+
+                    <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                        ${vehicleType.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.type">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <text-input label="above" value.bind="vehicle.brand" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Make
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.brand">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-larger-bottom">
+
+                <text-input label="above" value.bind="vehicle.model" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Model
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.model">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+                <number-input label="above" value.bind="vehicle.productionYear" min.bind="0" use-grouping.bind="false" constrain.bind="true" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Production year
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.productionYear">
+                        </required-validator>
+
+                        <length-validator
+                            value.bind="vehicle.productionYear"
+                            min.bind="4"
+                            max.bind="4">
+                        </length-validator>
+
+                    </div>
+
+                </number-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <text-input label="above" value.bind="vehicle.licensePlate" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Registration number
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.licensePlate">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="vehicle.color" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Color
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.color">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-larger-bottom">
+
+            <div slot="header" translate>
+                Weight and inner dimensions
+            </div>
+
+            <div class="control-row margin-larger-bottom">
+
+                <number-input label="above" value.bind="vehicle.internalDimensions.height" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
+
+                    <span slot="heading" translate>
+                        Height
+                    </span>
+
+                    <span slot="after" class="opacity-faded">
+                        cm
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.height">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="vehicle.internalDimensions.height"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+                <number-input label="above" value.bind="vehicle.internalDimensions.width" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
+
+                    <span slot="heading" translate>
+                        Width
+                    </span>
+
+                    <span slot="after" class="opacity-faded">
+                        cm
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.width">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="vehicle.internalDimensions.width"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+                <number-input label="above" value.bind="vehicle.internalDimensions.length" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
+
+                    <span slot="heading" translate>
+                        length
+                    </span>
+
+                    <span slot="after" class="opacity-faded">
+                        cm
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.length">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="vehicle.internalDimensions.length"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <number-input label="above" value.bind="vehicle.allowedTotalWeight" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
+
+                    <span slot="heading" translate>
+                        Max total weight
+                    </span>
+
+                    <span slot="after" class="opacity-faded">
+                        kg
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.allowedTotalWeight">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="vehicle.allowedTotalWeight"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+                <div class="flex-basis-1-of-3"></div>
+
+                <div class="flex-basis-1-of-3"></div>
+
+            </div>
+
+        </modal-section>
+
+        <button if.bind="vehicle.id == null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
+            Create vehicle
+        </button>
+
+        <button if.bind="vehicle.id != null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
+            Save changes
+        </button>
+
+    </modal-panel>
+
+</template>
