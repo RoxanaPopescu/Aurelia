@@ -93,7 +93,7 @@ export class RouteStopPanel
                 return;
             }
 
-            if (this.model.routeStop.location.address.id != null && this.model.routeStop.location.position == null)
+            if (this.model.routeStop.location.address.id != null)
             {
                 try
                 {
