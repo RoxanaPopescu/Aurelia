@@ -524,7 +524,7 @@
                             accent.bind="stop.status.accent"
                             click.call="onStopClick(stop, false)"
                             insert.call="onAddStopClick($index)"
-                            movable="true"
+                            movable="${true}"
                             class="${stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell>
