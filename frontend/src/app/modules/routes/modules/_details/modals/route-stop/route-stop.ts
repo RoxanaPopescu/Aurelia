@@ -3,6 +3,7 @@ import { IValidation } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { RouteStopType, RouteStop, RouteService, Route } from "app/model/route";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
+import { Modal } from '../../../../../../../shared/framework/services/modal/modal';
 
 @autoinject
 export class RouteStopPanel
@@ -12,15 +13,17 @@ export class RouteStopPanel
      * @param routeService The `RouteService` instance.
      * @param addressService The `AddressService` instance.
      */
-    public constructor(routeService: RouteService, addressService: AddressService)
+    public constructor(routeService: RouteService, addressService: AddressService, modal: Modal)
     {
         this._routeService = routeService;
         this._addressService = addressService;
+        this._modal = modal;
     }
 
     private readonly _routeService: RouteService;
     private readonly _addressService: AddressService;
     private _result: RouteStop | undefined;
+    private _modal: Modal;
 
     /**
      * True if the model represents a new stop, otherwise false.
@@ -82,6 +85,7 @@ export class RouteStopPanel
      */
     protected async onSaveClick(atIndex?: number): Promise<void>
     {
+        this._modal.busy = true;
         try
         {
             // Activate validation so any further changes will be validated immediately.
@@ -110,7 +114,6 @@ export class RouteStopPanel
 
             if (this.isNew)
             {
-                console.log(atIndex)
                 await this._routeService.addRouteStop(this.model.route, this.model.routeStop, atIndex != null ? atIndex : this.model.routeStop.stopNumber - 1);
             }
             else
@@ -125,5 +128,6 @@ export class RouteStopPanel
         {
             Log.error("Could not save the route stop", error);
         }
+        this._modal.busy = false;
     }
 }

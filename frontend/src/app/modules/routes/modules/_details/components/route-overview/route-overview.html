@@ -120,7 +120,7 @@
                         ${routeDuration | duration: 'narrow'}
                     </div>
 
-                    <div class="font-small" translate>
+                    <div class="font-small">
                         &nbsp;
                     </div>
 
@@ -177,7 +177,7 @@
 
                     </div>
 
-                    <div class="font-small" translate>
+                    <div class="font-small">
                         &nbsp;
                     </div>
 
@@ -196,9 +196,9 @@
                         <span class="font-largest">- -</span>
                     </div>
 
-                    <div class="font-small" translate>
+                    <div class="font-small">
                         <span if.bind="route.overallRating != null">&nbsp;</span>
-                        <a if.bind="route.overallRating == null" class="font-small">Rate the route</a>
+                        <a if.bind="route.overallRating == null" class="font-small" translate>Rate the route</a>
                     </div>
 
                 </div>
@@ -212,7 +212,7 @@
                     <div if.bind="route.criticality != null">${route.criticality.name}</div>
                     <div class="font-largest" if.bind="route.criticality == null">- -</div>
 
-                    <div class="font-small" translate>
+                    <div class="font-small">
                         &nbsp;
                     </div>
 

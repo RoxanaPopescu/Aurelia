@@ -10,8 +10,20 @@
 
         <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
-            <span if.bind="model.isNew" translate>
-                Create a stop between stop ${model.routeStop.stopNumber - 1} and ${model.routeStop.stopNumber}
+            <span if.bind="model.isNew">
+
+                <span if.bind="model.routeStop.stopNumber !== model.route.stops.length && model.routeStop.stopNumber !== 1" translate>
+                    Create a stop between stop ${model.routeStop.stopNumber - 1} and ${model.routeStop.stopNumber}
+                </span>
+
+                <span if.bind="model.routeStop.stopNumber === model.route.stops.length" translate>
+                    Create a stop between stop at the end of the route
+                </span>
+
+                <span if.bind="model.routeStop.stopNumber === 1" translate>
+                    Create a stop between stop at the start of the route
+                </span>
+
             </span>
 
             <path-nav if.bind="!model.isNew">
