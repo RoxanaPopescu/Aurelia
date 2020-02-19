@@ -15,6 +15,16 @@ export class Route extends AbstractRoute<RouteStop>
      */
     public constructor(data: any)
     {
+        // FIXME: REMOVE HACK
+        var index = 0;
+        for (let stop of data.stops) {
+            if (index > 1) {
+                stop.hidden = true;
+            }
+
+            index++;
+        }
+
         const stops = data.stops
             .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new RouteStop(s, i + 1));
 
@@ -77,7 +87,7 @@ export class Route extends AbstractRoute<RouteStop>
      */
     public get totalColliCount(): number
     {
-        return (this.stops as RouteStop[])
+        return this.accessibleStops
             .filter(s => s.status.slug !== "cancelled")
             .reduce((total, s) => total + s.pickups.reduce((t, d) => t + d.colli.length, 0), 0);
     }

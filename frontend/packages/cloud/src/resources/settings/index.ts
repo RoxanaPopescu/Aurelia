@@ -43,6 +43,7 @@ export default
     [
         { hostname: /(^|\.)movertransport.com$/, localeCode: "da", currencyCode: "DKK", themeSlug: "mover" },
         { hostname: /(^|\.)cooplogistikonline\.dk$/, localeCode: "da", currencyCode: "DKK", themeSlug: "coop" },
+        { hostname: /(^|\.)logistics.ikea.com$/, localeCode: "da", currencyCode: "DKK", themeSlug: "ikea" },
         { hostname: /./, localeCode: "da", currencyCode: "DKK", themeSlug: "mover" }
     ]
 };
