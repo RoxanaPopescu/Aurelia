@@ -59,11 +59,15 @@
                     </div>
 
                     <div class="margin-bottom">
-                        ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false || '--'}
+                        ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
                     <div if.bind="!model.routeStop.arrivalTime && model.routeStop.estimates.arrivalTime">
-                        ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false || '--'}
+                        ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false}
+                    </div>
+
+                    <div if.bind="!model.routeStop.arrivalTime && !model.routeStop.estimates.arrivalTime">
+                        --
                     </div>
 
                 </div>
@@ -94,12 +98,20 @@
                         ${model.routeStop.type.name}
                     </div>
 
-                    <div class="margin-bottom">
+                    <div if.bind="model.routeStop.estimates.taskTime" class="margin-bottom">
+                        ${model.routeStop.estimates.taskTime | duration: 'narrow'}
+                    </div>
+
+                    <div if.bind="!model.routeStop.estimates.taskTime" class="margin-bottom">
+                        --
+                    </div>
+
+                    <div if.bind="model.routeStop.taskTime">
                         ${model.routeStop.taskTime | duration: 'narrow' || '--'}
                     </div>
 
-                    <div>
-                        ${model.routeStop.estimates.taskTime | duration: 'narrow' || '--'}
+                    <div if.bind="!model.routeStop.taskTime">
+                        --
                     </div>
 
                 </div>
