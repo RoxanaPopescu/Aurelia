@@ -42,8 +42,12 @@
                         Planned arrival
                     </div>
 
-                    <div class="opacity-faded" translate>
+                    <div if.bind="model.routeStop.arrivalTime" class="opacity-faded" translate>
                         Actual arrival
+                    </div>
+
+                    <div if.bind="!model.routeStop.arrivalTime && model.routeStop.estimates.arrivalTime" class="opacity-faded" translate>
+                        Estimated arrival
                     </div>
 
                 </div>
@@ -51,15 +55,15 @@
                 <div>
 
                     <div class="margin-bottom" empty>
-                        ${model.routeStop.reference}
+                        ${model.routeStop.reference || '--'}
                     </div>
 
                     <div class="margin-bottom">
-                        ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                        ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false || '--'}
                     </div>
 
-                    <div>
-                        ${model.routeStop.arrivalTime | dateTime: 'narrow' : false}
+                    <div if.bind="!model.routeStop.arrivalTime && model.routeStop.estimates.arrivalTime">
+                        ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false || '--'}
                     </div>
 
                 </div>
@@ -91,11 +95,11 @@
                     </div>
 
                     <div class="margin-bottom">
-                        ${model.routeStop.taskTime | duration: 'narrow'}
+                        ${model.routeStop.taskTime | duration: 'narrow' || '--'}
                     </div>
 
                     <div>
-                        ${model.routeStop.taskTime | duration: 'narrow'}
+                        ${model.routeStop.estimates.taskTime | duration: 'narrow' || '--'}
                     </div>
 
                 </div>

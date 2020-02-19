@@ -560,7 +560,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${stop.arrivalTime | time: 'narrow' : false}
+                                    ${stop.arrivalTime | time: 'narrow' : false || stop.estimates.arrivalTime | time: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
@@ -572,7 +572,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${stop.taskTime | duration: 'narrow'}
+                                    ${stop.taskTime | duration: 'narrow' || stop.estimates.taskTime | duration: 'narrow'}
                                 </span>
                             </data-table-cell>
 

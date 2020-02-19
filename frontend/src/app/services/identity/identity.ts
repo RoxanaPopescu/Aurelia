@@ -66,4 +66,8 @@ export class Identity
      * The the tokens to use when accessing the API.
      */
     public readonly tokens: { refresh: string; access: string };
+
+    public hasClaim( claim: string ): boolean {
+        return false;
+    }
 }
