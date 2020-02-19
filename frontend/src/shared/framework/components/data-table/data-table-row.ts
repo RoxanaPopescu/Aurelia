@@ -224,7 +224,7 @@ export class DataTableRowCustomElement
      */
     protected onMouseDown(event: MouseEvent): void
     {
-        if (!event.defaultPrevented && this.model != null && this.dataTable.move != null)
+        if (!event.defaultPrevented && this.model != null && this.dataTable.move != null && this.movable)
         {
             document.addEventListener("mouseup", this.onMouseUpAnywhere, { capture: true });
 
