@@ -47,10 +47,6 @@ export class RouteStopType
         "return":
         {
             name: "Return"
-        },
-        "unknown":
-        {
-            name: "Unknown"
         }
     };
 }
