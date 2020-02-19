@@ -8,6 +8,7 @@ import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -30,13 +31,15 @@ export class DetailsModule
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
      * @param modalService The `ModalService` instance.
+     * @param modalService The `IdentityService` instance.
      * @param router The `Router` instance.
      */
-    public constructor(routeService: RouteService, modalService: ModalService, router: Router)
+    public constructor(routeService: RouteService, modalService: ModalService, identityService: IdentityService, router: Router)
     {
         this._routeService = routeService;
         this._modalService = modalService;
         this._router = router;
+        this.editable = identityService.identity?.hasClaim("edit-routes") ?? false;
     }
 
     private _isMovingStop = false;
@@ -55,6 +58,11 @@ export class DetailsModule
      * The data table element.
      */
     protected dataTableElement: HTMLElement;
+
+    /**
+     * True to show the map, otherwise false.
+     */
+    protected editable = false;
 
     /**
      * True to show the map, otherwise false.
@@ -222,6 +230,8 @@ export class DetailsModule
      */
     protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
+
+        console.log(source);
         const sourceIndex = this.route!.stops.indexOf(source);
         this._targetIndex = this.route!.stops.indexOf(target);
 

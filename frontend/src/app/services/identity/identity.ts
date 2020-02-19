@@ -66,4 +66,19 @@ export class Identity
      * The the tokens to use when accessing the API.
      */
     public readonly tokens: { refresh: string; access: string };
+
+    /**
+     * Determines whether the user has the specific claim.
+     * @param claim The specific claim.
+     * @returns True if claim exist, otherwise false.
+     */
+    public hasClaim( claim: string ): boolean {
+        for(let _claim of this.claims.values()){
+            if (_claim === claim) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

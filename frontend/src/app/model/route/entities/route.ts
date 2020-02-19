@@ -15,15 +15,6 @@ export class Route extends AbstractRoute<RouteStop>
      */
     public constructor(data: any)
     {
-        // FIXME: REMOVE HACK
-        var index = 0;
-        for (let stop of data.stops) {
-            if (index > 1) {
-                stop.hidden = true;
-            }
-
-            index++;
-        }
 
         const stops = data.stops
             .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new RouteStop(s, i + 1));

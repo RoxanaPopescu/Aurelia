@@ -4,7 +4,7 @@
         <path id="prefix__c" d="M0.543 0.262L42.306 0.262 42.306 26 0.543 26z"/>
         <path id="prefix__e" d="M0.33 0.259L29.61 0.259 29.61 25.773 0.33 25.773z"/>
     </defs>
-    <g fill="none" fill-rule="evenodd">
+    <g fill="none" fill-rule="evenodd" transform="translate(74, 13) scale(0.9) translate(-81, -13)">
         <g transform="translate(0 -1) translate(0 .741)">
             <mask id="prefix__b" fill="#fff">
                 <use xlink:href="#prefix__a"/>

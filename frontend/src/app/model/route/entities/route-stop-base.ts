@@ -4,6 +4,7 @@ import { Location } from "app/model/shared";
 import { Outfit } from "app/model/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopInfo } from "./route-stop-info";
+import { RouteEstimates } from "./route-estimates";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -22,6 +23,7 @@ export abstract class RouteStopBase extends RouteStopInfo
         {
             this.port = data.port;
             this.driverInstructions = data.driverInstructions;
+
             this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
             this.isDelayed = data.isDelayed;
 
@@ -30,9 +32,19 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.outfit = new Outfit(data.outfit);
             }
 
+            if (data.estimates != null)
+            {
+                this.estimates = new RouteEstimates(data.estimates);
+            }
+
             if (data.arrivalTime != null)
             {
                 this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
+            }
+
+            if (data.completionTime != null)
+            {
+                this.completionTime = DateTime.fromISO(data.completionTime, { setZone: true });
             }
 
             if (data.taskTime != null)
@@ -62,6 +74,11 @@ export abstract class RouteStopBase extends RouteStopInfo
     public location: Location;
 
     /**
+     * The estimates for this stop.
+     */
+    public estimates?: RouteEstimates;
+
+    /**
      * The port to use at this stop.
      */
     public readonly port?: string;
@@ -79,7 +96,6 @@ export abstract class RouteStopBase extends RouteStopInfo
 
     /**
      * The time the driver waited before he could start the taskTime
-     * If the stop is not yet completed, this will be an estimate.
      */
     public readonly waitingTime?: Duration;
 
@@ -89,11 +105,14 @@ export abstract class RouteStopBase extends RouteStopInfo
     public readonly arrivalTimeFrame: DateTimeRange;
 
     /**
-     * The date and time at which the driver arrives.
-     * If the stop is not yet completed, this will be an estimate.
-     * If the route is not yet accepted, this will be undefined.
+     * The date and time at which the driver arrived.
      */
     public arrivalTime?: DateTime;
+
+    /**
+     * The date and time at which the stop was complated.
+     */
+    public completionTime?: DateTime;
 
     /**
      * True if there is a delay at this stop, and the delay excedes
