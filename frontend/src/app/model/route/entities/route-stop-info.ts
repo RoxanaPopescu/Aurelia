@@ -16,6 +16,7 @@ export class RouteStopInfo
     {
         if (data != null)
         {
+            this.hidden = data.hidden;
             this.id = data.id;
             this.type = new RouteStopType(data.type);
             this.status = new RouteStopStatus(data.status);
@@ -59,4 +60,10 @@ export class RouteStopInfo
      * where only the position is provided.
      */
     public readonly location: Location;
+
+    /**
+     * Some users are not allwoed to see all stops on a route since
+     * a route can be combined from multiple customers
+     */
+    public hidden: boolean;
 }

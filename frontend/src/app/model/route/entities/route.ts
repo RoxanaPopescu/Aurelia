@@ -15,9 +15,8 @@ export class Route extends AbstractRoute<RouteStop>
      */
     public constructor(data: any)
     {
-
         const stops = data.stops
-            .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new RouteStop(s, i + 1));
+            .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i + 1) : new RouteStop(s, i + 1));
 
         super(data, stops);
 
