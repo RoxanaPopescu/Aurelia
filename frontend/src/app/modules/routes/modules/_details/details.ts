@@ -230,6 +230,8 @@ export class DetailsModule
      */
     protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
+
+        console.log(source);
         const sourceIndex = this.route!.stops.indexOf(source);
         this._targetIndex = this.route!.stops.indexOf(target);
 

@@ -23,6 +23,7 @@ export abstract class RouteStopBase extends RouteStopInfo
         {
             this.port = data.port;
             this.driverInstructions = data.driverInstructions;
+
             this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
             this.isDelayed = data.isDelayed;
 
