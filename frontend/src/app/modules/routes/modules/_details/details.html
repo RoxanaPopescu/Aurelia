@@ -578,7 +578,7 @@
 
                             <data-table-cell align="right">
 
-                                <div class="icon-row">
+                                <div if-claims="edit-routes" class="icon-row">
 
                                     <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
                                         <icon name="edit-small"></icon>
@@ -596,7 +596,7 @@
 
                     </template>
 
-                    <template replace-part="append">
+                    <template  if-claims="edit-routes" replace-part="append">
                         Add stop
                     </template>
 

@@ -79,7 +79,7 @@ export class FleetModule
                 title: routeTitles.vehicleList,
                 nav: true,
                 href: "/fleet-management/vehicles",
-                icon: "fleet"
+                icon: "vehicles"
             },
             {
                 name: "dispatch-default",

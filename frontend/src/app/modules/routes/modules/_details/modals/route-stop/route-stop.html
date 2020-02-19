@@ -10,7 +10,7 @@
 
     <modal-panel name="route-stop" position="right" close-button.bind="!edit && true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
-        <div slot="actions">
+        <div if-claims="edit-routes" slot="actions">
 
             <button
                 if.bind="!edit"
