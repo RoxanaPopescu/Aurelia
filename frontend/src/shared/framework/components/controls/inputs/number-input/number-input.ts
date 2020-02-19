@@ -111,6 +111,12 @@ export class NumberInputCustomElement
     public constrain: boolean;
 
     /**
+     * True to format the value according to locale rules, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public useGrouping: boolean;
+
+    /**
      * Called when the input element receives focus.
      * Selects the content of the input element, if `autoselect` is enabled.
      */
@@ -154,6 +160,8 @@ export class NumberInputCustomElement
             return false;
         }
 
+        /* TODO: Disabled because selectionStart is not supported on a number input.
+
         // Prevent the user from entering '-', except at the beginning of the value.
         if (event.key === "-" && this.inputElement.selectionStart! > 0)
         {
@@ -178,6 +186,8 @@ export class NumberInputCustomElement
             return false;
         }
 
+        */
+
         if (this.constrain)
         {
             // Prevent the user from entering negative numbers if `min` is more than zero.
@@ -186,14 +196,18 @@ export class NumberInputCustomElement
                 return false;
             }
 
+            /* TODO: Disabled because selectionStart is not supported on a number input.
+
             // Prevent the user from entering positive numbers if `max` is less than zero.
             if (event.key !== "-" && this.max != null && this.max < 0 && this.inputElement.selectionStart === 0)
             {
                 return false;
             }
 
+            */
+
             // Prevent the user from entering a decimal point if `step` is a whole number.
-            if (this.step % 1 === 0 && !/\d-/.test(event.key))
+            if (this.step % 1 === 0 && !/\d|-/.test(event.key))
             {
                 return false;
             }

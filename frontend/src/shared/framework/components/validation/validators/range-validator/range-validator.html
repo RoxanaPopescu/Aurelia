@@ -2,21 +2,21 @@
 
     <template if.bind="invalid === true">
 
-        <validation-message if.bind="min && max" accent="negative">
+        <validation-message if.bind="min != null && max != null" accent="negative">
             <template replaceable part="invalid-min-max" translate>
-                Please provide a value <kbd>${minInclusive ? '≤' : '<'} ${min}</kbd> and <kbd>${maxInclusive ? '≥' : '>'} ${max}</kbd>.
+                Please provide a value <kbd>${minInclusive ? '≥' : '>'} ${min}</kbd> and <kbd>${maxInclusive ? '≤' : '<'} ${max}</kbd>.
             </template>
         </validation-message>
 
-        <validation-message if.bind="min && !max" accent="negative">
+        <validation-message if.bind="min != null && max == null" accent="negative">
             <template replaceable part="invalid-min" translate>
-                Please provide a value <kbd>${minInclusive ? '≤' : '<'} ${min}</kbd>.
+                Please provide a value <kbd>${minInclusive ? '≥' : '>'} ${min}</kbd>.
             </template>
         </validation-message>
 
-        <validation-message if.bind="!min && max" accent="negative">
+        <validation-message if.bind="min == null && max != null" accent="negative">
             <template replaceable part="invalid-max" translate>
-                Please provide a value <kbd>${maxInclusive ? '≥' : '>'} ${max}</kbd>.
+                Please provide a value <kbd>${maxInclusive ? '≤' : '<'} ${max}</kbd>.
             </template>
         </validation-message>
 

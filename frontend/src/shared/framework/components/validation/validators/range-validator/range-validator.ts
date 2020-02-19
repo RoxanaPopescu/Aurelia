@@ -64,8 +64,8 @@ export class RangeValidatorCustomElement extends Validator
             const value = this.value.valueOf();
 
             this.invalid =
-                this.min != null && (this.minInclusive ? value <= this.min.valueOf() : value < this.min.valueOf()) ||
-                this.max != null && (this.maxInclusive ? value >= this.max.valueOf() : value > this.max.valueOf()) ||
+                this.min != null && (this.minInclusive ? value < this.min.valueOf() : value <= this.min.valueOf()) ||
+                this.max != null && (this.maxInclusive ? value > this.max.valueOf() : value >= this.max.valueOf()) ||
                 this.step != null && value % this.step.valueOf() !== 0;
         }
 

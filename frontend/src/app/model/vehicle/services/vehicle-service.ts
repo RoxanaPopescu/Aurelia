@@ -30,6 +30,36 @@ export class VehicleService
     }
 
     /**
+     * Creates the specified vehicle.
+     * @param vehicle The vehicle to create.
+     * @returns A promise that will be resolved with the updated vehicle.
+     */
+    public async createDetached(vehicle: Vehicle): Promise<Vehicle>
+    {
+        const result = await this._apiClient.post("vehicles/create",
+        {
+            body: vehicle
+        });
+
+        return new Vehicle(result.data);
+    }
+
+    /**
+     * Savesthe specified vehicle.
+     * @param vehicle The vehicle to save.
+     * @returns A promise that will be resolved with the updated vehicle.
+     */
+    public async saveDetached(vehicle: Vehicle): Promise<Vehicle>
+    {
+        const result = await this._apiClient.post("vehicles/update",
+        {
+            body: vehicle
+        });
+
+        return new Vehicle(result.data);
+    }
+
+    /**
      * Creates a new vehicle, associated with the specified driver.
      * @param vehicle The vehicle to create.
      * @param driverId The ID of the driver the vehicle should be associated with.

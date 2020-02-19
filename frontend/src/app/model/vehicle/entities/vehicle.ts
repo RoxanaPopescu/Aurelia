@@ -10,20 +10,25 @@ export class Vehicle
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        this.id = data.id;
-        this.name = data.name;
-        this.licensePlate = data.licensePlate;
-        this.type = VehicleType.get(data.type);
-        this.make = data.make;
-        this.model = data.model;
-        this.productionYear = data.productionYear;
-        this.color = data.color;
-        this.allowedTotalWeight = data.allowedTotalWeight;
-        this.registrationCertificateUrl = data.registrationCertificateUrl;
-        if (data.internalDimensions) {
-            this.internalDimensions = new Dimensions(data.internalDimensions);
+        if (data != null)
+        {
+            this.id = data.id;
+            this.name = data.name;
+            this.licensePlate = data.licensePlate;
+            this.type = VehicleType.get(data.type);
+            this.make = data.make;
+            this.model = data.model;
+            this.productionYear = data.productionYear;
+            this.color = data.color;
+            this.allowedTotalWeight = data.allowedTotalWeight;
+            this.registrationCertificateUrl = data.registrationCertificateUrl;
+
+            if (data.internalDimensions)
+            {
+                this.internalDimensions = new Dimensions(data.internalDimensions);
+            }
         }
     }
 
@@ -33,7 +38,7 @@ export class Vehicle
     public id: string;
 
     /**
-     * The name of the vehicle.
+     * The name of the vehicle, if any.
      */
     public name?: string;
 
@@ -85,7 +90,8 @@ export class Vehicle
     /**
      * The make and model of the vehicle.
      */
-    public get makeAndModel(): string {
+    public get makeAndModel(): string
+    {
         return `${this.make} ${this.model}`;
     }
 }

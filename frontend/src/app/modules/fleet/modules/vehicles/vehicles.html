@@ -20,7 +20,8 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if-claims="invite-vehicle" appearance="solid" page-href="path: /fleet-management/vehicles/create" translate>
+                    <!-- if-claims="invite-vehicle" -->
+                    <button appearance="outline" accent="primary" click.trigger="onAddVehicleClick()" translate>
                         Add vehicle
                     </button>
 
@@ -54,7 +55,7 @@
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="model" translate>
-                            Brand
+                            Model
                         </data-table-cell>
 
                     </data-table-headers>
@@ -62,7 +63,7 @@
                     <template repeat.for="vehicle of vehicles">
 
                         <data-table-row
-                            href="/fleet-management/vehicles/edit/${vehicle.id}">
+                            click.call="onVehicleClick(vehicle)">
 
                             <data-table-cell>
                                 ${vehicle.id}
@@ -73,15 +74,15 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${vehicle.type}
+                                ${vehicle.type.name}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.make}
+                                ${vehicle.make}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.model}
+                                ${vehicle.model}
                             </data-table-cell>
 
                         </data-table-row>

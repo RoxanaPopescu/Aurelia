@@ -16,7 +16,7 @@ export class RouteStopType
      */
     public constructor(slug: RouteStopTypeSlug)
     {
-        this.slug = slug ? textCase(slug, "pascal", "kebab") as any : "unknown";
+        this.slug = slug ? textCase(slug, "pascal", "kebab") as any : "pickup";
         Object.assign(this, RouteStopType.values[this.slug]);
     }
 
