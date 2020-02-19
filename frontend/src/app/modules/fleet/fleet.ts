@@ -77,7 +77,7 @@ export class FleetModule
                     ]
                 },
                 title: routeTitles.vehicleList,
-                nav: false,
+                nav: true,
                 href: "/fleet-management/vehicles",
                 icon: "fleet"
             },
