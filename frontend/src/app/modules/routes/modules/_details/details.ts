@@ -243,22 +243,24 @@ export class DetailsModule
 
             document.addEventListener("mouseup", async () =>
             {
-                try
+                if (this._targetIndex !== source.stopNumber - 1)
                 {
-                    await this._routeService.moveRouteStop(this.route!, source, this._targetIndex!)
+                    try
+                    {
+                        await this._routeService.moveRouteStop(this.route!, source, this._targetIndex!)
 
-                    this.fetchRoute(this.route!.id);
+                        this.fetchRoute(this.route!.id);
+                    }
+                    catch (error)
+                    {
+                        Log.error("Could not move route stop", error);
+                    }
+                    finally
+                    {
+                        this._isMovingStop = false;
+                        this._targetIndex = undefined;
+                    }
                 }
-                catch (error)
-                {
-                    Log.error("Could not move route stop", error);
-                }
-                finally
-                {
-                    this._isMovingStop = false;
-                    this._targetIndex = undefined;
-                }
-
             }, { once: true });
         }
     }
