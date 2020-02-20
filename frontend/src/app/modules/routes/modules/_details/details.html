@@ -581,12 +581,25 @@
 
                                 <div if.bind="!stop.hidden" if-claims="edit-routes" class="icon-row">
 
-                                    <button appearance="none" accent="primary" click.trigger="onStopClick(stop, true)">
+                                    <button
+                                        title.translate="Edit stop"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onStopClick(stop, true)">
+
                                         <icon name="edit-small"></icon>
+
                                     </button>
 
-                                    <button class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveStopClick(stop)">
+                                    <button
+                                        title.translate="Cancel stop"
+                                        class="icon-row"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onRemoveStopClick(stop)">
+
                                         <icon name="delete-small"></icon>
+
                                     </button>
 
                                 </div>
