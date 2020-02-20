@@ -37,16 +37,12 @@
 
                     <data-table-headers>
 
-                        <data-table-cell DISABLED-name="id" translate>
-                            Id
-                        </data-table-cell>
-
                         <data-table-cell DISABLED-name="name" translate>
                             Name
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="type" translate>
-                            Type
+                        <data-table-cell DISABLED-name="id" translate>
+                            Id
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="make" translate>
@@ -57,23 +53,27 @@
                             Model
                         </data-table-cell>
 
+                        <data-table-cell DISABLED-name="type" translate>
+                            Type
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="vehicle of vehicles">
 
                         <data-table-row
-                            click.call="onVehicleClick(vehicle)">
-
-                            <data-table-cell>
-                                ${vehicle.id}
-                            </data-table-cell>
+                            click.call="onRemoveVehicleClick(vehicle)">
 
                             <data-table-cell>
                                 ${vehicle.name}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${vehicle.type.name}
+                                ${vehicle.id}
                             </data-table-cell>
 
                             <data-table-cell>
@@ -82,6 +82,22 @@
 
                             <data-table-cell>
                                 ${vehicle.model}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${vehicle.type.name}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if-claims="create-vehicle" class="icon-row">
+
+                                    <button class="icon-row" appearance="none" accent="primary" click.trigger="onRemoveVehicleClick(vehicle)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>
