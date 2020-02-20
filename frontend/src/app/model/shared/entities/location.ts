@@ -1,5 +1,6 @@
 import { Address } from "./address";
 import { Position } from "./position";
+import { IANAZone } from "luxon";
 
 /**
  * Represents a coordinate and address
@@ -20,6 +21,11 @@ export class Location
             {
                 this.position = new Position(data.position);
             }
+
+            if (data.timeZone != null)
+            {
+                this.timeZone = new IANAZone(data.timeZone);
+            }
         }
     }
 
@@ -32,4 +38,9 @@ export class Location
      * The position of the location.
      */
     public position?: Position;
+
+    /**
+     * The IANA Time Zone Identifier for the time zone associated with the location.
+     */
+    public timeZone: IANAZone;
 }
