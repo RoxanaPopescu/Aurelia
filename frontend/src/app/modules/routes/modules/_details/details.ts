@@ -60,7 +60,7 @@ export class DetailsModule
     protected dataTableElement: HTMLElement;
 
     /**
-     * True to show the map, otherwise false.
+     * If the current user is allowed to edit the route.
      */
     protected editable = false;
 
