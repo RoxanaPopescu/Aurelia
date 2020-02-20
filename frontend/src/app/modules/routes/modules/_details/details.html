@@ -525,7 +525,7 @@
                             click.call="onStopClick(stop, false)"
                             clickable.bind="!stop.hidden"
                             insert.call="onAddStopClick($index)"
-                            movable="true"
+                            movable.bind="!stop.hidden"
                             class="${(stop.status.slug == 'cancelled' || stop.hidden) ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell>
