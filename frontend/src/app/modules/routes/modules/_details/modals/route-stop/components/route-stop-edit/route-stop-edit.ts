@@ -1,7 +1,7 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { RouteStop, Route, RouteStopStatus } from "app/model/route";
-import { RouteStopType } from '../../../../../../../../model/route/entities/route-stop-type';
+import { RouteStopType } from "../../../../../../../../model/route/entities/route-stop-type";
 
 @autoinject
 export class RouteStopEditCustomElement

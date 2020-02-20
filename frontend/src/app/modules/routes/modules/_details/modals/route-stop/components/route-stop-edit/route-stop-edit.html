@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/time-of-day/time-of-day"></require>
     <require from="app/components/address-input/address-input"></require>
     <require from="app/components/information/information"></require>
     <require from="../order-accordion/order-accordion"></require>
@@ -103,7 +104,7 @@
 
             <div class="control-row flex-basis-1-of-2">
 
-                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.from" zone.bind="model.routeStop.location.timeZone" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival from
@@ -112,14 +113,14 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routeStop.arrivalTimeFrame.from">
+                            value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay">
                         </required-validator>
 
                     </div>
 
                 </time-input>
 
-                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.to" zone.bind="model.routeStop.location.timeZone" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival to
@@ -128,7 +129,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routeStop.arrivalTimeFrame.to">
+                            value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay">
                         </required-validator>
 
                     </div>
