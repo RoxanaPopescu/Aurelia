@@ -2,7 +2,7 @@ circular-meter
 {
     position: relative;
 
-    svg
+    > svg
     {
         transform: rotate(-90deg);
 

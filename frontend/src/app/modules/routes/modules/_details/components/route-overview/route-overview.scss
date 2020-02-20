@@ -44,6 +44,15 @@ route-overview
             height: 45rem;
             width: 45rem;
             align-self: center;
+
+            .route-cancelled-warning
+            {
+                icon
+                {
+                    height: 6rem;
+                    width: 5rem;
+                }
+            }
         }
     }
 }
