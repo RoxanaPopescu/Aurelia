@@ -1,8 +1,10 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
+import { Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { Vehicle, VehicleService } from "app/model/vehicle";
 import { VehiclePanel } from "./modals/vehicle/vehicle";
+import { DeleteVehicleDialog } from "./modals/confirm-delete/confirm-delete";
 
 /**
  * Represents the page.
@@ -123,5 +125,32 @@ export class ListPage
         {
             this.vehicles.push(vehicle);
         }
+    }
+
+    /**
+     * Called when the `Remove vehicle` icon is clicked on a vehicle.
+     * Asks the user to confirm, then deletes the stop from the route.
+     * @param vehicle The vehicle to remove.
+     */
+    protected async onRemoveVehicleClick(vehicle: Vehicle): Promise<void>
+    {
+        const confirmed = await this._modalService.open(DeleteVehicleDialog, vehicle).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            // await this._routeService.setRouteStopStatus(this.route!, stop, "cancelled");
+            // FIXME: DELETE IT
+        }
+        catch (error)
+        {
+            Log.error("Could not remove the vehicle", error);
+        }
+
+        // this.fetchRoute(this.route!.id);
     }
 }
