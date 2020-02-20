@@ -85,7 +85,6 @@ export class RouteStopPanel
      */
     protected async onSaveClick(atIndex?: number): Promise<void>
     {
-        this._modal.busy = true;
         try
         {
             // Activate validation so any further changes will be validated immediately.
@@ -97,11 +96,14 @@ export class RouteStopPanel
                 return;
             }
 
+            // Mark the modal as busy.
+            this._modal.busy = true;
+
+            // Resolve stop location, if needed.
             if (this.model.routeStop.location.address.id != null)
             {
                 try
                 {
-                    // Resolve stop location.
                     this.model.routeStop.location = await this._addressService.getLocation(this.model.routeStop.location.address);
                 }
                 catch (error)
@@ -112,6 +114,7 @@ export class RouteStopPanel
                 }
             }
 
+            // Save the route stop.
             if (this.isNew)
             {
                 await this._routeService.addRouteStop(this.model.route, this.model.routeStop, atIndex != null ? atIndex : this.model.routeStop.stopNumber - 1);
@@ -121,13 +124,20 @@ export class RouteStopPanel
                 await this._routeService.saveRouteStop(this.model.route, this.model.routeStop);
             }
 
+            // Set the result of the modal.
             this._result = this.model.routeStop;
+
+            // Transition the modal to its readonly mode.
             this.edit = false;
         }
         catch (error)
         {
             Log.error("Could not save the route stop", error);
         }
-        this._modal.busy = false;
+        finally
+        {
+            // Mark the modal as not busy.
+            this._modal.busy = false;
+        }
     }
 }
