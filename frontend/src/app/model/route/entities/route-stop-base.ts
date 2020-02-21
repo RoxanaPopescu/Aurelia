@@ -102,7 +102,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * The timeframe within which the driver must arrive.
      */
-    public readonly arrivalTimeFrame: DateTimeRange;
+    public arrivalTimeFrame: DateTimeRange;
 
     /**
      * The date and time at which the driver arrived.

@@ -4,6 +4,7 @@ import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 import { RouteStopType } from "../../../../../../../../model/route/entities/route-stop-type";
 import { Duration, DateTime } from "luxon";
 import { observable } from 'aurelia-binding';
+import { DateTimeRange } from "shared/types";
 
 @autoinject
 export class RouteStopEditCustomElement
@@ -80,22 +81,32 @@ export class RouteStopEditCustomElement
     {
         if (newValue != null)
         {
-            this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from?.set({
-                                                                            day: newValue.day,
-                                                                            month: newValue.month,
-                                                                            year: newValue.year });
-            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to?.set({
-                                                                            day: newValue.day,
-                                                                            month: newValue.month,
-                                                                            year: newValue.year });
-
-            if (this.model.routeStop.arrivalTimeFrame.to!.diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") < 0)
+            if (this.model.routeStop.arrivalTimeFrame == null)
             {
-                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.plus({ day: 1 });
+                this.model.routeStop.arrivalTimeFrame = new DateTimeRange({
+                                                            from: newValue,
+                                                            to: newValue
+                                                        }, { setZone: true });
             }
-            else if (this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") > 0)
+            else
             {
-                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 });
+                this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from?.set({
+                                                                                day: newValue.day,
+                                                                                month: newValue.month,
+                                                                                year: newValue.year });
+                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to?.set({
+                                                                                day: newValue.day,
+                                                                                month: newValue.month,
+                                                                                year: newValue.year });
+
+                if (this.model.routeStop.arrivalTimeFrame.to!.diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") < 0)
+                {
+                    this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.plus({ day: 1 });
+                }
+                else if (this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") > 0)
+                {
+                    this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 });
+                }
             }
         }
     }
