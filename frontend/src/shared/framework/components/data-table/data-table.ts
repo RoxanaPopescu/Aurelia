@@ -16,7 +16,7 @@ export class DataTableCustomElement
     /**
      * The model for the rows currently being dragged, if any.
      */
-    public draggedModel: number | undefined;
+    public draggedModel: any | undefined;
 
     /**
      * The selection mode to use.
