@@ -2,7 +2,7 @@ import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 import { RouteStopType } from "../../../../../../../../model/route/entities/route-stop-type";
-import { Duration } from "luxon";
+import { Duration, DateTime } from "luxon";
 import { observable } from 'aurelia-binding';
 
 @autoinject
@@ -42,6 +42,12 @@ export class RouteStopEditCustomElement
     public onCancel: () => void;
 
     /**
+     * The local date element for stop arrival date
+     */
+    @observable
+    public date: DateTime | undefined;
+
+    /**
      * The local time element for stop arrival time from
      */
     @observable
@@ -59,8 +65,39 @@ export class RouteStopEditCustomElement
      */
     public attached(): void
     {
-        this.timeFrom = this.model?.routeStop.arrivalTimeFrame.from?.diff(this.model.routeStop.arrivalTimeFrame.from.startOf("day"));
-        this.timeTo = this.model?.routeStop.arrivalTimeFrame.to?.diff(this.model.routeStop.arrivalTimeFrame.to.startOf("day"));
+        if (this.model.routeStop.arrivalTimeFrame != null)
+        {
+            this.date = this.model.routeStop.arrivalTimeFrame.from?.startOf("day");
+            this.timeFrom = this.model.routeStop.arrivalTimeFrame.from?.diff(this.model.routeStop.arrivalTimeFrame.from?.startOf("day"));
+            this.timeTo = this.model.routeStop.arrivalTimeFrame.to?.diff(this.model.routeStop.arrivalTimeFrame.to?.startOf("day"));
+        }
+    }
+
+    /**
+     * Called when the observable property, date, changes value.
+     */
+    protected dateChanged(newValue: DateTime | undefined): void
+    {
+        if (newValue != null)
+        {
+            this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from?.set({
+                                                                            day: newValue.day,
+                                                                            month: newValue.month,
+                                                                            year: newValue.year });
+            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to?.set({
+                                                                            day: newValue.day,
+                                                                            month: newValue.month,
+                                                                            year: newValue.year });
+
+            if (this.model.routeStop.arrivalTimeFrame.to!.diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") < 0)
+            {
+                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.plus({ day: 1 });
+            }
+            else if (this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") > 0)
+            {
+                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 });
+            }
+        }
     }
 
     /**
