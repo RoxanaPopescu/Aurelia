@@ -107,8 +107,12 @@
 
                     </div>
 
-                    <div class="font-largest">
+                    <div empty-value if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" class="font-largest">
                         ${route.stops[0].arrivalTime | dateTime: 'narrow' : false}
+                    </div>
+
+                    <div empty-value if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" class="font-largest">
+                        ${route.stops[0].estimates.arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
                     <div class="font-small">

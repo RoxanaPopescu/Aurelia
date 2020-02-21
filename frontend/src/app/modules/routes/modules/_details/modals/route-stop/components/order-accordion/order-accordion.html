@@ -2,7 +2,7 @@
 
     <require from="./order-accordion.scss"></require>
 
-    <div class="order-accordion-header" click.trigger="onHeaderClick($event, order)">
+    <div class="order-accordion-header ${model.colli.length > 0 ? '--clickable' : ''}" click.trigger="onHeaderClick($event, order)">
 
         <div class="order-accordion-header-content">
 
@@ -13,28 +13,25 @@
                 </a>
             </div>
 
-            <div>
+            <div class="text-align-right">
                 <!-- TODO: # kg -->
             </div>
 
-            <div>
+            <div class="text-align-right">
                 <!-- TODO: # m³ -->
             </div>
 
-            <div>
+            <div class="text-align-right">
                 ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
             </div>
 
         </div>
 
-        <icon class="order-accordion-header-toggle" name="md-expand-${expanded ? 'less' : 'more'}" accent="primary"></icon>
+        <icon if.bind="model.colli.length > 0" class="order-accordion-header-toggle" name="md-expand-${expanded ? 'less' : 'more'}" accent="primary"></icon>
 
     </div>
 
-    <div
-        if.bind="expanded && model.colli.length > 0"
-        class="order-accordion-content
-        ${showAllColli ? '--expanded' : ''}">
+    <div if.bind="expanded" class="order-accordion-content ${showAllColli ? '--expanded' : ''}">
 
         <data-table appearance="rows">
 

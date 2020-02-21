@@ -23,11 +23,15 @@ order-accordion
         padding: 3rem 0;
         background-color: var(--surface-color);
         transition: background-color var(--animation-duration-medium);
-        cursor: pointer;
 
-        &:hover
+        &.--clickable
         {
-            background-color: var(--surface-color--hover);
+            cursor: pointer;
+
+            &:hover
+            {
+                background-color: var(--surface-color--hover);
+            }
         }
 
         .order-accordion-header-content
