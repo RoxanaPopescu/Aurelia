@@ -72,10 +72,6 @@ export class RouteStopEditCustomElement
         {
             this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from?.startOf("day").plus(newValue);
         }
-        else
-        {
-            this.model.routeStop.arrivalTimeFrame.from = undefined;
-        }
     }
 
     /**
@@ -95,10 +91,6 @@ export class RouteStopEditCustomElement
             {
                 this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 });
             }
-        }
-        else
-        {
-            this.model.routeStop.arrivalTimeFrame.to = undefined;
         }
     }
 }
