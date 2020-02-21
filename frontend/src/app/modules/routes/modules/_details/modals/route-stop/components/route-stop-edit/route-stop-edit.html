@@ -104,7 +104,7 @@
 
             <div class="control-row flex-basis-1-of-2">
 
-                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay: model.route.stops[0].arrivalTimeFrame.from" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival from
@@ -113,14 +113,14 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay">
+                            value.bind="model.routeStop.arrivalTimeFrame.from | timeOfDay: model.route.stops[0].arrivalTimeFrame.from">
                         </required-validator>
 
                     </div>
 
                 </time-input>
 
-                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay" class="flex-basis-1-of-2">
+                <time-input label="above" value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay: model.route.stops[0].arrivalTimeFrame.from" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
                         Arrival to
@@ -129,7 +129,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay">
+                            value.bind="model.routeStop.arrivalTimeFrame.to | timeOfDay: model.route.stops[0].arrivalTimeFrame.from">
                         </required-validator>
 
                     </div>

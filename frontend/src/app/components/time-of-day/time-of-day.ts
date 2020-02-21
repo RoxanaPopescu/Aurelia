@@ -31,11 +31,12 @@ export class TimeOfDayValueConverter
     /**
      * Converts the value for use in the model.
      * @param value The value to convert.
+     * @param date The date on which the return value should be based, or undefined to use the last converted date.
      * @returns A `DateTime` instance representing the most recent date, with the specified time of day.
      */
-    public fromView(value: Duration | undefined | null): DateTime | null | undefined
+    public fromView(value: Duration | undefined | null, date?: DateTime): DateTime | null | undefined
     {
-        if (this._value == null)
+        if (this._value == null && date == null)
         {
             throw new Error("Cannot convert a time of day to date and time, when no date has been set.");
         }
@@ -45,10 +46,10 @@ export class TimeOfDayValueConverter
             return value;
         }
 
-        const newValue = this._value.startOf("day").plus(value);
+        const newValue = (date ?? this._value)!.startOf("day").plus(value);
 
         // Only update the value if it changed, to avoid infinite update loops.
-        if (newValue.valueOf() !== this._value.valueOf())
+        if (this._value == null || newValue.valueOf() !== this._value.valueOf())
         {
             this._value = newValue;
         }
