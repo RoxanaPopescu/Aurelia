@@ -47,7 +47,7 @@ export class OrderAccordionCustomElement
      */
     protected onHeaderClick(event: MouseEvent): void
     {
-        if (event.defaultPrevented)
+        if (event.defaultPrevented || this.model.colli.length === 0)
         {
             return;
         }

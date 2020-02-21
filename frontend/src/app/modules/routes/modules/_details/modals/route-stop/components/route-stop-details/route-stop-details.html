@@ -329,7 +329,7 @@
     </template>
 
     <!-- Actions -->
-    <template if.bind="model.routeStop.actions != null">
+    <template if.bind="model.routeStop.actions.photo || model.routeStop.actions.signature || model.routeStop.actions.colliCountVerification || model.routeStop.actions.timeFrameVerification || model.routeStop.actions.scanColli || model.routeStop.actions.instructionsAccept">
 
         <hr class="hr-line margin-bottom">
 
