@@ -41,8 +41,8 @@
                             Name
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="id" translate>
-                            Id
+                        <data-table-cell DISABLED-name="status" translate>
+                            Status
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="make" translate>
@@ -66,14 +66,14 @@
                     <template repeat.for="vehicle of vehicles">
 
                         <data-table-row
-                            click.call="onRemoveVehicleClick(vehicle)">
+                            click.call="onVehicleClick(vehicle)">
 
                             <data-table-cell>
                                 ${vehicle.name}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${vehicle.id}
+                                ${vehicle.status.name}
                             </data-table-cell>
 
                             <data-table-cell>

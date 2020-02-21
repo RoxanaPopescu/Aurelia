@@ -1,5 +1,6 @@
 import { VehicleType } from "./vehicle-type";
 import { Dimensions } from "app/model/shared";
+import { VehicleStatus } from "./vehicle-status";
 
 /**
  * Represents a vehicle that may be used to deliver a shipment.
@@ -15,6 +16,7 @@ export class Vehicle
         if (data != null)
         {
             this.id = data.id;
+            this.status = new VehicleStatus(data.status);
             this.name = data.name;
             this.licensePlate = data.licensePlate;
             this.type = VehicleType.get(data.type);
@@ -41,6 +43,11 @@ export class Vehicle
      * The name of the vehicle, if any.
      */
     public name?: string;
+
+    /**
+     * The status of the vehicle.
+     */
+    public status: VehicleStatus;
 
     /**
      * The maximum allowed weight of the vehicle with all load (including persons).
