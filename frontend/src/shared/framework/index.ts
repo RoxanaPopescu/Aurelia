@@ -12,6 +12,7 @@ export function configure(use: FrameworkConfiguration): void
         // Components
         PLATFORM.moduleName("./components/behaviors/autofocus/autofocus"),
         PLATFORM.moduleName("./components/behaviors/empty/empty"),
+        PLATFORM.moduleName("./components/behaviors/empty-value/empty-value"),
         PLATFORM.moduleName("./components/behaviors/forward-focus/forward-focus"),
         PLATFORM.moduleName("./components/behaviors/return-focus/return-focus"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
@@ -113,6 +114,7 @@ export function configure(use: FrameworkConfiguration): void
 // Components
 export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/empty/empty";
+export * from "./components/behaviors/empty-value/empty-value";
 export * from "./components/behaviors/forward-focus/forward-focus";
 export * from "./components/behaviors/return-focus/return-focus";
 export * from "./components/behaviors/scroll/scroll";

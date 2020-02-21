@@ -21,6 +21,11 @@ export class EmptyCustomAttribute
     private readonly _textNodeMutationObserver = new MutationObserver(mutations => this.onContentChanged());
 
     /**
+     * The name of the attribute.
+     */
+    protected attributeName = "empty";
+
+    /**
      * True if the element is empty, otherwise false.
      */
     @bindable({ primaryProperty: true, defaultBindingMode: bindingMode.fromView })
@@ -60,6 +65,20 @@ export class EmptyCustomAttribute
     }
 
     /**
+     * Called when the text in a child node of the element changes.
+     */
+    protected onContentChanged(): void
+    {
+        const innerText = this.ignoreWhitespace
+            ? this._element.innerText.trim()
+            : this._element.innerText;
+
+        this.value = !(Array.from(this._element.children).some(e => e.nodeType !== 8) || innerText !== "");
+
+        this._element.setAttribute(this.attributeName, this.value.toString());
+    }
+
+    /**
      * Called when the child list of the element changes.
      * @param mutations The mutation records.
      */
@@ -88,19 +107,5 @@ export class EmptyCustomAttribute
                 }
             });
         }
-    }
-
-    /**
-     * Called when the text in a child node of the element changes.
-     */
-    private onContentChanged(): void
-    {
-        const innerText = this.ignoreWhitespace
-            ? this._element.innerText.trim()
-            : this._element.innerText;
-
-        this.value = !(Array.from(this._element.children).some(e => e.nodeType !== 8) || innerText !== "");
-
-        this._element.setAttribute("empty", this.value.toString());
     }
 }

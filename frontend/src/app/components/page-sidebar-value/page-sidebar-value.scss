@@ -7,10 +7,4 @@ page-sidebar-value
     {
         display: none;
     }
-
-    [slot="value"][empty="true"]::before
-    {
-        content: "--";
-        opacity: var(--opacity-faded);
-    }
 }

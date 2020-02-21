@@ -21,7 +21,7 @@
                         ID
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.slug}
                     </div>
 
@@ -33,7 +33,7 @@
                         Type
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.productType.name}
                     </div>
 
@@ -45,7 +45,7 @@
                         Reference
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.reference}
                     </div>
 
@@ -57,7 +57,7 @@
                         Status
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.status.name}
                     </div>
 
@@ -69,7 +69,7 @@
                         Vehicle
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.vehicleType.name}
                     </div>
 
@@ -81,7 +81,7 @@
                         Weight
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         <template if.bind="route.totalWeightRange != null">
                             ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
                         </template>
@@ -95,7 +95,7 @@
                         Colli
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.totalColliCount | number}
                     </div>
 
@@ -115,7 +115,7 @@
                         Starts
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
                     </div>
 
@@ -127,7 +127,7 @@
                         Ends
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
                     </div>
 
@@ -147,7 +147,7 @@
                         Address
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         <span
                             if.bind="route.stops[0].location.address"
                             innerhtml.bind="route.stops[0].location.address.toHtmlString()">
@@ -170,7 +170,7 @@
                         Company
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.fulfiller.primaryName}
                     </div>
 
@@ -182,7 +182,7 @@
                         Driver ID
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driver.id}
                     </div>
 
@@ -194,7 +194,7 @@
                         Driver name
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driver.name}
                     </div>
 
@@ -206,7 +206,7 @@
                         Driver phone
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driver.phone}
                     </div>
 
@@ -226,7 +226,7 @@
                         Type
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driverVehicle.vehicleType.name}
                     </div>
 
@@ -238,7 +238,7 @@
                         Make and model
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driverVehicle.makeAndModel}
                     </div>
 
@@ -250,7 +250,7 @@
                         Color
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driverVehicle.color}
                     </div>
 
@@ -262,7 +262,7 @@
                         License plate
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${route.driverVehicle.licensePlate}
                     </div>
 
@@ -278,7 +278,7 @@
 
                 <page-sidebar-value>
 
-                    <div slot="value" class="text-align-left" empty>
+                    <div slot="value" class="text-align-left" empty-value>
                         ${route.driverInstructions}
                     </div>
 
@@ -318,7 +318,7 @@
                         Route price
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${p && { amount: p.price, currencyCode: p.currencyCode } | currency }
                     </div>
 
@@ -330,7 +330,7 @@
                         VAT
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${p && { amount: p.vat, currencyCode: p.currencyCode } | currency }
                     </div>
 
@@ -344,7 +344,7 @@
                         Total price
                     </div>
 
-                    <div slot="value" empty>
+                    <div slot="value" empty-value>
                         ${p && { amount: p.totalPrice, currencyCode: p.currencyCode } | currency }
                     </div>
 

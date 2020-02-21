@@ -1,0 +1,8 @@
+[empty-value="true"]
+{
+    &::before
+    {
+        content: "--";
+        opacity: var(--opacity-faded);
+    }
+}
