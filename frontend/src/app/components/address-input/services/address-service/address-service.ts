@@ -38,7 +38,7 @@ export class AddressService
             signal
         });
 
-        return result.data.results.map(data => new Address(data));
+        return result.data.results.filter(data => data.id != null).map(data => new Address(data));
     }
 
     /**

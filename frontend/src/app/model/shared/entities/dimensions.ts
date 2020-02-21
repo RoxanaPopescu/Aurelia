@@ -28,4 +28,16 @@ export class Dimensions
      * The height of the vehicle in meters.
      */
     public height: number;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            width: this.width,
+            height: this.height,
+            length: this.length
+        };
+    }
 }

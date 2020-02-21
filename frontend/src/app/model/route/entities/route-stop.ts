@@ -47,6 +47,7 @@ export class RouteStop extends RouteStopBase
 
             this.pickups = [];
             this.deliveries = [];
+            this.actions = new RouteStopActions();
         }
     }
 

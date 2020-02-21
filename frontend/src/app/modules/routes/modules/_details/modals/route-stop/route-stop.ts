@@ -118,6 +118,7 @@ export class RouteStopPanel
             if (this.isNew)
             {
                 await this._routeService.addRouteStop(this.model.route, this.model.routeStop, atIndex != null ? atIndex : this.model.routeStop.stopNumber - 1);
+                // FIXME: How do we add this to the list?
             }
             else
             {

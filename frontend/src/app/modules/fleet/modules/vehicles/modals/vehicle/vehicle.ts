@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
 import { VehicleService, Vehicle, VehicleType } from "app/model/vehicle";
+import { VehicleStatus } from "app/model/vehicle/entities/vehicle-status";
 
 @autoinject
 export class VehiclePanel
@@ -37,6 +38,11 @@ export class VehiclePanel
     protected validation: IValidation;
 
     /**
+     * The available statuses.
+     */
+    protected statuses = Object.keys(VehicleStatus.values).map(slug => ({ slug, ...VehicleStatus.values[slug] }));
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
@@ -44,7 +50,7 @@ export class VehiclePanel
     {
         this.vehicleTypes = await this._vehicleService.getTypes();
 
-        this.vehicle = model ?? new Vehicle();
+        this.vehicle = model?.clone() ?? new Vehicle();
     }
 
     /**
@@ -82,13 +88,15 @@ export class VehiclePanel
                 return;
             }
 
+            this._modal.busy = true;
+
             if (this.vehicle!.id == null)
             {
-                await this._vehicleService.createDetached(this.vehicle!);
+                await this._vehicleService.create(this.vehicle!);
             }
             else
             {
-                await this._vehicleService.saveDetached(this.vehicle!);
+                await this._vehicleService.update(this.vehicle!);
             }
 
             this._result = this.vehicle;
@@ -98,6 +106,11 @@ export class VehiclePanel
         catch (error)
         {
             Log.error("Could not save the vehicle", error);
+        }
+        finally
+        {
+            // Mark the modal as not busy.
+            this._modal.busy = false;
         }
     }
 }

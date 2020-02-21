@@ -1,6 +1,7 @@
 import { VehicleType } from "./vehicle-type";
 import { Dimensions } from "app/model/shared";
 import { VehicleStatus } from "./vehicle-status";
+import clone from "clone";
 
 /**
  * Represents a vehicle that may be used to deliver a shipment.
@@ -24,7 +25,7 @@ export class Vehicle
             this.model = data.model;
             this.productionYear = data.productionYear;
             this.color = data.color;
-            this.allowedTotalWeight = data.allowedTotalWeight;
+            this.approvedTotalWeight = data.approvedTotalWeight;
             this.registrationCertificateUrl = data.registrationCertificateUrl;
 
             if (data.internalDimensions)
@@ -52,7 +53,7 @@ export class Vehicle
     /**
      * The maximum allowed weight of the vehicle with all load (including persons).
      */
-    public allowedTotalWeight?: number;
+    public approvedTotalWeight?: number;
 
     /**
      * The internal dimensions of the vehicle, can be used for route planning
@@ -100,5 +101,33 @@ export class Vehicle
     public get makeAndModel(): string
     {
         return `${this.make} ${this.model}`;
+    }
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            id: this.id,
+            name: this.name,
+            status: this.status.slug,
+            approvedTotalWeight: this.approvedTotalWeight,
+            internalDimensions: this.internalDimensions?.toJSON() ?? null,
+            licensePlate: this.licensePlate,
+            type: this.type.id,
+            make: this.make,
+            model: this.model,
+            productionYear: this.productionYear,
+            color: this.color
+        };
     }
 }

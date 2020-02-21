@@ -1,4 +1,19 @@
 modal-panel[name="vehicle"]
 {
     --modal-panel-min-width: 200rem;
+
+    .button-container
+    {
+        display: flex;
+
+        button
+        {
+            width: 56rem;
+
+            &:not(:last-child)
+            {
+                margin-right: 7rem;
+            }
+        }
+    }
 }

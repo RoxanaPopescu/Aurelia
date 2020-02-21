@@ -7,16 +7,27 @@ export class RouteStopActions
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        this.instructionsAccept = data.instructionsAccept;
-        this.timeFrameVerification = data.timeFrameVerification;
-        this.scanColli = data.scanColli;
-        this.scanAllColli = data.scanAllColli;
-        this.signature = data.signature;
-        this.photo = data.photo;
-        this.verificationCode = data.verificationCode;
-        this.colliCountVerification = data.colliCountVerification;
+        if (data) {
+            this.instructionsAccept = data.instructionsAccept;
+            this.timeFrameVerification = data.timeFrameVerification;
+            this.scanColli = data.scanColli;
+            this.scanAllColli = data.scanAllColli;
+            this.signature = data.signature;
+            this.photo = data.photo;
+            this.verificationCode = data.verificationCode;
+            this.colliCountVerification = data.colliCountVerification;
+        } else {
+            this.instructionsAccept = false;
+            this.timeFrameVerification = false;
+            this.scanColli = false;
+            this.scanAllColli = false;
+            this.signature = false;
+            this.photo = false;
+            this.verificationCode = false;
+            this.colliCountVerification = false;
+        }
     }
 
     /**
