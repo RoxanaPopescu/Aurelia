@@ -58,7 +58,7 @@ export class RouteStopPanel
     {
         this.isNew = (model.routeStop?.id) == null;
         this.edit = this.isNew || model.edit;
-        this.model = { route: model.route, routeStop: model.routeStop?.clone(), isNew: this.isNew };
+        this.model = { route: model.route, routeStop: model.routeStop.clone(), isNew: this.isNew };
     }
 
     /**

@@ -271,8 +271,17 @@ export class DetailsModule
      */
     protected async onAddStopClick(index?: number): Promise<void>
     {
-        const newStop = new RouteStop(undefined, index != null ? index + 1 : this.route?.stops.length);
-        console.log("Stop number", newStop.stopNumber);
+        let stopNumber: number;
+        if (index != null) {
+            // Index exist, 1-index it since it's stopNumber
+            stopNumber = index + 1;
+        } else {
+            // End of list, since it's a stopNumber we add one to the list length
+            stopNumber = this.route!.stops.length + 1;
+        }
+
+        const newStop = new RouteStop(undefined, stopNumber);
+        console.log("Stop number", newStop.stopNumber, index);
 
         const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: newStop, edit: true }).promise;
 

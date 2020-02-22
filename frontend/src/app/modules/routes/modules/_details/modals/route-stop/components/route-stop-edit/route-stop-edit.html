@@ -13,11 +13,11 @@
 
             <span if.bind="model.isNew">
 
-                <span if.bind="model.routeStop.stopNumber !== model.route.stops.length && model.routeStop.stopNumber !== 1" translate>
+                <span if.bind="model.routeStop.stopNumber - 1 !== model.route.stops.length && model.routeStop.stopNumber !== 1" translate>
                     New stop after stop ${model.routeStop.stopNumber - 1}
                 </span>
 
-                <span if.bind="model.routeStop.stopNumber === model.route.stops.length" translate>
+                <span if.bind="model.routeStop.stopNumber - 1 === model.route.stops.length" translate>
                     New stop at the end of the route
                 </span>
 
