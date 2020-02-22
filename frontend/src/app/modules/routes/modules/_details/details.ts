@@ -281,8 +281,6 @@ export class DetailsModule
         }
 
         const newStop = new RouteStop(undefined, stopNumber);
-        console.log("Stop number", newStop.stopNumber, index);
-
         const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: newStop, edit: true }).promise;
 
         if (savedStop != null)
