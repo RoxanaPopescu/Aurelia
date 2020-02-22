@@ -34,7 +34,7 @@ export class RouteStopEditCustomElement
      * Called when the `Save` button is pressed.
      */
     @bindable
-    public onSave: (atIndex?: number) => void;
+    public onSave: () => void;
 
     /**
      * Called when the `Cancel` button is pressed.

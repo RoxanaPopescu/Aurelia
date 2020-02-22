@@ -121,7 +121,7 @@ export class Vehicle
             name: this.name,
             status: this.status.slug,
             approvedTotalWeight: this.approvedTotalWeight,
-            internalDimensions: this.internalDimensions?.toJSON() ?? null,
+            internalDimensions: this.internalDimensions,
             licensePlate: this.licensePlate,
             type: this.type.id,
             make: this.make,
