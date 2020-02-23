@@ -9,7 +9,6 @@ export type WeekdayStyle = "narrow" | "short" | "long";
 
 /**
  * Represents a value converter that formats a date or ISO weekday number as a localized weekday string.
- * See the `Luxon` API docs for details.
  */
 @autoinject
 export class WeekdayValueConverter

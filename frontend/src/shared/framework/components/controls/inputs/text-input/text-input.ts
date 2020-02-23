@@ -9,7 +9,7 @@ import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, Sp
 export class TextInputCustomElement
 {
     /**
-     * The unique ID of the control.
+     * The unique ID of the input element associated with the label.
      */
     protected id = Id.sequential();
 
@@ -19,16 +19,16 @@ export class TextInputCustomElement
     protected inputElement: HTMLInputElement | HTMLTextAreaElement;
 
     /**
-     * Gets the input value.
+     * Gets the value of the input element based on the value of the component.
      */
     @computedFrom("value")
     protected get inputValue(): string
     {
-        return this.value != null ? this.value : "";
+        return this.value || "";
     }
 
     /**
-     * Sets the input value.
+     * Sets the value of the component based on the value of the input element.
      */
     protected set inputValue(value: string)
     {
@@ -91,8 +91,7 @@ export class TextInputCustomElement
     public enterkey: EnterKeyHint | undefined;
 
     /**
-     * The initial number of text lines in the input,
-     * or undefined to allow only a single line.
+     * The initial number of text lines in the input, or undefined to allow only a single line.
      */
     @bindable({ defaultValue: undefined })
     public lines: number | undefined;

@@ -17,54 +17,59 @@ export class DateFormat
      */
     public constructor(localeCode?: string)
     {
-        const parts = date.toLocaleParts(
+        const dateParts = date.toLocaleParts(
         {
             ...DateTime.DATE_SHORT,
             locale: localeCode ? `${localeCode}-u-ca-iso8601-nu-latn` : undefined
         });
 
-        for (const part of parts)
+        const parts = dateParts.map(part =>
         {
             switch (part.type)
             {
                 case "year":
                 {
-                    part.token = "y";
-                    part.value = Array(4).fill(formatTokens.year).join("");
-                    part.inputPattern = ["(\\d(\\d(\\d(\\d", ")?)?)?)?"];
-                    part.keyPattern = "\\d";
-                    break;
+                    return {
+                        token: "y",
+                        value: Array(4).fill(formatTokens.year).join(""),
+                        inputPattern: ["(\\d(\\d(\\d(\\d", ")?)?)?)?"],
+                        keyPattern: "\\d"
+                    };
                 }
                 case "month":
                 {
-                    part.token = "M";
-                    part.value = Array(2).fill(formatTokens.month).join("");
-                    part.inputPattern = ["(\\d(\\d", ")?)?"];
-                    part.keyPattern = "\\d";
-                    break;
+                    return {
+                        token: "M",
+                        value: Array(2).fill(formatTokens.month).join(""),
+                        inputPattern: ["(\\d(\\d", ")?)?"],
+                        keyPattern: "\\d"
+                    };
                 }
                 case "day":
                 {
-                    part.token = "d";
-                    part.value = Array(2).fill(formatTokens.day).join("");
-                    part.inputPattern = ["(\\d(\\d", ")?)?"];
-                    part.keyPattern = "\\d";
-                    break;
+                    return {
+                        token: "d",
+                        value: Array(2).fill(formatTokens.day).join(""),
+                        inputPattern: ["(\\d(\\d", ")?)?"],
+                        keyPattern: "\\d"
+                    };
                 }
                 default:
                 {
-                    part.token = part.value;
-                    part.inputPattern = [part.value.replace(/./g, ($0: string) => `(${escapeRegExp($0)}`), part.value.replace(/./g, ")?")];
-                    part.keyPattern = [...part.value].map(c => escapeRegExp(c)).join("|");
-                    break;
+                    return {
+                        token: part.value,
+                        value: part.value,
+                        inputPattern: [part.value.replace(/./g, ($0: string) => `(${escapeRegExp($0)}`), part.value.replace(/./g, ")?")],
+                        keyPattern: [...part.value].map(c => escapeRegExp(c)).join("|")
+                    };
                 }
             }
-        }
+        });
 
         this.displayFormat = parts.map(part => part.value).join("");
         this.inputFormat = parts.map(part => part.token).join("");
         this.inputPattern = new RegExp(`^${[...parts.map(part => part.inputPattern[0]), ...parts.map(part => part.inputPattern[1])].join("")}$`);
-        this.keyPattern = new RegExp(`^${[...parts.map(part => part.keyPattern)].join("|")}$`);
+        this.keyPattern = new RegExp(`^(${[...parts.map(part => part.keyPattern)].join("|")})$`);
     }
 
     /**
@@ -74,7 +79,7 @@ export class DateFormat
 
     /**
      * The format string to use for parsing user input.
-     * Note that this format is specific to the Luxon package.
+     * Note that this format is specific to the `luxon` package.
      */
     public readonly inputFormat: string;
 

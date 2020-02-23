@@ -4,7 +4,6 @@ import { LocaleService } from "../../services/locale";
 
 /**
  * Represents a value converter that formats a date as a localized, relative time string.
- * See the `Luxon` API docs for details.
  */
 @autoinject
 export class RelativeTimeValueConverter

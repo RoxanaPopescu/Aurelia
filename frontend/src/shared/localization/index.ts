@@ -57,4 +57,5 @@ export * from "./services/currency";
 
 // Types.
 export * from "./types/date-format";
+export * from "./types/number-format";
 export * from "./types/time-format";

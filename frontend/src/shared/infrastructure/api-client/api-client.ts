@@ -525,50 +525,49 @@ export class ApiClient
             return "";
         }
 
-        // If the value is a native date, convert it to ISO-8601 format.
+        // If the value is a `Date` instance, convert it to ISO-8601 format.
         if (value instanceof Date)
         {
             return value.toISOString();
         }
 
-        // If the value is a Luxon date, convert it to ISO-8601 format.
+        // If the value is a `DateTime` instance, convert it to ISO-8601 format.
         if (value instanceof DateTime)
         {
             return value.toISO();
         }
 
-        // If the value is a Luxon duration, convert it to ISO-8601 format.
+        // If the value is a `Duration`instance, convert it to ISO-8601 format.
         if (value instanceof Duration)
         {
             return value.toISO();
         }
 
-        // If the value is an array, convert it to a comma-separated list of values.
+        // If the value is an `Array` instance, convert it to a comma-separated list of values.
         if (!isNested && value instanceof Array)
         {
             return value.map(v => this.encodeQueryValue(v, true)).join(",");
         }
 
-        // If the value is a set, convert it to a comma-separated list of values.
+        // If the value is a `Set` instance, convert it to a comma-separated list of values.
         if (!isNested && value instanceof Set)
         {
             return Array.from(value).map(v => this.encodeQueryValue(v, true)).join(",");
         }
 
-        // If the value is a map, convert it to a comma-separated list of 'key:value' pairs.
+        // If the value is a `Map` instance, convert it to a comma-separated list of 'key:value' pairs.
         if (!isNested && value instanceof Map)
         {
             return Array.from(value).map(([k, v]) => `${k}:${this.encodeQueryValue(v, true)}`).join(",");
         }
 
-        // If the value is an object, convert it to comma-separated list of 'key:value' pairs.
+        // If the value is an `Object` instance, convert it to comma-separated list of 'key:value' pairs.
         if (!isNested && value instanceof Object)
         {
             return Object.keys(value).map(k => `${k}:${this.encodeQueryValue(value[k], true)}`).join(",");
         }
 
-        // Otherwise, convert the value to its default string representation,
-        // and encode it for use in the query string.
+        // Otherwise, convert the value to its default string representation.
         return this.encodeQueryComponent(value.toString());
     }
 }

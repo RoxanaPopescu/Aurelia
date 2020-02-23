@@ -18,7 +18,6 @@ export type DateStyle = keyof typeof dateStyles;
 
 /**
  * Represents a value converter that formats a date as a localized date string.
- * See the `Luxon` API docs for details.
  */
 @autoinject
 export class DateValueConverter

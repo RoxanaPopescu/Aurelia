@@ -1,6 +1,7 @@
 import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framework";
-import { Id } from "shared/utilities";
+import { Id, escapeRegExp } from "shared/utilities";
 import { AutocompleteHint, EnterKeyHint } from "../input";
+import { NumberFormat } from "shared/localization";
 
 /**
  * Custom element representing a number input.
@@ -9,9 +10,14 @@ import { AutocompleteHint, EnterKeyHint } from "../input";
 export class NumberInputCustomElement
 {
     /**
-     * The unique ID of the control.
+     * The unique ID of the input element associated with the label.
      */
     protected id = Id.sequential();
+
+    /**
+     * The number format for the current locale.
+     */
+    protected numberFormat = new NumberFormat();
 
     /**
      * The input element.
@@ -19,37 +25,69 @@ export class NumberInputCustomElement
     protected inputElement: HTMLInputElement;
 
     /**
-     * Gets the input value, based on the value.
+     * The value entered in the input element, or undefined if the value is valid and the input is not focused.
+     */
+    protected enteredValue: string | undefined;
+
+    /**
+     * True if the entered value should be validated, otherwise false
+     */
+    protected validate = false;
+
+    /**
+     * True if the entered value is invalid, otherwise false.
+     */
+    protected invalid = false;
+
+    /**
+     * Gets the value of the input element based on the value of the component.
      */
     @computedFrom("value")
     protected get inputValue(): string
     {
+        // If the user entered a value, return that.
+        if (this.enteredValue != null)
+        {
+            return this.enteredValue;
+        }
+
+        // Return the value of the input element.
         return this.value != null ? this.value.toString() : "";
     }
 
     /**
-     * Sets the value, based on the input value.
+     * Sets the value of the component based on the value of the input element.
      * Note that the value is only set if the input value can be parsed successfully.
      */
     protected set inputValue(value: string)
     {
+        // Store the value entered by the user.
+        this.enteredValue = value;
+
+        // Parse the value of the input element.
         if (value)
         {
-            const number = parseFloat(value);
-
-            if (!isNaN(number))
+            // Is the value valid?
+            if (this.numberFormat.validPattern.test(value))
             {
-                this.value = number;
+                this.value = parseFloat(value);
+                this.invalid = false;
+            }
+            else
+            {
+                this.value = undefined;
+                this.invalid = true;
             }
         }
         else
         {
             this.value = undefined;
+            this.invalid = false;
         }
     }
 
     /**
-     * The value of the input, or undefined if the input is empty.
+     * The value of the input, or undefined if the input is empty or invalid.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public value: number | undefined;
@@ -67,6 +105,13 @@ export class NumberInputCustomElement
     public readonly: boolean;
 
     /**
+     * The hint indicating the type of `Enter` key to show on a virtual keyboard,
+     * or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: undefined })
+    public enterkey: EnterKeyHint | undefined;
+
+    /**
      * The autocomplete mode to use, or undefined to use the default behavior.
      */
     @bindable({ defaultValue: "off" })
@@ -79,17 +124,11 @@ export class NumberInputCustomElement
     public autoselect: boolean;
 
     /**
-     * The hint indicating the type of `Enter` key to show on a virtual keyboard,
+     * The amount by which the value should increment or decrement for each step,
      * or undefined to use the default behavior.
      */
     @bindable({ defaultValue: undefined })
-    public enterkey: EnterKeyHint | undefined;
-
-    /**
-     * The amount by which the value should increment or decrement for each step.
-     */
-    @bindable({ defaultValue: 1 })
-    public step: number;
+    public step: number | undefined;
 
     /**
      * The min value of the input, or undefined to use no min value.
@@ -104,13 +143,6 @@ export class NumberInputCustomElement
     public max: number | undefined;
 
     /**
-     * True to constrain keyboard input to enforce the specified `min`, `max` and `step`.
-     * Note that this does not prevent an invalid value from being pasted into the input.
-     */
-    @bindable({ defaultValue: false })
-    public constrain: boolean;
-
-    /**
      * True to format the value according to locale rules, otherwise false.
      */
     @bindable({ defaultValue: true })
@@ -122,6 +154,8 @@ export class NumberInputCustomElement
      */
     protected onFocus(): void
     {
+        this.validate = this.invalid;
+
         if (this.autoselect)
         {
             setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
@@ -130,14 +164,15 @@ export class NumberInputCustomElement
 
     /**
      * Called when the input element looses focus.
-     * Sets the value of the input element, to remove any trailing decimal separators.
+     * Clears the value entered by the user.
      */
     protected onBlur(): void
     {
-        if (this.inputValue)
+        this.validate = true;
+
+        if (!this.invalid)
         {
-            this.inputElement.value = "";
-            this.inputElement.value = this.inputValue;
+            this.enteredValue = undefined;
         }
     }
 
@@ -148,69 +183,88 @@ export class NumberInputCustomElement
      */
     protected onKeyDown(event: KeyboardEvent): boolean
     {
+        // Never handle the event if default has been prevented.
+        if (event.defaultPrevented)
+        {
+            return false;
+        }
+
         // Never block special keys or key combinations.
         if (!event.key || event.key.length > 1 || event.metaKey || event.ctrlKey)
         {
             return true;
         }
 
-        // Prevent the user from entering '+'.
-        if (event.key === "+")
+        const selectionStart = this.inputElement.selectionStart!;
+        const selectionEnd = this.inputElement.selectionEnd;
+        const inputValue = this.inputElement.value;
+        const decimalSeparatorPattern = new RegExp(`\\.|,|${escapeRegExp(this.numberFormat.decimalSeparator)}`);
+
+        // Prevent the user from entering something other than a digit, '-' or a decimal separator.
+        if (!this.numberFormat.keyPattern.test(event.key) && !decimalSeparatorPattern.test(event.key))
         {
             return false;
         }
-
-        /* TODO: Disabled because selectionStart is not supported on a number input.
 
         // Prevent the user from entering '-', except at the beginning of the value.
-        if (event.key === "-" && this.inputElement.selectionStart! > 0)
+        if (event.key === this.numberFormat.minusSign && selectionStart > 0)
         {
             return false;
         }
 
-        // Prevent the user from entering something other than a digit or '-' at the beginning of the value.
-        if (!/\d|-/.test(event.key) && this.inputElement.selectionStart === 0)
-        {
-            return false;
-        }
-
-        // Prevent the user from entering consecutive zeros at the beginning of the value.
-        if (event.key === "0" && this.inputElement.selectionStart! <= this.inputElement.value.search(/[^+-0]/))
+        // Prevent the user from entering a decimal separator at the beginning of the value.
+        if (decimalSeparatorPattern.test(event.key) && selectionStart === 0)
         {
             return false;
         }
 
         // Prevent the user from entering something other than a decimal separator if the value begins with a zero.
-        if (!/\d/.test(event.key) && this.inputElement.selectionStart! === 1 && this.inputElement.value.startsWith("0"))
+        if (!decimalSeparatorPattern.test(event.key) && selectionStart === 1 && inputValue.search(/0/) === 0)
         {
             return false;
         }
 
-        */
-
-        if (this.constrain)
+        // Prevent the user from entering a decimal separator if the value already contains a decimal separator outside the selection range.
+        if (decimalSeparatorPattern.test(event.key) && (
+            inputValue.substring(0, selectionStart).search(decimalSeparatorPattern) >= 0 ||
+            selectionEnd != null && inputValue.substring(selectionEnd).search(decimalSeparatorPattern) >= 0))
         {
-            // Prevent the user from entering negative numbers if `min` is more than zero.
-            if (event.key === "-" && this.min != null && this.min >= 0)
+            return false;
+        }
+
+        // Prevent the user from entering negative numbers if `min` is more than zero.
+        if (this.min != null && this.min >= 0)
+        {
+            if (event.key === this.numberFormat.minusSign)
             {
                 return false;
             }
+        }
 
-            /* TODO: Disabled because selectionStart is not supported on a number input.
-
-            // Prevent the user from entering positive numbers if `max` is less than zero.
-            if (event.key !== "-" && this.max != null && this.max < 0 && this.inputElement.selectionStart === 0)
+        // Prevent the user from entering positive numbers if `max` is less than zero.
+        if (this.max != null && this.max < 0)
+        {
+            if (event.key !== this.numberFormat.minusSign && selectionStart === 0)
             {
                 return false;
             }
+        }
 
-            */
-
-            // Prevent the user from entering a decimal point if `step` is a whole number.
-            if (this.step % 1 === 0 && !/\d|-/.test(event.key))
+        // Prevent the user from entering a decimal point if `step` is a whole number.
+        if (this.step != null && this.step % 1 === 0)
+        {
+            if (decimalSeparatorPattern.test(event.key))
             {
                 return false;
             }
+        }
+
+        // Coerce the enterede decimal separator to match the decimal separator for the current locale.
+        if (decimalSeparatorPattern.test(event.key))
+        {
+            document.execCommand("insertText", false, this.numberFormat.decimalSeparator);
+
+            return false;
         }
 
         return true;

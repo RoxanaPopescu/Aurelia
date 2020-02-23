@@ -10,7 +10,6 @@ export type DurationStyle = "narrow" | "long";
 
 /**
  * Represents a value converter that formats a duration as a localized duration string.
- * See the `Luxon` API docs for details.
  */
 @autoinject
 export class DurationValueConverter

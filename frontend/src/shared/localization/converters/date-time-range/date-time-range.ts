@@ -5,7 +5,6 @@ import { TimeValueConverter } from "../time/time";
 
 /**
  * Represents a value converter that formats a date and time range value as a localized date and time range string.
- * See the `Luxon` API docs for details.
  */
 @autoinject
 export class DateTimeRangeValueConverter

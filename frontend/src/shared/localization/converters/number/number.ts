@@ -40,22 +40,22 @@ export class NumberValueConverter
      * Converts the value for use in the view,
      * formatting the specified value as a localized number string with the specified number of fraction digits.
      * @param value The value to format.
-     * @param fractionDigits The number of fraction digits to use, or undefined to use the default.
+     * @param fractionDigits The number of fraction digits to use, null to apply no limit, or undefined to use the default.
      * @param useGrouping True to use grouping, false to not use grouping, or undefined to use the default.
      * @returns A localized string representing the value.
      */
-    public toView(value: number | undefined | null, fractionDigits: number | undefined, useGrouping?: boolean): string | null | undefined;
+    public toView(value: number | undefined | null, fractionDigits: number | null | undefined, useGrouping?: boolean): string | null | undefined;
 
     /**
      * Converts the value for use in the view,
      * formatting the specified value as a localized number string with the specified number of fraction digits.
      * @param value The value to format.
-     * @param minimumFractionDigits The minimum number of fraction digits to use, or undefined to use the default.
-     * @param maximumFractionDigits The maximum number of fraction digits to use, or undefined to use the default.
+     * @param minimumFractionDigits The minimum number of fraction digits to use, null to apply no limit, or undefined to use the default.
+     * @param maximumFractionDigits The maximum number of fraction digits to use, null to apply no limit, or undefined to use the default.
      * @param useGrouping True to use grouping, false to not use grouping, or undefined to use the default.
      * @returns A localized string representing the value.
      */
-    public toView(value: number | undefined | null, minimumFractionDigits: number | undefined, maximumFractionDigits: number | undefined, useGrouping?: boolean): string | null | undefined;
+    public toView(value: number | undefined | null, minimumFractionDigits: number | undefined, maximumFractionDigits: number | undefined | null, useGrouping?: boolean): string | null | undefined;
 
     public toView(...args: any[]): string | null | undefined
     {
@@ -64,11 +64,11 @@ export class NumberValueConverter
             return args[0];
         }
 
-        const numberFormat = this.getNumberFormat(this._localeService.locale.code,
+        const numberFormat = this.getNumberFormat(`${this._localeService.locale.code}-u-nu-latn`,
         {
             style: "decimal",
-            minimumFractionDigits: typeof args[1] === "number" ? args[1] : undefined,
-            maximumFractionDigits: typeof args[2] === "number" ? args[2] : typeof args[1] === "number" ? args[1] : undefined,
+            minimumFractionDigits: typeof args[1] === "number" || args[1] === null ? args[1] : undefined,
+            maximumFractionDigits: typeof args[2] === "number" || args.length >= 3 ? args[2] : typeof args[1] === "number" || args[1] === null ? args[1] : undefined,
             useGrouping: typeof args[args.length - 1] === "boolean" ? args[args.length - 1] : undefined
         });
 
@@ -88,7 +88,19 @@ export class NumberValueConverter
 
         if (numberFormat == null)
         {
-            numberFormat = new Intl.NumberFormat(localeCode, options);
+            const resolvedOptions = { ...options };
+
+            if (resolvedOptions.minimumFractionDigits === null)
+            {
+                resolvedOptions.minimumFractionDigits = 0;
+            }
+
+            if (resolvedOptions.maximumFractionDigits === null)
+            {
+                resolvedOptions.maximumFractionDigits = 20;
+            }
+
+            numberFormat = new Intl.NumberFormat(localeCode, resolvedOptions);
             numberFormatCache.set(cacheKey, numberFormat);
         }
 

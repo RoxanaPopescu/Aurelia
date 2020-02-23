@@ -160,7 +160,7 @@ async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
         return new Promise(() => undefined);
     }
 
-    // Set the default locale to use for the Luxon package.
+    // Set the default locale to use for the `luxon` package.
     LuxonSettings.defaultLocale = newLocale.code;
 
     // Set the `locale` header to use for the `ApiClient`.

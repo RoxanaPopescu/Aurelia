@@ -30,20 +30,19 @@
         <div class="input-control-inner">
 
             <div class="input-value user-select-contain">
-                ${value | number: useGrouping}
+                ${value | number: 0 : null : useGrouping}
             </div>
 
             <input
                 ref="inputElement"
                 id="input-${id}"
                 class="input-input --hide-when-unfocused"
-                type="number"
+                type="text"
                 inputmode="decimal"
-                value.two-way="inputValue"
-                min.bind="min"
-                max.bind="max"
-                step.bind="step"
+                value.bind="inputValue"
                 autocomplete.bind="autocomplete"
+                autocorrect="off"
+                autocapitalize="off"
                 mozactionhint.bind="enterkey"
                 enterkeyhint.bind="enterkey"
                 disabled.bind="disabled"
@@ -67,16 +66,17 @@
 
     <div class="input-validation font-small">
 
-        <input-validator
+        <custom-validator
+            if.bind="!readonly && !disabled && validate"
             active.bind="true"
-            input.bind="inputElement"
-            trigger="change">
+            valid.bind="!invalid"
+            trigger="input">
 
             <template replace-part="invalid" translate>
                 Please provide a numeric value.
             </template>
 
-        </input-validator>
+        </custom-validator>
 
         <slot name="validation"></slot>
 
