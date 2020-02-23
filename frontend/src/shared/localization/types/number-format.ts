@@ -26,8 +26,8 @@ export class NumberFormat
                 case "integer":
                 {
                     return {
-                        validPattern: "(\\d|[1-9]\\d+)",
-                        inputPattern: ["((\\d|[1-9]\\d+)", ")?"],
+                        validPattern: "\\d+",
+                        inputPattern: ["(\\d+", ")?"],
                         keyPattern: "\\d"
                     };
                 }

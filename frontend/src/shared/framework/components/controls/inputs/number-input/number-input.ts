@@ -52,7 +52,7 @@ export class NumberInputCustomElement
         }
 
         // Return the value of the input element.
-        return this.value != null ? this.value.toString() : "";
+        return this.value != null ? this.value.toString().replace(".", this.numberFormat.decimalSeparator) : "";
     }
 
     /**
@@ -70,7 +70,7 @@ export class NumberInputCustomElement
             // Is the value valid?
             if (this.numberFormat.validPattern.test(value))
             {
-                this.value = parseFloat(value);
+                this.value = parseFloat(value) || 0;
                 this.invalid = false;
             }
             else
@@ -173,6 +173,7 @@ export class NumberInputCustomElement
         if (!this.invalid)
         {
             this.enteredValue = undefined;
+            this.inputElement.value = this.inputValue;
         }
     }
 
@@ -200,25 +201,25 @@ export class NumberInputCustomElement
         const inputValue = this.inputElement.value;
         const decimalSeparatorPattern = new RegExp(`\\.|,|${escapeRegExp(this.numberFormat.decimalSeparator)}`);
 
-        // Prevent the user from entering something other than a digit, '-' or a decimal separator.
+        // Prevent the user from entering something other than a digit, a minus sign or a decimal separator.
         if (!this.numberFormat.keyPattern.test(event.key) && !decimalSeparatorPattern.test(event.key))
         {
             return false;
         }
 
-        // Prevent the user from entering '-', except at the beginning of the value.
+        // Prevent the user from entering a minus sign, except at the beginning of the value.
         if (event.key === this.numberFormat.minusSign && selectionStart > 0)
         {
             return false;
         }
 
-        // Prevent the user from entering a decimal separator at the beginning of the value.
-        if (decimalSeparatorPattern.test(event.key) && selectionStart === 0)
+        // Prevent the user from entering something other than a minus sign or a non-zero digit before a leading zero.
+        if (event.key !== this.numberFormat.minusSign && !(/[1-9]/).test(event.key) && selectionStart === 0 && inputValue.search(/0/) === 0)
         {
             return false;
         }
 
-        // Prevent the user from entering something other than a decimal separator if the value begins with a zero.
+        // Prevent the user from entering something other than a decimal separator after a leading zero.
         if (!decimalSeparatorPattern.test(event.key) && selectionStart === 1 && inputValue.search(/0/) === 0)
         {
             return false;
