@@ -61,7 +61,10 @@ export class PercentValueConverter
             return args[0];
         }
 
-        const numberFormat = this.getNumberFormat(this._localeService.locale.code,
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
+        const numberFormat = this.getNumberFormat(localeCodeWithExtension,
         {
             style: "percent",
             minimumFractionDigits: args[1],

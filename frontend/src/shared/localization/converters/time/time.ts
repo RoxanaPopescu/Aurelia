@@ -54,6 +54,9 @@ export class TimeValueConverter
             return value;
         }
 
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
         const valueToFormat =
             value instanceof Duration ? DateTime.local().startOf("day").plus(value) :
             value instanceof DateTime && convert ? value.toLocal() : value;
@@ -61,7 +64,7 @@ export class TimeValueConverter
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
             ...timeStyles[style || "narrow"],
-            locale: `${this._localeService.locale.code}-u-ca-iso8601`,
+            locale: localeCodeWithExtension,
             hour12: false
         };
 

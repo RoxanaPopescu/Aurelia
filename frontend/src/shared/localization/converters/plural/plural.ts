@@ -40,7 +40,10 @@ export class PluralValueConverter
             return value;
         }
 
-        const pluralRules = this.getPluralRules(this._localeService.locale.code);
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
+        const pluralRules = this.getPluralRules(localeCodeWithExtension);
         const pluralCategories = pluralRules.resolvedOptions().pluralCategories;
 
         if (strings.length !== pluralCategories.length)

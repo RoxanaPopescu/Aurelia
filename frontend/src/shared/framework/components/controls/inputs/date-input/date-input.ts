@@ -14,10 +14,12 @@ export class DateInputCustomElement
     /**
      * Creates a new instance of the type.
      * @param element The element representing the component.
+     * @param dateFormat The `DateFormat` instance.
      */
-    public constructor(element: Element)
+    public constructor(element: Element, dateFormat: DateFormat)
     {
         this._element = element as HTMLElement;
+        this.dateFormat = dateFormat;
     }
 
     private readonly _element: HTMLElement;
@@ -25,7 +27,7 @@ export class DateInputCustomElement
     /**
      * The date format for the current locale.
      */
-    protected dateFormat = new DateFormat();
+    protected dateFormat: DateFormat;
 
     /**
      * The element representing the text input.
@@ -332,11 +334,11 @@ export class DateInputCustomElement
     }
 
     /**
-     * Called when a `change` event is triggered on the input.
+     * Called when an event is triggered.
      * Prevents the event from bubbling further, as this input dispatches its own event.
-     * @param event The change event.
+     * @param event The event.
      */
-    protected onInputChange(event: Event): void
+    protected onInternalEvent(event: Event): void
     {
         event.stopPropagation();
     }

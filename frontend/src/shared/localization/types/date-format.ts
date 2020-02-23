@@ -1,5 +1,7 @@
+import { autoinject } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { escapeRegExp } from "shared/utilities";
+import { LocaleService } from "../services/locale";
 import * as formatTokens from "../resources/strings/format-tokens.json";
 
 // The date used when resolving format parts.
@@ -8,19 +10,20 @@ const date = DateTime.fromMillis(0);
 /**
  * Represents a date format for a specific locale.
  */
+@autoinject
 export class DateFormat
 {
     /**
      * Creates a new instance of the type.
-     * @param localeCode The IETF language tag identifying the locale associated
-     * with the format, or undefined to create the format for the current locale.
+     * @param localeService The `LocaleService`instance.
      */
-    public constructor(localeCode?: string)
+    public constructor(localeService: LocaleService)
     {
+        const localeCodeWithExtension = `${localeService.locale.code}${localeService.locale.extension}`;
         const dateParts = date.toLocaleParts(
         {
             ...DateTime.DATE_SHORT,
-            locale: localeCode ? `${localeCode}-u-ca-iso8601-nu-latn` : undefined
+            locale: localeCodeWithExtension
         });
 
         const parts = dateParts.map(part =>

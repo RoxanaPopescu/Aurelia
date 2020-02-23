@@ -88,10 +88,13 @@ export class CurrencyValueConverter
                 undefined
         };
 
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
         // Create the format, based on what we know so far.
         // Note that this may not be the format we actually end up using,
         // but we need it to resolve the min and max fraction digits.
-        let numberFormat = this.getNumberFormat(this._localeService.locale.code,
+        let numberFormat = this.getNumberFormat(localeCodeWithExtension,
         {
             ...numberFormatOptions,
 
@@ -125,7 +128,7 @@ export class CurrencyValueConverter
             if (roundedAmount % 1 !== 0)
             {
                 // Create a new format with the resolved max fraction digits.
-                numberFormat = this.getNumberFormat(this._localeService.locale.code,
+                numberFormat = this.getNumberFormat(localeCodeWithExtension,
                 {
                     ...numberFormatOptions,
                     maximumFractionDigits: resolvedOptions.maximumFractionDigits
@@ -134,7 +137,7 @@ export class CurrencyValueConverter
             else
             {
                 // Create a new format with zero min fraction digits.
-                numberFormat = this.getNumberFormat(this._localeService.locale.code,
+                numberFormat = this.getNumberFormat(localeCodeWithExtension,
                 {
                     ...numberFormatOptions,
                     minimumFractionDigits: 0
@@ -146,7 +149,7 @@ export class CurrencyValueConverter
         else if (args[1] === "none")
         {
             // Create a new format with the modified style.
-            numberFormat = this.getNumberFormat(this._localeService.locale.code, numberFormatOptions);
+            numberFormat = this.getNumberFormat(localeCodeWithExtension, numberFormatOptions);
         }
 
         // Format the value.

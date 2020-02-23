@@ -52,7 +52,10 @@ export class ListValueConverter
             return value;
         }
 
-        const listFormat = this.getListFormat(this._localeService.locale.code,
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
+        const listFormat = this.getListFormat(localeCodeWithExtension,
         {
             style, type
         });

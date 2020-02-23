@@ -27,11 +27,13 @@ export class TimeInputCustomElement
     /**
      * Creates a new instance of the type.
      * @param element The element representing the component.
+     * @param timeFormat The `TimeFormat` instance.
      * @param timeValueConverter The `TimeValueConverter` instance.
      */
-    public constructor(element: Element, timeValueConverter: TimeValueConverter)
+    public constructor(element: Element, timeFormat: TimeFormat, timeValueConverter: TimeValueConverter)
     {
         this._element = element as HTMLElement;
+        this.timeFormat = timeFormat;
         this._timeValueConverter = timeValueConverter;
     }
 
@@ -41,7 +43,7 @@ export class TimeInputCustomElement
     /**
      * The format info for the current locale.
      */
-    protected timeFormat = new TimeFormat();
+    protected timeFormat: TimeFormat;
 
     /**
      * The element representing the input.
@@ -435,11 +437,11 @@ export class TimeInputCustomElement
     }
 
     /**
-     * Called when a `change` event is triggered on the input.
+     * Called when an event is triggered.
      * Prevents the event from bubbling further, as this input dispatches its own event.
-     * @param event The change event.
+     * @param event The event.
      */
-    protected onInputChange(event: Event): void
+    protected onInternalEvent(event: Event): void
     {
         event.stopPropagation();
     }

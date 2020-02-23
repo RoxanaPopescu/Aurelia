@@ -37,9 +37,12 @@ export class RelativeDateValueConverter
             return value;
         }
 
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
         const formatOptions: ToRelativeCalendarOptions =
         {
-            locale: `${this._localeService.locale.code}-u-ca-iso8601`
+            locale: localeCodeWithExtension
         };
 
         return value.toRelativeCalendar(formatOptions);

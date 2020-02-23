@@ -49,11 +49,14 @@ export class WeekdayValueConverter
             return Info.weekdays(style)[value - 1];
         }
 
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
         const valueToFormat = convert ? value.toLocal() : value;
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
-            locale: this._localeService.locale.code,
+            locale: localeCodeWithExtension,
             weekday: style
         };
 

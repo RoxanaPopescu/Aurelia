@@ -64,7 +64,10 @@ export class NumberValueConverter
             return args[0];
         }
 
-        const numberFormat = this.getNumberFormat(`${this._localeService.locale.code}-u-nu-latn`,
+        // Get the locale code, including the extension.
+        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+
+        const numberFormat = this.getNumberFormat(localeCodeWithExtension,
         {
             style: "decimal",
             minimumFractionDigits: typeof args[1] === "number" || args[1] === null ? args[1] : undefined,

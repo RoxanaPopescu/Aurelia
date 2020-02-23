@@ -10,6 +10,15 @@ import { NumberFormat } from "shared/localization";
 export class NumberInputCustomElement
 {
     /**
+     * Creates a new instance of the type.
+     * @param numberFormat The `NumberFormat` instance.
+     */
+    public constructor(numberFormat: NumberFormat)
+    {
+        this.numberFormat = numberFormat;
+    }
+
+    /**
      * The unique ID of the input element associated with the label.
      */
     protected id = Id.sequential();
@@ -17,7 +26,7 @@ export class NumberInputCustomElement
     /**
      * The number format for the current locale.
      */
-    protected numberFormat = new NumberFormat();
+    protected numberFormat: NumberFormat;
 
     /**
      * The input element.
