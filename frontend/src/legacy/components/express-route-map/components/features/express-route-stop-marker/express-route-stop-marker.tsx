@@ -45,7 +45,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                             ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
                             {!this.props.unconnected &&
-                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--:--"}</div>}
+                            <div>Est. {Localization.formatTime(this.props.routeStop.estimates?.arrivalTime) || "--:--"}</div>}
                         </div>
 
                         <div className={`
@@ -185,7 +185,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                         </div>
                     </div>
 
-                    {this.props.routeStop.arrivalTime && (
+                    {this.props.routeStop.arrivedTime && (
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
@@ -193,7 +193,7 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                                 )}
                             </div>
                             <div>
-                                {Localization.formatTime(this.props.routeStop.arrivalTime)}
+                                {Localization.formatTime(this.props.routeStop.arrivedTime)}
                             </div>
                         </div>
                     )}

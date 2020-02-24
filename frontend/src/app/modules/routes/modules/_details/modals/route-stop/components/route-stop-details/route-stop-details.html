@@ -42,11 +42,11 @@
                         Planned arrival
                     </div>
 
-                    <div if.bind="model.routeStop.arrivalTime" class="opacity-faded" translate>
+                    <div if.bind="model.routeStop.arrivedTime" class="opacity-faded" translate>
                         Actual arrival
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivalTime && model.routeStop.estimates.arrivalTime" class="opacity-faded" translate>
+                    <div if.bind="!model.routeStop.arrivedTime && model.routeStop.estimates.arrivalTime" class="opacity-faded" translate>
                         Estimated arrival
                     </div>
 
@@ -62,11 +62,11 @@
                         ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivalTime && model.routeStop.estimates.arrivalTime">
+                    <div if.bind="!model.routeStop.arrivedTime && model.routeStop.estimates.arrivalTime">
                         ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivalTime && !model.routeStop.estimates.arrivalTime">
+                    <div if.bind="!model.routeStop.arrivedTime && !model.routeStop.estimates.arrivalTime">
                         --
                     </div>
 

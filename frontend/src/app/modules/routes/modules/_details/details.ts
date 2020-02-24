@@ -44,6 +44,7 @@ export class DetailsModule
 
     private _isMovingStop = false;
     private _targetIndex: number | undefined;
+    private pollTimeout: any;
 
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
@@ -63,6 +64,11 @@ export class DetailsModule
      * If the current user is allowed to edit the route.
      */
     protected editable = false;
+
+    /**
+     * True to show the map, otherwise false.
+     */
+    protected routeId: string;
 
     /**
      * True to show the map, otherwise false.
@@ -90,7 +96,8 @@ export class DetailsModule
      */
     public activate(params: IRouteParams): void
     {
-        this.fetchRoute(params.id);
+        this.routeId = params.id;
+        this.fetchRoute();
     }
 
     /**
@@ -116,7 +123,7 @@ export class DetailsModule
 
         if (driver != null)
         {
-            this.fetchRoute(this.route!.id);
+            this.fetchRoute();
         }
     }
 
@@ -130,7 +137,7 @@ export class DetailsModule
 
         if (fulfiller != null)
         {
-            this.fetchRoute(this.route!.id);
+            this.fetchRoute();
         }
     }
 
@@ -193,7 +200,7 @@ export class DetailsModule
         {
             this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
 
-            this.fetchRoute(this.route!.id);
+            this.fetchRoute();
         }
     }
 
@@ -220,7 +227,7 @@ export class DetailsModule
             Log.error("Could not remove route stop", error);
         }
 
-        this.fetchRoute(this.route!.id);
+        this.fetchRoute();
     }
 
     /**
@@ -249,7 +256,7 @@ export class DetailsModule
                     {
                         await this._routeService.moveRouteStop(this.route!, source, this._targetIndex!)
 
-                        this.fetchRoute(this.route!.id);
+                        this.fetchRoute();
                     }
                     catch (error)
                     {
@@ -294,7 +301,7 @@ export class DetailsModule
                 this.route!.stops.push(savedStop);
             }
 
-            this.fetchRoute(this.route!.id);
+            this.fetchRoute();
         }
     }
 
@@ -313,8 +320,10 @@ export class DetailsModule
      * Fetches the specified route.
      * @param routeId The ID of the route to fetch.
      */
-    private fetchRoute(routeId: string): void
+    private fetchRoute(): void
     {
+        clearTimeout(this.pollTimeout);
+
         if (this.fetchOperation != null)
         {
             this.fetchOperation.abort();
@@ -322,10 +331,12 @@ export class DetailsModule
 
         this.fetchOperation = new Operation(async signal =>
         {
-            this.route = await this._routeService.get(routeId, signal);
+            this.route = await this._routeService.get(this.routeId, signal);
 
             this._router.title = this.route.slug;
             this._router.updateTitle();
+
+            this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
         });
     }
 }

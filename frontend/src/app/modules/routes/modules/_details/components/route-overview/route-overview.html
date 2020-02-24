@@ -108,11 +108,11 @@
                     </div>
 
                     <div empty-value if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" class="font-largest">
-                        ${route.stops[0].arrivalTime | dateTime: 'narrow' : false}
+                        ${route.stops[0].arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
                     <div empty-value if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" class="font-largest">
-                        ${route.stops[0].estimates.arrivalTime | dateTime: 'narrow' : false}
+                        ${route.stops[0].estimates.arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
                     <div class="font-small">
@@ -158,8 +158,7 @@
                         class="font-largest"
                         accent.bind="isRouteDelayed ? 'negative' : 'neutral' & attr">
 
-                        <span if.bind="route.status.slug === 'started'">${route.completionTime | time: 'narrow' : false}</span>
-                        <span if.bind="route.status.slug !== 'started'">${route.completionTime | dateTime: 'narrow' : false}</span>
+                        <span if.bind="route.estimates.completionTime">${route.estimates.completionTime | time: 'narrow' : false}</span>
 
                     </div>
 

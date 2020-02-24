@@ -486,14 +486,14 @@ export class MergeColumnCustomElement
     {
         for (const stop of this.driverStops)
         {
-            stop.stop.arrivalTime = undefined;
+            stop.stop.estimates = undefined;
         }
 
         if (this.workspace.newDriverStops != null)
         {
             for (const stop of this.workspace.newDriverStops)
             {
-                stop.arrivalTime = undefined;
+                stop.estimates = undefined;
             }
         }
 
@@ -511,7 +511,7 @@ export class MergeColumnCustomElement
 
                 if (stop != null)
                 {
-                    stop.stop.arrivalTime = estimatedStop.arrivalTime;
+                    stop.stop.estimates = estimatedStop.estimates;
                     stop.stop.isDelayed = estimatedStop.isDelayed;
                 }
             }

@@ -37,14 +37,14 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.estimates = new RouteEstimates(data.estimates);
             }
 
-            if (data.arrivalTime != null)
+            if (data.arrivedTime != null)
             {
-                this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
+                this.arrivedTime = DateTime.fromISO(data.arrivedTime, { setZone: true });
             }
 
-            if (data.completionTime != null)
+            if (data.completedTime != null)
             {
-                this.completionTime = DateTime.fromISO(data.completionTime, { setZone: true });
+                this.completedTime = DateTime.fromISO(data.completedTime, { setZone: true });
             }
 
             if (data.taskTime != null)
@@ -107,12 +107,12 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * The date and time at which the driver arrived.
      */
-    public arrivalTime?: DateTime;
+    public arrivedTime?: DateTime;
 
     /**
      * The date and time at which the stop was complated.
      */
-    public completionTime?: DateTime;
+    public completedTime?: DateTime;
 
     /**
      * True if there is a delay at this stop, and the delay excedes
@@ -133,8 +133,12 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public get arrivalDelay(): Duration | undefined
     {
-        return this.isDelayed && this.arrivalTime && this.arrivalTimeFrame.to
-            ? this.arrivalTime
+        if (!this.isDelayed || this.estimates == null) {
+            return undefined;
+        }
+
+        return this.arrivalTimeFrame.to
+            ? this.estimates.arrivalTime
                 .startOf("minute")
                 .diff(this.arrivalTimeFrame.to.startOf("minute"))
             : undefined;

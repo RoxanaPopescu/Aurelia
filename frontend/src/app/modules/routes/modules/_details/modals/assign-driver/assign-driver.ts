@@ -108,6 +108,7 @@ export class AssignDriverPanel
     {
         try
         {
+            this._modal.busy = true;
             await this._routeAssignmentService.assignDriver(this.route, driver);
 
             this._result = driver;
@@ -117,6 +118,7 @@ export class AssignDriverPanel
         catch (error)
         {
             Log.error("Could not assign driver", error);
+            this._modal.busy = false;
         }
     }
 }

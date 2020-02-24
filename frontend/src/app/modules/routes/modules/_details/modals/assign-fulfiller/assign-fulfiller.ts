@@ -101,6 +101,7 @@ export class AssignFulfillerPanel
     {
         try
         {
+            this._modal.busy = true;
             await this._routeAssignmentService.assignFulfiller(this.route, fulfiller);
 
             this._result = fulfiller;
@@ -110,6 +111,7 @@ export class AssignFulfillerPanel
         catch (error)
         {
             Log.error("Could not assign fulfiller", error);
+            this._modal.busy = false;
         }
     }
 }

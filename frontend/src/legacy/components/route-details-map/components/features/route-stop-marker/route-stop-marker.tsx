@@ -39,16 +39,6 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                 <React.Fragment>
 
                     <div className={`routeDetails-routeStopMarker ${this.props.faded ? "--faded" : ""}`}>
-
-                        {/*
-                        <div className={`
-                            routeDetails-routeStopMarker-info
-                            ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
-                            <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
-                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--:--"}</div>
-                        </div>
-                        */}
-
                         <div className={`
                             routeDetails-routeStopMarker-shape
                             routeDetails-routeStopMarker--${this.getMarkerModifier()}
@@ -183,7 +173,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                         </div>
                     </div>
 
-                    {this.props.routeStop.arrivalTime && (
+                    {this.props.routeStop.arrivedTime && (
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
@@ -191,7 +181,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps>
                                 )}
                             </div>
                             <div>
-                                {Localization.formatTime(this.props.routeStop.arrivalTime)}
+                                {Localization.formatTime(this.props.routeStop.arrivedTime)}
                             </div>
                         </div>
                     )}

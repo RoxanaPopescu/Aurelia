@@ -1,6 +1,6 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { Route, RouteStop } from "app/model/route";
-import { DateTime, Duration } from "luxon";
+import { Duration } from "luxon";
 import { Collo } from "app/model/collo";
 
 /**
@@ -136,17 +136,21 @@ export class RouteOverview
     {
         let duration = Duration.fromMillis(0);
 
-        if (this.route != null && (this.route.stops[0] as RouteStop).arrivalTime != null)
+        if (this.route != null && (this.route.stops[0] as RouteStop).arrivedTime != null)
         {
-            const from = (this.route.stops[0] as RouteStop).arrivalTime;
+            const from = (this.route.stops[0] as RouteStop).arrivedTime!;
 
-            if (this.route.status.slug === "completed")
+            if (this.route.completedTime != null)
             {
-                duration = DateTime.local().diff(this.route.completionTime!);
+                duration = from.diff(this.route.completedTime);
             }
             else
             {
-                duration = DateTime.local().diff(from!);
+                // We get the last stop's estimates
+                const lastStop = this.route.stops[this.route.stops.length-1];
+                if (lastStop instanceof RouteStop && lastStop.estimates != null) {
+                    duration = from.diff(lastStop.estimates.completionTime);
+                }
             }
         }
 
@@ -159,15 +163,19 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get routeDelay(): Duration | undefined
     {
-        if (this.route != null)
+        if (this.route == null || this.route.estimates == null)
         {
-            const lastStop = this.route.stops[this.route.stops.length - 1] as RouteStop;
-            if (lastStop.arrivalTimeFrame.to != null &&
-                this.route.completionTime != null &&
-                lastStop.arrivalTimeFrame.to.diff(this.route.completionTime).as("second") > 0)
-            {
-                return lastStop.arrivalTimeFrame.to.diff(this.route.completionTime);
-            }
+            return undefined;
+        }
+
+        const lastStop = this.route.stops[this.route.stops.length - 1] as RouteStop;
+        const completionTime = this.route.estimates.completionTime;
+
+        if (lastStop.arrivalTimeFrame.to != null &&
+            completionTime != null &&
+            lastStop.arrivalTimeFrame.to.diff(completionTime).as("second") > 0)
+        {
+            return lastStop.arrivalTimeFrame.to.diff(completionTime);
         }
 
         return undefined;
@@ -217,17 +225,17 @@ export class RouteOverview
     {
         if (this.route != null && this.route.stops[0] instanceof RouteStop)
         {
-            if (this.route.stops[0].arrivalTime != null)
+            if (this.route.stops[0].arrivedTime != null)
             {
                 if (this.route.stops[0].arrivalTimeFrame.from != null &&
-                    this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.from).as("second") < 0)
+                    this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.from).as("second") < 0)
                 {
-                    return this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.from);
+                    return this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.from);
                 }
                 if (this.route.stops[0].arrivalTimeFrame.to != null &&
-                    this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.to).as("second") > 0)
+                    this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.to).as("second") > 0)
                 {
-                    return this.route.stops[0].arrivalTime.diff(this.route.stops[0].arrivalTimeFrame.to);
+                    return this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.to);
                 }
             }
         }

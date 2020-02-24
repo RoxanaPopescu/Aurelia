@@ -44,7 +44,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                             expressRoutes-driverRouteStopMarker-info
                             ${this.props.routeStop.hasAlert ? '--has-alert' : this.props.routeStop.hasWarning ? '--has-warning' : ''}`}>
                             <div>{Localization.formatTimeRange(this.props.routeStop.arrivalTimeFrame)}</div>
-                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivalTime) || "--:--"}</div>
+                            <div>Est. {Localization.formatTime(this.props.routeStop.arrivedTime) || "--:--"}</div>
                         </div>
 
                         <div className={`
@@ -181,7 +181,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                         </div>
                     </div>
 
-                    {this.props.routeStop.arrivalTime && (
+                    {this.props.routeStop.arrivedTime && (
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
@@ -189,7 +189,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                                 )}
                             </div>
                             <div>
-                                {Localization.formatTime(this.props.routeStop.arrivalTime)}
+                                {Localization.formatTime(this.props.routeStop.arrivedTime)}
                             </div>
                         </div>
                     )}

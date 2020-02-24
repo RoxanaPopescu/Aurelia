@@ -152,11 +152,11 @@
                                                 <div>
                                                     &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
                                                 </div>
-                                                <div if.bind="stop.stop.arrivalTime == null">
+                                                <div if.bind="stop.stop.estimates.arrivalTime == null">
                                                     &nbsp;&nbsp;(--:--)
                                                 </div>
-                                                <div if.bind="stop.stop.arrivalTime != null">
-                                                    &nbsp;&nbsp;(${stop.stop.arrivalTime | time: 'narrow' : false})
+                                                <div if.bind="stop.stop.estimates.arrivalTime != null">
+                                                    &nbsp;&nbsp;(${stop.stop.estimates.arrivalTime | time: 'narrow' : false})
                                                 </div>
                                             </div>
                                         </div>
