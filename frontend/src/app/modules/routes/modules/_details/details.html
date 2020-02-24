@@ -57,7 +57,7 @@
                         Status
                     </div>
 
-                    <div slot="value" empty-value>
+                    <div slot="value" accent.bind="route.status.slug === 'cancelled' ? 'negative' : 'neutral' & attr" empty-value>
                         ${route.status.name}
                     </div>
 
