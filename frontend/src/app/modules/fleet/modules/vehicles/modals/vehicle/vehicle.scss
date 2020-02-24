@@ -5,6 +5,7 @@ modal-panel[name="vehicle"]
     .button-container
     {
         display: flex;
+        justify-content: flex-end;
 
         button
         {

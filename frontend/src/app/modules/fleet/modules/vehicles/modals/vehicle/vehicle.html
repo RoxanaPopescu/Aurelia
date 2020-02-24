@@ -22,12 +22,10 @@
 
         </modal-header>
 
-        <hr class="hr-line margin-large-bottom">
-
         <modal-section class="margin-larger-bottom">
 
             <div if.bind="vehicle.id" class="control-row margin-larger-bottom">
-                <text-input disabled="true" label="above" value.bind="vehicle.id" class="flex-basis-1-of-1">
+                <text-input readonly="true" label="above" value.bind="vehicle.id" class="flex-basis-1-of-1">
 
                     <span slot="heading" translate>
                         Id
@@ -215,6 +213,40 @@
 
             <div class="control-row margin-larger-bottom">
 
+                <number-input label="above" value.bind="vehicle.approvedTotalWeight" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
+
+                    <span slot="heading" translate>
+                        Approved total weight
+                    </span>
+
+                    <span slot="after" class="opacity-faded">
+                        kg
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.approvedTotalWeight">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="vehicle.approvedTotalWeight"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+                <div class="flex-basis-1-of-3"></div>
+
+                <div class="flex-basis-1-of-3"></div>
+
+            </div>
+
+            <div class="control-row">
+
                 <number-input
                     label="above"
                     value.bind="vehicle.internalDimensions.height"
@@ -236,7 +268,6 @@
                         <range-validator
                             value.bind="vehicle.internalDimensions.height"
                             min.bind="0"
-                            enabled.bind="true"
                             min-inclusive.bind="false"
                         >
                         </range-validator>
@@ -262,6 +293,12 @@
                     </span>
 
                     <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.width"
+                            enabled.bind="vehicle.internalDimensions.width || vehicle.internalDimensions.height || vehicle.internalDimensions.length"
+                        >
+                        </required-validator>
 
                         <range-validator
                             value.bind="vehicle.internalDimensions.width"
@@ -297,43 +334,13 @@
 
             </div>
 
-            <div class="control-row">
-
-                <number-input label="above" value.bind="vehicle.approvedTotalWeight" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
-
-                    <span slot="heading" translate>
-                        Approved total weight
-                    </span>
-
-                    <span slot="after" class="opacity-faded">
-                        kg
-                    </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="vehicle.approvedTotalWeight">
-                        </required-validator>
-
-                        <range-validator
-                            value.bind="vehicle.approvedTotalWeight"
-                            min.bind="0"
-                            min-inclusive.bind="false">
-                        </range-validator>
-
-                    </div>
-
-                </number-input>
-
-                <div class="flex-basis-1-of-3"></div>
-
-                <div class="flex-basis-1-of-3"></div>
-
-            </div>
-
         </modal-section>
 
         <div class="button-container margin-large-top">
+
+            <button appearance="outline" accent="primary" click.trigger="onCancel()" translate>
+                Cancel
+            </button>
 
             <button if.bind="vehicle.id == null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
                 Create vehicle
@@ -341,10 +348,6 @@
 
             <button if.bind="vehicle.id != null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
                 Save changes
-            </button>
-
-            <button appearance="outline" accent="primary" click.trigger="onCancel()" translate>
-                Cancel
             </button>
 
         </div>
