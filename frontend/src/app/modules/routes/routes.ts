@@ -40,9 +40,7 @@ export class RoutesModule
             {
                 name: "details",
                 route: "details/:id",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/_details/details") :
-                    PLATFORM.moduleName("./modules/details/details"),
+                moduleId: PLATFORM.moduleName("./modules/_details/details"),
                 settings:
                 {
                     claims:

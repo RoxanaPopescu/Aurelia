@@ -143,14 +143,13 @@ export class ListPage
 
         try
         {
-            // await this._routeService.setRouteStopStatus(this.route!, stop, "cancelled");
-            // FIXME: DELETE IT
+            await this._vehicleService.delete(vehicle.id);
         }
         catch (error)
         {
             Log.error("Could not remove the vehicle", error);
         }
 
-        // this.fetchRoute(this.route!.id);
+        this.update();
     }
 }
