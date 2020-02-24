@@ -8,7 +8,7 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="route-stop" position="right" close-button.bind="!edit && true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+    <modal-panel name="route-stop" position="right" close-button.bind="!edit || isNew" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
         <div if-claims="edit-routes" slot="actions">
 
@@ -18,6 +18,14 @@
                 title.translate="Edit stop"
                 click.trigger="onEditToggle()">
                 <icon name="edit"></icon>
+            </button>
+
+            <button
+                if.bind="edit && !isNew"
+                appearance="icon"
+                title.translate="Cancel"
+                click.trigger="onEditToggle()">
+                <icon name="arrow_left"></icon>
             </button>
 
         </div>
