@@ -20,6 +20,14 @@
                 <icon name="edit"></icon>
             </button>
 
+            <button
+                if.bind="edit || isNew"
+                appearance="icon"
+                title.translate="Cancel"
+                click.trigger="onEditToggle()">
+                <icon name="arrow_left"></icon>
+            </button>
+
         </div>
 
         <route-stop-details if.bind="!edit" model.bind="model"></route-stop-details>
