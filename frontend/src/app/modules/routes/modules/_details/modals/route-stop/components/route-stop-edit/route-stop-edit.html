@@ -428,12 +428,12 @@
             Create stop
         </button>
 
-        <button if.bind="!model.isNew" appearance="outline" accent="primary" click.trigger="onCancel()" translate>
-            Cancel edit
-        </button>
-
         <button if.bind="!model.isNew" appearance="solid" accent="primary" click.trigger="onSave()" translate>
             Save changes
+        </button>
+
+        <button if.bind="!model.isNew" appearance="outline" accent="primary" click.trigger="onCancel()" translate>
+            Cancel edit
         </button>
 
     </div>

@@ -41,8 +41,12 @@
                             Name
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="status" translate>
-                            Status
+                        <data-table-cell DISABLED-name="id" translate>
+                            Id
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="type" translate>
+                            Type
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="make" translate>
@@ -53,8 +57,8 @@
                             Model
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="type" translate>
-                            Type
+                        <data-table-cell DISABLED-name="status" translate>
+                            Status
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -73,7 +77,11 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${vehicle.status.name}
+                                ${vehicle.id}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${vehicle.type.name}
                             </data-table-cell>
 
                             <data-table-cell>
@@ -85,7 +93,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${vehicle.type.name}
+                                ${vehicle.status.name}
                             </data-table-cell>
 
                             <data-table-cell align="right">
