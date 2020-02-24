@@ -105,16 +105,16 @@
 
                 </select-input>
 
-                <text-input label="above" value.bind="vehicle.brand" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="vehicle.licensePlate" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
-                        Make
+                        Registration number
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="vehicle.brand">
+                            value.bind="vehicle.licensePlate">
                         </required-validator>
 
                     </div>
@@ -141,6 +141,26 @@
 
                 </text-input>
 
+                <text-input label="above" value.bind="vehicle.make" class="flex-basis-1-of-2">
+
+                    <span slot="heading" translate>
+                        Make
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="vehicle.make">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row">
+
                 <number-input label="above" value.bind="vehicle.productionYear" min.bind="0" use-grouping.bind="false" constrain.bind="true" class="flex-basis-1-of-2">
 
                     <span slot="heading" translate>
@@ -162,26 +182,6 @@
                     </div>
 
                 </number-input>
-
-            </div>
-
-            <div class="control-row">
-
-                <text-input label="above" value.bind="vehicle.licensePlate" class="flex-basis-1-of-2">
-
-                    <span slot="heading" translate>
-                        Registration number
-                    </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="vehicle.licensePlate">
-                        </required-validator>
-
-                    </div>
-
-                </text-input>
 
                 <text-input label="above" value.bind="vehicle.color" class="flex-basis-1-of-2">
 
@@ -265,7 +265,14 @@
 
                     <div slot="validation">
 
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                        >
+                        </required-validator>
+
                         <range-validator
+                            active.bind="true"
                             value.bind="vehicle.internalDimensions.height"
                             min.bind="0"
                             min-inclusive.bind="false"
@@ -295,12 +302,13 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="vehicle.internalDimensions.width"
-                            enabled.bind="vehicle.internalDimensions.width || vehicle.internalDimensions.height || vehicle.internalDimensions.length"
+                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
                         >
                         </required-validator>
 
                         <range-validator
+                            active.bind="true"
                             value.bind="vehicle.internalDimensions.width"
                             min.bind="0"
                             min-inclusive.bind="false">
@@ -322,7 +330,14 @@
 
                     <div slot="validation">
 
+                        <required-validator
+                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                        >
+                        </required-validator>
+
                         <range-validator
+                            active.bind="true"
                             value.bind="vehicle.internalDimensions.length"
                             min.bind="0"
                             min-inclusive.bind="false">

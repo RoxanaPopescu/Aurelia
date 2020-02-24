@@ -89,16 +89,18 @@ export class VehiclePanel
             }
 
             this._modal.busy = true;
+            var updatedVehicle: Vehicle;
 
             if (this.vehicle!.id == null)
             {
-                await this._vehicleService.create(this.vehicle!);
+                updatedVehicle = await this._vehicleService.create(this.vehicle!);
             }
             else
             {
-                await this._vehicleService.update(this.vehicle!);
+                updatedVehicle = await this._vehicleService.update(this.vehicle!);
             }
 
+            this.vehicle = updatedVehicle;
             this._result = this.vehicle;
 
             await this._modal.close();
