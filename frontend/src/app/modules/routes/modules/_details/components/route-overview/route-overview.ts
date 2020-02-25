@@ -142,14 +142,14 @@ export class RouteOverview
 
             if (this.route.completedTime != null)
             {
-                duration = from.diff(this.route.completedTime);
+                duration = this.route.completedTime.diff(from);
             }
             else
             {
                 // We get the last stop's estimates
                 const lastStop = this.route.stops[this.route.stops.length-1];
                 if (lastStop instanceof RouteStop && lastStop.estimates != null) {
-                    duration = from.diff(lastStop.estimates.completionTime);
+                    duration = lastStop.estimates.completionTime.diff(from);
                 }
             }
         }
