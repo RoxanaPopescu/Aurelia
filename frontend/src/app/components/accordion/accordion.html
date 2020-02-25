@@ -1,0 +1,21 @@
+<template class="${expandable ? '--expandable' : ''} ${expanded ? '--expanded' : ''}" surface="card">
+
+    <require from="./accordion.scss"></require>
+
+    <div class="accordion-header ${expandable ? '--clickable' : ''}" click.trigger="onHeaderClick($event)">
+
+        <div class="accordion-header-content">
+            <slot name="header"></slot>
+        </div>
+
+        <icon if.bind="expandable" class="accordion-header-toggle" name="md-expand-${expanded ? 'less' : 'more'}" accent="primary"></icon>
+
+    </div>
+
+    <div show.bind="expanded" class="accordion-content">
+
+        <slot></slot>
+
+    </div>
+
+</template>

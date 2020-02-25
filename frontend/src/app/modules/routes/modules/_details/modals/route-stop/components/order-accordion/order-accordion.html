@@ -1,10 +1,11 @@
 <template class="${expanded ? '--expanded' : ''}" surface="card">
 
+    <require from="app/components/accordion/accordion"></require>
     <require from="./order-accordion.scss"></require>
 
-    <div class="order-accordion-header ${model.colli.length > 0 ? '--clickable' : ''}" click.trigger="onHeaderClick($event, order)">
+    <accordion expandable.bind="model.colli.length > 0" expanded.bind="expanded">
 
-        <div class="order-accordion-header-content">
+        <div slot="header">
 
             <div class="flex-row">
                 <icon if.bind="hasProblems" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
@@ -27,36 +28,30 @@
 
         </div>
 
-        <icon if.bind="model.colli.length > 0" class="order-accordion-header-toggle" name="md-expand-${expanded ? 'less' : 'more'}" accent="primary"></icon>
-
-    </div>
-
-    <div if.bind="expanded" class="order-accordion-content ${showAllColli ? '--expanded' : ''}">
-
-        <data-table appearance="rows">
+        <data-table appearance="rows" class="font-small ${showAllColli ? '--expanded' : ''}">
 
             <data-table-headers>
 
                 <data-table-cell>
-                    <span class="opacity-faded text-truncate font-small" translate>
+                    <span class="opacity-faded text-truncate" translate>
                         Collo barcode
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate" translate>
                         Scan method
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate font-small" translate>
+                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate" translate>
                         Picture
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span class="opacity-faded text-truncate font-small" translate>
+                    <span class="opacity-faded text-truncate" translate>
                         Status
                     </span>
                 </data-table-cell>
@@ -69,19 +64,21 @@
 
                     <data-table-cell>
                         <icon if.bind="collo.status.accent == 'negative'" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
-                        <a
-                            class="order-collo text-truncate font-small"
-                            title="${collo.barcode}"
-                            href="/orders/details/${model.orderSlug}?collo=${collo.barcode}" target="_blank">
-                            ${collo.barcode}
-                        </a>
-                        <div if.bind="collo.origin.slug != 'regular'" class="opacity-faded font-small collo-origin">
-                            ${collo.origin.name}
+                        <div>
+                            <a
+                                class="text-truncate"
+                                title="${collo.barcode}"
+                                href="/orders/details/${model.orderSlug}?collo=${collo.barcode}" target="_blank">
+                                ${collo.barcode}
+                            </a>
+                            <div if.bind="collo.origin.slug != 'regular'" class="margin-top opacity-faded collo-origin">
+                                ${collo.origin.name}
+                            </div>
                         </div>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span if.bind="model.consignor != null" class="order-collo text-truncate font-small">
+                        <span if.bind="model.consignor != null" class="text-truncate">
                             ${collo.scanMethod.name}
                         </span>
                     </data-table-cell>
@@ -93,7 +90,7 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate font-small">
+                        <span class="text-truncate">
                             ${collo.status.name}
                         </span>
                     </data-table-cell>
@@ -104,18 +101,18 @@
 
         </data-table>
 
-        <a if.bind="model.colli.length > 3" class="order-accordion-table-toggle font-small" click.trigger="onShowAllColliToggle()">
+        <a if.bind="model.colli.length > 3" class="order-accordion-show-all-toggle font-small" click.trigger="onShowAllColliToggle()">
 
-            <span if.bind="showAllColli" translate>
+            <template if.bind="showAllColli" translate>
                 Show less
-            </span>
+            </template>
 
-            <span if.bind="!showAllColli" translate>
+            <template if.bind="!showAllColli" translate>
                 Show all
-            </span>
+            </template>
 
         </a>
 
-    </div>
+    </accordion>
 
 </template>
