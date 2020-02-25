@@ -252,8 +252,7 @@
                     value.bind="vehicle.internalDimensions.height"
                     min.bind="0"
                     constrain.bind="true"
-                    class="flex-basis-1-of-3"
-                >
+                    class="flex-basis-1-of-3">
 
                     <span slot="heading" translate>
                         Height
@@ -267,16 +266,14 @@
 
                         <required-validator
                             value.bind="vehicle.internalDimensions.height"
-                            enabled.bind="(vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length) ? undefined : false"
-                        >
+                            enabled.bind="(vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length) ? undefined : false">
                         </required-validator>
 
                         <range-validator
                             active.bind="true"
                             value.bind="vehicle.internalDimensions.height"
                             min.bind="0"
-                            min-inclusive.bind="false"
-                        >
+                            min-inclusive.bind="false">
                         </range-validator>
 
                     </div>
@@ -288,8 +285,7 @@
                     value.bind="vehicle.internalDimensions.width"
                     min.bind="0"
                     constrain.bind="true"
-                    class="flex-basis-1-of-3"
-                >
+                    class="flex-basis-1-of-3">
 
                     <span slot="heading" translate>
                         Width
@@ -302,9 +298,8 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
-                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
-                        >
+                            value.bind="vehicle.internalDimensions.width"
+                            enabled.bind="(vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length) ? undefined : false">
                         </required-validator>
 
                         <range-validator
@@ -331,9 +326,8 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
-                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
-                        >
+                            value.bind="vehicle.internalDimensions.length"
+                            enabled.bind="(vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length) ? undefined : false">
                         </required-validator>
 
                         <range-validator

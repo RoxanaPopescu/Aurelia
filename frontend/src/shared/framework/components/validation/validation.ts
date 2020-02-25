@@ -374,7 +374,7 @@ export class ValidationCustomAttribute implements IValidation
                 const shouldValidate =
 
                     // Always run if the validation run was triggered programmatically.
-                    reason == null ||
+                    reason == null && validator.computedEnabled ||
 
                     // Only run validators that are enabled and active in response to events.
                     validator.computedEnabled && validator.computedActive &&
