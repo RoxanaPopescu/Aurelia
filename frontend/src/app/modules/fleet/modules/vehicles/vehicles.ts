@@ -110,7 +110,14 @@ export class ListPage
      */
     protected async onVehicleClick(vehicle: Vehicle): Promise<void>
     {
-        await this._modalService.open(VehiclePanel, vehicle).promise;
+        const newVehicle = await this._modalService.open(VehiclePanel, vehicle).promise;
+
+        if (newVehicle != null)
+        {
+            this.vehicles.splice(this.vehicles.indexOf(vehicle), 1, newVehicle);
+
+            this.update();
+        }
     }
 
     /**
@@ -119,12 +126,14 @@ export class ListPage
      */
     protected async onAddVehicleClick(): Promise<void>
     {
-        const vehicle = await this._modalService.open(VehiclePanel).promise;
+        const newVehicle = await this._modalService.open(VehiclePanel).promise;
 
-        if (vehicle != null)
+        if (newVehicle != null)
         {
-            this.vehicles.push(vehicle);
+            this.vehicles.push(newVehicle);
         }
+
+        this.update();
     }
 
     /**
@@ -144,12 +153,12 @@ export class ListPage
         try
         {
             await this._vehicleService.delete(vehicle.id);
+
+            this.vehicles.splice(this.vehicles.indexOf(vehicle), 1);
         }
         catch (error)
         {
             Log.error("Could not remove the vehicle", error);
         }
-
-        this.update();
     }
 }
