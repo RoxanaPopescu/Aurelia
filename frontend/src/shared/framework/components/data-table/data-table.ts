@@ -43,6 +43,12 @@ export class DataTableCustomElement
     public append: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
+     * False to disable appending to the table, otherwise true.
+     */
+    @bindable({ defaultValue: true })
+    public appendable: boolean;
+
+    /**
      * True if the select all option is checked, otherwise false.
      */
     @bindable({ defaultValue: false })

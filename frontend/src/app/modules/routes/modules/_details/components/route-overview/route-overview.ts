@@ -19,8 +19,13 @@ export class RouteOverview
      * Counts the number of picked up colli on the route
      */
     @computedFrom("route.stops.length")
-    public get pickedUpColliCount(): number
+    public get pickedUpColliCount(): number | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let pickedUpColliCount = 0;
         if (this.route != null)
         {
@@ -46,8 +51,13 @@ export class RouteOverview
      * Counts the number of delivered colli on the route
      */
     @computedFrom("route.stops.length")
-    public get deliveredColliCount(): number
+    public get deliveredColliCount(): number | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let deliveredColliCount = 0;
         if (this.route != null)
         {
@@ -73,8 +83,13 @@ export class RouteOverview
      * Counts the number of colli on the route
      */
     @computedFrom("route.stops.length")
-    public get totalColliCount(): number
+    public get totalColliCount(): number | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let totalColliCount = 0;
         if (this.route != null)
         {
@@ -93,8 +108,13 @@ export class RouteOverview
      * Counts the number of colli on the route
      */
     @computedFrom("route.stops.length")
-    public get completedColliCount(): number
+    public get completedColliCount(): number | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let totalColliCount = 0;
         if (this.route != null)
         {
@@ -114,8 +134,13 @@ export class RouteOverview
      * Counts the number of colli on the completed stops
      */
     @computedFrom("route.stops.length")
-    public get completedStops(): number
+    public get completedStops(): number | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let completedStops = 0;
 
         if (this.route != null)
@@ -132,11 +157,16 @@ export class RouteOverview
      * Calculates the duration of the route
      */
     @computedFrom("route.stops.length")
-    public get routeDuration(): Duration
+    public get routeDuration(): Duration | undefined
     {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
         let duration = Duration.fromMillis(0);
 
-        if (this.route != null && (this.route.stops[0] as RouteStop).arrivedTime != null)
+        if ((this.route.stops[0] as RouteStop).arrivedTime != null)
         {
             const from = (this.route.stops[0] as RouteStop).arrivedTime!;
 

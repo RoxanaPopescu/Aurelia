@@ -6,7 +6,7 @@
 
     <data-table-row class="data-table-append-action" click.call="append($event)" insert.bind="true">
 
-        <data-table-cell show.bind="append != null" accent="primary">
+        <data-table-cell show.bind="appendable && append != null" accent="primary">
             <icon name="add" class="font-larger line-height-1"></icon>
             &nbsp;
             <div>
