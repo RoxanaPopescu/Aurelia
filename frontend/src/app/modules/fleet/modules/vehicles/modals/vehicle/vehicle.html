@@ -266,8 +266,8 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
-                            enabled.bind="vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length"
+                            value.bind="vehicle.internalDimensions.height"
+                            enabled.bind="(vehicle.internalDimensions.height || vehicle.internalDimensions.width || vehicle.internalDimensions.length) ? undefined : false"
                         >
                         </required-validator>
 
