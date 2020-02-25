@@ -86,7 +86,9 @@ a
     {
         color: inherit;
 
+        &:hover,
         &:any-link:hover,
+        .focus-visible &:focus,
         .focus-visible &:any-link:focus
         {
             // If a neutral accent is applied, highlight when hovered or focused.

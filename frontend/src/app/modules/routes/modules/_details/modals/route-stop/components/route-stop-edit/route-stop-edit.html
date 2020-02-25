@@ -29,9 +29,9 @@
 
             <path-nav if.bind="!model.isNew">
 
-                <div translate>
+                <a accent="inherit" click.trigger="onCancel()" translate>
                     Stop ${model.routeStop.stopNumber}
-                </div>
+                </a>
 
                 <div translate>
                     Edit
