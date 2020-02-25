@@ -255,26 +255,6 @@
 
     </modal-section>
 
-    <modal-section if.bind="!model.isNew" class="margin-larger-bottom">
-
-        <div class="font-large margin-bottom" translate>Orders</div>
-
-        <!-- Orders to be delivered -->
-        <template if.bind="model.routeStop.deliveries.length != 0" invalid.bind="hasDeliveryProblems">
-
-            <order-accordion repeat.for="delivery of model.routeStop.deliveries" model.bind="delivery"></order-accordion>
-
-        </template>
-
-        <!-- Orders to pick up -->
-        <template if.bind="model.routeStop.pickups.length != 0" invalid.bind="hasPickupProblems">
-
-            <order-accordion repeat.for="pickup of model.routeStop.pickups" model.bind="pickup"></order-accordion>
-
-        </template>
-
-    </modal-section>
-
     <modal-section>
 
         <div slot="header" translate>
