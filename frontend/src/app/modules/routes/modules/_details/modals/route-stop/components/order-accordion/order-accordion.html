@@ -39,13 +39,13 @@
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate" translate>
+                    <span class="opacity-faded text-truncate" translate>
                         Scan method
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
-                    <span if.bind="model.consignor != null" class="opacity-faded text-truncate" translate>
+                    <span class="opacity-faded text-truncate" translate>
                         Picture
                     </span>
                 </data-table-cell>
@@ -78,13 +78,13 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span if.bind="model.consignor != null" class="text-truncate">
+                        <span class="text-truncate">
                             ${collo.scanMethod.name}
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <a if.bind="model.consignor != null && collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
+                        <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
                             <icon name="picture-small" accent="primary" class="font-larger"></icon>
                         </a>
                     </data-table-cell>
