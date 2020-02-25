@@ -42,11 +42,11 @@
                         Planned arrival
                     </div>
 
-                    <div if.bind="model.routeStop.arrivedTime" class="opacity-faded" translate>
+                    <div if.bind="model.routeStop.arrivedTime != null" class="opacity-faded" translate>
                         Actual arrival
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivedTime && model.routeStop.estimates.arrivalTime" class="opacity-faded" translate>
+                    <div if.bind="model.routeStop.arrivedTime == null" class="opacity-faded" translate>
                         Estimated arrival
                     </div>
 
@@ -58,16 +58,16 @@
                         ${model.routeStop.reference}
                     </div>
 
-                    <div class="margin-bottom">
+                    <div class="margin-bottom" empty-value>
                         ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivedTime && model.routeStop.estimates.arrivalTime">
-                        ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false}
+                    <div if.bind="model.routeStop.arrivedTime != null" empty-value>
+                        ${model.routeStop.arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
-                    <div if.bind="!model.routeStop.arrivedTime && !model.routeStop.estimates.arrivalTime">
-                        --
+                    <div if.bind="model.routeStop.arrivedTime == null" empty-value>
+                        ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
                 </div>
@@ -94,24 +94,16 @@
 
                 <div>
 
-                    <div class="margin-bottom">
+                    <div class="margin-bottom" empty-value>
                         ${model.routeStop.type.name}
                     </div>
 
-                    <div if.bind="model.routeStop.estimates.taskTime" class="margin-bottom">
+                    <div class="margin-bottom" empty-value>
                         ${model.routeStop.estimates.taskTime | duration: 'narrow'}
                     </div>
 
-                    <div if.bind="!model.routeStop.estimates.taskTime" class="margin-bottom">
-                        --
-                    </div>
-
-                    <div if.bind="model.routeStop.taskTime">
-                        ${model.routeStop.taskTime | duration: 'narrow' || '--'}
-                    </div>
-
-                    <div if.bind="!model.routeStop.taskTime">
-                        --
+                    <div empty-value>
+                        ${model.routeStop.taskTime | duration: 'narrow'}
                     </div>
 
                 </div>
