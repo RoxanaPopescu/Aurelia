@@ -40,14 +40,22 @@ page[name="routes"] page[name="details"]
             --surface-accent-surface-text-color: var(--palette-color-whitepoint);
         }
 
+        &.--arrived
+        {
+            border-color: var(--palette-color-positive);
+            background: transparent;
+            color: var(--palette-color-positive);
+        }
+
         position: relative;
         overflow: visible;
         border-radius: 50%;
         width: 8rem;
-        line-height: 8rem;
+        line-height: calc(8rem - 2 * var(--border-width-medium));
         text-align: center;
         background: var(--surface-accent-surface-color);
         color: var(--surface-accent-surface-text-color);
+        border: var(--border-width-medium) solid transparent;
 
         icon
         {
