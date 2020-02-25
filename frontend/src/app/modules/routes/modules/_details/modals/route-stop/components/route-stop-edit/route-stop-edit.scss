@@ -2,17 +2,9 @@ route-stop-edit
 {
     .button-container
     {
-        display: flex;
-        justify-content: flex-end;
-
         button
         {
-            width: 56rem;
-
-            &:not(:last-child)
-            {
-                margin-right: 7rem;
-            }
+            width: 100%;
         }
     }
 
