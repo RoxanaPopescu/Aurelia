@@ -102,6 +102,17 @@ export class RouteStop extends RouteStopBase
     {
         return (
             this.getHasAlert() ||
+            this.problems.length > 0 ||
+            this.hasColliProblem
+        );
+    }
+
+    /**
+     * True if there is an alert for this route stop, otherwise false.
+     */
+    public get hasColliProblem(): boolean
+    {
+        return (
             this.pickups.some(p => p.colli.some(c => c.status.accent.pickup === "negative")) ||
             this.deliveries.some(d => d.colli.some(c => c.status.accent.delivery === "negative"))
         );
@@ -113,6 +124,18 @@ export class RouteStop extends RouteStopBase
     public get totalColliCount(): number
     {
         return this.pickups.reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
+    }
+
+    /**
+     * The total number colli that has been picked up or delivered at this stop.
+     */
+    public get scannedColliCount(): number
+    {
+        return this.pickups.reduce((t, d) =>
+            t +
+            d.colli.filter(c => c.status.slug === "picked-up").length, 0) +
+            this.deliveries.reduce((t, d) => t + d.colli.filter(c => c.status.slug === "delivered").length,
+        0);
     }
 
     /**

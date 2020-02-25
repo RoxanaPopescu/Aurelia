@@ -532,7 +532,7 @@
                             <data-table-cell>
                                 <div class="route-details-stop-number text-truncate accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
                                     ${stop.stopNumber}
-                                    <icon if.bind="stop.problems.length > 0" name="warning" accent="negative"></icon>
+                                    <icon if.bind="stop.hasAlert" name="warning" accent="negative"></icon>
                                 </div>
                             </data-table-cell>
 
@@ -555,13 +555,13 @@
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate">
-                                    ${stop.totalColliCount | number}
+                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined">
+                                    ${stop.scannedColliCount | number}/${stop.totalColliCount | number}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined">
                                     ${stop.arrivedTime || stop.estimates.arrivalTime | time: 'narrow' : false}
                                 </span>
                             </data-table-cell>
