@@ -555,13 +555,13 @@
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined">
+                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined & attr">
                                     ${stop.scannedColliCount | number}/${stop.totalColliCount | number}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined">
+                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined & attr">
                                     ${stop.arrivedTime || stop.estimates.arrivalTime | time: 'narrow' : false}
                                 </span>
                             </data-table-cell>
