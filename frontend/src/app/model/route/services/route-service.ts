@@ -147,6 +147,19 @@ export class RouteService
     }
 
     /**
+     * Adds a support note to the route.
+     * @param note The support note for the route.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async addSupportNote(note: string): Promise<void>
+    {
+        await this._apiClient.post("routes/addSupportNote",
+        {
+            body: { note }
+        });
+    }
+
+    /**
      * Changes the status of the specified route stop to the specified status.
      * @param route The route owning the stop.
      * @param stop The route stop for which the status should be set.

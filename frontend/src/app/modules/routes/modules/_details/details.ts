@@ -9,6 +9,7 @@ import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-can
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
 import { IdentityService } from "app/services/identity";
+import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
 
 /**
  * Represents the route parameters for the page.
@@ -149,6 +150,7 @@ export class DetailsModule
     {
         window.open(this.route?.driverListUrl, "_blank");
     }
+
     /**
      * Called when the `Reload route in app` button is clicked.
      * Notifies the driver appthat it should reload the route.
@@ -163,6 +165,31 @@ export class DetailsModule
         {
             Log.error("Could not reload the route", error);
         }
+    }
+
+    /**
+     * Called when the `Add support note` button is clicked.
+     * Shows a model for adding a support note.
+     */
+    protected async onAddSupportNoteClick(): Promise<void>
+    {
+        const confirmed = await this._modalService.open(AddSupportNoteDialog).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeService.addSupportNote("FIXME");
+        }
+        catch (error)
+        {
+            Log.error("Could not remove route stop", error);
+        }
+
+        this.fetchRoute();
     }
 
     /**

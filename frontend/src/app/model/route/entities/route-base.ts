@@ -26,6 +26,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
+        this.supportNote = data.supportNote;
         this.productType = new ProductType(data.productType);
         this.reference = data.reference;
         this.criticality = new RouteCriticality(data.criticality);
@@ -154,6 +155,12 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The estimates for this route.
      */
     public estimates?: RouteEstimates;
+
+    /**
+     * The support note for this route.
+     * Usually used for writing information about the driver
+     */
+    public supportNote?: string;
 
     /**
      * The date and time at which the driver completed, or is estimated to complete,
