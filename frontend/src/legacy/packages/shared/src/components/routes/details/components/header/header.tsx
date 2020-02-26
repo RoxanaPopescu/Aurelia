@@ -2,7 +2,6 @@ import React from "react";
 import { observer } from "mobx-react";
 import H from "history";
 import Localization from "shared/src/localization";
-import { SubPage } from "shared/src/utillity/page";
 import { Button, ButtonType, ButtonSize } from "shared/src/webKit";
 import { Session } from "shared/src/model/session";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
@@ -30,7 +29,6 @@ export default class extends React.Component<Props> {
       <PageHeaderComponent
         history={this.props.history}
         path={[
-          { title: "Ruter", href: SubPage.path(SubPage.RouteList) },
           { title: this.props.detailsService.routeDetails!.slug }
         ]}
       >

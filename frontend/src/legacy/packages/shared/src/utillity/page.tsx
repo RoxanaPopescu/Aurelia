@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router";
 
 import Localization from "shared/src/localization";
 import TrackingRoute from "shared/src/components/tracking/route";
-import RouteListComponent from "shared/src/components/routes/list";
 import RouteDetailsComponent from "shared/src/components/routes/details";
 import OrderListComponent from "shared/src/components/order/list";
 import SaveOrderComponent from "shared/src/components/order/save";
@@ -162,7 +161,6 @@ export class NavigationPage {
         ];
       case "Routes":
         return [
-          SubPage.RouteList,
           SubPage.RouteLiveTracking,
           SubPage.DriverTracking,
           SubPage.RouteDetails,
@@ -197,7 +195,6 @@ export class NavigationPage {
 export enum SubPage {
   DriverTracking,
   RouteLiveTracking,
-  RouteList,
   RouteDetails,
   FulfillerRouteAutoDispatch,
 
@@ -232,8 +229,6 @@ export namespace SubPage {
         return Localization.operationsValue("Menu_Operation_LiveTracking");
       case SubPage.DriverTracking:
         return Localization.operationsValue("Menu_Operation_DriverTracking");
-      case SubPage.RouteList:
-        return Localization.operationsValue("Menu_Routes_List");
       case SubPage.RouteDetails:
         return undefined;
       case SubPage.FulfillerRouteAutoDispatch:
@@ -280,8 +275,6 @@ export namespace SubPage {
         return LiveTrackingComponent;
       case SubPage.DriverTracking:
         return TrackingRoute;
-      case SubPage.RouteList:
-        return RouteListComponent;
       case SubPage.RouteDetails:
         return RouteDetailsComponent;
       case SubPage.FulfillerRouteAutoDispatch:
@@ -328,8 +321,6 @@ export namespace SubPage {
         return NavigationPage.path("Routes") + "/live-tracking";
       case SubPage.DriverTracking:
         return NavigationPage.path("Routes") + "/driver-tracking";
-      case SubPage.RouteList:
-        return NavigationPage.path("Routes") + "/list";
       case SubPage.RouteDetails:
         return NavigationPage.path("Routes") + "/details/:id";
       case SubPage.FulfillerRouteAutoDispatch:

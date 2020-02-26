@@ -1,9 +1,8 @@
 import Base from "../../../services/base";
-import { RoutesListSorting, RoutesListSortingMap } from "./store";
 import { RouteListResponseModel } from "./models/responseModel";
 import { RouteStatus } from "../../../model/logistics/routes";
 import Localization from "../../../localization";
-import { SortingDirectionMap } from "shared/src/model/general/sorting";
+import { SortingDirectionMap, SortingDirection } from "shared/src/model/general/sorting";
 
 export default class RouteService {
   static async getRoutes(
@@ -41,5 +40,54 @@ export default class RouteService {
     }
 
     throw new Error(Localization.sharedValue("Error_General"));
+  }
+}
+
+export type RoutesListSortingKey =
+  | "RouteId"
+  | "Reference"
+  | "Status"
+  | "StartDate"
+  | "StartAddress"
+  | "StopCount";
+
+export class RoutesListSortingMap {
+  public static readonly map = {
+    RouteId: {
+      id: 1
+    },
+    Reference: {
+      id: 2
+    },
+    StartAddress: {
+      id: 3
+    },
+    StartDate: {
+      id: 4
+    },
+    StopCount: {
+      id: 5
+    },
+    Status: {
+      id: 6
+    }
+  };
+
+  public constructor(status: keyof typeof RoutesListSortingMap.map) {
+    this.slug = status;
+    Object.assign(this, RoutesListSortingMap.map[status]);
+  }
+
+  public slug: keyof typeof RoutesListSortingMap.map;
+  public id: number;
+}
+
+export class RoutesListSorting {
+  key: RoutesListSortingKey;
+  direction: SortingDirection;
+
+  constructor(key: RoutesListSortingKey, direction: SortingDirection) {
+    this.key = key;
+    this.direction = direction;
   }
 }
