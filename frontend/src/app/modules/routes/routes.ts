@@ -40,7 +40,7 @@ export class RoutesModule
             {
                 name: "details",
                 route: "details/:id",
-                moduleId: PLATFORM.moduleName("./modules/_details/details"),
+                moduleId: PLATFORM.moduleName("./modules/details/details"),
                 settings:
                 {
                     claims:
