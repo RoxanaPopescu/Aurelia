@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router";
 
 import Localization from "shared/src/localization";
 import TrackingRoute from "shared/src/components/tracking/route";
-import RouteDetailsComponent from "shared/src/components/routes/details";
 import OrderListComponent from "shared/src/components/order/list";
 import SaveOrderComponent from "shared/src/components/order/save";
 import OrderDetailsComponent from "shared/src/components/order/details";
@@ -276,7 +275,7 @@ export namespace SubPage {
       case SubPage.DriverTracking:
         return TrackingRoute;
       case SubPage.RouteDetails:
-        return RouteDetailsComponent;
+        return undefined;
       case SubPage.FulfillerRouteAutoDispatch:
         return AutoDispatchComponent;
       case SubPage.OrderCreate:
