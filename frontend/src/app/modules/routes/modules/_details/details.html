@@ -158,6 +158,26 @@
 
             </page-section>
 
+            <page-section
+                if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
+                toggle.bind="true"
+                expanded.to-view="false"
+            >
+
+                <div slot="header" translate>
+                    Support note
+                </div>
+
+                <page-sidebar-value>
+
+                    <div slot="value" class="text-align-left support-note" empty-value>
+                        ${route.supportNote}
+                    </div>
+
+                </page-sidebar-value>
+
+            </page-section>
+
             <page-section toggle.bind="true" expanded.to-view="false">
 
                 <div slot="header" translate>
@@ -307,22 +327,6 @@
             <page-section toggle.bind="true" expanded.to-view="false">
 
                 <div slot="header" translate>
-                    Support note
-                </div>
-
-                <page-sidebar-value>
-
-                    <div slot="value" class="text-align-left support-note" empty-value>
-                        ${route.supportNote}
-                    </div>
-
-                </page-sidebar-value>
-
-            </page-section>
-
-            <page-section toggle.bind="true" expanded.to-view="false">
-
-                <div slot="header" translate>
                     Price
                 </div>
 
@@ -438,7 +442,11 @@
                             Reload route in app
                         </item>
 
-                        <item click.trigger="onAddSupportNoteClick()" translate>
+                        <item
+                            if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
+                            click.trigger="onAddSupportNoteClick()"
+                            translate
+                        >
                             Add support note
                         </item>
 

@@ -93,6 +93,16 @@ export class Outfit
     }
 
     /**
+     * Returns true if the current fulfiller is mover logistics.
+     * In the future we really should not do this
+     */
+    @computedFrom("id")
+    public get isMoverLogistics(): boolean
+    {
+        return this.id === "2ab2712b-5f60-4439-80a9-a58379cce885";
+    }
+
+    /**
      * Gets the data representing this instance.
      */
     public toJSON(): any

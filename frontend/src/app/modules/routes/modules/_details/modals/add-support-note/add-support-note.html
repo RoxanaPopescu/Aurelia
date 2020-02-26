@@ -24,15 +24,13 @@
 
                         <required-validator
                             value.bind="note"
-                            enabled.bind="note"
                         >
                         </required-validator>
 
                         <range-validator
-                            active.bind="true"
                             value.bind="note"
                             min.bind="10"
-                            min-inclusive.bind="false">
+                        >
                         </range-validator>
 
                     </div>

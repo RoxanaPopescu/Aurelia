@@ -40,6 +40,7 @@ export class DetailsModule
         this._routeService = routeService;
         this._modalService = modalService;
         this._router = router;
+        this.identityService = identityService;
         this.editable = identityService.identity?.hasClaim("edit-routes") ?? false;
     }
 
@@ -50,6 +51,8 @@ export class DetailsModule
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _router: Router;
+    protected readonly identityService: IdentityService;
+    protected readonly environment = ENVIRONMENT.name;
 
     /**
      * The scroll manager for the page.
