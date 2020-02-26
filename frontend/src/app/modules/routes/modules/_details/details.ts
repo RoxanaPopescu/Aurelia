@@ -173,20 +173,11 @@ export class DetailsModule
      */
     protected async onAddSupportNoteClick(): Promise<void>
     {
-        const confirmed = await this._modalService.open(AddSupportNoteDialog).promise;
+        const added = await this._modalService.open(AddSupportNoteDialog, { route: this.route! }).promise;
 
-        if (!confirmed)
+        if (!added)
         {
             return;
-        }
-
-        try
-        {
-            await this._routeService.addSupportNote("FIXME");
-        }
-        catch (error)
-        {
-            Log.error("Could not remove route stop", error);
         }
 
         this.fetchRoute();

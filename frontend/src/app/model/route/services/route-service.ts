@@ -151,11 +151,11 @@ export class RouteService
      * @param note The support note for the route.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async addSupportNote(note: string): Promise<void>
+    public async addSupportNote(route: Route, note: string): Promise<void>
     {
         await this._apiClient.post("routes/addSupportNote",
         {
-            body: { note }
+            body: { routeId: route.id, note }
         });
     }
 

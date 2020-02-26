@@ -12,9 +12,9 @@
                 Add support note
             </h1>
 
-            <div class="control-row margin-large-top">
+            <div class="control-row margin-large-top" validation validation.ref="validation">
 
-                <text-input lines="6" label="above" value.bind="vehicle.color" class="flex-basis-1-of-1">
+                <text-input lines="6" label="above" value.bind="note" class="flex-basis-1-of-1">
 
                     <span slot="placeholder" translate>
                         Type in your support note for this route
@@ -23,8 +23,17 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="note">
+                            value.bind="note"
+                            enabled.bind="note"
+                        >
                         </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="note"
+                            min.bind="10"
+                            min-inclusive.bind="false">
+                        </range-validator>
 
                     </div>
 
@@ -38,11 +47,11 @@
 
             <div class="button-row flex-push-right">
 
-                <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
+                <button appearance="outline" accent="primary" click.delegate="onCancelClick()" translate>
                     Cancel
                 </button>
 
-                <button appearance="solid" accent="primary" click.trigger="onAdd()" translate>
+                <button appearance="solid" accent="primary" click.trigger="onAddClick()" translate>
                     Add support note
                 </button>
 
