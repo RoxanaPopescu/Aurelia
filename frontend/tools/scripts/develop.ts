@@ -14,7 +14,7 @@ commander
 
     .option("--api <url>",
         "The URL to which API requests should be proxied, including a trailing `/`",
-        "https://localhost:5001/")
+        "https://bff-v1-test-mover.azurewebsites.net/")
 
     .option("--port <number>",
         "The port on which the server should listen",
