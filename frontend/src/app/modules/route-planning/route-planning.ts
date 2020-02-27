@@ -52,7 +52,9 @@ export class RoutePlanningModule
             {
                 name: "settings-list",
                 route: "settings/list",
-                moduleId: PLATFORM.moduleName("./modules/route-settings/list/list"),
+                moduleId: ENVIRONMENT.name === "development" ?
+                    PLATFORM.moduleName("./modules/settings/list/list") :
+                    PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
                 settings:
                 {
                     claims:
@@ -67,7 +69,9 @@ export class RoutePlanningModule
             {
                 name: "settings-details",
                 route: "settings/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/route-settings/details/details"),
+                moduleId: ENVIRONMENT.name === "development" ?
+                    PLATFORM.moduleName("./modules/settings/details/details") :
+                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
                 settings:
                 {
                     claims:
@@ -80,7 +84,9 @@ export class RoutePlanningModule
             {
                 name: "settings-create",
                 route: "settings/create",
-                moduleId: PLATFORM.moduleName("./modules/route-settings/details/details"),
+                moduleId: ENVIRONMENT.name === "development" ?
+                    PLATFORM.moduleName("./modules/settings/details/details") :
+                    PLATFORM.moduleName("./modules/route-settings/details/details"),
                 settings:
                 {
                     claims:

@@ -1,0 +1,82 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="settings-list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/route-planning">
+                            FIXME - not done yet. Links incorrectly
+                        </a>
+                        <!--
+                        <a accent="inherit" href="/route-planning" translate>
+                            Route planning
+                        </a>
+                        -->
+
+                        <span translate>
+                            Settings
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button if-claims="create-routeplan-settings" appearance="solid" class="flex-push-right" page-href="path: /route-planning/settings/create" translate>
+                        Add settings
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="setting of settings">
+
+                        <data-table-row
+                            href="/route-planning/settings/details/${setting.id}">
+
+                            <data-table-cell>
+                                ${setting.name}
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="settings == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="settings.length == 0" class="margin-largest" translate>
+                    No results
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>
