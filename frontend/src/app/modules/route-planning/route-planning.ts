@@ -86,7 +86,7 @@ export class RoutePlanningModule
                 route: "settings/create",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
-                    PLATFORM.moduleName("./modules/route-settings/details/details"),
+                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
                 settings:
                 {
                     claims:
