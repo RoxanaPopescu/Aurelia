@@ -68,7 +68,7 @@ export class RoutePlanningModule
             },
             {
                 name: "settings-details",
-                route: "settings/details/:id",
+                route: "settings/details/:id/:tab",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),

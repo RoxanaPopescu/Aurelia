@@ -1,6 +1,11 @@
 <template>
 
     <require from="./details.scss"></require>
+    <require from="./modules/general/general"></require>
+    <require from="./modules/geographical-areas/geographical-areas"></require>
+    <require from="./modules/vehicle-groups/vehicle-groups"></require>
+    <require from="./modules/start-locations/start-locations"></require>
+    <require from="./modules/task-times/task-times"></require>
 
     <page name="details">
 
@@ -20,25 +25,25 @@
 
                 <toolbar>
 
-                    <tab-nav appearance="solid" value.bind="statusFilter">
+                    <tab-nav appearance="solid" value.bind="tab">
 
-                        <tab name="requested" translate>
+                        <tab page-href="path: /route-planning/settings/details/${settingsId}/general & attr" name="general" translate>
                             General
                         </tab>
 
-                        <tab name="assigned" translate>
+                        <tab page-href="path: /route-planning/settings/details/${settingsId}/geographical-areas & attr" name="geographical-areas" translate>
                             Geographical areas
                         </tab>
 
-                        <tab name="started" translate>
+                        <tab page-href="path: /route-planning/settings/details/${settingsId}/vehicle-groups & attr" name="vehicle-groups" translate>
                             Vehicle groups
                         </tab>
 
-                        <tab name="completed" translate>
+                        <tab page-href="path: /route-planning/settings/details/${settingsId}/start-locations & attr" name="start-locations" translate>
                             Start locations
                         </tab>
 
-                        <tab name="cancelled" translate>
+                        <tab page-href="path: /route-planning/settings/details/${settingsId}/task-times & attr" name="task-times" translate>
                             Task times
                         </tab>
 
@@ -48,9 +53,15 @@
 
             </page-header>
 
-            <page-section>
+            <general if.bind="tab === 'general'"></general>
 
-            </page-section>
+            <vehicle-groups if.bind="tab === 'vehicle-groups'"></vehicle-groups>
+
+            <start-locations if.bind="tab === 'start-locations'"></start-locations>
+
+            <task-times if.bind="tab === 'task-times'"></task-times>
+
+            <geographical-areas if.bind="tab === 'geographical-areas'"></geographical-areas>
 
         </page-content>
 

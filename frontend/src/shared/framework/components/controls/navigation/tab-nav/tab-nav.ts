@@ -30,5 +30,5 @@ export class TabNavCustomElement
      * The appearance to use for the tabs.
      */
     @bindable
-    public appearance: "outine" | "solid" | "text";
+    public appearance: "outline" | "solid" | "text";
 }

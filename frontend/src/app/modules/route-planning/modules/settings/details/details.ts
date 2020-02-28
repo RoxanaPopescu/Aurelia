@@ -1,5 +1,5 @@
 import { autoinject, observable } from "aurelia-framework";
-import { RouteStatusSlug, RouteInfo } from "app/model/route";
+import { RouteSettingsService } from "app/model/route-settings";
 
 /**
  * Represents the page.
@@ -9,56 +9,34 @@ export class DetailsPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routeService The `RouteService` instance.
-     * @param historyHelper The `HistoryHelper` instance.
+     * @param routeSettingsService The `RouteSettingsService` instance.
      */
-    public constructor()
+    public constructor(routeSettingsService: RouteSettingsService)
     {
+        // this._routeSettingsService = routeSettingsService;
     }
 
-    /**
-     * The name identifying the selected status tab.
-     */
-    @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug | undefined = "requested";
+    // private readonly _routeSettingsService: RouteSettingsService;
 
     /**
-     * The text in the filter text input.
+     * Current tab page the user is routed to.
      */
-    @observable({ changeHandler: "update" })
-    protected textFilter: string | undefined;
+    @observable
+    protected tab: "general" | "geographical-areas" | "vehicle-groups" | "start-location" | "task-times";
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * The id of the routeplan settings
      */
-    protected routeCount: number | undefined;
-
-    /**
-     * The items to present in the table.
-     */
-    protected routes: RouteInfo[];
+    protected settingsId: string;
 
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(): Promise<void>
+    public async activate(params: any): Promise<void>
     {
-
-    }
-
-    /**
-     * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
-     */
-    public deactivate(): void
-    {
-        // Abort any existing operation.
-        /* if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
-        */
+        this.tab = params.tab;
+        this.settingsId = params.id;
     }
 }
