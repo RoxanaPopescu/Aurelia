@@ -31,6 +31,8 @@ export class DemoPage
     protected minDate = DateTime.local().startOf("day");
     protected maxDate = this.minDate.plus({ year: 1 });
 
+    protected tab = "tab-1";
+
     protected async submit(): Promise<void>
     {
         this.validation.active = true;

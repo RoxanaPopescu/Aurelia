@@ -4,6 +4,8 @@
     <require from="../../components/design-row/design-row"></require>
     <require from="../../components/design-column/design-column"></require>
 
+    <require from="app/components/address-input/address-input"></require>
+
     <require from="./demo.scss"></require>
 
     <div class="app-modules-design-modules-demo">
@@ -44,7 +46,7 @@
         <div surface.bind="surface" class="font-${fontSize}">
 
             <h1 class="font-largest margin">
-                Custom controls
+                App components
             </h1>
 
             <design-item heading="address-input">
@@ -96,6 +98,70 @@
                         <div>focused: ${placeFocusedValue}</div>
                         <div>comitted: ${placeValue}</div>
                     </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <h1 class="font-largest margin">
+                Framework components
+            </h1>
+
+            <design-item heading="tab-nav">
+
+                <design-row heading="tabs">
+
+                    <div>
+
+                        <tab-nav appearance="tabs" value.bind="tab">
+                            <tab name="tab-1">Tab 1</tab>
+                            <tab name="tab-2">Tab 2</tab>
+                            <tab name="tab-3">Tab 3</tab>
+                        </tab-nav>
+
+                    </div>
+
+                </design-row>
+
+                <design-row heading="solid">
+
+                    <div class="flex-row">
+
+                        <tab-nav appearance="solid" value.bind="tab">
+                            <tab name="tab-1">Tab 1</tab>
+                            <tab name="tab-2">Tab 2</tab>
+                            <tab name="tab-3">Tab 3</tab>
+                        </tab-nav>
+
+                    </div>
+
+                </design-row>
+
+                <design-row heading="outline">
+
+                    <div class="flex-row">
+
+                        <tab-nav appearance="outline" value.bind="tab">
+                            <tab name="tab-1">Tab 1</tab>
+                            <tab name="tab-2">Tab 2</tab>
+                            <tab name="tab-3">Tab 3</tab>
+                        </tab-nav>
+
+                    </div>
+
+                </design-row>
+
+                <design-row heading="text">
+
+                    <div class="flex-row">
+
+                        <tab-nav appearance="text" value.bind="tab">
+                            <tab name="tab-1">Tab 1</tab>
+                            <tab name="tab-2">Tab 2</tab>
+                            <tab name="tab-3">Tab 3</tab>
+                        </tab-nav>
+
+                    </div>
 
                 </design-row>
 
