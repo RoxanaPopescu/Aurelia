@@ -27,23 +27,23 @@
 
                     <tab-nav appearance="solid" value.bind="tab">
 
-                        <tab page-href="path: /route-planning/settings/details/${settingsId}/general & attr" name="general" translate>
+                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/general'" name="general" translate>
                             General
                         </tab>
 
-                        <tab page-href="path: /route-planning/settings/details/${settingsId}/geographical-areas & attr" name="geographical-areas" translate>
+                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/geographical-areas'" name="geographical-areas" translate>
                             Geographical areas
                         </tab>
 
-                        <tab page-href="path: /route-planning/settings/details/${settingsId}/vehicle-groups & attr" name="vehicle-groups" translate>
+                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/vehicle-groups'" name="vehicle-groups" translate>
                             Vehicle groups
                         </tab>
 
-                        <tab page-href="path: /route-planning/settings/details/${settingsId}/start-locations & attr" name="start-locations" translate>
+                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/start-locations'" name="start-locations" translate>
                             Start locations
                         </tab>
 
-                        <tab page-href="path: /route-planning/settings/details/${settingsId}/task-times & attr" name="task-times" translate>
+                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/task-times'" name="task-times" translate>
                             Task times
                         </tab>
 
