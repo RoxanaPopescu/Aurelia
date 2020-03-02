@@ -67,6 +67,10 @@ export class RoutePlanningModule
                 icon: "settings"
             },
             {
+                route: "settings/details/:id",
+                redirect: "settings/details/:id/general"
+            },
+            {
                 name: "settings-details",
                 route: "settings/details/:id/:tab",
                 moduleId: ENVIRONMENT.name === "development" ?
