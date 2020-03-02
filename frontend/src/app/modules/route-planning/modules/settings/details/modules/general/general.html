@@ -2,7 +2,7 @@
 
     <require from="./general.scss"></require>
 
-    <page-section scroll-fade="0.7">
+    <page-section>
 
         <h1 class="font-large flex-row margin-large-bottom" tabindex="-1" autofocus="visible.bind: false">
 
@@ -197,19 +197,19 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
 
-                <span slot="heading" translate>Allow ferries</span>
+                <div slot="heading" translate>Allow ferries</div>
 
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
 
-                <span slot="heading" translate>Allow private roads</span>
+                <div slot="heading" translate>Allow private roads</div>
 
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
 
-                <span slot="heading" translate>Allow highways</span>
+                <div slot="heading" translate>Allow highways</div>
 
             </check-toggle>
 
@@ -219,7 +219,7 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
 
-                <span slot="heading" translate>One route per start location</span>
+                <div slot="heading" translate>One route per start location</div>
 
             </check-toggle>
 

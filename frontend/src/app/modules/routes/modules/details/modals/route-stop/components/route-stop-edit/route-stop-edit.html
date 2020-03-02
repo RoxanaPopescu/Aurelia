@@ -49,17 +49,17 @@
 
             <text-input label="above" value.bind="model.routeStop.reference" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Reference
-                </span>
+                </div>
 
             </text-input>
 
             <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Status
-                </span>
+                </div>
 
                 <item repeat.for="status of statuses" model.bind="status">
                     ${status.name}
@@ -92,9 +92,9 @@
                 display-value.bind="model.routeStop.type.name"
                 class="flex-basis-1-of-3">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Type
-                </span>
+                </div>
 
                 <item repeat.for="type of types" model.bind="type">
                     ${type.name}
@@ -115,9 +115,9 @@
                 label="above"
                 value.bind="date">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Arrival date
-                </span>
+                </div>
 
                 <div slot="validation">
 
@@ -133,9 +133,9 @@
 
                 <time-input label="above" value.bind="timeFrom" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         From
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -149,9 +149,9 @@
 
                 <time-input label="above" value.bind="timeTo" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         To
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -179,9 +179,9 @@
 
             <address-input label="above" value.bind="model.routeStop.location.address" class="flex-basis-1-of-1">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Address
-                </span>
+                </div>
 
                 <div slot="validation">
 
@@ -199,17 +199,17 @@
 
             <text-input label="above" value.bind="model.routeStop.outfit.companyName" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Company
-                </span>
+                </div>
 
             </text-input>
 
             <text-input label="above" value.bind="model.routeStop.outfit.personName" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Name
-                </span>
+                </div>
 
             </text-input>
 
@@ -219,17 +219,17 @@
 
             <text-input label="above" value.bind="model.routeStop.outfit.contactPhone.number" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Phone number
-                </span>
+                </div>
 
             </text-input>
 
             <text-input label="above" value.bind="model.routeStop.port" class="flex-basis-1-of-2">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Port
-                </span>
+                </div>
 
             </text-input>
         </div>
@@ -238,9 +238,9 @@
 
             <text-input label="above" lines.bind="3" value.bind="model.routeStop.driverInstructions" class="flex-basis-1-of-1">
 
-                <span slot="heading" translate>
+                <div slot="heading" translate>
                     Instructions
-                </span>
+                </div>
 
                 <span slot="placeholder" translate>
                     Type any instructions that might help the driver

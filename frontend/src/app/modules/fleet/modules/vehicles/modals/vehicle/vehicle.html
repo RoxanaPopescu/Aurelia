@@ -27,9 +27,9 @@
             <div if.bind="vehicle.id" class="control-row margin-larger-bottom">
                 <text-input readonly="true" label="above" value.bind="vehicle.id" class="flex-basis-1-of-1">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Id
-                    </span>
+                    </div>
 
                 </text-input>
             </div>
@@ -38,9 +38,9 @@
 
                 <text-input label="above" value.bind="vehicle.name" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Name
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -54,9 +54,9 @@
 
                 <select-input label="above" none.bind="false" value.bind="vehicle.status" display-value.bind="vehicle.status.name" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Status
-                    </span>
+                    </div>
 
                     <item repeat.for="status of statuses" model.bind="status">
                         ${status.name}
@@ -87,9 +87,9 @@
 
                 <select-input label="above" none.bind="false" value.bind="vehicle.type" display-value.bind="vehicle.type.name" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Type
-                    </span>
+                    </div>
 
                     <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
                         ${vehicleType.name}
@@ -107,9 +107,9 @@
 
                 <text-input label="above" value.bind="vehicle.licensePlate" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Registration number
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -127,9 +127,9 @@
 
                 <text-input label="above" value.bind="vehicle.model" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Model
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -143,9 +143,9 @@
 
                 <text-input label="above" value.bind="vehicle.make" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Make
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -163,9 +163,9 @@
 
                 <number-input label="above" value.bind="vehicle.productionYear" min.bind="0" use-grouping.bind="false" constrain.bind="true" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Production year
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -185,9 +185,9 @@
 
                 <text-input label="above" value.bind="vehicle.color" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Color
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -215,9 +215,9 @@
 
                 <number-input label="above" value.bind="vehicle.approvedTotalWeight" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Approved total weight
-                    </span>
+                    </div>
 
                     <span slot="after" class="opacity-faded">
                         kg
@@ -254,9 +254,9 @@
                     constrain.bind="true"
                     class="flex-basis-1-of-3">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Height
-                    </span>
+                    </div>
 
                     <span slot="after" class="opacity-faded">
                         meters
@@ -287,9 +287,9 @@
                     constrain.bind="true"
                     class="flex-basis-1-of-3">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Width
-                    </span>
+                    </div>
 
                     <span slot="after" class="opacity-faded">
                         meters
@@ -315,9 +315,9 @@
 
                 <number-input label="above" value.bind="vehicle.internalDimensions.length" min.bind="0" constrain.bind="true" class="flex-basis-1-of-3">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Length
-                    </span>
+                    </div>
 
                     <span slot="after" class="opacity-faded">
                         meters

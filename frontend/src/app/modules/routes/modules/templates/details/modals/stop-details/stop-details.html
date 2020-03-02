@@ -30,9 +30,9 @@
 
                 <select-input label="above" none.bind="false" value.bind="model.type" display-value.bind="model.type.name" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Type
-                    </span>
+                    </div>
 
                     <item repeat.for="type of types" model.bind="type">
                         ${type.name}
@@ -52,9 +52,9 @@
 
                     <time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-2">
 
-                        <span slot="heading" translate>
+                        <div slot="heading" translate>
                             Arrival from
-                        </span>
+                        </div>
 
                         <div slot="validation">
 
@@ -68,9 +68,9 @@
 
                     <time-input label="above" value.bind="model.arrivalTimeFrame.to" class="flex-basis-1-of-2">
 
-                        <span slot="heading" translate>
+                        <div slot="heading" translate>
                             Arrival to
-                        </span>
+                        </div>
 
                         <div slot="validation">
 
@@ -92,9 +92,9 @@
 
                 <address-input label="above" value.bind="model.location.address" class="flex-basis-1-of-1">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Address
-                    </span>
+                    </div>
 
                     <div slot="validation">
 
@@ -112,17 +112,17 @@
 
                 <text-input label="above" value.bind="model.consignee.personName" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Name
-                    </span>
+                    </div>
 
                 </text-input>
 
                 <text-input label="above" value.bind="model.consignee.companyName" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Company
-                    </span>
+                    </div>
 
                 </text-input>
 
@@ -132,17 +132,17 @@
 
                 <text-input label="above" value.bind="model.consignee.contactPhone.number" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Phone number
-                    </span>
+                    </div>
 
                 </text-input>
 
                 <text-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Port
-                    </span>
+                    </div>
 
                 </text-input>
             </div>
@@ -151,9 +151,9 @@
 
                 <text-input label="above" lines.bind="3" value.bind="model.instructions" class="flex-basis-1-of-1">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Instructions
-                    </span>
+                    </div>
 
                     <span slot="placeholder" translate>
                         Type any instructions that might help the driver
@@ -175,17 +175,17 @@
 
                 <check-toggle label="after" value.bind="model.requirements.photo" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Photo
-                    </span>
+                    </div>
 
                 </check-toggle>
 
                 <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Signature
-                    </span>
+                    </div>
 
                 </check-toggle>
 
@@ -195,17 +195,17 @@
 
                 <check-toggle label="after" value.bind="model.requirements.scanColli" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Scan colli
-                    </span>
+                    </div>
 
                 </check-toggle>
 
                 <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Verify timeframe
-                    </span>
+                    </div>
 
                 </check-toggle>
 
@@ -215,17 +215,17 @@
 
                 <check-toggle label="after" value.bind="model.requirements.customerCode" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Customer code
-                    </span>
+                    </div>
 
                 </check-toggle>
 
                 <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
 
-                    <span slot="heading" translate>
+                    <div slot="heading" translate>
                         Accept instruction
-                    </span>
+                    </div>
 
                 </check-toggle>
 
