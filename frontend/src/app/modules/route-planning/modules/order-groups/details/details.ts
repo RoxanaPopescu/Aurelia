@@ -3,7 +3,7 @@ import { Log } from "shared/infrastructure";
 import { ModalService, IValidation, ToastService } from "shared/framework";
 import { Consignor } from "app/model/outfit";
 import { AgreementService } from "app/model/agreement";
-import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/_order-group";
+import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/order-group";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
 import updatedToast from "./resources/strings/updated-toast.json";
