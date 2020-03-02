@@ -161,8 +161,7 @@
             <page-section
                 if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
                 toggle.bind="true"
-                expanded.to-view="false"
-            >
+                expanded.to-view="false">
 
                 <div slot="header" translate>
                     Support note
@@ -170,9 +169,7 @@
 
                 <page-sidebar-value>
 
-                    <div slot="value" class="text-align-left support-note" empty-value>
-                        ${route.supportNote}
-                    </div>
+                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
 
                 </page-sidebar-value>
 
@@ -298,9 +295,7 @@
 
                 <page-sidebar-value>
 
-                    <div slot="value" class="text-align-left" empty-value>
-                        ${route.driverInstructions}
-                    </div>
+                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.driverInstructions}</div>
 
                 </page-sidebar-value>
 
@@ -312,7 +307,9 @@
                     Tags
                 </div>
 
-                <tags-input readonly.bind="true" class="--tags-only">
+                <div if.bind="route == null || route.tags.length == 0" empty-value></div>
+
+                <tags-input if.bind="route.tags.length > 0" readonly.bind="true" class="--tags-only">
 
                     <div slot="value">
                         <tag repeat.for="tag of route.tags">
@@ -445,8 +442,7 @@
                         <item
                             if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
                             click.trigger="onAddSupportNoteClick()"
-                            translate
-                        >
+                            translate>
                             Add support note
                         </item>
 
