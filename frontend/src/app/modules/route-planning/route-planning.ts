@@ -103,7 +103,7 @@ export class RoutePlanningModule
             {
                 name: "order-groups-list",
                 route: "order-groups/list",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/_list/list"),
+                moduleId: PLATFORM.moduleName("./modules/order-groups/list/list"),
                 settings:
                 {
                     claims:
@@ -118,7 +118,7 @@ export class RoutePlanningModule
             {
                 name: "order-groups-details",
                 route: "order-groups/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/_details/details"),
+                moduleId: PLATFORM.moduleName("./modules/order-groups/details/details"),
                 settings:
                 {
                     claims:
@@ -131,7 +131,7 @@ export class RoutePlanningModule
             {
                 name: "order-groups-create",
                 route: "order-groups/create",
-                moduleId: PLATFORM.moduleName("./modules/order-groups/_details/details"),
+                moduleId: PLATFORM.moduleName("./modules/order-groups/details/details"),
                 settings:
                 {
                     claims:

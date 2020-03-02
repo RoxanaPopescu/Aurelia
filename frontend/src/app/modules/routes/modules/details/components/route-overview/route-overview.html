@@ -75,15 +75,15 @@
 
                     <div class="font-small">
 
-                        <span if.bind="totalColliCount === 0 || notPickedUpColli.length === 0">
+                        <span if.bind="route == null || totalColliCount === 0 || notPickedUpColli.length === 0">
                             &nbsp;
                         </span>
 
-                        <span if.bind="notPickedUpColli.length === 0 && totalColliCount !== 0" translate>
+                        <span if.bind="route != null && notPickedUpColli.length === 0 && totalColliCount !== 0" translate>
                             All colli picked up
                         </span>
 
-                        <span if.bind="notPickedUpColli.length > 0" translate>
+                        <span if.bind="route != null && notPickedUpColli.length > 0" translate>
                             ${notPickedUpColli.length} has not been picked up
                         </span>
 
@@ -114,15 +114,15 @@
 
                     <div class="font-small">
 
-                        <span if.bind="totalColliCount === 0 || notDeliveredColli.length === 0">
+                        <span if.bind="route == null || totalColliCount === 0 || notDeliveredColli.length === 0">
                             &nbsp;
                         </span>
 
-                        <span if.bind="notDeliveredColli.length === 0 && totalColliCount !== 0" translate>
+                        <span if.bind="route != null && notDeliveredColli.length === 0 && totalColliCount !== 0" translate>
                             Every colli has been delivered
                         </span>
 
-                        <span if.bind="notDeliveredColli.length > 0" translate>
+                        <span if.bind="route != null && notDeliveredColli.length > 0" translate>
                             ${notDeliveredColli.length} has not been picked up
                         </span>
 

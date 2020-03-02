@@ -83,7 +83,7 @@
 
     <modal-section class="margin-bottom">
 
-        <div class="control-row margin-larger-bottom">
+        <div class="control-row">
 
             <select-input
                 label="above"
@@ -167,7 +167,13 @@
 
         </div>
 
-        <div class="font-larger margin-medium-bottom" translate>General stop informations</div>
+    </modal-section>
+
+    <modal-section class="margin-bottom">
+
+        <div slot="header" translate>
+            General stop informations
+        </div>
 
         <div class="control-row margin-medium-bottom">
 
@@ -407,16 +413,8 @@
 
     <div class="button-container margin-larger-top">
 
-        <button appearance="outline" accent="primary" click.trigger="onCancel()" translate>
-            Cancel
-        </button>
-
         <button if.bind="model.isNew" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
             Create stop
-        </button>
-
-        <button if.bind="!model.isNew" appearance="solid" accent="primary" click.trigger="onSave()" translate>
-            Save changes
         </button>
 
     </div>

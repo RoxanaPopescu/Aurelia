@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
-import { OrderGroupInfo } from "app/model/order-group";
+import { OrderGroup } from "../entities/order-group";
+import { IOrderGroupFilter } from "./order-group-filter";
 
 /**
  * Represents a service that manages order groups used for route planning.
@@ -21,18 +22,35 @@ export class OrderGroupService
     private readonly _apiClient: ApiClient;
 
     /**
+     * Gets the tags using which order groups may be filtered.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the available tags.
+     */
+    public async getAllTags(signal?: AbortSignal): Promise<string[]>
+    {
+        const result = await this._apiClient.post("ordergroups/tags",
+        {
+            signal
+        });
+
+        return result.data;
+    }
+
+    /**
      * Gets all order groups visible to the current user.
+     * @param filter The filter options to use.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the order groups.
      */
-    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroupInfo[]; orderGroupCount: number }>
+    public async getAll(filter?: IOrderGroupFilter, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroup[]; orderGroupCount: number }>
     {
         const result = await this._apiClient.post("ordergroups/list",
         {
             body:
             {
+                filter,
                 paging,
                 sorting
             },
@@ -40,8 +58,89 @@ export class OrderGroupService
         });
 
         return {
-            orderGroups: result.data.orderGroups.map((data: any) => new OrderGroupInfo(data)),
+            orderGroups: result.data.orderGroups.map((data: any) => new OrderGroup(data)),
             orderGroupCount: result.data.orderGroupCount
         };
+    }
+
+    /**
+     * Gets the order group with the specified ID.
+     * @param id The ID of the order group to get.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the order group.
+     */
+    public async get(id: string, signal?: AbortSignal): Promise<OrderGroup>
+    {
+        const result = await this._apiClient.post("ordergroups/details",
+        {
+            body: { id },
+            signal
+        });
+
+        return new OrderGroup(result.data);
+    }
+
+    /**
+     * Creates the specified order group.
+     * @param orderGroup The data for the order group to create.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the order group.
+     */
+    public async create(orderGroup: Partial<OrderGroup>, signal?: AbortSignal): Promise<OrderGroup>
+    {
+        const result = await this._apiClient.post("ordergroups/create",
+        {
+            body: orderGroup,
+            signal
+        });
+
+        return new OrderGroup(result.data);
+    }
+
+    /**
+     * Updates the specified order group.
+     * @param orderGroup The order group to update.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the order group.
+     */
+    public async update(orderGroup: OrderGroup, signal?: AbortSignal): Promise<OrderGroup>
+    {
+        const result = await this._apiClient.post("ordergroups/update",
+        {
+            body: orderGroup,
+            signal
+        });
+
+        return new OrderGroup(result.data);
+    }
+
+    /**
+     * Pauses the specified order group.
+     * @param orderGroup The order group to pause.
+     * @returns A promise that will be resolved updated entity data, such as the new etag.
+     */
+    public async pause(orderGroup: OrderGroup): Promise<{ etag: string }>
+    {
+        const result = await this._apiClient.post("ordergroups/pause",
+        {
+            body: { id: orderGroup.id, etag: orderGroup.etag }
+        });
+
+        return result.data;
+    }
+
+    /**
+     * Pauses the specified order group.
+     * @param orderGroup The order group to unpause.
+     * @returns A promise that will be resolved updated entity data, such as the new etag.
+     */
+    public async unpause(orderGroup: OrderGroup): Promise<{ etag: string }>
+    {
+        const result = await this._apiClient.post("ordergroups/unpause",
+        {
+            body: { id: orderGroup.id, etag: orderGroup.etag }
+        });
+
+        return result.data;
     }
 }
