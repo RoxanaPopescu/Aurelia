@@ -49,6 +49,18 @@
 
                     </tab-nav>
 
+                    <div class="flex-push-right control-row">
+
+                        <button class="flex-basis-1-of-2" appearance="outline" accent="primary" click.trigger="onCancel()" translate>
+                            Cancel
+                        </button>
+
+                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+                            Update
+                        </button>
+
+                    </div>
+
                 </toolbar>
 
             </page-header>

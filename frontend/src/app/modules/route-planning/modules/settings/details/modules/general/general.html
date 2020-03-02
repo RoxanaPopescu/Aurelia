@@ -1,8 +1,295 @@
 <template>
 
+    <require from="./general.scss"></require>
+
     <page-section scroll-fade="0.7">
 
-        <div>General</div>
+        <h1 class="font-large flex-row margin-large-bottom" tabindex="-1" autofocus="visible.bind: false">
+
+            <div class="opacity-faded font-small" translate>
+                Opdateret:
+            </div>
+
+            <div class="font-small">
+                ${model.routeStop.status.name}
+            </div>
+
+            <div class="opacity-faded font-small" translate>
+                | Oprettet:
+            </div>
+
+            <div class="font-small">
+                ${model.routeStop.status.name}
+            </div>
+
+            <div class="opacity-faded font-small" translate>
+                af bruger-ID:
+            </div>
+
+            <div class="font-small">
+                ${model.routeStop.status.name}
+            </div>
+
+        </h1>
+
+        <h1 class="font-largest margin-smaller-bottom" translate>
+            General rules for the route plan
+        </h1>
+
+        <div class="margin-large-bottom" translate>I the following part, you can tweak the settings for your routeplanning.</div>
+
+        <text-input label="above" value.bind="model.routeStop.reference">
+
+            <div slot="heading" translate>
+                Name for the setting
+            </div>
+
+        </text-input>
+
+    </page-section>
+
+    <page-section>
+
+        <hr class="hr-line margin-larger-bottom">
+
+        <h1 class="font-large margin-large-bottom" translate>
+            Begrænsninger
+        </h1>
+
+        <div class="control-row margin-large-bottom">
+
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Strategy for route planning
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <number-input label="above" value.bind="numberValue" class="flex-basis-1-of-2">
+
+                <div slot="heading">
+                    Max time for calculation
+                </div>
+
+                <span slot="after" class="opacity-faded">
+                    &nbsp;kg
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="numberValue">
+
+                        <template replace-part="invalid">
+                            This is required
+                        </template>
+
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Strategy for u-turns
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Curb side strategy
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+        <div class="control-row margin-larger-bottom">
+
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Exceed of timeframe on arrival before time
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Exceed of timeframe on arrival after time
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+
+                <span slot="heading" translate>Allow ferries</span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+
+                <span slot="heading" translate>Allow private roads</span>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+
+                <span slot="heading" translate>Allow highways</span>
+
+            </check-toggle>
+
+        </div>
+
+        <div class="control-row">
+
+            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+
+                <span slot="heading" translate>One route per start location</span>
+
+            </check-toggle>
+
+        </div>
+
+    </page-section>
+
+    <page-section>
+
+        <hr class="hr-line margin-larger-bottom">
+
+        <h1 class="font-large margin-bottom" translate>After finish</h1>
+
+        <h2 class="margin-large-bottom" translate>Here, with tags, you can lay a strategy for what happens after planning is done</h2>
+
+        <tags-input
+            label="above"
+            filter="auto"
+            fixed.bind="true"
+            value.bind="editModel.claimGroups">
+
+            <div slot="heading" translate>
+                Add tags to the route
+            </div>
+
+            <div slot="placeholder" translate>
+                Add tags …
+            </div>
+
+            <div slot="value">
+
+                <tag repeat.for="claimGroup of editModel.claimGroups" model.bind="claimGroup">
+                    <span class="text-truncate">
+                        ${claimGroup.name}
+                    </span>
+                </tag>
+
+            </div>
+
+            <item repeat.for="claimGroup of filteredAvailableClaimGroups" model.bind="claimGroup">
+                <span class="text-truncate">
+                    ${claimGroup.name}
+                </span>
+            </item>
+
+        </tags-input>
+
+    </page-section>
+
+    <page-section>
+
+        <hr class="hr-line margin-larger-bottom">
+
+        <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-2">
+
+            <span slot="heading">
+
+                <span translate>Approve routes manually</span>
+                <information position="${'top'}">
+
+                    <span slot="headline" translate>Manual approval</span>
+                    <span slot="body" translate>
+                        If the system determines that the driver will be late on the stop, we will make the driver extra aware on the situation.
+                    </span>
+
+                </information>
+
+            </span>
+
+        </check-toggle>
 
     </page-section>
 
