@@ -1,16 +1,17 @@
-information
+info-icon
 {
-    .information-container
+    display: inline;
+
+    .info-icon-container
     {
         position: relative;
         display: inline-block;
-        height: 3.5rem;
-        width: 3.5rem;
 
         icon
         {
-            height: 3.5rem;
-            width: 3.5rem;
+            height: 1em;
+            width: 1em;
+            margin-bottom: 0.214em;
             color: var(--surface-primary-text-color);
             position: relative;
             pointer-events: auto;
@@ -18,19 +19,19 @@ information
             vertical-align: middle;
         }
 
-        .information-window
+        .info-icon-window
         {
             opacity: 0;
             pointer-events: none;
-            transition: opacity 150ms;
+            transition: opacity var(--animation-duration-short);
             width: 72rem;
             padding: 5rem;
             position: absolute;
             background-color: white;
             border: var(--border-width-thin) solid var(--surface-neutral-border-color);
             border-radius: var(--border-radius-medium);
-            box-shadow: 0 1px 4px 2px var(--surface-neutral-border-color);
-            z-index: var(--z-index-toast);
+            box-shadow: var(--shadow-tooltip);
+            z-index: var(--z-index-tooltip);
 
             &:after
             {
@@ -44,11 +45,11 @@ information
             }
         }
 
-        &.right
+        &.--right
         {
-            .information-window
+            .info-icon-window
             {
-                left: calc(100% + 2rem);
+                left: calc(100% + 2.5rem);
                 top: -3rem;
 
                 &:after
@@ -62,11 +63,11 @@ information
             }
         }
 
-        &.left
+        &.--left
         {
-            .information-window
+            .info-icon-window
             {
-                right: calc(100% + 3rem);
+                right: calc(100% + 2.5rem);
                 top: -3rem;
 
                 &:after
@@ -80,12 +81,12 @@ information
             }
         }
 
-        &.top
+        &.--top
         {
-            .information-window
+            .info-icon-window
             {
-                bottom: calc(100% + 2rem);
-                left: -4rem;
+                bottom: calc(100% + 1.5rem);
+                left: -3.5rem;
 
                 &:after
                 {
@@ -98,12 +99,12 @@ information
             }
         }
 
-        &.bottom
+        &.--bottom
         {
-            .information-window
+            .info-icon-window
             {
-                top: calc(100% + 4rem);
-                left: -4rem;
+                top: calc(100% + 1.5rem);
+                left: -3.5rem;
 
                 &:after
                 {
@@ -118,7 +119,7 @@ information
 
         &:hover
         {
-            .information-window
+            .info-icon-window
             {
                 opacity: 1;
                 pointer-events: auto;

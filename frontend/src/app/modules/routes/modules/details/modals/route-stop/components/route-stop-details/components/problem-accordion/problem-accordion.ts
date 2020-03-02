@@ -8,13 +8,13 @@ export class ProblemAccordionCustomElement
      * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected expanded: boolean = true;
+    public expanded: boolean = true;
 
     /**
      * The problem to present.
      */
     @bindable
-    protected model: RouteStopProblem;
+    public model: RouteStopProblem;
 
     /**
      * Called when the header is clicked.

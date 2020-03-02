@@ -3,18 +3,12 @@ import { IValidation } from "shared/framework";
 import { RouteStop, Route, RouteStopStatus } from "app/model/route";
 import { RouteStopType } from "../../../../../../../../model/route/entities/route-stop-type";
 import { Duration, DateTime } from "luxon";
-import { observable } from 'aurelia-binding';
+import { observable } from "aurelia-binding";
 import { DateTimeRange } from "shared/types";
 
 @autoinject
 export class RouteStopEditCustomElement
 {
-    /**
-     * The model for the modal.
-     */
-    @bindable
-    protected model: { route: Route; routeStop: RouteStop; isNew: boolean };
-
     /**
      * The validation for the modal.
      */
@@ -29,6 +23,12 @@ export class RouteStopEditCustomElement
      * The available stop types.
      */
     protected types = Object.keys(RouteStopType.values).map(slug => ({ slug, ...RouteStopType.values[slug] }));
+
+    /**
+     * The model for the modal.
+     */
+    @bindable
+    public model: { route: Route; routeStop: RouteStop; isNew: boolean };
 
     /**
      * Called when the `Save` button is pressed.

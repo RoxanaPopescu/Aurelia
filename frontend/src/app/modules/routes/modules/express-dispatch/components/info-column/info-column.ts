@@ -8,7 +8,7 @@ export class InfoColumnCustomElement
      * The workspace.
      */
     @bindable
-    protected workspace: Workspace;
+    public workspace: Workspace;
 
     protected onBackClick(): void
     {

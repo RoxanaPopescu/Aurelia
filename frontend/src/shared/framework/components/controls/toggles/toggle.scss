@@ -217,11 +217,11 @@ body
 }
 
 check-toggle,
-redio-toggle
+radio-toggle
 {
     &[label="before"]
     {
-        icon svg
+        .toggle-control icon svg
         {
             // The icon does not fill its viewbox, so to ensure the right edge
             // edge aligns with other controls, we translate the icon right.
@@ -238,7 +238,7 @@ redio-toggle
 
     &[label="after"]
     {
-        icon svg
+        .toggle-control icon svg
         {
             // The icon does not fill its viewbox, so to ensure the left edge
             // edge aligns with other controls, we translate the icon left.

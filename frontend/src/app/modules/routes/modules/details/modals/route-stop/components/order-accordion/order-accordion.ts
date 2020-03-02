@@ -8,19 +8,19 @@ export class OrderAccordionCustomElement
      * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected expanded: boolean = false;
+    public expanded: boolean = false;
 
     /**
      * True if the component is expanded, otherwise false.
      */
     @bindable
-    protected showAllColli: boolean = false;
+    public showAllColli: boolean = false;
 
     /**
      * The pickups or deliveries to present.
      */
     @bindable
-    protected model: Pickup | Delivery;
+    public model: Pickup | Delivery;
 
     /**
      * True if one or more colli has a negative status, otherwise false.

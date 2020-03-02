@@ -1,0 +1,17 @@
+<template>
+
+    <require from="./info-icon.scss"></require>
+
+    <div class="info-icon-container --${position}">
+
+        <icon name="info-small"></icon>
+        <div class="info-icon-window">
+
+            <div class="margin-bottom"><slot name="heading"></slot></div>
+            <div class="font-small opacity-faded"><slot name="body"></slot></div>
+
+        </div>
+
+    </div>
+
+</template>

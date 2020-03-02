@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { ExpressRoute } from "../entities/express-route";
 import { DriverRoute } from "../entities/driver-route";
-import { DateTime } from 'luxon';
+import { DateTime } from "luxon";
 
 /**
  * Represents a service that manages dispatching of express routes.
