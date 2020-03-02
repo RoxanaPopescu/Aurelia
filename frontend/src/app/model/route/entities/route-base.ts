@@ -243,17 +243,6 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     }
 
     /**
-     * The stops the current user is allowed follow
-     */
-    public get accessibleStops(): TRouteStop[]
-    {
-        return this.stops
-            .filter(s =>
-                s instanceof RouteStopBase &&
-                s.isDelayed) as TRouteStop[];
-    }
-
-    /**
      * Migrates the client-side state of this route to the specified route.
      * @param targetRoute The route to which client-side state should be migrated.
      */

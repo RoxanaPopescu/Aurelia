@@ -77,8 +77,8 @@ export class Route extends AbstractRoute<RouteStop>
      */
     public get totalColliCount(): number
     {
-        return this.accessibleStops
-            .filter(s => s.status.slug !== "cancelled")
-            .reduce((total, s) => total + s.pickups.reduce((t, d) => t + d.colli.length, 0), 0);
+        return this.stops
+            .filter(s => s instanceof RouteStop && s.status.slug !== "cancelled")
+            .reduce((total, s: RouteStop) => total + s.pickups.reduce((t, p) => t + p.colli.length, 0), 0);
     }
 }
