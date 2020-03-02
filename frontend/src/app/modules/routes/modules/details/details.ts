@@ -77,7 +77,7 @@ export class DetailsModule
     /**
      * True to show the map, otherwise false.
      */
-    protected showMap = false;
+    protected showMap = true;
 
     /**
      * The most recent update operation.
