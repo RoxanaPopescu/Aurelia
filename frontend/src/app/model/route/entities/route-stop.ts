@@ -123,7 +123,8 @@ export class RouteStop extends RouteStopBase
      */
     public get totalColliCount(): number
     {
-        return this.pickups.reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
+        return this.pickups
+            .reduce((t, d) => t + d.colli.length, 0) + this.deliveries.reduce((t, d) => t + d.colli.length, 0);
     }
 
     /**
@@ -131,11 +132,8 @@ export class RouteStop extends RouteStopBase
      */
     public get scannedColliCount(): number
     {
-        return this.pickups.reduce((t, d) =>
-            t +
-            d.colli.filter(c => c.status.slug === "picked-up").length, 0) +
-            this.deliveries.reduce((t, d) => t + d.colli.filter(c => c.status.slug === "delivered").length,
-        0);
+        return [...this.pickups, ...this.deliveries]
+            .reduce((t, d) => t + d.colli.filter(c => c.status.slug === "picked-up" || c.status.slug === "delivered").length, 0);
     }
 
     /**
