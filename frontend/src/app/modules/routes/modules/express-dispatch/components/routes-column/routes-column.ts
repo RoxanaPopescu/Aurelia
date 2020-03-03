@@ -59,7 +59,7 @@ export class RoutesColumnCustomElement
      * The workspace.
      */
     @bindable
-    protected workspace: Workspace;
+    public workspace: Workspace;
 
     @computedFrom("workspace.expressRoutes", "textFilter", "sorting")
     protected get orderedAndFilteredItems(): ExpressRoute[]

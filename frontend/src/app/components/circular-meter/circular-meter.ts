@@ -10,7 +10,7 @@ export class CircularMeter
      * The percentage to show
      */
     @bindable
-    protected percentage: number = 0;
+    public percentage: number = 0;
 
     /**
      * The percentage to show

@@ -3,7 +3,7 @@ import { IValidation } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { RouteStopType, RouteStop, RouteService, Route } from "app/model/route";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
-import { Modal } from '../../../../../../../shared/framework/services/modal/modal';
+import { Modal } from "../../../../../../../shared/framework/services/modal/modal";
 
 @autoinject
 export class RouteStopPanel

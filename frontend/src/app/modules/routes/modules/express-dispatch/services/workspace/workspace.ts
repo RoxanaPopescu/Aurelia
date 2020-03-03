@@ -1,6 +1,6 @@
 import { observable } from "aurelia-framework";
 import { ExpressRoute, DriverRoute, DriverRouteStop, ExpressRouteStop } from "app/model/express-route";
-import { DateTime } from 'luxon';
+import { DateTime } from "luxon";
 
 export class Workspace
 {

@@ -21,7 +21,7 @@ export class RouteStopDetailsCustomElement
      * The model for the modal.
      */
     @bindable
-    protected model: { route: Route; routeStop: RouteStop; isNew: boolean };
+    public model: { route: Route; routeStop: RouteStop; isNew: boolean };
 
     /**
      * The available stop status values.

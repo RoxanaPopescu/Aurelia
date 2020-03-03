@@ -13,7 +13,7 @@ export class RouteOverview
      * The route to present.
      */
     @bindable
-    protected route: Route | undefined;
+    public route: Route | undefined;
 
     /**
      * Counts the number of picked up colli on the route

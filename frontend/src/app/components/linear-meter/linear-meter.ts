@@ -10,7 +10,7 @@ export class LinearMeter
      * The percentage to show
      */
     @bindable
-    protected percentage: number;
+    public percentage: number;
 
     /**
      * Gets the width of the individual bar from which iteration it gets

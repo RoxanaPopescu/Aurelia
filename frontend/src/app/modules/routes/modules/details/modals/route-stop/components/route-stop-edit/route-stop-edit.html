@@ -2,7 +2,7 @@
 
     <require from="app/components/time-of-day/time-of-day"></require>
     <require from="app/components/address-input/address-input"></require>
-    <require from="app/components/information/information"></require>
+    <require from="app/components/info-icon/info-icon"></require>
     <require from="../order-accordion/order-accordion"></require>
 
     <require from="./route-stop-edit.scss"></require>
@@ -172,7 +172,7 @@
     <modal-section class="margin-bottom">
 
         <div slot="header" translate>
-            General stop informations
+            General stop information
         </div>
 
         <div class="control-row margin-medium-bottom">
@@ -246,14 +246,14 @@
                     Type any instructions that might help the driver
                 </span>
 
-                <span slot="validation">
+                <div slot="validation">
 
                     <required-validator
                         if.bind="model.routeStop.actions.instructionsAccept"
                         value.bind="model.routeStop.driverInstructions">
                     </required-validator>
 
-                </span>
+                </div>
 
             </text-input>
 
@@ -271,37 +271,39 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.photo" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Photo</span>
-                    <information position="${'right'}">
 
-                        <span slot="headline" translate>Photo of delivery</span>
+                    <info-icon position="right">
+
+                        <span slot="heading" translate>Photo of delivery</span>
                         <span slot="body" translate>
                             Requiring the driver to take a picture of the delivery at the stop helps documenting the action.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.signature" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Signature</span>
-                    <information position="${'left'}">
 
-                        <span slot="headline" translate>Signature verification</span>
+                    <info-icon position="left">
+
+                        <span slot="heading" translate>Signature verification</span>
                         <span slot="body" translate>
                             Requiring the driver to get a signature from the consignee at the stop helps documenting the action.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
@@ -311,37 +313,39 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.colliCountVerification" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Colli count verification</span>
-                    <information position="${'right'}">
 
-                        <span slot="headline" translate>Colli count verification</span>
+                    <info-icon position="right">
+
+                        <span slot="heading" translate>Colli count verification</span>
                         <span slot="body" translate>
                             For the validation of colli without barcodes, you can require the driver to verify the colli count on the stop. This feature works best alongside "Signature Verification"
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Verify timeframe</span>
-                    <information position="${'left'}">
 
-                        <span slot="headline" translate>Timeframe verification</span>
+                    <info-icon position="left">
+
+                        <span slot="heading" translate>Timeframe verification</span>
                         <span slot="body" translate>
                             If the system determines that the driver will be late on the stop, we will make the driver extra aware on the situation.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
@@ -351,37 +355,39 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.scanColli" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Scan colli</span>
-                    <information position="${'right'}">
 
-                        <span slot="headline" translate>Driver scan of colli</span>
+                    <info-icon position="right">
+
+                        <span slot="heading" translate>Driver scan of colli</span>
                         <span slot="body" translate>
                             The driver has to scan colli on the stop, if they have barcodes.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.scanAllColli" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Driver scan of all colli required</span>
-                    <information position="${'left'}">
 
-                        <span slot="headline" translate>Driver scan of all colli required</span>
+                    <info-icon position="left">
+
+                        <span slot="heading" translate>Driver scan of all colli required</span>
                         <span slot="body" translate>
                             The driver cannot complete the stop without scanning all the colli with barcodes.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
@@ -391,19 +397,20 @@
 
             <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
 
-                <span slot="heading">
+                <div slot="heading">
 
                     <span translate>Accept of instructions</span>
-                    <information position="${'right'}">
 
-                        <span slot="headline" translate>Accept of instructions</span>
+                    <info-icon position="right">
+
+                        <span slot="heading" translate>Accept of instructions</span>
                         <span slot="body" translate>
                             To ensure that the driver has read the instructions, it will be shown to him on arrival.
                         </span>
 
-                    </information>
+                    </info-icon>
 
-                </span>
+                </div>
 
             </check-toggle>
 
