@@ -1,5 +1,18 @@
 import { autoinject, observable } from "aurelia-framework";
-import { RouteSettingsService } from "app/model/route-settings";
+import { RoutePlanningSettingsService, RoutePlanningSettings as RoutePlanningSettings } from "app/model/_route-planning-settings";
+import { Log } from "shared/infrastructure";
+import { IValidation } from "shared/framework";
+
+/**
+ * Represents the route parameters for the page.
+ */
+interface IRouteParams
+{
+    /**
+     * The ID of the route planning settings, or undefined if new.
+     */
+    id?: string;
+}
 
 /**
  * Represents the page.
@@ -9,14 +22,14 @@ export class DetailsPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routeSettingsService The `RouteSettingsService` instance.
+     * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
      */
-    public constructor(routeSettingsService: RouteSettingsService)
+    public constructor(routePlanningSettingsService: RoutePlanningSettingsService)
     {
-        // this._routeSettingsService = routeSettingsService;
+        this._routePlanningSettingsService = routePlanningSettingsService;
     }
 
-    // private readonly _routeSettingsService: RouteSettingsService;
+    private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
     /**
      * Current tab page the user is routed to.
@@ -25,9 +38,14 @@ export class DetailsPage
     protected tab: "general" | "geographical-areas" | "vehicle-groups" | "start-location" | "task-times";
 
     /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
+
+    /**
      * The id of the routeplan settings
      */
-    protected settingsId: string;
+    protected settings: RoutePlanningSettings;
 
     /**
      * The id of the routeplan settings
@@ -39,18 +57,43 @@ export class DetailsPage
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: any): Promise<void>
+    public async activate(params: IRouteParams): Promise<void>
     {
-        if (params.settingsId == null)
+        this.tab = "general";
+        this.isNew = params.id == null;
+
+        if (!this.isNew)
         {
-            this.isNew = true;
+            this.settings = await this._routePlanningSettingsService.get(params.id!);
         }
         else
         {
-            this.isNew = false;
-            this.settingsId = params.id;
+            this.settings = new RoutePlanningSettings();
+        }
+    }
+
+    /**
+     * Called when the "Save changes" button is clicked.
+     * Saves the route plannign settings.
+     */
+    protected async onSaveClick(): Promise<void>
+    {
+        // Activate validation so any further changes will be validated immediately.
+        this.validation.active = true;
+
+        // Validate the form.
+        if (!await this.validation.validate())
+        {
+            return;
         }
 
-        this.tab = "general";
+        try
+        {
+            await this._routePlanningSettingsService.update(this.settings);
+        }
+        catch (error)
+        {
+            Log.error("Could not save the route planning settings", error);
+        }
     }
 }

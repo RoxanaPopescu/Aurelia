@@ -1,4 +1,3 @@
-import { Duration } from "luxon";
 import { UturnStrategy } from "./uturn-strategy";
 import { CurbApproachStrategy } from "./curb-approach-strategy";
 import { TimeWindowAdjustment } from "./time-window-adjustment";
@@ -64,7 +63,7 @@ export class Restrictions
 
     /**
      * The time window adjustments allowed during optimization,
-     * in order to save cost or improve quality.
+     * in order to narrow the time window to ensure timely arrival.
      */
     public timeWindowAdjustment: TimeWindowAdjustment;
 
@@ -76,5 +75,5 @@ export class Restrictions
     /**
      * The timeout to use when calculating a route plan.
      */
-    public maxCalculationTime: Duration;
+    public maxCalculationTime: number;
 }

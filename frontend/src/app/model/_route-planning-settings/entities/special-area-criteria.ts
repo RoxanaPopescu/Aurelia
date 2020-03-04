@@ -15,7 +15,7 @@ export class SpecialAreaCriteria
         if (data != null)
         {
             this.weekdays = data.weekdays;
-            this.datePeriod = data.datePeriod;
+            this.datePeriod = new DateTimeRange(data.datePeriod, { setZone: true });
             this.orderTagsAllRequired = data.orderTagsAllRequired;
             this.orderTagsOneRequired = data.orderTagsOneRequired;
         }

@@ -1,7 +1,7 @@
 /**
- * Represents a slot associated with a port.
+ * Represents a slot associated with a gate.
  */
-export class PortSlot
+export class GateSlot
 {
     /**
      * Creates a new instance of the type.
@@ -19,14 +19,14 @@ export class PortSlot
     }
 
     /**
-     * The time at which the vehicle should arrive at the port.
+     * The time at which the vehicle should arrive at the gate.
      */
-    public arrivalTime: string;
+    public arrivalTime: number;
 
     /**
-     * The time at which the vehicle must depart the port.
+     * The time at which the vehicle must depart the gate.
      */
-    public lastDepartureTime: string;
+    public lastDepartureTime: number;
 
     /**
      * The time between two arrival times, used for loading and preparing the gate for next arrival.
@@ -36,5 +36,5 @@ export class PortSlot
     /**
      * The vehicle group to which the vehicle should belong.
      */
-    public vehicleGroupId: string;
+    public vehicleGroupId: number;
 }

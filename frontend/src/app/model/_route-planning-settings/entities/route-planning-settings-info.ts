@@ -1,7 +1,7 @@
 /**
- * Represents info about a route optimization rule set.
+ * Represents info about a route planning rule set.
  */
-export class RouteOptimizationSettingsInfo
+export class RoutePlanningSettingsInfo
 {
     /**
      * Creates a new instance of the type.
@@ -18,17 +18,17 @@ export class RouteOptimizationSettingsInfo
     }
 
     /**
-     * The ID of the route optimization settings.
+     * The ID of the route planning settings.
      */
     public id: string;
 
     /**
-     * The name of the route optimization settings.
+     * The name of the route planning settings.
      */
     public name: string;
 
     /**
-     * The slug identifying the route optimization settings.
+     * The slug identifying the route planning settings.
      */
     public slug: string;
 }

@@ -1,9 +1,9 @@
-import { PortSlot } from "./port-slot";
+import { GateSlot } from "./gate-slot";
 
 /**
- * Represents a port associated with a departure time scenario.
+ * Represents a gate associated with a departure time scenario.
  */
-export class Port
+export class Gate
 {
     /**
      * Creates a new instance of the type.
@@ -23,12 +23,12 @@ export class Port
     }
 
     /**
-     * The name identifying the port.
+     * The name identifying the gate.
      */
     public name: string;
 
     /**
-     * The slots associated with the port.
+     * The slots associated with the gate.
      */
-    public slots: PortSlot[];
+    public slots: GateSlot[];
 }

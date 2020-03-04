@@ -6,9 +6,9 @@ import { TaskTimes } from "./task-times";
 import { SpecialArea } from "./special-area";
 
 /**
- * Represents a route optimization rule set.
+ * Represents a route planning rule set.
  */
-export class RouteOptimizationSettings
+export class RoutePlanningSettings
 {
     /**
      * Creates a new instance of the type.
@@ -40,22 +40,22 @@ export class RouteOptimizationSettings
     }
 
     /**
-     * The ID of the route optimization settings.
+     * The ID of the route planning settings.
      */
     public id: string;
 
     /**
-     * The name of the route optimization settings.
+     * The name of the route planning settings.
      */
     public name: string;
 
     /**
-     * The slug identifying the route optimization settings.
+     * The slug identifying the route planning settings.
      */
     public slug: string;
 
     /**
-     * The restrictions to use during route optimization.
+     * The restrictions to use during route planning.
      */
     public restrictions: Restrictions;
 

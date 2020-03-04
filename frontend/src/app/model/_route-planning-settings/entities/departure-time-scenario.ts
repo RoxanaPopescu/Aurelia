@@ -1,5 +1,5 @@
 import { DepartureTimeCriteria } from "./departure-time-criteria";
-import { Port } from "./port";
+import { Gate } from "./gate";
 
 /**
  * Represents a departure time scenario.
@@ -16,12 +16,12 @@ export class DepartureTimeScenario
         {
             this.name = data.name;
             this.criteria = new DepartureTimeCriteria(data.criteria);
-            this.ports = data.ports.map(d => new Port(d));
+            this.gates = data.gates.map(d => new Gate(d));
         }
         else
         {
             this.criteria = new DepartureTimeCriteria();
-            this.ports = [];
+            this.gates = [];
         }
     }
 
@@ -36,7 +36,7 @@ export class DepartureTimeScenario
     public criteria: DepartureTimeCriteria;
 
     /**
-     * The ports associated with the scenario.
+     * The gates associated with the scenario.
      */
-    public ports: Port[];
+    public gates: Gate[];
 }

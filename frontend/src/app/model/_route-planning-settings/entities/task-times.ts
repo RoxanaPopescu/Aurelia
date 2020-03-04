@@ -28,7 +28,7 @@ export class TaskTimes
     }
 
     /**
-     * The additional time to add, if no scenario matches.
+     * The additional time to add, regardless of scenario.
      */
     public base: TaskTimesAdditionalTime;
 
@@ -38,7 +38,7 @@ export class TaskTimes
     public roundDefinition: TaskTimesRoundDefinition;
 
     /**
-     * The scenarios in which settings should be applied.
+     * The scenarios in which additional time should be added.
      */
     public scenarios: TaskTimesScenario[];
 }

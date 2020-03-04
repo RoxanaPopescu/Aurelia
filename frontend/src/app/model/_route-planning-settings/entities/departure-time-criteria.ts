@@ -15,7 +15,7 @@ export class DepartureTimeCriteria
         if (data != null)
         {
             this.weekdays = data.weekdays;
-            this.datePeriod = new DateTimeRange(data.datePeriod);
+            this.datePeriod = new DateTimeRange(data.datePeriod, { setZone: true });
         }
         else
         {

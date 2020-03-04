@@ -1,6 +1,6 @@
 /**
  * Represents the arrival time window adjustments that are allowed,
- * in order to save cost or improve quality.
+ * in order to narrow the time window to ensure timely arrival.
  */
 export class TimeWindowAdjustment
 {

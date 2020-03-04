@@ -7,45 +7,33 @@
     <require from="./modules/start-locations/start-locations"></require>
     <require from="./modules/task-times/task-times"></require>
 
-    <page name="details">
+    <page name="settings-details">
 
-        <page-content scroll scroll.ref="scroll">
+        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
 
             <page-header scroll-fade>
 
                 <h1 class="font-largest margin-bottom">
                     <path-nav>
 
-                        <a accent="inherit" href="/routes" translate>
-                            Ruteplanlægning
+                        <a accent="inherit" href="/route-planning/list" translate>
+                            Route planning
                         </a>
 
-                        <span if.bind="!isNew">
-                            ${routePlanSetting.slug}
-                        </span>
+                        <a accent="inherit" href="/route-planning/settings/list" translate>
+                            Rule sets
+                        </a>
 
-                        <span if.bind="isNew" translate>
-                            New setting
-                        </span>
+                        <span>
 
-                        <span if.bind="tab == 'general'" translate>
-                            General
-                        </span>
+                            <template if.bind="!isNew">
+                                ${settings.name}
+                            </template>
 
-                        <span if.bind="tab == 'geographical-areas'" translate>
-                            Geographical areas
-                        </span>
+                            <template if.bind="isNew" translate>
+                                New rule set
+                            </template>
 
-                        <span if.bind="tab == 'vehicle-groups'" translate>
-                            Vehicle Groups
-                        </span>
-
-                        <span if.bind="tab == 'start-locations'" translate>
-                            Start locations
-                        </span>
-
-                        <span if.bind="tab == 'task-times'" translate>
-                            Task times
                         </span>
 
                     </path-nav>
@@ -79,8 +67,20 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
-                            Save changes
+                        <button if.bind="isNew" class="flex-basis-1-of-2" appearance="outline" accent="primary" page-href="path: /route-planning/settings/list" translate>
+                            Cancel
+                        </button>
+
+                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave()">
+
+                            <template if.bind="isNew" translate>
+                                Create rule set
+                            </template>
+
+                            <template if.bind="!isNew" translate>
+                                Save changes
+                            </template>
+
                         </button>
 
                     </div>

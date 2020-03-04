@@ -1,20 +1,8 @@
-import { autoinject, observable } from "aurelia-framework";
-import { ISorting, IPaging, SortingDirection } from "shared/types";
+import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RouteSettingsService, RouteSettingsInfo } from "app/model/route-settings";
-
-/**
- * Represents the route parameters for the page.
- */
-interface IRouteParams
-{
-    page?: number;
-    pageSize?: number;
-    sortProperty?: string;
-    sortDirection?: SortingDirection;
-}
+import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
+import { Log } from "shared/infrastructure";
 
 /**
  * Represents the page.
@@ -24,19 +12,14 @@ export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routeSettingsService The `RouteSettingsService` instance.
-     * @param historyHelper The `HistoryHelper` instance.
+     * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
      */
-    public constructor(routeSettingsService: RouteSettingsService, historyHelper: HistoryHelper)
+    public constructor(routePlanningSettingsService: RoutePlanningSettingsService)
     {
-        this._routeSettingsService = routeSettingsService;
-        this._historyHelper = historyHelper;
-        this._constructed = true;
+        this._routePlanningSettingsService = routePlanningSettingsService;
     }
 
-    private readonly _routeSettingsService: RouteSettingsService;
-    private readonly _historyHelper: HistoryHelper;
-    private readonly _constructed;
+    private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
     /**
      * The scroll manager for the page.
@@ -49,48 +32,21 @@ export class ListPage
     protected updateOperation: Operation;
 
     /**
-     * The sorting to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected sorting: ISorting =
-    {
-        property: "name",
-        direction: "descending"
-    };
-
-    /**
-     * The paging to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected paging: IPaging =
-    {
-        page: 1,
-        pageSize: 20
-    };
-
-    /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected settingCount: number | undefined;
-
-    /**
      * The items to present in the table.
      */
-    protected settings: RouteSettingsInfo[];
+    protected items: RoutePlanningSettingsInfo[];
 
     /**
      * Called by the framework when the module is activated.
-     * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(): void
     {
-        this.paging.page = params.page || this.paging.page;
-        this.paging.pageSize = params.pageSize || this.paging.pageSize;
-        this.sorting.property = params.sortProperty || this.sorting.property;
-        this.sorting.direction = params.sortDirection || this.sorting.direction;
-
-        this.update();
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            // Fetch the data.
+            this.items = await this._routePlanningSettingsService.getAll(signal);
+        });
     }
 
     /**
@@ -107,55 +63,21 @@ export class ListPage
     }
 
     /**
-     * Updates the page by fetching the latest data.
+     * Called when the "Delete" button is clicked on a route planning settings item.
+     * Deletes the route planning settings.
+     * @param settings The route planning settings to delete.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected async onDeleteSettingsClick(settings: RoutePlanningSettingsInfo): Promise<void>
     {
-        // Return if the object is not constructed.
-        // This is needed because the `observable` decorator calls the change handler when the
-        // initial property value is set, which happens before the constructor is called.
-        if (!this._constructed)
+        try
         {
-            return;
+            await this._routePlanningSettingsService.delete(settings.id);
+
+            this.items.splice(this.items.indexOf(settings), 1);
         }
-
-        // Abort any existing operation.
-        if (this.updateOperation != null)
+        catch (error)
         {
-            this.updateOperation.abort();
+            Log.error("Could not delete the route planning settings", error);
         }
-
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            // Fetch the data.
-            const result = await this._routeSettingsService.getAll(
-                this.sorting,
-                this.paging,
-                signal);
-
-            // Update the state.
-            this.settings = result.settings;
-            this.settingCount = result.settingCount;
-
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
-            }
-
-            // Scroll to top.
-            this.scroll.reset();
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.page = this.paging.page;
-                state.params.pageSize = this.paging.pageSize;
-                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-            },
-            { trigger: false, replace: true });
-        });
     }
 }
