@@ -67,12 +67,8 @@ export class RoutePlanningModule
                 icon: "settings"
             },
             {
-                route: "settings/details/:id",
-                redirect: "settings/details/:id/general"
-            },
-            {
                 name: "settings-details",
-                route: "settings/details/:id/:tab",
+                route: [ "settings/details/:id", "settings/create" ],
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),

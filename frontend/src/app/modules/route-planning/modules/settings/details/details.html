@@ -16,8 +16,36 @@
                 <h1 class="font-largest margin-bottom">
                     <path-nav>
 
-                        <span translate>
-                            Fixme header in general story
+                        <a accent="inherit" href="/routes" translate>
+                            Ruteplanlægning
+                        </a>
+
+                        <span if.bind="!isNew">
+                            ${routePlanSetting.slug}
+                        </span>
+
+                        <span if.bind="isNew" translate>
+                            New setting
+                        </span>
+
+                        <span if.bind="tab == 'general'" translate>
+                            General
+                        </span>
+
+                        <span if.bind="tab == 'geographical-areas'" translate>
+                            Geographical areas
+                        </span>
+
+                        <span if.bind="tab == 'vehicle-groups'" translate>
+                            Vehicle Groups
+                        </span>
+
+                        <span if.bind="tab == 'start-locations'" translate>
+                            Start locations
+                        </span>
+
+                        <span if.bind="tab == 'task-times'" translate>
+                            Task times
                         </span>
 
                     </path-nav>
@@ -27,23 +55,23 @@
 
                     <tab-nav appearance="solid" value.bind="tab">
 
-                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/general'" name="general" translate>
+                        <tab name="general" translate>
                             General
                         </tab>
 
-                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/geographical-areas'" name="geographical-areas" translate>
+                        <tab name="geographical-areas" translate>
                             Geographical areas
                         </tab>
 
-                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/vehicle-groups'" name="vehicle-groups" translate>
+                        <tab name="vehicle-groups" translate>
                             Vehicle groups
                         </tab>
 
-                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/start-locations'" name="start-locations" translate>
+                        <tab name="start-locations" translate>
                             Start locations
                         </tab>
 
-                        <tab page-href="path.bind: '/route-planning/settings/details/' + settingsId + '/task-times'" name="task-times" translate>
+                        <tab name="task-times" translate>
                             Task times
                         </tab>
 
@@ -51,12 +79,8 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button class="flex-basis-1-of-2" appearance="outline" accent="primary" click.trigger="onCancel()" translate>
-                            Cancel
-                        </button>
-
                         <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
-                            Update
+                            Save changes
                         </button>
 
                     </div>

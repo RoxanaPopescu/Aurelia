@@ -30,13 +30,27 @@ export class DetailsPage
     protected settingsId: string;
 
     /**
+     * The id of the routeplan settings
+     */
+    protected isNew: boolean;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
      */
     public async activate(params: any): Promise<void>
     {
-        this.tab = params.tab;
-        this.settingsId = params.id;
+        if (params.settingsId == null)
+        {
+            this.isNew = true;
+        }
+        else
+        {
+            this.isNew = false;
+            this.settingsId = params.id;
+        }
+
+        this.tab = "general";
     }
 }
