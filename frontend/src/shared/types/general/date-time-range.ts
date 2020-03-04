@@ -10,24 +10,27 @@ export class DateTimeRange
      * @param data The response data from which the instance should be created.
      * @param options The parsing options to use.
      */
-    public constructor(data: any, options?: DateTimeOptions)
+    public constructor(data?: any, options?: DateTimeOptions)
     {
-        if (data.from instanceof DateTime)
+        if (data != null)
         {
-            this.from = data.from;
-        }
-        else if (data.from != null)
-        {
-            this.from = DateTime.fromISO(data.from, options);
-        }
+            if (data.from instanceof DateTime)
+            {
+                this.from = data.from;
+            }
+            else if (data.from != null)
+            {
+                this.from = DateTime.fromISO(data.from, options);
+            }
 
-        if (data.to instanceof DateTime)
-        {
-            this.to = data.to;
-        }
-        else if (data.to != null)
-        {
-            this.to = DateTime.fromISO(data.to, options);
+            if (data.to instanceof DateTime)
+            {
+                this.to = data.to;
+            }
+            else if (data.to != null)
+            {
+                this.to = DateTime.fromISO(data.to, options);
+            }
         }
     }
 
