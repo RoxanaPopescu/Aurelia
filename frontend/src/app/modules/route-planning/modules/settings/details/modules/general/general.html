@@ -1,47 +1,61 @@
 <template>
 
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/info-icon/info-icon"></require>
+
     <require from="./general.scss"></require>
 
     <page-section>
 
-        <h1 class="font-large flex-row margin-large-bottom" tabindex="-1" autofocus="visible.bind: false">
+        <name-value-list class="font-small">
 
-            <div class="opacity-faded font-small" translate>
-                Opdateret:
-            </div>
+            <name-value-pair>
 
-            <div class="font-small">
-                ${model.routeStop.status.name}
-            </div>
+                <div slot="name" translate>
+                    Last modified
+                </div>
 
-            <div class="opacity-faded font-small" translate>
-                | Oprettet:
-            </div>
+                <div slot="value">
+                    04/03/2020 8:32
+                    <span class="opacity-faded" translate>
+                        by
+                    </span>
+                    Thomas Darling
+                </div>
 
-            <div class="font-small">
-                ${model.routeStop.status.name}
-            </div>
+            </name-value-pair>
 
-            <div class="opacity-faded font-small" translate>
-                af bruger-ID:
-            </div>
+            <name-value-pair>
 
-            <div class="font-small">
-                ${model.routeStop.status.name}
-            </div>
+                <div slot="name" translate>
+                    Created
+                </div>
 
-        </h1>
+                <div slot="value">
+                    05/03/2020 10:17
+                    <span class="opacity-faded" translate>
+                        by
+                    </span>
+                    Thomas Darling
+                </div>
 
-        <h1 class="font-largest margin-smaller-bottom" translate>
+            </name-value-pair>
+
+        </name-value-list>
+
+        <h1 class="font-largest margin" tabindex="-1" autofocus="visible.bind: false" translate>
             General rules for the route plan
         </h1>
 
-        <div class="margin-large-bottom" translate>I the following part, you can tweak the settings for your routeplanning.</div>
+        <div class="margin-large-bottom" translate>
+            Here you can tweak the settings for your routeplanning.
+        </div>
 
-        <text-input label="above" value.bind="model.routeStop.reference">
+        <text-input label="above" value.bind="settings.name">
 
             <div slot="heading" translate>
-                Name for the setting
+                Name of the rule set
             </div>
 
         </text-input>
@@ -58,45 +72,84 @@
 
         <div class="control-row margin-large-bottom">
 
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+            <select-input label="above" none.bind="false" value.bind="settings.restrictions.uturnStrategy" display-value.bind="settings.restrictions.uturnStrategy.name" class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
-                    Strategy for route planning
+                    Strategy for U-turns
                 </div>
 
-                <item repeat.for="status of statuses" model.bind="status">
-                    ${status.name}
+                <item repeat.for="uturnStrategy of uturnStrategies" model.bind="uturnStrategy">
+                    ${uturnStrategy.name}
                 </item>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.routeStop.status">
+                        value.bind="settings.restrictions.uturnStrategy">
                     </required-validator>
 
                 </div>
 
             </select-input>
 
-            <number-input label="above" value.bind="numberValue" class="flex-basis-1-of-2">
+            <select-input label="above" none.bind="false" value.bind="settings.restrictions.curbApproachStrategy" display-value.bind="settings.restrictions.curbApproachStrategy.name" class="flex-basis-1-of-2">
 
-                <div slot="heading">
-                    Max time for calculation
+                <div slot="heading" translate>
+                    Strategy for curb approach
+                </div>
+
+                <item repeat.for="curbApproachStrategy of curbApproachStrategies" model.bind="status">
+                    ${curbApproachStrategy.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="settings.restrictions.curbApproachStrategy">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <number-input label="above" none.bind="false" value.bind="settings.restrictions.timeWindowAdjustment.start" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Time frame narrowing to prevent early arrival
                 </div>
 
                 <span slot="after" class="opacity-faded">
-                    &nbsp;kg
+                    min
                 </span>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="numberValue">
+                        value.bind="settings.restrictions.timeWindowAdjustment.start">
+                    </required-validator>
 
-                        <template replace-part="invalid">
-                            This is required
-                        </template>
+                </div>
 
+            </number-input>
+
+            <number-input label="above" none.bind="false" value.bind="settings.restrictions.timeWindowAdjustment.end" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Time frame narrowing to prevent late arrival
+                </div>
+
+                <span slot="after" class="opacity-faded">
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="settings.restrictions.timeWindowAdjustment.end">
                     </required-validator>
 
                 </div>
@@ -107,109 +160,53 @@
 
         <div class="control-row margin-large-bottom">
 
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+            <number-input label="above" value.bind="settings.restrictions.maxCalculationTime" class="flex-basis-1-of-2">
 
-                <div slot="heading" translate>
-                    Strategy for u-turns
+                <div slot="heading">
+                    Max time for route calculation
                 </div>
 
-                <item repeat.for="status of statuses" model.bind="status">
-                    ${status.name}
-                </item>
+                <span slot="after" class="opacity-faded">
+                    min
+                </span>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.routeStop.status">
+                        value.bind="settings.restrictions.maxCalculationTime">
                     </required-validator>
 
                 </div>
 
-            </select-input>
+            </number-input>
 
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
-
-                <div slot="heading" translate>
-                    Curb side strategy
-                </div>
-
-                <item repeat.for="status of statuses" model.bind="status">
-                    ${status.name}
-                </item>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="model.routeStop.status">
-                    </required-validator>
-
-                </div>
-
-            </select-input>
-
-        </div>
-
-        <div class="control-row margin-larger-bottom">
-
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
-
-                <div slot="heading" translate>
-                    Exceed of timeframe on arrival before time
-                </div>
-
-                <item repeat.for="status of statuses" model.bind="status">
-                    ${status.name}
-                </item>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="model.routeStop.status">
-                    </required-validator>
-
-                </div>
-
-            </select-input>
-
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
-
-                <div slot="heading" translate>
-                    Exceed of timeframe on arrival after time
-                </div>
-
-                <item repeat.for="status of statuses" model.bind="status">
-                    ${status.name}
-                </item>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="model.routeStop.status">
-                    </required-validator>
-
-                </div>
-
-            </select-input>
+            <div class="flex-basis-1-of-2"></div>
 
         </div>
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+            <check-toggle label="after" value.bind="settings.restrictions.ferriesAllowed" class="flex-basis-1-of-3">
 
-                <div slot="heading" translate>Allow ferries</div>
-
-            </check-toggle>
-
-            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
-
-                <div slot="heading" translate>Allow private roads</div>
+                <div slot="heading" translate>
+                    Allow ferries
+                </div>
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+            <check-toggle label="after" value.bind="settings.restrictions.privateRoadsAllowed" class="flex-basis-1-of-3">
 
-                <div slot="heading" translate>Allow highways</div>
+                <div slot="heading" translate>
+                    Allow private roads
+                </div>
+
+            </check-toggle>
+
+            <check-toggle label="after" value.bind="settings.restrictions.highwaysAllowed" class="flex-basis-1-of-3">
+
+                <div slot="heading" translate>
+                    Allow highways
+                </div>
 
             </check-toggle>
 
@@ -217,9 +214,11 @@
 
         <div class="control-row">
 
-            <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-3">
+            <check-toggle label="after" value.bind="settings.restrictions.oneRoutePlanPerStartLocation" class="flex-basis-1-of-3">
 
-                <div slot="heading" translate>One route per start location</div>
+                <div slot="heading" translate>
+                    One route per start location
+                </div>
 
             </check-toggle>
 
@@ -231,9 +230,13 @@
 
         <hr class="hr-line margin-larger-bottom">
 
-        <h1 class="font-large margin-bottom" translate>After completion</h1>
+        <h1 class="font-large margin-bottom" translate>
+            After completion
+        </h1>
 
-        <h2 class="margin-large-bottom" translate>Here, with tags, you can lay a strategy for what happens after planning is completed</h2>
+        <h2 class="margin-large-bottom" translate>
+            Here, with tags, you can lay a strategy for what happens after planning is completed
+        </h2>
 
         <tags-input
             label="above"
@@ -273,21 +276,27 @@
 
         <hr class="hr-line margin-larger-bottom">
 
-        <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-2">
+        <check-toggle label="after" value.bind="OLDMODEL" class="flex-basis-1-of-2">
 
             <span slot="heading">
 
-                <span translate>Approve routes manually</span>
-                <information position="${'top'}">
+                <span translate>
+                    Approve routes manually
+                </span>
 
-                    <span slot="headline" translate>Manual approval</span>
-                    <span slot="body" translate>
+                <info-icon position="${'top'}">
+
+                    <div slot="headline" translate>
+                        Manual approval
+                    </div>
+
+                    <div slot="body" translate>
                         If the system determines that the driver will be late on the stop, we will make the driver extra aware on the situation.
-                    </span>
+                    </div>
 
-                </information>
+                </info-icon>
 
-            </span>
+            </div>
 
         </check-toggle>
 

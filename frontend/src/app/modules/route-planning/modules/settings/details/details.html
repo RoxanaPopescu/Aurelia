@@ -89,15 +89,15 @@
 
             </page-header>
 
-            <general if.bind="tab === 'general'"></general>
+            <general if.bind="tab === 'general'" settings.bind="settings"></general>
 
-            <vehicle-groups if.bind="tab === 'vehicle-groups'"></vehicle-groups>
+            <vehicle-groups if.bind="tab === 'vehicle-groups'" settings.bind="settings"></vehicle-groups>
 
-            <start-locations if.bind="tab === 'start-locations'"></start-locations>
+            <start-locations if.bind="tab === 'start-locations'" settings.bind="settings"></start-locations>
 
-            <task-times if.bind="tab === 'task-times'"></task-times>
+            <task-times if.bind="tab === 'task-times'" settings.bind="settings"></task-times>
 
-            <geographical-areas if.bind="tab === 'geographical-areas'"></geographical-areas>
+            <geographical-areas if.bind="tab === 'geographical-areas'" settings.bind="settings"></geographical-areas>
 
         </page-content>
 

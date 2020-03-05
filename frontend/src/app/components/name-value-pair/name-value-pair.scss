@@ -1,0 +1,20 @@
+name-value-pair
+{
+    display: flex;
+    text-align: right;
+
+    .name-value-pair-name
+    {
+        margin-right: 1.5em;
+
+        &[empty="true"]
+        {
+            display: none;
+        }
+    }
+
+    .name-value-pair-value
+    {
+        flex-grow: 1;
+    }
+}

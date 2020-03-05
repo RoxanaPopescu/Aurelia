@@ -1,0 +1,18 @@
+name-value-list
+{
+    display: flex;
+    align-items: center;
+
+    name-value-pair:not(:last-of-type)::after
+    {
+        content: "|";
+
+        padding: 0 var(--size-inline-spacing);
+        opacity: var(--opacity-faded-more);
+    }
+
+    .name-value-pair-name
+    {
+        margin-right: var(--size-inline-spacing);
+    }
+}

@@ -1,6 +1,6 @@
 export default
 {
-    "GET /api/v1/routeplanning/settings2/list":
+    "POST /api/v1/routeplanning/settingsv2/list":
     {
         data:
         [
@@ -12,7 +12,7 @@ export default
         ]
     },
 
-    "GET /api/v1/routeplanning/settings2/details?slug=rule-set-1-id":
+    "POST /api/v1/routeplanning/settingsv2/details":
     {
         data:
         {
@@ -180,17 +180,17 @@ export default
         }
     },
 
-    "POST /api/v1/routeplanning/settings2/create":
+    "POST /api/v1/routeplanning/settingsv2/create":
     {
         status: 201
     },
 
-    "POST /api/v1/routeplanning/settings2/update":
+    "POST /api/v1/routeplanning/settingsv2/update":
     {
         status: 201
     },
 
-    "POST /api/v1/routeplanning/settings2/delete":
+    "POST /api/v1/routeplanning/settingsv2/delete":
     {
         status: 201
     }

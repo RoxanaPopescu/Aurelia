@@ -1,6 +1,6 @@
 <template>
 
-    <require from="app/components/page-sidebar-value/page-sidebar-value"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
     <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
@@ -15,9 +15,9 @@
                     Route info
                 </div>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         ID
                     </div>
 
@@ -25,11 +25,11 @@
                         ${route.slug}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Type
                     </div>
 
@@ -37,11 +37,11 @@
                         ${route.productType.name}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Reference
                     </div>
 
@@ -49,11 +49,11 @@
                         ${route.reference}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Status
                     </div>
 
@@ -61,11 +61,11 @@
                         ${route.status.name}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Vehicle
                     </div>
 
@@ -73,11 +73,11 @@
                         ${route.vehicleType.name}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Weight
                     </div>
 
@@ -87,11 +87,11 @@
                         </template>
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Colli
                     </div>
 
@@ -99,7 +99,7 @@
                         ${route.totalColliCount | number}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -109,9 +109,9 @@
                     Time frame
                 </div>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Starts
                     </div>
 
@@ -119,11 +119,11 @@
                         ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Ends
                     </div>
 
@@ -131,7 +131,7 @@
                         ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -141,9 +141,9 @@
                     First pickup
                 </div>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Address
                     </div>
 
@@ -154,7 +154,7 @@
                         </span>
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -167,11 +167,11 @@
                     Support note
                 </div>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
                     <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -181,9 +181,9 @@
                     Fulfiller
                 </div>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Company
                     </div>
 
@@ -191,11 +191,11 @@
                         ${route.fulfiller.primaryName}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Driver ID
                     </div>
 
@@ -203,11 +203,11 @@
                         ${route.driver.id}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Driver name
                     </div>
 
@@ -215,11 +215,11 @@
                         ${route.driver.name}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Driver phone
                     </div>
 
@@ -227,7 +227,7 @@
                         ${route.driver.phone}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -237,9 +237,9 @@
                     Vehicle
                 </div>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Type
                     </div>
 
@@ -247,11 +247,11 @@
                         ${route.driverVehicle.vehicleType.name}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Make and model
                     </div>
 
@@ -259,11 +259,11 @@
                         ${route.driverVehicle.makeAndModel}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Color
                     </div>
 
@@ -271,11 +271,11 @@
                         ${route.driverVehicle.color}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         License plate
                     </div>
 
@@ -283,7 +283,7 @@
                         ${route.driverVehicle.licensePlate}
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -293,11 +293,11 @@
                     Instructions
                 </div>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
                     <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.driverInstructions}</div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -329,9 +329,9 @@
 
                 <let p.bind="route.priceOverview"></let>
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Route price
                     </div>
 
@@ -339,11 +339,11 @@
                         ${p && { amount: p.price, currencyCode: p.currencyCode } | currency }
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
-                <page-sidebar-value>
+                <name-value-pair>
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         VAT
                     </div>
 
@@ -351,13 +351,13 @@
                         ${p && { amount: p.vat, currencyCode: p.currencyCode } | currency }
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
                 <hr class="hr-line margin">
 
-                <page-sidebar-value class="margin-bottom">
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="heading" translate>
+                    <div slot="name" translate>
                         Total price
                     </div>
 
@@ -365,7 +365,7 @@
                         ${p && { amount: p.totalPrice, currencyCode: p.currencyCode } | currency }
                     </div>
 
-                </page-sidebar-value>
+                </name-value-pair>
 
             </page-section>
 
@@ -466,7 +466,7 @@
 
                         <switch-toggle label="before" value.bind="showMap">
 
-                            <div slot="heading" translate>
+                            <div slot="name" translate>
                                 Show map
                             </div>
 
