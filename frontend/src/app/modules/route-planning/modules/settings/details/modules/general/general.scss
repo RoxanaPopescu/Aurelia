@@ -1,7 +1,13 @@
-general
+page[name="route-planning"] page[name="settings-details"] general
 {
     page-section
     {
         width: 182rem;
+    }
+
+    text-input [slot="after"] select-button
+    {
+        white-space: nowrap;
+        border-left: var(--input-border-width) solid var(--input-border-color);
     }
 }

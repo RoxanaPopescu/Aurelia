@@ -23,8 +23,8 @@ export default
                 "ferriesAllowed": true,
                 "privateRoadsAllowed": true,
                 "highwaysAllowed": true,
-                "uturnStrategy": "allowed | allowed-only-dead-ends | allowed-only-intersections-and-dead-ends | not-allowed",
-                "curbApproachStrategy": "either-side-of-vehicle | right-side-of-vehicle | left-side-of-vehicle | no-uturn",
+                "uturnStrategy": "allowed",
+                "curbApproachStrategy": "either-side-of-vehicle",
                 "timeWindowAdjustment": {
                 "start": 12,
                 "end": 12
@@ -33,7 +33,7 @@ export default
                 "maxCalculationTime": 60
             },
             "routeCreation": {
-                "routeTags": [ "" ],
+                "routeTags": [],
                 "manualApproval": false,
                 "routeNameTemplate": ""
             },

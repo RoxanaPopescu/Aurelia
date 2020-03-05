@@ -66,13 +66,18 @@
 
         <hr class="hr-line margin-larger-bottom">
 
-        <h1 class="font-large margin-large-bottom" translate>
+        <h1 class="font-larger margin-large-bottom" translate>
             Begrænsninger
         </h1>
 
         <div class="control-row margin-large-bottom">
 
-            <select-input label="above" none.bind="false" value.bind="settings.restrictions.uturnStrategy" display-value.bind="settings.restrictions.uturnStrategy.name" class="flex-basis-1-of-2">
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="settings.restrictions.uturnStrategy"
+                display-value.bind="settings.restrictions.uturnStrategy.name"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Strategy for U-turns
@@ -92,7 +97,12 @@
 
             </select-input>
 
-            <select-input label="above" none.bind="false" value.bind="settings.restrictions.curbApproachStrategy" display-value.bind="settings.restrictions.curbApproachStrategy.name" class="flex-basis-1-of-2">
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="settings.restrictions.curbApproachStrategy"
+                display-value.bind="settings.restrictions.curbApproachStrategy.name"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Strategy for curb approach
@@ -116,7 +126,11 @@
 
         <div class="control-row margin-large-bottom">
 
-            <number-input label="above" none.bind="false" value.bind="settings.restrictions.timeWindowAdjustment.start" class="flex-basis-1-of-2">
+            <number-input
+                label="above"
+                none.bind="false"
+                value.bind="settings.restrictions.timeWindowAdjustment.start"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent early arrival
@@ -136,7 +150,11 @@
 
             </number-input>
 
-            <number-input label="above" none.bind="false" value.bind="settings.restrictions.timeWindowAdjustment.end" class="flex-basis-1-of-2">
+            <number-input
+                label="above"
+                none.bind="false"
+                value.bind="settings.restrictions.timeWindowAdjustment.end"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent late arrival
@@ -160,7 +178,10 @@
 
         <div class="control-row margin-large-bottom">
 
-            <number-input label="above" value.bind="settings.restrictions.maxCalculationTime" class="flex-basis-1-of-2">
+            <number-input
+                label="above"
+                value.bind="settings.restrictions.maxCalculationTime"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading">
                     Max time for route calculation
@@ -186,7 +207,10 @@
 
         <div class="control-row margin-large-bottom">
 
-            <check-toggle label="after" value.bind="settings.restrictions.ferriesAllowed" class="flex-basis-1-of-3">
+            <check-toggle
+                label="after"
+                value.bind="settings.restrictions.ferriesAllowed"
+                class="flex-basis-1-of-3">
 
                 <div slot="heading" translate>
                     Allow ferries
@@ -194,7 +218,10 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="settings.restrictions.privateRoadsAllowed" class="flex-basis-1-of-3">
+            <check-toggle
+                label="after"
+                value.bind="settings.restrictions.privateRoadsAllowed"
+                class="flex-basis-1-of-3">
 
                 <div slot="heading" translate>
                     Allow private roads
@@ -202,7 +229,10 @@
 
             </check-toggle>
 
-            <check-toggle label="after" value.bind="settings.restrictions.highwaysAllowed" class="flex-basis-1-of-3">
+            <check-toggle
+                label="after"
+                value.bind="settings.restrictions.highwaysAllowed"
+                class="flex-basis-1-of-3">
 
                 <div slot="heading" translate>
                     Allow highways
@@ -214,7 +244,10 @@
 
         <div class="control-row">
 
-            <check-toggle label="after" value.bind="settings.restrictions.oneRoutePlanPerStartLocation" class="flex-basis-1-of-3">
+            <check-toggle
+                label="after"
+                value.bind="settings.restrictions.oneRoutePlanPerStartLocation"
+                class="flex-basis-1-of-3">
 
                 <div slot="heading" translate>
                     One route per start location
@@ -230,42 +263,90 @@
 
         <hr class="hr-line margin-larger-bottom">
 
-        <h1 class="font-large margin-bottom" translate>
-            After completion
+        <h1 class="font-larger margin-bottom" translate>
+            Route creation
         </h1>
 
         <h2 class="margin-large-bottom" translate>
-            Here, with tags, you can lay a strategy for what happens after planning is completed
+            Here you can specify how the routes should be created.
         </h2>
+
+        <text-input
+            label="above"
+            trim.bind="false"
+            value.bind="settings.restrictions.routeNameTemplate"
+            class="flex-basis-1-of-2 margin-large-bottom"
+            ref="routeNameTempleteInputElement">
+
+            <div slot="heading" translate>
+                Template to use for the route
+            </div>
+
+            <div slot="after">
+
+                <select-button appearance="link" accent="primary">
+
+                    <div slot="label" class="flex-row">
+                        <icon name="placeholder-small" accent="primary" class="margin-right"></icon>
+                        <span translate>
+                            Insert placeholder
+                        </span>
+                    </div>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-1}')">
+                        Placeholder 1
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-2}')">
+                        Placeholder 2
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-3}')">
+                        Placeholder 3
+                    </item>
+
+                </select-button>
+
+            </div>
+
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="settings.restrictions.routeNameTemplate">
+                </required-validator>
+
+            </div>
+
+        </text-input>
 
         <tags-input
             label="above"
             filter="auto"
-            fixed.bind="true"
-            value.bind="editModel.claimGroups">
+            value.bind="settings.routeCreation.routeTags"
+            filter-value.bind="routeTagsFilterValue">
 
             <div slot="heading" translate>
-                Add tags to the route
+                Tags to add to the routes
             </div>
 
             <div slot="placeholder" translate>
-                Add tags …
+                Add tags
             </div>
 
-            <div slot="value">
+            <item if.bind="routeTagsFilterValue && !settings.routeCreation.routeTags.includes(routeTagsFilterValue)" model.bind="routeTagsFilterValue">
 
-                <tag repeat.for="claimGroup of editModel.claimGroups" model.bind="claimGroup">
-                    <span class="text-truncate">
-                        ${claimGroup.name}
-                    </span>
-                </tag>
+                <div class="flex-row">
 
-            </div>
+                    <div>
+                        ${routeTagsFilterValue}
+                    </div>
 
-            <item repeat.for="claimGroup of filteredAvailableClaimGroups" model.bind="claimGroup">
-                <span class="text-truncate">
-                    ${claimGroup.name}
-                </span>
+                    <div class="opacity-faded flex-push-right" translate>
+                        New tag
+                    </div>
+
+                </div>
+
             </item>
 
         </tags-input>
@@ -276,7 +357,7 @@
 
         <hr class="hr-line margin-larger-bottom">
 
-        <check-toggle label="after" value.bind="OLDMODEL" class="flex-basis-1-of-2">
+        <check-toggle label="after" value.bind="settings.routeCreation.manualApproval">
 
             <span slot="heading">
 
@@ -284,7 +365,7 @@
                     Approve routes manually
                 </span>
 
-                <info-icon position="${'top'}">
+                <info-icon position="top">
 
                     <div slot="headline" translate>
                         Manual approval

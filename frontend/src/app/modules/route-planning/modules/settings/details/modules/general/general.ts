@@ -13,6 +13,16 @@ export class General
     @bindable
     protected settings: RoutePlanningSettings;
 
+    protected routeNameTempleteInputElement: HTMLElement;
     protected uturnStrategies = Object.keys(UturnStrategy.values).map(key => UturnStrategy.values[key]);
     protected curbApproachStrategy = Object.keys(CurbApproachStrategy.values).map(key => CurbApproachStrategy.values[key]);
+
+    protected onRouteNamePlaceholderClick(placeholder: string): void
+    {
+        setTimeout(() =>
+        {
+            this.routeNameTempleteInputElement.focus();
+            document.execCommand("insertText", false, placeholder);
+        }, 100);
+    }
 }
