@@ -44,19 +44,31 @@ $__summary: comment;
 
 /// Text style for the title of a view.
 /// Use for extra large titles, such as the title of the dashboard overlay.
-@include define-font("title");
+@include define-font("title")
+{
+    // Prioritize geometric precision, to avoid overly heavy font rendering.
+    text-rendering: geometricPrecision;
+}
 
 /// Text style for the largest headings.
 /// Use for primary headings, such as the title of the page.
-@include define-font("largest");
+@include define-font("largest")
+{
+    // Prioritize geometric precision, to avoid overly heavy font rendering.
+    text-rendering: geometricPrecision;
+}
 
 /// Text style for the larger headings.
 /// Use for secondary headings, such as the subtitle of the page and section headings.
-@include define-font("larger");
+@include define-font("larger")
+{
+    // Prioritize geometric precision, to avoid overly heavy font rendering.
+    text-rendering: geometricPrecision;
+}
 
 /// Text style for the large headings.
 /// Use for tertiary headings, such as subsection and collection headings.
-@include define-font("large");
+@include define-font("large")
 
 /// Text style for the base text.
 /// Use to restore the text style to match the base document style.
