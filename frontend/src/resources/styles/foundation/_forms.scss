@@ -167,7 +167,8 @@ a[appearance]
 
     // Style for the `text` and unspecified appearance.
     &:not([appearance]),
-    &[appearance="text"]
+    &[appearance="text"],
+    &[appearance="text-without-hover"]
     {
         background: transparent;
         border-color: transparent;

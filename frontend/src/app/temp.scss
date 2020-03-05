@@ -53,6 +53,7 @@ page-header tab-nav tab button
 page-content > name-value-list
 {
     padding: 4.5rem 9rem 0 9rem;
+    margin-bottom: -1rem;
 }
 
 page-sidebar .page-sidebar-edge-icon icon
@@ -87,7 +88,7 @@ a[appearance]
 {
     &:not([appearance="none"]):not([appearance="icon"])
     {
-        min-width: 30rem;;
+        min-width: 40rem;;
     }
 }
 
