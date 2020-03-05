@@ -35,6 +35,11 @@ data-table
         {
             cursor: ns-resize;
         }
+
+        .data-table-append-action data-table-cell:last-of-type
+        {
+            cursor: pointer;
+        }
     }
 
     data-table-headers

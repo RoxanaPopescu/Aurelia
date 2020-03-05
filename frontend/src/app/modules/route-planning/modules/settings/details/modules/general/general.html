@@ -285,7 +285,8 @@
             label="above"
             filter="auto"
             value.bind="settings.routeCreation.routeTags"
-            filter-value.bind="routeTagsFilterValue">
+            filter-value.bind="routeTagsFilterValue"
+            class="margin-large-bottom">
 
             <div slot="heading" translate>
                 Tags to add to the routes
@@ -312,12 +313,6 @@
             </item>
 
         </tags-input>
-
-    </page-section>
-
-    <page-section>
-
-        <hr class="hr-line margin-larger-bottom">
 
         <check-toggle label="after" value.bind="settings.routeCreation.manualApproval">
 

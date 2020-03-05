@@ -4,9 +4,13 @@
 
     <slot></slot>
 
-    <data-table-row class="data-table-append-action" click.call="append($event)" insert.bind="true">
+    <div if.bind="appendable && append != null" class="data-table-row data-table-append-action" click.trigger="append($event)">
 
-        <data-table-cell show.bind="appendable && append != null" accent="primary">
+        <div class="data-table-row-insert">
+            <div class="data-table-row-insert-line"></div>
+        </div>
+
+        <data-table-cell accent="primary">
             <icon name="add" class="font-larger line-height-1"></icon>
             &nbsp;
             <div>
@@ -16,6 +20,6 @@
             </div>
         </data-table-cell>
 
-    </data-table-row>
+    </div>
 
 </template>
