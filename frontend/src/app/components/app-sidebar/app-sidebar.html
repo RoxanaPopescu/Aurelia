@@ -15,18 +15,24 @@
 
             <a class="nav-link" modal-href="modal: starred">
                 <icon title.translate="Starred and recent" name="starred"></icon>
-                <span translate>Starred and recent</span>
+                <span translate>
+                    Starred and recent
+                </span>
             </a>
 
             <a class="nav-link" modal-href="modal: search">
                 <icon title.translate="Search" name="search"></icon>
-                <span translate>Search</span>
+                <span translate>
+                    Search
+                </span>
             </a>
 
             <!--s
             <a class="nav-link" modal-href="modal: add">
                 <icon title.translate="Add" name="add"></icon>
-                <span translate>Add</span>
+                <span translate>
+                    Add
+                </span>
             </a>
             -->
 
@@ -83,18 +89,24 @@
                 <icon title.translate="Notifications" name="notifications">
                     <badge>5</badge>
                 </icon>
-                <span translate>Notifications</span>
+                <span translate>
+                    Notifications
+                </span>
             </a>
 
             <!--
             <a class="nav-link" page-href="path: help">
                 <icon title.translate="Help and support" name="help"></icon>
-                <span translate>Help and support</span>
+                <span translate>
+                    Help and support
+                </span>
             </a>
 
             <a class="nav-link" page-href="path: design">
                 <icon title.translate="Design" name="md-style"></icon>
-                <span translate>Design</span>
+                <span translate>
+                    Design
+                </span>
             </a>
             -->
 
@@ -105,15 +117,21 @@
         <a class="nav-link" click.trigger="toggleWidth()">
 
             <icon if.bind="expanded" title.translate="Collapse menu" name="sidebar-collapse"></icon>
-            <span if.bind="expanded" translate>Collapse menu</span>
+            <span if.bind="expanded" translate>
+                Collapse menu
+            </span>
 
             <icon if.bind="!expanded" title.translate="Expand menu" name="sidebar-expand"></icon>
 
         </a>
 
         <a class="app-sidebar--powered-by" href="https://www.mover.dk" target="_blank">
-            <span if.bind="expanded">Powered by Mover Systems</span>
-            <span if.bind="!expanded">Mover Systems</span>
+            <span if.bind="expanded" translate>
+                Powered by Mover Systems
+            </span>
+            <span if.bind="!expanded" translate>
+                Mover Systems
+            </span>
         </a>
 
     </footer>

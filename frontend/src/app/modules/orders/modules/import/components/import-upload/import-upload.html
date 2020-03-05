@@ -37,8 +37,13 @@
     >
 
         <div if.bind="!uploadComplete" class="upload-text">
-            <span translate>You can drop the excel (.xlsx) file here</span><br />
-            <span translate>or click this window to find the file on your computer</span>
+            <span translate>
+                You can drop the excel (.xlsx) file here
+            </span>
+            <br/>
+            <span translate>
+                or click this window to find the file on your computer
+            </span>
         </div>
 
         <div if.bind="uploadComplete" class="upload-complete-headline" translate>
@@ -54,11 +59,15 @@
 
         <div if.bind="dropzoneError == 'type' && file != null" slot="error-message" class="error-message margin-top" accent="negative">
             <icon name="warning"></icon>
-            <span translate>The chosen filetype ${fileExtension} is incorrect. The file has to be ${dropzoneOptions.acceptedFiles}.</span>
+            <span translate>
+                The chosen filetype ${fileExtension} is incorrect. The file has to be ${dropzoneOptions.acceptedFiles}.
+            </span>
         </div>
 
     </file-dropzone>
 
-    <button disabled.bind="file == null || dropzoneError != null" appearance="solid" accent="primary" click.trigger="onUploadClick()" translate>Upload</button>
+    <button disabled.bind="file == null || dropzoneError != null" appearance="solid" accent="primary" click.trigger="onUploadClick()" translate>
+        Upload
+    </button>
 
 </template>

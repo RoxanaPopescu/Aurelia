@@ -21,8 +21,12 @@
     <div class="link-row margin-top">
 
         <a if.bind="showAllVisible" click.trigger="showAll = !showAll">
-            <span if.bind="!showAll" translate>Show all</span>
-            <span if.bind="showAll" translate>Show less</span>
+            <span if.bind="!showAll" translate>
+                Show all
+            </span>
+            <span if.bind="showAll" translate>
+                Show less
+            </span>
         </a>
 
         <a if.bind="value.length > 0 && !filterValue" click.trigger="resetClick()" translate>
