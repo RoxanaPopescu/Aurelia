@@ -13,16 +13,32 @@ export class General
     @bindable
     protected settings: RoutePlanningSettings;
 
+    /**
+     * The route name template input element.
+     */
     protected routeNameTempleteInputElement: HTMLElement;
-    protected uturnStrategies = Object.keys(UturnStrategy.values).map(key => UturnStrategy.values[key]);
-    protected curbApproachStrategy = Object.keys(CurbApproachStrategy.values).map(key => CurbApproachStrategy.values[key]);
 
+    /**
+     * The available U-turn strategies.
+     */
+    protected uturnStrategies = Object.keys(UturnStrategy.values).map(key => UturnStrategy.values[key]);
+
+    /**
+     * The available curb-approach strategies.
+     */
+    protected curbApproachStrategies = Object.keys(CurbApproachStrategy.values).map(key => CurbApproachStrategy.values[key]);
+
+    /**
+     * Called when a route name template placeholder is clicked.
+     * Inserts the placeholder into the route name template input.
+     * @param placeholder The placeholder text to insert.
+     */
     protected onRouteNamePlaceholderClick(placeholder: string): void
     {
         setTimeout(() =>
         {
             this.routeNameTempleteInputElement.focus();
             document.execCommand("insertText", false, placeholder);
-        }, 100);
+        });
     }
 }

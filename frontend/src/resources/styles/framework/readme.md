@@ -11,8 +11,6 @@ containing different kinds of content, requireing different variations of the st
 For example, while the application interface and marketing material might all use e.g.
 the same font style, the appearance of that style will depend on the context.
 
-The context is set by applying the `context` attribute, which supports two values:
+The context is set by applying the `context` attribute, which currently supports one value:
 
 * `app` which indicates that the element represents an application.
-
-* `marketing` which indicates that the element represents marketing content.

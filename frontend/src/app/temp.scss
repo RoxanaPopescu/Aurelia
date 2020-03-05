@@ -44,6 +44,17 @@ path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-c
     mask-position: center;
 }
 
+page-header tab-nav tab button
+{
+    min-width: 40rem !important;
+    padding: 0 10rem !important;
+}
+
+page-content > name-value-list
+{
+    padding: 4.5rem 9rem 0 9rem;
+}
+
 page-sidebar .page-sidebar-edge-icon icon
 {
     font-size: calc(var(--font-largest-font-size) * 0.8334);
@@ -61,7 +72,7 @@ modal-panel .modal-panel-content modal-header
 
     .input-heading > *
     {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0;
         opacity: var(--opacity-faded);
     }
 

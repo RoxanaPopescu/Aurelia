@@ -1,11 +1,15 @@
 <template>
 
-    <require from="./details.scss"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+
     <require from="./modules/general/general"></require>
     <require from="./modules/geographical-areas/geographical-areas"></require>
     <require from="./modules/vehicle-groups/vehicle-groups"></require>
     <require from="./modules/start-locations/start-locations"></require>
     <require from="./modules/task-times/task-times"></require>
+
+    <require from="./details.scss"></require>
 
     <page name="settings-details">
 
@@ -44,23 +48,23 @@
                     <tab-nav appearance="solid" value.bind="tab">
 
                         <tab name="general" translate>
-                            General
+                            General rules
                         </tab>
 
                         <tab name="geographical-areas" translate>
-                            Geographical areas
+                            Geographical rules
                         </tab>
 
                         <tab name="vehicle-groups" translate>
-                            Vehicle groups
+                            Vehicle rules
                         </tab>
 
                         <tab name="start-locations" translate>
-                            Start locations
+                            Start location rules
                         </tab>
 
                         <tab name="task-times" translate>
-                            Task times
+                            Task time rules
                         </tab>
 
                     </tab-nav>
@@ -88,6 +92,42 @@
                 </toolbar>
 
             </page-header>
+
+            <name-value-list>
+
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        Last modified
+                    </div>
+
+                    <div slot="value">
+                        04/03/2020 8:32
+                        <span class="opacity-faded" translate>
+                            by
+                        </span>
+                        Thomas Darling
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        Created
+                    </div>
+
+                    <div slot="value">
+                        05/03/2020 10:17
+                        <span class="opacity-faded" translate>
+                            by
+                        </span>
+                        Thomas Darling
+                    </div>
+
+                </name-value-pair>
+
+            </name-value-list>
 
             <general if.bind="tab === 'general'" settings.bind="settings"></general>
 
