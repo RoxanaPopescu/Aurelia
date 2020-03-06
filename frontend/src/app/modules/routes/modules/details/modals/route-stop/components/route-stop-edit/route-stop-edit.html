@@ -43,9 +43,9 @@
 
     </modal-header>
 
-    <modal-section>
+    <modal-section class="margin-bottom">
 
-        <div class="control-row margin-larger-bottom">
+        <div class="control-row margin-large-bottom">
 
             <text-input label="above" value.bind="model.routeStop.reference" class="flex-basis-1-of-2">
 
@@ -76,12 +76,6 @@
             </select-input>
 
         </div>
-
-    </modal-section>
-
-    <hr class="hr-line margin-large-bottom">
-
-    <modal-section class="margin-bottom">
 
         <div class="control-row">
 
@@ -169,13 +163,13 @@
 
     </modal-section>
 
-    <modal-section class="margin-bottom">
+    <modal-section class="margin-bottom --line-above">
 
         <div slot="header" translate>
-            General stop information
+            Consignee
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row margin-large-bottom">
 
             <address-input label="above" value.bind="model.routeStop.location.address" class="flex-basis-1-of-1">
 
@@ -195,7 +189,7 @@
 
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row margin-large-bottom">
 
             <text-input label="above" value.bind="model.routeStop.outfit.companyName" class="flex-basis-1-of-2">
 
@@ -215,7 +209,7 @@
 
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row">
 
             <text-input label="above" value.bind="model.routeStop.outfit.contactPhone.number" class="flex-basis-1-of-2">
 
@@ -232,6 +226,14 @@
                 </div>
 
             </text-input>
+        </div>
+
+    </modal-section>
+
+    <modal-section class="margin-bottom --line-above">
+
+        <div slot="header" translate>
+            Instructions
         </div>
 
         <div class="control-row">
@@ -261,13 +263,13 @@
 
     </modal-section>
 
-    <modal-section>
+    <modal-section class="--line-above">
 
         <div slot="header" translate>
             Requirements
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row margin-large-bottom">
 
             <check-toggle label="after" value.bind="model.routeStop.actions.photo" class="flex-basis-1-of-2">
 
@@ -319,7 +321,7 @@
 
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row margin-large-bottom">
 
             <check-toggle label="after" value.bind="model.routeStop.actions.colliCountVerification" class="flex-basis-1-of-2">
 
@@ -371,7 +373,7 @@
 
         </div>
 
-        <div class="control-row margin-medium-bottom">
+        <div class="control-row margin-large-bottom">
 
             <check-toggle label="after" value.bind="model.routeStop.actions.scanColli" class="flex-basis-1-of-2">
 

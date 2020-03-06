@@ -75,7 +75,7 @@
                             Cancel
                         </button>
 
-                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave()">
+                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
                             <template if.bind="isNew" translate>
                                 Create rule set
@@ -93,7 +93,7 @@
 
             </page-header>
 
-            <name-value-list>
+            <name-value-list class="font-small opacity-faded">
 
                 <name-value-pair if.bind="settings.metadata.lastModified != null">
 

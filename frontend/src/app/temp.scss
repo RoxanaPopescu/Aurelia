@@ -56,6 +56,31 @@ page-content > name-value-list
     margin-bottom: -1.5rem;
 }
 
+page-content page-section
+{
+    &.--line-above
+    {
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
+        margin-top: 8rem;
+        padding-top: 6rem;
+    }
+
+    .page-section-header
+    {
+        font: var(--font-larger);
+    }
+}
+
+modal-section
+{
+    &.--line-above
+    {
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
+        margin-top: 8rem;
+        padding-top: 6rem;
+    }
+}
+
 page-sidebar .page-sidebar-edge-icon icon
 {
     font-size: calc(var(--font-largest-font-size) * 0.8334);

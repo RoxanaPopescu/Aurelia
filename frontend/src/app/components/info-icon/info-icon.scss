@@ -11,15 +11,24 @@ info-icon
         {
             height: 1em;
             width: 1em;
-            margin-bottom: 0.214em;
-            color: var(--surface-primary-text-color);
+            margin-bottom: calc(2 / 14 * 1em);
+            color: var(--surface-info-icon-color);
             position: relative;
             pointer-events: auto;
             pointer-events: initial;
             vertical-align: middle;
+            transition:
+                opacity var(--animation-duration-medium),
+                color var(--animation-duration-medium);
         }
 
-        .info-icon-window
+        &:not(:hover) icon
+        {
+            color: var(--surface-neutral-icon-color);
+            opacity: var(--opacity-faded-more);
+        }
+
+        .info-icon-popover
         {
             opacity: 0;
             pointer-events: none;
@@ -43,11 +52,16 @@ info-icon
                 background-color: white;
                 transform: rotate(45deg);
             }
+
+            > [slot="heading"]
+            {
+                margin-bottom: var(--font-current-margin-bottom);
+            }
         }
 
         &.--right
         {
-            .info-icon-window
+            .info-icon-popover
             {
                 left: calc(100% + 2.5rem);
                 top: -3rem;
@@ -65,7 +79,7 @@ info-icon
 
         &.--left
         {
-            .info-icon-window
+            .info-icon-popover
             {
                 right: calc(100% + 2.5rem);
                 top: -3rem;
@@ -83,7 +97,7 @@ info-icon
 
         &.--top
         {
-            .info-icon-window
+            .info-icon-popover
             {
                 bottom: calc(100% + 1.5rem);
                 left: -3.5rem;
@@ -101,7 +115,7 @@ info-icon
 
         &.--bottom
         {
-            .info-icon-window
+            .info-icon-popover
             {
                 top: calc(100% + 1.5rem);
                 left: -3.5rem;
@@ -119,7 +133,7 @@ info-icon
 
         &:hover
         {
-            .info-icon-window
+            .info-icon-popover
             {
                 opacity: 1;
                 pointer-events: auto;

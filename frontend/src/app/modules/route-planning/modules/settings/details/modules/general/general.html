@@ -20,17 +20,23 @@
                 Name of the rule set
             </div>
 
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="settings.name">
+                </required-validator>
+
+            </div>
+
         </text-input>
 
     </page-section>
 
-    <page-section>
+    <page-section class="--line-above">
 
-        <hr class="hr-line margin-larger-bottom">
-
-        <h1 class="font-larger margin-large-bottom" translate>
+        <div slot="header" translate>
             Begrænsninger
-        </h1>
+        </div>
 
         <div class="margin-large-bottom" translate>
             Here you can specify the limitations that should be taken into account when planning the routes.
@@ -225,13 +231,11 @@
 
     </page-section>
 
-    <page-section>
+    <page-section class="--line-above">
 
-        <hr class="hr-line margin-larger-bottom">
-
-        <h1 class="font-larger margin-bottom" translate>
+        <div slot="header" translate>
             Route creation
-        </h1>
+        </div>
 
         <h2 class="margin-large-bottom" translate>
             Here you can specify how the routes should be created, tagged and approved.

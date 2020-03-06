@@ -7,7 +7,7 @@ import { autoinject, bindable } from "aurelia-framework";
 export class InfoIcon
 {
     /**
-     * The position of the pop-up window
+     * The position of the popover.
      */
     @bindable
     public position: "right" | "left" | "top" | "bottom" = "right";

@@ -20,7 +20,7 @@ page-content
         padding: 7rem 9rem;
 
         // Add a border below the header.
-        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
 
         // Apply surface color, so the header covers the page content when scrolled.
         background: var(--surface-color);
@@ -97,7 +97,7 @@ page-content.page-content-center
         background: var(--surface-color);
 
         // Add a border above the footer.
-        border-top: var(--border-width-thin) solid var(--surface-separator-color);
+        border-top: var(--border-width-thin) solid var(--palette-color-neutral);
     }
 }
 
