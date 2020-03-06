@@ -30,7 +30,7 @@ export class User
     public id: string;
 
     /**
-     * The first name of the user.
+     * The username of the user.
      */
     public username: string;
 
@@ -73,4 +73,12 @@ export class User
      * True if the user can be deactivated, otherwise false.
      */
     public canDeactivate: boolean;
+
+    /**
+     * Get the string representation of this user, which is the full name of the user.
+     */
+    public toString(): string
+    {
+        return `${this.firstName} ${this.lastName}`;
+    }
 }

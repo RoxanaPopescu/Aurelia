@@ -16,6 +16,13 @@ export default
     {
         data:
         {
+            metadata:
+            {
+                created: "2020-03-05T08:32+02:00",
+                createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+                lastModified: "2020-03-05T09:52+02:00",
+                lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+            },
             id: "rule-set-1-id",
             name: "Rule set 1",
             slug: "rule-set-1-slug",
@@ -106,8 +113,8 @@ export default
                     "criteria": {
                         "weekdays": [ 1, 2 ],
                         "datePeriod": {
-                        "from": "2020-09-05 23:32:34+02:00",
-                        "to": "2021-10-05 00:32:34+02:00"
+                        "from": "2020-09-05T23:32:34+02:00",
+                        "to": "2021-10-05T00:32:34+02:00"
                         }
                     },
                     "gates": [
@@ -115,8 +122,8 @@ export default
                         "name": "Gate B",
                         "slots": [
                             {
-                            "arrivalTime": "2021-10-05 00:32:34+02:00",
-                            "lastDepartureTime": "2021-10-05 08:32:34+02:00",
+                            "arrivalTime": "2021-10-05T00:32:34+02:00",
+                            "lastDepartureTime": "2021-10-05T08:32:34+02:00",
                             "timeBetweenDepartures": "00:20:00",
                             "vehicleGroupId": ""
                             }
@@ -162,8 +169,8 @@ export default
                     "criteria": {
                         "weekdays": [ 1, 2 ],
                         "datePeriod": {
-                        "from": "2020-09-05 23:32:34+02:00",
-                        "to": "2021-10-05 00:32:34+02:00"
+                        "from": "2020-09-05T23:32:34+02:00",
+                        "to": "2021-10-05T00:32:34+02:00"
                         },
                         "orderTagsAllRequired": [ "" ],
                         "orderTagsOneRequired": [ "" ]

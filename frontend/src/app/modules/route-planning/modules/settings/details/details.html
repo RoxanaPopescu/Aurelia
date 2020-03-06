@@ -95,34 +95,34 @@
 
             <name-value-list>
 
-                <name-value-pair>
+                <name-value-pair if.bind="settings.metadata.lastModified != null">
 
                     <div slot="name" translate>
                         Last modified
                     </div>
 
                     <div slot="value">
-                        04/03/2020 8:32
+                        ${settings.metadata.lastModified | dateTime: 'narrow'}
                         <span class="opacity-faded" translate>
                             by
                         </span>
-                        Thomas Darling
+                        ${settings.metadata.lastModifiedBy}
                     </div>
 
                 </name-value-pair>
 
-                <name-value-pair>
+                <name-value-pair if.bind="settings.metadata.created != null">
 
                     <div slot="name" translate>
                         Created
                     </div>
 
                     <div slot="value">
-                        05/03/2020 10:17
+                        ${settings.metadata.created | dateTime: 'narrow'}
                         <span class="opacity-faded" translate>
                             by
                         </span>
-                        Thomas Darling
+                        ${settings.metadata.createdBy}
                     </div>
 
                 </name-value-pair>
