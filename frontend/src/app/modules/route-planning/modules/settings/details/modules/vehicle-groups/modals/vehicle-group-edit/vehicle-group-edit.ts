@@ -3,6 +3,7 @@ import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { VehicleGroup } from "app/model/_route-planning-settings";
 import { VehicleType } from "app/model/vehicle";
+import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
 @autoinject
 export class VehicleGroupPanel
@@ -12,13 +13,15 @@ export class VehicleGroupPanel
      * @param routeService The `RouteService` instance.
      * @param addressService The `AddressService` instance.
      */
-    public constructor(modal: Modal)
+    public constructor(modal: Modal, addressService: AddressService)
     {
         this._modal = modal;
+        this._addressService = addressService;
     }
 
     private _result: VehicleGroup | undefined;
     private _modal: Modal;
+    private readonly _addressService: AddressService;
 
     /**
      * True if the model represents a new stop, otherwise false.
@@ -33,7 +36,7 @@ export class VehicleGroupPanel
     /**
      * The available vehicle types.
      */
-    protected vehicleTypes = Object.keys(VehicleType.getAll).map(slug => ({ slug, ...VehicleType.getAll[slug] }));
+    protected vehicleTypes = VehicleType.getAll();
 
     /**
      * The validation for the modal.
@@ -76,8 +79,40 @@ export class VehicleGroupPanel
                 return;
             }
 
-            // Set the result of the modal.
-            this._result = this.model.vehicleGroup;
+            // Mark the modal as busy.
+            this._modal.busy = true;
+
+            // Resolve stop location, if needed.
+            if (this.model.vehicleGroup.startLocation != null && this.model.vehicleGroup.startLocation.location.address.id != null)
+            {
+                try
+                {
+                    this.model.vehicleGroup.startLocation.location = await this._addressService.getLocation(this.model.vehicleGroup.startLocation.location.address);
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+
+                    return;
+                }
+            }
+
+            // Resolve stop location, if needed.
+            if (this.model.vehicleGroup.endLocation != null && this.model.vehicleGroup.endLocation.location.address.id != null)
+            {
+                try
+                {
+                    this.model.vehicleGroup.endLocation.location = await this._addressService.getLocation(this.model.vehicleGroup.endLocation.location.address);
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+
+                    return;
+                }
+            }
+
+            this._modal.close();
         }
         catch (error)
         {

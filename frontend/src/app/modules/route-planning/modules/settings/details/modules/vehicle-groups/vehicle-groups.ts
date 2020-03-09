@@ -43,16 +43,7 @@ export class VehicleGroups
             return;
         }
 
-        // try
-        // {
-        //     await this._routeService.setRouteStopStatus(this.route!, vehicleGroup, "cancelled");
-        // }
-        // catch (error)
-        // {
-        //     Log.error("Could not remove route stop", error);
-        // }
-
-        // this.fetchRoute();
+        this.settings.vehicleGroups = this.settings.vehicleGroups.slice(this.settings.vehicleGroups.indexOf(vehicleGroup));
     }
 
     /**
@@ -66,7 +57,7 @@ export class VehicleGroups
 
         if (savedVehicleGroup != null)
         {
-            // Save the changes
+            this.settings.vehicleGroups[this.settings.vehicleGroups.indexOf(vehicleGroup)] = savedVehicleGroup;
         }
     }
 }

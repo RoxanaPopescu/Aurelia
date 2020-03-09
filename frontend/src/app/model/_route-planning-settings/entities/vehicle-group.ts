@@ -78,12 +78,12 @@ export class VehicleGroup
     /**
      * The start location associated with the vehicle group.
      */
-    public startLocation: VehicleGroupLocation;
+    public startLocation: VehicleGroupLocation | undefined;
 
     /**
      * The end location associated with the vehicle group.
      */
-    public endLocation: VehicleGroupLocation;
+    public endLocation: VehicleGroupLocation | undefined;
 
     /**
      * The route tags to associate with routes using this vehicle group.

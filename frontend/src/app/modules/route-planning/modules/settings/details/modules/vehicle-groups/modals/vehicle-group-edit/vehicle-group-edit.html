@@ -22,7 +22,7 @@
 
         <modal-section>
 
-            <div class="control-row margin-larger-bottom">
+            <div class="control-row">
 
                 <text-input label="above" value.bind="model.vehicleGroup.name" class="flex-basis-1-of-2">
 
@@ -55,8 +55,6 @@
             </div>
 
         </modal-section>
-
-        <hr class="hr-line margin-large-bottom">
 
         <modal-section class="--line-above">
 
@@ -172,7 +170,7 @@
 
             </div>
 
-            <div class="control-row margin-larger-bottom">
+            <div class="control-row">
 
                 <number-input value.bind="model.vehicleGroup.cost.distance" label="above" class="flex-basis-1-of-2">
 
@@ -202,8 +200,6 @@
             </div>
 
         </modal-section>
-
-        <hr class="hr-line margin-large-bottom">
 
         <modal-section class="--line-above">
 
@@ -311,7 +307,7 @@
 
             </div>
 
-            <div class="control-row margin-larger-bottom">
+            <div class="control-row">
 
                 <number-input value.bind="model.vehicleGroup.limits.time" label="above" class="flex-basis-1-of-2">
 
@@ -367,9 +363,7 @@
 
         </modal-section>
 
-        <hr class="hr-line margin-large-bottom">
-
-        <modal-section class="--line-above margin-large-bottom">
+        <modal-section class="--line-above">
 
             <div slot="header" translate>
                 Locations
@@ -399,7 +393,7 @@
 
             </div>
 
-            <div class="control-row margin-medium-bottom">
+            <div class="control-row">
 
                 <number-input value.bind="model.vehicleGroup.startLocation.taskTime" label="above" class="flex-basis-1-of-2">
 
@@ -455,9 +449,7 @@
 
         </modal-section>
 
-        <hr class="hr-line margin-large-bottom">
-
-        <modal-section class="--line-above margin-medium-bottom">
+        <modal-section class="--line-above">
 
             <div slot="header" translate>
                 Order tags
@@ -504,8 +496,7 @@
                 label="above"
                 filter="auto"
                 value.bind="model.vehicleGroup.orderTagsOneRequired"
-                filter-value.bind="orderTagsOneFilterValue"
-                class="margin-large-bottom">
+                filter-value.bind="orderTagsOneFilterValue">
 
                 <div slot="heading" translate>
                     Applicable to orders with atleast one of these tags
@@ -534,8 +525,6 @@
             </tags-input>
 
         </modal-section>
-
-        <hr class="hr-line margin-large-bottom">
 
         <modal-section class="--line-above">
 
@@ -581,6 +570,22 @@
             </tags-input>
 
         </modal-section>
+
+        <div class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="neutral" click.trigger="_modal.close()" translate>
+                Cancel
+            </button>
+
+            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                Create rule
+            </button>
+
+            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                Save and close
+            </button>
+
+        </div>
 
     </modal-panel>
 
