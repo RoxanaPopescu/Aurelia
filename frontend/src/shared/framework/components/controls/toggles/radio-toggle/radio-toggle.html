@@ -32,7 +32,8 @@
             readonly.bind="readonly || toggleGroup.readonly"
             name.bind="toggleGroup.id"
             checked.to-view="value"
-            change.trigger="value = !value">
+            change.trigger="value = !value"
+            click.trigger="onToggleClick(event)">
 
         <icon if.bind="value === true" name="md-radio-toggle-checked" accent.bind="accent & attr"></icon>
         <icon if.bind="value !== true" name="md-radio-toggle-unchecked" accent.bind="accent & attr"></icon>

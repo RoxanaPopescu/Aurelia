@@ -125,4 +125,15 @@ export class ToggleCustomElement
             this.toggleGroup.onToggleModelChanged(newValue, oldValue);
         }
     }
+
+    /**
+     * Called when the toggle is clicked.
+     * Toggels the state of the toggle, and prevents default for the event.
+     */
+    protected onToggleClick(): boolean
+    {
+        this.value = !this.value;
+
+        return false;
+    }
 }
