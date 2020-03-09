@@ -4,7 +4,8 @@
     "baseUrl": "src",
     "lib": [
       "es2018",
-      "dom"
+      "dom",
+      "dom.iterable"
     ],
     "module": "esnext",
     "target": "es2018",

@@ -4,7 +4,7 @@
     <require from="app/components/name-value-list/name-value-list"></require>
 
     <require from="./modules/general/general"></require>
-    <require from="./modules/geographical-areas/geographical-areas"></require>
+    <require from="./modules/geographic-areas/geographic-areas"></require>
     <require from="./modules/vehicle-groups/vehicle-groups"></require>
     <require from="./modules/start-locations/start-locations"></require>
     <require from="./modules/task-times/task-times"></require>
@@ -13,7 +13,7 @@
 
     <page name="settings-details">
 
-        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
+        <page-content class="${tab === 'geographic-areas' ? 'page-content-stretch' : ''}" scroll scroll.ref="scroll" validation validation.ref="validation">
 
             <page-header scroll-fade>
 
@@ -51,8 +51,8 @@
                             General rules
                         </tab>
 
-                        <tab name="geographical-areas" translate>
-                            Geographical rules
+                        <tab name="geographic-areas" translate>
+                            Geographic rules
                         </tab>
 
                         <tab name="vehicle-groups" translate>
@@ -75,7 +75,7 @@
                             Cancel
                         </button>
 
-                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSave()">
+                        <button class="flex-basis-1-of-2" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
                             <template if.bind="isNew" translate>
                                 Create rule set
@@ -93,36 +93,36 @@
 
             </page-header>
 
-            <name-value-list>
+            <name-value-list class="font-small opacity-faded">
 
-                <name-value-pair>
+                <name-value-pair if.bind="settings.metadata.lastModified != null">
 
                     <div slot="name" translate>
                         Last modified
                     </div>
 
                     <div slot="value">
-                        04/03/2020 8:32
+                        ${settings.metadata.lastModified | dateTime: 'narrow'}
                         <span class="opacity-faded" translate>
                             by
                         </span>
-                        Thomas Darling
+                        ${settings.metadata.lastModifiedBy}
                     </div>
 
                 </name-value-pair>
 
-                <name-value-pair>
+                <name-value-pair if.bind="settings.metadata.created != null">
 
                     <div slot="name" translate>
                         Created
                     </div>
 
                     <div slot="value">
-                        05/03/2020 10:17
+                        ${settings.metadata.created | dateTime: 'narrow'}
                         <span class="opacity-faded" translate>
                             by
                         </span>
-                        Thomas Darling
+                        ${settings.metadata.createdBy}
                     </div>
 
                 </name-value-pair>
@@ -137,7 +137,7 @@
 
             <task-times if.bind="tab === 'task-times'" settings.bind="settings"></task-times>
 
-            <geographical-areas if.bind="tab === 'geographical-areas'" settings.bind="settings"></geographical-areas>
+            <geographic-areas if.bind="tab === 'geographic-areas'" settings.bind="settings"></geographic-areas>
 
         </page-content>
 

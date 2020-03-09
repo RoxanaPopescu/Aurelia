@@ -11,7 +11,7 @@
         </h1>
 
         <div class="margin-large-bottom" translate>
-            Here you can tweak the settings for your routeplanning.
+            Here you can specify the general settings to use when planning the routes.
         </div>
 
         <text-input label="above" value.bind="settings.name">
@@ -20,17 +20,27 @@
                 Name of the rule set
             </div>
 
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="settings.name">
+                </required-validator>
+
+            </div>
+
         </text-input>
 
     </page-section>
 
-    <page-section>
+    <page-section class="--line-above">
 
-        <hr class="hr-line margin-larger-bottom">
-
-        <h1 class="font-larger margin-large-bottom" translate>
+        <div slot="header" translate>
             Begrænsninger
-        </h1>
+        </div>
+
+        <div class="margin-large-bottom" translate>
+            Here you can specify the limitations that should be taken into account when planning the routes.
+        </div>
 
         <div class="control-row margin-large-bottom">
 
@@ -221,16 +231,14 @@
 
     </page-section>
 
-    <page-section>
+    <page-section class="--line-above">
 
-        <hr class="hr-line margin-larger-bottom">
-
-        <h1 class="font-larger margin-bottom" translate>
+        <div slot="header" translate>
             Route creation
-        </h1>
+        </div>
 
         <h2 class="margin-large-bottom" translate>
-            Here you can specify how the routes should be created.
+            Here you can specify how the routes should be created, tagged and approved.
         </h2>
 
         <text-input
@@ -321,18 +329,6 @@
                 <span translate>
                     Approve routes manually
                 </span>
-
-                <info-icon position="top">
-
-                    <div slot="headline" translate>
-                        Manual approval
-                    </div>
-
-                    <div slot="body" translate>
-                        If the system determines that the driver will be late on the stop, we will make the driver extra aware on the situation.
-                    </div>
-
-                </info-icon>
 
             </div>
 

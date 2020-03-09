@@ -4,6 +4,7 @@ import { VehicleGroup } from "./vehicle-group";
 import { DepartureTime } from "./departure-time";
 import { TaskTimes } from "./task-times";
 import { SpecialArea } from "./special-area";
+import { Metadata } from "app/model/shared/entities/metadata";
 
 /**
  * Represents a route planning rule set.
@@ -18,6 +19,7 @@ export class RoutePlanningSettings
     {
         if (data != null)
         {
+            this.metadata = new Metadata(data.metadata);
             this.id = data.id;
             this.name = data.name;
             this.slug = data.slug;
@@ -30,6 +32,7 @@ export class RoutePlanningSettings
         }
         else
         {
+            this.metadata = new Metadata();
             this.restrictions = new Restrictions();
             this.routeCreation = new RouteCreation();
             this.vehicleGroups = [];
@@ -38,6 +41,11 @@ export class RoutePlanningSettings
             this.specialAreas = [];
         }
     }
+
+    /**
+     * The metadata for the entity.
+     */
+    public metadata: Metadata;
 
     /**
      * The ID of the route planning settings.

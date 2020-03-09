@@ -13,13 +13,12 @@ order-accordion
         {
             display: grid;
             grid-template-columns: 6.5fr 3.5fr 1fr 3fr;
-            margin-right: 12rem;
+            column-gap: 5rem;
+        }
 
-            > *
-            {
-                min-width: 0;
-                padding: 0 5rem;
-            }
+        .accordion-content
+        {
+            padding: 0;
         }
     }
 
@@ -27,7 +26,6 @@ order-accordion
     {
         --data-table-columns: 3.5fr 2fr 1.25fr 2fr;
 
-        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
         line-height: var(--font-large-line-height);
 
         &:not(.--expanded) .data-table-row:nth-child(n+5)
@@ -45,10 +43,16 @@ order-accordion
             min-height: calc(var(--font-large-line-height) + 2 * 3rem);
             padding: 3rem 5rem;
         }
+
+        .data-table-row:last-child data-table-cell
+        {
+            border-bottom: none !important;
+        }
     }
 
     .order-accordion-show-all-toggle
     {
+        border-top: var(--border-width-thin) solid var(--border-color);
         display: flex;
         align-items: center;
         min-height: calc(var(--font-large-line-height) + 2 * 3rem);

@@ -2,6 +2,8 @@
 
     <require from="./accordion.scss"></require>
 
+    <div class="accordion-edge"></div>
+
     <div class="accordion-header ${expandable ? '--clickable' : ''}" click.trigger="onHeaderClick($event)">
 
         <div class="accordion-header-content">
@@ -12,7 +14,7 @@
 
     </div>
 
-    <div show.bind="expanded" class="accordion-content">
+    <div show.bind="expanded" class="accordion-content" surface="base">
 
         <slot></slot>
 

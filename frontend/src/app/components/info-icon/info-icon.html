@@ -5,9 +5,10 @@
     <div class="info-icon-container --${position}">
 
         <icon name="info-small"></icon>
-        <div class="info-icon-window">
+        <div class="info-icon-popover">
 
-            <div class="margin-bottom"><slot name="heading"></slot></div>
+            <slot name="heading"></slot>
+
             <div class="font-small opacity-faded"><slot name="body"></slot></div>
 
         </div>

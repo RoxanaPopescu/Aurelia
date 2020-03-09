@@ -84,8 +84,8 @@
             return;
         }
 
-        // Don't clear selection on multi-click.
-        if (event.detail > 1)
+        // Don't clear selection on multi-click, or if the `Shift` key is pressed.
+        if (event.detail > 1 || event.shiftKey)
         {
             return;
         }

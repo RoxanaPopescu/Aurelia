@@ -1,4 +1,4 @@
-<template class="${expanded ? '--expanded' : ''}" surface="card">
+<template class="${expanded ? '--expanded' : ''}">
 
     <require from="app/components/accordion/accordion"></require>
     <require from="./order-accordion.scss"></require>
@@ -101,7 +101,7 @@
 
         </data-table>
 
-        <a if.bind="model.colli.length > 3" class="order-accordion-show-all-toggle font-small" click.trigger="onShowAllColliToggle()">
+        <a if.bind="model.colli.length > 3" class="order-accordion-show-all-toggle font-small" click.trigger="onShowAllColliToggle()" surface="card">
 
             <template if.bind="showAllColli" translate>
                 Show less
