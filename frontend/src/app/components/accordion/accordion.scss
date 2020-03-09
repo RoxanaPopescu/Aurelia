@@ -1,3 +1,5 @@
+@import "resources/index";
+
 accordion
 {
     display: block;
@@ -6,12 +8,62 @@ accordion
     border-color: var(--border-color);
     transition: border-color var(--animation-duration-medium);
 
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    &[accent]
+    {
+        // Ensure the accent only affects the edge, and not the content.
+        color: inherit;
+
+        &:not([accent="none"])
+        {
+            padding-left: var(--border-width-thick);
+        }
+    }
+
+    // Add accent color support.
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"] > .accordion-edge
+        {
+            // Apply the background color specified by the accent attribute.
+            background: var(--palette-color-#{$accent});
+        }
+    }
+
+    // Add support for the 'none' accent.
+    &[accent="none"] > .accordion-edge
+    {
+        // Apply transparent background color.
+        background: transparent;
+    }
+
+    > .accordion-edge
+    {
+        // Position along the left edge of the accordion.
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+
+        // Set the width of the edge.
+        width: var(--border-width-thick);
+
+        // Set the border radius to match that of the accordion.
+        border-top-left-radius: var(--border-radius-medium);
+        border-bottom-left-radius: var(--border-radius-medium);
+
+        // Animate color changes.
+        transition: background-color var(--animation-duration-short);
+    }
+
     .accordion-header
     {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 3rem 0;
+        padding: 3rem 4rem;
         background-color: var(--surface-color);
         transition: background-color var(--animation-duration-medium);
 
@@ -22,16 +74,14 @@ accordion
 
         .accordion-header-toggle
         {
-            position: absolute;
-            right: 5rem;
+            margin-left: 5rem;
             font-size: var(--font-larger-font-size);
         }
     }
 
     .accordion-content
     {
-        --surface-color: transparent;
-
+        padding: 3rem 4rem;
         background-color: var(--surface-color);
     }
 
@@ -56,11 +106,7 @@ accordion
         .accordion-header:hover
         {
             background-color: var(--surface-color--active);
-        }
-
-        .accordion-content
-        {
-            border-top: var(--border-width-thin) solid var(--border-color--active);
+            border-bottom: var(--border-width-thin) solid var(--border-color--active);
         }
     }
 }

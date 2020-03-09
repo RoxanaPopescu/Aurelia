@@ -1,5 +1,5 @@
 /**
- * Represents a coordinate identifying a geographical position.
+ * Represents a coordinate identifying a geographic position.
  */
 export class Position
 {

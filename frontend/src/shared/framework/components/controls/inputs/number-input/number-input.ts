@@ -79,7 +79,7 @@ export class NumberInputCustomElement
             // Is the value valid?
             if (this.numberFormat.validPattern.test(value))
             {
-                this.value = parseFloat(value) || 0;
+                this.value = parseFloat(value.replace(this.numberFormat.decimalSeparator, ".")) || 0;
                 this.invalid = false;
             }
             else

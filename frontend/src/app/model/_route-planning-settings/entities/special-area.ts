@@ -38,7 +38,7 @@ export class SpecialArea
     public color: number;
 
     /**
-     * The polygon defining the geographical area.
+     * The polygon defining the geographic area.
      */
     public polygon: GeoJsonPolygon;
 
