@@ -1,0 +1,21 @@
+page[name="route-planning"] page[name="settings-details"] geographic-areas
+{
+    --list-border-color: var(--surface-separator-color);
+
+    .geographic-areas-list
+    {
+        background: var(--surface-color);
+        border-right: var(--border-width-thin) solid var(--list-border-color);
+
+        list-layout
+        {
+            --list-layout-row-gap: 2rem;
+        }
+
+        accordion [slot="header"]
+        {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

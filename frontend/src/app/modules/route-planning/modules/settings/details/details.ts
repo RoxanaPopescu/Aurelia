@@ -35,7 +35,7 @@ export class DetailsPage
      * Current tab page the user is routed to.
      */
     @observable
-    protected tab: "general" | "geographical-areas" | "vehicle-groups" | "start-location" | "task-times";
+    protected tab: "general" | "geographic-areas" | "vehicle-groups" | "start-location" | "task-times";
 
     /**
      * The validation for the modal.

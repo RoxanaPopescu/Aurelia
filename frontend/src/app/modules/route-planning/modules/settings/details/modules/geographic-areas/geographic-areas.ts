@@ -5,7 +5,7 @@ import { RoutePlanningSettings } from "app/model/_route-planning-settings";
  * Represents the page.
  */
 @autoinject
-export class GeographicalAreas
+export class GeographicAreas
 {
     /**
      * The id of the routeplan settings
