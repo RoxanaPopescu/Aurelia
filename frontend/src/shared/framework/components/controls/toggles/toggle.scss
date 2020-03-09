@@ -119,6 +119,7 @@ body
         // Position the element within the grid.
         grid-area: control;
         justify-self: flex-start;
+        align-self: stretch;
 
         // Allow content to be positioned relative to this element.
         position: relative;
@@ -126,9 +127,6 @@ body
         // Use horizontal flex layout.
         display: flex;
         align-items: stretch;
-
-        // Expand to fill the available height.
-        height: 100%;
 
         // Set the min-height.
         min-height: var(--toggle-height);
@@ -211,7 +209,6 @@ body
     {
         appearance: none;
         margin: 0;
-        opacity: 0;
         cursor: inherit;
     }
 }
@@ -221,7 +218,7 @@ radio-toggle
 {
     &[label="before"]
     {
-        .toggle-control icon svg
+        .toggle-control
         {
             // The icon does not fill its viewbox, so to ensure the right edge
             // edge aligns with other controls, we translate the icon right.
@@ -238,7 +235,7 @@ radio-toggle
 
     &[label="after"]
     {
-        .toggle-control icon svg
+        .toggle-control
         {
             // The icon does not fill its viewbox, so to ensure the left edge
             // edge aligns with other controls, we translate the icon left.

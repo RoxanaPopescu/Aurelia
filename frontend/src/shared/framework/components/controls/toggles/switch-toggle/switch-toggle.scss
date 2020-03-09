@@ -13,5 +13,6 @@ switch-toggle
     input
     {
         min-width: calc(var(--toggle-height) * 2);
+        width: 100%;
     }
 }

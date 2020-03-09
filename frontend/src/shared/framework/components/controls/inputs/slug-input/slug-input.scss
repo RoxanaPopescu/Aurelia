@@ -1,3 +1,9 @@
 slug-input
 {
+    > .input-control > span[slot="before"] + .input-control-inner .input-input,
+    > .input-control > span[slot="before"] + .input-control-inner .input-value,
+    > .input-control > span[slot="before"] + .input-control-inner .input-placeholder
+    {
+        padding-left: 0.5rem !important;
+    }
 }
