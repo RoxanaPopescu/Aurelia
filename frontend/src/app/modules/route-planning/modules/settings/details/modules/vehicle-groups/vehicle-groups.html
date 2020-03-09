@@ -2,6 +2,21 @@
 
     <require from="./vehicle-groups.scss"></require>
 
+    <page-section class="create-rule-section">
+
+        <button
+            appearance="outline"
+            accent="primary"
+            click.trigger="onCreateVehicleGroupClick()"
+            class="flex-row">
+
+            <icon name="plus-small" class="margin-right"></icon>
+            <span translate>Add a new vehicle rule</span>
+
+        </button>
+
+    </page-section>
+
     <page-section>
 
         <data-table

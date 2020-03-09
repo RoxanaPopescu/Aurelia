@@ -30,7 +30,7 @@ export class VehicleGroups
     protected settings: RoutePlanningSettings;
 
     /**
-     * Called when the `Remove vehicle group` icon is clicked on a route stop.
+     * Called when the `Remove vehicle group` icon is clicked on a vehicle group.
      * Asks the user to confirm, then deletes the vehicle group from the list.
      * @param vehicleGroup The vehicle group to remove.
      */
@@ -44,6 +44,22 @@ export class VehicleGroups
         }
 
         this.settings.vehicleGroups = this.settings.vehicleGroups.slice(this.settings.vehicleGroups.indexOf(vehicleGroup));
+    }
+
+    /**
+     * Called when the `Create vehicle group` button is clicked on the page.
+     */
+    protected async onCreateVehicleGroupClick(): Promise<void>
+    {
+        let vehicleGroup = new VehicleGroup();
+        const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, { vehicleGroup: vehicleGroup }).promise;
+
+        if (!savedVehicleGroup)
+        {
+            return;
+        }
+
+        this.settings.vehicleGroups.push(savedVehicleGroup);
     }
 
     /**

@@ -1,5 +1,15 @@
 vehicle-groups
 {
+    .create-rule-section
+    {
+        margin-top: -7rem;
+
+        .page-section-content
+        {
+            align-items: flex-end;
+        }
+    }
+
     data-table
     {
         --data-table-columns: 2fr 1.25fr 1.25fr 1.25fr 1.25fr 1.5fr min-content;
