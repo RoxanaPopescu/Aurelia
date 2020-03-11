@@ -1,9 +1,9 @@
 {
     "list": "List",
     "details": "Details",
-    "settingsList": "Settings",
-    "settingsDetails": "Setting",
-    "settingsCreate": "Create setting",
+    "rulesList": "Rule sets",
+    "rulesDetails": "Rule",
+    "rulesCreate": "Create rule",
     "orderGroupsList": "Order groups",
     "orderGroupsDetails": "Order group",
     "simulationsList": "Simulations",

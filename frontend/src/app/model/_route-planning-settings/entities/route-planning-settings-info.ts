@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 /**
  * Represents info about a route planning rule set.
  */
@@ -14,6 +16,7 @@ export class RoutePlanningSettingsInfo
             this.id = data.id;
             this.name = data.name;
             this.slug = data.slug;
+            this.lastUpdated = DateTime.fromISO(data.lastUpdated, { setZone: true });
         }
     }
 
@@ -31,4 +34,9 @@ export class RoutePlanningSettingsInfo
      * The slug identifying the route planning settings.
      */
     public slug: string;
+
+    /**
+     * The last updated date.
+     */
+    public lastUpdated: DateTime;
 }

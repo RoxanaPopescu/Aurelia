@@ -1,8 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService } from "shared/framework";
 import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
 import { Log } from "shared/infrastructure";
+import { DeleteRoutePlanRuleDialog } from "./modals/confirm-delete/confirm-delete";
 
 /**
  * Represents the page.
@@ -13,12 +14,15 @@ export class ListPage
     /**
      * Creates a new instance of the class.
      * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(routePlanningSettingsService: RoutePlanningSettingsService)
+    public constructor(routePlanningSettingsService: RoutePlanningSettingsService, modalService: ModalService)
     {
         this._routePlanningSettingsService = routePlanningSettingsService;
+        this._modalService = modalService;
     }
 
+    private readonly _modalService: ModalService;
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
     /**
@@ -65,15 +69,22 @@ export class ListPage
     /**
      * Called when the "Delete" button is clicked on a route planning settings item.
      * Deletes the route planning settings.
-     * @param settings The route planning settings to delete.
+     * @param rule The route planning settings to delete.
      */
-    protected async onDeleteSettingsClick(settings: RoutePlanningSettingsInfo): Promise<void>
+    protected async onDeleteSettingsClick(rule: RoutePlanningSettingsInfo): Promise<void>
     {
+        const confirmed = await this._modalService.open(DeleteRoutePlanRuleDialog, rule).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
         try
         {
-            await this._routePlanningSettingsService.delete(settings.id);
+            await this._routePlanningSettingsService.delete(rule.id);
 
-            this.items.splice(this.items.indexOf(settings), 1);
+            this.items.splice(this.items.indexOf(rule), 1);
         }
         catch (error)
         {

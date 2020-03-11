@@ -50,8 +50,8 @@ export class RoutePlanningModule
                 title: routeTitles.details
             },
             {
-                name: "settings-list",
-                route: "settings/list",
+                name: "rules-list",
+                route: "rules/list",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/list/list") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
@@ -62,13 +62,13 @@ export class RoutePlanningModule
                         "view-routeplan-settings"
                     ]
                 },
-                title: routeTitles.settingsList,
+                title: routeTitles.rulesList,
                 nav: true,
                 icon: "settings"
             },
             {
-                name: "settings-details",
-                route: [ "settings/details/:id", "settings/create" ],
+                name: "rules-details",
+                route: [ "rules/details/:id", "rules/create" ],
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
@@ -79,11 +79,11 @@ export class RoutePlanningModule
                         "view-routeplan-settings"
                     ]
                 },
-                title: routeTitles.settingsDetails
+                title: routeTitles.rulesDetails
             },
             {
-                name: "settings-create",
-                route: "settings/create",
+                name: "rules-create",
+                route: "rules/create",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
@@ -94,7 +94,7 @@ export class RoutePlanningModule
                         "create-routeplan-settings"
                     ]
                 },
-                title: routeTitles.settingsCreate
+                title: routeTitles.rulesCreate
             },
             {
                 name: "order-groups-list",

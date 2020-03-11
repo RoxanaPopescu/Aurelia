@@ -44,6 +44,16 @@
                             Name
                         </data-table-cell>
 
+                        <data-table-cell translate>
+                            id
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                last modified
+                            </span>
+                        </data-table-cell>
+
                         <data-table-cell align="right">
                             <!-- Icons -->
                         </data-table-cell>
@@ -53,10 +63,18 @@
                     <template repeat.for="item of items">
 
                         <data-table-row
-                            href="/route-planning/settings/details/${item.id}">
+                            href="/route-planning/rules/details/${item.id}">
 
                             <data-table-cell>
                                 ${item.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${item.slug}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${item.lastUpdated | dateTime: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell align="right">
