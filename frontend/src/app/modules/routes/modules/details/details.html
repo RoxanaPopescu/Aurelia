@@ -244,7 +244,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.driverVehicle.vehicleType.name}
+                        ${route.vehicle.type.name}
                     </div>
 
                 </name-value-pair>
@@ -256,7 +256,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.driverVehicle.makeAndModel}
+                        ${route.vehicle.makeAndModel}
                     </div>
 
                 </name-value-pair>
@@ -268,7 +268,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.driverVehicle.color}
+                        ${route.vehicle.color}
                     </div>
 
                 </name-value-pair>
@@ -280,7 +280,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.driverVehicle.licensePlate}
+                        ${route.vehicle.licensePlate}
                     </div>
 
                 </name-value-pair>
@@ -399,6 +399,10 @@
 
                     <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
                         Assign driver
+                    </button>
+
+                    <button appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
+                        Assign vehicle
                     </button>
 
                     <select-button appearance="outline" accent="primary">

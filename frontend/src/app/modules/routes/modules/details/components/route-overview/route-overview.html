@@ -211,13 +211,13 @@
                             &nbsp;
                         </span>
 
-                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart.as('second') !== 0">
+                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart">
 
-                            <span if.bind="delayedStart.as('second') < 0" translate>
+                            <span if.bind="delayedStart" translate>
                                 Arrived ${delayedStart | duration} too early
                             </span>
 
-                            <span if.bind="delayedStart.as('second') > 0" translate>
+                            <span if.bind="delayedStart" translate>
                                 Delayed by ${delayedStart | duration}
                             </span>
 
@@ -271,10 +271,6 @@
                         <span if.bind="route.overallRating != null">
                             &nbsp;
                         </span>
-
-                        <a if.bind="route.overallRating == null" class="font-small" translate>
-                            Rate the route
-                        </a>
 
                     </div>
 

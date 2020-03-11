@@ -78,7 +78,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
           {this.renderDriverInfo()}
 
-          {this.props.route.driverVehicle &&
+          {this.props.route.vehicle &&
           this.renderVehicleInfo()}
 
         </div>
@@ -148,22 +148,22 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Type")}</div>
-          <div>{this.props.route.driverVehicle!.type.name}</div>
+          <div>{this.props.route.vehicle!.type.name}</div>
         </div>
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel")}</div>
-          <div>{this.props.route.driverVehicle!.makeAndModel}</div>
+          <div>{this.props.route.vehicle!.makeAndModel}</div>
         </div>
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Color")}</div>
-          <div>{this.props.route.driverVehicle!.color}</div>
+          <div>{this.props.route.vehicle!.color}</div>
         </div>
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_LicensePlate")}</div>
-          <div>{this.props.route.driverVehicle!.licensePlate}</div>
+          <div>{this.props.route.vehicle!.licensePlate}</div>
         </div>
 
       </div>
