@@ -3,7 +3,7 @@ import { AbortError } from "shared/types";
 /**
  * The HTTP status codes that represent transient errors.
  */
-export const transientHttpStatusCodes = [502, 503, 504] as ReadonlyArray<number>;
+export const transientHttpStatusCodes = [408, 502, 503, 504] as ReadonlyArray<number>;
 
 /**
  * The HTTP status codes that represent a missing or deleted resource.

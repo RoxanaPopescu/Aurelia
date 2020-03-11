@@ -7,12 +7,12 @@ const listFormatCache = new Map<string, Intl.ListFormat>();
 /**
  * The supported list style values.
  */
-type ListStyle = "narrow" | "short" | "long";
+export type ListStyle = "narrow" | "short" | "long";
 
 /**
  * The supported list type values.
  */
-type ListType = "conjunction" | "disjunction" | "unit";
+export type ListType = "conjunction" | "disjunction" | "unit";
 
 /**
  * Represents a value converter that formats a sequence of items as a string representing a localized list.
@@ -60,7 +60,7 @@ export class ListValueConverter
             style, type
         });
 
-        const stringArray = value instanceof Array ? value : [...value].map(item => item.toString());
+        const stringArray = (value instanceof Array ? value : [...value]).map(item => item.toString());
 
         return listFormat.format(stringArray);
     }

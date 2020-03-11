@@ -25,7 +25,8 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/select/select"),
         PLATFORM.moduleName("./converters/time/time"),
         PLATFORM.moduleName("./converters/time-range/time-range"),
-        PLATFORM.moduleName("./converters/weekday/weekday")
+        PLATFORM.moduleName("./converters/weekday/weekday"),
+        PLATFORM.moduleName("./converters/weekday-list/weekday-list")
     ]);
 
     // Signal time-dependent value converters to update every second.
@@ -50,6 +51,7 @@ export * from "./converters/select/select";
 export * from "./converters/time/time";
 export * from "./converters/time-range/time-range";
 export * from "./converters/weekday/weekday";
+export * from "./converters/weekday-list/weekday-list";
 
 // Services.
 export * from "./services/locale";

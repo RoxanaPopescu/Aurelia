@@ -31,7 +31,7 @@ export class WeekdayValueConverter
 
     /**
      * Converts the value for use in the view,
-     * formatting the date component of the specified value as a localized date string, using the specified style.
+     * formatting the value as a localized weekday, using the specified style.
      * @param value The value to format, which may be a `DateTime` or an ISO weekday number in the range [1, 7].
      * @param style The style to use. The default is `long`.
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
