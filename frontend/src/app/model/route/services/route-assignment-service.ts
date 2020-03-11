@@ -4,6 +4,7 @@ import { Route } from "../entities/route";
 import { Driver } from "app/model/driver";
 import { RouteStatus } from "../entities/route-status";
 import { Fulfiller } from "app/model/outfit";
+import { Vehicle } from "app/model/vehicle";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.
@@ -42,6 +43,26 @@ export class RouteAssignmentService
         route.driver = driver;
         route.status = new RouteStatus("assigned");
         route.allowAssignment = false;
+    }
+
+    /**
+     * Assigns the specified route to the specified vehicle.
+     * @param route The route to assign.
+     * @param vehicle The vehicle to whom the route should be assigned.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async assignVehicle(route: Route, vehicle: Vehicle): Promise<void>
+    {
+        await this._apiClient.post("dispatch/route/assignvehicle",
+        {
+            body:
+            {
+                routeId: route.id,
+                vehicleId: vehicle.id
+            }
+        });
+
+        route.vehicle = vehicle;
     }
 
     /**

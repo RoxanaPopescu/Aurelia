@@ -10,6 +10,7 @@ import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
 import { IdentityService } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
+import { AssignVehiclePanel } from "./modals/assign-vehicle/assign-vehicle";
 
 /**
  * Represents the route parameters for the page.
@@ -126,6 +127,20 @@ export class DetailsModule
         const driver = await this._modalService.open(AssignDriverPanel, this.route).promise;
 
         if (driver != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Assign vehicle` button is clicked.
+     * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignVehicleClick(): Promise<void>
+    {
+        const vehicle = await this._modalService.open(AssignVehiclePanel, this.route).promise;
+
+        if (vehicle != null)
         {
             this.fetchRoute();
         }

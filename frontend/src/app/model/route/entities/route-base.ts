@@ -49,7 +49,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
 
         if (data.driverVehicle != null)
         {
-            this.driverVehicle = new Vehicle(data.driverVehicle);
+            this.vehicle = new Vehicle(data.driverVehicle);
         }
 
         if (data.driverPosition != null)
@@ -131,7 +131,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The vehicle assiged to the route,
      * or undefined if none has been assigned.
      */
-    public readonly driverVehicle?: Vehicle;
+    public vehicle?: Vehicle;
 
     /**
      * True if the driver is currently online, false if not,

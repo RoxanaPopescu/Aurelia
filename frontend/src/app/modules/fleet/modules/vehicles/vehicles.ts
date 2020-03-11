@@ -93,7 +93,7 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._vehicleService.getAll(signal);
+            const result = await this._vehicleService.getAll(undefined, signal);
 
             // Update the state.
             this.vehicles = result;

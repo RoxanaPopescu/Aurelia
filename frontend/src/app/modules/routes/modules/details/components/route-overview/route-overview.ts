@@ -251,26 +251,26 @@ export class RouteOverview
      * Calculates the duration of the route
      */
     @computedFrom("route.status")
-    public get delayedStart(): Duration
+    public get delayedStart(): Duration | undefined
     {
         if (this.route != null && this.route.stops[0] instanceof RouteStop)
         {
             if (this.route.stops[0].arrivedTime != null)
             {
                 if (this.route.stops[0].arrivalTimeFrame.from != null &&
-                    this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.from).as("second") < 0)
+                    this.route.stops[0].arrivalTimeFrame.from.diff(this.route.stops[0].arrivedTime).as("second") > 0)
                 {
-                    return this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.from);
+                    return this.route.stops[0].arrivalTimeFrame.from.diff(this.route.stops[0].arrivedTime);
                 }
                 if (this.route.stops[0].arrivalTimeFrame.to != null &&
-                    this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.to).as("second") > 0)
+                    this.route.stops[0].arrivalTimeFrame.to.diff(this.route.stops[0].arrivedTime).as("second") > 0)
                 {
-                    return this.route.stops[0].arrivedTime.diff(this.route.stops[0].arrivalTimeFrame.to);
+                    return this.route.stops[0].arrivalTimeFrame.to.diff(this.route.stops[0].arrivedTime);
                 }
             }
         }
 
-        return Duration.fromMillis(0);
+        return undefined;
     }
 
     /**
@@ -281,7 +281,7 @@ export class RouteOverview
     {
         if (this.route != null)
         {
-            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'started') && this.delayedStart.as('second') !== 0)
+            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'started') && this.delayedStart)
             {
                 return  true;
             }

@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { Vehicle, VehicleType } from "app/model/vehicle";
 import { Session } from "shared/src/model/session";
+import { VehicleStatusSlug } from "../entities/vehicle-status";
 
 /**
  * Represents a service that manages vehicles.
@@ -79,10 +80,17 @@ export class VehicleService
      * Gets all vehicles associated with the specified fulfiller.
      * @returns A promise that will be resolved with the vehicles.
      */
-    public async getAll(signal?: AbortSignal): Promise<Vehicle[]>
+    public async getAll(filter?: { status?: VehicleStatusSlug, minimumVehicleType?: VehicleType }, signal?: AbortSignal): Promise<Vehicle[]>
     {
         const result = await this._apiClient.post("vehicles/list",
         {
+            body:
+            {
+                filter: filter ? {
+                    status: filter?.status,
+                    minimumVehicleType: filter?.minimumVehicleType?.id
+                } : undefined
+            },
             signal
         });
 

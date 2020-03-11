@@ -28,7 +28,7 @@ export class DriverRoute
 
         if (data.driverVehicle != null)
         {
-            this.driverVehicle = new Vehicle(data.driverVehicle);
+            this.vehicle = new Vehicle(data.driverVehicle);
         }
 
         if (data.driverPosition != null)
@@ -63,7 +63,7 @@ export class DriverRoute
     /**
      * The vehicle assiged to the route.
      */
-    public readonly driverVehicle?: Vehicle;
+    public readonly vehicle?: Vehicle;
 
     /**
      * True if the driver is currently online, false if not,
