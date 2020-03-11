@@ -1,0 +1,14 @@
+@import "resources/index";
+
+page-tab-nav
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Set the text color and font weight.
+    color: var(--surface-primary-text-color);
+    font-weight: 500;
+
+    padding: 0 9rem;
+    border-bottom: var(--border-width-thin) solid var(--border-color);
+}

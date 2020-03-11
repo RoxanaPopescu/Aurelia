@@ -1,0 +1,13 @@
+<template class="
+    ${name == tabNav.value ? '--active' : ''}
+    ${disabled ? '--disabled' : ''}
+    ${invalid ? '--invalid' : ''}"
+    inert.bind="disabled">
+
+    <require from="./page-tab.scss"></require>
+
+    <button appearance="none" click.delegate="onClick()">
+        <slot></slot>
+    </button>
+
+</template>
