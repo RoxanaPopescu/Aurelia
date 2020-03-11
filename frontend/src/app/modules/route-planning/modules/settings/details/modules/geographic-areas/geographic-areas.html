@@ -1,6 +1,7 @@
 <template class="flex-grow flex-column">
 
     <require from="app/components/accordion/accordion"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
 
     <require from="./geographic-areas.scss"></require>
 
@@ -26,66 +27,146 @@
 
                 <list-layout>
 
-                    <accordion accent="primary">
+                    <accordion repeat.for="specialArea of settings.specialAreas" accent="primary">
 
                         <div slot="header">
 
                             <check-toggle class="margin-right">
                             </check-toggle>
 
-                            <div translate>
-                                Title
+                            <div class="font-large" translate>
+                                ${specialArea.name}
                             </div>
 
-                            <div class="flex-push-right">
-                                Icons
-                            </div>
+                            <div class="flex-push-right icon-row">
 
-                        </div>
+                                <button appearance="none" accent="primary" click.trigger="onEditAreaClick($index)">
+                                    <icon name="edit-small"></icon>
+                                </button>
 
-                        Body
+                                <button appearance="none" accent="primary" click.trigger="onRemoveAreaClick($index)">
+                                    <icon name="delete-small"></icon>
+                                </button>
 
-                    </accordion>
-
-                    <accordion accent="primary">
-
-                        <div slot="header">
-
-                            <check-toggle class="margin-right">
-                            </check-toggle>
-
-                            <div translate>
-                                Title
-                            </div>
-
-                            <div class="flex-push-right">
-                                Icons
                             </div>
 
                         </div>
 
-                        Body
+                        <div>
 
-                    </accordion>
+                            <div repeat.for="scenario of specialArea.scenarios" class="geographic-area-scenario flex-row">
 
-                    <accordion accent="primary">
+                                <div class="special-area-scenario-number">
+                                    ${$index + 1}
+                                </div>
 
-                        <div slot="header">
+                                <div class="flex-grow">
 
-                            <check-toggle class="margin-right">
-                            </check-toggle>
+                                    <div class="geographic-area-scenario-heading margin-bottom">
 
-                            <div translate>
-                                Title
-                            </div>
+                                        <div class="flex-grow">
+                                            ${scenario.criteria.datePeriod | dateTimeRange: 'narrow'}
+                                        </div>
 
-                            <div class="flex-push-right">
-                                Icons
+                                        <div class="icon-row">
+
+                                            <button appearance="none" accent="primary" click.trigger="onEditAreaClick($index)">
+                                                <icon name="edit-small"></icon>
+                                            </button>
+
+                                            <button appearance="none" accent="primary" click.trigger="onRemoveAreaClick($index)">
+                                                <icon name="delete-small"></icon>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <name-value-pair>
+
+                                        <div slot="name" translate>
+                                            Days
+                                        </div>
+
+                                        <div slot="value">
+                                            <template if.bind="scenario.criteria.weekdays.length === 7" translate>
+                                                All days
+                                            </template>
+                                            <template if.bind="scenario.criteria.weekdays.length < 7">
+                                                ${scenario.criteria.weekdays | weekdayList: 'long'}
+                                            </template>
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.taskTimeChange" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Task time
+                                        </div>
+
+                                        <div slot="value">
+                                            ${scenario.taskTimeChange > 0 ? '+' : ''}${scenario.taskTimeChange | number} sec. task time
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.drivingTimeChangeFactor" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Driving time
+                                        </div>
+
+                                        <div slot="value">
+                                            ${scenario.drivingTimeChangeFactor > 0 ? '+' : ''}${scenario.drivingTimeChangeFactor | percent} driving time
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.isBlocked" class="margin-smallest-top">
+
+                                        <div slot="value" translate>
+                                            Area blocked
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.criteria.orderTagsAllRequired" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Match all tags
+                                        </div>
+
+                                        <div slot="value" class="text-truncate">
+                                            ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.criteria.orderTagsOneRequired" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Match some tags
+                                        </div>
+
+                                        <div slot="value" class="text-truncate">
+                                            ${scenario.criteria.orderTagsOneRequired | list: 'short' : 'unit'}
+                                        </div>
+
+                                    </name-value-pair>
+
+                                </div>
+
                             </div>
 
                         </div>
 
-                        Body
+                        <button appearance="outline" accent="primary" class="geographic-area-add-rule margin-large-top">
+                            <icon name="add" class="margin-right"></icon>
+                            <span translate>
+                                Add rule
+                            </span>
+                        </button>
 
                     </accordion>
 

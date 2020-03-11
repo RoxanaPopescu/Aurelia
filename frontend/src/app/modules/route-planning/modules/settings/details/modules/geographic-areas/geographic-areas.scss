@@ -7,15 +7,69 @@ page[name="route-planning"] page[name="settings-details"] geographic-areas
         background: var(--surface-color);
         border-right: var(--border-width-thin) solid var(--list-border-color);
 
+        --toggle-height: 5rem;
+
         list-layout
         {
             --list-layout-row-gap: 2rem;
         }
 
-        accordion [slot="header"]
+        accordion
         {
-            display: flex;
-            align-items: center;
+            .accordion-content
+            {
+                padding: 5rem 4.5rem 4.5rem 4rem;
+            }
+
+            [slot="header"]
+            {
+                display: flex;
+                align-items: center;
+            }
         }
+    }
+
+    .geographic-area-scenario
+    {
+        display: flex;
+        align-items: stretch;
+        cursor: pointer;
+
+        &:not(:last-child)
+        {
+            margin-bottom: 5rem;
+            padding-bottom: 5rem;
+            border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        }
+    }
+
+    .special-area-scenario-number
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.75rem;
+        height: 3.75rem;
+        margin-top: 0.5rem;
+        margin-left: calc((var(--toggle-height) - 3.75rem) / 2);
+        margin-right: calc((var(--toggle-height) - 3.75rem) / 2 + var(--size-inline-spacing-large));
+        border-radius: var(--border-radius-small);
+        background-color: var(--palette-color-neutral-light);
+        font-size: 0.714285em;
+        font-weight: 600;
+        opacity: var(--opacity-faded-less);
+    }
+
+    .geographic-area-scenario-heading
+    {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .geographic-area-add-rule
+    {
+        display: flex;
+        justify-content: center;
+        width: 100%;
     }
 }

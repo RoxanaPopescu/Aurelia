@@ -16,8 +16,8 @@ export class SpecialArea
         {
             this.name = data.name;
             this.color = data.color;
-            this.polygon = data.polygon;
-            this.scenarios = data.scenarios;
+            this.polygon = new GeoJsonPolygon(data.polygon);
+            this.scenarios = [...data.scenarios, ...data.scenarios].map(d => new SpecialAreaScenario(d));
         }
         else
         {
