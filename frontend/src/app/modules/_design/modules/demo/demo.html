@@ -381,6 +381,51 @@
 
             </design-item>
 
+            <design-item heading="switch-toggle">
+
+                <design-row heading="switch-toggle">
+
+                    <design-column heading="enabled">
+
+                        <switch-toggle
+                            label.bind="labelPosition & attr"
+                            value.bind="switchToggleValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                        </switch-toggle>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <switch-toggle
+                            disabled.bind="true"
+                            label.bind="labelPosition & attr"
+                            value.bind="switchToggleValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </switch-toggle>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>value: ${switchToggleValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="time-input">
 
                 <design-row heading="time-input">

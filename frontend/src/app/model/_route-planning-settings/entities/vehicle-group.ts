@@ -2,6 +2,7 @@ import { VehicleType } from "shared/src/model/session";
 import { VehicleGroupCost } from "./vehicle-group-cost";
 import { VehicleGroupLimits } from "./vehicle-group-limits";
 import { VehicleGroupLocation } from "./vehicle-group-location";
+import clone from "clone";
 
 /**
  * Represents settings associated with a vehicle group.
@@ -77,15 +78,23 @@ export class VehicleGroup
     /**
      * The start location associated with the vehicle group.
      */
-    public startLocation: VehicleGroupLocation;
+    public startLocation: VehicleGroupLocation | undefined;
 
     /**
      * The end location associated with the vehicle group.
      */
-    public endLocation: VehicleGroupLocation;
+    public endLocation: VehicleGroupLocation | undefined;
 
     /**
      * The route tags to associate with routes using this vehicle group.
      */
     public routeTags: string[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

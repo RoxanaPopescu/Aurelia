@@ -224,6 +224,9 @@ body
             // Apply the input padding, except at the end closest to the input value.
             padding: var(--input-padding);
             padding-right: 0;
+
+            // Prevent wrapping.
+            white-space: nowrap;
         }
 
         > span[slot="after"]
@@ -231,6 +234,9 @@ body
             // Apply the input padding, except at the end closest to the input value.
             padding: var(--input-padding);
             padding-left: 0;
+
+            // Prevent wrapping.
+            white-space: nowrap;
         }
 
         > .input-control-inner

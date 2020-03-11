@@ -9,9 +9,6 @@ page-section
     display: flex;
     flex-direction: column;
 
-    // Fill the available height.
-    flex-grow: 1;
-
     // Allow the element to shrink.
     min-height: 0;
 

@@ -21,7 +21,7 @@ export class VehicleGroupLimits
     }
 
     /**
-     * The max volume the vehicle can handle, in ㎡.
+     * The max volume the vehicle can handle, in m³.
      */
     public volume: number;
 

@@ -413,3 +413,19 @@ $__summary: comment;
         }
     }
 }
+
+[surface$="/card/card"],
+[surface$="/neutral/card"]
+{
+    // State: normal
+    --surface-color: var(--palette-color-whitepoint);
+
+    // State: hover
+    --surface-color--hover: var(--palette-color-neutral-lighter);
+
+    // State: focus
+    --surface-color--focus: var(--palette-color-neutral-lighter);
+
+    // State: active
+    --surface-color--active: var(--palette-color-neutral-light);
+}

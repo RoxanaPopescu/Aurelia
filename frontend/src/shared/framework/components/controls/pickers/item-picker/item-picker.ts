@@ -175,13 +175,16 @@ export class ItemPickerCustomElement
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
 
         // Did the user pick the value?
-        if (pick && this.focusedValue !== this.value)
+        if (pick)
         {
-            // Set the value.
-            this.value = value;
+            if (this.focusedValue !== this.value)
+            {
+                // Set the value.
+                this.value = value;
 
-            // Dispatch the `change` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value } }));
+                // Dispatch the `change` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value } }));
+            }
 
             // If the user picked the value, call the `pick` callback.
             if (this.pick != null)
