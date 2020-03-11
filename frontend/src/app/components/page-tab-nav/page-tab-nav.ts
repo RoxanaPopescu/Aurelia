@@ -4,7 +4,7 @@ import { autoinject, bindable, bindingMode } from "aurelia-framework";
  * Custom element that represents a group of tabs.
  */
 @autoinject
-export class TabNavCustomElement
+export class PageTabNavCustomElement
 {
     /**
      * The currently selected tab.
@@ -23,12 +23,5 @@ export class TabNavCustomElement
     {
         newValue: string | undefined;
         oldValue: string | undefined;
-
     }) => void | boolean);
-
-    /**
-     * The appearance to use for the tabs.
-     */
-    @bindable
-    public appearance: "tabs" | "solid" | "outline" | "text";
 }

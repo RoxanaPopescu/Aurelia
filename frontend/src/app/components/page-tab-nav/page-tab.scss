@@ -1,0 +1,59 @@
+@import "resources/index";
+
+page-tab-nav
+{
+    page-tab
+    {
+
+        display: flex;
+        position: relative;
+        cursor: pointer;
+        height: 9rem;
+        width: 50rem;
+        padding: 0 5rem;
+        border-top-left-radius: var(--border-radius-large);
+        border-top-right-radius: var(--border-radius-large);
+        border: var(--border-width-thin) solid var(--border-color);
+        margin-bottom: -.25rem;
+        background-color: var(--surface-neutral-surface-color);
+
+        &:not(:first-child)
+        {
+            margin-left: 1rem;
+        }
+
+        &.--active
+        {
+            border-bottom-color: var(--surface-color);
+            background-color: var(--surface-color);
+            color: var(--surface-text-color);
+            cursor: initial;
+
+            button
+            {
+                cursor: initial;
+            }
+        }
+
+        &:focus-within
+        {
+            // Increase the z-index, so the focus outline is
+            // not covered by other tabs.
+            z-index: 1;
+        }
+
+        &.--invalid
+        {
+            // Use negative accent color if the tab is invalid.
+            // Note that this will be overridden if the tab is active.
+            color: var(--surface-negative-text-color);
+        }
+
+        &.--disabled
+        {
+            // Reduce opacity when disabled.
+            opacity: var(--opacity-disabled);
+        }
+
+    }
+}

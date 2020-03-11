@@ -1,8 +1,32 @@
 <template>
 
-    <page-section scroll-fade="0.7">
+    <require from="app/components/page-tab-nav/page-tab-nav"></require>
+    <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="./start-locations.scss"></require>
 
-        <div>Start locations</div>
+    <page-tab-nav if.bind="activeDepartureTime != null" appearance="tabs" value.bind="activeDepartureTime.name">
+
+        <page-tab class="font-large" repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
+            ${departureTime.name} test
+        </page-tab>
+
+        <button
+            appearance="none"
+            class="add-location-button font-large"
+            click.delegate="onAddLocationClick()">
+
+            <icon name="plus-small"></icon>
+            <span translate>Add a new start location</span>
+
+        </button>
+
+    </page-tab-nav>
+
+    <page-section>
+
+        <div>
+
+        </div>
 
     </page-section>
 

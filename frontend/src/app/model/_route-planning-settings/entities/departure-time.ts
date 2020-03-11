@@ -16,13 +16,20 @@ export class DepartureTime
         {
             this.startLocation = new Location(data.startLocation);
             this.scenarios = data.scenarios.map(d => new DepartureTimeScenario(d));
+            this.name = data.name;
         }
         else
         {
             this.startLocation = new Location();
             this.scenarios = [];
+            this.name = "";
         }
     }
+
+    /**
+     * The name of the location from which the driver must depart from.
+     */
+    public name: string;
 
     /**
      * The location from which the driver must depart.
