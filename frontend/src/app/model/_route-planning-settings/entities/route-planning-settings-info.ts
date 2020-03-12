@@ -16,7 +16,7 @@ export class RoutePlanningSettingsInfo
             this.id = data.id;
             this.name = data.name;
             this.slug = data.slug;
-            this.lastUpdated = DateTime.fromISO(data.lastUpdated, { setZone: true });
+            this.lastModified = DateTime.fromISO(data.lastModified, { setZone: true });
         }
     }
 
@@ -36,7 +36,7 @@ export class RoutePlanningSettingsInfo
     public slug: string;
 
     /**
-     * The last updated date.
+     * The last modified date.
      */
-    public lastUpdated: DateTime;
+    public lastModified: DateTime;
 }

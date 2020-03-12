@@ -50,8 +50,8 @@ export class RoutePlanningModule
                 title: routeTitles.details
             },
             {
-                name: "rules-list",
-                route: "rules/list",
+                name: "rules-sets-list",
+                route: "rules-sets/list",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/list/list") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
@@ -67,8 +67,8 @@ export class RoutePlanningModule
                 icon: "settings"
             },
             {
-                name: "rules-details",
-                route: [ "rules/details/:id", "rules/create" ],
+                name: "rules-sets-details",
+                route: [ "rules-sets/details/:id", "rules-sets/create" ],
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
@@ -82,8 +82,8 @@ export class RoutePlanningModule
                 title: routeTitles.rulesDetails
             },
             {
-                name: "rules-create",
-                route: "rules/create",
+                name: "rules-sets-create",
+                route: "rules-sets/create",
                 moduleId: ENVIRONMENT.name === "development" ?
                     PLATFORM.moduleName("./modules/settings/details/details") :
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),

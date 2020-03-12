@@ -63,7 +63,7 @@
                     <template repeat.for="item of items">
 
                         <data-table-row
-                            href="/route-planning/rules/details/${item.id}">
+                            href="/route-planning/rules-sets/details/${item.id}">
 
                             <data-table-cell>
                                 ${item.name}
@@ -74,7 +74,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${item.lastUpdated | dateTime: 'narrow' : false}
+                                ${item.lastModified | dateTime: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell align="right">

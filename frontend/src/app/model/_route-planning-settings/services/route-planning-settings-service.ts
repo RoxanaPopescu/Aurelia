@@ -27,12 +27,13 @@ export class RoutePlanningSettingsService
      */
     public async getAll(signal?: AbortSignal): Promise<RoutePlanningSettingsInfo[]>
     {
-        const result = await this._apiClient.post("routeplanning/settingsv2/list",
+        const response = await this._apiClient.post("routeplanning/rulesets/list",
         {
+            body: {},
             signal
         });
 
-        return result.data.map(d => new RoutePlanningSettingsInfo(d));
+        return response.data.results.map(d => new RoutePlanningSettingsInfo(d));
     }
 
     /**
@@ -43,7 +44,7 @@ export class RoutePlanningSettingsService
      */
     public async get(slug: string, signal?: AbortSignal): Promise<RoutePlanningSettings>
     {
-        const result = await this._apiClient.post("routeplanning/settingsv2/details",
+        const result = await this._apiClient.post("routeplanning/rulesets/details",
         {
             body: { slug },
             signal
@@ -59,7 +60,7 @@ export class RoutePlanningSettingsService
      */
     public async create(settings: RoutePlanningSettings): Promise<void>
     {
-        await this._apiClient.post("routeplanning/settingsv2/create",
+        await this._apiClient.post("routeplanning/rulesets/create",
         {
             body: settings
         });
@@ -72,7 +73,7 @@ export class RoutePlanningSettingsService
      */
     public async update(settings: RoutePlanningSettings): Promise<void>
     {
-        await this._apiClient.post("routeplanning/settingsv2/update",
+        await this._apiClient.post("routeplanning/rulesets/update",
         {
             body: settings
         });
@@ -80,14 +81,14 @@ export class RoutePlanningSettingsService
 
     /**
      * Deletes the specified route planning settings.
-     * @param slug The slug identifying the route planning settings to delete.
+     * @param id The id identifying the route planning settings to delete.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async delete(slug: string): Promise<void>
+    public async delete(id: string): Promise<void>
     {
-        await this._apiClient.post("routeplanning/settingsv2/delete",
+        await this._apiClient.post("routeplanning/rulesets/delete",
         {
-            body: { slug }
+            body: { id }
         });
     }
 }

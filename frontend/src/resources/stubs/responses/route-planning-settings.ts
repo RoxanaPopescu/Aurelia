@@ -1,19 +1,7 @@
 export default
     {
-        "POST /api/v1/routeplanning/settingsv2/list":
-        {
-            data:
-            [
-                {
-                    id: "rule-set-1-id",
-                    name: "Rule set 1",
-                    slug: "rule-set-1-slug",
-                    lastUpdated: "2020-03-05T09:52+02:00"
-                }
-            ]
-        },
 
-        "POST /api/v1/routeplanning/settingsv2/details":
+        "POST /api/v1/routeplanning/rulesets/details":
         {
             data:
             {
