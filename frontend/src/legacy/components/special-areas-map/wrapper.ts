@@ -1,13 +1,13 @@
 import { autoinject, noView, bindable } from "aurelia-framework";
-import { Route, RouteStop } from "app/model/route";
 import { Wrapper } from "../../wrappers/wrapper";
+import { SpecialArea } from "app/model/_route-planning-settings";
 
 // Import the component that should be wrapped.
-import { RouteDetailsMapComponent as Component } from "./route-details-map";
+import { SpecialAreasMapComponent as Component } from "./special-areas-map";
 
 @noView
 @autoinject
-export class RouteDetailsMap extends Wrapper
+export class SpecialAreasMap extends Wrapper
 {
     /**
      * Creates a new instance of the type.
@@ -19,16 +19,8 @@ export class RouteDetailsMap extends Wrapper
     }
 
     @bindable
-    public route: Route;
+    public areas: SpecialArea[];
 
-    @bindable
-    public onRouteClick: undefined | ((context: { route: Route }) => void);
-
-    @bindable
-    public onStopClick: undefined | ((context: { route: Route; stop: RouteStop }) => void);
-
-    @bindable
-    public onMapClick: undefined | (() => void);
 
     /**
      * Called by the framework when the component is attached to the DOM.
@@ -37,10 +29,7 @@ export class RouteDetailsMap extends Wrapper
     {
         super.attached(Component, {},
         {
-            route: this.route,
-            onRouteClick: (route) => this.onRouteClick?.({ route }),
-            onStopClick: (route, stop) => this.onStopClick?.({ route, stop }),
-            onMapClick: () => this.onMapClick?.()
+            areas: this.areas
         });
     }
 
