@@ -24,6 +24,7 @@ export class OrderGroup
             this.timeZone = IANAZone.create(data.timeZone);
             this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
             this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(this.timeZone, d));
+            this.routeOptimizationSettingsId = data.routeOptimizationSettingsId;
         }
         else
         {
@@ -47,6 +48,11 @@ export class OrderGroup
      * The name of the order group.
      */
     public readonly name: string;
+
+    /**
+     * The name of the order group.
+     */
+    public routeOptimizationSettingsId?: string;
 
     /**
      * True if the order group is paused, otherwise false.
@@ -133,7 +139,8 @@ export class OrderGroup
             name: this.name,
             timeZone: this.timeZone.name,
             matchingCriteria: this.matchingCriteria,
-            routePlanningTimes: this.routePlanningTimes
+            routePlanningTimes: this.routePlanningTimes,
+            routeOptimizationSettingsId: this.routeOptimizationSettingsId
         };
     }
 }

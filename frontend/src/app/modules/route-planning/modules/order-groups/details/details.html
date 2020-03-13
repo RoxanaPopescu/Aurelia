@@ -76,11 +76,9 @@
 
             <page-section if-claims="edit-order-group">
 
-                <div class="flex-row">
+                    <div class="control-row margin-large-bottom">
 
-                    <div class="flex-basis-1-of-4">
-
-                        <text-input label="above" value.bind="orderGroup.name" autofocus>
+                        <text-input label="above" value.bind="orderGroup.name" class="flex-basis-1-of-4" autofocus>
 
                             <div slot="heading" translate>
                                 Order group name
@@ -97,8 +95,30 @@
                         </text-input>
 
                     </div>
+                    <div class="control-row">
 
-                </div>
+                        <select-input
+                            label="above"
+                            none.bind="true"
+                            class="flex-basis-1-of-4"
+                            value.bind="currentRuleSet"
+                            display-value.bind="currentRuleSet.name"
+                        >
+
+                            <div slot="heading" translate>
+                                Linked route planning rule set
+                            </div>
+
+                            <span slot="placeholder">
+                                Choose an option
+                            </span>
+
+                            <item repeat.for="ruleSet of ruleSets" model.bind="ruleSet">
+                                ${ruleSet.name}
+                            </item>
+
+                        </select-input>
+                    </div>
 
             </page-section>
 

@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { ModalService, IValidation, ToastService } from "shared/framework";
 import { Consignor } from "app/model/outfit";
@@ -7,6 +7,7 @@ import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } fr
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
 import updatedToast from "./resources/strings/updated-toast.json";
+import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
 
 /**
  * Represents the route parameters for the page.
@@ -28,23 +29,28 @@ export class DetailsPage
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param agreementService The `AgreementService` instance.
      * @param toastService The `ToastService` instance.
+     * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
      */
     public constructor(
         modalService: ModalService,
         orderGroupsService: OrderGroupService,
         agreementService: AgreementService,
-        toastService: ToastService
+        toastService: ToastService,
+        routePlanningSettingsService: RoutePlanningSettingsService
     ){
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
         this._agreementService = agreementService;
         this._toastService = toastService;
+        this._routePlanningSettingsService = routePlanningSettingsService;
     }
 
     private readonly _modalService: ModalService;
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _agreementService: AgreementService;
     private readonly _toastService: ToastService;
+    private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
+
     private availableConsignors: Consignor[];
     private availableTags: string[];
 
@@ -57,6 +63,11 @@ export class DetailsPage
      * The order group to present or edit.
      */
     protected orderGroup: OrderGroup;
+
+    /**
+     * The rulesets this ordergroup can be linked to.
+     */
+    protected ruleSets: RoutePlanningSettingsInfo[] | undefined;
 
     /**
      * The validation for the modal.
@@ -97,6 +108,26 @@ export class DetailsPage
             // Fetch available tags.
             this.availableTags = await this._orderGroupsService.getAllTags();
         })();
+
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            // Fetch available rule-sets.
+            this.ruleSets = await this._routePlanningSettingsService.getAll();
+        })();
+    }
+
+    /**
+     * Called when the linked route plan rulesets is clicked in the select
+     */
+    @computedFrom("ruleSets", "orderGroup.routeOptimizationSettingsId")
+    protected get currentRuleSet(): RoutePlanningSettingsInfo | undefined {
+        return this.ruleSets?.find(ruleSet => ruleSet.id == this.orderGroup.routeOptimizationSettingsId);
+    }
+
+    protected set currentRuleSet(info: RoutePlanningSettingsInfo | undefined) {
+        console.log("ID: ", info?.id);
+        this.orderGroup.routeOptimizationSettingsId = info?.id;
     }
 
     /**
