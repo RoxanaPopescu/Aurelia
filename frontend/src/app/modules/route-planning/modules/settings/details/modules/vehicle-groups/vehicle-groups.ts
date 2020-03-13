@@ -1,6 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { RoutePlanningSettings } from "app/model/_route-planning-settings";
-import { VehicleGroup } from '../../../../../../../model/_route-planning-settings/entities/vehicle-group';
+import { RoutePlanningSettings, VehicleGroup } from "app/model/_route-planning-settings";
 import { ConfirmDeleteVehicleGroupDialog } from "./modals/confirm-delete-vehicle-group/confirm-delete-vehicle-group";
 import { VehicleGroupPanel } from "./modals/vehicle-group-edit/vehicle-group-edit";
 import { ModalService } from "shared/framework";
@@ -21,7 +20,6 @@ export class VehicleGroups
     }
 
     private readonly _modalService: ModalService;
-
 
     /**
      * The id of the routeplan settings

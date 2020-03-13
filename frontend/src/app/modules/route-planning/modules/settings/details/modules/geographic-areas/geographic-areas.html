@@ -2,6 +2,7 @@
 
     <require from="app/components/accordion/accordion"></require>
     <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="legacy/components/special-areas-map/wrapper" as="special-areas-map"></require>
 
     <require from="./geographic-areas.scss"></require>
 
@@ -25,7 +26,7 @@
 
             <page-section class="flex-grow">
 
-                <list-layout>
+                <list-layout if.bind="settings.specialAreas.length > 0">
 
                     <accordion repeat.for="specialArea of settings.specialAreas" accent="primary">
 
@@ -44,7 +45,7 @@
                                     <icon name="edit-small"></icon>
                                 </button>
 
-                                <button appearance="none" accent="primary" click.trigger="onRemoveAreaClick($index)">
+                                <button appearance="none" accent="primary" click.trigger="onDeleteAreaClick($index)">
                                     <icon name="delete-small"></icon>
                                 </button>
 
@@ -52,9 +53,9 @@
 
                         </div>
 
-                        <div>
+                        <div if.bind="specialArea.scenarios.length > 0">
 
-                            <div repeat.for="scenario of specialArea.scenarios" class="geographic-area-scenario flex-row">
+                            <div repeat.for="scenario of specialArea.scenarios" class="geographic-area-scenario flex-row" click.trigger="onEditScenarioClick(specialArea, $index)">
 
                                 <div class="special-area-scenario-number">
                                     ${$index + 1}
@@ -70,11 +71,11 @@
 
                                         <div class="icon-row">
 
-                                            <button appearance="none" accent="primary" click.trigger="onEditAreaClick($index)">
+                                            <button appearance="none" accent="primary">
                                                 <icon name="edit-small"></icon>
                                             </button>
 
-                                            <button appearance="none" accent="primary" click.trigger="onRemoveAreaClick($index)">
+                                            <button appearance="none" accent="primary" click.trigger="onDeleteScenarioClick(specialArea, $index)">
                                                 <icon name="delete-small"></icon>
                                             </button>
 
@@ -95,6 +96,30 @@
                                             <template if.bind="scenario.criteria.weekdays.length < 7">
                                                 ${scenario.criteria.weekdays | weekdayList: 'long'}
                                             </template>
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.criteria.orderTagsAllRequired" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Match all tags
+                                        </div>
+
+                                        <div slot="value" class="text-truncate">
+                                            ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
+                                        </div>
+
+                                    </name-value-pair>
+
+                                    <name-value-pair if.bind="scenario.criteria.orderTagsOneRequired" class="margin-smallest-top">
+
+                                        <div slot="name" translate>
+                                            Match some tags
+                                        </div>
+
+                                        <div slot="value" class="text-truncate">
+                                            ${scenario.criteria.orderTagsOneRequired | list: 'short' : 'unit'}
                                         </div>
 
                                     </name-value-pair>
@@ -131,40 +156,20 @@
 
                                     </name-value-pair>
 
-                                    <name-value-pair if.bind="scenario.criteria.orderTagsAllRequired" class="margin-smallest-top">
-
-                                        <div slot="name" translate>
-                                            Match all tags
-                                        </div>
-
-                                        <div slot="value" class="text-truncate">
-                                            ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
-                                        </div>
-
-                                    </name-value-pair>
-
-                                    <name-value-pair if.bind="scenario.criteria.orderTagsOneRequired" class="margin-smallest-top">
-
-                                        <div slot="name" translate>
-                                            Match some tags
-                                        </div>
-
-                                        <div slot="value" class="text-truncate">
-                                            ${scenario.criteria.orderTagsOneRequired | list: 'short' : 'unit'}
-                                        </div>
-
-                                    </name-value-pair>
-
                                 </div>
 
                             </div>
 
                         </div>
 
-                        <button appearance="outline" accent="primary" class="geographic-area-add-rule margin-large-top">
+                        <empty-indicator if.bind="specialArea.scenarios.length == 0">
+                            No area rules specified
+                        </empty-indicator>
+
+                        <button appearance="outline" accent="primary" class="geographic-area-add-button margin-large-top" click.trigger="onAddScenarioClick(specialArea)">
                             <icon name="add" class="margin-right"></icon>
                             <span translate>
-                                Add rule
+                                Add area rule
                             </span>
                         </button>
 
@@ -172,13 +177,22 @@
 
                 </list-layout>
 
+                <empty-indicator if.bind="settings.specialAreas.length == 0">
+                    No areas specified
+                </empty-indicator>
+
+                <button appearance="outline" accent="primary" class="geographic-area-add-button margin-large-top" click.trigger="onAddAreaClick()">
+                    <icon name="add" class="margin-right"></icon>
+                    <span translate>
+                        Add area
+                    </span>
+                </button>
+
             </page-section>
 
         </div>
 
-        <div class="flex-basis-2-of-3">
-            MAP
-        </div>
+        <special-areas-map class="flex-basis-2-of-3"></special-areas-map>
 
     </div>
 

@@ -1,0 +1,43 @@
+@import "shared/src/webKit/constants.scss";
+
+special-areas-map
+{
+  display: block;
+}
+
+.special-areas-map
+{
+  position: relative;
+  height: 100%;
+}
+
+.special-areas-map-buttons
+{
+  position: absolute !important;
+  top: 10px !important;
+  left: 168px !important;
+  z-index: 1 !important;
+  display: flex;
+
+  .moverButton
+  {
+    height: 40px !important;
+    min-width: 80px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
+    color: #333 !important;
+    margin-right: 10px;
+
+    &.--active
+    {
+      color: var(--palette-color-primary-lighter) !important;
+      background: var(--palette-color-primary) !important;
+    }
+  }
+
+  .moverButtonText
+  {
+    font-weight: 400 !important;
+  }
+}

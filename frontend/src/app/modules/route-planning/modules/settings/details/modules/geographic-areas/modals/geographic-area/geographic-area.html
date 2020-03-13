@@ -1,0 +1,71 @@
+<template>
+
+    <require from="./geographic-area.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-dialog name="geographic-area" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <span if.bind="isNew" translate>
+                    Create area
+                </span>
+
+                <span if.bind="!isNew" translate>
+                    Edit area
+                </span>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <text-input label="above" value.bind="model.name" class="margin-large-bottom">
+
+                <div slot="heading" translate>
+                    Name of the area
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.name">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <div>
+                AUTO ASSIGNED COLOR
+            </div>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-container">
+
+                <button appearance="solid" accent="neutral" click.trigger="onCancelClick()" translate>
+                    Cancel
+                </button>
+
+                <button appearance="outline" accent="primary" click.trigger="onDrawAreaClick()" translate>
+                    Draw new area
+                </button>
+
+                <button appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
+                    Save and close
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

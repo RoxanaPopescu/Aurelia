@@ -1,0 +1,237 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./geographic-area-scenario.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="geographic-area-scenario" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <template if.bind="isNew" translate>
+                    Create area rule
+                </template>
+
+                <template if.bind="!isNew" translate>
+                    Edit area rule
+                </template>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                Period and weekdays
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the dates and weekdays on which the rule should be active.
+            </h1>
+
+            <div class="control-row">
+
+                <date-input label="above" value.bind="model.criteria.datePeriod.from" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        From date
+                    </div>
+
+                </date-input>
+
+                <date-input label="above" value.bind="model.criteria.datePeriod.to" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        To date
+                    </div>
+
+                </date-input>
+
+            </div>
+
+            <div class="control-row margin-large-top">
+
+                <tags-input
+                    label="above"
+                    value.bind="model.criteria.weekdays"
+                    filter="auto"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Weekdays
+                    </div>
+
+                    <div slot="value">
+                        <tag repeat.for="weekday of model.criteria.weekdays" model.bind="weekday">
+                            ${weekday | weekday}
+                        </tag>
+                    </div>
+
+                    <item repeat.for="weekday of 7" model.bind="weekday + 1">
+                        ${weekday + 1 | weekday}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.criteria.weekdays.length > 0">
+                        </required-validator>
+
+                    </div>
+
+                </tags-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Order tags
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the order tags to which the rule should apply.
+            </h1>
+
+            <tags-input
+                label="above"
+                value.bind="tagsValue"
+                focused-value.bind="model.criteria.orderTagsAllRequired"
+                filter="auto"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    All the tags
+                </div>
+
+                <div slot="value">
+                    <tag model.bind="tag" repeat.for="tag of model.criteria.orderTagsAllRequired">
+                        ${tag}
+                    </tag>
+                </div>
+
+                <item model="NEW TAG">
+                    NEW TAG
+                </item>
+
+            </tags-input>
+
+            <div class="margin-large-top margin-large-bottom text-align-center" translate>
+                and / or
+            </div>
+
+            <tags-input
+                label="above"
+                value.bind="tagsValue"
+                focused-value.bind="model.criteria.orderTagsOneRequired"
+                filter="auto"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    Some of the tags
+                </div>
+
+                <div slot="value">
+                    <tag model.bind="tag" repeat.for="tag of model.criteria.orderTagsOneRequired">
+                        ${tag}
+                    </tag>
+                </div>
+
+                <item model="NEW TAG">
+                    NEW TAG
+                </item>
+
+            </tags-input>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Limitations
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the adjustment to apply within the area, or mark the area as blocked.
+            </h1>
+
+            <div class="control-row margin-medium-bottom">
+
+                <number-input value.bind="model.taskTimeChange" label="above" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Task time change
+                    </div>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.taskTimeChange">
+                        </required-validator>
+
+                    </div>
+
+                </number-input>
+
+                <number-input value.bind="model.drivingTimeChangeFactor" label="above" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Driving time change
+                    </div>
+
+                    <span slot="after" class="opacity-faded">
+                        %
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.drivingTimeChangeFactor">
+                        </required-validator>
+
+                    </div>
+
+                </number-input>
+
+            </div>
+
+            <check-toggle label="after" value.bind="model.isBlocked">
+
+                <div slot="heading" translate>
+                    Area is blocked
+                </div>
+
+            </check-toggle>
+
+        </modal-section>
+
+        <div class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="neutral" click.trigger="onCancelClick()" translate>
+                Cancel
+            </button>
+
+            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
+                Create area rule
+            </button>
+
+            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
+                Save and close
+            </button>
+
+        </div>
+
+    </modal-panel>
+
+</template>
