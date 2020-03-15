@@ -291,9 +291,8 @@
 
         <tags-input
             label="above"
-            filter="auto"
             value.bind="settings.routeCreation.routeTags"
-            filter-value.bind="routeTagsFilterValue"
+            new.bind="true"
             class="margin-large-bottom">
 
             <div slot="heading" translate>
@@ -303,22 +302,6 @@
             <div slot="placeholder" translate>
                 Add tags
             </div>
-
-            <item if.bind="routeTagsFilterValue && !settings.routeCreation.routeTags.includes(routeTagsFilterValue)" model.bind="routeTagsFilterValue">
-
-                <div class="flex-row">
-
-                    <div>
-                        ${routeTagsFilterValue}
-                    </div>
-
-                    <div class="opacity-faded flex-push-right" translate>
-                        New tag
-                    </div>
-
-                </div>
-
-            </item>
 
         </tags-input>
 

@@ -141,8 +141,7 @@
             <tags-input
                 label="above"
                 value.bind="model.criteria.orderTagsAllRequired"
-                filter-value.bind="newOrderTag1"
-                filter="auto"
+                new.bind="true"
                 class="flex-basis-1-of-1">
 
                 <div slot="heading" translate>
@@ -155,22 +154,6 @@
                     </tag>
                 </div>
 
-                <item if.bind="newOrderTag1 && !model.criteria.orderTagsAllRequired.includes(newOrderTag1)" model.bind="newOrderTag1">
-
-                    <div class="flex-row">
-
-                        <div>
-                            ${newOrderTag1}
-                        </div>
-
-                        <div class="opacity-faded flex-push-right" translate>
-                            New tag
-                        </div>
-
-                    </div>
-
-                </item>
-
             </tags-input>
 
             <div class="margin-large-top margin-large-bottom text-align-center" translate>
@@ -180,8 +163,7 @@
             <tags-input
                 label="above"
                 value.bind="model.criteria.orderTagsOneRequired"
-                filter-value.bind="newOrderTag2"
-                filter="auto"
+                new.bind="true"
                 class="flex-basis-1-of-1">
 
                 <div slot="heading" translate>
@@ -193,22 +175,6 @@
                         ${tag}
                     </tag>
                 </div>
-
-                <item if.bind="newOrderTag2 && !model.criteria.orderTagsOneRequired.includes(newOrderTag2)" model.bind="newOrderTag2">
-
-                    <div class="flex-row">
-
-                        <div>
-                            ${newOrderTag2}
-                        </div>
-
-                        <div class="opacity-faded flex-push-right" translate>
-                            New tag
-                        </div>
-
-                    </div>
-
-                </item>
 
             </tags-input>
 

@@ -38,10 +38,10 @@ export class TagsInputCustomElement
     /**
      * Gets the input value.
      */
-    @computedFrom("open", "filter", "filterValue")
+    @computedFrom("open", "new", "filter", "filterValue")
     protected get inputValue(): string
     {
-        if (this.filter !== "none" && this.filterValue != null)
+        if ((this.new || this.filter !== "none") && this.filterValue != null)
         {
             return this.filterValue;
         }
@@ -61,6 +61,11 @@ export class TagsInputCustomElement
         else
         {
             this.filterValue = undefined;
+        }
+
+        if (this.new)
+        {
+            this.focusedValue = value;
         }
     }
 
@@ -95,6 +100,12 @@ export class TagsInputCustomElement
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
     public filterValue: string | undefined;
+
+    /**
+     * True to show the `New tag` option, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public new: boolean;
 
     /**
      * True if the dropdown is open, otherwise false.
@@ -301,7 +312,7 @@ export class TagsInputCustomElement
                 {
                     this.openDropdown(true);
                 }
-                else if (this.filter === "none")
+                else if (!this.new && this.filter === "none")
                 {
                     this.closeDropdown(false);
                 }

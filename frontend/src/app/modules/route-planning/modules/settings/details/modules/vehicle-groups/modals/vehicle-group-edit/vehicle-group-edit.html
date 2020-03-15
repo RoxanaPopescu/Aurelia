@@ -461,9 +461,8 @@
 
             <tags-input
                 label="above"
-                filter="auto"
                 value.bind="model.vehicleGroup.orderTagsAllRequired"
-                filter-value.bind="orderTagsAllFilterValue"
+                new.bind="true"
                 class="margin-large-bottom">
 
                 <div slot="heading" translate>
@@ -474,29 +473,12 @@
                     Add tags
                 </div>
 
-                <item if.bind="orderTagsAllFilterValue && !model.vehicleGroup.orderTagsAllRequired.includes(orderTagsAllFilterValue)" model.bind="orderTagsAllFilterValue">
-
-                    <div class="flex-row">
-
-                        <div>
-                            ${orderTagsAllFilterValue}
-                        </div>
-
-                        <div class="opacity-faded flex-push-right" translate>
-                            New tag
-                        </div>
-
-                    </div>
-
-                </item>
-
             </tags-input>
 
             <tags-input
                 label="above"
-                filter="auto"
                 value.bind="model.vehicleGroup.orderTagsOneRequired"
-                filter-value.bind="orderTagsOneFilterValue">
+                new.bind="true">
 
                 <div slot="heading" translate>
                     Applicable to orders with atleast one of these tags
@@ -505,22 +487,6 @@
                 <div slot="placeholder" translate>
                     Add tags
                 </div>
-
-                <item if.bind="orderTagsOneFilterValue && !model.vehicleGroup.orderTagsOneRequired.includes(orderTagsOneFilterValue)" model.bind="orderTagsOneFilterValue">
-
-                    <div class="flex-row">
-
-                        <div>
-                            ${orderTagsOneFilterValue}
-                        </div>
-
-                        <div class="opacity-faded flex-push-right" translate>
-                            New tag
-                        </div>
-
-                    </div>
-
-                </item>
 
             </tags-input>
 
@@ -538,9 +504,8 @@
 
             <tags-input
                 label="above"
-                filter="auto"
                 value.bind="model.vehicleGroup.routeTags"
-                filter-value.bind="routeTagsFilterValue"
+                new.bind="true"
                 class="margin-large-bottom">
 
                 <div slot="heading" translate>
@@ -550,22 +515,6 @@
                 <div slot="placeholder" translate>
                     Add tags
                 </div>
-
-                <item if.bind="routeTagsFilterValue && !model.vehicleGroup.routeTags.includes(routeTagsFilterValue)" model.bind="routeTagsFilterValue">
-
-                    <div class="flex-row">
-
-                        <div>
-                            ${routeTagsFilterValue}
-                        </div>
-
-                        <div class="opacity-faded flex-push-right" translate>
-                            New tag
-                        </div>
-
-                    </div>
-
-                </item>
 
             </tags-input>
 
