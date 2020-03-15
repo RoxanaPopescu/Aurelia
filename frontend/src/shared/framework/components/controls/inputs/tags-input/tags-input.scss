@@ -85,8 +85,8 @@ tags-input
     > text-input > .input-control > .input-control-inner
     {
         flex-grow: 1;
-        //width: auto !important; // Disabled because it does not wrap properly anyway...
-        min-width: 35rem;
+        width: auto !important;
+        min-width: 40rem;
         padding-right: 42px;
     }
 
