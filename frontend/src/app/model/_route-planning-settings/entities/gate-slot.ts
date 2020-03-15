@@ -11,22 +11,22 @@ export class GateSlot
     {
         if (data != null)
         {
-            this.arrivalTime = data.arrivalTime;
-            this.lastDepartureTime = data.lastDepartureTime;
+            this.earliestArrivalTime = data.earliestArrivalTime;
+            this.latestDepartureTime = data.latestDepartureTime;
             this.timeBetweenDepartures = data.timeBetweenDepartures;
-            this.vehicleGroupId = data.vehicleGroupId;
+            this.vehicleGroup = data.vehicleGroup;
         }
     }
 
     /**
      * The time at which the vehicle should arrive at the gate.
      */
-    public arrivalTime: number;
+    public earliestArrivalTime: number;
 
     /**
      * The time at which the vehicle must depart the gate.
      */
-    public lastDepartureTime: number;
+    public latestDepartureTime: number;
 
     /**
      * The time between two arrival times, used for loading and preparing the gate for next arrival.
@@ -34,7 +34,7 @@ export class GateSlot
     public timeBetweenDepartures: number;
 
     /**
-     * The vehicle group to which the vehicle should belong.
+     * The ID of the vehicle group to which the vehicle should belong.
      */
-    public vehicleGroupId: number;
+    public vehicleGroup: number;
 }

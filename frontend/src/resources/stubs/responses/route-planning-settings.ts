@@ -4,6 +4,13 @@ export default
     {
         data:
         {
+            metadata:
+            {
+                created: "2020-03-05T08:32+02:00",
+                createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+                lastModified: "2020-03-05T09:52+02:00",
+                lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+            },
             "id": "960a7f5a-c4aa-4eef-9e73-c057e913f8f2",
             "name": "Settings name 5",
             "slug": "settings-name-5",
@@ -12,10 +19,10 @@ export default
                 "ferriesAllowed": false,
                 "privateRoadsAllowed": true,
                 "highwaysAllowed": true,
-                "uturnStrategy": 1,
-                "curbApproachStrategy": 2,
+                "uturnStrategy": "allowed",
+                "curbApproachStrategy": "either-side-of-vehicle",
                 "oneRoutePlanPerStartLocation": false,
-                "timeWindowAdjustmentDelivery":
+                "timeWindowAdjustment":
                 {
                     "start": 300,
                     "end": 600
@@ -238,9 +245,7 @@ export default
                         }
                     ]
                 }
-            ],
-            "lastModifiedBy": "04eb462a-dc64-4a5e-b904-3c600cf8c02e",
-            "lastModified": "2020-03-12T08:33:39.8344131"
+            ]
         }
     },
 
