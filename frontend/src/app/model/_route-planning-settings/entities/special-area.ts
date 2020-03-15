@@ -1,3 +1,4 @@
+import clone from "clone";
 import { GeoJsonPolygon } from "shared/types";
 import { SpecialAreaScenario } from "./special-area-scenario";
 
@@ -46,4 +47,12 @@ export class SpecialArea
      * The scenarios in which settings should be applied.
      */
     public scenarios: SpecialAreaScenario[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

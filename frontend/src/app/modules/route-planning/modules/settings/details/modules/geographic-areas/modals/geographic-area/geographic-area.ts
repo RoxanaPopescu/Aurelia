@@ -38,7 +38,7 @@ export class GeographicAreaPanel
     public activate(model: SpecialArea): void
     {
         this.isNew = model == null;
-        this.model = model ?? new SpecialArea();
+        this.model = model != null ? model.clone() : new SpecialArea();
     }
 
     /**

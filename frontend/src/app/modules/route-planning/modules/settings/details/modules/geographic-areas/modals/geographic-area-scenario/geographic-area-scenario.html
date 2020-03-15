@@ -36,18 +36,56 @@
 
             <div class="control-row">
 
-                <date-input label="above" value.bind="model.criteria.datePeriod.from" class="flex-basis-1-of-2">
+                <date-input label="above" value.bind="model.criteria.datePeriod.from" max.bind="model.criteria.datePeriod.to" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         From date
                     </div>
 
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.criteria.datePeriod.from">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="model.criteria.datePeriod.from"
+                            max.bind="model.criteria.datePeriod.to"
+                            max-inclusive.bind="false">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time before the to time.
+                            </template>
+
+                        </range-validator>
+
+                    </div>
+
                 </date-input>
 
-                <date-input label="above" value.bind="model.criteria.datePeriod.to" class="flex-basis-1-of-2">
+                <date-input label="above" value.bind="model.criteria.datePeriod.to" min.bind="model.criteria.datePeriod.from" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         To date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.criteria.datePeriod.to">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="model.criteria.datePeriod.to"
+                            min.bind="model.criteria.datePeriod.from"
+                            min-inclusive.bind="false">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time after the from time.
+                            </template>
+
+                        </range-validator>
+
                     </div>
 
                 </date-input>
@@ -79,7 +117,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.criteria.weekdays.length > 0">
+                            value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
                         </required-validator>
 
                     </div>
@@ -102,8 +140,8 @@
 
             <tags-input
                 label="above"
-                value.bind="tagsValue"
-                focused-value.bind="model.criteria.orderTagsAllRequired"
+                value.bind="model.criteria.orderTagsAllRequired"
+                filter-value.bind="newOrderTag1"
                 filter="auto"
                 class="flex-basis-1-of-1">
 
@@ -117,8 +155,20 @@
                     </tag>
                 </div>
 
-                <item model="NEW TAG">
-                    NEW TAG
+                <item if.bind="newOrderTag1 && !model.criteria.orderTagsAllRequired.includes(newOrderTag1)" model.bind="newOrderTag1">
+
+                    <div class="flex-row">
+
+                        <div>
+                            ${newOrderTag1}
+                        </div>
+
+                        <div class="opacity-faded flex-push-right" translate>
+                            New tag
+                        </div>
+
+                    </div>
+
                 </item>
 
             </tags-input>
@@ -129,8 +179,8 @@
 
             <tags-input
                 label="above"
-                value.bind="tagsValue"
-                focused-value.bind="model.criteria.orderTagsOneRequired"
+                value.bind="model.criteria.orderTagsOneRequired"
+                filter-value.bind="newOrderTag2"
                 filter="auto"
                 class="flex-basis-1-of-1">
 
@@ -144,8 +194,20 @@
                     </tag>
                 </div>
 
-                <item model="NEW TAG">
-                    NEW TAG
+                <item if.bind="newOrderTag2 && !model.criteria.orderTagsOneRequired.includes(newOrderTag2)" model.bind="newOrderTag2">
+
+                    <div class="flex-row">
+
+                        <div>
+                            ${newOrderTag2}
+                        </div>
+
+                        <div class="opacity-faded flex-push-right" translate>
+                            New tag
+                        </div>
+
+                    </div>
+
                 </item>
 
             </tags-input>

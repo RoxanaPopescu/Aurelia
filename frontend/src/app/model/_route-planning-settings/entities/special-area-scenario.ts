@@ -1,3 +1,4 @@
+import clone from "clone";
 import { SpecialAreaCriteria } from "./special-area-criteria";
 
 /**
@@ -44,4 +45,12 @@ export class SpecialAreaScenario
      * True if the area is inaccessible, otherwise false.
      */
     public isBlocked: boolean;
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

@@ -38,7 +38,7 @@ export class GeographicAreaScenarioPanel
     public activate(model: SpecialAreaScenario): void
     {
         this.isNew = model == null;
-        this.model = model ?? new SpecialAreaScenario();
+        this.model = model != null ? model.clone() : new SpecialAreaScenario();
     }
 
     /**
