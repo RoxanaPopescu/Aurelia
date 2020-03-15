@@ -59,7 +59,7 @@
             <div class="tags-input-value" mousedown.trigger="onValueMouseDown()">
 
                 <!-- NOTE: Whitespace matters here. -->
-                <slot name="value"><div slot="value"><tag repeat.for="tag of value">${tag}</tag></div>
+                <slot name="value"><div if.bind="value.length > 0" class="tags-input-value-list"><tag repeat.for="tag of value">${tag}</tag></div></slot>
 
             </div>
 

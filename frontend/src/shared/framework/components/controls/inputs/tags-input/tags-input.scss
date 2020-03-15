@@ -75,7 +75,8 @@ tags-input
         max-width: 100%;
     }
 
-    [slot="value"]:not(:empty)
+    [slot="value"]:not(:empty),
+    .tags-input-value-list
     {
         display: flex;
         align-items: flex-start;
