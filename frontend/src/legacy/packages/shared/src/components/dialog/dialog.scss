@@ -16,6 +16,8 @@
 
 .c-dialog {
   border-radius: var(--border-radius-medium);
+  min-width: 30%;
+  min-height: 40%;
 }
 
 .c-dialog--disabled {
