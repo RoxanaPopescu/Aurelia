@@ -88,7 +88,7 @@ export class DetailsPage
     /**
      * The available statuses.
      */
-    protected statuses = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
+    protected statuses = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
     /**
      * The route recurrence representing the "All days" options.
