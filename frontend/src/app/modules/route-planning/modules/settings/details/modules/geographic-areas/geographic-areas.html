@@ -191,7 +191,16 @@
 
         </div>
 
-        <special-areas-map class="flex-basis-2-of-3" areas.bind="settings.specialAreas"></special-areas-map>
+        <special-areas-map
+            class="flex-basis-2-of-3"
+            areas.bind="settings.specialAreas"
+            redraw-trigger.bind="mapRedrawTrigger"
+            hovered-area.bind="hoveredArea"
+            on-area-click.call="onAreaClick(area)"
+            enable-drawing.bind="enableDrawing"
+            on-drawing-complete.call="onDrawingComplete(polygon)"
+            on-drawing-cancelled.call="onDrawingCancelled()">
+        </special-areas-map>
 
     </div>
 

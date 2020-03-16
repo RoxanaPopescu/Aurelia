@@ -8,7 +8,7 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+            <h1 class="font-largest">
 
                 <span if.bind="isNew" translate>
                     Create area
@@ -24,7 +24,7 @@
 
         <modal-section>
 
-            <text-input label="above" value.bind="model.name" class="margin-large-bottom">
+            <text-input label="above" value.bind="model.name" class="margin-large-bottom" autofocus>
 
                 <div slot="heading" translate>
                     Name of the area
@@ -40,9 +40,25 @@
 
             </text-input>
 
-            <div>
-                AUTO ASSIGNED COLOR
-            </div>
+            <select-input label="above" value.bind="model.color" fixed.bind="true" none.bind="false" class="margin-large-bottom">
+
+                <div slot="heading" translate>
+                    Color of the area
+                </div>
+
+                <item repeat.for="index of 8" model.bind="index + 1">
+                    ${index + 1}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.color">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
 
         </modal-section>
 

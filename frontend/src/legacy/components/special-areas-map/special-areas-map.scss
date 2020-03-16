@@ -19,20 +19,43 @@ special-areas-map
   z-index: 1 !important;
   display: flex;
 
-  .moverButton
+  .moverButton,
+  .special-areas-map-message
   {
     height: 40px !important;
     min-width: 80px !important;
     border: none !important;
     border-radius: 2px !important;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
-    color: #333 !important;
     margin-right: 10px;
 
-    &.--active
+    &.buttonLight
+    {
+      color: #333 !important;
+    }
+
+    &.buttonAction
     {
       color: var(--palette-color-primary-lighter) !important;
       background: var(--palette-color-primary) !important;
+    }
+  }
+
+  .special-areas-map-message
+  {
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    margin-right: 2rem;
+    background: var(--surface-info-surface-color);
+    color: var(--surface-info-surface-text-color);
+    border-radius: 2px;
+
+    a
+    {
+      font-weight: 600;
+      margin-left: 8rem;
+      color: var(--palette-color-whitepoint);
     }
   }
 

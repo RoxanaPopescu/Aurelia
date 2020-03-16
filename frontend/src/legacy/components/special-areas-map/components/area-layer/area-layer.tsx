@@ -9,9 +9,9 @@ export interface AreaLayerProps
 {
     index: number;
     area: SpecialArea
-    onClick?: (area: SpecialArea) => void;
-    onMouseEnter?: (area: SpecialArea) => void;
-    onMouseLeave?: (area: SpecialArea) => void;
+    onClick?: () => void;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 }
 
 @observer
@@ -37,9 +37,9 @@ export class AreaLayer extends React.Component<AreaLayerProps>
             <React.Fragment>
 
                 <Polygon
-                    onClick={() => this.props.onClick?.(this.props.area)}
-                    onMouseOver={() => this.props.onMouseEnter?.(this.props.area)}
-                    onMouseOut={() => this.props.onMouseLeave?.(this.props.area)}
+                    onClick={() => this.props.onClick?.()}
+                    onMouseOver={() => this.props.onMouseEnter?.()}
+                    onMouseOut={() => this.props.onMouseLeave?.()}
                     key={`polygon-${this.props.index}`}
                     path={this.props.area.polygon.coordinates[0].map(pos => ({ lng: pos[0], lat: pos[1] }))}
                     options={{

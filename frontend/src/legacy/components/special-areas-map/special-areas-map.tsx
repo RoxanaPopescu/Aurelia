@@ -4,13 +4,21 @@ import { observer } from "mobx-react";
 import { Button, ButtonType } from "shared/src/webKit";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
 import { SpecialArea } from "app/model/_route-planning-settings";
-import "./special-areas-map.scss";
 import { AreaLayer } from "./components/area-layer/area-layer";
+import "./special-areas-map.scss";
+import { DrawingLayer } from "./components/drawing-layer/drawing-layer";
+import { GeoJsonPolygon } from "shared/types";
 
 export interface ISpecialAreasMapProps
 {
     areas: SpecialArea[];
+    enableDrawing: boolean;
     onMapClick?: () => void;
+    onAreaClick?: (area: SpecialArea) => void;
+    onAreaMouseEnter?: (area: SpecialArea) => void;
+    onAreaMouseLeave?: (area: SpecialArea) => void;
+    onDrawingComplete: (polygon: GeoJsonPolygon) => Promise<void>;
+    onDrawingCancelled: () => void;
 }
 
 /**
@@ -41,11 +49,22 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
                 <div className="special-areas-map-buttons">
 
                     <Button
-                        className="special-areas-map-fit-button"
                         type={ButtonType.Light}
                         onClick={() => this.tryFitBounds()}>
                         Zoom to fit
                     </Button>
+
+                    {this.props.enableDrawing &&
+                    <div className="special-areas-map-message">
+
+                        Draw an area by clicking points on the map…
+
+                        <a
+                            onClick={() => this.props.onDrawingCancelled()}>
+                            Cancel
+                        </a>
+
+                    </div>}
 
                 </div>
 
@@ -58,8 +77,20 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
                         this.fitBoundsOnLoad();
                     }}>
 
+                        {this.props.enableDrawing &&
+                        <DrawingLayer
+                            onDrawingComplete={polygon => this.props.onDrawingComplete(polygon)}>
+                        </DrawingLayer>}
+
                         {this.props.areas?.map((area, index) =>
-                            <AreaLayer area={area} index={index} key={index}></AreaLayer>
+                            <AreaLayer
+                                area={area}
+                                index={index}
+                                key={index}
+                                onClick={() => this.props.onAreaClick?.(area)}
+                                onMouseEnter={() => this.props.onAreaMouseEnter?.(area)}
+                                onMouseLeave={() => this.props.onAreaMouseLeave?.(area)}>
+                            </AreaLayer>
                         )}
 
                 </WorldMap>
