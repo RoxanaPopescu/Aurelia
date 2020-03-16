@@ -5,10 +5,11 @@ import { Button, ButtonType } from "shared/src/webKit";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
 import { SpecialArea } from "app/model/_route-planning-settings";
 import "./special-areas-map.scss";
+import { AreaLayer } from "./components/area-layer/area-layer";
 
 export interface ISpecialAreasMapProps
 {
-    areas?: SpecialArea[];
+    areas: SpecialArea[];
     onMapClick?: () => void;
 }
 
@@ -57,6 +58,10 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
                         this.fitBoundsOnLoad();
                     }}>
 
+                        {this.props.areas?.map((area, index) =>
+                            <AreaLayer area={area} index={index} key={index}></AreaLayer>
+                        )}
+
                 </WorldMap>
 
             </div>
@@ -84,7 +89,13 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
 
         const routeBounds = new google.maps.LatLngBounds();
 
-        // TODO: Add points
+        for (const area of this.props.areas)
+        {
+            for (const pos of area.polygon.coordinates[0])
+            {
+                routeBounds.extend({ lng: pos[0], lat: pos[1] });
+            }
+        }
 
         (this.map.fitBounds as Function)(routeBounds, 50);
     }
