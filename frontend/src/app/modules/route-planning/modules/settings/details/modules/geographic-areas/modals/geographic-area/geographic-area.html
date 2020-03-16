@@ -46,8 +46,9 @@
                     Color of the area
                 </div>
 
-                <item repeat.for="index of 8" model.bind="index + 1">
+                <item repeat.for="index of 8" model.bind="index + 1" class="flex-row" style="align-items: center;">
                     ${index + 1}
+                    <div css="background: var(--palette-color-data-${index + 1}); height: 1em; flex-grow: 1; margin-left: var(--size-inline-spacing-large); border: 1px solid white;"></div>
                 </item>
 
                 <div slot="validation">
