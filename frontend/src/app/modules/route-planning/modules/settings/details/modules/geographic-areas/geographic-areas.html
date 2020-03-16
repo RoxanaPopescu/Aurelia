@@ -22,7 +22,7 @@
 
     <div class="flex-grow flex-row">
 
-        <div class="flex-basis-1-of-3 flex-column geographic-areas-list" surface="neutral">
+        <div class="flex-basis-1-of-3 flex-column geographic-areas-list">
 
             <page-section class="flex-grow">
 
@@ -106,7 +106,7 @@
                                             Match all tags
                                         </div>
 
-                                        <div slot="value" class="text-truncate">
+                                        <div slot="value" class="text-truncate" empty-value>
                                             ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
                                         </div>
 
@@ -118,7 +118,7 @@
                                             Match some tags
                                         </div>
 
-                                        <div slot="value" class="text-truncate">
+                                        <div slot="value" class="text-truncate" empty-value>
                                             ${scenario.criteria.orderTagsOneRequired | list: 'short' : 'unit'}
                                         </div>
 

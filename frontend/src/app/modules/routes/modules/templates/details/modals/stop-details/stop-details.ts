@@ -31,7 +31,7 @@ export class StopDetailsPanelCustomElement
     /**
      * The available types.
      */
-    protected types = Object.keys(RouteStopType.values).map(slug => ({ slug, ...RouteStopType.values[slug] }));
+    protected types = Object.keys(RouteStopType.values).map(slug => new RouteStopType(slug as any));
 
     /**
      * The validation for the modal.

@@ -93,7 +93,7 @@ export class DetailsModule
     /**
      * The available route status values.
      */
-    protected statusValues = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
+    protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
     /**
      * Called by the framework when the module is activated.

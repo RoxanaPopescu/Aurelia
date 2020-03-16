@@ -40,7 +40,7 @@ export class VehiclePanel
     /**
      * The available statuses.
      */
-    protected statuses = Object.keys(VehicleStatus.values).map(slug => ({ slug, ...VehicleStatus.values[slug] }));
+    protected statuses = Object.keys(VehicleStatus.values).map(slug => new VehicleStatus(slug as any));
 
     /**
      * Called by the framework when the modal is activated.

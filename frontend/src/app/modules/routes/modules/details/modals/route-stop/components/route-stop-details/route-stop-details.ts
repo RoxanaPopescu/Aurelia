@@ -18,20 +18,20 @@ export class RouteStopDetailsCustomElement
     private readonly _routeService: RouteService;
 
     /**
-     * The model for the modal.
-     */
-    @bindable
-    public model: { route: Route; routeStop: RouteStop; isNew: boolean };
-
-    /**
      * The available stop status values.
      */
-    protected stopStatusValues = Object.keys(RouteStopStatus.values).map(slug => ({ slug, ...RouteStopStatus.values[slug] }));
+    protected stopStatusValues = Object.keys(RouteStopStatus.values).map(slug => new RouteStopStatus(slug as any));
 
     /**
      * The available collo status values.
      */
-    protected colloStatusValues = Object.keys(ColloStatus.values).map(slug => ({ slug, ...ColloStatus.values[slug] }));
+    protected colloStatusValues = Object.keys(ColloStatus.values).map(slug => new ColloStatus(slug as any));
+
+    /**
+     * The model for the modal.
+     */
+    @bindable
+    public model: { route: Route; routeStop: RouteStop; isNew: boolean };
 
     /**
      * True if one or more pickup colli has a negative status, otherwise false.
@@ -49,7 +49,6 @@ export class RouteStopDetailsCustomElement
 
         return false;
     }
-
 
     /**
      * True if one or more delivery colli has a negative status, otherwise false.
