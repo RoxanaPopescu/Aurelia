@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RoutePlanningSettings, UturnStrategy, CurbApproachStrategy } from "app/model/_route-planning-settings";
 
 /**
@@ -21,12 +21,46 @@ export class General
     /**
      * The available U-turn strategies.
      */
-    protected uturnStrategies = Object.keys(UturnStrategy.values).map(key => UturnStrategy.values[key]);
+    protected availableUturnStrategies = Object.keys(UturnStrategy.values).map(slug => new UturnStrategy(slug as any));
+
+    /**
+     * Gets the U-turn strategy.
+     */
+    @computedFrom("availableUturnStrategies", "settings.restrictions.uturnStrategy.slug")
+    protected get selectedUturnStrategy(): UturnStrategy
+    {
+        return this.availableUturnStrategies.find(s => s.slug === this.settings.restrictions.uturnStrategy.slug)!;
+    }
+
+    /**
+     * Sets the U-turn strategy.
+     */
+    protected set selectedUturnStrategy(value: UturnStrategy)
+    {
+        this.settings.restrictions.uturnStrategy = value;
+    }
 
     /**
      * The available curb-approach strategies.
      */
-    protected curbApproachStrategies = Object.keys(CurbApproachStrategy.values).map(key => CurbApproachStrategy.values[key]);
+    protected availableCurbApproachStrategies = Object.keys(CurbApproachStrategy.values).map(slug => new CurbApproachStrategy(slug as any));
+
+    /**
+     * Gets the curb-approach strategy.
+     */
+    @computedFrom("availableCurbApproachStrategies", "settings.restrictions.curbApproachStrategy.slug")
+    protected get selectedCurbApproachStrategy(): CurbApproachStrategy
+    {
+        return this.availableCurbApproachStrategies.find(s => s.slug === this.settings.restrictions.curbApproachStrategy.slug)!;
+    }
+
+    /**
+     * Sets the curb-approach strategy.
+     */
+    protected set selectedCurbApproachStrategy(value: CurbApproachStrategy)
+    {
+        this.settings.restrictions.curbApproachStrategy = value;
+    }
 
     /**
      * Called when a route name template placeholder is clicked.

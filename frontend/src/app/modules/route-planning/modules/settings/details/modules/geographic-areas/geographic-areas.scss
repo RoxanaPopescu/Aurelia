@@ -1,11 +1,8 @@
 page[name="route-planning"] page[name="settings-details"] geographic-areas
 {
-    --list-border-color: var(--surface-separator-color);
-
     .geographic-areas-list
     {
-        background: var(--surface-color);
-        border-right: var(--border-width-thin) solid var(--list-border-color);
+        border-right: var(--border-width-thin) solid var(--surface-separator-color);
 
         --toggle-height: 5rem;
 
