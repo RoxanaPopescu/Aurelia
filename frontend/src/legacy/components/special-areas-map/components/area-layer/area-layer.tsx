@@ -1,7 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { SpecialArea } from "app/model/_route-planning-settings";
 import { Polygon } from "react-google-maps";
+import { Container, BindingEngine, Disposable } from "aurelia-framework";
+import { SpecialArea } from "app/model/_route-planning-settings";
+import { getCssVariable } from "legacy/helpers/css-helper";
 
 export interface AreaLayerProps
 {
@@ -13,9 +15,23 @@ export interface AreaLayerProps
 }
 
 @observer
-export class AreaLayer extends React.Component<AreaLayerProps> {
+export class AreaLayer extends React.Component<AreaLayerProps>
+{
+    private selectedSubscription: Disposable;
 
-    public render()
+    componentDidMount()
+    {
+        this.selectedSubscription = Container.instance.get(BindingEngine)
+            .propertyObserver(this.props.area, "selected")
+            .subscribe(() => this.forceUpdate());
+    }
+
+    componentWillUnmount()
+    {
+        this.selectedSubscription.dispose();
+    }
+
+    public render = () =>
     {
         return (
             <React.Fragment>
@@ -28,10 +44,12 @@ export class AreaLayer extends React.Component<AreaLayerProps> {
                     path={this.props.area.polygon.coordinates[0].map(pos => ({ lng: pos[0], lat: pos[1] }))}
                     options={{
                         geodesic: false,
-                        strokeColor: "black",
-                        fillColor: "rgba(0, 22, 46, 0.6)",
-                        strokeWeight: 3,
-                        zIndex: 1
+                        strokeColor: getCssVariable(`--palette-color-data-${this.props.area.color}`),
+                        strokeOpacity: this.props.area.selected ? 0.9 : 0.2,
+                        fillColor: getCssVariable(`--palette-color-data-${this.props.area.color}`),
+                        fillOpacity: this.props.area.selected ? 0.4 : 0.05,
+                        strokeWeight: 2,
+                        zIndex: this.props.index
                     }}
                 />);
 

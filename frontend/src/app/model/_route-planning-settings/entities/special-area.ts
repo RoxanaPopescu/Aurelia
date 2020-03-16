@@ -1,5 +1,6 @@
 import clone from "clone";
 import { GeoJsonPolygon } from "shared/types";
+import { DataColorIndex } from "resources/styles";
 import { SpecialAreaScenario } from "./special-area-scenario";
 
 /**
@@ -36,7 +37,7 @@ export class SpecialArea
     /**
      * The index of the color to use when presenting the area.
      */
-    public color: number;
+    public color: DataColorIndex;
 
     /**
      * The polygon defining the geographic area.
@@ -47,6 +48,11 @@ export class SpecialArea
      * The scenarios in which settings should be applied.
      */
     public scenarios: SpecialAreaScenario[];
+
+    /**
+     * True if the area is selected on the map, otherwise false.
+     */
+    public selected = true;
 
     /**
      * Gets a clone of this instance, suitable for editing.

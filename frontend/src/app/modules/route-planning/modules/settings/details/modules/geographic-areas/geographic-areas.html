@@ -28,12 +28,11 @@
 
                 <list-layout if.bind="settings.specialAreas.length > 0">
 
-                    <accordion repeat.for="specialArea of settings.specialAreas" accent="primary">
+                    <accordion repeat.for="specialArea of settings.specialAreas" accent.bind="'data-' + specialArea.color & attr">
 
                         <div slot="header">
 
-                            <check-toggle class="margin-right">
-                            </check-toggle>
+                            <check-toggle class="margin-right" value.bind="specialArea.selected"></check-toggle>
 
                             <div class="font-large" translate>
                                 ${specialArea.name}
