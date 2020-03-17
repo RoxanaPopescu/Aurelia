@@ -102,6 +102,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/json/json"),
         PLATFORM.moduleName("./converters/map/map"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
+        PLATFORM.moduleName("./converters/scale/scale"),
         PLATFORM.moduleName("./converters/skip/skip"),
         PLATFORM.moduleName("./converters/take/take"),
         PLATFORM.moduleName("./converters/trim/trim")
@@ -209,6 +210,7 @@ export * from "./converters/filter/filter";
 export * from "./converters/json/json";
 export * from "./converters/map/map";
 export * from "./converters/reverse/reverse";
+export * from "./converters/scale/scale";
 export * from "./converters/skip/skip";
 export * from "./converters/take/take";
 export * from "./converters/trim/trim";

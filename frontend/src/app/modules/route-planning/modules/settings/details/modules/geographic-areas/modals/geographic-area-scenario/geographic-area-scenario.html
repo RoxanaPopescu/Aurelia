@@ -32,7 +32,7 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the dates and weekdays on which the rule should be active.
+                Here you can specify the dates and weekdays to which the rule should apply.
             </h1>
 
             <div class="control-row">
@@ -136,7 +136,7 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the order tags to which the rule should apply.
+                Here you can specify the order tags that must be matched for the rule to apply.
             </h1>
 
             <tags-input
@@ -158,7 +158,7 @@
             </tags-input>
 
             <separator class="margin-larger-top margin-large-bottom" translate>
-                and / or
+                and
             </separator>
 
             <tags-input
@@ -188,12 +188,12 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the adjustment to apply within the area, or mark the area as blocked.
+                Here you can specify the adjustments to apply within the area, or mark the area as blocked.
             </h1>
 
             <div class="control-row margin-medium-bottom">
 
-                <number-input value.bind="model.taskTimeChange" label="above" class="flex-basis-1-of-2">
+                <number-input value.bind="model.taskTimeChange | scale: 1/60" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Task time change
@@ -206,6 +206,7 @@
                     <div slot="validation">
 
                         <required-validator
+                            enabled.bind="!model.isAreaBlocked"
                             value.bind="model.taskTimeChange">
                         </required-validator>
 
@@ -213,7 +214,7 @@
 
                 </number-input>
 
-                <number-input value.bind="model.drivingTimeChangeFactor" label="above" class="flex-basis-1-of-2">
+                <number-input value.bind="model.drivingTimeChangeFactor | scale: 100" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Driving time change
@@ -226,6 +227,7 @@
                     <div slot="validation">
 
                         <required-validator
+                            enabled.bind="!model.isAreaBlocked"
                             value.bind="model.drivingTimeChangeFactor">
                         </required-validator>
 

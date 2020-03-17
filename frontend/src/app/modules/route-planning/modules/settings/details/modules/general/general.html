@@ -101,14 +101,14 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.start"
+                value.bind="settings.restrictions.timeWindowAdjustment.start | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent early arrival
                 </div>
 
-                <span slot="after" class="opacity-faded">
+                <span slot="after" class="opacity-faded" trasnslate>
                     min
                 </span>
 
@@ -125,7 +125,7 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.end"
+                value.bind="settings.restrictions.timeWindowAdjustment.end | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
@@ -152,14 +152,14 @@
 
             <number-input
                 label="above"
-                value.bind="settings.restrictions.maxCalculationTime"
+                value.bind="settings.restrictions.maxCalculationTime | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading">
                     Max time for route calculation
                 </div>
 
-                <span slot="after" class="opacity-faded">
+                <span slot="after" class="opacity-faded" translate>
                     min
                 </span>
 
