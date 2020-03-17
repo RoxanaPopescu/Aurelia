@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/separator/separator"></require>
     <require from="app/components/address-input/address-input"></require>
 
     <require from="./geographic-area-scenario.scss"></require>
@@ -156,9 +157,9 @@
 
             </tags-input>
 
-            <div class="margin-large-top margin-large-bottom text-align-center" translate>
+            <separator class="margin-larger-top margin-large-bottom" translate>
                 and / or
-            </div>
+            </separator>
 
             <tags-input
                 label="above"
@@ -234,7 +235,7 @@
 
             </div>
 
-            <check-toggle label="after" value.bind="model.isBlocked">
+            <check-toggle label="after" value.bind="model.isAreaBlocked">
 
                 <div slot="heading" translate>
                     Area is blocked

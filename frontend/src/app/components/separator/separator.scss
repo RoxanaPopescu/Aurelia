@@ -1,0 +1,23 @@
+@import "resources/index";
+
+separator
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-top: var(--border-width-thin) solid;
+    border-color: var(--border-color);
+    width: 100rem;
+
+    > div
+    {
+        position: relative;
+        padding: 0 0.75em;
+        margin-top: calc(var(--border-width-thin) * -2);
+        background: var(--surface-color);
+    }
+}

@@ -1,13 +1,14 @@
 import React from "react";
 import { GoogleMap } from "react-google-maps";
+import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { Button, ButtonType } from "shared/src/webKit";
+import { GeoJsonPolygon } from "shared/types";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
 import { SpecialArea } from "app/model/_route-planning-settings";
 import { AreaLayer } from "./components/area-layer/area-layer";
-import "./special-areas-map.scss";
 import { DrawingLayer } from "./components/drawing-layer/drawing-layer";
-import { GeoJsonPolygon } from "shared/types";
+import "./special-areas-map.scss";
 
 export interface ISpecialAreasMapProps
 {
@@ -39,6 +40,9 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
     private map: GoogleMap | undefined;
     private hasFittedBounds = false;
 
+    @observable
+    private hideMessage = false;
+
     public render()
     {
         this.fitBoundsOnLoad();
@@ -54,7 +58,7 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
                         Zoom to fit
                     </Button>
 
-                    {this.props.enableDrawing &&
+                    {this.props.enableDrawing && !this.hideMessage &&
                     <div className="special-areas-map-message">
 
                         Draw an area by clicking points on the map…
@@ -79,7 +83,12 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
 
                         {this.props.enableDrawing &&
                         <DrawingLayer
-                            onDrawingComplete={polygon => this.props.onDrawingComplete(polygon)}>
+                            onDrawingComplete={async polygon =>
+                            {
+                                this.hideMessage = true;
+                                await this.props.onDrawingComplete(polygon);
+                                this.hideMessage = false;
+                            }}>
                         </DrawingLayer>}
 
                         {this.props.areas?.map((area, index) =>

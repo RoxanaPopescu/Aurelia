@@ -22,7 +22,7 @@ export class AreaLayer extends React.Component<AreaLayerProps>
     componentDidMount()
     {
         this.selectedSubscription = Container.instance.get(BindingEngine)
-            .propertyObserver(this.props.area, "selected")
+            .expressionObserver(this, "props.area.selected")
             .subscribe(() => this.forceUpdate());
     }
 
@@ -33,6 +33,7 @@ export class AreaLayer extends React.Component<AreaLayerProps>
 
     public render = () =>
     {
+
         return (
             <React.Fragment>
 

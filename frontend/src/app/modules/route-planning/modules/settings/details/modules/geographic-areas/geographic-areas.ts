@@ -21,6 +21,7 @@ export class GeographicAreas
     }
 
     private readonly _modalService: ModalService;
+    private _currentAreaModel: { area: SpecialArea; index?: number } | undefined;
 
     /**
      * The area currently being hovered, if any.
@@ -45,16 +46,29 @@ export class GeographicAreas
 
     protected onAddAreaClick(): void
     {
+        this._currentAreaModel = { area: new SpecialArea() };
         this.enableDrawing = true;
     }
 
     protected async onEditAreaClick(index: number): Promise<void>
     {
-        const result = await this._modalService.open(GeographicAreaPanel, this.settings.specialAreas[index]).promise;
+        this.enableDrawing = false;
+        this._currentAreaModel = { area: this.settings.specialAreas[index].clone(), index };
 
-        if (result != null)
+        const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
+
+        if (result == null)
         {
-            this.settings.specialAreas.splice(index, 1, result);
+            this._currentAreaModel = undefined;
+        }
+        else if (result === "draw-new-area")
+        {
+            this.enableDrawing = true;
+        }
+        else if (result === "done")
+        {
+            this.settings.specialAreas.splice(index, 1, this._currentAreaModel.area);
+            this._currentAreaModel = undefined;
             this.mapRedrawTrigger++;
         }
     }
@@ -100,20 +114,61 @@ export class GeographicAreas
 
     protected async onDrawingComplete(polygon: GeoJsonPolygon): Promise<void>
     {
-        this.enableDrawing = false;
+        const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
 
-        const result = await this._modalService.open(GeographicAreaPanel).promise;
-
-        if (result != null)
+        if (result == null)
         {
-            result.polygon = polygon;
-            this.settings.specialAreas.push(result);
+            this.enableDrawing = false;
+
+            this._currentAreaModel = undefined;
+        }
+        else if (result === "done")
+        {
+            this.enableDrawing = false;
+
+            this._currentAreaModel!.area.polygon = polygon;
+
+            if (this._currentAreaModel!.index != null)
+            {
+                this.settings.specialAreas.splice(this._currentAreaModel!.index, 1, this._currentAreaModel!.area);
+            }
+            else
+            {
+                this.settings.specialAreas.push(this._currentAreaModel!.area);
+            }
+
+            this._currentAreaModel = undefined;
             this.mapRedrawTrigger++;
         }
     }
 
-    protected onDrawingCancelled(): void
+    protected async onDrawingCancelled(): Promise<void>
     {
         this.enableDrawing = false;
+
+        if (this._currentAreaModel!.index == null)
+        {
+            this._currentAreaModel = undefined;
+        }
+        else
+        {
+            const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
+
+            if (result == null)
+            {
+                this._currentAreaModel = undefined;
+            }
+            else if (result === "draw-new-area")
+            {
+                this.enableDrawing = true;
+            }
+            else if (result === "done")
+            {
+                this.settings.specialAreas.splice(this._currentAreaModel!.index, 1, this._currentAreaModel!.area);
+
+                this._currentAreaModel = undefined;
+                this.mapRedrawTrigger++;
+            }
+        }
     }
 }

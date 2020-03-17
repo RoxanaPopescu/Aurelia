@@ -17,12 +17,12 @@ export class SpecialAreaScenario
             this.criteria = new SpecialAreaCriteria(data.criteria);
             this.taskTimeChange = data.taskTimeChange;
             this.drivingTimeChangeFactor = data.drivingTimeChangeFactor;
-            this.isBlocked = data.isBlocked;
+            this.isAreaBlocked = data.isAreaBlocked;
         }
         else
         {
             this.criteria = new SpecialAreaCriteria();
-            this.isBlocked = false;
+            this.isAreaBlocked = false;
         }
     }
 
@@ -44,7 +44,7 @@ export class SpecialAreaScenario
     /**
      * True if the area is inaccessible, otherwise false.
      */
-    public isBlocked: boolean;
+    public isAreaBlocked: boolean;
 
     /**
      * Gets a clone of this instance, suitable for editing.
