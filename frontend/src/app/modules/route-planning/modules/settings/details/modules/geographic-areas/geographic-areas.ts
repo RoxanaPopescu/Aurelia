@@ -6,6 +6,8 @@ import { groupItems } from "shared/utilities";
 import { DataColorIndex } from "resources/styles";
 import { GeographicAreaPanel } from "./modals/geographic-area/geographic-area";
 import { GeographicAreaScenarioPanel } from "./modals/geographic-area-scenario/geographic-area-scenario";
+import { ConfirmDeleteAreaDialog } from "./modals/confirm-delete-area/confirm-delete-area";
+import { ConfirmDeleteAreaScenarioDialog } from "./modals/confirm-delete-area-scenario/confirm-delete-area-scenario";
 
 /**
  * Represents the page.
@@ -87,11 +89,16 @@ export class GeographicAreas
 
     /**
      * Called when the "Delete area" icon is clicked on an area.
-     * Deletes the area.
+     * Asks for confirmation, then deletes the area.
      * @param area The area.
      */
-    protected onDeleteAreaClick(index: number): void
+    protected async onDeleteAreaClick(index: number): Promise<void>
     {
+        if (!await this._modalService.open(ConfirmDeleteAreaDialog, this.settings.specialAreas[index]).promise)
+        {
+            return;
+        }
+
         this.settings.specialAreas.splice(index, 1);
         this.mapRedrawTrigger++;
     }
@@ -115,11 +122,17 @@ export class GeographicAreas
     /**
      * Called when the "Edit area rule" icon is clicked on an area rule.
      * Opens the modal for editing the area rule.
+     * @param event The mouse event.
      * @param area The area owning the rule.
      * @param index The index of the rule.
      */
-    protected async onEditScenarioClick(area: SpecialArea, index: number): Promise<void>
+    protected async onEditScenarioClick(event: MouseEvent, area: SpecialArea, index: number): Promise<void>
     {
+        if (event.defaultPrevented)
+        {
+            return;
+        }
+
         const result = await this._modalService.open(GeographicAreaScenarioPanel, area.scenarios[index]).promise;
 
         if (result != null)
@@ -131,12 +144,17 @@ export class GeographicAreas
 
     /**
      * Called when the "Delete area rule" icon is clicked on an area rule.
-     * Deletes the area rule.
+     * Asks for confirmation, then deletes the area rule.
      * @param area The area owning the rule.
      * @param index The index of the rule.
      */
-    protected onDeleteScenarioClick(area: SpecialArea, index: number): void
+    protected async onDeleteScenarioClick(area: SpecialArea, index: number): Promise<void>
     {
+        if (!await this._modalService.open(ConfirmDeleteAreaScenarioDialog, index + 1).promise)
+        {
+            return;
+        }
+
         area.scenarios.splice(index, 1);
         this.mapRedrawTrigger++;
     }

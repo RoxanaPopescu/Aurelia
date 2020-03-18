@@ -72,7 +72,7 @@
                                 repeat.for="scenario of specialArea.scenarios"
                                 class="geographic-area-scenario flex-row"
                                 inert.bind="enableDrawing"
-                                click.trigger="onEditScenarioClick(specialArea, $index)">
+                                click.trigger="onEditScenarioClick($event, specialArea, $index)">
 
                                 <div class="special-area-scenario-number">
                                     ${$index + 1}

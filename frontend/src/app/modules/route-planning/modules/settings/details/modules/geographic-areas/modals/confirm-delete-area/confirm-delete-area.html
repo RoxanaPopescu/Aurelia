@@ -1,15 +1,15 @@
 <template>
 
-    <require from="./confirm-delete-template.scss"></require>
+    <require from="./confirm-delete-area.scss"></require>
 
     <modal-backdrop close-modal.bind="true"></modal-backdrop>
 
-    <modal-dialog name="confirm-delete-template" accent="negative" close-button.bind="false" close-shortcut.bind="true" scroll>
+    <modal-dialog name="confirm-delete-area" accent="negative" close-button.bind="false" close-shortcut.bind="true" scroll>
 
         <modal-header>
 
             <h1 class="font-larger focus-hidden" tabindex="-1" autofocus translate>
-                Are you sure you want to delete this template?
+                Are you sure you want to delete the area <b>${area.name}</b>?
             </h1>
 
         </modal-header>
@@ -19,7 +19,7 @@
             <div class="button-row flex-push-right">
 
                 <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
-                    Delete template
+                    Delete area
                 </button>
 
                 <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
