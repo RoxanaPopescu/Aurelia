@@ -71,15 +71,6 @@ export class GeographicAreaPanel
     }
 
     /**
-     * Called when the "Cancel" button is clicked.
-     * Closes the modal without returning the model.
-     */
-    protected async onCancelClick(): Promise<void>
-    {
-        await this._modal.close();
-    }
-
-    /**
      * Called when the "Draw new area" button is clicked.
      * Closes the modal while the user draws the new area.
      */

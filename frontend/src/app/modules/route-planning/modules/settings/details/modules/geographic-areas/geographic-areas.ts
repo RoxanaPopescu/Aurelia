@@ -4,6 +4,8 @@ import { ModalService } from "shared/framework";
 import { GeographicAreaPanel } from "./modals/geographic-area/geographic-area";
 import { GeographicAreaScenarioPanel } from "./modals/geographic-area-scenario/geographic-area-scenario";
 import { GeoJsonPolygon } from "shared/types";
+import { groupItems } from "shared/utilities";
+import { DataColorIndex } from "resources/styles";
 
 /**
  * Represents the page.
@@ -47,6 +49,7 @@ export class GeographicAreas
     protected onAddAreaClick(): void
     {
         this._currentAreaModel = { area: new SpecialArea() };
+        this._currentAreaModel.area.color = this.getSuggestedColor();
         this.enableDrawing = true;
     }
 
@@ -170,5 +173,20 @@ export class GeographicAreas
                 this.mapRedrawTrigger++;
             }
         }
+    }
+
+    private getSuggestedColor(): DataColorIndex
+    {
+        const colorsInUse = groupItems(this.settings.specialAreas.map(a => a.color));
+
+        for (let color = 1; color <= 8; color++)
+        {
+            if (!colorsInUse.has(color as DataColorIndex))
+            {
+                return color as DataColorIndex;
+            }
+        }
+
+        return Array.from(colorsInUse).sort((a, b) => a[0] - b[0]).sort((a, b) => a[1].length - b[1].length)[0][0];
     }
 }

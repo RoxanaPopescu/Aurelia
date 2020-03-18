@@ -98,13 +98,13 @@ modal-panel .modal-panel-content modal-header
 
     .input-heading > *
     {
-        margin-bottom: 0;
+        margin-bottom: 0.5rem;
         opacity: var(--opacity-faded);
     }
 
     .input-description > *
     {
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -127,8 +127,8 @@ page-section
 {
     &:not(.--expanded)
     {
-        margin-top: .5rem;
-        margin-bottom: .5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -144,7 +144,7 @@ page-section
 
 page-section:not(.--expanded) + page-section.--expanded
 {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 }
 
 .page-section-header-toggle

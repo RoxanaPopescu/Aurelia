@@ -40,16 +40,15 @@
 
             </text-input>
 
-            <select-input label="above" value.bind="model.color" fixed.bind="true" none.bind="false" class="margin-large-bottom">
+            <color-input label="above" value.bind="model.color">
 
                 <div slot="heading" translate>
                     Color of the area
                 </div>
 
-                <item repeat.for="index of 8" model.bind="index + 1" class="flex-row" style="align-items: center;">
-                    ${index + 1}
-                    <div css="background: var(--palette-color-data-${index + 1}); height: 1em; flex-grow: 1; margin-left: var(--size-inline-spacing-large); border: 1px solid white;"></div>
-                </item>
+                <div slot="description" translate>
+                    This makes it easier to differentiate the areas on the map.
+                </div>
 
                 <div slot="validation">
 
@@ -59,17 +58,13 @@
 
                 </div>
 
-            </select-input>
+            </color-input label="above">
 
         </modal-section>
 
         <modal-footer>
 
             <div class="button-container">
-
-                <button appearance="solid" accent="neutral" click.trigger="onCancelClick()" translate>
-                    Cancel
-                </button>
 
                 <button appearance="outline" accent="primary" click.trigger="onDrawNewAreaClick()" translate>
                     Draw new area

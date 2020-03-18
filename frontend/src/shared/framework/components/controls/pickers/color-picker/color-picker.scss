@@ -1,0 +1,59 @@
+color-picker
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Center items vertically.
+    align-items: center;
+
+    .color-picker-item
+    {
+        width: var(--input-min-height);
+        height: var(--input-min-height);
+        border: var(--border-width-medium) solid var(--surface-input-border-color);
+        border-radius: 50%;
+        color: var(--palette-color-whitepoint);
+        cursor: pointer;
+
+        &:not(:last-child)
+        {
+            // Apply margin to separate items.
+            margin-right: var(--size-inline-spacing-large);
+        }
+
+        > div
+        {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 0 1px 1px var(--palette-color-whitepoint);
+        }
+
+        icon
+        {
+            filter: drop-shadow(0 0 3px #0005);
+        }
+
+        &.--selected
+        {
+            border-color: var(--surface-primary-border-color);
+
+            > div
+            {
+                box-shadow: 0 0 0 1px var(--palette-color-whitepoint);
+            }
+        }
+    }
+
+    [slot="validation"]
+    {
+        validation-message
+        {
+            // Apply spacing above the validation messages.
+            margin-top: 1.5rem;
+        }
+    }
+}

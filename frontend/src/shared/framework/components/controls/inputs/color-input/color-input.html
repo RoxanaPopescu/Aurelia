@@ -1,0 +1,47 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    inert.bind="disabled || readonly"
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./color-input.scss"></require>
+
+    <label class="input-label" for="input-${id}">
+
+        <div class="input-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="input-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <div class="input-control">
+
+        <slot name="before"></slot>
+
+        <div class="input-control-inner">
+
+            <color-picker id="input-${id}" value.bind="value"></color-picker>
+
+        </div>
+
+        <slot name="after"></slot>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="input-validation font-small">
+
+        <slot name="validation"></slot>
+
+    </div>
+
+</template>
