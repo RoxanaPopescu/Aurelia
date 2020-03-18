@@ -34,18 +34,32 @@
 
                             <check-toggle class="margin-right" value.bind="specialArea.selected"></check-toggle>
 
-                            <div class="font-large" translate>
+                            <div class="font-large">
                                 ${specialArea.name}
                             </div>
 
                             <div class="flex-push-right icon-row">
 
-                                <button appearance="none" accent="primary" disabled.bind="enableDrawing" click.trigger="onEditAreaClick($index)">
+                                <button
+                                    title.translate="Edit area"
+                                    appearance="none"
+                                    accent="primary"
+                                    disabled.bind="enableDrawing"
+                                    click.trigger="onEditAreaClick($index)">
+
                                     <icon name="edit-small"></icon>
+
                                 </button>
 
-                                <button appearance="none" accent="primary" disabled.bind="enableDrawing" click.trigger="onDeleteAreaClick($index)">
+                                <button
+                                    title.translate="Delete area"
+                                    appearance="none"
+                                    accent="primary"
+                                    disabled.bind="enableDrawing"
+                                    click.trigger="onDeleteAreaClick($index)">
+
                                     <icon name="delete-small"></icon>
+
                                 </button>
 
                             </div>
@@ -74,11 +88,18 @@
 
                                         <div class="icon-row">
 
-                                            <button appearance="none" accent="primary" disabled.bind="enableDrawing">
+                                            <button
+                                                title.translate="Edit area rule"
+                                                appearance="none"
+                                                accent="primary"
+                                                disabled.bind="enableDrawing">
+
                                                 <icon name="edit-small"></icon>
+
                                             </button>
 
                                             <button
+                                                title.translate="Delete area rule"
                                                 appearance="none"
                                                 accent="primary"
                                                 disabled.bind="enableDrawing"
@@ -171,7 +192,7 @@
 
                         </div>
 
-                        <empty-indicator if.bind="specialArea.scenarios.length == 0">
+                        <empty-indicator if.bind="specialArea.scenarios.length == 0" translate>
                             No area rules specified
                         </empty-indicator>
 
@@ -194,7 +215,7 @@
 
                 </list-layout>
 
-                <empty-indicator if.bind="settings.specialAreas.length == 0">
+                <empty-indicator if.bind="settings.specialAreas.length == 0" translate>
                     No areas specified
                 </empty-indicator>
 

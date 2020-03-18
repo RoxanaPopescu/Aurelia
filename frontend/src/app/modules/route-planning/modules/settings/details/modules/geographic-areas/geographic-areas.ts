@@ -1,11 +1,11 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { RoutePlanningSettings, SpecialArea } from "app/model/_route-planning-settings";
 import { ModalService } from "shared/framework";
-import { GeographicAreaPanel } from "./modals/geographic-area/geographic-area";
-import { GeographicAreaScenarioPanel } from "./modals/geographic-area-scenario/geographic-area-scenario";
 import { GeoJsonPolygon } from "shared/types";
 import { groupItems } from "shared/utilities";
 import { DataColorIndex } from "resources/styles";
+import { GeographicAreaPanel } from "./modals/geographic-area/geographic-area";
+import { GeographicAreaScenarioPanel } from "./modals/geographic-area-scenario/geographic-area-scenario";
 
 /**
  * Represents the page.
@@ -46,6 +46,10 @@ export class GeographicAreas
     @bindable
     public settings: RoutePlanningSettings;
 
+    /**
+     * Called when the "Add area" button is clicked.
+     * Begins the process of adding an area, by enabling drawing on the map.
+     */
     protected onAddAreaClick(): void
     {
         this._currentAreaModel = { area: new SpecialArea() };
@@ -53,6 +57,11 @@ export class GeographicAreas
         this.enableDrawing = true;
     }
 
+    /**
+     * Called when the "Edit area" icon is clicked on an area.
+     * Opens the modal for editing the area.
+     * @param area The area.
+     */
     protected async onEditAreaClick(index: number): Promise<void>
     {
         this.enableDrawing = false;
@@ -76,12 +85,22 @@ export class GeographicAreas
         }
     }
 
+    /**
+     * Called when the "Delete area" icon is clicked on an area.
+     * Deletes the area.
+     * @param area The area.
+     */
     protected onDeleteAreaClick(index: number): void
     {
         this.settings.specialAreas.splice(index, 1);
         this.mapRedrawTrigger++;
     }
 
+    /**
+     * Called when the "Add area rule" icon is clicked on an area rule.
+     * Opens the modal for creating an area rule.
+     * @param area The area owning the rule.
+     */
     protected async onAddScenarioClick(area: SpecialArea): Promise<void>
     {
         const result = await this._modalService.open(GeographicAreaScenarioPanel).promise;
@@ -93,6 +112,12 @@ export class GeographicAreas
         }
     }
 
+    /**
+     * Called when the "Edit area rule" icon is clicked on an area rule.
+     * Opens the modal for editing the area rule.
+     * @param area The area owning the rule.
+     * @param index The index of the rule.
+     */
     protected async onEditScenarioClick(area: SpecialArea, index: number): Promise<void>
     {
         const result = await this._modalService.open(GeographicAreaScenarioPanel, area.scenarios[index]).promise;
@@ -104,17 +129,31 @@ export class GeographicAreas
         }
     }
 
+    /**
+     * Called when the "Delete area rule" icon is clicked on an area rule.
+     * Deletes the area rule.
+     * @param area The area owning the rule.
+     * @param index The index of the rule.
+     */
     protected onDeleteScenarioClick(area: SpecialArea, index: number): void
     {
         area.scenarios.splice(index, 1);
         this.mapRedrawTrigger++;
     }
 
+    /**
+     * Called when an area is clicked on the map.
+     * @param area The area that was clicked.
+     */
     protected onAreaClick(area: SpecialArea): void
     {
         console.log(area);
     }
 
+    /**
+     * Called when the user completes a drawing on the map.
+     * Opens the modal for creating an area.
+     */
     protected async onDrawingComplete(polygon: GeoJsonPolygon): Promise<void>
     {
         const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
@@ -145,6 +184,10 @@ export class GeographicAreas
         }
     }
 
+    /**
+     * Called when the user cancels a drawing on the map.
+     * Reverts state, and if the modal for editing the area was open, reopens the modal.
+     */
     protected async onDrawingCancelled(): Promise<void>
     {
         this.enableDrawing = false;
@@ -175,6 +218,10 @@ export class GeographicAreas
         }
     }
 
+    /**
+     * Gets the suggested color for a new area, based on the colors already used.
+     * @returns The index of the suggested color.
+     */
     private getSuggestedColor(): DataColorIndex
     {
         const colorsInUse = groupItems(this.settings.specialAreas.map(a => a.color));
