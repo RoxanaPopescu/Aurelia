@@ -9,6 +9,18 @@
 
     <modal-panel name="geographic-area-scenario" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="!isNew"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
@@ -247,18 +259,10 @@
 
         </modal-section>
 
-        <div class="button-container margin-larger-top">
+        <div if.bind="isNew" class="button-container margin-larger-top">
 
-            <button appearance="solid" accent="neutral" click.trigger="onCancelClick()" translate>
-                Cancel
-            </button>
-
-            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
+            <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                 Create area rule
-            </button>
-
-            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
-                Save and close
             </button>
 
         </div>

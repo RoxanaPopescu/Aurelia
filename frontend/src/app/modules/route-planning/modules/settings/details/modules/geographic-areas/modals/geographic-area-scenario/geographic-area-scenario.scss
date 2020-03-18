@@ -4,15 +4,9 @@ modal-panel[name="geographic-area-scenario"]
 
     .button-container
     {
-        display: flex;
-        justify-content: flex-end;
-
         button
         {
-            &:not(:first-child)
-            {
-                margin-left: 5rem;
-            }
+            width: 100%;
         }
     }
 }
