@@ -20,9 +20,9 @@ export class ExpressDispatchPage
     }
 
     /**
-     * Called by the framework when the component is dettached from the DOM.
+     * Called by the framework when the component is detached from the DOM.
      */
-    public dettached(): void
+    public detached(): void
     {
         window.removeEventListener("popstate", this.onPopState);
     }

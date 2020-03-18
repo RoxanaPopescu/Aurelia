@@ -25,10 +25,20 @@ accordion
     // Add accent color support.
     @each $accent in $accents
     {
-        &[accent="#{$accent}"] > .accordion-edge
+        &:not([accent^="data-"])[accent="#{$accent}"] > .accordion-edge
         {
             // Apply the background color specified by the accent attribute.
             background: var(--palette-color-#{$accent});
+        }
+    }
+
+    // Add data color support.
+    @each $dataColorIndex in [1, 2, 3, 4, 5, 6, 7, 8]
+    {
+        &[accent="data-#{$dataColorIndex}"] > .accordion-edge
+        {
+            // Apply the background color specified by the accent attribute.
+            background: var(--palette-color-data-#{$dataColorIndex});
         }
     }
 

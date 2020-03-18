@@ -45,6 +45,12 @@ export class AutoDispatchRule {
       this.priority = data.priority;
       this.fulfillerId = data.fulfillerId;
       this.conditions = new AutoDispatchRuleConditions(data.conditions);
+      if (data.routeTagsAllRequired) {
+        this.routeTagsAllRequired = data.routeTagsAllRequired;
+      }
+      if (data.routeTagsOneRequired) {
+        this.routeTagsOneRequired = data.routeTagsOneRequired;
+      }
     } else {
       this.conditions = new AutoDispatchRuleConditions();
     }
@@ -63,6 +69,12 @@ export class AutoDispatchRule {
 
   @observable
   public fulfillerId: string;
+
+  @observable
+  public routeTagsAllRequired: string[] = [];
+
+  @observable
+  public routeTagsOneRequired: string[] = [];
 
   @observable
   public conditions: AutoDispatchRuleConditions;

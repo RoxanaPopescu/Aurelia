@@ -24,6 +24,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/buttons/select-button/select-button"),
         PLATFORM.moduleName("./components/controls/dropdown/dropdown"),
         PLATFORM.moduleName("./components/controls/dropdown/dropdown-icon"),
+        PLATFORM.moduleName("./components/controls/inputs/color-input/color-input"),
         PLATFORM.moduleName("./components/controls/inputs/date-input/date-input"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
@@ -40,6 +41,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
         PLATFORM.moduleName("./components/controls/navigation/tree-nav/tree-nav"),
+        PLATFORM.moduleName("./components/controls/pickers/color-picker/color-picker"),
         PLATFORM.moduleName("./components/controls/pickers/date-picker/date-picker"),
         PLATFORM.moduleName("./components/controls/pickers/item-picker/item-picker"),
         PLATFORM.moduleName("./components/controls/pickers/item-picker/item"),
@@ -102,6 +104,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/json/json"),
         PLATFORM.moduleName("./converters/map/map"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
+        PLATFORM.moduleName("./converters/scale/scale"),
         PLATFORM.moduleName("./converters/skip/skip"),
         PLATFORM.moduleName("./converters/take/take"),
         PLATFORM.moduleName("./converters/trim/trim")
@@ -129,6 +132,7 @@ export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/dropdown/dropdown";
 export * from "./components/controls/dropdown/dropdown-icon";
 export * from "./components/controls/inputs/input";
+export * from "./components/controls/inputs/color-input/color-input";
 export * from "./components/controls/inputs/date-input/date-input";
 export * from "./components/controls/inputs/email-input/email-input";
 export * from "./components/controls/inputs/number-input/number-input";
@@ -145,6 +149,7 @@ export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
 export * from "./components/controls/navigation/tree-nav/tree-nav";
+export * from "./components/controls/pickers/color-picker/color-picker";
 export * from "./components/controls/pickers/date-picker/date-picker";
 export * from "./components/controls/pickers/item-picker/item-picker";
 export * from "./components/controls/pickers/item-picker/item";
@@ -209,6 +214,7 @@ export * from "./converters/filter/filter";
 export * from "./converters/json/json";
 export * from "./converters/map/map";
 export * from "./converters/reverse/reverse";
+export * from "./converters/scale/scale";
 export * from "./converters/skip/skip";
 export * from "./converters/take/take";
 export * from "./converters/trim/trim";

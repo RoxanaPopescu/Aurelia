@@ -120,10 +120,10 @@ export class RoutesColumnCustomElement
     }
 
     /**
-     * Called by the framework when the component is dettached from the DOM.
+     * Called by the framework when the component is detached from the DOM.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public dettached(): void
+    public detached(): void
     {
         // Abort any existing operation.
         if (this.updateOperation != null)

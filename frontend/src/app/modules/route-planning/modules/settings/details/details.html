@@ -24,7 +24,7 @@
                             Route planning
                         </a>
 
-                        <a accent="inherit" href="/route-planning/settings/list" translate>
+                        <a accent="inherit" href="/route-planning/rule-sets/list" translate>
                             Rule sets
                         </a>
 
@@ -71,7 +71,7 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button if.bind="isNew" class="flex-basis-1-of-2" appearance="outline" accent="primary" page-href="path: /route-planning/settings/list" translate>
+                        <button if.bind="isNew" class="flex-basis-1-of-2" appearance="outline" accent="primary" page-href="path: /route-planning/rule-sets/list" translate>
                             Cancel
                         </button>
 
@@ -129,15 +129,15 @@
 
             </name-value-list>
 
-            <general if.bind="tab === 'general'" settings.bind="settings"></general>
+            <general show.bind="tab === 'general'" settings.bind="settings"></general>
 
-            <vehicle-groups if.bind="tab === 'vehicle-groups'" settings.bind="settings"></vehicle-groups>
+            <vehicle-groups show.bind="tab === 'vehicle-groups'" settings.bind="settings"></vehicle-groups>
 
-            <start-locations if.bind="tab === 'start-locations'" settings.bind="settings"></start-locations>
+            <start-locations show.bind="tab === 'start-locations'" settings.bind="settings"></start-locations>
 
-            <task-times if.bind="tab === 'task-times'" settings.bind="settings"></task-times>
+            <task-times show.bind="tab === 'task-times'" settings.bind="settings"></task-times>
 
-            <geographic-areas if.bind="tab === 'geographic-areas'" settings.bind="settings"></geographic-areas>
+            <geographic-areas show.bind="tab === 'geographic-areas'" settings.bind="settings"></geographic-areas>
 
         </page-content>
 

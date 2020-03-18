@@ -126,12 +126,7 @@ export default class MultiSelectComponent extends React.Component<
     if (query === "") {
       return Localization.sharedValue("TypeToAdd");
     } else {
-      return (
-        <>
-          <span className="addOptionIcon" />
-          {this.props.addOptionText}
-        </>
-      );
+      return this.props.addOptionText;
     }
   }
 
@@ -154,15 +149,17 @@ export default class MultiSelectComponent extends React.Component<
             disabled={this.state.disabled || this.props.readonly}
             placeholder={this.props.placeholder}
             options={this.state.options}
+            search={this.state.search}
             // tslint:disable-next-line:no-any
             onValuesChange={(options: any) => {
-              this.setState({ selectedOptions: options });
+              this.setState({ selectedOptions: options, search: "" });
 
               if (this.props.onChange) {
                 this.props.onChange(options as OptionValue[]);
               }
             }}
             onBlur={e => this.onBlur()}
+            defaultValues={this.state.selectedOptions}
             values={this.state.selectedOptions}
             renderValue={option => {
               return (

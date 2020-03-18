@@ -1,11 +1,8 @@
 page[name="route-planning"] page[name="settings-details"] geographic-areas
 {
-    --list-border-color: var(--surface-separator-color);
-
     .geographic-areas-list
     {
-        background: var(--surface-color);
-        border-right: var(--border-width-thin) solid var(--list-border-color);
+        border-right: var(--border-width-thin) solid var(--surface-separator-color);
 
         --toggle-height: 5rem;
 
@@ -55,9 +52,10 @@ page[name="route-planning"] page[name="settings-details"] geographic-areas
         margin-right: calc((var(--toggle-height) - 3.75rem) / 2 + var(--size-inline-spacing-large));
         border-radius: var(--border-radius-small);
         background-color: var(--palette-color-neutral-light);
-        font-size: 0.714285em;
+        color: var(--palette-color-neutral-dark);
+        font-size: 0.64286em;
+        line-height: 1;
         font-weight: 600;
-        opacity: var(--opacity-faded-less);
     }
 
     .geographic-area-scenario-heading

@@ -455,9 +455,9 @@
 
     </modal-section>
 
-    <div class="button-container margin-larger-top">
+    <div if.bind="model.isNew" class="button-container margin-larger-top">
 
-        <button if.bind="model.isNew" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+        <button appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
             Create stop
         </button>
 

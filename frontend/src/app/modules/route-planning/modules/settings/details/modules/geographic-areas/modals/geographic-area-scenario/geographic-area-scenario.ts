@@ -38,7 +38,7 @@ export class GeographicAreaScenarioPanel
     public activate(model: SpecialAreaScenario): void
     {
         this.isNew = model == null;
-        this.model = model ?? new SpecialAreaScenario();
+        this.model = model != null ? model.clone() : new SpecialAreaScenario();
     }
 
     /**
@@ -51,10 +51,10 @@ export class GeographicAreaScenarioPanel
     }
 
     /**
-     * Called when the "Save and close" button is clicked.
+     * Called when the "Save changes" icon or the "Create area rule" button is clicked.
      * Closes the modal and returns the model.
      */
-    protected async onSaveAndCloseClick(): Promise<void>
+    protected async onSaveClick(): Promise<void>
     {
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;
@@ -67,15 +67,6 @@ export class GeographicAreaScenarioPanel
 
         this._result = this.model;
 
-        await this._modal.close();
-    }
-
-    /**
-     * Called when the "Cancel" button is clicked.
-     * Closes the modal without returning the model.
-     */
-    protected async onCancelClick(): Promise<void>
-    {
         await this._modal.close();
     }
 }

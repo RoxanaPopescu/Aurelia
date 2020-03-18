@@ -47,22 +47,22 @@
             <select-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.uturnStrategy"
-                display-value.bind="settings.restrictions.uturnStrategy.name"
+                value.bind="selectedUturnStrategy"
+                display-value.bind="selectedUturnStrategy.name"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Strategy for U-turns
                 </div>
 
-                <item repeat.for="uturnStrategy of uturnStrategies" model.bind="uturnStrategy">
+                <item repeat.for="uturnStrategy of availableUturnStrategies" model.bind="uturnStrategy">
                     ${uturnStrategy.name}
                 </item>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="settings.restrictions.uturnStrategy">
+                        value.bind="selectedUturnStrategy">
                     </required-validator>
 
                 </div>
@@ -72,22 +72,22 @@
             <select-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.curbApproachStrategy"
-                display-value.bind="settings.restrictions.curbApproachStrategy.name"
+                value.bind="selectedCurbApproachStrategy"
+                display-value.bind="selectedCurbApproachStrategy.name"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Strategy for curb approach
                 </div>
 
-                <item repeat.for="curbApproachStrategy of curbApproachStrategies" model.bind="status">
+                <item repeat.for="curbApproachStrategy of availableCurbApproachStrategies" model.bind="curbApproachStrategy">
                     ${curbApproachStrategy.name}
                 </item>
 
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="settings.restrictions.curbApproachStrategy">
+                        value.bind="selectedCurbApproachStrategy">
                     </required-validator>
 
                 </div>
@@ -101,14 +101,14 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.start"
+                value.bind="settings.restrictions.timeWindowAdjustment.start | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent early arrival
                 </div>
 
-                <span slot="after" class="opacity-faded">
+                <span slot="after" class="opacity-faded" trasnslate>
                     min
                 </span>
 
@@ -125,7 +125,7 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.end"
+                value.bind="settings.restrictions.timeWindowAdjustment.end | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
@@ -152,14 +152,14 @@
 
             <number-input
                 label="above"
-                value.bind="settings.restrictions.maxCalculationTime"
+                value.bind="settings.restrictions.maxCalculationTime | scale: 1/60"
                 class="flex-basis-1-of-2">
 
                 <div slot="heading">
                     Max time for route calculation
                 </div>
 
-                <span slot="after" class="opacity-faded">
+                <span slot="after" class="opacity-faded" translate>
                     min
                 </span>
 
@@ -291,34 +291,13 @@
 
         <tags-input
             label="above"
-            filter="auto"
             value.bind="settings.routeCreation.routeTags"
-            filter-value.bind="routeTagsFilterValue"
+            new.bind="true"
             class="margin-large-bottom">
 
             <div slot="heading" translate>
                 Tags to add to the routes
             </div>
-
-            <div slot="placeholder" translate>
-                Add tags
-            </div>
-
-            <item if.bind="routeTagsFilterValue && !settings.routeCreation.routeTags.includes(routeTagsFilterValue)" model.bind="routeTagsFilterValue">
-
-                <div class="flex-row">
-
-                    <div>
-                        ${routeTagsFilterValue}
-                    </div>
-
-                    <div class="opacity-faded flex-push-right" translate>
-                        New tag
-                    </div>
-
-                </div>
-
-            </item>
 
         </tags-input>
 

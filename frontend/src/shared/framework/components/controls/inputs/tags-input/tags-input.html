@@ -1,7 +1,8 @@
 <template class="
     ${open ? '--open' : ''}
     ${readonly ? '--readonly' : ''}
-    ${filter != 'none' ? '--filter' : ''}"
+    ${filter != 'none' ? '--filter' : ''}
+    ${new ? '--new' : ''}"
     inert.bind="disabled || readonly"
     validation
     forward-focus>
@@ -13,7 +14,7 @@
         value.bind="inputValue"
         label.bind="label & attr"
         disabled.bind="disabled"
-        readonly.bind="filter === 'none' || readonly"
+        readonly.bind="(!new && filter === 'none') || readonly"
         autocomplete.bind="autocomplete"
         autoselect.bind="autoselect"
         keydown.trigger="onInputKeyDown($event)"
@@ -27,14 +28,26 @@
 
         <span slot="placeholder">
 
-            <span show.bind="!readonly && (!open || filter === 'none')">
+            <span show.bind="!readonly && (!open || (!new && filter === 'none'))">
 
                 <slot name="placeholder"></slot>
 
             </span>
 
-            <span show.bind="open && filter !== 'none'" translate>
-                Type to filter…
+            <span show.bind="open && (filter !== 'none' || new)">
+
+                <template if.bind="new && filter == 'none'" translate>
+                    Type to add…
+                </template>
+
+                <template if.bind="new && filter != 'none'" translate>
+                    Type to filter or add…
+                </template>
+
+                <template if.bind="!new" translate>
+                    Type to filter…
+                </template>
+
             </span>
 
         </span>
@@ -46,7 +59,7 @@
             <div class="tags-input-value" mousedown.trigger="onValueMouseDown()">
 
                 <!-- NOTE: Whitespace matters here. -->
-                <slot name="value"><div slot="value"><tag repeat.for="tag of value">${tag}</tag></div>
+                <slot name="value"><div if.bind="value.length > 0" class="tags-input-value-list"><tag repeat.for="tag of value">${tag}</tag></div></slot>
 
             </div>
 
@@ -84,6 +97,22 @@
                 scroll>
 
                 <slot></slot>
+
+                <item if.bind="new && filterValue && !value.includes(filterValue)" model.bind="filterValue">
+
+                    <div class="flex-row">
+
+                        <div>
+                            ${filterValue}
+                        </div>
+
+                        <div class="opacity-faded flex-push-right" translate>
+                            New tag
+                        </div>
+
+                    </div>
+
+                </item>
 
             </item-picker>
 

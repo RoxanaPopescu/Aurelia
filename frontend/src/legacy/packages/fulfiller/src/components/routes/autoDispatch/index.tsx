@@ -96,6 +96,7 @@ export default class AutoDispatchComponent extends React.Component {
               <div className="c-autoDispatch-actions">
                 <Button
                   type={ButtonType.Action}
+                  size={ButtonSize.Medium}
                   onClick={() => (this.openRule = new AutoDispatchRule())}
                 >
                   {Localization.operationsValue("Routes_AutoDispatch_AddRule")}

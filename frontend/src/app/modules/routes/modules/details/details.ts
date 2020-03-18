@@ -33,7 +33,7 @@ export class DetailsModule
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
      * @param modalService The `ModalService` instance.
-     * @param modalService The `IdentityService` instance.
+     * @param identityService The `IdentityService` instance.
      * @param router The `Router` instance.
      */
     public constructor(routeService: RouteService, modalService: ModalService, identityService: IdentityService, router: Router)
@@ -93,7 +93,7 @@ export class DetailsModule
     /**
      * The available route status values.
      */
-    protected statusValues = Object.keys(RouteStatus.values).map(slug => ({ slug, ...RouteStatus.values[slug] }));
+    protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
     /**
      * Called by the framework when the module is activated.

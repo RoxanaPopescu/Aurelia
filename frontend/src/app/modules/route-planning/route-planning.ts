@@ -1,6 +1,7 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the module.
@@ -8,6 +9,36 @@ import routeTitles from "./resources/strings/route-titles.json";
 @autoinject
 export class RoutePlanningModule
 {
+    /**
+     * Creates a new instance of the class.
+     * @param identityService The `IdentityService` instance.
+     */
+    public constructor(identityService: IdentityService)
+    {
+        this._identityService = identityService;
+    }
+
+    private readonly _identityService: IdentityService;
+
+    /**
+     * Routeplan rule sets supports two implementations.
+     * Legacy: What coop and Mover is still using
+     * New: What we are building for Ikea.
+     * TODO: This should be removed when we move all customers to the new routeplans
+     */
+    private get legacyOutfit(): boolean {
+        const moverOutfitId = "d19d0cfb-2c08-4a7e-96d6-730f02c95c56";
+        const coopOutfitId = "36e39e32-38c1-45c1-acdd-24505b5ede6b";
+        const legacyOutfitIds = [moverOutfitId, coopOutfitId];
+
+        const identity = this._identityService.identity;
+        if (identity == null) {
+            return false;
+        }
+
+        return legacyOutfitIds.includes(identity.outfit.id);
+    }
+
     /**
      * Called to configure the router for the module.
      * @param config The router configuration associated with the module.
@@ -52,9 +83,9 @@ export class RoutePlanningModule
             {
                 name: "rules-sets-list",
                 route: "rules-sets/list",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/settings/list/list") :
-                    PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
+                moduleId: this.legacyOutfit ?
+                    PLATFORM.moduleName("./modules/legacy-route-settings/list/list") :
+                    PLATFORM.moduleName("./modules/settings/list/list"),
                 settings:
                 {
                     claims:
@@ -69,9 +100,9 @@ export class RoutePlanningModule
             {
                 name: "rules-sets-details",
                 route: [ "rules-sets/details/:id", "rules-sets/create" ],
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/settings/details/details") :
-                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
+                moduleId: this.legacyOutfit ?
+                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
+                    PLATFORM.moduleName("./modules/settings/details/details"),
                 settings:
                 {
                     claims:
@@ -84,9 +115,9 @@ export class RoutePlanningModule
             {
                 name: "rules-sets-create",
                 route: "rules-sets/create",
-                moduleId: ENVIRONMENT.name === "development" ?
-                    PLATFORM.moduleName("./modules/settings/details/details") :
-                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
+                moduleId: this.legacyOutfit ?
+                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
+                    PLATFORM.moduleName("./modules/settings/details/details"),
                 settings:
                 {
                     claims:

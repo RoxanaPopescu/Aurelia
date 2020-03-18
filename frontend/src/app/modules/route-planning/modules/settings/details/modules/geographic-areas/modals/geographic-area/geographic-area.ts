@@ -14,7 +14,7 @@ export class GeographicAreaPanel
     }
 
     private readonly _modal: Modal;
-    private _result: SpecialArea | undefined;
+    private _result: "draw-new-area" | "done" | undefined;
 
     /**
      * True if the model represents a new entity, otherwise false.
@@ -35,17 +35,17 @@ export class GeographicAreaPanel
      * Called by the framework when the modal is activated.
      * @param model The model for the modal, or undefined if creating a new entity.
      */
-    public activate(model: SpecialArea): void
+    public activate(model: { area: SpecialArea; index?: number }): void
     {
-        this.isNew = model == null;
-        this.model = model ?? new SpecialArea();
+        this.isNew = model.index == null;
+        this.model = model.area;
     }
 
     /**
      * Called by the framework when the modal is deactivated.
      * @returns The model for the modal, or undefined if cancelled.
      */
-    public async deactivate(): Promise<SpecialArea | undefined>
+    public async deactivate(): Promise<"draw-new-area" | "done" | undefined>
     {
         return this._result;
     }
@@ -65,17 +65,19 @@ export class GeographicAreaPanel
             return;
         }
 
-        this._result = this.model;
+        this._result = "done";
 
         await this._modal.close();
     }
 
     /**
-     * Called when the "Cancel" button is clicked.
-     * Closes the modal without returning the model.
+     * Called when the "Draw new area" button is clicked.
+     * Closes the modal while the user draws the new area.
      */
-    protected async onCancelClick(): Promise<void>
+    protected async onDrawNewAreaClick(): Promise<void>
     {
+        this._result = "draw-new-area";
+
         await this._modal.close();
     }
 }

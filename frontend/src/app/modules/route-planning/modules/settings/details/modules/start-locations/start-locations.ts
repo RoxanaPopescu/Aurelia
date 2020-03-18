@@ -24,7 +24,8 @@ export class StartLocations
      */
     public settingsChanged(newValue: RoutePlanningSettings): void
     {
-        console.log(newValue.departureTimes)
         this.activeDepartureTime = newValue.departureTimes[0];
+        console.log(this.activeDepartureTime.scenarios)
+
     }
 }

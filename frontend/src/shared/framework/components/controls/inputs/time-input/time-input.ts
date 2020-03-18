@@ -16,7 +16,7 @@ for (let hour = 0; hour < 24; hour++)
     }
 }
 
-timeItems.push(Duration.fromObject({ hour: 24, seconds: -1 }));
+timeItems.push(Duration.fromObject({ hour: 23, minutes: 59, seconds: 59 }));
 
 /**
  * Custom element representing an input for picking a single item from a list.

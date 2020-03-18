@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/separator/separator"></require>
     <require from="app/components/address-input/address-input"></require>
 
     <require from="./geographic-area-scenario.scss"></require>
@@ -7,6 +8,18 @@
     <modal-backdrop close="all"></modal-backdrop>
 
     <modal-panel name="geographic-area-scenario" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                if.bind="!isNew"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
 
         <modal-header scroll-fade>
 
@@ -31,23 +44,61 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the dates and weekdays on which the rule should be active.
+                Here you can specify the dates and weekdays to which the rule should apply.
             </h1>
 
             <div class="control-row">
 
-                <date-input label="above" value.bind="model.criteria.datePeriod.from" class="flex-basis-1-of-2">
+                <date-input label="above" value.bind="model.criteria.datePeriod.from" max.bind="model.criteria.datePeriod.to" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         From date
                     </div>
 
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.criteria.datePeriod.from">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="model.criteria.datePeriod.from"
+                            max.bind="model.criteria.datePeriod.to"
+                            max-inclusive.bind="false">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time before the to time.
+                            </template>
+
+                        </range-validator>
+
+                    </div>
+
                 </date-input>
 
-                <date-input label="above" value.bind="model.criteria.datePeriod.to" class="flex-basis-1-of-2">
+                <date-input label="above" value.bind="model.criteria.datePeriod.to" min.bind="model.criteria.datePeriod.from" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         To date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.criteria.datePeriod.to">
+                        </required-validator>
+
+                        <range-validator
+                            value.bind="model.criteria.datePeriod.to"
+                            min.bind="model.criteria.datePeriod.from"
+                            min-inclusive.bind="false">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time after the from time.
+                            </template>
+
+                        </range-validator>
+
                     </div>
 
                 </date-input>
@@ -79,7 +130,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.criteria.weekdays.length > 0">
+                            value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
                         </required-validator>
 
                     </div>
@@ -97,14 +148,13 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the order tags to which the rule should apply.
+                Here you can specify the order tags that must be matched for the rule to apply.
             </h1>
 
             <tags-input
                 label="above"
-                value.bind="tagsValue"
-                focused-value.bind="model.criteria.orderTagsAllRequired"
-                filter="auto"
+                value.bind="model.criteria.orderTagsAllRequired"
+                new.bind="true"
                 class="flex-basis-1-of-1">
 
                 <div slot="heading" translate>
@@ -117,21 +167,16 @@
                     </tag>
                 </div>
 
-                <item model="NEW TAG">
-                    NEW TAG
-                </item>
-
             </tags-input>
 
-            <div class="margin-large-top margin-large-bottom text-align-center" translate>
-                and / or
-            </div>
+            <separator class="margin-larger-top margin-large-bottom" translate>
+                and
+            </separator>
 
             <tags-input
                 label="above"
-                value.bind="tagsValue"
-                focused-value.bind="model.criteria.orderTagsOneRequired"
-                filter="auto"
+                value.bind="model.criteria.orderTagsOneRequired"
+                new.bind="true"
                 class="flex-basis-1-of-1">
 
                 <div slot="heading" translate>
@@ -144,10 +189,6 @@
                     </tag>
                 </div>
 
-                <item model="NEW TAG">
-                    NEW TAG
-                </item>
-
             </tags-input>
 
         </modal-section>
@@ -159,12 +200,12 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the adjustment to apply within the area, or mark the area as blocked.
+                Here you can specify the adjustments to apply within the area, or mark the area as blocked.
             </h1>
 
             <div class="control-row margin-medium-bottom">
 
-                <number-input value.bind="model.taskTimeChange" label="above" class="flex-basis-1-of-2">
+                <number-input value.bind="model.taskTimeChange | scale: 1/60" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Task time change
@@ -177,6 +218,7 @@
                     <div slot="validation">
 
                         <required-validator
+                            enabled.bind="!model.isAreaBlocked"
                             value.bind="model.taskTimeChange">
                         </required-validator>
 
@@ -184,19 +226,20 @@
 
                 </number-input>
 
-                <number-input value.bind="model.drivingTimeChangeFactor" label="above" class="flex-basis-1-of-2">
+                <number-input value.bind="model.drivingTimeChangeFactor | scale: 100" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Driving time change
                     </div>
 
-                    <span slot="after" class="opacity-faded">
+                    <span slot="after" class="opacity-faded" translate>
                         %
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
+                            enabled.bind="!model.isAreaBlocked"
                             value.bind="model.drivingTimeChangeFactor">
                         </required-validator>
 
@@ -206,7 +249,7 @@
 
             </div>
 
-            <check-toggle label="after" value.bind="model.isBlocked">
+            <check-toggle label="after" value.bind="model.isAreaBlocked">
 
                 <div slot="heading" translate>
                     Area is blocked
@@ -216,18 +259,10 @@
 
         </modal-section>
 
-        <div class="button-container margin-larger-top">
+        <div if.bind="isNew" class="button-container margin-larger-top">
 
-            <button appearance="solid" accent="neutral" click.trigger="onCancelClick()" translate>
-                Cancel
-            </button>
-
-            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
+            <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                 Create area rule
-            </button>
-
-            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveAndCloseClick()" translate>
-                Save and close
             </button>
 
         </div>
