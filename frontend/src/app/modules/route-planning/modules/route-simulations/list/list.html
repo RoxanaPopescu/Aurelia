@@ -65,7 +65,7 @@
                 <busy-indicator if.bind="simulations == null" class="margin-largest"></busy-indicator>
 
                 <empty-indicator if.bind="simulations.length == 0" class="margin-largest" translate>
-                    No results
+                    <div slot="heading">No results</div>
                 </empty-indicator>
 
                 <!--

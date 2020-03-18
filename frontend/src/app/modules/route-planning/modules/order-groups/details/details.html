@@ -203,7 +203,7 @@
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
                         <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" class="margin" translate>
-                            No items
+                            <div slot="heading">No items</div>
                         </empty-indicator>
 
                         <template if-claims="edit-order-group">
@@ -330,7 +330,7 @@
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
                         <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin" translate>
-                            No items
+                            <div slot="heading">No items</div>
                         </empty-indicator>
 
                         <template if-claims="edit-order-group">

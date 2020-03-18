@@ -7,9 +7,16 @@ empty-indicator
     .empty-indicator
     {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
 
         height: 25vh;
+
+        &-icon
+        {
+            height: 25rem;
+            width: 25rem;
+        }
     }
 }

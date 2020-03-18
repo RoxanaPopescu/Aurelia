@@ -163,7 +163,7 @@
                         </div>
 
                         <empty-indicator if.bind="specialArea.scenarios.length == 0">
-                            No area rules specified
+                            <div slot="heading">No area rules specified</div>
                         </empty-indicator>
 
                         <button appearance="outline" accent="primary" class="geographic-area-add-button margin-large-top" click.trigger="onAddScenarioClick(specialArea)">
@@ -178,7 +178,7 @@
                 </list-layout>
 
                 <empty-indicator if.bind="settings.specialAreas.length == 0">
-                    No areas specified
+                    <div slot="heading">No areas specified</div>
                 </empty-indicator>
 
                 <button appearance="outline" accent="primary" class="geographic-area-add-button margin-large-top" click.trigger="onAddAreaClick()">

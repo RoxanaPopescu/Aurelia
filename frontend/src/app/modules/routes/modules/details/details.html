@@ -646,7 +646,7 @@
                 </data-table>
 
                 <empty-indicator if.bind="route.stops.length == 0" class="margin-largest" translate>
-                    No stops
+                    <div slot="heading">No stops</div>
                 </empty-indicator>
 
                 <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>

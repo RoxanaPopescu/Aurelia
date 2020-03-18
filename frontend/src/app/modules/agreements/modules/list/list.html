@@ -84,7 +84,7 @@
                 <busy-indicator if.bind="agreements == null" class="margin-largest"></busy-indicator>
 
                 <empty-indicator if.bind="agreements.length == 0" class="margin-largest" translate>
-                    No results
+                    <div slot="heading">No results</div>
                 </empty-indicator>
 
                 <!--

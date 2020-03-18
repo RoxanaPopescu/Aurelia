@@ -2,8 +2,16 @@
 
     <require from="./empty-indicator.scss"></require>
 
-    <div class="empty-indicator font-largest opacity-faded-more">
-        <slot translate>Nothing to see here</slot>
+    <div class="empty-indicator">
+
+        <icon class="empty-indicator-icon" name="empty-box"></icon>
+
+        <div class="font-largest margin-large-top margin-bottom">
+            <slot name="heading" translate>Nothing to see here</slot>
+        </div>
+
+        <slot translate></slot>
+
     </div>
 
 </template>
