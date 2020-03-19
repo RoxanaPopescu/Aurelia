@@ -41,7 +41,7 @@
                         </div>
 
                         <div slot="value">
-                            ${settings.taskTimes.base.initial | number} min
+                            ${settings.taskTimes.base.initial / 60 | number} min
                         </div>
 
                     </name-value-pair>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div slot="value">
-                            ${settings.taskTimes.base.perFloor | number} min
+                            ${settings.taskTimes.base.perFloor / 60 | number} min
                         </div>
 
                     </name-value-pair>
@@ -65,7 +65,7 @@
                         </div>
 
                         <div slot="value">
-                            ${settings.taskTimes.base.perRound | number} min
+                            ${settings.taskTimes.base.perRound / 60 | number} min
                         </div>
 
                     </name-value-pair>
@@ -143,7 +143,7 @@
         <div class="margin-large-bottom">
 
             <div translate>
-                Here you can specify additional time to add, when orders with specific tags are to be handled.
+                Here you can specify the additional time to add when handling orders with specific tags.
             </div>
 
             <button appearance="outline" accent="primary" class="font-base --button-position-inline-right" translate>
@@ -164,6 +164,24 @@
                     </span>
                 </data-table-cell>
 
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Initial time
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Time per floor
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Time per round
+                    </span>
+                </data-table-cell>
+
                 <data-table-cell align="right">
                     <!-- Icons -->
                 </data-table-cell>
@@ -173,8 +191,54 @@
             <data-table-row repeat.for="scenario of settings.taskTimes.scenarios">
 
                 <data-table-cell>
-                    <span class="text-truncate" translate>
-                        Orders with all the tags &nbsp; ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'} &nbsp; and some of the tags &nbsp; ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
+                    <span class="text-truncate">
+
+                        <template if.bind="scenario.criteria.orderTagsAllRequired.length > 0">
+
+                            <span if.bind="scenario.criteria.orderTagsAllRequired.length > 0" translate>
+                                Orders with all the tags
+                            </span>
+
+                            <span if.bind="scenario.criteria.orderTagsAllRequired.length > 0" class="margin-left margin-right">
+                                ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
+                            </span>
+
+                        </template>
+
+                        <template if.bind="scenario.criteria.orderTagsOneRequired.length > 0">
+
+                            <span if.bind="scenario.criteria.orderTagsAllRequired.length > 0" translate>
+                                and some of the tags
+                            </span>
+
+                            <span if.bind="scenario.criteria.orderTagsAllRequired.length == 0" translate>
+                                Orders with some of the tags
+                            </span>
+
+                            <span class="margin-left margin-right">
+                                ${scenario.criteria.orderTagsOneRequired | list: 'short' : 'unit'}
+                            </span>
+
+                        </template>
+
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${scenario.time.initial / 60 | number} min
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${scenario.time.perFloor / 60 | number} min
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${scenario.time.perRound / 60 | number} min
                     </span>
                 </data-table-cell>
 

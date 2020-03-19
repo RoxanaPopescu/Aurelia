@@ -15,12 +15,12 @@ export class TaskTimesScenario
         if (data != null)
         {
             this.criteria = new TaskTimesCriteria(data.criteria);
-            this.additionalTime = new TaskTimesAdditionalTime(data.additionalTime);
+            this.time = new TaskTimesAdditionalTime(data.time);
         }
         else
         {
             this.criteria = new TaskTimesCriteria();
-            this.additionalTime = new TaskTimesAdditionalTime();
+            this.time = new TaskTimesAdditionalTime();
         }
     }
 
@@ -32,5 +32,5 @@ export class TaskTimesScenario
     /**
      * The additional task time to add.
      */
-    public additionalTime: TaskTimesAdditionalTime;
+    public time: TaskTimesAdditionalTime;
 }
