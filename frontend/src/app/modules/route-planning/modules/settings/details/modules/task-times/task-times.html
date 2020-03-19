@@ -26,7 +26,7 @@
                         Base task time
                     </div>
 
-                    <button appearance="none" accent="primary" click.trigger="onEditBaseTaskTimeClick()" class="margin-left">
+                    <button appearance="none" accent="primary" click.trigger="onEditBaseTaskTimeClick()" class="margin-left line-height-1">
                         <icon name="edit"></icon>
                     </button>
 
@@ -82,7 +82,7 @@
                         Round limits
                     </div>
 
-                    <button appearance="none" accent="primary" click.trigger="onEditRoundDefinitionClick()" class="margin-left">
+                    <button appearance="none" accent="primary" click.trigger="onEditRoundDefinitionClick()" class="margin-left line-height-1">
                         <icon name="edit"></icon>
                     </button>
 
@@ -140,17 +140,63 @@
                 Additional task time rules
         </div>
 
-        <div class="flex-row margin-large-bottom">
+        <div class="margin-large-bottom">
 
             <div translate>
                 Here you can specify additional time to add, when orders with specific tags are to be handled.
             </div>
 
-            <button appearance="outline" accent="primary" class="font-base flex-push-right --align-button-with-baseline" translate>
+            <button appearance="outline" accent="primary" class="font-base --button-position-inline-right" translate>
                 Add task time rule
             </button>
 
         </div>
+
+        <data-table
+            appearance="rows"
+            class="margin-large-bottom">
+
+            <data-table-headers>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Match criteria
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <!-- Icons -->
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <data-table-row repeat.for="scenario of settings.taskTimes.scenarios">
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Orders with all the tags &nbsp; ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'} &nbsp; and some of the tags &nbsp; ${scenario.criteria.orderTagsAllRequired | list: 'short' : 'unit'}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+
+                    <div class="icon-row">
+
+                        <button appearance="none" accent="primary" click.trigger="onEditAdditionalTaskTimeClick($index)">
+                            <icon name="edit-small"></icon>
+                        </button>
+
+                        <button appearance="none" accent="primary" click.trigger="onDeleteAdditionalTaskTimeClick($index)">
+                            <icon name="delete-small"></icon>
+                        </button>
+
+                    </div>
+
+                </data-table-cell>
+
+            </data-table-row>
+
+        </data-table>
 
         <empty-indicator size="medium">
 

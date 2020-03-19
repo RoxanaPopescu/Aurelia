@@ -139,7 +139,6 @@
                         </p>
 
                         <data-table
-                            if.bind="orderGroup.matchingCriteria.length > 0"
                             appearance="rows"
                             busy.bind="orderGroup == null"
                             class="margin-large-bottom">
@@ -204,7 +203,7 @@
 
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" size="small" class="margin-bottom">
+                        <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" size="small" class="margin-large-bottom">
                             <div slot="heading" translate>
                                 No items
                             </div>
@@ -233,7 +232,6 @@
                         </p>
 
                         <data-table
-                            if.bind="orderGroup.routePlanningTimes.length > 0"
                             appearance="rows"
                             busy.bind="orderGroup == null"
                             class="margin-large-bottom">
@@ -334,7 +332,7 @@
 
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" size="small" class="margin-bottom">
+                        <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" size="small" class="margin-large-bottom">
                             <div slot="heading" translate>
                                 No items
                             </div>
