@@ -192,8 +192,10 @@
 
                         </div>
 
-                        <empty-indicator if.bind="specialArea.scenarios.length == 0" translate>
-                            No area rules specified
+                        <empty-indicator if.bind="specialArea.scenarios.length == 0" size="small" class="margin-larger-bottom">
+                            <div slot="heading" translate>
+                                No area rules specified
+                            </div>
                         </empty-indicator>
 
                         <button
@@ -215,8 +217,10 @@
 
                 </list-layout>
 
-                <empty-indicator if.bind="settings.specialAreas.length == 0" translate>
-                    No areas specified
+                <empty-indicator if.bind="settings.specialAreas.length == 0" size="medium" icon="empty-map-drawing" class="margin-large-bottom">
+                    <div slot="heading" translate>
+                        No areas specified
+                    </div>
                 </empty-indicator>
 
                 <button

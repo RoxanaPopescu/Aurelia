@@ -48,6 +48,9 @@ $__summary: comment;
 {
     // Prioritize geometric precision, to avoid overly heavy font rendering.
     text-rendering: geometricPrecision;
+
+    // HACK: Prevents a font rendering bug in Chrome.
+    backface-visibility: hidden;
 }
 
 /// Text style for the largest headings.
@@ -56,6 +59,9 @@ $__summary: comment;
 {
     // Prioritize geometric precision, to avoid overly heavy font rendering.
     text-rendering: geometricPrecision;
+
+    // HACK: Prevents a font rendering bug in Chrome.
+    backface-visibility: hidden;
 }
 
 /// Text style for the larger headings.
@@ -64,6 +70,9 @@ $__summary: comment;
 {
     // Prioritize geometric precision, to avoid overly heavy font rendering.
     text-rendering: geometricPrecision;
+
+    // HACK: Prevents a font rendering bug in Chrome.
+    backface-visibility: hidden;
 }
 
 /// Text style for the large headings.

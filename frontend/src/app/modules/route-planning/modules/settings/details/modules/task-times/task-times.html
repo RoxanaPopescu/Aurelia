@@ -1,8 +1,164 @@
 <template>
 
-    <page-section scroll-fade="0.7">
+    <require from="app/components/info-icon/info-icon"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
 
-        <div>Task times</div>
+    <require from="./task-times.scss"></require>
+
+    <page-section>
+
+        <div class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            Task time rules
+        </div>
+
+        <div translate>
+            Here you can specify the time the driver is expected to be spend on tasks at each stop.
+        </div>
+
+        <div class="flex-row">
+
+            <div class="flex-basis-1-of-3">
+
+                <div class="flex-row font-larger margin">
+
+                    <div translate>
+                        Base task time
+                    </div>
+
+                    <button appearance="none" accent="primary" click.trigger="onEditBaseTaskTimeClick()" class="margin-left">
+                        <icon name="edit"></icon>
+                    </button>
+
+                </div>
+
+                <name-value-list>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Initial time
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.base.initial | number} min
+                        </div>
+
+                    </name-value-pair>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Time per floor
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.base.perFloor | number} min
+                        </div>
+
+                    </name-value-pair>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Time per round
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.base.perRound | number} min
+                        </div>
+
+                    </name-value-pair>
+
+                </name-value-list>
+
+            </div>
+
+            <div class="flex-basis-1-of-3">
+
+                <div class="flex-row font-larger margin">
+
+                    <div translate>
+                        Round limits
+                    </div>
+
+                    <button appearance="none" accent="primary" click.trigger="onEditRoundDefinitionClick()" class="margin-left">
+                        <icon name="edit"></icon>
+                    </button>
+
+                </div>
+
+                <name-value-list>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Colli per round
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.roundDefinition.colliPerRound | number}
+                        </div>
+
+                    </name-value-pair>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Weight per round
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.roundDefinition.weightPerRound | number} kg
+                        </div>
+
+                    </name-value-pair>
+
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            Volume per round
+                        </div>
+
+                        <div slot="value">
+                            ${settings.taskTimes.roundDefinition.volumePerRound | number} m³
+                        </div>
+
+                    </name-value-pair>
+
+                </name-value-list>
+
+            </div>
+
+        </div>
+
+    </page-section>
+
+    <page-section class="--line-above">
+
+        <div slot="header" class="flex-row" translate>
+                Additional task time rules
+        </div>
+
+        <div class="flex-row margin-large-bottom">
+
+            <div translate>
+                Here you can specify additional time to add, when orders with specific tags are to be handled.
+            </div>
+
+            <button appearance="outline" accent="primary" class="font-base flex-push-right --align-button-with-baseline" translate>
+                Add task time rule
+            </button>
+
+        </div>
+
+        <empty-indicator size="medium">
+
+            <div slot="heading" translate>
+                No additional task time
+            </div>
+
+        </empty-indicator>
 
     </page-section>
 
