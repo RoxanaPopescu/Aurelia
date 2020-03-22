@@ -1,0 +1,102 @@
+<template>
+
+    <require from="./round-definition-panel.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="round-definition-panel" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
+                Edit base task time
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                Task time
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the time the driver is expected to be spend on tasks at each stop.
+            </h1>
+
+            <number-input value.bind="model.colliPerRound" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Colli per round
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    colli
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.colliPerRound">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.weightPerRound" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Weight per round
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    kg
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.weightPerRound">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.volumePerRound" label="above">
+
+                <div slot="heading" translate>
+                    Volume per round
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    m³
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.volumePerRound">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>

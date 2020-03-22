@@ -1,0 +1,12 @@
+modal-panel[name="additional-task-time-panel"]
+{
+    --modal-panel-min-width: 175rem;
+
+    .button-container
+    {
+        button
+        {
+            width: 100%;
+        }
+    }
+}

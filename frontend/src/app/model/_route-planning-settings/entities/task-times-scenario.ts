@@ -1,3 +1,4 @@
+import clone from "clone";
 import { TaskTimesCriteria } from "./task-times-criteria";
 import { TaskTimesAdditionalTime } from "./task-times-additional-time";
 
@@ -33,4 +34,12 @@ export class TaskTimesScenario
      * The additional task time to add.
      */
     public time: TaskTimesAdditionalTime;
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

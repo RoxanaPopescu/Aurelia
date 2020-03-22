@@ -1,0 +1,195 @@
+<template>
+
+    <require from="app/components/separator/separator"></require>
+
+    <require from="./additional-task-time-panel.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="additional-task-time-panel" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                if.bind="!isNew"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <template if.bind="isNew" translate>
+                    Create task time rule
+                </template>
+
+                <template if.bind="!isNew" translate>
+                    Edit task time rule
+                </template>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                Order tags
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the order tags that must be matched for the rule to apply.
+            </h1>
+
+            <tags-input
+                label="above"
+                value.bind="model.criteria.orderTagsAllRequired"
+                new.bind="true"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    All the tags
+                </div>
+
+                <div slot="value">
+                    <tag model.bind="tag" repeat.for="tag of model.criteria.orderTagsAllRequired">
+                        ${tag}
+                    </tag>
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        validators.bind="orderTagsRequiredValidator">
+                    </dependent-validator>
+
+                </div>
+
+            </tags-input>
+
+            <separator class="margin-larger-top margin-large-bottom" translate>
+                and
+            </separator>
+
+            <tags-input
+                label="above"
+                value.bind="model.criteria.orderTagsOneRequired"
+                new.bind="true"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    Some of the tags
+                </div>
+
+                <div slot="value">
+                    <tag model.bind="tag" repeat.for="tag of model.criteria.orderTagsOneRequired">
+                        ${tag}
+                    </tag>
+                </div>
+
+                <div slot="validation">
+
+                    <custom-validator
+                        view-model.ref="orderTagsRequiredValidator"
+                        valid.bind="model.criteria.orderTagsOneRequired.length > 0 || model.criteria.orderTagsAllRequired.length > 0">
+
+                        <template replace-part="invalid" translate>
+                            Please choose at least one order tag.
+                        </template>
+
+                    </custom-validator>
+
+                </div>
+
+            </tags-input>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Task time
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the additional time to add when handling orders with specific tags.
+            </h1>
+
+            <number-input value.bind="model.time.initial | scale: 1/60" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Initial time
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.time.initial">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.time.perFloor | scale: 1/60" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Time per floor
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.time.perFloor">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.time.perRound | scale: 1/60" label="above">
+
+                <div slot="heading" translate>
+                    Time per round
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.time.perRound">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+        </modal-section>
+
+        <div if.bind="isNew" class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                Create task time rule
+            </button>
+
+        </div>
+
+    </modal-panel>
+
+</template>
