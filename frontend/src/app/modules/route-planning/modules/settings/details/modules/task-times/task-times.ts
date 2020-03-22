@@ -1,6 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ModalService } from "shared/framework";
-import { RoutePlanningSettings } from "app/model/_route-planning-settings";
+import { ModalService, IValidation } from "shared/framework";
+import { RoutePlanningSettings, TaskTimesAdditionalTime, TaskTimesRoundDefinition } from "app/model/_route-planning-settings";
 import { ConfirmDeleteScenarioDialog } from "./modals/confirm-delete-scenario/confirm-delete-scenario";
 import { AdditionalTaskTimePanel } from "./modals/additional-task-time-panel/additional-task-time-panel";
 import { BaseTaskTimePanel } from "./modals/base-task-time-panel/base-task-time-panel";
@@ -30,17 +30,31 @@ export class TaskTimes
     protected settings: RoutePlanningSettings;
 
     /**
+     * The validation for the base task time.
+     */
+    protected baseTaskTimeValidation: IValidation;
+
+    /**
+     * The validation for the round definition.
+     */
+    protected roundDefinitionValidation: IValidation;
+
+    /**
      * Called when the "Edit round definition" icon is clicked.
      * Opens the modal for editing the round definition.
      */
     protected async onEditRoundDefinitionClick(): Promise<void>
     {
-        const result = await this._modalService.open(RoundDefinitionPanel, this.settings.taskTimes.roundDefinition).promise;
+        const model = this.settings.taskTimes.roundDefinition || new TaskTimesRoundDefinition();
+        const result = await this._modalService.open(RoundDefinitionPanel, model).promise;
 
         if (result != null)
         {
             this.settings.taskTimes.roundDefinition = result;
         }
+
+        // Validate the form.
+        await this.roundDefinitionValidation.validate();
     }
 
     /**
@@ -49,12 +63,16 @@ export class TaskTimes
      */
     protected async onEditBaseTaskTimeClick(): Promise<void>
     {
-        const result = await this._modalService.open(BaseTaskTimePanel, this.settings.taskTimes.base).promise;
+        const model = this.settings.taskTimes.base || new TaskTimesAdditionalTime();
+        const result = await this._modalService.open(BaseTaskTimePanel, model).promise;
 
         if (result != null)
         {
             this.settings.taskTimes.base = result;
         }
+
+        // Validate the form.
+        await this.baseTaskTimeValidation.validate();
     }
 
     /**

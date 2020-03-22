@@ -1,6 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { RoutePlanningSettings } from "app/model/_route-planning-settings";
-import { DepartureTime } from '../../../../../../../model/_route-planning-settings/entities/departure-time';
+import { DepartureTime } from "app/model/_route-planning-settings/entities/departure-time";
 
 /**
  * Represents the page.
@@ -25,7 +25,5 @@ export class StartLocations
     public settingsChanged(newValue: RoutePlanningSettings): void
     {
         this.activeDepartureTime = newValue.departureTimes[0];
-        console.log(this.activeDepartureTime.scenarios)
-
     }
 }

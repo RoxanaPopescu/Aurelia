@@ -21,8 +21,6 @@ export class TaskTimes
         }
         else
         {
-            this.base = new TaskTimesAdditionalTime();
-            this.roundDefinition = new TaskTimesRoundDefinition();
             this.scenarios = [];
         }
     }

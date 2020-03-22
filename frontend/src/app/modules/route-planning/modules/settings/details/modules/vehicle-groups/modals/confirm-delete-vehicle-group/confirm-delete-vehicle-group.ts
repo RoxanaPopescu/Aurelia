@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
-import { VehicleGroup } from 'app/model/_route-planning-settings';
+import { VehicleGroup } from "app/model/_route-planning-settings";
 
 @autoinject
 export class ConfirmDeleteVehicleGroupDialog

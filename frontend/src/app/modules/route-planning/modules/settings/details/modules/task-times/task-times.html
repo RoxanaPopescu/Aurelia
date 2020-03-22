@@ -32,7 +32,11 @@
 
                 </div>
 
-                <name-value-list>
+                <div if.bind="settings.taskTimes.base == null" class="opacity-faded">
+                    No base task time specified
+                </div>
+
+                <name-value-list if.bind="settings.taskTimes.base != null">
 
                     <name-value-pair>
 
@@ -72,6 +76,19 @@
 
                 </name-value-list>
 
+                <div class="font-small margin-medium-top" validation validation.ref="baseTaskTimeValidation">
+
+                    <custom-validator
+                        valid.bind="settings.taskTimes.base.initial != null">
+
+                        <template replace-part="invalid" translate>
+                            Please provide the base task time.
+                        </template>
+
+                    </custom-validator>
+
+                </div>
+
             </div>
 
             <div class="flex-basis-1-of-3">
@@ -88,7 +105,11 @@
 
                 </div>
 
-                <name-value-list>
+                <div if.bind="settings.taskTimes.roundDefinition == null" class="opacity-faded">
+                    No round limits specified
+                </div>
+
+                <name-value-list if.bind="settings.taskTimes.roundDefinition != null">
 
                     <name-value-pair>
 
@@ -127,6 +148,19 @@
                     </name-value-pair>
 
                 </name-value-list>
+
+                <div class="font-small margin-medium-top" validation validation.ref="roundDefinitionValidation">
+
+                    <custom-validator
+                        valid.bind="settings.taskTimes.roundDefinition != null">
+
+                        <template replace-part="invalid" translate>
+                            Please provide the round limits.
+                        </template>
+
+                    </custom-validator>
+
+                </div>
 
             </div>
 
