@@ -96,6 +96,7 @@ export class StartLocations
     /**
      * Returns an array of scenarios filtered by date and tag filters.
      */
+    @computedFrom("activeDepartureTime.scenarios", "dateFromFilter", "dateToFilter", "weekdaysFilter")
     protected get filteredScenarios(): DepartureTimeScenario[]
     {
         let scenarios = this.activeDepartureTime?.scenarios ?? [];
