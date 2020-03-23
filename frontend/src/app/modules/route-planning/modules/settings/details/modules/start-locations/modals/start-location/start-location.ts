@@ -50,7 +50,7 @@ export class StartLocationDialog
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns True if the stop should be cancelled, otherwise false.
+     * @returns The departure time saved, undefined if the user cancels.
      */
     public deactivate(): DepartureTime | undefined
     {
@@ -59,7 +59,7 @@ export class StartLocationDialog
 
     /**
      * Called when the "Save" icon is clicked.
-     * Saves changes and transitions the modal to its readonly mode.
+     * Saves changes and closes the modal.
      */
     protected async onSaveClick(): Promise<void>
     {
@@ -77,7 +77,7 @@ export class StartLocationDialog
             // Mark the modal as busy.
             this._modal.busy = true;
 
-            // Resolve stop location, if needed.
+            // Resolve start location, if needed.
             if (this.model.departureTime.startLocation.address.id != null)
             {
                 try

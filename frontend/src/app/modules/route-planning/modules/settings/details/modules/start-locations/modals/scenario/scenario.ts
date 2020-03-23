@@ -1,4 +1,4 @@
-import { autoinject, bindable, computedFrom } from 'aurelia-framework';
+import { autoinject, computedFrom } from 'aurelia-framework';
 import { IValidation, Modal } from "shared/framework";
 import { DepartureTimeScenario, DepartureTime, Gate, VehicleGroup, GateSlot } from "app/model/_route-planning-settings";
 import { Duration } from "luxon";
@@ -20,22 +20,22 @@ export class ScenarioPanel
     private _result: DepartureTimeScenario | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The vehicle group the scenario is linked to.
      */
     protected selectedVehicleGroup: VehicleGroup | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The interval for which the vehicles can be at the gate.
      */
     protected reservationInterval: number | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The selected duration for earliest arrival.
      */
     protected selectedEarliestArrival: Duration | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The selected duration for latest departure.
      */
     protected selectedLatestDeparture: Duration | undefined;
 
@@ -50,20 +50,8 @@ export class ScenarioPanel
     protected model: { vehicleGroups: VehicleGroup[], departureTime: DepartureTime, scenario: DepartureTimeScenario; isNew: boolean };
 
     /**
-     * Called when the `Save` button is pressed.
-     */
-    @bindable
-    public onSave: () => void;
-
-    /**
-     * Called when the `Cancel` button is pressed.
-     */
-    @bindable
-    public onCancel: () => void;
-
-    /**
      * Called by the framework when the modal is activated.
-     * @param model The route and the stop to edit or create.
+     * @param model The vehicle groups of the setting, departure time for which the scenario belongs and the scenario itself.
      */
     public activate(model: { vehicleGroups: VehicleGroup[], departureTime: DepartureTime; scenario: DepartureTimeScenario; isNew: boolean }): void
     {
@@ -80,7 +68,7 @@ export class ScenarioPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns True if the stop should be cancelled, otherwise false.
+     * @returns The scenario on save and undefined on cancel.
      */
     public deactivate(): DepartureTimeScenario | undefined
     {
@@ -112,32 +100,17 @@ export class ScenarioPanel
     }
 
     /**
-     * Extract unique gates.
+     * Called when the "Cancel" icon is clicked.
+     * Closes the modal.
      */
-    @computedFrom("model.departureTime")
-    protected get vehicleGroups(): Gate[]
+    protected onCancelClick(): void
     {
-        let gates: Gate[] = [];
-
-        if (this.model.departureTime != null)
-        {
-            this.model.departureTime.scenarios
-                .forEach(s => {
-                    s.gates.forEach(g => {
-                        if (gates.filter(gate => gate.name === g.name).length === 0)
-                        {
-                            gates.push(g);
-                        }
-                    })
-                })
-        }
-
-        return gates;
+        this._modal.close();
     }
 
     /**
      * Called when the "Save" icon is clicked.
-     * Saves changes and transitions the modal to its readonly mode.
+     * Saves changes closes the modal.
      */
     protected async onSaveClick(): Promise<void>
     {

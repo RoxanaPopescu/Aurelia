@@ -32,25 +32,25 @@ export class StartLocations
     private readonly _modalService: ModalService;
 
     /**
-     * Current tab page the user is routed to.
+     * Current tab page name the user has active.
      */
     @bindable
     protected activeDepartureTimeName: string | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The date used to filter scenarios.
      */
     @bindable
     protected dateFromFilter: DateTime | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The date used to filter scenarios.
      */
     @bindable
     protected dateToFilter: DateTime | undefined;
 
     /**
-     * Current tab page the user is routed to.
+     * The weekdays used to filter scenarios.
      */
     @bindable
     protected weekdaysFilter: DayOfWeek[] = [];
@@ -94,7 +94,7 @@ export class StartLocations
     }
 
     /**
-     * Called when the `Add new scenario` button is clicked.
+     * Returns an array of scenarios filtered by date and tag filters.
      */
     protected get filteredScenarios(): DepartureTimeScenario[]
     {
@@ -219,7 +219,9 @@ export class StartLocations
     }
 
     /**
-     * Called when the "Edit" icon is clicked.
+     * Called when the "Edit start location" icon is clicked.
+     * Opens a modal showing the details of the departure time.
+     * @param departureTime The start location to edit.
      */
     protected async onEditStartLocationClick(departureTime: DepartureTime): Promise<void>
     {
@@ -235,7 +237,7 @@ export class StartLocations
     }
 
     /**
-     * Called when the "Edit" icon is clicked.
+     * Called when the "Add start location" button is clicked.
      */
     protected async onAddStartLocationClick(): Promise<void>
     {
