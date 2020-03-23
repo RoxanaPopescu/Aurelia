@@ -31,7 +31,7 @@
                 Here you can specify the time the driver is expected to be spend on tasks at each stop.
             </h1>
 
-            <number-input value.bind="model.initial | scale: 1/60" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.initial | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Initial time
@@ -47,11 +47,17 @@
                         value.bind="model.initial">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.initial"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
 
-            <number-input value.bind="model.perFloor | scale: 1/60" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.perFloor | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Time per floor
@@ -67,11 +73,17 @@
                         value.bind="model.perFloor">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.perFloor"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
 
-            <number-input value.bind="model.perRound | scale: 1/60" label="above">
+            <number-input value.bind="model.perRound | scale: 1/60" min.bind="0" label="above">
 
                 <div slot="heading" translate>
                     Time per round
@@ -86,6 +98,12 @@
                     <required-validator
                         value.bind="model.perRound">
                     </required-validator>
+
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.perRound"
+                        min.bind="0">
+                    </range-validator>
 
                 </div>
 

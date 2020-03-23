@@ -120,7 +120,7 @@
                 Here you can specify the additional time to add when handling orders with specific tags.
             </h1>
 
-            <number-input value.bind="model.time.initial | scale: 1/60" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.time.initial | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Initial time
@@ -136,11 +136,17 @@
                         value.bind="model.time.initial">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.time.initial"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
 
-            <number-input value.bind="model.time.perFloor | scale: 1/60" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.time.perFloor | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Time per floor
@@ -156,11 +162,17 @@
                         value.bind="model.time.perFloor">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.time.perFloor"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
 
-            <number-input value.bind="model.time.perRound | scale: 1/60" label="above">
+            <number-input value.bind="model.time.perRound | scale: 1/60" min.bind="0" label="above">
 
                 <div slot="heading" translate>
                     Time per round
@@ -175,6 +187,12 @@
                     <required-validator
                         value.bind="model.time.perRound">
                     </required-validator>
+
+                    <range-validator
+                        active.bind="true"
+                        value.bind="model.time.perRound"
+                        min.bind="0">
+                    </range-validator>
 
                 </div>
 

@@ -102,7 +102,8 @@
                 label="above"
                 none.bind="false"
                 value.bind="settings.restrictions.timeWindowAdjustment.start | scale: 1/60"
-                class="flex-basis-1-of-2">
+                class="flex-basis-1-of-2"
+                min.bind="0">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent early arrival
@@ -118,6 +119,12 @@
                         value.bind="settings.restrictions.timeWindowAdjustment.start">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="settings.restrictions.timeWindowAdjustment.start"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
@@ -126,7 +133,8 @@
                 label="above"
                 none.bind="false"
                 value.bind="settings.restrictions.timeWindowAdjustment.end | scale: 1/60"
-                class="flex-basis-1-of-2">
+                class="flex-basis-1-of-2"
+                min.bind="0">
 
                 <div slot="heading" translate>
                     Time frame narrowing to prevent late arrival
@@ -142,6 +150,12 @@
                         value.bind="settings.restrictions.timeWindowAdjustment.end">
                     </required-validator>
 
+                    <range-validator
+                        active.bind="true"
+                        value.bind="settings.restrictions.timeWindowAdjustment.end"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
             </number-input>
@@ -153,7 +167,8 @@
             <number-input
                 label="above"
                 value.bind="settings.restrictions.maxCalculationTime | scale: 1/60"
-                class="flex-basis-1-of-2">
+                class="flex-basis-1-of-2"
+                min.bind="0">
 
                 <div slot="heading" translate>
                     Max time for route calculation
@@ -168,6 +183,13 @@
                     <required-validator
                         value.bind="settings.restrictions.maxCalculationTime">
                     </required-validator>
+
+                    <range-validator
+                        active.bind="true"
+                        value.bind="settings.restrictions.maxCalculationTime"
+                        min.bind="0"
+                        min-inclusive.bind="false">
+                    </range-validator>
 
                 </div>
 

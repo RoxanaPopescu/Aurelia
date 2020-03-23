@@ -139,10 +139,27 @@
 
                     <date-input
                         label="above"
-                        value.bind="dateFromFilter">
+                        value.bind="dateFromFilter"
+                        max.bind="dateToFilter">
 
                         <div slot="heading" translate>
-                            Date from
+                            From date
+                        </div>
+
+                        <div slot="validation">
+
+                            <range-validator
+                                active.bind="true"
+                                value.bind="dateFromFilter"
+                                max.bind="dateToFilter"
+                                max-inclusive.bind="false">
+
+                                <template replace-part="invalid-max" translate>
+                                    Please choose a time before the to time.
+                                </template>
+
+                            </range-validator>
+
                         </div>
 
                     </date-input>
@@ -150,11 +167,30 @@
                     <date-input
                         class="margin-larger-left"
                         label="above"
-                        value.bind="dateToFilter">
+                        value.bind="dateToFilter"
+                        min.bind="dateFromFilter">
 
                         <div slot="heading" translate>
-                            Date to
+                            To date
                         </div>
+
+                        <div slot="validation">
+
+                            <range-validator
+                                active.bind="true"
+                                value.bind="dateToFilter"
+                                min.bind="dateFromFilter"
+                                min-inclusive.bind="false">
+
+                                <template replace-part="invalid-min" translate>
+                                    Please choose a time after the from time.
+                                </template>
+
+                            </range-validator>
+
+                        </div>
+
+                    </date-input>
 
                     </date-input>
 

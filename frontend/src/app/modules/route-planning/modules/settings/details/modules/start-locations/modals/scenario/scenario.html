@@ -131,10 +131,26 @@
                     <date-input
                         class="flex-basis-1-of-2"
                         label="above"
-                        value.bind="model.scenario.criteria.datePeriod.from">
+                        value.bind="model.scenario.criteria.datePeriod.from"
+                        max.bind="model.scenario.criteria.datePeriod.to">
 
                         <div slot="heading" translate>
-                            Date from
+                            From date
+                        </div>
+
+                        <div slot="validation">
+
+                            <range-validator
+                                value.bind="model.scenario.criteria.datePeriod.from"
+                                max.bind="model.scenario.criteria.datePeriod.to"
+                                max-inclusive.bind="false">
+
+                                <template replace-part="invalid-max" translate>
+                                    Please choose a time before the to time.
+                                </template>
+
+                            </range-validator>
+
                         </div>
 
                     </date-input>
@@ -142,10 +158,26 @@
                     <date-input
                         class="flex-basis-1-of-2"
                         label="above"
-                        value.bind="model.scenario.criteria.datePeriod.to">
+                        value.bind="model.scenario.criteria.datePeriod.to"
+                        min.bind="model.scenario.criteria.datePeriod.from">
 
                         <div slot="heading" translate>
-                            Date to
+                            To date
+                        </div>
+
+                        <div slot="validation">
+
+                            <range-validator
+                                value.bind="model.scenario.criteria.datePeriod.to"
+                                min.bind="model.scenario.criteria.datePeriod.from"
+                                min-inclusive.bind="false">
+
+                                <template replace-part="invalid-min" translate>
+                                    Please choose a time after the from time.
+                                </template>
+
+                            </range-validator>
+
                         </div>
 
                     </date-input>

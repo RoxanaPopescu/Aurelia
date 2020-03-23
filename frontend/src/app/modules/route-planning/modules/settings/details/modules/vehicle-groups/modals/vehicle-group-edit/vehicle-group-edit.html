@@ -94,6 +94,7 @@
 
                 <number-input
                     value.bind="model.cost.newRoute"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -111,12 +112,19 @@
                             value.bind="model.cost.newRoute">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.cost.newRoute"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
 
                 <number-input
                     value.bind="model.cost.waitingTime"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -135,6 +143,12 @@
                             value.bind="model.cost.waitingTime">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.cost.waitingTime"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
@@ -145,6 +159,7 @@
 
                 <number-input
                     value.bind="model.cost.drivingTime"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -162,12 +177,19 @@
                             value.bind="model.cost.drivingTime">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.cost.drivingTime"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
 
                 <number-input
                     value.bind="model.cost.taskTime"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -185,6 +207,12 @@
                             value.bind="model.cost.taskTime">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.cost.taskTime"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
@@ -195,6 +223,7 @@
 
                 <number-input
                     value.bind="model.cost.distance"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -211,6 +240,12 @@
                         <required-validator
                             value.bind="model.cost.distance">
                         </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.cost.distance"
+                            min.bind="0">
+                        </range-validator>
 
                     </div>
 
@@ -234,6 +269,7 @@
 
                 <number-input
                     value.bind="model.limits.volume"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -251,12 +287,20 @@
                             value.bind="model.limits.volume">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.volume"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
 
                 <number-input
                     value.bind="model.limits.weight"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -274,6 +318,13 @@
                             value.bind="model.limits.weight">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.weight"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
@@ -284,6 +335,9 @@
 
                 <number-input
                     value.bind="model.limits.colliCount"
+                    min.bind="0"
+                    step.bind="1"
+                    constrain.bind="true"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -301,12 +355,22 @@
                             value.bind="model.limits.colliCount">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.colliCount"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
 
                 <number-input
                     value.bind="model.limits.stopCount"
+                    min.bind="2"
+                    step.bind="1"
+                    constrain.bind="true"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -324,6 +388,12 @@
                             value.bind="model.limits.stopCount">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.stopCount"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
@@ -334,6 +404,7 @@
 
                 <number-input
                     value.bind="model.limits.time | scale: 1/60"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -351,12 +422,20 @@
                             value.bind="model.limits.time">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.time"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
 
                 <number-input
                     value.bind="model.limits.distance"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -373,6 +452,13 @@
                         <required-validator
                             value.bind="model.limits.distance">
                         </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.limits.distance"
+                            min.bind="0"
+                            min-inclusive.bind="false">
+                        </range-validator>
 
                     </div>
 
@@ -423,6 +509,7 @@
                 <number-input
                     value.bind="model.startLocation.time | scale: 1/60"
                     disabled.bind="model.startLocation.location.address == null"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -441,6 +528,12 @@
                             value.bind="model.startLocation.time">
                         </required-validator>
 
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.startLocation.time"
+                            min.bind="0">
+                        </range-validator>
+
                     </div>
 
                 </number-input>
@@ -448,6 +541,7 @@
                 <number-input
                     value.bind="model.endLocation.time | scale: 1/60"
                     disabled.bind="model.endLocation.location.address == null"
+                    min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
@@ -465,6 +559,12 @@
                             enabled.bind="model.endLocation.location.address != null"
                             value.bind="model.endLocation.time">
                         </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.endLocation.time"
+                            min.bind="0">
+                        </range-validator>
 
                     </div>
 
