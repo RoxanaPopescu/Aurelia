@@ -22,7 +22,6 @@ export class VehicleGroup
             this.cost = new VehicleGroupCost(data.cost);
             this.vehicleType = VehicleType.get(data.vehicleTypeId);
             this.limits = new VehicleGroupLimits(data.limits);
-            this.orderTagsAllRequired = data.orderTagsAllRequired;
             this.orderTagsOneRequired = data.orderTagsOneRequired;
             this.startLocation = new VehicleGroupLocation(data.startLocation);
             this.endLocation = new VehicleGroupLocation(data.endLocation);
@@ -32,7 +31,6 @@ export class VehicleGroup
         {
             this.cost = new VehicleGroupCost();
             this.limits = new VehicleGroupLimits();
-            this.orderTagsAllRequired = [];
             this.orderTagsOneRequired = [];
             this.startLocation = new VehicleGroupLocation();
             this.endLocation = new VehicleGroupLocation();
@@ -66,12 +64,7 @@ export class VehicleGroup
     public limits: VehicleGroupLimits;
 
     /**
-     * The order tags matched by this criteria, where all the specified tags must match.
-     */
-    public orderTagsAllRequired: string[];
-
-    /**
-     * The order matched by this criteria, where at least one of the specified tags match.
+     * The order tags matched by this criteria, where at least one of the specified tags match.
      */
     public orderTagsOneRequired: string[];
 

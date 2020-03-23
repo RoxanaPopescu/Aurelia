@@ -18,7 +18,6 @@ export default
             {
                 "ferriesAllowed": false,
                 "privateRoadsAllowed": true,
-                "highwaysAllowed": true,
                 "uturnStrategy": "allowed",
                 "curbApproachStrategy": "either-side-of-vehicle",
                 "oneRoutePlanPerStartLocation": false,
@@ -33,9 +32,8 @@ export default
             {
                 "routeTags":
                 [
-                    "sometag",
-                    "anothertag",
-                    "a"
+                    "tag-1",
+                    "tag-2"
                 ],
                 "manualApproval": false,
                 "routeNameTemplate": "IK-{AreaRouteNumber}-{Weekday}-{RouteplanRouteNumber}-{StartTime}"
@@ -63,10 +61,6 @@ export default
                         "time": 43200,
                         "distance": 300
                     },
-                    "orderTagsAllRequired":
-                    [
-                        "1-man"
-                    ],
                     "orderTagsOneRequired":
                     [
                         "electric",
@@ -170,13 +164,13 @@ export default
                         {
                             "orderTagsAllRequired":
                             [
-                                "carryin",
-                                "b"
+                                "tag-1",
+                                "tag-2"
                             ],
                             "orderTagsOneRequired":
                             [
-                                "c",
-                                "d"
+                                "tag-3",
+                                "tag-4"
                             ]
                         },
                         "time":
@@ -236,7 +230,7 @@ export default
                                 "orderTagsAllRequired": [],
                                 "orderTagsOneRequired":
                                 [
-                                    "b"
+                                    "tag-1"
                                 ]
                             },
                             "taskTimeChange": 300,

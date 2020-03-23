@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
-import { VehicleGroup } from "app/model/_route-planning-settings";
+import { VehicleGroup, VehicleGroupLocation } from "app/model/_route-planning-settings";
 import { VehicleType } from "app/model/vehicle";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
@@ -19,9 +19,9 @@ export class VehicleGroupPanel
         this._addressService = addressService;
     }
 
-    private _result: VehicleGroup | undefined;
-    private _modal: Modal;
+    private readonly _modal: Modal;
     private readonly _addressService: AddressService;
+    private _result: VehicleGroup | undefined;
 
     /**
      * True if the model represents a new stop, otherwise false.
@@ -31,7 +31,7 @@ export class VehicleGroupPanel
     /**
      * The model for the modal.
      */
-    protected model: { vehicleGroup: VehicleGroup };
+    protected model: VehicleGroup;
 
     /**
      * The available vehicle types.
@@ -47,10 +47,20 @@ export class VehicleGroupPanel
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
-    public activate(model: { vehicleGroup: VehicleGroup }): void
+    public activate(model: VehicleGroup): void
     {
-        this.isNew = (model.vehicleGroup?.id) == null;
-        this.model = { vehicleGroup: model.vehicleGroup.clone() };
+        this.isNew = model.id == null;
+        this.model = model.clone();
+
+        if (this.model.startLocation == null)
+        {
+            this.model.startLocation = new VehicleGroupLocation();
+        }
+
+        if (this.model.endLocation == null)
+        {
+            this.model.endLocation = new VehicleGroupLocation();
+        }
     }
 
     /**
@@ -82,12 +92,18 @@ export class VehicleGroupPanel
             // Mark the modal as busy.
             this._modal.busy = true;
 
-            // Resolve stop location, if needed.
-            if (this.model.vehicleGroup.startLocation != null && this.model.vehicleGroup.startLocation.location.address.id != null)
+            // Clear start location if no address is specified.
+            if (this.model.startLocation!.location.address == null)
+            {
+                this.model.startLocation = undefined;
+            }
+
+            // Resolve start location, if needed.
+            if (this.model.startLocation != null && this.model.startLocation.location.address.id != null)
             {
                 try
                 {
-                    this.model.vehicleGroup.startLocation.location = await this._addressService.getLocation(this.model.vehicleGroup.startLocation.location.address);
+                    this.model.startLocation.location = await this._addressService.getLocation(this.model.startLocation.location.address);
                 }
                 catch (error)
                 {
@@ -97,12 +113,18 @@ export class VehicleGroupPanel
                 }
             }
 
-            // Resolve stop location, if needed.
-            if (this.model.vehicleGroup.endLocation != null && this.model.vehicleGroup.endLocation.location.address.id != null)
+            // Clear end location if no address is specified.
+            if (this.model.endLocation!.location.address == null)
+            {
+                this.model.endLocation = undefined;
+            }
+
+            // Resolve end location, if needed.
+            if (this.model.endLocation != null && this.model.endLocation.location.address.id != null)
             {
                 try
                 {
-                    this.model.vehicleGroup.endLocation.location = await this._addressService.getLocation(this.model.vehicleGroup.endLocation.location.address);
+                    this.model.endLocation.location = await this._addressService.getLocation(this.model.endLocation.location.address);
                 }
                 catch (error)
                 {
@@ -112,7 +134,7 @@ export class VehicleGroupPanel
                 }
             }
 
-            this._modal.close();
+            this._result = this.model;
         }
         catch (error)
         {

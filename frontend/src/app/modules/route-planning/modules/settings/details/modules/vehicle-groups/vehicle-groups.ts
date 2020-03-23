@@ -49,8 +49,8 @@ export class VehicleGroups
      */
     protected async onCreateVehicleGroupClick(): Promise<void>
     {
-        let vehicleGroup = new VehicleGroup();
-        const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, { vehicleGroup: vehicleGroup }).promise;
+        const vehicleGroup = new VehicleGroup();
+        const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, vehicleGroup).promise;
 
         if (!savedVehicleGroup)
         {
@@ -67,7 +67,7 @@ export class VehicleGroups
      */
     protected async onVehicleGroupClick(vehicleGroup: VehicleGroup): Promise<void>
     {
-        const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, { vehicleGroup: vehicleGroup }).promise;
+        const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, vehicleGroup).promise;
 
         if (savedVehicleGroup != null)
         {
