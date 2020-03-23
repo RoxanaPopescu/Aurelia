@@ -52,13 +52,25 @@ export class RouteStopProblem
         {
             name: "Other problem"
         },
-        "denied-delivery":
+        "denied":
         {
-            name: "Delivery denied"
+            name: "Denied"
         },
         "wrong-address":
         {
             name: "Wrong address"
+        },
+        "gate-occupied":
+        {
+            name: "Gate occupied"
+        },
+        "missing-items":
+        {
+            name: "Missing items"
+        },
+        "incorrectly-packaged":
+        {
+            name: "Missing items"
         }
     };
 }

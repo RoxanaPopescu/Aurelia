@@ -68,8 +68,8 @@
 
                 <busy-indicator if.bind="depots == null" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="depots.length == 0" class="margin-largest" translate>
-                    <div slot="heading">No results</div>
+                <empty-indicator if.bind="depots.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
                 <!--

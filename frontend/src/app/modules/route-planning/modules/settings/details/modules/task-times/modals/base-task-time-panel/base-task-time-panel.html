@@ -1,0 +1,98 @@
+<template>
+
+    <require from="./base-task-time-panel.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="base-task-time-panel" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
+                Edit base task time
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the time the driver is expected to be spend on tasks at each stop.
+            </h1>
+
+            <number-input value.bind="model.initial | scale: 1/60" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Initial time
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.initial">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.perFloor | scale: 1/60" label="above" class="margin-medium-bottom">
+
+                <div slot="heading" translate>
+                    Time per floor
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.perFloor">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+            <number-input value.bind="model.perRound | scale: 1/60" label="above">
+
+                <div slot="heading" translate>
+                    Time per round
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.perRound">
+                    </required-validator>
+
+                </div>
+
+            </number-input>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>

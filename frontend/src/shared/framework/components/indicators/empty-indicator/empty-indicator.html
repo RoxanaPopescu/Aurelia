@@ -1,16 +1,20 @@
-<template class="au-animate animation-fade-in-long">
+<template class="au-animate animation-fade-in-long --size-${size}">
 
     <require from="./empty-indicator.scss"></require>
 
     <div class="empty-indicator">
 
-        <icon class="empty-indicator-icon" name="empty-box"></icon>
+        <icon if.bind="icon" class="empty-indicator-icon" name.bind="icon"></icon>
 
-        <div class="font-largest margin-large-top margin-bottom">
-            <slot name="heading" translate>Nothing to see here</slot>
+        <div class="empty-indicator-heading">
+
+            <slot name="heading" translate>
+                Nothing to see here
+            </slot>
+
         </div>
 
-        <slot translate></slot>
+        <slot name="details"></slot>
 
     </div>
 

@@ -140,7 +140,8 @@
 
                         <data-table
                             appearance="rows"
-                            busy.bind="orderGroup == null">
+                            busy.bind="orderGroup == null"
+                            class="margin-large-bottom">
 
                             <data-table-headers>
 
@@ -202,8 +203,10 @@
 
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" class="margin" translate>
-                            <div slot="heading">No items</div>
+                        <empty-indicator if.bind="orderGroup.matchingCriteria.length == 0" size="small" class="margin-large-bottom">
+                            <div slot="heading" translate>
+                                No items
+                            </div>
                         </empty-indicator>
 
                         <template if-claims="edit-order-group">
@@ -211,7 +214,6 @@
                                 if.bind="orderGroup != null"
                                 appearance="outline"
                                 accent="primary"
-                                class="margin-large-top"
                                 click.trigger="onAddMatchingCriteriaClick()">
                                 <icon name="md-add" class="font-larger line-height-1">
                             </button>
@@ -231,12 +233,13 @@
 
                         <data-table
                             appearance="rows"
-                            busy.bind="orderGroup == null">
+                            busy.bind="orderGroup == null"
+                            class="margin-large-bottom">
 
                             <data-table-headers>
 
                                 <data-table-cell>
-                                    <span class="text-truncate"  translate>
+                                    <span class="text-truncate" translate>
                                         Delivery day
                                     </span>
                                 </data-table-cell>
@@ -329,8 +332,10 @@
 
                         <busy-indicator if.bind="orderGroup == null" class="margin-largest"></busy-indicator>
 
-                        <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" class="margin" translate>
-                            <div slot="heading">No items</div>
+                        <empty-indicator if.bind="orderGroup.routePlanningTimes.length == 0" size="small" class="margin-large-bottom">
+                            <div slot="heading" translate>
+                                No items
+                            </div>
                         </empty-indicator>
 
                         <template if-claims="edit-order-group">
@@ -338,7 +343,6 @@
                                 if.bind="orderGroup != null"
                                 appearance="outline"
                                 accent="primary"
-                                class="margin-large-top"
                                 click.trigger="onAddRoutePlanningTimeClick()">
                                 <icon name="md-add" class="font-larger line-height-1">
                             </button>

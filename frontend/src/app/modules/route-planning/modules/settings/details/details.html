@@ -47,23 +47,23 @@
 
                     <tab-nav appearance="solid" value.bind="tab">
 
-                        <tab name="general" translate>
+                        <tab name="general" invalid.bind="generalValidation.invalid" translate>
                             General rules
                         </tab>
 
-                        <tab name="geographic-areas" translate>
+                        <tab name="geographic-areas" invalid.bind="geographicAreasValidation.invalid" translate>
                             Geographic rules
                         </tab>
 
-                        <tab name="vehicle-groups" translate>
+                        <tab name="vehicle-groups" invalid.bind="vehicleGroupsValidation.invalid" translate>
                             Vehicle rules
                         </tab>
 
-                        <tab name="start-locations" translate>
+                        <tab name="start-locations" invalid.bind="startLocationsValidation.invalid" translate>
                             Start location rules
                         </tab>
 
-                        <tab name="task-times" translate>
+                        <tab name="task-times" invalid.bind="taskTimesValidation.invalid" translate>
                             Task time rules
                         </tab>
 
@@ -129,15 +129,40 @@
 
             </name-value-list>
 
-            <general show.bind="tab === 'general'" settings.bind="settings"></general>
+            <general
+                show.bind="tab === 'general'"
+                settings.bind="settings"
+                validation
+                validation.ref="generalValidation">
+            </general>
 
-            <vehicle-groups show.bind="tab === 'vehicle-groups'" settings.bind="settings"></vehicle-groups>
+            <geographic-areas
+                show.bind="tab === 'geographic-areas'"
+                settings.bind="settings"
+                validation
+                validation.ref="geographicAreasValidation">
+            </geographic-areas>
 
-            <start-locations show.bind="tab === 'start-locations'" settings.bind="settings"></start-locations>
+            <vehicle-groups
+                show.bind="tab === 'vehicle-groups'"
+                settings.bind="settings"
+                validation
+                validation.ref="vehicleGroupsValidation">
+            </vehicle-groups>
 
-            <task-times show.bind="tab === 'task-times'" settings.bind="settings"></task-times>
+            <start-locations
+                show.bind="tab === 'start-locations'"
+                settings.bind="settings"
+                validation
+                validation.ref="startLocationsValidation">
+            </start-locations>
 
-            <geographic-areas show.bind="tab === 'geographic-areas'" settings.bind="settings"></geographic-areas>
+            <task-times
+                show.bind="tab === 'task-times'"
+                settings.bind="settings"
+                validation
+                validation.ref="taskTimesValidation">
+            </task-times>
 
         </page-content>
 

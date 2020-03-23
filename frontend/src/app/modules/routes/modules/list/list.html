@@ -171,8 +171,8 @@
 
                 <busy-indicator if.bind="routes == null" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="routes.length == 0" class="margin-largest" translate>
-                    <div slot="heading">No results</div>
+                <empty-indicator if.bind="routes.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
                 <div class="flex-row">

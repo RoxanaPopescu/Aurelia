@@ -1,3 +1,5 @@
+import clone from "clone";
+
 /**
  * Represents the definition of a round, which describes how much the driver can carry.
  */
@@ -31,4 +33,12 @@ export class TaskTimesRoundDefinition
      * The max volume that can be transported in a round.
      */
     public volumePerRound: number;
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

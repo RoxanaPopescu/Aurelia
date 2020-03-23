@@ -1,3 +1,5 @@
+import clone from "clone";
+
 /**
  * Represents additional task time.
  */
@@ -31,4 +33,12 @@ export class TaskTimesAdditionalTime
      * The time to add for each round at the ground floor.
      */
     public perRound: number;
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

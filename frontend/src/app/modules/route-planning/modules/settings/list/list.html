@@ -24,7 +24,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if-claims="create-routeplan-settings" appearance="solid" class="flex-push-right" page-href="path: /route-planning/settings/create" translate>
+                    <button if-claims="create-routeplan-settings" appearance="solid" class="flex-push-right" page-href="path: /route-planning/rule-sets/create" translate>
                         New rule set
                     </button>
 
@@ -63,7 +63,7 @@
                     <template repeat.for="item of items">
 
                         <data-table-row
-                            href="/route-planning/rules-sets/details/${item.slug}">
+                            href="/route-planning/rule-sets/details/${item.slug}">
 
                             <data-table-cell>
                                 ${item.name}
@@ -97,8 +97,8 @@
 
                 <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="items.length == 0" class="margin-largest" translate>
-                    <div slot="heading">No results</div>
+                <empty-indicator if.bind="items.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
             </page-section>

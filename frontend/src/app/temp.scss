@@ -8,6 +8,13 @@
     --card-padding-large: 12.5rem 13rem;
 }
 
+.--button-position-inline-right
+{
+    position: absolute;
+    top: calc((10rem - var(--font-base-line-height)) * -0.5);
+    right: 0;
+}
+
 .page-content-back-to-top
 {
     right: 3rem !important;
