@@ -129,10 +129,10 @@ export class ScenarioPanel
             this._modal.busy = true;
 
             this.model.scenario.gates[0].slots = [new GateSlot({
-                earliestArrivalTime: this.selectedEarliestArrival?.as("seconds"),
-                latestDepartureTime: this.selectedLatestDeparture?.as("seconds"),
+                earliestArrivalTime: this.selectedEarliestArrival!.as("seconds"),
+                latestDepartureTime: this.selectedLatestDeparture!.as("seconds"),
                 timeBetweenDepartures: this.reservationInterval! * 60,
-                vehicleGroupId: this.selectedVehicleGroup?.id
+                vehicleGroup: this.selectedVehicleGroup!.id
             })];
 
             // Set the result of the modal.

@@ -137,14 +137,6 @@
                             Date from
                         </div>
 
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.scenario.criteria.datePeriod.from">
-                            </required-validator>
-
-                        </div>
-
                     </date-input>
 
                     <date-input
@@ -154,14 +146,6 @@
 
                         <div slot="heading" translate>
                             Date to
-                        </div>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.scenario.criteria.datePeriod.to">
-                            </required-validator>
-
                         </div>
 
                     </date-input>
@@ -229,7 +213,7 @@
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
+                                value.bind="model.scenario.criteria.weekdays.length > 0 ? true : undefined">
                             </required-validator>
 
                         </div>
@@ -244,11 +228,11 @@
 
                 <div class="button-row flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+                    <button appearance="outline" accent="primary" click.trigger="onCancelClick()" translate>
                         Cancel
                     </button>
 
-                    <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+                    <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                         Save and close
                     </button>
 

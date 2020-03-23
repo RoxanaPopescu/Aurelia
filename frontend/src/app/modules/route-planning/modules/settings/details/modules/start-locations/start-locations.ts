@@ -77,7 +77,7 @@ export class StartLocations
     {
         let gates: Gate[] = [];
 
-        if (this.activeDepartureTimeName != null)
+        if (this.activeDepartureTime != null)
         {
             this.activeDepartureTime.scenarios
                 .forEach(s => {
@@ -98,7 +98,7 @@ export class StartLocations
      */
     protected get filteredScenarios(): DepartureTimeScenario[]
     {
-        let scenarios = this.activeDepartureTime.scenarios ?? [];
+        let scenarios = this.activeDepartureTime?.scenarios ?? [];
 
         if (this.dateFromFilter != null)
         {
@@ -133,14 +133,15 @@ export class StartLocations
                                                     ScenarioPanel,
                                                     {
                                                         vehicleGroups: this.settings.vehicleGroups,
-                                                        departureTime: this.activeDepartureTime,
+                                                        departureTime: this.activeDepartureTime!,
                                                         scenario: scenario,
                                                         isNew: false
                                                     }).promise;
 
         if (savedScenario != null)
         {
-            this.settings.departureTimes
+            let index = this.activeDepartureTime!.scenarios.indexOf(scenario);
+            this.activeDepartureTime!.scenarios.splice(index, 1, savedScenario);
         }
     }
 
@@ -154,7 +155,7 @@ export class StartLocations
                                                     ScenarioPanel,
                                                     {
                                                         vehicleGroups: this.settings.vehicleGroups,
-                                                        departureTime: this.activeDepartureTime,
+                                                        departureTime: this.activeDepartureTime!,
                                                         scenario: scenario,
                                                         isNew: true
                                                     }).promise;
@@ -181,8 +182,8 @@ export class StartLocations
 
         try
         {
-            let newScenarios = this.activeDepartureTime.scenarios.filter(s => s.name !== scenario.name);
-            this.settings.departureTimes[this.settings.departureTimes.indexOf(this.activeDepartureTime)].scenarios = newScenarios;
+            let newScenarios = this.activeDepartureTime!.scenarios.filter(s => s.name !== scenario.name);
+            this.settings.departureTimes[this.settings.departureTimes.indexOf(this.activeDepartureTime!)].scenarios = newScenarios;
         }
         catch (error)
         {
@@ -209,7 +210,7 @@ export class StartLocations
             this.settings.departureTimes = this.settings.departureTimes.filter(d => d.name !== departureTime.name);
             if (departureTime.name === this.activeDepartureTimeName)
             {
-                this.activeDepartureTimeName = this.settings.departureTimes[0].name;
+                this.activeDepartureTimeName = this.settings.departureTimes[0]?.name;
             }
         }
         catch (error)
@@ -225,14 +226,13 @@ export class StartLocations
      */
     protected async onEditStartLocationClick(departureTime: DepartureTime): Promise<void>
     {
-        const startLocation = await this._modalService.open(StartLocationDialog, { settings: this.settings, departureTime: departureTime, isNew: false }).promise;
+        const savedDepartureTime = await this._modalService.open(StartLocationDialog, { settings: this.settings, departureTime: departureTime, isNew: false }).promise;
 
-        if (startLocation != null)
+        if (savedDepartureTime != null)
         {
-            let departureTimes = this.settings.departureTimes;
-            departureTimes[departureTimes.indexOf(departureTime)] = startLocation;
-            this.settings.departureTimes = departureTimes;
-            this.activeDepartureTimeName = startLocation.name;
+            let index = this.settings.departureTimes.indexOf(departureTime);
+            this.settings.departureTimes.splice(index, 1, savedDepartureTime);
+            this.activeDepartureTimeName = savedDepartureTime.name;
         }
     }
 
@@ -254,8 +254,8 @@ export class StartLocations
     /**
      * Gets the current active departure time.
      */
-    protected get activeDepartureTime(): DepartureTime
+    protected get activeDepartureTime(): DepartureTime | undefined
     {
-        return this.settings.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
+        return this.settings?.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
     }
 }
