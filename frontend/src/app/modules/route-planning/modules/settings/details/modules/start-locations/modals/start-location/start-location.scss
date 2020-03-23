@@ -1,0 +1,12 @@
+modal-dialog[name="start-location"]
+{
+    .button-row
+    {
+        justify-content: space-between;
+
+        button
+        {
+            flex: 1;
+        }
+    }
+}

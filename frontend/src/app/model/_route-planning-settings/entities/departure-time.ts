@@ -1,5 +1,6 @@
 import { Location } from "app/model/shared";
 import { DepartureTimeScenario } from "./departure-time-scenario";
+import clone from "clone";
 
 /**
  * Represents settings related to a departure time.
@@ -40,4 +41,12 @@ export class DepartureTime
      * The scenarios in which settings should be applied.
      */
     public scenarios: DepartureTimeScenario[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

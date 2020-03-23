@@ -8,9 +8,10 @@ page-tab-nav
         display: flex;
         position: relative;
         cursor: pointer;
+        align-items: center;
         height: 9rem;
         width: 50rem;
-        padding: 0 5rem;
+        padding: 0 4rem;
         border-top-left-radius: var(--border-radius-large);
         border-top-right-radius: var(--border-radius-large);
         border: var(--border-width-thin) solid var(--border-color);
@@ -28,11 +29,6 @@ page-tab-nav
             background-color: var(--surface-color);
             color: var(--surface-text-color);
             cursor: initial;
-
-            button
-            {
-                cursor: initial;
-            }
         }
 
         &:focus-within
@@ -54,6 +50,5 @@ page-tab-nav
             // Reduce opacity when disabled.
             opacity: var(--opacity-disabled);
         }
-
     }
 }

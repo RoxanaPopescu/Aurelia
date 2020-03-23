@@ -1,0 +1,77 @@
+<template>
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./start-location.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="start-location" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false">
+                <span if.bind="model.isNew" translate>Create a new start location</span>
+                <span if.bind="!model.isNew" translate>Details for ${model.departureTime.name}</span>
+            </h1>
+
+            <h4 class="margin-large-top" translate>
+                Lorem ipsum
+            </h4>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.departureTime.name" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Name
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <address-input label="above" value.bind="model.departureTime.startLocation.address" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.departureTime.startLocation.address.primary">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row">
+
+                <button appearance="outline" accent="primary" click.delegate="onCancelClick()" translate>
+                    Cancel
+                </button>
+
+                <button appearance="solid" accent="primary" click.delegate="onSaveClick()" translate>
+                    Save and close
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

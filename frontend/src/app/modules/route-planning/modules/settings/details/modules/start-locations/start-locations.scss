@@ -1,17 +1,94 @@
 start-locations
 {
+    .add-location-button, .add-reservation-button
+    {
+        display: flex;
+
+        icon
+        {
+            margin-right: 2rem;
+        }
+    }
+    .add-reservation-button
+    {
+        justify-content: center;
+    }
+
+    .no-start-locations
+    {
+        .add-location-button
+        {
+            align-self: flex-start;
+        }
+    }
+
     page-tab-nav
     {
         margin-top: 7rem;
 
+        page-tab
+        {
+            justify-content: space-between;
+            span
+            {
+               padding-right: 1rem;
+            }
+
+            .button-container
+            {
+                display: flex;
+            }
+        }
+
         .add-location-button
         {
             margin-left: 8rem;
+        }
+    }
+
+    .departure-time-name
+    {
+        display: flex;
+
+        icon
+        {
+            height: 4rem;
+            width: 4rem;
+        }
+    }
+
+    .scenarios-container
+    {
+        .scenarios-filters
+        {
             display: flex;
 
-            icon
+            date-input
             {
-                margin-right: 2rem;
+                width: 90rem;
+            }
+
+            tags-input
+            {
+                flex: 1;
+            }
+        }
+    }
+
+    data-table
+    {
+        --data-table-columns: auto auto auto auto auto auto auto;
+
+        .criteria-weekdays
+        {
+            &:not(:first-child)
+            {
+                text-transform: lowercase;
+
+                &:before
+                {
+                    content: ", ";
+                }
             }
         }
     }

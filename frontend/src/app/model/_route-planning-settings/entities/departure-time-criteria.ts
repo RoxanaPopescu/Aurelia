@@ -20,6 +20,7 @@ export class DepartureTimeCriteria
         else
         {
             this.datePeriod = new DateTimeRange();
+            this.weekdays = [];
         }
     }
 

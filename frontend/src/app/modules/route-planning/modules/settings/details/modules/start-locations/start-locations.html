@@ -4,15 +4,15 @@
     <require from="app/components/page-tab-nav/page-tab"></require>
     <require from="./start-locations.scss"></require>
 
-    <page-tab-nav if.bind="activeDepartureTime != null" appearance="tabs" value.bind="activeDepartureTime.name">
+    <page-section class="no-start-locations" if.bind="settings.departureTimes.length === 0">
 
-        <page-tab class="font-large" repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
-            ${departureTime.name} test
-        </page-tab>
+        <h1 class="font-largest margin-large-top">Lorem ipsum</h1>
+        <h4 class="margin-top">Lorem ipsium</h4>
 
         <button
-            appearance="none"
-            class="add-location-button font-large"
+            appearance="outline"
+            class="add-location-button font-large margin-top"
+            accent="primary"
             click.delegate="onAddLocationClick()">
 
             <icon name="plus-small"></icon>
@@ -20,14 +20,265 @@
 
         </button>
 
-    </page-tab-nav>
-
-    <page-section>
-
-        <div>
-
-        </div>
-
     </page-section>
+
+    <template if.bind="settings.departureTimes.length !== 0">
+
+        <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
+
+            <page-tab class="font-large" repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
+
+                <span class="text-truncate" title.bind="departureTime.name">${departureTime.name}</span>
+
+                <div class="button-container">
+
+                    <button
+                        appearance="icon"
+                        accent="primary"
+                        disabled.bind="departureTime.name !== activeDepartureTimeName"
+                        title.translate="Edit start location"
+                        click.delegate="onEditStartLocationClick(departureTime)">
+                        <icon name="edit-small"></icon>
+                    </button>
+                    <button
+                        appearance="icon"
+                        accent="primary"
+                        disabled.bind="departureTime.name !== activeDepartureTimeName"
+                        title.translate="Delete start location"
+                        click.delegate="onDeleteStartLocationClick(departureTime)">
+                        <icon name="delete-small"></icon>
+                    </button>
+
+                </div>
+
+            </page-tab>
+
+            <button
+                appearance="none"
+                class="add-location-button font-large"
+                click.delegate="onAddStartLocationClick()">
+
+                <icon name="plus-small"></icon>
+                <span translate>Add a new start location</span>
+
+            </button>
+
+        </page-tab-nav>
+
+        <page-section>
+
+            <div class="flex-basis-1-of-2">
+
+                <div class="font-largest departure-time-name">
+                    ${activeDepartureTime.name}
+                </div>
+                <h4 class="margin-top">
+                    ${activeDepartureTime.startLocation.address.toString()}
+                </h4>
+
+            </div>
+
+        </page-section>
+
+        <page-section class="--line-above" if.bind="activeDepartureTime.scenarios.length == 0">
+
+            <empty-indicator>
+
+                <span slot="heading" translate>The list of reservations is empty</span>
+                <span translate>Lorem ipsum</span>
+                <button
+                    appearance="outline"
+                    class="add-reservation-button margin-larger-top"
+                    accent="primary"
+                    click.delegate="onAddScenarioClick()">
+
+                    <icon name="plus-small"></icon>
+                    <span translate>Add a reservation</span>
+
+                </button>
+
+            </empty-indicator>
+
+        </page-section>
+
+        <template if.bind="activeDepartureTime.scenarios.length != 0">
+
+            <page-section class="scenarios-container --line-above">
+
+                <div class="control-row">
+
+                    <div class="flex-basis-1-of-2">
+
+                        <div class="font-larger">
+                            Reservation times for gates
+                        </div>
+
+                        <h4 class="margin-medium-top">Lorem ipsum</h4>
+
+                    </div>
+
+                    <div class="flex-basis-1-of-2">
+
+                        <button
+                            appearance="outline"
+                            class="add-reservation-button flex-push-right"
+                            accent="primary"
+                            click.delegate="onAddScenarioClick()">
+
+                            <icon name="plus-small"></icon>
+                            <span translate>Add a reservation</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="scenarios-filters margin-larger-top">
+
+                    <date-input
+                        label="above"
+                        value.bind="dateFromFilter">
+
+                        <div slot="heading" translate>
+                            Date from
+                        </div>
+
+                    </date-input>
+
+                    <date-input
+                        class="margin-larger-left"
+                        label="above"
+                        value.bind="dateToFilter">
+
+                        <div slot="heading" translate>
+                            Date to
+                        </div>
+
+                    </date-input>
+
+                    <tags-input
+                        class="margin-larger-left"
+                        label="above"
+                        value.bind="weekdaysFilter"
+                        filter="auto">
+
+                        <div slot="heading" translate>
+                            Weekdays
+                        </div>
+
+                        <div slot="value">
+                            <tag repeat.for="weekday of weekdaysFilter" model.bind="weekday">
+                                ${weekday | weekday}
+                            </tag>
+                        </div>
+
+                        <item repeat.for="weekday of 7" model.bind="weekday + 1">
+                            ${weekday + 1 | weekday}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
+                            </required-validator>
+
+                        </div>
+
+                    </tags-input>
+
+                </div>
+
+            </page-section>
+
+            <page-section class="--line-above">
+
+                <data-table
+                    appearance="rows">
+
+                    <data-table-headers>
+
+                        <data-table-cell translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell translate>
+                            Gate
+                        </data-table-cell>
+
+                        <data-table-cell translate>
+                            Reserved weekdays
+                        </data-table-cell>
+
+                        <data-table-cell translate>
+                            Date from
+                        </data-table-cell>
+
+                        <data-table-cell translate>
+                            Date to
+                        </data-table-cell>
+
+                        <data-table-cell translate>
+                            Vehicle group
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            &nbsp;
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="scenario of filteredScenarios">
+
+                        <data-table-row
+                            click.call="onScenarioClick(scenario)">
+
+                            <data-table-cell>
+                                ${scenario.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${scenario.gates[0].name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="criteria-weekdays" repeat.for="weekday of scenario.criteria.weekdays">${weekday | weekday}</span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${scenario.criteria.datePeriod.from | date: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${scenario.criteria.datePeriod.to | date: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${scenario.gates[0].slots[0].vehicleGroupId}
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button if-claims="edit-routeplan-settings" appearance="none" accent="primary" click.trigger="onDeleteScenarioClick(scenario)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+            </page-section>
+
+        </template>
+
+    </template>
 
 </template>

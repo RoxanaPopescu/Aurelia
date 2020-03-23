@@ -1,0 +1,12 @@
+modal-panel[name="scenario"]
+{
+    --modal-panel-min-width: 200rem;
+
+    modal-footer
+    {
+        button
+        {
+            width: 55rem;
+        }
+    }
+}

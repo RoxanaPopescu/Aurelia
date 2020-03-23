@@ -193,7 +193,7 @@
                         </div>
 
                         <empty-indicator if.bind="specialArea.scenarios.length == 0" translate>
-                            No area rules specified
+                            <div slot="heading">No area rules specified</div>
                         </empty-indicator>
 
                         <button
@@ -216,7 +216,7 @@
                 </list-layout>
 
                 <empty-indicator if.bind="settings.specialAreas.length == 0" translate>
-                    No areas specified
+                    <div slot="heading">No areas specified</div>
                 </empty-indicator>
 
                 <button

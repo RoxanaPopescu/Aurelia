@@ -1,5 +1,6 @@
 import { DepartureTimeCriteria } from "./departure-time-criteria";
 import { Gate } from "./gate";
+import clone from "clone";
 
 /**
  * Represents a departure time scenario.
@@ -39,4 +40,12 @@ export class DepartureTimeScenario
      * The gates associated with the scenario.
      */
     public gates: Gate[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }

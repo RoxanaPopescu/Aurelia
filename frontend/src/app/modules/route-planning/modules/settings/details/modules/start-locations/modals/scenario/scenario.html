@@ -1,0 +1,263 @@
+<template>
+
+    <require from="./scenario.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="scenario" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-medium-bottom" tabindex="-1" autofocus="visible.bind: false">
+                <span if.bind="model.isNew" translate>Create a reservation</span>
+                <span if.bind="!model.isNew" translate>Details for ${model.scenario.name}</span>
+            </h1>
+
+            <h1 tabindex="-1" autofocus="visible.bind: false">
+                Lorem ipsum
+            </h1>
+
+        </modal-header>
+
+        <modal-section if.bind="model.vehicleGroups.length === 0">
+
+            <info-card accent="attention" title="Vehicle groups missing">
+
+                You cannot make a reservation before having a vehicle group.
+
+            </info-card>
+
+        </modal-section>
+
+        <template if.bind="model.vehicleGroups.length > 0">
+
+            <modal-section>
+
+                <div class="control-row margin-large-bottom">
+
+                    <text-input label="above" value.bind="model.scenario.name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Name
+                        </div>
+
+                    </text-input>
+
+                    <select-input label="above" none.bind="false" value.bind="model.scenario.gates[0]" display-value.bind="model.scenario.gates[0].name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Gate name
+                        </div>
+
+                        <item repeat.for="gateName of gateNames" model.bind="gateName">
+                            ${gateName}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.scenario.gates[0]">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <select-input
+                        label="above"
+                        none.bind="false"
+                        value.bind="selectedVehicleGroup"
+                        display-value.bind="selectedVehicleGroup.name"
+                        class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Vehicle group
+                        </div>
+
+                        <item repeat.for="vehicleGroup of model.vehicleGroups" model.bind="vehicleGroup">
+                            ${vehicleGroup.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="selectedVehicleGroup">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                    <number-input
+                        label="above"
+                        value.bind="reservationInterval"
+                        min.bind="0"
+                        constrain.bind="true"
+                        class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Interval
+                        </div>
+
+                        <span slot="after" class="opacity-faded" translate>
+                            minutes
+                        </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="reservationInterval">
+                            </required-validator>
+
+                            <range-validator
+                                active.bind="true"
+                                value.bind="reservationInterval"
+                                min.bind="0"
+                                min-inclusive.bind="false">
+                            </range-validator>
+
+                        </div>
+
+                    </number-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <date-input
+                        class="flex-basis-1-of-2"
+                        label="above"
+                        value.bind="model.scenario.criteria.datePeriod.from">
+
+                        <div slot="heading" translate>
+                            Date from
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.scenario.criteria.datePeriod.from">
+                            </required-validator>
+
+                        </div>
+
+                    </date-input>
+
+                    <date-input
+                        class="flex-basis-1-of-2"
+                        label="above"
+                        value.bind="model.scenario.criteria.datePeriod.to">
+
+                        <div slot="heading" translate>
+                            Date to
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.scenario.criteria.datePeriod.to">
+                            </required-validator>
+
+                        </div>
+
+                    </date-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <time-input label="above" value.bind="selectedEarliestArrival" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Earliest arrival
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="selectedEarliestArrival">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                    <time-input label="above" value.bind="selectedLatestDeparture" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Latest departure
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="selectedLatestDeparture">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                </div>
+
+                <div class="control-row">
+
+                    <tags-input
+                        label="above"
+                        value.bind="model.scenario.criteria.weekdays"
+                        filter="auto"
+                        class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Weekdays
+                        </div>
+
+                        <div slot="value">
+                            <tag repeat.for="weekday of model.scenario.criteria.weekdays" model.bind="weekday">
+                                ${weekday | weekday}
+                            </tag>
+                        </div>
+
+                        <item repeat.for="weekday of 7" model.bind="weekday + 1">
+                            ${weekday + 1 | weekday}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
+                            </required-validator>
+
+                        </div>
+
+                    </tags-input>
+
+                </div>
+
+            </modal-section>
+
+            <modal-footer>
+
+                <div class="button-row flex-push-right">
+
+                    <button appearance="outline" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+                        Cancel
+                    </button>
+
+                    <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSave(model.routeStop.stopNumber - 1)" translate>
+                        Save and close
+                    </button>
+
+                </div>
+
+            </modal-footer>
+
+        </template>
+
+    </modal-panel>
+
+</template>
