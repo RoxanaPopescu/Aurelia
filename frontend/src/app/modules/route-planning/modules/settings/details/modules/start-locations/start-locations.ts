@@ -112,10 +112,10 @@ export class StartLocations
                 s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") >= 0)
         }
 
-        if (this.weekdaysFilter != null)
+        if (this.weekdaysFilter.length > 0)
         {
             this.weekdaysFilter.forEach(w => {
-                scenarios = [...new Set(scenarios.concat(scenarios.filter(s => s.criteria.weekdays.indexOf(w) > -1)))]
+                scenarios = scenarios.filter(s => s.criteria.weekdays.indexOf(w) > -1)
             })
         }
 
