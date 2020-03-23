@@ -59,7 +59,7 @@ export class ScenarioPanel
 
         if (!model.isNew)
         {
-            this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroupId.toString())[0];
+            this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroupId)[0];
             this.reservationInterval = model.scenario.criteria.datePeriod.duration.as("minutes");
             this.selectedEarliestArrival = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].earliestArrivalTime });
             this.selectedLatestDeparture = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].latestDepartureTime });

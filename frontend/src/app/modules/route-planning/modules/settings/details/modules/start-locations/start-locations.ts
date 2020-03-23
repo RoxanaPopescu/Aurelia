@@ -66,7 +66,7 @@ export class StartLocations
      */
     public settingsChanged(newValue: RoutePlanningSettings): void
     {
-        this.activeDepartureTimeName = newValue.departureTimes[0].name;
+        this.activeDepartureTimeName = newValue.departureTimes[0]?.name;
     }
 
     /**
