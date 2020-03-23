@@ -93,7 +93,7 @@ export class VehicleGroupPanel
             this._modal.busy = true;
 
             // Clear start location if no address is specified.
-            if (this.model.startLocation!.location.address == null)
+            if (this.model.startLocation?.location.address == null)
             {
                 this.model.startLocation = undefined;
             }
@@ -114,7 +114,7 @@ export class VehicleGroupPanel
             }
 
             // Clear end location if no address is specified.
-            if (this.model.endLocation!.location.address == null)
+            if (this.model.endLocation?.location.address == null)
             {
                 this.model.endLocation = undefined;
             }
@@ -135,6 +135,7 @@ export class VehicleGroupPanel
             }
 
             this._result = this.model;
+            this._modal.close();
         }
         catch (error)
         {

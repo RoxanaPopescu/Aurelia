@@ -52,7 +52,7 @@ export class VehicleGroups
         const vehicleGroup = new VehicleGroup();
         const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, vehicleGroup).promise;
 
-        if (!savedVehicleGroup)
+        if (savedVehicleGroup == null)
         {
             return;
         }
