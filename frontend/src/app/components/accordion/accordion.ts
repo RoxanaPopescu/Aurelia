@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
 
 @autoinject
 export class AccordionCustomElement
@@ -6,7 +6,7 @@ export class AccordionCustomElement
     /**
      * True if the component is expanded, otherwise false.
      */
-    @bindable
+    @bindable({ defaultBindingMode: bindingMode.twoWay })
     public expanded: boolean = false;
 
     /**

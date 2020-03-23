@@ -28,7 +28,7 @@
 
                 <list-layout if.bind="settings.specialAreas.length > 0">
 
-                    <accordion repeat.for="specialArea of settings.specialAreas" accent.bind="'data-' + specialArea.color & attr">
+                    <accordion repeat.for="specialArea of settings.specialAreas" expanded.bind="specialArea.expanded" accent.bind="'data-' + specialArea.color & attr">
 
                         <div slot="header">
 

@@ -56,6 +56,7 @@ export class GeographicAreas
     {
         this._currentAreaModel = { area: new SpecialArea() };
         this._currentAreaModel.area.color = this.getSuggestedColor();
+        this._currentAreaModel.area.expanded = true;
         this.enableDrawing = true;
     }
 
@@ -66,8 +67,11 @@ export class GeographicAreas
      */
     protected async onEditAreaClick(index: number): Promise<void>
     {
+        const area = this.settings.specialAreas[index].clone();
+
         this.enableDrawing = false;
-        this._currentAreaModel = { area: this.settings.specialAreas[index].clone(), index };
+        this._currentAreaModel = { area, index };
+        this._currentAreaModel.area.expanded = area.expanded;
 
         const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
 
@@ -165,7 +169,7 @@ export class GeographicAreas
      */
     protected onAreaClick(area: SpecialArea): void
     {
-        console.log(area);
+        area.expanded = !area.expanded;
     }
 
     /**

@@ -55,6 +55,11 @@ export class SpecialArea
     public selected = true;
 
     /**
+     * True if the area is expanded in the list, otherwise false.
+     */
+    public expanded = false;
+
+    /**
      * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
