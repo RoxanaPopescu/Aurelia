@@ -17,7 +17,6 @@ export class Restrictions
         {
             this.ferriesAllowed = data.ferriesAllowed;
             this.privateRoadsAllowed = data.privateRoadsAllowed;
-            this.highwaysAllowed = data.highwaysAllowed;
             this.uturnStrategy = new UturnStrategy(data.uturnStrategy);
             this.curbApproachStrategy = new CurbApproachStrategy(data.curbApproachStrategy);
             this.timeWindowAdjustment = new TimeWindowAdjustment(data.timeWindowAdjustment);
@@ -28,7 +27,6 @@ export class Restrictions
         {
             this.ferriesAllowed = true;
             this.privateRoadsAllowed = true;
-            this.highwaysAllowed = true;
             this.uturnStrategy = new UturnStrategy("allowed");
             this.curbApproachStrategy = new CurbApproachStrategy("either-side-of-vehicle");
             this.timeWindowAdjustment = new TimeWindowAdjustment();
@@ -45,11 +43,6 @@ export class Restrictions
      * True to allow private routes, otherwise false.
      */
     public privateRoadsAllowed: boolean;
-
-    /**
-     * True to allow highways, otherwise false.
-     */
-    public highwaysAllowed: boolean;
 
     /**
      * The U-turn strategy to use.

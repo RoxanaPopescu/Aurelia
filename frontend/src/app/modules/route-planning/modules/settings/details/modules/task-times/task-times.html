@@ -170,25 +170,28 @@
 
     <page-section class="--line-above">
 
-        <div slot="header" class="flex-row" translate>
-                Additional task time rules
-        </div>
-
-        <div class="margin-large-bottom">
+        <div slot="header" class="flex-row">
 
             <div translate>
-                Here you can specify the additional time to add when handling orders with specific tags.
+                Additional task time rules
             </div>
 
-            <button appearance="outline" accent="primary" class="font-base --button-position-inline-right" click.trigger="onAddAdditionalTaskTimeClick()" translate>
-                Add task time rule
+            <button appearance="outline" accent="primary" class="flex-row font-base --button-position-right" click.trigger="onAddAdditionalTaskTimeClick()">
+                <icon name="plus-small" class="margin-right"></icon>
+                <span translate>
+                    Add task time rule
+                </span>
             </button>
 
         </div>
 
+        <div class="flex-row margin-large-bottom" translate>
+            Here you can specify the additional time to add when handling orders with specific tags.
+        </div>
+
         <data-table
             appearance="rows"
-            class="margin-large-bottom">
+            class="margin-large-bottom --reduce-header-whitespace">
 
             <data-table-headers>
 

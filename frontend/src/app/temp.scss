@@ -8,10 +8,10 @@
     --card-padding-large: 12.5rem 13rem;
 }
 
-.--button-position-inline-right
+.--button-position-right
 {
     position: absolute;
-    top: calc((10rem - var(--font-base-line-height)) * -0.5);
+    align-self: center;
     right: 0;
 }
 

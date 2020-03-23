@@ -14,7 +14,7 @@ export class VehicleGroupLocation
         if (data != null)
         {
             this.location = new Location(data.location);
-            this.taskTime = data.taskTime;
+            this.time = data.time;
         }
         else
         {
@@ -30,5 +30,5 @@ export class VehicleGroupLocation
     /**
      * The task time at this location.
      */
-    public taskTime: number;
+    public time: number;
 }

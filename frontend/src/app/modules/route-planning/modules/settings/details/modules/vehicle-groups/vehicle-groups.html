@@ -2,26 +2,28 @@
 
     <require from="./vehicle-groups.scss"></require>
 
-    <page-section class="create-rule-section">
-
-        <button
-            appearance="outline"
-            accent="primary"
-            click.trigger="onCreateVehicleGroupClick()"
-            class="flex-row">
-
-            <icon name="plus-small" class="margin-right"></icon>
-            <span translate>Add a new vehicle rule</span>
-
-        </button>
-
-    </page-section>
-
     <page-section>
 
-        <data-table
-            appearance="rows"
-            class="--reduce-header-whitespace">
+        <div class="flex-row font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
+
+            <div translate>
+                Vehicle rules
+            </div>
+
+            <button appearance="outline" accent="primary" click.trigger="onCreateVehicleGroupClick()" class="flex-row font-base --button-position-right">
+                <icon name="plus-small" class="margin-right"></icon>
+                <span translate>
+                    Add a new vehicle rule
+                </span>
+            </button>
+
+        </div>
+
+        <div class="margin-large-bottom" translate>
+            Here you can specify the rules for how vehicles are grouped, based on their properties.
+        </div>
+
+        <data-table appearance="rows" class="--reduce-header-whitespace">
 
             <data-table-headers>
 
@@ -39,25 +41,25 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Capacity
+                        Max volume
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Max. stop count
+                        Max stops
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Max. weight
+                        Max weight
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Max.  distance
+                        Max distance
                     </span>
                 </data-table-cell>
 
@@ -87,13 +89,13 @@
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${vehicleGroup.limits.volume} m³
+                            ${vehicleGroup.limits.volume | number} m³
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${vehicleGroup.limits.stopCount}
+                            ${vehicleGroup.limits.stopCount | number}
                             <span translate>
                                 stops
                             </span>
@@ -102,13 +104,13 @@
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${vehicleGroup.limits.weight} kg
+                            ${vehicleGroup.limits.weight | number} kg
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${vehicleGroup.limits.distance} km
+                            ${vehicleGroup.limits.distance | number} km
                         </span>
                     </data-table-cell>
 
@@ -117,7 +119,7 @@
                         <div if.bind="!vehicleGroup.hidden" if-claims="edit-routes" class="icon-row">
 
                             <button
-                                title.translate="Cancel stop"
+                                title.translate="Delete rule"
                                 class="icon-row"
                                 appearance="none"
                                 accent="primary"

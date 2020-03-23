@@ -8,13 +8,29 @@
 
     <modal-panel name="vehicle-group-edit" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="!isNew"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
-                <span if.bind="isNew" translate>Create vehicle group</span>
+                <span if.bind="isNew" translate>
+                    Create vehicle rule
+                </span>
 
-                <span if.bind="!isNew" translate>Edit ${model.vehicleGroup.name}</span>
+                <span if.bind="!isNew" translate>
+                    Edit vehicle rule
+                </span>
 
             </h1>
 
@@ -24,7 +40,10 @@
 
             <div class="control-row">
 
-                <text-input label="above" value.bind="model.vehicleGroup.name" class="flex-basis-1-of-2">
+                <text-input
+                    label="above"
+                    value.bind="model.name"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Name of the rule
@@ -32,7 +51,12 @@
 
                 </text-input>
 
-                <select-input label="above" none.bind="false" value.bind="model.vehicleGroup.vehicleType" display-value.bind="model.vehicleGroup.vehicleType.name" class="flex-basis-1-of-2">
+                <select-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="model.vehicleType"
+                    display-value.bind="model.vehicleType.name"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Vehicle type
@@ -45,7 +69,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.vehicleType">
+                            value.bind="model.vehicleType">
                         </required-validator>
 
                     </div>
@@ -63,51 +87,52 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Lorem ipsum.
+                Here you can specify the cost associated with this vehicle group.
             </h1>
 
             <div class="control-row margin-larger-bottom">
 
-                <number-input value.bind="model.vehicleGroup.cost.newRoute" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.cost.newRoute"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Cost of a new route
                     </div>
 
+                    <span slot="after" class="opacity-faded">
+                        per route
+                    </span>
+
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.cost.newRoute">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.cost.newRoute">
                         </required-validator>
 
                     </div>
 
                 </number-input>
 
-                <number-input value.bind="model.vehicleGroup.cost.waitingTime" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.cost.waitingTime"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Cost of waiting time
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        per minutes
+                        per min
                     </span>
+
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.cost.waitingTime">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.cost.waitingTime">
                         </required-validator>
 
                     </div>
@@ -118,50 +143,46 @@
 
             <div class="control-row margin-larger-bottom">
 
-                <number-input value.bind="model.vehicleGroup.cost.drivingTime" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.cost.drivingTime"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Cost of driving time
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        per minutes
+                        per min
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.cost.drivingTime">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.cost.drivingTime">
                         </required-validator>
 
                     </div>
 
                 </number-input>
 
-                <number-input value.bind="model.vehicleGroup.cost.taskTime" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.cost.taskTime"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Cost of task time
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        per minutes
+                        per min
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.cost.taskTime">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.cost.taskTime">
                         </required-validator>
 
                     </div>
@@ -172,25 +193,23 @@
 
             <div class="control-row">
 
-                <number-input value.bind="model.vehicleGroup.cost.distance" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.cost.distance"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Cost of distance driven
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        per km.
+                        per km
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.cost.distance">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.cost.distance">
                         </required-validator>
 
                     </div>
@@ -204,55 +223,55 @@
         <modal-section class="--line-above">
 
             <div slot="header" translate>
-                Restrictions
+                Limitations
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Lorem ipsum.
+                Here you can specify the limitations of the vehicle group.
             </h1>
 
             <div class="control-row margin-larger-bottom">
 
-                <number-input value.bind="model.vehicleGroup.limits.volume" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.limits.volume"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Max. volume of space per route
-                    </div>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.vehicleGroup.limits.volume">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
-                        </required-validator>
-
-                    </div>
-
-                </number-input>
-
-                <number-input value.bind="model.vehicleGroup.limits.weight" label="above" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Max. weight per route
+                        Max volume per route
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        kg.
+                        m³
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.limits.weight">
+                            value.bind="model.limits.volume">
+                        </required-validator>
 
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
+                    </div>
 
+                </number-input>
+
+                <number-input
+                    value.bind="model.limits.weight"
+                    label="above"
+                    class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Max weight per route
+                    </div>
+
+                    <span slot="after" class="opacity-faded">
+                        kg
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.limits.weight">
                         </required-validator>
 
                     </div>
@@ -263,42 +282,46 @@
 
             <div class="control-row margin-larger-bottom">
 
-                <number-input value.bind="model.vehicleGroup.limits.colliCount" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.limits.colliCount"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Max. amount of colli per route
+                        Max number of colli per route
                     </div>
+
+                    <span slot="after" class="opacity-faded">
+                        colli
+                    </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.limits.colliCount">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.limits.colliCount">
                         </required-validator>
 
                     </div>
 
                 </number-input>
 
-                <number-input value.bind="model.vehicleGroup.limits.stopCount" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.limits.stopCount"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Max. amount of stops per route
+                        Max number of stops per route
                     </div>
+
+                    <span slot="after" class="opacity-faded">
+                        stops
+                    </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.limits.stopCount">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.limits.stopCount">
                         </required-validator>
 
                     </div>
@@ -309,35 +332,36 @@
 
             <div class="control-row">
 
-                <number-input value.bind="model.vehicleGroup.limits.time" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.limits.time | scale: 1/60"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Max. time used per route
+                        Max time used per route
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        minutes
+                        min
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.limits.time">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.limits.time">
                         </required-validator>
 
                     </div>
 
                 </number-input>
 
-                <number-input value.bind="model.vehicleGroup.limits.distance" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.limits.distance"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Max. distance driven per route
+                        Max distance driven per route
                     </div>
 
                     <span slot="after" class="opacity-faded">
@@ -347,12 +371,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.limits.distance">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            value.bind="model.limits.distance">
                         </required-validator>
 
                     </div>
@@ -370,20 +389,26 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Lorem ipsum.
+                Here you can specify the location at which the vehicle must be picked up and returned.
             </h1>
 
             <div class="control-row margin-medium-bottom">
 
-                <address-input label="above" value.bind="model.vehicleGroup.startLocation.location.address" class="flex-basis-1-of-2">
+                <address-input
+                    label="above"
+                    value.bind="model.startLocation.location.address"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Starting address
+                        Start address
                     </div>
 
                 </address-input>
 
-                <address-input label="above" value.bind="model.vehicleGroup.endLocation.location.address" class="flex-basis-1-of-2">
+                <address-input
+                    label="above"
+                    value.bind="model.endLocation.location.address"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         End address
@@ -395,50 +420,50 @@
 
             <div class="control-row">
 
-                <number-input value.bind="model.vehicleGroup.startLocation.taskTime" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.startLocation.time | scale: 1/60"
+                    disabled.bind="model.startLocation.location.address == null"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Task time on starting location
+                        Task time at the start address
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        minutes
+                        min
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.startLocation.taskTime">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            enabled.bind="model.startLocation.location.address != null"
+                            value.bind="model.startLocation.time">
                         </required-validator>
 
                     </div>
 
                 </number-input>
 
-                <number-input value.bind="model.vehicleGroup.endLocation.taskTime" label="above" class="flex-basis-1-of-2">
+                <number-input
+                    value.bind="model.endLocation.time | scale: 1/60"
+                    disabled.bind="model.endLocation.location.address == null"
+                    label="above"
+                    class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Task time on end location
+                        Task time at the end address
                     </div>
 
                     <span slot="after" class="opacity-faded">
-                        minutes
+                        min
                     </span>
 
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.vehicleGroup.endLocation.taskTime">
-
-                            <template replace-part="invalid">
-                                This is required
-                            </template>
-
+                            enabled.bind="model.endLocation.location.address != null"
+                            value.bind="model.endLocation.time">
                         </required-validator>
 
                     </div>
@@ -456,36 +481,16 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Lorem ipsum.
+                Here you can specify the order tags for which this vehicle group is applicable.
             </h1>
 
             <tags-input
                 label="above"
-                value.bind="model.vehicleGroup.orderTagsAllRequired"
-                new.bind="true"
-                class="margin-large-bottom">
-
-                <div slot="heading" translate>
-                    Applicable to orders with all these tags
-                </div>
-
-                <div slot="placeholder" translate>
-                    Add tags
-                </div>
-
-            </tags-input>
-
-            <tags-input
-                label="above"
-                value.bind="model.vehicleGroup.orderTagsOneRequired"
+                value.bind="model.orderTagsOneRequired"
                 new.bind="true">
 
                 <div slot="heading" translate>
-                    Applicable to orders with atleast one of these tags
-                </div>
-
-                <div slot="placeholder" translate>
-                    Add tags
+                    Some of the tags
                 </div>
 
             </tags-input>
@@ -499,39 +504,26 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Lorem ipsum.
+                Here you can specify the tags that should be assigned to routes using this vehicle group.
             </h1>
 
             <tags-input
                 label="above"
-                value.bind="model.vehicleGroup.routeTags"
-                new.bind="true"
-                class="margin-large-bottom">
+                value.bind="model.routeTags"
+                new.bind="true">
 
                 <div slot="heading" translate>
-                    Applicable to routes with these tags
-                </div>
-
-                <div slot="placeholder" translate>
-                    Add tags
+                    Route tags to assign
                 </div>
 
             </tags-input>
 
         </modal-section>
 
-        <div class="button-container margin-larger-top">
+        <div if.bind="isNew" class="button-container margin-larger-top">
 
-            <button appearance="solid" accent="neutral" click.trigger="_modal.close()" translate>
-                Cancel
-            </button>
-
-            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                Create rule
-            </button>
-
-            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                Save and close
+            <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                Create vehicle rule
             </button>
 
         </div>
