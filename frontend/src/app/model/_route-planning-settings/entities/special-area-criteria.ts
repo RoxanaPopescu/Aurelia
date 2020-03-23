@@ -44,7 +44,7 @@ export class SpecialAreaCriteria
     public orderTagsAllRequired: string[];
 
     /**
-     * The order matched by this criteria, where at least one of the specified tags match.
+     * The order tags matched by this criteria, where at least one of the specified tags match.
      */
     public orderTagsOneRequired: string[];
 }

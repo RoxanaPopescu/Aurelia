@@ -9,11 +9,11 @@
         <modal-header>
 
             <h1 if.bind="vehicle.name" class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
-                Are you sure you want to delete vehicle with name ${vehicle.name}?
+                Are you sure you want to delete the vehicle <br class="br-preferred"><b>${vehicle.name}</b>?
             </h1>
 
             <h1 if.bind="!vehicle.name" class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
-                Are you sure you want to delete vehicle with id ${vehicle.id}?
+                Are you sure you want to delete the vehicle with id <b>${vehicle.id}</b>?
             </h1>
 
         </modal-header>
