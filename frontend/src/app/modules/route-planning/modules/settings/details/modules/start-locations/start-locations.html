@@ -85,17 +85,18 @@
             <empty-indicator>
 
                 <span slot="heading" translate>The list of reservations is empty</span>
-                <span translate>Lorem ipsum</span>
-                <button
-                    appearance="outline"
-                    class="add-reservation-button margin-larger-top"
-                    accent="primary"
-                    click.delegate="onAddScenarioClick()">
+                <div slot="details">
+                    <button
+                        appearance="outline"
+                        class="add-reservation-button margin-larger-top"
+                        accent="primary"
+                        click.delegate="onAddScenarioClick()">
 
-                    <icon name="plus-small"></icon>
-                    <span translate>Add a reservation</span>
+                        <icon name="plus-small"></icon>
+                        <span translate>Add a reservation</span>
 
-                </button>
+                    </button>
+                </div>
 
             </empty-indicator>
 
