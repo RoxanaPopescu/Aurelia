@@ -41,7 +41,7 @@ export class VehicleGroups
             return;
         }
 
-        this.settings.vehicleGroups = this.settings.vehicleGroups.slice(this.settings.vehicleGroups.indexOf(vehicleGroup));
+        this.settings.vehicleGroups.splice(this.settings.vehicleGroups.indexOf(vehicleGroup), 1);
     }
 
     /**

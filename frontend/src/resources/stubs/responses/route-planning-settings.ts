@@ -87,11 +87,60 @@ export default
                     [
                         "electric"
                     ]
+                },
+                {
+                    "name": "Electric Van 1",
+                    "id": "fe6c46c9-7277-4890-92b2-e009821de945",
+                    "cost":
+                    {
+                        "newRoute": 120,
+                        "waitingTime": 8,
+                        "drivingTime": 5,
+                        "taskTime": 5,
+                        "distance": 2
+                    },
+                    "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
+                    "limits":
+                    {
+                        "volume": 100,
+                        "weight": 900,
+                        "colliCount": 1000,
+                        "stopCount": 30,
+                        "time": 43200,
+                        "distance": 300
+                    },
+                    "orderTagsOneRequired":
+                    [
+                        "electric",
+                        "eco"
+                    ],
+                    "endLocation":
+                    {
+                        "location":
+                        {
+                            "address":
+                            {
+                                "primary": "Mårkærvej 15",
+                                "secondary": "2630 Taastrup"
+                            },
+                            "position":
+                            [
+                                10.2948912,
+                                55.7815602
+                            ]
+                        },
+                        "time": 600
+                    },
+                    "routeTags":
+                    [
+                        "electric"
+                    ]
                 }
             ],
             "departureTimes":
             [
                 {
+                    "name": "Hej2",
                     "startLocation":
                     {
                         "address":
@@ -124,6 +173,124 @@ export default
                                 }
                             ],
                             "name": "Weekdays - no monday",
+                            "criteria":
+                            {
+                                "weekdays":
+                                [
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                ],
+                                "datePeriod":
+                                {
+                                    "from": "2021-01-19T23:00:00+01:00",
+                                    "to": "2021-12-19T23:00:00+01:00"
+                                }
+                            }
+                        },
+                        {
+                            "gates":
+                            [
+                                {
+                                    "name": "Gate B",
+                                    "slots":
+                                    [
+                                        {
+                                            "earliestArrivalTime": 23700,
+                                            "latestDepartureTime": 30120,
+                                            "vehicleGroup": "3462b6c3-1b44-4015-b971-98070d8f216c",
+                                            "timeBetweenDepartures": 1320
+                                        }
+                                    ]
+                                }
+                            ],
+                            "name": "Weekdays - no mnday",
+                            "criteria":
+                            {
+                                "weekdays":
+                                [
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                ],
+                                "datePeriod":
+                                {
+                                    "from": "2021-01-19T23:00:00+01:00",
+                                    "to": "2021-12-19T23:00:00+01:00"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "hej",
+                    "startLocation":
+                    {
+                        "address":
+                        {
+                            "primary": "Mårkærvej 15",
+                            "secondary": "2630 Taastrup"
+                        },
+                        "position":
+                        [
+                            10.2948912,
+                            55.7815602
+                        ]
+                    },
+                    "scenarios":
+                    [
+                        {
+                            "gates":
+                            [
+                                {
+                                    "name": "Gate B",
+                                    "slots":
+                                    [
+                                        {
+                                            "earliestArrivalTime": 23700,
+                                            "latestDepartureTime": 30120,
+                                            "vehicleGroup": "3462b6c3-1b44-4015-b971-98070d8f216c",
+                                            "timeBetweenDepartures": 1320
+                                        }
+                                    ]
+                                }
+                            ],
+                            "name": "Weekdays - no monday",
+                            "criteria":
+                            {
+                                "weekdays":
+                                [
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                ],
+                                "datePeriod":
+                                {
+                                    "from": "2021-01-19T23:00:00+01:00",
+                                    "to": "2021-12-19T23:00:00+01:00"
+                                }
+                            }
+                        },
+                        {
+                            "gates":
+                            [
+                                {
+                                    "name": "Gate B",
+                                    "slots":
+                                    [
+                                        {
+                                            "earliestArrivalTime": 23700,
+                                            "latestDepartureTime": 30120,
+                                            "vehicleGroup": "3462b6c3-1b44-4015-b971-98070d8f216c",
+                                            "timeBetweenDepartures": 1320
+                                        }
+                                    ]
+                                }
+                            ],
+                            "name": "Weekdays - no mnday",
                             "criteria":
                             {
                                 "weekdays":

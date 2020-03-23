@@ -182,8 +182,7 @@ export class StartLocations
 
         try
         {
-            let newScenarios = this.activeDepartureTime!.scenarios.filter(s => s.name !== scenario.name);
-            this.settings.departureTimes[this.settings.departureTimes.indexOf(this.activeDepartureTime!)].scenarios = newScenarios;
+            this.activeDepartureTime!.scenarios.splice(this.activeDepartureTime!.scenarios.indexOf(scenario), 1);
         }
         catch (error)
         {
@@ -207,11 +206,8 @@ export class StartLocations
 
         try
         {
-            this.settings.departureTimes = this.settings.departureTimes.filter(d => d.name !== departureTime.name);
-            if (departureTime.name === this.activeDepartureTimeName)
-            {
-                this.activeDepartureTimeName = this.settings.departureTimes[0]?.name;
-            }
+            this.settings.departureTimes.splice(this.settings.departureTimes.indexOf(departureTime), 1);
+            this.activeDepartureTimeName = this.settings.departureTimes[0]?.name;
         }
         catch (error)
         {
