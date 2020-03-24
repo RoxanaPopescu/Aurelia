@@ -76,10 +76,11 @@
 
                 </name-value-list>
 
-                <div class="font-small margin-medium-top" validation validation.ref="baseTaskTimeValidation">
+                <div validation validation.ref="baseTaskTimeValidation">
 
                     <custom-validator
-                        valid.bind="settings.taskTimes.base.initial != null">
+                        valid.bind="settings.taskTimes.base.initial != null"
+                        class="font-small margin-medium-top">
 
                         <template replace-part="invalid" translate>
                             Please provide the base task time.
@@ -149,10 +150,11 @@
 
                 </name-value-list>
 
-                <div class="font-small margin-medium-top" validation validation.ref="roundDefinitionValidation">
+                <div validation validation.ref="roundDefinitionValidation">
 
                     <custom-validator
-                        valid.bind="settings.taskTimes.roundDefinition != null">
+                        valid.bind="settings.taskTimes.roundDefinition != null"
+                        class="font-small margin-medium-top">
 
                         <template replace-part="invalid" translate>
                             Please provide the round limits.
