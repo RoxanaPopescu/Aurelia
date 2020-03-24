@@ -19,7 +19,7 @@ export class Restrictions
             this.privateRoadsAllowed = data.privateRoadsAllowed;
             this.uturnStrategy = new UturnStrategy(data.uturnStrategy);
             this.curbApproachStrategy = new CurbApproachStrategy(data.curbApproachStrategy);
-            this.timeWindowAdjustment = new TimeWindowAdjustment(data.timeWindowAdjustment);
+            this.timeWindowAdjustmentDelivery = new TimeWindowAdjustment(data.timeWindowAdjustmentDelivery);
             this.oneRoutePlanPerStartLocation = data.oneRoutePlanPerStartLocation;
             this.maxCalculationTime = data.maxCalculationTime;
         }
@@ -29,7 +29,7 @@ export class Restrictions
             this.privateRoadsAllowed = true;
             this.uturnStrategy = new UturnStrategy("allowed");
             this.curbApproachStrategy = new CurbApproachStrategy("either-side-of-vehicle");
-            this.timeWindowAdjustment = new TimeWindowAdjustment();
+            this.timeWindowAdjustmentDelivery = new TimeWindowAdjustment();
             this.oneRoutePlanPerStartLocation = true;
         }
     }
@@ -58,7 +58,7 @@ export class Restrictions
      * The time window adjustments allowed during optimization,
      * in order to narrow the time window to ensure timely arrival.
      */
-    public timeWindowAdjustment: TimeWindowAdjustment;
+    public timeWindowAdjustmentDelivery: TimeWindowAdjustment;
 
     /**
      * True to produce one route plan per start location, otherwise false.

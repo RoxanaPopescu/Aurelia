@@ -221,7 +221,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-right: var(--size-inline-spacing-larger)
+        margin-right: var(--size-inline-spacing-larger);
     }
 }
 
@@ -231,7 +231,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-right: var(--size-inline-spacing-larger)
+        margin-right: var(--size-inline-spacing-larger);
     }
 }
 
@@ -242,7 +242,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-right: var(--size-inline-spacing-larger)
+        margin-right: var(--size-inline-spacing-larger);
     }
 }
 
@@ -254,7 +254,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-bottom: var(--size-inline-spacing-larger)
+        margin-bottom: var(--size-inline-spacing-larger);
     }
 }
 
@@ -264,7 +264,7 @@ page-sidebar
 
     > :not(:last-child)
     {
-        margin-right: calc(var(--size-inline-spacing-large) * 2)
+        margin-right: calc(var(--size-inline-spacing-large) * 2);
     }
 }
 

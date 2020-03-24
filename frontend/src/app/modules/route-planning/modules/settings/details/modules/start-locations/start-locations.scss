@@ -30,6 +30,7 @@ start-locations
         page-tab
         {
             justify-content: space-between;
+
             span
             {
                padding-right: 1rem;
@@ -38,12 +39,17 @@ start-locations
             .button-container
             {
                 display: flex;
+
+                button
+                {
+                    margin-left: var(--size-inline-spacing-large);
+                }
             }
         }
 
         .add-location-button
         {
-            margin-left: 8rem;
+            margin-left: var(--size-inline-spacing-larger);
         }
     }
 

@@ -7,11 +7,11 @@
     <page-section>
 
         <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
-            General rules for route planning
+            General rules
         </h1>
 
         <div class="margin-large-bottom" translate>
-            Here you can specify the general settings to use when planning the routes.
+            Here you can specify the general settings to use when planning routes.
         </div>
 
         <text-input label="above" value.bind="settings.name">
@@ -39,7 +39,7 @@
         </div>
 
         <div class="margin-large-bottom" translate>
-            Here you can specify the limitations that should be taken into account when planning the routes.
+            Here you can specify the limitations that should be taken into account when planning routes.
         </div>
 
         <div class="control-row margin-large-bottom">
@@ -101,7 +101,7 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.start | scale: 1/60"
+                value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start | scale: 1/60"
                 class="flex-basis-1-of-2"
                 min.bind="0">
 
@@ -116,12 +116,12 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="settings.restrictions.timeWindowAdjustment.start">
+                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start">
                     </required-validator>
 
                     <range-validator
                         active.bind="true"
-                        value.bind="settings.restrictions.timeWindowAdjustment.start"
+                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start"
                         min.bind="0">
                     </range-validator>
 
@@ -132,7 +132,7 @@
             <number-input
                 label="above"
                 none.bind="false"
-                value.bind="settings.restrictions.timeWindowAdjustment.end | scale: 1/60"
+                value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end | scale: 1/60"
                 class="flex-basis-1-of-2"
                 min.bind="0">
 
@@ -147,12 +147,12 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="settings.restrictions.timeWindowAdjustment.end">
+                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end">
                     </required-validator>
 
                     <range-validator
                         active.bind="true"
-                        value.bind="settings.restrictions.timeWindowAdjustment.end"
+                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end"
                         min.bind="0">
                     </range-validator>
 
@@ -199,7 +199,7 @@
 
         </div>
 
-        <div class="control-row margin-large-bottom">
+        <div class="control-row">
 
             <check-toggle
                 label="after"
@@ -251,7 +251,7 @@
         <text-input
             label="above"
             trim.bind="false"
-            value.bind="settings.restrictions.routeNameTemplate"
+            value.bind="settings.routeCreation.routeNameTemplate"
             class="flex-basis-1-of-2 margin-large-bottom"
             ref="routeNameTempleteInputElement">
 
@@ -270,16 +270,20 @@
                         </span>
                     </div>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-1}')">
-                        Placeholder 1
+                    <item click.trigger="onRouteNamePlaceholderClick('{AreaRouteNumber}')">
+                        Area route number
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-2}')">
-                        Placeholder 2
+                    <item click.trigger="onRouteNamePlaceholderClick('{Weekday}')">
+                        Weekday
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{placeholder-3}')">
-                        Placeholder 3
+                    <item click.trigger="onRouteNamePlaceholderClick('{RouteplanRouteNumber}')">
+                        Routeplan route number
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartTime}')">
+                        Start time
                     </item>
 
                 </select-button>
@@ -289,7 +293,7 @@
             <div slot="validation">
 
                 <required-validator
-                    value.bind="settings.restrictions.routeNameTemplate">
+                    value.bind="settings.routeCreation.routeNameTemplate">
                 </required-validator>
 
             </div>
