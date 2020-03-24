@@ -6,11 +6,27 @@
 
     <modal-panel name="scenario" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="!isNew"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-medium-bottom" tabindex="-1" autofocus="visible.bind: false">
-                <span if.bind="model.isNew" translate>Create a reservation</span>
-                <span if.bind="!model.isNew" translate>Details for ${model.scenario.name}</span>
+                <span if.bind="model.isNew" translate>
+                    Create reservation
+                </span>
+                <span if.bind="!model.isNew" translate>
+                    Edit reservation
+                </span>
             </h1>
 
             <h1 tabindex="-1" autofocus="visible.bind: false">
@@ -22,9 +38,7 @@
         <modal-section if.bind="model.vehicleGroups.length === 0">
 
             <info-card accent="attention" title="Vehicle groups missing">
-
                 You cannot make a reservation before having a vehicle group.
-
             </info-card>
 
         </modal-section>
@@ -94,7 +108,7 @@
 
                     <number-input
                         label="above"
-                        value.bind="reservationInterval"
+                        value.bind="reservationInterval | scale: 1/60"
                         min.bind="0"
                         constrain.bind="true"
                         class="flex-basis-1-of-2">
@@ -104,7 +118,7 @@
                         </div>
 
                         <span slot="after" class="opacity-faded" translate>
-                            minutes
+                            min
                         </span>
 
                         <div slot="validation">
@@ -141,6 +155,7 @@
                         <div slot="validation">
 
                             <range-validator
+                                active.bind="true"
                                 value.bind="model.scenario.criteria.datePeriod.from"
                                 max.bind="model.scenario.criteria.datePeriod.to"
                                 max-inclusive.bind="false">
@@ -168,6 +183,7 @@
                         <div slot="validation">
 
                             <range-validator
+                                active.bind="true"
                                 value.bind="model.scenario.criteria.datePeriod.to"
                                 min.bind="model.scenario.criteria.datePeriod.from"
                                 min-inclusive.bind="false">
@@ -186,7 +202,11 @@
 
                 <div class="control-row margin-large-bottom">
 
-                    <time-input label="above" value.bind="selectedEarliestArrival" class="flex-basis-1-of-2">
+                    <time-input
+                        label="above"
+                        value.bind="selectedEarliestArrival"
+                        class="flex-basis-1-of-2"
+                        max.bind="selectedLatestDeparture">
 
                         <div slot="heading" translate>
                             Earliest arrival
@@ -198,11 +218,27 @@
                                 value.bind="selectedEarliestArrival">
                             </required-validator>
 
+                            <range-validator
+                                active.bind="true"
+                                value.bind="selectedEarliestArrival"
+                                max.bind="selectedLatestDeparture"
+                                max-inclusive.bind="false">
+
+                                <template replace-part="invalid-max" translate>
+                                    Please choose a time before the latest departure time.
+                                </template>
+
+                            </range-validator>
+
                         </div>
 
                     </time-input>
 
-                    <time-input label="above" value.bind="selectedLatestDeparture" class="flex-basis-1-of-2">
+                    <time-input
+                        label="above"
+                        value.bind="selectedLatestDeparture"
+                        class="flex-basis-1-of-2"
+                        min.bind="selectedEarliestArrival">
 
                         <div slot="heading" translate>
                             Latest departure
@@ -213,6 +249,18 @@
                             <required-validator
                                 value.bind="selectedLatestDeparture">
                             </required-validator>
+
+                            <range-validator
+                                active.bind="true"
+                                value.bind="selectedLatestDeparture"
+                                min.bind="selectedEarliestArrival"
+                                min-inclusive.bind="false">
+
+                                <template replace-part="invalid-min" translate>
+                                    Please choose a time after the earliest arrival time.
+                                </template>
+
+                            </range-validator>
 
                         </div>
 
@@ -256,21 +304,13 @@
 
             </modal-section>
 
-            <modal-footer>
+            <div if.bind="isNew" class="button-container margin-larger-top">
 
-                <div class="button-row flex-push-right">
+                <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                    Create reservation
+                </button>
 
-                    <button appearance="outline" accent="primary" click.trigger="onCancelClick()" translate>
-                        Cancel
-                    </button>
-
-                    <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                        Save and close
-                    </button>
-
-                </div>
-
-            </modal-footer>
+            </div>
 
         </template>
 

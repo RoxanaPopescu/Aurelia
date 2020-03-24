@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from 'aurelia-framework';
+import { autoinject, computedFrom } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
 import { DepartureTimeScenario, DepartureTime, Gate, VehicleGroup, GateSlot } from "app/model/_route-planning-settings";
 import { Duration } from "luxon";
@@ -47,20 +47,20 @@ export class ScenarioPanel
     /**
      * The model for the modal.
      */
-    protected model: { vehicleGroups: VehicleGroup[], departureTime: DepartureTime, scenario: DepartureTimeScenario; isNew: boolean };
+    protected model: { vehicleGroups: VehicleGroup[]; departureTime: DepartureTime; scenario: DepartureTimeScenario; isNew: boolean };
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The vehicle groups of the setting, departure time for which the scenario belongs and the scenario itself.
      */
-    public activate(model: { vehicleGroups: VehicleGroup[], departureTime: DepartureTime; scenario: DepartureTimeScenario; isNew: boolean }): void
+    public activate(model: { vehicleGroups: VehicleGroup[]; departureTime: DepartureTime; scenario: DepartureTimeScenario; isNew: boolean }): void
     {
         this.model = { vehicleGroups: model.vehicleGroups, departureTime: model.departureTime, scenario: model.scenario.clone(), isNew: model.isNew };
 
         if (!model.isNew)
         {
-            this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroupId)[0];
-            this.reservationInterval = model.scenario.criteria.datePeriod.duration.as("minutes");
+            this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroup)[0];
+            this.reservationInterval = model.scenario.criteria.datePeriod.duration.as("seconds");
             this.selectedEarliestArrival = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].earliestArrivalTime });
             this.selectedLatestDeparture = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].latestDepartureTime });
         }
@@ -81,19 +81,20 @@ export class ScenarioPanel
     @computedFrom("model.departureTime")
     protected get gateNames(): string[]
     {
-        let gates: Gate[] = [];
+        const gates: Gate[] = [];
 
         if (this.model.departureTime != null)
         {
-            this.model.departureTime.scenarios
-                .forEach(s => {
-                    s.gates.forEach(g => {
-                        if (gates.filter(gate => gate.name === g.name).length === 0)
-                        {
-                            gates.push(g);
-                        }
-                    })
-                })
+            for (const scenario of this.model.departureTime.scenarios)
+            {
+                for (const gate of scenario.gates)
+                {
+                    if (!gates.some(g => g.name === gate.name))
+                    {
+                        gates.push(gate);
+                    }
+                }
+            }
         }
 
         return gates.map(g => g.name);
@@ -103,9 +104,9 @@ export class ScenarioPanel
      * Called when the "Cancel" icon is clicked.
      * Closes the modal.
      */
-    protected onCancelClick(): void
+    protected async onCancelClick(): Promise<void>
     {
-        this._modal.close();
+        await this._modal.close();
     }
 
     /**
@@ -128,21 +129,25 @@ export class ScenarioPanel
             // Mark the modal as busy.
             this._modal.busy = true;
 
-            this.model.scenario.gates[0].slots = [new GateSlot({
-                earliestArrivalTime: this.selectedEarliestArrival!.as("seconds"),
-                latestDepartureTime: this.selectedLatestDeparture!.as("seconds"),
-                timeBetweenDepartures: this.reservationInterval! * 60,
-                vehicleGroup: this.selectedVehicleGroup!.id
-            })];
+            this.model.scenario.gates[0].slots =
+            [
+                new GateSlot(
+                {
+                    earliestArrivalTime: this.selectedEarliestArrival!.as("seconds"),
+                    latestDepartureTime: this.selectedLatestDeparture!.as("seconds"),
+                    timeBetweenDepartures: this.reservationInterval,
+                    vehicleGroup: this.selectedVehicleGroup!.id
+                })
+            ];
 
             // Set the result of the modal.
             this._result = this.model.scenario;
 
-            this._modal.close();
+            await this._modal.close();
         }
         catch (error)
         {
-            Log.error("Could not save the start location", error);
+            Log.error("Could not save the reservation", error);
         }
         finally
         {

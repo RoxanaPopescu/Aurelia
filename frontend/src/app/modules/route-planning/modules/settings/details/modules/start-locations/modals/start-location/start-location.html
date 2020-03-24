@@ -10,8 +10,12 @@
         <modal-header>
 
             <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false">
-                <span if.bind="model.isNew" translate>Create a new start location</span>
-                <span if.bind="!model.isNew" translate>Details for ${model.departureTime.name}</span>
+                <span if.bind="model.isNew" translate>
+                    Create start location
+                </span>
+                <span if.bind="!model.isNew" translate>
+                    Edit start location
+                </span>
             </h1>
 
             <h4 class="margin-large-top" translate>
@@ -20,7 +24,7 @@
 
         </modal-header>
 
-        <modal-section class="margin-bottom">
+        <modal-section>
 
             <div class="control-row margin-large-bottom">
 

@@ -8,12 +8,6 @@ import { RoutePlanningSettings, UturnStrategy, CurbApproachStrategy } from "app/
 export class General
 {
     /**
-     * The id of the routeplan settings
-     */
-    @bindable
-    protected settings: RoutePlanningSettings;
-
-    /**
      * The route name template input element.
      */
     protected routeNameTempleteInputElement: HTMLElement;
@@ -61,6 +55,12 @@ export class General
     {
         this.settings.restrictions.curbApproachStrategy = value;
     }
+
+    /**
+     * The id of the routeplan settings
+     */
+    @bindable
+    public settings: RoutePlanningSettings;
 
     /**
      * Called when a route name template placeholder is clicked.

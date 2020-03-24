@@ -1,10 +1,10 @@
-import { autoinject, bindable, computedFrom } from 'aurelia-framework';
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RoutePlanningSettings, Gate, DepartureTimeScenario } from "app/model/_route-planning-settings";
-import { DepartureTime } from '../../../../../../../model/_route-planning-settings/entities/departure-time';
+import { DepartureTime } from "app/model/_route-planning-settings/entities/departure-time";
 import { ModalService, IValidation } from "shared/framework";
-import { ScenarioPanel } from "./modals/scenario/scenario"
+import { ScenarioPanel } from "./modals/scenario/scenario";
 import { StartLocationDialog } from "./modals/start-location/start-location";
-import { ConfirmDeleteScenarioDialog } from './modals/confirm-delete-scenario/confirm-delete-scenario';
+import { ConfirmDeleteScenarioDialog } from "./modals/confirm-delete-scenario/confirm-delete-scenario";
 import { Log } from "shared/infrastructure";
 import { ConfirmDeleteStartLocationDialog } from "./modals/confirm-delete-start-location/confirm-delete-start-location";
 import { DateTime } from "luxon";
@@ -17,11 +17,6 @@ import { DayOfWeek } from "app/model/shared";
 export class StartLocations
 {
     /**
-     * The validation for the modal.
-     */
-    protected validation: IValidation;
-
-    /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
      */
@@ -29,37 +24,43 @@ export class StartLocations
     {
         this._modalService = modalService;
     }
+
     private readonly _modalService: ModalService;
+
+    /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
 
     /**
      * Current tab page name the user has active.
      */
     @bindable
-    protected activeDepartureTimeName: string | undefined;
+    public activeDepartureTimeName: string | undefined;
 
     /**
      * The date used to filter scenarios.
      */
     @bindable
-    protected dateFromFilter: DateTime | undefined;
+    public dateFromFilter: DateTime | undefined;
 
     /**
      * The date used to filter scenarios.
      */
     @bindable
-    protected dateToFilter: DateTime | undefined;
+    public dateToFilter: DateTime | undefined;
 
     /**
      * The weekdays used to filter scenarios.
      */
     @bindable
-    protected weekdaysFilter: DayOfWeek[] = [];
+    public weekdaysFilter: DayOfWeek[] = [];
 
     /**
      * The id of the routeplan settings
      */
     @bindable
-    protected settings: RoutePlanningSettings;
+    public settings: RoutePlanningSettings;
 
     /**
      * Called by the framework when the module is activated.
@@ -75,7 +76,7 @@ export class StartLocations
     @computedFrom("activeDepartureTime")
     protected get gates(): Gate[]
     {
-        let gates: Gate[] = [];
+        const gates: Gate[] = [];
 
         if (this.activeDepartureTime != null)
         {
@@ -86,8 +87,8 @@ export class StartLocations
                         {
                             gates.push(g);
                         }
-                    })
-                })
+                    });
+                });
         }
 
         return gates;
@@ -104,20 +105,20 @@ export class StartLocations
         if (this.dateFromFilter != null)
         {
             scenarios = scenarios.filter(s =>
-                s.criteria.datePeriod.from == null || s.criteria.datePeriod.from?.diff(this.dateFromFilter!).as("seconds") >= 0)
+                s.criteria.datePeriod.from == null || s.criteria.datePeriod.from?.diff(this.dateFromFilter!).as("seconds") >= 0);
         }
 
         if (this.dateToFilter != null)
         {
             scenarios = scenarios.filter(s =>
-                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") >= 0)
+                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") >= 0);
         }
 
         if (this.weekdaysFilter.length > 0)
         {
             this.weekdaysFilter.forEach(w => {
-                scenarios = scenarios.filter(s => s.criteria.weekdays.indexOf(w) > -1)
-            })
+                scenarios = scenarios.filter(s => s.criteria.weekdays.indexOf(w) > -1);
+            });
         }
 
         return scenarios;
@@ -131,17 +132,17 @@ export class StartLocations
     protected async onScenarioClick(scenario: DepartureTimeScenario): Promise<void>
     {
         const savedScenario = await this._modalService.open(
-                                                    ScenarioPanel,
-                                                    {
-                                                        vehicleGroups: this.settings.vehicleGroups,
-                                                        departureTime: this.activeDepartureTime!,
-                                                        scenario: scenario,
-                                                        isNew: false
-                                                    }).promise;
+            ScenarioPanel,
+            {
+                vehicleGroups: this.settings.vehicleGroups,
+                departureTime: this.activeDepartureTime!,
+                scenario: scenario,
+                isNew: false
+            }).promise;
 
         if (savedScenario != null)
         {
-            let index = this.activeDepartureTime!.scenarios.indexOf(scenario);
+            const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
             this.activeDepartureTime!.scenarios.splice(index, 1, savedScenario);
         }
     }
@@ -153,13 +154,13 @@ export class StartLocations
     {
         const scenario = new DepartureTimeScenario(undefined);
         const savedStop = await this._modalService.open(
-                                                    ScenarioPanel,
-                                                    {
-                                                        vehicleGroups: this.settings.vehicleGroups,
-                                                        departureTime: this.activeDepartureTime!,
-                                                        scenario: scenario,
-                                                        isNew: true
-                                                    }).promise;
+            ScenarioPanel,
+            {
+                vehicleGroups: this.settings.vehicleGroups,
+                departureTime: this.activeDepartureTime!,
+                scenario: scenario,
+                isNew: true
+            }).promise;
 
         if (savedStop != null)
         {
@@ -227,7 +228,7 @@ export class StartLocations
 
         if (savedDepartureTime != null)
         {
-            let index = this.settings.departureTimes.indexOf(departureTime);
+            const index = this.settings.departureTimes.indexOf(departureTime);
             this.settings.departureTimes.splice(index, 1, savedDepartureTime);
             this.activeDepartureTimeName = savedDepartureTime.name;
         }

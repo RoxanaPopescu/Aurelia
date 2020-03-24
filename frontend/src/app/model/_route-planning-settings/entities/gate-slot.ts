@@ -14,7 +14,7 @@ export class GateSlot
             this.earliestArrivalTime = data.earliestArrivalTime;
             this.latestDepartureTime = data.latestDepartureTime;
             this.timeBetweenDepartures = data.timeBetweenDepartures;
-            this.vehicleGroupId = data.vehicleGroup;
+            this.vehicleGroup = data.vehicleGroup;
         }
     }
 
@@ -36,5 +36,5 @@ export class GateSlot
     /**
      * The ID of the vehicle group to which the vehicle should belong.
      */
-    public vehicleGroupId: string;
+    public vehicleGroup: string;
 }

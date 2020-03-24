@@ -25,7 +25,7 @@ export class VehicleGroups
      * The id of the routeplan settings
      */
     @bindable
-    protected settings: RoutePlanningSettings;
+    public settings: RoutePlanningSettings;
 
     /**
      * Called when the `Remove vehicle group` icon is clicked on a vehicle group.

@@ -6,29 +6,41 @@
 
     <page-section class="no-start-locations" if.bind="settings.departureTimes.length === 0">
 
-        <h1 class="font-largest margin-large-top">Lorem ipsum</h1>
-        <h4 class="margin-top">Lorem ipsium</h4>
+        <empty-indicator class="margin-largest-top">
 
-        <button
-            appearance="outline"
-            class="add-location-button font-large margin-top"
-            accent="primary"
-            click.delegate="onAddStartLocationClick()">
+            <span slot="heading" translate>
+                No start locations specified
+            </span>
 
-            <icon name="plus-small"></icon>
-            <span translate>Add a new start location</span>
+            <div slot="details">
+                <button
+                    appearance="outline"
+                    class="add-location-button"
+                    accent="primary"
+                    click.delegate="onAddStartLocationClick()">
 
-        </button>
+                    <icon name="plus-small"></icon>
+
+                    <span translate>
+                        Add start location
+                    </span>
+
+                </button>
+            </div>
+
+        </empty-indicator>
 
     </page-section>
 
-    <template if.bind="settings.departureTimes.length !== 0">
+    <template if.bind="settings.departureTimes.length > 0">
 
         <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
 
             <page-tab class="font-large" repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
 
-                <span class="text-truncate" title.bind="departureTime.name">${departureTime.name}</span>
+                <span class="text-truncate" title.bind="departureTime.name">
+                    ${departureTime.name}
+                </span>
 
                 <div class="button-container">
 
@@ -40,6 +52,7 @@
                         click.delegate="onEditStartLocationClick(departureTime)">
                         <icon name="edit-small"></icon>
                     </button>
+
                     <button
                         appearance="icon"
                         accent="primary"
@@ -59,7 +72,10 @@
                 click.delegate="onAddStartLocationClick()">
 
                 <icon name="plus-small"></icon>
-                <span translate>Add a new start location</span>
+
+                <span translate>
+                    Add start location
+                </span>
 
             </button>
 
@@ -72,6 +88,7 @@
                 <div class="font-largest departure-time-name">
                     ${activeDepartureTime.name}
                 </div>
+
                 <h4 class="margin-top">
                     ${activeDepartureTime.startLocation.address.toString()}
                 </h4>
@@ -82,18 +99,24 @@
 
         <page-section class="--line-above" if.bind="activeDepartureTime.scenarios.length == 0">
 
-            <empty-indicator>
+            <empty-indicator size="medium" class="margin-larger-top">
 
-                <span slot="heading" translate>The list of reservations is empty</span>
+                <span slot="heading" translate>
+                    No reservations specified
+                </span>
+
                 <div slot="details">
                     <button
                         appearance="outline"
-                        class="add-reservation-button margin-larger-top"
+                        class="add-reservation-button"
                         accent="primary"
                         click.delegate="onAddScenarioClick()">
 
                         <icon name="plus-small"></icon>
-                        <span translate>Add a reservation</span>
+
+                        <span translate>
+                            Add reservation
+                        </span>
 
                     </button>
                 </div>
@@ -114,7 +137,9 @@
                             Reservation times for gates
                         </div>
 
-                        <h4 class="margin-medium-top">Lorem ipsum</h4>
+                        <h4 class="margin-medium-top">
+                            Lorem ipsum
+                        </h4>
 
                     </div>
 
@@ -127,7 +152,10 @@
                             click.delegate="onAddScenarioClick()">
 
                             <icon name="plus-small"></icon>
-                            <span translate>Add a reservation</span>
+
+                            <span translate>
+                                Add reservation
+                            </span>
 
                         </button>
 
@@ -151,8 +179,7 @@
                             <range-validator
                                 active.bind="true"
                                 value.bind="dateFromFilter"
-                                max.bind="dateToFilter"
-                                max-inclusive.bind="false">
+                                max.bind="dateToFilter">
 
                                 <template replace-part="invalid-max" translate>
                                     Please choose a time before the to time.
@@ -179,8 +206,7 @@
                             <range-validator
                                 active.bind="true"
                                 value.bind="dateToFilter"
-                                min.bind="dateFromFilter"
-                                min-inclusive.bind="false">
+                                min.bind="dateFromFilter">
 
                                 <template replace-part="invalid-min" translate>
                                     Please choose a time after the from time.
@@ -230,8 +256,7 @@
 
             <page-section class="--line-above">
 
-                <data-table
-                    appearance="rows">
+                <data-table appearance="rows" class="--reduce-header-whitespace">
 
                     <data-table-headers>
 
@@ -279,7 +304,9 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="criteria-weekdays" repeat.for="weekday of scenario.criteria.weekdays">${weekday | weekday}</span>
+                                <span class="criteria-weekdays" repeat.for="weekday of scenario.criteria.weekdays">
+                                    ${weekday | weekday}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
@@ -291,7 +318,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${scenario.gates[0].slots[0].vehicleGroupId}
+                                ${scenario.gates[0].slots[0].vehicleGroup}
                             </data-table-cell>
 
                             <data-table-cell align="right">

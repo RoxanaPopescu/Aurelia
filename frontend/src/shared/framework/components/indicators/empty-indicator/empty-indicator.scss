@@ -33,7 +33,7 @@ empty-indicator
             opacity: var(--opacity-faded);
         }
 
-        > [slot="details"]
+        .empty-indicator > [slot="details"]
         {
             margin-top: var(--font-large-margin-bottom);
         }
@@ -60,7 +60,7 @@ empty-indicator
             opacity: var(--opacity-faded);
         }
 
-        > [slot="details"]
+        .empty-indicator > [slot="details"]
         {
             margin-top: var(--font-larger-margin-bottom);
         }
@@ -87,7 +87,7 @@ empty-indicator
             opacity: var(--opacity-faded);
         }
 
-        > [slot="details"]
+        .empty-indicator > [slot="details"]
         {
             margin-top: var(--font-largest-margin-bottom);
         }

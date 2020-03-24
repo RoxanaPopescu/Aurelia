@@ -24,12 +24,6 @@ export class TaskTimes
     private readonly _modalService: ModalService;
 
     /**
-     * The id of the routeplan settings
-     */
-    @bindable
-    protected settings: RoutePlanningSettings;
-
-    /**
      * The validation for the base task time.
      */
     protected baseTaskTimeValidation: IValidation;
@@ -38,6 +32,12 @@ export class TaskTimes
      * The validation for the round definition.
      */
     protected roundDefinitionValidation: IValidation;
+
+    /**
+     * The id of the routeplan settings
+     */
+    @bindable
+    public settings: RoutePlanningSettings;
 
     /**
      * Called when the "Edit round definition" icon is clicked.
