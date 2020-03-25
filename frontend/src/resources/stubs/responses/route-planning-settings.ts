@@ -21,7 +21,7 @@ export default
                 "uturnStrategy": "allowed",
                 "curbApproachStrategy": "either-side-of-vehicle",
                 "oneRoutePlanPerStartLocation": false,
-                "timeWindowAdjustment":
+                "timeWindowAdjustmentDelivery":
                 {
                     "start": 300,
                     "end": 600
@@ -140,7 +140,7 @@ export default
             "departureTimes":
             [
                 {
-                    "name": "Hej2",
+                    "name": "Terminal 1",
                     "startLocation":
                     {
                         "address":
@@ -225,7 +225,7 @@ export default
                     ]
                 },
                 {
-                    "name": "hej",
+                    "name": "Terminal 2",
                     "startLocation":
                     {
                         "address":
