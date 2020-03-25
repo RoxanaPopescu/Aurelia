@@ -270,20 +270,112 @@
                         </span>
                     </div>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{AreaRouteNumber}')">
-                        Area route number
+                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')">
+                        <div accent="primary">
+                            {DayOfWeek}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Day of week as letter, A = Monday, B = Tuesday etc.
+                        </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Weekday}')">
-                        Weekday
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocation}')">
+                        <div accent="primary">
+                            {StartLocation}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            First three letters of start location on route
+                        </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{RouteplanRouteNumber}')">
-                        Routeplan route number
+                    <item click.trigger="onRouteNamePlaceholderClick('{EndLocation}')">
+                        <div accent="primary">
+                            {EndLocation}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            First three letters of end location om route
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{Gate}')">
+                        <div accent="primary">
+                            {Gate}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Gate of the route
+                        </div>
                     </item>
 
                     <item click.trigger="onRouteNamePlaceholderClick('{StartTime}')">
-                        Start time
+                        <div accent="primary">
+                            {StartTime}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Start time of route, eg. 1040
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{Number}')">
+                        <div accent="primary">
+                            {Number}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Route number index in optimization, sorted by start time
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{Year}')">
+                        <div accent="primary">
+                            {Year}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Year of the day of delivery
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{Month}')">
+                        <div accent="primary">
+                            {Month}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Month of the day of delivery
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{Day}')">
+                        <div accent="primary">
+                            {Day}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Day of the delivery
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip1}')">
+                        <div accent="primary">
+                            {StartLocationZip1}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            First character in the zip code on the start location
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip}')">
+                        <div accent="primary">
+                            {StartLocationZip}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Full zip code on the start location
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{LastDeliveryZip}')">
+                        <div accent="primary">
+                            {LastDeliveryZip}
+                        </div>
+                        <div class="font-small opacity-faded" translate>
+                            Full zip code on last delivery
+                        </div>
                     </item>
 
                 </select-button>

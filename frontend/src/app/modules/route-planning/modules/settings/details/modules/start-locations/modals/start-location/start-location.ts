@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 import { DepartureTime, RoutePlanningSettings } from "app/model/_route-planning-settings";
 import { IValidation } from "shared/framework";
@@ -8,11 +8,6 @@ import { AddressService } from "app/components/address-input/services/address-se
 @autoinject
 export class StartLocationDialog
 {
-    /**
-     * The validation for the modal.
-     */
-    protected validation: IValidation;
-
     /**
      * Creates a new instance of the type.
      * @param modal The `Modal` instance representing the modal.
@@ -28,7 +23,24 @@ export class StartLocationDialog
     private readonly _modal: Modal;
     private _result: DepartureTime | undefined;
 
-    protected model: { settings: RoutePlanningSettings; departureTime: DepartureTime; isNew: boolean; }
+    /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
+
+    /**
+     * The model for the modal.
+     */
+    protected model: { settings: RoutePlanningSettings; departureTime: DepartureTime; isNew: boolean };
+
+    /**
+     * Called by the framework when the modal is deactivated.
+     * @returns The departure time saved, undefined if the user cancels.
+     */
+    public deactivate(): DepartureTime | undefined
+    {
+        return this._result;
+    }
 
     /**
      * Called by the framework when the modal is activated.
@@ -43,18 +55,9 @@ export class StartLocationDialog
      * Called when the "Cancel" icon is clicked.
      * Closes the modal.
      */
-    protected onCancelClick(): void
+    protected async onCancelClick(): Promise<void>
     {
-        this._modal.close();
-    }
-
-    /**
-     * Called by the framework when the modal is deactivated.
-     * @returns The departure time saved, undefined if the user cancels.
-     */
-    public deactivate(): DepartureTime | undefined
-    {
-        return this._result;
+        await this._modal.close();
     }
 
     /**
@@ -95,7 +98,7 @@ export class StartLocationDialog
             // Set the result of the modal.
             this._result = this.model.departureTime;
 
-            this._modal.close();
+            await this._modal.close();
         }
         catch (error)
         {
