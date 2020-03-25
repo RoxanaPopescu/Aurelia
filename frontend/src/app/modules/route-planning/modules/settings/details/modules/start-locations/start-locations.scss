@@ -85,18 +85,5 @@ start-locations
     data-table
     {
         --data-table-columns: auto auto auto auto auto auto auto;
-
-        .criteria-weekdays
-        {
-            &:not(:first-child)
-            {
-                text-transform: lowercase;
-
-                &:before
-                {
-                    content: ", ";
-                }
-            }
-        }
     }
 }

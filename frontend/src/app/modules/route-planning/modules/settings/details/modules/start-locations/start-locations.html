@@ -304,8 +304,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="criteria-weekdays" repeat.for="weekday of scenario.criteria.weekdays">
-                                    ${weekday | weekday}
+                                ${scenario.criteria.weekdays | weekdayList}
                                 </span>
                             </data-table-cell>
 
