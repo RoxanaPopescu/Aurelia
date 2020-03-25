@@ -34,7 +34,7 @@ export class TaskTimes
     protected roundDefinitionValidation: IValidation;
 
     /**
-     * The id of the routeplan settings
+     * The route planning rule set.
      */
     @bindable
     public settings: RoutePlanningSettings;

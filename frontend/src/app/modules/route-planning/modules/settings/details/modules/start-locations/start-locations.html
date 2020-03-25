@@ -17,7 +17,7 @@
                     appearance="outline"
                     class="add-location-button"
                     accent="primary"
-                    click.delegate="onAddStartLocationClick()">
+                    click.delegate="onAddDepartureTimeClick()">
 
                     <icon name="plus-small"></icon>
 
@@ -49,7 +49,7 @@
                         accent="primary"
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Edit start location"
-                        click.delegate="onEditStartLocationClick(departureTime)">
+                        click.delegate="onEditDepartureTimeClick(departureTime)">
                         <icon name="edit-small"></icon>
                     </button>
 
@@ -58,7 +58,7 @@
                         accent="primary"
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Delete start location"
-                        click.delegate="onDeleteStartLocationClick(departureTime)">
+                        click.delegate="onDeleteDepartureTimeClick(departureTime)">
                         <icon name="delete-small"></icon>
                     </button>
 
@@ -69,7 +69,7 @@
             <button
                 appearance="none"
                 class="add-location-button font-large"
-                click.delegate="onAddStartLocationClick()">
+                click.delegate="onAddDepartureTimeClick()">
 
                 <icon name="plus-small"></icon>
 
@@ -240,14 +240,6 @@
                             ${weekday + 1 | weekday}
                         </item>
 
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.criteria.weekdays.length > 0 ? true : undefined">
-                            </required-validator>
-
-                        </div>
-
                     </tags-input>
 
                 </div>
@@ -292,8 +284,7 @@
 
                     <template repeat.for="scenario of filteredScenarios">
 
-                        <data-table-row
-                            click.call="onScenarioClick(scenario)">
+                        <data-table-row click.call="onScenarioClick(scenario)">
 
                             <data-table-cell>
                                 ${scenario.name}

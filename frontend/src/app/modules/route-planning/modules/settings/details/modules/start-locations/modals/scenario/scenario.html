@@ -9,7 +9,7 @@
         <div slot="actions">
 
             <button
-                if.bind="!isNew"
+                if.bind="!model.isNew"
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSaveClick()">
@@ -49,28 +49,33 @@
 
                 <div class="control-row margin-large-bottom">
 
-                    <text-input label="above" value.bind="model.scenario.name" class="flex-basis-1-of-2">
+                    <text-input
+                        label="above"
+                        value.bind="model.scenario.name"
+                        class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             Name
                         </div>
 
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.scenario.name">
+                            </required-validator>
+
+                        </div>
+
                     </text-input>
 
-                    <select-input
+                    <text-input
                         label="above"
-                        none.bind="false"
-                        value.bind="model.scenario.gates[0]"
-                        display-value.bind="model.scenario.gates[0].name"
+                        value.bind="model.scenario.gates[0].name"
                         class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             Gate name
                         </div>
-
-                        <item repeat.for="gateName of gateNames" model.bind="gateName">
-                            ${gateName}
-                        </item>
 
                         <div slot="validation">
 
@@ -80,7 +85,7 @@
 
                         </div>
 
-                    </select-input>
+                    </text-input>
 
                 </div>
 
@@ -309,9 +314,9 @@
 
             </modal-section>
 
-            <div if.bind="isNew" class="button-container margin-larger-top">
+            <div if.bind="model.isNew" class="button-container margin-larger-top">
 
-                <button class="margin-large-left" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                     Create reservation
                 </button>
 

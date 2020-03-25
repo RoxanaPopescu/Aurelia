@@ -1,5 +1,5 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
-import { RoutePlanningSettings, Gate, DepartureTimeScenario } from "app/model/_route-planning-settings";
+import { RoutePlanningSettings, DepartureTimeScenario } from "app/model/_route-planning-settings";
 import { DepartureTime } from "app/model/_route-planning-settings/entities/departure-time";
 import { ModalService, IValidation } from "shared/framework";
 import { ScenarioPanel } from "./modals/scenario/scenario";
@@ -33,69 +33,51 @@ export class StartLocations
     protected validation: IValidation;
 
     /**
-     * Current tab page name the user has active.
+     * The earliest date for which gate slots should be presented.
      */
-    @bindable
-    public activeDepartureTimeName: string | undefined;
+    protected dateFromFilter: DateTime | undefined;
 
     /**
-     * The date used to filter scenarios.
+     * The latest date for which gate slots should be presented.
      */
-    @bindable
-    public dateFromFilter: DateTime | undefined;
+    protected dateToFilter: DateTime | undefined;
 
     /**
-     * The date used to filter scenarios.
+     * The weekdays for which gate slots should be presented.
      */
-    @bindable
-    public dateToFilter: DateTime | undefined;
+    protected weekdaysFilter: DayOfWeek[] = [];
 
     /**
-     * The weekdays used to filter scenarios.
+     * The name of the departure time currently being presented.
      */
-    @bindable
-    public weekdaysFilter: DayOfWeek[] = [];
+    protected activeDepartureTimeName: string | undefined;
 
     /**
-     * The id of the routeplan settings
+     * Gets the current active departure time.
+     */
+    protected get activeDepartureTime(): DepartureTime | undefined
+    {
+        return this.settings?.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
+    }
+
+    /**
+     * The route planning rule set.
      */
     @bindable
     public settings: RoutePlanningSettings;
 
     /**
-     * Called by the framework when the module is activated.
+     * Called by the framework when the `settings` property changes.
+     * @param newValue The new value.
      */
     public settingsChanged(newValue: RoutePlanningSettings): void
     {
+        newValue.departureTimes[0].name = newValue.departureTimes[0]?.name || "Unnamed location";
         this.activeDepartureTimeName = newValue.departureTimes[0]?.name;
     }
 
     /**
-     * Extract unique gates.
-     */
-    @computedFrom("activeDepartureTime")
-    protected get gates(): Gate[]
-    {
-        const gates: Gate[] = [];
-
-        if (this.activeDepartureTime != null)
-        {
-            this.activeDepartureTime.scenarios
-                .forEach(s => {
-                    s.gates.forEach(g => {
-                        if (gates.filter(gate => gate.name === g.name).length === 0)
-                        {
-                            gates.push(g);
-                        }
-                    });
-                });
-        }
-
-        return gates;
-    }
-
-    /**
-     * Returns an array of scenarios filtered by date and tag filters.
+     * Gets the scenarios of the current departure time, filtered by date range and weekdays.
      */
     @computedFrom("activeDepartureTime.scenarios", "dateFromFilter", "dateToFilter", "weekdaysFilter")
     protected get filteredScenarios(): DepartureTimeScenario[]
@@ -105,99 +87,68 @@ export class StartLocations
         if (this.dateFromFilter != null)
         {
             scenarios = scenarios.filter(s =>
-                s.criteria.datePeriod.from == null || s.criteria.datePeriod.from?.diff(this.dateFromFilter!).as("seconds") >= 0);
+                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.startOf("day").diff(this.dateFromFilter!).as("seconds") >= 0);
         }
 
         if (this.dateToFilter != null)
         {
             scenarios = scenarios.filter(s =>
-                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") <= 0);
+                s.criteria.datePeriod.from == null || s.criteria.datePeriod.from?.startOf("day").diff(this.dateToFilter!).as("seconds") <= 0);
         }
 
         if (this.weekdaysFilter.length > 0)
         {
-            this.weekdaysFilter.forEach(w => {
-                scenarios = scenarios.filter(s => s.criteria.weekdays.indexOf(w) > -1);
-            });
+            this.weekdaysFilter.forEach(w =>
+                scenarios = scenarios.filter(s => s.criteria.weekdays.includes(w)));
         }
 
         return scenarios;
     }
 
     /**
-     * Called when a scenario is clicked.
-     * Opens a modal showing the details of the scenario.
-     * @param scenario The stop to edit.
+     * Called when the "Add start location" button is clicked.
      */
-    protected async onScenarioClick(scenario: DepartureTimeScenario): Promise<void>
+    protected async onAddDepartureTimeClick(): Promise<void>
     {
-        const savedScenario = await this._modalService.open(
-            ScenarioPanel,
-            {
-                vehicleGroups: this.settings.vehicleGroups,
-                departureTime: this.activeDepartureTime!,
-                scenario: scenario,
-                isNew: false
-            }).promise;
-
-        if (savedScenario != null)
+        const model =
         {
-            const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
-            this.activeDepartureTime!.scenarios.splice(index, 1, savedScenario);
+            settings: this.settings,
+            departureTime: new DepartureTime(),
+            isNew: true
+        };
+
+        const editedDepartureTime = await this._modalService.open(StartLocationDialog, model).promise;
+
+        if (editedDepartureTime != null)
+        {
+            this.settings.departureTimes.push(editedDepartureTime);
+            this.activeDepartureTimeName = editedDepartureTime.name;
         }
     }
 
     /**
-     * Called when the `Add new scenario` button is clicked.
+     * Called when the "Edit start location" icon is clicked.
+     * Opens a modal showing the details of the departure time.
+     * @param departureTime The departure time to edit.
      */
-    protected async onAddScenarioClick(): Promise<void>
+    protected async onEditDepartureTimeClick(departureTime: DepartureTime): Promise<void>
     {
-        const scenario = new DepartureTimeScenario(undefined);
-        const savedStop = await this._modalService.open(
-            ScenarioPanel,
-            {
-                vehicleGroups: this.settings.vehicleGroups,
-                departureTime: this.activeDepartureTime!,
-                scenario: scenario,
-                isNew: true
-            }).promise;
+        const editedDepartureTime = await this._modalService.open(StartLocationDialog, { settings: this.settings, departureTime: departureTime, isNew: false }).promise;
 
-        if (savedStop != null)
+        if (editedDepartureTime != null)
         {
-            // Do something
+            const index = this.settings.departureTimes.indexOf(departureTime);
+            this.settings.departureTimes.splice(index, 1, editedDepartureTime);
+            this.activeDepartureTimeName = editedDepartureTime.name;
         }
     }
 
     /**
-     * Called when the `Remove scenario` icon is clicked on a scenario.
-     * Asks the user to confirm, then deletes the scenario from the departure time.
-     * @param scenario The scenario to remove.
-     */
-    protected async onDeleteScenarioClick(scenario: DepartureTimeScenario): Promise<void>
-    {
-        const confirmed = await this._modalService.open(ConfirmDeleteScenarioDialog, scenario).promise;
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        try
-        {
-            this.activeDepartureTime!.scenarios.splice(this.activeDepartureTime!.scenarios.indexOf(scenario), 1);
-        }
-        catch (error)
-        {
-            Log.error("Could not remove scenario", error);
-        }
-    }
-
-    /**
-     * Called when the `Remove departure time` icon is clicked on a departure time.
+     * Called when the `Delete start location` icon is clicked on a departure time.
      * Asks the user to confirm, then deletes the departure time from the departure time.
      * @param departureTime The departure time to remove.
      */
-    protected async onDeleteStartLocationClick(departureTime: DepartureTime): Promise<void>
+    protected async onDeleteDepartureTimeClick(departureTime: DepartureTime): Promise<void>
     {
         const confirmed = await this._modalService.open(ConfirmDeleteStartLocationDialog, departureTime).promise;
 
@@ -213,47 +164,77 @@ export class StartLocations
         }
         catch (error)
         {
-            Log.error("Could not remove start location", error);
+            Log.error("Could not delete start location", error);
         }
     }
 
     /**
-     * Called when the "Edit start location" icon is clicked.
-     * Opens a modal showing the details of the departure time.
-     * @param departureTime The start location to edit.
+     * Called when the `Add reservation` button is clicked.
      */
-    protected async onEditStartLocationClick(departureTime: DepartureTime): Promise<void>
+    protected async onAddScenarioClick(): Promise<void>
     {
-        const savedDepartureTime = await this._modalService.open(StartLocationDialog, { settings: this.settings, departureTime: departureTime, isNew: false }).promise;
-
-        if (savedDepartureTime != null)
+        const model =
         {
-            const index = this.settings.departureTimes.indexOf(departureTime);
-            this.settings.departureTimes.splice(index, 1, savedDepartureTime);
-            this.activeDepartureTimeName = savedDepartureTime.name;
-        }
-    }
+            vehicleGroups: this.settings.vehicleGroups,
+            departureTime: this.activeDepartureTime!,
+            scenario: new DepartureTimeScenario(),
+            isNew: true
+        };
 
-    /**
-     * Called when the "Add start location" button is clicked.
-     */
-    protected async onAddStartLocationClick(): Promise<void>
-    {
-        let departureTime: DepartureTime | undefined = new DepartureTime();
-        departureTime = await this._modalService.open(StartLocationDialog, { settings: this.settings, departureTime: departureTime, isNew: true }).promise;
+        const editedStop = await this._modalService.open(ScenarioPanel, model).promise;
 
-        if (departureTime != null)
+        if (editedStop != null)
         {
-            this.settings.departureTimes.push(departureTime);
-            this.activeDepartureTimeName = departureTime.name;
+            this.activeDepartureTime!.scenarios.push(editedStop);
         }
     }
 
     /**
-     * Gets the current active departure time.
+     * Called when a scenario is clicked.
+     * Opens a modal showing the details of the scenario.
+     * @param scenario The scenario being clicked.
      */
-    protected get activeDepartureTime(): DepartureTime | undefined
+    protected async onScenarioClick(scenario: DepartureTimeScenario): Promise<void>
     {
-        return this.settings?.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
+        const model =
+        {
+            vehicleGroups: this.settings.vehicleGroups,
+            departureTime: this.activeDepartureTime!,
+            scenario,
+            isNew: false
+        };
+
+        const editedScenario = await this._modalService.open(ScenarioPanel, model).promise;
+
+        if (editedScenario != null)
+        {
+            const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
+            this.activeDepartureTime!.scenarios.splice(index, 1, editedScenario);
+        }
+    }
+
+    /**
+     * Called when the `Delete reservation` icon is clicked on a scenario.
+     * Asks the user to confirm, then deletes the scenario.
+     * @param scenario The scenario to delete.
+     */
+    protected async onDeleteScenarioClick(scenario: DepartureTimeScenario): Promise<void>
+    {
+        const confirmed = await this._modalService.open(ConfirmDeleteScenarioDialog, scenario).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
+            this.activeDepartureTime!.scenarios.splice(index, 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not delete reservation", error);
+        }
     }
 }

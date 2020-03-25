@@ -22,7 +22,7 @@ export class VehicleGroups
     private readonly _modalService: ModalService;
 
     /**
-     * The id of the routeplan settings
+     * The route planning rule set.
      */
     @bindable
     public settings: RoutePlanningSettings;

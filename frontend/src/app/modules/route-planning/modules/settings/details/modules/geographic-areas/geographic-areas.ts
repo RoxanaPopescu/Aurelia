@@ -43,10 +43,16 @@ export class GeographicAreas
     protected mapRedrawTrigger = 0;
 
     /**
-     * The id of the routeplan settings
+     * The route planning rule set.
      */
     @bindable
     public settings: RoutePlanningSettings;
+
+    /**
+     * True if the componentis visible to the user, otherwise false.
+     */
+    @bindable
+    public visible = false;
 
     /**
      * Called when the "Add area" button is clicked.

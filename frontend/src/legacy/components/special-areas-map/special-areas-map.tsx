@@ -117,6 +117,7 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
         {
             this.hasFittedBounds = true;
             this.tryFitBounds();
+            setTimeout(() => this.tryFitBounds(), 50);
         }
     }
 

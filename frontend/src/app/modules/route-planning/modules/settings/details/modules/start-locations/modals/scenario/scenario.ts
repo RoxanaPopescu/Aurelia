@@ -1,6 +1,6 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
-import { DepartureTimeScenario, DepartureTime, Gate, VehicleGroup } from "app/model/_route-planning-settings";
+import { DepartureTimeScenario, DepartureTime, VehicleGroup, Gate, GateSlot } from "app/model/_route-planning-settings";
 import { Duration } from "luxon";
 import { Log } from "shared/infrastructure";
 
@@ -50,19 +50,35 @@ export class ScenarioPanel
      */
     public activate(model: { vehicleGroups: VehicleGroup[]; departureTime: DepartureTime; scenario: DepartureTimeScenario; isNew: boolean }): void
     {
-        this.model = { vehicleGroups: model.vehicleGroups, departureTime: model.departureTime, scenario: model.scenario.clone(), isNew: model.isNew };
-
-        if (!model.isNew)
+        this.model =
         {
-            this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroup)[0];
-            this.selectedEarliestArrival = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].earliestArrivalTime });
-            this.selectedLatestDeparture = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].latestDepartureTime });
+            vehicleGroups: model.vehicleGroups,
+            departureTime: model.departureTime,
+            scenario: model.scenario.clone(),
+            isNew: model.isNew
+        };
+
+        if (this.model.scenario.gates.length === 0)
+        {
+            this.model.scenario.gates.push(new Gate());
+        }
+
+        if (this.model.scenario.gates[0].slots.length === 0)
+        {
+            this.model.scenario.gates[0].slots.push(new GateSlot());
+        }
+
+        if (!this.model.isNew)
+        {
+            this.selectedVehicleGroup = this.model.vehicleGroups.filter(v => v.id === this.model.scenario.gates[0].slots[0].vehicleGroup)[0];
+            this.selectedEarliestArrival = Duration.fromObject({ seconds: this.model.scenario.gates[0].slots[0].earliestArrivalTime });
+            this.selectedLatestDeparture = Duration.fromObject({ seconds: this.model.scenario.gates[0].slots[0].latestDepartureTime });
         }
     }
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The scenario on save and undefined on cancel.
+     * @returns The scenario to save, or undefined if cancelled.
      */
     public deactivate(): DepartureTimeScenario | undefined
     {
@@ -70,42 +86,8 @@ export class ScenarioPanel
     }
 
     /**
-     * Extract unique gates.
-     */
-    @computedFrom("model.departureTime")
-    protected get gateNames(): string[]
-    {
-        const gates: Gate[] = [];
-
-        if (this.model.departureTime != null)
-        {
-            for (const scenario of this.model.departureTime.scenarios)
-            {
-                for (const gate of scenario.gates)
-                {
-                    if (!gates.some(g => g.name === gate.name))
-                    {
-                        gates.push(gate);
-                    }
-                }
-            }
-        }
-
-        return gates.map(g => g.name);
-    }
-
-    /**
-     * Called when the "Cancel" icon is clicked.
-     * Closes the modal.
-     */
-    protected async onCancelClick(): Promise<void>
-    {
-        await this._modal.close();
-    }
-
-    /**
      * Called when the "Save" icon is clicked.
-     * Saves changes closes the modal.
+     * Saves changes and closes the modal.
      */
     protected async onSaveClick(): Promise<void>
     {

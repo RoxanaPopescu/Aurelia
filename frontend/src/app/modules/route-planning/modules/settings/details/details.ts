@@ -43,12 +43,12 @@ export class DetailsPage
     protected validation: IValidation;
 
     /**
-     * The id of the routeplan settings
+     * The route planning rule set.
      */
     protected settings: RoutePlanningSettings;
 
     /**
-     * The id of the routeplan settings
+     * True if the route planning rule set is new, otherwise false.
      */
     protected isNew: boolean;
 
