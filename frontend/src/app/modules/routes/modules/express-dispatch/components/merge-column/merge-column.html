@@ -41,7 +41,7 @@
 
         </page-header>
 
-        <page-section>
+        <page-section class="flex-grow min-height-0">
 
             <div class="stop-lists ${isDragging ? '--dragging' : ''}">
 
@@ -76,7 +76,7 @@
                                         <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
                                         <div class="margin-smallest-top">${stop.stop.location.address}</div>
                                     </div>
-                                    <div class="flex-push-right text-align-right">
+                                    <div class="flex-push-right text-align-right flex-basis-1-of-2">
                                         <div>
                                             &nbsp;${stop.stop.orderIds | list: 'short'}
                                         </div>
@@ -142,7 +142,7 @@
                                         <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
                                         <div class="margin-smallest-top">${stop.stop.location.address}</div>
                                     </div>
-                                    <div class="flex-push-right text-align-right">
+                                    <div class="flex-push-right text-align-right flex-basis-1-of-2">
                                         <div>
                                             &nbsp;${stop.stop.orderIds | list: 'short'}
                                         </div>
