@@ -111,7 +111,7 @@ export class StartLocations
         if (this.dateToFilter != null)
         {
             scenarios = scenarios.filter(s =>
-                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") >= 0);
+                s.criteria.datePeriod.to == null || s.criteria.datePeriod.to?.diff(this.dateToFilter!).as("seconds") <= 0);
         }
 
         if (this.weekdaysFilter.length > 0)
