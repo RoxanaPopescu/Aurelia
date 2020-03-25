@@ -1,6 +1,6 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
-import { DepartureTimeScenario, DepartureTime, Gate, VehicleGroup, GateSlot } from "app/model/_route-planning-settings";
+import { DepartureTimeScenario, DepartureTime, Gate, VehicleGroup } from "app/model/_route-planning-settings";
 import { Duration } from "luxon";
 import { Log } from "shared/infrastructure";
 
@@ -23,11 +23,6 @@ export class ScenarioPanel
      * The vehicle group the scenario is linked to.
      */
     protected selectedVehicleGroup: VehicleGroup | undefined;
-
-    /**
-     * The interval for which the vehicles can be at the gate.
-     */
-    protected reservationInterval: number | undefined;
 
     /**
      * The selected duration for earliest arrival.
@@ -60,7 +55,6 @@ export class ScenarioPanel
         if (!model.isNew)
         {
             this.selectedVehicleGroup = model.vehicleGroups.filter(v => v.id === model.scenario.gates[0].slots[0].vehicleGroup)[0];
-            this.reservationInterval = model.scenario.criteria.datePeriod.duration.as("seconds");
             this.selectedEarliestArrival = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].earliestArrivalTime });
             this.selectedLatestDeparture = Duration.fromObject({ seconds: model.scenario.gates[0].slots[0].latestDepartureTime });
         }
@@ -129,16 +123,9 @@ export class ScenarioPanel
             // Mark the modal as busy.
             this._modal.busy = true;
 
-            this.model.scenario.gates[0].slots =
-            [
-                new GateSlot(
-                {
-                    earliestArrivalTime: this.selectedEarliestArrival!.as("seconds"),
-                    latestDepartureTime: this.selectedLatestDeparture!.as("seconds"),
-                    timeBetweenDepartures: this.reservationInterval,
-                    vehicleGroup: this.selectedVehicleGroup!.id
-                })
-            ];
+            this.model.scenario.gates[0].slots[0].earliestArrivalTime = this.selectedEarliestArrival!.as("seconds");
+            this.model.scenario.gates[0].slots[0].latestDepartureTime = this.selectedLatestDeparture!.as("seconds");
+            this.model.scenario.gates[0].slots[0].vehicleGroup = this.selectedVehicleGroup!.id;
 
             // Set the result of the modal.
             this._result = this.model.scenario;
