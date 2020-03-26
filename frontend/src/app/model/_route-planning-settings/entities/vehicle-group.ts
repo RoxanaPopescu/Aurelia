@@ -90,4 +90,17 @@ export class VehicleGroup
     {
         return clone(this);
     }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+
+        delete data.vehicleType;
+        data.vehicleTypeId = this.vehicleType.id;
+
+        return data;
+    }
 }

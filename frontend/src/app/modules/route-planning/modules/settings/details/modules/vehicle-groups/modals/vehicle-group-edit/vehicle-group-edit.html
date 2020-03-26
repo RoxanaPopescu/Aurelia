@@ -188,7 +188,7 @@
                 </number-input>
 
                 <number-input
-                    value.bind="model.cost.taskTime"
+                    value.bind="model.cost.time"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
@@ -204,12 +204,12 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.cost.taskTime">
+                            value.bind="model.cost.time">
                         </required-validator>
 
                         <range-validator
                             active.bind="true"
-                            value.bind="model.cost.taskTime"
+                            value.bind="model.cost.time"
                             min.bind="0">
                         </range-validator>
 

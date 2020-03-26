@@ -16,7 +16,7 @@ export class VehicleGroupCost
             this.newRoute = data.newRoute;
             this.waitingTime = data.waitingTime;
             this.drivingTime = data.drivingTime;
-            this.taskTime = data.taskTime;
+            this.time = data.time;
             this.distance = data.distance;
         }
     }
@@ -39,7 +39,7 @@ export class VehicleGroupCost
     /**
      * The cost of every minute used to load or unload.
      */
-    public taskTime: number;
+    public time: number;
 
     /**
      * The cost of every kilometer driven.

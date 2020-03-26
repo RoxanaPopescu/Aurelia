@@ -66,4 +66,17 @@ export class SpecialArea
     {
         return clone(this);
     }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+
+        delete data.expanded;
+        delete data.selected;
+
+        return data;
+    }
 }
