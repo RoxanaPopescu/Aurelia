@@ -237,4 +237,14 @@ export class StartLocations
             Log.error("Could not delete reservation", error);
         }
     }
+
+    /**
+     * Gets the name of the vehicle group with the specified ID.
+     * @param vehicleGroupId The ID of the vehicle group.
+     * @returns The name of the vehicle group.
+     */
+    protected getVehicleGroupName(vehicleGroupId: string): string | undefined
+    {
+        return this.settings.vehicleGroups.find(g => g.id === vehicleGroupId)?.name;
+    }
 }
