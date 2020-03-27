@@ -23,14 +23,13 @@ empty-indicator
         {
             height: 15rem;
             width: 15rem;
-            opacity: var(--opacity-faded);
             margin-bottom: var(--font-base-margin-bottom);
         }
 
         .empty-indicator-heading
         {
             font: var(--font-large);
-            opacity: var(--opacity-faded);
+            opacity: var(--opacity-faded-less);
         }
 
         .empty-indicator > [slot="details"]
@@ -50,14 +49,13 @@ empty-indicator
         {
             height: 20rem;
             width: 20rem;
-            opacity: var(--opacity-faded);
             margin-bottom: var(--font-large-margin-bottom);
         }
 
         .empty-indicator-heading
         {
             font: var(--font-larger);
-            opacity: var(--opacity-faded);
+            opacity: var(--opacity-faded-less);
         }
 
         .empty-indicator > [slot="details"]
@@ -77,14 +75,13 @@ empty-indicator
         {
             height: 25rem;
             width: 25rem;
-            opacity: var(--opacity-faded);
             margin-bottom: var(--font-large-margin-bottom);
         }
 
         .empty-indicator-heading
         {
             font: var(--font-largest);
-            opacity: var(--opacity-faded);
+            opacity: var(--opacity-faded-less);
         }
 
         .empty-indicator > [slot="details"]
