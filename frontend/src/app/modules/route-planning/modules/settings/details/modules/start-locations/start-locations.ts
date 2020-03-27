@@ -72,7 +72,6 @@ export class StartLocations
      */
     public settingsChanged(newValue: RoutePlanningSettings): void
     {
-        newValue.departureTimes[0].name = newValue.departureTimes[0]?.name || "Unnamed location";
         this.activeDepartureTimeName = newValue.departureTimes[0]?.name;
     }
 
