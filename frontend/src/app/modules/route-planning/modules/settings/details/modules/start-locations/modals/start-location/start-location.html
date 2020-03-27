@@ -18,10 +18,6 @@
                 </span>
             </h1>
 
-            <h4 class="margin-large-top" translate>
-                Lorem ipsum
-            </h4>
-
         </modal-header>
 
         <modal-section>
@@ -38,7 +34,7 @@
 
             </div>
 
-            <div class="control-row margin-large-bottom">
+            <div class="control-row">
 
                 <address-input fixed.bind="true" label="above" value.bind="model.departureTime.startLocation.address" class="flex-basis-1-of-1">
 
@@ -62,11 +58,7 @@
 
         <modal-footer>
 
-            <div class="button-row">
-
-                <button appearance="outline" accent="primary" click.delegate="onCancelClick()" translate>
-                    Cancel
-                </button>
+            <div class="button-row margin-auto-left">
 
                 <button appearance="solid" accent="primary" click.delegate="onSaveClick()" translate>
                     Save and close
