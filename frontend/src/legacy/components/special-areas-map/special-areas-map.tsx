@@ -123,7 +123,7 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
 
     private tryFitBounds(): void
     {
-        if (this.map == null)
+        if (this.map == null || this.props.areas.length === 0)
         {
             return;
         }
