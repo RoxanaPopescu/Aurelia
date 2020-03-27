@@ -9,21 +9,25 @@
         <modal-header>
 
             <h1 class="font-larger focus-hidden" tabindex="-1" autofocus translate>
-                Are you sure you want to delete the area <br class="br-preferred"><b>${area.name}</b>?
+                Are you sure you want to delete the area <b>${area.name}</b>?
             </h1>
 
         </modal-header>
+
+        <modal-section translate>
+            This action cannot be undone.
+        </modal-section>
 
         <modal-footer>
 
             <div class="button-row flex-push-right">
 
-                <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
-                    Delete area
-                </button>
-
                 <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
                     Cancel
+                </button>
+
+                <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
+                    Delete area
                 </button>
 
             </div>
