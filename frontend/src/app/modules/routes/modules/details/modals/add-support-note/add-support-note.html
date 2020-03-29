@@ -1,4 +1,4 @@
-<template>
+<template validation validation.ref="validation">
 
     <require from="./add-support-note.scss"></require>
 
@@ -12,42 +12,36 @@
                 New support note
             </h1>
 
-            <div class="control-row margin-large-top" validation validation.ref="validation">
-
-                <text-input lines="6" label="above" value.bind="note" class="flex-basis-1-of-1">
-
-                    <span slot="placeholder" translate>
-                        Type in your support note for this route
-                    </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="note"
-                        >
-                        </required-validator>
-
-                        <range-validator
-                            value.bind="note"
-                            min.bind="10"
-                        >
-                        </range-validator>
-
-                    </div>
-
-                </text-input>
-
-            </div>
-
         </modal-header>
+
+        <modal-section>
+
+            <text-input lines="6" label="above" value.bind="note" class="flex-basis-1-of-1">
+
+                <span slot="placeholder" translate>
+                    Type your support note here…
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="note">
+                    </required-validator>
+
+                    <range-validator
+                        value.bind="note"
+                        min.bind="10">
+                    </range-validator>
+
+                </div>
+
+            </text-input>
+
+        </modal-section>
 
         <modal-footer>
 
             <div class="button-row flex-push-right">
-
-                <button appearance="outline" accent="primary" click.delegate="onCancelClick()" translate>
-                    Cancel
-                </button>
 
                 <button appearance="solid" accent="primary" click.trigger="onAddClick()" translate>
                     Create support note
