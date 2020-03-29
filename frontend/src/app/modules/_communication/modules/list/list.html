@@ -1,0 +1,261 @@
+<template>
+
+    <require from="app/components/filters/check-filter/check-filter"></require>
+    <require from="app/components/filters/check-filter/check-filter-item"></require>
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-sidebar scroll>
+
+            <page-section>
+
+                <search-input value.bind="textFilter & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find trigger…
+                    </span>
+
+                </search-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Trigger events
+                </div>
+
+                <toggle-group class="flex-column" value.bind="triggerEventFilter">
+
+                    <check-toggle label="after" model="delivery" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Delivery
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="pickup" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Pickup
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="ready-for-pickup" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Ready for pickup
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="arrival-at-terminal" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Arrival at terminal
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Message type
+                </div>
+
+                <toggle-group class="flex-column" value.bind="messageTypeFilter">
+
+                    <check-toggle label="after" model="sms" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            SMS
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="email" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Email
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Receiver
+                </div>
+
+                <toggle-group class="flex-column" value.bind="receiverFilter">
+
+                    <check-toggle label="after" model="receiver-1-slug" value.one-time="true">
+
+                        <div slot="heading" translate>
+                            Receiver 1
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+        </page-sidebar>
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Communication triggers
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button appearance="outline" accent="primary" page-href="path: /communication/create" class="flex-row">
+
+                        <icon name="add" class="font-larger margin-right"></icon>
+
+                        <span translate>
+                            Create trigger
+                        </span>
+
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="name">
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="sender">
+                            <span class="text-truncate" translate>
+                                Sender
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="receiver">
+                            <span class="text-truncate" translate>
+                                Receiver
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="messageType">
+                            <span class="text-truncate" translate>
+                                Message type
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="triggerEvent">
+                            <span class="text-truncate" translate>
+                                Event
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="trigger of orderedAndFilteredTriggers">
+
+                        <data-table-row
+                            href="/communication/details/${trigger.slug}">
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${trigger.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${trigger.sender}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${trigger.receiver.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${trigger.messageType.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${trigger.triggerEvent.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onDeleteTriggerClick(trigger)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="triggers == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="orderedAndFilteredTriggers.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

@@ -252,7 +252,9 @@ export class AppModule
             {
                 name: "communication",
                 route: "communication",
-                moduleId: PLATFORM.moduleName("./modules/communication/communication"),
+                moduleId: ENVIRONMENT.name === "development"
+                    ? PLATFORM.moduleName("./modules/_communication/communication")
+                    : PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
                     outfits: ["fulfiller"],
