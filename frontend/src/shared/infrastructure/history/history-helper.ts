@@ -10,7 +10,7 @@ export const routeNameSeparator = "/";
 /**
  * Represents info about a new or existing history state.
  */
-export interface IHistoryState
+export interface IHistoryState<TParams = MapObject, TData = any>
 {
     /**
      * The path for the route, which may contain dynamic segments.
@@ -20,7 +20,7 @@ export interface IHistoryState
     /**
      * The parameters for the route.
      */
-    params: MapObject;
+    params: TParams;
 
     /**
      * The fragment in the URL.
@@ -30,7 +30,7 @@ export interface IHistoryState
     /**
      * The data associated with the state in the browser history.
      */
-    data: any;
+    data: TData;
 }
 
 /**

@@ -48,10 +48,10 @@ export class ToggleGroupCustomElement
         // Add the toggle to the list of toggles.
         this._toggles.push(toggle);
 
-        // If the toggle is active, set its model as the current value.
+        // If the toggle is active, update the group value.
         if (toggle.value)
         {
-            this.value = toggle.model;
+            this.onToggleActivated(toggle);
         }
     }
 
@@ -71,6 +71,12 @@ export class ToggleGroupCustomElement
             // Remove the toggle from the list of toggles.
             this._toggles.splice(this._toggles.indexOf(toggle), 1);
         }
+
+        // If the toggle is active, update the group value.
+        if (toggle.value)
+        {
+            this.onToggleDeactivated(toggle);
+        }
     }
 
     /**
@@ -86,7 +92,7 @@ export class ToggleGroupCustomElement
         }
         else if (this.value instanceof Array)
         {
-            this.value = [...this.value, toggle.model];
+            this.value = [...new Set([...this.value, toggle.model])];
         }
         else
         {
