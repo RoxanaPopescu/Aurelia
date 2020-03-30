@@ -91,13 +91,13 @@ export class DetailsPage
         {
             if (this.isNew)
             {
-                await this._routePlanningSettingsService.update(this.settings);
-            }
-            else
-            {
                 await this._routePlanningSettingsService.create(this.settings);
 
                 this.isNew = false;
+            }
+            else
+            {
+                await this._routePlanningSettingsService.update(this.settings);
             }
         }
         catch (error)
