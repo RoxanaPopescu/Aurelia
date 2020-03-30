@@ -89,7 +89,16 @@ export class DetailsPage
 
         try
         {
-            await this._routePlanningSettingsService.update(this.settings);
+            if (this.isNew)
+            {
+                await this._routePlanningSettingsService.update(this.settings);
+            }
+            else
+            {
+                await this._routePlanningSettingsService.create(this.settings);
+
+                this.isNew = false;
+            }
         }
         catch (error)
         {

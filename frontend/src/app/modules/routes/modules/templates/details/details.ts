@@ -225,20 +225,20 @@ export class DetailsPage
             if (!this.template.id)
             {
                 await this._routeTemplateService.create(this.template);
+
                 toastHeading = toast["heading-created"];
             }
             else
             {
                 await this._routeTemplateService.save(this.template);
+
                 toastHeading = toast["heading-updated"];
             }
 
-            this._toastService.open(
-                "info",
-                {
-                    "heading": toastHeading
-                }
-            );
+            this._toastService.open("info",
+            {
+                "heading": toastHeading
+            });
         }
         catch (error)
         {

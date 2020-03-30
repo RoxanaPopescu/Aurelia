@@ -27,8 +27,6 @@ export class Restrictions
         {
             this.ferriesAllowed = true;
             this.privateRoadsAllowed = true;
-            this.uturnStrategy = new UturnStrategy("allowed");
-            this.curbApproachStrategy = new CurbApproachStrategy("either-side-of-vehicle");
             this.timeWindowAdjustmentDelivery = new TimeWindowAdjustment();
             this.oneRoutePlanPerStartLocation = true;
         }

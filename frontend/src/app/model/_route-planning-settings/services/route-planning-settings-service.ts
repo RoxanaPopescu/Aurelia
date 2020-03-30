@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { RoutePlanningSettings } from "../entities/route-planning-settings";
 import { RoutePlanningSettingsInfo } from "../entities/route-planning-settings-info";
+import { Metadata } from "app/model/shared/entities/metadata";
 
 /**
  * Represents a service that manages route planning settings.
@@ -60,10 +61,14 @@ export class RoutePlanningSettingsService
      */
     public async create(settings: RoutePlanningSettings): Promise<void>
     {
-        await this._apiClient.post("routeplanning/rulesets/create",
+        const result = await this._apiClient.post("routeplanning/rulesets/create",
         {
             body: settings
         });
+
+        settings.id = result.data.id;
+        settings.slug = result.data.slug;
+        settings.metadata = new Metadata(result.data.metadata);
     }
 
     /**

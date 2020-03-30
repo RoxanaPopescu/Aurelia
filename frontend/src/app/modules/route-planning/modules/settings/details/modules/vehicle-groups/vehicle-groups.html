@@ -2,7 +2,35 @@
 
     <require from="./vehicle-groups.scss"></require>
 
-    <page-section>
+    <page-section class="no-start-locations" if.bind="settings.vehicleGroups.length == 0">
+
+        <empty-indicator class="margin-largest-top">
+
+            <span slot="heading" translate>
+                No vehicle groups specified
+            </span>
+
+            <div slot="details">
+                <button
+                    appearance="outline"
+                    class="flex-row"
+                    accent="primary"
+                    click.delegate="onCreateVehicleGroupClick()">
+
+                    <icon name="plus-small" class="margin-right"></icon>
+
+                    <span translate>
+                        New vehicle group
+                    </span>
+
+                </button>
+            </div>
+
+        </empty-indicator>
+
+    </page-section>
+
+    <page-section if.bind="settings.vehicleGroups.length > 0">
 
         <div class="flex-row font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
 

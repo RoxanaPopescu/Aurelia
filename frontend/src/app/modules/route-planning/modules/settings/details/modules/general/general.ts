@@ -21,17 +21,19 @@ export class General
      * Gets the U-turn strategy.
      */
     @computedFrom("availableUturnStrategies", "settings.restrictions.uturnStrategy.slug")
-    protected get selectedUturnStrategy(): UturnStrategy
+    protected get selectedUturnStrategy(): UturnStrategy | undefined
     {
-        return this.availableUturnStrategies.find(s => s.slug === this.settings.restrictions.uturnStrategy.slug)!;
+        return this.settings.restrictions.uturnStrategy
+            ? this.availableUturnStrategies.find(s => s.slug === this.settings.restrictions.uturnStrategy.slug)!
+            : undefined;
     }
 
     /**
      * Sets the U-turn strategy.
      */
-    protected set selectedUturnStrategy(value: UturnStrategy)
+    protected set selectedUturnStrategy(value: UturnStrategy | undefined)
     {
-        this.settings.restrictions.uturnStrategy = value;
+        this.settings.restrictions.uturnStrategy = value as any;
     }
 
     /**
@@ -43,17 +45,19 @@ export class General
      * Gets the curb-approach strategy.
      */
     @computedFrom("availableCurbApproachStrategies", "settings.restrictions.curbApproachStrategy.slug")
-    protected get selectedCurbApproachStrategy(): CurbApproachStrategy
+    protected get selectedCurbApproachStrategy(): CurbApproachStrategy | undefined
     {
-        return this.availableCurbApproachStrategies.find(s => s.slug === this.settings.restrictions.curbApproachStrategy.slug)!;
+        return this.settings.restrictions.curbApproachStrategy
+            ? this.availableCurbApproachStrategies.find(s => s.slug === this.settings.restrictions.curbApproachStrategy.slug)!
+            : undefined;
     }
 
     /**
      * Sets the curb-approach strategy.
      */
-    protected set selectedCurbApproachStrategy(value: CurbApproachStrategy)
+    protected set selectedCurbApproachStrategy(value: CurbApproachStrategy | undefined)
     {
-        this.settings.restrictions.curbApproachStrategy = value;
+        this.settings.restrictions.curbApproachStrategy = value as any;
     }
 
     /**
