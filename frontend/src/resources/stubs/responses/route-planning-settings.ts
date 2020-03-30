@@ -46,9 +46,7 @@ export default
                     "cost":
                     {
                         "newRoute": 120,
-                        "waitingTime": 8,
-                        "drivingTime": 5,
-                        "taskTime": 5,
+                        "time": 5,
                         "distance": 2
                     },
                     "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
@@ -94,9 +92,7 @@ export default
                     "cost":
                     {
                         "newRoute": 120,
-                        "waitingTime": 8,
-                        "drivingTime": 5,
-                        "taskTime": 5,
+                        "time": 5,
                         "distance": 2
                     },
                     "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",

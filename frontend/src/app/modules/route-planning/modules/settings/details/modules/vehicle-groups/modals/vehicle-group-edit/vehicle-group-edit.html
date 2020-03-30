@@ -123,83 +123,19 @@
                 </number-input>
 
                 <number-input
-                    value.bind="model.cost.waitingTime"
-                    min.bind="0"
-                    label="above"
-                    class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Cost of waiting time
-                    </div>
-
-                    <span slot="after" class="opacity-faded">
-                        per min
-                    </span>
-
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.cost.waitingTime">
-                        </required-validator>
-
-                        <range-validator
-                            active.bind="true"
-                            value.bind="model.cost.waitingTime"
-                            min.bind="0">
-                        </range-validator>
-
-                    </div>
-
-                </number-input>
-
-            </div>
-
-            <div class="control-row margin-larger-bottom">
-
-                <number-input
-                    value.bind="model.cost.drivingTime"
-                    min.bind="0"
-                    label="above"
-                    class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Cost of driving time
-                    </div>
-
-                    <span slot="after" class="opacity-faded">
-                        per min
-                    </span>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.cost.drivingTime">
-                        </required-validator>
-
-                        <range-validator
-                            active.bind="true"
-                            value.bind="model.cost.drivingTime"
-                            min.bind="0">
-                        </range-validator>
-
-                    </div>
-
-                </number-input>
-
-                <number-input
                     value.bind="model.cost.time"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Cost of task time
+                        Cost of time
                     </div>
 
                     <span slot="after" class="opacity-faded">
                         per min
                     </span>
+
 
                     <div slot="validation">
 

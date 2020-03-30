@@ -14,8 +14,6 @@ export class VehicleGroupCost
         if (data != null)
         {
             this.newRoute = data.newRoute;
-            this.waitingTime = data.waitingTime;
-            this.drivingTime = data.drivingTime;
             this.time = data.time;
             this.distance = data.distance;
         }
@@ -27,17 +25,7 @@ export class VehicleGroupCost
     public newRoute: number;
 
     /**
-     * The cost of every minute waiting.
-     */
-    public waitingTime: number;
-
-    /**
-     * The cost of every minute driving.
-     */
-    public drivingTime: number;
-
-    /**
-     * The cost of every minute used to load or unload.
+     * The cost of every minute.
      */
     public time: number;
 
