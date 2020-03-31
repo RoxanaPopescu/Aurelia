@@ -4,6 +4,7 @@ import { Log } from "shared/infrastructure";
 import { VehicleGroup, VehicleGroupLocation } from "app/model/_route-planning-settings";
 import { VehicleType } from "app/model/vehicle";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
+import { Uuid } from "shared/utilities/id/uuid";
 
 @autoinject
 export class VehicleGroupPanel
@@ -132,6 +133,10 @@ export class VehicleGroupPanel
 
                     return;
                 }
+            }
+
+            if (this.model.id == null) {
+                this.model.id = Uuid.v1();
             }
 
             this._result = this.model;

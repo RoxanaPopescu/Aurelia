@@ -98,6 +98,14 @@ export class VehicleGroup
     {
         const data = { ...this } as any;
 
+        if (data.startLocation?.location?.address == null) {
+            delete data.startLocation;
+        }
+
+        if (data.endLocation?.location?.address == null) {
+            delete data.endLocation;
+        }
+
         delete data.vehicleType;
         data.vehicleTypeId = this.vehicleType.id;
 
