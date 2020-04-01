@@ -28,7 +28,7 @@ modal-overlay
         right: 0;
 
         // Set the size of the content area.
-        width: calc(100% - var(--modal-panel-actions-width));
+        width: calc(100% - var(--modal-overlay-actions-width));
         min-height: 100%;
 
         // Use vertical flex layout.
@@ -37,7 +37,6 @@ modal-overlay
 
         // Apply horizontal padding.
         padding-right: 9rem;
-        padding-left: var(--modal-overlay-actions-width);
 
         // Ensure content is always above the modal actions.
         z-index: 1;
