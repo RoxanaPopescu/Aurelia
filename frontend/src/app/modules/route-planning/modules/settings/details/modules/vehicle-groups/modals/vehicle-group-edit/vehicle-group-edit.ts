@@ -135,7 +135,8 @@ export class VehicleGroupPanel
                 }
             }
 
-            if (this.model.id == null) {
+            if (this.model.id == null)
+            {
                 this.model.id = Uuid.v1();
             }
 
