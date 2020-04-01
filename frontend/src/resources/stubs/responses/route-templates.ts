@@ -100,12 +100,12 @@ export default
 
     "POST /api/v1/route-templates/create":
     {
-        status: 204
+        data: routeTemplate
     },
 
     "POST /api/v1/route-templates/update":
     {
-        status: 204
+        data: routeTemplate
     },
 
     "POST /api/v1/route-templates/delete":

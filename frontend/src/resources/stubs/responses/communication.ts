@@ -44,6 +44,38 @@ export default
       }
     },
 
+    "POST /api/v1/communication/triggers/update":
+    {
+      data:
+      {
+        metadata:
+        {
+          created: "2020-03-05T08:32+02:00",
+          createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+          lastModified: "2020-03-05T09:52+02:00",
+          lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+        },
+        "id": "trigger-1-id",
+        "slug": "trigger-1-slug"
+      }
+    },
+
+    "POST /api/v1/communication/triggers/create":
+    {
+      data:
+      {
+        metadata:
+        {
+          created: "2020-03-05T08:32+02:00",
+          createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+          lastModified: "2020-03-05T09:52+02:00",
+          lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+        },
+        "id": "trigger-1-id",
+        "slug": "trigger-1-slug"
+      }
+    },
+
     "POST /api/v1/communication/triggers/delete":
     {
       status: 201

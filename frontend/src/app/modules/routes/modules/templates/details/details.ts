@@ -230,7 +230,7 @@ export class DetailsPage
             }
             else
             {
-                await this._routeTemplateService.save(this.template);
+                await this._routeTemplateService.update(this.template);
 
                 toastHeading = toast["heading-updated"];
             }

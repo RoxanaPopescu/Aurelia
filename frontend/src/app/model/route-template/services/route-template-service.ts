@@ -65,10 +65,12 @@ export class RouteTemplateService
      */
     public async create(routeTemplate: Partial<RouteTemplate>): Promise<void>
     {
-        await this._apiClient.post("route-templates/create",
+        const result = await this._apiClient.post("route-templates/create",
         {
             body: routeTemplate
         });
+
+        routeTemplate.id = result.data.id;
     }
 
     /**
@@ -76,12 +78,14 @@ export class RouteTemplateService
      * @param routeTemplate The route template to save.
      * @returns A promise that will be resolved when teh operation succeedes.
      */
-    public async save(routeTemplate: RouteTemplate): Promise<void>
+    public async update(routeTemplate: RouteTemplate): Promise<void>
     {
-        await this._apiClient.post("route-templates/update",
+        const result = await this._apiClient.post("route-templates/update",
         {
             body: routeTemplate
         });
+
+        routeTemplate.id = result.data.id;
     }
 
     /**

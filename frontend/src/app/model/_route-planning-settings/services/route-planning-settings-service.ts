@@ -78,10 +78,14 @@ export class RoutePlanningSettingsService
      */
     public async update(settings: RoutePlanningSettings): Promise<void>
     {
-        await this._apiClient.post("routeplanning/rulesets/update",
+        const result = await this._apiClient.post("routeplanning/rulesets/update",
         {
             body: settings
         });
+
+        settings.id = result.data.id;
+        settings.slug = result.data.slug;
+        settings.metadata = new Metadata(result.data.metadata);
     }
 
     /**

@@ -30,7 +30,7 @@ export class RouteTemplateInfo
     /**
      * The ID of the route template.
      */
-    public readonly id: string;
+    public id: string;
 
     /**
      * The reference to use for routes based on this template.
