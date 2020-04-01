@@ -46,7 +46,7 @@
                     class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Name of the rule
+                        Name
                     </div>
 
                 </text-input>
@@ -87,7 +87,7 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the cost associated with this vehicle group.
+                Here you can specify the costs associated with the vehicle group. The costs are stated in an arbitrary size and the route calculation itself tries to minimize this cost. Therefore, the ratio of the different costs of each vehicle group is what determines which vehicle groups are most appropriate to use.
             </h1>
 
             <div class="control-row margin-larger-bottom">
@@ -98,8 +98,15 @@
                     label="above"
                     class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Cost of a new route
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Cost of a new route
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                This is used, among other things. To adjust how many vehicles one will have in relation to how much time saved by inserting a new vehicle, the higher the value, the fewer routes will be generated at the expense of less efficient routes
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded">
@@ -128,8 +135,15 @@
                     label="above"
                     class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Cost of time
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Cost of time
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                Task hour covers: driving time, waiting time and loading and unloading
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded">
@@ -163,8 +177,15 @@
                     label="above"
                     class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Cost of distance driven
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Cost of distance driven
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                The higher the value, the less distance the route will be at the expense of spending more time
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded">
@@ -310,8 +331,15 @@
                     label="above"
                     class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Max number of stops per route
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Max number of stops per route
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                Maximum number of stops on the route, in addition to any Specified start and end address of the vehicle group
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded">
@@ -517,7 +545,7 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the order tags for which this vehicle group is applicable.
+                Here you can specify the order tags that this vehicle group can handle. If no one is specified, this can handle all orders.
             </h1>
 
             <tags-input
@@ -525,8 +553,15 @@
                 value.bind="model.orderTagsOneRequired"
                 new.bind="true">
 
-                <div slot="heading" translate>
-                    Some of the tags
+                <div slot="heading">
+                    <div slot="heading" translate>
+                        Order must have all of the following tags
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but must at least contain all the tags listed in the list below
+                        </div>
+                    </info-icon>
                 </div>
 
             </tags-input>

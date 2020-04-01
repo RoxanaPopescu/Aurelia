@@ -53,6 +53,11 @@ export class DetailsPage
     protected isNew: boolean;
 
     /**
+     * True if the rule set is being updated, otherwise false.
+     */
+    protected updating: boolean = false;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -87,6 +92,8 @@ export class DetailsPage
             return;
         }
 
+        this.updating = true;
+
         try
         {
             if (this.isNew)
@@ -99,9 +106,12 @@ export class DetailsPage
             {
                 await this._routePlanningSettingsService.update(this.settings);
             }
+
+            this.updating = false;
         }
         catch (error)
         {
+            this.updating = false;
             Log.error("Could not save the route planning settings", error);
         }
     }

@@ -52,8 +52,15 @@
                 new.bind="true"
                 class="flex-basis-1-of-1">
 
-                <div slot="heading" translate>
-                    All the tags
+                <div slot="heading">
+                    <div slot="heading" translate>
+                        Order must have all of the following tags
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but must at least contain all the tags listed in the list below
+                        </div>
+                    </info-icon>
                 </div>
 
                 <div slot="value">
@@ -74,7 +81,7 @@
 
             <separator class="margin-larger-top margin-large-bottom">
                 <span class="opacity-faded" translate>
-                    and
+                    or
                 </span>
             </separator>
 
@@ -84,8 +91,15 @@
                 new.bind="true"
                 class="flex-basis-1-of-1">
 
-                <div slot="heading" translate>
-                    Some of the tags
+                <div slot="heading" >
+                    <div slot="heading" translate>
+                        Order must have at least one of the following tags
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but must contain at least one of the tags listed in the list below
+                        </div>
+                    </info-icon>
                 </div>
 
                 <div slot="value">
@@ -125,7 +139,7 @@
             <number-input value.bind="model.time.initial | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
-                    Initial time
+                    Start time
                 </div>
 
                 <span slot="after" class="opacity-faded" translate>

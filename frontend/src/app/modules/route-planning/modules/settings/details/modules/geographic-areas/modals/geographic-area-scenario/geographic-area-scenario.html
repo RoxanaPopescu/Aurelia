@@ -44,7 +44,7 @@
             </div>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the dates and weekdays to which the rule should apply.
+                Here you can specify which period and which rules should apply.
             </h1>
 
             <div class="control-row">
@@ -113,8 +113,15 @@
                     filter="auto"
                     class="flex-basis-1-of-1">
 
-                    <div slot="heading" translate>
-                        Weekdays
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Weekdays
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                If both date range & weekdays are specified, the rule will only apply to the weekdays in the specified date range
+                            </div>
+                        </info-icon>
                     </div>
 
                     <div slot="value">
@@ -157,8 +164,15 @@
                 new.bind="true"
                 class="flex-basis-1-of-1">
 
-                <div slot="heading" translate>
-                    All the tags
+                <div slot="heading">
+                    <div slot="heading" translate>
+                        Order must have all the following tags
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but must at least contain all the tags listed in the list below
+                        </div>
+                    </info-icon>
                 </div>
 
                 <div slot="value">
@@ -171,7 +185,7 @@
 
             <separator class="margin-larger-top margin-large-bottom">
                 <span class="opacity-faded" translate>
-                    and
+                    or
                 </span>
             </separator>
 
@@ -181,8 +195,15 @@
                 new.bind="true"
                 class="flex-basis-1-of-1">
 
-                <div slot="heading" translate>
-                    Some of the tags
+                <div slot="heading">
+                    <div slot="heading" translate>
+                        Order must have atleast one of the following tags
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but must contain at least one of the tags listed in the list below
+                        </div>
+                    </info-icon>
                 </div>
 
                 <div slot="value">
@@ -209,8 +230,15 @@
 
                 <number-input value.bind="model.taskTimeChange | scale: 1/60" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Task time change
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Task time change
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                If it takes longer to do the actual loading and unloading in the geographic area. It is also possible to indicate negative time
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded" translate>
@@ -230,8 +258,15 @@
 
                 <number-input value.bind="model.drivingTimeChangeFactor | scale: 100" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
-                    <div slot="heading" translate>
-                        Driving time change
+                    <div slot="heading">
+                        <div slot="heading" translate>
+                            Driving time change
+                        </div>
+                        <info-icon position="left">
+                            <div slot="body" translate>
+                                If a driving time is calculated at 10 minutes on a stretch, this will be 11 minutes if set to 10% within this geographic area. This value can be negative.
+                            </div>
+                        </info-icon>
                     </div>
 
                     <span slot="after" class="opacity-faded" translate>
@@ -253,8 +288,15 @@
 
             <check-toggle label="after" value.bind="model.isAreaBlocked">
 
-                <div slot="heading" translate>
-                    Area is blocked
+                <div slot="heading">
+                    <div slot="heading" translate>
+                        Area is blocked
+                    </div>
+                    <info-icon position="left">
+                        <div slot="body" translate>
+                            It will not be possible to make deliveries in this area
+                        </div>
+                    </info-icon>
                 </div>
 
             </check-toggle>
@@ -263,8 +305,15 @@
 
         <div if.bind="isNew" class="button-container margin-larger-top">
 
-            <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                Create area rule
+            <button appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                <div slot="heading" translate>
+                    Create area rule
+                </div>
+                <info-icon position="left">
+                    <div slot="body" translate>
+                        It will not be possible to make deliveries in this area
+                    </div>
+                </info-icon>
             </button>
 
         </div>

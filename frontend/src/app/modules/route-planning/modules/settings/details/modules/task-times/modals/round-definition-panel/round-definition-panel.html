@@ -20,7 +20,7 @@
         <modal-header scroll-fade>
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
-                Edit round limits
+                Edit round definition
             </h1>
 
         </modal-header>
@@ -28,7 +28,7 @@
         <modal-section>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify how much the driver can handle in a single round.
+                Here you can specify how much the driver can handle in each round. The number of laps corresponds to the number of times the driver must fetch goods from the vehicle to the location.
             </h1>
 
             <number-input value.bind="model.colliPerRound" min.bind="0" step.bind="1" constrain.bind="true" label="above" class="margin-medium-bottom">

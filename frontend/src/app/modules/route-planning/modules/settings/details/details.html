@@ -60,7 +60,7 @@
                         </tab>
 
                         <tab name="start-locations" invalid.bind="startLocationsValidation.invalid" translate>
-                            Start location rules
+                            Departure times
                         </tab>
 
                         <tab name="task-times" invalid.bind="taskTimesValidation.invalid" translate>
@@ -75,14 +75,18 @@
                             Cancel
                         </button>
 
-                        <button appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                        <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
-                            <template if.bind="isNew" translate>
+                            <template if.bind="isNew && !updating" translate>
                                 Create rule set
                             </template>
 
-                            <template if.bind="!isNew" translate>
+                            <template if.bind="!isNew && !updating" translate>
                                 Save changes
+                            </template>
+
+                            <template if.bind="updating" translate>
+                                Loading...
                             </template>
 
                         </button>

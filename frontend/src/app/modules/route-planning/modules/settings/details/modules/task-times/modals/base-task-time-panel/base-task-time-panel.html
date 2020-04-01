@@ -20,7 +20,7 @@
         <modal-header scroll-fade>
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
-                Edit base task time
+                Edit starting point
             </h1>
 
         </modal-header>
@@ -28,13 +28,13 @@
         <modal-section>
 
             <h1 class="margin-large-bottom" translate>
-                Here you can specify the time the driver is expected to be spend on tasks at each stop.
+                Here you can specify the time the driver is expected to spend as a starting point for tasks at each stop.
             </h1>
 
             <number-input value.bind="model.initial | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
-                    Initial time
+                    Start time
                 </div>
 
                 <span slot="after" class="opacity-faded" translate>
