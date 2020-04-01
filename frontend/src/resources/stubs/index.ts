@@ -4,7 +4,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import routeTemplates from "./responses/route-templates";
 // import uploadOrders from "./responses/upload-orders";
 // import routeDetails from "./responses/route-details";
-// import routePlanningSettings from "./responses/route-planning-settings";
+import routePlanningSettings from "./responses/route-planning-settings";
 import communication from "./responses/communication";
 
 /**
@@ -25,6 +25,6 @@ export const stubs: IResponseStubs =
     // ...routeTemplates,
     // ...uploadOrders,
     // ...routeDetails,
-    // ...routePlanningSettings,
+    ...routePlanningSettings,
     ...communication
 };

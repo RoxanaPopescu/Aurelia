@@ -11,6 +11,7 @@
             </span>
 
             <div slot="details">
+
                 <button
                     appearance="outline"
                     class="flex-row"
@@ -24,6 +25,19 @@
                     </span>
 
                 </button>
+
+                <div class="font-small margin-large-top">
+
+                    <invalid-validator>
+
+                        <template replace-part="invalid" translate>
+                            Please add at least one vehicle group.
+                        </template>
+
+                    </invalid-validator>
+
+                </div>
+
             </div>
 
         </empty-indicator>

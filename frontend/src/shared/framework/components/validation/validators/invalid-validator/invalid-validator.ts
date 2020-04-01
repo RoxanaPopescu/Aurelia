@@ -16,6 +16,8 @@ export class InvalidValidatorCustomElement extends Validator
      */
     public async validate(reason: ValidationReason): Promise<boolean>
     {
+        this.invalid = true;
+
         return false;
     }
 }
