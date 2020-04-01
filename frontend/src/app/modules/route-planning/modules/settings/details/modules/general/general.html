@@ -7,7 +7,7 @@
     <page-section>
 
         <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
-            General rules
+            General
         </h1>
 
         <div class="margin-large-bottom" translate>
@@ -279,7 +279,7 @@
 
             <div slot="heading">
                 <div slot="heading" translate>
-                    Template to use for the route
+                    Route name
                 </div>
                 <info-icon position="left">
                     <div slot="body" translate>
@@ -305,6 +305,15 @@
                         </div>
                         <div class="font-small margin-smallest-top opacity-faded" translate>
                             Day of week as letter, A = Monday, B = Tuesday etc.
+                        </div>
+                    </item>
+
+                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')">
+                        <div accent="primary">
+                            {DayOfYear}
+                        </div>
+                        <div class="font-small margin-smallest-top opacity-faded" translate>
+                            Number of days in the year, starting from January 1, eg. 122
                         </div>
                     </item>
 
