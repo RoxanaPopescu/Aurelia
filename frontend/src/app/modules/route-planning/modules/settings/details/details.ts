@@ -78,8 +78,8 @@ export class DetailsPage
     }
 
     /**
-     * Called when the "Save changes" button is clicked.
-     * Saves the route plannign settings.
+     * Called when the "Save changes" or "Create rule set" button is clicked.
+     * Saves the route planning settings.
      */
     protected async onSaveClick(): Promise<void>
     {

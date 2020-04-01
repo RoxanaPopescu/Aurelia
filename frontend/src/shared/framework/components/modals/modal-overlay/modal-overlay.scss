@@ -38,6 +38,9 @@ modal-overlay
         padding-right: 9rem;
         padding-left: var(--modal-overlay-actions-width);
 
+        // Ensure content is always above the modal actions.
+        z-index: 1;
+
         // Provide defaults for sectioning elements.
 
         modal-header,
