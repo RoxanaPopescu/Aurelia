@@ -99,15 +99,15 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Receivers
+                    Recipients
                 </div>
 
-                <toggle-group class="flex-column" value.bind="receiverFilter">
+                <toggle-group class="flex-column" value.bind="recipientFilter">
 
-                    <check-toggle label="after" model="receiver-1-slug" value.one-time="true">
+                    <check-toggle label="after" model="recipient-1-slug" value.one-time="true">
 
-                        <div slot="heading" translate>
-                            Receiver 1
+                        <div slot="heading">
+                            Recipient 1
                         </div>
 
                     </check-toggle>
@@ -169,9 +169,9 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="receiver">
+                        <data-table-cell name="recipient">
                             <span class="text-truncate" translate>
-                                Receiver
+                                Recipient
                             </span>
                         </data-table-cell>
 
@@ -206,13 +206,13 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${trigger.sender}
+                                    ${trigger.senderName}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${trigger.receiver.name}
+                                    ${trigger.recipient.name}
                                 </span>
                             </data-table-cell>
 

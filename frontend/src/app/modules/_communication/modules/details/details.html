@@ -1,0 +1,362 @@
+<template>
+
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/numbered-section/numbered-section"></require>
+
+    <require from="./details.scss"></require>
+
+    <page name="details">
+
+        <page-content class="${tab === 'geographic-areas' ? 'page-content-stretch' : ''}" scroll scroll.ref="scroll" validation validation.ref="validation">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/communication/list" translate>
+                            Communication
+                        </a>
+
+                        <div>
+
+                            <template if.bind="model.id != null">
+                                ${model.name}
+                            </template>
+
+                            <template if.bind="model.id == null" translate>
+                                New trigger
+                            </template>
+
+                        </div>
+
+                    </path-nav>
+                </h1>
+
+                <div class="flex-push-right control-row">
+
+                    <button if.bind="model.id == null" appearance="outline" accent="primary" page-href="path: /communication/list" translate>
+                        Cancel
+                    </button>
+
+                    <button appearance="solid" accent="primary" click.trigger="onSaveClick()">
+
+                        <template if.bind="model.id == null" translate>
+                            Create trigger
+                        </template>
+
+                        <template if.bind="model.id != null" translate>
+                            Save changes
+                        </template>
+
+                    </button>
+
+                </div>
+
+            </page-header>
+
+            <name-value-list class="font-small opacity-faded">
+
+                <name-value-pair if.bind="model.metadata.lastModified != null">
+
+                    <div slot="name" translate>
+                        Last modified
+                    </div>
+
+                    <div slot="value">
+                        ${model.metadata.lastModified | dateTime: 'narrow'}
+                        <span class="opacity-faded" translate>
+                            by
+                        </span>
+                        ${model.metadata.lastModifiedBy}
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair if.bind="model.metadata.created != null">
+
+                    <div slot="name" translate>
+                        Created
+                    </div>
+
+                    <div slot="value">
+                        ${model.metadata.created | dateTime: 'narrow'}
+                        <span class="opacity-faded" translate>
+                            by
+                        </span>
+                        ${model.metadata.createdBy}
+                    </div>
+
+                </name-value-pair>
+
+            </name-value-list>
+
+            <page-section>
+
+                <div class="margin-larger-bottom" translate>
+                    Here you can define a message to be sent when certain trigger conditions occur.
+                </div>
+
+                <numbered-section number.bind="1" heading.translate="Define trigger" class="--line-below">
+
+                    <div class="control-row margin-large-bottom">
+
+                        <text-input
+                            label="above"
+                            value.bind="model.name"
+                            class="flex-basis-1-of-1">
+
+                            <div slot="heading" translate>
+                                Name of the trigger
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.name">
+                                </required-validator>
+
+                            </div>
+
+                        </text-input>
+
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+
+                        <select-input
+                            label="above"
+                            none.bind="false"
+                            value.bind="model.triggerEvent"
+                            display-value.bind="model.triggerEvent.name"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Trigger event
+                            </div>
+
+                            <item repeat.for="triggerEvent of availableTriggerEvents" model.bind="triggerEvent">
+                                ${triggerEvent.name}
+                            </item>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.triggerEvent">
+                                </required-validator>
+
+                            </div>
+
+                        </select-input>
+
+                        <select-input
+                            label="above"
+                            none.bind="false"
+                            value.bind="model.customer"
+                            display-value.bind="model.customer.name"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Applies to the customer
+                            </div>
+
+                            <item repeat.for="customer of availableCustomers" model.bind="customer">
+                                ${customer.name}
+                            </item>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.customer">
+                                </required-validator>
+
+                            </div>
+
+                        </select-input>
+
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+
+                        <tags-input
+                            label="above"
+                            value.bind="model.routeTags"
+                            new.bind="true"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Applies to routes with the tags
+                            </div>
+
+                        </tags-input>
+
+                        <tags-input
+                            label="above"
+                            value.bind="model.stopTags"
+                            new.bind="true"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Applies to stops with the tags
+                            </div>
+
+                        </tags-input>
+
+                    </div>
+
+                </numbered-section>
+
+                <numbered-section number.bind="2" heading.translate="Parameters" class="--line-below">
+
+                    CONTENT
+
+                </numbered-section>
+
+                <numbered-section number.bind="3" heading.translate="Choose recipient" class="--line-below">
+
+                    <div class="control-row margin-large-bottom">
+
+                        <select-input
+                            label="above"
+                            none.bind="false"
+                            value.bind="model.recipient"
+                            display-value.bind="model.recipient.name"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Send message to
+                            </div>
+
+                            <item repeat.for="recipient of availableRecipients" model.bind="recipient">
+                                ${recipient.name}
+                            </item>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.recipient">
+                                </required-validator>
+
+                            </div>
+
+                        </select-input>
+
+                    </div>
+
+                </numbered-section>
+
+                <numbered-section number.bind="4" heading.translate="Choose message type" class="--line-below">
+
+                    <div class="control-row margin-large-bottom">
+
+                        <select-input
+                            label="above"
+                            none.bind="false"
+                            value.bind="model.messageType"
+                            display-value.bind="model.messageType.name"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Send message as
+                            </div>
+
+                            <item repeat.for="messageType of availableMessageTypes" model.bind="messageType">
+                                ${messageType.name}
+                            </item>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.messageType">
+                                </required-validator>
+
+                            </div>
+
+                        </select-input>
+
+                    </div>
+
+                </numbered-section>
+
+                <numbered-section number.bind="5" heading.translate="Compose message">
+
+                    <div class="control-row margin-large-bottom">
+
+                        <text-input
+                            label="above"
+                            value.bind="model.senderName"
+                            class="flex-basis-1-of-1">
+
+                            <div slot="heading" translate>
+                                Name of the sender, as seen by the recipient
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.senderName">
+                                </required-validator>
+
+                            </div>
+
+                        </text-input>
+
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+
+                        <text-input
+                            label="above"
+                            value.bind="model.messageTitle"
+                            class="flex-basis-1-of-1">
+
+                            <div slot="heading" translate>
+                                Message title
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.messageTitle">
+                                </required-validator>
+
+                            </div>
+
+                        </text-input>
+
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+
+                        <text-input
+                            label="above"
+                            value.bind="model.messageBody"
+                            class="flex-basis-1-of-1"
+                            lines.bind="5">
+
+                            <div slot="heading" translate>
+                                Message body
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.messageBody">
+                                </required-validator>
+
+                            </div>
+
+                        </text-input>
+
+                    </div>
+
+                </numbered-section>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

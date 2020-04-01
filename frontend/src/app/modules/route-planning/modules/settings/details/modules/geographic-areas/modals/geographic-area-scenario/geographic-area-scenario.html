@@ -114,10 +114,10 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading">
-                        <div slot="heading" translate>
+                        <span slot="heading" translate>
                             Weekdays
-                        </div>
-                        <info-icon position="left">
+                        </span>
+                        <info-icon position="right">
                             <div slot="body" translate>
                                 If both date range & weekdays are specified, the rule will only apply to the weekdays in the specified date range
                             </div>
@@ -165,10 +165,10 @@
                 class="flex-basis-1-of-1">
 
                 <div slot="heading">
-                    <div slot="heading" translate>
+                    <span slot="heading" translate>
                         Order must have all the following tags
-                    </div>
-                    <info-icon position="left">
+                    </span>
+                    <info-icon position="right">
                         <div slot="body" translate>
                             The order may have multiple tags, but must at least contain all the tags listed in the list below
                         </div>
@@ -196,10 +196,10 @@
                 class="flex-basis-1-of-1">
 
                 <div slot="heading">
-                    <div slot="heading" translate>
-                        Order must have atleast one of the following tags
-                    </div>
-                    <info-icon position="left">
+                    <span slot="heading" translate>
+                        Order must have at least one of the following tags
+                    </span>
+                    <info-icon position="right">
                         <div slot="body" translate>
                             The order may have multiple tags, but must contain at least one of the tags listed in the list below
                         </div>
@@ -231,10 +231,10 @@
                 <number-input value.bind="model.taskTimeChange | scale: 1/60" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading">
-                        <div slot="heading" translate>
+                        <span slot="heading" translate>
                             Task time change
-                        </div>
-                        <info-icon position="left">
+                        </span>
+                        <info-icon position="right">
                             <div slot="body" translate>
                                 If it takes longer to do the actual loading and unloading in the geographic area. It is also possible to indicate negative time
                             </div>
@@ -259,9 +259,9 @@
                 <number-input value.bind="model.drivingTimeChangeFactor | scale: 100" disabled.bind="model.isAreaBlocked" label="above" class="flex-basis-1-of-2">
 
                     <div slot="heading">
-                        <div slot="heading" translate>
+                        <span slot="heading" translate>
                             Driving time change
-                        </div>
+                        </span>
                         <info-icon position="left">
                             <div slot="body" translate>
                                 If a driving time is calculated at 10 minutes on a stretch, this will be 11 minutes if set to 10% within this geographic area. This value can be negative.
@@ -289,10 +289,10 @@
             <check-toggle label="after" value.bind="model.isAreaBlocked">
 
                 <div slot="heading">
-                    <div slot="heading" translate>
+                    <span slot="heading" translate>
                         Area is blocked
-                    </div>
-                    <info-icon position="left">
+                    </span>
+                    <info-icon position="right">
                         <div slot="body" translate>
                             It will not be possible to make deliveries in this area
                         </div>
@@ -306,10 +306,10 @@
         <div if.bind="isNew" class="button-container margin-larger-top">
 
             <button appearance="solid" accent="primary" click.trigger="onSaveClick()">
-                <div slot="heading" translate>
+                <span slot="heading" translate>
                     Create area rule
-                </div>
-                <info-icon position="left">
+                </span>
+                <info-icon position="right">
                     <div slot="body" translate>
                         It will not be possible to make deliveries in this area
                     </div>

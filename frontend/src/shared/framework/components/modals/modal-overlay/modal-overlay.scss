@@ -21,13 +21,14 @@ modal-overlay
 
     .modal-overlay-content
     {
-        // Position at the top and allow content to
+        // Position at the top-right and allow content to
         // be positioned relative to this element.
         position: absolute;
         top: 0;
+        right: 0;
 
         // Set the size of the content area.
-        width: 100%;
+        width: calc(100% - var(--modal-panel-actions-width));
         min-height: 100%;
 
         // Use vertical flex layout.
@@ -37,6 +38,9 @@ modal-overlay
         // Apply horizontal padding.
         padding-right: 9rem;
         padding-left: var(--modal-overlay-actions-width);
+
+        // Ensure content is always above the modal actions.
+        z-index: 1;
 
         // Provide defaults for sectioning elements.
 

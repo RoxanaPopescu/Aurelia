@@ -1,9 +1,9 @@
 import { autoinject, observable, computedFrom } from "aurelia-framework";
-import { ISorting, SortingDirection, AbortError } from "shared/types";
+import { ISorting, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
-import { CommunicationService, CommunicationTriggerEventSlug, CommunicationMessageTypeSlug, CommunicationTriggerInfo, CommunicationReceiverSlug } from "app/model/_communication";
+import { CommunicationService, CommunicationTriggerEventSlug, CommunicationMessageTypeSlug, CommunicationTriggerInfo, CommunicationRecipientSlug } from "app/model/_communication";
 import { ConfirmDeleteTriggerDialog } from "./modals/confirm-delete-trigger/confirm-delete-trigger";
 
 /**
@@ -82,10 +82,10 @@ export class ListPage
     protected messageTypeFilter: CommunicationMessageTypeSlug[] | undefined;
 
     /**
-     * The message receiver filter.
+     * The message recipient filter.
      */
     @observable({ changeHandler: "update" })
-    protected receiverFilter: CommunicationReceiverSlug[] | undefined;
+    protected recipientFilter: CommunicationRecipientSlug[] | undefined;
 
     /**
      * The items to present in the table.
@@ -107,7 +107,7 @@ export class ListPage
             // Filtering
             .filter(t => this.triggerEventFilter && this.triggerEventFilter.includes(t.triggerEvent.slug))
             .filter(t => this.messageTypeFilter && this.messageTypeFilter.includes(t.messageType.slug))
-            .filter(t => this.receiverFilter && this.receiverFilter.includes(t.receiver.slug))
+            .filter(t => this.recipientFilter && this.recipientFilter.includes(t.recipient.slug))
             .filter(t => !this.textFilter || t.searchModel.contains(this.textFilter))
 
             // Sorting
@@ -177,35 +177,25 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            try
+            // Fetch the data.
+            const result = await this._communicationService.getAll(signal);
+
+            // Update the state.
+            this.triggers = result;
+
+            // Scroll to top.
+            this.scroll.reset();
+
+            // tslint:disable-next-line: no-floating-promises
+            this._historyHelper.navigate((state: IHistoryState<IRouteParams>) =>
             {
-                // Fetch the data.
-                const result = await this._communicationService.getAll(signal);
-
-                // Update the state.
-                this.triggers = result;
-
-                // Scroll to top.
-                this.scroll.reset();
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState<IRouteParams>) =>
-                {
-                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.triggerEvent = this.triggerEventFilter?.join(",");
-                    state.params.messageType = this.messageTypeFilter?.join(",");
-                    state.params.text = this.textFilter || undefined;
-                },
-                { trigger: false, replace: true });
-            }
-            catch (error)
-            {
-                if (!(error instanceof AbortError))
-                {
-                    Log.error(error);
-                }
-            }
+                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                state.params.triggerEvent = this.triggerEventFilter?.join(",");
+                state.params.messageType = this.messageTypeFilter?.join(",");
+                state.params.text = this.textFilter || undefined;
+            },
+            { trigger: false, replace: true });
         });
     }
 

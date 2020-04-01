@@ -408,12 +408,34 @@ export default
 
     "POST /api/v1/routeplanning/settingsv2/create":
     {
-        status: 201
+        data:
+        {
+            metadata:
+            {
+                created: "2020-03-05T08:32+02:00",
+                createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+                lastModified: "2020-03-05T09:52+02:00",
+                lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+            },
+            "id": "884b2e80-df8b-48a3-b2f4-9cfc8b6009b1",
+            "slug": "new-settings-name"
+        }
     },
 
     "POST /api/v1/routeplanning/settingsv2/update":
     {
-        status: 201
+        data:
+        {
+            metadata:
+            {
+                created: "2020-03-05T08:32+02:00",
+                createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+                lastModified: "2020-03-05T09:52+02:00",
+                lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+            },
+            "id": "960a7f5a-c4aa-4eef-9e73-c057e913f8f2",
+            "slug": "settings-name-5"
+        }
     },
 
     "POST /api/v1/routeplanning/settingsv2/delete":

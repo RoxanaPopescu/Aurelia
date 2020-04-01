@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="communication"] page[name="details"]
+{
+    numbered-section
+    {
+        max-width: 180rem;
+    }
+}

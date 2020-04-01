@@ -36,7 +36,7 @@ info-icon
             width: 72rem;
             padding: 5rem;
             position: absolute;
-            background-color: white;
+            background-color: var(--surface-color);
             border: var(--border-width-thin) solid var(--surface-neutral-border-color);
             border-radius: var(--border-radius-medium);
             box-shadow: var(--shadow-tooltip);
@@ -49,7 +49,7 @@ info-icon
                 height: 3rem;
                 width: 3rem;
                 border: var(--border-width-medium) solid var(--surface-neutral-border-color);
-                background-color: white;
+                background-color: var(--surface-color);
                 transform: rotate(45deg);
             }
 
