@@ -106,10 +106,10 @@
                 min.bind="0">
 
                 <div slot="heading">
-                    <div slot="heading" translate>
+                    <span slot="heading" translate>
                         Extending the earliest arrival time
-                    </div>
-                    <info-icon position="left">
+                    </span>
+                    <info-icon position="right">
                         <div slot="body" translate>
                             To plan with early arrival as it can provide better economy on route if previous delivery is acceptable
                         </div>
@@ -144,10 +144,10 @@
                 min.bind="0">
 
                 <div slot="heading">
-                    <div slot="heading" translate>
+                    <span slot="heading" translate>
                         Extension of latest arrival time
-                    </div>
-                    <info-icon position="left">
+                    </span>
+                    <info-icon position="right">
                         <div slot="body" translate>
                             If negative: Extra buffer for latest delivery time, as planned at an earlier interval than what is promised to the customer. If positive: Improved finances, those scheduled at a later delivery interval than what is promised to the customer
                         </div>
@@ -185,11 +185,11 @@
                 min.bind="0">
 
                 <div slot="heading">
-                    <div translate>
+                    <span translate>
                         Max time for route calculation
-                    </div>
+                    </span>
 
-                    <info-icon position="left">
+                    <info-icon position="right">
                         <div slot="body" translate>
                             The maximum time the route calculation is to perform the calculation itself. Note that if the route optimization is in the middle of a calculation, it will first complete the current calculation before it will finish
                         </div>
@@ -278,10 +278,10 @@
             ref="routeNameTempleteInputElement">
 
             <div slot="heading">
-                <div slot="heading" translate>
+                <span slot="heading" translate>
                     Template to use for the route
-                </div>
-                <info-icon position="left">
+                </span>
+                <info-icon position="right">
                     <div slot="body" translate>
                         When the route is created after run route optimization, the route name must follow this template
                     </div>

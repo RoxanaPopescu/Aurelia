@@ -1,5 +1,14 @@
 @import "resources/index";
 
+.input[label="above"] > .input-label .input-heading > * {
+    opacity: 1 !important;
+
+    > :not(info-icon)
+    {
+        opacity: var(--opacity-faded);
+    }
+}
+
 :root
 {
     // Default padding for cards.

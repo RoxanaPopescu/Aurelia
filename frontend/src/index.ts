@@ -53,7 +53,8 @@ export async function configure(aurelia: Aurelia): Promise<void>
     // Register global resources.
     aurelia.use.globalResources(
     [
-        PLATFORM.moduleName("app/components/if-claims/if-claims")
+        PLATFORM.moduleName("app/components/if-claims/if-claims"),
+        PLATFORM.moduleName("app/components/info-icon/info-icon")
     ]);
 
     // Add task that will run after all plugins and features have been loaded.
