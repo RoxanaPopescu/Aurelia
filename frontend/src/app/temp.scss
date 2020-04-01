@@ -78,6 +78,22 @@ page-content page-section
     }
 }
 
+page-content > numbered-section
+{
+    margin-left: 9rem;
+    margin-right: 9rem;
+
+    &:first-of-type
+    {
+        margin-top: 8rem;
+    }
+
+    &:last-of-type
+    {
+        margin-bottom: 8rem;
+    }
+}
+
 modal-section
 {
     &.--line-above

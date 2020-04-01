@@ -1,0 +1,22 @@
+<template>
+
+    <require from="./numbered-section.scss"></require>
+
+    <div class="numbered-section-header font-larger">
+
+        <div class="numbered-section-number">
+            ${number}
+        </div>
+
+        <div class="numbered-section-heading">
+            ${heading}
+        </div>
+
+    </div>
+
+    <div class="numbered-section-content">
+        <slot></slot>
+        <hr class="numbered-section-line hr-line">
+    </div>
+
+</template>

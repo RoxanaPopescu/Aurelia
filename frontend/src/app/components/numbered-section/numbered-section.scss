@@ -1,0 +1,102 @@
+@import "resources/index";
+
+numbered-section
+{
+    // Use vertical flex layout.
+    display: flex;
+    flex-direction: column;
+
+    .numbered-section-header
+    {
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
+        // Use horizontal flex layout.
+        display: flex;
+        align-items: center;
+
+        margin-left: 5rem;
+        padding-left: 9rem;
+        padding-top: calc((10rem - var(--font-larger-line-height)) / 2);
+        padding-bottom: calc(var(--font-larger-margin-bottom) + 2rem);
+    }
+
+    .numbered-section-heading
+    {
+        // Fill the available width.
+        flex-grow: 1;
+    }
+
+    .numbered-section-number
+    {
+        position: absolute;
+        left: -5.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        background: var(--surface-positive-surface-color);
+        color: var(--surface-positive-surface-text-color);
+    }
+
+    .numbered-section-content
+    {
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
+        // Fill the available width.
+        flex-grow: 1;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        margin-left: 5rem;
+        padding-left: 9rem;
+    }
+
+    .numbered-section-line
+    {
+        margin-top: var(--font-larger-margin-bottom);
+        margin-bottom: var(--font-larger-margin-bottom);
+    }
+
+    &:not(.--line-below) .numbered-section-line
+    {
+        display: none;
+    }
+
+    &:not(:last-of-type) .numbered-section-header,
+    &:not(:last-of-type) .numbered-section-content
+    {
+        border-left: 0.5rem solid var(--surface-positive-surface-color);
+    }
+
+    &.margin
+    {
+        &, &-top
+        {
+            margin-top: var(--font-large-margin-top);
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: var(--font-large-margin-top);
+        }
+    }
+
+    &.margin-double
+    {
+        &, &-top
+        {
+            margin-top: calc(2 * var(--font-large-margin-top));
+        }
+
+        &, &-bottom
+        {
+            margin-bottom: calc(2 * var(--font-large-margin-top));
+        }
+    }
+}
