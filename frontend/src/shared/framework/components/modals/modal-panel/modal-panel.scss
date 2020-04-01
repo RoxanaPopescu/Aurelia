@@ -48,7 +48,7 @@ modal-panel
         top: 0;
 
         // Set the size of the content area.
-        width: 100%;
+        width: calc(100% - var(--modal-panel-actions-width));
         min-height: 100%;
 
         // Use vertical flex layout.
@@ -84,13 +84,19 @@ modal-panel
     &.--left .modal-panel-content
     {
         // Apply padding, making room for the actions.
-        padding: 9rem 12rem 9rem var(--modal-panel-actions-width);
+        padding: 9rem 12rem 9rem 0;
+
+        // Position the content to the right.
+        right: 0;
     }
 
     &.--right .modal-panel-content
     {
         // Apply padding, making room for the actions.
-        padding: 9rem var(--modal-panel-actions-width) 9rem 12rem;
+        padding: 9rem 0 9rem 12rem;
+
+        // Position the content to the left.
+        left: 0;
     }
 
     .modal-panel-actions
