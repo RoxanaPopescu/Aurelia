@@ -1,26 +1,26 @@
 import { textCase } from "shared/utilities";
 
 /**
- * Represents the slug identifying a `CommunicationReceiver`.
+ * Represents the slug identifying a `CommunicationRecipient`.
  */
-export type CommunicationReceiverSlug = keyof typeof CommunicationReceiver.values;
+export type CommunicationRecipientSlug = keyof typeof CommunicationRecipient.values;
 
 /**
- * Represents a receiver of a message.
+ * Represents a recipient of a message.
  */
-export class CommunicationReceiver
+export class CommunicationRecipient
 {
     /**
      * Creates a new instance of the type.
      * @param slug The slug identifying the status of the order.
      */
-    public constructor(slug: CommunicationReceiverSlug)
+    public constructor(slug: CommunicationRecipientSlug)
     {
         this.slug = textCase(slug, "pascal", "kebab") as any;
-        Object.assign(this, CommunicationReceiver.values[this.slug]);
+        Object.assign(this, CommunicationRecipient.values[this.slug]);
     }
 
-    public slug: CommunicationReceiverSlug;
+    public slug: CommunicationRecipientSlug;
     public name: string;
 
     /**
@@ -36,9 +36,9 @@ export class CommunicationReceiver
      */
     public static readonly values =
     {
-        "receiver-1-slug":
+        "recipient-1-slug":
         {
-            name: "Receiver 1"
+            name: "Recipient 1"
         }
     };
 }

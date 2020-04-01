@@ -1,34 +1,46 @@
 // tslint:disable
 export default
 {
-    "GET /api/v1/communication/triggers/list":
+    "POST /api/v1/communication/triggers/list":
     {
       data:
       [
         {
-          "slug": "trigger-2",
-          "name": "Trigger 2",
-          "sender": "Coop Mad",
-          "receiver": "receiver-1-slug",
-          "triggerEvent": "delivery",
-          "messageType": "email"
-        },
-        {
-          "slug": "trigger-1",
+          "id": "trigger-1-id",
+          "slug": "trigger-1-slug",
           "name": "Trigger 1",
-          "sender": "Coop Mad",
-          "receiver": "receiver-1-slug",
           "triggerEvent": "delivery",
+          "recipient": "recipient-1-slug",
+          "senderName": "Sender 1",
           "messageType": "email"
         }
       ]
     },
 
-    "GET /api/v1/communication/triggers/details":
+    "POST /api/v1/communication/triggers/details":
     {
       data:
       {
-        // TODO
+        metadata:
+        {
+          created: "2020-03-05T08:32+02:00",
+          createdBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" },
+          lastModified: "2020-03-05T09:52+02:00",
+          lastModifiedBy: { id: "", username: "tda@mover.dk", email: "tda@mover.dk", firstName: "Thomas", lastName: "Darling" }
+        },
+        "id": "trigger-1-id",
+        "slug": "trigger-1-slug",
+        "name": "Trigger 1",
+        "customer": "customer-1-id",
+        "routeTags": [],
+        "stopTags": [],
+        "triggerEvent": "delivery",
+        "parameters": {},
+        "recipient": "recipient-1-slug",
+        "senderName": "Sender 1",
+        "messageType": "email",
+        "messageTitle": "email",
+        "messageBody": "email"
       }
     },
 

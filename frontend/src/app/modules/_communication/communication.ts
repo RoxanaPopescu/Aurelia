@@ -30,12 +30,38 @@ export class OrdersModule
                 {
                     claims:
                     [
-                        "view-orders"
+                        "view-communication"
                     ]
                 },
                 title: routeTitles.list,
                 nav: false,
                 href: "/orders/list"
+            },
+            {
+                name: "details",
+                route: "details/:slug",
+                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-communication"
+                    ]
+                },
+                title: routeTitles.details
+            },
+            {
+                name: "create",
+                route: "create",
+                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-communication"
+                    ]
+                },
+                title: routeTitles.details
             }
         ]);
     }
