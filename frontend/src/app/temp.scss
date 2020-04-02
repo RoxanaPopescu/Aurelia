@@ -1,6 +1,9 @@
 @import "resources/index";
 
-.input[label="above"] > .input-label .input-heading > *
+.input-heading > *,
+.input-description > *,
+.toggle-heading > *,
+.toggle-description > *
 {
     opacity: 1 !important;
     color: var(--surface-subtle-color);
