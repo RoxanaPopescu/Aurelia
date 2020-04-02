@@ -1,0 +1,123 @@
+<template>
+
+    <number-input
+        label="above"
+        none.bind="false"
+        value.bind="model.minutesAddedToEstimate | scale: 1/60"
+        class="margin-large-bottom"
+        min.bind="0">
+
+        <div slot="heading" translate>
+            Minutes added to estimate
+        </div>
+
+        <span slot="after" class="opacity-faded" translate>
+            min
+        </span>
+
+        <div slot="validation">
+
+            <required-validator
+                value.bind="model.minutesAddedToEstimate">
+            </required-validator>
+
+            <range-validator
+                active.bind="true"
+                value.bind="model.minutesAddedToEstimate"
+                min.bind="0">
+            </range-validator>
+
+        </div>
+
+    </number-input>
+
+    <number-input
+        label="above"
+        none.bind="false"
+        value.bind="model.minutesAddedPriorToEstimate | scale: 1/60"
+        class="margin-large-bottom"
+        min.bind="0">
+
+        <div slot="heading" translate>
+            Minutes added prior to estimate
+        </div>
+
+        <span slot="after" class="opacity-faded" translate>
+            min
+        </span>
+
+        <div slot="validation">
+
+            <required-validator
+                value.bind="model.minutesAddedPriorToEstimate">
+            </required-validator>
+
+            <range-validator
+                active.bind="true"
+                value.bind="model.minutesAddedPriorToEstimate"
+                min.bind="0">
+            </range-validator>
+
+        </div>
+
+    </number-input>
+
+
+    <number-input
+        label="above"
+        none.bind="false"
+        value.bind="model.daysPriorToDelivery"
+        class="margin-large-bottom"
+        min.bind="0">
+
+        <div slot="heading" translate>
+            Days prior to delivery
+        </div>
+
+        <span slot="after" class="opacity-faded" translate>
+            days
+        </span>
+
+        <div slot="validation">
+
+            <required-validator
+                value.bind="model.daysPriorToDelivery">
+            </required-validator>
+
+            <range-validator
+                active.bind="true"
+                value.bind="model.daysPriorToDelivery"
+                min.bind="0">
+            </range-validator>
+
+        </div>
+
+    </number-input>
+
+    <time-input
+        label="above"
+        none.bind="false"
+        value.bind="model.timeOfDay"
+        min.bind="0">
+
+        <div slot="heading" translate>
+            Time of day
+        </div>
+
+        <div slot="validation">
+
+            <required-validator
+                value.bind="model.timeOfDay">
+            </required-validator>
+
+            <range-validator
+                active.bind="true"
+                value.bind="model.timeOfDay"
+                min.bind="0">
+            </range-validator>
+
+        </div>
+
+    </time-input>
+
+</template>

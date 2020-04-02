@@ -43,6 +43,10 @@ export class CommunicationMessageType
         "email":
         {
             name: "Email"
+        },
+        "push-to-driver":
+        {
+            name: "Push notification to driver"
         }
     };
 }

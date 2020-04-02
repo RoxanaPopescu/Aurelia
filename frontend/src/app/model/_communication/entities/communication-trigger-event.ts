@@ -36,21 +36,41 @@ export class CommunicationTriggerEvent
      */
     public static readonly values =
     {
-        "delivery":
+        "order-pickup-completed":
         {
-            name: "Delivery"
+            name: "Order pickup completed"
         },
-        "pickup":
+        "order-delivery-arrived":
         {
-            name: "Pickup"
+            name: "Order delivery arrived"
         },
-        "ready-for-pickup":
+        "eta-specific-time":
         {
-            name: "Ready for pickup"
+            name: "ETA - Specific time"
         },
-        "arrival-at-terminal":
+        "eta-before-delivery":
         {
-            name: "Arrival at terminal"
-        }
+            name: "ETA - Before delivery"
+        },
+        "eta-before-pickup":
+        {
+            name: "ETA - Before pickup"
+        },
+        "delayed-delivery":
+        {
+            name: "Delayed - Delivery"
+        },
+        "delayed-pickup":
+        {
+            name: "Delayed - Pickup"
+        },
+        "order-cancelled-en-route":
+        {
+            name: "Order cancelled en route"
+        },
+        "order-modified-en-route":
+        {
+            name: "Order modified en route"
+        },
     };
 }

@@ -4,6 +4,16 @@
     <require from="app/components/name-value-list/name-value-list"></require>
     <require from="app/components/numbered-section/numbered-section"></require>
 
+    <require from="./components/order-pickup-completed-params/order-pickup-completed-params"></require>
+    <require from="./components/order-delivery-arrived-params/order-delivery-arrived-params"></require>
+    <require from="./components/eta-specific-time-params/eta-specific-time-params"></require>
+    <require from="./components/eta-before-delivery-params/eta-before-delivery-params"></require>
+    <require from="./components/eta-before-pickup-params/eta-before-pickup-params"></require>
+    <require from="./components/delayed-delivery-params/delayed-delivery-params"></require>
+    <require from="./components/delayed-pickup-params/delayed-pickup-params"></require>
+    <require from="./components/order-cancelled-en-route-params/order-cancelled-en-route-params"></require>
+    <require from="./components/order-modified-en-route-params/order-modified-en-route-params"></require>
+
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -108,7 +118,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Name of the trigger
+                                Name of the trigger ${model.triggerEvent.slug}
                             </div>
 
                             <div slot="validation">
@@ -130,6 +140,7 @@
                             none.bind="false"
                             value.bind="model.triggerEvent"
                             display-value.bind="model.triggerEvent.name"
+                            change.trigger="setAvailableOptions($event.detail.value, model.recipient)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
@@ -169,7 +180,7 @@
 
                     </div>
 
-                    <div class="control-row margin-large-bottom">
+                    <div class="control-row">
 
                         <tags-input
                             label="above"
@@ -199,28 +210,73 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="2" heading.translate="Parameters" class="--line-below">
+                <numbered-section number.bind="2" heading.translate="Parameters" class="communication-parameters-section --line-below">
 
-                    CONTENT
+                    <order-pickup-completed-params
+                        if.bind="model.triggerEvent.slug === 'order-pickup-completed'"
+                        model.bind="model.params">
+                    </order-pickup-completed-params>
+
+                    <order-delivery-arrived-params
+                        if.bind="model.triggerEvent.slug === 'order-delivery-arrived'"
+                        model.bind="model.params">
+                    </order-delivery-arrived-params>
+
+                    <eta-specific-time-params
+                        if.bind="model.triggerEvent.slug === 'eta-specific-time'"
+                        model.bind="model.params">
+                    </eta-specific-time-params>
+
+                    <eta-before-delivery-params
+                        if.bind="model.triggerEvent.slug === 'eta-before-delivery'"
+                        model.bind="model.params">
+                    </eta-before-delivery-params>
+
+                    <eta-before-pickup-params
+                        if.bind="model.triggerEvent.slug === 'eta-before-pickup'"
+                        model.bind="model.params">
+                    </eta-before-pickup-params>
+
+                    <delayed-delivery-params
+                        if.bind="model.triggerEvent.slug === 'delayed-delivery'"
+                        model.bind="model.params">
+                    </delayed-delivery-params>
+
+                    <delayed-pickup-params
+                        if.bind="model.triggerEvent.slug === 'delayed-pickup'"
+                        model.bind="model.params">
+                    </delayed-pickup-params>
+
+                    <order-cancelled-en-route-params
+                        if.bind="model.triggerEvent.slug === 'order-cancelled-en-route'"
+                        model.bind="model.params">
+                    </order-cancelled-en-route-params>
+
+                    <order-modified-en-route-params
+                        if.bind="model.triggerEvent.slug === 'order-modified-en-route'"
+                        model.bind="model.params">
+                    </order-modified-en-route-params>
+
 
                 </numbered-section>
 
                 <numbered-section number.bind="3" heading.translate="Choose recipient" class="--line-below">
 
-                    <div class="control-row margin-large-bottom">
+                    <div class="control-row">
 
                         <select-input
                             label="above"
                             none.bind="false"
                             value.bind="model.recipient"
                             display-value.bind="model.recipient.name"
+                            change.trigger="setAvailableOptions(model.triggerEvent, $event.detail.value)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
                                 Send message to
                             </div>
 
-                            <item repeat.for="recipient of availableRecipients" model.bind="recipient">
+                            <item repeat.for="recipient of options.recipients" model.bind="recipient">
                                 ${recipient.name}
                             </item>
 
@@ -240,7 +296,7 @@
 
                 <numbered-section number.bind="4" heading.translate="Choose message type" class="--line-below">
 
-                    <div class="control-row margin-large-bottom">
+                    <div class="control-row">
 
                         <select-input
                             label="above"
@@ -253,7 +309,7 @@
                                 Send message as
                             </div>
 
-                            <item repeat.for="messageType of availableMessageTypes" model.bind="messageType">
+                            <item repeat.for="messageType of options.messageTypes" model.bind="messageType">
                                 ${messageType.name}
                             </item>
 
@@ -319,7 +375,7 @@
 
                     </div>
 
-                    <div class="control-row margin-large-bottom">
+                    <div class="control-row">
 
                         <text-input
                             label="above"

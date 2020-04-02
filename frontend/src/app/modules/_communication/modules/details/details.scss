@@ -6,4 +6,13 @@ page[name="communication"] page[name="details"]
     {
         max-width: 180rem;
     }
+
+    .communication-parameters-section
+    {
+        .input,
+        .toggle
+        {
+            max-width: 80.125rem;
+        }
+    }
 }

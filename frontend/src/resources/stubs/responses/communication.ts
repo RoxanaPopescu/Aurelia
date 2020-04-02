@@ -9,8 +9,8 @@ export default
           "id": "trigger-1-id",
           "slug": "trigger-1-slug",
           "name": "Trigger 1",
-          "triggerEvent": "delivery",
-          "recipient": "recipient-1-slug",
+          "triggerEvent": "order-delivery-arrived",
+          "recipient": "delivery-customer",
           "senderName": "Sender 1",
           "messageType": "email"
         }
@@ -34,9 +34,9 @@ export default
         "customer": "customer-1-id",
         "routeTags": [],
         "stopTags": [],
-        "triggerEvent": "delivery",
+        "triggerEvent": "order-delivery-arrived",
         "parameters": {},
-        "recipient": "recipient-1-slug",
+        "recipient": "delivery-customer",
         "senderName": "Sender 1",
         "messageType": "email",
         "messageTitle": "Message title",

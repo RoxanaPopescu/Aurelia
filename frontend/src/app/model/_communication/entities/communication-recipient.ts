@@ -36,9 +36,24 @@ export class CommunicationRecipient
      */
     public static readonly values =
     {
-        "recipient-1-slug":
+        "delivery-customer":
         {
-            name: "Recipient 1"
+            name: "Delivery customer"
+        },
+
+        "pickup-customer":
+        {
+            name: "Pickup customer"
+        },
+
+        "driver":
+        {
+            name: "Driver"
+        },
+
+        "supplier":
+        {
+            name: "Supplier"
         }
     };
 }

@@ -166,7 +166,7 @@ export default
         [
             "sms",
             "email",
-            "push-to-driver-app"
+            "push-to-driver"
         ],
         placeholders: getPlaceholders(
         [
@@ -192,7 +192,7 @@ export default
         [
             "sms",
             "email",
-            "push-to-driver-app"
+            "push-to-driver"
         ],
         placeholders: getPlaceholders(
         [
