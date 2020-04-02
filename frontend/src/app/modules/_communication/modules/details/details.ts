@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
-import { CommunicationService, CommunicationTrigger } from "app/model/_communication";
+import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
 
 /**
  * Represents the route parameters for the page.
@@ -40,6 +40,26 @@ export class DetailsPage
      * The model to present.
      */
     protected model: CommunicationTrigger;
+
+    /**
+     * The available trigger events.
+     */
+    protected availableTriggerEvents = Object.keys(CommunicationTriggerEvent.values).map(key => CommunicationTriggerEvent.values[key]);
+
+    /**
+     * The available customers.
+     */
+    protected availableCustomers = [];
+
+    /**
+     * The available recipients.
+     */
+    protected availableRecipients = Object.keys(CommunicationRecipient.values).map(key => CommunicationRecipient.values[key]);
+
+    /**
+     * The available message types.
+     */
+    protected availableMessageTypes = Object.keys(CommunicationMessageType.values).map(key => CommunicationMessageType.values[key]);
 
     /**
      * Called by the framework when the module is activated.

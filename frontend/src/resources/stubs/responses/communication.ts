@@ -39,8 +39,8 @@ export default
         "recipient": "recipient-1-slug",
         "senderName": "Sender 1",
         "messageType": "email",
-        "messageTitle": "email",
-        "messageBody": "email"
+        "messageTitle": "Message title",
+        "messageBody": "Message body"
       }
     },
 

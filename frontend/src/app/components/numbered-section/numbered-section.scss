@@ -68,10 +68,16 @@ numbered-section
         display: none;
     }
 
+    .numbered-section-header,
+    .numbered-section-content
+    {
+        border-left: 0.5rem solid transparent;
+    }
+
     &:not(:last-of-type) .numbered-section-header,
     &:not(:last-of-type) .numbered-section-content
     {
-        border-left: 0.5rem solid var(--surface-positive-surface-color);
+        border-color: var(--surface-positive-surface-color);
     }
 
     &.margin

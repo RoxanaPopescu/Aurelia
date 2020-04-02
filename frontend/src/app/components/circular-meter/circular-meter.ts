@@ -9,11 +9,11 @@ export class CircularMeter
     /**
      * The percentage to show
      */
-    @bindable
-    public percentage: number = 0;
+    protected dashArraySize: number = 440;
 
     /**
      * The percentage to show
      */
-    protected dashArraySize: number = 440;
+    @bindable
+    public percentage: number = 0;
 }
