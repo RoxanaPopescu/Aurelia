@@ -24,8 +24,7 @@ info-icon
 
         &:not(:hover) icon
         {
-            color: var(--surface-neutral-icon-color);
-            opacity: var(--opacity-faded-more);
+            opacity: 0.4;
         }
 
         .info-icon-popover
