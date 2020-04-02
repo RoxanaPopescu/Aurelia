@@ -68,9 +68,17 @@ export class RouteStopProblem
         {
             name: "Missing items"
         },
-        "incorrectly-packaged":
+        "incorrectly-packed":
         {
-            name: "Missing items"
+            name: "Incorrectly packed"
+        },
+        "missing-colli":
+        {
+            name: "Missing colli"
+        },
+        "other-damage":
+        {
+            name: "Other damage"
         }
     };
 }
