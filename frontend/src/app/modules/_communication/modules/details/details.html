@@ -210,7 +210,14 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="2" heading.translate="Parameters" class="communication-parameters-section --line-below">
+                <numbered-section number.bind="2" heading.translate="Parameters" disabled.bind="model.triggerEvent.slug == null" class="communication-parameters-section --line-below">
+
+                    <div
+                        if.bind="model.triggerEvent.slug == null"
+                        class="opacity-faded"
+                        translate>
+                        Please choose a trigger event
+                    </div>
 
                     <order-pickup-completed-params
                         if.bind="model.triggerEvent.slug === 'order-pickup-completed'"
@@ -260,7 +267,7 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="3" heading.translate="Choose recipient" class="--line-below">
+                <numbered-section number.bind="3" heading.translate="Choose recipient" disabled.bind="model.triggerEvent.slug == null" class="--line-below">
 
                     <div class="control-row">
 
@@ -294,7 +301,7 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="4" heading.translate="Choose message type" class="--line-below">
+                <numbered-section number.bind="4" heading.translate="Choose message type" disabled.bind="model.recipient.slug == null" class="--line-below">
 
                     <div class="control-row">
 
@@ -327,7 +334,7 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="5" heading.translate="Compose message">
+                <numbered-section number.bind="5" heading.translate="Compose message" disabled.bind="model.recipient.slug == null">
 
                     <div class="control-row margin-large-bottom">
 

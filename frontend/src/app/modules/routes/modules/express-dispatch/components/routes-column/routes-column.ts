@@ -79,10 +79,8 @@ export class RoutesColumnCustomElement
                 if (!b.selected && a.selected) { return -1; }
                 if (b.selected && !a.selected) { return 1; }
 
-                // tslint:disable: no-eval
-                let aPropertyValue = eval(`a.${this.sorting.property}`);
-                let bPropertyValue = eval(`b.${this.sorting.property}`);
-                // tslint:enable
+                let aPropertyValue = a[this.sorting.property];
+                let bPropertyValue = b[this.sorting.property];
 
                 if (aPropertyValue instanceof Duration || aPropertyValue instanceof DateTime)
                 {

@@ -32,34 +32,10 @@
 
                 <toggle-group class="flex-column" value.bind="triggerEventFilter">
 
-                    <check-toggle label="after" model="delivery" value.one-time="true">
+                    <check-toggle repeat.for="triggerEvent of availableTriggerEvents" label="after" model.bind="triggerEvent.slug" value.one-time="true">
 
                         <div slot="heading" translate>
-                            Delivery
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="pickup" value.one-time="true">
-
-                        <div slot="heading" translate>
-                            Pickup
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="ready-for-pickup" value.one-time="true">
-
-                        <div slot="heading" translate>
-                            Ready for pickup
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="arrival-at-terminal" value.one-time="true">
-
-                        <div slot="heading" translate>
-                            Arrival at terminal
+                            ${triggerEvent.name}
                         </div>
 
                     </check-toggle>
@@ -76,18 +52,10 @@
 
                 <toggle-group class="flex-column" value.bind="messageTypeFilter">
 
-                    <check-toggle label="after" model="sms" value.one-time="true">
+                    <check-toggle repeat.for="messageType of availableMessageTypes" label="after" model.bind="messageType.slug" value.one-time="true">
 
                         <div slot="heading" translate>
-                            SMS
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="email" value.one-time="true">
-
-                        <div slot="heading" translate>
-                            Email
+                            ${messageType.name}
                         </div>
 
                     </check-toggle>
@@ -104,10 +72,10 @@
 
                 <toggle-group class="flex-column" value.bind="recipientFilter">
 
-                    <check-toggle label="after" model="recipient-1-slug" value.one-time="true">
+                    <check-toggle repeat.for="recipient of availableRecipients" label="after" model.bind="recipient.slug" value.one-time="true">
 
-                        <div slot="heading">
-                            Recipient 1
+                        <div slot="heading" translate>
+                            ${recipient.name}
                         </div>
 
                     </check-toggle>

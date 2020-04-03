@@ -3,7 +3,7 @@ import { ISorting, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
-import { CommunicationService, CommunicationTriggerEventSlug, CommunicationMessageTypeSlug, CommunicationTriggerInfo, CommunicationRecipientSlug } from "app/model/_communication";
+import { CommunicationService, CommunicationTriggerEventSlug, CommunicationMessageTypeSlug, CommunicationTriggerInfo, CommunicationRecipientSlug, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
 import { ConfirmDeleteTriggerDialog } from "./modals/confirm-delete-trigger/confirm-delete-trigger";
 
 /**
@@ -92,6 +92,24 @@ export class ListPage
      */
     protected triggers: CommunicationTriggerInfo[];
 
+    /**
+     * The available trigger events.
+     */
+    protected availableTriggerEvents = Object.keys(CommunicationTriggerEvent.values)
+        .map(key => new CommunicationTriggerEvent(key as any));
+
+    /**
+     * The available recipients.
+     */
+    protected availableRecipients = Object.keys(CommunicationRecipient.values)
+        .map(key => new CommunicationRecipient(key as any));
+
+    /**
+     * The available message types.
+     */
+    protected availableMessageTypes = Object.keys(CommunicationMessageType.values)
+        .map(key => new CommunicationMessageType(key as any));
+
     @computedFrom("triggers", "sorting", "textFilter", "triggerEventFilter", "messageTypeFilter")
     protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[]
     {
@@ -113,10 +131,8 @@ export class ListPage
             // Sorting
             .sort((a, b) =>
             {
-                // tslint:disable: no-eval
-                const aPropertyValue = eval(`a.${this.sorting.property}`);
-                const bPropertyValue = eval(`b.${this.sorting.property}`);
-                // tslint:enable
+                const aPropertyValue = a[this.sorting.property];
+                const bPropertyValue = b[this.sorting.property];
 
                 // Sort by selected column and direction.
                 if (aPropertyValue < bPropertyValue) { return -offset; }

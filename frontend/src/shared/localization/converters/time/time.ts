@@ -58,7 +58,7 @@ export class TimeValueConverter
         const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
 
         const valueToFormat =
-            value instanceof Duration ? DateTime.local().startOf("day").plus(value) :
+            value instanceof Duration ? DateTime.utc().startOf("day").plus(value) :
             value instanceof DateTime && convert ? value.toLocal() : value;
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =

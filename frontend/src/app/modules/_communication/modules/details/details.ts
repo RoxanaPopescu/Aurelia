@@ -145,7 +145,7 @@ export class DetailsPage
             this.model.messageType = undefined as any;
         }
 
-        if (this.model.messageType.slug === "push-to-driver" && (this.model.recipient == null || this.model.recipient.slug !== "driver"))
+        if (this.model.messageType != null && this.model.messageType.slug === "push-to-driver" && (this.model.recipient == null || this.model.recipient.slug !== "driver"))
         {
             this.model.messageType = undefined as any;
         }

@@ -17,4 +17,10 @@ export class NumberedSectionCustomElement
      */
     @bindable
     public heading: string;
+
+    /**
+     * True if the section is disabled, otherwise false.
+     */
+    @bindable
+    public disabled: string;
 }

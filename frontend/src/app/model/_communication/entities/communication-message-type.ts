@@ -46,7 +46,7 @@ export class CommunicationMessageType
         },
         "push-to-driver":
         {
-            name: "Push notification to driver"
+            name: "Driver notification"
         }
     };
 }

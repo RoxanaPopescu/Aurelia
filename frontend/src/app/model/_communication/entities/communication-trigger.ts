@@ -29,16 +29,12 @@ export class CommunicationTrigger
             this.messageBody = data.messageBody;
             this.parameters = data.parameters;
         }
-        else
-        {
-            this.metadata = new Metadata();
-        }
     }
 
     /**
      * The metadata for the entity.
      */
-    public metadata: Metadata;
+    public metadata: Metadata | undefined;
 
     /**
      * The ID of the comunication trigger.
