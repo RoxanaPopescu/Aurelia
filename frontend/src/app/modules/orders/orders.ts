@@ -18,13 +18,8 @@ export class OrdersModule
         config.map(
         [
             {
-                name: "default",
-                route: "",
-                redirect: "list"
-            },
-            {
                 name: "list",
-                route: "list",
+                route: "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 settings:
                 {

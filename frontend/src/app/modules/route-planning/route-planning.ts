@@ -51,11 +51,11 @@ export class RoutePlanningModule
             {
                 name: "default",
                 route: "",
-                redirect: "list"
+                redirect: "plans"
             },
             {
                 name: "list",
-                route: "list",
+                route: "plans",
                 moduleId: PLATFORM.moduleName("./modules/route-plans/list/list"),
                 settings:
                 {
@@ -69,7 +69,7 @@ export class RoutePlanningModule
             },
             {
                 name: "details",
-                route: "details/:id",
+                route: "plans/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/route-plans/details/details"),
                 settings:
                 {
@@ -82,7 +82,7 @@ export class RoutePlanningModule
             },
             {
                 name: "rule-sets-list",
-                route: "rule-sets/list",
+                route: "rule-sets",
                 moduleId: this.legacyOutfit ?
                     PLATFORM.moduleName("./modules/legacy-route-settings/list/list") :
                     PLATFORM.moduleName("./modules/settings/list/list"),
@@ -129,7 +129,7 @@ export class RoutePlanningModule
             },
             {
                 name: "order-groups-list",
-                route: "order-groups/list",
+                route: "order-groups",
                 moduleId: PLATFORM.moduleName("./modules/order-groups/list/list"),
                 settings:
                 {
@@ -170,7 +170,7 @@ export class RoutePlanningModule
             },
             {
                 name: "simulations-list",
-                route: "simulations/list",
+                route: "simulations",
                 moduleId: PLATFORM.moduleName("./modules/route-simulations/list/list"),
                 settings:
                 {

@@ -18,13 +18,8 @@ export class RoutesModule
         config.map(
         [
             {
-                name: "default",
-                route: "",
-                redirect: "list"
-            },
-            {
                 name: "list",
-                route: "list",
+                route: "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 settings:
                 {
@@ -115,7 +110,7 @@ export class RoutesModule
             [
                 {
                     name: "templates-list",
-                    route: "templates/list",
+                    route: "templates",
                     moduleId: PLATFORM.moduleName("./modules/templates/list/list"),
                     settings:
                     {
