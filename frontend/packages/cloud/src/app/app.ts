@@ -89,7 +89,6 @@ export class App
             }
 
             // Get the settings for the hostname specified in the request.
-
             const hostSettings = settings.hosts.find(s => s.hostname.test(request.hostname));
 
             if (hostSettings == null)
@@ -99,7 +98,6 @@ export class App
 
             // Resolve the theme to use, ensure the cookie is set,
             // and rewrite the request to serve the correct resources.
-
             const themeSlugFromCookie = request.cookies["theme"];
             response.locals.themeSlug = themeSlugFromCookie || hostSettings.themeSlug;
 

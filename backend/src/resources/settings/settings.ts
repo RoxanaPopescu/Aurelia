@@ -23,7 +23,7 @@ export default
                 audience: "mover",
                 header: "x-refresh-token",
                 cookie: "refresh-token",
-                expiresIn: Duration.fromObject({ days: 30 }),
+                expiresIn: Duration.fromObject({ days: 60 }),
                 secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
             },
             accessToken:
@@ -32,7 +32,7 @@ export default
                 audience: "mover",
                 header: "x-access-token",
                 cookie: "access-token",
-                expiresIn: Duration.fromObject({ days: 3 }),
+                expiresIn: Duration.fromObject({ days: 7 }),
                 secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
             }
         }

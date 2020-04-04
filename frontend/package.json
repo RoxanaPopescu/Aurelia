@@ -25,7 +25,7 @@
     "lint": "cross-env tslint --project \"tsconfig.json\" && stylelint \"src/**/*.css\" \"src/**/*.scss\" --config \"../stylelint.json\"",
     "translate-export": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export\"",
     "translate-pseudo": "cross-env ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
-    "translate": "cross-env npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-da\"",
+    "translate": "cross-env npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-all\"",
     "postinstall": "patch-package"
   },
   "dependencies": {
