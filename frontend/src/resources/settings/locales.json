@@ -1,5 +1,6 @@
 [
   { "code": "en-US", "extension": "-u-ca-iso8601-nu-latn", "name": "English (United States)" },
   { "code": "x-pseudo", "extension": "-u-ca-iso8601-nu-latn", "name": "Pseudo translation" },
-  { "code": "da", "extension": "-u-ca-iso8601-nu-latn", "name": "Dansk" }
+  { "code": "da", "extension": "-u-ca-iso8601-nu-latn", "name": "Dansk" },
+  { "code": "en-x-ikea", "extension": "-u-ca-iso8601-nu-latn", "name": "English (IKEA colli -> shipment)" }
 ]
