@@ -42,7 +42,7 @@ export class OrderDetailsStore {
     var markers: JSX.Element[] = [];
 
     if (this.order && this.map) {
-      if (this.order.journey) {
+      if (this.order.journey && this.order.journey.passages && this.order.journey.passages.length > 0) {
         this.order.journey.passages.map((passage, index) => {
           markers.push(
             <JourneyStopMarker

@@ -30,7 +30,7 @@ export class OrdersModule
                 },
                 title: routeTitles.list,
                 nav: false,
-                href: "/orders/list"
+                href: "/orders"
             },
             {
                 name: "details",

@@ -302,9 +302,9 @@ export namespace FulfillerSubPage {
     // tslint:disable-next-line:switch-default
     switch (page) {
       case FulfillerSubPage.RoutePlanningList:
-        return FulfillerNavigationPage.path("RoutePlanning") + "/list";
+        return FulfillerNavigationPage.path("RoutePlanning");
       case FulfillerSubPage.RoutePlanningSettingList:
-        return FulfillerNavigationPage.path("RoutePlanning") + "/settings/list";
+        return FulfillerNavigationPage.path("RoutePlanning") + "/settings";
       case FulfillerSubPage.RoutePlanningSettingDetails:
         return (
           FulfillerNavigationPage.path("RoutePlanning") +
@@ -318,7 +318,7 @@ export namespace FulfillerSubPage {
         return FulfillerNavigationPage.path("RoutePlanning") + "/details/:id";
       case FulfillerSubPage.OrderGroupList:
         return (
-          FulfillerNavigationPage.path("RoutePlanning") + "/order-groups/list"
+          FulfillerNavigationPage.path("RoutePlanning") + "/order-groups"
         );
       case FulfillerSubPage.OrderGroupCreate:
         return (
@@ -331,7 +331,7 @@ export namespace FulfillerSubPage {
         );
       case FulfillerSubPage.SimulationList:
         return (
-          FulfillerNavigationPage.path("RoutePlanning") + "/simulations/list"
+          FulfillerNavigationPage.path("RoutePlanning") + "/simulations"
         );
       case FulfillerSubPage.SimulationStart:
         return (
@@ -344,7 +344,7 @@ export namespace FulfillerSubPage {
           "/simulations/:id/result"
         );
       case FulfillerSubPage.DepotList:
-        return FulfillerNavigationPage.path("Depots") + "/list";
+        return FulfillerNavigationPage.path("Depots");
       case FulfillerSubPage.DepotCreate:
         return FulfillerNavigationPage.path("Depots") + "/create";
       case FulfillerSubPage.DepotDetails:

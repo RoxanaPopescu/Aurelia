@@ -130,7 +130,7 @@ export default class OrderDetailsComponent extends React.Component<Props> {
       <PageHeaderComponent
         history={this.props.history}
         path={[
-          { title: "Ordrer", href: SubPage.path(SubPage.OrderList) },
+          { title: Localization.sharedValue("General_Orders"), href: SubPage.path(SubPage.OrderList) },
           { title: orderDetailsStore.order!.publicOrderId }
         ]}
       >
@@ -151,7 +151,7 @@ export default class OrderDetailsComponent extends React.Component<Props> {
               size={ButtonSize.Medium}
               loading={orderDetailsStore.loading}
             >
-              Rediger ordre
+              {Localization.sharedValue("Order_Edit")}
             </Button>
           )}
 

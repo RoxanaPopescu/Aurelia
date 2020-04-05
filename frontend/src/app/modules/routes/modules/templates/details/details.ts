@@ -194,7 +194,7 @@ export class DetailsPage
         {
             await this._routeTemplateService.delete(this.template.id);
 
-            this._router.navigate("/routes/templates/list");
+            this._router.navigate("/routes/templates");
         }
         catch (error)
         {

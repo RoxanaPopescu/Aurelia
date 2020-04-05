@@ -43,40 +43,47 @@ export default class JourneyInformationComponent extends React.Component<
     OrderService.getJourney(orderDetailsStore.orderId)
       .then(journey => {
         orderDetailsStore.journey = journey;
-        // tslint:disable-next-line:no-console
 
-        // TODO: Change this to include all routes
-        orderDetailsStore.routeDetailsService
-          .startPolling(journey.passages[0].slug)
-          .then(() => {
-            // tslint:disable-next-line:no-console
-            orderDetailsStore.routeDetailsService.stopPolling();
+        if (journey.passages && journey.passages.length > 0) {
+          // tslint:disable-next-line:no-console
 
-            var stops = orderDetailsStore.routeDetailsService.routeDetails!.stops.filter(
-              s => s instanceof RouteStop
-            );
-            orderDetailsStore.journey!.passages.map(p => {
-              var pickupStop = this.getPickupStop(stops as RouteStop[]);
-              var deliveryStop = this.getDeliveryStop(stops as RouteStop[]);
+          // TODO: Change this to include all routes
+          orderDetailsStore.routeDetailsService
+            .startPolling(journey.passages[0].slug)
+            .then(() => {
+              // tslint:disable-next-line:no-console
+              orderDetailsStore.routeDetailsService.stopPolling();
 
-              if (pickupStop && deliveryStop) {
-                p.setStops(pickupStop, deliveryStop);
-              }
+              var stops = orderDetailsStore.routeDetailsService.routeDetails!.stops.filter(
+                s => s instanceof RouteStop
+              );
+              orderDetailsStore.journey!.passages.map(p => {
+                var pickupStop = this.getPickupStop(stops as RouteStop[]);
+                var deliveryStop = this.getDeliveryStop(stops as RouteStop[]);
+
+                if (pickupStop && deliveryStop) {
+                  p.setStops(pickupStop, deliveryStop);
+                }
+              });
+
+              // Hack to ensure repaint when unobservable data changes
+              var temp = orderDetailsStore.journey;
+              orderDetailsStore.journey = undefined;
+              orderDetailsStore.journey = temp;
+            })
+            .catch(error => {
+              // tslint:disable-next-line:no-console
+              console.log(error);
+              this.setState({
+                stateText: Localization.sharedValue("Loading_Headline:Fail")
+              });
+              orderDetailsStore.routeDetailsService.stopPolling();
             });
 
-            // Hack to ensure repaint when unobservable data changes
-            var temp = orderDetailsStore.journey;
-            orderDetailsStore.journey = undefined;
-            orderDetailsStore.journey = temp;
-          })
-          .catch(error => {
-            // tslint:disable-next-line:no-console
-            console.log(error);
-            this.setState({
-              stateText: Localization.sharedValue("Loading_Headline:Fail")
-            });
-            orderDetailsStore.routeDetailsService.stopPolling();
-          });
+        } else {
+          console.log("No journey found");
+          orderDetailsStore.loading = false;
+        }
       })
       .catch(error => {
         // tslint:disable-next-line:no-console

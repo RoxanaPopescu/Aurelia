@@ -329,7 +329,7 @@ export namespace SubPage {
       case SubPage.OrderUpdate:
         return NavigationPage.path("Orders") + "/edit/:id";
       case SubPage.OrderList:
-        return NavigationPage.path("Orders") + "/list";
+        return NavigationPage.path("Orders");
       case SubPage.OrderSettings:
         return NavigationPage.path("Orders") + "/settings";
       case SubPage.OrderDetails:
@@ -349,13 +349,13 @@ export namespace SubPage {
       case SubPage.ConsignorKpi:
         return NavigationPage.path("Kpi") + "/consignor";
       case SubPage.DepartmentsList:
-        return NavigationPage.path("Departments") + "/list";
+        return NavigationPage.path("Departments") ;
       case SubPage.Department:
         return NavigationPage.path("Departments") + "/:id";
       case SubPage.DepartmentsCreate:
         return NavigationPage.path("Departments") + "/create";
       case SubPage.AgreementsList:
-        return NavigationPage.path("Agreements") + "/list";
+        return NavigationPage.path("Agreements");
     }
   }
 }

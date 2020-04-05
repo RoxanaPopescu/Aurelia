@@ -435,9 +435,9 @@ export default class SaveOrderComponent extends React.Component<Props> {
       }
     } else {
       if (this.saveOrdersStore.orderDetails !== undefined) {
-        return `Rediger #${order.publicOrderId}`;
+        return Localization.consignorValue("Order_Create_OrderCount").replace("{order-id}", order.publicOrderId!);
       } else {
-        return "Henter data ...";
+        return Localization.sharedValue("General_Loading");
       }
     }
   }
@@ -489,8 +489,8 @@ export default class SaveOrderComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Ordrer", href: SubPage.path(SubPage.OrderList) },
-            { title: !this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId ? "Ny ordre" : "Rediger ordre" }
+            { title: Localization.sharedValue("General_Orders"), href: SubPage.path(SubPage.OrderList) },
+            { title: !this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId ? Localization.sharedValue("Order_New") : Localization.sharedValue("Order_Edit") }
           ]}
           actionElements={<>
             {!this.saveOrdersStore.orderDetails && !this.saveOrdersStore.orderId &&
@@ -543,7 +543,9 @@ export default class SaveOrderComponent extends React.Component<Props> {
                 loading={this.saveOrdersStore.loading}
                 onClick={() => this.editOrder()}
               >
-                Opdater ordre
+                {Localization.consignorValue(
+                  "Order_Create_Update_Button"
+                )}
               </Button>
             }
           </>}
@@ -568,7 +570,11 @@ export default class SaveOrderComponent extends React.Component<Props> {
                           .saveOrdersStore.generalInformationOpen;
                       }}
                     >
-                      Generelle informationer
+                      {
+                        Localization.consignorValue(
+                          "Order_Create_General_Information"
+                        )
+                      }
                       <div className="c-order-create-chevron" />
                     </div>
                     {this.saveOrdersStore.generalInformationOpen && (

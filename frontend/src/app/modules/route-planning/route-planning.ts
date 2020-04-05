@@ -56,7 +56,9 @@ export class RoutePlanningModule
             {
                 name: "list",
                 route: "plans",
-                moduleId: PLATFORM.moduleName("./modules/route-plans/list/list"),
+                moduleId: this.legacyOutfit ?
+                    PLATFORM.moduleName("./modules/legacy-route-plans/list/list") :
+                    PLATFORM.moduleName("./modules/plans/list/list"),
                 settings:
                 {
                     claims:
@@ -70,7 +72,9 @@ export class RoutePlanningModule
             {
                 name: "details",
                 route: "plans/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/route-plans/details/details"),
+                moduleId: this.legacyOutfit ?
+                    PLATFORM.moduleName("./modules/legacy-route-plans/details/details") :
+                    PLATFORM.moduleName("./modules/plans/details/details"),
                 settings:
                 {
                     claims:
