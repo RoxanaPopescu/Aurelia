@@ -1,0 +1,25 @@
+.c-routePlanning-routes-routeInfo {
+  display: flex;
+  height: 48px;
+  justify-content: flex-start;
+  align-items: center;
+  width: calc(100% + 40px);
+  padding-right: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, white 85%, transparent);
+  cursor: pointer;
+}
+
+.c-routePlanning-routes-route-transporter {
+  min-width: 231px;
+  width: 231px;
+}
+
+.c-routePlanning-routes-route-id {
+  min-width: 50px;
+  width: 50px;
+}
+
+.c-routePlanning-routes-route-infoContent {
+  padding-left: 40px;
+}

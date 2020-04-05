@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router";
 import RoutePlansComponent from "../routePlanning/list";
-import RoutePlanningDetails from "../routePlanning/details";
+import RoutePlanningDetails from "../routePlanning/details-v1";
 import Localization from "shared/src/localization";
 import { Base } from "shared/src/webKit/utillity/base";
 import DriverListComponent from "../fleet/drivers/list";

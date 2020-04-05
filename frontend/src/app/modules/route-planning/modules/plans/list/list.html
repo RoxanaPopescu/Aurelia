@@ -3,6 +3,78 @@
     <require from="./list.scss"></require>
 
     <page name="route-plans-list">
+        <page-sidebar scroll>
+            <page-section>
+                <search-input value.bind="textFilter & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find...
+                    </span>
+
+                </search-input>
+            </page-section>
+
+            <page-section toggle.bind="true">
+                <div slot="header" translate>
+                    Status
+                </div>
+
+                <toggle-group class="flex-column" value.bind="statusFilter">
+                    <check-toggle label="after" model="succeeded" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Succeeded
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="waiting-for-approval" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Waiting for approval
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="executing" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Processing
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="calculation-completed" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Calculation completed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="failed" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Failed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Cancelled
+                        </div>
+
+                    </check-toggle>
+                </toggle-group>
+            </page-section>
+
+        </page-sidebar>
 
         <page-content scroll scroll.ref="scroll">
 
@@ -29,28 +101,34 @@
 
                     <data-table-headers>
 
-                        <data-table-cell DISABLED-name="time-frame" translate>
-                            Time frame v2
+                        <data-table-cell DISABLED-name="status">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="created" translate>
                             Created
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="updated" translate>
-                            Updated
+                        <data-table-cell DISABLED-name="completed" translate>
+                            Completed
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="routes" align="right" translate>
-                            Routes
+                        <data-table-cell DISABLED-name="time-frame" translate>
+                            Time frame
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="unscheduled-stops" align="right" translate>
-                            Unscheduled stops
+                        <data-table-cell DISABLED-name="routes" align="right">
+                            <span class="text-truncate" translate>
+                                Routes
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="status" translate>
-                            Status
+                        <data-table-cell DISABLED-name="unscheduled-tasks" align="right">
+                            <span class="text-truncate" translate>
+                                Unscheduled tasks
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -62,27 +140,33 @@
                             href.bind="detailsLink(plan)">
 
                             <data-table-cell>
+                                <span class="text-truncate">
+                                    ${plan.status.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${plan.timeCreated | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${plan.timeCompleted | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 ${plan.timeFrame | dateTimeRange: 'narrow' : false}
                             </data-table-cell>
 
-                            <data-table-cell>
-                                ${plan.createdDateTime | dateTime: 'narrow' : false}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${plan.updatedDateTime | dateTime: 'narrow' : false}
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${plan.routesCount}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                ${plan.routeCount}
-                            </data-table-cell>
-
-                            <data-table-cell align="right">
-                                ${plan.unscheduledStopCount}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${plan.status.name}
+                                <span class="text-truncate">
+                                    ${plan.unscheduledTasksCount}
+                                </span>
                             </data-table-cell>
 
                         </data-table-row>

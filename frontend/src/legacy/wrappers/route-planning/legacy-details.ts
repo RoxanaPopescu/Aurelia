@@ -3,11 +3,11 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "fulfiller/src/components/routePlanning/details/index";
+import Component from "fulfiller/src/components/routePlanning/details-v1/index";
 
 @noView
 @autoinject
-export class DetailsCustomElement extends Wrapper
+export class LegacyDetailsCustomElement extends Wrapper
 {
     /**
      * Creates a new instance of the type.

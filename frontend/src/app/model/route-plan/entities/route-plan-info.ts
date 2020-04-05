@@ -15,11 +15,17 @@ export class RoutePlanInfo
     {
         this.slug = data.id;
         this.status = new RoutePlanStatus(data.status);
-        this.createdDateTime = DateTime.fromISO(data.created, { setZone: true });
-        this.updatedDateTime = DateTime.fromISO(data.lastUpdated, { setZone: true });
-        this.routeCount = data.routeCount;
-        this.unscheduledStopCount = data.unscheduledStopsCount;
-        this.timeFrame = new DateTimeRange(data.timeFrame, { setZone: true });
+        this.timeCreated = DateTime.fromISO(data.timeCreated, { setZone: true });
+        if (data.timeCompleted != null) {
+            this.timeCompleted = DateTime.fromISO(data.timeCompleted, { setZone: true });
+        }
+        if (data.routesCount != null) {
+            this.routesCount = data.routesCount;
+        }
+        if (data.unscheduledTasksCount != null) {
+            this.unscheduledTasksCount = data.unscheduledTasksCount;
+        }
+        this.deliveryTime = new DateTimeRange(data.deliveryTime, { setZone: true });
     }
 
     /**
@@ -35,25 +41,25 @@ export class RoutePlanInfo
     /**
      * The date and time at which the route plan was created.
      */
-    public readonly createdDateTime: DateTime;
+    public readonly timeCreated: DateTime;
 
     /**
-     * The date and time at which the route plan was last updated.
+     * The date and time at which the route plan was completed.
      */
-    public readonly updatedDateTime: DateTime;
+    public readonly timeCompleted?: DateTime;
 
     /**
      * The number of routes in the route plan.
      */
-    public readonly routeCount: number;
+    public readonly routesCount?: number;
 
     /**
-     * The number of unscheduled stops in the route plan.
+     * The number of unscheduled tasks in the route plan.
      */
-    public readonly unscheduledStopCount: number;
+    public readonly unscheduledTasksCount?: number;
 
     /**
-     * The time frame for this route plan.
+     * The delivery time frame for this route plan
      */
-    public readonly timeFrame: DateTimeRange;
+    public readonly deliveryTime: DateTimeRange;
 }

@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+import { RoutePlanService, RoutePlanInfo, RoutePlanStatusSlug } from "app/model/route-plan";
 
 /**
  * Represents the route parameters for the page.
@@ -14,6 +14,7 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
+    textFilter?: string;
 }
 
 /**
@@ -59,6 +60,19 @@ export class ListPage
     };
 
     /**
+     * The name identifying the selected status tab.
+     */
+    @observable({ changeHandler: "update" })
+    protected statusFilter: RoutePlanStatusSlug[] | undefined;
+
+
+    /**
+     * The text in the filter text input.
+     */
+    @observable({ changeHandler: "update" })
+    protected textFilter: string | undefined;
+
+    /**
      * The paging to use for the table.
      */
     @observable({ changeHandler: "update" })
@@ -89,6 +103,7 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
+        this.textFilter = params.textFilter || this.textFilter;
 
         this.update();
     }
@@ -99,14 +114,12 @@ export class ListPage
      */
     public detailsLink(plan: RoutePlanInfo): string | undefined
     {
-        if (plan.status.slug === "cancelled" ||
-            plan.status.slug === "failed-externally" ||
-            plan.status.slug === "failed-internally")
+        if (plan.status.slug === "succeeded")
         {
-            return undefined;
+            return `/route-planning/details/${plan.slug}`;
         }
 
-        return `/route-planning/details/${plan.slug}`;
+        return undefined;
     }
 
     /**
@@ -153,6 +166,7 @@ export class ListPage
             // Update the state.
             this.plans = result.plans;
             this.planCount = result.planCount;
+            // FIXME: LINK OTHER INFO
 
             // Reset page.
             if (propertyName !== "paging")
@@ -170,6 +184,7 @@ export class ListPage
                 state.params.pageSize = this.paging.pageSize;
                 state.params.sortProperty = this.sorting.property;
                 state.params.sortDirection = this.sorting.direction;
+                state.params.textFilter = this.textFilter;
             },
             { trigger: false, replace: true });
         });

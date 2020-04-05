@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo } from "app/model/route-plan";
+import { RoutePlanService, LegacyRoutePlanInfo } from "app/model/route-plan";
 
 /**
  * Represents the route parameters for the page.
@@ -76,7 +76,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected plans: RoutePlanInfo[];
+    protected plans: LegacyRoutePlanInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -97,7 +97,7 @@ export class ListPage
      * Called by the list when looping through the plans
      * @returns The details link if not cancelled or failed.
      */
-    public detailsLink(plan: RoutePlanInfo): string | undefined
+    public detailsLink(plan: LegacyRoutePlanInfo): string | undefined
     {
         if (plan.status.slug === "cancelled" ||
             plan.status.slug === "failed-externally" ||
@@ -145,7 +145,7 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._routePlanService.getAll(
+            const result = await this._routePlanService.legacyGetAll(
                 this.sorting,
                 this.paging,
                 signal);
