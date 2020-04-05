@@ -79,7 +79,7 @@ export class ListPage
     protected paging: IPaging =
     {
         page: 1,
-        pageSize: 20
+        pageSize: 50
     };
 
     /**
@@ -90,7 +90,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected plans: RoutePlanInfo[];
+    protected results: RoutePlanInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -167,7 +167,7 @@ export class ListPage
                     signal);
 
                 // Update the state.
-                this.plans = result.plans;
+                this.results = result.plans;
                 // FIXME: LINK OTHER INFO
 
                 // Reset page.

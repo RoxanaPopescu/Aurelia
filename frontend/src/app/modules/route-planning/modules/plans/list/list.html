@@ -116,7 +116,7 @@
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="time-frame" translate>
-                            Time frame
+                            Delivery
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="routes" align="right">
@@ -133,39 +133,39 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="plan of plans">
+                    <template repeat.for="result of results">
 
                         <data-table-row
-                            accent.bind="plan.status.accent"
-                            href.bind="detailsLink(plan)">
+                            accent.bind="result.status.accent"
+                            href.bind="detailsLink(result)">
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${plan.status.name}
+                                    ${result.status.name}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${plan.timeCreated | dateTime: 'narrow' : false}
+                                ${result.timeCreated | dateTime: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${plan.timeCompleted | dateTime: 'narrow' : false}
+                                ${result.timeCompleted | dateTime: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${plan.timeFrame | dateTimeRange: 'narrow' : false}
+                                ${result.deliveryTime | dateTimeRange: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell align="right">
                                 <span class="text-truncate">
-                                    ${plan.routesCount}
+                                    ${result.routesCount}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
                                 <span class="text-truncate">
-                                    ${plan.unscheduledTasksCount}
+                                    ${result.unscheduledTasksCount}
                                 </span>
                             </data-table-cell>
 
@@ -175,11 +175,21 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="plans == null && !failed" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="plans.length == 0" class="margin-largest">
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="results"
+                        class="flex-push-right margin-top"
+                        value.bind="paging">
+                    </data-table-pager>
+
+                </div>
 
             </page-section>
 
