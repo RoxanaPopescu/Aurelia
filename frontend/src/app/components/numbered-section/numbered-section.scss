@@ -6,6 +6,20 @@ numbered-section
     display: flex;
     flex-direction: column;
 
+    ---accent-surface-color: var(--surface-positive-surface-color);
+    ---accent-text-color: var(--surface-positive-surface-text-color);
+
+    &.--disabled
+    {
+        ---accent-surface-color: var(--palette-color-neutral-dim);
+        ---accent-text-color: var(--palette-color-whitepoint);
+
+        .numbered-section-content
+        {
+            display: none;
+        }
+    }
+
     .numbered-section-header
     {
         // Allow content to be positioned relative to this element.
@@ -18,7 +32,6 @@ numbered-section
         margin-left: 5rem;
         padding-left: 9rem;
         padding-top: calc((10rem - var(--font-larger-line-height)) / 2);
-        padding-bottom: 5rem;
     }
 
     .numbered-section-heading
@@ -37,8 +50,8 @@ numbered-section
         width: 10rem;
         height: 10rem;
         border-radius: 50%;
-        background: var(--surface-positive-surface-color);
-        color: var(--surface-positive-surface-text-color);
+        background: var(---accent-surface-color);
+        color: var(---accent-text-color);
     }
 
     .numbered-section-content
@@ -53,14 +66,20 @@ numbered-section
         display: flex;
         flex-direction: column;
 
+        padding-top: 5rem;
+    }
+
+    .numbered-section-content,
+    .numbered-section-line
+    {
         margin-left: 5rem;
         padding-left: 9rem;
     }
 
     .numbered-section-line
     {
-        margin-top: 7rem;
-        margin-bottom: var(--font-larger-margin-bottom);
+        padding-top: 7rem;
+        padding-bottom: var(--font-larger-margin-bottom);
     }
 
     &:not(.--line-below) .numbered-section-line
@@ -69,15 +88,20 @@ numbered-section
     }
 
     .numbered-section-header,
-    .numbered-section-content
+    .numbered-section-content,
+    .numbered-section-line
     {
         border-left: 0.5rem solid transparent;
     }
 
-    &:not(:last-of-type) .numbered-section-header,
-    &:not(:last-of-type) .numbered-section-content
+    &:not(:last-of-type)
     {
-        border-color: var(--surface-positive-surface-color);
+        .numbered-section-header,
+        .numbered-section-content,
+        .numbered-section-line
+        {
+            border-color: var(---accent-surface-color);
+        }
     }
 
     &.margin

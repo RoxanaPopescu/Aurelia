@@ -79,7 +79,7 @@ export class TagsInputCustomElement
      * The models associated with the items picked by the user, or undefined if no items have been picked.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
-    public value: any[] = [];
+    public value: any[] | undefined;
 
     /**
      * The value of the item that is focused, but not yet picked, or undefined if no item has been focused.
@@ -153,10 +153,18 @@ export class TagsInputCustomElement
      */
     public deselectItem(model: any): void
     {
-        const value = [...this.value];
+        const value = [...this.value!];
         const index = value.indexOf(model);
         value.splice(index, 1);
-        this.value = value;
+
+        if (value.length > 0)
+        {
+            this.value = value;
+        }
+        else
+        {
+            this.value = undefined;
+        }
 
         // Dispatch the `input` event to indicate that the comitted value, has changed.
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
@@ -198,11 +206,11 @@ export class TagsInputCustomElement
 
         this.filterValue = undefined;
 
-        if (pick && this.focusedValue)
+        if (pick && this.focusedValue && !this.value?.includes(this.focusedValue))
         {
             // To ensuere a binding update is triggered, replace the
             // value with a new array including the picked value.
-            const value = [...this.value];
+            const value = this.value != null ? [...this.value] : [];
             value.push(this.focusedValue);
             this.value = value;
 
@@ -256,14 +264,14 @@ export class TagsInputCustomElement
             {
                 case "Backspace":
                 {
-                    if (this.open && !this.filterValue && this.value.length > 0)
+                    if (this.open && !this.filterValue && this.value != null && this.value.length > 0)
                     {
                         this.open = false;
 
                         return false;
                     }
 
-                    if (!this.open)
+                    if (!this.open && this.value != null)
                     {
                         this.value.pop();
 
@@ -352,6 +360,19 @@ export class TagsInputCustomElement
         if (!event.defaultPrevented && event.target !== this.toggleElement && !this.open)
         {
             this.openDropdown(false);
+        }
+    }
+
+    /**
+     * Called when the input, or an element within the input, looses focus.
+     * Ensures the state is reset, even if the dropdown was not visible.
+     * @param event The focus event.
+     */
+    protected onInputFocusOut(event: FocusEvent): void
+    {
+        if (!event.defaultPrevented && this.open && this.itemPicker.empty)
+        {
+            this.closeDropdown(false, false);
         }
     }
 

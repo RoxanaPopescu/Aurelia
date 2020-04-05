@@ -32,7 +32,7 @@
                         <div>
 
                             <template if.bind="model.id != null">
-                                ${model.name}
+                                ${triggerName}
                             </template>
 
                             <template if.bind="model.id == null" translate>
@@ -165,15 +165,15 @@
                             label="above"
                             none.bind="false"
                             value.bind="model.customer"
-                            display-value.bind="model.customer.name"
+                            display-value.bind="selectedCustomer.primaryName"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
                                 Applies to the customer
                             </div>
 
-                            <item repeat.for="customer of availableCustomers" model.bind="customer">
-                                ${customer.name}
+                            <item repeat.for="customer of availableCustomers" model.bind="customer.id">
+                                ${customer.primaryName}
                             </item>
 
                         </select-input>
@@ -221,47 +221,47 @@
 
                     <order-pickup-completed-params
                         if.bind="model.triggerEvent.slug === 'order-pickup-completed'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </order-pickup-completed-params>
 
                     <order-delivery-arrived-params
                         if.bind="model.triggerEvent.slug === 'order-delivery-arrived'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </order-delivery-arrived-params>
 
                     <eta-specific-time-params
                         if.bind="model.triggerEvent.slug === 'eta-specific-time'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </eta-specific-time-params>
 
                     <eta-before-delivery-params
                         if.bind="model.triggerEvent.slug === 'eta-before-delivery'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </eta-before-delivery-params>
 
                     <eta-before-pickup-params
                         if.bind="model.triggerEvent.slug === 'eta-before-pickup'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </eta-before-pickup-params>
 
                     <delayed-delivery-params
                         if.bind="model.triggerEvent.slug === 'delayed-delivery'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </delayed-delivery-params>
 
                     <delayed-pickup-params
                         if.bind="model.triggerEvent.slug === 'delayed-pickup'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </delayed-pickup-params>
 
                     <order-cancelled-en-route-params
                         if.bind="model.triggerEvent.slug === 'order-cancelled-en-route'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </order-cancelled-en-route-params>
 
                     <order-modified-en-route-params
                         if.bind="model.triggerEvent.slug === 'order-modified-en-route'"
-                        model.bind="model.params">
+                        model.bind="model.parameters">
                     </order-modified-en-route-params>
 
 
@@ -386,12 +386,43 @@
 
                         <text-input
                             label="above"
+                            trim.bind="false"
                             value.bind="model.messageBody"
                             class="flex-basis-1-of-1"
-                            lines.bind="5">
+                            lines.bind="5"
+                            ref="messageInputElement">
 
                             <div slot="heading" translate>
                                 Message body
+                            </div>
+
+                            <div slot="before">
+
+                                <select-button appearance="text-without-hover" accent="primary" class="flex-push-right">
+
+                                    <div slot="label" class="flex-row">
+                                        <icon name="placeholder-small" accent="primary" class="margin-right"></icon>
+                                        <span translate>
+                                            Insert placeholder
+                                        </span>
+                                    </div>
+
+                                    <item
+                                        repeat.for="placeholder of options.placeholders"
+                                        click.trigger="onMessagePlaceholderClick(placeholder.placeholder)">
+
+                                        <div accent="primary">
+                                            ${placeholder.placeholder}
+                                        </div>
+
+                                        <div class="font-small margin-smallest-top opacity-faded" translate>
+                                            ${placeholder.description}
+                                        </div>
+
+                                    </item>
+
+                                </select-button>
+
                             </div>
 
                             <div slot="validation">

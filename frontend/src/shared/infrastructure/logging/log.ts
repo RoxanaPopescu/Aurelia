@@ -1,5 +1,5 @@
 import { Container } from "aurelia-framework";
-import { MapObject } from "shared/types";
+import { MapObject, AbortError } from "shared/types";
 
 // TODO: This reference is technically not allowed, as `infrastructure` should reference `framework`.
 import { ToastService } from "shared/framework/services/toast";
@@ -104,13 +104,15 @@ export namespace Log
 
     /**
      * Logs the specified error, optionally with additional context.
+     * Note that errors of type `AbortError` will be ignored.
      * @param error The error to log.
      * @param context The context to associate with the log entry.
      */
     export function error(errors: Error, context?: MapObject): void;
 
     /**
-     * Logs the specified message and error, optionally with additional context.
+     * Logs the specified error message and error, optionally with additional context.
+     * Note that errors of type `AbortError` will be ignored.
      * @param message The message to log.
      * @param error The error to associate with the log entry.
      * @param context The context to associate with the log entry.
@@ -141,6 +143,11 @@ export namespace Log
             {
                 context = args[1];
             }
+        }
+
+        if (error instanceof AbortError)
+        {
+            return;
         }
 
         log("error", message, error, context);

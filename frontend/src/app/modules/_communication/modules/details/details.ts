@@ -1,7 +1,9 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
+import { AgreementService } from "app/model/agreement";
+import { Outfit } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -23,13 +25,16 @@ export class DetailsPage
     /**
      * Creates a new instance of the class.
      * @param communicationService The `CommunicationService` instance.
+     * @param agreementService The `AgreementService` instance.
      */
-    public constructor(communicationService: CommunicationService)
+    public constructor(communicationService: CommunicationService, agreementService: AgreementService)
     {
         this._communicationService = communicationService;
+        this._agreementService = agreementService;
     }
 
     private readonly _communicationService: CommunicationService;
+    private readonly _agreementService: AgreementService;
 
     /**
      * The validation for the modal.
@@ -37,9 +42,19 @@ export class DetailsPage
     protected validation: IValidation;
 
     /**
+     * The message input element.
+     */
+    protected messageInputElement: HTMLElement;
+
+    /**
      * The model to present.
      */
     protected model: CommunicationTrigger;
+
+    /**
+     * The name of the trigger, at the time it was last saved.
+     */
+    protected triggerName: string;
 
     /**
      * The available options, based on the selected trigger event.
@@ -53,21 +68,18 @@ export class DetailsPage
         .map(key => new CommunicationTriggerEvent(key as any));
 
     /**
-     * The available customers.
+     * The available customers - i.e. consignors.
      */
-    protected availableCustomers = [];
+    protected availableCustomers: Outfit[];
 
     /**
-     * The available recipients.
+     * The selected customer, if any.
      */
-    protected availableRecipients = Object.keys(CommunicationRecipient.values)
-        .map(key => new CommunicationRecipient(key as any));
-
-    /**
-     * The available message types.
-     */
-    protected availableMessageTypes = Object.keys(CommunicationMessageType.values)
-        .map(key => new CommunicationMessageType(key as any));
+    @computedFrom("model.customer", "availableCustomers")
+    protected get selectedCustomer(): Outfit | undefined
+    {
+        return this.availableCustomers.find(c => c.id === this.model.customer);
+    }
 
     /**
      * Called by the framework when the module is activated.
@@ -79,12 +91,15 @@ export class DetailsPage
         if (params.slug != null)
         {
             this.model = await this._communicationService.get(params.slug);
+            this.triggerName = this.model.name;
             this.setAvailableOptions(this.model.triggerEvent, this.model.recipient);
         }
         else
         {
             this.model = new CommunicationTrigger();
         }
+
+        this.availableCustomers = (await this._agreementService.getAll()).agreements.filter(a => a.type.slug === "consignor");
     }
 
     /**
@@ -112,11 +127,27 @@ export class DetailsPage
             {
                 await this._communicationService.update(this.model);
             }
+
+            this.triggerName = this.model.name;
         }
         catch (error)
         {
             Log.error("Could not save the route planning settings", error);
         }
+    }
+
+    /**
+     * Called when a message placeholder is clicked.
+     * Inserts the placeholder into the message input.
+     * @param placeholder The placeholder text to insert.
+     */
+    protected onMessagePlaceholderClick(placeholder: string): void
+    {
+        setTimeout(() =>
+        {
+            (this.messageInputElement.querySelector(".input-input") as HTMLElement).focus();
+            document.execCommand("insertText", false, placeholder);
+        });
     }
 
     protected setAvailableOptions(triggerEvent: CommunicationTriggerEvent, recipient: CommunicationRecipient): void

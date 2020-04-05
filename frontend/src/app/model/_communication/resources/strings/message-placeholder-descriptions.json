@@ -1,15 +1,15 @@
 {
-    "{OrderId}": "Kundens ordrenummer",
-    "{DriverPhone}": "Chaufførens telefonnummer",
-    "{DriverName}": "Chaufførens fornavn",
-    "{ETA}": "Forventet ankomsttidsinterval. Fx 13:30-14:30",
-    "{RouteReference}": "Rutens navn",
-    "{RouteId}": "Rutens id",
-    "{StopNumber}": "Stopnummer på ruten",
-    "{DeliveryCustomerName}": "Fornavn på modtager",
-    "{DeliveryLocationAddress}": "Adressen for levering",
-    "{DeliveryTimeFrame}": "Tidspunkt for leverancen. Fx: 14:00-16:00",
-    "{PickupCustomerName}": "Fornavn på modtager",
-    "{PickupLocationAddress}": "Adressen for afhentning",
-    "{PickupTimeFrame}": "Tidspunkt for afhentning. Fx: 14:00-16:00"
+    "OrderId": "Kundens ordrenummer",
+    "DriverPhone": "Chaufførens telefonnummer",
+    "DriverName": "Chaufførens fornavn",
+    "ETA": "Forventet ankomsttidsinterval. Fx 13:30-14:30",
+    "RouteReference": "Rutens navn",
+    "RouteId": "Rutens id",
+    "StopNumber": "Stopnummer på ruten",
+    "DeliveryCustomerName": "Fornavn på modtager",
+    "DeliveryLocationAddress": "Adressen for levering",
+    "DeliveryTimeFrame": "Tidspunkt for leverancen. Fx: 14:00-16:00",
+    "PickupCustomerName": "Fornavn på modtager",
+    "PickupLocationAddress": "Adressen for afhentning",
+    "PickupTimeFrame": "Tidspunkt for afhentning. Fx: 14:00-16:00"
 }
