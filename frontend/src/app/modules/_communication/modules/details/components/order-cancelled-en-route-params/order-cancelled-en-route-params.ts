@@ -9,4 +9,12 @@ export class OrderCancelledEnRouteParamsCustomElement
      */
     @bindable
     public model: MapObject;
+
+    public attached(): void
+    {
+        if (this.model.onlyForOrdersPickedUp == null)
+        {
+            this.model.onlyForOrdersPickedUp = false;
+        }
+    }
 }

@@ -15,14 +15,14 @@ export default
         ],
         placeholders: getPlaceholders(
         [
-            "{OrderId}",
-            "{DeliveryCustomerName}",
-            "{PickupLocationAddress}",
-            "{DeliveryLocationAddress}",
-            "{DeliveryTimeFrame}",
-            "{DriverPhone}",
-            "{DriverName}",
-            "{ETA}"
+            "OrderId",
+            "DeliveryCustomerName",
+            "PickupLocationAddress",
+            "DeliveryLocationAddress",
+            "DeliveryTimeFrame",
+            "DriverPhone",
+            "DriverName",
+            "ETA"
         ])
     },
     "order-delivery-arrived":
@@ -212,5 +212,5 @@ export default
 
 function getPlaceholders(placeholders: string[]): { placeholder: string; description: string }[]
 {
-    return placeholders.map(placeholder => ({ placeholder, description: placeholderDescriptions[placeholder] }));
+    return placeholders.map(placeholder => ({ placeholder: `{${placeholder}}`, description: placeholderDescriptions[placeholder] }));
 }

@@ -20,6 +20,7 @@
         keydown.trigger="onInputKeyDown($event)"
         mousedown.trigger="onInputMouseDown($event)"
         focusin.trigger="onInputFocusIn($event)"
+        focusout.trigger="onInputFocusOut($event)"
         change.trigger="onInputChange($event)">
 
         <slot name="heading" slot="heading"></slot>
@@ -79,7 +80,7 @@
         </div>
 
         <dropdown
-            show.bind="open"
+            show.bind="open && !itemPicker.empty"
             close.call="closeDropdown(escape, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
             fixed.bind="fixed">

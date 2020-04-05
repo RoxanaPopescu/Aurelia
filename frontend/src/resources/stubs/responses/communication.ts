@@ -31,7 +31,7 @@ export default
         "id": "trigger-1-id",
         "slug": "trigger-1-slug",
         "name": "Trigger 1",
-        "customer": "customer-1-id",
+        "customer": "a02d82f2-fcbe-49eb-a2c7-4212687f841b",
         "routeTags": [],
         "stopTags": [],
         "triggerEvent": "order-delivery-arrived",

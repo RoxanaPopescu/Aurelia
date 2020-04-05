@@ -3,6 +3,7 @@ import { CommunicationRecipient } from "./communication-recipient";
 import { CommunicationTriggerEvent } from "./communication-trigger-event";
 import { CommunicationMessageType } from "./communication-message-type";
 import { Metadata } from "app/model/shared/entities/metadata";
+import { CommunicationParameters } from "./communication-parameters";
 
 export class CommunicationTrigger
 {
@@ -27,7 +28,11 @@ export class CommunicationTrigger
             this.messageType = new CommunicationMessageType(data.messageType);
             this.messageTitle = data.messageTitle;
             this.messageBody = data.messageBody;
-            this.parameters = data.parameters;
+            this.parameters = new CommunicationParameters(data.parameters);
+        }
+        else
+        {
+            this.parameters = new CommunicationParameters();
         }
     }
 
@@ -104,5 +109,18 @@ export class CommunicationTrigger
     /**
      * The model representing the searchable text in the entity.
      */
-    public readonly searchModel = new SearchModel(this);
+    public searchModel = new SearchModel(this);
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = {...this};
+
+        delete data.metadata;
+        delete data.searchModel;
+
+        return data;
+    }
 }

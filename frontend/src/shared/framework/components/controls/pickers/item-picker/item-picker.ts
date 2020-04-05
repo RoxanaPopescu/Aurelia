@@ -27,11 +27,6 @@ export class ItemPickerCustomElement
     protected itemsElement: HTMLElement;
 
     /**
-     * True if the picker contains no visible items, otherwise false.
-     */
-    protected empty = true;
-
-    /**
      * True to highlight items when hovered, otherwise false.
      */
     protected hoverable = false;
@@ -48,6 +43,12 @@ export class ItemPickerCustomElement
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
     public value: any;
+
+    /**
+     * True if the picker contains no visible items, otherwise false.
+     */
+    @bindable({ defaultBindingMode: bindingMode.fromView })
+    public empty = true;
 
     /**
      * The value of the focused item, or undefined if no item is focused.

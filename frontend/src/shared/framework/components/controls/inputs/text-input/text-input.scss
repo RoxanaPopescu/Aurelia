@@ -29,4 +29,43 @@ text-input
             white-space: pre-wrap;
         }
     }
+
+    &.--multiline
+    {
+        > .input-control
+        {
+            // Use column layout.
+            flex-direction: column;
+
+            > div[slot="before"]
+            {
+                // Apply a border below the before content.
+                border-bottom: var(--input-border-width) solid var(--input-border-color);
+            }
+
+            > div[slot="after"]
+            {
+                // Apply a border above the after content.
+                border-top: var(--input-border-width) solid var(--input-border-color);
+            }
+
+            > span[slot="before"]
+            {
+                // Apply the input padding, except at the end closest to the input value.
+                padding: var(--input-padding);
+
+                // Prevent wrapping.
+                white-space: inherit;
+            }
+
+            > span[slot="after"]
+            {
+                // Apply the input padding, except at the end closest to the input value.
+                padding: var(--input-padding);
+
+                // Prevent wrapping.
+                white-space: inherit;
+            }
+        }
+    }
 }
