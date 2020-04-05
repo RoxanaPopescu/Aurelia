@@ -126,7 +126,6 @@ export class DetailsPage
     }
 
     protected set currentRuleSet(info: RoutePlanningSettingsInfo | undefined) {
-        console.log("ID: ", info?.id);
         this.orderGroup.routeOptimizationSettingsId = info?.id;
     }
 

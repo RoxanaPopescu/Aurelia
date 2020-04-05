@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
@@ -107,6 +107,11 @@ export class ListPage
     protected toDateFilter: DateTime | undefined;
 
     /**
+     * If it failed loading.
+     */
+    protected failed: boolean = false;
+
+    /**
      * The total number of items matching the query, or undefined if unknown.
      */
     protected orderCount: number | undefined;
@@ -207,41 +212,49 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            // Fetch the data.
-            const result = await this._orderService.getAll(
-                this.fromDateFilter,
-                this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
-                this.statusFilter,
-                this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
-                this.textFilter,
-                this.sorting,
-                this.paging,
-                signal);
+            try {
+                this.failed = false;
 
-            // Update the state.
-            this.orders = result.orders;
-            this.orderCount = result.orderCount;
+                // Fetch the data.
+                const result = await this._orderService.getAll(
+                    this.fromDateFilter,
+                    this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
+                    this.statusFilter,
+                    this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
+                    this.textFilter,
+                    this.sorting,
+                    this.paging,
+                    signal);
 
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
+                // Update the state.
+                this.orders = result.orders;
+                this.orderCount = result.orderCount;
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll.reset();
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                    state.params.statusFilter = this.statusFilter;
+                    state.params.textFilter = this.textFilter || undefined;
+                },
+                { trigger: false, replace: true });
+
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
             }
-
-            // Scroll to top.
-            this.scroll.reset();
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.page = this.paging.page;
-                state.params.pageSize = this.paging.pageSize;
-                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                state.params.statusFilter = this.statusFilter;
-                state.params.textFilter = this.textFilter || undefined;
-            },
-            { trigger: false, replace: true });
         });
     }
 }

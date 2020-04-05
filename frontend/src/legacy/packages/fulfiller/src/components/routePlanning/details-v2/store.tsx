@@ -85,7 +85,7 @@ export class RoutePlanningStore {
     };
 
     let response = await fetch(
-      Base.url("RoutePlanning/Details"),
+      Base.url("RoutePlanning/plans/Details"),
       Base.defaultConfig(items)
     );
 

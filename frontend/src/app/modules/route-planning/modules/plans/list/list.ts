@@ -1,7 +1,7 @@
 import { autoinject, observable } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { RoutePlanService, RoutePlanInfo, RoutePlanStatusSlug } from "app/model/route-plan";
 
@@ -83,9 +83,9 @@ export class ListPage
     };
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * If it failed loading.
      */
-    protected planCount: number | undefined;
+    protected failed: boolean = false;
 
     /**
      * The items to present in the table.
@@ -116,7 +116,7 @@ export class ListPage
     {
         if (plan.status.slug === "succeeded")
         {
-            return `/route-planning/details/${plan.slug}`;
+            return `/route-planning/plans/details/${plan.slug}`;
         }
 
         return undefined;
@@ -157,36 +157,42 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            // Fetch the data.
-            const result = await this._routePlanService.getAll(
-                this.sorting,
-                this.paging,
-                signal);
+            try {
+                this.failed = false;
 
-            // Update the state.
-            this.plans = result.plans;
-            this.planCount = result.planCount;
-            // FIXME: LINK OTHER INFO
+                // Fetch the data.
+                const result = await this._routePlanService.getAll(
+                    this.sorting,
+                    this.paging,
+                    signal);
 
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
+                // Update the state.
+                this.plans = result.plans;
+                // FIXME: LINK OTHER INFO
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll.reset();
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting.property;
+                    state.params.sortDirection = this.sorting.direction;
+                    state.params.textFilter = this.textFilter;
+                },
+                { trigger: false, replace: true });
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
             }
-
-            // Scroll to top.
-            this.scroll.reset();
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.page = this.paging.page;
-                state.params.pageSize = this.paging.pageSize;
-                state.params.sortProperty = this.sorting.property;
-                state.params.sortDirection = this.sorting.direction;
-                state.params.textFilter = this.textFilter;
-            },
-            { trigger: false, replace: true });
         });
     }
 }
