@@ -16,15 +16,22 @@ export class RoutePlanInfo
         this.slug = data.id;
         this.status = new RoutePlanStatus(data.status);
         this.timeCreated = DateTime.fromISO(data.timeCreated, { setZone: true });
-        if (data.timeCompleted != null) {
+
+        if (data.timeCompleted != null)
+        {
             this.timeCompleted = DateTime.fromISO(data.timeCompleted, { setZone: true });
         }
-        if (data.routesCount != null) {
+
+        if (data.routesCount != null)
+        {
             this.routesCount = data.routesCount;
         }
-        if (data.unscheduledTasksCount != null) {
+
+        if (data.unscheduledTasksCount != null)
+        {
             this.unscheduledTasksCount = data.unscheduledTasksCount;
         }
+
         this.deliveryTime = new DateTimeRange(data.deliveryTime, { setZone: true });
     }
 
