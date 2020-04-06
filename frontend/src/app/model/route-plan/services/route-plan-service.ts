@@ -3,7 +3,8 @@ import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
 import { LegacyRoutePlanInfo } from "../entities/legacy/legacy-route-plan-info";
 import { RoutePlan } from "../entities/route-plan";
-import { RoutePlanInfo } from "..";
+import { RoutePlanInfo, RoutePlanStatusSlug } from "..";
+import { DateTime } from "luxon";
 
 /**
  * Represents a service that manages route plans.
@@ -29,23 +30,34 @@ export class RoutePlanService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route plans.
      */
-    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ plans: RoutePlanInfo[]; planCount: number }>
+    public async getAll(
+        filter?: {
+            createdFromDate?: DateTime,
+            createdToDate?: DateTime,
+            searchQuery?:  string,
+            statues?: RoutePlanStatusSlug[]
+        },
+        sorting?: ISorting,
+        paging?: IPaging,
+        signal?: AbortSignal):
+        Promise<{ plans: RoutePlanInfo[] }>
     {
         const result = await this._apiClient.post("routeplanning/plans/list",
         {
             body:
             {
-                page: 1,
-                pageSize: 100,
-                searchQuery: null,
-                statuses: null
+                page: paging?.page,
+                pageSize: paging?.pageSize,
+                createdFromDate: filter?.createdFromDate,
+                createdToDate: filter?.createdToDate,
+                searchQuery: filter?.searchQuery,
+                statuses: filter?.statues
             },
             signal
         });
 
         return {
-            plans: result.data.results.map((data: any) => new RoutePlanInfo(data)),
-            planCount: result.data.results.length
+            plans: result.data.results.map((data: any) => new RoutePlanInfo(data))
         };
     }
 

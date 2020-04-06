@@ -4,6 +4,7 @@ import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { RoutePlanService, RoutePlanInfo, RoutePlanStatusSlug } from "app/model/route-plan";
+import { DateTime } from "luxon";
 
 /**
  * Represents the route parameters for the page.
@@ -60,6 +61,18 @@ export class ListPage
     };
 
     /**
+     * The min date for which created from plans should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdFromDateFilter: DateTime | undefined;
+
+    /**
+     * The max date for which created from plans should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdToDateFilter: DateTime | undefined;
+
+    /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
@@ -99,8 +112,8 @@ export class ListPage
      */
     public activate(params: IRouteParams): void
     {
-        this.paging.page = params.page || this.paging.page;
-        this.paging.pageSize = params.pageSize || this.paging.pageSize;
+        this.paging.page = Number(params.page || this.paging.page);
+        this.paging.pageSize = Number(params.pageSize || this.paging.pageSize);
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.textFilter = params.textFilter || this.textFilter;
@@ -136,6 +149,30 @@ export class ListPage
     }
 
     /**
+     * Called when the from date changes.
+     * Ensures the to date remains valid.
+     */
+    protected onCreatedFromDateChanged(): void
+    {
+        if (this.createdFromDateFilter && this.createdToDateFilter && this.createdToDateFilter.valueOf() < this.createdFromDateFilter.valueOf())
+        {
+            this.createdToDateFilter = this.createdFromDateFilter;
+        }
+    }
+
+    /**
+     * Called when the from date changes.
+     * Ensures the to date remains valid.
+     */
+    protected onCreatedToDateChanged(): void
+    {
+        if (this.createdFromDateFilter && this.createdToDateFilter && this.createdToDateFilter.valueOf() < this.createdFromDateFilter.valueOf())
+        {
+            this.createdFromDateFilter = this.createdToDateFilter;
+        }
+    }
+
+    /**
      * Updates the page by fetching the latest data.
      */
     protected update(newValue?: any, oldValue?: any, propertyName?: string): void
@@ -162,13 +199,18 @@ export class ListPage
 
                 // Fetch the data.
                 const result = await this._routePlanService.getAll(
+                    {
+                        createdFromDate: this.createdFromDateFilter,
+                        createdToDate: this.createdToDateFilter?.endOf("day"),
+                        searchQuery: this.textFilter,
+                        statues: this.statusFilter
+                    },
                     this.sorting,
                     this.paging,
                     signal);
 
                 // Update the state.
                 this.results = result.plans;
-                // FIXME: LINK OTHER INFO
 
                 // Reset page.
                 if (propertyName !== "paging")
