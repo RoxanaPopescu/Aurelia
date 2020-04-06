@@ -31,14 +31,14 @@
                 Here you can specify the time the driver is expected to spend as a starting point for tasks at each stop.
             </h1>
 
-            <number-input value.bind="model.initial | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.initial" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Start time
                 </div>
 
                 <span slot="after" class="opacity-faded" translate>
-                    min
+                    sec
                 </span>
 
                 <div slot="validation">
@@ -57,14 +57,14 @@
 
             </number-input>
 
-            <number-input value.bind="model.perFloor | scale: 1/60" min.bind="0" label="above" class="margin-medium-bottom">
+            <number-input value.bind="model.perFloor" min.bind="0" label="above" class="margin-medium-bottom">
 
                 <div slot="heading" translate>
                     Time per floor
                 </div>
 
                 <span slot="after" class="opacity-faded" translate>
-                    min
+                    sec
                 </span>
 
                 <div slot="validation">
@@ -83,14 +83,14 @@
 
             </number-input>
 
-            <number-input value.bind="model.perRound | scale: 1/60" min.bind="0" label="above">
+            <number-input value.bind="model.perRound" min.bind="0" label="above">
 
                 <div slot="heading" translate>
                     Time per round
                 </div>
 
                 <span slot="after" class="opacity-faded" translate>
-                    min
+                    sec
                 </span>
 
                 <div slot="validation">
