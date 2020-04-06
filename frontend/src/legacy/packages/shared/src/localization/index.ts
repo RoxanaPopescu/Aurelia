@@ -2,10 +2,11 @@ import { DateTime, Settings, Duration } from "luxon";
 import humanizeDuration from "humanize-duration";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 
-const locale = ENVIRONMENT.locale == "da" ? "da" : "en-US";
+const locale = ENVIRONMENT.locale.includes("da") ? "da" : "en";
 
 var I18n = require("i18n-js");
 I18n.defaultLocale = locale;
+I18n.locale = locale;
 I18n.fallbacks = true;
 
 enum Area {

@@ -578,7 +578,7 @@ export class RoutePlanningStore {
     };
 
     let response = await fetch(
-      Base.url("RoutePlanning/approve"),
+      Base.url("RoutePlanning/plans/approve"),
       Base.defaultConfig(items)
     );
 
