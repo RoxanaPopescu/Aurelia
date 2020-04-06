@@ -29,6 +29,9 @@ export class Driver {
   @observable
   public email: string;
 
+  @observable
+  public password: string;
+
   @computed
   public get isValid(): boolean {
     return !!(

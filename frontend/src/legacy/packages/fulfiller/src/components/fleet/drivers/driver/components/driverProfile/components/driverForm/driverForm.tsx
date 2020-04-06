@@ -45,6 +45,16 @@ export class DriverForm extends React.Component<DriverFormProps> {
           value={this.props.driver.email}
           readonly={!Profile.claims.has("edit-driver")}
         />
+        {this.props.driver.id == null &&
+          <Input
+            size={"medium"}
+            headline={Localization.operationsValue("Driver_Profile_Password")}
+            placeholder={Localization.operationsValue("Driver_Profile_PasswordPlaceholder")}
+            onChange={value => (this.props.driver.password = value)}
+            value={this.props.driver.password}
+            readonly={!Profile.claims.has("edit-driver")}
+          />
+        }
         <div>
           <Input
             size={"medium"}

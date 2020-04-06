@@ -208,7 +208,7 @@ export class DriverDispatchService {
     this.haulierFilters = [];
 
     this.startDate = DateTime.local().startOf("day");
-    this.endDate = DateTime.local().endOf("day");
+    this.endDate = DateTime.local().plus({ days: 7 }).endOf("day");
 
     this.forecasts = [];
     this.prebookings = [];
