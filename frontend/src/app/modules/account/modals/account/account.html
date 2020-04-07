@@ -8,17 +8,17 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
-                ${settingsModel.fullName}
+                ${identity.fullName}
             </h1>
 
             <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
 
-                <tab name="profile" invalid.bind="profileValidation.invalid">
+                <tab name="profile">
                     <h2 translate>
                         Profile
                     </h2>
