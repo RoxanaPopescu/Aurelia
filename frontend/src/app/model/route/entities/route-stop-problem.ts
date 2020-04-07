@@ -40,9 +40,9 @@ export class RouteStopProblem
      */
     public static readonly values =
     {
-        "nobody-at-location":
+        "nobody-at-address":
         {
-            name: "Nobody at location"
+            name: "Nobody at address"
         },
         "damaged-colli":
         {
@@ -52,17 +52,17 @@ export class RouteStopProblem
         {
             name: "Other problem"
         },
-        "denied":
+        "refused":
         {
-            name: "Denied"
+            name: "Refused"
         },
         "wrong-address":
         {
             name: "Wrong address"
         },
-        "gate-occupied":
+        "ramp-gate-occupied":
         {
-            name: "Gate occupied"
+            name: "Ramp gate occupied"
         },
         "missing-items":
         {
