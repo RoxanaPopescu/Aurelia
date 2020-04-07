@@ -135,16 +135,16 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell DISABLED-name="time-frame" translate>
+                            Delivery
+                        </data-table-cell>
+
                         <data-table-cell DISABLED-name="created" translate>
                             Created
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="completed" translate>
                             Completed
-                        </data-table-cell>
-
-                        <data-table-cell DISABLED-name="time-frame" translate>
-                            Delivery
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="routes" align="right">
@@ -174,15 +174,15 @@
                             </data-table-cell>
 
                             <data-table-cell>
+                                ${result.deliveryTime | dateTimeRange: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 ${result.timeCreated | dateTime: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell>
                                 ${result.timeCompleted | dateTime: 'narrow' : false}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${result.deliveryTime | dateTimeRange: 'narrow' : false}
                             </data-table-cell>
 
                             <data-table-cell align="right">
