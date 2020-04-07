@@ -1,0 +1,46 @@
+<template validation>
+
+    <require from="./profile-pane.scss"></require>
+
+    <modal-section>
+
+        <text-input readonly.bind="true" label="above" value.bind="model.fullName" autocomplete="name">
+
+            <div slot="heading" translate>
+                Full name
+            </div>
+
+            <div slot="description" translate>
+                This is the name other users will see in your profile.<br>
+                Make sure this is accurate, so other users know its you.
+            </div>
+
+        </text-input>
+
+        <text-input readonly.bind="true" class="margin-double-top" label="above" value.bind="model.outfit.primaryName" autocomplete="text">
+
+            <div slot="heading" translate>
+                Organization
+            </div>
+
+            <div slot="description" translate>
+                This is the organization you are associated with.
+            </div>
+
+        </text-input>
+
+        <text-input readonly.bind="true" class="margin-double-top" label="above" value.bind="model.username" autocomplete="username">
+
+            <div slot="heading" translate>
+                Username
+            </div>
+
+            <div slot="description" translate>
+                This is the email you use to sign in, and to which account info may be sent.
+            </div>
+
+        </text-input>
+
+    </modal-section>
+
+</template>

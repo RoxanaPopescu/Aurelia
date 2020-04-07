@@ -1,0 +1,14 @@
+modal-panel[name="account"]
+{
+    .account-tab-row
+    {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    footer > button,
+    section > button
+    {
+        width: 100%;
+    }
+}

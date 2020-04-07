@@ -1,0 +1,51 @@
+<template>
+
+    <require from="./components/profile-pane/profile-pane"></require>
+    <require from="./components/settings-pane/settings-pane"></require>
+    <require from="./components/account-pane/account-pane"></require>
+
+    <require from="./account.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
+                ${settingsModel.fullName}
+            </h1>
+
+            <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
+
+                <tab name="profile" invalid.bind="profileValidation.invalid">
+                    <h2 translate>
+                        Profile
+                    </h2>
+                </tab>
+
+                <tab name="settings">
+                    <h2 translate>
+                        Settings
+                    </h2>
+                </tab>
+
+                <tab name="account">
+                    <h2 translate>
+                        Account
+                    </h2>
+                </tab>
+
+            </tab-nav>
+
+        </modal-header>
+
+        <profile-pane show.bind="selectedTab === 'profile'" model.bind="identity"></profile-pane>
+
+        <settings-pane show.bind="selectedTab === 'settings'"></settings-pane>
+
+        <account-pane show.bind="selectedTab === 'account'"></account-pane>
+
+    </modal-panel>
+
+</template>

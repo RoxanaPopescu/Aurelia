@@ -15,7 +15,6 @@ export class Identity
         this.username = data.username;
         this.fullName = data.fullName;
         this.preferredName = data.preferredName;
-        this.email = data.email;
         this.pictureUrl = data.pictureUrl;
         this.outfit = new Outfit(data.outfit);
         this.claims = new Set<string>(data.claims);
@@ -43,11 +42,6 @@ export class Identity
     public readonly preferredName: string;
 
     /**
-     * The email of the user.
-     */
-    public readonly email: string;
-
-    /**
      * The URL for the user picture.
      */
     public readonly pictureUrl: string;
@@ -66,19 +60,4 @@ export class Identity
      * The the tokens to use when accessing the API.
      */
     public readonly tokens: { refresh: string; access: string };
-
-    /**
-     * Determines whether the user has the specific claim.
-     * @param claim The specific claim.
-     * @returns True if claim exist, otherwise false.
-     */
-    public hasClaim( claim: string ): boolean {
-        for(let _claim of this.claims.values()){
-            if (_claim === claim) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

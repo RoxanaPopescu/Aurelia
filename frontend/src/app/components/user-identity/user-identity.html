@@ -4,7 +4,7 @@
 
     <require from="./user-identity.scss"></require>
 
-    <a href="/profile" title.translate="Profile">
+    <a modal-href="modal: account" title.translate="Profile">
 
         <identity-picture src.bind="identityService.identity.pictureUrl">
             ${identityService.identity.preferredName[0]}

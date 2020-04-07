@@ -102,7 +102,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" page-href="path: /communication/create" class="flex-row">
+                    <button if-claims="edit-communication" appearance="outline" accent="primary" page-href="path: /communication/create" class="flex-row">
 
                         <icon name="add" class="font-larger margin-right"></icon>
 
@@ -200,7 +200,7 @@
 
                                 <div class="icon-row">
 
-                                    <button appearance="none" accent="primary" click.trigger="onDeleteTriggerClick(trigger)">
+                                    <button if-claioms="edit-communication" appearance="none" accent="primary" click.trigger="onDeleteTriggerClick(trigger)">
                                         <icon name="delete-small"></icon>
                                     </button>
 

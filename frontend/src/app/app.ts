@@ -97,6 +97,10 @@ export class AppModule
             {
                 name: "confirm-discard",
                 moduleId: PLATFORM.moduleName("app/modals/dialogs/confirm-discard/confirm-discard")
+            },
+            {
+                name: "account",
+                moduleId: PLATFORM.moduleName("app/modules/account/modals/account/account")
             }
         ];
 
@@ -135,15 +139,6 @@ export class AppModule
                 route: "reset-password",
                 moduleId: PLATFORM.moduleName("./modules/account/modules/reset-password/reset-password"),
                 title: routeTitles.resetPassword
-            },
-            {
-                name: "profile",
-                route: "profile",
-                moduleId: PLATFORM.moduleName("./modules/profile/profile"),
-                settings:
-                {
-                    outfits: ["fulfiller", "consignor"]
-                }
             },
             {
                 name: "kpi",

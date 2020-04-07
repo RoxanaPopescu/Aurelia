@@ -42,7 +42,7 @@ export class DetailsModule
         this._modalService = modalService;
         this._router = router;
         this.identityService = identityService;
-        this.editable = identityService.identity?.hasClaim("edit-routes") ?? false;
+        this.editable = identityService.identity!.claims.has("edit-routes");
     }
 
     private _isMovingStop = false;

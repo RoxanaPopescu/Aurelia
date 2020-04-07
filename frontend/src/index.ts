@@ -53,6 +53,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
     // Register global resources.
     aurelia.use.globalResources(
     [
+        PLATFORM.moduleName("app/components/if-environment/if-environment"),
         PLATFORM.moduleName("app/components/if-claims/if-claims"),
         PLATFORM.moduleName("app/components/info-icon/info-icon")
     ]);
