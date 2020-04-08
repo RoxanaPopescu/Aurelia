@@ -4,7 +4,7 @@ import HeaderItemComponent from "./item";
 import Localization from "shared/src/localization";
 import { RoutePlanningStore } from "../../store";
 import { observer } from "mobx-react";
-import { RoutePlanRoute } from "shared/src/model/logistics/routePlanning";
+import { LegacyRoutePlanRoute } from "shared/src/model/logistics/routePlanning";
 
 interface Props {
   store: RoutePlanningStore;
@@ -71,7 +71,7 @@ export default class MetaHeaderComponent extends React.Component<Props> {
     );
   }
 
-  renderRoute(route: RoutePlanRoute) {
+  renderRoute(route: LegacyRoutePlanRoute) {
     return (
       <React.Fragment>
         <HeaderItemComponent

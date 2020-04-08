@@ -280,7 +280,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           </div>
           {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            {this.props.store.plan.status === "WaitingForApproval" &&
+            {this.props.store.plan.status === "waiting-for-approval" &&
               <Button
                 loading={this.props.store.approving}
                 type={ButtonType.Action}

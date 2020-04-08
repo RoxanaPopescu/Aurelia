@@ -1,10 +1,10 @@
 import React from "react";
 import { observable, action } from "mobx";
 import {
-  RoutePlan,
-  RoutePlanRoute,
-  RoutePlanStopBase,
-  RoutePlanRouteStop
+  LegacyRoutePlan,
+  LegacyRoutePlanRoute,
+  LegacyRoutePlanStopBase,
+  LegacyRoutePlanRouteStop
 } from "shared/src/model/logistics/routePlanning";
 import { Marker, Polyline, GoogleMap } from "react-google-maps";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
@@ -43,13 +43,13 @@ export class RoutePlanningStore {
   toastMessage?: string;
 
   @observable
-  plan: RoutePlan;
+  plan: LegacyRoutePlan;
 
   @observable
-  focusedRoute?: RoutePlanRoute;
+  focusedRoute?: LegacyRoutePlanRoute;
 
   @observable
-  focusedStop?: RoutePlanRouteStop;
+  focusedStop?: LegacyRoutePlanRouteStop;
 
   @observable
   markers: JSX.Element[] = [];
@@ -92,7 +92,7 @@ export class RoutePlanningStore {
     if (response.ok) {
       let responseJson = await response.json();
 
-      var plan = new RoutePlan(responseJson, id);
+      var plan = new LegacyRoutePlan(responseJson, id);
       this.minuteToPixel = 6;
       this.plan = plan;
 
@@ -113,7 +113,7 @@ export class RoutePlanningStore {
   }
 
   // FIXME: should take from & to
-  async updateRoutes(droppedInRoute: RoutePlanRoute, stopIndex: number) {
+  async updateRoutes(droppedInRoute: LegacyRoutePlanRoute, stopIndex: number) {
     this.updatingRoute = true;
 
     setTimeout(() => {
@@ -136,7 +136,7 @@ export class RoutePlanningStore {
   }
 
   @action
-  focusRoute(route?: RoutePlanRoute, zoom: Boolean = true) {
+  focusRoute(route?: LegacyRoutePlanRoute, zoom: Boolean = true) {
     this.focusedRoute = route;
     this.checkBounds();
 
@@ -152,12 +152,12 @@ export class RoutePlanningStore {
   }
 
   @action
-  focusStop(stop: RoutePlanStopBase) {
+  focusStop(stop: LegacyRoutePlanStopBase) {
     if (this.map === undefined) {
       return;
     }
 
-    if (stop instanceof RoutePlanRouteStop) {
+    if (stop instanceof LegacyRoutePlanRouteStop) {
       this.focusRoute(stop.route, false);
 
       let bounds = new google.maps.LatLngBounds();
@@ -208,7 +208,7 @@ export class RoutePlanningStore {
     );
   }
 
-  positionInList(stop: RoutePlanRouteStop): number {
+  positionInList(stop: LegacyRoutePlanRouteStop): number {
     let startInMinutes = this.plan.meta.timeFrame.from!.diff(
       stop.estimates.timeFrame.from!
     );
@@ -282,7 +282,7 @@ export class RoutePlanningStore {
     map.fitBounds(bounds, 5);
   }
 
-  zoomToRoute(route: RoutePlanRoute) {
+  zoomToRoute(route: LegacyRoutePlanRoute) {
     let bounds = new google.maps.LatLngBounds();
 
     for (let stop of route.stops) {
@@ -373,7 +373,7 @@ export class RoutePlanningStore {
       );
     });
 
-    let stops: RoutePlanRouteStop[] = [];
+    let stops: LegacyRoutePlanRouteStop[] = [];
     this.plan.routes.map(route => {
       // Check if any stops are within
       let polyWithinBounds = false;
@@ -430,7 +430,7 @@ export class RoutePlanningStore {
     this.polylines = polylines;
   }
 
-  stopMarker(stop: RoutePlanRouteStop, index: number): JSX.Element {
+  stopMarker(stop: LegacyRoutePlanRouteStop, index: number): JSX.Element {
     let marker: JSX.Element = (
       <MarkerWithLabel
         icon={MoverMarker.markerIconWithLabel(stop.route.color)}
@@ -468,7 +468,7 @@ export class RoutePlanningStore {
     return marker;
   }
 
-  markersForRoute(route: RoutePlanRoute): JSX.Element[] {
+  markersForRoute(route: LegacyRoutePlanRoute): JSX.Element[] {
     let markers: JSX.Element[] = [];
     route.stops.forEach((stop, index) => {
       markers.push(this.stopMarker(stop, index));
@@ -477,7 +477,7 @@ export class RoutePlanningStore {
     return markers;
   }
 
-  polylinesForRoute(route: RoutePlanRoute): JSX.Element[] {
+  polylinesForRoute(route: LegacyRoutePlanRoute): JSX.Element[] {
     let polylines: JSX.Element[] = [];
 
     polylines.push(
@@ -495,7 +495,7 @@ export class RoutePlanningStore {
     return polylines;
   }
 
-  getStopRows(stop: RoutePlanStopBase) {
+  getStopRows(stop: LegacyRoutePlanStopBase) {
     let timeframe: string = Localization.formatDateTimeRange(
       stop.arrivalTimeFrame
     );
@@ -508,7 +508,7 @@ export class RoutePlanningStore {
       { headline: Localization.sharedValue("TimePeriod"), value: timeframe }
     ];
 
-    if (stop instanceof RoutePlanRouteStop && stop.route) {
+    if (stop instanceof LegacyRoutePlanRouteStop && stop.route) {
       rows.push({
         headline: Localization.sharedValue("Expected_Arrival"),
         value: Localization.formatTime(stop.estimates.arrival)
@@ -539,7 +539,7 @@ export class RoutePlanningStore {
     return rows;
   }
 
-  getRouteRows(route: RoutePlanRoute) {
+  getRouteRows(route: LegacyRoutePlanRoute) {
     return [
       {
         headline: Localization.sharedValue("Expected_TimePeriod"),

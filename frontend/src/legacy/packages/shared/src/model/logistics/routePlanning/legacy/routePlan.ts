@@ -1,9 +1,9 @@
-import { RoutePlanRoute } from "./routePlanRoute";
-import { RoutePlanMeta } from "./routePlanMeta";
-import { RoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
+import { LegacyRoutePlanRoute } from "./routePlanRoute";
+import { LegacyRoutePlanMeta } from "./routePlanMeta";
+import { LegacyRoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
-export type RoutePlanStatus =
+export type LegacyRoutePlanStatus =
   | "Processing"
   | "ProcessingExternally"
   | "WaitingForApproval"
@@ -15,7 +15,7 @@ export type RoutePlanStatus =
 /**
  * Represents the status of a route planning job, eventually including the planned routes.
  */
-export class RoutePlan {
+export class LegacyRoutePlan {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, id: string) {
     this.id = id;
@@ -23,12 +23,12 @@ export class RoutePlan {
     const consignors = data.consignors.map(s => new Consignor(s));
 
     this.status = data.status;
-    this.meta = new RoutePlanMeta(data.meta);
+    this.meta = new LegacyRoutePlanMeta(data.meta);
     this.routes = data.routes.map(
-      (s, index) => new RoutePlanRoute(s, consignors, index + 1)
+      (s, index) => new LegacyRoutePlanRoute(s, consignors, index + 1)
     );
     this.unscheduledTasks = data.unscheduledTasks.map(
-      (s, i) => new RoutePlanUnscheduledTask(s, i + 1, consignors)
+      (s, i) => new LegacyRoutePlanUnscheduledTask(s, i + 1, consignors)
     );
   }
 
@@ -40,22 +40,22 @@ export class RoutePlan {
   /**
    * The status of the route plan.
    */
-  public status: RoutePlanStatus;
+  public status: LegacyRoutePlanStatus;
 
   /**
    * The metadata for this route plan
    */
-  public meta: RoutePlanMeta;
+  public meta: LegacyRoutePlanMeta;
 
   /**
    * The routes for this route plan
    */
-  public routes: RoutePlanRoute[];
+  public routes: LegacyRoutePlanRoute[];
 
   /**
    * The unscheduled tasks for
    */
-  public unscheduledTasks: RoutePlanUnscheduledTask[];
+  public unscheduledTasks: LegacyRoutePlanUnscheduledTask[];
 
   /**
    * The bounds of the routes in this plan

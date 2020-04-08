@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.scss";
 import {
-  RoutePlanMeta,
-  RoutePlanRoute
+  LegacyRoutePlanMeta,
+  LegacyRoutePlanRoute
 } from "shared/src/model/logistics/routePlanning";
 import Stop from "./stop";
 import Line from "./line";
@@ -10,8 +10,8 @@ import { observer } from "mobx-react";
 import { RoutePlanningStore, DragType } from "../store";
 
 interface Props {
-  meta: RoutePlanMeta;
-  route: RoutePlanRoute;
+  meta: LegacyRoutePlanMeta;
+  route: LegacyRoutePlanRoute;
   store: RoutePlanningStore;
 }
 

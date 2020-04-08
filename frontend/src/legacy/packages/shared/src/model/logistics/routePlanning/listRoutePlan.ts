@@ -1,13 +1,13 @@
 import { DateTime } from "luxon";
 import { DateTimeRange } from "../../general/dateTimeRange";
-import { RoutePlanStatus } from "./routePlan";
+import { LegacyRoutePlanStatus } from "./legacy/routePlan";
 
 export class ListRoutePlan {
   id: string;
   outfitId: string;
   createdBy: string;
   created: DateTime;
-  status: RoutePlanStatus;
+  status: LegacyRoutePlanStatus;
   lastUpdated: DateTime;
   routeCount: number;
   unscheduledStopsCount: number;

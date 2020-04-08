@@ -8,7 +8,7 @@ import RouteScaleComponent from "./header/scale";
 import { RoutePlanningMap } from "./map";
 import Mousetrap from "mousetrap";
 import { GoogleMap } from "react-google-maps";
-import { RoutePlanRoute } from "shared/src/model/logistics/routePlanning";
+import { LegacyRoutePlanRoute } from "shared/src/model/logistics/routePlanning";
 import TimeHeaderComponent from "./header/time";
 import MetaHeaderComponent from "./header/meta";
 import { RoutePlanningStore } from "./store";
@@ -312,7 +312,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
     );
   }
 
-  renderTopInfoView(route: RoutePlanRoute) {
+  renderTopInfoView(route: LegacyRoutePlanRoute) {
     return (
       <div className="c-routePlanning-mapInfoTop">
         <Button

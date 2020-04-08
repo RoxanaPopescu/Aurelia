@@ -1,10 +1,10 @@
 import React from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
-import { RoutePlanRouteStop } from "shared/src/model/logistics/routePlanning";
+import { LegacyRoutePlanRouteStop } from "shared/src/model/logistics/routePlanning";
 
 interface Props {
-  stop: RoutePlanRouteStop;
+  stop: LegacyRoutePlanRouteStop;
 }
 
 export default class RoutePlanningOrderIdsComponent extends React.Component<

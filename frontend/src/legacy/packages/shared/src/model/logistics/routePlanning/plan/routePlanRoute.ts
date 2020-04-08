@@ -2,7 +2,7 @@ import {
   RoutePlanRouteDirections,
   RoutePlanRouteStop,
   RoutePlanMeta
-} from "./";
+} from "..";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
 /**

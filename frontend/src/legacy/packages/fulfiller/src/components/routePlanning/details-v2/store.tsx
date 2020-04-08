@@ -586,7 +586,7 @@ export class RoutePlanningStore {
       this.error = Localization.sharedValue("Error_General");
     } else {
       this.toastMessage = "Ruteplanen er godkendt";
-      this.plan.status = "Cancelled";
+      this.plan.status = "succeeded";
     }
 
     this.approving = false;

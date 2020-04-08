@@ -129,6 +129,10 @@
 
                     <data-table-headers>
 
+                        <data-table-cell DISABLED-name="name" translate>
+                            Name
+                        </data-table-cell>
+
                         <data-table-cell DISABLED-name="status">
                             <span class="text-truncate" translate>
                                 Status
@@ -166,6 +170,10 @@
                         <data-table-row
                             accent.bind="result.status.accent"
                             href.bind="detailsLink(result)">
+
+                            <data-table-cell>
+                                ${result.name}
+                            </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">

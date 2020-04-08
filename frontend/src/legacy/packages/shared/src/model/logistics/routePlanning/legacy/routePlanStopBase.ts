@@ -1,11 +1,11 @@
 import { Location } from "shared/src/model/general/location";
 import { Consignor } from "shared/src/model/logistics/consignor";
-import { DateTimeRange } from "../../general/dateTimeRange";
+import { DateTimeRange } from "../../../general/dateTimeRange";
 
 /**
  * Represents one stop for a route plan route
  */
-export class RoutePlanStopBase {
+export class LegacyRoutePlanStopBase {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, stopNumber: number, consignors: Consignor[]) {
     this.id = data.id;

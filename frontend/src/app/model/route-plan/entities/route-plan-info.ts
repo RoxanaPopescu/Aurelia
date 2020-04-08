@@ -14,6 +14,7 @@ export class RoutePlanInfo
     public constructor(data: any)
     {
         this.slug = data.id;
+        this.name = data.name;
         this.status = new RoutePlanStatus(data.status);
         this.timeCreated = DateTime.fromISO(data.timeCreated, { setZone: true });
 
@@ -32,13 +33,20 @@ export class RoutePlanInfo
             this.unscheduledTasksCount = data.unscheduledTasksCount;
         }
 
-        this.deliveryTime = new DateTimeRange(data.deliveryTime, { setZone: true });
+        if (data.deliveryTime) {
+            this.deliveryTime = new DateTimeRange(data.deliveryTime, { setZone: true });
+        }
     }
 
     /**
      * The slug identifying the route plan.
      */
     public readonly slug: string;
+
+    /**
+     * The name identifying the route plan.
+     */
+    public readonly name: string;
 
     /**
      * The status of the route plan.
@@ -68,5 +76,5 @@ export class RoutePlanInfo
     /**
      * The delivery time frame for this route plan
      */
-    public readonly deliveryTime: DateTimeRange;
+    public readonly deliveryTime?: DateTimeRange;
 }

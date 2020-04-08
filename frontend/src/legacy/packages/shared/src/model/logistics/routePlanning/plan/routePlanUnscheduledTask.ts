@@ -1,4 +1,4 @@
-import { RoutePlanUnscheduledTaskStop } from "./";
+import { RoutePlanUnscheduledTaskStop } from "..";
 import { Consignor } from "shared/src/model/logistics/consignor";
 
 export type RoutePlanUnscheduledTaskReason =

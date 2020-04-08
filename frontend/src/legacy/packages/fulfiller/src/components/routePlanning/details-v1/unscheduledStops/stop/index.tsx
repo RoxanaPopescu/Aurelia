@@ -1,12 +1,12 @@
 import React from "react";
 import "./styles.scss";
 import { observer } from "mobx-react";
-import { RoutePlanUnscheduledTask } from "shared/src/model/logistics/routePlanning";
+import { LegacyRoutePlanUnscheduledTask } from "shared/src/model/logistics/routePlanning";
 import Localization from "shared/src/localization";
 import { RoutePlanningStore } from "../../store";
 
 interface Props {
-  task: RoutePlanUnscheduledTask;
+  task: LegacyRoutePlanUnscheduledTask;
   store: RoutePlanningStore;
 }
 @observer

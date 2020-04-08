@@ -1,12 +1,12 @@
 import React from "react";
 import "./styles.scss";
-import { RoutePlanRoute } from "shared/src/model/logistics/routePlanning";
+import { LegacyRoutePlanRoute } from "shared/src/model/logistics/routePlanning";
 import { observer } from "mobx-react";
 import { RoutePlanningStore } from "../../store";
 
 interface Props {
   store: RoutePlanningStore;
-  route: RoutePlanRoute;
+  route: LegacyRoutePlanRoute;
 }
 
 @observer
