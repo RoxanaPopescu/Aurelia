@@ -248,7 +248,8 @@ react-module
     .selectContainer .selectWrapper .react-selectize .react-selectize-control .react-selectize-placeholder,
     .inputContainer .inputWrapper input::placeholder
     {
-        color: var(--surface-subtle-color);
+        color: var(--surface-input-surface-text-color) !important;
+        opacity: var(--opacity-faded) !important
     }
 
     .gridTable-container-old .c-gridTable .c-gridTable-header.font-heading

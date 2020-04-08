@@ -72,7 +72,7 @@ export class EditRuleForm extends React.Component<EditRuleFormProps> {
         <Select
           headline={Localization.operationsValue("Routes_AutoDispatch_Rule_Fulfiller")}
           placeholder={Localization.operationsValue("Routes_AutoDispatch_Rule_Fulfiller")}
-          options={this.props.fulfillers.map(f => ({ label: f.primaryName, value: f.id }))}
+          options={(this.props.fulfillers?.map(f => ({ label: f.primaryName, value: f.id }))) ?? []}
           size={"medium"}
           onSelect={option => {
             this.props.rule.fulfillerId = option ? option.value : undefined;

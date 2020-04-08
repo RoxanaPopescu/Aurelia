@@ -69,7 +69,8 @@ fieldset
 
 ::placeholder
 {
-    color: var(--surface-input-surface-subtle-color);
+    color: var(--surface-input-surface-text-color);
+    opacity: var(--opacity-faded);
 }
 
 

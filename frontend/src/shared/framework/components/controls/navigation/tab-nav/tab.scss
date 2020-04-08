@@ -67,7 +67,11 @@ tab
             width: 100%;
 
             // Compensate for the border along the bottom of the tabs.
-            line-height: calc(10rem - var(--tab-border-width));
+            line-height: calc(10rem - 2 * var(--tab-border-width));
+
+            // Apply a border around each tab.
+            border: var(--tab-border-width) solid transparent;
+            margin-bottom: calc(-1 * var(--tab-border-width));
         }
 
         &.--active button
@@ -75,6 +79,8 @@ tab
             // Highlight the active tab.
             background: var(--surface-neutral-surface-color);
             color: var(--surface-neutral-text-color);
+            border-color: var(--tab-border-color);
+            border-bottom-color: transparent;
             border-top-left-radius: var(--border-radius-medium);
             border-top-right-radius: var(--border-radius-medium);
         }
