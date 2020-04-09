@@ -260,6 +260,7 @@
   "RoutePlanning_RoutePlan_Route_ExitSingle": "Afslut enkeltrutevisning ({route_id})",
   "RoutePlanning_RoutePlan_Route_Stop_DrivingTime": "{time} køretid",
   "RoutePlanning_RoutePlan_Route_Stop_LoadingTime": "{time} læssetid",
+  "RoutePlanning_RoutePlan_Route_Stop_TaskTime": "{time} opgave tid",
   "RoutePlanning_RoutePlan_Route_Stop_WaitingTime": "{time} ventetid",
   "RoutePlanning_RoutePlan_StopHover_Title": "Route {routeId} - Stop {stopNumber}",
   "RoutePlanning_RoutePlan_UnplannedTasks": "Uplanlagte opgaver",

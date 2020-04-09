@@ -42,10 +42,11 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
         onClick={() => this.props.store.focusStop(stop)}
         style={{
           backgroundColor: stop.route.color,
+          borderColor: stop.route.color,
           width: width + "px"
         }}
         title={Localization.operationsValue(
-          "RoutePlanning_RoutePlan_Route_Stop_LoadingTime"
+          "RoutePlanning_RoutePlan_Route_Stop_TaskTime"
         ).replace(
           "{time}",
           Localization.formatDuration(stop.estimates.taskTime)

@@ -3,6 +3,7 @@ import humanizeDuration from "humanize-duration";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 
 const locale = ENVIRONMENT.locale.includes("da") ? "da" : "en";
+const formatLocale = "da";
 
 var I18n = require("i18n-js");
 I18n.defaultLocale = locale;
@@ -57,17 +58,19 @@ export default class Localization {
     options: DurationFormatOptions
   ) => string;
 
+
+
   // HACK: Needed until https://github.com/moment/luxon/issues/352 is resolved.
   private static dateFormat = new Intl.DateTimeFormat(
-    locale,
+    formatLocale,
     DateTime.DATE_SHORT
   );
   private static timeFormat = new Intl.DateTimeFormat(
-    locale,
+    formatLocale,
     DateTime.TIME_SIMPLE
   );
   private static dateTimeFormat = new Intl.DateTimeFormat(
-    locale,
+    formatLocale,
     DateTime.DATETIME_SHORT
   );
   private static weekdays?: Weekday[];

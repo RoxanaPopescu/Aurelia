@@ -260,6 +260,7 @@
   "RoutePlanning_RoutePlan_Route_ExitSingle": "Exit single route view ({route_id})",
   "RoutePlanning_RoutePlan_Route_Stop_DrivingTime": "{time} driving time",
   "RoutePlanning_RoutePlan_Route_Stop_LoadingTime": "{time} loading time",
+  "RoutePlanning_RoutePlan_Route_Stop_TaskTime": "{time} task time",
   "RoutePlanning_RoutePlan_Route_Stop_WaitingTime": "{time} waiting time",
   "RoutePlanning_RoutePlan_StopHover_Title": "Route {routeId} - Stop {stopNumber}",
   "RoutePlanning_RoutePlan_UnplannedTasks": "Unplanned tasks",

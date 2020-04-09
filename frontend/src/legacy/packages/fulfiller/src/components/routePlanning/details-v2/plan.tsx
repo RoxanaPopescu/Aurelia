@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.scss";
-import { Button, ButtonType, MapConstants } from "shared/src/webKit";
+import { Button, ButtonType, MapConstants, ButtonSize } from "shared/src/webKit";
 import RouteComponent from "./route";
 import RouteInfoComponent from "./route/info";
 import { observer } from "mobx-react";
@@ -201,7 +201,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
         </div>
         <div
           style={{
-            height: this.props.store.listHeight + "px"
+            height: ((this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0) ?  this.props.store.listHeight + 28 : this.props.store.listHeight) + "px"
           }}
           className="c-routePlanning-routes-list"
         >
@@ -234,7 +234,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               </div>
             </div>
           </div>
-          {this.props.store.focusedStop && (
+          {this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0 && (
             <RoutePlanningOrderIdsComponent
               stop={this.props.store.focusedStop}
             />
@@ -320,6 +320,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
             this.props.store.focusRoute(undefined);
           }}
           type={ButtonType.Action}
+          size={ButtonSize.Medium}
         >
           {Localization.operationsValue(
             "RoutePlanning_RoutePlan_Route_ExitSingle"

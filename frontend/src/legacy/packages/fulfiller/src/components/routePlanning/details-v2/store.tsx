@@ -398,7 +398,8 @@ export class RoutePlanningStore {
             options={{
               strokeColor: route.color,
               geodesic: true,
-              strokeWeight: 2
+              strokeWeight: 2,
+              strokeOpacity: 0.7
             }}
             onMouseOver={event => {
               this.hoveredItem = {
@@ -503,7 +504,7 @@ export class RoutePlanningStore {
     let rows = [
       {
         headline: Localization.sharedValue("Address"),
-        value: stop.location.address.primary
+        value: stop.location.address.formattedString()
       },
       { headline: Localization.sharedValue("TimePeriod"), value: timeframe }
     ];
@@ -518,7 +519,7 @@ export class RoutePlanningStore {
         value: Localization.formatDuration(stop.estimates.drivingTime)
       });
       rows.push({
-        headline: Localization.sharedValue("Expected_LoadingTime"),
+        headline: Localization.sharedValue("Expected_TaskTime"),
         value: Localization.formatDuration(stop.estimates.taskTime)
       });
       rows.push({
@@ -550,7 +551,7 @@ export class RoutePlanningStore {
         value: Localization.formatDuration(route.meta.drivingTime)
       },
       {
-        headline: Localization.sharedValue("Expected_LoadingTime"),
+        headline: Localization.sharedValue("Expected_TaskTime"),
         value: Localization.formatDuration(route.meta.taskTime)
       },
       {
