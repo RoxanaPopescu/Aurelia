@@ -26,7 +26,7 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
   render() {
     const stop = this.props.stop;
     let width = this.props.store.minutesToPixels(
-      stop.estimates.loadingTime.as("minutes")
+      stop.estimates.taskTime.as("minutes")
     );
 
     let classNames = "c-routePlanning-routes-route-stop";
@@ -48,7 +48,7 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
           "RoutePlanning_RoutePlan_Route_Stop_LoadingTime"
         ).replace(
           "{time}",
-          Localization.formatDuration(stop.estimates.loadingTime)
+          Localization.formatDuration(stop.estimates.taskTime)
         )}
       >
         <div className="font-small c-routePlanning-routes-route-stop-number">

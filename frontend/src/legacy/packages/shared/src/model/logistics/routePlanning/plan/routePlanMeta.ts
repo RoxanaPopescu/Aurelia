@@ -11,7 +11,7 @@ export class RoutePlanMeta {
     this.colliCount = data.colliCount;
     this.stopsCount = data.stopsCount;
     this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
-    this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+    this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
     this.timeFrame = new DateTimeRange(data.timeFrame, { setZone: true });
   }
@@ -37,9 +37,9 @@ export class RoutePlanMeta {
   public drivingTime: Duration;
 
   /**
-   * The estimated loading time the driver will use to load/deliver colli
+   * The estimated task time the driver will use to load/deliver colli
    */
-  public loadingTime: Duration;
+  public taskTime: Duration;
 
   /**
    * The time the driver has to wait.
@@ -56,6 +56,6 @@ export class RoutePlanMeta {
    * The total amount of time
    */
   public get totalTime(): Duration {
-    return this.drivingTime.plus(this.loadingTime).plus(this.waitingTime);
+    return this.drivingTime.plus(this.taskTime).plus(this.waitingTime);
   }
 }

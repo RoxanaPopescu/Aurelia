@@ -82,7 +82,7 @@ export default class RoutePlanningRouteComponent extends React.Component<
       currentDate = currentDate.plus(
         stop.estimates.waitingTime
           .plus(stop.estimates.drivingTime)
-          .plus(stop.estimates.loadingTime)
+          .plus(stop.estimates.taskTime)
       );
 
       // Draw driving if it exists
@@ -185,7 +185,7 @@ export default class RoutePlanningRouteComponent extends React.Component<
       }
 
       currentDistance += this.props.store.minutesToPixels(
-        stop.estimates.loadingTime.as("minutes")
+        stop.estimates.taskTime.as("minutes")
       );
     }
 

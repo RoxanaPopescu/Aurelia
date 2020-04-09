@@ -8,7 +8,7 @@ export class RoutePlanRouteStopEstimates {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
     this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
-    this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+    this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
     this.timeFrame = new DateTimeRange(data.timeFrame, { setZone: true });
   }
@@ -19,9 +19,9 @@ export class RoutePlanRouteStopEstimates {
   public drivingTime: Duration;
 
   /**
-   * The estimated loading time.
+   * The estimated task time.
    */
-  public loadingTime: Duration;
+  public taskTime: Duration;
 
   /**
    * The estimated waiting time.

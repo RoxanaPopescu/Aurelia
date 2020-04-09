@@ -519,7 +519,7 @@ export class RoutePlanningStore {
       });
       rows.push({
         headline: Localization.sharedValue("Expected_LoadingTime"),
-        value: Localization.formatDuration(stop.estimates.loadingTime)
+        value: Localization.formatDuration(stop.estimates.taskTime)
       });
       rows.push({
         headline: Localization.sharedValue("Expected_WaitingTime"),
@@ -551,7 +551,7 @@ export class RoutePlanningStore {
       },
       {
         headline: Localization.sharedValue("Expected_LoadingTime"),
-        value: Localization.formatDuration(route.meta.loadingTime)
+        value: Localization.formatDuration(route.meta.taskTime)
       },
       {
         headline: Localization.sharedValue("Expected_WaitingTime"),

@@ -3,6 +3,7 @@
     "routeTracking": "Live tracking",
     "driverTracking": "Driver tracking",
     "templates": "Templates",
+    "test": "Generate test routes",
     "newTemplate": "New template",
     "templateDetails": "Details — Templates",
     "autoDispatch": "Auto dispatch",
