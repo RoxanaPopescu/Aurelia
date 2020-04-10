@@ -2,4 +2,9 @@
 
 page[name="routes"] page[name="generate-test-routes"]
 {
+    .create-driver-button
+    {
+        height: 40px;
+        align-self: flex-end;
+    }
 }
