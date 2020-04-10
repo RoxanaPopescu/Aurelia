@@ -102,6 +102,42 @@
                         </div>
 
                         <div class="flex-row margin-large-bottom">
+                            <date-input
+                                class="flex-basis-2-of-3 margin-large-right"
+                                label="above"
+                                value.bind="date">
+
+                                <div slot="heading" translate>
+                                    Start date
+                                </div>
+
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="date">
+                                    </required-validator>
+
+                                </div>
+
+                            </date-input>
+                            <time-input label="above" value.bind="timeFrom" class="flex-basis-1-of-3">
+
+                                <div slot="heading" translate>
+                                    start time
+                                </div>
+
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="timeFrom">
+                                    </required-validator>
+
+                                </div>
+
+                            </time-input>
+                        </div>
+
+                        <div class="flex-row margin-large-bottom">
                             <text-input readonly="true" class="flex-basis-2-of-3 margin-large-right" label="above" value.bind="templateDriverId">
 
                                 <div slot="heading" translate>
@@ -142,12 +178,17 @@
                 </div>
 
                 <div if.bind="results.length < 1" class="margin-large-bottom" translate>
-                    None created yet.
+                    No results - when they are created they will show their status here.
                 </div>
 
                 <div repeat.for="result of results" model.bind="result" class="margin-smaller-bottom">
+
+                    <div>
+                        ${result.created | time: 'narrow' : false}
+                    </div>
+
                     <div if.bind="!result.slug && !result.error">
-                        Generating ${result.name}
+                        Generating ${result.name}...
                     </div>
 
                     <div if.bind="result.error">
@@ -155,7 +196,7 @@
                     </div>
 
                     <div if.bind="result.slug">
-                         Generated route
+                         Generated
                          <a target="_blank" href="/routes/details/${result.slug}">
                             ${result.slug}
                         </a>

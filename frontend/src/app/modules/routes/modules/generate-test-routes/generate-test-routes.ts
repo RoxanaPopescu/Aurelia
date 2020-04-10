@@ -1,6 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { TestService } from "app/model/test/services/test-service";
 import { RequestTemplate } from "app/model/test/entities/request-template";
+import { DateTime } from "luxon";
 
 type Type = "by-id" | "template";
 type Result = {
@@ -8,7 +9,8 @@ type Result = {
     name: string,
     failed: boolean,
     id: string,
-    slug?: string
+    slug?: string,
+    created: DateTime
 };
 
 /**
@@ -31,11 +33,7 @@ export class GenerateTestRoutes
     /**
      * The results of created routes.
      */
-    protected results: Result[] = [
-        {type: "template", "name": "name1", id: "2323", failed: false, slug: "test-5"},
-        {type: "template", "name": "name2", id: "2323", failed: true},
-        {type: "template", "name": "name3", id: "2323", failed: false}
-    ];
+    protected results: Result[] = [];
 
     /**
      * The request id.
@@ -80,16 +78,14 @@ export class GenerateTestRoutes
     protected async onGenerate(): Promise<void>
     {
         // FIXME: VALIDATE
-        // FIXME: DATE NOW SHOW
         // FIXME: DATE
 
         let requestId = this.template?.requestId ?? this.requestId;
 
-        console.log(this.template);
-
         const result: Result = {
             type: this.template ? "template" : "by-id",
             failed: false,
+            created: DateTime.local(),
             slug: undefined,
             name: this.template?.name ?? this.requestId!,
             id: this.template?.requestId ?? this.requestId!
