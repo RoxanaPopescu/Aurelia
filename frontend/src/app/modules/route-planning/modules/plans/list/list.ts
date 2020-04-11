@@ -64,13 +64,13 @@ export class ListPage
      * The min date for which created from plans should be shown.
      */
     @observable({ changeHandler: "update" })
-    protected createdFromDateFilter: DateTime | undefined;
+    protected createdDateFromFilter: DateTime | undefined;
 
     /**
      * The max date for which created from plans should be shown.
      */
     @observable({ changeHandler: "update" })
-    protected createdToDateFilter: DateTime | undefined;
+    protected createdDateToFilter: DateTime | undefined;
 
     /**
      * The name identifying the selected status tab.
@@ -152,11 +152,11 @@ export class ListPage
      * Called when the from date changes.
      * Ensures the to date remains valid.
      */
-    protected onCreatedFromDateChanged(): void
+    protected onCreatedDateFromChanged(): void
     {
-        if (this.createdFromDateFilter && this.createdToDateFilter && this.createdToDateFilter.valueOf() < this.createdFromDateFilter.valueOf())
+        if (this.createdDateFromFilter && this.createdDateToFilter && this.createdDateToFilter.valueOf() < this.createdDateFromFilter.valueOf())
         {
-            this.createdToDateFilter = this.createdFromDateFilter;
+            this.createdDateToFilter = this.createdDateFromFilter;
         }
     }
 
@@ -164,11 +164,11 @@ export class ListPage
      * Called when the from date changes.
      * Ensures the to date remains valid.
      */
-    protected onCreatedToDateChanged(): void
+    protected onCreatedDateToChanged(): void
     {
-        if (this.createdFromDateFilter && this.createdToDateFilter && this.createdToDateFilter.valueOf() < this.createdFromDateFilter.valueOf())
+        if (this.createdDateFromFilter && this.createdDateToFilter && this.createdDateToFilter.valueOf() < this.createdDateFromFilter.valueOf())
         {
-            this.createdFromDateFilter = this.createdToDateFilter;
+            this.createdDateFromFilter = this.createdDateToFilter;
         }
     }
 
@@ -200,8 +200,8 @@ export class ListPage
                 // Fetch the data.
                 const result = await this._routePlanService.getAll(
                     {
-                        createdFromDate: this.createdFromDateFilter,
-                        createdToDate: this.createdToDateFilter?.endOf("day"),
+                        createdDateFrom: this.createdDateFromFilter,
+                        createdDateTo: this.createdDateToFilter?.endOf("day"),
                         searchQuery: this.textFilter,
                         statues: this.statusFilter
                     },

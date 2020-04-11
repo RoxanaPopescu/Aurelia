@@ -169,7 +169,6 @@ export class GenerateTestRoutes
                 this.results[index].slug = response.slug;
             }
         } catch {
-
             let index = this.results.findIndex(r => r.id === id);
             if (index >= 0) {
                 this.results[index].failed = true;

@@ -32,8 +32,8 @@ export class RoutePlanService
      */
     public async getAll(
         filter?: {
-            createdFromDate?: DateTime,
-            createdToDate?: DateTime,
+            createdDateFrom?: DateTime,
+            createdDateTo?: DateTime,
             searchQuery?:  string,
             statues?: RoutePlanStatusSlug[]
         },
@@ -48,8 +48,8 @@ export class RoutePlanService
             {
                 page: paging?.page,
                 pageSize: paging?.pageSize,
-                createdFromDate: filter?.createdFromDate,
-                createdToDate: filter?.createdToDate,
+                createdDateFrom: filter?.createdDateFrom,
+                createdDateTo: filter?.createdDateTo,
                 searchQuery: filter?.searchQuery,
                 statuses: filter?.statues
             },
