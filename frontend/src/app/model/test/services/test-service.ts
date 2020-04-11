@@ -36,7 +36,7 @@ export class TestService
         {
             body: {
                 requestId: id,
-                driverId: String(driverId),
+                driverId: driverId?.toString(),
                 date: date
             }
         });

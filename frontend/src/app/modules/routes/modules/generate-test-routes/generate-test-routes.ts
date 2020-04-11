@@ -5,6 +5,7 @@ import { DateTime, Duration } from "luxon";
 import { ModalService, IValidation } from "shared/framework";
 import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { Driver } from "app/model/driver";
+import { Uuid } from "shared/utilities/id/uuid";
 
 type Type = "by-id" | "template";
 type Result = {
@@ -12,6 +13,7 @@ type Result = {
     name: string,
     failed: boolean,
     id: string,
+    requestId: string,
     slug?: string,
     created: DateTime
 };
@@ -143,13 +145,15 @@ export class GenerateTestRoutes
 
         let requestId = this.template?.requestId ?? this.requestId;
 
+        const id = Uuid.v1();
         const result: Result = {
             type: this.template ? "template" : "by-id",
             failed: false,
             created: DateTime.local(),
+            id: id,
             slug: undefined,
             name: this.template?.name ?? this.requestId!,
-            id: this.template?.requestId ?? this.requestId!
+            requestId: this.template?.requestId ?? this.requestId!
         }
         this.results.unshift(result);
 
@@ -160,17 +164,16 @@ export class GenerateTestRoutes
                 this.dateTime
             );
 
-            let index = this.results.findIndex(r => r.id === requestId);
+            let index = this.results.findIndex(r => r.id === id);
             if (index >= 0) {
                 this.results[index].slug = response.slug;
             }
         } catch {
-            let index = this.results.findIndex(r => r.id === requestId);
+
+            let index = this.results.findIndex(r => r.id === id);
             if (index >= 0) {
                 this.results[index].failed = true;
             }
-
-            console.log("XXRESUL", this.results)
         }
     }
 
