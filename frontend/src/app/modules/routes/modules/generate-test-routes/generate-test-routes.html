@@ -5,7 +5,7 @@
 
     <page name="generate-test-routes">
 
-        <page-content scroll scroll.ref="scroll">
+        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
 
             <page-header scroll-fade>
 
@@ -59,10 +59,10 @@
                                 </div>
                             </item>
 
-                            <div slot="validation">
+                            <div if.bind="!template && !requestId" slot="validation">
 
                                 <required-validator
-                                    value.bind="selectedTemplate">
+                                    value.bind="template">
                                 </required-validator>
 
                             </div>
@@ -81,10 +81,11 @@
                                 Request id
                             </div>
 
-                            <div slot="validation">
+                            <div if.bind="!template && !requestId" slot="validation">
 
                                 <required-validator
-                                    value.bind="requestId">
+                                    value.bind="requestId"
+                                >
                                 </required-validator>
 
                             </div>
@@ -103,7 +104,7 @@
 
                         <div class="flex-row margin-large-bottom">
                             <date-input
-                                class="flex-basis-2-of-3 margin-large-right"
+                                class="flex-basis-2-of-3 margin-right"
                                 label="above"
                                 value.bind="date">
 
@@ -111,7 +112,7 @@
                                     Start date
                                 </div>
 
-                                <div slot="validation">
+                                <div if.bind="time" slot="validation">
 
                                     <required-validator
                                         value.bind="date">
@@ -120,16 +121,16 @@
                                 </div>
 
                             </date-input>
-                            <time-input label="above" value.bind="timeFrom" class="flex-basis-1-of-3">
+                            <time-input label="above" value.bind="time" class="flex-basis-1-of-3">
 
                                 <div slot="heading" translate>
                                     start time
                                 </div>
 
-                                <div slot="validation">
+                                <div if.bind="date" slot="validation">
 
                                     <required-validator
-                                        value.bind="timeFrom">
+                                        value.bind="time">
                                     </required-validator>
 
                                 </div>
@@ -138,7 +139,7 @@
                         </div>
 
                         <div class="flex-row margin-large-bottom">
-                            <text-input readonly="true" class="flex-basis-2-of-3 margin-large-right" label="above" value.bind="templateDriverId">
+                            <text-input readonly="true" class="flex-basis-2-of-3 margin-right" label="above" value.bind="driver.name">
 
                                 <div slot="heading" translate>
                                     Assign to driver (not required)
@@ -146,14 +147,6 @@
 
                                 <div slot="placeholder" translate>
                                     No driver selected
-                                </div>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="driverId">
-                                    </required-validator>
-
                                 </div>
 
                             </text-input>
@@ -164,7 +157,7 @@
 
                         </div>
 
-                        <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onGenerate()">
+                        <button appearance="solid" accent="primary" click.trigger="onGenerate()">
                             Generate
                         </button>
                     </div>
@@ -187,11 +180,11 @@
                         ${result.created | time: 'narrow' : false}
                     </div>
 
-                    <div if.bind="!result.slug && !result.error">
+                    <div if.bind="!result.slug && !result.failed">
                         Generating ${result.name}...
                     </div>
 
-                    <div if.bind="result.error">
+                    <div if.bind="result.failed">
                         Failed to add ${result.name}
                     </div>
 

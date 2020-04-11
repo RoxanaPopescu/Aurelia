@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
+import { DateTime } from "luxon";
 
 /**
  * Represents a service that manages vehicles.
@@ -27,12 +28,17 @@ export class TestService
      */
     public async copyRequest(
         id: string,
-        driverId: string | undefined = undefined
+        driverId: number | undefined = undefined,
+        date: DateTime | undefined
     ): Promise<{ slug: string }>
     {
         const result = await this._apiClient.post("test/copyRequest",
         {
-            body: { requestId: id, driverId }
+            body: {
+                requestId: id,
+                driverId: String(driverId),
+                date: date
+            }
         });
 
         return result.data;

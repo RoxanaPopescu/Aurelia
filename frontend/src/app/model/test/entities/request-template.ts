@@ -31,14 +31,32 @@ export class RequestTemplate
         "ikea-flow1":
         {
             name: "IKEA flow 1",
-            requestId: "447280",
-            description: "Description 1"
+            requestId: "510627",
+            description: "Custom flows for IKEA"
         },
         "ikea-flow2":
         {
             name: "IKEA flow 2",
-            requestId: "447280",
-            description: "Description 2"
+            requestId: "510630",
+            description: "Custom flows for IKEA"
+        },
+        "ikea-flow3":
+        {
+            name: "IKEA flow 3",
+            requestId: "510634",
+            description: "Custom flows for IKEA"
+        },
+        "ikea-flow4":
+        {
+            name: "IKEA flow 4",
+            requestId: "510635",
+            description: "Custom flows for IKEA"
+        },
+        "ikea-flow5":
+        {
+            name: "IKEA flow 5",
+            requestId: "510638",
+            description: "Custom flows for IKEA"
         }
     };
 }

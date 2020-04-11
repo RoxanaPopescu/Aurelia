@@ -1,7 +1,10 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { TestService } from "app/model/test/services/test-service";
 import { RequestTemplate } from "app/model/test/entities/request-template";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
+import { ModalService, IValidation } from "shared/framework";
+import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
+import { Driver } from "app/model/driver";
 
 type Type = "by-id" | "template";
 type Result = {
@@ -22,17 +25,26 @@ export class GenerateTestRoutes
     /**
      * Creates a new instance of the class.
      * @param vehicleService The `VehicleService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(testService: TestService)
+    public constructor(testService: TestService, modalService: ModalService)
     {
         this._testService = testService;
+        this._modalService = modalService;
     }
 
     private readonly _testService: TestService;
+    private readonly _modalService: ModalService;
+
+    /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
 
     /**
      * The results of created routes.
      */
+    @observable
     protected results: Result[] = [];
 
     /**
@@ -43,12 +55,29 @@ export class GenerateTestRoutes
     /**
      * The driver id.
      */
-    protected driverId?: string;
+    protected driver?: Driver;
 
     /**
      * The template.
      */
     protected template?: RequestTemplate;
+
+    /**
+     * The date to create from
+     */
+    @observable
+    public date: DateTime | undefined;
+
+    /**
+     * The time to create from
+     */
+    @observable
+    public time: Duration | undefined;
+
+    /**
+     * The dateTime to create from
+     */
+    public dateTime: DateTime | undefined;
 
     /**
      * The available U-turn strategies.
@@ -73,12 +102,44 @@ export class GenerateTestRoutes
     }
 
     /**
+     * Called when the observable property, date, changes value.
+     */
+    protected dateChanged(newValue: DateTime | undefined): void
+    {
+        this.dateTimeChanged();
+    }
+
+    /**
+     * Called when the observable property, time, changes value.
+     */
+    protected timeChanged(newValue: Duration | undefined): void
+    {
+        this.dateTimeChanged();
+    }
+
+    /**
+     * Called when the timeFrom, time changes value.
+     */
+    protected dateTimeChanged(): void
+    {
+        if (this.date == null || this.time == null) {
+            return;
+        }
+
+        this.dateTime = this.date.startOf("day").plus(this.time);
+    }
+
+    /**
      * Called when a test route is about to be generated
      */
     protected async onGenerate(): Promise<void>
     {
-        // FIXME: VALIDATE
-        // FIXME: DATE
+        this.validation.active = true;
+        if (!await this.validation.validate())
+        {
+            return;
+        }
+        this.validation.active = false;
 
         let requestId = this.template?.requestId ?? this.requestId;
 
@@ -95,7 +156,8 @@ export class GenerateTestRoutes
         try {
             let response = await this._testService.copyRequest(
                 requestId!,
-                this.driverId
+                this.driver?.id,
+                this.dateTime
             );
 
             let index = this.results.findIndex(r => r.id === requestId);
@@ -107,15 +169,16 @@ export class GenerateTestRoutes
             if (index >= 0) {
                 this.results[index].failed = true;
             }
+
+            console.log("XXRESUL", this.results)
         }
     }
 
     /**
      * Called when a drivers is about to be selected
      */
-    protected onSelectDriver(): void
+    protected async onSelectDriver(): Promise<void>
     {
-        this._testService.copyRequest(this.requestId!);
-        // FIXME: DO THIS
+        this.driver = await this._modalService.open(AssignDriverPanel).promise;
     }
 }
