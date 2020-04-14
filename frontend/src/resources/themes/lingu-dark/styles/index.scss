@@ -1,0 +1,88 @@
+////
+/// @group resources/themes/lingu-dark
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+
+
+// Export the themes.
+// Themes define the values to use within different areas of the app.
+@import "./surfaces/base";
+@import "./surfaces/card";
+@import "./surfaces/neutral";
+@import "./surfaces/primary";
+
+:root
+{
+    --modal-panel-afterglow: 0 0 20px 0 rgba(30, 30, 30, 0.4) !important;
+}
+
+.card-edge
+{
+    --palette-color-neutral: var(--palette-color-neutral-lit);
+}
+
+app-sidebar
+{
+    --surface-color: var(--palette-color-neutral-lit) !important;
+
+    app-icon
+    {
+        filter: contrast(0.6);
+    }
+}
+
+body
+{
+    /**
+     * The color of the border of tabs.
+     */
+     --tab-border-color: var(--palette-color-neutral);
+
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-border-width: var(--border-width-medium);
+
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
+}
+
+button[appearance="outline"]
+{
+    border-color: var(--palette-color-neutral) !important;
+}
+
+:root
+{
+    --modal-backdrop-color: rgba(0, 0, 0, 0.54);
+}
+
+data-table[appearance="rows"]
+{
+    --data-table-header-background: rgba(30, 30, 30, 0.97);
+}
+
+data-table[appearance="cards"]
+{
+    --data-table-header-background: rgba(30, 30, 30, 0.97);
+}
+
+html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    background: transparent !important;
+    color: var(--palette-color-neutral-lightest) !important;
+}

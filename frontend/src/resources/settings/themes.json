@@ -15,8 +15,14 @@
         "color": "#0051ba"
     },
     {
-        "slug": "lingu",
-        "name": "Lingu",
+        "slug": "lingu-light",
+        "name": "Lingu (Light)",
         "color": "#0646a6"
+    },
+    {
+        "slug": "lingu-dark",
+        "name": "Lingu (Dark)",
+        "color": "#252526",
+        "debug": true
     }
 ]
