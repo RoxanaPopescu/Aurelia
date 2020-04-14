@@ -1,6 +1,6 @@
 import { autoinject, observable } from "aurelia-framework";
 import { ITheme, ThemeService } from "shared/framework";
-import { ILocale, LocaleService } from "shared/localization";
+import { Locale, LocaleService } from "shared/localization";
 
 /**
  * Represents a tab pane for managing the settings for the current user.
@@ -32,7 +32,7 @@ export class SettingsPaneCustomElement
      * The selected locale.
      */
     @observable
-    protected locale: ILocale;
+    protected locale: Locale;
 
     /**
      * The supported themes.
@@ -42,7 +42,7 @@ export class SettingsPaneCustomElement
     /**
      * The supported locales.
      */
-    protected locales: ReadonlyArray<ILocale>;
+    protected locales: ReadonlyArray<Locale>;
 
     /**
      * Called by the framework when the component is attached.

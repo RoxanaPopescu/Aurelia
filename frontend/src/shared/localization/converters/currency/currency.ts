@@ -88,8 +88,8 @@ export class CurrencyValueConverter
                 undefined
         };
 
-        // Get the locale code, including the extension.
-        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = this._localeService.locale.codeWithUnicodeExtension;
 
         // Create the format, based on what we know so far.
         // Note that this may not be the format we actually end up using,

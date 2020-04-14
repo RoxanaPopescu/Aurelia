@@ -9,7 +9,7 @@ import "inert-polyfill";
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
 import { Settings as LuxonSettings } from "luxon";
 import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log } from "shared/infrastructure";
-import { LocaleService, ILocale, CurrencyService, ICurrency } from "shared/localization";
+import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
 import { IdentityService } from "app/services/identity";
@@ -147,7 +147,7 @@ function getLocaleCode(): string
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns A promise that never resolves, as the page is about to reload.
  */
-async function setLocale(newLocale: ILocale, oldLocale: ILocale): Promise<void>
+async function setLocale(newLocale: Locale, oldLocale: Locale): Promise<void>
 {
     // If this is a user-initiated change, set the `locale` cookie and reload the app.
     if (oldLocale != null)
@@ -218,7 +218,7 @@ function getCurrencyCode(): string
  * @param newCurrency The new currency being set.
  * @param oldCurrency The old currency, or undefined if not previously set.
  */
-function setCurrency(newCurrency: ICurrency, oldCurrency: ICurrency): void
+function setCurrency(newCurrency: Currency, oldCurrency: Currency): void
 {
     // If this is a user-initiated change, set the `currency` cookie.
     if (oldCurrency != null)

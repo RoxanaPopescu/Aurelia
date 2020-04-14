@@ -1,6 +1,18 @@
 [
-    { "code": "DKK", "symbol": "kr.", "name": "Danish Krone" },
-    { "code": "EUR", "symbol": "€", "name": "Euro" },
-    { "code": "GBP", "symbol": "£", "name": "British Pound" },
-    { "code": "USD", "symbol": "$", "name": "US Dollar" }
+    {
+        "code": "DKK",
+        "name": "Danish Krone"
+    },
+    {
+        "code": "EUR",
+        "name": "Euro"
+    },
+    {
+        "code": "GBP",
+        "name": "British Pound"
+    },
+    {
+        "code": "USD",
+        "name": "US Dollar"
+    }
 ]

@@ -51,9 +51,10 @@ declare interface IClientEnvironment
     platform: ClientPlatformName;
 
     /**
-     * The IETF language tag identifying the locale.
-     * This value is case sensitive and consists of an ISO 639-1 language code,
-     * optionally an ISO 15924 script code, and an ISO 3166-1 Alpha 2 country code.
+     * The IETF language tag identifying the locale, excluding any unicode extension.
+     * This value is case sensitive and consists of an ISO 639-1 language code, optionally
+     * followed by an ISO 15924 script code, an ISO 3166-1 Alpha 2 country code, and a
+     * private use subtag, in that order.
      */
     locale: string;
 

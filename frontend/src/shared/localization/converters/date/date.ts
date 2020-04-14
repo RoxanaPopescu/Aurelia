@@ -53,8 +53,8 @@ export class DateValueConverter
             return value;
         }
 
-        // Get the locale code, including the extension.
-        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = this._localeService.locale.codeWithUnicodeExtension;
 
         const valueToFormat = convert ? value.toLocal() : value;
 

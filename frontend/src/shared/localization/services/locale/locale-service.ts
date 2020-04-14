@@ -1,5 +1,6 @@
 import { autoinject, computedFrom, signalBindings } from "aurelia-framework";
-import { ILocale } from "./locale";
+import { EventAggregator } from "aurelia-event-aggregator";
+import { ILocale, Locale } from "./locale";
 
 /**
  * Represents a function that will be invoked before the locale changes.
@@ -8,7 +9,7 @@ import { ILocale } from "./locale";
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new locale.
  */
-type LocaleChangeFunc = (newLocale: ILocale, oldLocale: ILocale | undefined) => void | Promise<void>;
+type LocaleChangeFunc = (newLocale: Locale, oldLocale: Locale | undefined) => void | Promise<void>;
 
 /**
  * Represents a service that manages locales.
@@ -16,15 +17,25 @@ type LocaleChangeFunc = (newLocale: ILocale, oldLocale: ILocale | undefined) => 
 @autoinject
 export class LocaleService
 {
-    private _locales: ILocale[];
-    private _locale: ILocale;
+    /**
+     * Creates a new instance of the type.
+     * @param eventAggregator The `EventAggregator` instance.
+     */
+    public constructor(eventAggregator: EventAggregator)
+    {
+        this._eventAggregator = eventAggregator;
+    }
+
+    private readonly _eventAggregator: EventAggregator;
+    private _locales: Locale[];
+    private _locale: Locale;
     private _changeFunc: LocaleChangeFunc;
 
     /**
      * Gets the supported locales.
      */
     @computedFrom("_locales")
-    public get locales(): ReadonlyArray<ILocale>
+    public get locales(): ReadonlyArray<Locale>
     {
         return this._locales;
     }
@@ -33,7 +44,7 @@ export class LocaleService
      * Gets the current locale.
      */
     @computedFrom("_locale")
-    public get locale(): ILocale
+    public get locale(): Locale
     {
         return this._locale;
     }
@@ -45,7 +56,7 @@ export class LocaleService
      */
     public configure(locales: ILocale[], changeFunc?: LocaleChangeFunc): void
     {
-        this._locales = locales;
+        this._locales = locales.filter(l => ENVIRONMENT.debug || !l.debug).map(l => new Locale(l));
         this._changeFunc = changeFunc || (() => undefined);
     }
 
@@ -54,7 +65,7 @@ export class LocaleService
      * @param localeCode The case-insensitive locale code.
      * @returns The locale with the specified locale code.
      */
-    public getLocale(localeCode: string): ILocale
+    public getLocale(localeCode: string): Locale
     {
         const canonicalLocaleCode = Intl.getCanonicalLocales([localeCode])[0];
         const locale = this._locales.find(l => l.code === canonicalLocaleCode);
@@ -70,9 +81,9 @@ export class LocaleService
     /**
      * Sets the current locale.
      * @param localeCode The new case-insensitive locale code.
-     * @returns A promise that will be resolved with the `ILocale` instance when the new locale is loaded.
+     * @returns A promise that will be resolved with the `Locale` instance when the new locale is loaded.
      */
-    public async setLocale(localeCode: string): Promise<ILocale>
+    public async setLocale(localeCode: string): Promise<Locale>
     {
         if (this._locale != null && localeCode === this._locale.code)
         {
@@ -84,6 +95,8 @@ export class LocaleService
         await this._changeFunc(locale, this._locale);
 
         this._locale = locale;
+
+        this._eventAggregator.publish("locale-changed");
 
         signalBindings("locale-changed");
 

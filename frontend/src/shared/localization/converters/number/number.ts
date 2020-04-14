@@ -64,8 +64,8 @@ export class NumberValueConverter
             return args[0];
         }
 
-        // Get the locale code, including the extension.
-        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = this._localeService.locale.codeWithUnicodeExtension;
 
         const numberFormat = this.getNumberFormat(localeCodeWithExtension,
         {

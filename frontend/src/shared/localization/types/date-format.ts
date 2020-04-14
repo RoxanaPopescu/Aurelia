@@ -19,12 +19,17 @@ export class DateFormat
      */
     public constructor(localeService: LocaleService)
     {
-        const localeCodeWithExtension = `${localeService.locale.code}${localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = localeService.locale.codeWithUnicodeExtension;
+
+        // Get the date format parts.
         const dateParts = date.toLocaleParts(
         {
             ...DateTime.DATE_SHORT,
             locale: localeCodeWithExtension
         });
+
+        // Extract the relevant info from the date format parts.
 
         const parts = dateParts.map(part =>
         {

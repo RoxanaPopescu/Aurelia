@@ -2,11 +2,11 @@ import { autoinject } from "aurelia-framework";
 import { escapeRegExp } from "shared/utilities";
 import { LocaleService } from "../services/locale";
 
-// The date used when resolving format parts.
+// The number used when resolving format parts.
 const number = -1.1;
 
 /**
- * Represents a date format for a specific locale.
+ * Represents a number format for a specific locale.
  */
 @autoinject
 export class NumberFormat
@@ -17,10 +17,16 @@ export class NumberFormat
      */
     public constructor(localeService: LocaleService)
     {
-        const localeCodeWithExtension = `${localeService.locale.code}${localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = localeService.locale.codeWithUnicodeExtension;
+
+        // Get the number format.
         const numberFormat = new Intl.NumberFormat(localeCodeWithExtension);
 
+        // Get the number format parts.
         const numberParts = numberFormat.formatToParts(number);
+
+        // Extract the relevant info from the number format parts.
 
         const parts = numberParts.map((part: any) =>
         {

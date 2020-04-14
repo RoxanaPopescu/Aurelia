@@ -40,8 +40,8 @@ export class PluralValueConverter
             return value;
         }
 
-        // Get the locale code, including the extension.
-        const localeCodeWithExtension = `${this._localeService.locale.code}${this._localeService.locale.extension}`;
+        // Get the locale code, including any unicode extension.
+        const localeCodeWithExtension = this._localeService.locale.codeWithUnicodeExtension;
 
         const pluralRules = this.getPluralRules(localeCodeWithExtension);
         const pluralCategories = pluralRules.resolvedOptions().pluralCategories;
