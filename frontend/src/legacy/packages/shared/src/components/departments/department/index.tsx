@@ -28,7 +28,7 @@ export default class DepartmentComponent extends React.Component<Props> {
     super(props);
 
     document.title = this.props.match.params.id
-      ? "Afdeling " + this.props.match.params.id
+      ? Localization.operationsValue("Departments_Update_Title").replace("{department}", this.props.match.params.id)
       : Localization.operationsValue("Departments_Create_Title");
   }
 
@@ -89,7 +89,7 @@ export default class DepartmentComponent extends React.Component<Props> {
         departmentStore.departmentParentId
       );
 
-      departmentStore.success = `Created ${departmentStore.departmentName}`;
+      departmentStore.success = Localization.operationsValue("Departments_Create_Confirmation").replace("{department}", departmentStore.departmentName);
       departmentStore.reset();
     } catch (error) {
       departmentStore.error = error.message;
@@ -118,9 +118,8 @@ export default class DepartmentComponent extends React.Component<Props> {
     )
       .then(() => {
         departmentStore.loading = false;
-        departmentStore.success = `"${
-          departmentStore.departmentName
-        }" er blevet opdateret`;
+        departmentStore.success = Localization.operationsValue("Departments_Update_Confirmation")
+          .replace("{department}", departmentStore.departmentName != null ? departmentStore.departmentName : "");
       })
       .catch(error => {
         departmentStore.loading = false;
@@ -157,8 +156,8 @@ export default class DepartmentComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Afdelinger", href: SubPage.path(SubPage.DepartmentsList) },
-            { title: "Ny afdeling" }
+            { title: Localization.operationsValue("Menu_Departments"), href: SubPage.path(SubPage.DepartmentsList) },
+            { title: Localization.operationsValue("Departments_Create_Title") }
           ]}
         >
 
@@ -180,7 +179,7 @@ export default class DepartmentComponent extends React.Component<Props> {
             loading={departmentStore.loading}
           >
             {departmentStore.departmentId
-              ? "Opdater"
+              ? Localization.operationsValue("Departments_Update:Button")
               : Localization.consignorValue(
                   "Departments_Create_CreateDepartment"
                 )}

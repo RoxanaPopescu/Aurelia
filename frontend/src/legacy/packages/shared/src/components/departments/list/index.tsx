@@ -66,7 +66,7 @@ export default class DepartmentsListComponent extends React.Component<Props> {
 
         <PageHeaderComponent
           path={[
-            { title: "Afdelinger" }
+            { title: Localization.operationsValue("Menu_Departments") }
           ]}
         >
 
@@ -75,13 +75,13 @@ export default class DepartmentsListComponent extends React.Component<Props> {
             type={ButtonType.Light}
             onClick={() => this.props.history!.push(SubPage.path(SubPage.DepartmentsCreate))}
           >
-            Tilføj afdeling
+            {Localization.operationsValue("Departments_Create_Title")}
           </ButtonAdd>
 
         </PageHeaderComponent>
 
         <PageContentComponent>
-        
+
           <TableComponent
             gridTemplateColumns="auto auto"
             generateURL={index => {
@@ -108,7 +108,7 @@ export default class DepartmentsListComponent extends React.Component<Props> {
             {deparmentListStore.error}
           </Toast>
         )}
-        
+
       </>
     );
   }
