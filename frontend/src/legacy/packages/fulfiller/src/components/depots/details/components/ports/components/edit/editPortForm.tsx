@@ -64,8 +64,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
       <div className="c-portForm-container">
         <MultiSelect
           size={"medium"}
-          headline="UGEDAGE"
-          placeholder="Vælg ugedage"
+          headline={Localization.operationsValue("Depots_Gates_Update_WeekDays")}
           onChange={values => {
             if (values) {
               this.availability.daysOfWeek = values.map(object => object.value);
@@ -81,8 +80,8 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
         />
         <InputNumbers
           size={"medium"}
-          headline="Antal porte"
-          valueDescription="porte"
+          headline={Localization.operationsValue("Depots_Gates_Update_NumberOfGates")}
+          valueDescription={Localization.operationsValue("Depots_Gates_Update_WeekDays:Input")}
           onChange={numberOfPorts => {
             this.availability.numberOfGates = numberOfPorts;
           }}
@@ -90,7 +89,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
           value={this.availability.numberOfGates}
         />
         <TimeComponent
-          headline="Åbningstid"
+          headline={Localization.operationsValue("Depots_Gates_Update_TimeStart")}
           placeholder="TT:MM"
           size={"medium"}
           onChange={seconds => {
@@ -107,7 +106,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
           type={ButtonType.Action}
           loading={this.props.store.saving}
         >
-          {this.availability.created ? "Opdater" : "Opret"}
+          {this.availability.created ? Localization.operationsValue("Depots_General_Update:Button") : Localization.operationsValue("Depots_General_Create:Button")}
         </Button>
       </div>
     );
@@ -125,7 +124,7 @@ export default class DepotPortsEditComponent extends React.Component<Props> {
 
     return (
       <TimeComponent
-          headline="Lukketid"
+          headline={Localization.operationsValue("Depots_Gates_Update_TimeEnd")}
           placeholder="TT:MM"
           size={"medium"}
           onChange={seconds => {

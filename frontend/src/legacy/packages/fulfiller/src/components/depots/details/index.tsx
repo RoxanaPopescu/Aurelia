@@ -58,10 +58,10 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
       this.store.depot != null
         ? this.store.depot.id != null
           ? this.store.depot.name
-          : "Ny terminal"
-        : "Henter terminal...";
+          : Localization.operationsValue("Depots_Create_Title")
+        : Localization.operationsValue("Depots_Update_Loading");
 
-    document.title = `${title} | Terminaler`;
+    document.title = `${title} | ${Localization.operationsValue("Menu_Depots")}`;
 
     if (this.store.loading) {
       return <LoadingInline />;
@@ -86,7 +86,7 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
           history={this.props.history}
           path={[
             {
-              title: "Terminaler",
+              title: Localization.operationsValue("Menu_Depots"),
               href: FulfillerSubPage.path(FulfillerSubPage.DepotList)
             },
             { title: title }
@@ -94,13 +94,13 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
           tabs={[
             ...(this.store.depot.id
               ? [
-                  { name: "activity", title: "Rute aktivitet" },
-                  { name: "scanned", title: "Manglende colli" }
+                  { name: "activity", title: Localization.operationsValue("Depots_Activity_Title") },
+                  { name: "scanned", title: Localization.operationsValue("Depots_MissingColli_Title") }
                 ]
               : []),
 
-            { name: "settings", title: "Indstillinger" },
-            { name: "ports", title: "Porte" }
+            { name: "settings", title: Localization.operationsValue("Depots_Settings_Title") },
+            { name: "ports", title: Localization.operationsValue("Depots_Gates_Title") }
           ]}
           tab={this.tab}
           onTabChange={tab => {
@@ -127,7 +127,7 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
         {this.store.activeGate && (
           <Dialog
             title={
-              this.store.activeGate.created ? "Rediger porte" : "Tilføj porte"
+              this.store.activeGate.created ? Localization.operationsValue("Depots_Gates_Edit_Title") : Localization.operationsValue("Depots_Gates_Create_Title")
             }
             onClose={() => {
               this.store.activeGate = undefined;

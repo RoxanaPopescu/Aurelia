@@ -29,7 +29,7 @@ export default class RoutePlanningDepotsListComponent extends React.Component<Pr
   // tslint:disable-next-line:no-any
   public constructor(props: Props) {
     super(props);
-    document.title = "Terminaler";
+    document.title = Localization.operationsValue("Menu_Depots");
   }
 
   public componentDidMount() {
@@ -62,7 +62,7 @@ export default class RoutePlanningDepotsListComponent extends React.Component<Pr
 
         <PageHeaderComponent
           path={[
-            { title: "Terminaler" }
+            { title: Localization.operationsValue("Menu_Depots") }
           ]}
         >
 

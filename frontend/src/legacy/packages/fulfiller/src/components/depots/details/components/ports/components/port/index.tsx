@@ -22,18 +22,14 @@ export class PortComponent extends React.Component<Props> {
           this.props.selected ? "c-depotsPort-rule--selected" : ""
         }`}
       >
-        {this.props.port.numberOfGates} Porte
+        {this.props.port.numberOfGates} {Localization.operationsValue("Depots_Gates_Update_WeekDays:Input")}
         <br />
-        Åben fra{" "}
-        {Localization.formatTime(
-          DateHelper.startOfDay(this.props.port.openingTime!)
-        )}{" "}
-        til{" "}
-        {Localization.formatTime(
-          DateHelper.startOfDay(this.props.port.closingTime!)
-        )}
-        <br />I dagene{" "}
-        {Localization.formatWeekdays(this.props.port.daysOfWeek!)}
+        {Localization.operationsValue("Depots_Gates_OpeningHours")
+          .replace("{timeFrom}", Localization.formatTime(DateHelper.startOfDay(this.props.port.openingTime!)))
+          .replace("{timeTo}", Localization.formatTime(DateHelper.startOfDay(this.props.port.closingTime!)))}
+        <br />
+        {Localization.operationsValue("Depots_Gates_DaysOfWeek")
+          .replace("{daysOfWeek}", Localization.formatWeekdays(this.props.port.daysOfWeek!))}
         <div className="c-depotsPort-rule-actions">
           {Profile.claims.has("edit-depot") &&
           <Icon name="edit" onClick={() => this.props.onEdit()} />}

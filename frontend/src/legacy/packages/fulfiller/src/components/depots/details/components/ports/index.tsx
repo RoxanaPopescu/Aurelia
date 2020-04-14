@@ -8,6 +8,7 @@ import { PortComponent } from "./components/port";
 import GUID from "../../../../../../../shared/src/webKit/utillity/guid";
 import { Availability } from "shared/src/model/logistics/depots";
 import { Profile } from "shared/src/model/profile";
+import Localization from '../../../../../../../shared/src/localization/index';
 
 interface Props {
   store: DepotStore;
@@ -39,7 +40,7 @@ export default class DepotPortsComponent extends React.Component<Props> {
           onClick={() => (this.props.store.activeGate = new Availability())}
           type={ButtonType.Action}
         >
-          + Tilføj porte
+          {Localization.operationsValue("Depots_Gates_Add:Button")}
         </Button>}
       </div>
     );

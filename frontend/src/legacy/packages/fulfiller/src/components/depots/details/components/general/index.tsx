@@ -7,6 +7,7 @@ import AddressSearchComponent from "shared/src/components/addressSearch";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { Profile } from "shared/src/model/profile";
+import Localization from "shared/src/localization";
 
 interface Props {
   store: DepotStore;
@@ -31,27 +32,26 @@ export default class DepotGeneralComponent extends React.Component<Props> {
       <div className="c-depotsGeneral-container">
         <Input
           size={"medium"}
-          headline="NAVN"
-          placeholder="Indtast navn"
+          headline={Localization.sharedValue("Header_Name")}
           onChange={name => (this.props.store.depot.name = name)}
           error={this.validate && !this.props.store.depot.name}
           value={this.props.store.depot.name}
           readonly={!Profile.claims.has("edit-depot")}
         />
         <AddressSearchComponent
-          headline="ADRESSE"
+          headline={Localization.sharedValue("Address")}
           error={this.validate && !this.props.store.depot.location}
           onChange={location => {
             this.props.store.depot.location = location;
           }}
           value={this.props.store.depot.location}
-          placeholder="Indskriv terminal lokation..."
+          placeholder={Localization.operationsValue("Depots_General_Address:Placeholder")}
           locationRequired={true}
           disabled={!Profile.claims.has("edit-depot")}
         />
         <InputNumbers
           size={"medium"}
-          headline="Minutter imellem afgange"
+          headline={Localization.operationsValue("Depots_General_SlotInterval")}
           valueDescription="min"
           error={this.validate && !this.props.store.depot.slotInterval}
           onChange={slotInterval => {
@@ -76,7 +76,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           loading={this.props.store.saving}
           disabled={this.props.store.saving}
         >
-          {this.props.store.depot.id ? "Opdater" : "Opret"}
+          {this.props.store.depot.id ? Localization.operationsValue("Depots_General_Update:Button") : Localization.operationsValue("Depots_General_Create:Button")}
         </Button>}
       </div>
     );

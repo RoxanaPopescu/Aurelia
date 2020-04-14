@@ -65,7 +65,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
       <>
         <DateComponent
           className="c-depots-activity-date"
-          headline="Vælg dato"
+          headline={Localization.operationsValue("Depots_Activity_ChooseDate")}
           date={this.date}
           size="medium"
           onChange={value => {
@@ -89,16 +89,16 @@ export default class DepotActivityComponent extends React.Component<Props> {
           )}
           data={{
             headers: [
-              { key: "route", content: "Rute" },
-              { key: "reference", content: "Reference" },
-              { key: "driver", content: "Chauffør" },
-              { key: "port", content: "Port" },
-              { key: "fulfiller", content: "Logistikpartner" },
-              { key: "planned-arrival", content: "Planlagt ankomst" },
-              { key: "actual-arrival", content: "Chauffør ankomst" },
-              { key: "actual-departure", content: "Chauffør afgang" },
-              { key: "colli-status", content: "Kolli scannet / total" },
-              { key: "driver-list-ready", content: "Køreliste klar" },
+              { key: "route", content: Localization.sharedValue("Passage_Route") },
+              { key: "reference", content: Localization.sharedValue("Route_TableHeader_Reference") },
+              { key: "driver", content: Localization.sharedValue("User_Driver") },
+              { key: "port", content: Localization.sharedValue("RouteDetails_Stops_Stop_Port") },
+              { key: "fulfiller", content: Localization.sharedValue("Route_TableHeader_Fulfiller") },
+              { key: "planned-arrival", content: Localization.operationsValue("Depots_Activity_Table_PlannedArrival") },
+              { key: "actual-arrival", content: Localization.operationsValue("Depots_Activity_Table_DriverArrival") },
+              { key: "actual-departure", content: Localization.operationsValue("Depots_Activity_Table_DriverDeparture") },
+              { key: "colli-status", content: Localization.operationsValue("Depots_Activity_Table_ColliStatus") },
+              { key: "driver-list-ready", content: Localization.operationsValue("Depots_Activity_Table_DriverList") },
               { key: "print-driver-list", content: "" },
               { key: "report-problem", content: "" }
             ],
@@ -108,7 +108,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
 
         {this.openRoute != null && (
           <Dialog
-            title={`Problemer med rute ${this.openRoute.slug}`}
+            title={Localization.operationsValue("Depots_Activity_RouteProblem").replace("{routeSlug}", this.openRoute.slug)}
             onClose={() => this.saveOpenRoute()}
             disabled={this.savingRemarks}
           >
@@ -118,14 +118,14 @@ export default class DepotActivityComponent extends React.Component<Props> {
               <InputTextarea
                 size="medium"
                 className="c-depots-activity-remarks-notes"
-                headline="Bemærkninger"
+                headline={Localization.operationsValue("Depots_Activity_RouteProblem_Comments")}
                 rows={2}
                 value={this.openRoute.note}
                 onChange={value => (this.openRoute!.note = value)}
               />
 
               <div className="inputHeadline font-heading">
-                Årsag til forsinkelse
+                {Localization.operationsValue("Depots_Activity_RouteProblem_Reason")}
               </div>
 
               {this.service.remarks.map(i => (
@@ -210,7 +210,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
           href={route.driverListUrl}
           target="_blank"
         >
-          Print Køreliste
+          {Localization.operationsValue("Depots_Activity_RouteProblem_Print")}
         </a>,
         // tslint:disable-next-line:jsx-wrap-multiline
         <a
@@ -221,9 +221,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
           }}
         >
           {route.remarks.length > 0
-            ? `${route.remarks.length} ${
-                route.remarks.length === 1 ? "problem" : "problemer"
-              }`
+            ? `${route.remarks.length} ${Localization.operationsValue("Depots_Activity_RouteProblem_Problems")}`
             : "Rapporter problem"}
         </a>
       ]);

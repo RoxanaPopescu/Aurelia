@@ -75,7 +75,7 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
     var tabs: any[] = [];
 
     if (this.service.overview) {
-      tabs = [{ title: "Alle", key: "all" }].concat(
+      tabs = [{ title: Localization.sharedValue("Model_Logistics_OrderStatus:All"), key: "all" }].concat(
         this.service.overview.colliMissingByConsignors.map(t => {
           return {
             title: t.consignorName,
@@ -100,7 +100,7 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
         >
           <DateComponent
             className="c-depots-scannedColli-date"
-            headline="Vælg dato"
+            headline={Localization.operationsValue("Depots_Activity_ChooseDate")}
             size="medium"
             date={this.date}
             onChange={value => {
@@ -130,15 +130,15 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
     return (
       <div className="c-depots-scannedColli-counts">
         <DepotScannedColliInfoComponent
-          title="Ikke skannede"
+          title={Localization.operationsValue("Depots_MissingColli_Status:NotScanned")}
           description={correctOverview.missing + " kolli"}
         />
         <DepotScannedColliInfoComponent
-          title="Skannede"
+          title={Localization.operationsValue("Depots_MissingColli_Status:Scanned")}
           description={correctOverview.scanned + " kolli"}
         />
         <DepotScannedColliInfoComponent
-          title="Totalt"
+          title={Localization.operationsValue("Depots_MissingColli_Total")}
           description={correctOverview.total + " kolli"}
         />
       </div>
@@ -156,8 +156,7 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
         <TableComponent
           totalRowsText={
             this.service.missingColli
-              ? Localization.formatNumber(this.service.missingColli.length) +
-                " Ikke scannede kolli"
+              ? Localization.operationsValue("Depots_MissingColli_TotalMissing").replace("{number}", Localization.formatNumber(this.service.missingColli.length))
               : undefined
           }
           canSelectRow={() => false}
@@ -182,14 +181,14 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
   private getHead() {
     let rowHead: { key: string; content: string }[] = [];
 
-    rowHead.push({ key: "barcode", content: "Barcode" });
+    rowHead.push({ key: "barcode", content: Localization.sharedValue("Barcode") });
     if (this.service.selectedConsignor === undefined) {
-      rowHead.push({ key: "consignorCompanyName", content: "Afsender" });
+      rowHead.push({ key: "consignorCompanyName", content: Localization.sharedValue("OrderGroup_TableHeader_Consignor") });
     }
-    rowHead.push({ key: "stopNumber", content: "Stop" });
-    rowHead.push({ key: "routeSlug", content: "Rute id" });
-    rowHead.push({ key: "routeReference", content: "Rute reference" });
-    rowHead.push({ key: "orderId", content: "Ordre id" });
+    rowHead.push({ key: "stopNumber", content: Localization.sharedValue("StopNumber") });
+    rowHead.push({ key: "routeSlug", content: Localization.sharedValue("Passage_RouteId") });
+    rowHead.push({ key: "routeReference", content: Localization.sharedValue("RouteReference") });
+    rowHead.push({ key: "orderId", content: Localization.sharedValue("OrderId") });
 
     return rowHead;
   }
