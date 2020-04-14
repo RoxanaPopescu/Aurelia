@@ -14,6 +14,9 @@ export class CommunicationTriggerInfo
         this.id = data.id;
         this.slug = data.slug;
         this.name = data.name;
+        this.customer = data.customer;
+        this.routeTags = data.routeTags;
+        this.stopTags = data.stopTags;
         this.recipient = new CommunicationRecipient(data.recipient);
         this.triggerEvent = new CommunicationTriggerEvent(data.triggerEvent);
         this.senderName = data.senderName;
@@ -21,19 +24,34 @@ export class CommunicationTriggerInfo
     }
 
     /**
+     * The ID of the comunication trigger.
+     */
+    public readonly id: string;
+
+    /**
      * The slug identifying the comunication trigger.
      */
     public readonly slug: string;
 
     /**
-     * The ID of the comunication trigger.
-     */
-    public id: string;
-
-    /**
      * The name of the comunication trigger.
      */
     public readonly name: string;
+
+    /**
+     * The customer for which this trigger should be enabled.
+     */
+    public readonly customer: string;
+
+    /**
+     * The route tags for which this trigger should be enabled.
+     */
+    public readonly routeTags: string[] | undefined;
+
+    /**
+     * The route stop tags for which this trigger should be enabled.
+     */
+    public readonly stopTags: string[] | undefined;
 
     /**
      * The recipient of the message.
