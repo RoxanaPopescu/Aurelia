@@ -81,7 +81,7 @@ export default class extends React.Component<Props, State> {
           <InfoBox
             data={[
               {
-                name: "Unassigned routes",
+                name: Localization.operationsValue("Dispatch_UnassignedRoutes"),
                 value: this.state.routes.length === 0 ? 0 : this.state.routes.length - this.state.matchedRoutes.length }
             ]}
           />

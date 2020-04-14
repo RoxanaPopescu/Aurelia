@@ -63,7 +63,7 @@ export default class extends React.Component<Props, State> {
       array.push({
         label: i.toString(),
         value: i,
-        labelNote: `time${i > 1 ? "r" : ""}`
+        labelNote: Localization.operationsValue("Dispatch_Duration")
       });
     }
 
