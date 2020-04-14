@@ -14,6 +14,7 @@ import { Role, ClaimGroup } from "../../../../../model/profile/user";
 import { RoleStore } from "./store";
 import UserManagementService from "../../../service";
 import { ButtonSize } from "shared/src/webKit/button";
+import Localization from "shared/src/localization";
 
 export const roleStore = new RoleStore();
 
@@ -89,7 +90,7 @@ export default class RoleComponent extends React.Component<Props> {
       .then(() => {
         roleStore.loading = false;
         roleStore.modalOpen = false;
-        roleStore.success = `"${roleStore.roleName}" er blevet oprettet`;
+        roleStore.success = Localization.operationsValue("Users_Role_Create_Confirmation").replace("{role}", roleStore.roleName != null ? roleStore.roleName : "");
 
         roleStore.roleName = undefined;
         roleStore.chosenClaimGroups = undefined;
@@ -122,7 +123,7 @@ export default class RoleComponent extends React.Component<Props> {
       .then(() => {
         roleStore.loading = false;
         roleStore.modalOpen = false;
-        roleStore.success = `"${roleStore.roleName}" er blevet opdateret`;
+        roleStore.success = Localization.operationsValue("Users_Role_Update_Confirmation").replace("{role}", roleStore.roleName != null ? roleStore.roleName : "");
 
         roleStore.roleName = undefined;
         roleStore.chosenClaimGroups = undefined;
@@ -157,7 +158,7 @@ export default class RoleComponent extends React.Component<Props> {
         />
         <div className="c-role">
           <div className="c-role-headline font-large">
-            {this.props.role ? "Rediger rolle" : "Opret rolle"}
+            {this.props.role ? Localization.operationsValue("Users_Role_Update_Title") : Localization.operationsValue("Users_Role_Create_Title")}
           </div>
           <div className="c-role-formContainer">
             <Input
@@ -174,7 +175,7 @@ export default class RoleComponent extends React.Component<Props> {
               size="medium"
               headline="Tilføj funktionalitet"
               placeholder={
-                roleStore.loading ? "Henter data ..." : "Vælg funktionaliteter"
+                roleStore.loading ? Localization.sharedValue("Loading_Headline") : Localization.operationsValue("Users_Role_Claims")
               }
               onChange={options => {
                 if (options) {
@@ -210,7 +211,7 @@ export default class RoleComponent extends React.Component<Props> {
               }}
               loading={roleStore.loading}
             >
-              {this.props.role ? "Opdater" : "Opret"}
+              {this.props.role ? Localization.operationsValue("Users_Role_Update:Button") : Localization.operationsValue("Users_Role_Create:Button")}
             </Button>
           </div>
         </div>

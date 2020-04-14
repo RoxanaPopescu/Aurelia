@@ -33,7 +33,7 @@ export default class CreateUserComponent extends React.Component<Props> {
   // tslint:disable-next-line:no-any
   constructor(props: any) {
     super(props);
-    document.title = "Inviter en bruger";
+    document.title = Localization.operationsValue("Users_PageTitle");
   }
 
   componentDidMount() {
@@ -137,11 +137,11 @@ export default class CreateUserComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Brugere", href: SubPage.path(SubPage.UsersManagement) },
-            { title: "Ny bruger" }
+            { title: Localization.operationsValue("Users_List_Title"), href: SubPage.path(SubPage.UsersManagement) },
+            { title: Localization.operationsValue("Users_NewUser") }
           ]}
         >
-        
+
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -155,7 +155,7 @@ export default class CreateUserComponent extends React.Component<Props> {
         </PageHeaderComponent>
 
         <PageContentComponent className="c-users-create">
-        
+
           <Select
             size={"medium"}
             headline={Localization.operationsValue(
@@ -250,7 +250,7 @@ export default class CreateUserComponent extends React.Component<Props> {
                 Validation.email(createUserStore.email) === false)
             }
           />
-          
+
         </PageContentComponent>
 
         {createUserStore.error && (

@@ -12,6 +12,7 @@ import {
 } from "../../../../../webKit/button/index";
 import { roleStore } from "../role";
 import { userManagementStore } from "../../index";
+import Localization from "shared/src/localization";
 
 export const rolesListStore = new RolesListStore();
 
@@ -20,7 +21,7 @@ export default class RolesListComponent extends React.Component {
   // tslint:disable-next-line:no-any
   constructor(props: any) {
     super(props);
-    document.title = "Roller";
+    document.title = Localization.operationsValue("Users_Roles_Title");
   }
 
   componentDidMount() {
@@ -102,7 +103,7 @@ export default class RolesListComponent extends React.Component {
               size={ButtonSize.Medium}
               type={ButtonType.Light}
             >
-              Rediger
+              {Localization.operationsValue("Users_Roles_Edit")}
             </Button>
             <div className="c-users-role-chevron" />
           </div>
@@ -110,7 +111,7 @@ export default class RolesListComponent extends React.Component {
         {rolesListStore.selectedRole &&
           rolesListStore.selectedRole.id === role.id && (
             <div className="c-users-role-details">
-              <div className="c-users-role-title font-heading">Funktioner</div>
+              <div className="c-users-role-title font-heading">{Localization.operationsValue("Users_Roles_Functions")}</div>
               <div className="c-users-role-claims">
                 {rolesListStore.selectedRole.claimGroups!.map(claim => {
                   return (

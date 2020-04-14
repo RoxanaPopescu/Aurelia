@@ -58,8 +58,8 @@ export default class UserManagementComponent extends React.Component<Props> {
             { title: "Brugere og roller" }
           ]}
           tabs={[
-            { title: "Brugere", name: "users", href: SubPage.path(SubPage.UsersManagement).replace(":page", "users") },
-            { title: "Roller", name: "roles", href: SubPage.path(SubPage.UsersManagement).replace(":page", "roles") }
+            { title: Localization.operationsValue("Users_List_Title"), name: "users", href: SubPage.path(SubPage.UsersManagement).replace(":page", "users") },
+            { title: Localization.operationsValue("Users_Roles_Title"), name: "roles", href: SubPage.path(SubPage.UsersManagement).replace(":page", "roles") }
           ]}
           tab={userManagementStore.activeTab}
           onTabChange={tab => {
@@ -74,7 +74,7 @@ export default class UserManagementComponent extends React.Component<Props> {
               type={ButtonType.Light}
               onClick={() => this.props.history!.push(SubPage.path(SubPage.UsersCreate))}
             >
-              Tilføj bruger
+              {Localization.operationsValue("Users_NewUser")}
             </ButtonAdd>
           </>}
 
@@ -85,7 +85,7 @@ export default class UserManagementComponent extends React.Component<Props> {
               type={ButtonType.Light}
               onClick={() => (roleStore.modalOpen = true)}
             >
-              Tilføj rolle
+              {Localization.operationsValue("Users_Roles:Button")}
             </ButtonAdd>
           </>}
 

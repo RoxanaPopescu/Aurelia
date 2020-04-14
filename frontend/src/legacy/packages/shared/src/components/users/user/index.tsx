@@ -35,7 +35,7 @@ export default class UserComponent extends React.Component<Props> {
   // tslint:disable-next-line:no-any
   constructor(props: any) {
     super(props);
-    document.title = "Bruger " + props.match.params.id;
+    document.title = Localization.operationsValue("Users_Update_PageTitle").replace("{id}", props.match.params.id);
 
     this.getUser(props.match.params.id);
   }
@@ -86,13 +86,13 @@ export default class UserComponent extends React.Component<Props> {
   }
 
   requestPasswordReset() {
-    if (confirm("Er du sikker på du vil nulstille passwordet for denne bruger?")) {
+    if (confirm(Localization.operationsValue("Users_Update_ResetPassword_Confirm"))) {
       userStore.loading = true;
 
       UserManagementService.requestPasswordReset(userStore.user!.username)
       .then(user => {
         userStore.loading = false;
-        userStore.toastMessage = "Brugeren har fået en mail med et reset password link";
+        userStore.toastMessage = Localization.operationsValue("Users_Update_ResetPassword_Confirmation");
       })
       .catch(error => {
         userStore.loading = false;
@@ -102,14 +102,14 @@ export default class UserComponent extends React.Component<Props> {
   }
 
   deactivate() {
-    if (confirm("Sikker på du vil deaktivere denne bruger?")) {
+    if (confirm(Localization.operationsValue("Users_Update_Deactivate_Confirm"))) {
       userStore.loading = true;
 
       UserManagementService.deactivate(userStore.user!.username)
       .then(user => {
         userStore.loading = false;
 
-        userStore.toastMessage = "Brugeren er blevet deaktiveret";
+        userStore.toastMessage = Localization.operationsValue("Users_Update_Deactivate_Confirmation");
         userStore.user!.canDeactivate = false;
       })
       .catch(error => {
@@ -177,7 +177,7 @@ export default class UserComponent extends React.Component<Props> {
   render() {
     let userTitle = userStore.user
     ? userStore.user!.fullName.toString()
-    : "Henter bruger...";
+    : Localization.operationsValue("Users_Update_Loading");
 
     return (
       <>
@@ -185,7 +185,7 @@ export default class UserComponent extends React.Component<Props> {
         <PageHeaderComponent
           history={this.props.history}
           path={[
-            { title: "Brugere", href: SubPage.path(SubPage.UsersManagement) },
+            { title: Localization.operationsValue("Users_List_Title"), href: SubPage.path(SubPage.UsersManagement) },
             { title:  userTitle}
           ]}
         >
@@ -207,7 +207,7 @@ export default class UserComponent extends React.Component<Props> {
               onClick={() => this.deactivate()}
               disabled={userStore.loading}
             >
-              Deaktiver brugeren
+              {Localization.operationsValue("Users_Update_Deactivate:Button")}
             </Button>
           }
           { Profile.claims.has("reset-user-password") && userStore.user && userStore.user.status === "Activated" &&
@@ -218,7 +218,7 @@ export default class UserComponent extends React.Component<Props> {
               onClick={() => this.requestPasswordReset()}
               disabled={userStore.loading}
             >
-              Nulstil password
+              {Localization.operationsValue("Users_Update_ResetPassword:Button")}
             </Button>
           }
         </PageHeaderComponent>
