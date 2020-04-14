@@ -44,8 +44,10 @@
                 Note that changing this will cause the app to reload.
             </div>
 
-            <item repeat.for="theme of themes" model.bind="theme">
-                ${theme.name}
+            <item repeat.for="theme of themes" model.bind="theme" class="theme-item">
+
+                <div class="theme-preview" css="background: ${theme.color}"></div>
+                <div>${theme.name}</div>
             </item>
 
         </select-input>

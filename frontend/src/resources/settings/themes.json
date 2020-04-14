@@ -1,6 +1,22 @@
 [
-    { "slug": "mover", "name": "Mover", "color": "#f00" },
-    { "slug": "coop", "name": "Coop", "color": "#f00" },
-    { "slug": "ikea", "name": "Ikea", "color": "#0051ba" },
-    { "slug": "lingu", "name": "Lingu", "color": "#0646a6" }
+    {
+        "slug": "mover",
+        "name": "Mover",
+        "color": "#008dd5"
+    },
+    {
+        "slug": "coop",
+        "name": "Coop",
+        "color": "#c80016"
+    },
+    {
+        "slug": "ikea",
+        "name": "IKEA",
+        "color": "#0051ba"
+    },
+    {
+        "slug": "lingu",
+        "name": "Lingu",
+        "color": "#0646a6"
+    }
 ]

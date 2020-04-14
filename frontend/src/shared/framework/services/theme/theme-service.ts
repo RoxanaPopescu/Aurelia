@@ -1,5 +1,5 @@
 import { autoinject, computedFrom } from "aurelia-framework";
-import { ITheme } from "./theme";
+import { ITheme, Theme } from "./theme";
 import { once } from "shared/utilities";
 
 /**
@@ -9,7 +9,7 @@ import { once } from "shared/utilities";
  * @param oldTheme The old theme, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new theme.
  */
-type ThemeChangeFunc = (newTheme: ITheme, oldTheme: ITheme | undefined) => void | Promise<void>;
+type ThemeChangeFunc = (newTheme: Theme, oldTheme: Theme | undefined) => void | Promise<void>;
 
 /**
  * Represents a service that manages themes.
@@ -17,15 +17,15 @@ type ThemeChangeFunc = (newTheme: ITheme, oldTheme: ITheme | undefined) => void 
 @autoinject
 export class ThemeService
 {
-    private _themes: ITheme[];
-    private _theme: ITheme;
+    private _themes: Theme[];
+    private _theme: Theme;
     private _changeFunc: ThemeChangeFunc;
 
     /**
      * Gets the supported themes.
      */
     @computedFrom("_themes")
-    public get themes(): ReadonlyArray<ITheme>
+    public get themes(): ReadonlyArray<Theme>
     {
         return this._themes;
     }
@@ -34,7 +34,7 @@ export class ThemeService
      * Gets the current theme.
      */
     @computedFrom("_theme")
-    public get theme(): ITheme
+    public get theme(): Theme
     {
         return this._theme;
     }
@@ -48,7 +48,8 @@ export class ThemeService
     @once
     public configure(themes: ITheme[], changeFunc: ThemeChangeFunc): void
     {
-        this._themes = themes;
+        this._themes = themes.filter(t => ENVIRONMENT.debug || !t.debug).map(t => new Theme(t));
+
         this._changeFunc = changeFunc;
     }
 
@@ -57,9 +58,9 @@ export class ThemeService
      * @param themeSlug The slug iddentifying the theme.
      * @returns The theme with the specified slug.
      */
-    public getTheme(themeSlug: string): ITheme
+    public getTheme(themeSlug: string): Theme
     {
-        const theme = this._themes.find(l => l.slug === themeSlug);
+        const theme = this._themes.find(t => t.slug === themeSlug);
 
         if (theme == null)
         {
@@ -72,9 +73,9 @@ export class ThemeService
     /**
      * Sets the current theme.
      * @param themeSlug The slug identifying the theme.
-     * @returns A promise that will be resolved with the `ITheme` instance when the new theme is loaded.
+     * @returns A promise that will be resolved with the `Theme` instance when the new theme is loaded.
      */
-    public async setTheme(themeSlug: string): Promise<ITheme>
+    public async setTheme(themeSlug: string): Promise<Theme>
     {
         if (this._theme != null && themeSlug === this._theme.slug)
         {
