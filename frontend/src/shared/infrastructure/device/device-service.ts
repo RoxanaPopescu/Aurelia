@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+﻿import { autoinject } from "aurelia-framework";
 import { textCase } from "shared/utilities";
 import * as platforms from "./detectors/platforms";
 import * as features from "./detectors/features";

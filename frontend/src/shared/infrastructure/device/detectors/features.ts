@@ -1,5 +1,5 @@
 /**
- * Returns true if 'sessionStorage' is supported and writable.
+ * Returns true if 'sessionStorage' is supported and writable, otherwise false.
  */
 export function sessionStorage(): boolean
 {
@@ -18,7 +18,7 @@ export function sessionStorage(): boolean
 }
 
 /**
- * Returns true if 'localStorage' is supported and writable.
+ * Returns true if 'localStorage' is supported and writable, otherwise false.
  */
 export function localStorage(): boolean
 {
@@ -34,4 +34,12 @@ export function localStorage(): boolean
     {
         return false;
     }
+}
+
+/**
+ * Returns true if the user agent indicates it prefers a dark color scheme, otherwise false.
+ */
+export function darkMode(): boolean
+{
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
