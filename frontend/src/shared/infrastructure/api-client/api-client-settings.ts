@@ -1,5 +1,5 @@
 import { Type } from "shared/types";
-import { Interceptor } from "aurelia-fetch-client";
+import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestSettings } from "./api-request-settings";
 
 /**
@@ -43,7 +43,7 @@ export interface IApiClientSettings
     /**
      * The interceptors, or interceptor types, to use.
      */
-    interceptors: (Interceptor | Type<Interceptor>)[];
+    interceptors: (IApiInterceptor | Type<IApiInterceptor>)[];
 }
 
 /**

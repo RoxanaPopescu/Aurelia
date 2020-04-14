@@ -1,11 +1,11 @@
 import { MapObject } from "shared/types";
-import { Interceptor, json } from "aurelia-fetch-client";
 import { delay } from "shared/utilities";
+import { IApiInterceptor } from "../api-interceptor";
 
 /**
  * Represents an interceptor that responds with a stubbed response, if one is available for the request.
  */
-export class ResponseStubInterceptor implements Interceptor
+export class ResponseStubInterceptor implements IApiInterceptor
 {
     /**
      * Creates a new instance of the type.
@@ -68,11 +68,10 @@ export class ResponseStubInterceptor implements Interceptor
             const status = stub.status != null ? stub.status : 200;
             const statusText = stub.statusText;
 
-            const body = stub.body != null
-                ? stub.body
-                : (stub.data != null
-                    ? json(stub.data)
-                    : undefined);
+            const body =
+                stub.body != null ? stub.body :
+                stub.data != null ? JSON.stringify(stub.data) :
+                undefined;
 
             const headers =
             {

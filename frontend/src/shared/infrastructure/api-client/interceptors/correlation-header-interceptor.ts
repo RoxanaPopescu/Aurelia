@@ -1,11 +1,11 @@
-import { Interceptor } from "aurelia-fetch-client";
 import { Id } from "shared/utilities";
+import { IApiInterceptor } from "../api-interceptor";
 
 /**
  * Represents an interceptor that adds a header with a correlation ID to the request.
  * Note that the header will only be added if it does not already exists.
  */
-export class CorrelationHeaderInterceptor implements Interceptor
+export class CorrelationHeaderInterceptor implements IApiInterceptor
 {
     /**
      * Creates a new instance of the type.

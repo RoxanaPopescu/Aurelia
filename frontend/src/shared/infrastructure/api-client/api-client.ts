@@ -1,7 +1,7 @@
 import { Container, autoinject } from "aurelia-framework";
-import { HttpClient } from "aurelia-fetch-client";
 import { once, delay } from "shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
+import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
 import { apiRequestDefaults } from "./api-request-defaults";
 import { ApiAbortError, ApiError, ApiOriginError, ApiValidationError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
@@ -28,12 +28,11 @@ export class ApiClient
     public constructor(container: Container)
     {
         this._container = container;
-        this._httpClient = new HttpClient();
     }
 
     private readonly _container: Container;
-    private readonly _httpClient: HttpClient;
     private _settings: IApiClientSettings;
+    private _interceptors: IApiInterceptor[];
 
     /**
      * Configures the instance.
@@ -43,19 +42,17 @@ export class ApiClient
     public configure(settings: IApiClientSettings): void
     {
         this._settings = settings;
+        this._interceptors = [];
 
-        // Configure the underlying HTTP client.
-        this._httpClient.configure(config =>
+        // Addx any interceptors specified in the settings.
+        if (this._settings.interceptors != null)
         {
-            // Add interceptors, if configured.
-            if (this._settings.interceptors != null)
+            for (const interceptor of this._settings.interceptors)
             {
-                for (const i of this._settings.interceptors)
-                {
-                    config.withInterceptor(i instanceof Function ? this._container.get(i) : i);
-                }
+                const interceptorInstance = interceptor instanceof Function ? this._container.get(interceptor) : interceptor;
+                this._interceptors.push(interceptorInstance);
             }
-        });
+        }
     }
 
     /**
@@ -343,7 +340,9 @@ export class ApiClient
             referrerPolicy: options.referrerPolicy,
             signal: options.signal,
             integrity: options.integrity,
-            credentials: options.credentials
+            credentials: options.credentials,
+            keepalive: options.keepalive,
+            window: options.window
         };
 
         // Add the body, if specified.
@@ -372,12 +371,40 @@ export class ApiClient
     }
 
     /**
+     * Gets the response to the specified fetch request, passing the request
+     * and response through any registered interceptors along the way.
+     * @param fetchRequest The request to send.
+     * @param options The request options to use.
+     * @returns A promise that will be resolved with the response to the fetch request.
+     */
+    private async getResponse(request: Request, options: IApiRequestOptions): Promise<Response>
+    {
+        let current: Request | Response = request;
+
+        while (current instanceof Request)
+        {
+            // Apply the interceptors to the request.
+            current = await this.interceptRequest(current);
+
+            if (current instanceof Request)
+            {
+                current = await this.fetchResponse(current, options);
+            }
+
+            // Apply the interceptors to the response.
+            current = await this.interceptResponse(current);
+        }
+
+        return current;
+    }
+
+    /**
      * Sends the specified fetch request and gets the response.
      * @param fetchRequest The request to send.
      * @param options The request options to use.
      * @returns A promise that will be resolved with the response to the fetch request.
      */
-    private async getResponse(fetchRequest: Request, options: IApiRequestOptions): Promise<Response>
+    private async fetchResponse(fetchRequest: Request, options: IApiRequestOptions): Promise<Response>
     {
         let fetchResponse: Response | undefined;
 
@@ -387,7 +414,7 @@ export class ApiClient
             try
             {
                 // Send the request and await the response.
-                fetchResponse = await this._httpClient.fetch(fetchRequest);
+                fetchResponse = await fetch(fetchRequest);
 
                 // Does the response represent a transient error?
                 if (transientHttpStatusCodes.includes(fetchResponse.status))
@@ -570,4 +597,63 @@ export class ApiClient
         // Otherwise, convert the value to its default string representation.
         return this.encodeQueryComponent(value.toString());
     }
+
+    /**
+     * Applies any registered interceptors to the specified request.
+     * @param request The request to intercept.
+     * @returns The request or response to use, or the specified request if not intercepted.
+     */
+    private async interceptRequest(request: Request): Promise<Request | Response>
+    {
+        let current = request;
+
+        for (const interceptor of this._interceptors)
+        {
+            if (interceptor.request != null)
+            {
+                const result = await interceptor.request(current);
+
+                if (result instanceof Request)
+                {
+                    current = result;
+                }
+                else if (result instanceof Response)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return current;
+    }
+
+    /**
+     * Applies any registered interceptors to the specified response.
+     * @param response The response to intercept.
+     * @returns The response to use, or a new request.
+     */
+    private async interceptResponse(response: Response): Promise<Request | Response>
+    {
+        let current = response;
+
+        for (const interceptor of this._interceptors)
+        {
+            if (interceptor.response != null)
+            {
+                const result = await interceptor.response(current);
+
+                if (result instanceof Response)
+                {
+                    current = result;
+                }
+                else if (result instanceof Request)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return current;
+    }
+
 }

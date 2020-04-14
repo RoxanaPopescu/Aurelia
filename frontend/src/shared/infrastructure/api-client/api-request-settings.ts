@@ -70,6 +70,12 @@ export interface IApiRequestSettings
     referrerPolicy?: ReferrerPolicy;
 
     /**
+     * The window to associate with the request.
+     * The only valid value for this property is null, which disassociates the request from any window.
+     */
+    window?: never | null;
+
+    /**
      * True to treat a response with status code 404 or 410 as valid, false to throw an error.
      * The default is false, or the configured default value.
      */
