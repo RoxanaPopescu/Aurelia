@@ -17,6 +17,11 @@ $__summary: comment;
     /// The horizontal spacing to apply between an inline element and its neighbor.
     /// Use this to apply spacing between a small element and its related text,
     /// such as e.g. bullet points or checkboxes and the text that folows.
+    --size-inline-spacing-small: 0.35em;
+
+    /// The horizontal spacing to apply between an inline element and its neighbor.
+    /// Use this to apply spacing between a small element and its related text,
+    /// such as e.g. bullet points or checkboxes and the text that folows.
     --size-inline-spacing: 0.5em;
 
     /// The horizontal spacing to apply between an inline element and its neighbor.
@@ -27,4 +32,9 @@ $__summary: comment;
     /// The horizontal spacing to apply between an inline element and its neighbor.
     /// Use this to apply spacing between unrelated elements that need additional spacing.
     --size-inline-spacing-larger: 1.5em;
+
+    /// The vertical spacing to apply between two single-height lines of text.
+    /// Use this to apply spacing between a title and and its related subtitle,
+    /// such as e.g. the title and subtitle in an identity component.
+    --size-line-spacing: 1.5rem;
 }

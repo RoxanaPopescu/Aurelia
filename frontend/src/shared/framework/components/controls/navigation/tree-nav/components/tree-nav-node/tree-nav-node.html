@@ -17,7 +17,7 @@
         drop.trigger="onDrop($event, model)">
 
         <icon class="tree-nav-node-icon">
-            <icon name="md-folder" click.trigger="onClick(true, $event)"></icon>
+            <icon name.bind="folderLike ? 'md-folder' : 'md-file'" click.trigger="onClick(true, $event)"></icon>
             <icon name.bind="iconName" click.trigger="onClick(true, $event)"></icon>
         </icon>
 
@@ -48,13 +48,14 @@
                     title.translate="New folder"
                     name="md-new-folder"
                     tabindex="0"
-                    click.trigger="onNewFolderClick($event)">
+                    click.trigger="onNewFolderClick($event)"
+                    class="preserve-selection">
                 </icon>
 
                 <icon
                     if.bind="model.parent != null"
                     title.translate="Delete"
-                    name="delete-small"
+                    name="md-delete"
                     tabindex="0"
                     click.trigger="onDeleteClick($event)">
                 </icon>
@@ -62,9 +63,10 @@
                 <icon
                     if.bind="model.parent != null"
                     title.translate="Rename"
-                    name="edit-small"
+                    name="md-edit"
                     tabindex="0"
-                    click.trigger="onRenameClick($event)">
+                    click.trigger="onRenameClick($event)"
+                    class="preserve-selection">
                 </icon>
 
             </div>

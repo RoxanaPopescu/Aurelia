@@ -1,6 +1,6 @@
 :root
 {
-    --busy-overlay-color: rgba(255, 255, 255);
+    --busy-overlay-color: var(--surface-color);
     --busy-overlay-opacity: 0.95;
     --busy-overlay-message-max-width: 65%;
     --busy-overlay-message-text-align: center;

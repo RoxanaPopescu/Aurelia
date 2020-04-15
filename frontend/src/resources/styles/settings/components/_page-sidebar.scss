@@ -9,18 +9,18 @@ $__summary: comment;
 :root
 {
     /// The width of the collapsed page-sidebar.
-    --size-page-sidebar-collapsed-width: 11rem;
+    --page-sidebar-collapsed-width: 11rem;
 
     /// The min-width of the expanded page-sidebar.
-    --size-page-sidebar-min-width: 100rem;
+    --page-sidebar-min-width: 100rem;
 
     /// The max-width of the expanded page-sidebar.
-    --size-page-sidebar-max-width: 50%;
+    --page-sidebar-max-width: 50%;
 
     @media ($media-smallest)
     {
         // Expand the page-sidebar to fill the width of the smallest viewports.
-        --size-page-sidebar-min-width: calc(100vw - var(--size-app-sidebar-width) - 2rem);
-        --size-page-sidebar-max-width: var(--size-page-sidebar-min-width);
+        --page-sidebar-min-width: calc(100vw - var(--app-sidebar-width) - 2rem);
+        --page-sidebar-max-width: var(--page-sidebar-min-width);
     }
 }

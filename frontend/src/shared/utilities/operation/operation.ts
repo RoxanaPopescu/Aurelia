@@ -51,7 +51,7 @@ export class Operation<TResult = void>
     /**
      * True if the operation was aborted, otherwise false.
      */
-    private _aborted = true;
+    private _aborted = false;
 
     /**
      * The error that occurred, or undefined if the operation is pending or succeeded.
@@ -95,7 +95,7 @@ export class Operation<TResult = void>
      */
     public abort(): void
     {
-        this._abortController.abort();
         this._aborted = true;
+        this._abortController.abort();
     }
 }

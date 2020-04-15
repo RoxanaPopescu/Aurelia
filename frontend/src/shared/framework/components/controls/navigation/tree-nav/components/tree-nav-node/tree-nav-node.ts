@@ -72,38 +72,44 @@ export class TreeNavNodeCustomElement
     @computedFrom("active", "tree.selectSubtree", "model.expanded")
     protected get iconName(): string
     {
+        if (!this.folderLike)
+        {
+            // File icon, if the node is not folder-like.
+            return "md-file";
+        }
+
         if (!this.active)
         {
-            // Filled icon, when the node is not active.
+            // Filled folder icon, when the node is not active.
             return "md-folder";
         }
 
-        if (!this.folderLike || !this.expandable)
+        if (!this.expandable)
         {
-             // Filled icon, if the node is not folder-like or expandable.
+             // Filled folder icon, if the node is not expandable.
              return "md-folder";
         }
 
         if (this.tree.selectSubtree === true)
         {
-            // Filled icon, indicating that child nodes are included.
+            // Filled folder icon, indicating that child nodes are included.
             return "md-folder";
         }
 
         if (this.tree.selectSubtree === false)
         {
-            // Outline icon, indicating that child nodes are excluded.
-            return "md-folder-open";
+            // Outline folder icon, indicating that child nodes are excluded.
+            return "md-folder-outline";
         }
 
         if (this.model.expanded)
         {
-            // Filled icon, indicating that child nodes are included.
+            // Filled folder icon, indicating that child nodes are included.
             return "md-folder";
         }
 
-        // Outline icon, indicating that child nodes are excluded.
-        return "md-folder-open";
+        // Outline folder icon, indicating that child nodes are excluded.
+        return "md-folder-outline";
     }
 
     /**
@@ -156,13 +162,9 @@ export class TreeNavNodeCustomElement
      */
     protected onNewFolderClick(event: MouseEvent): void
     {
-        // Get the new node.
-        const newNode = this.tree.createNode!();
-
-        // Add the new node as a child of this node.
+        const newNode = this.tree.createNode!({ parentNode: this.model });
         newNode.attach(this.model);
 
-        // Get the new node.
         if (this.tree.nodeCreated != null)
         {
             this.tree.nodeCreated({ node: newNode });

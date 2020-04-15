@@ -1,0 +1,36 @@
+////
+/// @group settings/components/toast
+////
+
+/// The settings to use for the toast component.
+$__summary: comment;
+
+@import "resources/index";
+
+
+:root
+{
+    // The vertical spacing between the toasts.
+    --toast-margin-top: 4rem;
+
+    // The horizontal spacing between the toasts and the edge of the viewport.
+    --toast-margin-right: 4rem;
+
+    // The min height of a toast.
+    --toast-min-height: none;
+
+    // The max height of a toast.
+    --toast-max-height: 80rem;
+
+    // The min width of a toast.
+    --toast-min-width: 110rem;
+
+    // The max width of a toast.
+    --toast-max-width: 50vw;
+
+    // The opacity of the backdrop behind the toasts.
+    --toast-backdrop-opacity: 0;
+
+    // The color of the `Clear all` button.
+    --toast-clear-all-color: var(--surface-text-color);
+}

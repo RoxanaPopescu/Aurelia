@@ -137,7 +137,8 @@ const driverRoutes =
             "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
             "make": "Mike",
             "model": "Model",
-            "color": "Sort"
+            "color": "Sort",
+            "status": "approved"
         },
         "driverOnline": false,
         "driverPosition":

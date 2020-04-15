@@ -59,12 +59,12 @@ page[name="routes"] page[name="express-dispatch"]
         {
             html.sideMenu--collapsed &
             {
-                flex-basis: calc(50% - var(--size-app-sidebar-width)) !important;
+                flex-basis: calc(50% - var(--app-sidebar-width)) !important;
             }
 
             html:not(.sideMenu--collapsed) &
             {
-                flex-basis: calc(50% - var(--size-app-sidebar-width-expanded)) !important;
+                flex-basis: calc(50% - var(--app-sidebar-width-expanded)) !important;
             }
         }
     }
@@ -97,12 +97,12 @@ page[name="routes"] page[name="express-dispatch"]
         {
             html.sideMenu--collapsed &
             {
-                flex-basis: calc(33.33333% - var(--size-app-sidebar-width)) !important;
+                flex-basis: calc(33.33333% - var(--app-sidebar-width)) !important;
             }
 
             html:not(.sideMenu--collapsed) &
             {
-                flex-basis: calc(33.33333% - var(--size-app-sidebar-width-expanded)) !important;
+                flex-basis: calc(33.33333% - var(--app-sidebar-width-expanded)) !important;
             }
 
         }

@@ -2,6 +2,31 @@
 
 tab
 {
+    /// The min-width of the component.
+    --tab-min-width: 30rem;
+
+    /// The min-height of the component.
+    --tab-min-height: 10rem;
+
+    /// The padding of the component.
+    --tab-padding: 0 3.5rem;
+
+    /// The spacing between the tabs with appearance `text`.
+    --tab-spacing: 6rem;
+
+    /// The color of the surface of the component.
+    /// NOTE: This should be customized for each theme surface.
+    --tab-surface-color: transparent;
+    --tab-surface-color--active: var(--surface-neutral-surface-color);
+
+    /// The color of the text on the surface of the component.
+    /// NOTE: This should be customized for each theme surface.
+    --tab-surface-text-color: var(--surface-neutral-text-color);
+    --tab-surface-text-color--active: var(--surface-neutral-text-color);
+}
+
+tab
+{
     display: block;
     position: relative;
     cursor: pointer;
@@ -31,13 +56,13 @@ tab
         &:not(:last-child)
         {
             // Apply margin between the tabs.
-            margin-right: 6rem;
+            margin-right: var(--tab-spacing);
         }
 
         &.--active
         {
-            // Highlight the active tab.
-            color: var(--surface-neutral-text-color);
+            // Apply colors for the active tab.
+            color: var(--tab-surface-text-color--active);
         }
     }
 
@@ -48,10 +73,11 @@ tab
     {
         button
         {
-            min-width: 30rem;
+            // Apply a min-width to the tab.
+            min-width: var(--tab-min-width);
 
             // Style to appear as a button.
-            padding: 0 3.5rem;
+            padding: var(--tab-padding);
             text-align: center;
         }
     }
@@ -67,22 +93,26 @@ tab
             width: 100%;
 
             // Compensate for the border along the bottom of the tabs.
-            line-height: calc(10rem - 2 * var(--tab-border-width));
+            line-height: calc(var(--tab-min-height) - 2 * var(--tab-nav-border-width));
 
             // Apply a border around each tab.
-            border: var(--tab-border-width) solid transparent;
-            margin-bottom: calc(-1 * var(--tab-border-width));
+            border: var(--tab-nav-border-width) solid transparent;
+            margin-bottom: calc(-1 * var(--tab-nav-border-width));
+
+            // Apply colors for inactive tabs.
+            background: var(--tab-surface-color);
+            color: var(--tab-surface-text-color);
         }
 
         &.--active button
         {
-            // Highlight the active tab.
-            background: var(--surface-neutral-surface-color);
-            color: var(--surface-neutral-text-color);
-            border-color: var(--tab-border-color);
+            // Apply colors for the active tab.
+            background: var(--tab-surface-color--active);
+            color: var(--tab-surface-text-color--active);
+            border-color: var(--tab-nav-border-color);
             border-bottom-color: transparent;
-            border-top-left-radius: var(--border-radius-medium);
-            border-top-right-radius: var(--border-radius-medium);
+            border-top-left-radius: var(--tab-nav-border-radius);
+            border-top-right-radius: var(--tab-nav-border-radius);
         }
     }
 
@@ -94,20 +124,24 @@ tab
             flex-grow: 1;
 
             // Compensate for the border around the tabs.
-            line-height: calc(10rem - 2 * var(--tab-border-width));
+            line-height: calc(var(--tab-min-height) - 2 * var(--tab-nav-border-width));
+
+            // Apply colors for inactive tabs.
+            background: var(--tab-surface-color);
+            color: var(--tab-surface-text-color);
         }
 
         &:not(:last-child) button
         {
             // Apply a border between the tabs.
-            border-right: var(--tab-border-width) solid var(--tab-border-color);
+            border-right: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
         }
 
         &.--active button
         {
-            // Highlight the active tab.
-            background: var(--surface-neutral-surface-color);
-            color: var(--surface-neutral-text-color);
+            // Apply colors for the active tab.
+            background: var(--tab-surface-color--active);
+            color: var(--tab-surface-text-color--active);
         }
     }
 
@@ -116,18 +150,18 @@ tab
         button
         {
             // Apply a border around the tab.
-            border: var(--tab-border-width) solid transparent;
-            border-radius: var(--border-radius-medium);
+            border: var(--tab-nav-border-width) solid transparent;
+            border-radius: var(--tab-nav-border-radius);
 
             // Compensate for the border around the tab.
-            line-height: calc(10rem - 2 * var(--tab-border-width));
+            line-height: calc(var(--tab-min-height) - 2 * var(--tab-nav-border-width));
         }
 
         &.--active button
         {
-            // Highlight the active tab.
-            border-color: var(--tab-border-color);
-            color: var(--surface-neutral-text-color);
+            // Apply colors for the active tab.
+            border-color: var(--tab-nav-border-color);
+            color: var(--tab-surface-text-color--active);
         }
     }
 }

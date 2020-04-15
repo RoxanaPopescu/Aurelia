@@ -17,7 +17,11 @@ $__summary: comment;
 {
     [accent="#{$accent}"]
     {
-        color: var(--surface-#{$accent}-text-color, inherit);
+        // Set a custom property with the accent color.
+        --surface-accent-color: var(--surface-#{$accent}-text-color, inherit);
+
+        // Set the foreground color.
+        color: var(--surface-accent-color, inherit);
     }
 }
 
@@ -459,10 +463,10 @@ mark
     text-decoration: none;
 
     // Ensure consistent foreground color.
-    color: inherit;
+    color: var(--surface-mark-surface-text-color);;
 
     // Ensure consistent background color.
-    background: var(--surface-mark-color);
+    background: var(--surface-mark-surface-color);
 }
 
 
@@ -476,9 +480,10 @@ code, var, kbd, samp
     font-family: var(--font-family-monospaced);
     text-decoration: none;
 
-    // Reduce the font size to compensate for the difference
-    // between normal and monospaced fonts.
+    // Reduce the font size and letter spacing to compensate for
+    // the differences between normal and monospaced fonts.
     font-size: var(--font-monospaced-font-size);
+    letter-spacing: var(--font-monospaced-letter-spacing);
 
     // Ensure consistent foreground color.
     color: inherit;
@@ -499,32 +504,36 @@ kbd
 // See: https://www.w3.org/TR/html51/edits.html
 // ====================================================================================================
 
-ins
+ins, del
 {
     // Ensure consistent text size and appearance.
     font: inherit;
     text-decoration: none;
 
+    // Ensure border radius applies, even if the text wraps.
+    box-decoration-break: clone;
+
+    // Apply a border radius to soften the corners.
+    border-radius: var(--border-radius-medium);
+}
+
+ins
+{
     // Ensure consistent foreground color.
-    color: inherit;
+    color: var(--surface-ins-surface-text-color);
 
     // Ensure consistent background color.
-    background: none;
+    background: var(--surface-ins-surface-color);
 }
 
 del
 {
-    // Ensure consistent text size and appearance.
-    font: inherit;
-    text-decoration: line-through;
-
     // Ensure consistent foreground color.
-    color: inherit;
+    color: var(--surface-del-surface-text-color);
 
     // Ensure consistent background color.
-    background: none;
+    background: var(--surface-del-surface-color);
 }
-
 
 // Embedded content
 // See: https://www.w3.org/TR/html51/semantics-embedded-content.html

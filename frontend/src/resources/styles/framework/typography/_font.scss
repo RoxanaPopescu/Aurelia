@@ -77,7 +77,7 @@ $__summary: comment;
 
 /// Text style for the large headings.
 /// Use for tertiary headings, such as subsection and collection headings.
-@include define-font("large")
+@include define-font("large");
 
 /// Text style for the base text.
 /// Use to restore the text style to match the base document style.

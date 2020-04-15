@@ -274,11 +274,11 @@ export class SelectInputCustomElement
     }
 
     /**
-     * Called when a `change` event is triggered on the input.
+     * Called when an event is triggered.
      * Prevents the event from bubbling further, as this input dispatches its own event.
-     * @param event The change event.
+     * @param event The event.
      */
-    protected onInputChange(event: Event): void
+    protected onInternalEvent(event: Event): void
     {
         event.stopPropagation();
     }

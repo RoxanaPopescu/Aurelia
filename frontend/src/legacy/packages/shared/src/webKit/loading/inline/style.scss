@@ -5,15 +5,15 @@
   user-select: none;
   position: fixed;
   height: 100vh;
-  left: var(--size-app-sidebar-width-expanded, #{$backofficeMenuBig});
-  width: calc(100vw - var(--size-app-sidebar-width-expanded, #{$backofficeMenuBig}));
+  left: var(--app-sidebar-width-expanded, #{$backofficeMenuBig});
+  width: calc(100vw - var(--app-sidebar-width-expanded, #{$backofficeMenuBig}));
   top: 0;
   z-index: 99999;
 
   .sideMenu--collapsed &
   {
-    left: var(--size-app-sidebar-width, #{$backofficeMenuSmall});
-    width: calc(100vw - var(--size-app-sidebar-width, #{$backofficeMenuSmall}));
+    left: var(--app-sidebar-width, #{$backofficeMenuSmall});
+    width: calc(100vw - var(--app-sidebar-width, #{$backofficeMenuSmall}));
   }
 
   .loadingContainer {

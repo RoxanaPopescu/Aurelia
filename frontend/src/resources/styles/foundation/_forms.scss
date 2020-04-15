@@ -49,7 +49,6 @@ fieldset
 [disabled="disabled"]
 {
     opacity: var(--opacity-disabled);
-    pointer-events: none;
     cursor: default;
 
     [disabled=""],
@@ -60,17 +59,6 @@ fieldset
         // element is nested inside another disabled element.
         opacity: 1;
     }
-}
-
-
-// placeholder
-// The placeholder content, to which opacity is applied to make it appear faded.
-// ----------------------------------------------------------------------------------------------------
-
-::placeholder
-{
-    color: var(--surface-input-surface-text-color);
-    opacity: var(--opacity-faded);
 }
 
 
@@ -87,9 +75,7 @@ a
     {
         color: inherit;
 
-        &:hover,
         &:any-link:hover,
-        .focus-visible &:focus,
         .focus-visible &:any-link:focus
         {
             // If a neutral accent is applied, highlight when hovered or focused.
@@ -293,7 +279,7 @@ input
 input[type="search"]::-webkit-search-decoration
 {
     // Prevent unwanted indentation of the placeholder and value in Safari.
-    -webkit-appearance: none;
+    appearance: none;
 }
 
 
@@ -303,6 +289,15 @@ input[type="search"]::-webkit-search-decoration
 
 .use-form-styles
 {
+    // placeholder
+    // The placeholder content, to which opacity is applied to make it appear faded.
+    // ----------------------------------------------------------------------------------------------------
+
+    ::placeholder
+    {
+        color: var(--surface-input-surface-text-color);
+        opacity: var(--opacity-faded);
+    }
 
     // input (checkbox)
     // Checkbox supporting the checked, unchecked and indeterminate state.
@@ -613,5 +608,4 @@ input[type="search"]::-webkit-search-decoration
         );
         /* stylelint-enable */
     }
-
 }

@@ -17,7 +17,7 @@ const spaceSeparatedTextCases = ["space", "upper", "lower", "sentence", "title"]
  * 'Title Case' or 'Sentence case', thus making those operations less invasive and more performant.
  * @returns The converted text.
  */
-export function textCase(strings: string[], toCase: TextCase, localize?: boolean, nonInvasive?: boolean): string;
+export function textCase(strings: string[], toCase: TextCase, localized?: boolean, aggressive?: boolean): string;
 
 /**
  * Converts the specified text from the specified text case to the specified text case.
@@ -30,7 +30,7 @@ export function textCase(strings: string[], toCase: TextCase, localize?: boolean
  * 'Title Case' or 'Sentence case', thus making those operations less invasive and more performant.
  * @returns The converted text.
  */
-export function textCase(text: string, fromCase: TextCase, toCase: TextCase, localize?: boolean, aggressive?: boolean): string;
+export function textCase(text: string, fromCase: TextCase, toCase: TextCase, localized?: boolean, aggressive?: boolean): string;
 
 export function textCase(...args: any[]): string
 {

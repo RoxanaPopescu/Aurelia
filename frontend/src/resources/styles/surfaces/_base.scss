@@ -47,10 +47,25 @@ $__summary: comment;
         --surface-scrollbar-thumb-color--hover: var(--palette-color-neutral-dark);
     }
 
-    // Markings on the surface.
+    // Inserted text on the surface.
     &
     {
-        --surface-mark-color: #ffff00;
+        --surface-ins-surface-color: var(--palette-color-positive-dark);
+        --surface-ins-surface-text-color: var(--palette-color-positive-lighter);
+    }
+
+    // Deleted text on the surface.
+    &
+    {
+        --surface-del-surface-color: var(--palette-color-negative-dark);
+        --surface-del-surface-text-color: var(--palette-color-negative-lighter);
+    }
+
+    // Marked text on the surface.
+    &
+    {
+        --surface-mark-surface-color: #ffff00;
+        --surface-mark-surface-text-color: inherit;
     }
 
     // Neutral elements on the surface.

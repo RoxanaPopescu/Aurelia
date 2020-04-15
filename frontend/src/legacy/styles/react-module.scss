@@ -13,11 +13,11 @@ react-module
     position: absolute;
     height: 100vh;
 
-    width: calc(100vw - var(--size-app-sidebar-width-expanded));
+    width: calc(100vw - var(--app-sidebar-width-expanded));
 
     .sideMenu--collapsed &
     {
-        width: calc(100vw - var(--size-app-sidebar-width));
+        width: calc(100vw - var(--app-sidebar-width));
         left: 0;
     }
 

@@ -13,12 +13,28 @@ $__summary: comment;
 {
     from
     {
-        opacity: 0;
+        opacity: var(--fade-in-from-opacity, 0);
     }
 
     to
     {
-        opacity: 1;
+        opacity: var(--fade-in-to-opacity, 1);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from 0 to 1,
+/// using the longer animation duration.
+.animation-fade-in-longer
+{
+    &.au-enter
+    {
+        opacity: var(--fade-in-from-opacity, 0);
+    }
+
+    &.au-enter-active
+    {
+        animation: fade-in ease forwards;
+        animation-duration: var(--animation-duration-longer);
     }
 }
 
@@ -28,7 +44,7 @@ $__summary: comment;
 {
     &.au-enter
     {
-        opacity: 0;
+        opacity: var(--fade-in-from-opacity, 0);
     }
 
     &.au-enter-active
@@ -44,7 +60,7 @@ $__summary: comment;
 {
     &.au-enter
     {
-        opacity: 0;
+        opacity: var(--fade-in-from-opacity, 0);
     }
 
     &.au-enter-active
@@ -60,7 +76,7 @@ $__summary: comment;
 {
     &.au-enter
     {
-        opacity: 0;
+        opacity: var(--fade-in-from-opacity, 0);
     }
 
     &.au-enter-active

@@ -10,7 +10,7 @@ app-sidebar
     flex-direction: column;
 
     // Set the width of the sidebar.
-    width: var(--size-app-sidebar-width);
+    width: var(--app-sidebar-width);
 
     // Don't shrink - we collapse it manually in small viewports.
     flex-shrink: 0;
@@ -386,7 +386,7 @@ app-sidebar
 app-sidebar.--expanded
 {
     // Set the width of the sidebar.
-    width: var(--size-app-sidebar-width-expanded);
+    width: var(--app-sidebar-width-expanded);
 
     app-logo
     {

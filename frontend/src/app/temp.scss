@@ -22,6 +22,12 @@
     --card-padding-large: 12.5rem 13rem;
 }
 
+body
+{
+    /// The min-height of the component.
+    --toggle-height: 2em;
+}
+
 .--button-position-right
 {
     position: absolute;

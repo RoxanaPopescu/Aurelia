@@ -16,7 +16,8 @@
         autoselect.bind="autoselect"
         mousedown.trigger="onInputMouseDown($event)"
         focusin.trigger="onInputFocusIn($event)"
-        change.trigger="onInputChange($event)">
+        input.trigger="onInternalEvent($event)"
+        change.trigger="onInternalEvent($event)">
 
         <slot name="heading" slot="heading"></slot>
         <slot name="description" slot="description"></slot>
