@@ -30,7 +30,7 @@ button[appearance="outline"]
     border-color: var(--palette-color-neutral) !important;
 }
 
-body
+tab-nav
 {
     /**
      * The color of the border of tabs.
@@ -41,7 +41,10 @@ body
      * The width of the border of tabs.
      */
      --tab-nav-border-width: var(--border-width-thin);
+}
 
+body
+{
     /**
      * The width of the border of inputs.
      */

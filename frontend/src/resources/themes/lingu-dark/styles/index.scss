@@ -43,18 +43,16 @@ app-sidebar
     }
 }
 
-body
+tab-nav
 {
     /**
      * The color of the border of tabs.
      */
      --tab-nav-border-color: var(--palette-color-neutral);
+}
 
-    /**
-     * The width of the border of tabs.
-     */
-     --tab-nav-border-width: var(--border-width-medium);
-
+body
+{
     /**
      * The width of the border of inputs.
      */

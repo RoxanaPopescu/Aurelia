@@ -92,7 +92,10 @@ export class ToggleGroupCustomElement
         }
         else if (this.value instanceof Array)
         {
-            this.value = [...new Set([...this.value, toggle.model])];
+            if (!this.value.includes(toggle.model))
+            {
+                this.value = [...this.value, toggle.model];
+            }
         }
         else
         {

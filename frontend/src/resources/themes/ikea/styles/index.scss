@@ -37,7 +37,7 @@ modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not
     color: var(--surface-primary-icon-color);
 }
 
-body
+tab-nav
 {
     /**
      * The color of the border of tabs.
@@ -48,7 +48,10 @@ body
      * The width of the border of tabs.
      */
      --tab-nav-border-width: var(--border-width-thin);
+}
 
+body
+{
     /**
      * The width of the border of inputs.
      */
