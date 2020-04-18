@@ -51,6 +51,22 @@ tab-nav
      --tab-nav-border-color: var(--palette-color-neutral);
 }
 
+page-tab-nav
+{
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-medium);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--palette-color-neutral);
+
+    /// The color of the border of the component.
+    --tab-surface-color--active: var(--palette-color-neutral);
+}
+
 body
 {
     /**
@@ -77,6 +93,7 @@ data-table[appearance="rows"]
 data-table[appearance="cards"]
 {
     --data-table-header-background: rgba(30, 30, 30, 0.97);
+    --data-table-header-border-color: rgba(30, 30, 30, 0.95);
 }
 
 html page-sidebar page-section:not(.--header-slot-empty) .page-section-header

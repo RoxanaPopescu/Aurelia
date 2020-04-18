@@ -80,7 +80,7 @@ body
 *:focus
 {
     // Remove default focus style.
-    transition: outline 0;
+    transition: outline 0s;
     outline: none;
 
     // Class indicating that focus should be visible, e.g. during keyboard

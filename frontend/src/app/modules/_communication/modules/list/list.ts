@@ -123,9 +123,9 @@ export class ListPage
         return this.triggers
 
             // Filtering
-            .filter(t => this.triggerEventFilter && this.triggerEventFilter.includes(t.triggerEvent.slug))
-            .filter(t => this.messageTypeFilter && this.messageTypeFilter.includes(t.messageType.slug))
-            .filter(t => this.recipientFilter && this.recipientFilter.includes(t.recipient.slug))
+            .filter(t => !this.triggerEventFilter || this.triggerEventFilter.includes(t.triggerEvent.slug))
+            .filter(t => !this.messageTypeFilter || this.messageTypeFilter.includes(t.messageType.slug))
+            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipient.slug))
             .filter(t => !this.textFilter || t.searchModel.contains(this.textFilter))
 
             // Sorting
