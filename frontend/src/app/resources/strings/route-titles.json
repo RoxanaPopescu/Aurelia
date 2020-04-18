@@ -12,5 +12,6 @@
     "departments": "Departments",
     "users": "Users",
     "agreements": "Agreements",
-    "design": "Design"
+    "design": "Design",
+    "pageNotFound": "404 - page not found"
 }

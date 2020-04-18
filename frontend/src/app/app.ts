@@ -327,8 +327,20 @@ export class AppModule
             ] : []
         ];
 
+        const handleUnknownRoutes = () =>
+        {
+            return {
+                route: "page-not-found",
+                title: routeTitles.pageNotFound,
+                moduleId: PLATFORM.moduleName("./modules/page-not-found/page-not-found")
+            };
+        };
+
         // Configure the routes.
         config.map(routeConfigs);
+
+        // Add page not found
+        config.mapUnknownRoutes(handleUnknownRoutes);
 
         // Add a router pipeline step that checks whether the user is authorized to access the route.
         config.addPipelineStep("authorize", AuthorizePipelineStep);
