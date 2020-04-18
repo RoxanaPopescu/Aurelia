@@ -274,7 +274,7 @@ export class RoutePlanningStore {
     }
 
     for (let task of this.plan.unscheduledTasks) {
-      bounds.extend(task.deliveryStop.location.position!.toGoogleLatLng());
+      bounds.extend(task.delivery.location.position!.toGoogleLatLng());
     }
 
     // tslint:disable-next-line:no-any
@@ -343,7 +343,7 @@ export class RoutePlanningStore {
     }
 
     this.plan.unscheduledTasks.forEach(task => {
-      const stop = task.deliveryStop;
+      const stop = task.delivery;
 
       markers.push(
         <Marker

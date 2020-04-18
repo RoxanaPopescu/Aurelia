@@ -15,29 +15,20 @@ export type RoutePlanUnscheduledTaskReason =
 export class RoutePlanUnscheduledTask {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, taskNumber: number, consignors: Consignor[]) {
-    this.pickupStop = new RoutePlanUnscheduledTaskStop(
-      data.pickupStop,
+    this.pickup = new RoutePlanUnscheduledTaskStop(
+      data.pickup,
       1,
       consignors,
       this
     );
-    this.deliveryStop = new RoutePlanUnscheduledTaskStop(
-      data.deliveryStop,
+    this.delivery = new RoutePlanUnscheduledTaskStop(
+      data.delivery,
       1,
       consignors,
       this
     );
 
-    if (data.returnStop) {
-      this.returnStop = new RoutePlanUnscheduledTaskStop(
-        data.returnStop,
-        1,
-        consignors,
-        this
-      );
-    }
-
-    this.reason = data.reason;
+    this.reasons = data.reasons;
     this.orderIds = data.orderIds;
     this.colliCount = data.colliCount;
     this.consignors = data.consignorIndexes.map(s => consignors[s as number]);
@@ -52,22 +43,18 @@ export class RoutePlanUnscheduledTask {
   /**
    * The pickup stop for this unscheduled task
    */
-  public pickupStop: RoutePlanUnscheduledTaskStop;
+  public pickup: RoutePlanUnscheduledTaskStop;
 
   /**
    * The delivery stop for this unscheduled task
    */
-  public deliveryStop: RoutePlanUnscheduledTaskStop;
+  public delivery: RoutePlanUnscheduledTaskStop;
 
-  /**
-   * The return stop for this unscheduled task
-   */
-  public returnStop?: RoutePlanUnscheduledTaskStop;
 
   /**
    * The reason this unscheduled task failed
    */
-  public reason: RoutePlanUnscheduledTaskReason;
+  public reasons: string[];
 
   /**
    * The orders for this unplanned task
