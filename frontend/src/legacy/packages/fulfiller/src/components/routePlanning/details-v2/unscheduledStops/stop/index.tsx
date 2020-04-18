@@ -30,6 +30,7 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
           );
           this.props.store.focusRoute(undefined);
         }}
+        title={this.props.task.reasons.join(", ")}
         draggable={true}
         onDragStart={e => this.onDragStart(e)}
       >

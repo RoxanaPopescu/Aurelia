@@ -305,7 +305,7 @@
   "RoutePlanning_RoutePlan_Route_Stop_WaitingTime": "{time} waiting time",
   "RoutePlanning_RoutePlan_StopHover_Title": "Route {routeId} - Stop {stopNumber}",
   "RoutePlanning_RoutePlan_UnplannedTasks": "Unplanned tasks",
-  "RoutePlanning_RoutePlan_UnscheduledStopHover_Title": "Unscheduled stop",
+  "RoutePlanning_RoutePlan_UnscheduledTaskHover_Title": "Unscheduled task",
   "RoutePlanning_Settings_List_Title": "Routeplan settings",
   "RoutePlanning_Settings_List_TotalCount": "Settings {count}",
   "RoutePlanning_Simulations_List_TotalCount": "{count} simulations",

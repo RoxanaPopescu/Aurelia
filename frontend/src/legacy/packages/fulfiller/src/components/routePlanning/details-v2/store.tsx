@@ -357,9 +357,13 @@ export class RoutePlanningStore {
           onMouseOver={() => {
             this.hoveredItem = {
               title: Localization.operationsValue(
-                "RoutePlanning_RoutePlan_UnscheduledStopHover_Title"
+                "RoutePlanning_RoutePlan_UnscheduledTaskHover_Title"
               ),
-              rows: this.getStopRows(stop),
+              rows: [
+                ...this.getStopRows(task.pickup, Localization.sharedValue("Trip_Pickup")),
+                ...this.getStopRows(stop, Localization.sharedValue("Trip_Delivery")),
+                { headline: Localization.sharedValue("General_Problems"), value: task.reasons.join(", ") }
+              ],
               color: "black",
               point: stop.location.position!.toGoogleLatLng(),
               infoWindowOffset: -35
@@ -496,14 +500,14 @@ export class RoutePlanningStore {
     return polylines;
   }
 
-  getStopRows(stop: RoutePlanStopBase) {
+  getStopRows(stop: RoutePlanStopBase, addressName: string | undefined = undefined) {
     let timeframe: string = Localization.formatDateTimeRange(
       stop.arrivalTimeFrame
     );
 
     let rows = [
       {
-        headline: Localization.sharedValue("Address"),
+        headline: addressName ?? "",
         value: stop.location.address.formattedString()
       },
       { headline: Localization.sharedValue("TimePeriod"), value: timeframe }
