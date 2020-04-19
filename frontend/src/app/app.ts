@@ -247,9 +247,7 @@ export class AppModule
             {
                 name: "communication",
                 route: "communication",
-                moduleId: ENVIRONMENT.name === "production"
-                    ? PLATFORM.moduleName("./modules/communication/communication")
-                    : PLATFORM.moduleName("./modules/_communication/communication"),
+                moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
                     outfits: ["fulfiller"],
