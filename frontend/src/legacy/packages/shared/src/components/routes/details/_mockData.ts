@@ -315,7 +315,8 @@ export default {
     "vehicleTypeId": "165f348d-ea67-4c94-9b27-48f2be29d545",
     "make": "Peugeout",
     "model": "Boxer",
-    "color": "Hvis"
+    "color": "Hvis",
+    "status": "approved"
   },
   "driverOnline": true,
   "driverPosition": {

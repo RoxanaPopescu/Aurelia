@@ -1,6 +1,7 @@
 export * from "./entities/accent";
 export * from "./entities/address";
 export * from "./entities/location";
+export * from "./entities/metadata";
 export * from "./entities/person-name";
 export * from "./entities/phone";
 export * from "./entities/photo";

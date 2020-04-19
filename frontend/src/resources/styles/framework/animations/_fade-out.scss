@@ -13,7 +13,18 @@ $__summary: comment;
 {
     to
     {
-        opacity: 0;
+        opacity: var(--fade-out-to-opacity, 0);
+    }
+}
+
+/// Animates the `opacity` of the element linearly from its current value to 0,
+/// using the longer animation duration.
+.animation-fade-out-longer
+{
+    &.au-leave-active
+    {
+        animation: fade-out ease forwards;
+        animation-duration: var(--animation-duration-longer);
     }
 }
 

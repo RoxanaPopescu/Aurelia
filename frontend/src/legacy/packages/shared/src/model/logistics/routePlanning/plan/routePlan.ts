@@ -38,6 +38,16 @@ export class RoutePlan {
   public status: RoutePlanStatus;
 
   /**
+   * The status of the route plan.
+   */
+  public isAutomaticApproved: boolean;
+
+  /**
+   * The routeplan is waiting for approval
+   */
+  public waitingForApproval: boolean;
+
+  /**
    * The metadata for this route plan
    */
   public meta: RoutePlanMeta;

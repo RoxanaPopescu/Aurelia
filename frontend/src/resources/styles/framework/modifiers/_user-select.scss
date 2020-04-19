@@ -14,6 +14,12 @@ $__summary: comment;
     user-select: none;
 }
 
+/// Modifier class that applies the auto user selection behavior.
+.user-select-auto
+{
+    user-select: auto;
+}
+
 /// Modifier class that allows user selection with no constraints.
 .user-select-text
 {
@@ -36,5 +42,8 @@ $__summary: comment;
 /// but enforces that the content must all be selected atomically.
 .user-select-all
 {
+    // Fallback for browsers that do not support `all`.
+    user-select: text;
+
     user-select: all;
 }

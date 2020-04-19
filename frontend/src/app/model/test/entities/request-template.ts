@@ -4,13 +4,13 @@
 export type RequestTemplatesName = keyof typeof RequestTemplate.values;
 
 /**
- * Represents a U-turn strategy used during route optimization.
+ * Represents a template for a request.
  */
 export class RequestTemplate
 {
     /**
      * Creates a new instance of the type.
-     * @param slug The slug identifying the status of the order.
+     * @param template The template of the request.
      */
     public constructor(template: RequestTemplatesName)
     {

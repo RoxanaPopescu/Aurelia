@@ -1,6 +1,7 @@
 import { Location } from "shared/src/model/general/location";
 import { Consignor } from "shared/src/model/logistics/consignor";
 import { DateTimeRange } from "../../../general/dateTimeRange";
+import { GUID } from "shared/src/webKit";
 
 /**
  * Represents one stop for a route plan route
@@ -8,7 +9,7 @@ import { DateTimeRange } from "../../../general/dateTimeRange";
 export class RoutePlanStopBase {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, stopNumber: number, consignors: Consignor[]) {
-    this.id = data.id;
+    this.id = data.id ?? GUID.generate();
     this.stopNumber = stopNumber;
     this.location = new Location(data.location);
     this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, {

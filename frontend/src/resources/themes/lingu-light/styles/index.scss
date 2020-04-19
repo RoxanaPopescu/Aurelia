@@ -19,24 +19,6 @@ $__summary: comment;
 
 // HACK: Override default styles.
 
-body
-{
-    /**
-     * The color of the border of tabs.
-     */
-     --tab-border-color: var(--palette-color-neutral-light);
-
-    /**
-     * The width of the border of tabs.
-     */
-     --tab-border-width: var(--border-width-medium);
-
-    /**
-     * The width of the border of inputs.
-     */
-    --input-border-width: var(--border-width-thin);
-}
-
 button[appearance="outline"]
 {
     border-color: var(--palette-color-neutral-light) !important;

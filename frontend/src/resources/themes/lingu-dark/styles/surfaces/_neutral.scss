@@ -318,19 +318,19 @@ $__summary: comment;
     &
     {
         // State: normal
-        --surface-toggle-border-color: var(--palette-color-neutral);
-        --surface-toggle-surface-color: var(--palette-color-neutral-darkest);
-        --surface-toggle-surface-indicator-color: var(--palette-color-neutral);
+        --surface-toggle-border-color: var(--palette-color-neutral-light);
+        --surface-toggle-surface-color: var(--palette-color-neutral-light);
+        --surface-toggle-surface-indicator-color: var(--palette-color-neutral-light);
 
         // State: hover
-        --surface-toggle-border-color--hover: var(--palette-color-neutral);
-        --surface-toggle-surface-color--hover: var(--palette-color-neutral-darkest);
-        --surface-toggle-surface-indicator-color--hover: var(--palette-color-neutral);
+        --surface-toggle-border-color--hover: var(--palette-color-neutral-light);
+        --surface-toggle-surface-color--hover: var(--palette-color-neutral-light);
+        --surface-toggle-surface-indicator-color--hover: var(--palette-color-neutral-light);
 
         // State: focus
-        --surface-toggle-border-color--focus: var(--palette-color-neutral);
-        --surface-toggle-surface-color--focus: var(--palette-color-neutral-darkest);
-        --surface-toggle-surface-indicator-color--focus: var(--palette-color-neutral);
+        --surface-toggle-border-color--focus: var(--palette-color-neutral-light);
+        --surface-toggle-surface-color--focus: var(--palette-color-neutral-light);
+        --surface-toggle-surface-indicator-color--focus: var(--palette-color-neutral-light);
 
         // State: active
         --surface-toggle-border-color--active: var(--palette-color-primary);

@@ -1,4 +1,4 @@
-import { Container, inject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Container, autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { ValidationCustomAttribute } from "./validation";
 import { ValidationTrigger, ValidationReason } from "./validation-trigger";
 
@@ -69,8 +69,7 @@ export interface IValidator
  * Validators are custom elements that represent input validation requirements,
  * encapsulating the validation logic and the rendering of validation messages.
  */
-// TODO: Use autoinject once https://github.com/aurelia/dependency-injection/pull/186 is released
-@inject(Container)
+@autoinject
 export abstract class Validator implements IValidator
 {
     /**

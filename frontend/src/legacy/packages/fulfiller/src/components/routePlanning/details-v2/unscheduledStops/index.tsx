@@ -23,7 +23,7 @@ export default class RoutePlanningUnscheduledStopsComponent extends React.Compon
         <Stop
           store={this.props.store}
           task={unscheduledTasks[i]}
-          key={"unscheduledStop_" + task.deliveryStop.id}
+          key={"unscheduledStop_" + task.delivery.id}
         />
       );
     }

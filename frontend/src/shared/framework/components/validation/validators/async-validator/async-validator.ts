@@ -61,7 +61,10 @@ export class AsyncValidatorCustomElement extends Validator
                 }
                 catch (error)
                 {
-                    this.invalid = true;
+                    if (this.computedEnabled)
+                    {
+                        this.invalid = true;
+                    }
 
                     throw error;
                 }
@@ -71,5 +74,19 @@ export class AsyncValidatorCustomElement extends Validator
         }
 
         return !this.invalid;
+    }
+
+    /**
+     * Resets this validator to the default validity state, then updates the ancestor validations.
+     */
+    public reset(): void
+    {
+        // Abort any pending operation.
+        if (this.operation?.pending)
+        {
+            this.operation.abort();
+        }
+
+        super.reset();
     }
 }

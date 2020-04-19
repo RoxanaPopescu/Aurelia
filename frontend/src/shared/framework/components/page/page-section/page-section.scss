@@ -9,6 +9,9 @@ page-section
     display: flex;
     flex-direction: column;
 
+    // Allow the element to shrink.
+    min-height: 0;
+
     // Apply margin to the section.
     margin: 7rem 9rem;
 

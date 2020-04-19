@@ -94,7 +94,7 @@ page-sidebar
         justify-content: center;
 
         // Collapse the sidebar.
-        width: var(--size-page-sidebar-collapsed-width);
+        width: var(--page-sidebar-collapsed-width);
 
         // Use cursor to indicate a click on the surface expands the sidebar.
         cursor: e-resize;
@@ -115,8 +115,8 @@ page-sidebar
     &.--expanded
     {
         // Set min and max size of the expanded sidebar.
-        min-width: var(--size-page-sidebar-min-width);
-        max-width: var(--size-page-sidebar-max-width);
+        min-width: var(--page-sidebar-min-width);
+        max-width: var(--page-sidebar-max-width);
 
         .page-sidebar-edge div
         {

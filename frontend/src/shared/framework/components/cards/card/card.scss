@@ -97,12 +97,6 @@ card
         background: var(--surface-color);
         color: var(--surface-text-color);
 
-        // Animate color changes.
-        transition:
-            background-color var(--animation-duration-medium),
-            border-color var(--animation-duration-medium),
-            color var(--animation-duration-medium);
-
         > .card-edge
         {
             // Position along the left edge of the card.
@@ -117,9 +111,6 @@ card
             // Set the border radius to match that of the card.
             border-top-left-radius: var(--border-radius-medium);
             border-bottom-left-radius: var(--border-radius-medium);
-
-            // Animate color changes.
-            transition: background-color var(--animation-duration-short);
         }
 
         > footer
@@ -180,5 +171,20 @@ card
                 }
             }
         }
+    }
+}
+
+card.--animate > a
+{
+    // Animate color changes.
+    transition:
+        background-color var(--animation-duration-medium),
+        border-color var(--animation-duration-medium),
+        color var(--animation-duration-medium);
+
+    > .card-edge
+    {
+        // Animate color changes.
+        transition: background-color var(--animation-duration-medium);
     }
 }

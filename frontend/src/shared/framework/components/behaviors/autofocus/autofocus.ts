@@ -45,16 +45,20 @@ export class AutofocusCustomAttribute
      */
     public attached(): void
     {
-        if (this.enabled || this.enabled === "")
+        // Delay focusing the element, to prevent conflicts with the `trap-focus` attribute,
+        // which if applied will also attempt to focus an element after a timeout.
+        setTimeout(() => setTimeout(() =>
         {
-            const customFocusOptions: IExtendedFocusOptions =
+            if (this.enabled || this.enabled === "")
             {
-                focusVisible: this.visible
-            };
+                const customFocusOptions: IExtendedFocusOptions =
+                {
+                    focusVisible: this.visible
+                };
 
-            // Delay focusing the element, to prevent conflicts with the `trap-focus` attribute,
-            // which if applied will also attempt to focus an element after a timeout.
-            setTimeout(() => setTimeout(() => this._element.focus(customFocusOptions)), this.delay);
-        }
+                this._element.focus(customFocusOptions);
+            }
+
+        }), this.delay);
     }
 }

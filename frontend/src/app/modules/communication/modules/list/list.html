@@ -1,7 +1,7 @@
 <template>
 
-    <require from="app/components/filters/check-filter/check-filter"></require>
-    <require from="app/components/filters/check-filter/check-filter-item"></require>
+    <require from="app/components/check-filter/check-filter"></require>
+    <require from="app/components/check-filter/check-filter-item"></require>
     <require from="./list.scss"></require>
 
     <page name="list">
@@ -32,7 +32,7 @@
 
                 <toggle-group class="flex-column" value.bind="triggerEventFilter">
 
-                    <check-toggle repeat.for="triggerEvent of availableTriggerEvents" label="after" model.bind="triggerEvent.slug" value.one-time="true">
+                    <check-toggle repeat.for="triggerEvent of availableTriggerEvents" label="after" model.bind="triggerEvent.slug" value.one-time="false">
 
                         <div slot="heading" translate>
                             ${triggerEvent.name}
@@ -52,7 +52,7 @@
 
                 <toggle-group class="flex-column" value.bind="messageTypeFilter">
 
-                    <check-toggle repeat.for="messageType of availableMessageTypes" label="after" model.bind="messageType.slug" value.one-time="true">
+                    <check-toggle repeat.for="messageType of availableMessageTypes" label="after" model.bind="messageType.slug" value.one-time="false">
 
                         <div slot="heading" translate>
                             ${messageType.name}
@@ -72,7 +72,7 @@
 
                 <toggle-group class="flex-column" value.bind="recipientFilter">
 
-                    <check-toggle repeat.for="recipient of availableRecipients" label="after" model.bind="recipient.slug" value.one-time="true">
+                    <check-toggle repeat.for="recipient of availableRecipients" label="after" model.bind="recipient.slug" value.one-time="false">
 
                         <div slot="heading" translate>
                             ${recipient.name}
@@ -214,7 +214,7 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="triggers == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="triggers == null && !orderedAndFilteredTriggers" class="margin-largest"></busy-indicator>
 
                 <empty-indicator if.bind="orderedAndFilteredTriggers.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>

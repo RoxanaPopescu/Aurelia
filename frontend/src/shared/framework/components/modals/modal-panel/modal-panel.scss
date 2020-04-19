@@ -156,13 +156,13 @@ modal-panel
     &.--left
     {
         // The transform to apply to the panel before it enters and after it leaves.
-        --modal-panel-origin-transform: translateX(calc(-100% + var(--size-app-sidebar-width) * 0.5));
+        --modal-panel-origin-transform: translateX(calc(-100% + var(--app-sidebar-width) * 0.5));
     }
 
     &.--right
     {
         // The transform to apply to the panel before it enters and after it leaves.
-        --modal-panel-origin-transform: translateX(calc(+100% + var(--size-app-sidebar-width) * 0.5));
+        --modal-panel-origin-transform: translateX(calc(+100% + var(--app-sidebar-width) * 0.5));
     }
 
     modal-view compose.au-enter &

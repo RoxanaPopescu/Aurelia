@@ -33,7 +33,8 @@
       "licensePlate": "AB 12 234",
       "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
       "makeAndModel": "Ford Transporter",
-      "color": "Lilla"
+      "color": "Lilla",
+      "status": "approved"
     },
     "driverOnline": true,
     "driverPosition": {

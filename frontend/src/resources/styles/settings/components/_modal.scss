@@ -33,7 +33,7 @@ $__summary: comment;
     --modal-panel-afterglow: 0 0 20px 0 rgba(255, 255, 255, 0.4);
 
     // The width of the action area within the sidebar.
-    --modal-panel-actions-width: var(--size-app-sidebar-width);
+    --modal-panel-actions-width: var(--app-sidebar-width);
 
     @media ($media-smallest-max)
     {

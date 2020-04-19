@@ -365,7 +365,7 @@ export class TagsInputCustomElement
 
     /**
      * Called when the input, or an element within the input, looses focus.
-     * Ensures the state is reset, even if the dropdown was not visible.
+     * Ensures the state is reset, even if the dropdown is not visible.
      * @param event The focus event.
      */
     protected onInputFocusOut(event: FocusEvent): void

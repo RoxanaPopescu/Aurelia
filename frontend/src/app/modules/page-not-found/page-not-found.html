@@ -1,0 +1,23 @@
+<template>
+    <require from="./page-not-found.scss"></require>
+    <page-not-found>
+        <div>
+            <img src="./resources/images/maze.svg">
+            <div>
+                <div class="margin-bottom" translate>404 - page not found</div>
+                <h1 translate>
+                    Oops, you're probably driving the wrong way!
+                </h1>
+            </div>
+            <div>
+                <div class="margin-double-bottom" translate>
+                    <b>
+                        Suggestions for ways out of the roundabout:
+                    </b>
+                </div class="margin-bottom">
+                <a class="margin-bottom" href="/" translate>Go to the home page</a class="margin-bottom">
+                <a class="margin-bottom" href="javascript:window.history.back()" translate>Go back to the previous page</a>
+            </div>
+        </div>
+    </page-not-found>
+</template>

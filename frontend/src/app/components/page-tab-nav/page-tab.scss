@@ -12,11 +12,11 @@ page-tab-nav
         height: 9rem;
         width: 50rem;
         padding: 0 4rem;
-        border-top-left-radius: var(--border-radius-large);
-        border-top-right-radius: var(--border-radius-large);
-        border: var(--border-width-thin) solid var(--border-color);
+        border-top-left-radius: var(--tab-nav-border-radius);
+        border-top-right-radius: var(--tab-nav-border-radius);
+        border: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
         margin-bottom: -.25rem;
-        background-color: var(--surface-neutral-surface-color);
+        background-color: var(--tab-surface-color);
 
         &:not(:first-child)
         {
@@ -25,9 +25,9 @@ page-tab-nav
 
         &.--active
         {
-            border-bottom-color: var(--surface-color);
-            background-color: var(--surface-color);
-            color: var(--surface-text-color);
+            border-bottom-color: var(--tab-surface-color--active);
+            background-color: var(--tab-surface-color--active);
+            color: var(--tab-surface-text-color--active);
             cursor: initial;
         }
 

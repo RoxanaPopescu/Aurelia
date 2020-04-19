@@ -338,24 +338,17 @@ export class ValidationCustomAttribute implements IValidation
      */
     public async validate(reason?: ValidationReason): Promise<boolean>
     {
-        const pendingValidationPromise = this._validationPromise;
-
-        // Wait for any pending validation run to complete, to avoid a race condition.
-        await pendingValidationPromise;
+        // Wait for any pending validation runs to complete, to avoid race conditions.
+        while (this._validationPromise != null)
+        {
+            await this._validationPromise?.catch();
+        }
 
         // If this validation is computed as disabled, or if the trigger is an event and this
         // validation is computed as inactive, just return true.
         if (!this.computedEnabled)
         {
             return true;
-        }
-
-        // If a new validation promise was already created, just return that.
-        // This happens if multiple `validate` calls were waiting for a
-        // pending validation run to complete.
-        if (this._validationPromise != null && this._validationPromise !== pendingValidationPromise)
-        {
-            return this._validationPromise;
         }
 
         // Assume validation is successful until proven otherwise.
@@ -402,7 +395,7 @@ export class ValidationCustomAttribute implements IValidation
 
             .then(validationResults =>
             {
-                // Clear the stored promise.
+                // Clear the validation promise.
                 this._validationPromise = undefined;
 
                 // If the validation run failed, mark this validation as invalid.
@@ -411,10 +404,13 @@ export class ValidationCustomAttribute implements IValidation
                     invalid = true;
                 }
 
-                // Update the validity state of the validation.
-                this.invalid = invalid;
+                if (this.computedEnabled)
+                {
+                    // Update the validity state of the validation.
+                    this.invalid = invalid;
+                }
 
-                return !this.invalid;
+                return !invalid;
             })
 
             .catch(error =>

@@ -11,7 +11,6 @@ import RoutePlanningSettingDetailsComponent from "../routePlanning/settings/deta
 import OrderGroupListComponent from "fulfiller/src/components/orderGroup/list";
 import OrderGroupComponent from "../orderGroup/single/index";
 import DriverComponent from "../fleet/drivers/driver";
-import CommunicationConsignorComponent from "../communication/consignor";
 import RoutePlanSettingListComponent from "../routePlanning/settings/list";
 import RoutePlanSettingDetailsComponent from "../routePlanning/settings/details";
 import SimulationListComponent from "../routePlanning/simulation/components/list";
@@ -26,7 +25,6 @@ export type FulfillerPageType =
   | "RoutePlanning"
   | "Depots"
   | "FleetManagement"
-  | "Communication";
 
 export class FulfillerNavigationPage {
   // tslint:disable-next-line:no-any
@@ -85,8 +83,6 @@ export class FulfillerNavigationPage {
         return Localization.operationsValue("Menu_Depots");
       case "FleetManagement":
         return Localization.operationsValue("Menu_FleetManagement");
-      case "Communication":
-        return Localization.operationsValue("Menu_Communication");
     }
   }
 
@@ -99,8 +95,6 @@ export class FulfillerNavigationPage {
         return "/depots";
       case "FleetManagement":
         return "/fleet-management";
-      case "Communication":
-        return "/communication";
     }
   }
 
@@ -113,8 +107,7 @@ export class FulfillerNavigationPage {
         return "depots";
       case "FleetManagement":
         return "fleetManagement";
-      case "Communication":
-        return "communication";
+
     }
   }
 
@@ -151,8 +144,6 @@ export class FulfillerNavigationPage {
           FulfillerSubPage.DriverCreate,
           FulfillerSubPage.DriverEdit
         ];
-      case "Communication":
-        return [FulfillerSubPage.CommunicationConsignor];
     }
   }
 }
@@ -178,8 +169,7 @@ export enum FulfillerSubPage {
   DriverDispatch,
   DriverList,
   DriverCreate,
-  DriverEdit,
-  CommunicationConsignor
+  DriverEdit
 }
 
 export namespace FulfillerSubPage {
@@ -241,8 +231,6 @@ export namespace FulfillerSubPage {
         return undefined; // return Localization.operationsValue("Menu_Driver_Create");
       case FulfillerSubPage.DriverEdit:
         return undefined;
-      case FulfillerSubPage.CommunicationConsignor:
-        return Localization.operationsValue("Menu_Communication_Consignor");
     }
   }
 
@@ -293,8 +281,6 @@ export namespace FulfillerSubPage {
         return DriverComponent;
       case FulfillerSubPage.DriverEdit:
         return DriverComponent;
-      case FulfillerSubPage.CommunicationConsignor:
-        return CommunicationConsignorComponent;
     }
   }
 
@@ -375,8 +361,6 @@ export namespace FulfillerSubPage {
         return (
           FulfillerNavigationPage.path("FleetManagement") + "/drivers/edit/:id"
         );
-      case FulfillerSubPage.CommunicationConsignor:
-        return FulfillerNavigationPage.path("Communication") + "/consignor";
     }
   }
 }

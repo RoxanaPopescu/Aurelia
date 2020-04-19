@@ -103,7 +103,14 @@ export class TreeNavCustomElement
      * @returns The new node to be added.
      */
     @bindable
-    public createNode: undefined | (() => TreeNode);
+    public createNode: undefined | ((params:
+    {
+        /**
+         * The parent node of the node being created.
+         */
+        parentNode: TreeNode;
+
+    }) => TreeNode);
 
     /**
      * Called after a new folder-like node was added.

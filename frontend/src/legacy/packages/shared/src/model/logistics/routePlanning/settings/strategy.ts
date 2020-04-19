@@ -45,6 +45,11 @@ export class RoutePlanStrategy
             name: "Korte ruter",
             value: 2
         },
+        "no-depots":
+        {
+            name: "Uden terminaler",
+            value: 5
+        },
         "quick":
         {
             name: "Hurtig ruteoptimering",

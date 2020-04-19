@@ -20,7 +20,7 @@
 
     </template>
 
-    <template if.bind="invalid === true && !operation.pending && !operation.error">
+    <template if.bind="invalid === true && !operation.pending && !operation.error && !operation.aborted">
 
         <validation-message accent="negative">
             <template replaceable part="invalid" translate>
