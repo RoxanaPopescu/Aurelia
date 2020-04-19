@@ -6,7 +6,6 @@ import { SideMenu, GlobalTopMenu, Base } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { FulfillerNavigationPage } from "./page";
 import { NavigationPage, SubPage } from "shared/src/utillity/page";
-
 import { Session } from "shared/src/model/session";
 import { Profile } from "../../../../shared/src/model/profile/index";
 import nJwt from "njwt";
@@ -112,8 +111,6 @@ export default class Main extends React.Component<Props, State> {
         pages.push(FulfillerNavigationPage.page("Depots"));
       }
 
-      pages.push(FulfillerNavigationPage.page("Communication"));
-
       if (
         this.state.claims["Create departments"] &&
         this.state.claims["Edit departments"] &&
@@ -175,7 +172,6 @@ export default class Main extends React.Component<Props, State> {
             {NavigationPage.routes("Kpi")}
             {NavigationPage.routes("Departments")}
             {NavigationPage.routes("Agreements")}
-            {FulfillerNavigationPage.routes("Communication")}
             {NavigationPage.routes("Profile")}
             <Redirect
               exact={true}
