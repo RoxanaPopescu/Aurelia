@@ -8,6 +8,7 @@ import { RouteStopStatusSlug, RouteStopStatus } from "../entities/route-stop-sta
 import { RouteStop } from "../entities/route-stop";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { getLegacyRouteSortProperty, getLegacySortDirection, getLegacyRouteStatus } from "legacy/helpers/api-helper";
+import { VehicleType } from "shared/src/model/session";
 
 /**
  * Represents a service that manages routes.
@@ -106,6 +107,23 @@ export class RouteService
         {
             body: { routeId: route.id, stop, atIndex }
         });
+    }
+
+    /**
+     * Adds the specified route stop at the specified index.
+     * @param orders The orders from which the route is created from.
+     * @param routeReference The reference for the route being created.
+     * @param vehicleType The type of vehicle used for the route being created.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<Route>
+    {
+        let result = await this._apiClient.post("routes/create",
+        {
+            body: { orders: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
+        });
+
+        return new Route(result.data);
     }
 
     /**

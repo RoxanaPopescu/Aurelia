@@ -3,10 +3,12 @@ import { DateTime } from "luxon";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService, ToastService } from "shared/framework";
 import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
 import { Consignor } from "app/model/outfit";
+import createdToast from "./resources/strings/created-toast.json";
+import { CreateRoutePanel } from "./modals/create-route/create-route";
 
 /**
  * Represents the route parameters for the page.
@@ -33,16 +35,25 @@ export class ListPage
      * @param historyHelper The `HistoryHelper` instance.
      * @param agreementService The `AgreementService` instance.
      */
-    public constructor(orderService: OrderService, historyHelper: HistoryHelper, agreementService: AgreementService)
+    public constructor(
+        orderService: OrderService,
+        historyHelper: HistoryHelper,
+        modalService: ModalService,
+        toastService: ToastService,
+        agreementService: AgreementService)
     {
         this._orderService = orderService;
         this._historyHelper = historyHelper;
+        this._modalService = modalService;
+        this._toastService = toastService;
         this._agreementService = agreementService;
         this._constructed = true;
     }
 
     private readonly _orderService: OrderService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
     private readonly _agreementService: AgreementService;
     private readonly _constructed;
 
@@ -122,6 +133,11 @@ export class ListPage
     protected orders: OrderInfo[];
 
     /**
+     * The items selected in the table
+     */
+    protected selectedOrders: OrderInfo[] = [];
+
+    /**
      * The consignors to show in the filter.
      */
     protected consignors: Consignor[];
@@ -163,6 +179,72 @@ export class ListPage
         if (this.updateOperation != null)
         {
             this.updateOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the selection of a row is toggled.
+     */
+    protected onRowToggle(order: OrderInfo, selected: boolean): void
+    {
+        if (selected)
+        {
+            this.selectedOrders.push(order);
+        }
+        else
+        {
+            this.selectedOrders.splice(this.selectedOrders.findIndex(r => r.id === order.id), 1);
+        }
+
+        this.selectedOrders = this.selectedOrders.slice();
+    }
+
+    /**
+     * Checks if the order is selected.
+     * @param order The order to check.
+     * @returns a boolean to determine the result.
+     */
+    protected orderSelected(order: OrderInfo): boolean
+    {
+        return this.selectedOrders.find(o => o.id === order.id) != null;
+    }
+
+    /**
+     * Called when the selection of all rows is toggled.
+     */
+    protected onToggleAll(selected: boolean): void
+    {
+        if (selected)
+        {
+            this.selectedOrders = [...new Set(this.selectedOrders.concat(this.orders))];
+        }
+        else
+        {
+            this.selectedOrders = this.selectedOrders.filter(so => !this.orders.find(o => o.id === so.id));
+        }
+    }
+
+    /**
+     * Called when a "Create route" is clicked.
+     * Opens a modal showing the details of creating the route.
+     * @param orders The orders to makes the route from.
+     */
+    protected async onCreateRouteClick(orders: OrderInfo[]): Promise<void>
+    {
+        const createdRoute = await this._modalService.open(CreateRoutePanel, { orders: orders }).promise;
+        console.log(createdRoute)
+
+        if (createdRoute != null)
+        {
+            createdToast.body = createdToast.body.replace("{routeSlug}", createdRoute.slug);
+
+            this._toastService.open(
+                "info",
+                createdToast
+            );
+
+            this.selectedOrders = [];
+            this.update();
         }
     }
 

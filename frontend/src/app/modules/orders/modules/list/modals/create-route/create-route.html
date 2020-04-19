@@ -1,0 +1,144 @@
+<template>
+
+    <require from="./create-route.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="create-route" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade="0.3">
+
+            <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
+
+                <div translate>
+                    Create a route from orders
+                </div>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div class="control-row">
+
+                <text-input
+                    label="above"
+                    value.bind="routeReference"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Route reference
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="routeReference">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-top">
+
+                <select-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="selectedVehicleType"
+                    display-value.bind="selectedVehicleType.name"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Vehicle type
+                    </div>
+
+                    <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                        ${vehicleType.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="selectedVehicleType">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Selected orders
+            </div>
+
+            <data-table
+                appearance="rows">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            ID
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+                        <!-- Icons -->
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="order of model.orders">
+
+                    <data-table-row
+                        href="/orders/details/${order.slug}">
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${order.slug}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+
+                            <button
+                                title.translate="Remove order"
+                                class="icon-row"
+                                appearance="none"
+                                accent="primary"
+                                click.trigger="onRemoveOrderClick(order)">
+
+                                <icon name="delete-small"></icon>
+
+                            </button>
+
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+        </modal-section>
+
+        <div class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                Create route
+            </button>
+
+        </div>
+
+    </modal-panel>
+
+</template>
