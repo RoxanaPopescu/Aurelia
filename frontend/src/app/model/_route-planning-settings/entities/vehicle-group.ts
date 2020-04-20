@@ -1,4 +1,4 @@
-import { VehicleType } from "shared/src/model/session";
+import { VehicleType } from "app/model/vehicle";
 import { VehicleGroupCost } from "./vehicle-group-cost";
 import { VehicleGroupLimits } from "./vehicle-group-limits";
 import { VehicleGroupLocation } from "./vehicle-group-location";
@@ -98,11 +98,13 @@ export class VehicleGroup
     {
         const data = { ...this } as any;
 
-        if (data.startLocation?.location?.address == null) {
+        if (data.startLocation?.location?.address == null)
+        {
             delete data.startLocation;
         }
 
-        if (data.endLocation?.location?.address == null) {
+        if (data.endLocation?.location?.address == null)
+        {
             delete data.endLocation;
         }
 

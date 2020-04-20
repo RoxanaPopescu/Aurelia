@@ -1,18 +1,17 @@
-import { autoinject, bindable } from 'aurelia-framework';
-import { IValidation } from "shared/framework";
+import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { Modal } from "../../../../../../../shared/framework/services/modal/modal";
+import { Modal, IValidation } from "shared/framework";
 import { OrderInfo } from "app/model/order";
+import { VehicleType } from "app/model/vehicle";
 import { Route, RouteService } from "app/model/route";
-import { VehicleType } from "shared/src/model/session";
 
 @autoinject
 export class CreateRoutePanel
 {
     /**
      * Creates a new instance of the class.
-    * @param routeService The `RouteService` instance.
-    * @param modal The `Modal` instance.
+     * @param routeService The `RouteService` instance.
+     * @param modal The `Modal` instance.
      */
     public constructor(routeService: RouteService, modal: Modal)
     {
@@ -21,14 +20,14 @@ export class CreateRoutePanel
     }
 
     private readonly _routeService: RouteService;
-    private _modal: Modal;
+    private readonly _modal: Modal;
     private _result: Route | undefined;
 
     /**
      * The model for the modal.
      */
     @bindable
-    protected model: { orders: OrderInfo[]; };
+    protected model: { orders: OrderInfo[] };
 
     /**
      * The available vehicle types.
@@ -107,11 +106,12 @@ export class CreateRoutePanel
             this._modal.busy = true;
 
             // Create the route
-            let route = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
+            const route = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
 
             // Set the result of the modal.
             this._result = route;
-            this._modal.close();
+
+            await this._modal.close();
         }
         catch (error)
         {
