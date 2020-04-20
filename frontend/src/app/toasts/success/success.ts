@@ -4,9 +4,9 @@ import { Toast, ToastCloseReason } from "shared/framework";
 import settings from "resources/settings";
 
 /**
- * Represents the model for a toast that notifies the user of a warning.
+ * Represents the model for a toast that notifies the user of a success.
  */
-export interface IWarningToastModel
+export interface IInfoToastModel
 {
     /**
      * The heading text to show.
@@ -36,10 +36,10 @@ export interface IWarningToastModel
 }
 
 /**
- * Represents a toast that notifies the user of a warning.
+ * Represents a toast that notifies the user of an event or new info.
  */
 @autoinject
-export class WarningToast
+export class InfoToast
 {
     /**
      * Creates a new instance of the type.
@@ -59,13 +59,13 @@ export class WarningToast
     /**
      * The model to for the toast.
      */
-    protected model: IWarningToastModel;
+    protected model: IInfoToastModel;
 
     /**
      * Called by the framework when the toast is activated.
      * @param model The model to use for the toast.
      */
-    public activate(model: IWarningToastModel): void
+    public activate(model: IInfoToastModel): void
     {
         // Sets the model for the toast.
         this.model = model;
@@ -104,7 +104,7 @@ export class WarningToast
     }
 
     /**
-     * Called when a mousedown event occurs within the toast.
+     * Called when a click event occurs within the toast.
      * Closes the toast, and navigates to the URL associated with the notification, if specified.
      * @param event The mouse event.
      */

@@ -1,3 +1,7 @@
 toast[name="warning"]
 {
+    &.--clickable
+    {
+        cursor: pointer;
+    }
 }
