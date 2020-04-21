@@ -114,16 +114,16 @@ export class RouteService
      * @param orders The orders from which the route is created from.
      * @param routeReference The reference for the route being created.
      * @param vehicleType The type of vehicle used for the route being created.
-     * @returns A promise that will be resolved when the operation succeedes.
+     * @returns A promise that will be resolved with a route slug.
      */
-    public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<Route>
+    public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<string>
     {
         let result = await this._apiClient.post("routes/create",
         {
             body: { orders: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
         });
 
-        return new Route(result.data);
+        return result.data.routeSlug;
     }
 
     /**

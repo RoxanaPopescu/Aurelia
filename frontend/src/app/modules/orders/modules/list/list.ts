@@ -231,12 +231,11 @@ export class ListPage
      */
     protected async onCreateRouteClick(orders: OrderInfo[]): Promise<void>
     {
-        const createdRoute = await this._modalService.open(CreateRoutePanel, { orders: orders }).promise;
-        console.log(createdRoute)
+        const newRoutesSlug = await this._modalService.open(CreateRoutePanel, { orders: orders }).promise;
 
-        if (createdRoute != null)
+        if (newRoutesSlug != null)
         {
-            createdToast.body = createdToast.body.replace("{routeSlug}", createdRoute.slug);
+            createdToast.body = createdToast.body.replace("{routeSlug}", newRoutesSlug);
 
             this._toastService.open(
                 "info",

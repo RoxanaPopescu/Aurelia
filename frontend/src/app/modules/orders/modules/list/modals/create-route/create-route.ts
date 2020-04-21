@@ -3,7 +3,7 @@ import { IValidation } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { Modal } from "../../../../../../../shared/framework/services/modal/modal";
 import { OrderInfo } from "app/model/order";
-import { Route, RouteService } from "app/model/route";
+import { RouteService } from "app/model/route";
 import { VehicleType } from "shared/src/model/session";
 
 @autoinject
@@ -22,7 +22,7 @@ export class CreateRoutePanel
 
     private readonly _routeService: RouteService;
     private _modal: Modal;
-    private _result: Route | undefined;
+    private _result: string | undefined;
 
     /**
      * The model for the modal.
@@ -61,9 +61,9 @@ export class CreateRoutePanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new route, or undefined if cancelled.
+     * @returns The new route's slug, or undefined if cancelled.
      */
-    public async deactivate(): Promise<Route | undefined>
+    public async deactivate(): Promise<string | undefined>
     {
         return this._result;
     }
@@ -107,10 +107,10 @@ export class CreateRoutePanel
             this._modal.busy = true;
 
             // Create the route
-            let route = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
+            let routeSlug = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
 
             // Set the result of the modal.
-            this._result = route;
+            this._result = routeSlug;
             this._modal.close();
         }
         catch (error)
