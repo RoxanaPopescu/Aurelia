@@ -2,7 +2,7 @@
 
     <require from="./info.scss"></require>
 
-    <toast name="info" accent="info" scroll mousedown.capture="cancelScheduledClose()">
+    <toast name="info" accent="info" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" class="${model.url ? '--clickable' : ''}">
 
         <toast-header>
 

@@ -1,9 +1,10 @@
 import { autoinject } from "aurelia-framework";
-import { Toast } from "shared/framework";
+import { AppRouter } from "aurelia-router";
+import { Toast, ToastCloseReason } from "shared/framework";
 import settings from "resources/settings";
 
 /**
- * Represents the model for a toast that notifies the user of an event or new info.
+ * Represents the model for a toast that notifies the user of some info.
  */
 export interface IInfoToastModel
 {
@@ -27,6 +28,11 @@ export interface IInfoToastModel
      * null to never hide the toast, or undefined to use the default.
      */
     timeout?: number | null;
+
+    /**
+     * The URL associated with the toast, if any.
+     */
+    url?: string;
 }
 
 /**
@@ -38,13 +44,16 @@ export class InfoToast
     /**
      * Creates a new instance of the type.
      * @param toast The `Toast` instance representing the toast.
+     * @param router The `AppRouter` instance
      */
-    public constructor(toast: Toast)
+    public constructor(toast: Toast, router: AppRouter)
     {
         this._toast = toast;
+        this._router = router;
     }
 
     private readonly _toast: Toast;
+    private readonly _router: AppRouter;
     private _closeTimeouthandle: any;
 
     /**
@@ -69,6 +78,21 @@ export class InfoToast
     }
 
     /**
+     * Called by the framework when the toast is deactivated.
+     * @param reason The reason for closing the modal.
+     * @returns True if the user clicked the notification, otherwise false.
+     */
+    public deactivate(reason?: ToastCloseReason): boolean
+    {
+        if (reason === "click")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Called when a mousedown event occurs within the toast.
      */
     protected cancelScheduledClose(): boolean
@@ -77,5 +101,28 @@ export class InfoToast
         clearTimeout(this._closeTimeouthandle);
 
         return true;
+    }
+
+    /**
+     * Called when a click event occurs within the toast.
+     * Closes the toast, and navigates to the URL associated with the notification, if specified.
+     * @param event The mouse event.
+     */
+    protected onClick(event: MouseEvent): void
+    {
+        if (event.defaultPrevented)
+        {
+            return;
+        }
+
+        // Closes the toast immediately.
+        // tslint:disable-next-line: no-floating-promises
+        this._toast.close("click");
+
+        // Navigate to the URL associated with the notification, if specified.
+        if (this.model.url)
+        {
+            this._router.navigate(this.model.url);
+        }
     }
 }

@@ -1,37 +1,42 @@
 @import "resources/index";
 
-page-not-found
+page[name="page-not-found"]
 {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     flex: 1;
-    
-    > div {
+
+    > div
+    {
         margin: 30px 0 30px 0;
         position: relative;
         height: 656px;
         width: 1200px;
 
-        > div:first-of-type {
+        > div:first-of-type
+        {
             position: absolute;
             left: 0;
             bottom: 460px;
             width: 550px;
 
-            > h1 {
+            > h1
+            {
                 font-size: 40px;
                 line-height: 50px;
             }
         }
 
-        > div:last-of-type {
+        > div:last-of-type
+        {
             position: absolute;
             top: 395px;
             left: 0;
 
-            a {
+            a
+            {
                 display: block;
             }
         }

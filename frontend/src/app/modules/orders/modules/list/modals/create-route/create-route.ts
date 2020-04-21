@@ -4,7 +4,7 @@ import { Log } from "shared/infrastructure";
 import { Modal } from "../../../../../../../shared/framework/services/modal/modal";
 import { OrderInfo } from "app/model/order";
 import { RouteService } from "app/model/route";
-import { VehicleType } from "shared/src/model/session";
+import { VehicleType } from "app/model/vehicle";
 
 @autoinject
 export class CreateRoutePanel
@@ -21,7 +21,7 @@ export class CreateRoutePanel
     }
 
     private readonly _routeService: RouteService;
-    private _modal: Modal;
+    private readonly _modal: Modal;
     private _result: string | undefined;
 
     /**
@@ -111,6 +111,7 @@ export class CreateRoutePanel
 
             // Set the result of the modal.
             this._result = routeSlug;
+
             this._modal.close();
         }
         catch (error)

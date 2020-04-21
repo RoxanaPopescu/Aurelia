@@ -8,7 +8,7 @@ import { RouteStopStatusSlug, RouteStopStatus } from "../entities/route-stop-sta
 import { RouteStop } from "../entities/route-stop";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { getLegacyRouteSortProperty, getLegacySortDirection, getLegacyRouteStatus } from "legacy/helpers/api-helper";
-import { VehicleType } from "shared/src/model/session";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents a service that manages routes.
@@ -118,7 +118,7 @@ export class RouteService
      */
     public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<string>
     {
-        let result = await this._apiClient.post("routes/create",
+        const result = await this._apiClient.post("routes/create",
         {
             body: { orders: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
         });

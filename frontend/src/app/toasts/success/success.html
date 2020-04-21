@@ -1,8 +1,8 @@
 <template>
 
-    <require from="./warning.scss"></require>
+    <require from="./info.scss"></require>
 
-    <toast name="warning" accent="attention" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" class="${model.url ? '--clickable' : ''}">
+    <toast name="success" accent="positive" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" class="${model.url ? '--clickable' : ''}">
 
         <toast-header>
 
