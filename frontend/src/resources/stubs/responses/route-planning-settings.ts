@@ -136,7 +136,7 @@ export default
             "departureTimes":
             [
                 {
-                    "name": "Terminal 1",
+                    "name": "Distributions center 1",
                     "startLocation":
                     {
                         "address":
@@ -221,7 +221,7 @@ export default
                     ]
                 },
                 {
-                    "name": "Terminal 2",
+                    "name": "Distributions center 2",
                     "startLocation":
                     {
                         "address":

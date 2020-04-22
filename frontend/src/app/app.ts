@@ -210,9 +210,9 @@ export class AppModule
                 icon: "route-planning"
             },
             {
-                name: "depots",
-                route: "depots",
-                moduleId: PLATFORM.moduleName("./modules/depots/depots"),
+                name: "distribution-centers",
+                route: "distribution-centers",
+                moduleId: PLATFORM.moduleName("./modules/distribution-centers/distribution-centers"),
                 settings:
                 {
                     outfits: ["fulfiller"],
@@ -221,9 +221,9 @@ export class AppModule
                         "view-depot"
                     ]
                 },
-                title: routeTitles.depots,
+                title: routeTitles.distributionCenters,
                 nav: true,
-                href: "/depots",
+                href: "/distribution-centers",
                 icon: "depots"
             },
             {

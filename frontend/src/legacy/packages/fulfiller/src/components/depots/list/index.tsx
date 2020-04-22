@@ -71,7 +71,7 @@ export default class RoutePlanningDepotsListComponent extends React.Component<Pr
             type={ButtonType.Light}
             onClick={() => this.props.history!.push(FulfillerSubPage.path(FulfillerSubPage.DepotCreate))}
           >
-            Tilføj terminal
+            {Localization.operationsValue("Depots_Add")}
           </ButtonAdd>
 
         </PageHeaderComponent>

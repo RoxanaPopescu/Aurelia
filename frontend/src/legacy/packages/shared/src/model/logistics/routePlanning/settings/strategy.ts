@@ -47,7 +47,7 @@ export class RoutePlanStrategy
         },
         "no-depots":
         {
-            name: "Uden terminaler",
+            name: "Uden distributionscenter",
             value: 5
         },
         "quick":
@@ -57,7 +57,7 @@ export class RoutePlanStrategy
         },
         "many-pickups-one-delivery":
         {
-            name: "Afhetning til terminal",
+            name: "Afhetning til distributionscenter",
             value: 4
         }
     };

@@ -89,7 +89,7 @@ export class RoutePlanningModule
                 route: "rule-sets",
                 moduleId: this.legacyOutfit ?
                     PLATFORM.moduleName("./modules/legacy-route-settings/list/list") :
-                    PLATFORM.moduleName("./modules/settings/list/list"),
+                    PLATFORM.moduleName("./modules/rule-sets/list/list"),
                 settings:
                 {
                     claims:

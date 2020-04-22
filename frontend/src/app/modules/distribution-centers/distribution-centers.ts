@@ -6,7 +6,7 @@ import routeTitles from "./resources/strings/route-titles.json";
  * Represents the module.
  */
 @autoinject
-export class DepotsModule
+export class DistributionCentersModule
 {
     /**
      * Called to configure the router for the module.
