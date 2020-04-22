@@ -106,7 +106,7 @@ export class RoutePlanningModule
                 route: [ "rule-sets/details/:id", "rule-sets/create" ],
                 moduleId: this.legacyOutfit ?
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
-                    PLATFORM.moduleName("./modules/settings/details/details"),
+                    PLATFORM.moduleName("./modules/rule-sets/details/details"),
                 settings:
                 {
                     claims:
@@ -121,7 +121,7 @@ export class RoutePlanningModule
                 route: "rule-sets/create",
                 moduleId: this.legacyOutfit ?
                     PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
-                    PLATFORM.moduleName("./modules/settings/details/details"),
+                    PLATFORM.moduleName("./modules/rule-sets/details/details"),
                 settings:
                 {
                     claims:
