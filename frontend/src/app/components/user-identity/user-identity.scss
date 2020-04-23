@@ -2,6 +2,10 @@
 
 user-identity
 {
+    // Set the icon size.
+    width: 12rem;
+    height: 12rem;
+
     a
     {
         // Use horizontal flex layout.
@@ -9,6 +13,10 @@ user-identity
 
         // Center items vertically.
         align-items: center;
+
+        // Fill the container.
+        width: 100%;
+        height: 100%;
 
         // Animate the hover effect.
         transition:
@@ -23,9 +31,9 @@ user-identity
 
         identity-picture
         {
-            // Set the icon size.
-            width: 12rem;
-            height: 12rem;
+            // Fill the container.
+            width: 100%;
+            height: 100%;
 
             // Clip as a circle.
             border-radius: 50%;
