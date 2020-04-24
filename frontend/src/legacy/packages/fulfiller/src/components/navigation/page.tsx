@@ -92,7 +92,7 @@ export class FulfillerNavigationPage {
       case "RoutePlanning":
         return "/route-planning";
       case "Depots":
-        return "/depots";
+        return "/distribution-centers";
       case "FleetManagement":
         return "/fleet-management";
     }
