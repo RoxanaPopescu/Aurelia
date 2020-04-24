@@ -519,6 +519,10 @@ export class RoutePlanningStore {
         value: Localization.formatTime(stop.estimates.arrival)
       });
       rows.push({
+        headline: Localization.sharedValue("Expected_TaskTimeStart"),
+        value: Localization.formatTime(stop.estimates.arrival.plus(stop.estimates.waitingTime))
+      });
+      rows.push({
         headline: Localization.sharedValue("Expected_DrivingTime"),
         value: Localization.formatDuration(stop.estimates.drivingTime)
       });
@@ -538,6 +542,10 @@ export class RoutePlanningStore {
       rows.push({
         headline: Localization.sharedValue("Order_Count"),
         value: stop.orderIds.length.toString()
+      });
+      rows.push({
+        headline: Localization.sharedValue("Distance"),
+        value: Localization.formatDistance(stop.estimates.distance)
       });
     }
 
@@ -569,6 +577,10 @@ export class RoutePlanningStore {
       {
         headline: Localization.sharedValue("Order_Count"),
         value: route.meta.orderCount.toString()
+      },
+      {
+        headline: Localization.sharedValue("Total_Distance"),
+        value: Localization.formatDistance(route.meta.distance)
       }
     ];
   }

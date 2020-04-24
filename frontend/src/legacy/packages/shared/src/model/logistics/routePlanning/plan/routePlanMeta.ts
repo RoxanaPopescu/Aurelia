@@ -10,6 +10,7 @@ export class RoutePlanMeta {
     this.orderCount = data.orderCount;
     this.colliCount = data.colliCount;
     this.stopsCount = data.stopsCount;
+    this.distance = data.distance;
     this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
     this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
@@ -46,6 +47,11 @@ export class RoutePlanMeta {
    * Usually this happens in when the driver is not allowed to deliver befor an allowed timeslot.
    */
   public waitingTime: Duration;
+
+  /**
+   * The distance in meters.
+   */
+  public distance: number;
 
   /**
    * The earliest time for when the driver will begin working

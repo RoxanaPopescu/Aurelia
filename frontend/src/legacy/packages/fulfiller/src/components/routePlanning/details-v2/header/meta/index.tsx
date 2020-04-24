@@ -67,6 +67,12 @@ export default class MetaHeaderComponent extends React.Component<Props> {
             this.props.store.plan.meta.totalTime
           )}
         />
+        <HeaderItemComponent
+          title={Localization.sharedValue("Total_Distance")}
+          description={Localization.formatDistance(
+            this.props.store.plan.meta.distance
+          )}
+        />
       </React.Fragment>
     );
   }
@@ -100,6 +106,12 @@ export default class MetaHeaderComponent extends React.Component<Props> {
           title={Localization.sharedValue("Total_Time")}
           description={Localization.formatDuration(
             route.meta.timeFrame.duration
+          )}
+        />
+        <HeaderItemComponent
+          title={Localization.sharedValue("Total_Distance")}
+          description={Localization.formatDistance(
+            route.meta.distance
           )}
         />
       </React.Fragment>
