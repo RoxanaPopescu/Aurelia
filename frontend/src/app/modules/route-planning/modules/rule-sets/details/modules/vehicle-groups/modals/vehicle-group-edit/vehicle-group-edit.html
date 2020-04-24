@@ -130,7 +130,7 @@
                 </number-input>
 
                 <number-input
-                    value.bind="model.cost.time"
+                    value.bind="model.cost.time | scale: 1/60"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
@@ -172,7 +172,7 @@
             <div class="control-row">
 
                 <number-input
-                    value.bind="model.cost.distance"
+                    value.bind="model.cost.distance | scale: 1/1000"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
