@@ -152,7 +152,7 @@
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${vehicleGroup.limits.distance | number} km
+                            ${vehicleGroup.limits.distance | scale: 1/1000 | number} km
                         </span>
                     </data-table-cell>
 

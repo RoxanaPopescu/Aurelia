@@ -398,7 +398,7 @@
                 </number-input>
 
                 <number-input
-                    value.bind="model.limits.distance"
+                    value.bind="model.limits.distance | scale: 1/1000"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
