@@ -19,13 +19,11 @@ export class SpecialArea
             this.name = data.name;
             this.color = data.color;
             this.polygon = new GeoJsonPolygon(data.polygon);
-            this.scenarios = [...data.scenarios, ...data.scenarios].map(d => new SpecialAreaScenario(d));
+            this.scenarios = data.scenarios.map(d => new SpecialAreaScenario(d));
         }
         else
         {
             this.scenarios = [];
-
-            // TODO: How do we assign a color?
         }
     }
 
