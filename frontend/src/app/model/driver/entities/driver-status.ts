@@ -38,7 +38,7 @@ export class DriverStatus
      */
     public static readonly values =
     {
-        "verified":
+        "approved":
         {
             name: "Approved",
             accent: "positive"

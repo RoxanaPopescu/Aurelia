@@ -3,7 +3,7 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { Vehicle, VehicleService } from "app/model/vehicle";
-import { DeleteVehicleDialog } from "./modals/confirm-delete/confirm-delete";
+import { DeleteVehicleDialog } from "../../modals/confirm-delete/confirm-delete";
 import { VehiclePanel } from "../../modals/vehicle/vehicle";
 
 /**
@@ -110,7 +110,7 @@ export class ListPage
      */
     protected async onVehicleClick(vehicle: Vehicle): Promise<void>
     {
-        const newVehicle = await this._modalService.open(VehiclePanel, vehicle).promise;
+        const newVehicle = await this._modalService.open(VehiclePanel, { vehicle: vehicle }).promise;
 
         if (newVehicle != null)
         {

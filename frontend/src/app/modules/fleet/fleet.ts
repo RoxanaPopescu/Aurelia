@@ -40,7 +40,7 @@ export class FleetModule
             },
             {
                 name: "details",
-                route: "drivers/edit/:id",
+                route: "drivers/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/drivers/details/details"),
                 settings:
                 {

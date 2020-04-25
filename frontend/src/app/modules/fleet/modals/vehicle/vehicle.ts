@@ -28,6 +28,11 @@ export class VehiclePanel
     protected vehicle: Vehicle | undefined;
 
     /**
+     * The driver this vehicle belongs to.
+     */
+    protected driverId?: number;
+
+    /**
      * The available vehicle types.
      */
     protected vehicleTypes: VehicleType[];
@@ -46,11 +51,11 @@ export class VehiclePanel
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
-    public async activate(model?: Vehicle): Promise<void>
+    public async activate(model?: { vehicle?: Vehicle, driverId?: number}): Promise<void>
     {
         this.vehicleTypes = await this._vehicleService.getTypes();
-
-        this.vehicle = model?.clone() ?? new Vehicle();
+        this.driverId = model?.driverId;
+        this.vehicle = model?.vehicle?.clone() ?? new Vehicle();
     }
 
     /**
@@ -93,7 +98,7 @@ export class VehiclePanel
 
             if (this.vehicle!.id == null)
             {
-                updatedVehicle = await this._vehicleService.create(this.vehicle!);
+                updatedVehicle = await this._vehicleService.create(this.vehicle!, this.driverId);
             }
             else
             {

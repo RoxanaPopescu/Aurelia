@@ -11,7 +11,7 @@
             <h1 class="font-largest">
 
                 <template if.bind="vehicle.id != null" translate>
-                    Edit vehicle
+                    Edit vehicle (${vehicle.id})
                 </template>
 
                 <template if.bind="vehicle.id == null" translate>
@@ -23,16 +23,6 @@
         </modal-header>
 
         <modal-section class="margin-larger-bottom">
-
-            <div if.bind="vehicle.id" class="control-row margin-larger-bottom">
-                <text-input readonly="true" label="above" value.bind="vehicle.id" class="flex-basis-1-of-1">
-
-                    <div slot="heading" translate>
-                        Id
-                    </div>
-
-                </text-input>
-            </div>
 
             <div class="control-row">
 

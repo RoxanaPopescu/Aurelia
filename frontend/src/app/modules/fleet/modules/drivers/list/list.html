@@ -51,6 +51,10 @@
                             Name
                         </data-table-cell>
 
+                        <data-table-cell DISABLED-name="email" translate>
+                            Email
+                        </data-table-cell>
+
                         <data-table-cell DISABLED-name="vehicles" translate>
                             Vehicles
                         </data-table-cell>
@@ -72,7 +76,7 @@
                     <template repeat.for="driver of drivers">
 
                         <data-table-row
-                            href="/fleet-management/drivers/edit/${driver.id}">
+                            href="/fleet-management/drivers/details/${driver.id}">
 
                             <data-table-cell>
                                 <span class="text-truncate">
@@ -85,6 +89,10 @@
                             </data-table-cell>
 
                             <data-table-cell>
+                                ${driver.email}
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
                             </data-table-cell>
 
@@ -94,7 +102,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    STATUS FIXME
+                                    ${driver.status.name}
                                 </span>
                             </data-table-cell>
 
