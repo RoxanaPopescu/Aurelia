@@ -1,9 +1,10 @@
 import { autoinject, observable } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
+import { IScroll, ModalService } from "shared/framework";
 import { DriverService, Driver } from "app/model/driver";
+import { DeleteDriverDialog } from "./modals/confirm-delete/confirm-delete";
 
 /**
  * Represents the route parameters for the page.
@@ -26,16 +27,19 @@ export class ListPage
      * Creates a new instance of the class.
      * @param driverService The `DriverService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(driverService: DriverService, historyHelper: HistoryHelper)
+    public constructor(driverService: DriverService, historyHelper: HistoryHelper, modalService: ModalService)
     {
         this._driverService = driverService;
         this._historyHelper = historyHelper;
+        this._modalService = modalService;
         this._constructed = true;
     }
 
     private readonly _driverService: DriverService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _modalService: ModalService;
     private readonly _constructed;
 
     /**
@@ -103,6 +107,31 @@ export class ListPage
         if (this.updateOperation != null)
         {
             this.updateOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the `Remove driver` icon is clicked on a driver.
+     * Asks the user to confirm, then deletes driver
+     * @param driver The driver to remove.
+     */
+    protected async onRemoveDriverClick(driver: Driver): Promise<void>
+    {
+        const confirmed = await this._modalService.open(DeleteDriverDialog, driver).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._driverService.delete(driver.id);
+            this.drivers.splice(this.drivers.indexOf(driver), 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not remove the driver", error);
         }
     }
 

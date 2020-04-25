@@ -25,7 +25,7 @@ export class FleetModule
             {
                 name: "list",
                 route: "drivers",
-                moduleId: PLATFORM.moduleName("./modules/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/drivers/list/list"),
                 settings:
                 {
                     claims:
@@ -41,7 +41,7 @@ export class FleetModule
             {
                 name: "details",
                 route: "drivers/edit/:id",
-                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                moduleId: PLATFORM.moduleName("./modules/drivers/details/details"),
                 settings:
                 {
                     claims:
@@ -55,7 +55,7 @@ export class FleetModule
             {
                 name: "create",
                 route: "drivers/create",
-                moduleId: PLATFORM.moduleName("./modules/create/create"),
+                moduleId: PLATFORM.moduleName("./modules/drivers/details/details"),
                 settings:
                 {
                     claims:

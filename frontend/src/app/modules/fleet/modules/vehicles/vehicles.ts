@@ -3,8 +3,8 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { Vehicle, VehicleService } from "app/model/vehicle";
-import { VehiclePanel } from "./modals/vehicle/vehicle";
 import { DeleteVehicleDialog } from "./modals/confirm-delete/confirm-delete";
+import { VehiclePanel } from "../../modals/vehicle/vehicle";
 
 /**
  * Represents the page.

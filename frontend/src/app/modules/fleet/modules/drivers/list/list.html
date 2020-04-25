@@ -59,6 +59,14 @@
                             Phone
                         </data-table-cell>
 
+                        <data-table-cell DISABLED-name="status" translate>
+                            Status
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="driver of drivers">
@@ -67,7 +75,9 @@
                             href="/fleet-management/drivers/edit/${driver.id}">
 
                             <data-table-cell>
-                                ${driver.id}
+                                <span class="text-truncate">
+                                    ${driver.id}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
@@ -80,6 +90,24 @@
 
                             <data-table-cell>
                                 ${driver.phone}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    STATUS FIXME
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if-claims="invite-driver" class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onRemoveDriverClick(driver)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>

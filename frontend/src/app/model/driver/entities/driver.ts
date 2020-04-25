@@ -1,5 +1,6 @@
 import { PersonName, Phone } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
+import { DriverStatus } from "./driver-status";
 
 /**
  * Represents a driver, who makes the trip to fulfill the transportation of an order.
@@ -14,6 +15,7 @@ export class Driver
     public constructor(data: any, vehicleTypes?: VehicleType[])
     {
         this.id = data.id;
+        this.status = new DriverStatus(data.status);
         this.name = new PersonName(data.name);
         this.phone = new Phone(data.phone);
         this.pictureUrl = data.pictureUrl;
@@ -24,6 +26,11 @@ export class Driver
      * The ID of the driver.
      */
     public id: number;
+
+    /**
+     * The status of the driver.
+     */
+    public status: DriverStatus;
 
     /**
      * The name of the driver.

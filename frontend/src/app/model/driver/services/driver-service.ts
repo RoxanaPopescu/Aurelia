@@ -50,4 +50,17 @@ export class DriverService
             driverCount: result.data.length
         };
     }
+
+    /**
+     * Deletes the specified vehicle.
+     * @param driverId The ID of the driver to be deleted.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async delete(id: number): Promise<void>
+    {
+        await this._apiClient.post("drivers/delete",
+        {
+            body: { id }
+        });
+    }
 }
