@@ -66,6 +66,20 @@ export class FleetModule
                 title: routeTitles.create
             },
             {
+                name: "multi-create",
+                route: "drivers/multi-create",
+                moduleId: PLATFORM.moduleName("./modules/drivers/multi-create/multi-create"),
+                nav: false,
+                settings:
+                {
+                    claims:
+                    [
+                        "invite-driver"
+                    ]
+                },
+                title: routeTitles.create
+            },
+            {
                 name: "list-vehicles",
                 route: "vehicles",
                 moduleId: PLATFORM.moduleName("./modules/vehicles/vehicles"),
