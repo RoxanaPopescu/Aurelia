@@ -36,9 +36,8 @@
                         </div>
 
                     </text-input>
-                </div>
-                <div class="control-row margin-bottom">
-                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-1-of-2">
+
+                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-2-of-2">
 
                         <div slot="heading" translate>
                             Last name
@@ -56,7 +55,7 @@
                 </div>
 
                 <div class="control-row margin-bottom">
-                    <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-2">
+                    <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
                             Email
@@ -82,9 +81,27 @@
                 </div>
 
                 <div class="control-row margin-bottom">
-                    <text-input label="above" value.bind="driver.phone.number" class="flex-basis-1-of-2">
+                    <text-input label="above" value.bind="driver.phone.countryPrefix" class="flex-basis-1-of-2">
                         <div slot="heading" translate>
-                            Phone number (+45)
+                            Country code
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.phone.countryPrefix">
+                            </required-validator>
+
+                            <length-validator
+                                value.bind="driver.phone.countryPrefix"
+                                max.bind="2"
+                                min.bind="2">
+                            </length-validator>
+                        </div>
+                    </text-input>
+                    <text-input label="above" value.bind="driver.phone.number" class="flex-basis-2-of-2">
+                        <div slot="heading" translate>
+                            Phone number
                         </div>
 
                         <div slot="validation">
@@ -95,25 +112,20 @@
 
                             <length-validator
                                 value.bind="driver.phone.number"
-                                min.bind="8"
-                                max.bind="8">
+                                min.bind="6">
                             </length-validator>
 
                             <invalid-validator if.bind="emailOrPhoneAlreadyExist">
-
                                 <template replace-part="invalid" translate>
                                     The email or phone number already exist
                                 </template>
-
                             </invalid-validator>
-
                         </div>
-
                     </text-input>
                 </div>
 
                 <div if.bind="isNew" class="control-row margin-bottom">
-                    <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-2">
+                    <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-1">
                         <div slot="heading" translate>
                             Password
                         </div>
@@ -130,8 +142,8 @@
                     </text-input>
                 </div>
 
-                <div class="control-row margin-bottom">
-                    <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-2">
+                <div class="control-row margin-larger-bottom">
+                    <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
                             Status
@@ -151,6 +163,48 @@
 
                     </select-input>
                 </div>
+
+                <button appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                    Create
+                </button>
+            </page-section>
+
+            <page-section class="--line-above">
+                <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                    Results
+                </h1>
+
+                <div if.bind="results.length < 1" class="margin-large-bottom" translate>
+                    No results, when added they will show up here.
+                </div>
+
+                <div repeat.for="result of results" model.bind="result" class="margin-smaller-bottom">
+
+                    <div translate>
+                        ${result.created | time: 'narrow' : false}
+                    </div>
+
+                    <div if.bind="result.failed == 'no' && !result.driver.id" translate>
+                        Creating ${result.driver.name}...
+                    </div>
+
+                    <div if.bind="result.failed != 'no'">
+                        <span translate>
+                            Failed to add with problem: ${result.failed}
+                        </span>
+                        <a click.trigger="onTransferClick(result.driver)" translate>
+                            (transfer to form)
+                        </a>
+                    </div>
+
+                    <div if.bind="result.driver.id" translate>
+                         Created
+                         <a target="_blank" href="/fleet-management/drivers/details/${result.driver.id}">
+                            ${result.driver.name} (${result.driver.id})
+                        </a>
+                    </div>
+                </div>
+
             </page-section>
         </page-content>
     </page>
