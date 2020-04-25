@@ -37,10 +37,13 @@ export default
         "triggerEvent": "order-delivery-arrived",
         "parameters": {},
         "recipient": "delivery-customer",
-        "senderName": "Sender 1",
-        "messageType": "email",
-        "messageTitle": "Message title",
-        "messageBody": "Message body"
+        "message":
+        {
+          "senderName": "Sender 1",
+          "messageType": "email",
+          "messageTitle": "Message title",
+          "messageBody": "Message body"
+        }
       }
     },
 

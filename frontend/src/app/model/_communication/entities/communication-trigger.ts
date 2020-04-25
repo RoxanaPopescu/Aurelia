@@ -23,12 +23,12 @@ export class CommunicationTrigger
             this.routeTags = data.routeTags;
             this.stopTags = data.stopTags;
             this.triggerEvent = new CommunicationTriggerEvent(data.triggerEvent);
-            this.recipient = new CommunicationRecipient(data.recipient);
-            this.senderName = data.senderName;
-            this.messageType = new CommunicationMessageType(data.messageType);
-            this.messageTitle = data.messageTitle;
-            this.messageBody = data.messageBody;
             this.parameters = new CommunicationParameters(data.parameters);
+            this.recipient = new CommunicationRecipient(data.recipient);
+            this.senderName = data.message.senderName;
+            this.messageType = new CommunicationMessageType(data.message.messageType);
+            this.messageTitle = data.message.messageTitle;
+            this.messageBody = data.message.messageBody;
         }
         else
         {
@@ -116,10 +116,25 @@ export class CommunicationTrigger
      */
     public toJSON(): any
     {
-        const data = {...this};
-
-        delete data.metadata;
-        delete data.searchModel;
+        const data =
+        {
+            id: this.id,
+            slug: this.slug,
+            name: this.name,
+            customer: this.customer,
+            routeTags: this.routeTags,
+            stopTags: this.stopTags,
+            triggerEvent: this.triggerEvent,
+            parameters: this.parameters,
+            recipient: this.recipient,
+            message:
+            {
+                senderName: this.senderName,
+                messageType: this.messageType,
+                messageTitle: this.messageTitle,
+                messageBody: this.messageBody
+            }
+        };
 
         return data;
     }
