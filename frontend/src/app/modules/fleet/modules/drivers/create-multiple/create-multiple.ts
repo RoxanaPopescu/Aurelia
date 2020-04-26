@@ -16,7 +16,7 @@ type Result = {
  * Represents the module.
  */
 @autoinject
-export class MultiCreatePage
+export class CreateMultiplePage
 {
     /**
      * Creates a new instance of the class.

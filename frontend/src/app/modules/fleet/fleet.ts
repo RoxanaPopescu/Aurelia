@@ -66,20 +66,6 @@ export class FleetModule
                 title: routeTitles.create
             },
             {
-                name: "multi-create",
-                route: "drivers/multi-create",
-                moduleId: PLATFORM.moduleName("./modules/drivers/multi-create/multi-create"),
-                nav: false,
-                settings:
-                {
-                    claims:
-                    [
-                        "invite-driver"
-                    ]
-                },
-                title: routeTitles.create
-            },
-            {
                 name: "list-vehicles",
                 route: "vehicles",
                 moduleId: PLATFORM.moduleName("./modules/vehicles/vehicles"),
@@ -157,7 +143,23 @@ export class FleetModule
                 nav: true,
                 href: "/fleet-management/forecasts",
                 icon: "forecast"
-            }
+            },
+            {
+                name: "create-multiple",
+                route: "drivers/create-multiple",
+                moduleId: PLATFORM.moduleName("./modules/drivers/create-multiple/create-multiple"),
+                settings:
+                {
+                    claims:
+                    [
+                        "invite-driver"
+                    ]
+                },
+                title: routeTitles.createMultipleDrivers,
+                nav: true,
+                href: "/fleet-management/drivers/create-multiple",
+                icon: "fleet"
+            },
         ]);
     }
 }

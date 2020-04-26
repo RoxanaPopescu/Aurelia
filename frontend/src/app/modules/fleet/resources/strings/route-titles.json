@@ -2,6 +2,7 @@
     "list": "All drivers",
     "details": "Details",
     "create": "Create",
+    "createMultipleDrivers": "Create multiple drivers",
     "dispatch": "Dispatch",
     "vehicleList": "Vehicles",
     "forecasts": "Forecasts",
