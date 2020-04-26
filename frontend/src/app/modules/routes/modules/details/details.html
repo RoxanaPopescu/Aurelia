@@ -391,7 +391,7 @@
                     </path-nav>
                 </h1>
 
-                <toolbar class="flex-push-right">
+                <toolbar if-claims="edit-routes" class="flex-push-right">
 
                     <button appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()" translate>
                         Assign fulfiller
@@ -639,7 +639,7 @@
 
                     </template>
 
-                    <template  if-claims="edit-routes" replace-part="append" translate>
+                    <template if-claims="edit-routes" replace-part="append" translate>
                         Add stop
                     </template>
 
