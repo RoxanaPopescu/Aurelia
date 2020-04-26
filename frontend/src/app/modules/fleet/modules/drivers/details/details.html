@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="control-row margin-bottom">
-                    <text-input label="above" value.bind="driver.phone.countryPrefix" class="flex-basis-1-of-2">
+                    <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" class="flex-basis-1-of-2">
                         <div slot="heading" translate>
                             Country code
                         </div>
@@ -127,6 +127,17 @@
                                 max.bind="2"
                                 min.bind="2">
                             </length-validator>
+
+                            <pattern-validator
+                                active.bind="true"
+                                value.bind="driver.phone.countryPrefix"
+                                pattern="^[0-9]*$">
+
+                                <template replace-part="invalid" translate>
+                                    Please only provide a value with numbers.
+                                </template>
+
+                            </pattern-validator>
                         </div>
                     </text-input>
                     <text-input label="above" value.bind="driver.phone.number" class="flex-basis-2-of-2">
