@@ -280,7 +280,7 @@
   "RouteDetails_Map_RouteDriverMarker_Vehicle_LicensePlate": "Nummerplade",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel": "Mærke og model",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_Type": "Type",
-  "RouteDetails_Map_RouteStopMarker_ArrivalTime": "Ankomsttid",
+  "RouteDetails_Map_RouteStopMarker_ArrivalTime": "Forventet ankomsttid",
   "RouteDetails_Map_RouteStopMarker_ArrivalTimeFrame": "Tidsramme",
   "RouteDetails_Map_RouteStopMarker_ArrivedTime": "Ankommet tid",
   "RouteDetails_Map_RouteStopMarker_Delayed": "Forsinket",

@@ -280,7 +280,7 @@
   "RouteDetails_Map_RouteDriverMarker_Vehicle_LicensePlate": "License plate",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel": "Make and model",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_Type": "Type",
-  "RouteDetails_Map_RouteStopMarker_ArrivalTime": "Arrival time",
+  "RouteDetails_Map_RouteStopMarker_ArrivalTime": "Expected arrival time",
   "RouteDetails_Map_RouteStopMarker_ArrivalTimeFrame": "Time frame",
   "RouteDetails_Map_RouteStopMarker_ArrivedTime": "Arrived time",
   "RouteDetails_Map_RouteStopMarker_Delayed": "Delayed",
