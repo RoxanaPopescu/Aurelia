@@ -178,20 +178,8 @@
             <page-section toggle.bind="true" expanded.to-view="false">
 
                 <div slot="header" translate>
-                    Fulfiller
+                    Driver
                 </div>
-
-                <name-value-pair class="margin-bottom">
-
-                    <div slot="name" translate>
-                        Company
-                    </div>
-
-                    <div slot="value" empty-value>
-                        ${route.fulfiller.primaryName}
-                    </div>
-
-                </name-value-pair>
 
                 <name-value-pair class="margin-bottom">
 
@@ -225,6 +213,26 @@
 
                     <div slot="value" empty-value>
                         ${route.driver.phone}
+                    </div>
+
+                </name-value-pair>
+
+            </page-section>
+
+            <page-section toggle.bind="true" expanded.to-view="false">
+
+                <div slot="header" translate>
+                    Fulfiller
+                </div>
+
+                <name-value-pair class="margin-bottom">
+
+                    <div slot="name" translate>
+                        Company
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.fulfiller.primaryName}
                     </div>
 
                 </name-value-pair>
@@ -391,18 +399,26 @@
                     </path-nav>
                 </h1>
 
-                <toolbar if-claims="edit-routes" class="flex-push-right">
+                <toolbar if.bind="route" if-claims="edit-routes" class="flex-push-right">
 
                     <button appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()" translate>
                         Assign fulfiller
                     </button>
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
+                    <button if.bind="!route.driver" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
                         Assign driver
                     </button>
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
+                    <button if.bind="route.driver" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
+                        Reassign driver
+                    </button>
+
+                    <button if.bind="!route.vehicle" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
                         Assign vehicle
+                    </button>
+
+                    <button if.bind="route.vehicle" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
+                        Reassign vehicle
                     </button>
 
                     <select-button appearance="outline" accent="primary">
