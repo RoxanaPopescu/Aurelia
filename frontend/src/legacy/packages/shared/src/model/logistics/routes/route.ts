@@ -11,6 +11,7 @@ import { RouteStatus } from "./routeStatus";
 import { RouteStop } from "./routeStop";
 import { RouteStopBase } from "./routeStopBase";
 import { RouteCriticality } from "./routeCriticality";
+import { RouteEstimates } from "./routeEstimates";
 
 /**
  * Represents the live status of a route.
@@ -53,10 +54,13 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
       });
     }
 
-    if (data.completionTime != null) {
-      this.completionTime = DateTime.fromISO(data.completionTime, {
-        setZone: true
-      });
+    if (data.completedTime != null)
+    {
+        this.completedTime = DateTime.fromISO(data.completedTime, { setZone: true });
+    }
+
+    if (data.estimates != null) {
+      this.estimates = new RouteEstimates(data.estimates);
     }
   }
 
@@ -69,6 +73,11 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    * The slug identifying the route.
    */
   public readonly slug: string;
+
+  /**
+   * The estimates for this route.
+   */
+  public estimates?: RouteEstimates;
 
   /**
    * The non-unique reference for the route,
@@ -141,9 +150,8 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
 
   /**
    * The date and time at which the driver completed, or is estimated to complete,
-   * the last stop on the route, or undefined if the route is not yet started.
    */
-  public readonly completionTime?: DateTime;
+  public readonly completedTime?: DateTime;
 
   /**
    * The stops at which the driver must either pick up or deliver colli.

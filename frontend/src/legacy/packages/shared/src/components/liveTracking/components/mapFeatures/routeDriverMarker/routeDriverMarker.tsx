@@ -97,13 +97,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
   private getMarkerModifier(): string {
 
     let modifierClass = "";
-    
+
     modifierClass +=
       this.props.route.driverOnline ?
         " c-liveTracking-routeDriverMarker--online" :
           " c-liveTracking-routeDriverMarker--offline";
 
-    modifierClass += 
+    modifierClass +=
       this.props.route.status.slug === "completed" ?
         " c-liveTracking-routeDriverMarker--completed" :
           this.props.route.status.slug === "cancelled" ?
@@ -117,7 +117,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
     return (
       <React.Fragment>
-        
+
         <div className="c-worldMap-popup-header">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_Heading")}</div>
         </div>
@@ -126,7 +126,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
         {this.props.route.fulfiller.companyName &&
         <div className="c-worldMap-popup-subtitle">{this.props.route.fulfiller.primaryName}</div>}
-        
+
         <div className="c-worldMap-popup-section">
 
           <div className="c-worldMap-popup-section-row">
@@ -158,16 +158,16 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
     return (
       <React.Fragment>
-        
+
         <div className="c-worldMap-popup-header">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Fulfiller_Heading")}</div>
         </div>
 
         <div className="c-worldMap-popup-title">{this.props.route.fulfiller.primaryName}</div>
-        
+
         {this.props.route.fulfiller.secondaryName &&
         <div className="c-worldMap-popup-subtitle">{this.props.route.fulfiller.secondaryName}</div>}
-        
+
         <div className="c-worldMap-popup-section">
 
           <div className="c-worldMap-popup-section-row">
@@ -182,7 +182,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
           </div>}
 
         </div>
-      
+
       </React.Fragment>
     );
   }
@@ -191,7 +191,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
     return (
       <div className="c-worldMap-popup-section c-worldMap-popup-section--border">
-        
+
         <div className="c-worldMap-popup-section-title">
           {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Heading")}
         </div>
@@ -226,7 +226,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
       <React.Fragment>
 
         <div className="c-worldMap-popup-section c-worldMap-popup-section--border">
-          
+
           <div className="c-worldMap-popup-section-title">
             {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_Heading")}
           </div>
@@ -236,16 +236,21 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
             <div>{this.props.route.status.name}</div>
           </div>
 
-          {this.props.route.completionTime &&
+          {this.props.route.completedTime &&
           <div className="c-worldMap-popup-section-row">
             <div>
-              {this.props.route.status.slug === "completed" ?
-                Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_Done") :
-                Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDone")}
+              {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_Done")}
             </div>
-            <div>{Localization.formatTime(this.props.route.completionTime)}</div>
+            <div>{Localization.formatTime(this.props.route.completedTime)}</div>
           </div>}
 
+          {this.props.route.completedTime == null && this.props.route.estimates?.completionTime &&
+          <div className="c-worldMap-popup-section-row">
+            <div>
+              {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDone")}
+            </div>
+            <div>{Localization.formatTime(this.props.route.estimates?.completionTime)}</div>
+          </div>}
         </div>
 
         {this.props.route.expectedDelays.length > 0 &&
