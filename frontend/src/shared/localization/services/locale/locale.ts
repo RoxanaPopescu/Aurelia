@@ -45,6 +45,7 @@ export class Locale
     {
         this._name = data.name;
         this.code = data.code;
+        this.debug = data.debug ?? false;
 
         if (data.unicodeExtension)
         {
@@ -66,7 +67,7 @@ export class Locale
      * private use subtag, in that order.
      * This is the code that should be used to identify the locale.
      */
-    public code: string;
+    public readonly code: string;
 
     /**
      * The IETF language tag, including any unicode extension.
@@ -74,7 +75,12 @@ export class Locale
      * which may specify which calendar, numbering system, etc. should be used.
      * This is the code that should be used when formatting values.
      */
-    public codeWithUnicodeExtension: string;
+    public readonly codeWithUnicodeExtension: string;
+
+    /**
+     * True if the locale should only be available if debugging is enabled, otherwise false.
+     */
+    public readonly debug: boolean;
 
     /**
      * The name of the locale, which may be localized.

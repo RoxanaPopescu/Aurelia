@@ -19,5 +19,6 @@ export * from "./api-client";
 export * from "./cookies";
 export * from "./history";
 export * from "./logging";
+export * from "./prerender";
 export * from "./templating";
 export * from "./workers";

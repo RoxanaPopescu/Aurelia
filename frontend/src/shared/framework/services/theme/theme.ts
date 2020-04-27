@@ -39,6 +39,7 @@ export class Theme
         this.slug = data.slug;
         this.name = data.name;
         this.color = data.color;
+        this.debug = data.debug ?? false;
     }
 
     /**
@@ -56,4 +57,9 @@ export class Theme
      * The primary color of the theme, as an RGB HEX value.
      */
     public readonly color: string;
+
+    /**
+     * True if the market should only be available if debugging is enabled, otherwise false.
+     */
+    public readonly debug: boolean;
 }

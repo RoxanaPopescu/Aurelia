@@ -8,7 +8,7 @@ import "inert-polyfill";
 
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
 import { Settings as LuxonSettings } from "luxon";
-import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log } from "shared/infrastructure";
+import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log, setPrerenderStatusCode } from "shared/infrastructure";
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
@@ -127,8 +127,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
 
     // TODO: The value we set here should depend on whether the page actually rendered successfully.
     // Set the status code that should be returned to crawlers.
-    const prerenderStatusCodeElement = document.head.querySelector('meta[name="prerender-status-code"]') as HTMLMetaElement;
-    prerenderStatusCodeElement.setAttribute("content", "200");
+    setPrerenderStatusCode(200);
 }
 
 /**
@@ -282,7 +281,7 @@ function getThemeSlug(): string
  * @param oldTheme The old theme, or undefined if not previously set.
  * @returns A promise that never resolves, as the page is about to reload.
  */
-async function setTheme(newTheme: ITheme, oldTheme: ITheme): Promise<void>
+async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined): Promise<void>
 {
     // If this is a user-initiated change, set the `theme` cookie and reload the app.
     if (oldTheme != null)
