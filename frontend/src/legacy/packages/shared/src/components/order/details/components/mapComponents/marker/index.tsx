@@ -116,7 +116,7 @@ export class JourneyStopMarker extends Marker<JourneyStopMarkerProps> {
           <div className="c-worldMap-popup-section-row">
             <div>
               {Localization.sharedValue(
-                "RouteDetails_Map_RouteStopMarker_ArrivalTimeFrame"
+                "RouteDetails_Map_RouteStopMarker_EstimatedArrivalTimeFrame"
               )}
             </div>
             {/* <div>
@@ -130,7 +130,7 @@ export class JourneyStopMarker extends Marker<JourneyStopMarkerProps> {
             <div className="c-worldMap-popup-section-row">
               <div>
                 {Localization.sharedValue(
-                  "RouteDetails_Map_RouteStopMarker_ArrivalTime"
+                  ""
                 )}
               </div>
               <div>
