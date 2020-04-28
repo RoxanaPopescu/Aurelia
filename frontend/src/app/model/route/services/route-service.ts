@@ -120,10 +120,10 @@ export class RouteService
     {
         const result = await this._apiClient.post("routes/create",
         {
-            body: { orders: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
+            body: { orderIds: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
         });
 
-        return result.data.routeSlug;
+        return result.data.slug;
     }
 
     /**
