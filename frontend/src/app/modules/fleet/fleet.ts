@@ -25,7 +25,7 @@ export class FleetModule
             {
                 name: "list",
                 route: "drivers",
-                moduleId: PLATFORM.moduleName("./modules/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/drivers/list/list"),
                 settings:
                 {
                     claims:
@@ -40,8 +40,8 @@ export class FleetModule
             },
             {
                 name: "details",
-                route: "drivers/edit/:id",
-                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                route: "drivers/details/:id",
+                moduleId: PLATFORM.moduleName("./modules/drivers/details/details"),
                 settings:
                 {
                     claims:
@@ -55,7 +55,7 @@ export class FleetModule
             {
                 name: "create",
                 route: "drivers/create",
-                moduleId: PLATFORM.moduleName("./modules/create/create"),
+                moduleId: PLATFORM.moduleName("./modules/drivers/details/details"),
                 settings:
                 {
                     claims:
@@ -143,7 +143,23 @@ export class FleetModule
                 nav: true,
                 href: "/fleet-management/forecasts",
                 icon: "forecast"
-            }
+            },
+            {
+                name: "create-multiple",
+                route: "drivers/create-multiple",
+                moduleId: PLATFORM.moduleName("./modules/drivers/create-multiple/create-multiple"),
+                settings:
+                {
+                    claims:
+                    [
+                        "invite-driver"
+                    ]
+                },
+                title: routeTitles.createMultipleDrivers,
+                nav: true,
+                href: "/fleet-management/drivers/create-multiple",
+                icon: "fleet"
+            },
         ]);
     }
 }

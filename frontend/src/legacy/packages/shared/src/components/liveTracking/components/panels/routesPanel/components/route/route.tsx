@@ -53,7 +53,7 @@ export class Route extends React.Component<RoutesLayerProps> {
         </div>
 
         <div>
-          
+
           <div className="c-liveTracking-panel-section user-select-text suppress-double-click">
 
             <div className="c-liveTracking-panel-title c-liveTracking-routesPanel-route-title">
@@ -84,20 +84,25 @@ export class Route extends React.Component<RoutesLayerProps> {
 
               {driverOrFulfillerPhone &&
               <div>{driverOrFulfillerPhone}</div>}
-              
+
               {this.props.route.driverVehicle &&
               <div>{this.props.route.driverVehicle.vehicleType.name}</div>}
-              
-              {this.props.route.completionTime &&
+
+              {this.props.route.completedTime &&
               <div>{Localization.sharedValue("LiveTracking_Route_DoneTime", {
-                time: Localization.formatTime(this.props.route.completionTime)
+                time: Localization.formatTime(this.props.route.completedTime)
+              })}</div>}
+
+              {this.props.route.completedTime == null && this.props.route.estimates?.completionTime &&
+              <div>{Localization.sharedValue("LiveTracking_Route_ExpectedDoneTime", {
+                time: Localization.formatTime(this.props.route.estimates?.completionTime)
               })}</div>}
 
             </div>
 
           </div>
-          
-          {this.props.route.expectedDelays.length > 0 &&          
+
+          {this.props.route.expectedDelays.length > 0 &&
           <div
             onClick={e => this.onDelayMessageClicked(e)}
             className={`
@@ -116,7 +121,7 @@ export class Route extends React.Component<RoutesLayerProps> {
           </div>}
 
         </div>
-        
+
       </div>
     );
   }

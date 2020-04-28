@@ -36,9 +36,10 @@ export class Currency
      */
     public constructor(data: ICurrency, localeService: LocaleService)
     {
-        this.code = data.code;
         this._name = data.name;
         this._localeService = localeService;
+        this.code = data.code;
+        this.debug = data.debug ?? false;
     }
 
     private readonly _localeService: LocaleService;
@@ -49,6 +50,11 @@ export class Currency
      * This value is case sensitive.
      */
     public readonly code: string;
+
+    /**
+     * True if the currency should only be available if debugging is enabled, otherwise false.
+     */
+    public readonly debug: boolean;
 
     /**
      * The name of the currency, which may be localized.

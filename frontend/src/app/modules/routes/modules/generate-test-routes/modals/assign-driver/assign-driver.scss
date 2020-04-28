@@ -1,10 +1,10 @@
 modal-panel[name="assign-driver"]
 {
-    --modal-panel-min-width: 200rem;
+    --modal-panel-min-width: 220rem;
 
     data-table
     {
-        --data-table-columns: 23rem 1fr 2.5fr 2fr 2.5fr;
+        --data-table-columns: min-content min-content 2.5fr 2fr 2.5fr;
     }
 
     identity-picture

@@ -292,6 +292,16 @@ export default class Localization {
     );
   }
 
+  static formatDistance(distanceInMeters: number) {
+    if (distanceInMeters > 20000) {
+      return String(Math.ceil(distanceInMeters / 1000)) + " km"
+    } else if (distanceInMeters > 900) {
+      return String((distanceInMeters / 1000).toFixed(1)) + " km"
+    } else {
+      return String(Math.ceil(distanceInMeters)) + " m"
+    }
+  }
+
   static formatDuration(
     duration: Duration | undefined,
     options?: DurationFormatOptions

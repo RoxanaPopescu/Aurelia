@@ -7,6 +7,7 @@ import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 export class RoutePlanRouteStopEstimates {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any) {
+    this.distance = data.distance;
     this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
     this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
@@ -27,6 +28,11 @@ export class RoutePlanRouteStopEstimates {
    * The estimated waiting time.
    */
   public waitingTime: Duration;
+
+  /**
+   * The distance in meters.
+   */
+  public distance: number;
 
   /**
    * The estimated time for starting.

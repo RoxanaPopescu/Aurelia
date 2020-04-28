@@ -4,13 +4,11 @@ import RoutePlansComponent from "../routePlanning/list";
 import RoutePlanningDetails from "../routePlanning/details-v1";
 import Localization from "shared/src/localization";
 import { Base } from "shared/src/webKit/utillity/base";
-import DriverListComponent from "../fleet/drivers/list";
 import DepotsDetailsComponent from "../depots/details";
 import DepotsListComponent from "../depots/list";
 import RoutePlanningSettingDetailsComponent from "../routePlanning/settings/details";
 import OrderGroupListComponent from "fulfiller/src/components/orderGroup/list";
 import OrderGroupComponent from "../orderGroup/single/index";
-import DriverComponent from "../fleet/drivers/driver";
 import RoutePlanSettingListComponent from "../routePlanning/settings/list";
 import RoutePlanSettingDetailsComponent from "../routePlanning/settings/details";
 import SimulationListComponent from "../routePlanning/simulation/components/list";
@@ -92,7 +90,7 @@ export class FulfillerNavigationPage {
       case "RoutePlanning":
         return "/route-planning";
       case "Depots":
-        return "/depots";
+        return "/distribution-centers";
       case "FleetManagement":
         return "/fleet-management";
     }
@@ -276,11 +274,11 @@ export namespace FulfillerSubPage {
       case FulfillerSubPage.AssignRoutes:
         return AssignRoutesComponent;
       case FulfillerSubPage.DriverList:
-        return DriverListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.DriverCreate:
-        return DriverComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.DriverEdit:
-        return DriverComponent;
+        return AssignRoutesComponent;
     }
   }
 

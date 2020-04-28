@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="fleet"] page[name="list"]
+{
+    data-table
+    {
+        --data-table-columns: min-content 1fr 1fr 1fr 1fr 1fr min-content;
+    }
+}

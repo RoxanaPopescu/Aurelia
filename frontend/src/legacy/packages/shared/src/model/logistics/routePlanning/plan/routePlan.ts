@@ -18,6 +18,8 @@ export class RoutePlan {
     const consignors = data.consignors.map(s => new Consignor(s));
 
     this.status = data.status;
+    this.waitingForApproval = data.waitingForApproval;
+    this.isAutomaticApproved = data.isAutomaticApproved;
     this.meta = new RoutePlanMeta(data.meta);
     this.routes = data.routes.map(
       (s, index) => new RoutePlanRoute(s, consignors, index + 1)

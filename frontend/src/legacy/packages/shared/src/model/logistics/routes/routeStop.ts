@@ -5,6 +5,7 @@ import { Outfit } from "../outfit";
 import { RouteStopStatus } from "./routeStopStatus";
 import { RouteStopBase } from "./routeStopBase";
 import { observable } from "mobx";
+import { RouteEstimates } from "./routeEstimates";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -29,14 +30,35 @@ export abstract class RouteStop extends RouteStopBase {
       this.outfit = new Outfit(data.outfit);
     }
 
-    if (data.arrivalTime != null) {
-      this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
+    if (data.arrivedTime != null)
+    {
+        this.arrivedTime = DateTime.fromISO(data.arrivedTime, { setZone: true });
     }
 
-    if (data.loadingTime != null) {
-      this.loadingTime = Duration.fromObject({ seconds: data.loadingTime });
+    if (data.completedTime != null)
+    {
+        this.completedTime = DateTime.fromISO(data.completedTime, { setZone: true });
+    }
+
+    if (data.estimates != null)
+    {
+        this.estimates = new RouteEstimates(data.estimates);
+    }
+
+    if (data.taskTime != null)
+    {
+        this.taskTime = Duration.fromObject({ seconds: data.taskTime });
+    }
+
+    if (data.waitingTime) {
+        this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
     }
   }
+
+  /**
+   * The estimates for this stop.
+   */
+  public estimates?: RouteEstimates;
 
   /**
    * The ID of the route stop.
@@ -77,7 +99,12 @@ export abstract class RouteStop extends RouteStopBase {
    * The time spent loading and unloading at the stop.
    * If the stop is not yet completed, this will be an estimate.
    */
-  public readonly loadingTime: Duration;
+  public readonly taskTime?: Duration;
+
+  /**
+   * The time the driver waited before he could start the taskTime
+   */
+  public readonly waitingTime?: Duration;
 
   /**
    * The timeframe within which the driver must arrive.
@@ -89,7 +116,8 @@ export abstract class RouteStop extends RouteStopBase {
    * If the stop is not yet completed, this will be an estimate.
    * If the route is not yet accepted, this will be undefined.
    */
-  public readonly arrivalTime?: DateTime;
+  public readonly arrivedTime?: DateTime;
+  public readonly completedTime?: DateTime;
 
   /**
    * True if there is a delay at this stop, and the delay excedes
@@ -109,12 +137,17 @@ export abstract class RouteStop extends RouteStopBase {
    * If the stop is not yet completed, this will be an estimate.
    * Note that the value is rounded down to the nearest minute.
    */
-  public get arrivalDelay(): Duration | undefined {
-    return this.isDelayed && this.arrivalTime && this.arrivalTimeFrame.to
-      ? this.arrivalTime
-          .startOf("minute")
-          .diff(this.arrivalTimeFrame.to.startOf("minute"))
-      : undefined;
+  public get arrivalDelay(): Duration | undefined
+  {
+      if (!this.isDelayed || this.estimates == null) {
+          return undefined;
+      }
+
+      return this.arrivalTimeFrame.to
+          ? this.estimates.arrivalTime
+              .startOf("minute")
+              .diff(this.arrivalTimeFrame.to.startOf("minute"))
+          : undefined;
   }
 
   /**

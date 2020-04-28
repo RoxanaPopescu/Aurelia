@@ -50,4 +50,76 @@ export class DriverService
             driverCount: result.data.length
         };
     }
+
+    /**
+     * Saves the specified driver.
+     * @param driver The vehicle to save.
+     * @returns A promise that will be resolved with the updated driver.
+     */
+    public async update(driver: Driver): Promise<Driver>
+    {
+        const result = await this._apiClient.post("drivers/update",
+        {
+            body: driver
+        });
+
+        return new Driver(result.data);
+    }
+
+    /**
+     * Creates a new driver, associated with the specified driver.
+     * @param driver The driver to create.
+     * @returns A promise that will be resolved with the new driver.
+     */
+    public async create(driver: Driver): Promise<Driver>
+    {
+        const result = await this._apiClient.post("drivers/create",
+        {
+            body: driver
+        });
+
+        return new Driver(result.data);
+    }
+
+    /**
+     * Creates a new driver, associated with the specified driver.
+     * @param driverId The driver id.
+     * @param newPassword The new password for the driver .
+     * @returns A promise that will be resolved.
+     */
+    public async updatePassword(driverId: number, newPassword: string): Promise<void>
+    {
+        await this._apiClient.post("drivers/setpassword",
+        {
+            body: { id: driverId, newPassword }
+        });
+    }
+
+    /**
+     * Gets a single driver
+     * @param driverId The id of the driver.
+     * @returns A promise that will be resolved with the drivers.
+     */
+    public async get(driverId: number): Promise<Driver>
+    {
+        const result = await this._apiClient.get("drivers/details",
+        {
+            query: { id: driverId }
+        });
+
+        return new Driver(result.data);
+    }
+
+    /**
+     * Deletes the specified vehicle.
+     * @param driverId The ID of the driver to be deleted.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async delete(id: number): Promise<void>
+    {
+        await this._apiClient.post("drivers/delete",
+        {
+            body: { id }
+        });
+    }
 }

@@ -1,0 +1,333 @@
+<template>
+    <require from="./details.scss"></require>
+    <page name="driver-details">
+
+        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/fleet-management/drivers" translate>
+                            Drivers
+                        </a>
+
+                        <span>
+                            <template if.bind="!isNew">
+                                ${driver.name} (${driver.id})
+                            </template>
+                            <template if.bind="isNew" translate>
+                                New driver
+                            </template>
+                        </span>
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+                    <button if.bind="driver.id" if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onAddVehicleClick()" class="flex-row">
+                        <icon name="add" class="font-larger margin-right"></icon>
+                        <span translate>
+                            New vehicle
+                        </span>
+                    </button>
+                    <button if.bind="driver.id" translate if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onChangePasswordClick()">
+                        Change password
+                    </button>
+                    <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                        <template if.bind="isNew && !updating" translate>
+                            Create driver
+                        </template>
+                        <template if.bind="!isNew && !updating" translate>
+                            Save changes
+                        </template>
+                        <template if.bind="updating" translate>
+                            Saving...
+                        </template>
+                    </button>
+                </toolbar>
+
+            </page-header>
+
+            <page-section class="driver-section">
+                <div class="control-row margin-bottom">
+                    <text-input label="above" value.bind="driver.name.first" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            First name
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.name.first">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-2-of-2">
+
+                        <div slot="heading" translate>
+                            Last name
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.name.last">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+                </div>
+
+                <div class="control-row margin-bottom">
+                    <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Email
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.email">
+                            </required-validator>
+
+                            <invalid-validator if.bind="emailOrPhoneAlreadyExist">
+
+                                <template replace-part="invalid" translate>
+                                    The email or phone number already exist
+                                </template>
+
+                            </invalid-validator>
+
+                        </div>
+
+                    </email-input>
+                </div>
+
+                <div class="control-row margin-bottom">
+                    <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" class="flex-basis-1-of-2">
+                        <div slot="heading" translate>
+                            Country code
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.phone.countryPrefix">
+                            </required-validator>
+
+                            <length-validator
+                                value.bind="driver.phone.countryPrefix"
+                                max.bind="2"
+                                min.bind="2">
+                            </length-validator>
+
+                            <pattern-validator
+                                active.bind="true"
+                                value.bind="driver.phone.countryPrefix"
+                                pattern="^[0-9]*$">
+
+                                <template replace-part="invalid" translate>
+                                    Please only provide a value with numbers.
+                                </template>
+
+                            </pattern-validator>
+                        </div>
+                    </text-input>
+                    <text-input label="above" value.bind="driver.phone.number" class="flex-basis-2-of-2">
+                        <div slot="heading" translate>
+                            Phone number
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.phone.number">
+                            </required-validator>
+
+                            <length-validator
+                                value.bind="driver.phone.number"
+                                min.bind="6">
+                            </length-validator>
+
+                            <invalid-validator if.bind="emailOrPhoneAlreadyExist">
+                                <template replace-part="invalid" translate>
+                                    The email or phone number already exist
+                                </template>
+                            </invalid-validator>
+                        </div>
+                    </text-input>
+                </div>
+
+                <div if.bind="isNew" class="control-row margin-bottom">
+                    <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-1">
+                        <div slot="heading" translate>
+                            Password
+                        </div>
+
+                        <div if.bind="driver.password" slot="validation">
+                            <required-validator
+                                value.bind="driver.password">
+                            </required-validator>
+                            <length-validator
+                                value.bind="driver.password"
+                                min.bind="6">
+                            </length-validator>
+                        </div>
+                    </text-input>
+                </div>
+
+                <div class="control-row margin-bottom">
+                    <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Status
+                        </div>
+
+                        <item repeat.for="status of statuses" model.bind="status">
+                            ${status.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="driver.status">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+                </div>
+            </page-section>
+
+            <page-section if.bind="driver.id">
+                <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                    Vehicles
+                </h1>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="name">
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="make">
+                            <span class="text-truncate" translate>
+                                Make
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="model">
+                            <span class="text-truncate" translate>
+                                Model
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="status">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="id">
+                            <span class="text-truncate" translate>
+                                Id
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="type">
+                            <span class="text-truncate" translate>
+                                Type
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="vehicle of vehicles">
+
+                        <data-table-row
+                            click.call="onVehicleClick(vehicle)">
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.make}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.model}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.status.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.id}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${vehicle.type.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if-claims="create-vehicle" class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onRemoveVehicleClick(vehicle)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="vehicles == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="vehicles.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+            </page-section>
+        </page-content>
+
+    </page>
+
+</template>

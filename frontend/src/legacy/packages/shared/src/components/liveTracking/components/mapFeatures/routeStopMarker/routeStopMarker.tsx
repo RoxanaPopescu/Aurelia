@@ -175,7 +175,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
             </div>
           </div>
 
-          {this.props.routeStop.arrivalTime && (
+          {this.props.routeStop.arrivedTime == null && this.props.routeStop.estimates?.arrivalTime && (
             <div className="c-worldMap-popup-section-row">
               <div>
                 {Localization.sharedValue(
@@ -183,20 +183,46 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
                 )}
               </div>
               <div>
-                {Localization.formatTime(this.props.routeStop.arrivalTime)}
+                {Localization.formatTime(this.props.routeStop.estimates?.arrivalTime)}
               </div>
             </div>
           )}
 
-          {this.props.routeStop.loadingTime && (
+          {this.props.routeStop.arrivedTime && (
             <div className="c-worldMap-popup-section-row">
               <div>
                 {Localization.sharedValue(
-                  "RouteDetails_Map_RouteStopMarker_LoadingTime"
+                  "RouteDetails_Map_RouteStopMarker_ArrivedTime"
                 )}
               </div>
               <div>
-                {Localization.formatDuration(this.props.routeStop.loadingTime)}
+                {Localization.formatTime(this.props.routeStop.arrivedTime)}
+              </div>
+            </div>
+          )}
+
+          {this.props.routeStop.taskTime && (
+            <div className="c-worldMap-popup-section-row">
+              <div>
+                {Localization.sharedValue(
+                  "RouteDetails_Map_RouteStopMarker_TaskTime"
+                )}
+              </div>
+              <div>
+                {Localization.formatDuration(this.props.routeStop.taskTime)}
+              </div>
+            </div>
+          )}
+
+          {this.props.routeStop.waitingTime && (
+            <div className="c-worldMap-popup-section-row">
+              <div>
+                {Localization.sharedValue(
+                  "RouteDetails_Map_RouteStopMarker_WaitingTime"
+                )}
+              </div>
+              <div>
+                {Localization.formatDuration(this.props.routeStop.waitingTime)}
               </div>
             </div>
           )}
