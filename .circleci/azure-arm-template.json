@@ -75,6 +75,7 @@
         "kind": "app,linux,container",
         "serverFarmId": "[resourceId(concat(parameters('environment'), 'linux'), 'Microsoft.Web/serverfarms/', variables('servicePlanName'))]",
         "siteConfig": {
+          "clientAffinityEnabled": false,
           "alwaysOn": true,
           "appCommandLine": "",
           "http20Enabled": true,
