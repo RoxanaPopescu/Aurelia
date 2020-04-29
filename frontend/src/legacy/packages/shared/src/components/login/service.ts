@@ -1,9 +1,8 @@
 import Localization from "shared/src/localization";
 import Base from "../../services/base";
-import { OutfitType } from "../../model/logistics/outfit";
 
 export class LoginService {
-  static async login(type: OutfitType, username: string, password: string) {
+  static async login(username: string, password: string) {
     try {
       var items = {
         username: username,
@@ -17,14 +16,6 @@ export class LoginService {
 
       if (response.ok) {
         let responseJson = await response.json();
-
-        if (type && type !== responseJson.outfitType) {
-          throw new Error(
-            Localization.sharedValue("Error_LoginIncorrectType")
-              .replace("{login_type}", responseJson.outfitType)
-              .replace("{type}", type)
-          );
-        }
 
         return responseJson;
       } else {

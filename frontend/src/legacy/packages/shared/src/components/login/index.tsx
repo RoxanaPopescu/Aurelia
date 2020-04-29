@@ -8,19 +8,19 @@ import {
   Button,
   ButtonType,
   Toast,
-  ToastType,
-  Base
+  ToastType
 } from "shared/src/webKit";
 import Validation from "../../utillity/validation";
 import { LoginService } from "./service";
 import { LoginStore } from "./store";
+import H from "history";
 import { Profile } from "../../model/profile";
 import { ButtonSize } from "../../webKit/button/index";
-import { OutfitType } from "../../model/logistics/outfit";
+import { Theme } from "shared/framework";
 
 interface Props {
-  description: string;
-  type: OutfitType;
+  match?: any;
+  history: H.History;
 }
 
 const store = new LoginStore();
@@ -29,7 +29,9 @@ const store = new LoginStore();
 export default class Login extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    document.title = Localization.operationsValue("Login_Title");
+
+    let theme: Theme = this.props.match.params.theme;
+    document.title = theme.name;
   }
 
   login() {
@@ -42,7 +44,7 @@ export default class Login extends React.Component<Props> {
 
     store.loading = true;
 
-    LoginService.login(this.props.type, store.email, store.password)
+    LoginService.login(store.email, store.password)
       .then(async success => {
         if (success !== false) {
           const loginPromise = await Profile.login(
@@ -67,6 +69,8 @@ export default class Login extends React.Component<Props> {
   }
 
   render() {
+    let theme: Theme = this.props.match.params.theme;
+
     return (
       <div className="c-login-outerContainer">
         <img
@@ -75,14 +79,14 @@ export default class Login extends React.Component<Props> {
         />
         <div className="c-login-backgroundOverlayLight" />
         <div className="c-login-backgroundOverlayDark" />
-        <img className="c-login-logo" src={Base.theme.logoWideURL} />
+        <img className="c-login-logo" src={"/resources/themes/" + theme.slug + "/images/logo-wide.svg"} />
         <div className="c-login-container">
           <div className="c-login-content dark">
-            <div className="c-login-container-title font-larger">
+            <div className="c-login-container-title font-largest">
               {Localization.operationsValue("Login_Info_Title")}
             </div>
             <div className="c-login-container-description">
-              {this.props.description}
+              {Localization.operationsValue("Login_Info_Description")}
             </div>
             <Input
               className="email c-login-container-inputElement"
