@@ -171,7 +171,7 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                     <div className="c-worldMap-popup-section-row">
                         <div>
                             {Localization.sharedValue(
-                                "RouteDetails_Map_RouteStopMarker_ArrivalTimeFrame"
+                                "RouteDetails_Map_RouteStopMarker_TimeFrame"
                             )}
                         </div>
                         <div>
@@ -185,11 +185,24 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                         <div className="c-worldMap-popup-section-row">
                             <div>
                                 {Localization.sharedValue(
-                                    "RouteDetails_Map_RouteStopMarker_ArrivalTime"
+                                    "RouteDetails_Map_RouteStopMarker_ArrivedTime"
                                 )}
                             </div>
                             <div>
                                 {Localization.formatTime(this.props.routeStop.arrivedTime)}
+                            </div>
+                        </div>
+                    )}
+
+                    {this.props.routeStop.arrivedTime == null && this.props.routeStop.estimates?.arrivalTime && (
+                        <div className="c-worldMap-popup-section-row">
+                            <div>
+                                {Localization.sharedValue(
+                                    "RouteDetails_Map_RouteStopMarker_EstimatedArrivalTime"
+                                )}
+                            </div>
+                            <div>
+                                {Localization.formatTime(this.props.routeStop.estimates?.arrivalTime)}
                             </div>
                         </div>
                     )}
@@ -203,6 +216,45 @@ export class DriverRouteStopMarker extends Marker<DriverRouteStopMarkerProps>
                             </div>
                             <div>
                                 {Localization.formatDuration(this.props.routeStop.taskTime)}
+                            </div>
+                        </div>
+                    )}
+
+                    {this.props.routeStop.taskTime == null && this.props.routeStop.estimates?.taskTime && (
+                        <div className="c-worldMap-popup-section-row">
+                            <div>
+                                {Localization.sharedValue(
+                                    "RouteDetails_Map_RouteStopMarker_EstimatedTaskTime"
+                                )}
+                            </div>
+                            <div>
+                                {Localization.formatDuration(this.props.routeStop.estimates?.taskTime)}
+                            </div>
+                        </div>
+                    )}
+
+                    {this.props.routeStop.waitingTime && (
+                        <div className="c-worldMap-popup-section-row">
+                            <div>
+                                {Localization.sharedValue(
+                                    "RouteDetails_Map_RouteStopMarker_WaitingTime"
+                                )}
+                            </div>
+                            <div>
+                                {Localization.formatDuration(this.props.routeStop.waitingTime)}
+                            </div>
+                        </div>
+                    )}
+
+                    {this.props.routeStop.waitingTime == null && this.props.routeStop.estimates?.waitingTime && (
+                        <div className="c-worldMap-popup-section-row">
+                            <div>
+                                {Localization.sharedValue(
+                                    "RouteDetails_Map_RouteStopMarker_EstimatedWaitingTime"
+                                )}
+                            </div>
+                            <div>
+                                {Localization.formatDuration(this.props.routeStop.estimates?.waitingTime)}
                             </div>
                         </div>
                     )}
