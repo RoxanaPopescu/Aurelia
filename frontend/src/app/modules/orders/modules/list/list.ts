@@ -236,6 +236,7 @@ export class ListPage
         if (newRoutesSlug != null)
         {
             createdToast.body = createdToast.body.replace("{routeSlug}", newRoutesSlug);
+            createdToast.url = createdToast.url.replace("{routeSlug}", newRoutesSlug);
 
             this._toastService.open(
                 "info",
