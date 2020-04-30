@@ -12,6 +12,8 @@ import { RouteStop } from "./routeStop";
 import { RouteStopBase } from "./routeStopBase";
 import { RouteCriticality } from "./routeCriticality";
 import { RouteEstimates } from "./routeEstimates";
+import { Outfit } from "../outfit";
+import { ProductType } from "app/model/product";
 
 /**
  * Represents the live status of a route.
@@ -25,6 +27,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
     this.reference = data.reference;
     this.criticality = new RouteCriticality(data.criticality);
     this.status = new RouteStatus(data.status);
+    this.productType = new ProductType(data.productType);
     this.fulfiller = new Fulfiller(data.fulfiller);
     this.driverOnline = data.driverOnline;
     this.stops = stops;
@@ -62,6 +65,10 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
     if (data.estimates != null) {
       this.estimates = new RouteEstimates(data.estimates);
     }
+
+    if (data.owner != null) {
+      this.owner = new Outfit(data.owner);
+    }
   }
 
   /**
@@ -86,6 +93,11 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
   public readonly reference?: string;
 
   /**
+   * The owner of this route.
+   */
+  public readonly owner?: Outfit;
+
+  /**
    * The criticality of the route.
    */
   public readonly criticality: RouteCriticality;
@@ -99,6 +111,11 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    * The status of the route.
    */
   public status: RouteStatus;
+
+  /**
+   * The type of product
+   */
+  public productType: ProductType;
 
   /**
    * The date and time at which the request for this route expires,
