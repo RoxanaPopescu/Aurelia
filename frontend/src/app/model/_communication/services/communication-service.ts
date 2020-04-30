@@ -87,7 +87,7 @@ export class CommunicationService
      */
     public async create(trigger: CommunicationTrigger): Promise<void>
     {
-        const result = await this._apiClient.post("communication/triggers/update",
+        const result = await this._apiClient.post("communication/triggers/create",
         {
             body: trigger
         });

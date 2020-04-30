@@ -300,7 +300,8 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            try {
+            try
+            {
                 this.failed = false;
 
                 // Fetch the data.
@@ -309,7 +310,7 @@ export class ListPage
                     this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
                     this.statusFilter,
                     this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
-                    this.orderTagsFilter.length > 0 ? this.orderTagsFilter.map(c => c.id) : undefined,
+                    this.orderTagsFilter,
                     this.textFilter,
                     this.sorting,
                     this.paging,
@@ -340,7 +341,9 @@ export class ListPage
                 },
                 { trigger: false, replace: true });
 
-            } catch (error) {
+            }
+            catch (error)
+            {
                 this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }
