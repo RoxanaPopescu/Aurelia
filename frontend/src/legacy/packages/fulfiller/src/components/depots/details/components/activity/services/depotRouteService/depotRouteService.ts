@@ -7,12 +7,12 @@ import { remarks } from "./data/depotRouteRemarks";
 let currentSessionId = 0;
 
 export class DepotRouteService {
-
+  private paused = false;
   private depotId: string;
   private date: DateTime;
 
   // tslint:disable-next-line:no-any
-  private pollIntervalHandle: any;
+  private pollTimeoutHandle: any;
 
   @observable
   public routes: DepotRoute[] | undefined;
@@ -27,28 +27,31 @@ export class DepotRouteService {
     this.depotId = depotId;
     this.date = date;
 
-    this.resumePolling();
-  }
-
-  public stopPolling(): void {
-    currentSessionId++;
-    clearInterval(this.pollIntervalHandle);
-  }
-
-  public pausePolling(): void {
-    currentSessionId++;
-    clearInterval(this.pollIntervalHandle);
-  }
-
-  public resumePolling(): void {
     this.fetchRoutes(this.depotId, this.date);
-    this.pollIntervalHandle = setInterval(() => {
+  }
+
+  public stopPolling() {
+    clearTimeout(this.pollTimeoutHandle);
+  }
+
+  public pausePolling() {
+    this.stopPolling();
+    this.paused = true;
+  }
+
+  public resumePolling() {
+    this.fetchRoutes(this.depotId, this.date);
+    this.paused = false;
+  }
+
+  private fetchAfterDelay(): void {
+    this.pollTimeoutHandle = setTimeout(() => {
       try {
         this.fetchRoutes(this.depotId, this.date);
       } catch (error) {
         console.warn("Could not get routes for depot", error);
       }
-    }, 10000);
+    }, 5000);
   }
 
   public async saveRoute(route: DepotRoute): Promise<void> {
@@ -69,6 +72,7 @@ export class DepotRouteService {
   }
 
   private async fetchRoutes(depotId: string, date: DateTime): Promise<void> {
+    if (this.paused) { return }
 
     const sessionId = currentSessionId;
 
@@ -87,6 +91,9 @@ export class DepotRouteService {
       }),
       BaseService.defaultConfig()
     );
+
+    if (this.paused) { return }
+    this.fetchAfterDelay();
 
     if (sessionId !== currentSessionId) {
       return;
