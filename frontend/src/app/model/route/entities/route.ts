@@ -3,6 +3,7 @@ import { RouteStopInfo } from "./route-stop-info";
 import { RouteStop } from "./route-stop";
 import { RoutePrice } from "./route-price";
 import { WeightRange } from "app/model/shared";
+import { Outfit } from "app/model/outfit";
 
 /**
  * Represents details about a route.
@@ -25,6 +26,11 @@ export class Route extends AbstractRoute<RouteStop>
         this.driverInstructions = data.driverInstructions;
         this.tags = data.tags;
         this.allowAssignment = data.allowAssignment;
+
+        if (data.owner != null)
+        {
+            this.owner = new Outfit(data.owner);
+        }
 
         if (data.totalWeightRange != null)
         {
@@ -71,6 +77,11 @@ export class Route extends AbstractRoute<RouteStop>
      * True if the route may be assigned to a fulfiller or driver, otherwise false.
      */
     public allowAssignment: boolean;
+
+    /**
+     * The owner of this route, only exist if all stops belongs to this outfit.
+     */
+    public readonly owner?: Outfit;
 
     /**
      * The total number colli associated with pickups on non-cancelled stops on the route.

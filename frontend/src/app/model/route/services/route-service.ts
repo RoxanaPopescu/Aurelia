@@ -188,7 +188,7 @@ export class RouteService
     {
         stop.status = new RouteStopStatus(routeStopStatusSlug);
 
-        await this._apiClient.post("routes/stops/update",
+        await this._apiClient.post("routes/stop/update",
         {
             body: { routeId: route.id, stop }
         });
