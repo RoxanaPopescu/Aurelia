@@ -13,6 +13,7 @@ export class OrderInfo
     {
         this.id = data.internalId;
         this.slug = data.publicId;
+        this.tags = data.tags;
         this.status = new OrderStatus(data.status.name.toLowerCase());
         this.earliestPickupDate = DateTime.fromISO(data.earliestPickupDate, { setZone: true });
         this.earliestPickupTime = TimeOfDay.fromISO(data.earliestPickupTime);
@@ -43,6 +44,8 @@ export class OrderInfo
     public readonly id: string;
 
     public readonly slug: string;
+
+    public readonly tags: string[];
 
     public readonly status: OrderStatus;
 

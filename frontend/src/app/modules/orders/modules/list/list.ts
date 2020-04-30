@@ -106,6 +106,12 @@ export class ListPage
     protected consignorFilter: any[] = [];
 
     /**
+     * The order tags for which orders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected orderTagsFilter: any[] = [];
+
+    /**
      * The min date for whichorders should be shown.
      */
     @observable({ changeHandler: "update" })
@@ -303,6 +309,7 @@ export class ListPage
                     this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
                     this.statusFilter,
                     this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
+                    this.orderTagsFilter.length > 0 ? this.orderTagsFilter.map(c => c.id) : undefined,
                     this.textFilter,
                     this.sorting,
                     this.paging,
