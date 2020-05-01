@@ -31,22 +31,10 @@
   }
 }
 
-.c-liveTracking-routesPanel-route-picture {
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
-  margin-top: 2px;
-  margin-right: 18px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
 
 .c-liveTracking-routesPanel-route-flag {
-  color: var(--colorNeutralLight);
+  color: var(--colorBackgroundPrimary);
+  opacity: 0.3;
   cursor: pointer;
   width: 36px;
   height: 19px;
@@ -60,7 +48,7 @@
 }
 
 .c-liveTracking-routesPanel-route-flag--active {
-  color: var(--colorBackgroundPrimary);
+  opacity: 1;
 }
 
 .c-liveTracking-routesPanel-route-title {

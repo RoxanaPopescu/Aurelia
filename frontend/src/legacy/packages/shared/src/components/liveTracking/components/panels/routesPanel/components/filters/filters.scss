@@ -19,6 +19,15 @@
   background: var(--colorNeutralRegular);
   color: white;
 }
+.c-liveTracking-routesPanel-filters-input {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.c-liveTracking-routesPanel-filters-criticality {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .c-liveTracking-routesPanel-filters-criticality:hover {
   .c-liveTracking-routesPanel-filters-badge {

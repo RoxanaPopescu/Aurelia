@@ -35,11 +35,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
         <InputCheckbox
           className="c-liveTracking-routesPanel-filters-criticality"
           checked={this.props.routesService.filter.criticality != null}
-          onChange={active => 
+          onChange={active =>
             this.props.routesService.setFilter({ criticality: active ? importantCriticalityLevels : undefined })}
         >
           {Localization.sharedValue("LiveTracking_Filters_Criticality_Label")}
-            
+
           {highCriticalityCount > 0 &&
           <span className="c-liveTracking-routesPanel-filters-badge c-liveTracking-box-negative">
             {highCriticalityCount}
@@ -54,12 +54,13 @@ export class Filters extends React.Component<RoutesLayerProps> {
 
         <Input
           type="search"
+          className="c-liveTracking-routesPanel-filters-input"
           value={this.props.routesService.textFilter}
-          onChange={value => 
+          onChange={value =>
             this.props.routesService.textFilter = value || undefined}
           placeholder={Localization.sharedValue("Input_Placeholder_Filter")}
         />
-        
+
       </div>
     );
   }

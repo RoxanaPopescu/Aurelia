@@ -18,7 +18,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
       <React.Fragment>
 
         {this.props.routesService.routes && this.props.routesService.routes
-        .filter(r => r.driverPosition != null)
+        .filter(r => r.driverPosition != null && r.containsText(this.props.routesService.textFilter))
         .map(r =>
         <RouteDriverMarker
           key={`RouteDriverMarker-${r.id}`}

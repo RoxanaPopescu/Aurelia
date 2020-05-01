@@ -36,11 +36,6 @@ export class Route extends React.Component<RoutesLayerProps> {
       >
         <div>
 
-          <div className="c-liveTracking-routesPanel-route-picture">
-            {this.props.route.driver && this.props.route.driver.pictureUrl &&
-            <img src={this.props.route.driver.pictureUrl}/>}
-          </div>
-
           <div
             className={`
               c-liveTracking-routesPanel-route-flag
@@ -72,8 +67,8 @@ export class Route extends React.Component<RoutesLayerProps> {
 
               </div>
 
-              <div className={`c-liveTracking-color-${this.props.route.status.accent}`}>
-                {this.props.route.status.name}
+              <div>
+                {this.props.route.owner?.companyName}
               </div>
 
             </div>
@@ -117,7 +112,7 @@ export class Route extends React.Component<RoutesLayerProps> {
 
           {!this.props.route.driverOnline && !["completed", "cancelled"].includes(this.props.route.status.slug) &&
           <div className="c-liveTracking-panel-message c-liveTracking-box-negative">
-            {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}
+            {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
           </div>}
 
         </div>

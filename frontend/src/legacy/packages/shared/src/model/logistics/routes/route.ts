@@ -241,7 +241,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
 
   // TODO: We should find a more efficient way to do free-text search.
   private json: string | undefined;
-  public containsText(text?: string) {
+  public containsText(text?: string): boolean {
     if (!text) {
       return true;
     }
@@ -250,12 +250,30 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
       this.json = JSON.stringify(this, null, 1).toLowerCase();
     }
 
-    const q = text.toLowerCase();
+    const initialQuery = text.toLowerCase();
 
-    return new RegExp(
-      `^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`,
-      "m"
-    ).test(this.json);
+    // We allow multiple searches when a ',' is added. We trim spaces if this exist
+    let s: string[] = [];
+    const splitQuery = initialQuery.split(",");
+    if (splitQuery.length > 1) {
+      s = splitQuery.map(e => e.trim());
+    } else {
+      s.push(initialQuery);
+    }
+
+    let found = true;
+    for(const q of s) {
+      const foundSingle = new RegExp(
+        `^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`,
+        "m"
+      ).test(this.json)
+
+      if (!foundSingle) {
+        found = false;
+      }
+    }
+
+    return found;
   }
 
   /**
