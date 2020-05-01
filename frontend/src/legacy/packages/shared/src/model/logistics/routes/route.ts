@@ -263,8 +263,10 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
 
     let found = true;
     for(const q of s) {
+      const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
       const foundSingle = new RegExp(
-        `^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`,
+        `^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`,
         "m"
       ).test(this.json)
 
