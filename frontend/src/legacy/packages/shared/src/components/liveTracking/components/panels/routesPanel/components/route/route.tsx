@@ -109,15 +109,31 @@ export class Route extends React.Component<RoutesLayerProps> {
             {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDelaysAtStop")}
             {" " + Localization.formatIntegersAsRanges(this.props.route.expectedDelays.map(s => s.stopNumber), 3)}
           </div>}
-
-          {!this.props.route.driverOnline && !["completed", "cancelled"].includes(this.props.route.status.slug) &&
-          <div className="c-liveTracking-panel-message c-liveTracking-box-negative">
-            {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
-          </div>}
-
+          {this.renderDriverOffline()}
         </div>
 
       </div>
+    );
+  }
+
+  renderDriverOffline(): JSX.Element | undefined {
+    if (this.props.route.driverOnline) {
+      return;
+    }
+
+    if (["completed", "cancelled"].includes(this.props.route.status.slug)) {
+      return;
+    }
+
+    let boxStyle = "c-liveTracking-box-negative";
+    if (this.props.route.status.slug != "requested") {
+      boxStyle = "c-liveTracking-box-warning";
+    }
+
+    return (
+      <div className={"c-liveTracking-panel-message " + boxStyle}>
+            {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
+          </div>
     );
   }
 
