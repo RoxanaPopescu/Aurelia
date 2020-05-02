@@ -201,7 +201,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
         </div>
         <div
           style={{
-            height: ((this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0) ?  this.props.store.listHeight + 28 : this.props.store.listHeight) + "px"
+            height: this.props.store.listHeight + "px"
           }}
           className="c-routePlanning-routes-list"
         >
@@ -239,7 +239,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               stop={this.props.store.focusedStop}
             />
           )}
-          {this.props.store.plan.unscheduledTasks.length > 0 && (
+          {this.props.store.plan.unscheduledTasks.length > 0 && !(this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0) && (
             <RoutePlanningUnscheduledStopsComponent store={this.props.store} />
           )}
           <div className="c-routePlanning-routes-list-main">

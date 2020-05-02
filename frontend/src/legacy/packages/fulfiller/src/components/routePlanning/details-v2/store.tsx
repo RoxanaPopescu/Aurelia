@@ -19,7 +19,8 @@ export class RoutePlanningStore {
   listCurrentItems = 0;
 
   listUnschedulTasksHeight = 56;
-  listInfoHeight = 140;
+  listStopOrderIdsHeight = 56;
+  listInfoHeight = 125;
   listItemHeight = 48;
   minuteToPixel = 5;
 
@@ -220,6 +221,12 @@ export class RoutePlanningStore {
     let height = this.listInfoHeight;
     height += this.plan.routes.length * this.listItemHeight;
 
+    if (this.focusedStop && this.focusedStop.orderIds.length > 0) {
+      height += this.listStopOrderIdsHeight;
+    } else if (this.plan.unscheduledTasks.length > 0) {
+      height += this.listUnschedulTasksHeight;
+    }
+
     const maximumProcentOfScreen = 0.75;
     const maximumHeight = window.innerHeight * maximumProcentOfScreen;
     if (height > maximumHeight) {
@@ -231,16 +238,19 @@ export class RoutePlanningStore {
       height -= tooManyItems * this.listItemHeight;
     }
 
-    if (this.plan.unscheduledTasks.length > 0) {
-      height += this.listUnschedulTasksHeight;
-    }
-
     return height;
   }
 
   get preferredHeight(): number {
     let minimumHeight = this.listInfoHeight;
     minimumHeight += this.listCurrentItems * this.listItemHeight;
+
+    if (this.focusedStop) {
+      minimumHeight += this.listStopOrderIdsHeight;
+    } else if (this.plan.unscheduledTasks.length > 0) {
+      minimumHeight += this.listUnschedulTasksHeight;
+    }
+
     return minimumHeight;
   }
 
