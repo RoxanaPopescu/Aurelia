@@ -402,6 +402,8 @@
   "TimePeriod": "Time Period",
   "Total_Distance": "Total distance",
   "Total_Time": "Total time",
+  "Total_Volume": "Total volume",
+  "Total_Weight": "Total weight",
   "TripRequestStatus_Cancelled": "Cancelled",
   "TripRequestStatus_DriverAssigned": "Driver assigned",
   "TripRequestStatus_Expired": "Expired",
@@ -468,5 +470,7 @@
   "Vehicle_Lift_Plural": "Lifts",
   "Vehicle_Truck": "Truck",
   "Vehicle_Van": "Van",
-  "Vehicle_Van_Plural": "Vans"
+  "Vehicle_Van_Plural": "Vans",
+  "Volume": "Volume",
+  "Weight": "Weight"
 }

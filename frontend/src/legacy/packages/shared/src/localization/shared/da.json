@@ -402,6 +402,8 @@
   "TimePeriod": "Tidsrum",
   "Total_Distance": "Total distance",
   "Total_Time": "Totaltid",
+  "Total_Volume": "Total volume",
+  "Total_Weight": "Total vægt",
   "TripRequestStatus_Cancelled": "Anulleret",
   "TripRequestStatus_DriverAssigned": "Chauffør tildelt",
   "TripRequestStatus_Expired": "Udløbet",
@@ -468,5 +470,7 @@
   "Vehicle_Lift_Plural": "Liftvogne",
   "Vehicle_Truck": "Lastbil",
   "Vehicle_Van": "Varevogn",
-  "Vehicle_Van_Plural": "Varevogne"
+  "Vehicle_Van_Plural": "Varevogne",
+  "Volume": "Volumen",
+  "Weight": "Vægt"
 }

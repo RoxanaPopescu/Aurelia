@@ -7,9 +7,13 @@
 .c-routePlanning-headerItem-title {
   margin-right: 4px;
   opacity: 0.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .c-routePlanning-headerItem-description {
   font-weight: bold;
   text-transform: lowercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

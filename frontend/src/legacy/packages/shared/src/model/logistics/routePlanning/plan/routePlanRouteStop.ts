@@ -20,6 +20,7 @@ export class RoutePlanRouteStop extends RoutePlanStopBase {
     this.colliCount = data.colliCount;
     this.consignors = data.consignorIndexes.map(s => consignors[s as number]);
     this.route = route;
+
   }
 
   /**

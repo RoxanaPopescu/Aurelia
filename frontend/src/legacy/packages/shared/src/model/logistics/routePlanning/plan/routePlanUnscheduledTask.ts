@@ -29,7 +29,7 @@ export class RoutePlanUnscheduledTask {
     );
 
     this.reasons = data.reasons;
-    this.orderIds = data.orderIds;
+    this.orderId = data.orderId;
     this.colliCount = data.colliCount;
     this.consignors = data.consignorIndexes.map(s => consignors[s as number]);
     this.taskNumber = taskNumber;
@@ -57,9 +57,9 @@ export class RoutePlanUnscheduledTask {
   public reasons: string[];
 
   /**
-   * The orders for this unplanned task
+   * The order for this unplanned task
    */
-  public orderIds: string[];
+  public orderId: string;
 
   /**
    * Amount of colli to be picked up or delivered

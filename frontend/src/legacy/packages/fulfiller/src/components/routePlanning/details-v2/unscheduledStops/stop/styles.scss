@@ -1,21 +1,21 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-routePlanning-unscheduledStop {
-  height: 33px;
-  padding: 0 12px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding: 4px 4px;
+  align-items: left;
   cursor: pointer;
   background-color: white;
-  border: 1px dashed #abbec7;
+  border: 1px solid #ddd;
 
   &:hover {
     opacity: 0.6;
   }
 
   &:not(:last-child) {
-    margin-right: 20px;
+    margin-right: 10px;
   }
 }
 

@@ -369,6 +369,7 @@ export class RoutePlanningStore {
               infoWindowOffset: -35
             };
           }}
+          onClick={ () => window.open(`/orders/details/${task.orderId}`) }
           zIndex={9999}
           onMouseOut={() => {
             this.hoveredItem = undefined;
@@ -547,6 +548,20 @@ export class RoutePlanningStore {
         headline: Localization.sharedValue("Distance"),
         value: Localization.formatDistance(stop.estimates.distance)
       });
+
+      if (stop.weight) {
+        rows.push({
+          headline: Localization.sharedValue("Weight"),
+          value: Localization.formatWeight(stop.weight)
+        });
+      }
+
+      if (stop.volume) {
+        rows.push({
+          headline: Localization.sharedValue("Volume"),
+          value: Localization.formatVolume(stop.volume)
+        });
+      }
     }
 
     return rows;
@@ -581,6 +596,14 @@ export class RoutePlanningStore {
       {
         headline: Localization.sharedValue("Total_Distance"),
         value: Localization.formatDistance(route.meta.distance)
+      },
+      {
+        headline: Localization.sharedValue("Total_Weight"),
+        value: Localization.formatWeight(route.meta.weight)
+      },
+      {
+        headline: Localization.sharedValue("Total_Volume"),
+        value: Localization.formatVolume(route.meta.volume)
       }
     ];
   }

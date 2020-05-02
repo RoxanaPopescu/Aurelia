@@ -73,6 +73,18 @@ export default class MetaHeaderComponent extends React.Component<Props> {
             this.props.store.plan.meta.distance
           )}
         />
+        <HeaderItemComponent
+          title={Localization.sharedValue("Total_Weight")}
+          description={Localization.formatWeight(
+            this.props.store.plan.meta.weight
+          )}
+        />
+        <HeaderItemComponent
+          title={Localization.sharedValue("Total_Volume")}
+          description={Localization.formatVolume(
+            this.props.store.plan.meta.volume
+          )}
+        />
       </React.Fragment>
     );
   }

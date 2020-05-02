@@ -292,13 +292,25 @@ export default class Localization {
     );
   }
 
+  static formatVolume(weight: number) {
+    return String(weight.toFixed(1)) + " m3";
+  }
+
+  static formatWeight(weight: number) {
+    if (weight > 1200) {
+      return String((weight / 1000).toFixed(1)) + " tons";
+    } else {
+      return String(weight.toFixed(1)) + " kg";
+    }
+  }
+
   static formatDistance(distanceInMeters: number) {
     if (distanceInMeters > 20000) {
-      return String(Math.ceil(distanceInMeters / 1000)) + " km"
+      return String(Math.ceil(distanceInMeters / 1000)) + " km";
     } else if (distanceInMeters > 900) {
-      return String((distanceInMeters / 1000).toFixed(1)) + " km"
+      return String((distanceInMeters / 1000).toFixed(1)) + " km";
     } else {
-      return String(Math.ceil(distanceInMeters)) + " m"
+      return String(Math.ceil(distanceInMeters)) + " m";
     }
   }
 

@@ -15,6 +15,8 @@ export class RoutePlanStopBase {
     this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, {
       setZone: true
     });
+    this.weight = data.weight;
+    this.volume = data.volume;
   }
 
   /**
@@ -31,6 +33,16 @@ export class RoutePlanStopBase {
    * Location of this stop
    */
   public location: Location;
+
+  /**
+   * The weight of all colli
+   */
+  public weight?: number;
+
+  /**
+   * The volume of all colli
+   */
+  public volume?: number;
 
   /**
    * The range of which the driver is allowed to arrive.

@@ -31,8 +31,6 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
           this.props.store.focusRoute(undefined);
         }}
         title={this.props.task.reasons.join(", ")}
-        draggable={true}
-        onDragStart={e => this.onDragStart(e)}
       >
         <RoutePlanningRoutesStopItemComponent
           title={Localization.sharedValue("Timeframe")}
@@ -42,7 +40,6 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
           title={Localization.sharedValue("Address")}
           description={stop.location.address.primary}
         />
-        <img src={require("./assets/drag.svg")} />
       </div>
     );
   }

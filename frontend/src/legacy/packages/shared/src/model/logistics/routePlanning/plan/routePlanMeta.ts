@@ -15,6 +15,8 @@ export class RoutePlanMeta {
     this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
     this.timeFrame = new DateTimeRange(data.timeFrame, { setZone: true });
+    this.weight = data.weight;
+    this.volume = data.volume;
   }
 
   /**
@@ -26,6 +28,16 @@ export class RoutePlanMeta {
    * Amount of colli either picked up or delivered
    */
   public colliCount: number;
+
+  /**
+   * The weight of all colli
+   */
+  public weight: number;
+
+  /**
+   * The volume of all colli
+   */
+  public volume: number;
 
   /**
    * Amount of stops
