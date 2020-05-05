@@ -4,6 +4,7 @@
     "slug": "demo",
     "status": "started",
     "reference": "Fyn1",
+    "productType": "solution",
     "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
     "criticality": "high",
     "fulfiller": {

@@ -1,0 +1,185 @@
+////
+/// @group resources/themes/mover
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+@import "./settings/font-family";
+
+// Export the surfaces.
+// Surfaces define theme specific overrides to the base surfaces.
+@import "./surfaces/index";
+
+// HACK: Override default styles.
+
+button[appearance="outline"]
+{
+    border-width: var(--border-width-thin) !important;
+    border-color: var(--palette-color-neutral) !important;
+}
+
+modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not([accent]),
+.modal-dialog-actions button[appearance="icon"]:not([accent]),
+.toast-actions
+{
+    color: var(--surface-primary-icon-color);
+}
+
+tab-nav
+{
+    /**
+     * The color of the border of tabs.
+     */
+    --tab-nav-border-color: var(--palette-color-neutral);
+
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-nav-border-width: var(--border-width-thin);
+}
+
+page-tab-nav
+{
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-medium);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--surface-neutral-surface-color);
+}
+
+body
+{
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
+}
+
+dropdown-icon
+{
+    opacity: 1;
+}
+
+// NEW:
+
+data-table[appearance="rows"]
+{
+    --data-table-header-padding: 3rem;
+    --data-table-cell-padding: 3rem;
+    --data-table-cell-background--hover: var(--palette-color-primary-lighter);
+}
+
+page-sidebar page-header,
+page-sidebar page-section,
+page-sidebar page-footer,
+page-content page-section,
+page-content page-footer,
+{
+    margin: 6rem 7rem !important;
+}
+
+page-content page-header,
+{
+    padding: 6rem 7rem !important;
+}
+
+html
+{
+    .input-heading > *,
+    .input-description > *,
+    .toggle-heading > *,
+    .toggle-description > *
+    {
+        opacity: var(--opacity-faded-less) !important;
+        color: inherit !important;
+    }
+
+    page-sidebar
+    {
+        .input-heading > *,
+        .input-description > *,
+        .toggle-heading > *,
+        .toggle-description > *
+        {
+            opacity: 1 !important;
+            color: inherit !important;
+        }
+    }
+}
+
+html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    margin: 0;
+    padding: 2rem 0 5px 0;
+    border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
+    background: none !important;
+    color: var(--palette-color-neutral-darker);
+    font-weight: 600;
+}
+
+body
+{
+    --modal-backdrop-color: rgba(171, 190, 199, 0.5);
+    --app-sidebar-width: 15rem;
+    --toggle-height: 1.75em !important;
+}
+
+html app-sidebar
+{
+    --surface-nav-link-surface-icon-color: #88929e !important;
+    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%) !important;
+
+    &,
+    header::before,
+    footer::before
+    {
+        background: var(--palette-color-primary-darkest);
+    }
+
+    app-logo
+    {
+        margin: 9rem 2rem 6rem 2rem;
+        height: 5rem;
+    }
+
+    user-identity a identity-picture
+    {
+        width: 9rem;
+        height: 9rem;
+        background: var(--palette-color-primary--child);
+    }
+
+    &:not(.--expanded)
+    {
+        .nav-link
+        {
+            padding: 3rem 4.5rem;
+        }
+
+        .sidebar-child-link
+        {
+            padding: 1.75rem 0 1.75rem 5.5rem;
+        }
+    }
+
+    &.--expanded user-identity
+    {
+        margin-left: 6rem;
+    }
+}

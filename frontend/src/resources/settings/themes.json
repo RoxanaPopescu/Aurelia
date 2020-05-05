@@ -15,6 +15,11 @@
         "color": "#0051ba"
     },
     {
+        "slug": "zendesk",
+        "name": "Zendesk",
+        "color": "#11253E"
+    },
+    {
         "slug": "lingu-light",
         "name": "Lingu (Light)",
         "color": "#0646a6"
