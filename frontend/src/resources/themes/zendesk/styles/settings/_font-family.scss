@@ -1,0 +1,33 @@
+////
+/// @group themes/mover/settings/font-family
+////
+
+/// Theme specific overrides to the base settings.
+$__summary: comment;
+
+
+/* stylelint-disable declaration-colon-space-after, value-list-max-empty-lines */
+
+:root
+{
+    /// The sans-serif font family, used for normal text.
+    /// Note that the font `system-ui` is not used, as it depends on the system language,
+    /// and may represents a font that is not optimized for the Latin script.
+    --font-family-sans-serif:
+
+        "Open Sans",
+
+        -apple-system,
+        BlinkMacSystemFont,
+
+        "Segoe UI",
+        "Roboto",
+        "Helvetica",
+        "Arial",
+
+        sans-serif,
+
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol";
+}
