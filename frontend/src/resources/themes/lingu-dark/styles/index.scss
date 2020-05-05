@@ -96,8 +96,10 @@ data-table[appearance="cards"]
     --data-table-header-border-color: rgba(30, 30, 30, 0.95);
 }
 
-html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
+    padding-bottom: 0;
+    padding-top: 0;
     background: transparent !important;
     color: var(--palette-color-neutral-lightest) !important;
 }
