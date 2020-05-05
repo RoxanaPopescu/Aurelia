@@ -25,7 +25,6 @@ export class Route extends AbstractRoute<RouteStop>
         this.driverListUrl = data.driverListUrl;
         this.driverInstructions = data.driverInstructions;
         this.tags = data.tags;
-        this.allowAssignment = data.allowAssignment;
 
         if (data.owner != null)
         {
@@ -72,11 +71,6 @@ export class Route extends AbstractRoute<RouteStop>
      * The instructions the driver should follow, if any.
      */
     public readonly driverInstructions?: string;
-
-    /**
-     * True if the route may be assigned to a fulfiller or driver, otherwise false.
-     */
-    public allowAssignment: boolean;
 
     /**
      * The owner of this route, only exist if all stops belongs to this outfit.

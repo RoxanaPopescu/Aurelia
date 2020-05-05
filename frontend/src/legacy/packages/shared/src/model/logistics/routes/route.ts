@@ -187,7 +187,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    */
   public get totalStopCount(): number {
     return this.stops.filter(
-      s => s instanceof RouteStop && s.status.slug !== "cancelled"
+      s => s instanceof RouteStop
     ).length;
   }
 
@@ -222,11 +222,35 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
   public get currentOrNextStop(): TRouteStop | undefined {
     return this.stops
       .filter(
-        s => s instanceof RouteStop && s.status.slug !== "cancelled"
+        s => s instanceof RouteStop && s.status.slug !== "cancelled" && s.status.slug !== "failed"
       )
       .find(
         s => s.status.slug === "arrived" || s.status.slug === "not-visited"
       ) as TRouteStop;
+  }
+
+  /**
+   * The current or next stop on the route, or undefined
+   * if all stops have been visited or cancelled.
+   */
+  public get currentStopIndex(): number | undefined {
+    return this.stops
+      .filter(
+        s => s instanceof RouteStop && s.status.slug !== "cancelled" && s.status.slug !== "failed"
+      )
+      .findIndex(
+        s => s.status.slug === "arrived" || s.status.slug === "not-visited"
+      );
+  }
+
+  /**
+   * The future stops at which too early is expected.
+   */
+  public get expectedTooEarly(): TRouteStop[] {
+    return this.stops.filter(
+      s =>
+        s instanceof RouteStop && s.status.slug === "not-visited" && s.expectedTooEarly != null
+    ) as TRouteStop[];
   }
 
   /**

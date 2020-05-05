@@ -6,6 +6,7 @@ import { RoutesService } from "../../../../../services/routesService";
 import { routeFlagService } from "../../../../../services/routeFlagService";
 import { Icon } from "shared/src/webKit";
 import "./route.scss";
+import { RouteStop } from "shared/src/model/logistics/routes";
 
 export interface RoutesLayerProps {
   routesService: RoutesService;
@@ -109,10 +110,49 @@ export class Route extends React.Component<RoutesLayerProps> {
             {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDelaysAtStop")}
             {" " + Localization.formatIntegersAsRanges(this.props.route.expectedDelays.map(s => s.stopNumber), 3)}
           </div>}
+          {this.renderCancelledOrFailedStops()}
           {this.renderDriverOffline()}
+          {this.props.route.expectedTooEarly.length > 0 &&
+            <div
+              onClick={e => this.onTooEarlyMessageClicked(e)}
+              className={`
+                c-liveTracking-panel-message
+                c-liveTracking-box-clickable
+                c-liveTracking-box-neutral
+              `}
+            >
+              {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedTooEarlyAtStop")}
+              {" " + Localization.formatIntegersAsRanges(this.props.route.expectedTooEarly.map(s => s.stopNumber), 3)}
+            </div>
+          }
         </div>
 
       </div>
+    );
+  }
+
+  renderCancelledOrFailedStops(): JSX.Element | undefined {
+    if (["completed", "cancelled"].includes(this.props.route.status.slug)) {
+      return;
+    }
+
+    let problems = this.problemStops();
+    if (problems.length <= 0) {
+      return;
+    }
+
+    return (
+      <div
+          onClick={e => this.onFailedOrCancelledMessageClicked(e)}
+          className={`
+            c-liveTracking-panel-message
+            c-liveTracking-box-clickable
+            c-liveTracking-box-warning
+          `}
+        >
+          {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_CancelledOrFailedAtStop")}
+          {" " + Localization.formatIntegersAsRanges(problems.map(s => s.stopNumber), 3)}
+        </div>
     );
   }
 
@@ -125,16 +165,28 @@ export class Route extends React.Component<RoutesLayerProps> {
       return;
     }
 
-    let boxStyle = "c-liveTracking-box-negative";
-    if (this.props.route.status.slug != "requested") {
+    let boxStyle: string;
+    if (this.props.route.status.slug == "not-started") {
+      boxStyle = "c-liveTracking-box-negative";
+    } else {
       boxStyle = "c-liveTracking-box-warning";
     }
 
     return (
       <div className={"c-liveTracking-panel-message " + boxStyle}>
-            {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
-          </div>
+          {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
+      </div>
     );
+  }
+
+  private problemStops(): RouteStop[] {
+    return this.props.route.stops.filter(
+      s =>
+        s instanceof RouteStop &&
+        this.props.route.currentStopIndex &&
+        this.props.route.currentStopIndex + 1 > s.stopNumber &&
+        (s.status.slug === "cancelled" || s.status.slug === "failed")
+    ) as RouteStop[];
   }
 
   private onClick(): void {
@@ -153,6 +205,17 @@ export class Route extends React.Component<RoutesLayerProps> {
     event.stopPropagation();
   }
 
+  private onFailedOrCancelledMessageClicked(event: React.MouseEvent): void {
+    if (this.props.routesService.selectedRouteId === this.props.route.id) {
+      event.stopPropagation();
+    }
+    setTimeout(() => {
+      // Needed to trigger change detection.
+      this.props.routesService.selectedRouteStopId = undefined;
+      this.props.routesService.selectedRouteStopId = this.problemStops[0].id;
+    });
+  }
+
   private onDelayMessageClicked(event: React.MouseEvent): void {
     if (this.props.routesService.selectedRouteId === this.props.route.id) {
       event.stopPropagation();
@@ -161,6 +224,17 @@ export class Route extends React.Component<RoutesLayerProps> {
       // Needed to trigger change detection.
       this.props.routesService.selectedRouteStopId = undefined;
       this.props.routesService.selectedRouteStopId = this.props.route.expectedDelays[0].id;
+    });
+  }
+
+  private onTooEarlyMessageClicked(event: React.MouseEvent): void {
+    if (this.props.routesService.selectedRouteId === this.props.route.id) {
+      event.stopPropagation();
+    }
+    setTimeout(() => {
+      // Needed to trigger change detection.
+      this.props.routesService.selectedRouteStopId = undefined;
+      this.props.routesService.selectedRouteStopId = this.props.route.expectedTooEarly[0].id;
     });
   }
 }

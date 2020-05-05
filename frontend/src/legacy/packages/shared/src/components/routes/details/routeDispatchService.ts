@@ -3,7 +3,6 @@ import { Driver } from "shared/src/model/logistics/driver";
 import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Route } from "../../../model/logistics/routes/details";
-import { RouteStatus } from "shared/src/model/logistics/routes";
 
 export class DriverInfo {
 
@@ -52,8 +51,6 @@ export class RouteDispatchService {
     }
 
     route.driver = driver;
-    route.status = new RouteStatus("assigned");
-    route.allowAssignment = false;
   }
 
   public async getFulfillers(): Promise<Fulfiller[]> {

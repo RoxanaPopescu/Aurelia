@@ -1,10 +1,12 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { Modal } from "shared/framework";
+import { Modal, ModalService } from "shared/framework";
 import { RouteAssignmentService, Route } from "app/model/route";
 import { AgreementService } from "app/model/agreement";
 import { Fulfiller } from "app/model/outfit";
+import { ConfirmRemoveFulfillerDialog } from "./confirm-remove-fulfiller/confirm-remove-fulfiller";
+import { IdentityService } from "app/services/identity";
 
 @autoinject
 export class AssignFulfillerPanel
@@ -12,17 +14,23 @@ export class AssignFulfillerPanel
     /**
      * Creates a new instance of the class.
      * @param modal The `Modal` instance representing the modal.
+     * @param modalService The `ModalService` instance.
+     * @param identityService The `IdentityService` instance.
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param agreementService The `AgreementService` instance.
      */
-    public constructor(modal: Modal, routeAssignmentService: RouteAssignmentService, agreementService: AgreementService)
+    public constructor(modal: Modal, modalService: ModalService, identityService: IdentityService, routeAssignmentService: RouteAssignmentService, agreementService: AgreementService)
     {
         this._modal = modal;
+        this._modalService = modalService;
+        this.identityService = identityService;
         this._routeAssignmentService = routeAssignmentService;
         this._agreementService = agreementService;
     }
 
     private readonly _modal: Modal;
+    private readonly _modalService: ModalService;
+    protected readonly identityService: IdentityService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _agreementService: AgreementService;
     private _result: Fulfiller | undefined;
@@ -96,9 +104,26 @@ export class AssignFulfillerPanel
     /**
      * Called when a fulfiller in the list of fulfillers is clicked.
      * Assigns the fulfiller to the route and closes the modal.
+     * If the fulfiller of the route is not the current user,
+     * we are removing fulfillers, therefore we confirm it.
      */
     protected async onFulfillerClick(fulfiller: Fulfiller): Promise<void>
     {
+        if (this.route.fulfiller.id != this.identityService.identity?.outfit.id) {
+            const confirmed = await this._modalService.open(
+                ConfirmRemoveFulfillerDialog,
+                {
+                    currentFulfiller: this.route.fulfiller,
+                    newFulfiller: fulfiller
+                }
+            ).promise;
+
+            if (!confirmed)
+            {
+                return;
+            }
+        }
+
         try
         {
             this._modal.busy = true;

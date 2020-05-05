@@ -6,7 +6,7 @@ import { RouteCriticality, RouteStatus } from "shared/src/model/logistics/routes
 import { routeFlagService } from "./routeFlagService";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
-  ["requested", "accepted", "assigned", "started", "completed", "cancelled"];
+  ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
 
 /**
  * Represents the filters that determien which routes are shown in live tracking.

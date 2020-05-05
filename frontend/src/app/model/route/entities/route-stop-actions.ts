@@ -13,7 +13,7 @@ export class RouteStopActions
             this.instructionsAccept = data.instructionsAccept;
             this.timeFrameVerification = data.timeFrameVerification;
             this.scanColli = data.scanColli;
-            this.scanAllColli = data.scanAllColli;
+            this.handleAllColli = data.handleAllColli;
             this.signature = data.signature;
             this.photo = data.photo;
             this.verificationCode = data.verificationCode;
@@ -22,7 +22,7 @@ export class RouteStopActions
             this.instructionsAccept = false;
             this.timeFrameVerification = false;
             this.scanColli = false;
-            this.scanAllColli = false;
+            this.handleAllColli = false;
             this.signature = false;
             this.photo = false;
             this.verificationCode = false;
@@ -46,9 +46,9 @@ export class RouteStopActions
     public scanColli: boolean;
 
     /**
-     * True if all colli must be scanned, otherwise false.
+     * True if all colli must be handled by either scanning or rejecting, otherwise false.
      */
-    public scanAllColli: boolean;
+    public handleAllColli: boolean;
 
     /**
      * True if a signature must be captured as proof of delivery, otherwise false.

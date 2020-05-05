@@ -2,7 +2,7 @@ import { Signature, Photo } from "app/model/shared";
 import { RouteStopBase } from "./route-stop-base";
 import { Pickup } from "./pickup";
 import { Delivery } from "./delivery";
-import { RouteStopProblem } from "./route-stop-problem";
+import { RouteStopDeviation } from "./route-stop-deviation";
 import { RouteStopActions } from "./route-stop-actions";
 import clone from "clone";
 
@@ -24,10 +24,8 @@ export class RouteStop extends RouteStopBase
             this.pickups = data.pickups.map(p => new Pickup(p));
             this.deliveries = data.deliveries.map(d => new Delivery(d));
             this.actions = new RouteStopActions(data.actions);
-            this.problems = data.problems.map(p => new RouteStopProblem(p));
+            this.deviations = data.deviations.map(p => new RouteStopDeviation(p));
             this.selfies = data.selfies.map(p => new Photo(p));
-            this.signatureRequired = data.signatureRequired;
-            this.photoRequired = data.photoRequired;
             this.tags = data.tags;
 
             if (data.signature != null)
@@ -39,7 +37,6 @@ export class RouteStop extends RouteStopBase
             {
                 this.photo = new Photo(data.photo);
             }
-
         }
         else
         {
@@ -67,9 +64,9 @@ export class RouteStop extends RouteStopBase
     public readonly actions: RouteStopActions;
 
     /**
-     * The problems associated with the stop.
+     * The deviations associated with the stop.
      */
-    public readonly problems: RouteStopProblem[];
+    public readonly deviations: RouteStopDeviation[];
 
     /**
      * The selfies captured at the stop to verify the drivers identity and appearance.
@@ -91,10 +88,6 @@ export class RouteStop extends RouteStopBase
      */
     public readonly tags: string[];
 
-    // TODO: Should be removed - replaced by actions
-    public readonly signatureRequired: boolean;
-    public readonly photoRequired: boolean;
-
     /**
      * True if there is an alert for this route stop, otherwise false.
      */
@@ -102,7 +95,7 @@ export class RouteStop extends RouteStopBase
     {
         return (
             this.getHasAlert() ||
-            this.problems.length > 0 ||
+            this.deviations.length > 0 ||
             this.hasColliProblem
         );
     }

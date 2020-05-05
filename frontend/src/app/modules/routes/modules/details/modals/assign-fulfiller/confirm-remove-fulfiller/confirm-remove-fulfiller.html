@@ -1,0 +1,35 @@
+<template>
+
+    <require from="./confirm-remove-fulfiller.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="confirm-remove-fulfiller" accent="negative" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
+                You have already assigned this to <b>${newFulfiller.companyName}</b> instead of <b>${currentFulfiller.companyName}</b>?
+            </h1>
+
+        </modal-header>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
+                    Cancel
+                </button>
+
+                <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
+                    Assign to <b>${newFulfiller.companyName}</b>
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

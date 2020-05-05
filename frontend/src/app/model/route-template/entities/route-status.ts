@@ -36,13 +36,13 @@ export class RouteStatus
      */
     public static readonly values =
     {
-        "requested":
+        "not-started":
         {
-            name: "Requested"
+            name: "Not started"
         },
-        "waiting-for-approval":
+        "not-approved":
         {
-            name: "Waiting for approval"
+            name: "Not approved"
         }
     };
 }

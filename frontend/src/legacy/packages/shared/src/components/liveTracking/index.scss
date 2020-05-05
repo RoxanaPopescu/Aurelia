@@ -22,10 +22,10 @@
 }
 
 .c-liveTracking-box-neutral {
-  background-color: var(--colorNeutralExtraLight) !important;
+  background-color: var(--colorNeutralRegular) !important;
 
   &.c-liveTracking-box-clickable:hover {
-    background-color: var(--colorNeutralExtraLightDarken) !important;
+    opacity: 0.7;
   }
 }
 

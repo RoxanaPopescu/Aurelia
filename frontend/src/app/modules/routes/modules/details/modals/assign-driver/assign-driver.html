@@ -10,8 +10,13 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest margin-bottom" translate>
-                Assign driver
+            <h1 class="font-largest margin-bottom">
+                <template if.bind="route.driver" translate>
+                    Reassign driver
+                </template>
+                <template if.bind="!route.driver" translate>
+                    Assign driver
+                </template>
             </h1>
 
             <search-input value.bind="queryText" autofocus ref="queryInputElement">

@@ -22,7 +22,12 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.slug}
+                        <template if.bind="route">
+                            ${route.slug}
+                        </template>
+                        <template if.bind="!route">
+                            ${routeId}
+                        </template>
                     </div>
 
                 </name-value-pair>
@@ -158,24 +163,27 @@
 
             </page-section>
 
-            <page-section
-                if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
-                toggle.bind="true"
-                expanded.to-view="false">
+            <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Support note
+                    Fulfiller
                 </div>
 
-                <name-value-pair>
+                <name-value-pair class="margin-bottom">
 
-                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
+                    <div slot="name" translate>
+                        Company
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.fulfiller.primaryName}
+                    </div>
 
                 </name-value-pair>
 
             </page-section>
 
-            <page-section toggle.bind="true" expanded.to-view="false">
+            <page-section toggle.bind="true" expanded.to-view="route.driver">
 
                 <div slot="header" translate>
                     Driver
@@ -219,24 +227,20 @@
 
             </page-section>
 
-            <page-section toggle.bind="true" expanded.to-view="false">
+            <page-section
+                if.bind="environment == 'development' || route.isPrimaryFulfiller"
+                toggle.bind="true"
+                expanded.to-view="false">
 
                 <div slot="header" translate>
-                    Fulfiller
+                    Support note
                 </div>
 
-                <name-value-pair class="margin-bottom">
+                <name-value-pair>
 
-                    <div slot="name" translate>
-                        Company
-                    </div>
-
-                    <div slot="value" empty-value>
-                        ${route.fulfiller.primaryName}
-                    </div>
+                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
 
                 </name-value-pair>
-
             </page-section>
 
             <page-section toggle.bind="true" expanded.to-view="false">
@@ -390,35 +394,44 @@
                             Routes
                         </a>
 
-                        <span if.bind="route.slug != null">
-                            ${route.slug}
+                        <span>
+                            <template if.bind="route">
+                                ${route.slug}
+                            </template>
+                            <template if.bind="!route">
+                                ${routeId}
+                            </template>
                         </span>
-
-                        <div if.bind="route.slug == null" class="text-skeleton" style="width: 60rem"></div>
-
                     </path-nav>
                 </h1>
 
                 <toolbar if.bind="route" if-claims="edit-routes" class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()" translate>
-                        Assign fulfiller
+                    <button appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()">
+                        <template if.bind="route.fulfiller.id == identityService.identity.outfit.id" translate>
+                            Assign fulfiller
+                        </template>
+                        <template if.bind="route.fulfiller.id != identityService.identity.outfit.id" translate>
+                            Reassign fulfiller
+                        </template>
                     </button>
 
-                    <button if.bind="!route.driver" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
-                        Assign driver
+                    <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
+                        <template if.bind="!route.driver" translate>
+                            Assign driver
+                        </template>
+                        <template if.bind="route.driver" translate>
+                            Reassign driver
+                        </template>
                     </button>
 
-                    <button if.bind="route.driver" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()" translate>
-                        Reassign driver
-                    </button>
-
-                    <button if.bind="!route.vehicle" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
-                        Assign vehicle
-                    </button>
-
-                    <button if.bind="route.vehicle" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()" translate>
-                        Reassign vehicle
+                    <button appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()">
+                        <template if.bind="!route.vehicle" translate>
+                            Assign vehicle
+                        </template>
+                        <template if.bind="route.vehicle" translate>
+                            Reassign vehicle
+                        </template>
                     </button>
 
                     <select-button appearance="outline" accent="primary">
@@ -427,12 +440,12 @@
                             Change status
                         </div>
 
-                        <item disabled.bind="['requested', 'accepted', 'assigned'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
+                        <item disabled.bind="['not-started'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
                             Not started
                         </item>
 
-                        <item if.bind="route.driver" disabled.bind="['requested', 'accepted', 'started'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
-                            Started
+                        <item if.bind="route.driver" disabled.bind="['in-progress'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
+                            In progress
                         </item>
 
                         <item if.bind="route.driver" disabled.bind="['completed'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
@@ -460,7 +473,7 @@
                         </item>
 
                         <item
-                            if.bind="environment == 'development' || identityService.identity.outfit.isMoverLogistics"
+                            if.bind="environment == 'development' || route.isPrimaryFulfiller"
                             click.trigger="onAddSupportNoteClick()"
                             translate>
                             Add support note

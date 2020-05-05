@@ -8,8 +8,13 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest margin-bottom" translate>
-                Assign fulfiller
+            <h1 class="font-largest margin-bottom">
+                <template if.bind="route.fulfiller.id != identityService.identity.outfit.id" translate>
+                    Reassign fulfiller
+                </template>
+                <template if.bind="route.fulfiller.id == identityService.identity.outfit.id" translate>
+                    Assign fulfiller
+                </template>
             </h1>
 
             <search-input value.bind="queryText" autofocus ref="queryInputElement">

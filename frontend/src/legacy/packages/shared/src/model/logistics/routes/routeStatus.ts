@@ -1,46 +1,42 @@
 import Localization from "shared/src/localization";
 import { Accent } from "../../general/accent";
+import { textCase } from "shared/utilities";
 
 /**
  * Represents the status of a route.
  */
 export class RouteStatus {
   public static readonly map = {
-    requested: {
-      name: Localization.sharedValue("Model_Logistics_RouteStatus:Requested"),
+    "not-started": {
+      name: Localization.sharedValue("Model_Logistics_RouteStatus:NotStarted"),
       accent: "neutral",
       value: 1
     },
-    accepted: {
-      name: Localization.sharedValue("Model_Logistics_RouteStatus:Accepted"),
-      accent: "neutral",
-      value: 2
-    },
-    assigned: {
-      name: Localization.sharedValue("Model_Logistics_RouteStatus:Assigned"),
-      accent: "neutral",
-      value: 3
-    },
-    started: {
-      name: Localization.sharedValue("Model_Logistics_RouteStatus:Started"),
+    "in-progress": {
+      name: Localization.sharedValue("Model_Logistics_RouteStatus:InProgress"),
       accent: "neutral",
       value: 4
     },
-    completed: {
+    "not-approved": {
+      name: Localization.sharedValue("Model_Logistics_RouteStatus:NotApproved"),
+      accent: "neutral",
+      value: 4
+    },
+    "completed": {
       name: Localization.sharedValue("Model_Logistics_RouteStatus:Completed"),
       accent: "positive",
       value: 20
     },
-    cancelled: {
+    "cancelled": {
       name: Localization.sharedValue("Model_Logistics_RouteStatus:Cancelled"),
       accent: "neutral",
       value: 100
     }
   };
 
-  public constructor(status: keyof typeof RouteStatus.map) {
-    this.slug = status;
-    Object.assign(this, RouteStatus.map[status]);
+  public constructor(slug: keyof typeof RouteStatus.map) {
+    this.slug = textCase(slug, "pascal", "kebab") as any;
+    Object.assign(this, RouteStatus.map[this.slug]);
   }
 
   public slug: keyof typeof RouteStatus.map;

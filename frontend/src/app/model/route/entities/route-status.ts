@@ -39,28 +39,22 @@ export class RouteStatus
      */
     public static readonly values =
     {
-        "requested":
+        "not-started":
         {
-            name: "Requested",
-            accent: "attention",
+            name: "Not started",
+            accent: "neutral",
             value: 1
         },
-        "accepted":
+        "in-progress":
         {
-            name: "Accepted",
+            name: "In progress",
             accent: "attention",
             value: 2
         },
-        "assigned":
+        "not-approved":
         {
-            name: "Assigned",
-            accent: "neutral",
-            value: 3
-        },
-        "started":
-        {
-            name: "Started",
-            accent: "neutral",
+            name: "Not approved",
+            accent: "attention",
             value: 4
         },
         "completed":
@@ -72,7 +66,7 @@ export class RouteStatus
         "cancelled":
         {
             name: "Cancelled",
-            accent: "neutral",
+            accent: "negative",
             value: 100
         }
     };

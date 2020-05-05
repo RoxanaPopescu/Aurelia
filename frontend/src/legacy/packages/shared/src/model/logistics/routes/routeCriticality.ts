@@ -1,7 +1,8 @@
 import Localization from "shared/src/localization";
+import { textCase } from "shared/utilities";
 
 /**
- * Represents the criticality of a route, which is an indication of 
+ * Represents the criticality of a route, which is an indication of
  * how much attention it requires from the operations team.
  */
 export class RouteCriticality {
@@ -20,9 +21,9 @@ export class RouteCriticality {
     }
   };
 
-  public constructor(criticality: keyof typeof RouteCriticality.map) {
-    this.slug = criticality;
-    Object.assign(this, RouteCriticality.map[criticality]);
+  public constructor(slug: keyof typeof RouteCriticality.map) {
+    this.slug = textCase(slug, "pascal", "kebab") as any;
+    Object.assign(this, RouteCriticality.map[this.slug]);
   }
 
   public slug: keyof typeof RouteCriticality.map;

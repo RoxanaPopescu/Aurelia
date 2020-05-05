@@ -145,6 +145,22 @@ export abstract class RouteStopBase extends RouteStopInfo
     }
 
     /**
+     * The time the driver is expected too early
+     */
+    public get expectedTooEarly(): Duration | undefined
+    {
+        if (this.estimates == null) {
+            return undefined;
+        }
+
+        return this.arrivalTimeFrame.from
+            ? this.arrivalTimeFrame.from
+                .startOf("minute")
+                .diff(this.estimates.arrivalTime.startOf("minute"))
+            : undefined;
+    }
+
+    /**
      * True if there is an alert for this route stop, otherwise false.
      * @returns True if there is an alert for this route stop, otherwise false.
      */

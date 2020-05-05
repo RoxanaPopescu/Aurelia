@@ -2,7 +2,6 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { Route } from "../entities/route";
 import { Driver } from "app/model/driver";
-import { RouteStatus } from "../entities/route-status";
 import { Fulfiller } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
 
@@ -41,8 +40,6 @@ export class RouteAssignmentService
         });
 
         route.driver = driver;
-        route.status = new RouteStatus("assigned");
-        route.allowAssignment = false;
     }
 
     /**
@@ -84,6 +81,5 @@ export class RouteAssignmentService
         });
 
         route.fulfiller = fulfiller;
-        route.allowAssignment = false;
     }
 }

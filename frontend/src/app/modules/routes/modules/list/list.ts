@@ -67,20 +67,26 @@ export class ListPage
     protected paging: IPaging =
     {
         page: 1,
-        pageSize: 20
+        pageSize: 50
     };
 
     /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug | undefined = "requested";
+    protected statusFilter: RouteStatusSlug | undefined = "in-progress";
 
     /**
      * The text in the filter text input.
      */
     @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
+
+    /**
+     * The order tags for which orders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected tagsFilter: any[] = [];
 
     /**
      * The total number of items matching the query, or undefined if unknown.

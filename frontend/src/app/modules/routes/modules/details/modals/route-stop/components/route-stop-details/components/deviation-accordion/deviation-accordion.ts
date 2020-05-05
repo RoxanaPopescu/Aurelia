@@ -1,8 +1,8 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { RouteStopProblem } from "app/model/route";
+import { RouteStopDeviation } from "app/model/route";
 
 @autoinject
-export class ProblemAccordionCustomElement
+export class DeviationAccordionCustomElement
 {
     /**
      * True if the component is expanded, otherwise false.
@@ -14,7 +14,7 @@ export class ProblemAccordionCustomElement
      * The problem to present.
      */
     @bindable
-    public model: RouteStopProblem;
+    public model: RouteStopDeviation;
 
     /**
      * Called when the header is clicked.

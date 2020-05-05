@@ -134,20 +134,35 @@ export abstract class RouteStop extends RouteStopBase {
 
   /**
    * The delay at the stop, if the driver arrived late.
-   * If the stop is not yet completed, this will be an estimate.
    * Note that the value is rounded down to the nearest minute.
    */
   public get arrivalDelay(): Duration | undefined
   {
-      if (!this.isDelayed || this.estimates == null) {
+      if (this.estimates == null || this.arrivalTimeFrame?.to == null) {
           return undefined;
       }
 
-      return this.arrivalTimeFrame.to
-          ? this.estimates.arrivalTime
-              .startOf("minute")
-              .diff(this.arrivalTimeFrame.to.startOf("minute"))
-          : undefined;
+      let duration = this.estimates.arrivalTime
+        .startOf("minute")
+        .diff(this.arrivalTimeFrame.to.startOf("minute"));
+
+      return duration.get("milliseconds") > 0 ? duration : undefined;
+  }
+
+  /**
+   * The time the driver is expected too early
+   */
+  public get expectedTooEarly(): Duration | undefined
+  {
+      if (this.estimates == null || this.arrivalTimeFrame?.from == null) {
+          return undefined;
+      }
+
+      let duration = this.arrivalTimeFrame.from
+        .startOf("minute")
+        .diff(this.estimates.arrivalTime.startOf("minute"));
+
+      return duration.get("milliseconds") > 0 ? duration : undefined;
   }
 
   /**

@@ -2,7 +2,7 @@
 
     <require from="app/components/data-section/data-section"></require>
     <require from="../order-accordion/order-accordion"></require>
-    <require from="./components/problem-accordion/problem-accordion"></require>
+    <require from="./components/deviation-accordion/deviation-accordion"></require>
 
     <require from="./route-stop-details.scss"></require>
 
@@ -181,18 +181,18 @@
 
     </template>
 
-    <!-- Problems -->
-    <template if.bind="model.routeStop.problems.length > 0">
+    <!-- Devitiona -->
+    <template if.bind="model.routeStop.deviations.length > 0">
 
         <hr class="hr-line margin-bottom">
 
-        <data-section class="margin-bottom" toggle.bind="true" invalid.bind="model.routeStop.problems.length > 0">
+        <data-section class="margin-bottom" toggle.bind="true" invalid.bind="model.routeStop.deviations.length > 0">
 
             <div slot="header" class="flex-row" translate>
-                Problems
+                Deviations
             </div>
 
-            <problem-accordion repeat.for="problem of model.routeStop.problems"model.bind="problem"></problem-accordion>
+            <deviation-accordion repeat.for="deviation of model.routeStop.deviations"model.bind="deviation"></deviation-accordion>
 
         </data-section>
 

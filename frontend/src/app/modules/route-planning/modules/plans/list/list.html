@@ -19,34 +19,6 @@
             </page-section>
 
             <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Created date range
-                </div>
-
-                <div class="control-row">
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            From
-                        </div>
-
-                    </date-input>
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            To
-                        </div>
-
-                    </date-input>
-
-                </div>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
                 <div slot="header" translate>
                     Status
                 </div>
@@ -100,6 +72,34 @@
 
                     </check-toggle>
                 </toggle-group>
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Created date
+                </div>
+
+                <div class="control-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdDateFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                    </date-input>
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdDateToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                    </date-input>
+
+                </div>
+
             </page-section>
 
         </page-sidebar>

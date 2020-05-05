@@ -1,5 +1,6 @@
 import Localization from "shared/src/localization";
 import { Accent } from "../../general/accent";
+import { textCase } from "shared/utilities";
 
 /**
  * Represents the status of a route stop.
@@ -29,9 +30,9 @@ export class RouteStopStatus {
     }
   };
 
-  public constructor(status: keyof typeof RouteStopStatus.map) {
-    this.slug = status;
-    Object.assign(this, RouteStopStatus.map[status]);
+  public constructor(slug: keyof typeof RouteStopStatus.map) {
+    this.slug = textCase(slug, "pascal", "kebab") as any;
+    Object.assign(this, RouteStopStatus.map[this.slug]);
   }
 
   public slug: keyof typeof RouteStopStatus.map;

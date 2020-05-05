@@ -2,6 +2,8 @@ import { DateTime } from "luxon";
 import { Address } from "app/model/shared";
 import { Fulfiller } from "app/model/outfit";
 import { RouteStatus } from "./route-status";
+import { VehicleType } from "app/model/vehicle";
+import { RouteCriticality } from "..";
 
 export class RouteInfo
 {
@@ -14,10 +16,14 @@ export class RouteInfo
         this.id = data.publicId;
         this.slug = data.slug;
         this.reference = data.routeReference;
-        this.status = new RouteStatus(data.status);
+        // FIXME:
+        this.status = new RouteStatus("in-progress");
         this.startDateTime = DateTime.fromISO(data.startDateTime, { setZone: true });
         this.startAddress = new Address({ primary: data.pickupAddress });
         this.stopCount = data.stopCount;
+        this.vehicleType = VehicleType.get(data.vehicleTypeId);
+        // FIXME:
+        this.criticality = new RouteCriticality("high");
 
         if (data.fulfiller)
         {
@@ -36,6 +42,11 @@ export class RouteInfo
     public readonly slug: string;
 
     /**
+     * The type of vehicle required for the route.
+     */
+    public readonly vehicleType: VehicleType;
+
+    /**
      * The non-unique reference for the route,
      * or undefined if no reference has been assigned.
      */
@@ -45,6 +56,11 @@ export class RouteInfo
      * The status of the route.
      */
     public readonly status: RouteStatus;
+
+    /**
+     * The criticality of the route.
+     */
+    public readonly criticality: RouteCriticality;
 
     /**
      * The fulfiller responsible for the shipment.

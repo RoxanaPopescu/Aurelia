@@ -34,8 +34,8 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
         this.stops = stops;
-
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
+        this.isPrimaryFulfiller = data.isPrimaryFulfiller;
 
         if (data.expires != null)
         {
@@ -119,6 +119,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The fulfiller responsible for the shipment.
      */
     public fulfiller: Fulfiller;
+
+    /**
+     * The if the fulfiller is the primary one.
+     */
+    public isPrimaryFulfiller: boolean;
 
     /**
      * The driver assigned to the route,
@@ -228,6 +233,16 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
                 s.status.slug !== "cancelled")
             .find(s =>
                 s.status.slug === "arrived" || s.status.slug === "not-visited") as TRouteStop;
+    }
+
+    /**
+     * The future stops at which too early is expected.
+     */
+    public get expectedTooEarly(): TRouteStop[] {
+        return this.stops.filter(
+        s =>
+            s instanceof RouteStopBase && s.status.slug === "not-visited" && s.expectedTooEarly != null
+        ) as TRouteStop[];
     }
 
     /**

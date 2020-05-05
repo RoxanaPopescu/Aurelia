@@ -184,7 +184,7 @@ export class RouteOverview
             }
         }
 
-        return duration;
+        return duration.get("seconds") > 0 ? duration : undefined;
     }
 
     /**
@@ -281,7 +281,7 @@ export class RouteOverview
     {
         if (this.route != null)
         {
-            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'started') && this.delayedStart)
+            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'in-progress') && this.delayedStart)
             {
                 return  true;
             }
