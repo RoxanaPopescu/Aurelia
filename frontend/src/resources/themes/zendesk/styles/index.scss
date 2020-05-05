@@ -80,8 +80,8 @@ dropdown-icon
 
 data-table[appearance="rows"]
 {
-    --data-table-header-padding: 3rem;
-    --data-table-cell-padding: 3rem;
+    --data-table-header-padding: 2.5rem 3.5rem;
+    --data-table-cell-padding: 2.5rem 3.5rem;
     --data-table-cell-background--hover: var(--palette-color-primary-lighter);
 }
 
@@ -158,11 +158,22 @@ html app-sidebar
         height: 5rem;
     }
 
-    user-identity a identity-picture
+    user-identity
     {
-        width: 9rem;
-        height: 9rem;
-        background: var(--palette-color-primary--child);
+        margin-bottom: 3rem;
+
+        a identity-picture
+        {
+            width: 9rem;
+            height: 9rem;
+            background: var(--palette-color-primary--child);
+        }
+
+        + .nav-link
+        {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
     }
 
     &:not(.--expanded)
