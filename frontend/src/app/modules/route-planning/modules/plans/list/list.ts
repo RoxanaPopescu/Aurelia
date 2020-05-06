@@ -96,7 +96,7 @@ export class ListPage
     };
 
     /**
-     * If it failed loading.
+     * True if initial loading failed
      */
     protected failed: boolean = false;
 

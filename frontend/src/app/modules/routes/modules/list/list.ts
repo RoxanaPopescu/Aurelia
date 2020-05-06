@@ -1,9 +1,11 @@
 import { autoinject, observable } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RouteService, RouteStatusSlug, RouteInfo } from "app/model/route";
+import { RouteService, RouteInfo } from "app/model/route";
+import { RouteStatusListSlug } from "app/model/route/entities/route-status-list";
+import { DateTime } from "luxon";
 
 /**
  * Represents the route parameters for the page.
@@ -14,7 +16,7 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    statusFilter?: RouteStatusSlug;
+    statusFilter?: RouteStatusListSlug;
     textFilter?: string;
 }
 
@@ -71,22 +73,39 @@ export class ListPage
     };
 
     /**
+     * True if initial loading failed
+     */
+    protected failed: boolean = false;
+
+    /**
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusSlug | undefined = "in-progress";
+    protected statusFilter: RouteStatusListSlug = "requested";
 
     /**
-     * The text in the filter text input.
+     * The text in the search text input.
      */
     @observable({ changeHandler: "update" })
-    protected textFilter: string | undefined;
+    protected searchQuery: string | undefined;
 
     /**
      * The order tags for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
     protected tagsFilter: any[] = [];
+
+    /**
+     * The min date for whichorders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected startTimeFromFilter: DateTime | undefined;
+
+    /**
+     * The min date for which orders should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected startTimeToFilter: DateTime | undefined;
 
     /**
      * The total number of items matching the query, or undefined if unknown.
@@ -96,7 +115,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected routes: RouteInfo[];
+    protected results: RouteInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -110,7 +129,7 @@ export class ListPage
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.statusFilter = params.statusFilter || this.statusFilter;
-        this.textFilter = params.textFilter || this.textFilter;
+        this.searchQuery = params.textFilter || this.searchQuery;
 
         this.update();
     }
@@ -150,38 +169,51 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            // Fetch the data.
-            const result = await this._routeService.getAll(
-                this.statusFilter,
-                this.textFilter,
-                this.sorting,
-                this.paging,
-                signal);
+            this.failed = false;
 
-            // Update the state.
-            this.routes = result.routes;
-            this.routeCount = result.routeCount;
+            try {
+                // Fetch the data.
+                const result = await this._routeService.getAll(
+                    {
+                        status: this.statusFilter,
+                        searchQuery: this.searchQuery,
+                        tags: this.tagsFilter,
+                        startTimeFrom: this.startTimeFromFilter,
+                        startTimeTo: this.startTimeToFilter
+                    },
+                    this.sorting,
+                    this.paging,
+                    signal
+                );
 
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
+                // Update the state.
+                this.results = result.routes;
+                this.routeCount = result.routeCount;
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll.reset();
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                    state.params.statusFilter = this.statusFilter;
+                    state.params.searchQuery = this.searchQuery || undefined;
+                },
+                { trigger: false, replace: true });
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
             }
-
-            // Scroll to top.
-            this.scroll.reset();
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.page = this.paging.page;
-                state.params.pageSize = this.paging.pageSize;
-                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                state.params.statusFilter = this.statusFilter;
-                state.params.textFilter = this.textFilter || undefined;
-            },
-            { trigger: false, replace: true });
         });
     }
 }

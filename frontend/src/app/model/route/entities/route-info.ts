@@ -1,9 +1,9 @@
 import { DateTime } from "luxon";
 import { Address } from "app/model/shared";
 import { Fulfiller } from "app/model/outfit";
-import { RouteStatus } from "./route-status";
 import { VehicleType } from "app/model/vehicle";
 import { RouteCriticality } from "..";
+import { RouteStatusList } from "./route-status-list";
 
 export class RouteInfo
 {
@@ -13,22 +13,19 @@ export class RouteInfo
      */
     public constructor(data: any)
     {
-        this.id = data.publicId;
+        this.id = data.id;
         this.slug = data.slug;
-        this.reference = data.routeReference;
-        // FIXME:
-        this.status = new RouteStatus("in-progress");
-        this.startDateTime = DateTime.fromISO(data.startDateTime, { setZone: true });
-        this.startAddress = new Address({ primary: data.pickupAddress });
+        this.reference = data.reference;
+        this.status = new RouteStatusList(data.status);
+        this.startDate = DateTime.fromISO(data.startDate, { setZone: true });
+        this.startAddress = new Address({ primary: data.startAddress });
         this.stopCount = data.stopCount;
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
-        // FIXME:
-        this.criticality = new RouteCriticality("high");
+        this.tags = data.tags;
+        this.fulfiller = new Fulfiller(data.fulfiller);
 
-        if (data.fulfiller)
-        {
-            this.fulfiller = new Fulfiller(data.fulfiller);
-        }
+        // FIXME:
+        this.criticality = new RouteCriticality("low");
     }
 
     /**
@@ -42,6 +39,11 @@ export class RouteInfo
     public readonly slug: string;
 
     /**
+     * The tags for the route.
+     */
+    public readonly tags: string[];
+
+    /**
      * The type of vehicle required for the route.
      */
     public readonly vehicleType: VehicleType;
@@ -53,9 +55,9 @@ export class RouteInfo
     public readonly reference?: string;
 
     /**
-     * The status of the route.
+     * The status of the route list.
      */
-    public readonly status: RouteStatus;
+    public readonly status: RouteStatusList;
 
     /**
      * The criticality of the route.
@@ -65,12 +67,12 @@ export class RouteInfo
     /**
      * The fulfiller responsible for the shipment.
      */
-    public readonly fulfiller?: Fulfiller;
+    public readonly fulfiller: Fulfiller;
 
     /**
      * The date and time at which the route is planned to start.
      */
-    public readonly startDateTime: DateTime;
+    public readonly startDate: DateTime;
 
     /**
      * The address at which the route is planned to start.

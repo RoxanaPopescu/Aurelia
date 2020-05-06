@@ -134,19 +134,48 @@ export abstract class RouteStop extends RouteStopBase {
 
   /**
    * The delay at the stop, if the driver arrived late.
-   * Note that the value is rounded down to the nearest minute.
    */
-  public get arrivalDelay(): Duration | undefined
+  public get arrivedDelay(): Duration | undefined
   {
+      if (this.arrivedTime === null || this.arrivalTimeFrame?.to == null) {
+          return undefined;
+      }
+
+      let duration = this.arrivedTime!.diff(this.arrivalTimeFrame.to);
+
+      return duration.get("minute") > 0 ? duration : undefined;
+  }
+
+  /**
+   * The delay at the stop, if the driver is extimated to arrive late.
+   */
+  public get expectedArrivalDelay(): Duration | undefined
+  {
+      if (this.arrivedTime !== null) {
+        return undefined;
+      }
+
       if (this.estimates == null || this.arrivalTimeFrame?.to == null) {
           return undefined;
       }
 
-      let duration = this.estimates.arrivalTime
-        .startOf("minute")
-        .diff(this.arrivalTimeFrame.to.startOf("minute"));
+      let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
 
-      return duration.get("milliseconds") > 0 ? duration : undefined;
+      return duration.get("minute") > 0 ? duration : undefined;
+  }
+
+  /**
+   * The too early arrival at the stop, if the driver arrived too early.
+   * Note that the value is rounded up to the nearest minute.
+   */
+  public get arrivedTooEarly(): Duration | undefined
+  {
+      if (this.arrivedTime === null || this.arrivalTimeFrame?.from === null) {
+          return undefined;
+      }
+
+      let duration = this.arrivalTimeFrame.from!.diff(this.arrivedTime!);
+      return duration.get("minute") > 0 ? duration : undefined;
   }
 
   /**
@@ -154,15 +183,16 @@ export abstract class RouteStop extends RouteStopBase {
    */
   public get expectedTooEarly(): Duration | undefined
   {
-      if (this.estimates == null || this.arrivalTimeFrame?.from == null) {
+      if (this.arrivedTime !== null) {
+        return undefined;
+      }
+
+      if (this.estimates === null || this.arrivalTimeFrame?.from === null) {
           return undefined;
       }
 
-      let duration = this.arrivalTimeFrame.from
-        .startOf("minute")
-        .diff(this.estimates.arrivalTime.startOf("minute"));
-
-      return duration.get("milliseconds") > 0 ? duration : undefined;
+      let duration = this.arrivalTimeFrame.from!.diff(this.estimates!.arrivalTime);
+      return duration.get("minute") > 0 ? duration : undefined;
   }
 
   /**

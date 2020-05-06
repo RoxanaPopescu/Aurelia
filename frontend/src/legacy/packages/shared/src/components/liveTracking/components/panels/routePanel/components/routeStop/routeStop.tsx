@@ -215,33 +215,72 @@ export class RouteStop extends React.Component<RoutesLayerProps> {
             )}
           </div>
 
-          {this.props.routeStop.isDelayed && (
+          {this.props.routeStop.arrivedDelay && (
             <div
               className={`
               c-liveTracking-panel-message
-              c-liveTracking-box-${
-                this.props.route.criticality.slug === "high"
-                  ? "negative"
-                  : "warning"
-              }
+              c-liveTracking-box-warning
             `}
             >
               <div>
-                {this.props.routeStop.status.slug === "not-visited"
-                  ? Localization.sharedValue(
-                      "RouteDetails_Map_RouteStopMarker_ExpectedDelay"
-                    )
-                  : Localization.sharedValue(
-                      "RouteDetails_Map_RouteStopMarker_Delayed"
-                    )}
+                {Localization.sharedValue("RouteDetails_Map_RouteStopMarker_Delayed")}
               </div>
-              {this.props.routeStop.arrivalDelay && (
-                <div>
+              <div>
+                {Localization.formatDuration(
+                  this.props.routeStop.arrivedDelay
+                )}
+              </div>
+            </div>
+          )}
+          {this.props.routeStop.expectedArrivalDelay && (
+            <div
+              className={`
+              c-liveTracking-panel-message
+              c-liveTracking-box-negative
+            `}
+            >
+              <div>
+                {Localization.sharedValue("RouteDetails_Map_RouteStopMarker_ExpectedDelay")}
+              </div>
+              <div>
+                {Localization.formatDuration(
+                  this.props.routeStop.expectedArrivalDelay
+                )}
+              </div>
+            </div>
+          )}
+          {this.props.routeStop.expectedTooEarly && (
+            <div
+              className={`
+              c-liveTracking-panel-message
+              c-liveTracking-box-neutral
+            `}
+            >
+              <div>
+                {Localization.sharedValue("RouteDetails_Map_RouteStopMarker_ExpectedTooEarly")}
+              </div>
+              <div>
                   {Localization.formatDuration(
-                    this.props.routeStop.arrivalDelay
+                    this.props.routeStop.expectedTooEarly
                   )}
                 </div>
-              )}
+            </div>
+          )}
+          {this.props.routeStop.arrivedTooEarly && (
+            <div
+              className={`
+              c-liveTracking-panel-message
+              c-liveTracking-box-neutral
+            `}
+            >
+              <div>
+                {Localization.sharedValue("RouteDetails_Map_RouteStopMarker_TooEarly")}
+              </div>
+              <div>
+                  {Localization.formatDuration(
+                    this.props.routeStop.arrivedTooEarly
+                  )}
+                </div>
             </div>
           )}
         </div>

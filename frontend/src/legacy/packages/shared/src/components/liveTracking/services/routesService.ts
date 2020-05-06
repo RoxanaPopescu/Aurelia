@@ -228,7 +228,7 @@ export class RoutesService {
     if (isDemo) {
       routes = this.fetchDemo();
     } else {
-      var url = "routes/tracking";
+      var url = "routes/v2/tracking";
 
       const response = await fetch(
         BaseService.url(url),

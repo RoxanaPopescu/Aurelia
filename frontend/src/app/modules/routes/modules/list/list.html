@@ -6,7 +6,7 @@
 
         <page-sidebar scroll>
             <page-section>
-                <search-input value.bind="textFilter & debounce: 200">
+                <search-input value.bind="searchQuery & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
                         <icon name="md-search"></icon>
@@ -24,17 +24,17 @@
                     Status
                 </div>
 
-                <toggle-group class="flex-column">
+                <toggle-group class="flex-column" value.bind="statusFilter">
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="in-progress" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="requested" value.one-time="false">
 
                         <div slot="heading" translate>
-                            In progress
+                            Unassigned
                         </div>
 
                     </radio-toggle>
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="not-started" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="accepted" value.one-time="false">
 
                         <div slot="heading" translate>
                             Not started
@@ -42,10 +42,18 @@
 
                     </radio-toggle>
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="not-approved" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="started" value.one-time="false">
 
                         <div slot="heading" translate>
-                            Not approved
+                            In progress
+                        </div>
+
+                    </radio-toggle>
+
+                    <radio-toggle label="after" model="cancelled" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Cancelled
                         </div>
 
                     </radio-toggle>
@@ -58,16 +66,10 @@
 
                     </radio-toggle>
 
-                    <radio-toggle label="after" model="cancelled" value.one-time="false">
-
-                        <div slot="heading" translate>
-                            Cancelled
-                        </div>
-
-                    </radio-toggle>
                 </toggle-group>
             </page-section>
 
+            <!--
             <page-section toggle.bind="true">
                 <div slot="header" translate>
                     Assignment
@@ -84,6 +86,7 @@
 
                 </toggle-group>
             </page-section>
+            -->
 
             <page-section toggle.bind="true">
 
@@ -93,7 +96,7 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="startTimeFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
 
                         <div slot="heading" translate>
                             From
@@ -101,7 +104,7 @@
 
                     </date-input>
 
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="startTimeToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
 
                         <div slot="heading" translate>
                             To
@@ -112,7 +115,7 @@
                 </div>
 
             </page-section>
-
+            <!--
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -140,7 +143,7 @@
                 </div>
 
             </page-section>
-
+            -->
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -208,7 +211,7 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
-                                Criticality
+                                Tags
                             </span>
                         </data-table-cell>
 
@@ -232,7 +235,7 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="route of routes">
+                    <template repeat.for="route of results">
 
                         <data-table-row
                             accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
@@ -252,7 +255,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.startDateTime | dateTime: 'narrow' : false}
+                                    ${route.startDate | dateTime: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
@@ -264,7 +267,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.criticality.name}
+                                    ${route.tags | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 
@@ -290,16 +293,16 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="routes == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="routes.length == 0" class="margin-largest">
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="routes.length > 0"
+                        if.bind="results.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="routeCount">

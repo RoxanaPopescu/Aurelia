@@ -7,8 +7,10 @@ import { Route } from "../entities/route";
 import { RouteStopStatusSlug, RouteStopStatus } from "../entities/route-stop-status";
 import { RouteStop } from "../entities/route-stop";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
-import { getLegacyRouteSortProperty, getLegacySortDirection, getLegacyRouteStatus } from "legacy/helpers/api-helper";
+import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpers/api-helper";
 import { VehicleType } from "app/model/vehicle";
+import { RouteStatusListSlug, RouteStatusList } from "../entities/route-status-list";
+import { DateTime } from "luxon";
 
 /**
  * Represents a service that manages routes.
@@ -29,24 +31,38 @@ export class RouteService
 
     /**
      * Gets all routes visible to the current user.
-     * @param statusFilter The route status to filter by, or undefined to apply no status filter.
-     * @param textFilter The route text to filter by, or undefined to apply no text filter.
+     * @param filter The filter for finding routes
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the routes.
      */
-    public async getAll(statusFilter?: RouteStatusSlug, textFilter?: string, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ routes: RouteInfo[]; routeCount: number }>
+    public async getAll(
+        filter?: {
+            status?: RouteStatusListSlug,
+            searchQuery?: string,
+            tags?: string[],
+            startTimeFrom?: DateTime,
+            startTimeTo?: DateTime
+        },
+        sorting?: ISorting,
+        paging?: IPaging,
+        signal?: AbortSignal
+    ): Promise<{ routes: RouteInfo[]; routeCount: number }>
     {
-        const result = await this._apiClient.post("routes/list",
+        const tags: string[] = filter?.tags ?? [];
+        const result = await this._apiClient.post("routes/v2/list",
         {
             body:
             {
                 page: paging ? paging.page : undefined,
                 pageSize: paging ? paging.pageSize : undefined,
                 sorting: sorting ? [{ field: getLegacyRouteSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) }] : [],
-                status: statusFilter ? [getLegacyRouteStatus(statusFilter)] : undefined,
-                filter: textFilter ? [textFilter] : undefined
+                statues: filter?.status ? [new RouteStatusList(filter?.status).value] : undefined,
+                searchQuery: filter?.searchQuery,
+                startTimeFrom: filter?.startTimeFrom,
+                startTimeTo: filter?.startTimeTo,
+                tags: tags.length > 0 ? tags : undefined
             },
             signal
         });
@@ -59,15 +75,15 @@ export class RouteService
 
     /**
      * Gets the specified route.
-     * @param routeSlug The slug identifying the route.
+     * @param slug The slug identifying the route.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route.
      */
-    public async get(routeSlug: string, signal?: AbortSignal): Promise<Route>
+    public async get(slug: string, signal?: AbortSignal): Promise<Route>
     {
-        const result = await this._apiClient.get("routes/details",
+        const result = await this._apiClient.get("routes/v2/details",
         {
-            query: { routeSlug },
+            query: { slug },
             signal
         });
 
@@ -80,18 +96,18 @@ export class RouteService
      * @param routeStatusSlug The slug identifying the new status.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async setRouteStatus(route: Route, routeStatusSlug: RouteStatusSlug): Promise<void>
+    public async setRouteStatus(route: Route, statusSlug: RouteStatusSlug): Promise<void>
     {
-        await this._apiClient.post("routes/setRouteStatus",
+        await this._apiClient.post("routes/v2/updateStatus",
         {
             body:
             {
                 routeId: route.id,
-                status: routeStatusSlug
+                status: statusSlug
             }
         });
 
-        route.status = new RouteStatus(routeStatusSlug);
+        route.status = new RouteStatus(statusSlug);
     }
 
     /**

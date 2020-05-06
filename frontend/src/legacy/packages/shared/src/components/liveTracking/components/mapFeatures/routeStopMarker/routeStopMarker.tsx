@@ -267,21 +267,67 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
           )}
         </div>
 
-        {this.props.routeStop.isDelayed && (
+        {this.props.routeStop.arrivedDelay && (
           <div className="c-worldMap-popup-section c-worldMap-popup-section--noBorder">
-            <div className="c-worldMap-popup-section-row c-liveTracking-color-negative">
+            <div className="c-worldMap-popup-section-row c-liveTracking-color-warning">
               <div>
                 {Localization.sharedValue(
                   "RouteDetails_Map_RouteStopMarker_Delayed"
                 )}
               </div>
-              {this.props.routeStop.arrivalDelay && (
-                <div>
+              <div>
                   {Localization.formatDuration(
-                    this.props.routeStop.arrivalDelay
+                    this.props.routeStop.arrivedDelay
                   )}
                 </div>
-              )}
+            </div>
+          </div>
+        )}
+        {this.props.routeStop.expectedArrivalDelay && (
+          <div className="c-worldMap-popup-section c-worldMap-popup-section--noBorder">
+            <div className="c-worldMap-popup-section-row c-liveTracking-color-negative">
+              <div>
+                {Localization.sharedValue(
+                  "RouteDetails_Map_RouteStopMarker_ExpectedDelay"
+                )}
+              </div>
+              <div>
+                  {Localization.formatDuration(
+                    this.props.routeStop.expectedArrivalDelay
+                  )}
+                </div>
+            </div>
+          </div>
+        )}
+        {this.props.routeStop.arrivedTooEarly && (
+          <div className="c-worldMap-popup-section c-worldMap-popup-section--noBorder">
+            <div className="c-worldMap-popup-section-row c-liveTracking-color-neutral">
+              <div>
+                {Localization.sharedValue(
+                  "RouteDetails_Map_RouteStopMarker_TooEarly"
+                )}
+              </div>
+              <div>
+                  {Localization.formatDuration(
+                    this.props.routeStop.arrivedTooEarly
+                  )}
+                </div>
+            </div>
+          </div>
+        )}
+        {this.props.routeStop.expectedTooEarly && (
+          <div className="c-worldMap-popup-section c-worldMap-popup-section--noBorder">
+            <div className="c-worldMap-popup-section-row c-liveTracking-color-neutral">
+              <div>
+                {Localization.sharedValue(
+                  "RouteDetails_Map_RouteStopMarker_ExpectedTooEarly"
+                )}
+              </div>
+              <div>
+                  {Localization.formatDuration(
+                    this.props.routeStop.expectedTooEarly
+                  )}
+                </div>
             </div>
           </div>
         )}
