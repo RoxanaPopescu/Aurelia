@@ -367,12 +367,16 @@ export class DetailsModule
 
         this.fetchOperation = new Operation(async signal =>
         {
-            this.route = await this._routeService.get(this.routeId, signal);
+            try {
+                this.route = await this._routeService.get(this.routeId, signal);
 
-            this._router.title = this.route.slug;
-            this._router.updateTitle();
+                this._router.title = this.route.slug;
+                this._router.updateTitle();
 
-            this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+            } catch (error) {
+                Log.error("An error occurred while loading this route.\n", error);
+            }
         });
     }
 }
