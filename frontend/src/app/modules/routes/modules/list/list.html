@@ -26,7 +26,7 @@
 
                 <toggle-group class="flex-column" value.bind="statusFilter">
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="requested" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="requested">
 
                         <div slot="heading" translate>
                             Unassigned
@@ -34,7 +34,7 @@
 
                     </radio-toggle>
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="accepted" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="accepted">
 
                         <div slot="heading" translate>
                             Not started
@@ -42,7 +42,7 @@
 
                     </radio-toggle>
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="started" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="started">
 
                         <div slot="heading" translate>
                             In progress
@@ -50,7 +50,7 @@
 
                     </radio-toggle>
 
-                    <radio-toggle label="after" model="cancelled" value.one-time="false">
+                    <radio-toggle label="after" model="cancelled">
 
                         <div slot="heading" translate>
                             Cancelled
@@ -58,7 +58,7 @@
 
                     </radio-toggle>
 
-                    <radio-toggle class="small-margin-bottom" label="after" model="completed" value.one-time="false">
+                    <radio-toggle class="small-margin-bottom" label="after" model="completed">
 
                         <div slot="heading" translate>
                             Completed
