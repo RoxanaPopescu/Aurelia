@@ -65,6 +65,10 @@ export class DateTimeValueConverter
             hour12: false
         };
 
-        return valueToFormat.toLocaleString(formatOptions);
+        return valueToFormat.toLocaleString(formatOptions)
+
+            // HACK: Fix common format errors in the browser locale data.
+            .replace(/(^|\s)24:/, "$100:")
+            .replace("24시", "0시");
     }
 }
