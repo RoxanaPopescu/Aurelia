@@ -472,15 +472,15 @@
                             Not started
                         </item>
 
-                        <item disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
+                        <item disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-approved')" translate>
                             Not approved
                         </item>
 
-                        <item if.bind="route.driver" disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
+                        <item disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('in-progress')" translate>
                             In progress
                         </item>
 
-                        <item if.bind="route.driver" disabled.bind="['completed', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
+                        <item disabled.bind="['completed', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
                             Completed
                         </item>
 
