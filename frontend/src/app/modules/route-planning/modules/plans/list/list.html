@@ -3,8 +3,11 @@
     <require from="./list.scss"></require>
 
     <page name="route-plans-list">
+
         <page-sidebar scroll>
+
             <page-section>
+
                 <search-input value.bind="textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
@@ -16,14 +19,17 @@
                     </span>
 
                 </search-input>
+
             </page-section>
 
             <page-section toggle.bind="true">
+
                 <div slot="header" translate>
                     Status
                 </div>
 
                 <toggle-group class="flex-column" value.bind="statusFilter">
+
                     <check-toggle label="after" model="succeeded" value.one-time="false">
 
                         <div slot="heading" translate>
@@ -71,7 +77,9 @@
                         </div>
 
                     </check-toggle>
+
                 </toggle-group>
+
             </page-section>
 
             <page-section toggle.bind="true">

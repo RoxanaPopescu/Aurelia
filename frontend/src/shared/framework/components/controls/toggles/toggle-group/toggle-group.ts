@@ -16,10 +16,11 @@ export class ToggleGroupCustomElement
     protected id = Id.sequential();
 
     /**
-     * The model associated with the active toggle, or undefined if no toggle is active.
+     * The model associated with the active toggle, or if multiple toggles are active, and array
+     * of the models associated with the active toggles, or undefined if no toggle is active.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public value: any;
+    public value: any | any[];
 
     /**
      * True if the toggle group is disabled, otherwise false.
@@ -48,11 +49,27 @@ export class ToggleGroupCustomElement
         // Add the toggle to the list of toggles.
         this._toggles.push(toggle);
 
-        // If the toggle is active, update the group value.
-        if (toggle.value)
-        {
-            this.onToggleActivated(toggle);
-        }
+        // // If the toggle has no value, set its state based on the group value.
+        // if (toggle.value == null && this.value != null)
+        // {
+        //     toggle.value =
+        //         this.value === toggle.model ||
+        //         (this.value instanceof Array && this.value.includes(toggle.model));
+        // }
+
+        // // If the toggle is active, update the group value.
+        // // tslint:disable-next-line: no-boolean-literal-compare
+        // else if (toggle.value === true)
+        // {
+        //     this.onToggleActivated(toggle);
+        // }
+
+        // // If the toggle is inactive, update the group value.
+        // // tslint:disable-next-line: no-boolean-literal-compare
+        // else if (toggle.value === false)
+        // {
+        //     this.onToggleDeactivated(toggle);
+        // }
     }
 
     /**

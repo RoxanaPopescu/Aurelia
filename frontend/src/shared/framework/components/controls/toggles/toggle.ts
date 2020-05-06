@@ -77,6 +77,14 @@ export class ToggleCustomElement
     {
         if (this.toggleGroup != null)
         {
+            // If the toggle has no value, set its value based on the group value.
+            if (this.value == null && this.toggleGroup.value != null)
+            {
+                this.value =
+                    this.toggleGroup.value === this.model ||
+                    (this.toggleGroup.value instanceof Array && this.toggleGroup.value.includes(this.model));
+            }
+
             this.toggleGroup.attachToggle(this);
         }
     }

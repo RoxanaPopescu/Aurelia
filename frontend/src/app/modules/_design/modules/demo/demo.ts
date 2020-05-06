@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { DateTime } from "luxon";
 import { Log } from "shared/infrastructure";
@@ -33,6 +33,9 @@ export class DemoPage
 
     protected tab = "tab-1";
 
+    @observable
+    protected toggleGroupValue = "toggle-2";
+
     protected async submit(): Promise<void>
     {
         this.validation.active = true;
@@ -57,5 +60,10 @@ export class DemoPage
     protected get remainingTags(): any[]
     {
         return this.tags.filter(t => !this.tagsValue.includes(t));
+    }
+
+    protected toggleGroupValueChanged(): void
+    {
+        console.log(`toggleGroupValue changed to ${this.toggleGroupValue}`);
     }
 }
