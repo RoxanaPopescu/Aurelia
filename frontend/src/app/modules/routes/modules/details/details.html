@@ -405,9 +405,9 @@
                     </path-nav>
                 </h1>
 
-                <toolbar if.bind="route" if-claims="edit-routes" class="flex-push-right">
+                <toolbar if.bind="route" class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()">
+                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()">
                         <template if.bind="route.fulfiller.id == identityService.identity.outfit.id" translate>
                             Assign fulfiller
                         </template>
@@ -416,7 +416,7 @@
                         </template>
                     </button>
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
+                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
                         <template if.bind="!route.driver" translate>
                             Assign driver
                         </template>
@@ -425,7 +425,7 @@
                         </template>
                     </button>
 
-                    <button appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()">
+                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()">
                         <template if.bind="!route.vehicle" translate>
                             Assign vehicle
                         </template>
@@ -434,7 +434,7 @@
                         </template>
                     </button>
 
-                    <select-button appearance="outline" accent="primary">
+                    <select-button if-claims="edit-routes" appearance="outline" accent="primary">
 
                         <div slot="label" translate>
                             Change status
@@ -444,15 +444,19 @@
                             Not started
                         </item>
 
-                        <item if.bind="route.driver" disabled.bind="['in-progress'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
+                        <item disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
+                            Not approved
+                        </item>
+
+                        <item if.bind="route.driver" disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('started')" translate>
                             In progress
                         </item>
 
-                        <item if.bind="route.driver" disabled.bind="['completed'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
+                        <item if.bind="route.driver" disabled.bind="['completed', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
+                        <item disabled.bind="['cancelled', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
                             Cancelled
                         </item>
 
@@ -468,11 +472,12 @@
                             Print route
                         </item>
 
-                        <item if.bind="route.driver" click.trigger="onReloadRouteInAppClick()" translate>
+                        <item if-claims="edit-routes" if.bind="route.driver" click.trigger="onReloadRouteInAppClick()" translate>
                             Reload route in app
                         </item>
 
                         <item
+                            if-claims="edit-routes"
                             if.bind="environment == 'development' || route.isPrimaryFulfiller"
                             click.trigger="onAddSupportNoteClick()"
                             translate>
