@@ -83,7 +83,35 @@
                 <name-value-pair class="margin-bottom">
 
                     <div slot="name" translate>
-                        Weight
+                        Total volume of all pickups
+                    </div>
+
+                    <div slot="value" empty-value>
+                        <template if.bind="route.totalVolume != null">
+                            ${route.totalVolume | number} m³
+                        </template>
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair class="margin-bottom">
+
+                    <div slot="name" translate>
+                        Total weight of all pickups
+                    </div>
+
+                    <div slot="value" empty-value>
+                        <template if.bind="route.totalWeight != null">
+                            ${route.totalWeight | number} kg
+                        </template>
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair if.bind="route.totalWeightRange" class="margin-bottom">
+
+                    <div slot="name" translate>
+                        Weight range
                     </div>
 
                     <div slot="value" empty-value>
@@ -97,7 +125,7 @@
                 <name-value-pair>
 
                     <div slot="name" translate>
-                        Colli
+                        Colli count
                     </div>
 
                     <div slot="value" empty-value>

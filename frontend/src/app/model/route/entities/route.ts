@@ -86,4 +86,38 @@ export class Route extends AbstractRoute<RouteStop>
             .filter(s => s instanceof RouteStop && s.status.slug !== "cancelled")
             .reduce((total, s: RouteStop) => total + s.pickups.reduce((t, p) => t + p.colli.length, 0), 0);
     }
+
+    /**
+     * The total weight of all pickup colli for this route, can be undefined if no colli has weight.
+     * In the future all colli should have a weight and dimension!
+     */
+    public get totalWeight(): number | undefined {
+        let weight = 0;
+
+        const stops = this.stops.filter(s => s instanceof RouteStop) as RouteStop[];
+        for (const stop of stops) {
+            for (const pickup of stop.pickups) {
+                weight += pickup.totalWeight ?? 0;
+            }
+        }
+
+        return weight > 0 ? weight : undefined;
+    }
+
+    /**
+     * The total volume of all pickup colli for this route, can be undefined if no colli has dimensions.
+     * In the future all colli should have a weight and dimension!
+     */
+    public get totalVolume(): number | undefined {
+        let volume = 0;
+
+        const stops = this.stops.filter(s => s instanceof RouteStop) as RouteStop[];
+        for (const stop of stops) {
+            for (const pickup of stop.pickups) {
+                volume += pickup.totalVolume ?? 0;
+            }
+        }
+
+        return volume > 0 ? volume : undefined;
+    }
 }

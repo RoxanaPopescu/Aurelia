@@ -14,12 +14,16 @@
                 </a>
             </div>
 
-            <div class="text-align-right">
-                <!-- TODO: # kg -->
+            <div class="text-align-right opacity-faded">
+                <template if.bind="model.totalWeight">
+                    ${model.totalWeight | number} kg
+                </template>
             </div>
 
-            <div class="text-align-right">
-                <!-- TODO: # m³ -->
+            <div class="text-align-right opacity-faded">
+                <template if.bind="model.totalVolume">
+                    ${model.totalVolume | number} m³
+                </template>
             </div>
 
             <div class="text-align-right">

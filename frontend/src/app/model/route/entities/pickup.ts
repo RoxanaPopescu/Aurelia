@@ -37,4 +37,22 @@ export class Pickup
      * The colli to pick up.
      */
     public colli: Collo[];
+
+    /**
+     * The total weight of all colli to pickup, can be undefined if no colli has weight.
+     * In the future all colli should have a weight and dimension!
+     */
+    public get totalWeight(): number | undefined {
+        let weight = this.colli.reduce((accu, colli) => accu += colli.weight ?? 0, 0);
+        return weight > 0 ? weight : undefined;
+    }
+
+    /**
+     * The total volume of colli in this pickup, can be undefined if no colli has weight.
+     * In the future all colli should have a weight and dimension!
+     */
+    public get totalVolume(): number | undefined {
+        let volume = this.colli.reduce((accu, colli) => accu += colli.dimensions?.volume ?? 0, 0);
+        return volume > 0 ? volume : undefined;
+    }
 }

@@ -30,6 +30,13 @@ export class Dimensions
     public height: number;
 
     /**
+     * The volume of the dimensions in m3.
+     */
+    public get volume(): number {
+        return this.width * this.length * this.height;
+    }
+
+    /**
      * Gets the data representing this instance.
      */
     public toJSON(): any

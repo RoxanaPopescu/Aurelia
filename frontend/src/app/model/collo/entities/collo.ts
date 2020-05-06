@@ -1,6 +1,7 @@
 import { ColloStatus } from "./collo-status";
 import { ColloOrigin } from "./collo-origin";
 import { ColloScanMethod } from "./collo-scan-method";
+import { Dimensions } from "app/model/shared";
 
 /**
  * Represents a single collo.
@@ -21,6 +22,12 @@ export class Collo
         this.status = new ColloStatus(data.status);
         this.origin = new ColloOrigin(data.origin);
         this.scanImageUrl = data.scanImageUrl;
+        this.weight = data.weight;
+
+        if (data.dimensions != null)
+        {
+            this.dimensions = new Dimensions(data.dimensions);
+        }
 
         if (data.scanMethod != null)
         {
@@ -52,6 +59,16 @@ export class Collo
      * The barcode identifying the collo.
      */
     public readonly barcode: string;
+
+    /**
+     * The weight of the collo in kg.
+     */
+    public readonly weight?: number;
+
+    /**
+     * The weight of the collo in kg.
+     */
+    public readonly dimensions?: Dimensions;
 
     /**
      * The status of the collo.
