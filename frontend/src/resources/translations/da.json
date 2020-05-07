@@ -538,7 +538,7 @@
   "341948c40": "Opret support note",
   "d2fdbb9da": "Vælg den chauffør, der skal blive tildelt ruten",
   "a4e08d720": "Vælg den transportør, der skal blive tildelt ruten",
-  "77f87ad91": "Du har allerede tildelt dette til <b>${newFulfiller.companyName}</b>, vil du tildele det til <b>${currentFulfiller.companyName}</b> i stedet for?",
+  "1f0130694": "Du har allerede tildelt dette til <b>${currentFulfiller.companyName}</b>, vil du tildele det til <b>${newFulfiller.companyName}</b> i stedet for?",
   "70d1aefcc": "Tildel til <b>${newFulfiller.companyName}</b>",
   "2b2ca9485": "Vælg det køretøj, der skal blive tildelt ruten",
   "a3bf00ebe": "Er du sikker på du vil annullere stop nummer <b>${stop.stopNumber}</b>?",
