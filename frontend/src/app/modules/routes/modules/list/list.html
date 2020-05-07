@@ -5,7 +5,9 @@
     <page name="list">
 
         <page-sidebar scroll>
+
             <page-section>
+
                 <search-input value.bind="searchQuery & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
@@ -17,9 +19,11 @@
                     </span>
 
                 </search-input>
+
             </page-section>
 
             <page-section toggle.bind="true">
+
                 <div slot="header" translate>
                     Status
                 </div>
@@ -67,6 +71,7 @@
                     </radio-toggle>
 
                 </toggle-group>
+
             </page-section>
 
             <!--
@@ -165,7 +170,7 @@
 
             <page-header scroll-fade>
 
-                <h1 class="font-largest margin-bottom">
+                <h1 class="font-largest">
                     <path-nav>
 
                         <span translate>
@@ -178,6 +183,7 @@
             </page-header>
 
             <page-section>
+
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"

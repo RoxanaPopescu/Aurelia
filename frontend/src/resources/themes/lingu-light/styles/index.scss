@@ -23,3 +23,9 @@ button[appearance="outline"]
 {
     border-color: var(--palette-color-neutral-light) !important;
 }
+
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    background: transparent !important;
+    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
+}

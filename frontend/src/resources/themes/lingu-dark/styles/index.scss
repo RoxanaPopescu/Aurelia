@@ -45,10 +45,8 @@ app-sidebar
 
 tab-nav
 {
-    /**
-     * The color of the border of tabs.
-     */
-     --tab-nav-border-color: var(--palette-color-neutral);
+    /// The color of the border of tabs.
+    --tab-nav-border-color: var(--palette-color-neutral);
 }
 
 page-tab-nav
@@ -69,9 +67,7 @@ page-tab-nav
 
 body
 {
-    /**
-     * The width of the border of inputs.
-     */
+    /// The width of the border of inputs.
     --input-border-width: var(--border-width-thin);
 }
 
@@ -98,8 +94,7 @@ data-table[appearance="cards"]
 
 html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
-    padding-bottom: 0;
-    padding-top: 0;
+    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
     background: transparent !important;
     color: var(--palette-color-neutral-lightest) !important;
 }
