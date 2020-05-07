@@ -127,7 +127,8 @@ export class AssignFulfillerPanel
         try
         {
             this._modal.busy = true;
-            await this._routeAssignmentService.assignFulfiller(this.route, fulfiller);
+
+            await this._routeAssignmentService.assignFulfiller(this.route, this.identityService.identity!.outfit, fulfiller);
 
             this._result = fulfiller;
 

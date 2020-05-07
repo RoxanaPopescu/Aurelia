@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { Route } from "../entities/route";
 import { Driver } from "app/model/driver";
-import { Fulfiller } from "app/model/outfit";
+import { Fulfiller, Outfit } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
 
 /**
@@ -68,7 +68,7 @@ export class RouteAssignmentService
      * @param fulfiller The fulfiller to which the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignFulfiller(route: Route, fulfiller: Fulfiller): Promise<void>
+    public async assignFulfiller(route: Route, currentOutfit: Outfit, fulfiller: Fulfiller): Promise<void>
     {
         await this._apiClient.post("dispatch/route/assignfulfiller",
         {
@@ -76,7 +76,7 @@ export class RouteAssignmentService
             {
                 routeId: route.id,
                 fulfillerId: fulfiller.id,
-                currentFulfillerId: route.fulfiller.id
+                currentFulfillerId: currentOutfit.id
             }
         });
 

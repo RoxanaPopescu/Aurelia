@@ -11,6 +11,7 @@ import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller
 import { IdentityService } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
 import { AssignVehiclePanel } from "./modals/assign-vehicle/assign-vehicle";
+import { AbortError } from "shared/types";
 
 /**
  * Represents the route parameters for the page.
@@ -116,6 +117,8 @@ export class DetailsModule
         {
             this.fetchOperation.abort();
         }
+
+        clearTimeout(this.pollTimeout);
     }
 
     /**
@@ -375,7 +378,9 @@ export class DetailsModule
 
                 this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
             } catch (error) {
-                Log.error("An error occurred while loading this route.\n", error);
+                if (!(error instanceof AbortError)) {
+                    Log.error("An error occurred while loading this route.\n", error);
+                }
             }
         });
     }
