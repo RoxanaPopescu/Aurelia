@@ -67,7 +67,7 @@
 
                     </text-input>
 
-                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-2-of-2">
+                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             Last name
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="control-row margin-bottom">
-                    <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" class="flex-basis-1-of-2">
+                    <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" style="width: 25rem;">
                         <div slot="heading" translate>
                             Country code
                         </div>
@@ -140,7 +140,7 @@
                             </pattern-validator>
                         </div>
                     </text-input>
-                    <text-input label="above" value.bind="driver.phone.number" class="flex-basis-2-of-2">
+                    <text-input label="above" value.bind="driver.phone.number" class="flex-grow">
                         <div slot="heading" translate>
                             Phone number
                         </div>

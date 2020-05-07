@@ -98,3 +98,28 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
     background: transparent !important;
     color: var(--palette-color-neutral-lightest) !important;
 }
+
+page-content page-header
+{
+    border-bottom-color: var(--palette-color-neutral-lit);
+}
+
+[surface="base"],
+[surface$="/base"]
+{
+    --surface-separator-color: var(--palette-color-neutral-lit);
+}
+
+[surface$="/card"]
+{
+    --border-color: var(--palette-color-neutral-lit);
+    --border-color--hover: var(--palette-color-neutral-lit);
+    --border-color--focus: var(--palette-color-neutral-lit);
+    --border-color--active: var(--palette-color-neutral-lit);
+    --data-table-row-border-color--active: var(--palette-color-neutral-lit) !important;
+}
+
+.data-table-row[accent="neutral"]
+{
+    --data-table-row-edge-color: var(--palette-color-neutral-light);
+}
