@@ -1,0 +1,82 @@
+////
+/// @group resources/themes/mover
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+@import "./settings/font-family";
+
+// Export the surfaces.
+// Surfaces define theme specific overrides to the base surfaces.
+@import "./surfaces/index";
+
+// HACK: Override default styles.
+
+button[appearance="outline"]
+{
+    border-width: var(--border-width-thin) !important;
+    border-color: var(--palette-color-neutral) !important;
+}
+
+modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not([accent]),
+.modal-dialog-actions button[appearance="icon"]:not([accent]),
+.toast-actions
+{
+    color: var(--surface-primary-icon-color);
+}
+
+tab-nav
+{
+    /**
+     * The color of the border of tabs.
+     */
+    --tab-nav-border-color: var(--palette-color-neutral);
+
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-nav-border-width: var(--border-width-thin);
+}
+
+page-tab-nav
+{
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-medium);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--surface-neutral-surface-color);
+}
+
+body
+{
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
+}
+
+dropdown-icon
+{
+    opacity: 1;
+}
+
+:root
+{
+    --modal-backdrop-color: rgba(171, 190, 199, 0.5);
+}

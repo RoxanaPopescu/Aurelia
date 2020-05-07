@@ -2,6 +2,11 @@
     {
         "slug": "mover",
         "name": "Mover",
+        "color": "#11253E"
+    },
+    {
+        "slug": "mover-old",
+        "name": "Mover (Old)",
         "color": "#008dd5"
     },
     {
@@ -13,11 +18,6 @@
         "slug": "ikea",
         "name": "IKEA",
         "color": "#0051ba"
-    },
-    {
-        "slug": "zendesk",
-        "name": "Zendesk",
-        "color": "#11253E"
     },
     {
         "slug": "lingu-light",
