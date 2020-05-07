@@ -18,17 +18,18 @@ export class DateTimeRange {
 
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, options?: DateTimeOptions) {
+    if (data != null) {
+      if (data.from instanceof DateTime) {
+        this.from = data.from;
+      } else if (data.from != null) {
+        this.from = DateTime.fromISO(data.from, options);
+      }
 
-    if (data.from instanceof DateTime) {
-      this.from = data.from;
-    } else if (data.from != null) {
-      this.from = DateTime.fromISO(data.from, options);
-    }
-
-    if (data.to instanceof DateTime) {
-      this.to = data.to;
-    } else if (data.to != null) {
-      this.to = DateTime.fromISO(data.to, options);
+      if (data.to instanceof DateTime) {
+        this.to = data.to;
+      } else if (data.to != null) {
+        this.to = DateTime.fromISO(data.to, options);
+      }
     }
   }
 
