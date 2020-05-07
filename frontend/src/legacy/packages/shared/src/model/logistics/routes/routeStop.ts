@@ -142,7 +142,7 @@ export abstract class RouteStop extends RouteStopBase {
       }
 
       let duration = this.arrivedTime.diff(this.arrivalTimeFrame.to);
-      return duration;
+      return duration.valueOf() > 0 ? duration : undefined;
   }
 
   /**
@@ -159,7 +159,7 @@ export abstract class RouteStop extends RouteStopBase {
       }
 
       let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
-      return duration;
+      return duration.valueOf() > 0 ? duration : undefined;
   }
 
   /**
@@ -173,7 +173,7 @@ export abstract class RouteStop extends RouteStopBase {
       }
 
       let duration = this.arrivalTimeFrame.from.diff(this.arrivedTime);
-      return duration;
+      return duration.valueOf() > 0 ? duration : undefined;
   }
 
   /**
@@ -190,7 +190,7 @@ export abstract class RouteStop extends RouteStopBase {
       }
 
       let duration = this.arrivalTimeFrame.from.diff(this.estimates.arrivalTime);
-      return duration;
+      return duration.valueOf() > 0 ? duration : undefined;
   }
 
   /**

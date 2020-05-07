@@ -21,12 +21,12 @@ export class Delivery
     /**
      * The ID of the consignor related to this delivery.
      */
-    public consignorId: string;
+    public consignorId?: string;
 
     /**
      * The ID of the order related to this delivery.
      */
-    public orderId: string;
+    public orderId?: string;
 
     /**
      * The slug identifying the order related to this pickup.

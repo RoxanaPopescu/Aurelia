@@ -19,9 +19,14 @@ export class Pickup
     }
 
     /**
+     * The ID of the consignor related to this delivery.
+     */
+    public consignorId?: string;
+
+    /**
      * The ID of the order related to this pickup.
      */
-    public orderId: string;
+    public orderId?: string;
 
     /**
      * The slug identifying the order related to this pickup.
