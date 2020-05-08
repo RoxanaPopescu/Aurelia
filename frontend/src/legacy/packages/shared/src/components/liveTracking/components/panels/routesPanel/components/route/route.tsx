@@ -68,7 +68,7 @@ export class Route extends React.Component<RoutesLayerProps> {
 
               </div>
 
-              <div>
+              <div className="c-liveTracking-routesPanel-route-owner">
                 {this.props.route.owner?.companyName}
               </div>
 
