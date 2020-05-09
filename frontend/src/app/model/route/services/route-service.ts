@@ -58,7 +58,7 @@ export class RouteService
                 page: paging ? paging.page : undefined,
                 pageSize: paging ? paging.pageSize : undefined,
                 sorting: sorting ? [{ field: getLegacyRouteSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) }] : [],
-                statues: filter?.status ? [new RouteStatusList(filter?.status).value] : undefined,
+                statuses: filter?.status ? [new RouteStatusList(filter?.status).value] : undefined,
                 searchQuery: filter?.searchQuery,
                 startTimeFrom: filter?.startTimeFrom,
                 startTimeTo: filter?.startTimeTo,
