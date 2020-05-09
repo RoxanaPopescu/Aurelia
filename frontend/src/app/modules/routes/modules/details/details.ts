@@ -376,7 +376,9 @@ export class DetailsModule
                 this._router.title = this.route.slug;
                 this._router.updateTitle();
 
-                this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                if (this.route.status.slug === "in-progress") {
+                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                }
             } catch (error) {
                 if (!(error instanceof AbortError)) {
                     Log.error("An error occurred while loading this route.\n", error);
