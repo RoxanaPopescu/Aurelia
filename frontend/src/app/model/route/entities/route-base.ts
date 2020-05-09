@@ -47,9 +47,9 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
             this.driver = new Driver(data.driver);
         }
 
-        if (data.driverVehicle != null)
+        if (data.vehicle != null)
         {
-            this.vehicle = new Vehicle(data.driverVehicle);
+            this.vehicle = new Vehicle(data.vehicle);
         }
 
         if (data.driverPosition != null)
