@@ -13,14 +13,13 @@
                     ${model.orderSlug}
                 </a>
             </div>
-
-            <div class="text-align-right opacity-faded">
+            <div class="text-align-right opacity-faded text-truncate">
                 <template if.bind="model.totalWeight">
                     ${model.totalWeight | number} kg
                 </template>
             </div>
 
-            <div class="text-align-right opacity-faded">
+            <div class="text-align-right opacity-faded text-truncate">
                 <template if.bind="model.totalVolume">
                     ${model.totalVolume | number} m³
                 </template>
