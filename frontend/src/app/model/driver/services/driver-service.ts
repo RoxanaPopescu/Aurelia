@@ -3,6 +3,7 @@ import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
 import { VehicleService } from "app/model/vehicle";
 import { Driver } from "../entities/driver";
+import { DriverStatusSlug } from "../entities/driver-status";
 
 /**
  * Represents a service that manages drivers.
@@ -28,26 +29,40 @@ export class DriverService
      * Gets all drivers visible to the current user.
      * @param sorting The sorting options to use.
      * @param paging The paging options to use.
+     * @param filters The filter options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the drivers.
      */
-    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ drivers: Driver[]; driverCount: number }>
-    {
-        const result = await this._apiClient.get("drivers/list",
+    public async getAll(
+        sorting?: ISorting,
+        paging?: IPaging,
+        filter?: {
+            statuses?: DriverStatusSlug[],
+            searchQuery?: string
+        },
+        signal?: AbortSignal
+    ): Promise<{ results: Driver[]; driverCount?: number }> {
+        const result = await this._apiClient.post("drivers/list",
         {
-            signal
+            signal,
+            body: {
+                sorting: sorting,
+                paging: paging,
+                filter: {
+                    searchQuery: filter?.searchQuery,
+                    statuses: filter?.statuses
+                }
+            }
         });
 
         const vehicleTypes = await this._vehicleService.getTypes();
 
         return {
-            drivers: result.data.map((data: any) =>
+            results: result.data.results.map((data: any) =>
             {
                 const driverVehicleTypes = data.vehicleTypeIds.map(id => vehicleTypes.find(vt => vt.id === id));
-
                 return new Driver(data.driver, driverVehicleTypes);
             }),
-            driverCount: result.data.length
         };
     }
 

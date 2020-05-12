@@ -71,8 +71,13 @@ export class AssignDriverPanel
         // tslint:disable-next-line: no-unused-expression
         new Operation(async () =>
         {
-            const driversRespnse = await this._driverService.getAll();
-            this.drivers = driversRespnse.drivers;
+            // TODO: Use generalized one
+            const driversRespnse = await this._driverService.getAll(
+                { property: "name", direction: "ascending" },
+                { page: 1, pageSize: 100 },
+                { statuses: ["approved"] }
+            );
+            this.drivers = driversRespnse.results;
         });
     }
 

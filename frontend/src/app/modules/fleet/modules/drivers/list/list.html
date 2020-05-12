@@ -4,6 +4,70 @@
 
     <page name="list">
 
+        <page-sidebar scroll>
+
+            <page-section>
+
+                <search-input value.bind="searchQuery & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find...
+                    </span>
+
+                </search-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Status
+                </div>
+
+                <toggle-group class="flex-column" value.bind="statusFilter">
+
+                    <check-toggle label="after" model="approved" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Approved
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="not-approved" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Not approved
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="waiting-for-approval" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Waiting for approval
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="banned" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Banned
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+        </page-sidebar>
+
         <page-content scroll scroll.ref="scroll">
 
             <page-header class="flex-row" scroll-fade>
@@ -39,27 +103,27 @@
 
                     <data-table-headers>
 
-                        <data-table-cell DISABLED-name="id" translate>
-                            Id
-                        </data-table-cell>
-
-                        <data-table-cell DISABLED-name="name" translate>
+                        <data-table-cell name="name" translate>
                             Name
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="email" translate>
+                        <data-table-cell name="email" translate>
                             Email
+                        </data-table-cell>
+
+                        <data-table-cell name="phone" translate>
+                            Phone
                         </data-table-cell>
 
                         <data-table-cell DISABLED-name="vehicles" translate>
                             Vehicles
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="phone" translate>
-                            Phone
+                        <data-table-cell name="id" translate>
+                            Id
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="status" translate>
+                        <data-table-cell name="status" translate align="right">
                             Status
                         </data-table-cell>
 
@@ -69,16 +133,10 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="driver of drivers">
+                    <template repeat.for="driver of results">
 
                         <data-table-row
                             href="/fleet-management/drivers/details/${driver.id}">
-
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${driver.id}
-                                </span>
-                            </data-table-cell>
 
                             <data-table-cell>
                                 ${driver.name}
@@ -89,14 +147,20 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
-                            </data-table-cell>
-
-                            <data-table-cell>
                                 ${driver.phone}
                             </data-table-cell>
 
                             <data-table-cell>
+                                ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${driver.id}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
                                 <span class="text-truncate">
                                     ${driver.status.name}
                                 </span>
@@ -120,24 +184,21 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="drivers == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="drivers.length == 0" class="margin-largest">
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
-                <!--
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="drivers.length > 0"
+                        if.bind="results"
                         class="flex-push-right margin-top"
-                        value.bind="paging"
-                        list-size.bind="driverCount">
+                        value.bind="paging">
                     </data-table-pager>
 
                 </div>
-                -->
 
             </page-section>
 

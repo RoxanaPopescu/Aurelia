@@ -92,7 +92,7 @@ export class ListPage
     protected paging: IPaging =
     {
         page: 1,
-        pageSize: 50
+        pageSize: 20
     };
 
     /**

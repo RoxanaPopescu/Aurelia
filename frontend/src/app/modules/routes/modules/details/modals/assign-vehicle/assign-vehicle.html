@@ -36,10 +36,6 @@
 
         <modal-section if.bind="true" class="margin-bottom">
 
-            <div class="margin-bottom" translate>
-                Choose the vehicle that should be assigned to the route
-            </div>
-
             <data-table appearance="rows">
 
                 <data-table-headers>
@@ -62,7 +58,7 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
+                    <data-table-cell align="right">
                         <span class="text-truncate" translate>
                             Type
                         </span>
@@ -92,7 +88,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell>
+                        <data-table-cell align="right">
                             <span class="text-truncate">
                                 ${vehicle.type.name}
                             </span>

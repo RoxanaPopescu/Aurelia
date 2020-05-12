@@ -6,7 +6,7 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="assign-driver" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel scroll scroll.ref="scroll" name="assign-driver" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <modal-header scroll-fade>
 
@@ -19,7 +19,7 @@
                 </template>
             </h1>
 
-            <search-input value.bind="queryText" autofocus ref="queryInputElement">
+            <search-input value.bind="searchQuery & debounce: 200" autofocus ref="queryInputElement">
 
                 <span slot="before" class="opacity-faded">
                     <icon name="md-search" class="font-larger"></icon>
@@ -35,27 +35,25 @@
 
         <modal-section if.bind="true" class="margin-bottom">
 
-            <div class="margin-bottom" translate>
-                Choose the driver that should be assigned to the route
-            </div>
-
-            <data-table appearance="rows">
+            <data-table sorting.bind="sorting" busy.bind="updateOperation.pending" appearance="rows">
 
                 <data-table-headers>
 
-                    <data-table-cell>
-                        <!-- picture -->
-                    </data-table-cell>
-
-                    <data-table-cell>
+                    <data-table-cell name="name">
                         <span class="text-truncate" translate>
-                            ID
+                            Name
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
+                    <data-table-cell name="email">
                         <span class="text-truncate" translate>
-                            Name
+                            Email
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell name="phone">
+                        <span class="text-truncate" translate>
+                            Phone
                         </span>
                     </data-table-cell>
 
@@ -65,29 +63,17 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
+                    <data-table-cell name="id" align="right">
                         <span class="text-truncate" translate>
-                            Phone
+                            ID
                         </span>
                     </data-table-cell>
 
                 </data-table-headers>
 
-                <template repeat.for="driver of filteredDrivers">
+                <template repeat.for="driver of results">
 
                     <data-table-row click.call="onDriverClick(driver)">
-
-                        <data-table-cell>
-                            <identity-picture src.bind="driver.pictureUrl">
-                                ${driver.name.initials}
-                            </identity-picture>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate">
-                                ${driver.id}
-                            </span>
-                        </data-table-cell>
 
                         <data-table-cell>
                             <span class="text-truncate">
@@ -97,7 +83,7 @@
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${driver.vehicleTypes | map: 'name' | list: 'short'}
+                                ${driver.email}
                             </span>
                         </data-table-cell>
 
@@ -107,15 +93,27 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${driver.vehicleTypes | map: 'name' | list: 'short'}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <span class="text-truncate">
+                                ${driver.id}
+                            </span>
+                        </data-table-cell>
+
                     </data-table-row>
 
                 </template>
 
             </data-table>
 
-            <busy-indicator if.bind="drivers == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="results == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="filteredDrivers.length == 0" class="margin-largest">
+            <empty-indicator if.bind="results.length == 0" class="margin-largest">
                 <div slot="heading" translate>No results</div>
             </empty-indicator>
 

@@ -1,9 +1,10 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, observable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Operation } from "shared/utilities";
-import { Modal } from "shared/framework";
+import { Modal, IScroll } from "shared/framework";
 import { RouteAssignmentService, Route } from "app/model/route";
 import { Driver, DriverService } from "app/model/driver";
+import { ISorting } from "shared/types";
 
 @autoinject
 export class AssignDriverPanel
@@ -19,17 +20,40 @@ export class AssignDriverPanel
         this._modal = modal;
         this._routeAssignmentService = routeAssignmentService;
         this._driverService = driverService;
+        this._constructed = true;
     }
 
     private readonly _modal: Modal;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _driverService: DriverService;
     private _result: Driver | undefined;
+    private readonly _constructed;
 
     /**
      * The searchg query, or undefined if ne search query is entered.
      */
-    protected queryText: string | undefined;
+    @observable({ changeHandler: "update" })
+    protected searchQuery: string | undefined;
+
+    /**
+     * The sorting to use for the table.
+     */
+    @observable({ changeHandler: "update" })
+    protected sorting: ISorting =
+    {
+        property: "name",
+        direction: "ascending"
+    };
+
+    /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
+
+    /**
+     * The most recent update operation.
+     */
+    protected updateOperation: Operation;
 
     /**
      * The route to which a driver should be assigned.
@@ -39,41 +63,7 @@ export class AssignDriverPanel
     /**
      * The available drivers.
      */
-    protected drivers: Driver[] | undefined;
-
-    /**
-     * The selected driver.
-     */
-    protected driver: Driver | undefined;
-
-    /**
-     * The available drivers, filtered to include only those matching the route requirements and query text.
-     */
-    @computedFrom("drivers", "queryText")
-    protected get filteredDrivers(): Driver[] | undefined
-    {
-        if (this.drivers == null)
-        {
-            return undefined;
-        }
-
-        if (!this.queryText)
-        {
-            return this.drivers;
-        }
-
-        const text = this.queryText.toLowerCase();
-
-        return this.drivers
-
-            .filter(d =>
-                d.vehicleTypes != null && d.vehicleTypes.some(vt => vt.slug === this.route.vehicleType.slug))
-
-            .filter(d =>
-                d.id.toString().includes(text) ||
-                d.name.toString().toLowerCase().includes(text) ||
-                d.phone.toString().toLowerCase().includes(text));
-    }
+    protected results: Driver[] | undefined;
 
     /**
      * Called by the framework when the modal is activated.
@@ -82,13 +72,7 @@ export class AssignDriverPanel
     public activate(model: Route): void
     {
         this.route = model;
-
-        // tslint:disable-next-line: no-unused-expression
-        new Operation(async () =>
-        {
-            const driversRespnse = await this._driverService.getAll();
-            this.drivers = driversRespnse.drivers;
-        });
+        this.update();
     }
 
     /**
@@ -97,8 +81,15 @@ export class AssignDriverPanel
      */
     public async deactivate(): Promise<Driver | undefined>
     {
+        // Abort any existing operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+
         return this._result;
     }
+
 
     /**
      * Called when a driver in the list of drivers is clicked.
@@ -120,5 +111,50 @@ export class AssignDriverPanel
             Log.error("Could not assign driver", error);
             this._modal.busy = false;
         }
+    }
+
+    /**
+     * Updates the page by fetching the latest data.
+     */
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    {
+        // Return if the object is not constructed.
+        // This is needed because the `observable` decorator calls the change handler when the
+        // initial property value is set, which happens before the constructor is called.
+        if (!this._constructed)
+        {
+            return;
+        }
+
+        // Abort any existing operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            try {
+                // Fetch the data. // searchQuery: this.searchQuery,
+                const data = await this._driverService.getAll(
+                    this.sorting,
+                    { page: 1, pageSize: 50 },
+                    {
+                        statuses: ["approved"],
+                        searchQuery: this.searchQuery
+                     },
+                    signal
+                );
+
+                // Update the state.
+                this.results = data.results;
+
+                // Scroll to top.
+                this.scroll.reset();
+            } catch (error) {
+                Log.error("An error occurred while loading the list.\n", error);
+            }
+        });
     }
 }

@@ -36,6 +36,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.stops = stops;
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
+        this.legacyId = data.legacyId;
 
         if (data.expires != null)
         {
@@ -81,6 +82,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The slug identifying the route.
      */
     public readonly slug: string;
+
+    /**
+     * The NOI legacy id
+     */
+    public readonly legacyId: string;
 
     /**
      * The type of product associated with the route.
