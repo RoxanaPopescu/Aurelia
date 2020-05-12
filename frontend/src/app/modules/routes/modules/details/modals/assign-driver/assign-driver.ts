@@ -139,7 +139,7 @@ export class AssignDriverPanel
                 // Fetch the data. // searchQuery: this.searchQuery,
                 const data = await this._driverService.getAll(
                     this.sorting,
-                    { page: 1, pageSize: 50 },
+                    { page: 1, pageSize: 30 },
                     {
                         statuses: ["approved"],
                         searchQuery: this.searchQuery
