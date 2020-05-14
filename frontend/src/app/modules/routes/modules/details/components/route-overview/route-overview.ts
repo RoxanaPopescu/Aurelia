@@ -320,7 +320,7 @@ export class RouteOverview
             completedPickupStops.forEach((s: RouteStop) => {
                 s.pickups.forEach(p => {
                     p.colli.forEach(c => {
-                        if (c.status.slug !== "picked-up")
+                        if (c.status.slug === "no-action" || c.status.slug === "not-picked-up")
                         {
                             notPickedUpColli.push(c);
                         }
