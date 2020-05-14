@@ -36,7 +36,7 @@ export class RouteOverview
                 {
                     s.pickups.forEach(p => p.colli.forEach(c =>
                         {
-                            if (c.status.slug === "picked-up")
+                            if (c.status.slug !== "not-picked-up" && c.status.slug !== "no-action")
                             {
                                 pickedUpColliCount++;
                             }
