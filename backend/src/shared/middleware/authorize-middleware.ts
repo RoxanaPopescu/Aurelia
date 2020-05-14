@@ -32,8 +32,11 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             {
                 // Try to get the JWT from the request.
                 const jwtString =
+                (
                     context.headers[options.header] ||
-                    context.cookies.get(options.cookie);
+                    context.cookies.get(options.cookie)
+                )
+                .replace(/^Bearer\s+/, "");
 
                 if (jwtString)
                 {
@@ -70,7 +73,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                     throw new AuthorizationError("The JWT did not contain any permissions.");
                 }
 
-                if (permissions.some(claim => !context.user.permissions.includes(claim)))
+                if (permissions.some(claim => !context.state.jwt.permissions.includes(claim)))
                 {
                     throw new AuthorizationError("The JWT did not contain the specified permissions.");
                 }
