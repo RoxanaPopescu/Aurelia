@@ -166,9 +166,9 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="end-address">
+                        <data-table-cell>
                             <span class="text-truncate" translate>
-                                End address
+                                Tags
                             </span>
                         </data-table-cell>
 
@@ -223,7 +223,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.endAddress}
+                                    ${route.tags | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 
