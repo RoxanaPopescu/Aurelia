@@ -3,12 +3,12 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesPriorToDelivery | scale: 1/60"
+        value.bind="model.minutesBeforeDelivery | scale: 1/60"
         class="margin-large-bottom"
         min.bind="0">
 
         <div slot="heading" translate>
-            Minutes prior to delivery
+            Minutes before delivery
         </div>
 
         <span slot="after" class="opacity-faded" translate>
@@ -18,12 +18,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesPriorToDelivery">
+                value.bind="model.minutesBeforeDelivery">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesPriorToDelivery"
+                value.bind="model.minutesBeforeDelivery"
                 min.bind="0">
             </range-validator>
 
@@ -65,12 +65,12 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesAddedPriorToEstimate | scale: 1/60"
+        value.bind="model.minutesSubtractedFromEstimate | scale: 1/60"
         class="margin-large-bottom"
         min.bind="0">
 
         <div slot="heading" translate>
-            Minutes added prior to estimate
+            Minutes subtracted from estimate
         </div>
 
         <span slot="after" class="opacity-faded" translate>
@@ -80,12 +80,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesAddedPriorToEstimate">
+                value.bind="model.minutesSubtractedFromEstimate">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesAddedPriorToEstimate"
+                value.bind="model.minutesSubtractedFromEstimate"
                 min.bind="0">
             </range-validator>
 
@@ -117,36 +117,6 @@
             <range-validator
                 active.bind="true"
                 value.bind="model.minutesDelayedBeforeSending"
-                min.bind="0">
-            </range-validator>
-
-        </div>
-
-    </number-input>
-
-    <number-input
-        label="above"
-        none.bind="false"
-        value.bind="model.minutesPriorPlannedDeliveryTimeCanMessageBeSent | scale: 1/60"
-        min.bind="0">
-
-        <div slot="heading" translate>
-            Minutes prior planned delivery time can message be sent
-        </div>
-
-        <span slot="after" class="opacity-faded" translate>
-            min
-        </span>
-
-        <div slot="validation">
-
-            <required-validator
-                value.bind="model.minutesPriorPlannedDeliveryTimeCanMessageBeSent">
-            </required-validator>
-
-            <range-validator
-                active.bind="true"
-                value.bind="model.minutesPriorPlannedDeliveryTimeCanMessageBeSent"
                 min.bind="0">
             </range-validator>
 

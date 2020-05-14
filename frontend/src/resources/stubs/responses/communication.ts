@@ -9,9 +9,9 @@ export default
           "id": "trigger-1-id",
           "slug": "trigger-1-slug",
           "name": "Trigger 1",
-          "triggerEvent": "order-delivery-arrived",
-          "recipient": "delivery-customer",
-          "senderName": "Sender 1",
+          "eventType": "order-delivery-arrived",
+          "recipientType": "delivery-customer",
+          "fromName": "Sender 1",
           "messageType": "email"
         }
       ]
@@ -34,15 +34,16 @@ export default
         "customer": "a02d82f2-fcbe-49eb-a2c7-4212687f841b",
         "routeTags": [],
         "stopTags": [],
-        "triggerEvent": "order-delivery-arrived",
+        "eventType": "order-delivery-arrived",
         "parameters": {},
-        "recipient": "delivery-customer",
-        "message":
+        "recipientType": "delivery-customer",
+        "messageType": "email",
+        "messageTemplate":
         {
-          "senderName": "Sender 1",
-          "messageType": "email",
-          "messageTitle": "Message title",
-          "messageBody": "Message body"
+          "fromName": "Sender 1 name",
+          "fromEmail": "sender-1-email@example.com",
+          "messageSubject": "Message title",
+          "messageContent": "Message body"
         }
       }
     },

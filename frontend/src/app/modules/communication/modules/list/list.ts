@@ -13,7 +13,7 @@ interface IRouteParams
 {
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    triggerEvent?: string;
+    eventType?: string;
     messageType?: string;
     text?: string;
 }
@@ -73,7 +73,7 @@ export class ListPage
      * The trigger event filter.
      */
     @observable({ changeHandler: "update" })
-    protected triggerEventFilter: CommunicationTriggerEventSlug[] | undefined;
+    protected eventTypeFilter: CommunicationTriggerEventSlug[] | undefined;
 
     /**
      * The message type filter.
@@ -99,7 +99,7 @@ export class ListPage
         .map(key => new CommunicationTriggerEvent(key as any));
 
     /**
-     * The available recipients.
+     * The available recipient types.
      */
     protected availableRecipients = Object.keys(CommunicationRecipient.values)
         .map(key => new CommunicationRecipient(key as any));
@@ -110,7 +110,7 @@ export class ListPage
     protected availableMessageTypes = Object.keys(CommunicationMessageType.values)
         .map(key => new CommunicationMessageType(key as any));
 
-    @computedFrom("triggers", "sorting", "textFilter", "triggerEventFilter", "messageTypeFilter")
+    @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter")
     protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[]
     {
         if (this.triggers == null)
@@ -123,9 +123,9 @@ export class ListPage
         return this.triggers
 
             // Filtering
-            .filter(t => !this.triggerEventFilter || this.triggerEventFilter.includes(t.triggerEvent.slug))
+            .filter(t => !this.eventTypeFilter || this.eventTypeFilter.includes(t.eventType.slug))
             .filter(t => !this.messageTypeFilter || this.messageTypeFilter.includes(t.messageType.slug))
-            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipient.slug))
+            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipientType.slug))
             .filter(t => !this.textFilter || t.searchModel.contains(this.textFilter))
 
             // Sorting
@@ -151,7 +151,7 @@ export class ListPage
     {
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
-        this.triggerEventFilter = params.triggerEvent ? params.triggerEvent.split(",") as any : this.triggerEventFilter;
+        this.eventTypeFilter = params.eventType ? params.eventType.split(",") as any : this.eventTypeFilter;
         this.messageTypeFilter = params.messageType ? params.messageType.split(",") as any : this.messageTypeFilter;
         this.textFilter = params.text || this.textFilter;
 
@@ -207,7 +207,7 @@ export class ListPage
             {
                 state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
                 state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                state.params.triggerEvent = this.triggerEventFilter?.join(",");
+                state.params.eventType = this.eventTypeFilter?.join(",");
                 state.params.messageType = this.messageTypeFilter?.join(",");
                 state.params.text = this.textFilter || undefined;
             },
