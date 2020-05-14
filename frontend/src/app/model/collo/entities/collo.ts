@@ -16,7 +16,7 @@ export class Collo
     {
         this.id = data.id;
         this.orderId = orderId;
-        this.orderSlug = data.consignorOrderId;
+        this.orderSlug = data.orderSlug;
         this.consignorId = data.consignorId;
         this.barcode = data.barcode;
         this.status = new ColloStatus(data.status);
