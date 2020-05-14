@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Operation } from "shared/utilities";
 import { Modal, IScroll } from "shared/framework";
-import { RouteAssignmentService, Route } from "app/model/route";
+import { RouteAssignmentService, RouteBase } from "app/model/route";
 import { Driver, DriverService } from "app/model/driver";
 import { ISorting } from "shared/types";
 
@@ -56,9 +56,14 @@ export class AssignDriverPanel
     protected updateOperation: Operation;
 
     /**
-     * The route to which a driver should be assigned.
+     * The route to which a driver should be assigned
      */
-    protected route: Route;
+    protected route?: RouteBase;
+
+    /**
+     * If the driver should be assigned within this modal
+     */
+    protected assignOnSelect: boolean;
 
     /**
      * The available drivers.
@@ -67,11 +72,12 @@ export class AssignDriverPanel
 
     /**
      * Called by the framework when the modal is activated.
-     * @param model The stop to edit, or undefined to create a new stop.
+     * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model: Route): void
+    public activate(model: { route?: RouteBase, assignOnSelect: boolean }): void
     {
-        this.route = model;
+        this.route = model.route;
+        this.assignOnSelect = model.assignOnSelect;
         this.update();
     }
 
@@ -99,8 +105,10 @@ export class AssignDriverPanel
     {
         try
         {
-            this._modal.busy = true;
-            await this._routeAssignmentService.assignDriver(this.route, driver);
+            if (this.route != null && this.assignOnSelect) {
+                this._modal.busy = true;
+                await this._routeAssignmentService.assignDriver(this.route, driver);
+            }
 
             this._result = driver;
 

@@ -2,7 +2,7 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Operation } from "shared/utilities";
 import { Modal } from "shared/framework";
-import { RouteAssignmentService, Route } from "app/model/route";
+import { RouteAssignmentService, RouteBase } from "app/model/route";
 import { VehicleService, Vehicle } from "app/model/vehicle";
 
 @autoinject
@@ -32,19 +32,19 @@ export class AssignVehiclePanel
     protected queryText: string | undefined;
 
     /**
-     * The route to which a driver should be assigned.
+     * The route to which a driver should be assigned
      */
-    protected route: Route;
+    protected route: RouteBase;
+
+    /**
+     * If the driver should be assigned within this modal
+     */
+    protected assignOnSelect: boolean;
 
     /**
      * The available drivers.
      */
     protected vehicles: Vehicle[] | undefined;
-
-    /**
-     * The selected driver.
-     */
-    protected vehicle: Vehicle | undefined;
 
     /**
      * The available drivers, filtered to include only those matching the route requirements and query text.
@@ -78,9 +78,10 @@ export class AssignVehiclePanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: Route): void
+    public activate(model: { route: RouteBase, assignOnSelect: boolean }): void
     {
-        this.route = model;
+        this.route = model.route;
+        this.assignOnSelect = model.assignOnSelect;
 
         // tslint:disable-next-line: no-unused-expression
         new Operation(async () =>
@@ -108,9 +109,10 @@ export class AssignVehiclePanel
     {
         try
         {
-            this._modal.busy = true;
-
-            await this._routeAssignmentService.assignVehicle(this.route, vehicle);
+            if (this.assignOnSelect) {
+                this._modal.busy = true;
+                await this._routeAssignmentService.assignVehicle(this.route, vehicle);
+            }
 
             this._result = vehicle;
 

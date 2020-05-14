@@ -1,8 +1,8 @@
 <template>
 
-    <require from="./list.scss"></require>
+    <require from="./assign-list.scss"></require>
 
-    <page name="list">
+    <page name="assign-list">
 
         <page-sidebar scroll>
 
@@ -74,25 +74,6 @@
 
             </page-section>
 
-            <!--
-            <page-section toggle.bind="true">
-                <div slot="header" translate>
-                    Assignment
-                </div>
-
-                <toggle-group class="flex-column">
-                    <check-toggle label="after" model="succeeded" value.one-time="false">
-
-                        <div slot="heading" translate>
-                            Fulfiller assigned
-                        </div>
-
-                    </check-toggle>
-
-                </toggle-group>
-            </page-section>
-            -->
-
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -120,35 +101,6 @@
                 </div>
 
             </page-section>
-            <!--
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Created date
-                </div>
-
-                <div class="control-row">
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            From
-                        </div>
-
-                    </date-input>
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdDateToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            To
-                        </div>
-
-                    </date-input>
-
-                </div>
-
-            </page-section>
-            -->
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -190,10 +142,9 @@
                     busy.bind="updateOperation.pending">
 
                     <data-table-headers>
-
-                        <data-table-cell>
+                        <data-table-cell name="slug">
                             <span class="text-truncate" translate>
-                                ID
+                                Slug
                             </span>
                         </data-table-cell>
 
@@ -215,15 +166,21 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell>
+                        <data-table-cell name="end-address">
                             <span class="text-truncate" translate>
-                                Tags
+                                End address
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="stops">
+                        <data-table-cell>
                             <span class="text-truncate" translate>
-                                Stops
+                                Fulfiller
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Driver
                             </span>
                         </data-table-cell>
 
@@ -233,30 +190,23 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="status">
-                            <span class="text-truncate" translate>
-                                Status
-                            </span>
-                        </data-table-cell>
-
                     </data-table-headers>
 
                     <template repeat.for="route of results">
 
                         <data-table-row
                             accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
-                            href="/routes/details/${route.slug}">
-
+                        >
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <a href="/routes/details/${route.slug}" class="text-truncate">
                                     ${route.slug}
-                                </span>
+                                </a>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <a href="/routes/details/${route.slug}" class="text-truncate">
                                     ${route.reference}
-                                </span>
+                                </a>
                             </data-table-cell>
 
                             <data-table-cell>
@@ -273,24 +223,46 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.tags | list: 'short' : 'unit'}
+                                    ${route.endAddress}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.stopCount}
-                                </span>
+                                <a
+                                    class="text-truncate"
+                                    click.trigger="onAssignFulfillerClick(route)"
+                                >
+                                    Missing data
+                                    ${route.fulfiller.companyName}
+                                </a>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.vehicleType.name}
+                                <a
+                                    class="text-truncate"
+                                    click.trigger="onAssignDriverClick(route)"
+                                >
+                                    <template if.bind="!route.driver" translate>
+                                        Assign driver
+                                    </template>
+                                    <template if.bind="route.driver">
+                                        ${route.driver.name}
+                                    </template>
+                                </a>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.legacyStatus.name}
-                                </span>
+                                <a
+                                    class="text-truncate"
+                                    click.trigger="onAssignVehicleClick(route)"
+                                >
+                                    <template if.bind="!route.vehicle" translate>
+                                        Assign Vehicle
+                                    </template>
+                                    <template if.bind="route.vehicle">
+                                        ${route.vehicle.name}
+                                    </template>
+                                </a>
                             </data-table-cell>
 
                         </data-table-row>

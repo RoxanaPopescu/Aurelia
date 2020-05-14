@@ -1,9 +1,10 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
-import { Route } from "../entities/route";
 import { Driver } from "app/model/driver";
 import { Fulfiller, Outfit } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
+import { RouteBase } from "..";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.
@@ -14,12 +15,15 @@ export class RouteAssignmentService
     /**
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(apiClient: ApiClient)
+    public constructor(apiClient: ApiClient, identityService: IdentityService)
     {
         this._apiClient = apiClient;
+        this._identityService = identityService;
     }
 
+    protected readonly _identityService: IdentityService;
     private readonly _apiClient: ApiClient;
 
     /**
@@ -28,7 +32,7 @@ export class RouteAssignmentService
      * @param driver The driver to whom the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignDriver(route: Route, driver: Driver): Promise<void>
+    public async assignDriver(route: RouteBase, driver: Driver): Promise<void>
     {
         await this._apiClient.post("dispatch/route/assigndriver",
         {
@@ -48,7 +52,7 @@ export class RouteAssignmentService
      * @param vehicle The vehicle to whom the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignVehicle(route: Route, vehicle: Vehicle): Promise<void>
+    public async assignVehicle(route: RouteBase, vehicle: Vehicle): Promise<void>
     {
         await this._apiClient.post("dispatch/route/assignvehicle",
         {
@@ -68,15 +72,17 @@ export class RouteAssignmentService
      * @param fulfiller The fulfiller to which the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignFulfiller(route: Route, currentOutfit: Outfit, fulfiller: Fulfiller): Promise<void>
+    public async assignFulfiller(route: RouteBase, fulfiller: Fulfiller, currentOutfit?: Outfit): Promise<void>
     {
+
+
         await this._apiClient.post("dispatch/route/assignfulfiller",
         {
             body:
             {
                 routeId: route.id,
                 fulfillerId: fulfiller.id,
-                currentFulfillerId: currentOutfit.id
+                currentFulfillerId: currentOutfit?.id ?? this._identityService.identity!.outfit.id
             }
         });
 

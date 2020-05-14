@@ -26,10 +26,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
-        this.supportNote = data.supportNote;
-        this.productType = new ProductType(data.productType);
+        // Remove default solution when we have completed v4 route list
+        this.productType = new ProductType(data.productType ?? "solution");
         this.reference = data.reference;
-        this.criticality = new RouteCriticality(data.criticality);
+        // Remove default low when we have completed v4 route list
+        this.criticality = new RouteCriticality(data.criticality ?? "low");
         this.status = new RouteStatus(data.status);
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
@@ -37,6 +38,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
         this.legacyId = data.legacyId;
+        this.tags = data.tags ?? [];
 
         if (data.expires != null)
         {
@@ -105,6 +107,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public readonly criticality: RouteCriticality;
 
     /**
+     * The tags associated with the route.
+     */
+    public readonly tags: string[];
+
+    /**
      * The status of the route.
      */
     public status: RouteStatus;
@@ -127,7 +134,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public fulfiller: Fulfiller;
 
     /**
-     * The if the fulfiller is the primary one.
+     * If the fulfiller is the primary one.
      */
     public isPrimaryFulfiller: boolean;
 
@@ -166,12 +173,6 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The estimates for this route.
      */
     public estimates?: RouteEstimates;
-
-    /**
-     * The support note for this route.
-     * Usually used for writing information about the driver
-     */
-    public supportNote?: string;
 
     /**
      * The date and time at which the driver completed, or is estimated to complete,
