@@ -6,7 +6,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import routeDetails from "./responses/route-details";
 // import routePlanningSettings from "./responses/route-planning-settings";
 // import routePlans from "./responses/route-plans";
-import communication from "./responses/communication";
+// import communication from "./responses/communication";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -27,6 +27,6 @@ export const stubs: IResponseStubs =
     // ...uploadOrders,
     // ...routeDetails,
     // ...routePlanningSettings,
-    //...routePlans,
-    ...communication
+    // ...routePlans,
+    // ...communication
 };
