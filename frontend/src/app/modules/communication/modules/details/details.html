@@ -118,7 +118,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Name of the trigger ${model.triggerEvent.slug}
+                                Name of the trigger ${model.eventType.slug}
                             </div>
 
                             <div slot="validation">
@@ -138,23 +138,23 @@
                         <select-input
                             label="above"
                             none.bind="false"
-                            value.bind="model.triggerEvent"
-                            display-value.bind="model.triggerEvent.name"
-                            change.trigger="setAvailableOptions($event.detail.value, model.recipient)"
+                            value.bind="model.eventType"
+                            display-value.bind="model.eventType.name"
+                            change.trigger="setAvailableOptions($event.detail.value, model.recipientType)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
                                 Trigger event
                             </div>
 
-                            <item repeat.for="triggerEvent of availableTriggerEvents" model.bind="triggerEvent">
-                                ${triggerEvent.name}
+                            <item repeat.for="eventType of availableTriggerEvents" model.bind="eventType">
+                                ${eventType.name}
                             </item>
 
                             <div slot="validation">
 
                                 <required-validator
-                                    value.bind="model.triggerEvent">
+                                    value.bind="model.eventType">
                                 </required-validator>
 
                             </div>
@@ -210,87 +210,86 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="2" heading.translate="Parameters" disabled.bind="model.triggerEvent.slug == null" class="communication-parameters-section --line-below">
+                <numbered-section number.bind="2" heading.translate="Parameters" disabled.bind="model.eventType.slug == null" class="communication-parameters-section --line-below">
 
                     <div
-                        if.bind="model.triggerEvent.slug == null"
+                        if.bind="model.eventType.slug == null"
                         class="opacity-faded"
                         translate>
                         Please choose a trigger event
                     </div>
 
                     <order-pickup-completed-params
-                        if.bind="model.triggerEvent.slug === 'order-pickup-completed'"
+                        if.bind="model.eventType.slug === 'order-pickup-completed'"
                         model.bind="model.parameters">
                     </order-pickup-completed-params>
 
                     <order-delivery-arrived-params
-                        if.bind="model.triggerEvent.slug === 'order-delivery-arrived'"
+                        if.bind="model.eventType.slug === 'order-delivery-arrived'"
                         model.bind="model.parameters">
                     </order-delivery-arrived-params>
 
                     <eta-specific-time-params
-                        if.bind="model.triggerEvent.slug === 'eta-specific-time'"
+                        if.bind="model.eventType.slug === 'eta-specific-time'"
                         model.bind="model.parameters">
                     </eta-specific-time-params>
 
                     <eta-before-delivery-params
-                        if.bind="model.triggerEvent.slug === 'eta-before-delivery'"
+                        if.bind="model.eventType.slug === 'eta-before-delivery'"
                         model.bind="model.parameters">
                     </eta-before-delivery-params>
 
                     <eta-before-pickup-params
-                        if.bind="model.triggerEvent.slug === 'eta-before-pickup'"
+                        if.bind="model.eventType.slug === 'eta-before-pickup'"
                         model.bind="model.parameters">
                     </eta-before-pickup-params>
 
                     <delayed-delivery-params
-                        if.bind="model.triggerEvent.slug === 'delayed-delivery'"
+                        if.bind="model.eventType.slug === 'delayed-delivery'"
                         model.bind="model.parameters">
                     </delayed-delivery-params>
 
                     <delayed-pickup-params
-                        if.bind="model.triggerEvent.slug === 'delayed-pickup'"
+                        if.bind="model.eventType.slug === 'delayed-pickup'"
                         model.bind="model.parameters">
                     </delayed-pickup-params>
 
                     <order-cancelled-en-route-params
-                        if.bind="model.triggerEvent.slug === 'order-cancelled-en-route'"
+                        if.bind="model.eventType.slug === 'order-cancelled-en-route'"
                         model.bind="model.parameters">
                     </order-cancelled-en-route-params>
 
                     <order-modified-en-route-params
-                        if.bind="model.triggerEvent.slug === 'order-modified-en-route'"
+                        if.bind="model.eventType.slug === 'order-modified-en-route'"
                         model.bind="model.parameters">
                     </order-modified-en-route-params>
 
-
                 </numbered-section>
 
-                <numbered-section number.bind="3" heading.translate="Choose recipient" disabled.bind="model.triggerEvent.slug == null" class="--line-below">
+                <numbered-section number.bind="3" heading.translate="Choose recipient" disabled.bind="model.eventType.slug == null" class="--line-below">
 
                     <div class="control-row">
 
                         <select-input
                             label="above"
                             none.bind="false"
-                            value.bind="model.recipient"
-                            display-value.bind="model.recipient.name"
-                            change.trigger="setAvailableOptions(model.triggerEvent, $event.detail.value)"
+                            value.bind="model.recipientType"
+                            display-value.bind="model.recipientType.name"
+                            change.trigger="setAvailableOptions(model.eventType, $event.detail.value)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
                                 Send message to
                             </div>
 
-                            <item repeat.for="recipient of options.recipients" model.bind="recipient">
+                            <item repeat.for="recipient of options.recipientTypes" model.bind="recipient">
                                 ${recipient.name}
                             </item>
 
                             <div slot="validation">
 
                                 <required-validator
-                                    value.bind="model.recipient">
+                                    value.bind="model.recipientType">
                                 </required-validator>
 
                             </div>
@@ -301,7 +300,7 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="4" heading.translate="Choose message type" disabled.bind="model.recipient.slug == null" class="--line-below">
+                <numbered-section number.bind="4" heading.translate="Choose message type" disabled.bind="model.recipientType.slug == null" class="--line-below">
 
                     <div class="control-row">
 
@@ -334,13 +333,13 @@
 
                 </numbered-section>
 
-                <numbered-section number.bind="5" heading.translate="Compose message" disabled.bind="model.recipient.slug == null">
+                <numbered-section number.bind="5" heading.translate="Compose message" disabled.bind="model.recipientType.slug == null">
 
                     <div class="control-row margin-large-bottom">
 
                         <text-input
                             label="above"
-                            value.bind="model.senderName"
+                            value.bind="model.fromName"
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
@@ -350,7 +349,7 @@
                             <div slot="validation">
 
                                 <required-validator
-                                    value.bind="model.senderName">
+                                    value.bind="model.fromName">
                                 </required-validator>
 
                             </div>
@@ -359,11 +358,34 @@
 
                     </div>
 
+                    <div if.bind="model.messageType === 'emil'" class="control-row margin-large-bottom">
+
+                        <email-input
+                            label="above"
+                            value.bind="model.fromEmail"
+                            class="flex-basis-1-of-1">
+
+                            <div slot="heading" translate>
+                                Email of the sender, as seen by the recipient
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.fromEmail">
+                                </required-validator>
+
+                            </div>
+
+                        </email-input>
+
+                    </div>
+
                     <div class="control-row margin-large-bottom">
 
                         <text-input
                             label="above"
-                            value.bind="model.messageTitle"
+                            value.bind="model.messageSubject"
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
@@ -373,7 +395,7 @@
                             <div slot="validation">
 
                                 <required-validator
-                                    value.bind="model.messageTitle">
+                                    value.bind="model.messageSubject">
                                 </required-validator>
 
                             </div>
@@ -387,7 +409,7 @@
                         <text-input
                             label="above"
                             trim.bind="false"
-                            value.bind="model.messageBody"
+                            value.bind="model.messageContent"
                             class="flex-basis-1-of-1 --use-column-layout"
                             lines.bind="5"
                             ref="messageInputElement">
@@ -428,7 +450,7 @@
                             <div slot="validation">
 
                                 <required-validator
-                                    value.bind="model.messageBody">
+                                    value.bind="model.messageContent">
                                 </required-validator>
 
                             </div>

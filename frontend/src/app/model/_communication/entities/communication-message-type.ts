@@ -44,9 +44,9 @@ export class CommunicationMessageType
         {
             name: "Email"
         },
-        "push-to-driver":
+        "app-push":
         {
-            name: "Driver notification"
+            name: "Push notification"
         }
     };
 }
