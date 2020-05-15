@@ -17,6 +17,7 @@ export class CommunicationTriggerInfo
         this.customer = data.customer;
         this.routeTags = data.routeTags;
         this.stopTags = data.stopTags;
+        this.orderTags = data.orderTags;
         this.recipientType = new CommunicationRecipient(data.recipientType);
         this.eventType = new CommunicationTriggerEvent(data.eventType);
         this.fromName = data.fromName;
@@ -52,6 +53,11 @@ export class CommunicationTriggerInfo
      * The route stop tags for which this trigger should be enabled.
      */
     public readonly stopTags: string[] | undefined;
+
+    /**
+     * The order stop tags for which this trigger should be enabled.
+     */
+    public readonly orderTags: string[] | undefined;
 
     /**
      * The recipient of the message.
