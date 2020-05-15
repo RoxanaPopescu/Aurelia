@@ -61,7 +61,7 @@
 
                     </div>
 
-                    <div class="font-largest" accent.bind="notPickedUpColli.length > 0 ? 'negative' : 'neutral' & attr">
+                    <div class="font-largest" accent.bind="'neutral' & attr">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value>
                             ${totalColliCount}

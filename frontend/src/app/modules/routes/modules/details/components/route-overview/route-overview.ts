@@ -315,7 +315,6 @@ export class RouteOverview
         if (this.route != null)
         {
             let completedPickupStops = this.route.stops.filter(s => s.type.slug === "pickup" &&
-                                                                s.status.slug === "completed" &&
                                                                 s instanceof RouteStop);
             completedPickupStops.forEach((s: RouteStop) => {
                 s.pickups.forEach(p => {
