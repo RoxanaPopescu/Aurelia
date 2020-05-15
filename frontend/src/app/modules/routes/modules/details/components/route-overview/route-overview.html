@@ -51,11 +51,11 @@
 
                     <div class="font-small opacity-faded">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" translate>
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" translate>
                             Total colli count
                         </span>
 
-                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" translate>
+                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" translate>
                             Colli picked up
                         </span>
 
@@ -63,28 +63,23 @@
 
                     <div class="font-largest" accent.bind="notPickedUpColli.length > 0 ? 'negative' : 'neutral' & attr">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" empty-value>
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value>
                             ${totalColliCount}
                         </span>
 
-                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" empty-value>
+                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" empty-value>
                             ${pickedUpColliCount}
                         </span>
 
                     </div>
 
                     <div class="font-small">
-
-                        <span if.bind="route == null || totalColliCount === 0 || notPickedUpColli.length === 0">
-                            &nbsp;
-                        </span>
-
                         <span if.bind="route != null && notPickedUpColli.length === 0 && totalColliCount !== 0" translate>
-                            All colli picked up
+                            &nbsp;All colli picked up
                         </span>
 
                         <span if.bind="route != null && notPickedUpColli.length > 0" translate>
-                            ${notPickedUpColli.length} has not been picked up
+                            &nbsp;${notPickedUpColli.length} has not been picked up
                         </span>
 
                     </div>
@@ -102,11 +97,11 @@
 
                     <div class="font-largest" accent.bind="notDeliveredColli.length > 0 ? 'negative' : 'neutral' & attr">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" empty-value>
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value>
                             ${totalColliCount}
                         </span>
 
-                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" empty-value>
+                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" empty-value>
                             ${deliveredColliCount}
                         </span>
 
@@ -114,16 +109,12 @@
 
                     <div class="font-small">
 
-                        <span if.bind="route == null || totalColliCount === 0 || notDeliveredColli.length === 0">
-                            &nbsp;
-                        </span>
-
                         <span if.bind="route != null && notDeliveredColli.length === 0 && totalColliCount !== 0" translate>
-                            Every colli has been delivered
+                            &nbsp;Every colli has been delivered
                         </span>
 
                         <span if.bind="route != null && notDeliveredColli.length > 0" translate>
-                            ${notDeliveredColli.length} has not been picked up
+                            &nbsp;${notDeliveredColli.length} has not been picked up
                         </span>
 
                     </div>
@@ -140,21 +131,21 @@
 
                     <div class="font-small opacity-faded">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" translate>
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" translate>
                             Scheduled route start
                         </span>
 
-                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" translate>
+                        <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" translate>
                             Route start
                         </span>
 
                     </div>
 
-                    <div if.bind="route.status.slug === 'completed' || route.status.slug === 'started'" class="font-largest" empty-value>
+                    <div if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" class="font-largest" empty-value>
                         ${route.stops[0].arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
-                    <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" class="font-largest" empty-value>
+                    <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" class="font-largest" empty-value>
                         ${route.stops[0].estimates.arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
@@ -207,11 +198,11 @@
 
                     <div class="font-small">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'">
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'">
                             &nbsp;
                         </span>
 
-                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'started') && delayedStart">
+                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'in-progress') && delayedStart">
 
                             <span if.bind="delayedStart" translate>
                                 Arrived ${delayedStart | duration} too early
@@ -230,7 +221,7 @@
                 <hr class="hr-line margin">
 
                 <!-- Bottom section -->
-                <div if.bind="route.status.slug === 'started'" class="card-section-bottom card-section">
+                <div if.bind="route.status.slug === 'in-progress'" class="card-section-bottom card-section">
 
                     <div class="font-small opacity-faded" translate>
                         Driver status
@@ -276,7 +267,7 @@
 
                 </div>
 
-                <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'started'" class="card-section-bottom card-section">
+                <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" class="card-section-bottom card-section">
 
                     <div class="font-small opacity-faded" translate>
                         Difficulty
