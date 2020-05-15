@@ -19,18 +19,18 @@ export default
         {
             refreshToken:
             {
-                issuer: "mover",
-                audience: "mover",
-                header: "x-refresh-token",
+                issuer: "Mover Systems Aps",
+                audience: undefined,
+                header: "refresh-token",
                 cookie: "refresh-token",
                 expiresIn: Duration.fromObject({ days: 60 }),
                 secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
             },
             accessToken:
             {
-                issuer: "mover",
-                audience: "mover",
-                header: "x-access-token",
+                issuer: "Mover Systems Aps",
+                audience: undefined,
+                header: "authorization",
                 cookie: "access-token",
                 expiresIn: Duration.fromObject({ days: 7 }),
                 secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
