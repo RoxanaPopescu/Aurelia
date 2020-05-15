@@ -99,14 +99,14 @@ export class CommunicationService
 
     /**
      * Deletes the specified communication trigger.
-     * @param slug The slug identifying the communication trigger to delete.
+     * @param id The ID of the communication trigger to delete.
      * @returns A promise that will be resolved when the operation completes.
      */
-    public async delete(slug: string): Promise<void>
+    public async delete(id: string): Promise<void>
     {
         await this._apiClient.post("communication/triggers/delete",
         {
-            body: { slug }
+            body: { id }
         });
     }
 }
