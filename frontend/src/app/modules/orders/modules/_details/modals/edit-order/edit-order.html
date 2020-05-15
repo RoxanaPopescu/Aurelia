@@ -1,0 +1,405 @@
+<template>
+
+    <require from="./edit-order.scss"></require>
+    <require from="app/components/address-input/address-input"></require>
+    <require from="app/components/info-icon/info-icon"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="edit-order" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <path-nav if.bind="!model.isNew">
+
+                    <a accent="inherit" click.trigger="onCancel()" translate>
+                        Order ${model.order.slug}
+                    </a>
+
+                    <div translate>
+                        Edit
+                    </div>
+
+                </path-nav>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                Order information
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.order.slug" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Order ID
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.routeStop.reference" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Related order ID
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="model.order.status"
+                    display-value.bind="model.order.state.status.name"
+                    class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Status
+                    </div>
+
+                    <item repeat.for="status of statusValues" model.bind="status">
+                        ${status.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.order.state.status">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <div class="flex-basis-1-of-2"></div>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-bottom --line-above">
+
+            <div slot="header" translate>
+                Pickup
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <address-input label="above" value.bind="model.order.pickup.location.address" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.order.pickup.location.address.primary">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.order.pickup.contactName" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Name
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.order.pickup.contactCompanyName" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Company name
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.order.pickup.contactPhoneNumber" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Phone number
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.order.pickup.contactEmail" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        E-mail
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <date-input
+                    class="flex-basis-1-of-2"
+                    label="above"
+                    value.bind="model.order.pickup.appointment.earliestArrivalDate">
+
+                    <div slot="heading" translate>
+                        Arrival date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.order.pickup.appointment.earliestArrivalDate">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+                <div class="control-row flex-basis-1-of-2">
+
+                    <time-input label="above" value.bind="model.order.pickup.appointment.earliestArrivalTime" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.order.pickup.appointment.earliestArrivalTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                    <time-input label="above" value.bind="model.order.pickup.appointment.latestArrivalTime" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.order.pickup.appointment.latestArrivalTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                </div>
+
+            </div>
+
+            <div class="control-row">
+
+                <text-input label="above" lines.bind="3" value.bind="model.order.pickup.instructions" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Instructions
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Type any instructions that might help the driver
+                    </span>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-bottom --line-above">
+
+            <div slot="header" translate>
+                Delivery
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <address-input label="above" value.bind="model.order.delivery.location.address" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.order.delivery.location.address.primary">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.order.delivery.contactName" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Name
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.order.delivery.contactCompanyName" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Company name
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.order.delivery.contactPhoneNumber" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Phone number
+                    </div>
+
+                </text-input>
+
+                <text-input label="above" value.bind="model.order.delivery.contactEmail" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        E-mail
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <date-input
+                    class="flex-basis-1-of-2"
+                    label="above"
+                    value.bind="model.order.delivery.appointment.earliestArrivalDate">
+
+                    <div slot="heading" translate>
+                        Arrival date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.order.delivery.appointment.earliestArrivalDate">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+                <div class="control-row flex-basis-1-of-2">
+
+                    <time-input label="above" value.bind="model.order.delivery.appointment.earliestArrivalTime" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.order.delivery.appointment.earliestArrivalTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                    <time-input label="above" value.bind="model.order.delivery.appointment.latestArrivalTime" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.order.delivery.appointment.latestArrivalTime">
+                            </required-validator>
+
+                        </div>
+
+                    </time-input>
+
+                </div>
+
+            </div>
+
+            <div class="control-row">
+
+                <text-input label="above" lines.bind="3" value.bind="model.order.delivery.instructions" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Instructions
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Type any instructions that might help the driver
+                    </span>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Tags
+            </div>
+
+            <tags-input
+                label="above"
+                value.bind="model.order.tags"
+                new.bind="true"
+                class="flex-basis-1-of-1">
+
+            </tags-input>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>

@@ -1,0 +1,64 @@
+@import "shared/src/webKit/constants.scss";
+
+route-details-map
+{
+  display: block;
+  height: 50vh;
+}
+
+.routeDetails-map
+{
+  position: relative;
+  height: 100%;
+}
+
+.routeDetails-map-buttons
+{
+  position: absolute !important;
+  top: 10px !important;
+  left: 168px !important;
+  z-index: 1 !important;
+  display: flex;
+
+  .moverButton
+  {
+    height: 40px !important;
+    min-width: 80px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px !important;
+    color: #333 !important;
+    margin-right: 10px;
+
+    &.--active
+    {
+      color: var(--palette-color-primary-lighter) !important;
+      background: var(--palette-color-primary) !important;
+    }
+  }
+
+  .moverButtonText
+  {
+    font-weight: 400 !important;
+  }
+}
+
+.routeDetails-color-positive
+{
+  color: var(--colorOk) !important;
+}
+
+.routeDetails-color-negative
+{
+  color: var(--colorAlert) !important;
+}
+
+.routeDetails-routeStopMarker-warning
+{
+  background: var(--colorWarning);
+}
+
+.routeDetails-routeStopMarker-alert
+{
+  background: var(--colorAlert);
+}

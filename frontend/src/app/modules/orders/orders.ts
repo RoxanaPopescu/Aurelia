@@ -35,7 +35,7 @@ export class OrdersModule
             {
                 name: "details",
                 route: "details/:id",
-                moduleId: PLATFORM.moduleName("./modules/details/details"),
+                moduleId: ENVIRONMENT.name === "development" ? PLATFORM.moduleName("./modules/_details/details") : PLATFORM.moduleName("./modules/details/details"),
                 settings:
                 {
                     claims:

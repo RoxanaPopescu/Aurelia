@@ -1,0 +1,82 @@
+<template>
+
+    <require from="app/components/page-tab-nav/page-tab-nav"></require>
+    <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="./shippings.scss"></require>
+
+    <page-tab-nav class="margin-larger-top" appearance="tabs" value.bind="tab">
+
+        <page-tab class="font-large" name.bind="'actual'">
+
+            <span class="text-truncate" title.bind="'actual'" translate>
+                Actual (${order.actualColli.length})
+            </span>
+
+        </page-tab>
+
+        <page-tab class="font-large" name.bind="'estimated'">
+
+            <span class="text-truncate" title.bind="'estimated'" translate>
+                Estimated (${order.estimatedColli.length})
+            </span>
+
+        </page-tab>
+
+    </page-tab-nav>
+
+    <page-section>
+
+        <div slot="header" class="margin-large-top" translate>
+            Shippings
+        </div>
+
+        <data-table appearance="rows">
+
+            <data-table-headers>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Barcode number
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <!-- Icons -->
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <template repeat.for="collo of (tab === 'actual' ? order.actualColli : order.estimatedColli)">
+
+                <data-table-row>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${collo.barcode}
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+
+                        <!-- <button
+                            title.translate="Remove order"
+                            class="icon-row"
+                            appearance="none"
+                            accent="primary"
+                            click.trigger="onRemoveOrderClick(order)">
+
+                            <icon name="delete-small"></icon>
+
+                        </button> -->
+
+                    </data-table-cell>
+
+                </data-table-row>
+
+            </template>
+
+        </data-table>
+
+    </page-section>
+
+</template>

@@ -1,0 +1,109 @@
+@import "shared/src/webKit/constants.scss";
+
+.routeDetails-routeStopMarker {
+  padding: 0 10px;
+  pointer-events: none;
+
+  &.--faded {
+    opacity: 0.4;
+  }
+}
+
+.routeDetails-routeStopMarker-shape {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  line-height: 28px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  pointer-events: all;
+  background: black;
+  border: 2px solid black;
+  box-shadow: 0 0 1px 1px white;
+
+  &.routeDetails-routeStopMarker--pending {
+    background: gray;
+    border-color: gray;
+  }
+
+  &.routeDetails-routeStopMarker--arrived {
+    background: #7d887c;
+    border-color: var(--colorOkDarken);
+    box-shadow: inset 0 0 0 1px lighten(#7d887c, 2%), 0 0 1px 1px white;
+  }
+
+  &.routeDetails-routeStopMarker--done {
+    background: var(--colorOk);
+    border-color: var(--colorOkDarken);
+  }
+
+  &.routeDetails-routeStopMarker--cancelled {
+    background: gray;
+    border-color: gray;
+    opacity: .5;
+  }
+
+  &.routeDetails-routeStopMarker--selected {
+    box-shadow:
+      0 0 1px 1px rgba(white, .3),
+      0 0 0px 3px var(--colorBackgroundPrimary),
+      0 0 2px 5px white;
+  }
+}
+
+.routeDetails-routeStopMarker-info {
+  position: relative;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  background: white;
+  padding: 4px 5px;
+  font-size: 0.75em;
+  margin-bottom: 5px;
+
+  &.--has-alert
+  {
+    color: var(--colorAlert);
+  }
+
+  &.--has-warning
+  {
+    color: var(--colorWarning);
+  }
+
+  &::after
+  {
+    content: "";
+    position: absolute;
+    left: 11px;
+    display: block;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    border: 1px solid #aaa;
+    background: white;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.routeDetails-routeStopMarker-warning,
+.routeDetails-routeStopMarker-alert {
+  position: absolute;
+  bottom: 0;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 1px white;
+  border-radius: 4px;
+  pointer-events: all;
+}
+
+.routeDetails-routeStopMarker-warning {
+  background: var(--colorWarning);
+}
+
+.routeDetails-routeStopMarker-alert {
+  background: var(--colorAlert);
+}

@@ -1,0 +1,115 @@
+<template>
+
+    <require from="./events.scss"></require>
+    <!-- <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require> -->
+
+    <page-section>
+
+        <!-- <switch-toggle label="before" value.bind="showMap">
+
+            <div slot="heading" translate>
+                Show map
+            </div>
+
+        </switch-toggle> -->
+
+        <!-- <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></order-details-map> -->
+
+        <data-table appearance="rows">
+
+            <data-table-headers>
+
+                <data-table-cell align="right">
+                    <span class="text-truncate timeline-header" translate>
+                        Time of occurrence
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell class="event-location-header">
+                    <span class="text-truncate" translate>
+                        Event and location
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Accountable
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <!-- Icons -->
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <template repeat.for="event of events">
+
+                <data-table-row>
+
+                    <data-table-cell align="right">
+                        <div class="order-event-column">
+
+                            <span class="text-truncate font-larger">
+                                ${event.date | date: 'narrow' : false}
+                            </span>
+                            <span class="text-truncate">
+                                ${event.date | time: 'narrow' : false}
+                            </span>
+
+                            <div class="timeline">
+                                <div class="timeline-line top"></div>
+                                <div class="timeline-circle"></div>
+                                <div class="timeline-line bottom"></div>
+                            </div>
+                        </div>
+                    </data-table-cell>
+
+                    <data-table-cell class="event-location-column">
+                        <div class="order-event-column">
+
+                            <span class="text-truncate font-larger">
+                                ${event.name}
+                            </span>
+                            <span class="text-truncate">
+                                ${event.location}
+                            </span>
+
+                            <div class=""
+                        </div>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <div class="order-event-column">
+
+                            <span class="text-truncate font-larger">
+                                ${event.author.name}
+                            </span>
+                            <span class="text-truncate">
+                                ${event.author.affiliation}
+                            </span>
+
+                        </div>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+
+                        <button
+                            appearance="outline"
+                            accent="primary"
+                            click.trigger="onEventDetailsClick(event)"
+                            translate>
+                            See details
+                        </button>
+
+                    </data-table-cell>
+
+                </data-table-row>
+
+            </template>
+
+        </data-table>
+
+    </page-section>
+
+</template>

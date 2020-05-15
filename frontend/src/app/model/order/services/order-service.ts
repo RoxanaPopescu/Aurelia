@@ -6,6 +6,7 @@ import { OrderStatusSlug } from "../entities/order-status";
 import { OrderInfo } from "../entities/order-info";
 import { Order } from "../entities/order";
 import { getLegacyOrderSortProperty, getLegacySortDirection, getLegacyOrderStatus } from "legacy/helpers/api-helper";
+import { OrderNew } from "..";
 
 /**
  * Represents a service that manages orders.
@@ -84,5 +85,33 @@ export class OrderService
         });
 
         return new Order(result.data);
+    }
+
+    /**
+     * Gets the specified order.
+     * @param orderSlug The slug identifying the order.
+     * @returns A promise that will be resolved with the order.
+     */
+    public async getV2(orderSlug: string): Promise<OrderNew>
+    {
+        const result = await this._apiClient.get("orders/v2/details",
+        {
+            query: { slug: orderSlug }
+        });
+
+        return new OrderNew(result.data);
+    }
+
+    /**
+     * Saves the specified order.
+     * @param order The order.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async saveOrder(order: OrderNew): Promise<void>
+    {
+        await this._apiClient.post("orders/v2/edit",
+        {
+            body: { order: order }
+        });
     }
 }

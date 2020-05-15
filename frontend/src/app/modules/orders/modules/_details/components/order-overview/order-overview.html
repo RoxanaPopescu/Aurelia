@@ -1,0 +1,101 @@
+<template>
+
+    <require from="./order-overview.scss"></require>
+
+    <page-section scroll-fade="0.7">
+
+        <div class="control-row">
+
+            <!-- 1st card -->
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Order status
+                    </div>
+
+                    <div class="font-largest" accent.bind="accentFromStatus & attr">
+                        ${order.state.status.name}
+                    </div>
+
+                    <div class="font-small">
+
+                        &nbsp;
+
+                    </div>
+
+                </div>
+
+            </card>
+
+            <!-- 2nd card -->
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Delivery date
+                    </div>
+
+                    <div class="font-largest" empty-value>
+                        ${order.pickup.appointment.earliestArrivalDate | date: 'narrow' : false}
+                    </div>
+
+                    <div class="font-small">
+                        &nbsp;
+                    </div>
+
+                </div>
+
+            </card>
+
+            <!-- 3rd card -->
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Delivery interval
+                    </div>
+
+                    <div class="font-largest" empty-value>
+
+                        ${order.pickup.appointment.earliestArrivalTime | time: 'narrow' : false} - ${order.pickup.appointment.latestArrivalTime | time: 'narrow' : false}
+
+                    </div>
+
+                    <div class="font-small">
+                        &nbsp;
+                    </div>
+
+                </div>
+
+            </card>
+
+            <!-- 4th card -->
+            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+                <div class="card-section">
+
+                    <div class="font-small opacity-faded" translate>
+                        Estimated time of delivery
+                    </div>
+
+                    <div class="font-largest" empty-value>
+                        ${order.delivery.appointment.estimatedArrivalTime | time: 'narrow' : false}
+                    </div>
+
+                    <div class="font-small">
+                        &nbsp;
+                    </div>
+
+                </div>
+
+            </card>
+
+        </div>
+
+    </page-section>
+
+</template>

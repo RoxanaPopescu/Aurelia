@@ -1,0 +1,129 @@
+events
+{
+    data-table
+    {
+        --data-table-columns: min-content 2fr 2fr 1fr;
+
+        .timeline-header
+        {
+            padding-right: 12rem;
+        }
+
+        .event-location-column, .event-location-header
+        {
+            padding-left: 0;
+        }
+
+        .data-table-row
+        {
+            &:not(:first-of-type)
+            {
+                data-table-cell
+                {
+                    &:first-child
+                    {
+                        border: 0;
+                    }
+                }
+            }
+
+            &:first-of-type
+            {
+                data-table-cell
+                {
+                    &:first-child
+                    {
+                        .timeline
+                        {
+                            &-line
+                            {
+                                &.top
+                                {
+                                    background-color: transparent;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:last-of-type
+            {
+                data-table-cell
+                {
+                    &:first-child
+                    {
+                        .timeline
+                        {
+                            &-line
+                            {
+                                &.bottom
+                                {
+                                    background-color: transparent;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            data-table-cell
+            {
+                height: 21rem;
+
+                .data-table-cell-content
+                {
+                    width: 100%;
+                }
+            }
+
+            .order-event-column
+            {
+                width: 100%;
+                padding-right: 12rem;
+
+                span
+                {
+                    &:first-child
+                    {
+                        font-weight: 600;
+                    }
+                }
+
+                .timeline
+                {
+                    position: absolute;
+                    right: 5rem;
+                    top: 0;
+                    bottom: 0;
+                    width: 6.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    &-line
+                    {
+                        width: 1rem;
+                        background-color: var(--surface-positive-border-color);
+
+                        &.top
+                        {
+                            height: 5rem;
+                        }
+                        &.bottom
+                        {
+                            flex-grow: 1;
+                        }
+                    }
+                    &-circle
+                    {
+                        width: 6.5rem;
+                        height: 6.5rem;
+                        border-radius: 50%;
+                        background-color: var(--surface-positive-surface-color);
+                    }
+                }
+            }
+        }
+    }
+}

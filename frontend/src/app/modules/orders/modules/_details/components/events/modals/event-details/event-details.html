@@ -1,0 +1,29 @@
+<template>
+
+    <require from="./event-details.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="event-details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                Event
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                General informations
+            </div>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>
