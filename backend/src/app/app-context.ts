@@ -1,10 +1,16 @@
 import { IPaging, ISorting } from "../shared/types";
+import { User } from "../app/middleware/authorize-middleware";
 
 /**
  * Represents the custom properties and methods added to the context.
  */
 export interface IAppContext
 {
+    /**
+     * The authenticated user, if a JWT is specified.
+     */
+    user?: User | null;
+
     /**
      * The paging to use, if specified.
      */

@@ -1,6 +1,6 @@
 import { environment } from "./env";
 import { container, ApiClient, RequestHeadersInterceptor, ResponseStubInterceptor } from "./shared/infrastructure";
-import { getRequestHeaders } from "./shared/middleware/headers-middleware";
+import { getRequestHeaders } from "./app/middleware/headers-middleware";
 import { App } from "./app/app";
 import { AppRouter } from "./app/app-router";
 import settings from "./resources/settings/settings";

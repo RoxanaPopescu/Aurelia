@@ -27,6 +27,11 @@ export class RequestHeadersInterceptor implements IApiInterceptor
     {
         const headers = this.getHeadersFunc();
 
+        if (headers.authorization && !request.headers.has("authorization"))
+        {
+            request.headers.set("authorization", headers.authorization);
+        }
+
         if (headers.correlationId && !request.headers.has("x-correlation"))
         {
             request.headers.set("x-correlation", headers.correlationId);

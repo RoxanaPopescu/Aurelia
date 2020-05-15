@@ -1,5 +1,5 @@
 import { Middleware } from "koa";
-import { ApiError } from "../infrastructure";
+import { ApiError } from "../../shared/infrastructure";
 
 /**
  * Creates a new middlerware instance, that adds a `internal` method to the
