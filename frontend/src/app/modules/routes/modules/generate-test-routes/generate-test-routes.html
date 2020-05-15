@@ -139,7 +139,7 @@
                         </div>
 
                         <div class="flex-row margin-large-bottom">
-                            <text-input readonly="true" class="flex-basis-2-of-3 margin-right" label="above" value.bind="driver.name">
+                            <text-input readonly="true" class="flex-basis-1-of-3 margin-right" label="above" value.bind="driver.name">
 
                                 <div slot="heading" translate>
                                     Assign to driver (not required)
@@ -151,7 +151,7 @@
 
                             </text-input>
 
-                            <button class="flex-basis-1-of-3 create-driver-button" disabled.bind="updating" appearance="outline" accent="primary" click.trigger="onSelectDriver()">
+                            <button class="flex-basis-2-of-3 create-driver-button" disabled.bind="updating" appearance="outline" accent="primary" click.trigger="onSelectDriverClick()">
                                 Select
                             </button>
 

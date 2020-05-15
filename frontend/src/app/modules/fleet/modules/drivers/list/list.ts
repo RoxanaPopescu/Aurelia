@@ -5,6 +5,7 @@ import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { DriverService, Driver } from "app/model/driver";
 import { DeleteDriverDialog } from "./modals/confirm-delete/confirm-delete";
+import { DriverStatusSlug } from "app/model/driver/entities/driver-status";
 
 /**
  * Represents the route parameters for the page.
@@ -15,6 +16,7 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
+    searchQuery?: string;
 }
 
 /**
@@ -59,7 +61,7 @@ export class ListPage
     protected sorting: ISorting =
     {
         property: "name",
-        direction: "descending"
+        direction: "ascending"
     };
 
     /**
@@ -69,18 +71,30 @@ export class ListPage
     protected paging: IPaging =
     {
         page: 1,
-        pageSize: 20
+        pageSize: 50
     };
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * The text in the search text input.
      */
-    protected driverCount: number | undefined;
+    @observable({ changeHandler: "update" })
+    protected searchQuery: string | undefined;
+
+    /**
+     * The name identifying the selected status tab.
+     */
+    @observable({ changeHandler: "update" })
+    protected statusFilter: DriverStatusSlug[] | undefined;
 
     /**
      * The items to present in the table.
      */
-    protected drivers: Driver[];
+    protected results: Driver[];
+
+    /**
+     * True if initial loading failed
+     */
+    protected failed: boolean = false;
 
     /**
      * Called by the framework when the module is activated.
@@ -127,7 +141,7 @@ export class ListPage
         try
         {
             await this._driverService.delete(driver.id);
-            this.drivers.splice(this.drivers.indexOf(driver), 1);
+            this.results.splice(this.results.indexOf(driver), 1);
         }
         catch (error)
         {
@@ -157,34 +171,44 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            // Fetch the data.
-            const result = await this._driverService.getAll(
-                this.sorting,
-                this.paging,
-                signal);
+            try {
+                this.failed = false;
 
-            // Update the state.
-            this.drivers = result.drivers;
-            this.driverCount = result.driverCount;
+                // Fetch the data.
+                const data = await this._driverService.getAll(
+                    this.sorting,
+                    this.paging,
+                    {
+                        searchQuery: this.searchQuery,
+                        statuses: this.statusFilter
+                     },
+                    signal);
 
-            // Reset page.
-            if (propertyName !== "paging")
-            {
-                this.paging.page = 1;
+                // Update the state.
+                this.results = data.results;
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll.reset();
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                },
+                { trigger: false, replace: true });
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
             }
-
-            // Scroll to top.
-            this.scroll.reset();
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.page = this.paging.page;
-                state.params.pageSize = this.paging.pageSize;
-                state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-            },
-            { trigger: false, replace: true });
         });
     }
 }

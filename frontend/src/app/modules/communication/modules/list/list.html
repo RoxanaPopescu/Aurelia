@@ -30,12 +30,12 @@
                     Trigger events
                 </div>
 
-                <toggle-group class="flex-column" value.bind="triggerEventFilter">
+                <toggle-group class="flex-column" value.bind="eventTypeFilter">
 
-                    <check-toggle repeat.for="triggerEvent of availableTriggerEvents" label="after" model.bind="triggerEvent.slug" value.one-time="false">
+                    <check-toggle repeat.for="eventType of availableTriggerEvents" label="after" model.bind="eventType.slug" value.one-time="false">
 
                         <div slot="heading" translate>
-                            ${triggerEvent.name}
+                            ${eventType.name}
                         </div>
 
                     </check-toggle>
@@ -149,7 +149,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="triggerEvent">
+                        <data-table-cell name="eventType">
                             <span class="text-truncate" translate>
                                 Event
                             </span>
@@ -174,13 +174,13 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${trigger.senderName}
+                                    ${trigger.fromName}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${trigger.recipient.name}
+                                    ${trigger.recipientType.name}
                                 </span>
                             </data-table-cell>
 
@@ -192,7 +192,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${trigger.triggerEvent.name}
+                                    ${trigger.eventType.name}
                                 </span>
                             </data-table-cell>
 

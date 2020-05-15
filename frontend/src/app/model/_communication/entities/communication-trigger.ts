@@ -22,13 +22,15 @@ export class CommunicationTrigger
             this.customer = data.customer;
             this.routeTags = data.routeTags;
             this.stopTags = data.stopTags;
-            this.triggerEvent = new CommunicationTriggerEvent(data.triggerEvent);
+            this.eventType = new CommunicationTriggerEvent(data.eventType);
             this.parameters = new CommunicationParameters(data.parameters);
-            this.recipient = new CommunicationRecipient(data.recipient);
-            this.senderName = data.message.senderName;
-            this.messageType = new CommunicationMessageType(data.message.messageType);
-            this.messageTitle = data.message.messageTitle;
-            this.messageBody = data.message.messageBody;
+            this.recipientType = new CommunicationRecipient(data.recipientType);
+            this.messageType = new CommunicationMessageType(data.messageType);
+
+            this.fromName = data.messageTemplate.fromName;
+            this.fromEmail = data.messageTemplate.fromEmail;
+            this.messageSubject = data.messageTemplate.messageSubject;
+            this.messageContent = data.messageTemplate.messageContent;
         }
         else
         {
@@ -74,17 +76,22 @@ export class CommunicationTrigger
     /**
      * The event for which the message should be sent.
      */
-    public triggerEvent: CommunicationTriggerEvent;
+    public eventType: CommunicationTriggerEvent;
 
     /**
      * The recipient of the message.
      */
-    public recipient: CommunicationRecipient;
+    public recipientType: CommunicationRecipient;
 
     /**
      * The name of the sender, as seen by the recipient when the message is received.
      */
-    public senderName: string;
+    public fromName: string;
+
+    /**
+     * The email of the sender, as seen by the recipient when the message is received.
+     */
+    public readonly fromEmail: string;
 
     /**
      * The type of message to send.
@@ -94,12 +101,12 @@ export class CommunicationTrigger
     /**
      * The title of the message.
      */
-    public messageTitle: CommunicationMessageType;
+    public messageSubject: CommunicationMessageType;
 
     /**
      * The body of the message.
      */
-    public messageBody: CommunicationMessageType;
+    public messageContent: CommunicationMessageType;
 
     /**
      * The parameters to use, which depend on the trigger event.
@@ -124,15 +131,16 @@ export class CommunicationTrigger
             customer: this.customer,
             routeTags: this.routeTags,
             stopTags: this.stopTags,
-            triggerEvent: this.triggerEvent,
+            eventType: this.eventType,
             parameters: this.parameters,
-            recipient: this.recipient,
-            message:
+            recipientType: this.recipientType,
+            messageType: this.messageType,
+            messageTemplate:
             {
-                senderName: this.senderName,
-                messageType: this.messageType,
-                messageTitle: this.messageTitle,
-                messageBody: this.messageBody
+                fromName: this.fromName,
+                fromEmail: this.fromEmail,
+                messageSubject: this.messageSubject,
+                messageContent: this.messageContent
             }
         };
 

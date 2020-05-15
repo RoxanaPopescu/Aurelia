@@ -3,9 +3,9 @@ import { TestService } from "app/model/test/services/test-service";
 import { RequestTemplate } from "app/model/test/entities/request-template";
 import { DateTime, Duration } from "luxon";
 import { ModalService, IValidation } from "shared/framework";
-import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
 import { Driver } from "app/model/driver";
 import { Uuid } from "shared/utilities/id/uuid";
+import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 
 type Type = "by-id" | "template";
 type Result = {
@@ -179,8 +179,13 @@ export class GenerateTestRoutes
     /**
      * Called when a drivers is about to be selected
      */
-    protected async onSelectDriver(): Promise<void>
+    protected async onSelectDriverClick(): Promise<void>
     {
-        this.driver = await this._modalService.open(AssignDriverPanel).promise;
+        const driver = await this._modalService.open(
+            AssignDriverPanel,
+            { assignOnSelect: false }
+        ).promise;
+
+        this.driver = driver;
     }
 }

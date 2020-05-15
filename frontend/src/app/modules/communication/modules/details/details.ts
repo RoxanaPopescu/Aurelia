@@ -1,4 +1,5 @@
 import { autoinject, computedFrom } from "aurelia-framework";
+import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
@@ -27,14 +28,16 @@ export class DetailsPage
      * @param communicationService The `CommunicationService` instance.
      * @param agreementService The `AgreementService` instance.
      */
-    public constructor(communicationService: CommunicationService, agreementService: AgreementService)
+    public constructor(communicationService: CommunicationService, agreementService: AgreementService, router: Router)
     {
         this._communicationService = communicationService;
         this._agreementService = agreementService;
+        this._router = router;
     }
 
     private readonly _communicationService: CommunicationService;
     private readonly _agreementService: AgreementService;
+    private readonly _router: Router;
 
     /**
      * The validation for the modal.
@@ -92,7 +95,7 @@ export class DetailsPage
         {
             this.model = await this._communicationService.get(params.slug);
             this.triggerName = this.model.name;
-            this.setAvailableOptions(this.model.triggerEvent, this.model.recipient);
+            this.setAvailableOptions(this.model.eventType, this.model.recipientType);
         }
         else
         {
@@ -122,17 +125,19 @@ export class DetailsPage
             if (this.model.slug == null)
             {
                 await this._communicationService.create(this.model);
+
+                this._router.navigate("/communication/list");
             }
             else
             {
                 await this._communicationService.update(this.model);
-            }
 
-            this.triggerName = this.model.name;
+                this.triggerName = this.model.name;
+            }
         }
         catch (error)
         {
-            Log.error("Could not save the route planning settings", error);
+            Log.error("Could not save the communication trigger", error);
         }
     }
 
@@ -150,25 +155,25 @@ export class DetailsPage
         });
     }
 
-    protected setAvailableOptions(triggerEvent: CommunicationTriggerEvent, recipient: CommunicationRecipient): void
+    protected setAvailableOptions(eventType: CommunicationTriggerEvent, recipient: CommunicationRecipient): void
     {
-        const options = this._communicationService.getOptions(triggerEvent.slug);
+        const options = this._communicationService.getOptions(eventType.slug);
 
         this.options =
         {
-            recipients: options.recipients
+            recipientTypes: options.recipientTypes
                 .map(r => new CommunicationRecipient(r)),
 
             messageTypes: options.messageTypes
-                .filter(t => t !== "push-to-driver" || recipient.slug === "driver")
+                .filter(t => t !== "app-push" || recipient.slug === "driver")
                 .map(r => new CommunicationMessageType(r)),
 
             placeholders: options.placeholders
         };
 
-        if (this.model.recipient != null && !options.recipients.includes(this.model.recipient.slug))
+        if (this.model.recipientType != null && !options.recipientTypes.includes(this.model.recipientType.slug))
         {
-            this.model.recipient = undefined as any;
+            this.model.recipientType = undefined as any;
         }
 
         if (this.model.messageType != null && !options.messageTypes.includes(this.model.messageType.slug))
@@ -176,7 +181,7 @@ export class DetailsPage
             this.model.messageType = undefined as any;
         }
 
-        if (this.model.messageType != null && this.model.messageType.slug === "push-to-driver" && (this.model.recipient == null || this.model.recipient.slug !== "driver"))
+        if (this.model.messageType != null && this.model.messageType.slug === "app-push" && (this.model.recipientType == null || this.model.recipientType.slug !== "driver"))
         {
             this.model.messageType = undefined as any;
         }

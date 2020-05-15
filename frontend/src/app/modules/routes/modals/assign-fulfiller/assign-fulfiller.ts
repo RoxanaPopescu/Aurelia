@@ -2,7 +2,7 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, ModalService } from "shared/framework";
-import { RouteAssignmentService, Route } from "app/model/route";
+import { RouteAssignmentService, RouteBase } from "app/model/route";
 import { AgreementService } from "app/model/agreement";
 import { Fulfiller } from "app/model/outfit";
 import { ConfirmRemoveFulfillerDialog } from "./confirm-remove-fulfiller/confirm-remove-fulfiller";
@@ -41,9 +41,14 @@ export class AssignFulfillerPanel
     protected queryText: string | undefined;
 
     /**
-     * The route to which a fulfiller should be assigned.
+     * The route to which a driver should be assigned
      */
-    protected route: Route;
+    protected route: RouteBase;
+
+    /**
+     * If the driver should be assigned within this modal
+     */
+    protected assignOnSelect: boolean;
 
     /**
      * The available fulfillers.
@@ -80,9 +85,10 @@ export class AssignFulfillerPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: Route): void
+    public activate(model: { route: RouteBase, assignOnSelect: boolean }): void
     {
-        this.route = model;
+        this.route = model.route;
+        this.assignOnSelect = model.assignOnSelect;
 
         // tslint:disable-next-line: no-unused-expression
         new Operation(async () =>
@@ -126,9 +132,10 @@ export class AssignFulfillerPanel
 
         try
         {
-            this._modal.busy = true;
-
-            await this._routeAssignmentService.assignFulfiller(this.route, this.identityService.identity!.outfit, fulfiller);
+            if (this.assignOnSelect) {
+                this._modal.busy = true;
+                await this._routeAssignmentService.assignFulfiller(this.route, fulfiller, this.identityService.identity!.outfit);
+            }
 
             this._result = fulfiller;
 

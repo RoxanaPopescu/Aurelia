@@ -160,9 +160,9 @@ export class DetailsPage
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
+            // TODO: Make this work with autocomplete version
             const response = await this._driverService.getAll();
-            this.drivers = response.drivers;
-
+            this.drivers = response.results;
         })();
     }
 

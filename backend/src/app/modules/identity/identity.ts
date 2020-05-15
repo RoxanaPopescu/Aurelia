@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import { ParameterizedContext } from "koa";
-import settings from "../../../resources/settings/settings";
 import { AuthenticationError } from "../../../shared/types";
 import { AppModule } from "../../app-module";
 import { identityService } from "./services/identity";
+import settings from "../../../resources/settings/settings";
 
 /**
  * Represents a module exposing endpoints related to identity.
@@ -156,7 +156,7 @@ export class IdentityModule extends AppModule
             ? settings.middleware.identity.refreshToken.expiresIn.as("milliseconds")
             : undefined;
 
-        context.cookies.set(settings.middleware.identity.refreshToken.cookie, refreshJwt,
+        context.cookies.set(settings.middleware.identity.refreshToken.cookie, refreshJwt || "",
         {
             ...settings.infrastructure.cookies,
             httpOnly: true,
@@ -175,7 +175,7 @@ export class IdentityModule extends AppModule
             ? settings.middleware.identity.accessToken.expiresIn.as("milliseconds")
             : undefined;
 
-        context.cookies.set(settings.middleware.identity.accessToken.cookie, accessJwt,
+        context.cookies.set(settings.middleware.identity.accessToken.cookie, accessJwt || "",
         {
             ...settings.infrastructure.cookies,
             maxAge

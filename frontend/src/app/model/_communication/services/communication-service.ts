@@ -25,12 +25,12 @@ export class CommunicationService
 
     /**
      * Gets the available options for the specified trigger event.
-     * @param triggerEventSlug The slug identifying the trigger event.
+     * @param eventTypeSlug The slug identifying the trigger event.
      * @returns The available options.
      */
-    public getOptions(triggerEventSlug: CommunicationTriggerEventSlug): any
+    public getOptions(eventTypeSlug: CommunicationTriggerEventSlug): any
     {
-        return optionsForTriggerEvents[triggerEventSlug];
+        return optionsForTriggerEvents[eventTypeSlug];
     }
 
     /**

@@ -2,10 +2,13 @@ import { autoinject, observable } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
-import { RouteService, RouteInfo } from "app/model/route";
+import { IScroll, ModalService } from "shared/framework";
+import { RouteService, RouteInfo, RouteAssignmentService } from "app/model/route";
 import { RouteStatusListSlug } from "app/model/route/entities/route-status-list";
 import { DateTime } from "luxon";
+import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
+import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
+import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 
 /**
  * Represents the route parameters for the page.
@@ -27,21 +30,27 @@ interface IRouteParams
  * Represents the page.
  */
 @autoinject
-export class ListPage
+export class AssignListPage
 {
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param modalService The `ModalService` instance.
+     * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routeService: RouteService, historyHelper: HistoryHelper)
+    public constructor(routeService: RouteService, routeAssignmentService: RouteAssignmentService, modalService: ModalService, historyHelper: HistoryHelper)
     {
         this._routeService = routeService;
+        this._modalService = modalService;
+        this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
     private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+    private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
@@ -54,6 +63,11 @@ export class ListPage
      * The most recent update operation.
      */
     protected updateOperation: Operation;
+
+    /**
+     * The routes behing updated, by assignment
+     */
+    protected routesUpdating: RouteInfo[] = [];
 
     /**
      * The sorting to use for the table.
@@ -149,6 +163,63 @@ export class ListPage
         if (this.updateOperation != null)
         {
             this.updateOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the `Assign fulfiller` button is clicked.
+     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignFulfillerClick(route: RouteInfo): Promise<void>
+    {
+        const fulfiller = await this._modalService.open(
+            AssignFulfillerPanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (fulfiller != null)
+        {
+            this.routesUpdating.push(route);
+            await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+            this.routesUpdating.splice(this.routesUpdating.indexOf(route), 1);
+        }
+    }
+
+    /**
+     * Called when the `Assign vehicle` button is clicked.
+     * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignVehicleClick(route: RouteInfo): Promise<void>
+    {
+        const vehicle = await this._modalService.open(
+            AssignVehiclePanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (vehicle != null)
+        {
+            this.routesUpdating.push(route);
+            await this._routeAssignmentService.assignVehicle(route, vehicle);
+            this.routesUpdating.splice(this.routesUpdating.indexOf(route), 1);
+        }
+    }
+
+    /**
+     * Called when the `Assign driver` button is clicked.
+     * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignDriverClick(route: RouteInfo): Promise<void>
+    {
+        const driver = await this._modalService.open(
+            AssignDriverPanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (driver != null)
+        {
+            this.routesUpdating.push(route);
+            await this._routeAssignmentService.assignDriver(route, driver);
+            this.routesUpdating.splice(this.routesUpdating.indexOf(route), 1);
         }
     }
 

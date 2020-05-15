@@ -6,11 +6,11 @@ import { ModalService, IScroll } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
-import { AssignDriverPanel } from "./modals/assign-driver/assign-driver";
-import { AssignFulfillerPanel } from "./modals/assign-fulfiller/assign-fulfiller";
+import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
+import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
 import { IdentityService } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
-import { AssignVehiclePanel } from "./modals/assign-vehicle/assign-vehicle";
+import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 
 /**
@@ -127,7 +127,10 @@ export class DetailsModule
      */
     protected async onAssignDriverClick(): Promise<void>
     {
-        const driver = await this._modalService.open(AssignDriverPanel, this.route).promise;
+        const driver = await this._modalService.open(
+            AssignDriverPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
 
         if (driver != null)
         {
@@ -141,7 +144,10 @@ export class DetailsModule
      */
     protected async onAssignVehicleClick(): Promise<void>
     {
-        const vehicle = await this._modalService.open(AssignVehiclePanel, this.route).promise;
+        const vehicle = await this._modalService.open(
+            AssignVehiclePanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
 
         if (vehicle != null)
         {
@@ -155,7 +161,10 @@ export class DetailsModule
      */
     protected async onAssignFulfillerClick(): Promise<void>
     {
-        const fulfiller = await this._modalService.open(AssignFulfillerPanel, this.route).promise;
+        const fulfiller = await this._modalService.open(
+            AssignFulfillerPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
 
         if (fulfiller != null)
         {

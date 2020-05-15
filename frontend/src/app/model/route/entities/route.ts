@@ -21,10 +21,10 @@ export class Route extends AbstractRoute<RouteStop>
 
         super(data, stops);
 
+        this.supportNote = data.supportNote;
         this.overallRating = data.overallRating;
         this.driverListUrl = data.driverListUrl;
         this.driverInstructions = data.driverInstructions;
-        this.tags = data.tags;
 
         if (data.owner != null)
         {
@@ -58,11 +58,6 @@ export class Route extends AbstractRoute<RouteStop>
     public readonly driverListUrl?: string;
 
     /**
-     * The tags associated with the route.
-     */
-    public readonly tags: string[];
-
-    /**
      * The total weight range for the colli in the order.
      */
     public readonly totalWeightRange?: WeightRange;
@@ -76,6 +71,12 @@ export class Route extends AbstractRoute<RouteStop>
      * The owner of this route, only exist if all stops belongs to this outfit.
      */
     public readonly owner?: Outfit;
+
+    /**
+     * The support note for this route.
+     * Usually used for writing information about the driver
+     */
+    public supportNote?: string;
 
     /**
      * The total number colli associated with pickups on non-cancelled stops on the route.

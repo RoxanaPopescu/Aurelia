@@ -36,7 +36,7 @@ export class RouteOverview
                 {
                     s.pickups.forEach(p => p.colli.forEach(c =>
                         {
-                            if (c.status.slug === "picked-up")
+                            if (c.status.slug !== "not-picked-up" && c.status.slug !== "no-action")
                             {
                                 pickedUpColliCount++;
                             }
@@ -315,12 +315,11 @@ export class RouteOverview
         if (this.route != null)
         {
             let completedPickupStops = this.route.stops.filter(s => s.type.slug === "pickup" &&
-                                                                s.status.slug === "completed" &&
                                                                 s instanceof RouteStop);
             completedPickupStops.forEach((s: RouteStop) => {
                 s.pickups.forEach(p => {
                     p.colli.forEach(c => {
-                        if (c.status.slug !== "picked-up")
+                        if (c.status.slug === "no-action" || c.status.slug === "not-picked-up")
                         {
                             notPickedUpColli.push(c);
                         }

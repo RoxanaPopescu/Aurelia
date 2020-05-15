@@ -4,7 +4,7 @@ export default
 {
     "order-pickup-completed":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -22,12 +22,13 @@ export default
             "DeliveryTimeFrame",
             "DriverPhone",
             "DriverName",
-            "ETA"
+            "DeliveryEtaDate",
+            "DeliveryEtaTime"
         ])
     },
     "order-delivery-arrived":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -48,7 +49,7 @@ export default
     },
     "eta-specific-time":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -63,12 +64,13 @@ export default
             "DeliveryCustomerName",
             "DeliveryLocationAddress",
             "DeliveryTimeFrame",
-            "ETA"
+            "DeliveryEtaDate",
+            "DeliveryEtaTime"
         ])
     },
     "eta-before-delivery":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -83,14 +85,15 @@ export default
             "DeliveryCustomerName",
             "DeliveryLocationAddress",
             "DeliveryTimeFrame",
-            "ETA",
+            "DeliveryEtaDate",
+            "DeliveryEtaTime",
             "DriverPhone",
             "DriverName"
         ])
     },
     "eta-before-pickup":
     {
-        recipients:
+        recipientTypes:
         [
             "pickup-customer"
         ],
@@ -105,14 +108,15 @@ export default
             "PickupCustomerName",
             "PickupLocationAddress",
             "PickupTimeFrame",
-            "ETA",
+            "PickupEtaDate",
+            "PickupEtaTime",
             "DriverPhone",
             "DriverName"
         ])
     },
     "delayed-delivery":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -127,14 +131,15 @@ export default
             "DeliveryCustomerName",
             "DeliveryLocationAddress",
             "DeliveryTimeFrame",
-            "ETA",
+            "DeliveryEtaDate",
+            "DeliveryEtaTime",
             "DriverPhone",
             "DriverName"
         ])
     },
     "delayed-pickup":
     {
-        recipients:
+        recipientTypes:
         [
             "delivery-customer"
         ],
@@ -149,14 +154,17 @@ export default
             "PickupCustomerName",
             "PickupLocationAddress",
             "PickupTimeFrame",
-            "ETA",
+            "PickupEtaDate",
+            "PickupEtaTime",
+            "DeliveryEtaDate",
+            "DeliveryEtaTime",
             "DriverPhone",
             "DriverName"
         ])
     },
     "order-cancelled-en-route":
     {
-        recipients:
+        recipientTypes:
         [
             "pickup-customer",
             "driver",
@@ -166,7 +174,7 @@ export default
         [
             "sms",
             "email",
-            "push-to-driver"
+            "app-push"
         ],
         placeholders: getPlaceholders(
         [
@@ -183,7 +191,7 @@ export default
     },
     "order-modified-en-rout":
     {
-        recipients:
+        recipientTypes:
         [
             "driver",
             "supplier"
@@ -192,7 +200,7 @@ export default
         [
             "sms",
             "email",
-            "push-to-driver"
+            "app-push"
         ],
         placeholders: getPlaceholders(
         [

@@ -2,25 +2,24 @@
 
     <require from="app/components/identity-picture/identity-picture"></require>
 
-    <require from="./assign-vehicle.scss"></require>
+    <require from="./assign-driver.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="assign-vehicle" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel scroll scroll.ref="scroll" name="assign-driver" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom">
-                <template if.bind="route.vehicle" translate>
-                    Reassign vehicle
+                <template if.bind="route.driver" translate>
+                    Reassign driver
                 </template>
-
-                <template if.bind="!route.vehicle" translate>
-                    Assign vehicle
+                <template if.bind="!route.driver" translate>
+                    Assign driver
                 </template>
             </h1>
 
-            <search-input value.bind="queryText" autofocus ref="queryInputElement">
+            <search-input value.bind="searchQuery & debounce: 200" autofocus ref="queryInputElement">
 
                 <span slot="before" class="opacity-faded">
                     <icon name="md-search" class="font-larger"></icon>
@@ -36,65 +35,73 @@
 
         <modal-section if.bind="true" class="margin-bottom">
 
-            <div class="margin-bottom" translate>
-                Choose the vehicle that should be assigned to the route
-            </div>
-
-            <data-table appearance="rows">
+            <data-table sorting.bind="sorting" busy.bind="updateOperation.pending" appearance="rows">
 
                 <data-table-headers>
 
-                    <data-table-cell>
+                    <data-table-cell name="name">
                         <span class="text-truncate" translate>
                             Name
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
+                    <data-table-cell name="email">
                         <span class="text-truncate" translate>
-                            Make
+                            Email
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell name="phone">
+                        <span class="text-truncate" translate>
+                            Phone
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate" translate>
-                            Model
+                            Vehicles
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell>
+                    <data-table-cell name="id" align="right">
                         <span class="text-truncate" translate>
-                            Type
+                            ID
                         </span>
                     </data-table-cell>
 
                 </data-table-headers>
 
-                <template repeat.for="vehicle of filteredResults">
+                <template repeat.for="driver of results">
 
-                    <data-table-row click.call="onSelect(vehicle)">
+                    <data-table-row click.call="onDriverClick(driver)">
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${vehicle.name}
+                                ${driver.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${vehicle.make}
+                                ${driver.email}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${vehicle.model}
+                                ${driver.phone}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${vehicle.type.name}
+                                ${driver.vehicleTypes | map: 'name' | list: 'short'}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <span class="text-truncate">
+                                ${driver.id}
                             </span>
                         </data-table-cell>
 
@@ -104,9 +111,9 @@
 
             </data-table>
 
-            <busy-indicator if.bind="vehicles == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="results == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="filteredResults.length == 0" class="margin-largest">
+            <empty-indicator if.bind="results.length == 0" class="margin-largest">
                 <div slot="heading" translate>No results</div>
             </empty-indicator>
 

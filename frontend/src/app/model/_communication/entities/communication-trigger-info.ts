@@ -17,9 +17,9 @@ export class CommunicationTriggerInfo
         this.customer = data.customer;
         this.routeTags = data.routeTags;
         this.stopTags = data.stopTags;
-        this.recipient = new CommunicationRecipient(data.recipient);
-        this.triggerEvent = new CommunicationTriggerEvent(data.triggerEvent);
-        this.senderName = data.senderName;
+        this.recipientType = new CommunicationRecipient(data.recipientType);
+        this.eventType = new CommunicationTriggerEvent(data.eventType);
+        this.fromName = data.fromName;
         this.messageType = new CommunicationMessageType(data.messageType);
     }
 
@@ -56,17 +56,17 @@ export class CommunicationTriggerInfo
     /**
      * The recipient of the message.
      */
-    public readonly recipient: CommunicationRecipient;
+    public readonly recipientType: CommunicationRecipient;
 
     /**
      * The event for which the message should be sent.
      */
-    public readonly triggerEvent: CommunicationTriggerEvent;
+    public readonly eventType: CommunicationTriggerEvent;
 
     /**
      * The name of the sender, as seen by the recipient when the message is received.
      */
-    public readonly senderName: string;
+    public readonly fromName: string;
 
     /**
      * The type of message to send.

@@ -3,12 +3,12 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesPriorToPickup | scale: 1/60"
+        value.bind="model.minutesBeforePickup | scale: 1/60"
         class="margin-large-bottom"
         min.bind="0">
 
         <div slot="heading" translate>
-            Minutes prior to pickup
+            Minutes before pickup
         </div>
 
         <span slot="after" class="opacity-faded" translate>
@@ -18,12 +18,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesPriorToPickup">
+                value.bind="model.minutesBeforePickup">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesPriorToPickup"
+                value.bind="model.minutesBeforePickup"
                 min.bind="0">
             </range-validator>
 
@@ -65,11 +65,11 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesAddedPriorToEstimate | scale: 1/60"
+        value.bind="model.minutesSubtractedFromEstimate | scale: 1/60"
         min.bind="0">
 
         <div slot="heading" translate>
-            Minutes added prior to estimate
+            Minutes subtracted from estimate
         </div>
 
         <span slot="after" class="opacity-faded" translate>
@@ -79,12 +79,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesAddedPriorToEstimate">
+                value.bind="model.minutesSubtractedFromEstimate">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesAddedPriorToEstimate"
+                value.bind="model.minutesSubtractedFromEstimate"
                 min.bind="0">
             </range-validator>
 
