@@ -90,14 +90,23 @@ export class RouteStopEditCustomElement
             }
             else
             {
-                this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from?.set({
-                                                                                day: newValue.day,
-                                                                                month: newValue.month,
-                                                                                year: newValue.year });
-                this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to?.set({
-                                                                                day: newValue.day,
-                                                                                month: newValue.month,
-                                                                                year: newValue.year });
+                if (this.model.routeStop.arrivalTimeFrame.from != null) {
+                    this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from.set({
+                        day: newValue.day,
+                        month: newValue.month,
+                        year: newValue.year });
+                } else {
+                    this.model.routeStop.arrivalTimeFrame.from = newValue;
+                }
+
+                if (this.model.routeStop.arrivalTimeFrame.to != null) {
+                    this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.set({
+                        day: newValue.day,
+                        month: newValue.month,
+                        year: newValue.year });
+                } else {
+                    this.model.routeStop.arrivalTimeFrame.to = newValue;
+                }
 
                 this.dateTimeChanged();
             }
@@ -135,6 +144,10 @@ export class RouteStopEditCustomElement
      */
     protected dateTimeChanged(): void
     {
+        if (this.model.routeStop.arrivalTimeFrame.to == null || this.model.routeStop.arrivalTimeFrame.from == null) {
+            return;
+        }
+
         if (this.model.routeStop.arrivalTimeFrame.to!.diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") < 0)
         {
             this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.plus({ day: 1 });

@@ -125,7 +125,7 @@
 
             <div class="control-row flex-basis-1-of-3">
 
-                <time-input label="above" value.bind="timeFrom" class="flex-basis-1-of-2">
+                <time-input disabled.bind="model.routeStop.arrivalTimeFrame.from ? false : true" label="above" value.bind="timeFrom" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         From
@@ -141,7 +141,7 @@
 
                 </time-input>
 
-                <time-input label="above" value.bind="timeTo" class="flex-basis-1-of-2">
+                <time-input disabled.bind="model.routeStop.arrivalTimeFrame.to ? false : true" label="above" value.bind="timeTo" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         To
