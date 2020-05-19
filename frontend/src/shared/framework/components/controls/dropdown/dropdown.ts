@@ -68,12 +68,6 @@ export class DropdownCustomElement
             this.owner = this._element.parentElement!;
         }
 
-        // Listen for interaction events, that might indicate that the dropdown should close.
-        this._eventManager.addEventListener(this.owner, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
-        this._eventManager.addEventListener(document.documentElement, "mousedown", event => this.onInteractionAnywhere(event), { capture: true });
-        this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true });
-        this._eventManager.addEventListener(document.documentElement, "focusin", event => this.onInteractionAnywhere(event), { capture: true });
-
         // Listen for mutations within the dropdown or its owner, that might affect the visibility, size or position of the dropdown.
         this._mutationObserver = new MutationObserver(() => this.updateVisibilityAndPosition());
         this._mutationObserver.observe(this._element, { attributes: true, attributeFilter: ["class"], childList: true, subtree: true, characterData: true });
@@ -130,6 +124,7 @@ export class DropdownCustomElement
         // Create the `Popper` instance for the new owner.
         this._popper = new Popper(this.owner, this._element,
         {
+            eventsEnabled: false,
             placement: this.placement,
             positionFixed: this.fixed,
             modifiers:
@@ -160,10 +155,27 @@ export class DropdownCustomElement
             (!style.display || style.display !== "none") &&
             (!style.opacity || style.opacity !== "0");
 
-        // If the element is visible, update its position.
         if (this._visible)
         {
+            // Update the position of the `Popper` instance.
             this._popper!.update();
+
+            // Enable event listeners on the `Popper` instance.
+            this._popper!.enableEventListeners();
+
+            // Listen for interaction events, that might indicate that the dropdown should close.
+            this._eventManager.addEventListener(this.owner, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
+            this._eventManager.addEventListener(document.documentElement, "focusin", event => this.onInteractionAnywhere(event), { capture: true });
+            this._eventManager.addEventListener(document.documentElement, "mousedown", event => this.onInteractionAnywhere(event), { capture: true });
+            this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true, passive: false });
+        }
+        else
+        {
+            // Disable event listeners on the `Popper` instance.
+            this._popper!.disableEventListeners();
+
+            // Stop listening for interaction events
+            this._eventManager.removeEventListeners();
         }
 
         // If using fixed positioning, set min-width to match the owner.
