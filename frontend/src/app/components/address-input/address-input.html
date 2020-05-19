@@ -19,6 +19,7 @@
         keydown.trigger="onInputKeyDown($event)"
         mousedown.trigger="onInputMouseDown($event)"
         focusin.trigger="onInputFocusIn($event)"
+        focusout.trigger="onInputFocusOut($event)"
         change.trigger="onInputChange($event)">
 
         <slot name="heading" slot="heading"></slot>
@@ -61,7 +62,7 @@
         <slot></slot>
 
         <dropdown
-            if.bind="open"
+            if.bind="open && inputValue"
             close.call="closeDropdown(escape, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
             fixed.bind="fixed">
@@ -69,7 +70,6 @@
             <item-picker
                 view-model.ref="itemPicker"
                 focused-value.bind="focusedValue"
-                filter-value.bind="filterValue"
                 focused-element.bind="inputElement"
                 keyboard.bind="open"
                 none.bind="false"

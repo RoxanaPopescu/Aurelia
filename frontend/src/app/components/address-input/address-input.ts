@@ -311,6 +311,19 @@ export class AddressInputCustomElement
     }
 
     /**
+     * Called when the input, or an element within the input, looses focus.
+     * Ensures the state is reset, even if the dropdown is not visible.
+     * @param event The focus event.
+     */
+    protected onInputFocusOut(event: FocusEvent): void
+    {
+        if (!event.defaultPrevented && this.open && !this.inputValue)
+        {
+            this.closeDropdown(false, false);
+        }
+    }
+
+    /**
      * Called when a `change` event is triggered on the input.
      * Prevents the event from bubbling further, as this input dispatches its own event.
      * @param event The change event.
