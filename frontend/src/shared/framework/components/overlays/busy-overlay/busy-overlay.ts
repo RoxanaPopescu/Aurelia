@@ -224,7 +224,7 @@ export class BusyOverlayCustomElement
         {
             // Add event listener to prevent scrolling.
             this._eventSubscription = this._eventManager.addEventListener(this._element, ["wheel", "touchstart", "pointerdown"],
-                (event: Event) => event.preventDefault(), { capture: true });
+                (event: Event) => event.preventDefault(), { capture: true, passive: false });
         }
     }
 
