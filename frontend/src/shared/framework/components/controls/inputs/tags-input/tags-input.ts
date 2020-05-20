@@ -182,7 +182,7 @@ export class TagsInputCustomElement
         this.open = true;
         this.focusedValue = undefined;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue());
+        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 
         if (focusInput)
         {

@@ -295,7 +295,7 @@ export class TimeInputCustomElement
         this.open = true;
         this.focusedValue = this.value;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue());
+        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 
         if (focusInput)
         {
