@@ -137,19 +137,22 @@ export class ToggleGroupCustomElement
      */
     public onToggleModelChanged(newModel: any, oldModel: any): void
     {
-        if (this.value === oldModel)
+        if (this.value !== undefined)
         {
-            this.value = newModel;
-        }
-        else if (this.value instanceof Array)
-        {
-            const index = this.value.indexOf(oldModel);
-
-            if (index > -1)
+            if (this.value === oldModel)
             {
-                const newValue = [...this.value];
-                newValue.splice(index, 1, newModel);
-                this.value = newValue;
+                this.value = newModel;
+            }
+            else if (this.value instanceof Array)
+            {
+                const index = this.value.indexOf(oldModel);
+
+                if (index > -1)
+                {
+                    const newValue = [...this.value];
+                    newValue.splice(index, 1, newModel);
+                    this.value = newValue;
+                }
             }
         }
     }
