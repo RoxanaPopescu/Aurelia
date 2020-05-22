@@ -78,7 +78,7 @@
 
         <dropdown
             show.bind="open"
-            close.call="closeDropdown(escape, !escape)"
+            close.call="closeDropdown(escape || !focusout, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
             fixed.bind="fixed">
 

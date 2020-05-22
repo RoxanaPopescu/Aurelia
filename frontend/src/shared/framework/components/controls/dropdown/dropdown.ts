@@ -55,6 +55,9 @@ export class DropdownCustomElement
         // True if closing because the `Escape` key was pressed, otherwise false.
         escape: boolean;
 
+        // True if closing because focus is no longer within the dropdown or its owner, otherwise false.
+        focusout: boolean;
+
     }) => void;
 
     /**
@@ -167,7 +170,7 @@ export class DropdownCustomElement
             this._eventManager.addEventListener(this.owner, "keydown", event => this.onKeyDownAnywhere(event as KeyboardEvent));
             this._eventManager.addEventListener(document.documentElement, "focusin", event => this.onInteractionAnywhere(event), { capture: true });
             this._eventManager.addEventListener(document.documentElement, "mousedown", event => this.onInteractionAnywhere(event), { capture: true });
-            this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true, passive: false });
+            this._eventManager.addEventListener(document.documentElement, "touchstart", event => this.onInteractionAnywhere(event), { capture: true });
         }
         else
         {
@@ -201,7 +204,7 @@ export class DropdownCustomElement
         if (this._visible && !event.defaultPrevented && event.key === "Escape")
         {
             event.preventDefault();
-            this.close({ escape: true });
+            this.close({ escape: true, focusout: false });
         }
     }
 
@@ -216,8 +219,7 @@ export class DropdownCustomElement
 
         if (this._visible && !this._element.contains(target) && !this.owner.contains(target))
         {
-            event.preventDefault();
-            this.close({ escape: false });
+            this.close({ escape: false, focusout: event.type === "focusin" });
         }
     }
 }
