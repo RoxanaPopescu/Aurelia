@@ -3,8 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
-import { RouteService, RouteInfo, RouteAssignmentService } from "app/model/route";
-import { RouteStatusListSlug } from "app/model/route/entities/route-status-list";
+import { RouteService, RouteInfo, RouteAssignmentService, RouteStatusSlug } from "app/model/route";
 import { DateTime } from "luxon";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
@@ -20,17 +19,23 @@ interface IRouteParams
     sortProperty?: string;
     sortDirection?: SortingDirection;
     searchQuery?: string;
-    statusFilter?: RouteStatusListSlug;
+    statusFilter?: RouteStatusSlug;
     startTimeFromFilter?: string;
     startTimeToFilter?: string;
+    createdTimeFromFilter?: string;
+    createdTimeToFilter?: string;
     tagsFilter?: string;
+    assignedDriver?: boolean;
+    notAssignedDriver?: boolean;
+    assignedVehicle?: boolean;
+    notAssignedVehicle?: boolean;
 }
 
 /**
  * Represents the page.
  */
 @autoinject
-export class AssignListPage
+export class ListPage
 {
     /**
      * Creates a new instance of the class.
@@ -98,13 +103,37 @@ export class AssignListPage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusListSlug = "requested";
+    protected statusFilter: RouteStatusSlug[] | undefined;
 
     /**
      * The text in the search text input.
      */
     @observable({ changeHandler: "update" })
     protected searchQuery: string | undefined;
+
+    /**
+     * Ff the driver is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected assignedDriver: boolean = false;
+
+    /**
+     * If the driver is not assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected notAssignedDriver: boolean = true;
+
+    /**
+     * The if the vehicle is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected assignedVehicle: boolean = false;
+
+    /**
+     * The if the vehicle is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected notAssignedVehicle: boolean = false;
 
     /**
      * The order tags for which orders should be shown.
@@ -123,6 +152,18 @@ export class AssignListPage
      */
     @observable({ changeHandler: "update" })
     protected startTimeToFilter: DateTime | undefined;
+
+    /**
+     * The min created date for which routes should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdTimeFromFilter: DateTime | undefined;
+
+    /**
+     * The max created date for which routes should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdTimeToFilter: DateTime | undefined;
 
     /**
      * The total number of items matching the query, or undefined if unknown.
@@ -145,11 +186,18 @@ export class AssignListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
-        this.statusFilter = params.statusFilter || this.statusFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.searchQuery = params.searchQuery || this.searchQuery;
         this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
         this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter) : this.startTimeFromFilter
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter) : this.startTimeToFilter
+        this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter) : this.startTimeFromFilter
+        this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter) : this.startTimeToFilter
+        this.assignedDriver = params.assignedDriver != null ? Boolean(params.assignedDriver) : this.assignedDriver;
+        this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
+        this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
+        this.notAssignedVehicle = params.notAssignedVehicle != null ? Boolean(params.notAssignedVehicle) : this.notAssignedVehicle;
+
         this.update();
     }
 
@@ -164,6 +212,99 @@ export class AssignListPage
         {
             this.updateOperation.abort();
         }
+    }
+
+    /**
+     * Updates the page by fetching the latest data.
+     */
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    {
+        // Return if the object is not constructed.
+        // This is needed because the `observable` decorator calls the change handler when the
+        // initial property value is set, which happens before the constructor is called.
+        if (!this._constructed)
+        {
+            return;
+        }
+
+        // Abort any existing operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            this.failed = false;
+
+            try {
+                let assignedDriver: boolean | undefined;
+                if (this.assignedDriver != this.notAssignedDriver) {
+                    assignedDriver = this.assignedDriver
+                }
+
+                let assignedVehicle: boolean | undefined;
+                if (this.assignedVehicle != this.notAssignedVehicle) {
+                    assignedVehicle = this.assignedVehicle
+                }
+
+                const result = await this._routeService.getAll(
+                    {
+                        statuses: this.statusFilter,
+                        searchQuery: this.searchQuery,
+                        tagsAllMatching: this.tagsFilter,
+                        startTimeFrom: this.startTimeFromFilter,
+                        startTimeTo: this.startTimeToFilter,
+                        createdTimeFrom: this.createdTimeFromFilter,
+                        createdTimeTo: this.createdTimeToFilter,
+                        assignedDriver: assignedDriver,
+                        assignedVehicle: assignedVehicle
+                    },
+                    this.sorting,
+                    this.paging,
+                    true,
+                    signal
+                );
+
+                // Update the state.
+                this.results = result.routes;
+                this.routeCount = result.routeCount;
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll.reset();
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
+                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                    state.params.statusFilter = this.statusFilter?.join(",");
+                    state.params.searchQuery = this.searchQuery || undefined;
+                    state.params.tagsFilter = this.tagsFilter.length > 0 ? this.tagsFilter.join(",") : undefined;
+                    state.params.startTimeFromFilter = this.startTimeFromFilter?.toLocal();
+                    state.params.startTimeToFilter = this.startTimeToFilter?.toLocal();
+                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toLocal();
+                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toLocal();
+                    state.params.assignedDriver = this.assignedDriver ? true : undefined;
+                    state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
+                    state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
+                    state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
+                },
+                { trigger: false, replace: true });
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
+            }
+        });
     }
 
     /**
@@ -221,78 +362,5 @@ export class AssignListPage
             await this._routeAssignmentService.assignDriver(route, driver);
             this.routesUpdating.splice(this.routesUpdating.indexOf(route), 1);
         }
-    }
-
-    /**
-     * Updates the page by fetching the latest data.
-     */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
-    {
-        // Return if the object is not constructed.
-        // This is needed because the `observable` decorator calls the change handler when the
-        // initial property value is set, which happens before the constructor is called.
-        if (!this._constructed)
-        {
-            return;
-        }
-
-        // Abort any existing operation.
-        if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
-
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            this.failed = false;
-
-            try {
-                // Fetch the data.
-                const result = await this._routeService.getAll(
-                    {
-                        status: this.statusFilter,
-                        searchQuery: this.searchQuery,
-                        tags: this.tagsFilter,
-                        startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter
-                    },
-                    this.sorting,
-                    this.paging,
-                    signal
-                );
-
-                // Update the state.
-                this.results = result.routes;
-                this.routeCount = result.routeCount;
-
-                // Reset page.
-                if (propertyName !== "paging")
-                {
-                    this.paging.page = 1;
-                }
-
-                // Scroll to top.
-                this.scroll.reset();
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState) =>
-                {
-                    state.params.page = this.paging.page;
-                    state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.statusFilter = this.statusFilter;
-                    state.params.searchQuery = this.searchQuery || undefined;
-                    state.params.tagsFilter = this.tagsFilter.length > 0 ? this.tagsFilter.join(",") : undefined;
-                    state.params.startTimeFromFilter = this.startTimeFromFilter?.toLocal();
-                    state.params.startTimeToFilter = this.startTimeToFilter?.toLocal();
-                },
-                { trigger: false, replace: true });
-            } catch (error) {
-                this.failed = true;
-                Log.error("An error occurred while loading the list.\n", error);
-            }
-        });
     }
 }

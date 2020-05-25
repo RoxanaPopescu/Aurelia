@@ -26,16 +26,14 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
-        // Remove default solution when we have completed v4 route list
-        this.productType = new ProductType(data.productType ?? "solution");
+        this.productType = new ProductType(data.productType);
         this.reference = data.reference;
-        // Remove default low when we have completed v4 route list
         this.criticality = new RouteCriticality(data.criticality ?? "low");
         this.status = new RouteStatus(data.status);
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
         this.stops = stops;
-        this.vehicleType = VehicleType.get(data.vehicleTypeId);
+        this.vehicleType = VehicleType.get(data.vehicleType);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
         this.legacyId = data.legacyId;
         this.tags = data.tags ?? [];

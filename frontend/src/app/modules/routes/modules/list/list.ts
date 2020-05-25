@@ -3,8 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RouteService, RouteInfo } from "app/model/route";
-import { RouteStatusListSlug } from "app/model/route/entities/route-status-list";
+import { RouteService, RouteInfo, RouteStatusSlug } from "app/model/route";
 import { DateTime } from "luxon";
 
 /**
@@ -17,10 +16,16 @@ interface IRouteParams
     sortProperty?: string;
     sortDirection?: SortingDirection;
     searchQuery?: string;
-    statusFilter?: RouteStatusListSlug;
+    statusFilter?: RouteStatusSlug;
     startTimeFromFilter?: string;
     startTimeToFilter?: string;
+    createdTimeFromFilter?: string;
+    createdTimeToFilter?: string;
     tagsFilter?: string;
+    assignedDriver?: boolean;
+    notAssignedDriver?: boolean;
+    assignedVehicle?: boolean;
+    notAssignedVehicle?: boolean;
 }
 
 /**
@@ -84,13 +89,37 @@ export class ListPage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusListSlug = "requested";
+    protected statusFilter: RouteStatusSlug[] | undefined;
 
     /**
      * The text in the search text input.
      */
     @observable({ changeHandler: "update" })
     protected searchQuery: string | undefined;
+
+    /**
+     * Ff the driver is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected assignedDriver: boolean = false;
+
+    /**
+     * If the driver is not assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected notAssignedDriver: boolean = false;
+
+    /**
+     * The if the vehicle is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected assignedVehicle: boolean = false;
+
+    /**
+     * The if the vehicle is assigned
+     */
+    @observable({ changeHandler: "update" })
+    protected notAssignedVehicle: boolean = false;
 
     /**
      * The order tags for which orders should be shown.
@@ -109,6 +138,18 @@ export class ListPage
      */
     @observable({ changeHandler: "update" })
     protected startTimeToFilter: DateTime | undefined;
+
+    /**
+     * The min created date for which routes should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdTimeFromFilter: DateTime | undefined;
+
+    /**
+     * The max created date for which routes should be shown.
+     */
+    @observable({ changeHandler: "update" })
+    protected createdTimeToFilter: DateTime | undefined;
 
     /**
      * The total number of items matching the query, or undefined if unknown.
@@ -131,11 +172,17 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
-        this.statusFilter = params.statusFilter || this.statusFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.searchQuery = params.searchQuery || this.searchQuery;
         this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
         this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter) : this.startTimeFromFilter
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter) : this.startTimeToFilter
+        this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter) : this.startTimeFromFilter
+        this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter) : this.startTimeToFilter
+        this.assignedDriver = params.assignedDriver != null ? Boolean(params.assignedDriver) : this.assignedDriver;
+        this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
+        this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
+        this.notAssignedVehicle = params.notAssignedVehicle != null ? Boolean(params.notAssignedVehicle) : this.notAssignedVehicle;
         this.update();
     }
 
@@ -177,17 +224,31 @@ export class ListPage
             this.failed = false;
 
             try {
-                // Fetch the data.
+                let assignedDriver: boolean | undefined;
+                if (this.assignedDriver != this.notAssignedDriver) {
+                    assignedDriver = this.assignedDriver
+                }
+
+                let assignedVehicle: boolean | undefined;
+                if (this.assignedVehicle != this.notAssignedVehicle) {
+                    assignedVehicle = this.assignedVehicle
+                }
+
                 const result = await this._routeService.getAll(
                     {
-                        status: this.statusFilter,
+                        statuses: this.statusFilter,
                         searchQuery: this.searchQuery,
-                        tags: this.tagsFilter,
+                        tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter
+                        startTimeTo: this.startTimeToFilter,
+                        createdTimeFrom: this.createdTimeFromFilter,
+                        createdTimeTo: this.createdTimeToFilter,
+                        assignedDriver: assignedDriver,
+                        assignedVehicle: assignedVehicle
                     },
                     this.sorting,
                     this.paging,
+                    false,
                     signal
                 );
 
@@ -211,11 +272,17 @@ export class ListPage
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
                     state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.statusFilter = this.statusFilter;
+                    state.params.statusFilter = this.statusFilter?.join(",");
                     state.params.searchQuery = this.searchQuery || undefined;
                     state.params.tagsFilter = this.tagsFilter.length > 0 ? this.tagsFilter.join(",") : undefined;
                     state.params.startTimeFromFilter = this.startTimeFromFilter?.toLocal();
                     state.params.startTimeToFilter = this.startTimeToFilter?.toLocal();
+                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toLocal();
+                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toLocal();
+                    state.params.assignedDriver = this.assignedDriver ? true : undefined;
+                    state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
+                    state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
+                    state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                 },
                 { trigger: false, replace: true });
             } catch (error) {
