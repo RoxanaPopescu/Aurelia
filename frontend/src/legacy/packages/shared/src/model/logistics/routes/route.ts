@@ -69,12 +69,19 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
     if (data.owner != null) {
       this.owner = new Outfit(data.owner);
     }
+
+    this.legacyId = data.legacyId;
   }
 
   /**
    * The ID identifying the route.
    */
   public readonly id: string;
+
+  /**
+   * The NOI legacy id
+   */
+  public readonly legacyId: string;
 
   /**
    * The slug identifying the route.
