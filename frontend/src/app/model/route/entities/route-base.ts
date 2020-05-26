@@ -26,7 +26,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
-        this.productType = new ProductType(data.productType);
+        this.productType = new ProductType(data.productType ?? "solution");
         this.reference = data.reference;
         this.criticality = new RouteCriticality(data.criticality ?? "low");
         this.complexity = Math.round(data.complexity ?? 0);

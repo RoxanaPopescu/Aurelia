@@ -20,10 +20,6 @@ interface IRouteParams
     sortDirection?: SortingDirection;
     searchQuery?: string;
     statusFilter?: RouteStatusSlug;
-    startTimeFromFilter?: string;
-    startTimeToFilter?: string;
-    createdTimeFromFilter?: string;
-    createdTimeToFilter?: string;
     tagsFilter?: string;
     assignedDriver?: boolean;
     notAssignedDriver?: boolean;
@@ -189,10 +185,6 @@ export class ListPage
         this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.searchQuery = params.searchQuery || this.searchQuery;
         this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
-        this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter) : this.startTimeFromFilter
-        this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter) : this.startTimeToFilter
-        this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter) : this.startTimeFromFilter
-        this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter) : this.startTimeToFilter
         this.assignedDriver = params.assignedDriver != null ? Boolean(params.assignedDriver) : this.assignedDriver;
         this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
         this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
@@ -290,10 +282,6 @@ export class ListPage
                     state.params.statusFilter = this.statusFilter?.join(",");
                     state.params.searchQuery = this.searchQuery || undefined;
                     state.params.tagsFilter = this.tagsFilter.length > 0 ? this.tagsFilter.join(",") : undefined;
-                    state.params.startTimeFromFilter = this.startTimeFromFilter?.toLocal();
-                    state.params.startTimeToFilter = this.startTimeToFilter?.toLocal();
-                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toLocal();
-                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toLocal();
                     state.params.assignedDriver = this.assignedDriver ? true : undefined;
                     state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
                     state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
