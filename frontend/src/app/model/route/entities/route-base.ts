@@ -29,6 +29,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.productType = new ProductType(data.productType);
         this.reference = data.reference;
         this.criticality = new RouteCriticality(data.criticality ?? "low");
+        this.complexity = Math.round(data.complexity ?? 0);
         this.status = new RouteStatus(data.status);
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
@@ -120,6 +121,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * not originate as a request.
      */
     public readonly expires?: DateTime;
+
+    /**
+     * The complexity of this route
+     */
+    public readonly complexity: number;
 
     /**
      * The type of vehicle required for the route.

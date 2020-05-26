@@ -243,6 +243,12 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
+                                Complexity
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
                                 Fulfiller
                             </span>
                         </data-table-cell>
@@ -297,6 +303,12 @@
                             </data-table-cell>
 
                             <data-table-cell>
+                                <span class="text-truncate">
+                                    ${route.complexity | number} (${route.stopCount | number} stops)
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 <a
                                     class="text-truncate"
                                     click.trigger="onAssignFulfillerClick(route)"
@@ -304,7 +316,7 @@
                                     <template if.bind="route.fulfiller.companyName">
                                         ${route.fulfiller.companyName}
                                     </template>
-                                    <template if.bind="!route.fulfiller.companyName">
+                                    <template if.bind="!route.fulfiller.companyName" translate>
                                         Assign fulfiller
                                     </template>
                                 </a>
