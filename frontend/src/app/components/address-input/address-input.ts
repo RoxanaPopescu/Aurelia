@@ -319,7 +319,7 @@ export class AddressInputCustomElement
     {
         if (!event.defaultPrevented && this.open && !this.inputValue)
         {
-            this.closeDropdown(false, false);
+            this.closeDropdown(false, true);
         }
     }
 
