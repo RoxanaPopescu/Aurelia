@@ -401,7 +401,7 @@
 
                     </div>
 
-                    <div class="control-row margin-large-bottom">
+                    <div if.bind="model.messageType !== 'sms'" class="control-row margin-large-bottom">
 
                         <text-input
                             label="above"
@@ -409,7 +409,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Message title
+                                Message subject
                             </div>
 
                             <div slot="validation">
@@ -435,7 +435,7 @@
                             ref="messageInputElement">
 
                             <div slot="heading" translate>
-                                Message body
+                                Message content
                             </div>
 
                             <div slot="before">
