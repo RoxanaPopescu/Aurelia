@@ -70,7 +70,7 @@ export default
             endpointUrlPattern: `${environment.apiBaseUrl}{path}`,
             endpointSettings:
             {
-                "": { version: "", obfuscate: false }
+                "": { version: "v1", obfuscate: false }
             },
             interceptors: []
 
