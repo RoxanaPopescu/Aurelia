@@ -1,4 +1,13 @@
 validation-message
 {
     display: block;
+
+    // HACK: Some validation messages, e.g. from the `required-validator`,
+    // should only appear when no other validation messages are present.
+    // This is not perfect, it but should get the job done in most cases.
+    &.--single:not(:only-of-type),
+    + [slot="validation"] validation-message.--single
+    {
+        display: none;
+    }
 }

@@ -37,8 +37,8 @@
                 ref="inputElement"
                 id="input-${id}"
                 class="input-input --hide-when-unfocused"
-                type="phone"
-                inputmode="phone"
+                type="text"
+                inputmode="tel"
                 value.bind="inputValue"
                 autocomplete.bind="autocomplete"
                 autocorrect="off"
@@ -73,7 +73,7 @@
             trigger="input">
 
             <template replace-part="invalid" translate>
-                Please provide valid international phone number, starting with <kbd>+</kbd>.
+                Please provide a valid international phone number, starting with <kbd>+</kbd>.
             </template>
 
         </custom-validator>
