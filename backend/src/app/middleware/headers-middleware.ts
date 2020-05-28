@@ -30,7 +30,7 @@ export function headersMiddleware(): Middleware
             namespace.set("headers-middleware",
             {
                 authorization,
-                correlationId,
+                "Mover-CorrelationId": correlationId,
                 localeCode,
                 currencyCode
             });

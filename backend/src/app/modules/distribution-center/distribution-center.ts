@@ -14,26 +14,25 @@ export class DepotsModule extends AppModule
          * Gets the list of depots.
          * @returns The list of depots.
          */
-        this.router.post("/v2/depots/list", async context =>
+        this.router.post("/v2/distribution-center/list", async context =>
         {
             context.authorize("view-depots");
+            const result = await this.apiClient.post("depots/list");
 
-            const depotsResult = await this.apiClient.post("depots/list");
-
-            context.response.body = depotsResult.data;
+            context.response.body = result.data;
             context.response.status = 200;
         });
 
         /**
-         * Gets the depot with the specified ID.
+         * Gets the distribution center with the specified ID.
          * @param context.params.id The ID of the depot to get.
-         * @returns The depot with the specified ID.
+         * @returns The distribution center with the specified ID.
          */
-        this.router.get("/v2/depots/details/:id", async context =>
+        this.router.get("/v2/distribution-center/details/:id", async context =>
         {
             context.authorize("view-depots");
 
-            const depotResult = await this.apiClient.post("depots/details",
+            const result = await this.apiClient.post("logistics/depots/details",
             {
                 body:
                 {
@@ -41,7 +40,7 @@ export class DepotsModule extends AppModule
                 }
             });
 
-            context.response.body = depotResult.data;
+            context.response.body = result.data;
             context.response.status = 200;
         });
     }
