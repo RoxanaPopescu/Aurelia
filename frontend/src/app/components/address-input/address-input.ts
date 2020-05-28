@@ -57,7 +57,7 @@ export class AddressInputCustomElement
     /**
      * Gets the input value.
      */
-    @computedFrom("open", "focusedValue", "enteredValue", "value")
+    @computedFrom("open", "enteredValue", "focusedValue", "value")
     protected get inputValue(): string
     {
         // If the user entered a value, return that.
@@ -182,7 +182,7 @@ export class AddressInputCustomElement
         this.open = true;
         this.focusedValue = this.value;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue(), 100);
+        setTimeout(() => this.itemPicker?.scrollToFocusedValue(), 100);
 
         if (focusInput)
         {

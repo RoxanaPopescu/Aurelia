@@ -9,7 +9,7 @@
     validation.ref="validation">
 
     <require from="../input.scss"></require>
-    <require from="./url-input.scss"></require>
+    <require from="./phone-input.scss"></require>
 
     <label class="input-label" for="input-${id}">
 
@@ -29,25 +29,27 @@
 
         <div class="input-control-inner">
 
+            <div class="input-value user-select-contain">
+                ${value | phone}
+            </div>
+
             <input
                 ref="inputElement"
                 id="input-${id}"
-                class="input-input"
-                type="url"
+                class="input-input --hide-when-unfocused"
+                type="phone"
+                inputmode="phone"
                 value.bind="inputValue"
                 autocomplete.bind="autocomplete"
                 autocorrect="off"
                 autocapitalize="off"
-                spellcheck="off"
                 mozactionhint.bind="enterkey"
                 enterkeyhint.bind="enterkey"
-                maxlength.bind="maxlength || 524288"
                 disabled.bind="disabled"
                 readonly.bind="readonly"
                 focus.trigger="onFocus()"
                 blur.trigger="onBlur()"
                 keydown.trigger="onKeyDown($event)"
-                pattern="[\s]*(https?://[^\s]+)?[\s]*"
                 placeholder=" ">
 
             <div class="input-placeholder">
@@ -64,16 +66,17 @@
 
     <div class="input-validation font-small">
 
-        <input-validator
+        <custom-validator
+            if.bind="!readonly && !disabled && validate"
             active.bind="true"
-            input.bind="inputElement"
-            trigger.bind="validationTrigger">
+            valid.bind="!invalid"
+            trigger="input">
 
             <template replace-part="invalid" translate>
-                Please provide a valid URL.
+                Please provide valid international phone number, starting with <kbd>+</kbd>.
             </template>
 
-        </input-validator>
+        </custom-validator>
 
         <slot name="validation"></slot>
 

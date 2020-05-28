@@ -58,7 +58,7 @@ export class DateInputCustomElement
     /**
      * Gets the input value.
      */
-    @computedFrom("open", "focusedValue", "value")
+    @computedFrom("open", "enteredValue", "focusedValue", "value")
     protected get inputValue(): string
     {
         // If the user entered a value, return that.

@@ -2,6 +2,7 @@ import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { DateTime } from "luxon";
 import { Log } from "shared/infrastructure";
+import { IPhoneNumber } from "shared/types";
 
 const items: any[] = [];
 
@@ -32,6 +33,8 @@ export class DemoPage
     protected maxDate = this.minDate.plus({ year: 1 });
 
     protected tab = "tab-1";
+
+    protected phone: IPhoneNumber;
 
     @observable
     protected toggleGroupValue = "toggle-2";
