@@ -204,6 +204,7 @@ export class PhoneInputCustomElement
         }
 
         const selectionStart = this.inputElement.selectionStart!;
+        const selectionEnd = this.inputElement.selectionEnd;
         const inputValue = this.inputElement.value;
 
         // Prevent the user from entering something other than a digit or a plus sign.
@@ -212,8 +213,14 @@ export class PhoneInputCustomElement
             return false;
         }
 
-        // Prevent the user from entering a plus sign, except at the beginning of the numeric value.
-        if (event.key === "+" && (selectionStart > 0 || inputValue.includes("+")))
+        // Prevent the user from entering a plus sign, except at the beginning of the value.
+        if (/\+/.test(event.key) && (selectionStart > 0 || ((selectionEnd ?? selectionStart) <= inputValue.indexOf("+"))))
+        {
+            return false;
+        }
+
+        // Prevent the user from entering a digit in front of the plus sign.
+        if (/\d/.test(event.key) && ((selectionEnd ?? selectionStart) <= inputValue.indexOf("+")))
         {
             return false;
         }
