@@ -22,9 +22,9 @@
 
         <div slot="validation">
 
-            <dependent-validator
-                validators.bind="notEmptyValidator">
-            </dependent-validator>
+            <required-validator
+                value.bind="selectedConsignor">
+            </required-validator>
 
         </div>
 
