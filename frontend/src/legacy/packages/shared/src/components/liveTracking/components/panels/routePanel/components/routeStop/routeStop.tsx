@@ -93,6 +93,28 @@ export class RouteStop extends React.Component<RoutesLayerProps> {
               <div>{this.props.routeStop.location.address.secondary}</div>
             </div>
 
+            { this.props.routeStop.outfit &&
+              <div className="c-liveTracking-panel-section-row">
+                <div>
+                  {Localization.sharedValue(
+                    "RouteDetails_Map_RouteStopMarker_Customer"
+                  )}
+                </div>
+                <div>
+                  {this.props.routeStop.outfit.contactPerson}
+                  {this.props.routeStop.outfit.contactPhone &&
+                    <React.Fragment>
+                      <span> (</span>
+                      <a href={"tel:" + this.props.routeStop.outfit.contactPhone.toString()}>
+                        {this.props.routeStop.outfit.contactPhone.toString()}
+                      </a>
+                      <span>)</span>
+                    </React.Fragment>
+                  }
+                </div>
+              </div>
+            }
+
             <div className="c-liveTracking-panel-section-row">
               <div>
                 {Localization.sharedValue(

@@ -220,12 +220,14 @@
                 <name-value-pair class="margin-bottom">
 
                     <div slot="name" translate>
-                        Driver ID
+                        Driver Id
                     </div>
 
-                    <div slot="value" empty-value>
+                    <a target="_blank" href="/fleet-management/drivers/details/${route.driver.id}" if.bind="route.driver" slot="value">
                         ${route.driver.id}
-                    </div>
+                    </a>
+
+                    <div if.bind="!route.driver" slot="value" empty-value></div>
 
                 </name-value-pair>
 
@@ -403,6 +405,26 @@
 
                     <div slot="value" empty-value>
                         ${p && { amount: p.totalPrice, currencyCode: p.currencyCode } | currency }
+                    </div>
+
+                </name-value-pair>
+
+            </page-section>
+
+            <page-section toggle.bind="true" expanded.to-view="false">
+
+                <div slot="header" translate>
+                    Other
+                </div>
+
+                <name-value-pair class="margin-bottom">
+
+                    <div slot="name" translate>
+                        Legacy id
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.legacyId}
                     </div>
 
                 </name-value-pair>

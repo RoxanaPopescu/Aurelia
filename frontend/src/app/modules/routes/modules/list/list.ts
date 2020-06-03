@@ -192,6 +192,14 @@ export class ListPage
     }
 
     /**
+     * Called when the user selects the route to show the driver list url from
+     */
+    public onShowDriverLink(route: RouteInfo): void
+    {
+        window.open(route.driverListUrl, '_blank');
+    }
+
+    /**
      * Updates the page by fetching the latest data.
      */
     protected update(newValue?: any, oldValue?: any, propertyName?: string): void

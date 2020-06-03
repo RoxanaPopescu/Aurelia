@@ -260,6 +260,10 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="route of results">
@@ -312,6 +316,18 @@
                                 <span class="text-truncate">
                                     ${route.status.name}
                                 </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onShowDriverLink(route)">
+                                        <icon name="file"></icon>
+                                    </button>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>

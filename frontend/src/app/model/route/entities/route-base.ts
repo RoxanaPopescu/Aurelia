@@ -33,6 +33,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.status = new RouteStatus(data.status);
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
+        this.driverListUrl = data.driverListUrl;
         this.stops = stops;
         this.vehicleType = VehicleType.get(data.vehicleType);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
@@ -88,6 +89,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The NOI legacy id
      */
     public readonly legacyId: string;
+
+    /**
+     * The link for the driver list document, formatted for printing.
+     */
+    public readonly driverListUrl?: string;
 
     /**
      * The type of product associated with the route.
