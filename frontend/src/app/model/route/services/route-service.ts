@@ -10,6 +10,7 @@ import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpers/api-helper";
 import { VehicleType } from "app/model/vehicle";
 import { DateTime } from "luxon";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents a service that manages routes.
@@ -20,13 +21,16 @@ export class RouteService
     /**
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(apiClient: ApiClient)
+    public constructor(apiClient: ApiClient, identityService: IdentityService)
     {
         this._apiClient = apiClient;
+        this._identityService = identityService;
     }
 
     private readonly _apiClient: ApiClient;
+    private readonly _identityService: IdentityService;
 
     /**
      * Gets all routes visible to the current user.
@@ -72,7 +76,8 @@ export class RouteService
                 assignedVehicle: filter?.assignedVehicle,
                 tagsAllMatching: filter?.tagsAllMatching,
                 tagsOneMatching: filter?.tagsOneMatching,
-                fetchFulfillers: fetchFulfillers
+                fetchFulfillers: fetchFulfillers,
+                outfitType: this._identityService.identity?.outfit.type.slug
             },
             signal
         });
@@ -93,7 +98,10 @@ export class RouteService
     {
         const result = await this._apiClient.get("routes/v2/details",
         {
-            query: { slug },
+            query: {
+                slug,
+                outfitType: this._identityService.identity?.outfit.type.slug
+             },
             signal
         });
 
