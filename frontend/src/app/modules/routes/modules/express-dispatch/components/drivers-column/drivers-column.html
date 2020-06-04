@@ -128,12 +128,12 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.slug">
-                            <icon name="md-warning" if.bind="!item.driver.driverOnline"></icon>
+                            <icon name="md-warning" if.bind="!item.driverOnline"></icon>
                             <span class="text-truncate">
-                                <template if.bind="item.driver.driverOnline" translate>
+                                <template if.bind="item.driverOnline" translate>
                                     Online
                                 </template>
-                                <template if.bind="!item.driver.driverOnline" translate>
+                                <template if.bind="!item.driverOnline" translate>
                                     Offline
                                 </template>
                             </span>
