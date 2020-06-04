@@ -270,7 +270,7 @@
                     <template repeat.for="route of results">
 
                         <data-table-row
-                            accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
+                            accent.bind="route.criticality.accent"
                         >
                             <data-table-cell>
                                 <a href="/routes/details/${route.slug}" class="text-truncate">

@@ -40,15 +40,21 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Deadline">
+                    <data-table-cell title.translate="Status">
                         <span class="text-truncate" translate>
                             Status
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="Online">
+                        <span class="text-truncate" translate>
+                            Online/Offline
+                        </span>
+                    </data-table-cell>
+
                     <data-table-cell title.translate="ID">
                         <span class="text-truncate" translate>
-                            ID
+                            Id
                         </span>
                     </data-table-cell>
 
@@ -61,12 +67,6 @@
                     <data-table-cell title.translate="Vehicle">
                         <span class="text-truncate" translate>
                             Vehicle
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Stops remaining" align="right">
-                        <span class="text-truncate" translate>
-                            Stops remaining
                         </span>
                     </data-table-cell>
 
@@ -86,7 +86,7 @@
 
                 <template repeat.for="item of workspace.selectedDriverRoutes">
 
-                    <data-table-row accent="neutral">
+                    <data-table-row accent.bind="item.criticality.accent">
 
                         <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
                             <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
@@ -96,7 +96,19 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.slug">
-                            <a class="text-truncate" href="/fleet-management/drivers/edit/${item.driver.id}">
+                            <icon name="md-warning" if.bind="!item.driver.driverOnline"></icon>
+                            <span class="text-truncate">
+                                <template if.bind="item.driver.driverOnline" translate>
+                                    Online
+                                </template>
+                                <template if.bind="!item.driver.driverOnline" translate>
+                                    Offline
+                                </template>
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.slug">
+                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
                                 ${item.driver.id}
                             </a>
                         </data-table-cell>
@@ -109,13 +121,7 @@
 
                         <data-table-cell title.bind="item.vehicle.vehicleType.name">
                             <span class="text-truncate">
-                                ${item.vehicle.vehicleType.name}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.remainingStopCount" align="right">
-                            <span class="text-truncate">
-                                ${item.remainingStopCount || ''}
+                                ${item.vehicle.type.name}
                             </span>
                         </data-table-cell>
 

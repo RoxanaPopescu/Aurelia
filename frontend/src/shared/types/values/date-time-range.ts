@@ -16,7 +16,11 @@ export class DateTimeRange
         {
             if (data.from instanceof DateTime)
             {
-                this.from = data.from;
+                if (options && options.setZone) {
+                    this.from = data.from.setZone('UTC');
+                } else {
+                    this.from = data.from;
+                }
             }
             else if (data.from != null)
             {
@@ -25,7 +29,11 @@ export class DateTimeRange
 
             if (data.to instanceof DateTime)
             {
-                this.to = data.to;
+                if (options && options.setZone) {
+                    this.to = data.to.setZone('UTC');
+                } else {
+                    this.to = data.to;
+                }
             }
             else if (data.to != null)
             {

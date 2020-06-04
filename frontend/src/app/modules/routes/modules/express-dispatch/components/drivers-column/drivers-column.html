@@ -78,9 +78,15 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="ID" name="driver.id">
+                    <data-table-cell title.translate="Online">
                         <span class="text-truncate" translate>
-                            ID
+                            Online/Offline
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Id" name="driver.id">
+                        <span class="text-truncate" translate>
+                            Id
                         </span>
                     </data-table-cell>
 
@@ -93,12 +99,6 @@
                     <data-table-cell title.translate="Vehicle" name="vehicle.vehicleType.name">
                         <span class="text-truncate" translate>
                             Vehicle
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Stops remaining" name="remainingStopCount" align="right">
-                        <span class="text-truncate" translate>
-                            Stops remaining
                         </span>
                     </data-table-cell>
 
@@ -127,8 +127,20 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell title.bind="item.slug">
+                            <icon name="md-warning" if.bind="!item.driver.driverOnline"></icon>
+                            <span class="text-truncate">
+                                <template if.bind="item.driver.driverOnline" translate>
+                                    Online
+                                </template>
+                                <template if.bind="!item.driver.driverOnline" translate>
+                                    Offline
+                                </template>
+                            </span>
+                        </data-table-cell>
+
                         <data-table-cell title.bind="item.driver.id">
-                            <a class="text-truncate" href="/fleet-management/drivers/edit/${item.driver.id}">
+                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
                                 ${item.driver.id}
                             </a>
                         </data-table-cell>
@@ -141,13 +153,7 @@
 
                         <data-table-cell title.bind="item.vehicle.vehicleType.name">
                             <span class="text-truncate">
-                                ${item.vehicle.vehicleType.name}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.remainingStopCount" align="right">
-                            <span class="text-truncate">
-                                ${item.remainingStopCount || ''}
+                                ${item.vehicle.type.name}
                             </span>
                         </data-table-cell>
 

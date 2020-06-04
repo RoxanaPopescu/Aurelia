@@ -5,6 +5,7 @@ import { Driver } from "app/model/driver";
 import { Vehicle } from "app/model/vehicle";
 import { DriverRouteStop } from "./driver-route-stop";
 import { DriverRouteStatus } from "./driver-route-status";
+import { RouteCriticality } from "app/model/route";
 
 /**
  * Represents the route a driver should complete within the working day.
@@ -20,15 +21,18 @@ export class DriverRoute
         this.status = new DriverRouteStatus(data.status);
         this.driverOnline = data.driverOnline;
         this.routeId = data.routeId;
+        this.slug = data.slug;
+        this.legacyId = data.legacyId;
+        this.criticality = new RouteCriticality(data.criticality ?? "low");
 
         if (data.driver != null)
         {
             this.driver = new Driver(data.driver);
         }
 
-        if (data.driverVehicle != null)
+        if (data.vehicle != null)
         {
-            this.vehicle = new Vehicle(data.driverVehicle);
+            this.vehicle = new Vehicle(data.vehicle);
         }
 
         if (data.driverPosition != null)
@@ -56,9 +60,24 @@ export class DriverRoute
     public driver: Driver;
 
     /**
+     * The criticality of the route.
+     */
+    public readonly criticality: RouteCriticality;
+
+    /**
      * The routeId of the route.
      */
     public routeId: string;
+
+    /**
+     * The slug identifying the route.
+     */
+    public readonly slug: string;
+
+    /**
+     * The NOI legacy id
+     */
+    public readonly legacyId: string;
 
     /**
      * The vehicle assiged to the route.
