@@ -3,8 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RouteService, RouteInfo } from "app/model/route";
-import { RouteStatusListSlug } from "app/model/route/entities/route-status-list";
+import { RouteService, RouteInfo, RouteStatusSlug } from "app/model/route";
 
 /**
  * Represents the route parameters for the page.
@@ -102,7 +101,7 @@ export class DataTablePage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RouteStatusListSlug | undefined = "requested";
+    protected statusFilter: RouteStatusSlug[] | undefined = ["not-started"];
 
     /**
      * The text in the filter text input.
@@ -173,11 +172,12 @@ export class DataTablePage
             // Fetch the data.
             const result = await this._routeService.getAll(
                 {
-                   status: this.statusFilter,
+                   statuses: this.statusFilter,
                    searchQuery: this.textFilter
                 },
                 this.sorting,
                 this.paging,
+                false,
                 signal);
 
             // Update the state.

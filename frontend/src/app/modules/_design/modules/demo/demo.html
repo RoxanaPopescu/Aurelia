@@ -78,7 +78,7 @@
                     <design-column heading="disabled">
 
                         <address-input
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition"
                             value.bind="placeValue">
 
@@ -227,7 +227,7 @@
 
                     <design-column heading="disabled">
 
-                        <toggle-group class="flex-column" value.bind="toggleGroupValue" disabled.bind="true">
+                        <toggle-group class="flex-column" value.bind="toggleGroupValue" disabled.one-time="true">
 
                             <radio-toggle
                                 label.bind="labelPosition & attr"
@@ -306,7 +306,7 @@
                     <design-column heading="disabled">
 
                         <radio-toggle
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition & attr"
                             value.bind="radioToggleValue">
 
@@ -351,7 +351,7 @@
                     <design-column heading="disabled">
 
                         <check-toggle
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition & attr"
                             value.bind="checkToggleValue">
 
@@ -396,7 +396,7 @@
                     <design-column heading="disabled">
 
                         <switch-toggle
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition & attr"
                             value.bind="switchToggleValue">
 
@@ -449,7 +449,7 @@
                     <design-column heading="disabled">
 
                         <time-input
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition"
                             value.bind="timeValue">
 
@@ -524,7 +524,7 @@
                     <design-column heading="disabled">
 
                         <date-input
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition"
                             value.bind="dateValue"
                             focused-value.bind="dateFocusedValue">
@@ -627,7 +627,7 @@
                     <design-column heading="disabled">
 
                         <select-input
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition"
                             value.bind="selectValue"
                             display-value.bind="selectValue.name"
@@ -711,7 +711,7 @@
                     <design-column heading="disabled">
 
                         <tags-input
-                            disabled.bind="true"
+                            disabled.one-time="true"
                             label.bind="labelPosition"
                             value.bind="tagsValue">
 
@@ -772,7 +772,7 @@
 
                     <design-column heading="disabled">
 
-                        <number-input value.bind="numberValue" label.bind="labelPosition & attr" disabled.bind="true">
+                        <number-input value.bind="numberValue" label.bind="labelPosition & attr" disabled.one-time="true">
 
                             <div slot="heading">
                                 Heading
@@ -787,6 +787,54 @@
                             </span>
 
                         </number-input>
+
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <design-item heading="phone-input">
+
+                <design-row heading="phone-input">
+
+                    <design-column heading="enabled">
+
+                        <phone-input value.bind="phone" label.bind="labelPosition & attr">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                            <span slot="placeholder">
+                                Placeholder
+                            </span>
+
+                        </phone-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <phone-input value.bind="phone" label.bind="labelPosition & attr" disabled.one-time="true">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                            <span slot="placeholder">
+                                Placeholder
+                            </span>
+
+                        </phone-input>
 
                     </design-column>
 
@@ -840,7 +888,7 @@
 
                     <design-column heading="disabled">
 
-                        <text-input value.bind="textValue1" label.bind="labelPosition & attr" disabled.bind="true">
+                        <text-input value.bind="textValue1" label.bind="labelPosition & attr" disabled.one-time="true">
 
                             <div slot="heading">
                                 Heading
@@ -902,7 +950,7 @@
 
                     <design-column heading="disabled">
 
-                        <text-input value.bind="textValue2" label.bind="labelPosition & attr" disabled.bind="true" lines.bind="4">
+                        <text-input value.bind="textValue2" label.bind="labelPosition & attr" disabled.one-time="true" lines.bind="4">
 
                             <div slot="heading">
                                 Heading
@@ -1022,14 +1070,14 @@
                                 </required-validator>
 
                                 <length-validator
-                                    active.bind="true"
+                                    active.one-time="true"
                                     value.bind="textValue1"
                                     min.bind="3"
                                     trigger="change">
                                 </length-validator>
 
                                 <length-validator
-                                    active.bind="true"
+                                    active.one-time="true"
                                     value.bind="textValue1"
                                     max.bind="5"
                                     trigger="input">

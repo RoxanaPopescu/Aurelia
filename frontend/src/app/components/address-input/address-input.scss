@@ -57,6 +57,7 @@ address-input
                     // Position on top of the dropdown-icon.
                     position: absolute;
                     top: var(--input-border-width);
+                    bottom: var(--input-border-width);
 
                     // Apply the input surface color, so the indicator covers the dropdown-icon.
                     background: var(--input-surface-color);

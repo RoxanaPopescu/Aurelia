@@ -372,7 +372,11 @@ body
                 color: var(--input-surface-text-color--focus);
             }
         }
+    }
 
+    &:not(.--disabled).--readonly,
+    &:not(.--disabled):not(.--readonly)
+    {
         &.--invalid
         {
             > .input-control

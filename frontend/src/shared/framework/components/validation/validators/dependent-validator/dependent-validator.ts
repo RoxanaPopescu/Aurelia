@@ -20,7 +20,7 @@ export class DependentValidatorCustomElement extends Validator
     /**
      * True to set the validity of this validator, based on the validity of the dependent validators, otherwise false.
      */
-    @bindable({ defaultValue: true })
+    @bindable({ defaultValue: false })
     public setValidity: boolean;
 
     /**
@@ -30,25 +30,35 @@ export class DependentValidatorCustomElement extends Validator
      */
     public async validate(reason: ValidationReason): Promise<boolean>
     {
-        let invalid = true;
+        let valid = false;
 
         if (this.validators == null)
         {
-            invalid = false;
+            valid = true;
         }
         else if (this.validators instanceof Validator)
         {
-            invalid = await this.validators.validate("dependency");
+            if (this.validators.computedEnabled)
+            {
+                valid = await this.validators.validate("dependency");
+            }
+            else
+            {
+                valid = true;
+            }
         }
-        else
+        else if (this.validators instanceof Validator)
         {
-            const results = await Promise.all(this.validators.map(v => v.validate("dependency")));
-            invalid = results.some(r => !r);
+            const results = await Promise.all(this.validators.filter(v => v.computedEnabled).map(v => v.validate("dependency")));
+
+            valid = results.some(r => r);
         }
 
         if (this.setValidity)
         {
-            this.invalid = invalid;
+            this.invalid = !valid;
+
+            return valid;
         }
 
         return true;

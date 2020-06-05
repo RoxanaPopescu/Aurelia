@@ -336,7 +336,7 @@ export class ListPage
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
                     state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.statusFilter = this.statusFilter;
+                    state.params.statusFilter = this.statusFilter?.join(",");
                     state.params.textFilter = this.textFilter || undefined;
                 },
                 { trigger: false, replace: true });

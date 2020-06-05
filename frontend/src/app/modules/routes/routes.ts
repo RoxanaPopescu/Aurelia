@@ -33,20 +33,6 @@ export class RoutesModule
                 icon: "routes"
             },
             {
-                name: "list",
-                route: "assignment",
-                moduleId: PLATFORM.moduleName("./modules/assign-list/assign-list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routes"
-                    ]
-                },
-                nav: false,
-                icon: "routes"
-            },
-            {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
@@ -87,6 +73,21 @@ export class RoutesModule
                 title: routeTitles.driverTracking,
                 nav: true,
                 icon: "driver-tracking"
+            },
+            {
+                name: "list",
+                route: "assignment",
+                moduleId: PLATFORM.moduleName("./modules/assign-list/assign-list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-routes"
+                    ]
+                },
+                title: routeTitles.assignment,
+                nav: true,
+                icon: "routes"
             },
             {
                 name: "auto-dispatch",

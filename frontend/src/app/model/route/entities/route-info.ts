@@ -1,7 +1,5 @@
-import { DateTime } from "luxon";
-import { Address } from "app/model/shared";
+import { Location } from "app/model/shared";
 import { RouteBase } from "./route-base";
-import { RouteStatusList } from "./route-status-list";
 
 export class RouteInfo extends RouteBase
 {
@@ -12,41 +10,23 @@ export class RouteInfo extends RouteBase
     public constructor(data: any)
     {
         super(data, []);
-        this.startDate = DateTime.fromISO(data.startDate, { setZone: true });
-        this.endDate = DateTime.fromISO(data.endDate, { setZone: true });
-        this.startAddress = new Address({ primary: data.startAddress });
-        this.endAddress = new Address({ primary: data.endAddress });
+        this.startLocation = new Location(data.startLocation);
+        this.endLocation = new Location(data.endLocation);
         this.stopCount = data.stopCount;
-        this.legacyStatus = new RouteStatusList(data.status);
     }
 
     /**
-     * The date and time at which the route is planned to start.
+     * The locati at which the route is planned to start.
      */
-    public readonly startDate: DateTime;
+    public readonly startLocation: Location;
 
     /**
-     * The date and time at which the route is planned to end.
+     * The location at which the route is planned to end.
      */
-    public readonly endDate: DateTime;
-
-    /**
-     * The address at which the route is planned to start.
-     */
-    public readonly startAddress: Address;
-
-    /**
-     * The address at which the route is planned to start.
-     */
-    public readonly endAddress: Address;
+    public readonly endLocation: Location;
 
     /**
      * The number of stops on the route.
      */
     public readonly stopCount: number;
-
-    /**
-     * The number of stops on the route.
-     */
-    public readonly legacyStatus: RouteStatusList;
 }

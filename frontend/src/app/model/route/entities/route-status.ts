@@ -55,19 +55,19 @@ export class RouteStatus
         {
             name: "Not approved",
             accent: "attention",
-            value: 4
+            value: 3
         },
         "completed":
         {
             name: "Completed",
             accent: "positive",
-            value: 20
+            value: 4
         },
         "cancelled":
         {
             name: "Cancelled",
             accent: "negative",
-            value: 100
+            value: 5
         }
     };
 }

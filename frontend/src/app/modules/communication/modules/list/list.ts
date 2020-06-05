@@ -230,7 +230,7 @@ export class ListPage
         }
 
         // Delete thge trigger.
-        await this._communicationService.delete(trigger.slug);
+        await this._communicationService.delete(trigger.id);
 
         // Remove the trigger from the list, and force an update.
         this.triggers = [...this.triggers.splice(this.triggers.indexOf(trigger), 1)];

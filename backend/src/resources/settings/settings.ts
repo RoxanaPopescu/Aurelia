@@ -24,7 +24,7 @@ export default
                 header: "refresh-token",
                 cookie: "refresh-token",
                 expiresIn: Duration.fromObject({ days: 60 }),
-                secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
+                secret: "This is my little secret for protecting my resources. Muhahaha!!"
             },
             accessToken:
             {
@@ -33,7 +33,7 @@ export default
                 header: "authorization",
                 cookie: "access-token",
                 expiresIn: Duration.fromObject({ days: 7 }),
-                secret: "Qknf3Wb2SP4C5qp4mubS5MNjTg9sNdhH"
+                secret: "This is my little secret for protecting my resources. Muhahaha!!"
             }
         }
     },
@@ -54,6 +54,7 @@ export default
 
         /**
          * Settings related to the API client.
+         * FIXME: Support header versioning
          */
         api:
         {
@@ -61,14 +62,15 @@ export default
             {
                 headers:
                 {
-                    "x-api-key": "a89ba961-1a7d-4a1e-953c-0c8a766979ae"
+                    "Ocp-Apim-Subscription-Key": environment.subscriptionKey,
+                    "Api-Version": "v1"
                 }
             },
             cipher: "svrmZIDJCKab+o8n-h7wTR6l4XO1Qz95PHMp3BFNiqeYGdEAUx0_SckLVufy2jtgW",
             endpointUrlPattern: `${environment.apiBaseUrl}{path}`,
             endpointSettings:
             {
-                "": { version: "1", obfuscate: false }
+                "": { version: "v1", obfuscate: false }
             },
             interceptors: []
 

@@ -24,8 +24,11 @@ export class ServerEnvironment
         this.stubs = this.name === "development";
         this.debug = this.name === "development";
         this.apiBaseUrl = this.name === "development"
-            ? "https://bff-v1-test-mover.azurewebsites.net/"
-            : "https://consignor-bff.mover.dk/";
+            ? "https://test-mover.azure-api.net/"
+            : "https://prod-mover.azure-api.net/";
+        this.subscriptionKey = this.name === "development"
+            ? "bcf1f656a0844acb9fd5a33d61832afd"
+            : "afc3a3e5918b4dec9d3cf96090388532";
     }
 
     /**
@@ -63,6 +66,11 @@ export class ServerEnvironment
      * Note that this is independent of the `appBaseUrl` and must end with a `/`.
      */
     public apiBaseUrl: string;
+
+    /**
+     * The subscription key for our gateway
+     */
+    public subscriptionKey: string;
 }
 
 /**

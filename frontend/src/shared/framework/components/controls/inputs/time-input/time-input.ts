@@ -91,7 +91,7 @@ export class TimeInputCustomElement
     /**
      * Gets the input value.
      */
-    @computedFrom("open", "focusedValue", "value")
+    @computedFrom("open", "enteredValue", "focusedValue", "value")
     protected get inputValue(): string
     {
         // If the user entered a value, return that.
@@ -295,7 +295,7 @@ export class TimeInputCustomElement
         this.open = true;
         this.focusedValue = this.value;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue());
+        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 
         if (focusInput)
         {

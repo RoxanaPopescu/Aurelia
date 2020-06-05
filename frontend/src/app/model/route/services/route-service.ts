@@ -9,8 +9,8 @@ import { RouteStop } from "../entities/route-stop";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpers/api-helper";
 import { VehicleType } from "app/model/vehicle";
-import { RouteStatusListSlug, RouteStatusList } from "../entities/route-status-list";
 import { DateTime } from "luxon";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents a service that manages routes.
@@ -21,13 +21,16 @@ export class RouteService
     /**
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(apiClient: ApiClient)
+    public constructor(apiClient: ApiClient, identityService: IdentityService)
     {
         this._apiClient = apiClient;
+        this._identityService = identityService;
     }
 
     private readonly _apiClient: ApiClient;
+    private readonly _identityService: IdentityService;
 
     /**
      * Gets all routes visible to the current user.
@@ -39,30 +42,42 @@ export class RouteService
      */
     public async getAll(
         filter?: {
-            status?: RouteStatusListSlug,
+            statuses?: RouteStatusSlug[],
             searchQuery?: string,
-            tags?: string[],
+            tagsAllMatching?: string[],
+            tagsOneMatching?: string[],
             startTimeFrom?: DateTime,
-            startTimeTo?: DateTime
+            startTimeTo?: DateTime,
+            createdTimeFrom?: DateTime,
+            createdTimeTo?: DateTime,
+            assignedDriver?: boolean,
+            assignedVehicle?: boolean
         },
         sorting?: ISorting,
         paging?: IPaging,
+        fetchFulfillers?: boolean,
         signal?: AbortSignal
     ): Promise<{ routes: RouteInfo[]; routeCount: number }>
     {
-        const tags: string[] = filter?.tags ?? [];
-        const result = await this._apiClient.post("routes/v2/list",
+        const result = await this._apiClient.post("routes/list",
         {
             body:
             {
                 page: paging ? paging.page : undefined,
                 pageSize: paging ? paging.pageSize : undefined,
-                sorting: sorting ? [{ field: getLegacyRouteSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) }] : [],
-                statuses: filter?.status ? [new RouteStatusList(filter?.status).value] : undefined,
+                sorting: sorting ? { field: getLegacyRouteSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) } : undefined,
+                statuses: filter?.statuses?.map(v => new RouteStatus(v).value),
                 searchQuery: filter?.searchQuery,
                 startTimeFrom: filter?.startTimeFrom,
-                startTimeTo: filter?.startTimeTo,
-                tags: tags.length > 0 ? tags : undefined
+                startTimeTo: filter?.startTimeTo?.endOf("day"),
+                createdTimeFrom: filter?.createdTimeFrom,
+                createdTimeTo: filter?.createdTimeTo?.endOf("day"),
+                assignedDriver: filter?.assignedDriver,
+                assignedVehicle: filter?.assignedVehicle,
+                tagsAllMatching: filter?.tagsAllMatching,
+                tagsOneMatching: filter?.tagsOneMatching,
+                fetchFulfillers: fetchFulfillers,
+                outfitType: this._identityService.identity?.outfit.type.slug
             },
             signal
         });
@@ -83,7 +98,10 @@ export class RouteService
     {
         const result = await this._apiClient.get("routes/v2/details",
         {
-            query: { slug },
+            query: {
+                slug,
+                outfitType: this._identityService.identity?.outfit.type.slug
+             },
             signal
         });
 

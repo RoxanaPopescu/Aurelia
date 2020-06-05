@@ -79,12 +79,6 @@ export abstract class Validator implements IValidator
     public constructor(container: Container)
     {
         this.element = container.get(Element) as HTMLElement;
-
-        // Try to get the validation to which this validator belongs.
-        if (container.hasResolver(ValidationCustomAttribute, true))
-        {
-            this.validation = container.get(ValidationCustomAttribute);
-        }
     }
 
     /**
@@ -96,7 +90,7 @@ export abstract class Validator implements IValidator
      * The validation to which this validator belongs,
      * or undefined if not associated with any validation.
      */
-    protected readonly validation: ValidationCustomAttribute | undefined;
+    protected validation: ValidationCustomAttribute | undefined;
 
     /**
      * True to enable this validator, false to disable this validator,
@@ -227,11 +221,23 @@ export abstract class Validator implements IValidator
      */
     public async attached(): Promise<void>
     {
+        // Try to get the validation to which this validator belongs.
+
+        let parentElement = this.element.parentElement as any;
+
+        while (this.validation == null && parentElement != null)
+        {
+            this.validation = parentElement.au?.validation?.viewModel;
+            parentElement = parentElement.parentElement;
+        }
+
+        // Attach to the parent validation.
         if (this.validation != null)
         {
             this.validation.attachValidator(this);
         }
 
+        // If enabled and active, validate immediately.
         if (this.computedEnabled && this.computedActive)
         {
             await this.validate("attached");

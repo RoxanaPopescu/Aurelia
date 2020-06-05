@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path d="M20,2H17a2,2,0,0,0-2-2H9A2.05,2.05,0,0,0,7.88.34a2.13,2.13,0,0,0-.54.54A2.05,2.05,0,0,0,7,2H4A2,2,0,0,0,2,4V22a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V4A2,2,0,0,0,20,2ZM15,2V4H9V2Zm5,20H4V4H7A2,2,0,0,0,9,6h6a2,2,0,0,0,2-2h3Z" fill="currentColor"/>
+  <path d="M10,11h7a1,1,0,0,0,0-2H10a1,1,0,0,0,0,2Z" fill="currentColor"/>
+  <circle cx="7" cy="10" r="1" fill="currentColor"/>
+  <path d="M17,13H10a1,1,0,0,0,0,2h7a1,1,0,0,0,0-2Z" fill="currentColor"/>
+  <circle cx="7" cy="14" r="1" fill="currentColor"/>
+  <path d="M17,17H10a1,1,0,0,0,0,2h7a1,1,0,0,0,0-2Z" fill="currentColor"/>
+  <circle cx="7" cy="18" r="1" fill="currentColor"/>
+</svg>

@@ -23,7 +23,6 @@ export class Route extends AbstractRoute<RouteStop>
 
         this.supportNote = data.supportNote;
         this.overallRating = data.overallRating;
-        this.driverListUrl = data.driverListUrl;
         this.driverInstructions = data.driverInstructions;
 
         if (data.owner != null)
@@ -51,11 +50,6 @@ export class Route extends AbstractRoute<RouteStop>
      * The overall rating of this route, calculated based on the ratings given at each stop.
      */
     public readonly overallRating?: number;
-
-    /**
-     * The link for the driver list document, formatted for printing.
-     */
-    public readonly driverListUrl?: string;
 
     /**
      * The total weight range for the colli in the order.

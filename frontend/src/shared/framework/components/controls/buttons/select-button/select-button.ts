@@ -77,7 +77,7 @@ export class SelectButtonCustomElement
     {
         this.open = true;
 
-        setTimeout(() => this.itemPicker.scrollToFocusedValue());
+        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 
         if (focusButton)
         {

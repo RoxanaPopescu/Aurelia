@@ -30,49 +30,89 @@
 
                 <toggle-group class="flex-column" value.bind="statusFilter">
 
-                    <radio-toggle label="after" model="requested">
-
-                        <div slot="heading" translate>
-                            Unassigned
-                        </div>
-
-                    </radio-toggle>
-
-                    <radio-toggle label="after" model="accepted">
+                    <check-toggle label="after" model="not-started" value.one-time="false">
 
                         <div slot="heading" translate>
                             Not started
                         </div>
 
-                    </radio-toggle>
+                    </check-toggle>
 
-                    <radio-toggle label="after" model="started">
+                    <check-toggle label="after" model="in-progress" value.one-time="false">
 
                         <div slot="heading" translate>
                             In progress
                         </div>
 
-                    </radio-toggle>
+                    </check-toggle>
 
-                    <radio-toggle label="after" model="cancelled">
+                    <check-toggle label="after" model="not-approved" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Not approved
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled" value.one-time="false">
 
                         <div slot="heading" translate>
                             Cancelled
                         </div>
 
-                    </radio-toggle>
+                    </check-toggle>
 
-                    <radio-toggle label="after" model="completed">
+                    <check-toggle label="after" model="completed" value.one-time="false">
 
                         <div slot="heading" translate>
                             Completed
                         </div>
 
-                    </radio-toggle>
+                    </check-toggle>
 
                 </toggle-group>
 
             </page-section>
+
+
+            <page-section toggle.bind="true">
+                <div slot="header" translate>
+                    Assignment
+                </div>
+
+                <check-toggle label="after" value.bind="assignedDriver">
+
+                    <div slot="heading" translate>
+                        Assigned driver
+                    </div>
+
+                </check-toggle>
+                <check-toggle label="after" value.bind="notAssignedDriver">
+
+                    <div slot="heading" translate>
+                        No driver assigned
+                    </div>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="assignedVehicle">
+
+                    <div slot="heading" translate>
+                        Assigned vehicle
+                    </div>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="notAssignedVehicle">
+
+                    <div slot="heading" translate>
+                        No vehicle assigned
+                    </div>
+
+                </check-toggle>
+
+            </page-section>
+
 
             <page-section toggle.bind="true">
 
@@ -82,7 +122,7 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="startTimeFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="startTimeFromFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             From
@@ -90,7 +130,7 @@
 
                     </date-input>
 
-                    <date-input label="above" fixed.bind="true" value.bind="startTimeToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="startTimeToFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             To
@@ -101,6 +141,35 @@
                 </div>
 
             </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Created date
+                </div>
+
+                <div class="control-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdTimeFromFilter" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                    </date-input>
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdTimeToFilter" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                    </date-input>
+
+                </div>
+
+            </page-section>
+
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -144,7 +213,7 @@
                     <data-table-headers>
                         <data-table-cell name="slug">
                             <span class="text-truncate" translate>
-                                Slug
+                                Id
                             </span>
                         </data-table-cell>
 
@@ -174,6 +243,12 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
+                                Complexity
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
                                 Fulfiller
                             </span>
                         </data-table-cell>
@@ -195,7 +270,7 @@
                     <template repeat.for="route of results">
 
                         <data-table-row
-                            accent.bind="route.status.accent == 'neutral' ? undefined : route.status.accent"
+                            accent.bind="route.criticality.accent"
                         >
                             <data-table-cell>
                                 <a href="/routes/details/${route.slug}" class="text-truncate">
@@ -204,20 +279,20 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <a href="/routes/details/${route.slug}" class="text-truncate">
-                                    ${route.reference}
-                                </a>
-                            </data-table-cell>
-
-                            <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.startDate | dateTime: 'narrow' : false}
+                                    ${route.reference}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${route.startAddress}
+                                    ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${route.startLocation.address}
                                 </span>
                             </data-table-cell>
 
@@ -228,12 +303,22 @@
                             </data-table-cell>
 
                             <data-table-cell>
+                                <span class="text-truncate">
+                                    ${route.complexity | number} (${route.stopCount | number} stops)
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
                                 <a
                                     class="text-truncate"
                                     click.trigger="onAssignFulfillerClick(route)"
                                 >
-                                    Missing data
-                                    ${route.fulfiller.companyName}
+                                    <template if.bind="route.fulfiller.companyName">
+                                        ${route.fulfiller.companyName}
+                                    </template>
+                                    <template if.bind="!route.fulfiller.companyName" translate>
+                                        Assign fulfiller
+                                    </template>
                                 </a>
                             </data-table-cell>
 

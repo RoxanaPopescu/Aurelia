@@ -26,16 +26,16 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
-        // Remove default solution when we have completed v4 route list
         this.productType = new ProductType(data.productType ?? "solution");
         this.reference = data.reference;
-        // Remove default low when we have completed v4 route list
         this.criticality = new RouteCriticality(data.criticality ?? "low");
+        this.complexity = Math.round(data.complexity ?? 0);
         this.status = new RouteStatus(data.status);
         this.fulfiller = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
+        this.driverListUrl = data.driverListUrl;
         this.stops = stops;
-        this.vehicleType = VehicleType.get(data.vehicleTypeId);
+        this.vehicleType = VehicleType.get(data.vehicleType);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
         this.legacyId = data.legacyId;
         this.tags = data.tags ?? [];
@@ -91,6 +91,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public readonly legacyId: string;
 
     /**
+     * The link for the driver list document, formatted for printing.
+     */
+    public readonly driverListUrl?: string;
+
+    /**
      * The type of product associated with the route.
      */
     public readonly productType: ProductType;
@@ -122,6 +127,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * not originate as a request.
      */
     public readonly expires?: DateTime;
+
+    /**
+     * The complexity of this route
+     */
+    public readonly complexity: number;
 
     /**
      * The type of vehicle required for the route.

@@ -97,12 +97,6 @@ export class ValidationCustomAttribute implements IValidation
     public constructor(container: Container)
     {
         this.element = container.get(Element) as HTMLElement;
-
-        // Try to get the parent validation of this validation.
-        if (container.parent.hasResolver(ValidationCustomAttribute, true))
-        {
-            this.parentValidation = container.parent.get(ValidationCustomAttribute);
-        }
     }
 
     private readonly _eventManager = new EventManager(this);
@@ -117,7 +111,7 @@ export class ValidationCustomAttribute implements IValidation
      * The parent validation of this validation,
      * or undefined if no parent validation exists.
      */
-    protected readonly parentValidation: ValidationCustomAttribute | undefined;
+    protected parentValidation: ValidationCustomAttribute | undefined;
 
     /**
      * The child validations of this validation.
@@ -259,14 +253,27 @@ export class ValidationCustomAttribute implements IValidation
      */
     public async attached(): Promise<void>
     {
+        // Try to get the parent validation of this validation, if any.
+
+        let parentElement = this.element.parentElement as any;
+
+        while (this.parentValidation == null && parentElement != null)
+        {
+            this.parentValidation = parentElement.au?.validation?.viewModel;
+            parentElement = parentElement.parentElement;
+        }
+
+        // Attach to the parent validation.
         if (this.parentValidation != null)
         {
             this.parentValidation.attachValidation(this);
         }
 
+        // Listen for trigger events.
         this._eventManager.addEventListener(this.element, "input", event => this.onTriggerEvent(event));
         this._eventManager.addEventListener(this.element, "change", event => this.onTriggerEvent(event));
 
+        // If enabled and active, validate immediately.
         if (this.computedEnabled && this.computedActive)
         {
             await this.validate("attached");
@@ -334,9 +341,10 @@ export class ValidationCustomAttribute implements IValidation
      * Note that validators will only run for validations that are enabled,
      * with no disabled parent validator.
      * @param reason The reason for the validation run.
+     * @param recursive True to run validators in the entire subtree, false to only run validators attached to this validation.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public async validate(reason?: ValidationReason): Promise<boolean>
+    public async validate(reason?: ValidationReason, recursive = true): Promise<boolean>
     {
         // Wait for any pending validation runs to complete, to avoid race conditions.
         while (this._validationPromise != null)
@@ -351,15 +359,14 @@ export class ValidationCustomAttribute implements IValidation
             return true;
         }
 
-        // Assume validation is successful until proven otherwise.
-        let invalid = false;
-
         // Run the child validations and validators, collecting their promises.
         const validationPromises =
         [
             ...this.childValidations.map(validation =>
             {
-                return validation.validate(reason);
+                return recursive
+                    ? validation.validate(reason)
+                    : Promise.resolve(!validation.invalid);
             }),
 
             ...this.validators.map(validator =>
@@ -398,19 +405,15 @@ export class ValidationCustomAttribute implements IValidation
                 // Clear the validation promise.
                 this._validationPromise = undefined;
 
-                // If the validation run failed, mark this validation as invalid.
-                if (validationResults.some(valid => !valid))
+                // Update the validity state of the validation, but only if the validation is still enabled
+                // and the validity state has not yet been set. This check is needed, because new validators
+                // may have been attached, and updated the validity state, after the validation run started.
+                if (this.invalid == null && this.computedEnabled)
                 {
-                    invalid = true;
+                    this.invalid = validationResults.some(valid => !valid);
                 }
 
-                if (this.computedEnabled)
-                {
-                    // Update the validity state of the validation.
-                    this.invalid = invalid;
-                }
-
-                return !invalid;
+                return !this.invalid;
             })
 
             .catch(error =>
@@ -499,9 +502,6 @@ export class ValidationCustomAttribute implements IValidation
      */
     private onTriggerEvent(event: IValidationTriggerEvent): void
     {
-        if (event.__validationPromise == null)
-        {
-            event.__validationPromise = this.validate(event.type as ValidationTrigger);
-        }
+        event.__validationPromise = this.validate(event.type as ValidationTrigger, event.__validationPromise == null);
     }
 }

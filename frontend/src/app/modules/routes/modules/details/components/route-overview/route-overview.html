@@ -197,18 +197,10 @@
 
                     <div class="font-small">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'">
-                            &nbsp;
-                        </span>
-
                         <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'in-progress') && delayedStart">
 
                             <span if.bind="delayedStart" translate>
-                                Arrived ${delayedStart | duration} too early
-                            </span>
-
-                            <span if.bind="delayedStart" translate>
-                                Delayed by ${delayedStart | duration}
+                                &nbsp;Arrived ${delayedStart | duration} too early
                             </span>
 
                         </span>
