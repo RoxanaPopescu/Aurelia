@@ -1,6 +1,6 @@
 import { OrderStatus } from "./order-status";
-import { Collo } from "shared/src/model/logistics/order";
 import { OrderStop } from "./order-stop";
+import { Collo } from "shared/src/model/logistics/order";
 
 export class OrderNew
 {
@@ -60,4 +60,23 @@ export class OrderNew
     public actualColli: Collo[];
 
     public estimatedColli: Collo[];
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            id: this.id,
+            slug: this.slug,
+            relationalId: this.relationalId,
+            state: this.state,
+            pickup: this.pickup.toJSON(),
+            delivery: this.delivery.toJSON(),
+            tags: this.tags,
+            requirements: this.requirements,
+            actualColli: this.actualColli,
+            estimatedColli: this.estimatedColli
+        };
+    }
 }

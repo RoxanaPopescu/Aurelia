@@ -22,4 +22,17 @@ export class Appointment
     public latestArrivalDate: DateTime;
 
     public latestArrivalTime: TimeOfDay;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            earliestArrivalDate: this.earliestArrivalDate,
+            earliestArrivalTime: this.earliestArrivalTime.toString("second"),
+            latestArrivalDate: this.latestArrivalDate,
+            latestArrivalTime: this.latestArrivalTime.toString("second")
+        }
+    }
 }
