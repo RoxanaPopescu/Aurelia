@@ -84,4 +84,13 @@ export class TimeOfDay
 
         return result;
     }
+
+    /**
+     * Gets the primitive value of the instance, as the number of milliseconds since midnight.
+     * @returns The number of milliseconds since midnight.
+     */
+    public valueOf(): number
+    {
+        return (this.hour * 60 * 60 * 1000) + (this.minute * 60 * 1000) + (this.second * 1000) + (this.millisecond);
+    }
 }

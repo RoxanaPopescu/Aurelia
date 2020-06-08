@@ -169,7 +169,7 @@
                 <date-input
                     class="flex-basis-1-of-2"
                     label="above"
-                    value.bind="model.order.pickup.appointment.earliestArrivalDate">
+                    value.bind="earliestPickupArrivalDate">
 
                     <div slot="heading" translate>
                         Arrival date
@@ -178,7 +178,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.order.pickup.appointment.earliestArrivalDate">
+                            value.bind="earliestPickupArrivalDate">
                         </required-validator>
 
                     </div>
@@ -187,7 +187,7 @@
 
                 <div class="control-row flex-basis-1-of-2">
 
-                    <time-input label="above" value.bind="model.order.pickup.appointment.earliestArrivalTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="earliestPickupArrivalTime" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             From
@@ -196,14 +196,14 @@
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="model.order.pickup.appointment.earliestArrivalTime">
+                                value.bind="earliestPickupArrivalTime">
                             </required-validator>
 
                         </div>
 
                     </time-input>
 
-                    <time-input label="above" value.bind="model.order.pickup.appointment.latestArrivalTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="latestPickupArrivalTime" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             To
@@ -212,7 +212,7 @@
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="model.order.pickup.appointment.latestArrivalTime">
+                                value.bind="latestPickupArrivalTime">
                             </required-validator>
 
                         </div>
@@ -312,7 +312,7 @@
                 <date-input
                     class="flex-basis-1-of-2"
                     label="above"
-                    value.bind="model.order.delivery.appointment.earliestArrivalDate">
+                    value.bind="earliestDeliveryArrivalDate">
 
                     <div slot="heading" translate>
                         Arrival date
@@ -321,7 +321,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.order.delivery.appointment.earliestArrivalDate">
+                            value.bind="earliestDeliveryArrivalDate">
                         </required-validator>
 
                     </div>
@@ -330,7 +330,7 @@
 
                 <div class="control-row flex-basis-1-of-2">
 
-                    <time-input label="above" value.bind="model.order.delivery.appointment.earliestArrivalTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="earliestDeliveryArrivalTime" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             From
@@ -339,14 +339,14 @@
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="model.order.delivery.appointment.earliestArrivalTime">
+                                value.bind="earliestDeliveryArrivalTime">
                             </required-validator>
 
                         </div>
 
                     </time-input>
 
-                    <time-input label="above" value.bind="model.order.delivery.appointment.latestArrivalTime" class="flex-basis-1-of-2">
+                    <time-input label="above" value.bind="latestDeliveryArrivalTime" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
                             To
@@ -355,7 +355,7 @@
                         <div slot="validation">
 
                             <required-validator
-                                value.bind="model.order.delivery.appointment.latestArrivalTime">
+                                value.bind="latestDeliveryArrivalTime">
                             </required-validator>
 
                         </div>
