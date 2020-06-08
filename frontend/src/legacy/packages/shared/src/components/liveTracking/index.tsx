@@ -15,6 +15,7 @@ import { SplitRoutePanel } from "./components/panels/splitRoutePanel/splitRouteP
 import "./components/panels/panel.scss";
 import "./index.scss";
 import { Log } from "shared/infrastructure";
+import { PushDriversPanel } from "./components/panels/pushDriversPanel/pushDriversPanel";
 
 @observer
 export default class LiveTrackingComponent extends React.Component {
@@ -34,7 +35,7 @@ export default class LiveTrackingComponent extends React.Component {
   private routesBounds: google.maps.LatLngBounds;
   private reactionDisposers: IReactionDisposer[] = [];
 
-  @observable private routeSubPanel: undefined | "splitRoutePanel";
+  @observable private routeSubPanel: undefined | "splitRoutePanel" | "pushDriversPanel";
 
   @observable private selectedStops: RouteStop[] | undefined;
 
@@ -111,6 +112,9 @@ export default class LiveTrackingComponent extends React.Component {
                   onSplitRouteClick={selectedStops =>
                     this.onSplitRouteClick(selectedStops)
                   }
+                  onPushDriversClick={() =>
+                    this.onPushDriversClick()
+                  }
                 />
               )}
 
@@ -119,6 +123,14 @@ export default class LiveTrackingComponent extends React.Component {
                 routesService={this.routesService}
                 selectedStops={this.selectedStops!}
                 onConfirmSplitClick={() => this.onConfirmSplitClick()}
+                onBackClick={() => (this.routeSubPanel = undefined)}
+              />
+            )}
+
+            {this.routeSubPanel === "pushDriversPanel" && (
+              <PushDriversPanel
+                routesService={this.routesService}
+                onConfirmClick={() => this.onConfirmPushDriversClick()}
                 onBackClick={() => (this.routeSubPanel = undefined)}
               />
             )}
@@ -224,6 +236,16 @@ export default class LiveTrackingComponent extends React.Component {
   private onConfirmSplitClick(): void {
     this.selectedStops = undefined;
     Log.info(Localization.sharedValue("LiveTracking_RouteSplit_Completed"));
+    history.back();
+  }
+
+  private onPushDriversClick(): void {
+    this.routeSubPanel = "pushDriversPanel";
+    // history.pushState(history.state, "", window.location.href);
+  }
+
+  private onConfirmPushDriversClick(): void {
+    Log.info(Localization.sharedValue("LiveTracking_PushedToDrivers_Completed"));
     history.back();
   }
 }

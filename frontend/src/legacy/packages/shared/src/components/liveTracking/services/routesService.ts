@@ -4,6 +4,7 @@ import Localization from "shared/src/localization";
 import { Route } from "shared/src/model/logistics/routes/tracking";
 import { RouteCriticality, RouteStatus } from "shared/src/model/logistics/routes";
 import { routeFlagService } from "./routeFlagService";
+import { Driver } from "app/model/driver";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -214,6 +215,57 @@ export class RoutesService {
       console.error("An error occurred while polling for live tracking data.\n", error);
       this.pollTimeout = setTimeout(() => this.poll(), 8000);
     }
+  }
+
+  /**
+   * Fetches the tracked routes.
+   * @returns A promise that will be resolved with the routes.
+   */
+  public async pushToDrivers(drivers: Driver[], route: Route, message: string | undefined): Promise<void> {
+    var url = "dispatch/route/pushDrivers";
+
+    const response = await fetch(
+      BaseService.url(url),
+      BaseService.defaultConfig({
+        routeId: route.id,
+        driverIds: drivers.map(d => d.id),
+        message: message
+      })
+    );
+
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    return;
+  }
+
+  /**
+   * Fetches the tracked routes.
+   * @returns A promise that will be resolved with the routes.
+   */
+  public async fetchDriversNearby(route: Route): Promise<Driver[]> {
+    var url = "routes/v2/DriversAvailableNearby";
+
+    const response = await fetch(
+      BaseService.url(url),
+      BaseService.defaultConfig({
+        routeId: route.id
+      })
+    );
+
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
+
+    const data = await response.json();
+
+    var drivers: Driver[] = [];
+    for (let driver of data.results) {
+      drivers.push(new Driver(driver));
+    }
+
+    return drivers;
   }
 
   /**

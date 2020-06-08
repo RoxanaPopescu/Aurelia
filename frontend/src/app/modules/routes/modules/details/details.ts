@@ -12,6 +12,7 @@ import { IdentityService } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
+import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 
 /**
  * Represents the route parameters for the page.
@@ -195,6 +196,15 @@ export class DetailsModule
         {
             Log.error("Could not reload the route", error);
         }
+    }
+
+    /**
+     * Called when the `Push to drivers` button is clicked.
+     * Shows a model for pushing a route to any amount of drivers.
+     */
+    protected async onPushToDriversClick(): Promise<void>
+    {
+        await this._modalService.open(PushDriversPanel, { route: this.route! }).promise;
     }
 
     /**

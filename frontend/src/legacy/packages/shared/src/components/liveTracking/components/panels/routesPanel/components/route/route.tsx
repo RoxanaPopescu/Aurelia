@@ -81,8 +81,8 @@ export class Route extends React.Component<RoutesLayerProps> {
               {driverOrFulfillerPhone &&
               <div>{driverOrFulfillerPhone}</div>}
 
-              {this.props.route.driverVehicle &&
-              <div>{this.props.route.driverVehicle.vehicleType.name}</div>}
+              {this.props.route.vehicle &&
+              <div>{this.props.route.vehicle.vehicleType.name}</div>}
 
               {this.props.route.completedTime &&
               <div>{Localization.sharedValue("LiveTracking_Route_DoneTime", {
@@ -112,6 +112,7 @@ export class Route extends React.Component<RoutesLayerProps> {
           </div>}
           {this.renderCancelledOrFailedStops()}
           {this.renderDriverOffline()}
+          {this.renderNoDriver()}
           {this.props.route.expectedTooEarly.length > 0 &&
             <div
               onClick={e => this.onTooEarlyMessageClicked(e)}
@@ -156,8 +157,33 @@ export class Route extends React.Component<RoutesLayerProps> {
     );
   }
 
+  renderNoDriver(): JSX.Element | undefined {
+    if (this.props.route.driver != null) {
+      return;
+    }
+
+    let boxStyle: string = "c-liveTracking-box-neutral";
+    if (this.props.route.criticality.slug == "high") {
+      boxStyle = "c-liveTracking-box-negative";
+    } else if (this.props.route.criticality.slug == "medium") {
+      boxStyle = "c-liveTracking-box-warning";
+    }
+
+    let info = Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_NoneAssigned");
+    let stop = this.props.route.stops[0];
+    if (stop instanceof RouteStop && stop.arrivalTimeFrame.from != null) {
+      info = info.replace("{time}", Localization.formatDateTime(stop.arrivalTimeFrame.from));
+    }
+
+    return (
+      <div className={"c-liveTracking-panel-message " + boxStyle}>
+          {info}
+      </div>
+    );
+  }
+
   renderDriverOffline(): JSX.Element | undefined {
-    if (this.props.route.driverOnline) {
+    if (this.props.route.driverOnline || this.props.route.driver == null) {
       return;
     }
 

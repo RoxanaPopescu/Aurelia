@@ -1,4 +1,4 @@
-import { PersonName, Phone } from "app/model/shared";
+import { PersonName, Phone, Position } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
 import { DriverStatus } from "./driver-status";
 
@@ -22,6 +22,9 @@ export class Driver
             this.email = data.email;
             this.pictureUrl = data.pictureUrl;
             this.vehicleTypes = vehicleTypes;
+            if (data.position) {
+                this.position = new Position(data.position);
+            }
         } else {
             this.status = new DriverStatus("approved");
             this.name = new PersonName();
@@ -55,6 +58,11 @@ export class Driver
      * The phone number at which the driver can be contacted.
      */
     public phone: Phone;
+
+    /**
+     * The phone number at which the driver can be contacted.
+     */
+    public position?: Position;
 
     /**
      * The URL for the picture of the driver.

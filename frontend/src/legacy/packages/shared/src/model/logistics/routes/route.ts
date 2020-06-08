@@ -33,7 +33,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
     this.stops = stops;
     this.complexity = data.complexity;
 
-    this.vehicleType = VehicleType.get(data.vehicleTypeId);
+    this.vehicleType = VehicleType.get(data.vehicleType);
 
     if (data.expires != null) {
       this.expires = DateTime.fromISO(data.expires, { setZone: true });
@@ -43,8 +43,8 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
       this.driver = new Driver(data.driver);
     }
 
-    if (data.driverVehicle != null) {
-      this.driverVehicle = new Vehicle(data.driverVehicle);
+    if (data.vehicle != null) {
+      this.vehicle = new Vehicle(data.vehicle);
     }
 
     if (data.driverPosition != null) {
@@ -152,7 +152,7 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    * The vehicle assiged to the route,
    * or undefined if none has been assigned.
    */
-  public readonly driverVehicle?: Vehicle;
+  public readonly vehicle?: Vehicle;
 
   /**
    * True if the driver is currently online, false if not,

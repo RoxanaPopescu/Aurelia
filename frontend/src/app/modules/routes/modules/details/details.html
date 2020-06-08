@@ -528,6 +528,14 @@
 
                         <item
                             if-claims="edit-routes"
+                            if.bind="!route.driver"
+                            click.trigger="onPushToDriversClick()"
+                            translate>
+                            Push to drivers
+                        </item>
+
+                        <item
+                            if-claims="edit-routes"
                             if.bind="environment == 'development' || route.isPrimaryFulfiller"
                             click.trigger="onAddSupportNoteClick()"
                             translate>

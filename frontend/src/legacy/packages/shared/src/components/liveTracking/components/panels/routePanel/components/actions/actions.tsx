@@ -13,6 +13,7 @@ export interface ActionsProps {
   route: Route;
   onBackClick: () => void;
   onSplitRouteClick: () => void;
+  onPushToDriversClick: () => void;
   onRouteDetailsClick: () => void;
 }
 
@@ -39,6 +40,7 @@ export class Actions extends React.Component<ActionsProps> {
         <div className="c-liveTracking-routePanel-actions-group">
           {Profile.claims.has("edit-routes") &&
             this.isFulfiller &&
+            this.props.route.driver != null &&
             this.props.route.status.slug !== "completed" &&
             this.props.route.status.slug !== "cancelled" && (
               <a
@@ -49,6 +51,15 @@ export class Actions extends React.Component<ActionsProps> {
                 )}
               >
                 {Localization.sharedValue("LiveTracking_Actions_SplitRoute")}
+              </a>
+            )}
+          {Profile.claims.has("edit-routes") &&
+            this.isFulfiller &&
+            this.props.route.driver == null && (
+              <a
+                onClick={() => this.props.onPushToDriversClick()}
+              >
+                {Localization.sharedValue("LiveTracking_Actions_PushToDrivers")}
               </a>
             )}
 
