@@ -31,4 +31,20 @@ export class OrderStop
     public appointment: Appointment;
 
     public instructions: string;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            location: this.location,
+            name: this.contactName,
+            companyName: this.contactCompanyName,
+            phone: this.contactPhoneNumber,
+            email: this.contactEmail,
+            appointment: this.appointment.toJSON(),
+            instructions: this.instructions
+        };
+    }
 }

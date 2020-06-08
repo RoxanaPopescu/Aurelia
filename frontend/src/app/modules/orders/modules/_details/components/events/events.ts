@@ -1,8 +1,9 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, bindable } from 'aurelia-framework';
 import { OrderEvent } from '../../../../../../model/order/entities/order-event';
-import { DateTime } from 'luxon';
 import { ModalService } from "shared/framework";
 import { EventDetailsPanel } from "./modals/event-details/event-details";
+import { Operation } from "shared/utilities";
+import { OrderService } from "app/model/order";
 
 /**
  * Represents the module.
@@ -14,35 +15,15 @@ export class Events
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
      */
-    public constructor(modalService: ModalService)
+    public constructor(modalService: ModalService, orderService: OrderService)
     {
+        this._orderService = orderService;
         this._modalService = modalService;
-
-        this.events = [
-            new OrderEvent({
-                id: "a1234567",
-                date: DateTime.local(),
-                name: "Event1",
-                location: "Location1",
-                author: { name: "Author1", affiliation: "Company1" }
-            }),
-            new OrderEvent({
-                id: "b1234567",
-                date: DateTime.local(),
-                name: "Event1",
-                location: "Location1",
-                author: { name: "Author1", affiliation: "Company1" }
-            }),
-            new OrderEvent({
-                id: "c1234567",
-                date: DateTime.local(),
-                name: "Event1",
-                location: "Location1",
-                author: { name: "Author1", affiliation: "Company1" }
-            })
-        ]
     }
 
+    private pollTimeout: any;
+
+    private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
 
     /**
@@ -51,9 +32,25 @@ export class Events
     protected dataTableElement: HTMLElement;
 
     /**
-     * The data table element.
+     * True to show the map, otherwise false.
      */
-    protected events: OrderEvent[] = [];
+    @bindable
+    protected orderId: string;
+
+    /**
+     * The most recent update operation.
+     */
+    protected fetchOperation: Operation;
+
+    /**
+     * The current events.
+     */
+    protected completedEvents: OrderEvent[] = [];
+
+    /**
+     * The upcoming events.
+     */
+    protected futureEvents: OrderEvent[] = [];
 
     /**
      * Called when a route stop is clicked.
@@ -62,5 +59,67 @@ export class Events
     protected async onEventDetailsClick(event: OrderEvent): Promise<void>
     {
         await this._modalService.open(EventDetailsPanel, { event: event } ).promise;
+    }
+
+    /**
+     * Counts the number of picked up colli on the route
+     */
+    public isLatestEvent(events: OrderEvent[], event: OrderEvent): boolean
+    {
+        if (events[events.length - 1].id === event.id)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Called by the framework when the module is activated.
+     */
+    public orderIdChanged(newValue: string): void
+    {
+        if (newValue != null)
+        {
+            this.fetchEvents();
+        }
+    }
+
+    /**
+     * Called by the framework when the module is deactivated.
+     * @returns A promise that will be resolved when the module is activated.
+     */
+    public deactivate(): void
+    {
+        // Abort any existing operation.
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
+
+        clearTimeout(this.pollTimeout);
+    }
+
+    /**
+     * Fetches the specified order.
+     */
+    private fetchEvents(): void
+    {
+        clearTimeout(this.pollTimeout);
+
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
+
+        this.fetchOperation = new Operation(async signal =>
+        {
+            let response = await this._orderService.getEvents(this.orderId);
+
+            this.futureEvents = response.futureEvents;
+            this.completedEvents = response.completedEvents;
+
+            this.pollTimeout = setTimeout(() => this.fetchEvents(), 6000);
+        });
     }
 }

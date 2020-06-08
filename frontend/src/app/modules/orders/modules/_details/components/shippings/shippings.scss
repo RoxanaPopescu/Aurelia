@@ -1,7 +1,24 @@
 shippings
 {
+    page-tab-nav
+    {
+        z-index: 1000;
+        page-tab
+        {
+            margin-bottom: -.5rem;
+            background-color: var(--palette-color-neutral-light);
+
+            &.--active
+            {
+                border-bottom-color: white;
+                background-color: white;
+                color: black;
+            }
+        }
+    }
+
     data-table
     {
-        --data-table-columns: 2fr 1.25fr;
+        --data-table-columns: 2fr 3fr 1.25fr;
     }
 }
