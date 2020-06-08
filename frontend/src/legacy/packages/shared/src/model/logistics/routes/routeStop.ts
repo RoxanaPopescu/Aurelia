@@ -154,11 +154,12 @@ export abstract class RouteStop extends RouteStopBase {
         return undefined;
       }
 
-      if (this.estimates == null || this.arrivalTimeFrame?.to == null) {
+      if (this.estimates == null || this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null) {
           return undefined;
       }
 
       let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
+      console.log("X", this.arrivalTimeFrame.to, this.estimates.arrivalTime);
       return duration.valueOf() > 0 ? duration : undefined;
   }
 

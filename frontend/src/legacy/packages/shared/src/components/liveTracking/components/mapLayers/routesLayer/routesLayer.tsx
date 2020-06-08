@@ -13,19 +13,29 @@ export interface RoutesLayerProps {
 @observer
 export class RoutesLayer extends React.Component<RoutesLayerProps> {
 
+  private renderRoute(route: TrackingRoute): JSX.Element {
+    return (
+      <RouteDriverMarker
+          key={`RouteDriverMarker-${route.id}`}
+          route={route}
+          onClick={route => this.onClick(route)}
+        />
+    );
+  }
+
   public render() {
+    let routes = this.props.routesService.routes && this.props.routesService.routes
+    .filter(r => r.containsText(this.props.routesService.textFilter));
+
+    if (routes == null) {
+      return;
+    }
+
     return (
       <React.Fragment>
-
-        {this.props.routesService.routes && this.props.routesService.routes
-        .filter(r => r.driverPosition != null && r.containsText(this.props.routesService.textFilter))
-        .map(r =>
-        <RouteDriverMarker
-          key={`RouteDriverMarker-${r.id}`}
-          route={r}
-          onClick={route => this.onClick(route)}
-        />)}
-
+        {routes.map(r =>
+          this.renderRoute(r)
+        )}
       </React.Fragment>
     );
   }

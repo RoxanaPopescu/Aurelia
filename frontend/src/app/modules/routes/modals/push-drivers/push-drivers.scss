@@ -1,0 +1,14 @@
+modal-panel[name="push-drivers"]
+{
+    --modal-panel-min-width: 220rem;
+
+    data-table
+    {
+        --data-table-columns: 1fr 1fr 0.7fr 0.7fr min-content;
+    }
+
+    identity-picture
+    {
+        border-radius: 50%;
+    }
+}

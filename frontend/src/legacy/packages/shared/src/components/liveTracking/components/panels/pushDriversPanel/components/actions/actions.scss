@@ -1,0 +1,21 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-pushDriversPanel-actions {
+  padding: 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--colorNeutralLight);
+
+  a {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      display: inline-block;
+      margin-left: 2px;
+      margin-right: 6px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

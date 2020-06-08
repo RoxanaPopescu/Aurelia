@@ -47,6 +47,26 @@ export class RouteAssignmentService
     }
 
     /**
+     * Assigns the specified route to the specified driver.
+     * @param route The route to assign.
+     * @param drivers The drivers to who we send the push request
+     * @param message The custom push message to the drivers
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async pushToDrivers(route: RouteBase, drivers: Driver[], message: string | undefined): Promise<void>
+    {
+        await this._apiClient.post("dispatch/route/pushDrivers",
+        {
+            body:
+            {
+                routeId: route.id,
+                driverIds: drivers.map(d => d.id),
+                message: message
+            }
+        });
+    }
+
+    /**
      * Assigns the specified route to the specified vehicle.
      * @param route The route to assign.
      * @param vehicle The vehicle to whom the route should be assigned.

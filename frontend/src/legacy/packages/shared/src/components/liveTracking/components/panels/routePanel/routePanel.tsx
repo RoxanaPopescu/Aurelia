@@ -17,6 +17,7 @@ export interface RoutePanelProps {
   hidden?: boolean;
   onRouteStopSelected: (routeStop: RouteStopModel) => void;
   onSplitRouteClick: (selectedStops: RouteStopModel[]) => void;
+  onPushDriversClick: () => void;
 }
 
 @observer
@@ -50,7 +51,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   }
 
   public render() {
-    
+
     const selectedRoute = this.props.routesService.selectedRoute;
 
     if (selectedRoute == null) {
@@ -78,6 +79,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
             route={selectedRoute}
             onBackClick={() => this.onBackClick()}
             onSplitRouteClick={() => this.onSplitRouteClick()}
+            onPushToDriversClick={() => this.props.onPushDriversClick()}
             onRouteDetailsClick={() => this.onRouteDetailsClick()}
           />
 
@@ -91,7 +93,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
         </div>
 
         <div className="c-liveTracking-panel-body">
-        
+
           {this.routeStops.map(routeStop =>
           <RouteStop
             key={routeStop.id}
@@ -101,7 +103,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
             routesService={this.props.routesService}
             onClick={() => this.props.onRouteStopSelected(routeStop)}
           />)}
-        
+
         </div>
 
       </Panel>
@@ -132,7 +134,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
     const elementMargin = 4;
     const elementOffset = routeStopElement.offsetTop - elementMargin;
     const elementHeight = routeStopElement.offsetHeight + elementMargin;
-    
+
     const minVisibleOffset = panelElement.scrollTop;
     const maxVisibleOffset = minVisibleOffset + panelElement.clientHeight - headerHeight;
     const scroll = elementOffset < minVisibleOffset || elementOffset + elementHeight + elementMargin > maxVisibleOffset;

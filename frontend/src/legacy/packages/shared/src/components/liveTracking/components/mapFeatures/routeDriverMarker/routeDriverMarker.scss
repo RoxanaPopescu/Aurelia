@@ -24,6 +24,11 @@
     background: var(--colorOk);
   }
 
+  &.c-liveTracking-routeDriverMarker--noDriver {
+    border: 1px solid var(--colorAlertDarken);
+    background: var(--colorBackgroundPrimary);
+  }
+
   &.c-liveTracking-routeDriverMarker--offline {
     box-shadow: 0 0 1px 1px rgba(white, .7);
     border: 1px solid var(--colorAlertDarken);
