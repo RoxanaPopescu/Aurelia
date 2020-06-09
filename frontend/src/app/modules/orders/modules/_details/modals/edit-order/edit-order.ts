@@ -3,8 +3,8 @@ import { OrderNew, OrderStatus, OrderService } from "app/model/order";
 import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { observable } from 'aurelia-binding';
-import { DateTime } from "luxon";
-import { TimeOfDay } from '../../../../../../../shared/types/values/time-of-day';
+import { DateTime, Duration } from "luxon";
+import { TimeOfDay } from "shared/types";
 
 /**
  * Represents the module.
@@ -105,11 +105,11 @@ export class EditOrderPanel
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected earliestPickupArrivalTimeChanged(newValue: TimeOfDay | undefined): void
+    protected earliestPickupArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
-            this.model.order.pickup.appointment.earliestArrivalTime = newValue;
+            this.model.order.pickup.appointment.earliestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
             this.pickupDateTimeChanged();
         }
     }
@@ -117,11 +117,11 @@ export class EditOrderPanel
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected latestPickupArrivalTimeChanged(newValue: TimeOfDay | undefined): void
+    protected latestPickupArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
-            this.model.order.pickup.appointment.latestArrivalTime = newValue;
+            this.model.order.pickup.appointment.latestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
             this.pickupDateTimeChanged();
         }
     }
@@ -131,7 +131,7 @@ export class EditOrderPanel
      */
     protected earliestPickupArrivalDateChanged(newValue: DateTime | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
             this.model.order.pickup.appointment.earliestArrivalDate = newValue;
             this.pickupDateTimeChanged();
@@ -156,11 +156,11 @@ export class EditOrderPanel
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected earliestDeliveryArrivalTimeChanged(newValue: TimeOfDay | undefined): void
+    protected earliestDeliveryArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
-            this.model.order.delivery.appointment.earliestArrivalTime = newValue;
+            this.model.order.delivery.appointment.earliestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
             this.deliveryDateTimeChanged();
         }
     }
@@ -168,11 +168,11 @@ export class EditOrderPanel
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected latestDeliveryArrivalTimeChanged(newValue: TimeOfDay | undefined): void
+    protected latestDeliveryArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
-            this.model.order.delivery.appointment.latestArrivalTime = newValue;
+            this.model.order.delivery.appointment.latestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
             this.deliveryDateTimeChanged();
         }
     }
@@ -182,7 +182,7 @@ export class EditOrderPanel
      */
     protected earliestDeliveryArrivalDateChanged(newValue: DateTime | undefined): void
     {
-        if (newValue != null)
+        if (newValue != null && newValue instanceof Duration)
         {
             this.model.order.delivery.appointment.earliestArrivalDate = newValue;
             this.deliveryDateTimeChanged();
