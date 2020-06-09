@@ -30,9 +30,9 @@ export class Appointment
     {
         return {
             earliestArrivalDate: this.earliestArrivalDate,
-            earliestArrivalTime: this.earliestArrivalTime.toString("second"),
+            earliestArrivalTime: this.earliestArrivalTime.toString(),
             latestArrivalDate: this.latestArrivalDate,
-            latestArrivalTime: this.latestArrivalTime.toString("second")
+            latestArrivalTime: this.latestArrivalTime.toString()
         }
     }
 }
