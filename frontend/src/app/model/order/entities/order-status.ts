@@ -69,13 +69,13 @@ export class OrderStatus
             accent: "neutral",
             value: 5
         },
-        "inRoutePlanning":
+        "in-route-planning":
         {
             name: "Route planning",
             accent: "neutral",
             value: 6
         },
-        "routePlanned":
+        "route-planned":
         {
             name: "Route planned",
             accent: "neutral",

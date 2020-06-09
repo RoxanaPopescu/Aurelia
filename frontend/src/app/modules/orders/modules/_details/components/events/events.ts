@@ -119,7 +119,7 @@ export class Events
             this.futureEvents = response.futureEvents;
             this.completedEvents = response.completedEvents;
 
-            this.pollTimeout = setTimeout(() => this.fetchEvents(), 6000);
+            this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
         });
     }
 }

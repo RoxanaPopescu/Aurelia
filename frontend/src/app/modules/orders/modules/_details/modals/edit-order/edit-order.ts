@@ -35,7 +35,7 @@ export class EditOrderPanel
     /**
      * The model for the modal.
      */
-    public model: { order: OrderNew; };
+    public model: OrderNew;
 
     /**
      * The local date element for latest delivery arrival date
@@ -93,7 +93,7 @@ export class EditOrderPanel
      */
     public activate(model: { order: OrderNew }): void
     {
-        this.model = model;
+        this.model = model.order;
         this.earliestPickupArrivalDate = model.order.pickup.appointment.earliestArrivalDate;
         this.earliestPickupArrivalTime = model.order.pickup.appointment.earliestArrivalTime;
         this.latestPickupArrivalTime = model.order.pickup.appointment.latestArrivalTime;
@@ -109,7 +109,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.pickup.appointment.earliestArrivalTime = newValue;
+            this.model.pickup.appointment.earliestArrivalTime = newValue;
             this.pickupDateTimeChanged();
         }
     }
@@ -121,7 +121,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.pickup.appointment.latestArrivalTime = newValue;
+            this.model.pickup.appointment.latestArrivalTime = newValue;
             this.pickupDateTimeChanged();
         }
     }
@@ -133,7 +133,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.pickup.appointment.earliestArrivalDate = newValue;
+            this.model.pickup.appointment.earliestArrivalDate = newValue;
             this.pickupDateTimeChanged();
         }
     }
@@ -143,13 +143,13 @@ export class EditOrderPanel
      */
     protected pickupDateTimeChanged(): void
     {
-        if (this.model.order.pickup.appointment.latestArrivalTime.valueOf() < this.model.order.pickup.appointment.earliestArrivalTime.valueOf())
+        if (this.model.pickup.appointment.latestArrivalTime.valueOf() < this.model.pickup.appointment.earliestArrivalTime.valueOf())
         {
-            this.model.order.pickup.appointment.latestArrivalDate = this.model.order.pickup.appointment.earliestArrivalDate.plus({ day: 1 });
+            this.model.pickup.appointment.latestArrivalDate = this.model.pickup.appointment.earliestArrivalDate.plus({ day: 1 });
         }
         else
         {
-            this.model.order.pickup.appointment.latestArrivalDate = this.model.order.pickup.appointment.earliestArrivalDate;
+            this.model.pickup.appointment.latestArrivalDate = this.model.pickup.appointment.earliestArrivalDate;
         }
     }
 
@@ -160,7 +160,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.delivery.appointment.earliestArrivalTime = newValue;
+            this.model.delivery.appointment.earliestArrivalTime = newValue;
             this.deliveryDateTimeChanged();
         }
     }
@@ -172,7 +172,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.delivery.appointment.latestArrivalTime = newValue;
+            this.model.delivery.appointment.latestArrivalTime = newValue;
             this.deliveryDateTimeChanged();
         }
     }
@@ -184,7 +184,7 @@ export class EditOrderPanel
     {
         if (newValue != null)
         {
-            this.model.order.delivery.appointment.earliestArrivalDate = newValue;
+            this.model.delivery.appointment.earliestArrivalDate = newValue;
             this.deliveryDateTimeChanged();
         }
     }
@@ -194,13 +194,13 @@ export class EditOrderPanel
      */
     protected deliveryDateTimeChanged(): void
     {
-        if (this.model.order.delivery.appointment.latestArrivalTime.valueOf() < this.model.order.delivery.appointment.earliestArrivalTime.valueOf())
+        if (this.model.delivery.appointment.latestArrivalTime.valueOf() < this.model.delivery.appointment.earliestArrivalTime.valueOf())
         {
-            this.model.order.delivery.appointment.latestArrivalDate = this.model.order.delivery.appointment.earliestArrivalDate.plus({ day: 1 });
+            this.model.delivery.appointment.latestArrivalDate = this.model.delivery.appointment.earliestArrivalDate.plus({ day: 1 });
         }
         else
         {
-            this.model.order.delivery.appointment.latestArrivalDate = this.model.order.delivery.appointment.earliestArrivalDate;
+            this.model.delivery.appointment.latestArrivalDate = this.model.delivery.appointment.earliestArrivalDate;
         }
     }
 
@@ -225,10 +225,10 @@ export class EditOrderPanel
             this._modal.busy = true;
 
             // Save the changes.
-            await this._orderService.saveOrder(this.model.order);
+            await this._orderService.saveOrder(this.model);
 
             // Set the result of the modal.
-            this._result = this.model.order;
+            this._result = this.model;
             this._modal.close();
         }
         catch (error)

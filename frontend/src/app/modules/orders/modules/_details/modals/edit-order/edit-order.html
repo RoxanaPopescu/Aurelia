@@ -26,7 +26,7 @@
                 <path-nav if.bind="!model.isNew">
 
                     <a accent="inherit" click.trigger="onCancel()" translate>
-                        Order ${model.order.slug}
+                        Order ${model.slug}
                     </a>
 
                     <div translate>
@@ -47,7 +47,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.order.slug" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.slug" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Order ID
@@ -55,7 +55,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.order.relationalId" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.relationalId" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Related order ID
@@ -70,8 +70,8 @@
                 <select-input
                     label="above"
                     none.bind="false"
-                    value.bind="model.order.status"
-                    display-value.bind="model.order.state.status.name"
+                    value.bind="model.status"
+                    display-value.bind="model.state.status.name"
                     class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
@@ -85,7 +85,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.order.state.status">
+                            value.bind="model.state.status">
                         </required-validator>
 
                     </div>
@@ -106,7 +106,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <address-input label="above" value.bind="model.order.pickup.location.address" class="flex-basis-1-of-1">
+                <address-input label="above" value.bind="model.pickup.location.address" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Address
@@ -115,7 +115,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.order.pickup.location.address.primary">
+                            value.bind="model.pickup.location.address.primary">
                         </required-validator>
 
                     </div>
@@ -126,7 +126,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.order.pickup.contactName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.pickup.contactName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Name
@@ -134,7 +134,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.order.pickup.contactCompanyName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.pickup.contactCompanyName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Company name
@@ -146,7 +146,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.order.pickup.contactPhoneNumber" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.pickup.contactPhoneNumber" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Phone number
@@ -154,7 +154,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.order.pickup.contactEmail" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.pickup.contactEmail" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         E-mail
@@ -225,7 +225,7 @@
 
             <div class="control-row">
 
-                <text-input label="above" lines.bind="3" value.bind="model.order.pickup.instructions" class="flex-basis-1-of-1">
+                <text-input label="above" lines.bind="3" value.bind="model.pickup.instructions" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Instructions
@@ -249,7 +249,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <address-input label="above" value.bind="model.order.delivery.location.address" class="flex-basis-1-of-1">
+                <address-input label="above" value.bind="model.delivery.location.address" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Address
@@ -258,7 +258,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.order.delivery.location.address.primary">
+                            value.bind="model.delivery.location.address.primary">
                         </required-validator>
 
                     </div>
@@ -269,7 +269,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.order.delivery.contactName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.delivery.contactName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Name
@@ -277,7 +277,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.order.delivery.contactCompanyName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.delivery.contactCompanyName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Company name
@@ -289,7 +289,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.order.delivery.contactPhoneNumber" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.delivery.contactPhoneNumber" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Phone number
@@ -297,7 +297,7 @@
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.order.delivery.contactEmail" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.delivery.contactEmail" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         E-mail
@@ -368,7 +368,7 @@
 
             <div class="control-row">
 
-                <text-input label="above" lines.bind="3" value.bind="model.order.delivery.instructions" class="flex-basis-1-of-1">
+                <text-input label="above" lines.bind="3" value.bind="model.delivery.instructions" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Instructions
@@ -392,7 +392,7 @@
 
             <tags-input
                 label="above"
-                value.bind="model.order.tags"
+                value.bind="model.tags"
                 new.bind="true"
                 class="flex-basis-1-of-1">
 

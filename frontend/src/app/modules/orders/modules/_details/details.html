@@ -23,7 +23,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${order.slug}
+                        ${orderId}
                     </div>
 
                 </name-value-pair>
@@ -284,7 +284,7 @@
 
                     </tab-nav>
 
-                    <div class="flex-push-right control-row">
+                    <div class="flex-push-right control-row" if.bind="order">
 
                         <button appearance="outline" accent="primary" click.trigger="onEditOrderClick()" translate>
                             Edit order

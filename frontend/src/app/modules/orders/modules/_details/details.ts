@@ -1,5 +1,4 @@
 import { autoinject } from 'aurelia-framework';
-import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
@@ -30,13 +29,11 @@ export class DetailsModule
      * @param orderService The `OrderService` instance.
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
-     * @param router The `Router` instance.
      */
-    public constructor(orderService: OrderService, modalService: ModalService, identityService: IdentityService, router: Router)
+    public constructor(orderService: OrderService, modalService: ModalService, identityService: IdentityService)
     {
         this._orderService = orderService;
         this._modalService = modalService;
-        this._router = router;
         this.identityService = identityService;
     }
 
@@ -44,7 +41,6 @@ export class DetailsModule
 
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
-    private readonly _router: Router;
     protected readonly identityService: IdentityService;
     protected readonly environment = ENVIRONMENT.name;
 
@@ -72,11 +68,6 @@ export class DetailsModule
      * True to show the map, otherwise false.
      */
     protected orderId: string;
-
-    /**
-     * True to show the map, otherwise false.
-     */
-    protected showMap = true;
 
     /**
      * The most recent update operation.
@@ -125,11 +116,7 @@ export class DetailsModule
     protected async onEditOrderClick(): Promise<void>
     {
         const savedOrder = await this._modalService.open(EditOrderPanel, { order: this.order! }).promise;
-
-        if (savedOrder != null)
-        {
-            this.fetchOrder();
-        }
+        this.order = savedOrder;
     }
 
     /**
@@ -156,25 +143,44 @@ export class DetailsModule
 
     /**
      * Fetches the specified order.
-     * @param orderId The ID of the order to fetch.
      */
-    private fetchOrder(): void
+    private async fetchOrder()
     {
-        clearTimeout(this.pollTimeout);
-
         if (this.fetchOperation != null)
         {
             this.fetchOperation.abort();
         }
 
-        this.fetchOperation = new Operation(async signal =>
-        {
+        try {
             this.order = await this._orderService.getV2(this.orderId);
+        } catch (error) {
+            Log.error("An error occurred while loading the list.\n", error);
+        }
+    }
 
-            this._router.title = this.order.slug;
-            this._router.updateTitle();
+    /**
+     * Fetches the linked route of the order.
+     */
+    private fetchRoute(): void
+    {
+        clearTimeout(this.pollTimeout);
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
 
-            this.pollTimeout = setTimeout(() => this.fetchOrder(), 6000);
-        });
+        try {
+            this.fetchOperation = new Operation(async signal =>
+                {
+                    // this.order = await this._orderService.getV2(this.orderId);
+                    // FIXME:
+
+                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                });
+        } catch {
+            // FIXME:
+
+            this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+        }
     }
 }
