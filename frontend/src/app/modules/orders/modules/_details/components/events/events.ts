@@ -45,12 +45,12 @@ export class Events
     /**
      * The current events.
      */
-    protected completedEvents: OrderEvent[] = [];
+    protected completedEvents: OrderEvent[];
 
     /**
-     * The upcoming events.
+     * The future events.
      */
-    protected futureEvents: OrderEvent[] = [];
+    protected futureEvents: OrderEvent[];
 
     /**
      * Called when a route stop is clicked.

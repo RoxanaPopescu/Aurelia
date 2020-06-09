@@ -4,7 +4,6 @@ import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { observable } from 'aurelia-binding';
 import { DateTime, Duration } from "luxon";
-import { TimeOfDay } from "shared/types";
 
 /**
  * Represents the module.
@@ -37,41 +36,19 @@ export class EditOrderPanel
      */
     public model: OrderNew;
 
-    /**
-     * The local date element for latest delivery arrival date
-     */
     @observable
-    public latestDeliveryArrivalTime: TimeOfDay | undefined;
+    public pickupDate: DateTime | undefined;
+    @observable
+    public earliestPickupArrivalTime: Duration | undefined;
+    @observable
+    public latestPickupArrivalTime: Duration | undefined;
 
-    /**
-     * The local date element for earliest delivery arrival date
-     */
     @observable
-    public earliestDeliveryArrivalTime: TimeOfDay | undefined;
-
-    /**
-     * The local date element for earliest delivery arrival date
-     */
+    public deliveryDate: DateTime | undefined;
     @observable
-    public earliestDeliveryArrivalDate: DateTime | undefined;
-
-    /**
-     * The local date element for latest pickup arrival date
-     */
+    public earliestDeliveryArrivalTime: Duration | undefined;
     @observable
-    public latestPickupArrivalTime: TimeOfDay | undefined;
-
-    /**
-     * The local date element for earliest pickup arrival date
-     */
-    @observable
-    public earliestPickupArrivalTime: TimeOfDay | undefined;
-
-    /**
-     * The local date element for earliest pickup arrival date
-     */
-    @observable
-    public earliestPickupArrivalDate: DateTime | undefined;
+    public latestDeliveryArrivalTime: Duration | undefined;
 
     /**
      * The available route status values.
@@ -93,13 +70,13 @@ export class EditOrderPanel
      */
     public activate(model: { order: OrderNew }): void
     {
-        this.model = model.order;
-        this.earliestPickupArrivalDate = this.model.pickup.appointment.earliestArrivalDate;
-        this.earliestPickupArrivalTime = this.model.pickup.appointment.earliestArrivalTime;
-        this.latestPickupArrivalTime = this.model.pickup.appointment.latestArrivalTime;
-        this.earliestDeliveryArrivalDate =this.model.delivery.appointment.earliestArrivalDate;
-        this.earliestDeliveryArrivalTime = this.model.delivery.appointment.earliestArrivalTime;
-        this.latestDeliveryArrivalTime = this.model.delivery.appointment.latestArrivalTime;
+        this.model = model.order.clone();
+        this.pickupDate = this.model.pickup.appointment.earliestArrivalDate.startOf("day");
+        this.earliestPickupArrivalTime = this.model.pickup.appointment.earliestArrivalDate.diff(this.model.pickup.appointment.earliestArrivalDate.startOf("day"));
+        this.latestPickupArrivalTime = this.model.pickup.appointment.latestArrivalDate.diff(this.model.pickup.appointment.latestArrivalDate.startOf("day"));
+        this.deliveryDate = this.model.delivery.appointment.earliestArrivalDate.startOf("day");
+        this.earliestDeliveryArrivalTime = this.model.delivery.appointment.earliestArrivalDate.diff(this.model.delivery.appointment.earliestArrivalDate.startOf("day"));
+        this.latestDeliveryArrivalTime = this.model.delivery.appointment.latestArrivalDate.diff(this.model.delivery.appointment.latestArrivalDate.startOf("day"));
     }
 
     /**
@@ -107,11 +84,7 @@ export class EditOrderPanel
      */
     protected earliestPickupArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.pickup.appointment.earliestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
-            this.pickupDateTimeChanged();
-        }
+        this.pickupDateTimeChanged();
     }
 
     /**
@@ -119,23 +92,15 @@ export class EditOrderPanel
      */
     protected latestPickupArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.pickup.appointment.latestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
-            this.pickupDateTimeChanged();
-        }
+        this.pickupDateTimeChanged();
     }
 
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected earliestPickupArrivalDateChanged(newValue: DateTime | undefined): void
+    protected pickupDateChanged(newValue: DateTime | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.pickup.appointment.earliestArrivalDate = newValue;
-            this.pickupDateTimeChanged();
-        }
+        this.pickupDateTimeChanged();
     }
 
     /**
@@ -143,14 +108,18 @@ export class EditOrderPanel
      */
     protected pickupDateTimeChanged(): void
     {
-        if (this.model.pickup.appointment.latestArrivalTime.valueOf() < this.model.pickup.appointment.earliestArrivalTime.valueOf())
-        {
-            this.model.pickup.appointment.latestArrivalDate = this.model.pickup.appointment.earliestArrivalDate.plus({ day: 1 });
+        if (this.earliestPickupArrivalTime == null || this.latestPickupArrivalTime == null || this.pickupDate == null) {
+            return;
         }
-        else
+
+        const date = this.pickupDate.startOf("day");
+        this.model.pickup.appointment.earliestArrivalDate = date.plus(this.earliestPickupArrivalTime);
+        let latestDate = date.plus(this.latestPickupArrivalTime);
+        if (this.latestPickupArrivalTime < this.earliestPickupArrivalTime)
         {
-            this.model.pickup.appointment.latestArrivalDate = this.model.pickup.appointment.earliestArrivalDate;
+            latestDate = latestDate.plus({ day: 1 });
         }
+        this.model.pickup.appointment.latestArrivalDate = latestDate;
     }
 
     /**
@@ -158,11 +127,7 @@ export class EditOrderPanel
      */
     protected earliestDeliveryArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.delivery.appointment.earliestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
-            this.deliveryDateTimeChanged();
-        }
+        this.deliveryDateTimeChanged();
     }
 
     /**
@@ -170,23 +135,15 @@ export class EditOrderPanel
      */
     protected latestDeliveryArrivalTimeChanged(newValue: Duration | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.delivery.appointment.latestArrivalTime = TimeOfDay.fromISO(newValue.toISO());
-            this.deliveryDateTimeChanged();
-        }
+        this.deliveryDateTimeChanged();
     }
 
     /**
      * Called when the observable property, timeFrom, changes value.
      */
-    protected earliestDeliveryArrivalDateChanged(newValue: DateTime | undefined): void
+    protected deliveryDateChanged(newValue: DateTime | undefined): void
     {
-        if (newValue != null && newValue instanceof Duration)
-        {
-            this.model.delivery.appointment.earliestArrivalDate = newValue;
-            this.deliveryDateTimeChanged();
-        }
+        this.deliveryDateTimeChanged();
     }
 
     /**
@@ -194,14 +151,18 @@ export class EditOrderPanel
      */
     protected deliveryDateTimeChanged(): void
     {
-        if (this.model.delivery.appointment.latestArrivalTime.valueOf() < this.model.delivery.appointment.earliestArrivalTime.valueOf())
-        {
-            this.model.delivery.appointment.latestArrivalDate = this.model.delivery.appointment.earliestArrivalDate.plus({ day: 1 });
+        if (this.earliestDeliveryArrivalTime == null || this.latestDeliveryArrivalTime == null || this.deliveryDate == null) {
+            return;
         }
-        else
+
+        const date = this.deliveryDate.startOf("day");
+        this.model.delivery.appointment.earliestArrivalDate = date.plus(this.earliestDeliveryArrivalTime);
+        let latestDate = date.plus(this.latestDeliveryArrivalTime);
+        if (this.latestDeliveryArrivalTime < this.earliestDeliveryArrivalTime)
         {
-            this.model.delivery.appointment.latestArrivalDate = this.model.delivery.appointment.earliestArrivalDate;
+            latestDate = latestDate.plus({ day: 1 });
         }
+        this.model.delivery.appointment.latestArrivalDate = latestDate;
     }
 
     /**

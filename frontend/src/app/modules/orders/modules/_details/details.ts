@@ -116,7 +116,9 @@ export class DetailsModule
     protected async onEditOrderClick(): Promise<void>
     {
         const savedOrder = await this._modalService.open(EditOrderPanel, { order: this.order! }).promise;
-        this.order = savedOrder;
+        if (savedOrder != null) {
+            this.order = savedOrder;
+        }
     }
 
     /**

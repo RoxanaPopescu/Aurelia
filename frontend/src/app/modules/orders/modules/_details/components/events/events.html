@@ -43,12 +43,12 @@
 
             </data-table-headers>
 
-            <template repeat.for="event of currentEvents">
+            <template repeat.for="event of completedEvents">
 
                 <data-table-row class="current-event">
 
                     <data-table-cell align="right">
-                        <div class="order-event-column ${isLatestEvent(currentEvents, event) ? '--last' : ''}">
+                        <div class="order-event-column ${isLatestEvent(completedEvents, event) ? '--last' : ''}">
 
                             <span class="text-truncate font-larger">
                                 ${event.date | date: 'narrow' : false}
@@ -108,12 +108,12 @@
 
             </template>
 
-            <template repeat.for="event of upcomingEvents">
+            <template repeat.for="event of futureEvents">
 
                 <data-table-row class="upcoming-event">
 
                     <data-table-cell align="right">
-                        <div class="order-event-column ${isLatestEvent(upcomingEvents, event) ? '--last' : ''}">
+                        <div class="order-event-column ${isLatestEvent(futureEvents, event) ? '--last' : ''}">
 
                             <span class="text-truncate font-larger">
                                 ${event.date | date: 'narrow' : false}
@@ -174,7 +174,9 @@
             </template>
 
         </data-table>
-
+        <empty-indicator if.bind="completedEvents != null && completedEvents != null && completedEvents.length + futureEvents.length == 0" class="margin-largest">
+            <div slot="heading" translate>No events</div>
+        </empty-indicator>
     </page-section>
 
 </template>

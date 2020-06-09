@@ -1,6 +1,7 @@
 import { OrderStatus } from "./order-status";
 import { OrderStop } from "./order-stop";
 import { Collo } from "shared/src/model/logistics/order";
+import clone from "clone";
 
 export class OrderNew
 {
@@ -60,6 +61,14 @@ export class OrderNew
     public actualColli: Collo[];
 
     public estimatedColli: Collo[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 
     /**
      * Gets the data representing this instance.

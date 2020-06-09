@@ -35,11 +35,11 @@
                 <div class="card-section">
 
                     <div class="font-small opacity-faded" translate>
-                        Delivery date
+                        Pickup interval
                     </div>
 
                     <div class="font-largest" empty-value>
-                        ${order.pickup.appointment.earliestArrivalDate | date: 'narrow' : false}
+                        ${order.pickup.appointment.timeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
                     <div class="font-small">
@@ -60,9 +60,7 @@
                     </div>
 
                     <div class="font-largest" empty-value>
-
-                        ${order.pickup.appointment.earliestArrivalTime | time: 'narrow' : false} - ${order.pickup.appointment.latestArrivalTime | time: 'narrow' : false}
-
+                        ${order.delivery.appointment.timeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
                     <div class="font-small">

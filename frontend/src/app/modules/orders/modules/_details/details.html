@@ -109,7 +109,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${order.pickup.appointment.earliestArrivalTime | time: 'narrow' : false}
+                        ${order.pickup.appointment.earliestArrivalDate | dateTime: 'narrow' : false}
                     </div>
 
                 </name-value-pair>
@@ -121,7 +121,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${order.pickup.appointment.latestArrivalTime | time: 'narrow' : false}
+                        ${order.pickup.appointment.latestArrivalDate | dateTime: 'narrow' : false}
                     </div>
 
                 </name-value-pair>
@@ -195,7 +195,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${order.delivery.appointment.earliestArrivalTime | time: 'narrow' : false}
+                        ${order.delivery.appointment.earliestArrivalDate | dateTime: 'narrow' : false}
                     </div>
 
                 </name-value-pair>
@@ -207,7 +207,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${order.delivery.appointment.latestArrivalTime | time: 'narrow' : false}
+                        ${order.delivery.appointment.latestArrivalDate | dateTime: 'narrow' : false}
                     </div>
 
                 </name-value-pair>

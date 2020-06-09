@@ -1,5 +1,5 @@
-import { DateTime } from "luxon";
-import { TimeOfDay } from "shared/types";
+import { DateTime, Duration } from "luxon";
+import { TimeOfDay, DateTimeRange } from "shared/types";
 
 export class Appointment
 {
@@ -9,19 +9,22 @@ export class Appointment
      */
     public constructor(data: any)
     {
-        this.earliestArrivalDate = DateTime.fromISO(data.earliestArrivalDate, { setZone: true });
-        this.earliestArrivalTime = TimeOfDay.fromISO(data.earliestArrivalTime);
-        this.latestArrivalDate = DateTime.fromISO(data.latestArrivalDate, { setZone: true });
-        this.latestArrivalTime = TimeOfDay.fromISO(data.latestArrivalTime);
+        const fromDate = DateTime.fromISO(data.earliestArrivalDate, { setZone: true });
+        const fromDuration = Duration.fromMillis(TimeOfDay.fromISO(data.earliestArrivalTime).valueOf());
+        this.earliestArrivalDate = fromDate.plus(fromDuration)
+
+        const toDate = DateTime.fromISO(data.latestArrivalDate, { setZone: true });
+        const toDuration = Duration.fromMillis(TimeOfDay.fromISO(data.latestArrivalTime).valueOf());
+        this.latestArrivalDate = toDate.plus(toDuration)
+    }
+
+    public get timeFrame(): DateTimeRange {
+        return new DateTimeRange({ from: this.earliestArrivalDate, to: this.latestArrivalDate });
     }
 
     public earliestArrivalDate: DateTime;
-
-    public earliestArrivalTime: TimeOfDay;
-
     public latestArrivalDate: DateTime;
 
-    public latestArrivalTime: TimeOfDay;
 
     /**
      * Gets the data representing this instance.
@@ -29,10 +32,10 @@ export class Appointment
     public toJSON(): any
     {
         return {
-            earliestArrivalDate: this.earliestArrivalDate,
-            earliestArrivalTime: this.earliestArrivalTime.toString(),
-            latestArrivalDate: this.latestArrivalDate,
-            latestArrivalTime: this.latestArrivalTime.toString()
+            earliestArrivalDate: this.earliestArrivalDate.startOf("day").toFormat("yyyy-MM-dd'T'HH:mm:ss"),
+            earliestArrivalTime: this.earliestArrivalDate.toFormat("HH:mm:ss"),
+            latestArrivalDate: this.latestArrivalDate.startOf("day").toFormat("yyyy-MM-dd'T'HH:mm:ss"),
+            latestArrivalTime: this.latestArrivalDate.toFormat("HH:mm:ss")
         }
     }
 }
