@@ -95,10 +95,10 @@ export class Events
     }
 
     /**
-     * Called by the framework when the module is deactivated.
+     * Called by the framework when the module is detached.
      * @returns A promise that will be resolved when the module is activated.
      */
-    public deactivate(): void
+    public detached(): void
     {
         // Abort any existing operation.
         if (this.fetchOperation != null)

@@ -1,0 +1,25 @@
+cards
+{
+    --font-largest-font-weight: 400;
+
+    card
+    {
+        --card-height: 28rem;
+
+        > a
+        {
+            justify-content: space-around;
+        }
+    }
+
+    card
+    {
+        .card-section
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+    }
+}

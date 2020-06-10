@@ -28,6 +28,12 @@ export class RouteStop extends RouteStopBase
             this.selfies = data.selfies.map(p => new Photo(p));
             this.tags = data.tags;
 
+            if (data.orderIds) {
+                this.orderIds = data.orderIds;
+            } else {
+                this.orderIds = [];
+            }
+
             if (data.signature != null)
             {
                 this.signature = new Signature(data.signature);
@@ -44,6 +50,7 @@ export class RouteStop extends RouteStopBase
 
             this.pickups = [];
             this.deliveries = [];
+            this.orderIds = [];
             this.actions = new RouteStopActions();
         }
     }
@@ -87,6 +94,11 @@ export class RouteStop extends RouteStopBase
      * The tags associated with the stop.
      */
     public readonly tags: string[];
+
+    /**
+     * The order ids associated with the stop.
+     */
+    public readonly orderIds: string[];
 
     /**
      * True if there is an alert for this route stop, otherwise false.

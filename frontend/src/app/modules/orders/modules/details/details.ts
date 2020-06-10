@@ -1,5 +1,4 @@
 import { autoinject } from 'aurelia-framework';
-import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
 import { RouteStatusSlug } from "app/model/route";
@@ -36,9 +35,6 @@ export class DetailsModule
         this._modalService = modalService;
         this.identityService = identityService;
     }
-
-    private pollTimeout: any;
-
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
     protected readonly identityService: IdentityService;
@@ -57,7 +53,7 @@ export class DetailsModule
     /**
      * Current tab page the user is routed to.
      */
-    protected tab: "events" | "shippings" = "events";
+    protected tab: "events" | "colli" | "route" = "events";
 
     /**
      * If the current user is allowed to edit the order.
@@ -70,9 +66,14 @@ export class DetailsModule
     protected orderId: string;
 
     /**
-     * The most recent update operation.
+     * The id of the linked route.
      */
-    protected fetchOperation: Operation;
+    protected loadingRouteId: boolean = true;
+
+    /**
+     * The id of the linked route.
+     */
+    protected routeId: string | undefined;
 
     /**
      * The order to present.
@@ -92,21 +93,7 @@ export class DetailsModule
     {
         this.orderId = params.id;
         this.fetchOrder();
-    }
-
-    /**
-     * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
-     */
-    public deactivate(): void
-    {
-        // Abort any existing operation.
-        if (this.fetchOperation != null)
-        {
-            this.fetchOperation.abort();
-        }
-
-        clearTimeout(this.pollTimeout);
+        this.fetchRouteId();
     }
 
     /**
@@ -148,11 +135,6 @@ export class DetailsModule
      */
     private async fetchOrder()
     {
-        if (this.fetchOperation != null)
-        {
-            this.fetchOperation.abort();
-        }
-
         try {
             this.order = await this._orderService.get(this.orderId);
         } catch (error) {
@@ -161,28 +143,16 @@ export class DetailsModule
     }
 
     /**
-     * Fetches the linked route of the order.
+     * Fetches the linked routeId.
      */
-    private fetchRoute(): void
+    private async fetchRouteId()
     {
-        clearTimeout(this.pollTimeout);
-        if (this.fetchOperation != null)
-        {
-            this.fetchOperation.abort();
-        }
-
         try {
-            this.fetchOperation = new Operation(async signal =>
-                {
-                    // this.order = await this._orderService.getV2(this.orderId);
-                    // FIXME:
-
-                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
-                });
-        } catch {
-            // FIXME:
-
-            this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+            this.routeId = await this._orderService.getRouteId(this.orderId);
+            this.loadingRouteId = false;
+        } catch (error) {
+            this.loadingRouteId = false;
+            Log.error("An error occurred while loading the linked route.\n", error);
         }
     }
 }

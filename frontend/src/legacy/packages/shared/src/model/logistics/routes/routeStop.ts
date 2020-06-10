@@ -159,7 +159,6 @@ export abstract class RouteStop extends RouteStopBase {
       }
 
       let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
-      console.log("X", this.arrivalTimeFrame.to, this.estimates.arrivalTime);
       return duration.valueOf() > 0 ? duration : undefined;
   }
 

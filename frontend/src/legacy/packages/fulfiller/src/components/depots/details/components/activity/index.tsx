@@ -52,7 +52,7 @@ export default class DepotActivityComponent extends React.Component<Props> {
     await this.service.startPolling(this.props.depotId, this.date);
   }
 
-  public async componentWillUnmount() {
+  public componentWillUnmount() {
     this.service.stopPolling();
   }
 

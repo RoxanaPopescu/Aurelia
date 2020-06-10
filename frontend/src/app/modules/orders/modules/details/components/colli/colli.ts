@@ -5,7 +5,7 @@ import { Order } from "app/model/order";
  * Represents the module.
  */
 @autoinject
-export class Shippings
+export class Colli
 {
     /**
      * Creates a new instance of the class.

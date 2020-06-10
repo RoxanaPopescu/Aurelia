@@ -90,6 +90,25 @@ export class OrderService
     /**
      * Gets the specified order.
      * @param orderSlug The slug identifying the order.
+     * @returns A promise that will be resolved with the order.
+     */
+    public async getRouteId(orderSlug: string): Promise<string | undefined>
+    {
+        const result = await this._apiClient.get("journeydetails",
+        {
+            query: { orderId: orderSlug }
+        });
+
+        if (result.data.passages.length > 0) {
+            return result.data.passages[0].slug;
+        }
+
+        return undefined;
+    }
+
+    /**
+     * Gets the specified order.
+     * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the events.
      */
     public async getEvents(orderSlug: string): Promise<{completedEvents: OrderEvent[], futureEvents: OrderEvent[]}>

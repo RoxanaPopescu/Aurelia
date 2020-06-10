@@ -139,7 +139,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public readonly vehicleType: VehicleType;
 
     /**
-     * The fulfiller responsible for the shipment.
+     * The fulfiller responsible for the colli.
      */
     public fulfiller: Fulfiller;
 

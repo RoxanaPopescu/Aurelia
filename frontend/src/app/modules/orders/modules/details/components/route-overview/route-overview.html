@@ -1,0 +1,88 @@
+<template>
+    <require from="./components/cards/cards"></require>
+    <require from="./route-overview.scss"></require>
+
+    <page-section if.bind="route">
+        <cards route.bind="route"></cards>
+    </page-section>
+
+    <page-section if.bind="route">
+        <div slot="header" class="flex-row">
+            <div translate>
+                Stops
+            </div>
+        </div>
+
+        <data-table appearance="rows">
+            <data-table-headers>
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Status
+                    </span>
+                </data-table-cell>
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Stop type
+                    </span>
+                </data-table-cell>
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Completed/Estimated completion
+                    </span>
+                </data-table-cell>
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Colli scanned
+                    </span>
+                </data-table-cell>
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Stop number
+                    </span>
+                </data-table-cell>
+            </data-table-headers>
+
+            <template repeat.for="stop of stops">
+                <data-table-row>
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${stop.status.name}
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${stop.type.name}
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span if.bind="!stop.completedTime" class="text-truncate">
+                            ${stop.estimates.completionTime | dateTime: 'narrow' : false}
+                        </span>
+                        <span if.bind="stop.completedTime" class="text-truncate">
+                            ${stop.completedTime | dateTime: 'narrow' : false}
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${stop.scannedColliCount} / ${stop.totalColliCount}
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${stop.stopNumber}
+                        </span>
+                    </data-table-cell>
+
+                </data-table-row>
+
+            </template>
+
+        </data-table>
+    </page-section>
+
+    <busy-indicator if.bind="route == null" class="margin-largest"></busy-indicator>
+</template>

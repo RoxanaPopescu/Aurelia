@@ -3,7 +3,8 @@
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="./components/events/events"></require>
     <require from="./components/order-overview/order-overview"></require>
-    <require from="./components/shippings/shippings"></require>
+    <require from="./components/colli/colli"></require>
+    <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -278,8 +279,20 @@
                             Events
                         </tab>
 
-                        <tab name="shippings" invalid.bind="shippingsValidation.invalid" translate>
-                            Shippings
+                        <tab name="colli" invalid.bind="colliValidation.invalid" translate>
+                            Colli
+                        </tab>
+
+                        <tab name="route" disabled.bind="!routeId" invalid.bind="routeValidation.invalid">
+                            <span if.bind="loadingRouteId" translate>
+                                Loading route...
+                            </span>
+                            <span if.bind="!loadingRouteId && routeId" translate>
+                                Route ${routeId}
+                            </span>
+                            <span if.bind="!loadingRouteId && !routeId" translate>
+                                No linked route
+                            </span>
                         </tab>
 
                     </tab-nav>
@@ -299,19 +312,26 @@
             <order-overview show.bind="tab === 'events'" order.bind="order"></order-overview>
 
             <events
-                if.bind="order"
-                show.bind="tab === 'events'"
+                if.bind="tab === 'events'"
                 order.bind="order"
                 validation
                 validation.ref="eventsValidation">
             </events>
 
-            <shippings
-                show.bind="tab === 'shippings'"
+            <colli
+                if.bind="tab === 'colli'"
                 order.bind="order"
                 validation
-                validation.ref="shippingsValidation">
-            </shippings>
+                validation.ref="colliValidation">
+            </colli>
+
+            <route-overview
+                if.bind="tab === 'route'"
+                id.bind="routeId"
+                order.bind="order"
+                validation
+                validation.ref="routeValidation">
+            </route-overview>
 
         </page-content>
 
