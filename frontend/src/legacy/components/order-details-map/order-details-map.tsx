@@ -5,13 +5,11 @@ import { Button, ButtonType } from "shared/src/webKit";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
 import { OrderLayer } from "./components/layers/order-layer/order-layer";
 import "./order-details-map.scss";
-import { OrderNew } from 'app/model/order';
+import { Order } from 'app/model/order';
 
 export interface IOrderDetailsMapProps
 {
-    order?: OrderNew;
-    onOrderClick: (order: OrderNew) => void;
-    onStopClick?: (order: OrderNew) => void;
+    order?: Order;
     onMapClick?: () => void;
 }
 
@@ -62,10 +60,8 @@ export class OrderDetailsMapComponent extends React.Component<IOrderDetailsMapPr
 
                     {this.props.order != null &&
                     <OrderLayer
-                        key={`RouteLayer-${this.props.order.id}`}
+                        key={`OrderLayer-${this.props.order.id}`}
                         order={this.props.order}
-                        onOrderClick={(order) => this.props.onOrderClick?.(order)}
-                        onStopClick={(order) => this.props.onStopClick?.(order)}
                     />}
 
                 </WorldMap>
@@ -97,8 +93,12 @@ export class OrderDetailsMapComponent extends React.Component<IOrderDetailsMapPr
 
         if (this.props.order)
         {
-            // orderBounds.extend(this.props.order.pickup.location.position!.toGoogleLatLng());
-            // orderBounds.extend(this.props.order.delivery.location.position!.toGoogleLatLng());
+            if (this.props.order.pickup.location.position != null) {
+                orderBounds.extend(this.props.order.pickup.location.position.toGoogleLatLng());
+            }
+            if (this.props.order.delivery.location.position != null) {
+                orderBounds.extend(this.props.order.delivery.location.position.toGoogleLatLng());
+            }
         }
 
         (this.map.fitBounds as Function)(orderBounds, 50);

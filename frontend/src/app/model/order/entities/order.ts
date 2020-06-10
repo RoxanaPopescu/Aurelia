@@ -1,7 +1,7 @@
-import { DateTime } from "luxon";
-import { TimeOfDay } from "shared/types";
-import { Location } from "app/model/shared";
 import { OrderStatus } from "./order-status";
+import { OrderStop } from "./order-stop";
+import { Collo } from "shared/src/model/logistics/order";
+import clone from "clone";
 
 export class Order
 {
@@ -11,53 +11,81 @@ export class Order
      */
     public constructor(data: any)
     {
-        this.id = data.internalId;
-        this.slug = data.publicId;
+        this.id = data.id;
+        this.slug = data.slug;
+        this.relationalId = data.relationalId;
+
+        this.state = {
+            canBeCancelled: data.state.canBeCancelled,
+            canBeEdited: data.state.canBeEdited,
+            isDeleted: data.state.isDeleted,
+            status: new OrderStatus(data.state.status.name.toLowerCase())
+        };
+
+        this.pickup = new OrderStop(data.pickup);
+        this.delivery = new OrderStop(data.delivery);
+
         this.tags = data.tags;
-        this.status = new OrderStatus(data.status.name.toLowerCase());
-        this.earliestPickupDate = DateTime.fromISO(data.earliestPickupDate, { setZone: true });
-        this.earliestPickupTime = TimeOfDay.fromISO(data.earliestPickupTime);
-        this.latestPickupDate = DateTime.fromISO(data.latestPickupDate, { setZone: true });
-        this.latestPickupTime = TimeOfDay.fromISO(data.latestPickupTime);
+        this.requirements = data.requirements;
 
-        this.pickupLocation = new Location(
-        {
-            address:
-            {
-                primary: data.pickupLocation.address,
-                secondary: ""
-            },
-            position: data.pickupLocation.position
-        });
-
-        this.deliveryLocation = new Location(
-        {
-            address:
-            {
-                primary: data.deliveryLocation.address,
-                secondary: ""
-            },
-            position: data.deliveryLocation.position
-        });
+        this.actualColli = data.actualColli.map(ac => new Collo(ac));
+        this.estimatedColli = data.estimatedColli.map(ec => new Collo(ec));
     }
 
     public readonly id: string;
 
     public readonly slug: string;
 
-    public readonly tags: string[];
+    public readonly relationalId: string;
 
-    public readonly status: OrderStatus;
+    public state:
+    {
+        canBeCancelled: boolean;
+        canBeEdited: boolean;
+        isDeleted: boolean;
+        status: OrderStatus;
+    }
 
-    public readonly earliestPickupDate: DateTime;
+    public pickup: OrderStop;
 
-    public readonly earliestPickupTime: TimeOfDay;
+    public delivery: OrderStop;
 
-    public readonly latestPickupDate: DateTime;
+    public tags: string[];
 
-    public readonly latestPickupTime: TimeOfDay;
+    public requirements:
+    {
+        slug: string;
+        isSelected: boolean;
+    }[];
 
-    public readonly pickupLocation: Location;
+    public actualColli: Collo[];
 
-    public readonly deliveryLocation: Location;
+    public estimatedColli: Collo[];
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            id: this.id,
+            slug: this.slug,
+            relationalId: this.relationalId,
+            state: this.state,
+            pickup: this.pickup.toJSON(),
+            delivery: this.delivery.toJSON(),
+            tags: this.tags,
+            requirements: this.requirements,
+            actualColli: this.actualColli,
+            estimatedColli: this.estimatedColli
+        };
+    }
 }

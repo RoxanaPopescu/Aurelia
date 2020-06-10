@@ -1,19 +1,22 @@
 <template>
 
     <require from="./events.scss"></require>
-    <!-- <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require> -->
+    <require from="legacy/components/order-details-map/wrapper" as="order-details-map"></require>
 
     <page-section>
+        <div slot="header" class="flex-row">
+            <toolbar class="font-base flex-push-right">
+                <switch-toggle label="before" value.bind="showMap">
 
-        <!-- <switch-toggle label="before" value.bind="showMap">
+                    <div slot="heading" translate>
+                        Show map
+                    </div>
 
-            <div slot="heading" translate>
-                Show map
-            </div>
+                </switch-toggle>
+            </toolbar>
+        </div>
 
-        </switch-toggle> -->
-
-        <!-- <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></order-details-map> -->
+        <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" class="margin-bottom"></order-details-map>
 
         <data-table appearance="rows">
 

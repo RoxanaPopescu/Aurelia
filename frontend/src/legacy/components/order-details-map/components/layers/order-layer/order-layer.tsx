@@ -1,15 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
-// import { RouteStopMarker } from "../../features/route-stop-marker/route-stop-marker";
-// import { RouteSegmentLine } from "../../features/route-segment-line/route-segment-line";
-// import { DriverMarker } from "../../features/driver-marker/driver-marker";
-import { OrderNew } from "app/model/order";
+import { Order } from "app/model/order";
+import { OrderSegmentLine } from "../../features/segment-line/segment-line";
+import { OrderStopMarker } from "../../features/stop-marker/stop-marker";
 
 export interface OrderLayerProps
 {
-    order: OrderNew
-    onOrderClick?: (order: OrderNew) => void;
-    onStopClick?: (order: OrderNew) => void;
+    order: Order
 }
 
 @observer
@@ -19,26 +16,26 @@ export class OrderLayer extends React.Component<OrderLayerProps> {
     {
         return (
             <React.Fragment>
+                {this.props.order.pickup.location.position && this.props.order.delivery.location.position &&
+                    <OrderSegmentLine
+                        key={`OrderSegmentLine`}
+                        order={this.props.order}
+                    />
+                }
 
-                {/* {this.props.order.stops.length > 0 &&
-                <>
-                    {this.props.order.stops
-                        .filter(s =>
-                            s.status.slug !== "cancelled")
-                        .map((s, i, a) => i > 0 &&
-                            <RouteSegmentLine
-                                key={`RouteSegmentLine-${a[i - 1].id}-${s.id}`}
-                                routeStops={[a[i - 1], s]}
-                                onClick={() => this.props.onOrderClick?.(this.props.order)}
-                            />)}
+                {this.props.order.pickup.location.position &&
+                    <OrderStopMarker
+                        key={`OrderStopMarker-pickup`}
+                        stop={this.props.order.pickup}
+                    />
+                }
 
-                    <RouteStopMarker
-                        key={`RouteStopMarker-${s.id}`}
-                        routeStop={this.props.order.pickupLocation.position}
-                        onClick={() => this.props.onStopClick?.(this.props.order, s)}
-                    />)
-                </>} */}
-
+                {this.props.order.delivery.location.position &&
+                    <OrderStopMarker
+                        key={`OrderStopMarker-delivery`}
+                        stop={this.props.order.delivery}
+                    />
+                }
             </React.Fragment>
         );
     }

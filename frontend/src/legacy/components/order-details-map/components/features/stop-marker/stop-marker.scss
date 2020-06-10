@@ -1,6 +1,6 @@
 @import "shared/src/webKit/constants.scss";
 
-.routeDetails-routeStopMarker {
+.orderDetails-orderStopMarker {
   padding: 0 10px;
   pointer-events: none;
 
@@ -9,7 +9,7 @@
   }
 }
 
-.routeDetails-routeStopMarker-shape {
+.orderDetails-orderStopMarker-shape {
   position: relative;
   width: 32px;
   height: 32px;
@@ -24,29 +24,29 @@
   border: 2px solid black;
   box-shadow: 0 0 1px 1px white;
 
-  &.routeDetails-routeStopMarker--pending {
+  &.orderDetails-orderStopMarker--pending {
     background: gray;
     border-color: gray;
   }
 
-  &.routeDetails-routeStopMarker--arrived {
+  &.orderDetails-orderStopMarker--arrived {
     background: #7d887c;
     border-color: var(--colorOkDarken);
     box-shadow: inset 0 0 0 1px lighten(#7d887c, 2%), 0 0 1px 1px white;
   }
 
-  &.routeDetails-routeStopMarker--done {
+  &.orderDetails-orderStopMarker--done {
     background: var(--colorOk);
     border-color: var(--colorOkDarken);
   }
 
-  &.routeDetails-routeStopMarker--cancelled {
+  &.orderDetails-orderStopMarker--cancelled {
     background: gray;
     border-color: gray;
     opacity: .5;
   }
 
-  &.routeDetails-routeStopMarker--selected {
+  &.orderDetails-orderStopMarker--selected {
     box-shadow:
       0 0 1px 1px rgba(white, .3),
       0 0 0px 3px var(--colorBackgroundPrimary),
@@ -54,7 +54,7 @@
   }
 }
 
-.routeDetails-routeStopMarker-info {
+.orderDetails-orderStopMarker-info {
   position: relative;
   border: 1px solid #aaa;
   border-radius: 3px;
@@ -88,8 +88,8 @@
   }
 }
 
-.routeDetails-routeStopMarker-warning,
-.routeDetails-routeStopMarker-alert {
+.orderDetails-orderStopMarker-warning,
+.orderDetails-orderStopMarker-alert {
   position: absolute;
   bottom: 0;
   right: -2px;
@@ -100,10 +100,10 @@
   pointer-events: all;
 }
 
-.routeDetails-routeStopMarker-warning {
+.orderDetails-orderStopMarker-warning {
   background: var(--colorWarning);
 }
 
-.routeDetails-routeStopMarker-alert {
+.orderDetails-orderStopMarker-alert {
   background: var(--colorAlert);
 }

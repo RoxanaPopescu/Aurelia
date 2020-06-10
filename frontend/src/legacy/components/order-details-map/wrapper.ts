@@ -1,5 +1,5 @@
 import { autoinject, noView, bindable } from "aurelia-framework";
-import { OrderNew } from "app/model/order";
+import { Order } from "app/model/order";
 import { Wrapper } from "../../wrappers/wrapper";
 
 // Import the component that should be wrapped.
@@ -19,13 +19,7 @@ export class OrderDetailsMap extends Wrapper
     }
 
     @bindable
-    public order: OrderNew;
-
-    @bindable
-    public onOrderClick: undefined | ((context: { route: OrderNew }) => void);
-
-    @bindable
-    public onStopClick: undefined | ((context: { route: OrderNew; }) => void);
+    public order: Order;
 
     @bindable
     public onMapClick: undefined | (() => void);
@@ -37,9 +31,7 @@ export class OrderDetailsMap extends Wrapper
     {
         super.attached(Component, {},
         {
-            route: this.order,
-            onRouteClick: (route) => this.onOrderClick?.({ route }),
-            onStopClick: (route) => this.onStopClick?.({ route }),
+            order: this.order,
             onMapClick: () => this.onMapClick?.()
         });
     }

@@ -3,7 +3,7 @@ import { OrderEvent } from '../../../../../../model/order/entities/order-event';
 import { ModalService } from "shared/framework";
 import { EventDetailsPanel } from "./modals/event-details/event-details";
 import { Operation } from "shared/utilities";
-import { OrderService } from "app/model/order";
+import { OrderService, Order } from "app/model/order";
 
 /**
  * Represents the module.
@@ -35,7 +35,7 @@ export class Events
      * True to show the map, otherwise false.
      */
     @bindable
-    protected orderId: string;
+    protected order: Order;
 
     /**
      * The most recent update operation.
@@ -51,6 +51,11 @@ export class Events
      * The future events.
      */
     protected futureEvents: OrderEvent[];
+
+    /**
+     * True to show the map, otherwise false.
+     */
+    protected showMap = true;
 
     /**
      * Called when a route stop is clicked.
@@ -77,11 +82,15 @@ export class Events
     /**
      * Called by the framework when the module is activated.
      */
-    public orderIdChanged(newValue: string): void
+    public orderChanged(newValue: string): void
     {
         if (newValue != null)
         {
             this.fetchEvents();
+
+            if (!this.showMap) {
+                this.showMap = this.order.pickup.location.position != null || this.order.delivery.location.position != null;
+            }
         }
     }
 
@@ -114,7 +123,7 @@ export class Events
 
         this.fetchOperation = new Operation(async signal =>
         {
-            let response = await this._orderService.getEvents(this.orderId);
+            let response = await this._orderService.getEvents(this.order.slug);
 
             this.futureEvents = response.futureEvents;
             this.completedEvents = response.completedEvents;

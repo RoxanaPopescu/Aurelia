@@ -1,18 +1,18 @@
 @import "shared/src/webKit/constants.scss";
 
-route-details-map
+order-details-map
 {
   display: block;
-  height: 50vh;
+  height: 40vh;
 }
 
-.routeDetails-map
+.orderDetails-map
 {
   position: relative;
   height: 100%;
 }
 
-.routeDetails-map-buttons
+.orderDetails-map-buttons
 {
   position: absolute !important;
   top: 10px !important;
@@ -43,22 +43,22 @@ route-details-map
   }
 }
 
-.routeDetails-color-positive
+.orderDetails-color-positive
 {
   color: var(--colorOk) !important;
 }
 
-.routeDetails-color-negative
+.orderDetails-color-negative
 {
   color: var(--colorAlert) !important;
 }
 
-.routeDetails-routeStopMarker-warning
+.orderDetails-orderStopMarker-warning
 {
   background: var(--colorWarning);
 }
 
-.routeDetails-routeStopMarker-alert
+.orderDetails-orderStopMarker-alert
 {
   background: var(--colorAlert);
 }

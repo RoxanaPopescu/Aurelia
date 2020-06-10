@@ -1,5 +1,5 @@
 import { autoinject, bindable } from 'aurelia-framework';
-import { OrderNew } from "app/model/order";
+import { Order } from "app/model/order";
 
 /**
  * Represents the module.
@@ -18,7 +18,7 @@ export class Shippings
      * The order to present.
      */
     @bindable
-    public order: OrderNew | undefined;
+    public order: Order | undefined;
 
     /**
      * Current tab page the user is routed to.

@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { OrderNew, OrderStatus, OrderService } from "app/model/order";
+import { Order, OrderStatus, OrderService } from "app/model/order";
 import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
 import { observable } from 'aurelia-binding';
@@ -24,7 +24,7 @@ export class EditOrderPanel
 
     private readonly _orderService: OrderService;
     private readonly _modal: Modal;
-    private _result: OrderNew | undefined;
+    private _result: Order | undefined;
 
     /**
      * The validation for the modal.
@@ -34,7 +34,7 @@ export class EditOrderPanel
     /**
      * The model for the modal.
      */
-    public model: OrderNew;
+    public model: Order;
 
     @observable
     public pickupDate: DateTime | undefined;
@@ -59,7 +59,7 @@ export class EditOrderPanel
      * Called by the framework when the modal is deactivated.
      * @returns The new or edited stop, or undefined if cancelled.
      */
-    public async deactivate(): Promise<OrderNew | undefined>
+    public async deactivate(): Promise<Order | undefined>
     {
         return this._result;
     }
@@ -68,7 +68,7 @@ export class EditOrderPanel
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
-    public activate(model: { order: OrderNew }): void
+    public activate(model: { order: Order }): void
     {
         this.model = model.order.clone();
         this.pickupDate = this.model.pickup.appointment.earliestArrivalDate.startOf("day");
