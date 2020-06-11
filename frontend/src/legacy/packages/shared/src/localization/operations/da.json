@@ -291,6 +291,8 @@
   "Profile_GeneralInformation_Name": "Navn:",
   "Profile_GeneralInformation_Username": "Brugernavn:",
   "Profile_Title": "Profil",
+  "RoutePlanning_ApproveButton": "Godkend ruteplan",
+  "RoutePlanning_Approving": "Godkender...",
   "RoutePlanning_Depots_List_TotalCount": "{count} distributionscentre",
   "RoutePlanning_RoutePlan_Details_Title": "Route plan",
   "RoutePlanning_RoutePlan_List_RuteID": "Rute ID",

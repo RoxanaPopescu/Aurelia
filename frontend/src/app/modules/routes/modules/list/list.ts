@@ -1,10 +1,15 @@
-import { autoinject, observable } from "aurelia-framework";
+import { autoinject, observable, computedFrom } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
-import { RouteService, RouteInfo, RouteStatusSlug } from "app/model/route";
+import { IScroll, ModalService } from "shared/framework";
+import { RouteService, RouteInfo, RouteStatusSlug, RouteAssignmentService } from "app/model/route";
 import { DateTime } from "luxon";
+import { RouteListColumn } from "app/model/route/entities/route-list-column";
+import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
+import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
+import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
+import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
 
 /**
  * Represents the route parameters for the page.
@@ -33,16 +38,28 @@ export class ListPage
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param modalService The `ModalService` instance.
+     * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routeService: RouteService, historyHelper: HistoryHelper)
+    public constructor(routeService: RouteService, routeAssignmentService: RouteAssignmentService, modalService: ModalService, historyHelper: HistoryHelper)
     {
         this._routeService = routeService;
+        this._modalService = modalService;
+        this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
         this._constructed = true;
+
+        const localData = localStorage.getItem("route-columns");
+        if (localData != null) {
+            const columnsObject = JSON.parse(localData);
+            this.customColumns = columnsObject.map(slug => new RouteListColumn(slug));
+        }
     }
 
     private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+    private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
@@ -55,6 +72,44 @@ export class ListPage
      * The most recent update operation.
      */
     protected updateOperation: Operation;
+
+    /**
+     * The custom grid column widths calculated from the columns
+     */
+    @computedFrom("columns")
+    protected get tableStyle(): any {
+        let size = "";
+        for (const column of this.columns) {
+            size += `${column.columSize} `;
+        }
+
+        return {
+            'grid-template-columns': `${size} min-content`
+        };
+    };
+
+    /**
+     * The custom columns the user has selected
+     */
+    protected customColumns: RouteListColumn[] | undefined;
+
+    /**
+     * The current columns to show in the list
+     */
+    @computedFrom("customColumns")
+    protected get columns(): RouteListColumn[] {
+        return this.customColumns ?? [
+            new RouteListColumn("slug"),
+            new RouteListColumn("reference"),
+            new RouteListColumn("start-date"),
+            new RouteListColumn("start-address"),
+            new RouteListColumn("tags"),
+            new RouteListColumn("stop-count"),
+            new RouteListColumn("vehicle-type"),
+            new RouteListColumn("status"),
+            new RouteListColumn("driver-list")
+        ];
+    };
 
     /**
      * The sorting to use for the table.
@@ -155,7 +210,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected results: RouteInfo[];
+    protected results: RouteInfo[] | undefined;
 
     /**
      * Called by the framework when the module is activated.
@@ -197,6 +252,76 @@ export class ListPage
     public onShowDriverLink(route: RouteInfo): void
     {
         window.open(route.driverListUrl, '_blank');
+    }
+
+    /**
+     * Called when the `Assign fulfiller` button is clicked.
+     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignFulfillerClick(route: RouteInfo): Promise<void>
+    {
+        const fulfiller = await this._modalService.open(
+            AssignFulfillerPanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (fulfiller != null)
+        {
+            await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+        }
+    }
+
+    /**
+     * Called when the `Assign vehicle` button is clicked.
+     * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignVehicleClick(route: RouteInfo): Promise<void>
+    {
+        const vehicle = await this._modalService.open(
+            AssignVehiclePanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (vehicle != null)
+        {
+            await this._routeAssignmentService.assignVehicle(route, vehicle);
+        }
+    }
+
+    /**
+     * Called when the `Assign driver` button is clicked.
+     * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignDriverClick(route: RouteInfo): Promise<void>
+    {
+        const driver = await this._modalService.open(
+            AssignDriverPanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (driver != null)
+        {
+            await this._routeAssignmentService.assignDriver(route, driver);
+        }
+    }
+
+    /**
+     * Called when the `Select columns` button is clicked.
+     * Opens the panel for selecting the columns to see.
+     */
+    protected async onSelctColumnsClick(route: RouteInfo): Promise<void>
+    {
+        const columns = await this._modalService.open(
+            SelectColumnsPanel,
+            this.columns
+        ).promise;
+
+        if (columns != null)
+        {
+            this.customColumns = columns;
+            this.results = undefined;
+            this.update();
+        }
     }
 
     /**
@@ -244,11 +369,11 @@ export class ListPage
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter,
                         assignedDriver: assignedDriver,
-                        assignedVehicle: assignedVehicle
+                        assignedVehicle: assignedVehicle,
                     },
                     this.sorting,
                     this.paging,
-                    false,
+                    this.columns.map(c => c.slug).includes("fulfiller"),
                     signal
                 );
 

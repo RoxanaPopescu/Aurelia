@@ -299,8 +299,13 @@
 
                     <div class="flex-push-right control-row" if.bind="order">
 
-                        <button appearance="outline" accent="primary" click.trigger="onEditOrderClick()" translate>
-                            Edit order
+                        <button disabled.bind="!order.state.canBeEdited" appearance="outline" accent="primary" click.trigger="onEditOrderClick()">
+                            <template if.bind="order.state.canBeEdited" translate>
+                                Edit order
+                            </template>
+                            <template if.bind="!order.state.canBeEdited" translate>
+                                Not possible to edit
+                            </template>
                         </button>
 
                     </div>

@@ -1,0 +1,39 @@
+<template>
+    <require from="./select-columns.scss"></require>
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="select-columns" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+        <div if-claims="edit-routes" slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest flex-row" translate>
+                List columns
+            </h1>
+
+        </modal-header>
+
+        <modal-section if.bind="true" class="margin-bottom">
+            <div slot="header" translate>
+                Select the colums you want to see in the list, the selection order will determine the order in the list.
+            </div>
+            <toggle-group class="flex-column" value.bind="columns">
+                <check-toggle repeat.for="column of allColumns" label="after" model.bind="column.slug">
+                    <div slot="heading">
+                        ${column.name}
+                    </div>
+                </check-toggle>
+            </toggle-group>
+        </modal-section>
+
+    </modal-panel>
+</template>

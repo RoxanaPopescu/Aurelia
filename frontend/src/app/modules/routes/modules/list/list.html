@@ -74,7 +74,6 @@
 
             </page-section>
 
-
             <page-section toggle.bind="true">
                 <div slot="header" translate>
                     Assignment
@@ -189,7 +188,7 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <page-header scroll-fade>
+            <page-header class="flex-row" scroll-fade>
 
                 <h1 class="font-largest">
                     <path-nav>
@@ -201,6 +200,12 @@
                     </path-nav>
                 </h1>
 
+                <toolbar class="flex-push-right">
+                    <button appearance="outline" accent="primary" click.trigger="onSelctColumnsClick()" translate>
+                        List columns
+                    </button>
+                </toolbar>
+
             </page-header>
 
             <page-section>
@@ -208,127 +213,157 @@
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"
+                    style.bind="tableStyle"
                     busy.bind="updateOperation.pending">
 
                     <data-table-headers>
 
-                        <data-table-cell name="slug">
-                            <span class="text-truncate" translate>
-                                Id
-                            </span>
-                        </data-table-cell>
+                        <template repeat.for="column of columns">
+                            <data-table-cell name="${column.sortingName}">
+                                <span if.bind="!column.hideColumn" class="text-truncate">
+                                    ${column.name}
+                                </span>
+                            </data-table-cell>
 
-                        <data-table-cell name="reference">
-                            <span class="text-truncate" translate>
-                                Reference
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="start-date">
-                            <span class="text-truncate" translate>
-                                Start date
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="start-address">
-                            <span class="text-truncate" translate>
-                                Start address
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                Tags
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="stops">
-                            <span class="text-truncate" translate>
-                                Stops
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                Vehicle
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="status">
-                            <span class="text-truncate" translate>
-                                Status
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell align="right">
-                            <!-- Icons -->
-                        </data-table-cell>
+                        </template>
 
                     </data-table-headers>
 
                     <template repeat.for="route of results">
-
                         <data-table-row
-                            accent.bind="route.criticality.accent"
-                            href="/routes/details/${route.slug}">
+                            accent.bind="route.criticality.accent">
+                            <template repeat.for="column of columns">
+                                <data-table-cell if.bind="column.slug === 'slug'">
+                                    <a href="/routes/details/${route.slug}" class="text-truncate">
+                                        ${route.slug}
+                                    </a>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.slug}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'reference'">
+                                    <span class="text-truncate">
+                                        ${route.reference}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.reference}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'start-date'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'start-address'">
+                                    <span class="text-truncate">
+                                        ${route.startLocation.address}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.startLocation.address}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'end-date'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.tags | list: 'short' : 'unit'}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'end-address'">
+                                    <span class="text-truncate">
+                                        ${route.endLocation.address}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.stopCount}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'tags'">
+                                    <span class="text-truncate">
+                                        ${route.tags | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                ${route.vehicleType.name}
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'stop-count'">
+                                    <span class="text-truncate">
+                                        ${route.stopCount}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${route.status.name}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'vehicle-type'">
+                                    ${route.vehicleType.name}
+                                </data-table-cell>
 
-                            <data-table-cell align="right">
+                                <data-table-cell if.bind="column.slug === 'complexity'">
+                                    <span class="text-truncate">
+                                        ${route.complexity | number}
+                                    </span>
+                                </data-table-cell>
 
-                                <div class="icon-row">
+                                <data-table-cell if.bind="column.slug === 'owner'">
+                                    <span class="text-truncate">
+                                        ${route.owner.companyName}
+                                    </span>
+                                </data-table-cell>
 
-                                    <button appearance="none" accent="primary" click.trigger="onShowDriverLink(route)">
-                                        <icon name="document"></icon>
-                                    </button>
+                                <data-table-cell if.bind="column.slug === 'fulfiller'">
+                                    <a
+                                        class="text-truncate"
+                                        click.trigger="onAssignFulfillerClick(route)"
+                                    >
+                                        <template if.bind="route.fulfiller.companyName">
+                                            ${route.fulfiller.companyName}
+                                        </template>
+                                        <template if.bind="!route.fulfiller.companyName" translate>
+                                            Assign fulfiller
+                                        </template>
+                                    </a>
+                                </data-table-cell>
 
-                                </div>
+                                <data-table-cell if.bind="column.slug === 'driver'">
+                                    <a
+                                        class="text-truncate"
+                                        click.trigger="onAssignDriverClick(route)"
+                                    >
+                                        <template if.bind="!route.driver" translate>
+                                            Assign driver
+                                        </template>
+                                        <template if.bind="route.driver">
+                                            ${route.driver.name}
+                                        </template>
+                                    </a>
+                                </data-table-cell>
 
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'vehicle'">
+                                    <a
+                                        class="text-truncate"
+                                        click.trigger="onAssignVehicleClick(route)"
+                                    >
+                                        <template if.bind="!route.vehicle" translate>
+                                            Assign Vehicle
+                                        </template>
+                                        <template if.bind="route.vehicle">
+                                            ${route.vehicle.name}
+                                        </template>
+                                    </a>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'status'">
+                                    <span class="text-truncate">
+                                        ${route.status.name}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'legacy-id'">
+                                    <span class="text-truncate">
+                                        ${route.legacyId}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driver-list'" align="right">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary" click.trigger="onShowDriverLink(route)">
+                                            <icon name="document"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                            </template>
 
                         </data-table-row>
 

@@ -291,6 +291,8 @@
   "Profile_GeneralInformation_Name": "Name:",
   "Profile_GeneralInformation_Username": "Username:",
   "Profile_Title": "Profile",
+  "RoutePlanning_ApproveButton": "Approve route plan",
+  "RoutePlanning_Approving": "Approving...",
   "RoutePlanning_Depots_List_TotalCount": "{count} distribution centers",
   "RoutePlanning_RoutePlan_Details_Title": "Route plan",
   "RoutePlanning_RoutePlan_List_RuteID": "Rute ID",

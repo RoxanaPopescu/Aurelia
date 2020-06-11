@@ -12,6 +12,7 @@ export class Outfit {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, typeName?: OutfitType) {
     this.id = data.id;
+    this.legacyId = data.legacyId;
     this.publicId = data.publicId;
     this.companyName = data.companyName;
     this.contactPerson = data.contactPerson;
@@ -28,6 +29,11 @@ export class Outfit {
    * The ID of the outfit.
    */
   public id: string;
+
+  /**
+   * The legacy ID of the outfit.
+   */
+  public legacyId: string;
 
   /**
    * The public ID of the outfit.
