@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { DateTimeRange } from "shared/types";
 import { Position } from "app/model/shared";
-import { Fulfiller } from "app/model/outfit";
+import { Fulfiller, Outfit } from "app/model/outfit";
 import { Driver } from "app/model/driver";
 import { Vehicle, VehicleType } from "app/model/vehicle";
 import { SearchModel } from "app/model/search-model";
@@ -43,6 +43,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         if (data.expires != null)
         {
             this.expires = DateTime.fromISO(data.expires, { setZone: true });
+        }
+
+        if (data.owner != null)
+        {
+            this.owner = new Outfit(data.owner);
         }
 
         if (data.driver != null)
@@ -89,6 +94,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The NOI legacy id
      */
     public readonly legacyId: string;
+
+    /**
+     * The owner of this route, only exist if all stops belongs to this outfit.
+     */
+    public readonly owner?: Outfit;
 
     /**
      * The link for the driver list document, formatted for printing.

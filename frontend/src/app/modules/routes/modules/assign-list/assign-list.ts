@@ -253,9 +253,9 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle
                     },
+                    undefined,
                     this.sorting,
                     this.paging,
-                    true,
                     signal
                 );
 

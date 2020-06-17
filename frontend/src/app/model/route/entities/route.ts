@@ -3,7 +3,6 @@ import { RouteStopInfo } from "./route-stop-info";
 import { RouteStop } from "./route-stop";
 import { RoutePrice } from "./route-price";
 import { WeightRange } from "app/model/shared";
-import { Outfit } from "app/model/outfit";
 
 /**
  * Represents details about a route.
@@ -24,11 +23,6 @@ export class Route extends AbstractRoute<RouteStop>
         this.supportNote = data.supportNote;
         this.overallRating = data.overallRating;
         this.driverInstructions = data.driverInstructions;
-
-        if (data.owner != null)
-        {
-            this.owner = new Outfit(data.owner);
-        }
 
         if (data.totalWeightRange != null)
         {
@@ -60,11 +54,6 @@ export class Route extends AbstractRoute<RouteStop>
      * The instructions the driver should follow, if any.
      */
     public readonly driverInstructions?: string;
-
-    /**
-     * The owner of this route, only exist if all stops belongs to this outfit.
-     */
-    public readonly owner?: Outfit;
 
     /**
      * The support note for this route.

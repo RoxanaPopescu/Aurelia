@@ -371,9 +371,15 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
                     },
+                    {
+                        owner: this.columns.map(c => c.slug).includes("owner"),
+                        vehicle: this.columns.map(c => c.slug).includes("vehicle"),
+                        fulfiller: this.columns.map(c => c.slug).includes("fulfiller"),
+                        driver: this.columns.map(c => c.slug).includes("driver"),
+                        tags: this.columns.map(c => c.slug).includes("tags"),
+                    },
                     this.sorting,
                     this.paging,
-                    this.columns.map(c => c.slug).includes("fulfiller"),
                     signal
                 );
 

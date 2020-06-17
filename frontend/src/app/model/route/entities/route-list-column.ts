@@ -53,6 +53,12 @@ export class RouteListColumn
             sortingName: "reference",
             hideColumn: false
         },
+        "owner":
+        {
+            name: "Owner",
+            columSize: "1fr",
+            hideColumn: false
+        },
         "start-date":
         {
             name: "Start date",

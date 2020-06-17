@@ -245,6 +245,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'owner'">
+                                    <span class="text-truncate">
+                                        ${route.owner.companyName}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'start-date'">
                                     <span class="text-truncate">
                                         ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
@@ -288,12 +294,6 @@
                                 <data-table-cell if.bind="column.slug === 'complexity'">
                                     <span class="text-truncate">
                                         ${route.complexity | number}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell if.bind="column.slug === 'owner'">
-                                    <span class="text-truncate">
-                                        ${route.owner.companyName}
                                     </span>
                                 </data-table-cell>
 

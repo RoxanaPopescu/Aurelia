@@ -175,9 +175,13 @@ export class DataTablePage
                    statuses: this.statusFilter,
                    searchQuery: this.textFilter
                 },
+                {
+                    fulfiller: false,
+                    owner: false,
+                    driverLocation: false,
+                },
                 this.sorting,
                 this.paging,
-                false,
                 signal);
 
             // Update the state.

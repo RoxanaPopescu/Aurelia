@@ -53,9 +53,16 @@ export class RouteService
             assignedDriver?: boolean,
             assignedVehicle?: boolean
         },
+        include?: {
+            owner?: boolean,
+            fulfiller?: boolean,
+            vehicle?: boolean,
+            driver?: boolean,
+            driverLocation?: boolean,
+            tags?: boolean
+        },
         sorting?: ISorting,
         paging?: IPaging,
-        fetchFulfillers?: boolean,
         signal?: AbortSignal
     ): Promise<{ routes: RouteInfo[]; routeCount: number }>
     {
@@ -76,7 +83,7 @@ export class RouteService
                 assignedVehicle: filter?.assignedVehicle,
                 tagsAllMatching: filter?.tagsAllMatching,
                 tagsOneMatching: filter?.tagsOneMatching,
-                fetchFulfillers: fetchFulfillers,
+                include: include ? include : undefined,
                 outfitType: this._identityService.identity?.outfit.type.slug
             },
             signal
