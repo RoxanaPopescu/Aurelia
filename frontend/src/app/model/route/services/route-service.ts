@@ -83,7 +83,7 @@ export class RouteService
                 assignedVehicle: filter?.assignedVehicle,
                 tagsAllMatching: filter?.tagsAllMatching,
                 tagsOneMatching: filter?.tagsOneMatching,
-                include: include ? include : undefined,
+                include: include ? include : {},
                 outfitType: this._identityService.identity?.outfit.type.slug
             },
             signal

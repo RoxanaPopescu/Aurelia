@@ -253,7 +253,12 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle
                     },
-                    undefined,
+                    {
+                        driver: true,
+                        fulfiller: true,
+                        vehicle: true,
+                        tags: true
+                    },
                     this.sorting,
                     this.paging,
                     signal
