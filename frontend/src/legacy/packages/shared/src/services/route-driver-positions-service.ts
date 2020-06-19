@@ -54,7 +54,6 @@ export class RouteDriverPositionsService
             // const nextPosition = (i+2) > this.positions.length ? undefined : this.positions[i+1];
 
             if (position.timestamp! >= this.currentDate) {
-                console.log("CurrentDate:", this.currentDate.toString(), "timestamp", position.timestamp!.toString());
                 this.currentPosition = position;
                 this.currentPositionIndex = i;
                 break;
