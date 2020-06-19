@@ -12,11 +12,12 @@ export interface DriverPastMarkerProps {
 
 @observer
 export class DriverPastMarker extends Marker<DriverPastMarkerProps> {
-  protected renderMarker() {
-
-    const position = this.props.position.toGoogleLatLng();
-
+  componentDidMount() {
     this.showPopup();
+  }
+
+  protected renderMarker() {
+    const position = this.props.position.toGoogleLatLng();
 
     return (
       <MarkerWithLabel
