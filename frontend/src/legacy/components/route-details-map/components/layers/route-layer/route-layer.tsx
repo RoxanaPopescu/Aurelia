@@ -4,10 +4,13 @@ import { RouteStopMarker } from "../../features/route-stop-marker/route-stop-mar
 import { RouteSegmentLine } from "../../features/route-segment-line/route-segment-line";
 import { DriverMarker } from "../../features/driver-marker/driver-marker";
 import { Route, RouteStop } from "app/model/route";
+import { Position } from "app/model/shared";
+import { DriverPastMarker } from "../../features/driver-past-marker/driver-past-marker";
 
 export interface RouteLayerProps
 {
-    route: Route
+    route: Route;
+    pastDriverPosition?: Position;
     onRouteClick?: (route: Route) => void;
     onStopClick?: (route: Route, stop: RouteStop) => void;
 }
@@ -53,6 +56,12 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                         key={`DriverMarker-${this.props.route.driver?.id}`}
                         route={this.props.route}
                         onClick={() => this.props.onRouteClick?.(this.props.route)}
+                    />}
+
+                {this.props.pastDriverPosition &&
+                    <DriverPastMarker
+                        key={`DriverPastMarker`}
+                        position={this.props.pastDriverPosition}
                     />}
 
             </React.Fragment>

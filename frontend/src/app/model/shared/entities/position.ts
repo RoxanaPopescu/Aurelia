@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 /**
  * Represents a coordinate identifying a geographic position.
  */
@@ -11,6 +13,9 @@ export class Position
     {
         this.latitude = data.latitude;
         this.longitude = data.longitude;
+        if (data.timestamp) {
+            this.timestamp = DateTime.fromISO(data.timestamp, { setZone: true });
+        }
     }
 
     /**
@@ -22,6 +27,11 @@ export class Position
      * The longitude of the position.
      */
     public longitude: number;
+
+    /**
+     * The recorded time of the position.
+     */
+    public timestamp: DateTime;
 
     /**
      * Creates a new `LatLng` object, representing this position in Google Maps.

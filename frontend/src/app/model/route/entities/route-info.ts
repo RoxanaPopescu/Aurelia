@@ -18,15 +18,15 @@ export class RouteInfo extends RouteBase
     /**
      * The locati at which the route is planned to start.
      */
-    public readonly startLocation: Location;
+    public readonly startLocation?: Location;
 
     /**
      * The location at which the route is planned to end.
      */
-    public readonly endLocation: Location;
+    public readonly endLocation?: Location;
 
     /**
      * The number of stops on the route.
      */
-    public readonly stopCount: number;
+    public readonly stopCount?: number;
 }

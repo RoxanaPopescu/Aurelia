@@ -40,7 +40,7 @@ export class DetailsModule
      */
     public constructor(routeService: RouteService, modalService: ModalService, identityService: IdentityService, router: Router)
     {
-        this._routeService = routeService;
+        this.routeService = routeService;
         this._modalService = modalService;
         this._router = router;
         this.identityService = identityService;
@@ -51,7 +51,7 @@ export class DetailsModule
     private _targetIndex: number | undefined;
     private pollTimeout: any;
 
-    private readonly _routeService: RouteService;
+    protected readonly routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _router: Router;
     protected readonly identityService: IdentityService;
@@ -190,7 +190,7 @@ export class DetailsModule
     {
         try
         {
-            await this._routeService.reloadRoute(this.route!);
+            await this.routeService.reloadRoute(this.route!);
         }
         catch (error)
         {
@@ -237,7 +237,7 @@ export class DetailsModule
 
         try
         {
-            await this._routeService.setRouteStatus(this.route!, status);
+            await this.routeService.setRouteStatus(this.route!, status);
         }
         catch (error)
         {
@@ -278,7 +278,7 @@ export class DetailsModule
 
         try
         {
-            await this._routeService.setRouteStopStatus(this.route!, stop, "cancelled");
+            await this.routeService.setRouteStopStatus(this.route!, stop, "cancelled");
         }
         catch (error)
         {
@@ -312,7 +312,7 @@ export class DetailsModule
                 {
                     try
                     {
-                        await this._routeService.moveRouteStop(this.route!, source, this._targetIndex!)
+                        await this.routeService.moveRouteStop(this.route!, source, this._targetIndex!)
 
                         this.fetchRoute();
                     }
@@ -390,7 +390,7 @@ export class DetailsModule
         this.fetchOperation = new Operation(async signal =>
         {
             try {
-                this.route = await this._routeService.get(this.routeId, signal);
+                this.route = await this.routeService.get(this.routeId, signal);
 
                 this._router.title = this.route.slug;
                 this._router.updateTitle();

@@ -572,7 +572,7 @@
 
                 </div>
 
-                <route-details-map if="condition.bind: showMap; cache: false" route.bind="route" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></route-details-map>
+                <route-details-map if="condition.bind: showMap; cache: false" route.bind="route" service.bind="routeService" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></route-details-map>
 
                 <data-table
                     appearance="rows"

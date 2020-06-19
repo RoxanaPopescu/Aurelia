@@ -1,5 +1,5 @@
 import { autoinject, noView, bindable } from "aurelia-framework";
-import { Route, RouteStop } from "app/model/route";
+import { Route, RouteStop, RouteService } from "app/model/route";
 import { Wrapper } from "../../wrappers/wrapper";
 
 // Import the component that should be wrapped.
@@ -22,6 +22,9 @@ export class RouteDetailsMap extends Wrapper
     public route: Route;
 
     @bindable
+    public service: RouteService;
+
+    @bindable
     public onRouteClick: undefined | ((context: { route: Route }) => void);
 
     @bindable
@@ -38,6 +41,7 @@ export class RouteDetailsMap extends Wrapper
         super.attached(Component, {},
         {
             route: this.route,
+            routeService: this.service,
             onRouteClick: (route) => this.onRouteClick?.({ route }),
             onStopClick: (route, stop) => this.onStopClick?.({ route, stop }),
             onMapClick: () => this.onMapClick?.()

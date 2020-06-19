@@ -11,6 +11,8 @@ import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpe
 import { VehicleType } from "app/model/vehicle";
 import { DateTime } from "luxon";
 import { IdentityService } from "app/services/identity";
+import { Position } from "app/model/shared";
+import { RouteDriverPositionsService } from "shared/src/services/route-driver-positions-service";
 
 /**
  * Represents a service that manages routes.
@@ -133,6 +135,25 @@ export class RouteService
         });
 
         route.status = new RouteStatus(statusSlug);
+    }
+
+    /**
+     * Changes the status of the specified route to the specified status.
+     * @param route The route for which the status should be set.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async getDriverPositions(route: Route): Promise<RouteDriverPositionsService>
+    {
+        const result = await this._apiClient.post("routes/driverPositions",
+        {
+            body:
+            {
+                routeId: route.id
+            }
+        });
+
+        const positions = result.data.results.map(p => new Position(p));
+        return new RouteDriverPositionsService(positions);
     }
 
     /**
