@@ -13,7 +13,7 @@ export class Driver {
     this.phone = new Phone(data.phone);
     this.pictureUrl = data.pictureUrl;
   }
-  
+
   /**
    * The ID of the driver.
    */

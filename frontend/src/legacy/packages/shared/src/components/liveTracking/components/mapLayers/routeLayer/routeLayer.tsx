@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { RouteStop, Route } from "shared/src/model/logistics/routes";
+import { RouteStop, Route, RouteStopBase } from "shared/src/model/logistics/routes";
 import { RouteStopMarker } from "../../mapFeatures/routeStopMarker/routeStopMarker";
 import { RouteSegmentLine } from "../../mapFeatures/routeSegmentLine/routeSegmentLine";
 import { RouteDriverMarker } from "../../mapFeatures/routeDriverMarker/routeDriverMarker";
@@ -14,6 +14,51 @@ export interface RouteLayerProps {
 @observer
 export class RouteLayer extends React.Component<RouteLayerProps> {
 
+  renderStops() {
+    const selectedRoute = this.props.routesService.selectedRoute;
+
+    if (selectedRoute == null) {
+      return <React.Fragment/>;
+    }
+
+    let stops: (RouteStop | RouteStopBase)[];
+    let currentStopIndex = selectedRoute.currentStopIndex;
+    if (selectedRoute.productType.slug != "solution" && currentStopIndex != null) {
+      stops = selectedRoute.stops.slice(currentStopIndex + 1, selectedRoute.stops.length);
+    } else {
+      stops = selectedRoute.stops;
+    }
+
+    let nonCancelledStops = stops.filter(s =>
+      s.status.slug !== "cancelled");
+
+    let items: JSX.Element[] = [];
+
+    let i = 0;
+    for (let s of nonCancelledStops) {
+      if (i > 0) {
+        items.push(<RouteSegmentLine
+          routeStops={[nonCancelledStops[i - 1], s]}
+          key={`RouteSegmentLine-${nonCancelledStops[i - 1].id}-${s.id}`}
+        />);
+      }
+      i++;
+    }
+
+    for (let s of stops) {
+      if (s instanceof RouteStop) {
+        items.push(<RouteStopMarker
+          key={`RouteStopMarker-${s.id}`}
+          routeStop={s}
+          selectedRouteStopId={this.props.routesService.selectedRouteStopId}
+          onClick={routeStop => this.onStopMarkerClick(routeStop)}
+        />);
+      }
+    }
+
+    return items;
+  }
+
   public render() {
     const selectedRoute = this.props.routesService.selectedRoute;
 
@@ -23,25 +68,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
     return (
       <React.Fragment>
-
-        {selectedRoute.stops
-          .filter(s =>
-            s.status.slug !== "cancelled")
-          .map((s, i, a) => i > 0 &&
-          <RouteSegmentLine
-            routeStops={[a[i - 1], s]}
-            key={`RouteSegmentLine-${a[i - 1].id}-${s.id}`}
-          />)}
-
-        {selectedRoute.stops
-          .map(s => s instanceof RouteStop &&
-          <RouteStopMarker
-            key={`RouteStopMarker-${s.id}`}
-            routeStop={s}
-            selectedRouteStopId={this.props.routesService.selectedRouteStopId}
-            onClick={routeStop => this.onStopMarkerClick(routeStop)}
-          />)}
-
+        {this.renderStops()}
         {selectedRoute.driverPosition &&
         <RouteDriverMarker
           key={`RouteDriverMarker-${selectedRoute.id}`}

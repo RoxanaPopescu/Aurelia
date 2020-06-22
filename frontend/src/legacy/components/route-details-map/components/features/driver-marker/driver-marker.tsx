@@ -39,16 +39,14 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
           <div className={`routeDetails-driverMarker ${this.props.faded ? "--faded" : ""}`}>
 
             <div
-              className={`
-                routeDetails-driverMarker-shape
-                routeDetails-driverMarker--${this.getMarkerModifier()}`}
+              className={`routeDetails-driverMarker-shape routeDetails-driverMarker--circle`}
             >
               {labelText}
 
-              {this.props.route.status.accent === "negative" &&
+              {this.props.route.criticality.slug === "high" &&
               <div className="routeDetails-driverMarker-alert"/>}
 
-              {this.props.route.status.accent === "attention" &&
+              {this.props.route.criticality.slug === "medium" &&
               <div className="routeDetails-driverMarker-warning"/>}
 
             </div>
@@ -85,18 +83,6 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
       </Popup>
     );
-  }
-
-  private getMarkerModifier(): string {
-
-    let modifierClass = "";
-
-    modifierClass +=
-      this.props.route.driverOnline ?
-        " routeDetails-driverMarker--online" :
-          " routeDetails-driverMarker--offline";
-
-    return modifierClass;
   }
 
   private renderDriverInfo() {

@@ -9,6 +9,12 @@ export class PersonName {
     if (data != null) {
       this.first = data.first || "";
       this.last = data.last || "";
+
+      if (data.last) {
+        this.fullName = `${this.first} ${this.last}`;
+      } else {
+        this.fullName = this.first;
+      }
     }
   }
 
@@ -21,6 +27,11 @@ export class PersonName {
    * The family name or names, if any.
    */
   @observable public last: string;
+
+  /**
+   * The full name of the driver
+   */
+  public fullName: string;
 
   /**
    * The initials to be used instead of the name, where space is limited.

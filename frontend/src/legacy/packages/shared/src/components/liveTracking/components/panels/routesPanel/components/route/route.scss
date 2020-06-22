@@ -1,5 +1,15 @@
 @import "shared/src/webKit/constants.scss";
 
+.c-liveTracking-route-bar {
+  width: 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
 .c-liveTracking-routesPanel-route {
   position: relative;
   display: flex;

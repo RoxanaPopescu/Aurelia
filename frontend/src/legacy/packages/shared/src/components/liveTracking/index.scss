@@ -9,6 +9,11 @@
   flex-grow: 1;
 }
 
+.routeDetails-color-negative
+{
+  color: var(--colorAlert) !important;
+}
+
 .c-liveTracking-color-positive {
   color: var(--colorOk) !important;
 }

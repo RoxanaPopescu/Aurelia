@@ -21,7 +21,9 @@
   color: white;
   background: "gray";
 
-  &.routeDetails-driverMarker--online {
+  &.routeDetails-driverMarker--circle {
+    // Disabled due to extremely high CPU usage.
+    //animation: liveTracking-routeDriverMarker-pulse 2s infinite;
     border: 1px solid var(--colorOkDarken);
     background: var(--colorOk);
   }

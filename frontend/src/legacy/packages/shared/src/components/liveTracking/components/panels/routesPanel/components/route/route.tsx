@@ -30,11 +30,19 @@ export class Route extends React.Component<RoutesLayerProps> {
 
     const isFlagged = routeFlagService.isFlagged(this.props.route.id);
 
+    let boxStyle: string = "c-liveTracking-box-neutral";
+    if (this.props.route.criticality.slug == "high") {
+      boxStyle = "c-liveTracking-box-negative";
+    } else if (this.props.route.criticality.slug == "medium") {
+      boxStyle = "c-liveTracking-box-warning";
+    }
+
     return (
       <div
         className="c-liveTracking-routesPanel-route"
         onClick={() => this.onClick()}
       >
+        <div className={"c-liveTracking-route-bar " + boxStyle} />
         <div>
 
           <div
@@ -81,8 +89,7 @@ export class Route extends React.Component<RoutesLayerProps> {
               {driverOrFulfillerPhone &&
               <div>{driverOrFulfillerPhone}</div>}
 
-              {this.props.route.vehicle &&
-              <div>{this.props.route.vehicle.vehicleType.name}</div>}
+              <div>{this.props.route.vehicleType.name}</div>
 
               {this.props.route.completedTime &&
               <div>{Localization.sharedValue("LiveTracking_Route_DoneTime", {
@@ -104,8 +111,7 @@ export class Route extends React.Component<RoutesLayerProps> {
             className={`
               c-liveTracking-panel-message
               c-liveTracking-box-clickable
-              c-liveTracking-box-${this.props.route.criticality.slug === "high" ? "negative" : "warning"}
-            `}
+              c-liveTracking-box-neutral`}
           >
             {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDelaysAtStop")}
             {" " + Localization.formatIntegersAsRanges(this.props.route.expectedDelays.map(s => s.stopNumber), 3)}
@@ -148,7 +154,7 @@ export class Route extends React.Component<RoutesLayerProps> {
           className={`
             c-liveTracking-panel-message
             c-liveTracking-box-clickable
-            c-liveTracking-box-warning
+            c-liveTracking-box-neutral
           `}
         >
           {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_CancelledOrFailedAtStop")}
@@ -162,13 +168,6 @@ export class Route extends React.Component<RoutesLayerProps> {
       return;
     }
 
-    let boxStyle: string = "c-liveTracking-box-neutral";
-    if (this.props.route.criticality.slug == "high") {
-      boxStyle = "c-liveTracking-box-negative";
-    } else if (this.props.route.criticality.slug == "medium") {
-      boxStyle = "c-liveTracking-box-warning";
-    }
-
     let info = Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_NoneAssigned");
     let stop = this.props.route.stops[0];
     if (stop instanceof RouteStop && stop.arrivalTimeFrame.from != null) {
@@ -176,7 +175,7 @@ export class Route extends React.Component<RoutesLayerProps> {
     }
 
     return (
-      <div className={"c-liveTracking-panel-message " + boxStyle}>
+      <div className={"c-liveTracking-panel-message c-liveTracking-box-neutral"}>
           {info}
       </div>
     );
@@ -191,15 +190,8 @@ export class Route extends React.Component<RoutesLayerProps> {
       return;
     }
 
-    let boxStyle: string;
-    if (this.props.route.status.slug == "not-started") {
-      boxStyle = "c-liveTracking-box-negative";
-    } else {
-      boxStyle = "c-liveTracking-box-warning";
-    }
-
     return (
-      <div className={"c-liveTracking-panel-message " + boxStyle}>
+      <div className={"c-liveTracking-panel-message c-liveTracking-box-neutral"}>
           {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + this.props.route.status.name + ")"}
       </div>
     );

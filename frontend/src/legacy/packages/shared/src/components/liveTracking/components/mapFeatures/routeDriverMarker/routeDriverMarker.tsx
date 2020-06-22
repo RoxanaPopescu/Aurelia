@@ -24,7 +24,14 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
     }
 
     if (position == null) {
-      position = this.props.route.stops[0].location.position
+      let stop = this.props.route.currentOrNextStop;
+      if (stop != null) {
+        position = stop.location.position;
+      }
+    }
+
+    if (position == null) {
+      position = this.props.route.stops[0].location.position;
     }
 
     return position!;
@@ -35,10 +42,12 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
     if (this.props.route.driver) {
       labelText = this.props.route.driver.name.initials
     } else if (this.props.route.owner) {
-      labelText = this.props.route.owner.companyName?.substring(0,2) ?? "--";
+      labelText = this.props.route.owner.companyName?.substring(0,3) ?? "--";
     } else {
       labelText = this.props.route.fulfiller!.companyName!.substring(0, 2);
     }
+
+    let additionalBaseClass = this.props.route.driver == null ? "noDriver" : "driver";
 
     return (
       <MarkerWithLabel
@@ -59,8 +68,8 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
             <div
               className={`
-                c-liveTracking-routeDriverMarker-circle
-                c-liveTracking-routeDriverMarker--${this.getMarkerModifier()}`}
+                c-liveTracking-routeDriverMarker-base
+                c-liveTracking-routeDriverMarker-${additionalBaseClass}`}
             >
               {labelText}
 
@@ -109,29 +118,6 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
     );
   }
 
-  private getMarkerModifier(): string {
-
-    let modifierClass = "";
-
-    if (this.props.route.driver == null) {
-      modifierClass += " c-liveTracking-routeDriverMarker--noDriver"
-    } else {
-      modifierClass +=
-      this.props.route.driverOnline ?
-        " c-liveTracking-routeDriverMarker--online" :
-          " c-liveTracking-routeDriverMarker--offline";
-    }
-
-    modifierClass +=
-      this.props.route.status.slug === "completed" ?
-        " c-liveTracking-routeDriverMarker--completed" :
-          this.props.route.status.slug === "cancelled" ?
-            " c-liveTracking-routeDriverMarker--cancelled" :
-              "";
-
-    return modifierClass;
-  }
-
   private renderDriverInfo() {
 
     return (
@@ -155,19 +141,19 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
           <div className="c-worldMap-popup-section-row">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
-            <div>{this.props.route.driver!.phone.toString()}</div>
+            <a href={"tel:" + this.props.route.driver!.phone.toString()}>{this.props.route.driver!.phone.toString()}</a>
           </div>
+
+          {!this.props.route.driverOnline &&
+          <div className="c-worldMap-popup-section-row">
+            <div/>
+            <div className="routeDetails-color-negative">{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
+          </div>
+          }
 
         </div>
 
-        {!this.props.route.driverOnline &&
-        <div className="c-worldMap-popup-section">
 
-          <div className="c-worldMap-popup-section-row c-routeDetails-color-negative">
-            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
-          </div>
-
-        </div>}
 
       </React.Fragment>
     );
@@ -180,13 +166,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
     return (
       <React.Fragment>
-
-        <div className="c-worldMap-popup-header">
-          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Owner_Heading")}</div>
-        </div>
-
         <div className="c-worldMap-popup-title">{this.props.route.owner.companyName}</div>
-
       </React.Fragment>
     );
   }
@@ -303,6 +283,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
             <div>{Localization.formatTime(this.props.route.completedTime)}</div>
           </div>}
 
+           <div className="c-worldMap-popup-section-row">
+            <div>
+              {Localization.sharedValue("Order_VehicleType")}
+            </div>
+            <div>{this.props.route.vehicleType.name}</div>
+          </div>
+
           {this.props.route.completedTime == null && this.props.route.estimates?.completionTime &&
           <div className="c-worldMap-popup-section-row">
             <div>
@@ -315,7 +302,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
         {this.props.route.expectedDelays.length > 0 &&
         <div className="c-worldMap-popup-section">
 
-          <div className="c-worldMap-popup-section-row c-routeDetails-color-negative">
+          <div className="c-worldMap-popup-section-row routeDetails-color-negative">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDelaysAtStop")}</div>
             <div>{Localization.formatIntegersAsRanges(this.props.route.expectedDelays.map(s => s.stopNumber), 3)}</div>
           </div>

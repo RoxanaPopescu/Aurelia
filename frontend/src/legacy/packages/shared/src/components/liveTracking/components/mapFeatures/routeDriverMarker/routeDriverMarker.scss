@@ -5,24 +5,15 @@
   pointer-events: none;
 }
 
-.c-liveTracking-routeDriverMarker-circle {
+.c-liveTracking-routeDriverMarker-base {
   position: relative;
   min-width: 24px;
   min-height: 24px;
-  border-radius: 12px;
   line-height: 22px;
   font-size: 10px;
   font-weight: 600;
   text-align: center;
   color: white;
-  background: "gray";
-
-  &.c-liveTracking-routeDriverMarker--online {
-    // Disabled due to extremely high CPU usage.
-    //animation: liveTracking-routeDriverMarker-pulse 2s infinite;
-    border: 1px solid var(--colorOkDarken);
-    background: var(--colorOk);
-  }
 
   &.c-liveTracking-routeDriverMarker--noDriver {
     border: 1px solid var(--colorAlertDarken);
@@ -42,6 +33,17 @@
   &.c-liveTracking-routeDriverMarker--cancelled {
     opacity: .3;
   }
+}
+
+.c-liveTracking-routeDriverMarker-driver {
+  border-radius: 12px;
+  border: 1px solid var(--colorBackgroundPrimaryDarken);
+  background: var(--colorBackgroundPrimary);
+}
+
+.c-liveTracking-routeDriverMarker-noDriver {
+  border: 1px solid var(--colorNeutralSemiDark);
+  background: var(--colorNeutralRegularDarken);
 }
 
 .c-liveTracking-routeDriverMarker-warning,

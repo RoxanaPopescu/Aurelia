@@ -27,7 +27,11 @@ export class DepotRouteService {
     this.depotId = depotId;
     this.date = date;
 
-    this.fetchRoutes(this.depotId, this.date);
+    try {
+      this.fetchRoutes(this.depotId, this.date);
+    } catch {
+      // Do nothing
+    }
   }
 
   public stopPolling() {
@@ -40,7 +44,11 @@ export class DepotRouteService {
   }
 
   public resumePolling() {
-    this.fetchRoutes(this.depotId, this.date);
+    try {
+      this.fetchRoutes(this.depotId, this.date);
+    } catch {
+      // Do nothing
+    }
     this.paused = false;
   }
 
@@ -48,8 +56,8 @@ export class DepotRouteService {
     this.pollTimeoutHandle = setTimeout(() => {
       try {
         this.fetchRoutes(this.depotId, this.date);
-      } catch (error) {
-        console.warn("Could not get routes for depot", error);
+      } catch {
+        // Do nothing
       }
     }, 5000);
   }

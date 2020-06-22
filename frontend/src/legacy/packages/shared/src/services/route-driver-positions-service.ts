@@ -19,9 +19,11 @@ export class RouteDriverPositionsService
         this.positions = positions;
         this.canPlay = positions.length > 0;
 
-        const rangeDuration = this.timeRange.duration;
-        const iterations = Math.round(this.playTime.milliseconds / this.timeoutDelay.milliseconds);
-        this.increment = Duration.fromMillis(rangeDuration.milliseconds / iterations);
+        if (this.canPlay) {
+            let rangeDuration = this.timeRange.duration;
+            let iterations = Math.round(this.playTime.milliseconds / this.timeoutDelay.milliseconds);
+            this.increment = Duration.fromMillis(rangeDuration.milliseconds / iterations);
+        }
     }
 
     public readonly positions: Position[];
@@ -80,7 +82,7 @@ export class RouteDriverPositionsService
     }
 
     public play() {
-        if (!this.canPlay) {
+        if (!this.canPlay || this.positions.length <= 0) {
             console.log("Not possible to play with no gps points");
             return;
         }
