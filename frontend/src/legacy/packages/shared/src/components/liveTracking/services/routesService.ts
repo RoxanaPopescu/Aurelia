@@ -47,6 +47,11 @@ export class RoutesService {
   public polling = false;
 
   /**
+   * True if the service is paused for polling for updates, otherwise false.
+   */
+  private paused = false;
+
+  /**
    * The filters that determien which routes are shown in live tracking.
    */
   @observable
@@ -146,11 +151,11 @@ export class RoutesService {
    */
   public async startPolling(): Promise<void> {
     const restart = this.polling;
-    this.stopPolling();
     if (!restart) {
       this.loading = true;
     }
     this.polling = true;
+    this.paused = false;
     this.pollSession++;
     return this.poll();
   }
@@ -159,9 +164,17 @@ export class RoutesService {
    * Stops polling for route data.
    */
   public stopPolling(): void {
-    clearTimeout(this.pollTimeout);
     this.loading = false;
     this.polling = false;
+    this.pausePolling();
+  }
+
+  /**
+   * Stops polling for route data.
+   */
+  public pausePolling(): void {
+    clearTimeout(this.pollTimeout);
+    this.paused = true;
     this.pollSession++;
   }
 
@@ -200,7 +213,10 @@ export class RoutesService {
             }
 
             this.loading = false;
-            this.pollTimeout = setTimeout(() => this.poll(), 7000);
+
+            if (!this.paused) {
+              this.pollTimeout = setTimeout(() => this.poll(), 7000);
+            }
 
             resolve();
 

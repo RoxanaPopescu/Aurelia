@@ -49,11 +49,24 @@ export default class DepotActivityComponent extends React.Component<Props> {
       this.date = DateTime.fromISO(dateMatch[1]);
     }
 
+    window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
+
     await this.service.startPolling(this.props.depotId, this.date);
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.service.stopPolling();
+    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("blur", this.onBlur);
+  }
+
+  onBlur = () => {
+    this.service.pausePolling();
+  }
+
+  onFocus = () => {
+    this.service.resumePolling();
   }
 
   public render() {

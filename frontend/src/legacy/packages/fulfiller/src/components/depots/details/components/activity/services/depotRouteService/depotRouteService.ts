@@ -44,22 +44,24 @@ export class DepotRouteService {
   }
 
   public resumePolling() {
+    this.paused = false;
+
     try {
       this.fetchRoutes(this.depotId, this.date);
     } catch {
       // Do nothing
     }
-    this.paused = false;
   }
 
   private fetchAfterDelay(): void {
+    clearTimeout(this.pollTimeoutHandle);
     this.pollTimeoutHandle = setTimeout(() => {
       try {
         this.fetchRoutes(this.depotId, this.date);
       } catch {
         // Do nothing
       }
-    }, 5000);
+    }, 10000);
   }
 
   public async saveRoute(route: DepotRoute): Promise<void> {

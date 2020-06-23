@@ -23,8 +23,8 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
     let stops: (RouteStop | RouteStopBase)[];
     let currentStopIndex = selectedRoute.currentStopIndex;
-    if (selectedRoute.productType.slug != "solution" && currentStopIndex != null) {
-      stops = selectedRoute.stops.slice(currentStopIndex + 1, selectedRoute.stops.length);
+    if (selectedRoute.productType.slug != "solution" && currentStopIndex != null && currentStopIndex > 0) {
+      stops = selectedRoute.stops.slice(currentStopIndex);
     } else {
       stops = selectedRoute.stops;
     }

@@ -59,6 +59,9 @@ export default class LiveTrackingComponent extends React.Component {
   public componentDidMount() {
     window.addEventListener("popstate", this.onPopState);
 
+    window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
+
     this.reactionDisposers.push(
       reaction(
         r => this.routesService.selectedRoute,
@@ -84,6 +87,16 @@ export default class LiveTrackingComponent extends React.Component {
     this.reactionDisposers = [];
     window.removeEventListener("popstate", this.onPopState);
     this.routesService.stopPolling();
+    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("blur", this.onBlur);
+  }
+
+  onBlur = () => {
+    this.routesService.pausePolling();
+  }
+
+  onFocus = () => {
+    this.routesService.startPolling();
   }
 
   public render() {
