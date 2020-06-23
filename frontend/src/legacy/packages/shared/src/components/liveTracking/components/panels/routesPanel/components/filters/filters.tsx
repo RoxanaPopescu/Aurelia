@@ -17,14 +17,14 @@ const importantCriticalityLevels = ["high", "medium"] as (keyof typeof RouteCrit
 export class Filters extends React.Component<RoutesLayerProps> {
 
   public render() {
-    const highCriticalityCount = this.props.routesService.routes
-      ? this.props.routesService.routes
+    const highCriticalityCount = this.props.routesService.filteredRoutes
+      ? this.props.routesService.filteredRoutes
         .filter(r => r.criticality.slug === "high")
         .length
       : 0;
 
-    const mediumCriticalityCount = this.props.routesService.routes
-      ? this.props.routesService.routes
+    const mediumCriticalityCount = this.props.routesService.filteredRoutes
+      ? this.props.routesService.filteredRoutes
         .filter(r => r.criticality.slug === "medium")
         .length
       : 0;

@@ -21,11 +21,8 @@ export class RoutesPanel extends React.Component<RoutesPanelProps> {
         </div>
 
         <div className="c-liveTracking-panel-body">
-          {this.props.routesService.routes &&
-            this.props.routesService.routes
-              .filter(route =>
-                route.containsText(this.props.routesService.textFilter)
-              )
+          {this.props.routesService.filteredRoutes &&
+            this.props.routesService.filteredRoutes
               .map(route => (
                 <Route
                   key={route.id}

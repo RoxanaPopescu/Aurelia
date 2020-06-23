@@ -83,6 +83,20 @@ export class RoutesService {
   public selectedRouteStopId: string | undefined;
 
   /**
+   * The filtered routes being tracked
+   */
+  @computed
+  public get filteredRoutes(): Route[] | undefined {
+    if (this.textFilter == null || this.routes == undefined) {
+      return this.routes;
+    }
+
+    return this.routes.filter(route =>
+      route.containsText(this.textFilter)
+    )
+  }
+
+  /**
    * The routes being tracked.
    * Note that this array will be replaced after each poll.
    */

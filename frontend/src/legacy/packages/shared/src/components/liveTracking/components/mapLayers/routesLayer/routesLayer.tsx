@@ -24,8 +24,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
   }
 
   public render() {
-    let routes = this.props.routesService.routes && this.props.routesService.routes
-    .filter(r => r.containsText(this.props.routesService.textFilter));
+    let routes = this.props.routesService.filteredRoutes;
 
     if (routes == null) {
       return;
