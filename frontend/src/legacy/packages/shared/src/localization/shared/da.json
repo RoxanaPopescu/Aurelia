@@ -255,6 +255,7 @@
   "PoweredBy": "Powered by Mover Systems",
   "Price_Estimated_WithoutTax": "Estimeret pris ekskl. moms",
   "Price_Estimated_WithTax": "Estimeret pris inkl. moms",
+  "Product_Type": "Produkt type",
   "Request_Status_Expired": "Udløbet",
   "Request_Status_Processing": "Bearbejder",
   "Retry": "Prøv igen",

@@ -71,6 +71,11 @@ export class RouteStopEditCustomElement
             this.date = this.model.routeStop.arrivalTimeFrame.from?.startOf("day");
             this.timeFrom = this.model.routeStop.arrivalTimeFrame.from?.diff(this.model.routeStop.arrivalTimeFrame.from?.startOf("day"));
             this.timeTo = this.model.routeStop.arrivalTimeFrame.to?.diff(this.model.routeStop.arrivalTimeFrame.to?.startOf("day"));
+        } else {
+            // New stop, default to last index
+            if (this.model.route.stops[0] instanceof RouteStop) {
+                this.date = this.model.route.stops[0].arrivalTimeFrame.from?.startOf("day");
+            }
         }
     }
 

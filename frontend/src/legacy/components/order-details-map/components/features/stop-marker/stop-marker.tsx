@@ -23,7 +23,7 @@ export class OrderStopMarker extends Marker<OrderStopMarkerProps>
     protected renderMarker()
     {
         const position = this.props.stop.location.position!.toGoogleLatLng();
-        const labelText = `${this.props.stop.location.address.toString().substr(0,4)}`;
+        const labelText = `${this.props.stop.type.name.substr(0,1).toUpperCase()}`;
 
         return (
             <MarkerWithLabel

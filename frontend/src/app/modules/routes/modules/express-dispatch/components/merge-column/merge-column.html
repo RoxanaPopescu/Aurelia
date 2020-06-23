@@ -117,7 +117,7 @@
                         ref="driverStopsElement">
 
                         <div
-                            repeat.for="stop of driverStops"
+                            repeat.for="stop of driverStopsFiltered"
                             draggable="true"
                             dragstart.trigger="onDriverStopsDragStart($event, stop)"
                             dragend.trigger="onDriverStopsDragEnd($event, stop)"
@@ -139,7 +139,7 @@
                                         <div>${$index + 1}</div>
                                     </div>
                                     <div>
-                                        <div><b>${stop.stop.type.name}</b>${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
+                                        <div><b>${stop.stop.type.name}</b> (<b>${stop.stop.status.name}</b>)${stop.stop.outfit.primaryName ? ' - ' : ''}${stop.stop.outfit.primaryName}</div>
                                         <div class="margin-smallest-top">${stop.stop.location.address}</div>
                                     </div>
                                     <div class="flex-push-right text-align-right flex-basis-1-of-2">

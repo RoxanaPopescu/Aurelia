@@ -165,9 +165,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
     }
 
     return (
-      <React.Fragment>
+      <div className="c-worldMap-popup-section c-worldMap-popup-section--border">
+        <div className="c-worldMap-popup-header">
+          <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Owner_Heading")}</div>
+        </div>
+
         <div className="c-worldMap-popup-title">{this.props.route.owner.companyName}</div>
-      </React.Fragment>
+      </div>
     );
   }
 
@@ -188,16 +192,6 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
         {this.props.route.fulfiller.secondaryName &&
         <div className="c-worldMap-popup-subtitle">{this.props.route.fulfiller.secondaryName}</div>}
-
-        <div className="c-worldMap-popup-section">
-
-          {this.props.route.fulfiller.contactPhone &&
-          <div className="c-worldMap-popup-section-row">
-            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Fulfiller_PhoneNumber")}</div>
-            <div>{this.props.route.fulfiller.contactPhone.toString()}</div>
-          </div>}
-
-        </div>
 
       </React.Fragment>
     );
@@ -288,6 +282,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
               {Localization.sharedValue("Order_VehicleType")}
             </div>
             <div>{this.props.route.vehicleType.name}</div>
+          </div>
+
+          <div className="c-worldMap-popup-section-row">
+            <div>
+              {Localization.sharedValue("Product_Type")}
+            </div>
+            <div>{this.props.route.productType.name}</div>
           </div>
 
           {this.props.route.completedTime == null && this.props.route.estimates?.completionTime &&

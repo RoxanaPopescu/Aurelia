@@ -41,6 +41,14 @@ export class MergeColumnCustomElement
     protected driverStopsElement: HTMLElement;
 
     protected driverStops: (IExpressRouteStop | IDriverRouteStop)[];
+    protected get driverStopsFiltered(): (IExpressRouteStop | IDriverRouteStop)[] | undefined {
+        if (this.driverStops == null) {
+            return undefined;
+        }
+
+        return this.driverStops.filter(s => s.stop.status.slug != "cancelled");
+    }
+
     protected expressStops: IExpressRouteStop[];
     protected driverStopsDragover = false;
     protected expressStopsDragover = false;
@@ -427,7 +435,7 @@ export class MergeColumnCustomElement
 
     private updateWorkspace(): void
     {
-        this.canApply = false;
+        this.canApply = this.expressStops.length === 0;
 
         // Abort any existing update operation.
         if (this.updateOperation != null)

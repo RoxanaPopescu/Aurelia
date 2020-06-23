@@ -22,8 +22,8 @@ export class Order
             status: new OrderStatus(data.state.status.name.toLowerCase())
         };
 
-        this.pickup = new OrderStop(data.pickup);
-        this.delivery = new OrderStop(data.delivery);
+        this.pickup = new OrderStop(data.pickup, "pickup");
+        this.delivery = new OrderStop(data.delivery, "delivery");
 
         this.tags = data.tags;
         this.requirements = data.requirements;

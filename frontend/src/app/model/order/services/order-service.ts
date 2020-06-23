@@ -119,8 +119,8 @@ export class OrderService
         });
 
         return {
-            completedEvents: result.data.CompletedEvents.map(ce => new OrderEvent(ce)),
-            futureEvents: result.data.FutureEvents.map(fe => new OrderEvent(fe))
+            completedEvents: result.data.completedEvents.map(ce => new OrderEvent(ce)),
+            futureEvents: result.data.futureEvents.map(fe => new OrderEvent(fe))
         };
     }
 

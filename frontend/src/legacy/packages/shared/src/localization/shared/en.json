@@ -255,6 +255,7 @@
   "PoweredBy": "Powered by Mover Systems",
   "Price_Estimated_WithoutTax": "Estimated price without tax",
   "Price_Estimated_WithTax": "Estimated price with tax",
+  "Product_Type": "Product type",
   "Request_Status_Expired": "Expired",
   "Request_Status_Processing": "Processing",
   "Retry": "Retry",

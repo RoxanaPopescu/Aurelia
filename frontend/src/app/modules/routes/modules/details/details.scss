@@ -2,10 +2,6 @@
 
 page[name="routes"] page[name="details"]
 {
-    page-sidebar {
-        width: 400px;
-    }
-
     data-table
     {
         --data-table-columns: min-content 3fr 1.75fr 1fr 0.75fr 1.25fr 1.5fr 1.25fr min-content;
