@@ -167,6 +167,13 @@ export class RoutesService {
     const restart = this.polling;
     if (!restart) {
       this.loading = true;
+    } else {
+      if (this._routes == null) {
+        // Do not restart before routes exist
+        this.loading = true;
+        this.polling = true;
+        return;
+      }
     }
     this.polling = true;
     this.paused = false;
@@ -189,7 +196,10 @@ export class RoutesService {
   public pausePolling(): void {
     clearTimeout(this.pollTimeout);
     this.paused = true;
-    this.pollSession++;
+
+    if (this._routes != null) {
+      this.pollSession++;
+    }
   }
 
   /**

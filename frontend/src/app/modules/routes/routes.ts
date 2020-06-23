@@ -45,9 +45,9 @@ export class RoutesModule
                 }
             },
             {
-                name: "route-tracking",
-                route: "route-tracking",
-                moduleId: PLATFORM.moduleName("./modules/route-tracking/route-tracking"),
+                name: "live-tracking",
+                route: "live-tracking",
+                moduleId: PLATFORM.moduleName("./modules/live-tracking/live-tracking"),
                 settings:
                 {
                     claims:
@@ -55,24 +55,9 @@ export class RoutesModule
                         "view-routes"
                     ]
                 },
-                title: routeTitles.routeTracking,
+                title: routeTitles.liveTracking,
                 nav: true,
                 icon: "route-tracking"
-            },
-            {
-                name: "driver-tracking",
-                route: "driver-tracking",
-                moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routes"
-                    ]
-                },
-                title: routeTitles.driverTracking,
-                nav: true,
-                icon: "driver-tracking"
             },
             {
                 name: "list",

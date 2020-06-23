@@ -7,5 +7,6 @@
     "vehicleList": "Vehicles",
     "forecasts": "Forecasts",
     "assignRoutes": "Assign routes",
-    "createPrebooking": "Create prebooking"
+    "createPrebooking": "Create prebooking",
+    "driverTracking": "Driver tracking"
 }

@@ -40,15 +40,13 @@ export class Filters extends React.Component<RoutesLayerProps> {
         >
           {Localization.sharedValue("LiveTracking_Filters_Criticality_Label")}
 
-          {highCriticalityCount > 0 &&
-          <span className="c-liveTracking-routesPanel-filters-badge c-liveTracking-box-negative">
+          <span className={"c-liveTracking-routesPanel-filters-badge " + (highCriticalityCount > 0 ? "c-liveTracking-box-negative" : "")}>
             {highCriticalityCount}
-          </span>}
+          </span>
 
-          {mediumCriticalityCount > 0 &&
-          <span className="c-liveTracking-routesPanel-filters-badge c-liveTracking-box-warning">
+          <span className={"c-liveTracking-routesPanel-filters-badge " + (mediumCriticalityCount > 0 ? "c-liveTracking-box-warning" : "")}>
             {mediumCriticalityCount}
-          </span>}
+          </span>
 
         </InputCheckbox>
 

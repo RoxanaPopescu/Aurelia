@@ -1,8 +1,7 @@
 {
     "list": "All routes",
     "assignment": "Assignment",
-    "routeTracking": "Live tracking",
-    "driverTracking": "Driver tracking",
+    "liveTracking": "Live tracking",
     "templates": "Templates",
     "test": "Generate test routes",
     "newTemplate": "New template",
