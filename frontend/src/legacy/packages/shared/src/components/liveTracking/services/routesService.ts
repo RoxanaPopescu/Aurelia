@@ -2,9 +2,10 @@ import { observable, computed } from "mobx";
 import BaseService from "shared/src/services/base";
 import Localization from "shared/src/localization";
 import { Route } from "shared/src/model/logistics/routes/tracking";
-import { RouteCriticality, RouteStatus } from "shared/src/model/logistics/routes";
+import { RouteStatus } from "shared/src/model/logistics/routes";
 import { routeFlagService } from "./routeFlagService";
 import { Driver } from "app/model/driver";
+import { RouteCriticalitySlug } from "app/model/route";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -12,12 +13,19 @@ const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
 /**
  * Represents the filters that determien which routes are shown in live tracking.
  */
-export interface RouteFilter {
+export class RouteFilter {
 
   /**
-   * The criticality levels to include, or undefined to include all levels.
+   * The search query apply, or undefined to apply no text filter.
    */
-  criticality?: (keyof typeof RouteCriticality.map)[];
+  @observable
+  public searchQuery: string | undefined;
+
+    /**
+   * The criticality filter to apply.
+   */
+  @observable
+  public criticalities: RouteCriticalitySlug[] = [];
 }
 
 /**
@@ -28,6 +36,7 @@ export class RoutesService {
   /* tslint:disable-next-line: no-any */
   private pollTimeout: any;
   private pollSession = 0;
+  private pollLoading = false;
 
   @observable
   public _routes: Route[] | undefined;
@@ -55,13 +64,8 @@ export class RoutesService {
    * The filters that determien which routes are shown in live tracking.
    */
   @observable
-  public filter: RouteFilter = {};
+  public filter = new RouteFilter();
 
-  /**
-   * The text filter to apply, or undefined to apply no text filter.
-   */
-  @observable
-  public textFilter: string | undefined;
 
   /**
    * The currently selected route.
@@ -87,13 +91,24 @@ export class RoutesService {
    */
   @computed
   public get filteredRoutes(): Route[] | undefined {
-    if (this.textFilter == null || this.routes == undefined) {
+    if (this.routes == undefined) {
+      return undefined;
+    }
+
+    if (this.filter.searchQuery == null && this.filter.criticalities.length == 0) {
       return this.routes;
     }
 
-    return this.routes.filter(route =>
-      route.containsText(this.textFilter)
-    )
+    return this.routes
+      .filter(route => {
+        if (this.filter.criticalities.length > 0) {
+          if (!this.filter.criticalities.includes(route.criticality.slug)) {
+            return false;
+          }
+        }
+
+        return route.containsText(this.filter.searchQuery);
+      })
   }
 
   /**
@@ -150,20 +165,12 @@ export class RoutesService {
     this.selectedRouteStopId = undefined;
   }
 
-  /**
-   * Sets the currently selected route.
-   * @param route The route to select, or undefined to select no route.
-   */
-  public setFilter(filter: RouteFilter): void {
-    this.filter = { ...this.filter, ...filter };
-    this.startPolling();
-  }
 
   /**
    * Starts polling for route data.
    * @returns A promise that will be resolved when the initial request succeedes.
    */
-  public async startPolling(): Promise<void> {
+  public async startPolling() {
     const restart = this.polling;
     if (!restart) {
       this.loading = true;
@@ -175,10 +182,10 @@ export class RoutesService {
         return;
       }
     }
+
     this.polling = true;
     this.paused = false;
-    this.pollSession++;
-    return this.poll();
+    this.poll();
   }
 
   /**
@@ -196,10 +203,6 @@ export class RoutesService {
   public pausePolling(): void {
     clearTimeout(this.pollTimeout);
     this.paused = true;
-
-    if (this._routes != null) {
-      this.pollSession++;
-    }
   }
 
   /**
@@ -207,7 +210,13 @@ export class RoutesService {
    * @returns A promise that will be resolved when the poll succeedes.
    */
   private async poll(): Promise<void> {
+    if (this.pollLoading) {
+      return; // Not possible to poll while polling
+    }
+
     clearTimeout(this.pollTimeout);
+    this.pollSession++;
+    this.pollLoading = true;
 
     try {
       const pollSession = this.pollSession;
@@ -238,14 +247,16 @@ export class RoutesService {
 
             this.loading = false;
 
-            if (!this.paused) {
-              this.pollTimeout = setTimeout(() => this.poll(), 7000);
-            }
-
             resolve();
 
           } catch (error) {
             reject(error);
+          } finally {
+            if (!this.paused) {
+              this.pollTimeout = setTimeout(() => this.poll(), 7000);
+            }
+
+            this.pollLoading = false;
           }
         });
       });
@@ -313,35 +324,28 @@ export class RoutesService {
    * @returns A promise that will be resolved with the routes.
    */
   private async fetch(): Promise<Route[]> {
-    const isDemo = location.hash === "#demo";
-
     let routes: Route[];
+    var url = "routes/v2/tracking";
 
-    if (isDemo) {
-      routes = this.fetchDemo();
-    } else {
-      var url = "routes/v2/tracking";
+    const response = await fetch(
+      BaseService.url(url),
+      BaseService.defaultConfig({})
+    );
 
-      const response = await fetch(
-        BaseService.url(url),
-        BaseService.defaultConfig({ ...this.filter })
-      );
+    if (!response.ok) {
+      throw new Error(Localization.sharedValue("Error_General"));
+    }
 
-      if (!response.ok) {
-        throw new Error(Localization.sharedValue("Error_General"));
-      }
+    const data = await response.json();
 
-      const data = await response.json();
+    routes = [];
 
-      routes = [];
-
-      for (let route of data) {
-        try {
-          routes.push(new Route(route));
-        } catch (error) {
-          // tslint:disable-next-line:no-console
-          console.error("An error occurred while instantiating a live tracking route.\n", error, route);
-        }
+    for (let route of data) {
+      try {
+        routes.push(new Route(route));
+      } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.error("An error occurred while instantiating a live tracking route.\n", error, route);
       }
     }
 
@@ -361,54 +365,5 @@ export class RoutesService {
         }
       }
     }
-  }
-
-  /**
-   * Fetches the demo routes.
-   * @returns A promise that will be resolved with the routes.
-   */
-  private fetchDemo(): Route[] {
-    const second = new Date().getSeconds();
-    const offset = (second % 10) / 50;
-
-    const data = require("../_routesMockData.json");
-    const result: Route[] = [];
-    let lat = data[0].driverPosition.latitude;
-    let lon = data[0].driverPosition.longitude;
-    for (let x = 0; x < 10; x++) {
-      for (let y = 0; y < 10; y++) {
-        let routeData = JSON.parse(JSON.stringify(data[0]));
-
-        const driverOnline = x === 0 && y === 0 && second % 5 < 4 ? false : true;
-        const criticality = !(y % 5 || x % 5) ? "high" : !(y % 2 || x % 2) ? "medium" : "low";
-
-        if (criticality === "low") {
-          for (const stop of routeData.stops) {
-            stop.isDelayed = false;
-          }
-        }
-
-        const status = x === 1 ? (y === 8 ? "cancelled" : "completed") : routeData.status;
-
-        result.push(new Route({
-          ...routeData,
-          id: `${routeData.id}-r-00${x}-00${y}`,
-          slug: `r-00${x}-00${y}`,
-          status,
-          completionTime: status !== "cancelled" ? routeData.completionTime : undefined,
-          driverPosition: {
-            latitude: lat - (y / 5) - offset,
-            longitude: lon + (x / 2) - offset
-          },
-          driverOnline,
-          criticality
-        }));
-
-      }
-    }
-
-    return result.filter(r =>
-      this.filter.criticality == null ||
-      this.filter.criticality.includes(r.criticality.slug));
   }
 }

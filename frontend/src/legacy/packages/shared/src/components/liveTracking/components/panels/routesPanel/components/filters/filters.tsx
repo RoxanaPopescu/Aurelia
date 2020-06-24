@@ -2,16 +2,12 @@ import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { RoutesService } from "../../../../../services/routesService";
-import { RouteCriticality } from "shared/src/model/logistics/routes";
 import { InputCheckbox, Input } from "shared/src/webKit";
 import "./filters.scss";
 
 export interface RoutesLayerProps {
   routesService: RoutesService;
 }
-
-// The criticality levels that are considered "important".
-const importantCriticalityLevels = ["high", "medium"] as (keyof typeof RouteCriticality.map)[];
 
 @observer
 export class Filters extends React.Component<RoutesLayerProps> {
@@ -34,9 +30,15 @@ export class Filters extends React.Component<RoutesLayerProps> {
 
         <InputCheckbox
           className="c-liveTracking-routesPanel-filters-criticality"
-          checked={this.props.routesService.filter.criticality != null}
-          onChange={active =>
-            this.props.routesService.setFilter({ criticality: active ? importantCriticalityLevels : undefined })}
+          checked={this.props.routesService.filter.criticalities.length > 0}
+          onChange={active => {
+              if (active) {
+                this.props.routesService.filter.criticalities = ["high", "medium"];
+              } else {
+                this.props.routesService.filter.criticalities = [];
+              }
+            }
+          }
         >
           {Localization.sharedValue("LiveTracking_Filters_Criticality_Label")}
 
@@ -53,9 +55,9 @@ export class Filters extends React.Component<RoutesLayerProps> {
         <Input
           type="search"
           className="c-liveTracking-routesPanel-filters-input"
-          value={this.props.routesService.textFilter}
+          value={this.props.routesService.filter.searchQuery}
           onChange={value =>
-            this.props.routesService.textFilter = value || undefined}
+            this.props.routesService.filter.searchQuery = value || undefined}
           placeholder={Localization.sharedValue("Input_Placeholder_Filter")}
         />
 

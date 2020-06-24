@@ -36,7 +36,7 @@ export class CommunicationTriggerEvent
      */
     public static readonly values =
     {
-        "prder-delivery-arrived":
+        "order-delivery-arrived":
         {
             name: "Order delivery arrived"
         },

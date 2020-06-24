@@ -136,4 +136,17 @@ export class OrderService
             body: { order: order.toJSON() }
         });
     }
+
+    /**
+     * Updated the state in the order.
+     * @param order The order.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async updateStatus(order: Order, status: OrderStatusSlug): Promise<void>
+    {
+        await this._apiClient.post("orders/updatestatus",
+        {
+            body: { orderId: order.id, status: status }
+        });
+    }
 }

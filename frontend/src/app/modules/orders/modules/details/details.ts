@@ -1,9 +1,8 @@
 import { autoinject } from 'aurelia-framework';
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
-import { RouteStatusSlug } from "app/model/route";
 import { IdentityService } from "app/services/identity";
-import { OrderService, OrderStatus, Order } from "app/model/order";
+import { OrderService, OrderStatus, Order, OrderStatusSlug } from "app/model/order";
 import { EditOrderPanel } from "./modals/edit-order/edit-order";
 
 /**
@@ -113,7 +112,7 @@ export class DetailsModule
      * Sets the new route status.
      * @param status The slug identifying the new route status.
      */
-    protected async onStatusItemClick(status: RouteStatusSlug): Promise<void>
+    protected async onStatusItemClick(status: OrderStatusSlug): Promise<void>
     {
         if (status === this.order!.state.status.slug)
         {
@@ -122,7 +121,8 @@ export class DetailsModule
 
         try
         {
-            // await this._orderService.(this.order!, status);
+            await this._orderService.updateStatus(this.order!, status);
+            this.order!.state.status = new OrderStatus(status);
         }
         catch (error)
         {

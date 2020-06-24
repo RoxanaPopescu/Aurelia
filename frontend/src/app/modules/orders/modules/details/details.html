@@ -299,6 +299,42 @@
 
                     <div class="flex-push-right control-row" if.bind="order">
 
+                        <select-button disabled.bind="order == null" if-claims="edit-order" appearance="outline" accent="primary">
+
+                            <div slot="label" translate>
+                                Change status
+                            </div>
+
+                            <item disabled.bind="order.state.status.slug != 'delivered'" click.trigger="onStatusItemClick('placed')" translate>
+                                Placed
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('validated')" translate>
+                                Validated
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('ready')" translate>
+                                Ready
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('cancelled')" translate>
+                                Cancelled
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('in-route-planning')" translate>
+                                In route planning
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('route-planned')" translate>
+                                Route planned
+                            </item>
+
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('delivered')" translate>
+                                Delivered
+                            </item>
+
+                        </select-button>
+
                         <button if-claims="edit-order" disabled.bind="!order.state.canBeEdited" appearance="outline" accent="primary" click.trigger="onEditOrderClick()">
                             <template if.bind="order.state.canBeEdited" translate>
                                 Edit order
