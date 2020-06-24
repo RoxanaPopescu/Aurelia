@@ -69,7 +69,6 @@ export class ExpressRouteService
      */
     public async estimateDriverRoute(routeId: string, stopIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<DriverRoute>
     {
-        console.log("ESTIMATE ROUTE IDS:", addRouteIds);
         const result = await this._apiClient.post("expressdispatch/estimatedriverroute",
         {
             body: { routeId, stopIds, addRouteIds },
