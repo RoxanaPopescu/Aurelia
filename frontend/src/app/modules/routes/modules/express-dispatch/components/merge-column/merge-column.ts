@@ -352,9 +352,13 @@ export class MergeColumnCustomElement
             this.workspace.isBusy = true;
             this.addingStops = true;
 
+            const expressStops = this.driverStops.filter(s => s.type == "express-route-stop") as IExpressRouteStop[];
+            const addRouteIds = [...new Set(expressStops.map(s => s.route.id))];
+
             await this._expressRouteService.updateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].routeId,
-                this.driverStops.map(s => s.stop.id));
+                this.driverStops.map(s => s.stop.id),
+                addRouteIds);
 
             this.canApply = true;
             this.addingStops = false;
@@ -508,9 +512,14 @@ export class MergeColumnCustomElement
         try
         {
             this.fetchingEstimate = true;
+
+            const expressStops = this.driverStops.filter(s => s.type == "express-route-stop") as IExpressRouteStop[];
+            const addRouteIds = [...new Set(expressStops.map(s => s.route.id))];
+
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
                 this.workspace.selectedDriverRoutes[0].routeId,
                 this.driverStops.map(s => s.stop.id),
+                addRouteIds,
                 signal);
 
             for (const estimatedStop of estimatedDriverRoute.stops)

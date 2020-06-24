@@ -23,6 +23,7 @@ import {
   ButtonSize
 } from "../../../../../../shared/src/webKit/button/index";
 import { OverviewData } from "../models/overviewData";
+import { debounce } from "throttle-debounce";
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -56,6 +57,7 @@ export default class CreatePrebookingComponent extends React.Component<
 
   componentDidMount() {
     this.fetchData();
+    this.onSearchChange = debounce(280, false, this.onSearchChange);
   }
 
   private async fetchData(): Promise<void> {

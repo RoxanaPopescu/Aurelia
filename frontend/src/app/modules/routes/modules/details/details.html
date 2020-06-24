@@ -506,7 +506,7 @@
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
+                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
                             Cancelled
                         </item>
 
