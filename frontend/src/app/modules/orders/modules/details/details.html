@@ -305,7 +305,7 @@
                                 Change status
                             </div>
 
-                            <item disabled.bind="order.state.status.slug != 'delivered'" click.trigger="onStatusItemClick('placed')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('placed')" translate>
                                 Placed
                             </item>
 
@@ -313,7 +313,7 @@
                                 Validated
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('ready')" translate>
+                            <item disabled.bind="order.state.status.slug != 'delivered'" click.trigger="onStatusItemClick('ready')" translate>
                                 Ready
                             </item>
 
