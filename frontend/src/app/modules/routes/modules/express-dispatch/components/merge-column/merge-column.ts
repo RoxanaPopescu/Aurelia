@@ -525,7 +525,10 @@ export class MergeColumnCustomElement
             }
 
             this.fetchingEstimate = false;
-            this.canApply = this.expressStops.length === 0;
+
+            if (!this.addingStops) {
+                this.canApply = this.expressStops.length === 0;
+            }
         }
         catch (error)
         {

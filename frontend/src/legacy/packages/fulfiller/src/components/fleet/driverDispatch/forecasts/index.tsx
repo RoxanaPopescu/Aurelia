@@ -99,6 +99,8 @@ export default class ForecastsComponent extends React.Component<Props, State> {
                 createForecastDialogOpen: false
               });
 
+              this.fetchData();
+
               return true;
             } catch {
               return false;
