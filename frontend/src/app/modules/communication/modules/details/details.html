@@ -50,14 +50,18 @@
                         Cancel
                     </button>
 
-                    <button appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                    <button appearance="solid" disabled.bind="loading" accent="primary" click.trigger="onSaveClick()">
 
-                        <template if.bind="model.id == null" translate>
+                        <template if.bind="model.id == null && !loading" translate>
                             Create trigger
                         </template>
 
-                        <template if.bind="model.id != null" translate>
+                        <template if.bind="model.id != null && !loading" translate>
                             Save changes
+                        </template>
+
+                        <template if.bind="loading" translate>
+                            Saving...
                         </template>
 
                     </button>
@@ -164,7 +168,7 @@
                         <select-input
                             label="above"
                             none.bind="false"
-                            value.bind="model.customer"
+                            value.bind="model.customerId"
                             display-value.bind="selectedCustomer.primaryName"
                             class="flex-basis-1-of-2">
 

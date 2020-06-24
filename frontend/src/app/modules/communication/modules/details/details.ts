@@ -50,6 +50,11 @@ export class DetailsPage
     protected messageInputElement: HTMLElement;
 
     /**
+     * If updating or adding the trigger.
+     */
+    protected loading: boolean = false;
+
+    /**
      * The model to present.
      */
     protected model: CommunicationTrigger;
@@ -78,10 +83,10 @@ export class DetailsPage
     /**
      * The selected customer, if any.
      */
-    @computedFrom("model.customer", "availableCustomers")
+    @computedFrom("model.customerId", "availableCustomers")
     protected get selectedCustomer(): Outfit | undefined
     {
-        return this.availableCustomers.find(c => c.id === this.model.customer);
+        return this.availableCustomers.find(c => c.id === this.model.customerId);
     }
 
     /**
@@ -120,6 +125,8 @@ export class DetailsPage
             return;
         }
 
+        this.loading = true;
+
         try
         {
             if (this.model.slug == null)
@@ -138,6 +145,8 @@ export class DetailsPage
         catch (error)
         {
             Log.error("Could not save the communication trigger", error);
+        } finally {
+            this.loading = false;
         }
     }
 

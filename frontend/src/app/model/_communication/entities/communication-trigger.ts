@@ -19,7 +19,7 @@ export class CommunicationTrigger
             this.id = data.id;
             this.slug = data.slug;
             this.name = data.name;
-            this.customer = data.customer;
+            this.customerId = data.customerId;
             this.routeTags = data.routeTags;
             this.stopTags = data.stopTags;
             this.orderTags = data.orderTags;
@@ -32,6 +32,7 @@ export class CommunicationTrigger
             this.fromEmail = data.messageTemplate.fromEmail;
             this.messageSubject = data.messageTemplate.messageSubject;
             this.messageContent = data.messageTemplate.messageContent;
+            this.ownerOutfitId = data.ownerOutfitId;
         }
         else
         {
@@ -50,6 +51,11 @@ export class CommunicationTrigger
     public id: string;
 
     /**
+     * The ID the comunication trigger owner.
+     */
+    public ownerOutfitId: string;
+
+    /**
      * The slug identifying the comunication trigger.
      */
     public slug: string;
@@ -62,7 +68,7 @@ export class CommunicationTrigger
     /**
      * The customer for which this trigger should be enabled.
      */
-    public customer: string;
+    public customerId: string;
 
     /**
      * The route tags for which this trigger should be enabled.
@@ -134,7 +140,8 @@ export class CommunicationTrigger
             id: this.id,
             slug: this.slug,
             name: this.name,
-            customer: this.customer,
+            ownerOutfitId: this.ownerOutfitId,
+            customerId: this.customerId,
             routeTags: this.routeTags,
             stopTags: this.stopTags,
             orderTags: this.orderTags,
