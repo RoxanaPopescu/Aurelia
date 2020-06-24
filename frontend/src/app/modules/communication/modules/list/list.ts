@@ -1,4 +1,4 @@
-import { autoinject, observable, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { ISorting, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
@@ -56,7 +56,6 @@ export class ListPage
     /**
      * The sorting to use for the table.
      */
-    @observable({ changeHandler: "update" })
     protected sorting: ISorting =
     {
         property: "name",
@@ -66,25 +65,21 @@ export class ListPage
     /**
      * The text in the filter text input.
      */
-    @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
 
     /**
      * The trigger event filter.
      */
-    @observable({ changeHandler: "update" })
     protected eventTypeFilter: CommunicationTriggerEventSlug[] | undefined;
 
     /**
      * The message type filter.
      */
-    @observable({ changeHandler: "update" })
     protected messageTypeFilter: CommunicationMessageTypeSlug[] | undefined;
 
     /**
      * The message recipient filter.
      */
-    @observable({ changeHandler: "update" })
     protected recipientFilter: CommunicationRecipientSlug[] | undefined;
 
     /**
@@ -111,11 +106,11 @@ export class ListPage
         .map(key => new CommunicationMessageType(key as any));
 
     @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter")
-    protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[]
+    protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[] | undefined
     {
         if (this.triggers == null)
         {
-            return [];
+            return undefined;
         }
 
         const offset = this.sorting.direction === "ascending" ? 1 : -1;

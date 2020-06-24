@@ -47,28 +47,7 @@ export default
             "DriverName"
         ])
     },
-    "eta-specific-time":
-    {
-        recipientTypes:
-        [
-            "delivery-customer"
-        ],
-        messageTypes:
-        [
-            "sms",
-            "email"
-        ],
-        placeholders: getPlaceholders(
-        [
-            "OrderId",
-            "DeliveryCustomerName",
-            "DeliveryLocationAddress",
-            "DeliveryTimeFrame",
-            "DeliveryEtaDate",
-            "DeliveryEtaTime"
-        ])
-    },
-    "eta-before-delivery":
+    "order-delivery-eta-provided":
     {
         recipientTypes:
         [
@@ -91,7 +70,7 @@ export default
             "DriverName"
         ])
     },
-    "eta-before-pickup":
+    "order-pickup-eta-provided":
     {
         recipientTypes:
         [
@@ -114,108 +93,6 @@ export default
             "DriverName"
         ])
     },
-    "delayed-delivery":
-    {
-        recipientTypes:
-        [
-            "delivery-customer"
-        ],
-        messageTypes:
-        [
-            "sms",
-            "email"
-        ],
-        placeholders: getPlaceholders(
-        [
-            "OrderId",
-            "DeliveryCustomerName",
-            "DeliveryLocationAddress",
-            "DeliveryTimeFrame",
-            "DeliveryEtaDate",
-            "DeliveryEtaTime",
-            "DriverPhone",
-            "DriverName"
-        ])
-    },
-    "delayed-pickup":
-    {
-        recipientTypes:
-        [
-            "delivery-customer"
-        ],
-        messageTypes:
-        [
-            "sms",
-            "email"
-        ],
-        placeholders: getPlaceholders(
-        [
-            "OrderId",
-            "PickupCustomerName",
-            "PickupLocationAddress",
-            "PickupTimeFrame",
-            "PickupEtaDate",
-            "PickupEtaTime",
-            "DeliveryEtaDate",
-            "DeliveryEtaTime",
-            "DriverPhone",
-            "DriverName"
-        ])
-    },
-    "order-cancelled-en-route":
-    {
-        recipientTypes:
-        [
-            "pickup-customer",
-            "driver",
-            "supplier"
-        ],
-        messageTypes:
-        [
-            "sms",
-            "email",
-            "app-push"
-        ],
-        placeholders: getPlaceholders(
-        [
-            "OrderId",
-            "PickupCustomerName",
-            "PickupLocationAddress",
-            "DriverName",
-            "DriverPhone",
-            "DeliveryCustomerName",
-            "DeliveryLocationAddress",
-            "RouteReference",
-            "RouteId"
-        ])
-    },
-    "order-modified-en-rout":
-    {
-        recipientTypes:
-        [
-            "driver",
-            "supplier"
-        ],
-        messageTypes:
-        [
-            "sms",
-            "email",
-            "app-push"
-        ],
-        placeholders: getPlaceholders(
-        [
-            "OrderId",
-            "PickupCustomerName",
-            "PickupLocationAddress",
-            "DriverName",
-            "DriverPhone",
-            "DeliveryCustomerName",
-            "DeliveryLocationAddress",
-            "StopNumber",
-            "RouteReference",
-            "RouteId"
-        ])
-    }
 };
 
 function getPlaceholders(placeholders: string[]): { placeholder: string; description: string }[]

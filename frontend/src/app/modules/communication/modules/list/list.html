@@ -216,7 +216,7 @@
 
                 <busy-indicator if.bind="triggers == null && !orderedAndFilteredTriggers" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="orderedAndFilteredTriggers.length == 0" class="margin-largest">
+                <empty-indicator if.bind="orderedAndFilteredTriggers != null && orderedAndFilteredTriggers.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
