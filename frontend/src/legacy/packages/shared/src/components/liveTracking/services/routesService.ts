@@ -149,6 +149,9 @@ export class RouteFilter {
   }
 }
 
+const pollIntervalFocus = 7000;
+const pollIntervalOutOfFocus = 30000;
+
 /**
  * Represents a service that manages the routes shown in live tracking.
  */
@@ -157,7 +160,7 @@ export class RoutesService {
   /* tslint:disable-next-line: no-any */
   private pollTimeout: any;
   private pollSession = 0;
-  private pollLoading = false;
+  private pollInterval = pollIntervalFocus;
 
   @observable
   public _routes: Route[] | undefined;
@@ -338,18 +341,21 @@ export class RoutesService {
     this.paused = true;
   }
 
+  public setNotInFocus() {
+    this.pollInterval = pollIntervalOutOfFocus;
+  }
+
+  public setInFocus() {
+    this.pollInterval = pollIntervalFocus;
+  }
+
   /**
    * Fetches the tracked routes, then schedules the next poll.
    * @returns A promise that will be resolved when the poll succeedes.
    */
   private async poll(): Promise<void> {
-    if (this.pollLoading) {
-      return; // Not possible to poll while polling
-    }
-
     clearTimeout(this.pollTimeout);
     this.pollSession++;
-    this.pollLoading = true;
 
     try {
       const pollSession = this.pollSession;
@@ -361,7 +367,6 @@ export class RoutesService {
       return new Promise<void>((resolve, reject) => {
         setTimeout(async () => {
           try {
-
             if (pollSession !== this.pollSession) {
               return;
             }
@@ -386,10 +391,8 @@ export class RoutesService {
             reject(error);
           } finally {
             if (!this.paused) {
-              this.pollTimeout = setTimeout(() => this.poll(), 7000);
+              this.pollTimeout = setTimeout(() => this.poll(), this.pollInterval);
             }
-
-            this.pollLoading = false;
           }
         });
       });

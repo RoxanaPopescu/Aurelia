@@ -92,11 +92,11 @@ export default class LiveTrackingComponent extends React.Component {
   }
 
   onBlur = () => {
-    this.routesService.pausePolling();
+    this.routesService.setNotInFocus();
   }
 
   onFocus = () => {
-    this.routesService.startPolling();
+    this.routesService.setInFocus();
   }
 
   public render() {

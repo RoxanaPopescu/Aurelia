@@ -238,6 +238,7 @@ export class DetailsModule
         try
         {
             await this.routeService.setRouteStatus(this.route!, status);
+            this.fetchRoute()
         }
         catch (error)
         {
@@ -397,7 +398,10 @@ export class DetailsModule
 
                 if (this.route.status.slug === "in-progress") {
                     this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                } else {
+                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 30000);
                 }
+
             } catch (error) {
                 if (!(error instanceof AbortError)) {
                     Log.error("An error occurred while loading this route.\n", error);
