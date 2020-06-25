@@ -116,6 +116,9 @@ a[appearance]
     // Prevent shrinking.
     flex-shrink: 0;
 
+    // Center content on the cross axis, if flex layout is applied.
+    align-items: center;
+
     &:not([appearance="none"])
     {
         // Style to appear as a button.

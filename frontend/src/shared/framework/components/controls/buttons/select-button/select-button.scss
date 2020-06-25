@@ -28,6 +28,9 @@ select-button
         {
             // Apply spacing between padding.
             margin-right: var(--size-inline-spacing-large);
+
+            // Center content on the cross axis, if flex layout is applied.
+            align-items: center;
         }
 
         [slot="icon"]
