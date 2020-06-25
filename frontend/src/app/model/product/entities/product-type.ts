@@ -36,11 +36,11 @@ export class ProductType
      */
     public static readonly values =
     {
-        "curier-eco":
+        "courier-eco":
         {
             name: "Curier ECO"
         },
-        "curier-express":
+        "courier-express":
         {
             name: "Curier Express"
         },

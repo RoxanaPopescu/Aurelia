@@ -45,27 +45,21 @@ export class Route extends React.Component<RoutesLayerProps> {
         <div className={"c-liveTracking-route-bar " + boxStyle} />
         <div>
 
-          <div
-            className={`
-              c-liveTracking-routesPanel-route-flag
-              ${isFlagged ? "c-liveTracking-routesPanel-route-flag--active" : ""}`}
-            onClick={event => this.onFlagClick(event)}
-          >
-            <Icon name="eye"/>
-          </div>
-
-        </div>
-
-        <div>
-
           <div className="c-liveTracking-panel-section user-select-text suppress-double-click">
 
             <div className="c-liveTracking-panel-title c-liveTracking-routesPanel-route-title">
-
+              <div
+              className={`
+                c-liveTracking-routesPanel-route-flag
+                ${isFlagged ? "c-liveTracking-routesPanel-route-flag--active" : ""}`}
+              onClick={event => this.onFlagClick(event)}
+            >
+              <Icon name="eye"/>
+            </div>
               <div>
 
                 {Localization.sharedValue("LiveTracking_Route_Title", {
-                  slug: this.props.route.slug
+                  slug: this.props.route.slug.length >= 30 ? (this.props.route.slug.substr(0, 10) + "...") : this.props.route.slug
                 })}
 
                 {this.props.route.reference &&
@@ -116,22 +110,8 @@ export class Route extends React.Component<RoutesLayerProps> {
             {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedDelaysAtStop")}
             {" " + Localization.formatIntegersAsRanges(this.props.route.expectedDelays.map(s => s.stopNumber), 3)}
           </div>}
-          {this.renderCancelledOrFailedStops()}
           {this.renderDriverOffline()}
           {this.renderNoDriver()}
-          {this.props.route.expectedTooEarly.length > 0 &&
-            <div
-              onClick={e => this.onTooEarlyMessageClicked(e)}
-              className={`
-                c-liveTracking-panel-message
-                c-liveTracking-box-clickable
-                c-liveTracking-box-neutral
-              `}
-            >
-              {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Route_ExpectedTooEarlyAtStop")}
-              {" " + Localization.formatIntegersAsRanges(this.props.route.expectedTooEarly.map(s => s.stopNumber), 3)}
-            </div>
-          }
         </div>
 
       </div>
@@ -242,17 +222,6 @@ export class Route extends React.Component<RoutesLayerProps> {
       // Needed to trigger change detection.
       this.props.routesService.selectedRouteStopId = undefined;
       this.props.routesService.selectedRouteStopId = this.props.route.expectedDelays[0].id;
-    });
-  }
-
-  private onTooEarlyMessageClicked(event: React.MouseEvent): void {
-    if (this.props.routesService.selectedRouteId === this.props.route.id) {
-      event.stopPropagation();
-    }
-    setTimeout(() => {
-      // Needed to trigger change detection.
-      this.props.routesService.selectedRouteStopId = undefined;
-      this.props.routesService.selectedRouteStopId = this.props.route.expectedTooEarly[0].id;
     });
   }
 }

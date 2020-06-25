@@ -19,9 +19,23 @@
   background: var(--colorNeutralRegular);
   color: white;
 }
+
+.c-liveTracking-routesPanel-filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border-radius: $listItemBorderRadius;
+  font-size: 12px;
+}
+
 .c-liveTracking-routesPanel-filters-input {
   margin-left: 10px;
-  width: 100%;
+  width: 55%;
+}
+
+.c-liveTracking-routesPanel-filters-info {
+  width: 45%;
+  background-color: var(--colorNeutralRegular) !important;
 }
 
 .c-liveTracking-routesPanel-filters-criticality {
@@ -29,16 +43,28 @@
   text-overflow: ellipsis;
 }
 
-.c-liveTracking-routesPanel-filters-criticality:hover {
-  .c-liveTracking-routesPanel-filters-badge {
-    &.c-liveTracking-box-positive {
-      background-color: var(--colorOkDarken) !important;
+.c-liveTracking-box-white {
+  background-color: white;
+  color: #555;
+}
+
+.c-liveTracking-routesPanel-filters-title {
+  font-size: 18px;
+  margin-bottom: 10px !important;
+}
+
+.c-liveTracking-routesPanel-filters-expanded {
+  margin: 6px 6px 6px 6px;
+  padding: 10px;
+  background-color: var(--colorNeutralRegular);
+
+  > div {
+    > div:not(:last-child) {
+      margin-bottom: 4px;
     }
-    &.c-liveTracking-box-warning {
-      background-color: var(--colorWarningDarken) !important;
-    }
-    &.c-liveTracking-box-negative {
-      background-color: var(--colorAlertDarken) !important;
-    }
+  }
+
+  > div:not(:last-child) {
+    margin-bottom: 20px;
   }
 }

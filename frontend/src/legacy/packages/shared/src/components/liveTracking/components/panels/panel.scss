@@ -40,7 +40,7 @@
 .c-liveTracking-panel-message {
   display: flex;
   justify-content: space-between;
-  padding: 8px;
+  padding: 6px 8px;
   border-radius: $listItemBorderRadius;
   font-size: 12px;
 
@@ -54,7 +54,7 @@
 }
 
 .c-liveTracking-panel-section {
-  
+
   &:not(:last-child) {
     margin-bottom: 10px;
   }
