@@ -2,7 +2,7 @@ import { autoinject, bindable } from "aurelia-framework";
 import { MapObject } from "shared/types";
 
 @autoinject
-export class EtaBeforeDeliveryParamsCustomElement
+export class OrderDeliveryEtaProvidedParamsCustomElement
 {
     /**
      * The representing the parameters to present.

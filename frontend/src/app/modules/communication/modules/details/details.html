@@ -6,13 +6,8 @@
 
     <require from="./components/order-pickup-completed-params/order-pickup-completed-params"></require>
     <require from="./components/order-delivery-arrived-params/order-delivery-arrived-params"></require>
-    <require from="./components/eta-specific-time-params/eta-specific-time-params"></require>
-    <require from="./components/eta-before-delivery-params/eta-before-delivery-params"></require>
-    <require from="./components/eta-before-pickup-params/eta-before-pickup-params"></require>
-    <require from="./components/delayed-delivery-params/delayed-delivery-params"></require>
-    <require from="./components/delayed-pickup-params/delayed-pickup-params"></require>
-    <require from="./components/order-cancelled-en-route-params/order-cancelled-en-route-params"></require>
-    <require from="./components/order-modified-en-route-params/order-modified-en-route-params"></require>
+    <require from="./components/order-delivery-eta-provided-params/order-delivery-eta-provided-params"></require>
+    <require from="./components/order-pickup-eta-provided-params/order-pickup-eta-provided-params"></require>
 
     <require from="./details.scss"></require>
 
@@ -253,40 +248,15 @@
                         model.bind="model.parameters">
                     </order-delivery-arrived-params>
 
-                    <eta-specific-time-params
-                        if.bind="model.eventType.slug === 'eta-specific-time'"
+                    <order-delivery-eta-provided-params
+                        if.bind="model.eventType.slug === 'order-delivery-eta-provided'"
                         model.bind="model.parameters">
-                    </eta-specific-time-params>
+                    </order-delivery-eta-provided-params>
 
-                    <eta-before-delivery-params
-                        if.bind="model.eventType.slug === 'eta-before-delivery'"
+                    <order-pickup-eta-provided-params
+                        if.bind="model.eventType.slug === 'order-pickup-eta-provided'"
                         model.bind="model.parameters">
-                    </eta-before-delivery-params>
-
-                    <eta-before-pickup-params
-                        if.bind="model.eventType.slug === 'eta-before-pickup'"
-                        model.bind="model.parameters">
-                    </eta-before-pickup-params>
-
-                    <delayed-delivery-params
-                        if.bind="model.eventType.slug === 'delayed-delivery'"
-                        model.bind="model.parameters">
-                    </delayed-delivery-params>
-
-                    <delayed-pickup-params
-                        if.bind="model.eventType.slug === 'delayed-pickup'"
-                        model.bind="model.parameters">
-                    </delayed-pickup-params>
-
-                    <order-cancelled-en-route-params
-                        if.bind="model.eventType.slug === 'order-cancelled-en-route'"
-                        model.bind="model.parameters">
-                    </order-cancelled-en-route-params>
-
-                    <order-modified-en-route-params
-                        if.bind="model.eventType.slug === 'order-modified-en-route'"
-                        model.bind="model.parameters">
-                    </order-modified-en-route-params>
+                    </order-pickup-eta-provided-params>
 
                 </numbered-section>
 
