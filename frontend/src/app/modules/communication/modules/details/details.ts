@@ -145,7 +145,9 @@ export class DetailsPage
         catch (error)
         {
             Log.error("Could not save the communication trigger", error);
-        } finally {
+        }
+        finally
+        {
             this.loading = false;
         }
     }
@@ -159,7 +161,6 @@ export class DetailsPage
     {
         setTimeout(() =>
         {
-            (this.messageInputElement.querySelector(".input-input") as HTMLElement).focus();
             document.execCommand("insertText", false, placeholder);
         });
     }
