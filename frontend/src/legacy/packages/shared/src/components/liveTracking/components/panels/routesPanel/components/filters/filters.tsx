@@ -7,6 +7,7 @@ import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
 import { ProductType } from "app/model/product";
+import { VehicleType } from "shared/src/model/session";
 
 export interface RoutesLayerProps {
   routesService: RoutesService;
@@ -143,6 +144,20 @@ export class Filters extends React.Component<RoutesLayerProps> {
             >
               {new ProductType("courier-express").name}
             </InputCheckbox>
+          </div>
+          <div>
+            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
+            {VehicleType.getAll().map(v =>
+              <InputCheckbox
+                className="c-liveTracking-routesPanel-filters-criticality"
+                key={v.id}
+                checked={this.props.routesService.filter.vehicleTypeEnabled(v.slug)}
+                onChange={() => this.props.routesService.filter.vehicleTypeEnableDisable(v.slug)
+                }
+              >
+                {v.name}
+              </InputCheckbox>
+            )}
           </div>
         </div>}
       </React.Fragment>

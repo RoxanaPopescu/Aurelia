@@ -7,6 +7,7 @@ import { routeFlagService } from "./routeFlagService";
 import { Driver } from "app/model/driver";
 import { RouteCriticalitySlug, RouteStatusSlug, RouteCriticality } from "app/model/route";
 import { ProductTypeSlug, ProductType } from "app/model/product";
+import { VehicleType } from "shared/src/model/session";
 
 const filterProductTypesKey = "live-tracking-filter-products";
 const routeStatusSortOrder: (keyof typeof RouteStatus.map)[] =
@@ -49,6 +50,12 @@ export class RouteFilter {
   public statuses: RouteStatusSlug[] = [];
 
   /**
+   * The statues to show
+   */
+  @observable
+  public vehicleTypes: string[] = [];
+
+  /**
    * The amount of filters applied
    */
   @computed
@@ -64,6 +71,10 @@ export class RouteFilter {
     }
 
     if (this.statuses.length > 0 && this.statuses.length != 3) {
+      count++;
+    }
+
+    if (this.vehicleTypes.length > 0 && this.vehicleTypes.length != VehicleType.getAll().length) {
       count++;
     }
 
@@ -120,6 +131,30 @@ export class RouteFilter {
     }
 
     this.statuses = results;
+  }
+
+  vehicleTypeEnabled(slug: string): boolean {
+    if (this.vehicleTypes.length == VehicleType.getAll().length || this.vehicleTypes.length == 0) {
+      return true;
+    }
+
+    return this.vehicleTypes.includes(slug);
+  }
+
+  vehicleTypeEnableDisable(slug: string) {
+    let results = [...this.vehicleTypes];
+    if (results.length == 0) {
+      results = VehicleType.getAll().map(v => v.slug);
+    }
+
+    let index = results.indexOf(slug);
+    if (index != -1) {
+      results.splice(index, 1);
+    } else {
+      results.push(slug);
+    }
+
+    this.vehicleTypes = results;
   }
 
   productEnabled(product: ProductTypeSlug): boolean {
@@ -219,7 +254,7 @@ export class RoutesService {
       return [];
     }
 
-    if (this.filter.searchQuery == null && this.filter.criticalities.length == 0 && this.filter.statuses.length == 0 && this.filter.products.length == 0) {
+    if (this.filter.searchQuery == null && this.filter.criticalities.length == 0 && this.filter.vehicleTypes.length == 0 && this.filter.statuses.length == 0 && this.filter.products.length == 0) {
       return this.routes;
     }
 
@@ -239,6 +274,12 @@ export class RoutesService {
 
         if (this.filter.statuses.length > 0) {
           if (!this.filter.statuses.includes(route.status.slug)) {
+            return false;
+          }
+        }
+
+        if (this.filter.vehicleTypes.length > 0) {
+          if (!this.filter.vehicleTypes.includes(route.vehicleType.slug)) {
             return false;
           }
         }

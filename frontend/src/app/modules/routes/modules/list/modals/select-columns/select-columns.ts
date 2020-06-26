@@ -18,7 +18,7 @@ export class SelectColumnsPanel
     private _result: RouteListColumn[] | undefined;
 
     /**
-     * The route to which a driver should be assigned
+     * The selected columns
      */
     protected columns: RouteListColumnSlug[];
 
