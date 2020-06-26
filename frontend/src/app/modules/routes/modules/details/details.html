@@ -122,7 +122,7 @@
 
                 </name-value-pair>
 
-                <name-value-pair>
+                <name-value-pair class="margin-bottom">
 
                     <div slot="name" translate>
                         Colli count
@@ -130,6 +130,30 @@
 
                     <div slot="value" empty-value>
                         ${route.totalColliCount | number}
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair class="margin-bottom">
+
+                    <div slot="name" translate>
+                        Complexity
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.complexity | number}%
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        Criticality
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.criticality.name}
                     </div>
 
                 </name-value-pair>

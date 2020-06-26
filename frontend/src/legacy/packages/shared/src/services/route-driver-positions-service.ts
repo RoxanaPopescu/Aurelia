@@ -24,11 +24,13 @@ export class RouteDriverPositionsService
             let iterations = Math.round(this.playTime.milliseconds / this.timeoutDelay.milliseconds);
             this.increment = Duration.fromMillis(rangeDuration.milliseconds / iterations);
         }
+
+        this.status = "showing-all";
     }
 
     public readonly positions: Position[];
     public readonly canPlay: boolean;
-    @observable public status: "playing" | "paused" | "idle" = "idle";
+    @observable public status: "playing" | "paused" | "idle" | "showing-all" = "idle";
     @observable public currentPosition?: Position;
     private currentPositionIndex = 0;
 

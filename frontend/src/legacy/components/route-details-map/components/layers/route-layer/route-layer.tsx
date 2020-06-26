@@ -6,11 +6,13 @@ import { DriverMarker } from "../../features/driver-marker/driver-marker";
 import { Route, RouteStop } from "app/model/route";
 import { Position } from "app/model/shared";
 import { DriverPastMarker } from "../../features/driver-past-marker/driver-past-marker";
+import { DriverSegmentLine } from "../../features/driver-segment-line/driver-segment-line";
 
 export interface RouteLayerProps
 {
     route: Route;
     pastDriverPosition?: Position;
+    allPastDriverPositions?: Position[];
     onRouteClick?: (route: Route) => void;
     onStopClick?: (route: Route, stop: RouteStop) => void;
 }
@@ -18,8 +20,40 @@ export interface RouteLayerProps
 @observer
 export class RouteLayer extends React.Component<RouteLayerProps> {
 
+    public renderPastPositions(): undefined | JSX.Element[] {
+        let positions = this.props.allPastDriverPositions;
+
+        if (positions == null) {
+            return undefined;
+        }
+
+        let length = positions.length;
+        let components: JSX.Element[] = positions.map((p, i) => {
+            const showPopup = (i == 0 || i == length-1)
+            return (<DriverPastMarker
+                    key={`DriverPastMarker` + p.latitude.toString + p.longitude.toString()}
+                    position={p}
+                    showPopup={showPopup}
+                />);
+        });
+
+        if (length > 1) {
+            components.push(
+                <DriverSegmentLine
+                    key={`DriverSegmentLine`}
+                    positions={positions}
+                    faded={false}
+                />
+            );
+        }
+
+        return components;
+    }
+
     public render()
     {
+        let showingPastPositions = this.props.allPastDriverPositions ? true : false;
+
         return (
             <React.Fragment>
 
@@ -29,10 +63,11 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                         <RouteSegmentLine
                             key={`RouteSegmentLine-driver-${this.props.route.stops[0].id}`}
                             routeStops={[this.props.route.driverPosition!, this.props.route.stops[0]]}
+                            faded={showingPastPositions}
                             onClick={() => this.props.onRouteClick?.(this.props.route)}
                         />}
 
-                    {this.props.route.stops
+                    {!showingPastPositions && this.props.route.stops
                         .filter(s =>
                             s.status.slug !== "cancelled")
                         .map((s, i, a) => i > 0 &&
@@ -47,6 +82,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                             <RouteStopMarker
                                 key={`RouteStopMarker-${s.id}`}
                                 routeStop={s}
+                                faded={showingPastPositions}
                                 onClick={() => this.props.onStopClick?.(this.props.route, s)}
                             />)}
                 </>}
@@ -55,14 +91,11 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
                     <DriverMarker
                         key={`DriverMarker-${this.props.route.driver?.id}`}
                         route={this.props.route}
+                        faded={showingPastPositions}
                         onClick={() => this.props.onRouteClick?.(this.props.route)}
                     />}
 
-                {this.props.pastDriverPosition &&
-                    <DriverPastMarker
-                        key={`DriverPastMarker`}
-                        position={this.props.pastDriverPosition}
-                    />}
+                {this.renderPastPositions()}
 
             </React.Fragment>
         );

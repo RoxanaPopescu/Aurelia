@@ -8,12 +8,15 @@ import Localization from "shared/src/localization";
 
 export interface DriverPastMarkerProps {
   position: Position;
+  showPopup: boolean;
 }
 
 @observer
 export class DriverPastMarker extends Marker<DriverPastMarkerProps> {
   componentDidMount() {
-    this.showPopup();
+    if (this.props.showPopup) {
+      this.showPopup();
+    }
   }
 
   protected renderMarker() {
@@ -24,6 +27,8 @@ export class DriverPastMarker extends Marker<DriverPastMarkerProps> {
         icon=" "
         labelAnchor={new google.maps.Point(4, 4)}
         position={position}
+        onMouseOver={() => this.showPopup()}
+        onMouseOut={() => this.hidePopup()}
         zIndex={999}
       >
         <React.Fragment>

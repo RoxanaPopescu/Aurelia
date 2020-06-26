@@ -261,11 +261,11 @@
                 <div if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" class="card-section-bottom card-section">
 
                     <div class="font-small opacity-faded" translate>
-                        Difficulty
+                        Complexity
                     </div>
 
                     <div class="font-largest" empty-value>
-                        ${route.criticality.name}
+                        ${route.complexity | number}%
                     </div>
 
                     <div class="font-small">

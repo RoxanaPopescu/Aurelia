@@ -44,7 +44,7 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
 
     private async fetchDriverRoute() {
         if (this.positionService) {
-            this.positionService.playOrResume();
+            this.positionService.status = this.positionService.status == "idle" ? "showing-all" : "idle";
             return;
         }
 
@@ -52,8 +52,6 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
         this.failedDriverPositions = false;
         try {
             this.positionService = await this.props.routeService.getDriverPositions(this.props.route!);
-            this.positionService?.play();
-            this.panToCurrentPosition();
         } catch {
             this.failedDriverPositions = true;
         } finally {
@@ -79,10 +77,12 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
                 return "Playing route, click to pause";
             } else if (this.positionService.status == "paused") {
                 return "Playing route, click resume";
+            } else if (this.positionService.status == "showing-all") {
+                return "Hide driving route";
             }
         }
 
-        return "Play driven route";
+        return "Show driving route";
     }
 
     componentWillUnmount() {
@@ -128,7 +128,7 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
                     <RouteLayer
                         key={`RouteLayer-${this.props.route.driver?.id}`}
                         route={this.props.route}
-                        pastDriverPosition={this.positionService?.currentPosition}
+                        allPastDriverPositions={this.positionService?.status == "showing-all" ? this.positionService?.positions : undefined}
                         onRouteClick={(route) => this.props.onRouteClick?.(route)}
                         onStopClick={(route, stop) => this.props.onStopClick?.(route, stop)}
                     />}
