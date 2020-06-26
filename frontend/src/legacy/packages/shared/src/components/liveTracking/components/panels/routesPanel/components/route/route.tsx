@@ -56,6 +56,8 @@ export class Route extends React.Component<RoutesLayerProps> {
             >
               <Icon name="eye"/>
             </div>
+            <div className="c-liveTracking-routesPanel-route-title-container">
+
               <div>
 
                 {Localization.sharedValue("LiveTracking_Route_Title", {
@@ -73,7 +75,7 @@ export class Route extends React.Component<RoutesLayerProps> {
               <div className="c-liveTracking-routesPanel-route-owner">
                 {this.props.route.owner?.companyName}
               </div>
-
+              </div>
             </div>
 
             <div className="c-liveTracking-routesPanel-route-info">
