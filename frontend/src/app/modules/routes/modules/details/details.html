@@ -267,7 +267,7 @@
 
                 </name-value-pair>
 
-                <name-value-pair>
+                <name-value-pair class="margin-bottom">
 
                     <div slot="name" translate>
                         Driver phone
@@ -275,6 +275,18 @@
 
                     <div slot="value" empty-value>
                         ${route.driver.phone}
+                    </div>
+
+                </name-value-pair>
+
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        Driver system
+                    </div>
+
+                    <div slot="value" empty-value>
+                        ${route.driver.device.os} (${route.driver.device.appVersion})
                     </div>
 
                 </name-value-pair>

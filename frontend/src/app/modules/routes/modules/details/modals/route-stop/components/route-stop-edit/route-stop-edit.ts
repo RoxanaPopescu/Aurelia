@@ -43,6 +43,30 @@ export class RouteStopEditCustomElement
     public onCancel: () => void;
 
     /**
+     * The local date element for stop driver arrived date
+     */
+    @observable({ changeHandler: "arrivedDateTimeChanged" })
+    public arrivedDate: DateTime | undefined;
+
+    /**
+     * The local time element for stop driver arrived time
+     */
+    @observable({ changeHandler: "arrivedDateTimeChanged" })
+    public arrivedTime: Duration | undefined;
+
+    /**
+     * The local date element for stop driver completed date
+     */
+    @observable({ changeHandler: "completedDateTimeChanged" })
+    public completedDate: DateTime | undefined;
+
+    /**
+     * The local time element for stop driver completed time
+     */
+    @observable({ changeHandler: "completedDateTimeChanged" })
+    public completedTime: Duration | undefined;
+
+    /**
      * The local date element for stop arrival date
      */
     @observable
@@ -71,12 +95,55 @@ export class RouteStopEditCustomElement
             this.date = this.model.routeStop.arrivalTimeFrame.from?.startOf("day");
             this.timeFrom = this.model.routeStop.arrivalTimeFrame.from?.diff(this.model.routeStop.arrivalTimeFrame.from?.startOf("day"));
             this.timeTo = this.model.routeStop.arrivalTimeFrame.to?.diff(this.model.routeStop.arrivalTimeFrame.to?.startOf("day"));
+
         } else {
             // New stop, default to last index
             if (this.model.route.stops[0] instanceof RouteStop) {
                 this.date = this.model.route.stops[0].arrivalTimeFrame.from?.startOf("day");
             }
         }
+
+        if (this.model.routeStop.arrivedTime != null) {
+            const arrivedDateTime = this.model.routeStop.arrivedTime.plus({ seconds: 0});
+            const date = arrivedDateTime.startOf("day");
+            this.arrivedDate = date;
+            this.arrivedTime = arrivedDateTime.diff(date);
+        }
+
+        if (this.model.routeStop.completedTime != null) {
+            const completedDateTime = this.model.routeStop.completedTime.plus({ seconds: 0});
+            const date = completedDateTime.startOf("day");
+            this.completedDate = date;
+            this.completedTime = completedDateTime.diff(date);
+        }
+    }
+
+    /**
+     * Called when the completedDate or completedTime changes value.
+     */
+    protected completedDateTimeChanged(): void
+    {
+        if (this.completedDate == null || this.completedTime == null) {
+            this.model.routeStop.completedTime = undefined;
+            return;
+        }
+
+        const date = this.completedDate.toUTC();
+        this.model.routeStop.completedTime = date.startOf("day").plus(this.completedTime);
+    }
+
+    /**
+     * Called when the arrivedTime or arrivedDate changes value.
+     */
+    protected arrivedDateTimeChanged(): void
+    {
+        if (this.arrivedDate == null || this.arrivedTime == null) {
+            this.model.routeStop.arrivedTime = undefined;
+            return;
+        }
+
+        const date = this.arrivedDate.toUTC();
+        this.model.routeStop.arrivedTime = date.startOf("day").plus(this.arrivedTime);
     }
 
     /**

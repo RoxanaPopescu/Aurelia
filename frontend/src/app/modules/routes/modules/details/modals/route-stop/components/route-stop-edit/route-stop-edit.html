@@ -266,7 +266,7 @@
     <modal-section class="--line-above">
 
         <div slot="header" translate>
-            Requirements
+            Driver tasks
         </div>
 
         <div class="control-row margin-large-bottom">
@@ -452,6 +452,101 @@
             </check-toggle>
 
         </div>
+
+        <modal-section class="margin-bottom --line-above">
+
+            <div slot="header" translate>
+                Driver times
+            </div>
+
+            <div class="control-row margin-large-bottom">
+                <date-input
+                    disabled.bind="!['arrived', 'completed'].includes(model.routeStop.status.slug)"
+                    class="flex-basis-1-of-3"
+                    label="above"
+                    value.bind="arrivedDate">
+
+                    <div slot="heading" translate>
+                        Arrived date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            enabled.bind="arrivedTime ? undefined : false"
+                            value.bind="arrivedDate">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+                <time-input
+                    disabled.bind="!['arrived', 'completed'].includes(model.routeStop.status.slug)"
+                    label="above"
+                    value.bind="arrivedTime"
+                    class="flex-basis-1-of-3">
+
+                    <div slot="heading" translate>
+                        Time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            enabled.bind="arrivedDate ? undefined : false"
+                            value.bind="arrivedTime">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+            </div>
+
+            <div class="control-row">
+                <date-input
+                    disabled.bind="!['completed'].includes(model.routeStop.status.slug)"
+                    class="flex-basis-1-of-3"
+                    label="above"
+                    value.bind="completedDate">
+
+                    <div slot="heading" translate>
+                        Completed date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            enabled.bind="completedTime ? undefined : false"
+                            value.bind="completedDate">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+                <time-input
+                    disabled.bind="!['completed'].includes(model.routeStop.status.slug)"
+                    label="above"
+                    value.bind="completedTime"
+                    class="flex-basis-1-of-3">
+
+                    <div slot="heading" translate>
+                        Time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            enabled.bind="completedDate ? undefined : false"
+                            value.bind="completedTime">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+            </div>
+        </modal-section>
 
     </modal-section>
 

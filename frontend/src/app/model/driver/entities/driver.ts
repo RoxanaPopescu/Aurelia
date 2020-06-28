@@ -22,6 +22,7 @@ export class Driver
             this.email = data.email;
             this.pictureUrl = data.pictureUrl;
             this.vehicleTypes = vehicleTypes;
+            this.device = data.device;
             if (data.position) {
                 this.position = new Position(data.position);
             }
@@ -48,6 +49,11 @@ export class Driver
      * The name of the driver.
      */
     public name: PersonName;
+
+    /**
+     * The device of the driver.
+     */
+    public device: { appVersion: string, os: string };
 
     /**
      * The email of the driver.

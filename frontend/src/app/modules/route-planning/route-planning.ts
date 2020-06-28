@@ -3,6 +3,9 @@ import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
 import { IdentityService } from "app/services/identity";
 
+const moverOutfitId = "2ab2712b-5f60-4439-80a9-a58379cce885";
+const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
+
 /**
  * Represents the module.
  */
@@ -27,8 +30,6 @@ export class RoutePlanningModule
      * TODO: This should be removed when we move all customers to the new routeplans
      */
     private get legacyOutfit(): boolean {
-        const moverOutfitId = "2ab2712b-5f60-4439-80a9-a58379cce885";
-        const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
         const legacyOutfitIds = [moverOutfitId, coopOutfitId];
 
         const identity = this._identityService.identity;
