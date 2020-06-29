@@ -42,7 +42,13 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Dimensions
+                        Weight
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Dimensions (width/height/length)
                     </span>
                 </data-table-cell>
 
@@ -64,7 +70,13 @@
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${collo.weight | number}kg, H:${collo.dimensions.height} cm, L:${collo.dimensions.length} cm, B:${collo.dimensions.width} cm
+                            ${collo.weight | number}kg
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${collo.dimensions.height | number}m x ${collo.dimensions.length | number}m x ${collo.dimensions.width | number}m
                         </span>
                     </data-table-cell>
 

@@ -1,10 +1,11 @@
 import { Journey } from "./";
 import { Dimensions } from "app/model/shared";
+
 export class Collo {
   public id: string;
   public barcode: string;
   public weight?: number;
-  public dimenions?: Dimensions;
+  public dimensions?: Dimensions;
   public journey?: Journey;
 
   // tslint:disable-next-line:no-any
@@ -12,7 +13,9 @@ export class Collo {
     this.id = json.internalId;
     this.barcode = json.barcode;
     this.weight = json.weight;
-    this.dimenions = json.dimension;
+    if (json.dimensions) {
+      this.dimensions = new Dimensions(json.dimensions);
+    }
     if (json.journey) {
       this.journey = new Journey(json.journey);
     }
