@@ -26,18 +26,32 @@ export class RoutePlanningModule
     /**
      * Routeplan rule sets supports two implementations.
      * Legacy: What coop and Mover is still using
-     * New: What we are building for Ikea.
      * TODO: This should be removed when we move all customers to the new routeplans
      */
-    private get legacyOutfit(): boolean {
-        const legacyOutfitIds = [moverOutfitId, coopOutfitId];
-
+    private get showLegacy(): boolean {
         const identity = this._identityService.identity;
         if (identity == null) {
             return false;
         }
 
+        const legacyOutfitIds = [moverOutfitId, coopOutfitId];
         return legacyOutfitIds.includes(identity.outfit.id);
+    }
+
+    /**
+     * Routeplan rule sets supports two implementations.
+     * Legacy: What coop and Mover is still using
+     * TODO: This should be removed when we move all customers to the new routeplans
+     */
+    private get showNew(): boolean {
+        const identity = this._identityService.identity;
+
+        if (identity == null) {
+            return true;
+        }
+
+        const legacyOutfitIds = [coopOutfitId];
+        return !legacyOutfitIds.includes(identity.outfit.id);
     }
 
     /**
@@ -52,14 +66,12 @@ export class RoutePlanningModule
             {
                 name: "default",
                 route: "",
-                redirect: "plans"
+                redirect: this.showLegacy ? "plans-legacy" : "plans"
             },
             {
-                name: "list",
-                route: "plans",
-                moduleId: this.legacyOutfit ?
-                    PLATFORM.moduleName("./modules/legacy-route-plans/list/list") :
-                    PLATFORM.moduleName("./modules/plans/list/list"),
+                name: "list-legacy",
+                route: "plans-legacy",
+                moduleId: PLATFORM.moduleName("./modules/legacy-route-plans/list/list"),
                 settings:
                 {
                     claims:
@@ -67,15 +79,69 @@ export class RoutePlanningModule
                         "view-routeplans"
                     ]
                 },
-                title: routeTitles.list,
+                title: routeTitles.routePlans,
                 nav: false
+            },
+            {
+                name: "details-legacy",
+                route: "plans-legacy/details/:id",
+                moduleId: PLATFORM.moduleName("./modules/legacy-route-plans/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routeplans"
+                    ]
+                },
+                title: routeTitles.details
+            },
+            {
+                name: "rule-sets-list-legacy",
+                route: "rule-sets-legacy",
+                moduleId: PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routeplan-settings"
+                    ]
+                },
+                title: routeTitles.rulesList,
+                nav: this.showLegacy,
+                icon: "settings"
+            },
+            {
+                name: "rule-sets-details-legacy",
+                route: [ "rule-sets-legacy/details/:id", "rule-sets-legacy/create" ],
+                moduleId: PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routeplan-settings"
+                    ]
+                },
+                title: routeTitles.rulesDetails
+            },
+            {
+                name: "list",
+                route: "plans",
+                moduleId: PLATFORM.moduleName("./modules/plans/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routeplans"
+                    ]
+                },
+                title: (this.showNew && this.showLegacy) ? routeTitles.routePlansNew : routeTitles.routePlans,
+                nav: (this.showNew && this.showLegacy),
+                icon: "route-planning"
             },
             {
                 name: "details",
                 route: "plans/details/:id",
-                moduleId: this.legacyOutfit ?
-                    PLATFORM.moduleName("./modules/legacy-route-plans/details/details") :
-                    PLATFORM.moduleName("./modules/plans/details/details"),
+                moduleId: PLATFORM.moduleName("./modules/plans/details/details"),
                 settings:
                 {
                     claims:
@@ -88,9 +154,7 @@ export class RoutePlanningModule
             {
                 name: "rule-sets-list",
                 route: "rule-sets",
-                moduleId: this.legacyOutfit ?
-                    PLATFORM.moduleName("./modules/legacy-route-settings/list/list") :
-                    PLATFORM.moduleName("./modules/rule-sets/list/list"),
+                moduleId: PLATFORM.moduleName("./modules/rule-sets/list/list"),
                 settings:
                 {
                     claims:
@@ -98,16 +162,14 @@ export class RoutePlanningModule
                         "view-routeplan-settings"
                     ]
                 },
-                title: routeTitles.rulesList,
-                nav: true,
+                title: (this.showLegacy && this.showNew) ? routeTitles.rulesListNew : routeTitles.rulesList,
+                nav: this.showNew,
                 icon: "settings"
             },
             {
                 name: "rule-sets-details",
                 route: [ "rule-sets/details/:id", "rule-sets/create" ],
-                moduleId: this.legacyOutfit ?
-                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
-                    PLATFORM.moduleName("./modules/rule-sets/details/details"),
+                moduleId: PLATFORM.moduleName("./modules/rule-sets/details/details"),
                 settings:
                 {
                     claims:
@@ -116,21 +178,6 @@ export class RoutePlanningModule
                     ]
                 },
                 title: routeTitles.rulesDetails
-            },
-            {
-                name: "rule-sets-create",
-                route: "rule-sets/create",
-                moduleId: this.legacyOutfit ?
-                    PLATFORM.moduleName("./modules/legacy-route-settings/details/details") :
-                    PLATFORM.moduleName("./modules/rule-sets/details/details"),
-                settings:
-                {
-                    claims:
-                    [
-                        "create-routeplan-settings"
-                    ]
-                },
-                title: routeTitles.rulesCreate
             },
             {
                 name: "order-groups-list",

@@ -288,7 +288,7 @@ export namespace FulfillerSubPage {
       case FulfillerSubPage.RoutePlanningList:
         return FulfillerNavigationPage.path("RoutePlanning");
       case FulfillerSubPage.RoutePlanningSettingList:
-        return FulfillerNavigationPage.path("RoutePlanning") + "/settings";
+        return FulfillerNavigationPage.path("RoutePlanning") + "/rule-sets-legacy";
       case FulfillerSubPage.RoutePlanningSettingDetails:
         return (
           FulfillerNavigationPage.path("RoutePlanning") +
@@ -296,10 +296,10 @@ export namespace FulfillerSubPage {
         );
       case FulfillerSubPage.RoutePlanningSettingCreate:
         return (
-          FulfillerNavigationPage.path("RoutePlanning") + "/settings/create"
+          FulfillerNavigationPage.path("RoutePlanning") + "/rule-sets-legacy/create"
         );
       case FulfillerSubPage.RoutePlanningDetails:
-        return FulfillerNavigationPage.path("RoutePlanning") + "/details/:id";
+        return FulfillerNavigationPage.path("RoutePlanning") + "/plans-legacy/details/:id";
       case FulfillerSubPage.OrderGroupList:
         return (
           FulfillerNavigationPage.path("RoutePlanning") + "/order-groups"

@@ -1,7 +1,9 @@
 {
-    "list": "List",
+    "routePlans": "Route plans",
+    "routePlansNew": "Route plans (new)",
     "details": "Details",
     "rulesList": "Rule sets",
+    "rulesListNew": "Rule sets (new)",
     "rulesDetails": "Rule",
     "rulesCreate": "Create rule",
     "orderGroupsList": "Order groups",

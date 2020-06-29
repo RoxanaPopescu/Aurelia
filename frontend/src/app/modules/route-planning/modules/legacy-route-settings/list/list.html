@@ -24,7 +24,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if-claims="create-routeplan-settings" appearance="solid" class="flex-row flex-push-right" page-href="path: /route-planning/rule-sets/create">
+                    <button if-claims="create-routeplan-settings" appearance="solid" class="flex-row flex-push-right" page-href="path: /route-planning/rule-sets-legacy/create">
 
                         <icon name="add" class="font-larger margin-right"></icon>
 
@@ -60,7 +60,7 @@
                     <template repeat.for="setting of settings">
 
                         <data-table-row
-                            href="/route-planning/rule-sets/details/${setting.id}">
+                            href="/route-planning/rule-sets-legacy/details/${setting.id}">
 
                             <data-table-cell>
                                 ${setting.name}
