@@ -365,6 +365,11 @@
                 new.bind="true"
                 class="flex-basis-1-of-1">
 
+                <div slot="value">
+                    <tag model.bind="tag" repeat.for="tag of model.tags">
+                        ${tag}
+                    </tag>
+                </div>
             </tags-input>
 
         </modal-section>

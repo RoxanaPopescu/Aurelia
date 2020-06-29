@@ -69,29 +69,22 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate">
+                        <span class="text-truncate" if.bind="collo.weight">
                             ${collo.weight | number}kg
                         </span>
+
+                        <span if.bind="!collo.weight" empty-value />
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate">
+                        <span class="text-truncate" if.bind="collo.dimensions">
                             ${collo.dimensions.height | number}m x ${collo.dimensions.length | number}m x ${collo.dimensions.width | number}m
                         </span>
+
+                        <span if.bind="!collo.dimensions" empty-value />
                     </data-table-cell>
 
                     <data-table-cell align="right">
-
-                        <!-- <button
-                            title.translate="Remove order"
-                            class="icon-row"
-                            appearance="none"
-                            accent="primary"
-                            click.trigger="onRemoveOrderClick(order)">
-
-                            <icon name="delete-small"></icon>
-
-                        </button> -->
 
                     </data-table-cell>
 
