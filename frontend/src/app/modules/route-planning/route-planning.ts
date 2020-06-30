@@ -3,7 +3,7 @@ import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
 import { IdentityService } from "app/services/identity";
 
-const moverOutfitId = "2ab2712b-5f60-4439-80a9-a58379cce885";
+const moverOutfitId = "bf6d4bf2-49a2-44e7-9c49-489405c5776d";
 const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
 
 /**
