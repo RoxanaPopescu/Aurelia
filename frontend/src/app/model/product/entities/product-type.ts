@@ -38,11 +38,11 @@ export class ProductType
     {
         "courier-eco":
         {
-            name: "Curier ECO"
+            name: "Courier ECO"
         },
         "courier-express":
         {
-            name: "Curier Express"
+            name: "Courier Express"
         },
         "solution":
         {
