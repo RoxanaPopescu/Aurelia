@@ -165,8 +165,8 @@ export class RouteStop extends RouteStopBase
             port: this.port,
             driverInstructions: this.driverInstructions,
             actions: this.actions,
-            arrivedTime: this.arrivedTime,
-            completedTime: this.completedTime
+            arrivedTime: null, // this.arrivedTime,
+            completedTime: null // this.completedTime
         };
     }
 }
