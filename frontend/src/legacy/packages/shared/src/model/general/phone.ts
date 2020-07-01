@@ -8,7 +8,8 @@ export class Phone {
   public constructor(data?: any) {
     if (data != null) {
       this.countryPrefix = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
-            this.number = data.number ? data.number.replace(/\s/g, "").match(/.{1,2}/g).join(" ") : "";
+      this.notFormattedNumber = data.number ? data.number : "";
+      this.number = data.number ? data.number.replace(/\s/g, "").match(/.{1,2}/g).join(" ") : "";
     } else {
       this.countryPrefix = "45";
     }
@@ -25,6 +26,11 @@ export class Phone {
    */
   @observable
   public number: string;
+
+  /**
+   * The non formatted number
+   */
+  public notFormattedNumber: string;
 
   /**
    * True if the model is valid, otherwise false.
