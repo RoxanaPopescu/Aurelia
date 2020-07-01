@@ -512,12 +512,12 @@ export default class TrackingRoute extends React.Component<Props> {
 
         <PageHeaderComponent
           path={[
-            { title: "Ruter" },
-            { title: "Chauffør tracking" }
+            { title: Localization.operationsValue("DriverTracking_Rutes_Title") },
+            { title: Localization.operationsValue("Menu_Operation_DriverTracking") }
           ]}
         >
           <div className="body secondary c-driverTacking-help">
-            Chauffør ID
+            {Localization.operationsValue("DriverTracking_DriverIdPlaceholder")}
           </div>
           <InputPhone
             minlength={1}
