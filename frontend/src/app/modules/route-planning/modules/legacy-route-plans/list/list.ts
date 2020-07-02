@@ -106,7 +106,7 @@ export class ListPage
             return undefined;
         }
 
-        return `/route-planning/plans/details/${plan.slug}`;
+        return `/route-planning/plans-legacy/details/${plan.slug}`;
     }
 
     /**
