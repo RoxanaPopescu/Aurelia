@@ -162,8 +162,6 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
     this.splittingRoute = false;
     this.selectedDriverInfo = undefined;
     this.selectedVehicleType = undefined;
-    // Restart polling, so any pending requests are discarded.
-    this.props.routesService.startPolling();
   }
 
   private async onConfirmSplitClick(): Promise<void> {

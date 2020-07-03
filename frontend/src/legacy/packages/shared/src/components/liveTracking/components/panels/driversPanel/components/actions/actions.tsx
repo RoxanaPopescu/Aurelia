@@ -5,8 +5,11 @@ import { Icon } from "shared/src/webKit";
 import "./actions.scss";
 
 export interface ActionsProps {
-  enableConfirm: boolean;
-  onConfirmClick: () => void;
+  enableAssign: boolean;
+  enablePush: boolean;
+  showPush: boolean;
+  onPushClick: () => void;
+  onAssignClick: () => void;
   onBackClick: () => void;
 }
 
@@ -22,11 +25,20 @@ export class Actions extends React.Component<ActionsProps> {
           {Localization.sharedValue("LiveTracking_Actions_BackToRoute")}
         </a>
 
-        <a
-          className={!this.props.enableConfirm ? "disabled" : ""}
-          onClick={() => this.props.onConfirmClick()}
+        {this.props.showPush &&
+          <a
+          className={!this.props.enablePush ? "disabled" : ""}
+          onClick={() => this.props.onPushClick()}
         >
           {Localization.sharedValue("LiveTracking_Actions_SendPushDrivers")}
+        </a>
+        }
+
+        <a
+          className={!this.props.enableAssign ? "disabled" : ""}
+          onClick={() => this.props.onAssignClick()}
+        >
+          {Localization.sharedValue("LiveTracking_Actions_AssignToDriver")}
         </a>
 
       </div>

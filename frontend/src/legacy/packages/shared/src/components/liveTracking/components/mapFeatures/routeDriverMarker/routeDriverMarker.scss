@@ -3,6 +3,10 @@
 .c-liveTracking-routeDriverMarker {
   padding: 5px;
   pointer-events: none;
+
+  &.--faded {
+    opacity: 0.7;
+  }
 }
 
 .c-liveTracking-routeDriverMarker-base {

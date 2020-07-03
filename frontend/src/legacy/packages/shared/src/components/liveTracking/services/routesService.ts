@@ -200,6 +200,12 @@ export class RoutesService {
   @observable
   public _routes: Route[] | undefined;
 
+  @observable
+  drivers: Driver[] | undefined;
+
+  @observable
+  selectedDrivers: Driver[] = [];
+
   /**
    * True if the service is loading the routes, otherwise false.
    * Note that this will only be true for the initial request,
@@ -542,5 +548,14 @@ export class RoutesService {
         }
       }
     }
+  }
+
+  onSelectDriver(driver: Driver) {
+    let index = this.selectedDrivers.indexOf(driver);
+      if (index != -1) {
+        this.selectedDrivers.splice(index, 1);
+      } else {
+        this.selectedDrivers.push(driver);
+      }
   }
 }

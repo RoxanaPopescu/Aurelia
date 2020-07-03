@@ -15,7 +15,7 @@ import { SplitRoutePanel } from "./components/panels/splitRoutePanel/splitRouteP
 import "./components/panels/panel.scss";
 import "./index.scss";
 import { Log } from "shared/infrastructure";
-import { PushDriversPanel } from "./components/panels/pushDriversPanel/pushDriversPanel";
+import { DriversPanel } from "./components/panels/driversPanel/driversPanel";
 
 @observer
 export default class LiveTrackingComponent extends React.Component {
@@ -35,7 +35,7 @@ export default class LiveTrackingComponent extends React.Component {
   private routesBounds: google.maps.LatLngBounds;
   private reactionDisposers: IReactionDisposer[] = [];
 
-  @observable private routeSubPanel: undefined | "splitRoutePanel" | "pushDriversPanel";
+  @observable private routeSubPanel: undefined | "splitRoutePanel" | "driversPanel";
 
   @observable private selectedStops: RouteStop[] | undefined;
 
@@ -125,8 +125,8 @@ export default class LiveTrackingComponent extends React.Component {
                   onSplitRouteClick={selectedStops =>
                     this.onSplitRouteClick(selectedStops)
                   }
-                  onPushDriversClick={() =>
-                    this.onPushDriversClick()
+                  onDriversClick={() =>
+                    this.onDriversClick()
                   }
                 />
               )}
@@ -140,8 +140,8 @@ export default class LiveTrackingComponent extends React.Component {
               />
             )}
 
-            {this.routeSubPanel === "pushDriversPanel" && (
-              <PushDriversPanel
+            {this.routeSubPanel === "driversPanel" && (
+              <DriversPanel
                 routesService={this.routesService}
                 onConfirmClick={() => this.onConfirmPushDriversClick()}
                 onBackClick={() => (this.routeSubPanel = undefined)}
@@ -252,8 +252,8 @@ export default class LiveTrackingComponent extends React.Component {
     history.back();
   }
 
-  private onPushDriversClick(): void {
-    this.routeSubPanel = "pushDriversPanel";
+  private onDriversClick(): void {
+    this.routeSubPanel = "driversPanel";
     // history.pushState(history.state, "", window.location.href);
   }
 

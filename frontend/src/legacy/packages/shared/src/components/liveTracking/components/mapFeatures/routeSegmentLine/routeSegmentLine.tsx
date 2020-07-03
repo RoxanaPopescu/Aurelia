@@ -6,7 +6,7 @@ import { RouteStopBase } from "shared/src/model/logistics/routes";
 const strokeWeight = 2;
 
 // The opacity of the stroke, in the range [0.0, 1.0].
-const strokeOpacity = 0.9;
+const strokeOpacity = 0.4;
 
 export interface RouteSegmentLineProps {
   routeStops: (RouteStopBase)[];

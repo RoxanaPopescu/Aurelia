@@ -1,11 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { RouteStop, Route, RouteStopBase } from "shared/src/model/logistics/routes";
+import { RouteStop, Route } from "shared/src/model/logistics/routes";
 import { RouteStopMarker } from "../../mapFeatures/routeStopMarker/routeStopMarker";
 import { RouteSegmentLine } from "../../mapFeatures/routeSegmentLine/routeSegmentLine";
 import { RouteDriverMarker } from "../../mapFeatures/routeDriverMarker/routeDriverMarker";
 import "./routeLayer.scss";
 import { RoutesService } from "../../../services/routesService";
+import { DriverMarker } from "../../mapFeatures/driverMarker/driverMarker";
 
 export interface RouteLayerProps {
   routesService: RoutesService;
@@ -13,6 +14,25 @@ export interface RouteLayerProps {
 
 @observer
 export class RouteLayer extends React.Component<RouteLayerProps> {
+  renderDrivers() {
+    const drivers = this.props.routesService.drivers;
+
+    if (drivers == null) {
+      return <React.Fragment/>;
+    }
+
+    let items: JSX.Element[] = [];
+
+    for (let d of drivers) {
+      items.push(<DriverMarker
+        driver={d}
+        key={`Driver-${d.id}`}
+        onClick={driver =>  this.props.routesService.onSelectDriver(driver)}
+      />);
+    }
+
+    return items;
+  }
 
   renderStops() {
     const selectedRoute = this.props.routesService.selectedRoute;
@@ -21,14 +41,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
       return <React.Fragment/>;
     }
 
-    let stops: (RouteStop | RouteStopBase)[];
-    let currentStopIndex = selectedRoute.currentStopIndex;
-    if (selectedRoute.productType.slug != "solution" && currentStopIndex != null && currentStopIndex > 0) {
-      stops = selectedRoute.stops.slice(currentStopIndex);
-    } else {
-      stops = selectedRoute.stops;
-    }
-
+    let stops = selectedRoute.stops;
     let nonCancelledStops = stops.filter(s =>
       s.status.slug !== "cancelled");
 
@@ -52,6 +65,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
           routeStop={s}
           selectedRouteStopId={this.props.routesService.selectedRouteStopId}
           onClick={routeStop => this.onStopMarkerClick(routeStop)}
+          faded={s.status.slug === "cancelled" || s.status.slug === "completed"}
         />);
       }
     }
@@ -75,7 +89,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
           route={selectedRoute}
           onClick={route => this.onDriverMarkerClick(route)}
         />}
-
+        {this.renderDrivers()}
       </React.Fragment>
     );
   }

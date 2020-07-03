@@ -8,6 +8,7 @@ export interface RoutesLayerProps {
   textFilter: string | undefined;
   onTextFilterChange: (textFilter: string) => void;
   message: string | undefined;
+  showPush: boolean;
   onMessageChange: (message: string) => void;
 }
 
@@ -22,11 +23,13 @@ export class Filters extends React.Component<RoutesLayerProps> {
           value={this.props.textFilter}
           onChange={value => this.props.onTextFilterChange(value)}
         />
-        <Input
+        { this.props.showPush &&
+          <Input
           value={this.props.message}
           placeholder="Custom push message?"
           onChange={v => this.props.onMessageChange(v)}
         />
+        }
       </div>
     );
   }

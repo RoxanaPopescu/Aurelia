@@ -12,6 +12,7 @@ export interface RouteStopMarkerProps {
   routeStop: RouteStop;
   selectedRouteStopId?: string;
   onClick?: (routeStop: RouteStop) => void;
+  faded?: boolean;
 }
 
 @observer
@@ -47,7 +48,7 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
         onClick={() => this.props.onClick && this.props.onClick(this.props.routeStop)}
       >
         <React.Fragment>
-          <div className="c-liveTracking-routeStopMarker">
+          <div className={`c-liveTracking-routeStopMarker ${this.props.faded ? "--faded" : ""}`}>
             <div
               className={`
                 c-liveTracking-routeStopMarker-circle

@@ -1,5 +1,5 @@
 import { PersonName, Phone, Position } from "app/model/shared";
-import { VehicleType } from "app/model/vehicle";
+import { VehicleType, Vehicle } from "app/model/vehicle";
 import { DriverStatus } from "./driver-status";
 
 /**
@@ -25,6 +25,10 @@ export class Driver
             this.device = data.device;
             if (data.position) {
                 this.position = new Position(data.position);
+            }
+
+            if (data.onlineVehicle) {
+                this.onlineVehicle = new Vehicle(data.onlineVehicle);
             }
         } else {
             this.status = new DriverStatus("approved");
@@ -85,4 +89,9 @@ export class Driver
      * or undefined if unknown.
      */
     public vehicleTypes: VehicleType[] | undefined;
+
+    /**
+     * The current online vehicle
+     */
+    public onlineVehicle?: Vehicle;
 }

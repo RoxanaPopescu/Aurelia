@@ -13,7 +13,7 @@ export interface ActionsProps {
   route: Route;
   onBackClick: () => void;
   onSplitRouteClick: () => void;
-  onPushToDriversClick: () => void;
+  onDriversClick: () => void;
   onRouteDetailsClick: () => void;
 }
 
@@ -54,12 +54,11 @@ export class Actions extends React.Component<ActionsProps> {
               </a>
             )}
           {Profile.claims.has("edit-routes") &&
-            this.isFulfiller &&
-            this.props.route.driver == null && (
+            this.isFulfiller && (
               <a
-                onClick={() => this.props.onPushToDriversClick()}
+                onClick={() => this.props.onDriversClick()}
               >
-                {Localization.sharedValue("LiveTracking_Actions_PushToDrivers")}
+                {Localization.sharedValue("LiveTracking_Actions_Drivers")}
               </a>
             )}
 

@@ -17,7 +17,7 @@ export interface RoutePanelProps {
   hidden?: boolean;
   onRouteStopSelected: (routeStop: RouteStopModel) => void;
   onSplitRouteClick: (selectedStops: RouteStopModel[]) => void;
-  onPushDriversClick: () => void;
+  onDriversClick: () => void;
 }
 
 @observer
@@ -79,7 +79,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
             route={selectedRoute}
             onBackClick={() => this.onBackClick()}
             onSplitRouteClick={() => this.onSplitRouteClick()}
-            onPushToDriversClick={() => this.props.onPushDriversClick()}
+            onDriversClick={() => this.props.onDriversClick()}
             onRouteDetailsClick={() => this.onRouteDetailsClick()}
           />
 
