@@ -68,7 +68,7 @@ export class CommunicationTrigger
     /**
      * The customer for which this trigger should be enabled.
      */
-    public customerId: string;
+    public customerId?: string;
 
     /**
      * The route tags for which this trigger should be enabled.
