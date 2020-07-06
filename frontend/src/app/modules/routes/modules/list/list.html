@@ -219,20 +219,21 @@
                     <data-table-headers>
 
                         <template repeat.for="column of columns">
-                            <data-table-cell name="${column.sortingName}">
-                                <span if.bind="!column.hideColumn" class="text-truncate">
+                            <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
+                                <span if.bind="column.column == 'visible'" class="text-truncate">
                                     ${column.name}
                                 </span>
                             </data-table-cell>
-
                         </template>
 
                     </data-table-headers>
 
                     <template repeat.for="route of results">
                         <data-table-row
-                            accent.bind="route.criticality.accent">
+                            accent.bind="route.criticality.accent"
+                        >
                             <template repeat.for="column of columns">
+
                                 <data-table-cell if.bind="column.slug === 'slug'">
                                     <a href="/routes/details/${route.slug}" class="text-truncate">
                                         ${route.slug}
@@ -348,6 +349,24 @@
                                 <data-table-cell if.bind="column.slug === 'legacy-id'">
                                     <span class="text-truncate">
                                         ${route.legacyId}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-completion'">
+                                    <span class="text-truncate">
+                                        ${route.estimates.completionTime | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'planned-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delayed-stops'">
+                                    <span class="text-truncate">
+                                        ${delayedStops(route)}
                                     </span>
                                 </data-table-cell>
 

@@ -22,7 +22,7 @@ export class RouteListColumn
 
     public slug: RouteListColumnSlug;
     public name: string;
-    public hideColumn: boolean;
+    public column: "hidden" | "visible" | "not-added";
     public columSize: string;
     public sortingName?: string;
 
@@ -44,100 +44,120 @@ export class RouteListColumn
             name: "Id",
             columSize: "1.2fr",
             sortingName: "slug",
-            hideColumn: false
+            column: "visible"
         },
         "reference":
         {
             name: "Reference",
             columSize: "1.2fr",
             sortingName: "reference",
-            hideColumn: false
+            column: "visible"
         },
         "owner":
         {
             name: "Owner",
             columSize: "1fr",
-            hideColumn: false
+            column: "visible"
         },
         "start-date":
         {
             name: "Start date",
             columSize: "1fr",
             sortingName: "start-date",
-            hideColumn: false
+            column: "visible"
         },
         "start-address":
         {
             name: "Start address",
             columSize: "1.3fr",
             sortingName: "start-address",
-            hideColumn: false
+            column: "visible"
         },
         "end-date":
         {
             name: "End date",
             columSize: "1fr",
             sortingName: "end-date",
-            hideColumn: false
+            column: "visible"
         },
         "end-address":
         {
             name: "End address",
             columSize: "1.3fr",
             sortingName: "end-address",
-            hideColumn: false
+            column: "visible"
         },
         "tags": {
             name: "Tags",
             columSize: "1.3fr",
-            hideColumn: false
+            column: "visible"
         },
         "stop-count": {
             name: "Stop count",
             columSize: "min-content",
             sortingName: "stops",
-            hideColumn: false
+            column: "visible"
         },
         "vehicle-type": {
             name: "Vehicle type",
             columSize: "min-content",
-            hideColumn: false
+            column: "visible"
         },
         "vehicle": {
             name: "Vehicle",
             columSize: "1fr",
-            hideColumn: false
+            column: "visible"
         },
         "driver": {
             name: "Driver",
             columSize: "1fr",
-            hideColumn: false
+            column: "visible"
         },
         "fulfiller": {
             name: "Fulfiller",
             columSize: "1fr",
-            hideColumn: false
+            column: "visible"
         },
         "complexity": {
             name: "Complexity",
             columSize: "min-content",
-            hideColumn: false
+            column: "visible"
         },
         "status": {
             name: "Status",
             columSize: "min-content",
             sortingName: "status",
-            hideColumn: false
+            column: "visible"
         },
         "legacy-id": {
             name: "Legacy id",
             columSize: "min-content",
-            hideColumn: false
+            column: "visible"
         },
         "driver-list": {
             name: "Driver list",
             columSize: "min-content",
-            hideColumn: true
+            column: "hidden"
+        },
+        "delayed-stops": {
+            name: "Delayed stops",
+            columSize: "min-content",
+            column: "visible"
+        },
+        "estimated-completion": {
+            name: "Est. completed",
+            columSize: "min-content",
+            column: "visible"
+        },
+        "planned-time-frame": {
+            name: "Planned time",
+            columSize: "min-content",
+            column: "visible"
+        },
+        "criticality": {
+            name: "Criticality",
+            columSize: "min-content",
+            column: "not-added"
         }
     };
 }

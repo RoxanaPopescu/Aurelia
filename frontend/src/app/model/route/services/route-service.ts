@@ -61,7 +61,10 @@ export class RouteService
             vehicle?: boolean,
             driver?: boolean,
             driverLocation?: boolean,
-            tags?: boolean
+            tags?: boolean,
+            criticality?: boolean,
+            estimates?: boolean,
+            delayedStops?: boolean
         },
         sorting?: ISorting,
         paging?: IPaging,

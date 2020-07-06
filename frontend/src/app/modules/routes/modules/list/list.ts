@@ -80,7 +80,9 @@ export class ListPage
     protected get tableStyle(): any {
         let size = "";
         for (const column of this.columns) {
-            size += `${column.columSize} `;
+            if (column.column != "not-added") {
+                size += `${column.columSize} `;
+            }
         }
 
         return {
@@ -255,6 +257,18 @@ export class ListPage
     }
 
     /**
+     * Called from the table when delayed stops are being represented
+     */
+    public delayedStops(route: RouteInfo): string | undefined
+    {
+        if (route.delayedStopIndexes) {
+            return route.delayedStopIndexes.map(d => d += 1).join(", ");
+        }
+
+        return undefined;
+    }
+
+    /**
      * Called when the `Assign fulfiller` button is clicked.
      * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
      */
@@ -377,6 +391,9 @@ export class ListPage
                         fulfiller: this.columns.map(c => c.slug).includes("fulfiller"),
                         driver: this.columns.map(c => c.slug).includes("driver"),
                         tags: this.columns.map(c => c.slug).includes("tags"),
+                        criticality: this.columns.map(c => c.slug).includes("criticality"),
+                        estimates: this.columns.map(c => c.slug).includes("estimated-completion"),
+                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops")
                     },
                     this.sorting,
                     this.paging,

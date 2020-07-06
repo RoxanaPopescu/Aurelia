@@ -10,9 +10,16 @@ export class RouteInfo extends RouteBase
     public constructor(data: any)
     {
         super(data, []);
-        this.startLocation = new Location(data.startLocation);
-        this.endLocation = new Location(data.endLocation);
         this.stopCount = data.stopCount;
+        if (data.startLocation) {
+            this.startLocation = new Location(data.startLocation);
+        }
+        if (data.endLocation) {
+            this.endLocation = new Location(data.endLocation);
+        }
+        if (data.delayedStopIndexes) {
+            this.delayedStopIndexes = data.delayedStopIndexes;
+        }
     }
 
     /**
@@ -29,4 +36,9 @@ export class RouteInfo extends RouteBase
      * The number of stops on the route.
      */
     public readonly stopCount?: number;
+
+    /**
+     * The index of stops currently delayed.
+     */
+    public readonly delayedStopIndexes?: number[];
 }
