@@ -1,0 +1,70 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-routesPanel-filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--colorNeutralLight);
+}
+
+.c-liveTracking-routesPanel-filters-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 3px;
+  min-width: 2em;
+  border-radius: 2px;
+  line-height: 1.33;
+  font-size: 12px;
+  text-align: center;
+  background: var(--colorNeutralRegular);
+  color: white;
+}
+
+.c-liveTracking-routesPanel-filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border-radius: $listItemBorderRadius;
+  font-size: 12px;
+}
+
+.c-liveTracking-routesPanel-filters-input {
+  margin-left: 10px;
+  width: 55%;
+}
+
+.c-liveTracking-routesPanel-filters-info {
+  width: 45%;
+  background-color: var(--colorNeutralRegular) !important;
+}
+
+.c-liveTracking-routesPanel-filters-criticality {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.c-liveTracking-box-white {
+  background-color: white;
+  color: #555;
+}
+
+.c-liveTracking-routesPanel-filters-title {
+  font-size: 18px;
+  margin-bottom: 10px !important;
+}
+
+.c-liveTracking-routesPanel-filters-expanded {
+  margin: 6px 6px 6px 6px;
+  padding: 10px;
+  background-color: var(--colorNeutralRegular);
+
+  > div {
+    > div:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+
+  > div:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}

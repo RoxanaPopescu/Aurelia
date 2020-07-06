@@ -1,0 +1,99 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-route-bar {
+  width: 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.c-liveTracking-routesPanel-route {
+  position: relative;
+  display: flex;
+  margin: 4px;
+  padding: 16px 16px 16px 20px;
+  border: 1px solid var(--colorNeutralExtraLightDarken);
+  border-radius: $listItemBorderRadius;
+  background: var(--colorNeutralExtraLight);
+  cursor: pointer;
+
+  & > :last-child {
+    flex-grow: 1;
+  }
+
+  &:hover {
+    background-color: var(--colorNeutralExtraLightDarken);
+
+    &:before {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      bottom: -1px;
+      width: 4px;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      background-color: var(--colorBackgroundPrimary);
+    }
+  }
+}
+
+.c-liveTracking-routesPanel-route-owner {
+  text-align: right;
+}
+
+.c-liveTracking-routesPanel-route-flag {
+  color: var(--colorBackgroundPrimary);
+  opacity: 0.3;
+  cursor: pointer;
+  width: 25px;
+  height: 19px;
+  margin-right: 0;
+  text-align: center;
+  margin-top: -3px;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.c-liveTracking-routesPanel-route-title-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-liveTracking-routesPanel-route-flag--active {
+  opacity: 1;
+}
+
+.c-liveTracking-routesPanel-route-title {
+  display: flex;
+  margin-bottom: 8px;
+  line-height: 1;
+
+  > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.c-liveTracking-routesPanel-route-title-refSeparator {
+  color: var(--colorNeutralLight);
+  font-weight: 100;
+  padding: 0 0.5em;
+}
+
+.c-liveTracking-routesPanel-route-info {
+  display: flex;
+  font-size: 12px;
+
+  & > :not(:first-child) {
+    margin-left: 8px;
+    padding-left: 8px;
+    border-left: 1px solid var(--colorNeutralLight);
+  }
+}

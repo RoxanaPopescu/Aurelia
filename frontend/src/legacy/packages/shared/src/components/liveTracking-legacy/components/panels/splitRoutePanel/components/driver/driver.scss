@@ -1,0 +1,47 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-splitRoutePanel-driver {
+  position: relative;
+  display: flex;
+  margin: 4px;
+  padding: 16px 20px;
+  border: 1px solid var(--colorNeutralExtraLightDarken);
+  border-radius: $listItemBorderRadius;
+  background: var(--colorNeutralExtraLight);
+  cursor: pointer;
+
+  &.c-liveTracking-splitRoutePanel-driver--selected,
+  &:hover {
+    background-color: var(--colorNeutralExtraLightDarken);
+
+    &:before {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      bottom: -1px;
+      width: 4px;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      background-color: var(--colorBackgroundPrimary);
+    }
+  }
+
+  &.c-liveTracking-splitRoutePanel-driver--selected {
+    border-color: var(--colorBackgroundPrimary);
+  }
+}
+
+.c-liveTracking-splitRoutePanel-driver-id {
+  margin-right: 20px;
+  color: var(--colorInteractivePrimary);
+}
+
+.c-liveTracking-splitRoutePanel-driver-name {
+  margin-right: 20px;
+  flex-grow: 1;
+}
+
+.c-liveTracking-splitRoutePanel-driver-vehicleTypes {
+  color: var(--textDarkSecondary);
+}

@@ -1,0 +1,62 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking {
+  display: flex;
+  height: 100%;
+}
+
+.c-liveTracking-map {
+  flex-grow: 1;
+}
+
+.routeDetails-color-negative
+{
+  color: var(--colorAlert) !important;
+}
+
+.c-liveTracking-color-positive {
+  color: var(--colorOk) !important;
+}
+
+.c-liveTracking-color-negative {
+  color: var(--colorAlert) !important;
+}
+
+.c-liveTracking-box-clickable {
+  cursor: pointer;
+}
+
+.c-liveTracking-box-neutral {
+  background-color: var(--colorNeutralRegular) !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    opacity: 0.7;
+  }
+}
+
+.c-liveTracking-box-positive {
+  color: white !important;
+  background-color: var(--colorOk) !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: var(--colorOkDarken) !important;
+  }
+}
+
+.c-liveTracking-box-warning {
+  color: white !important;
+  background-color: var(--colorWarning) !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: var(--colorWarningDarken) !important;
+  }
+}
+
+.c-liveTracking-box-negative {
+  color: white !important;
+  background-color: var(--colorAlert) !important;
+
+  &.c-liveTracking-box-clickable:hover {
+    background-color: var(--colorAlertDarken) !important;
+  }
+}

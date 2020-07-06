@@ -1,0 +1,81 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-liveTracking-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  height: 100%;
+  background: white;
+  max-width: 30vw;
+}
+
+.c-liveTracking-panel-hidden {
+  display: none;
+}
+
+.c-liveTracking-panel-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+}
+
+.c-liveTracking-panel-body {
+  flex-grow: 1;
+}
+
+.c-liveTracking-panel-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.c-liveTracking-panel-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.c-liveTracking-panel-message {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: $listItemBorderRadius;
+  font-size: 12px;
+
+  :first-child {
+    margin-right: 40px;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
+}
+
+.c-liveTracking-panel-section {
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.c-liveTracking-panel-section-title {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  color: var(--textDarkSecondary);
+  text-transform: uppercase;
+}
+
+.c-liveTracking-panel-section-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: normal;
+
+  & > :first-child {
+    margin-right: 40px;
+  }
+}
