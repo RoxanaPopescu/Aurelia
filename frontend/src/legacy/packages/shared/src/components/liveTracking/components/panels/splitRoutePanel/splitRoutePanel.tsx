@@ -2,8 +2,7 @@ import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { LoadingOverlay } from "shared/src/webKit";
-import { RouteStop } from "shared/src/model/logistics/routes/tracking";
-import { RoutesService } from "../../../services/routesService";
+import { LiveTrackingService } from "../../../services/liveTrackingService";
 import {
   RouteSplitService,
   DriverInfo
@@ -17,9 +16,10 @@ import "./splitRoutePanel.scss";
 import Localization from "shared/src/localization";
 import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Log } from "shared/infrastructure";
+import { RouteStop } from "app/model/route";
 
 export interface SplitRoutePanelProps {
-  routesService: RoutesService;
+  service: LiveTrackingService;
   selectedStops: RouteStop[];
   onConfirmSplitClick: () => void;
   onBackClick: () => void;
@@ -43,7 +43,7 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
   @observable private textFilter: string | undefined;
 
   public render() {
-    const selectedRoute = this.props.routesService.selectedRoute!;
+    const selectedRoute = this.props.service.selectedRoute!;
 
     const drivers =
       this.drivers &&
@@ -169,7 +169,7 @@ export class SplitRoutePanel extends React.Component<SplitRoutePanelProps> {
       this.splittingRoute = true;
 
       await this.routeSplitService.splitRoute(
-        this.props.routesService.selectedRoute!,
+        this.props.service.selectedRoute!,
         this.selectedVehicleType!.id,
         this.selectedDriverInfo!.driver.id,
         this.props.selectedStops.map(s => s.id)

@@ -1,19 +1,18 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Route } from "shared/src/model/logistics/routes";
-import { Route as TrackingRoute } from "shared/src/model/logistics/routes/tracking";
-import { RoutesService } from "../../../services/routesService";
+import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { RouteDriverMarker } from "../../mapFeatures/routeDriverMarker/routeDriverMarker";
 import "./routesLayer.scss";
+import { RouteInfo } from "app/model/route";
 
 export interface RoutesLayerProps {
-  routesService: RoutesService;
+  service: LiveTrackingService;
 }
 
 @observer
 export class RoutesLayer extends React.Component<RoutesLayerProps> {
 
-  private renderRoute(route: TrackingRoute): JSX.Element {
+  private renderRoute(route: RouteInfo): JSX.Element {
     return (
       <RouteDriverMarker
           key={`RouteDriverMarker-${route.id}`}
@@ -24,7 +23,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
   }
 
   public render() {
-    let routes = this.props.routesService.filteredRoutes;
+    let routes = this.props.service.filteredRoutes;
 
     if (routes == null) {
       return;
@@ -39,10 +38,12 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
     );
   }
 
-  private onClick(route: Route): void {
+  private onClick(route: RouteInfo): void {
     history.pushState({ ...history.state, state: { routeId: route.id }}, "", window.location.href);
-    this.props.routesService.setSelectedRoute(route as TrackingRoute);
-    this.props.routesService.selectedRouteStopId = route.currentOrNextStop ?
+
+    // FIXME: FETCH SINGLE ROUTE
+    // this.props.service.setSelectedRoute(route as TrackingRoute);
+    this.props.service.selectedRouteStopId = route.currentOrNextStop ?
       route.currentOrNextStop.id : undefined;
   }
 }

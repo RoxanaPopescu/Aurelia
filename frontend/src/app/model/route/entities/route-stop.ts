@@ -5,6 +5,7 @@ import { Delivery } from "./delivery";
 import { RouteStopDeviation } from "./route-stop-deviation";
 import { RouteStopActions } from "./route-stop-actions";
 import clone from "clone";
+import { Duration } from "luxon";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -139,6 +140,67 @@ export class RouteStop extends RouteStopBase
     {
         return [...this.pickups, ...this.deliveries]
             .reduce((t, d) => t + d.colli.filter(c => c.status.slug === "picked-up" || c.status.slug === "delivered").length, 0);
+    }
+
+    /**
+     * The delay at the stop, if the driver arrived late.
+     */
+    public get arrivedDelay(): Duration | undefined
+    {
+        if (this.arrivedTime == null || this.arrivalTimeFrame?.to == null) {
+            return undefined;
+        }
+
+        let duration = this.arrivedTime.diff(this.arrivalTimeFrame.to);
+        return duration.valueOf() > 0 ? duration : undefined;
+    }
+
+    /**
+     * The delay at the stop, if the driver is extimated to arrive late.
+     */
+    public get expectedArrivalDelay(): Duration | undefined
+    {
+        if (this.arrivedTime != null) {
+            return undefined;
+        }
+
+        if (this.estimates == null || this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null) {
+            return undefined;
+        }
+
+        let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
+        return duration.valueOf() > 0 ? duration : undefined;
+    }
+
+    /**
+     * The too early arrival at the stop, if the driver arrived too early.
+     * Note that the value is rounded up to the nearest minute.
+     */
+    public get arrivedTooEarly(): Duration | undefined
+    {
+        if (this.arrivedTime == null || this.arrivalTimeFrame?.from == null) {
+            return undefined;
+        }
+
+        let duration = this.arrivalTimeFrame.from.diff(this.arrivedTime);
+        return duration.valueOf() > 0 ? duration : undefined;
+    }
+
+    /**
+     * The time the driver is expected too early
+     */
+    public get expectedTooEarly(): Duration | undefined
+    {
+        if (this.arrivedTime != null) {
+            return undefined;
+        }
+
+        if (this.estimates == null || this.arrivalTimeFrame?.from == null) {
+            return undefined;
+        }
+
+        let duration = this.arrivalTimeFrame.from.diff(this.estimates.arrivalTime);
+        return duration.valueOf() > 0 ? duration : undefined;
     }
 
     /**

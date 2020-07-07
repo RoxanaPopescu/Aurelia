@@ -1,7 +1,7 @@
 import BaseService from "shared/src/services/base";
-import { Driver } from "shared/src/model/logistics/driver";
-import { VehicleType } from "shared/src/model/logistics/vehicleType";
-import { Route } from "shared/src/model/logistics/routes/tracking";
+import { Driver } from "app/model/driver";
+import { VehicleType } from "app/model/vehicle";
+import { Route } from "app/model/route";
 
 export class DriverInfo {
   /* tslint:disable-next-line: no-any */
@@ -60,9 +60,12 @@ export class RouteSplitService {
     await response.json();
 
     // Remove the stops from the selected route.
+    // FIXME:
+    /*
     route.stops = route.stops.filter(
       s => !selectedStopIds.some(id => id === s.id)
     );
+    */
 
     // tslint:disable-next-line: max-line-length
     // TODO: We can't enable this feature before we update SplitRoute in BFF to return "Slug" & "Reference", also it might be buggy.

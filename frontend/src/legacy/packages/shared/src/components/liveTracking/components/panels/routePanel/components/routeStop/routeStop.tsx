@@ -4,25 +4,22 @@ import Localization from "shared/src/localization";
 import { Session } from "shared/src/model/session";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { InputCheckbox } from "shared/src/webKit";
-import {
-  RouteStop as RouteStopModel,
-  Route
-} from "shared/src/model/logistics/routes/tracking";
-import { RoutesService } from "shared/src/components/liveTracking/services/routesService";
+import { RouteStop, Route } from "app/model/route";
+import { LiveTrackingService } from "shared/src/components/liveTracking/services/liveTrackingService";
 import "./routeStop.scss";
 import { SubPage } from "shared/src/utillity/page";
 
 export interface RoutesLayerProps {
   route: Route;
-  routeStop: RouteStopModel;
-  routesService: RoutesService;
-  onClick: (routeStop: RouteStopModel) => void;
+  routeStop: RouteStop;
+  service: LiveTrackingService;
+  onClick: (routeStop: RouteStop) => void;
 }
 
 @observer
-export class RouteStop extends React.Component<RoutesLayerProps> {
+export class RouteStopComponent extends React.Component<RoutesLayerProps> {
   private onClick(): void {
-    this.props.routesService.selectedRouteStopId = this.props.routeStop.id;
+    this.props.service.selectedRouteStopId = this.props.routeStop.id;
     this.props.onClick(this.props.routeStop);
   }
 
@@ -101,7 +98,7 @@ export class RouteStop extends React.Component<RoutesLayerProps> {
                   )}
                 </div>
                 <div>
-                  {this.props.routeStop.outfit.contactPerson}
+                  {this.props.routeStop.outfit.personName}
                   {this.props.routeStop.outfit.contactPhone &&
                     <React.Fragment>
                       <span> (</span>

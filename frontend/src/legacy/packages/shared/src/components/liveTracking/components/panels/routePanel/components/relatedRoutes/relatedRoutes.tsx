@@ -1,11 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
-import Localization from "shared/src/localization";
-import { Route as RouteModel } from "shared/src/model/logistics/routes/tracking";
 import "./relatedRoutes.scss";
+import { Route } from "app/model/route";
 
 export interface RelatedRoutesProps {
-  route: RouteModel;
+  route: Route;
   onClick: (routeId: string) => void;
 }
 
@@ -13,13 +12,16 @@ export interface RelatedRoutesProps {
 export class RelatedRoutes extends React.Component<RelatedRoutesProps> {
 
   public render() {
+    // FIXME:
+    return undefined;
+    /*
     if (this.props.route.relatedRoutes.length === 0) {
       return <></>;
     }
-    
+
     return (
       <div className="c-liveTracking-routePanel-relatedRoutes">
-      
+
         <div className="c-liveTracking-routePanel-relatedToutes-title">
         {Localization.sharedValue("LiveTracking_Route_RelatedRoutes")}
         </div>
@@ -37,5 +39,7 @@ export class RelatedRoutes extends React.Component<RelatedRoutesProps> {
 
       </div>
     );
+
+    */
   }
 }

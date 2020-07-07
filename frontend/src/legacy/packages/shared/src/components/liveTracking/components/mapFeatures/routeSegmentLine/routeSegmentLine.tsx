@@ -1,6 +1,6 @@
 import React from "react";
 import { Polyline } from "react-google-maps";
-import { RouteStopBase } from "shared/src/model/logistics/routes";
+import { RouteStopBase, RouteStopInfo } from "app/model/route";
 
 // The width of the stroke, in pixels.
 const strokeWeight = 2;
@@ -9,7 +9,7 @@ const strokeWeight = 2;
 const strokeOpacity = 0.4;
 
 export interface RouteSegmentLineProps {
-  routeStops: (RouteStopBase)[];
+  routeStops: (RouteStopBase | RouteStopInfo)[];
 }
 
 export class RouteSegmentLine extends React.Component<RouteSegmentLineProps> {

@@ -1,13 +1,13 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Route as RouteModel } from "shared/src/model/logistics/routes/tracking";
-import { Route } from "../../../routesPanel/components/route/route";
-import { RoutesService } from "../../../../../services/routesService";
+import { RouteComponent } from "../../../routesPanel/components/route/route";
+import { LiveTrackingService } from "../../../../../services/liveTrackingService";
 import "./routeInfo.scss";
+import { Route } from "app/model/route";
 
 export interface RoutesLayerProps {
-  routesService: RoutesService;
-  route: RouteModel;
+  service: LiveTrackingService;
+  route: Route;
 }
 
 @observer
@@ -16,10 +16,9 @@ export class RouteInfo extends React.Component<RoutesLayerProps> {
   public render() {
     return (
       <div className="c-liveTracking-routePanel-routeInfo user-select-text">
-      
-        <Route
-          route={this.props.route}
-          routesService={this.props.routesService}
+
+        <RouteComponent
+          service={this.props.service}
         />
 
       </div>

@@ -447,7 +447,7 @@ export class RoutesServiceLegacy {
     } catch (error) {
       // tslint:disable-next-line:no-console
       console.error("An error occurred while polling for live tracking data.\n", error);
-      this.pollTimeout = setTimeout(() => this.poll(), 8000);
+      this.pollTimeout = setTimeout(() => this.poll(), this.pollInterval);
     }
   }
 

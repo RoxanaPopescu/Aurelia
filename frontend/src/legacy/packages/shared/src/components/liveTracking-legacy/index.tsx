@@ -22,9 +22,6 @@ export default class LiveTrackingLegacyComponent extends React.Component {
   // tslint:disable-next-line: no-any
   public constructor(props: any) {
     super(props);
-
-    document.title = "Live Tracking";
-
     this.routesService = new RoutesServiceLegacy();
     this.routesService.startPolling();
   }

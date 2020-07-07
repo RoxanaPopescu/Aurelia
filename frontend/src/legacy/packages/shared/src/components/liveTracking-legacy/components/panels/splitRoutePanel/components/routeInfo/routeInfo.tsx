@@ -6,7 +6,7 @@ import {
   Route as RouteModel,
   RouteStop
 } from "shared/src/model/logistics/routes/tracking";
-import { DriverInfo } from "shared/src/components/liveTracking/services/routeSplitService";
+import { DriverInfo } from "shared/src/components/liveTracking-legacy/services/routeSplitService";
 import "./routeInfo.scss";
 
 export interface RoutesLayerProps {

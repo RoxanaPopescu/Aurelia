@@ -45,6 +45,21 @@ export class RoutesModule
                 }
             },
             {
+                name: "live-tracking-legacy",
+                route: "live-tracking-legacy",
+                moduleId: PLATFORM.moduleName("./modules/live-tracking-legacy/live-tracking-legacy"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                title: routeTitles.liveTracking,
+                nav: true,
+                icon: "route-tracking"
+            },
+            {
                 name: "live-tracking",
                 route: "live-tracking",
                 moduleId: PLATFORM.moduleName("./modules/live-tracking/live-tracking"),
@@ -56,8 +71,7 @@ export class RoutesModule
                     ]
                 },
                 title: routeTitles.liveTracking,
-                nav: true,
-                icon: "route-tracking"
+                nav: false
             },
             {
                 name: "list",

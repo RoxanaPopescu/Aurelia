@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { DriverInfo } from "shared/src/components/liveTracking/services/routeSplitService";
+import { DriverInfo } from "shared/src/components/liveTracking-legacy/services/routeSplitService";
 import "./driver.scss";
 
 export interface DriverInfoProps {

@@ -3,20 +3,20 @@ import ReactDOM from "react-dom";
 import { reaction, IReactionDisposer } from "mobx";
 import { observer } from "mobx-react";
 import { SubPage } from "shared/src/utillity/page";
-import { RouteStop as RouteStopModel } from "shared/src/model/logistics/routes/tracking";
-import { RoutesService } from "../../../services/routesService";
+import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { Panel } from "../panel";
 import { Actions } from "./components/actions/actions";
 import { RouteInfo } from "./components/routeInfo/routeInfo";
 import { RelatedRoutes } from "./components/relatedRoutes/relatedRoutes";
-import { RouteStop } from "./components/routeStop/routeStop";
+import { RouteStopComponent } from "./components/routeStop/routeStop";
 import "./routePanel.scss";
+import { RouteStop } from "app/model/route";
 
 export interface RoutePanelProps {
-  routesService: RoutesService;
+  service: LiveTrackingService;
   hidden?: boolean;
-  onRouteStopSelected: (routeStop: RouteStopModel) => void;
-  onSplitRouteClick: (selectedStops: RouteStopModel[]) => void;
+  onRouteStopSelected: (routeStop: RouteStop) => void;
+  onSplitRouteClick: (selectedStops: RouteStop[]) => void;
   onDriversClick: () => void;
 }
 
@@ -29,19 +29,19 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
 
   private panelComponent: Panel;
   private headerElement: HTMLElement;
-  private routeStopComponents: RouteStop[];
-  private routeStops: RouteStopModel[];
+  private routeStopComponents: RouteStopComponent[];
+  private routeStops: RouteStop[];
   private reactionDisposers: IReactionDisposer[] = [];
 
   public componentDidMount() {
     setTimeout(() => {
-      if (this.props.routesService.selectedRouteStopId != null) {
-        this.scrollToRouteStop(this.props.routesService.selectedRouteStopId, "smooth");
+      if (this.props.service.selectedRouteStopId != null) {
+        this.scrollToRouteStop(this.props.service.selectedRouteStopId, "smooth");
       }
     });
 
     this.reactionDisposers.push(
-      reaction(() => this.props.routesService.selectedRouteStopId,
+      reaction(() => this.props.service.selectedRouteStopId,
         routeStopId => this.scrollToRouteStop(routeStopId, "smooth")));
   }
 
@@ -52,14 +52,14 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
 
   public render() {
 
-    const selectedRoute = this.props.routesService.selectedRoute;
+    const selectedRoute = this.props.service.selectedRoute;
 
     if (selectedRoute == null) {
       return <React.Fragment/>;
     }
 
     this.routeStops = selectedRoute.stops
-      .filter(s => s instanceof RouteStopModel) as RouteStopModel[];
+      .filter(s => s instanceof RouteStop) as RouteStop[];
 
     this.routeStopComponents = [];
 
@@ -83,7 +83,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
             onRouteDetailsClick={() => this.onRouteDetailsClick()}
           />
 
-          <RouteInfo route={selectedRoute} routesService={this.props.routesService}/>
+          <RouteInfo route={selectedRoute} service={this.props.service}/>
 
           <RelatedRoutes
             route={selectedRoute}
@@ -95,12 +95,12 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
         <div className="c-liveTracking-panel-body">
 
           {this.routeStops.map(routeStop =>
-          <RouteStop
+          <RouteStopComponent
             key={routeStop.id}
             ref={ref => ref && this.routeStopComponents.push(ref)}
             route={selectedRoute}
             routeStop={routeStop}
-            routesService={this.props.routesService}
+            service={this.props.service}
             onClick={() => this.props.onRouteStopSelected(routeStop)}
           />)}
 
@@ -145,30 +145,30 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   }
 
   private onBackClick() {
-    this.props.routesService.setSelectedRoute(undefined);
-
+    this.props.service.setSelectedRouteId(undefined);
     history.back();
   }
 
   private onSplitRouteClick() {
-    const selectedStops = this.props.routesService.selectedRoute!.stops
-      .filter(s => s instanceof RouteStopModel && s.selected);
+    const selectedStops = this.props.service.selectedRoute!.stops
+      .filter(s => s instanceof RouteStop && s.selected);
 
-    this.props.onSplitRouteClick(selectedStops as RouteStopModel[]);
+    this.props.onSplitRouteClick(selectedStops as RouteStop[]);
   }
 
   private onRouteDetailsClick(): void {
     const routeDetailsUrl = SubPage.path(SubPage.RouteDetails)
-      .replace(":id", this.props.routesService.selectedRoute!.slug);
+      .replace(":id", this.props.service.selectedRoute!.slug);
 
     window.open(routeDetailsUrl, "_blank");
   }
 
   private onRelatedRouteClick(routeId: string): void {
-    const route = this.props.routesService.routes!.find(r => r.id === routeId);
+    const route = this.props.service.routes!.find(r => r.id === routeId);
     if (route != null) {
-      this.props.routesService.setSelectedRoute(route);
-      this.props.routesService.selectedRouteStopId = route.currentOrNextStop ?
+      // FIXME: What does it do?
+      //this.props.service.setSelectedRoute(route);
+      this.props.service.selectedRouteStopId = route.currentOrNextStop ?
         route.currentOrNextStop.id : undefined;
     }
     history.pushState({ ...history.state, state: { routeId: routeId }}, "", window.location.href);

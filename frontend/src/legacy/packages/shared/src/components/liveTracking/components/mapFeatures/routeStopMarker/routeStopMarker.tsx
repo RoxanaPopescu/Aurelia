@@ -2,9 +2,9 @@ import React from "react";
 import { observer } from "mobx-react";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import Localization from "shared/src/localization";
-import { RouteStop } from "shared/src/model/logistics/routes";
 import { Marker, Popup } from "shared/src/components/worldMap";
 import "./routeStopMarker.scss";
+import { RouteStop } from "app/model/route";
 
 let lastSelectedRouteStopId: string;
 

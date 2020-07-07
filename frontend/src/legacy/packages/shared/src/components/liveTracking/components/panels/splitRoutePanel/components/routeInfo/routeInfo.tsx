@@ -2,15 +2,12 @@ import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { VehicleType } from "shared/src/model/logistics/vehicleType";
-import {
-  Route as RouteModel,
-  RouteStop
-} from "shared/src/model/logistics/routes/tracking";
 import { DriverInfo } from "shared/src/components/liveTracking/services/routeSplitService";
 import "./routeInfo.scss";
+import { RouteStop, Route } from "app/model/route";
 
 export interface RoutesLayerProps {
-  route: RouteModel;
+  route: Route;
   selectedVehicleType: VehicleType | undefined;
   selectedDriverInfo: DriverInfo | undefined;
   selectedStops: RouteStop[];

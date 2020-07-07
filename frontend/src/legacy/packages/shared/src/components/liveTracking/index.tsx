@@ -4,8 +4,6 @@ import { observer } from "mobx-react";
 import { GoogleMap } from "react-google-maps";
 import Localization from "shared/src/localization";
 import LoadingInline from "shared/src/webKit/loading/inline";
-import { RoutesService } from "./services/routesService";
-import { Route, RouteStop } from "shared/src/model/logistics/routes/tracking";
 import { WorldMap } from "shared/src/components/worldMap/worldMap";
 import { RouteLayer } from "./components/mapLayers/routeLayer/routeLayer";
 import { RoutesLayer } from "./components/mapLayers/routesLayer/routesLayer";
@@ -16,41 +14,40 @@ import "./components/panels/panel.scss";
 import "./index.scss";
 import { Log } from "shared/infrastructure";
 import { DriversPanel } from "./components/panels/driversPanel/driversPanel";
+import { LiveTrackingService } from "./services/liveTrackingService";
+import { RouteService, RouteStop, Route } from "app/model/route";
+
+export interface ILiveTrackingProps
+{
+    routeService: RouteService
+}
 
 @observer
-export default class LiveTrackingComponent extends React.Component {
+export default class LiveTrackingComponent extends React.Component<ILiveTrackingProps> {
   // tslint:disable-next-line: no-any
-  public constructor(props: any) {
+  public constructor(props: LiveTrackingService) {
     super(props);
-
-    document.title = "Live Tracking";
-
-    this.routesService = new RoutesService();
-    this.routesService.startPolling();
+    this.service = new LiveTrackingService(this.props.routeService);
   }
 
-  private routesService: RoutesService;
+  private service: LiveTrackingService;
   private map: GoogleMap;
   private boundsChanged: boolean | null = false;
   private routesBounds: google.maps.LatLngBounds;
   private reactionDisposers: IReactionDisposer[] = [];
 
   @observable private routeSubPanel: undefined | "splitRoutePanel" | "driversPanel";
-
   @observable private selectedStops: RouteStop[] | undefined;
 
   private onPopState = (event: PopStateEvent) => {
     if (
       event.state == null ||
       event.state.state == null ||
-      this.routesService.routes == null
+      this.service.routes == null
     ) {
-      this.routesService.setSelectedRoute(undefined);
+      this.service.setSelectedRouteId(undefined);
     } else if (event.state.state.routeId) {
-      const route = this.routesService.routes.find(
-        r => r.id === event.state.state.routeId
-      );
-      this.routesService.setSelectedRoute(route);
+      this.service.setSelectedRouteId(event.state.state.routeId);
     }
     this.routeSubPanel = undefined;
     // tslint:disable-next-line:semicolon
@@ -64,11 +61,14 @@ export default class LiveTrackingComponent extends React.Component {
 
     this.reactionDisposers.push(
       reaction(
-        r => this.routesService.selectedRoute,
-        route => this.onSelectedRouteChanged(route)
+        r => this.service.selectedRoute,
+        route => {
+          // this.onSelectedRouteChanged(route)
+          // FIXME: Route changed?
+        }
       ),
       reaction(
-        r => this.routesService.selectedRouteId,
+        r => this.service.selectedRouteId,
         routeId => this.onSelectedRouteIdChanged(routeId)
       )
     );
@@ -78,7 +78,7 @@ export default class LiveTrackingComponent extends React.Component {
       history.state.state != null &&
       history.state.state.routeId
     ) {
-      this.routesService.selectedRouteId = history.state.state.routeId;
+      this.service.selectedRouteId = history.state.state.routeId;
     }
   }
 
@@ -86,21 +86,21 @@ export default class LiveTrackingComponent extends React.Component {
     this.reactionDisposers.forEach(dispose => dispose());
     this.reactionDisposers = [];
     window.removeEventListener("popstate", this.onPopState);
-    this.routesService.stopPolling();
+    this.service.stopPolling();
     window.removeEventListener("focus", this.onFocus);
     window.removeEventListener("blur", this.onBlur);
   }
 
   onBlur = () => {
-    this.routesService.setNotInFocus();
+    this.service.setNotInFocus();
   }
 
   onFocus = () => {
-    this.routesService.setInFocus();
+    this.service.setInFocus();
   }
 
   public render() {
-    if (this.routesService.loading) {
+    if (!this.service.loadedResults) {
       return (
         <div className="c-liveTracking">
           <LoadingInline/>
@@ -111,14 +111,14 @@ export default class LiveTrackingComponent extends React.Component {
         <div className="c-liveTracking">
           <div>
             <RoutesPanel
-              hidden={this.routesService.selectedRouteId != null}
-              routesService={this.routesService}
+              hidden={this.service.selectedRouteId != null}
+              service={this.service}
             />
 
             {!this.routeSubPanel &&
-              this.routesService.selectedRouteId != null && (
+              this.service.selectedRouteId != null && (
                 <RoutePanel
-                  routesService={this.routesService}
+                  service={this.service}
                   onRouteStopSelected={routeStop =>
                     this.onRouteStopSelected(routeStop)
                   }
@@ -133,7 +133,7 @@ export default class LiveTrackingComponent extends React.Component {
 
             {this.routeSubPanel === "splitRoutePanel" && (
               <SplitRoutePanel
-                routesService={this.routesService}
+                service={this.service}
                 selectedStops={this.selectedStops!}
                 onConfirmSplitClick={() => this.onConfirmSplitClick()}
                 onBackClick={() => (this.routeSubPanel = undefined)}
@@ -142,7 +142,7 @@ export default class LiveTrackingComponent extends React.Component {
 
             {this.routeSubPanel === "driversPanel" && (
               <DriversPanel
-                routesService={this.routesService}
+                service={this.service}
                 onConfirmClick={() => this.onConfirmPushDriversClick()}
                 onBackClick={() => (this.routeSubPanel = undefined)}
               />
@@ -159,12 +159,12 @@ export default class LiveTrackingComponent extends React.Component {
                 scrollwheel: true
               }}
             >
-              {this.routesService.selectedRouteId == null && (
-                <RoutesLayer routesService={this.routesService} />
+              {this.service.selectedRouteId == null && (
+                <RoutesLayer service={this.service} />
               )}
 
-              {this.routesService.selectedRouteId != null && (
-                <RouteLayer routesService={this.routesService} />
+              {this.service.selectedRouteId != null && (
+                <RouteLayer service={this.service} />
               )}
             </WorldMap>
           </div>
@@ -176,7 +176,10 @@ export default class LiveTrackingComponent extends React.Component {
   private onMapReady(map: GoogleMap): void {
     this.map = map;
     this.routesBounds = this.map.getBounds();
-    this.tryFitBounds(this.routesService.selectedRoute);
+
+    if (this.service.selectedRoute != null) {
+      this.tryFitBounds(this.service.selectedRoute);
+    }
   }
 
   private onMapInteraction(): void {
@@ -186,7 +189,7 @@ export default class LiveTrackingComponent extends React.Component {
   }
 
   private onMapBoundsChanged(): void {
-    if (this.routesService.selectedRoute == null) {
+    if (this.service.selectedRoute == null) {
       this.routesBounds = this.map.getBounds();
     }
   }
@@ -196,6 +199,7 @@ export default class LiveTrackingComponent extends React.Component {
   }
 
   // Note that this is called after every poll request.
+  /*
   private onSelectedRouteChanged(route: Route | undefined): void {
     if (route != null) {
       if (this.boundsChanged === true) {
@@ -210,6 +214,7 @@ export default class LiveTrackingComponent extends React.Component {
 
     this.boundsChanged = false;
   }
+  */
 
   private tryFitBounds(route?: Route): void {
     if (this.map == null) {

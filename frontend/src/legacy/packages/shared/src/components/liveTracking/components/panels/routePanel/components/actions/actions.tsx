@@ -3,11 +3,10 @@ import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { Session } from "shared/src/model/session";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
-import { Route } from "shared/src/model/logistics/routes/tracking";
 import { Icon } from "shared/src/webKit";
 import "./actions.scss";
-import { RouteStop } from "shared/src/model/logistics/routes";
 import { Profile } from "shared/src/model/profile";
+import { Route, RouteStop } from "app/model/route";
 
 export interface ActionsProps {
   route: Route;

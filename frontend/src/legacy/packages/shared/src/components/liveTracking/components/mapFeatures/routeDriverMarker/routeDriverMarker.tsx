@@ -2,14 +2,14 @@ import React from "react";
 import { observer } from "mobx-react";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import Localization from "shared/src/localization";
-import { Route, RouteStop } from "shared/src/model/logistics/routes";
 import { Marker, Popup } from "shared/src/components/worldMap";
 import "./routeDriverMarker.scss";
 import { Position } from "shared/src/model/general/position";
+import { RouteStop, RouteBase } from "app/model/route";
 
 export interface RouteDriverMarkerProps {
-  route: Route;
-  onClick?: (route: Route) => void;
+  route: RouteBase;
+  onClick?: (route: RouteBase) => void;
 }
 
 @observer
@@ -208,7 +208,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
         <div className="c-worldMap-popup-section-row">
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Vehicle_Type")}</div>
-          <div>{this.props.route.vehicle!.vehicleType.name}</div>
+          <div>{this.props.route.vehicle!.type.name}</div>
         </div>
 
         <div className="c-worldMap-popup-section-row">
@@ -300,7 +300,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
           </div>}
         </div>
 
-        {this.props.route.expectedDelays.length > 0 &&
+        {this.props.route.expectedDelays != null && this.props.route.expectedDelays.length > 0 &&
         <div className="c-worldMap-popup-section">
 
           <div className="c-worldMap-popup-section-row routeDetails-color-negative">

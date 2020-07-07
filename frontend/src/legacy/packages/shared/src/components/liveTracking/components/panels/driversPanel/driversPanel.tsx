@@ -2,7 +2,7 @@ import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { LoadingOverlay } from "shared/src/webKit";
-import { RoutesService } from "../../../services/routesService";
+import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { Panel } from "../panel";
 import { Actions } from "./components/actions/actions";
 import { Filters } from "./components/filters/filters";
@@ -14,7 +14,7 @@ import { Driver } from "app/model/driver";
 import BaseService from "shared/src/services/base";
 
 export interface DriversPanelProps {
-  routesService: RoutesService;
+  service: LiveTrackingService;
   onConfirmClick: () => void;
   onBackClick: () => void;
 }
@@ -32,8 +32,8 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
 
   public render() {
     const drivers =
-      this.props.routesService.drivers &&
-      this.props.routesService.drivers
+      this.props.service.drivers &&
+      this.props.service.drivers
         .filter(
           driver =>
             !this.textFilter ||
@@ -48,19 +48,19 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
         <div className="c-liveTracking-panel-header">
           <Actions
             enablePush={
-              this.props.routesService.selectedDrivers.length > 0 &&
+              this.props.service.selectedDrivers.length > 0 &&
               !this.loading
             }
-            showPush={this.props.routesService.selectedRoute!.driver == null}
+            showPush={this.props.service.selectedRoute!.driver == null}
             enableAssign={
-              this.props.routesService.selectedDrivers.length == 1 &&
+              this.props.service.selectedDrivers.length == 1 &&
               !this.loading
             }
             onPushClick={() => this.onPushClick()}
             onAssignClick={() => this.onAssignClick()}
             onBackClick={() => {
-              this.props.routesService.drivers = undefined;
-              this.props.routesService.selectedDrivers = [];
+              this.props.service.drivers = undefined;
+              this.props.service.selectedDrivers = [];
               this.props.onBackClick();
             }}
           />
@@ -70,7 +70,7 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
             onTextFilterChange={textFilter =>
               this.onTextFilterChange(textFilter)
             }
-            showPush={this.props.routesService.selectedRoute!.driver == null}
+            showPush={this.props.service.selectedRoute!.driver == null}
             message={this.message}
             onMessageChange={m =>
               this.message = m
@@ -84,8 +84,8 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
               <DriverComponent
                 key={driver.id}
                 driver={driver}
-                route={this.props.routesService.selectedRoute!}
-                selected={this.props.routesService.selectedDrivers.includes(driver)}
+                route={this.props.service.selectedRoute!}
+                selected={this.props.service.selectedDrivers.includes(driver)}
                 onClick={() => this.onDriverSelected(driver)}
               />
             ))}
@@ -98,7 +98,7 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
                 )}
               </div>
             )}
-          {(!this.props.routesService.drivers || this.loading) && <LoadingOverlay />}
+          {(!this.props.service.drivers || this.loading) && <LoadingOverlay />}
         </div>
       </Panel>
     );
@@ -106,9 +106,9 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
 
   private async fetchDrivers(): Promise<void> {
     try {
-      this.props.routesService.drivers = await this.props.routesService.fetchDriversNearby(this.props.routesService.selectedRoute!);
+      this.props.service.drivers = await this.props.service.fetchDriversNearby(this.props.service.selectedRoute!);
     } catch (error) {
-      this.props.routesService.drivers = [];
+      this.props.service.drivers = [];
       this.loading = false;
       Log.error(Localization.sharedValue("LiveTracking_RouteSplit_CouldNotGetDrivers"), error);
     }
@@ -119,13 +119,13 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
   }
 
   private onDriverSelected(driver: Driver): void {
-    this.props.routesService.onSelectDriver(driver);
+    this.props.service.onSelectDriver(driver);
   }
 
   private reset() {
     this.loading = false;
-    this.props.routesService.drivers = undefined;
-    this.props.routesService.selectedDrivers = [];
+    this.props.service.drivers = undefined;
+    this.props.service.selectedDrivers = [];
   }
 
   private async onAssignClick(): Promise<void> {
@@ -137,8 +137,8 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
       const response = await fetch(
         BaseService.url(url),
         BaseService.defaultConfig({
-          routeId: this.props.routesService.selectedRoute!.id,
-          driverId: this.props.routesService.selectedDrivers[0].id
+          routeId: this.props.service.selectedRoute!.id,
+          driverId: this.props.service.selectedDrivers[0].id
         })
       );
 
@@ -160,9 +160,9 @@ export class DriversPanel extends React.Component<DriversPanelProps> {
     try {
       this.loading = true;
 
-      await this.props.routesService.pushToDrivers(
-        this.props.routesService.selectedDrivers,
-        this.props.routesService.selectedRoute!,
+      await this.props.service.pushToDrivers(
+        this.props.service.selectedDrivers,
+        this.props.service.selectedRoute!,
         this.message
       )
 

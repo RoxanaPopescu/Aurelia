@@ -1,9 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { Driver } from "app/model/driver";
-import { Route } from "shared/src/model/logistics/routes/tracking";
 import Localization from "shared/src/localization";
 import { Distance } from "shared/src/utillity/distance";
+import { Route } from "app/model/route";
 
 export interface DriverInfoProps {
   driver: Driver;

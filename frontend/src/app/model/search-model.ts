@@ -47,9 +47,32 @@ export class SearchModel
 
         // Search the JSON representation of the object.
 
-        const q = caseSensitive ? text : text.toLowerCase();
+        const initialQuery = text.toLowerCase();
 
-        return new RegExp(`^\\s*"[^"]+":.*${q}.*$|^\\s*"[^"]*${q}[^"]*",?$`, "m").test(this._json);
+        // We allow multiple searches when a ',' is added. We trim spaces if this exist
+        let s: string[] = [];
+        const splitQuery = initialQuery.split(",");
+        if (splitQuery.length > 1) {
+            s = splitQuery.map(e => e.trim());
+        } else {
+            s.push(initialQuery);
+        }
+
+        let found = true;
+        for(const q of s) {
+            const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+            const foundSingle = new RegExp(
+                `^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`,
+                "m"
+            ).test(this._json)
+
+            if (!foundSingle) {
+                found = false;
+            }
+        }
+
+        return found;
     }
 
     /**
