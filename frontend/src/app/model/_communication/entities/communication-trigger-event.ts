@@ -46,7 +46,7 @@ export class CommunicationTriggerEvent
         },
         "order-delivery-eta-provided":
         {
-            name: "Order delivery ETA provided"
+            name: "Order delivery before ETA"
         },
         "order-pickup-eta-provided":
         {
