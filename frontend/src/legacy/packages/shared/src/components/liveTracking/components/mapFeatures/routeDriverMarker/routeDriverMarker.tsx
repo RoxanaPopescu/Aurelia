@@ -4,7 +4,7 @@ import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithL
 import Localization from "shared/src/localization";
 import { Marker, Popup } from "shared/src/components/worldMap";
 import "./routeDriverMarker.scss";
-import { Position } from "shared/src/model/general/position";
+import { Position } from "app/model/shared";
 import { RouteStop, RouteBase } from "app/model/route";
 
 export interface RouteDriverMarkerProps {
@@ -19,9 +19,6 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
   protected get bestPosition(): Position {
     let position = this.props.route.driverPosition;
-    if (position == null) {
-      position = this.props.route.currentOrNextStop?.location.position
-    }
 
     if (position == null) {
       let stop = this.props.route.currentOrNextStop;

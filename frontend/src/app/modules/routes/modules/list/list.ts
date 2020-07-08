@@ -379,9 +379,9 @@ export class ListPage
                         searchQuery: this.searchQuery,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter,
+                        startTimeTo: this.startTimeToFilter?.endOf("day"),
                         createdTimeFrom: this.createdTimeFromFilter,
-                        createdTimeTo: this.createdTimeToFilter,
+                        createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
                     },
@@ -393,7 +393,9 @@ export class ListPage
                         tags: this.columns.map(c => c.slug).includes("tags"),
                         criticality: this.columns.map(c => c.slug).includes("criticality"),
                         estimates: this.columns.map(c => c.slug).includes("estimated-completion"),
-                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops")
+                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops"),
+                        stops: true,
+                        driverPosition: true
                     },
                     this.sorting,
                     this.paging,

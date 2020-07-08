@@ -165,10 +165,6 @@ export class RouteDetailsService {
       data.driverOnline = true;
     }
 
-    if (this.step >= 35) {
-      data.stops[3].isDelayed = true;
-    }
-
     if (this.step >= 45) {
       data.stops[3].status = "cancelled";
       delete data.stops[3].arrivalTime;

@@ -25,10 +25,6 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
   public render() {
     let routes = this.props.service.filteredRoutes;
 
-    if (routes == null) {
-      return;
-    }
-
     return (
       <React.Fragment>
         {routes.map(r =>

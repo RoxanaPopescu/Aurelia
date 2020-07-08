@@ -34,7 +34,7 @@ export class Driver
             this.status = new DriverStatus("approved");
             this.name = new PersonName();
             this.phone = new Phone();
-            this.phone.countryPrefix = "45";
+            this.phone.countryCode = "45";
         }
 
     }

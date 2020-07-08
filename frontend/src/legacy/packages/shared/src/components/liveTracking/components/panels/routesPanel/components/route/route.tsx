@@ -5,22 +5,23 @@ import { LiveTrackingService } from "../../../../../services/liveTrackingService
 import { routeFlagService } from "../../../../../services/routeFlagService";
 import { Icon } from "shared/src/webKit";
 import "./route.scss";
-import { RouteStop } from "shared/src/model/logistics/routes";
-import { Route } from "app/model/route";
+import { RouteInfo, RouteStop } from "app/model/route";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
+  route?: RouteInfo;
 }
 
 @observer
 export class RouteComponent extends React.Component<RoutesLayerProps> {
 
   public render() {
-    let route = this.props.service.selectedRoute;
+    // FIXME: SUPPORT TWO DIFFERENT ROUTES!!!
+    let route = this.props.route;
 
     if (route == null) {
-      // FIXME: SHOW LOADING
-      return;
+      return null;
+      // FIXME:
     }
 
     const driverOrFulfillerName =
@@ -125,7 +126,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
     );
   }
 
-  renderNoDriver(route: Route): JSX.Element | undefined {
+  renderNoDriver(route: RouteInfo): JSX.Element | undefined {
     if (route.driver != null) {
       return;
     }

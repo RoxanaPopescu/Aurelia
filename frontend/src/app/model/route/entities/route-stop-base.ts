@@ -25,7 +25,6 @@ export abstract class RouteStopBase extends RouteStopInfo
             this.driverInstructions = data.driverInstructions;
 
             this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
-            this.isDelayed = data.isDelayed;
 
             if (data.outfit != null)
             {
@@ -115,16 +114,26 @@ export abstract class RouteStopBase extends RouteStopInfo
     public completedTime?: DateTime;
 
     /**
-     * True if there is a delay at this stop, and the delay excedes
-     * the threshold for an acceptable delay, or undefined if the route
-     * is not yet started.
-     */
-    public isDelayed?: boolean;
-
-    /**
      * True if the route stop has been selected by the user, otherwise false.
      */
     public selected = false;
+
+    /**
+     * If the driver is currently delayed for this stop
+     * This can be unknown if no estimates exist
+     */
+    public get isDelayed(): boolean | undefined
+    {
+        if (this.estimates == null) {
+            return undefined;
+        }
+
+        if (this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null) {
+            return false;
+        }
+
+        return this.arrivalTimeFrame.to > this.estimates.arrivalTime;
+    }
 
     /**
      * The delay at the stop, if the driver arrived late.

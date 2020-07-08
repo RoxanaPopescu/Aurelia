@@ -1,5 +1,6 @@
 import { Location } from "app/model/shared";
 import { RouteBase } from "./route-base";
+import { RouteStop } from "..";
 
 export class RouteInfo extends RouteBase
 {
@@ -9,7 +10,8 @@ export class RouteInfo extends RouteBase
      */
     public constructor(data: any)
     {
-        super(data, []);
+        const stops = data.stops?.map((s, i: number) => new RouteStop(s, i + 1)) ?? [];
+        super(data, stops);
         this.stopCount = data.stopCount;
         if (data.startLocation) {
             this.startLocation = new Location(data.startLocation);

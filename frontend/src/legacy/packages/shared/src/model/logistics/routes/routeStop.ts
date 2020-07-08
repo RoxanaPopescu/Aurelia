@@ -24,8 +24,6 @@ export abstract class RouteStop extends RouteStopBase {
     this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, {
       setZone: true
     });
-    this.isDelayed = data.isDelayed;
-
     if (data.outfit != null) {
       this.outfit = new Outfit(data.outfit);
     }

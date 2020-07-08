@@ -178,7 +178,7 @@ export class DataTablePage
                 {
                     fulfiller: false,
                     owner: false,
-                    driverLocation: false,
+                    driverPosition: false,
                 },
                 this.sorting,
                 this.paging,

@@ -21,11 +21,11 @@ export class RoutesPanel extends React.Component<RoutesPanelProps> {
         </div>
 
         <div className="c-liveTracking-panel-body">
-          {this.props.service.filteredRoutes &&
-            this.props.service.filteredRoutes
+          {this.props.service.filteredRoutes
               .map(route => (
                 <RouteComponent
                   key={route.id}
+                  route={route}
                   service={this.props.service}
                 />
               ))}

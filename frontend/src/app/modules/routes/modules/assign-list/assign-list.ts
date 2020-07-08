@@ -247,9 +247,9 @@ export class ListPage
                         searchQuery: this.searchQuery,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter,
+                        startTimeTo: this.startTimeToFilter?.endOf("day"),
                         createdTimeFrom: this.createdTimeFromFilter,
-                        createdTimeTo: this.createdTimeToFilter,
+                        createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle
                     },

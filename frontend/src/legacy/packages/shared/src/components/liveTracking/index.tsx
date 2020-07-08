@@ -86,9 +86,10 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
     this.reactionDisposers.forEach(dispose => dispose());
     this.reactionDisposers = [];
     window.removeEventListener("popstate", this.onPopState);
-    this.service.stopPolling();
     window.removeEventListener("focus", this.onFocus);
     window.removeEventListener("blur", this.onBlur);
+
+    this.service.stopPolling();
   }
 
   onBlur = () => {

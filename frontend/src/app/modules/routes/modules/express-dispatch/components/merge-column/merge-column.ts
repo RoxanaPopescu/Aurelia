@@ -529,7 +529,6 @@ export class MergeColumnCustomElement
                 if (stop != null)
                 {
                     stop.stop.estimates = estimatedStop.estimates;
-                    stop.stop.isDelayed = estimatedStop.isDelayed;
                 }
             }
 

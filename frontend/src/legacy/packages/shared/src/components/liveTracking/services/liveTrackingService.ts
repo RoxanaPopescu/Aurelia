@@ -3,8 +3,9 @@ import BaseService from "shared/src/services/base";
 import Localization from "shared/src/localization";
 import { routeFlagService } from "./routeFlagService";
 import { Driver } from "app/model/driver";
-import { RouteService, Route, RouteInfo, RouteStatus } from "app/model/route";
+import { RouteService, Route, RouteInfo, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { LiveTrackingFilter } from "./liveTrackingFilter";
+import { DateTime, Duration } from "luxon";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -12,9 +13,13 @@ const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
 const pollIntervalFocus = 6000;
 const pollIntervalOutOfFocus = 30000;
 
+type ListType = "not-started" | "in-progress" | "no-driver";
+
 /**
  * Represents a service that manages the routes shown in live tracking.
  */
+
+
 export class LiveTrackingService {
   constructor(routeService: RouteService) {
     this.routeService = routeService;
@@ -95,15 +100,15 @@ export class LiveTrackingService {
     let routes: RouteInfo[] = [];
 
     if (this.routesNotStarted != null) {
-      routes.concat(this.routesNotStarted);
+      routes = routes.concat(this.routesNotStarted);
     }
 
     if (this.routesInProgress != null) {
-      routes.concat(this.routesInProgress);
+      routes = routes.concat(this.routesInProgress);
     }
 
     if (this.routesNoDriver != null) {
-      routes.concat(this.routesNoDriver);
+      routes = routes.concat(this.routesNoDriver);
     }
 
     return routes.sort((a, b) => {
@@ -140,8 +145,7 @@ export class LiveTrackingService {
    */
   @computed
   public get filteredRoutes(): RouteInfo[] {
-    let routes = this.routes;
-    if (routes == null) {
+    if (this.routes.length <= 0) {
       return [];
     }
 
@@ -150,10 +154,10 @@ export class LiveTrackingService {
         this.filter.vehicleTypes.length == 0 &&
         this.filter.statuses.length == 0 &&
         this.filter.products.length == 0) {
-      return routes;
+      return this.routes;
     }
 
-    return routes
+    return this.routes
       .filter(route => {
         if (this.filter.criticalities.length > 0) {
           if (!this.filter.criticalities.includes(route.criticality.slug)) {
@@ -200,6 +204,12 @@ export class LiveTrackingService {
     this.selectedRouteId = routeId;
     this.selectedRouteStopId = undefined;
 
+    if (routeId == null) {
+      this.setInFocus();
+    } else {
+      this.setNotInFocus();
+    }
+
     // FIXME: FETCH AND RESET
   }
 
@@ -210,7 +220,10 @@ export class LiveTrackingService {
    */
   private async startPolling() {
     this.stopped = false;
-    this.poll();
+
+    this.poll("in-progress");
+    this.poll("no-driver");
+    this.poll("not-started");
   }
 
   /**
@@ -236,47 +249,79 @@ export class LiveTrackingService {
    * Fetches the tracked routes, then schedules the next poll.
    * @returns A promise that will be resolved when the poll succeedes.
    */
-  private async poll(): Promise<void> {
-    // clearTimeout(this.pollTimeout);
+  private async poll(type: ListType) {
+    if (type == "in-progress") {
+      clearTimeout(this.pollTimeout.inProgress);
+    } else if (type == "no-driver") {
+      clearTimeout(this.pollTimeout.noDriver);
+    } else if (type == "not-started") {
+      clearTimeout(this.pollTimeout.notStarted);
+    }
 
     try {
-      // const routes = await this.fetch();
+      let statuses: RouteStatusSlug[];
+      let from = DateTime.local();
+      let to = DateTime.local();
+      let assignedDriver: boolean | undefined;
 
-      // The model creation already takes a while, primarily due to less than optimal date parsing in Luxon.
-      // To avoid blocking the UI thread for too long, we therefore do the assignments to observable properties
-      // within a timeout, thus deferring the react rendering process.
-      return new Promise<void>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
+      if (type == "in-progress") {
+        statuses = ["in-progress"];
+        from = from.minus(Duration.fromObject({hours: 12}));
+        to = to.plus(Duration.fromObject({hours: 24}));
+      } else if (type == "no-driver") {
+        statuses = ["not-started", "not-approved"];
+        assignedDriver = false;
+        from = from.minus(Duration.fromObject({hours: 2}));
+        to = to.plus(Duration.fromObject({hours: 12}));
+      } else {
+        statuses = ["not-started"];
+        assignedDriver = true;
+        from = from.minus(Duration.fromObject({hours: 1}));
+        to = to.plus(Duration.fromObject({hours: 4}));
+      }
 
-            /*
-            this.migrateRouteState(routes);
+      const result = await this.routeService.getAll(
+          {
+              statuses: statuses,
+              startTimeFrom: from.toUTC(),
+              startTimeTo: to.toUTC(),
+              assignedDriver: assignedDriver,
+          },
+          {
+              owner: true,
+              vehicle: true,
+              fulfiller: true,
+              driver: true,
+              tags: true,
+              criticality: true,
+              estimates: true,
+              stops: true,
+              driverPosition: true
+          },
+          undefined,
+          { page: 1, pageSize: 300 }
+      );
 
-            this._routes = routes;
-
-            if (this.selectedRouteId != null) {
-              const selectedRoute = this._routes.find(r => r.id === this.selectedRouteId);
-
-              if (selectedRoute != null) {
-                this.selectedRoute = selectedRoute;
-              }
-            }*/
-
-            resolve();
-          } catch (error) {
-            reject(error);
-          } finally {
-            if (!this.stopped) {
-              // FIXME: this.pollTimeout = setTimeout(() => this.poll(), this.pollInterval);
-            }
-          }
-        });
-      });
+      if (type == "in-progress") {
+        this.routesInProgress = result.routes;
+      } else if (type == "no-driver") {
+        this.routesNoDriver = result.routes;
+      } else {
+        this.routesNotStarted = result.routes;
+      }
 
     } catch (error) {
-      // tslint:disable-next-line:no-console
-      console.error("An error occurred while polling for live tracking data.\n", error);
-      // this.pollTimeout = setTimeout(() => this.poll(), 8000);
+      // Do not resolve errors yet.
+    } finally {
+      if (!this.stopped) {
+        if (type == "in-progress") {
+          this.pollTimeout.inProgress = setTimeout(() => this.poll(type), this.pollInterval);
+        } else if (type == "no-driver") {
+          this.pollTimeout.noDriver = setTimeout(() => this.poll(type), this.pollInterval);
+        } else if (type == "not-started") {
+          this.pollTimeout.notStarted = setTimeout(() => this.poll(type), this.pollInterval);
+        }
+      }
     }
   }
 
@@ -332,46 +377,11 @@ export class LiveTrackingService {
   }
 
   /**
-   * Fetches the tracked routes.
-   * @returns A promise that will be resolved with the routes.
-   */
-  /*
-  private async fetch(): Promise<RouteLegacy[]> {
-    let routes: RouteLegacy[];
-    var url = "routes/v2/tracking";
-
-    const response = await fetch(
-      BaseService.url(url),
-      BaseService.defaultConfig({})
-    );
-
-    if (!response.ok) {
-      throw new Error(Localization.sharedValue("Error_General"));
-    }
-
-    const data = await response.json();
-
-    routes = [];
-
-    for (let route of data) {
-      try {
-        routes.push(new RouteLegacy(route));
-      } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.error("An error occurred while instantiating a live tracking route.\n", error, route);
-      }
-    }
-
-    return routes;
-  }
-  */
-
-  /**
    * Migrates the client-side state of the routes by migrating it to the corresponding new routes.
    * @param newRoutes The new routes, just fetched from the server.
    */
   /*
-  private migrateRouteState(newRoutes: RouteLegacy[]): void {
+  private migrateDetailsState(route: Route): void {
     if (this._routes != null) {
       for (const newRoute of newRoutes) {
         const oldRoute = this._routes.find(r => r.id === newRoute.id);

@@ -11,19 +11,53 @@ export class Phone
     {
         if (data != null)
         {
-            this.countryPrefix = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
-            this.number = data.number ? data.number.replace(/\s/g, "").match(/.{1,2}/g).join(" ") : "";
+            this.countryCallingCode = data.countryCallingCode;
+
+            if (data.countryCode) {
+                this.countryCode = data.countryCode;
+            } else {
+                // TODO: Remove in later release
+                this.countryCode = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
+            }
+
+            if (data.nationalNumber) {
+                this.nationalNumber = data.nationalNumber;
+            } else {
+                // TODO: Remove in later release
+                this.nationalNumber = data.number;
+            }
+
+            // TODO: Remove legacy
+            this.countryPrefix = this.countryCode;
+            this.number = this.nationalNumber;
         }
     }
 
     /**
-     * The prefix identifying the country to which the phone number belongs.
+     * The ISO 3166-1 Alpha 2 country code identifying the country,
+     * or undefined if not known, or if the phone number is non-geographic.
+     * This value is case sensitive.
      */
-    public countryPrefix: string;
+    public countryCode?: string;
 
     /**
-     * The phone number, excluding the country prefix.
+     * The country calling code, without the "+",
+     * or undefined if not known.
+     * Note that some countries share the same country calling code.
      */
+    public countryCallingCode?: string;
+
+    /**
+     * The unformatted phone number, without the country calling code.
+     */
+    public nationalNumber: string;
+
+    /**
+     * Legacy properties. Before these can be removed we need to update
+     * Route stop details
+     * Driver add / edit
+     */
+    public countryPrefix?: string;
     public number: string;
 
     /**
@@ -32,8 +66,7 @@ export class Phone
     public get isValid(): boolean
     {
         return (
-            /^\d{1,3}$/.test(this.countryPrefix) &&
-            /^(\s*\d\s*){8}$/.test(this.number)
+            /^(\s*\d\s*){8}$/.test(this.nationalNumber)
         );
     }
 
