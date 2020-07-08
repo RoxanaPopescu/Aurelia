@@ -72,8 +72,12 @@
             valid.bind="!invalid"
             trigger="input">
 
-            <template replace-part="invalid" translate>
+            <template if.bind="defaultCountryCode == null" replace-part="invalid" translate>
                 Please provide a valid international phone number, starting with <kbd>+</kbd>.
+            </template>
+
+            <template if.bind="defaultCountryCode != null" replace-part="invalid" translate>
+                Please provide a valid phone number.
             </template>
 
         </custom-validator>
