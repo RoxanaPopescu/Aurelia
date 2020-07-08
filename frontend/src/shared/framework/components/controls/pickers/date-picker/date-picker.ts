@@ -117,7 +117,7 @@ export class DatePickerCustomElement
     {
         this.focusedElement = this.focusedElement || this._element;
         this.today = DateTime.local().setZone(this.zone).startOf("day");
-        this.cursor = (this.value || this.today).startOf("day");
+        this.cursor = this.value?.setZone(this.zone).startOf("day") || this.today;
         this.focusedValue = this.value;
 
         this.minChanged();
