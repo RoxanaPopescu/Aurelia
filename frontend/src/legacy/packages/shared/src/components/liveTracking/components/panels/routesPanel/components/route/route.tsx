@@ -159,13 +159,13 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
     let route = this.props.route;
 
     if (this.props.service.selectedRouteSlug !== this.props.route.slug) {
+      this.props.service.setSelectedRouteSlug(this.props.route.slug);
       this.props.service.selectedRouteStopId = route.currentOrNextStop ?
       route.currentOrNextStop.id : undefined;
-      this.props.service.setSelectedRouteSlug(this.props.route.slug);
 
       history.pushState({ ...history.state, state: { routeId: route.slug }}, "", window.location.href);
     } else {
-      // GO BACK FIXME:
+      // Go back?
     }
   }
 
@@ -177,15 +177,14 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
   }
 
   private onDelayMessageClicked(event: React.MouseEvent): void {
-    /*
-    if (this.props.service.selectedRouteId === route.id) {
+    if (this.props.service.selectedRouteSlug === this.props.route.slug) {
       event.stopPropagation();
     }
     setTimeout(() => {
       // Needed to trigger change detection.
       this.props.service.selectedRouteStopId = undefined;
-      this.props.service.selectedRouteStopId = route.expectedDelays[0].id;
+      this.props.service.selectedRouteStopId = this.props.route.expectedDelays[0].id;
     });
-    */
+
   }
 }

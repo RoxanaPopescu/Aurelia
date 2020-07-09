@@ -3,7 +3,7 @@ import BaseService from "shared/src/services/base";
 import Localization from "shared/src/localization";
 import { routeFlagService } from "./routeFlagService";
 import { Driver } from "app/model/driver";
-import { RouteService, Route, RouteInfo, RouteStatus, RouteStatusSlug } from "app/model/route";
+import { RouteService, Route, RouteInfo, RouteStatus, RouteStatusSlug, RouteStopBase } from "app/model/route";
 import { LiveTrackingFilter } from "./liveTrackingFilter";
 import { DateTime, Duration } from "luxon";
 
@@ -274,6 +274,19 @@ export class LiveTrackingService {
       const result = await this.routeService.get(this.selectedRouteSlug);
 
       if (this.selectedRouteSlug && this.selectedRouteSlug == result.slug) {
+
+        // Migrate stops if needed
+        if (this.selectedRoute != null) {
+          for (let stop of result.stops) {
+            if (stop instanceof RouteStopBase) {
+              let foundStop = this.selectedRoute.stops.find(s => s.id == stop.id);
+              if (foundStop != null && foundStop instanceof RouteStopBase) {
+                stop.selected = foundStop.selected;
+              }
+            }
+          }
+        }
+
         this.selectedRoute = result;
       }
     } catch (error) {
@@ -307,8 +320,8 @@ export class LiveTrackingService {
 
       if (type == "in-progress") {
         statuses = ["in-progress"];
-        from = from.minus(Duration.fromObject({hours: 12}));
-        to = to.plus(Duration.fromObject({hours: 24}));
+        from = from.minus(Duration.fromObject({hours: 24}));
+        to = to.plus(Duration.fromObject({hours: 12}));
       } else if (type == "no-driver") {
         statuses = ["not-started", "not-approved"];
         assignedDriver = false;
@@ -317,8 +330,8 @@ export class LiveTrackingService {
       } else {
         statuses = ["not-started"];
         assignedDriver = true;
-        from = from.minus(Duration.fromObject({hours: 1}));
-        to = to.plus(Duration.fromObject({hours: 4}));
+        from = from.minus(Duration.fromObject({hours: 4}));
+        to = to.plus(Duration.fromObject({hours: 1}));
       }
 
       const result = await this.routeService.getAll(

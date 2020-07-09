@@ -32,8 +32,20 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   private routeStopComponents: RouteStopComponent[];
   private routeStops: RouteStop[];
   private reactionDisposers: IReactionDisposer[] = [];
+  private didScroll = false;
 
-  public componentDidMount() {
+  public componentWillUnmount() {
+    this.reactionDisposers.forEach(dispose => dispose());
+    this.reactionDisposers = [];
+  }
+
+  public scrollToStop() {
+    if (this.didScroll) {
+      return;
+    }
+
+    this.didScroll = true;
+
     setTimeout(() => {
       if (this.props.service.selectedRouteStopId != null) {
         this.scrollToRouteStop(this.props.service.selectedRouteStopId, "smooth");
@@ -45,14 +57,8 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
         routeStopId => this.scrollToRouteStop(routeStopId, "smooth")));
   }
 
-  public componentWillUnmount() {
-    this.reactionDisposers.forEach(dispose => dispose());
-    this.reactionDisposers = [];
-  }
-
   public renderStops(): JSX.Element[] | JSX.Element | undefined {
     const selectedRoute = this.props.service.selectedRoute;
-
     if (!selectedRoute) {
       return (
         <div className="c-liveTracking-stops-loading">
@@ -61,6 +67,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
       );
     }
 
+    this.scrollToStop();
     this.routeStops = selectedRoute.stops
     .filter(s => s instanceof RouteStop) as RouteStop[];
 

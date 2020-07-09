@@ -6,7 +6,7 @@ import { RouteDriverMarker } from "../../mapFeatures/routeDriverMarker/routeDriv
 import "./routeLayer.scss";
 import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { DriverMarker } from "../../mapFeatures/driverMarker/driverMarker";
-import { RouteStop, Route } from "app/model/route";
+import { RouteStop, Route, RouteBase } from "app/model/route";
 
 export interface RouteLayerProps {
   service: LiveTrackingService;
@@ -75,23 +75,26 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
     const selectedRoute = this.props.service.selectedRoute;
     const currentRoute = selectedRoute ?? this.props.service.selectedListRoute;
 
-
+    if (!currentRoute) {
+      // This should not happen
+      return null;
+    }
 
     return (
       <React.Fragment>
         {this.renderStops(selectedRoute)}
-        {currentRoute!.driverPosition &&
+        {(currentRoute!.driverPosition || selectedRoute == null) &&
         <RouteDriverMarker
           key={`RouteDriverMarker-${currentRoute!.id}`}
           route={currentRoute!}
-          onClick={() => this.onDriverMarkerClick(selectedRoute)}
+          onClick={() => this.onDriverMarkerClick(currentRoute)}
         />}
         {this.renderDrivers()}
       </React.Fragment>
     );
   }
 
-  private onDriverMarkerClick(route?: Route): void {
+  private onDriverMarkerClick(route?: RouteBase): void {
     if (!route) {
       return;
     }
