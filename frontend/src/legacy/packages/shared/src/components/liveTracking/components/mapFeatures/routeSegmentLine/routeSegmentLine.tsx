@@ -3,7 +3,7 @@ import { Polyline } from "react-google-maps";
 import { RouteStopBase, RouteStopInfo } from "app/model/route";
 
 // The width of the stroke, in pixels.
-const strokeWeight = 2;
+const strokeWeight = 1;
 
 // The opacity of the stroke, in the range [0.0, 1.0].
 const strokeOpacity = 0.4;
@@ -30,7 +30,7 @@ export class RouteSegmentLine extends React.Component<RouteSegmentLineProps> {
       return {
         strokeColor: "#17C800",
         strokeWeight,
-        strokeOpacity,
+        strokeOpacity: 0.2,
         zIndex: 100,
         icons: []
       };
@@ -45,7 +45,7 @@ export class RouteSegmentLine extends React.Component<RouteSegmentLineProps> {
     return {
       strokeColor: color,
       strokeWeight,
-      strokeOpacity: 0,
+      strokeOpacity: strokeOpacity,
       zIndex: 1,
       icons: [
         {

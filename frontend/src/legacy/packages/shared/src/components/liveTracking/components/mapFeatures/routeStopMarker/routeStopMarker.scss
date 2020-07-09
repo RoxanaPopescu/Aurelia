@@ -3,6 +3,10 @@
 .c-liveTracking-routeStopMarker {
   padding: 5px;
   pointer-events: none;
+
+  &.--faded {
+    opacity: 0.6;
+  }
 }
 
 .c-liveTracking-routeStopMarker-circle {
