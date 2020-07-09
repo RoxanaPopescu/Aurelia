@@ -5,7 +5,7 @@ import { LiveTrackingService } from "../../../../../services/liveTrackingService
 import { routeFlagService } from "../../../../../services/routeFlagService";
 import { Icon } from "shared/src/webKit";
 import "./route.scss";
-import { RouteInfo, RouteStop } from "app/model/route";
+import { RouteInfo, RouteStopBase } from "app/model/route";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
@@ -127,7 +127,8 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
     let info = Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_NoneAssigned");
     let stop = route.stops[0];
-    if (stop instanceof RouteStop && stop.arrivalTimeFrame.from != null) {
+
+    if (stop instanceof RouteStopBase && stop.arrivalTimeFrame.from != null) {
       info = info.replace("{time}", Localization.formatDateTime(stop.arrivalTimeFrame.from));
     }
 

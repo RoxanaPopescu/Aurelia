@@ -10,7 +10,7 @@ import { RouteInfo } from "./components/routeInfo/routeInfo";
 import { RouteStopComponent } from "./components/routeStop/routeStop";
 import "./routePanel.scss";
 import { RouteStop } from "app/model/route";
-import { LoadingInline } from "shared/src/webKit";
+import { ThreeDotsAnimated } from "shared/src/webKit";
 
 export interface RoutePanelProps {
   service: LiveTrackingService;
@@ -56,7 +56,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
     if (!selectedRoute) {
       return (
         <div className="c-liveTracking-stops-loading">
-          <LoadingInline/>
+          <ThreeDotsAnimated small={false} light={false} />
         </div>
       );
     }
