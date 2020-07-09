@@ -168,11 +168,6 @@ export class TimeInputCustomElement
             this.focusedValue = undefined;
             this.isValid = true;
         }
-
-        if (this.isValid)
-        {
-            this.enteredValue = undefined;
-        }
     }
 
     /**
