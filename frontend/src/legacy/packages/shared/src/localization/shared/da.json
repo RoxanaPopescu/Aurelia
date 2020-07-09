@@ -283,6 +283,7 @@
   "RouteDetails_Map_RouteDriverMarker_Driver_Heading": "Chauffør",
   "RouteDetails_Map_RouteDriverMarker_Driver_NoneAssigned": "Ingen chauffør tildelt, starter {time}",
   "RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber": "Telefon",
+  "RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp": "Online position alder",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_FulfillerID": "Transportør ID",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_Heading": "Transportør",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_PhoneNumber": "Telefon",

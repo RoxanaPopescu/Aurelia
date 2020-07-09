@@ -148,9 +148,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
           </div>
           }
 
+        {this.props.route.driverPosition && this.props.route.driverPosition.timestamp &&
+          <div className="c-worldMap-popup-section-row">
+            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp")}</div>
+            <div>{Localization.formatDuration(this.props.route.driverPosition.timestamp.diffNow())}</div>
+          </div>
+        }
         </div>
-
-
 
       </React.Fragment>
     );
