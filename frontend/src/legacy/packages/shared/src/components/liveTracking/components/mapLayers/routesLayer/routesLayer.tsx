@@ -35,7 +35,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
   }
 
   private onClick(route: RouteInfo): void {
-    history.pushState({ ...history.state, state: { routeId: route.id }}, "", window.location.href);
+    history.pushState({ ...history.state, state: { routeSlug: route.slug }}, "", window.location.href);
 
     // FIXME: FETCH SINGLE ROUTE
     // this.props.service.setSelectedRoute(route as TrackingRoute);

@@ -45,9 +45,9 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
       event.state.state == null ||
       this.service.routes == null
     ) {
-      this.service.setSelectedRouteId(undefined);
-    } else if (event.state.state.routeId) {
-      this.service.setSelectedRouteId(event.state.state.routeId);
+      this.service.setSelectedRouteSlug(undefined);
+    } else if (event.state.state.routeSlug) {
+      this.service.setSelectedRouteSlug(event.state.state.routeSlug);
     }
     this.routeSubPanel = undefined;
     // tslint:disable-next-line:semicolon
@@ -63,22 +63,17 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
       reaction(
         r => this.service.selectedRoute,
         route => {
-          // this.onSelectedRouteChanged(route)
-          // FIXME: Route changed?
+          this.onSelectedRouteChanged(route)
         }
-      ),
-      reaction(
-        r => this.service.selectedRouteId,
-        routeId => this.onSelectedRouteIdChanged(routeId)
       )
     );
 
     if (
       history.state != null &&
       history.state.state != null &&
-      history.state.state.routeId
+      history.state.state.routeSlug
     ) {
-      this.service.selectedRouteId = history.state.state.routeId;
+      this.service.selectedRouteSlug = history.state.state.routeSlug;
     }
   }
 
@@ -112,12 +107,12 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
         <div className="c-liveTracking">
           <div>
             <RoutesPanel
-              hidden={this.service.selectedRouteId != null}
+              hidden={this.service.selectedRouteSlug != null}
               service={this.service}
             />
 
             {!this.routeSubPanel &&
-              this.service.selectedRouteId != null && (
+              this.service.selectedRouteSlug != null && (
                 <RoutePanel
                   service={this.service}
                   onRouteStopSelected={routeStop =>
@@ -160,13 +155,10 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
                 scrollwheel: true
               }}
             >
-              {this.service.selectedRouteId == null && (
+              {this.service.selectedRouteSlug ?
+                <RouteLayer service={this.service} /> :
                 <RoutesLayer service={this.service} />
-              )}
-
-              {this.service.selectedRouteId != null && (
-                <RouteLayer service={this.service} />
-              )}
+              }
             </WorldMap>
           </div>
         </div>
@@ -195,12 +187,7 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
     }
   }
 
-  private onSelectedRouteIdChanged(routeId: string | undefined): void {
-    this.boundsChanged = false;
-  }
-
   // Note that this is called after every poll request.
-  /*
   private onSelectedRouteChanged(route: Route | undefined): void {
     if (route != null) {
       if (this.boundsChanged === true) {
@@ -212,10 +199,9 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
     }
 
     this.tryFitBounds(route);
-
     this.boundsChanged = false;
   }
-  */
+
 
   private tryFitBounds(route?: Route): void {
     if (this.map == null) {

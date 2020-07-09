@@ -9,20 +9,14 @@ import { RouteInfo, RouteStop } from "app/model/route";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
-  route?: RouteInfo;
+  route: RouteInfo;
 }
 
 @observer
 export class RouteComponent extends React.Component<RoutesLayerProps> {
 
   public render() {
-    // FIXME: SUPPORT TWO DIFFERENT ROUTES!!!
     let route = this.props.route;
-
-    if (route == null) {
-      return null;
-      // FIXME:
-    }
 
     const driverOrFulfillerName =
       route.driver
@@ -161,18 +155,17 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
   }
 
   private onClick(): void {
-    /*
-    if (this.props.service.selectedRouteId !== route.id) {
-      // this.props.service.setSelectedRoute(route);
+    let route = this.props.route;
 
-      // FIXME: SELECT STOP ID
-      // this.props.service.selectedRouteStopId = route.currentOrNextStop ?
-      // route.currentOrNextStop.id : undefined;
+    if (this.props.service.selectedRouteSlug !== this.props.route.slug) {
+      this.props.service.selectedRouteStopId = route.currentOrNextStop ?
+      route.currentOrNextStop.id : undefined;
+      this.props.service.setSelectedRouteSlug(this.props.route.slug);
 
-      // FIXME: History state
-      //history.pushState({ ...history.state, state: { routeId: route.id }}, "", window.location.href);
+      history.pushState({ ...history.state, state: { routeId: route.slug }}, "", window.location.href);
+    } else {
+      // GO BACK FIXME:
     }
-    */
   }
 
   private onFlagClick(event: React.MouseEvent): void {

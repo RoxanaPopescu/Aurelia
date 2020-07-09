@@ -19,7 +19,6 @@ type ListType = "not-started" | "in-progress" | "no-driver";
  * Represents a service that manages the routes shown in live tracking.
  */
 
-
 export class LiveTrackingService {
   constructor(routeService: RouteService) {
     this.routeService = routeService;
@@ -59,6 +58,11 @@ export class LiveTrackingService {
   private stopped = false;
 
   /**
+   * True if the details polling is stopped
+   */
+  private stoppedDetails = true;
+
+  /**
    * The filters that determien which routes are shown in live tracking.
    */
   @observable
@@ -69,7 +73,7 @@ export class LiveTrackingService {
    * Note that this instance will be replaced after each poll.
    */
   @observable
-  public selectedRouteId: string | undefined;
+  public selectedRouteSlug: string | undefined;
 
   /**
    * The currently selected route.
@@ -93,6 +97,15 @@ export class LiveTrackingService {
     }
 
     return false;
+  }
+
+  @computed get selectedListRoute(): RouteInfo | undefined {
+    let slug = this.selectedRouteSlug;
+    if (!slug) {
+      return undefined;
+    }
+
+    return this.routes.find(r => r.slug == slug);
   }
 
   @computed
@@ -200,19 +213,21 @@ export class LiveTrackingService {
    * Sets the currently selected route.
    * @param route The route to select, or undefined to select no route.
    */
-  public setSelectedRouteId(routeId: string | undefined): void {
-    this.selectedRouteId = routeId;
+  public setSelectedRouteSlug(slug: string | undefined): void {
+    this.selectedRouteSlug = slug;
     this.selectedRouteStopId = undefined;
 
-    if (routeId == null) {
+    if (slug == null) {
+      this.stoppedDetails = true;
+      this.selectedRoute = undefined;
       this.setInFocus();
+      clearImmediate(this.pollTimeout.selectedRoute);
     } else {
+      this.stoppedDetails = false;
       this.setNotInFocus();
+      this.pollDetails();
     }
-
-    // FIXME: FETCH AND RESET
   }
-
 
   /**
    * Starts polling for route data.
@@ -246,8 +261,34 @@ export class LiveTrackingService {
   }
 
   /**
+   * Fetches the selected detail route
+   */
+  private async pollDetails() {
+    clearTimeout(this.pollTimeout.selectedRoute);
+
+    if (!this.selectedRouteSlug) {
+      return;
+    }
+
+    try {
+      const result = await this.routeService.get(this.selectedRouteSlug);
+
+      if (this.selectedRouteSlug && this.selectedRouteSlug == result.slug) {
+        this.selectedRoute = result;
+      }
+    } catch (error) {
+      // We do nothing
+    } finally {
+      if (this.stoppedDetails) {
+        return;
+      }
+
+      this.pollTimeout.selectedRoute = setTimeout(() => this.pollDetails(), pollIntervalFocus);
+    }
+  }
+
+  /**
    * Fetches the tracked routes, then schedules the next poll.
-   * @returns A promise that will be resolved when the poll succeedes.
    */
   private async poll(type: ListType) {
     if (type == "in-progress") {

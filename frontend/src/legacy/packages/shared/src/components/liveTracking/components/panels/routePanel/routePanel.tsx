@@ -7,10 +7,10 @@ import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { Panel } from "../panel";
 import { Actions } from "./components/actions/actions";
 import { RouteInfo } from "./components/routeInfo/routeInfo";
-import { RelatedRoutes } from "./components/relatedRoutes/relatedRoutes";
 import { RouteStopComponent } from "./components/routeStop/routeStop";
 import "./routePanel.scss";
 import { RouteStop } from "app/model/route";
+import { LoadingInline } from "shared/src/webKit";
 
 export interface RoutePanelProps {
   service: LiveTrackingService;
@@ -50,16 +50,37 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
     this.reactionDisposers = [];
   }
 
-  public render() {
-
+  public renderStops(): JSX.Element[] | JSX.Element | undefined {
     const selectedRoute = this.props.service.selectedRoute;
 
-    if (selectedRoute == null) {
-      return <React.Fragment/>;
+    if (!selectedRoute) {
+      return (
+        <div className="c-liveTracking-stops-loading">
+          <LoadingInline/>
+        </div>
+      );
     }
 
     this.routeStops = selectedRoute.stops
-      .filter(s => s instanceof RouteStop) as RouteStop[];
+    .filter(s => s instanceof RouteStop) as RouteStop[];
+
+    return this.routeStops.map(routeStop =>
+      <RouteStopComponent
+        key={routeStop.id}
+        ref={ref => ref && this.routeStopComponents.push(ref)}
+        route={selectedRoute}
+        routeStop={routeStop}
+        service={this.props.service}
+        onClick={() => this.props.onRouteStopSelected(routeStop)}
+      />);
+  }
+
+  public render() {
+    let route = this.props.service.selectedListRoute;
+
+    if (!route) {
+      return null;
+    }
 
     this.routeStopComponents = [];
 
@@ -74,36 +95,20 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
           ref={ref => ref && (this.headerElement = ref)}
           className="c-liveTracking-panel-header"
         >
-
           <Actions
-            route={selectedRoute}
+            route={this.props.service.selectedRoute}
             onBackClick={() => this.onBackClick()}
             onSplitRouteClick={() => this.onSplitRouteClick()}
             onDriversClick={() => this.props.onDriversClick()}
             onRouteDetailsClick={() => this.onRouteDetailsClick()}
           />
 
-          <RouteInfo route={selectedRoute} service={this.props.service}/>
-
-          <RelatedRoutes
-            route={selectedRoute}
-            onClick={routeId => this.onRelatedRouteClick(routeId)}
-          />
+          <RouteInfo service={this.props.service}/>
 
         </div>
 
         <div className="c-liveTracking-panel-body">
-
-          {this.routeStops.map(routeStop =>
-          <RouteStopComponent
-            key={routeStop.id}
-            ref={ref => ref && this.routeStopComponents.push(ref)}
-            route={selectedRoute}
-            routeStop={routeStop}
-            service={this.props.service}
-            onClick={() => this.props.onRouteStopSelected(routeStop)}
-          />)}
-
+          {this.renderStops()}
         </div>
 
       </Panel>
@@ -145,7 +150,7 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   }
 
   private onBackClick() {
-    this.props.service.setSelectedRouteId(undefined);
+    this.props.service.setSelectedRouteSlug(undefined);
     history.back();
   }
 
@@ -158,19 +163,8 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
 
   private onRouteDetailsClick(): void {
     const routeDetailsUrl = SubPage.path(SubPage.RouteDetails)
-      .replace(":id", this.props.service.selectedRoute!.slug);
+      .replace(":id", this.props.service.selectedListRoute!.slug);
 
     window.open(routeDetailsUrl, "_blank");
-  }
-
-  private onRelatedRouteClick(routeId: string): void {
-    const route = this.props.service.routes!.find(r => r.id === routeId);
-    if (route != null) {
-      // FIXME: What does it do?
-      //this.props.service.setSelectedRoute(route);
-      this.props.service.selectedRouteStopId = route.currentOrNextStop ?
-        route.currentOrNextStop.id : undefined;
-    }
-    history.pushState({ ...history.state, state: { routeId: routeId }}, "", window.location.href);
   }
 }

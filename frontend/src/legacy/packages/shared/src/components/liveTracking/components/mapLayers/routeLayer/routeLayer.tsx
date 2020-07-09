@@ -34,18 +34,14 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
     return items;
   }
 
-  renderStops() {
-    const selectedRoute = this.props.service.selectedRoute;
-
-    if (selectedRoute == null) {
+  renderStops(route?: Route) {
+    if (route == null) {
       return <React.Fragment/>;
     }
 
-    let stops = selectedRoute.stops;
+    let stops = route.stops;
     let nonCancelledStops = stops.filter(s =>
       s.status.slug !== "cancelled");
-
-    // Remove info stops FIXME:
 
     let items: JSX.Element[] = [];
 
@@ -77,18 +73,17 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
   public render() {
     const selectedRoute = this.props.service.selectedRoute;
+    const currentRoute = selectedRoute ?? this.props.service.selectedListRoute;
 
-    if (selectedRoute == null) {
-      return <React.Fragment/>;
-    }
+
 
     return (
       <React.Fragment>
-        {this.renderStops()}
-        {selectedRoute.driverPosition &&
+        {this.renderStops(selectedRoute)}
+        {currentRoute!.driverPosition &&
         <RouteDriverMarker
-          key={`RouteDriverMarker-${selectedRoute.id}`}
-          route={selectedRoute}
+          key={`RouteDriverMarker-${currentRoute!.id}`}
+          route={currentRoute!}
           onClick={() => this.onDriverMarkerClick(selectedRoute)}
         />}
         {this.renderDrivers()}
@@ -96,7 +91,11 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
     );
   }
 
-  private onDriverMarkerClick(route: Route): void {
+  private onDriverMarkerClick(route?: Route): void {
+    if (!route) {
+      return;
+    }
+
     // Needed to trigger change detection.
     this.props.service.selectedRouteStopId = undefined;
     this.props.service.selectedRouteStopId = route.currentOrNextStop ?

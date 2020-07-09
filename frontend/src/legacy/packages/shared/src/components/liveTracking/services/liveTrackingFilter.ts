@@ -171,7 +171,6 @@ export class LiveTrackingFilter {
       }
 
       this.products = results;
-      console.log(this.products);
       localStorage.setItem(filterProductTypesKey, JSON.stringify(results));
     }
   }

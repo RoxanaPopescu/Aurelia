@@ -9,7 +9,7 @@ import { Profile } from "shared/src/model/profile";
 import { Route, RouteStop } from "app/model/route";
 
 export interface ActionsProps {
-  route: Route;
+  route?: Route;
   onBackClick: () => void;
   onSplitRouteClick: () => void;
   onDriversClick: () => void;
@@ -20,14 +20,39 @@ export interface ActionsProps {
 export class Actions extends React.Component<ActionsProps> {
   private isFulfiller = Session.outfit instanceof Fulfiller;
 
-  public render() {
-    // tslint:disable-next-line:no-any
+  public renderSplitRoute(): JSX.Element | undefined {
+    if (!Profile.claims.has("edit-routes") || !this.isFulfiller) {
+      return undefined;
+    }
+
+    if (
+      this.props.route == null ||
+      this.props.route.driver == null ||
+      ["completed", "cancelled"].includes(this.props.route.status.slug)
+    ) {
+      return undefined;
+    }
 
     const selectedStops = this.props.route.stops.filter(
       s => (s as RouteStop).selected
     );
-
     const canSplitRoute = selectedStops.length > 1;
+
+    return (
+      <a
+        className={!canSplitRoute ? "visually-disabled" : ""}
+        onClick={() => canSplitRoute && this.props.onSplitRouteClick()}
+        title={Localization.sharedValue(
+          "LiveTracking_Actions_SplitRoute_Tooltip"
+        )}
+      >
+        {Localization.sharedValue("LiveTracking_Actions_SplitRoute")}
+      </a>
+    );
+  }
+
+  public render() {
+    // tslint:disable-next-line:no-any
 
     return (
       <div className="c-liveTracking-routePanel-actions">
@@ -37,21 +62,7 @@ export class Actions extends React.Component<ActionsProps> {
         </a>
 
         <div className="c-liveTracking-routePanel-actions-group">
-          {Profile.claims.has("edit-routes") &&
-            this.isFulfiller &&
-            this.props.route.driver != null &&
-            this.props.route.status.slug !== "completed" &&
-            this.props.route.status.slug !== "cancelled" && (
-              <a
-                className={!canSplitRoute ? "visually-disabled" : ""}
-                onClick={() => canSplitRoute && this.props.onSplitRouteClick()}
-                title={Localization.sharedValue(
-                  "LiveTracking_Actions_SplitRoute_Tooltip"
-                )}
-              >
-                {Localization.sharedValue("LiveTracking_Actions_SplitRoute")}
-              </a>
-            )}
+          {this.renderSplitRoute()}
           {Profile.claims.has("edit-routes") &&
             this.isFulfiller && (
               <a
