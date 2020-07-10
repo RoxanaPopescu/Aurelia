@@ -16,6 +16,7 @@ export abstract class RouteStop extends RouteStopBase {
     super(data, stopNumber);
 
     this.id = data.id;
+    this.isDelayed = data.isDelayed;
     this.stopNumber = stopNumber;
     this.status = new RouteStopStatus(data.status);
     this.location = new Location(data.location);
