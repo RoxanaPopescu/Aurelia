@@ -90,8 +90,8 @@ export class LiveTrackingService {
 
   @computed
   public get loadedResults(): boolean {
-    if (this.routesNotStarted != null ||
-        this.routesInProgress != null ||
+    if (this.routesNotStarted != null &&
+        this.routesInProgress != null &&
         this.routesNoDriver != null) {
       return true;
     }

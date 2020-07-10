@@ -399,6 +399,8 @@
   "Routes_List_TotalCount": "{count} routes",
   "Route_Count": "Route count",
   "Route_Loading": "Loading routes...",
+  "Route_Summary_ArrivedAtStop": "Arrived at stop {number}",
+  "Route_Summary_EnRouteToStop": "En route to stop {number}",
   "Route_TableHeader_Fulfiller": "Fulfiller",
   "Route_TableHeader_Id": "ID",
   "Route_TableHeader_Reference": "Reference",

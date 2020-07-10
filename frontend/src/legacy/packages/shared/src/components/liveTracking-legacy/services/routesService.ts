@@ -396,6 +396,23 @@ export class RoutesServiceLegacy {
     this.pollInterval = pollIntervalFocus;
   }
 
+  public summary(route: Route): string {
+    if (route.status.slug === "in-progress") {
+      const stop = route.currentStop;
+      const stopNumber = stop.stopNumber.toString();
+
+      if (stop.status.slug === "arrived") {
+        return Localization.sharedValue("Route_Summary_ArrivedAtStop")
+               .replace("{number}", stopNumber);
+      } else {
+        return Localization.sharedValue("Route_Summary_EnRouteToStop")
+               .replace("{number}", stopNumber);
+      }
+    } else {
+      return route.status.name;
+    }
+  }
+
   /**
    * Fetches the tracked routes, then schedules the next poll.
    * @returns A promise that will be resolved when the poll succeedes.
