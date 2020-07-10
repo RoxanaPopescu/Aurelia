@@ -241,13 +241,15 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    * if all stops have been visited or cancelled.
    */
   public get currentStop(): TRouteStop {
-    const stops = this.stops.filter(
+    let stops = this.stops.filter(
       s => s instanceof RouteStop && s.status.slug !== "cancelled" && s.status.slug !== "failed"
     );
 
-    const stop = stops.find(
-        s => s.status.slug !== "not-visited"
+    let stop = stops.find(
+        s => s.status.slug === "not-visited" || s.status.slug === "arrived"
       ) as TRouteStop;
+
+    console.log("STOP", stop);
 
     if (stop) {
       return stop;

@@ -398,8 +398,8 @@ export class RoutesServiceLegacy {
 
   public summary(route: Route): string {
     if (route.status.slug === "in-progress") {
-      const stop = route.currentStop;
-      const stopNumber = stop.stopNumber.toString();
+      let stop = route.currentStop;
+      let stopNumber = stop.stopNumber.toString();
 
       if (stop.status.slug === "arrived") {
         return Localization.sharedValue("Route_Summary_ArrivedAtStop")
