@@ -1,0 +1,13 @@
+toggle-group
+{
+    display: block;
+
+    > .toggle-validation
+    {
+        validation-message
+        {
+            // Apply spacing above the validation messages.
+            margin-top: 1.5rem;
+        }
+    }
+}

@@ -12,15 +12,20 @@ export class ToggleCustomElement
     /**
      * Creates a new instance of the class.
      * @param element The element representing the component.
+     * @param container The `Container` instance.
      */
-    public constructor(container: Container)
+    public constructor(element: Element, container: Container)
     {
+        this._element = element as HTMLElement;
+
         // Get the toggle group, if one exists.
         if (container.hasResolver(ToggleGroupCustomElement, true))
         {
             this.toggleGroup = container.get(ToggleGroupCustomElement);
         }
     }
+
+    private readonly _element: HTMLElement;
 
     /**
      * The goggle group to whihc the toggle belongs, if any.
@@ -136,11 +141,17 @@ export class ToggleCustomElement
 
     /**
      * Called when the toggle is clicked.
-     * Toggels the state of the toggle, and prevents default for the event.
+     * Toggels the state of the toggle, dispatches events, and prevents default for the event.
      */
     protected onToggleClick(): boolean
     {
         this.value = !this.value;
+
+        // Dispatch the `input` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+        // Dispatch the `change` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
 
         return false;
     }

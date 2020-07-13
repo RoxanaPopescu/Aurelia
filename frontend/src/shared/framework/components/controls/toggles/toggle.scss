@@ -3,7 +3,7 @@
 body
 {
     /// The min-height of the component.
-    --toggle-height: 1.75em;
+    --toggle-height: calc(24em / 14);
 }
 
 .toggle
@@ -48,12 +48,31 @@ body
             display: block;
 
             // Apply spacing between the label and the control.
-            margin-bottom: var(--font-current-margin-bottom);
+            margin-bottom: calc(var(--font-current-margin-bottom) - var(--font-small-margin-top));
+
+            .toggle-heading > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-bottom: var(--font-small-margin-top);
+            }
 
             .toggle-description > *
             {
                 // Apply spacing between the heading and the description.
-                margin-top: var(--font-current-margin-top);
+                margin-bottom: var(--font-small-margin-top);
+            }
+        }
+    }
+
+    &[label="before"],
+    &[label="after"]
+    {
+        > .toggle-label
+        {
+            .toggle-description > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-top: var(--font-current-margin-bottom);
             }
         }
     }
@@ -76,7 +95,7 @@ body
             align-self: center;
 
             // Apply spacing between the label and the control.
-            padding-right: var(--size-inline-spacing);
+            padding-right: var(--size-inline-spacing-large);
         }
     }
 
@@ -98,7 +117,7 @@ body
             align-self: center;
 
             // Apply spacing between the label and the control.
-            padding-left: var(--size-inline-spacing);
+            padding-left: var(--size-inline-spacing-large);
         }
     }
 
@@ -107,11 +126,17 @@ body
         // Position the element within the grid.
         grid-area: label;
 
+        // Allow content to be positioned relative to this element.
+        position: relative;
+
         // Only shown if the `label` attribute is specified.
         display: none;
 
         // Use cursor to indicate the element is clickable.
         cursor: pointer;
+
+        // Allow the element to shrink.
+        min-width: 0;
     }
 
     > .toggle-control
@@ -127,9 +152,6 @@ body
         // Use horizontal flex layout.
         display: flex;
         align-items: stretch;
-
-        // Set the min-height.
-        min-height: var(--toggle-height);
 
         // Apply component style for the normal state.
         color: var(--toggle-surface-indicator-color);
@@ -209,44 +231,7 @@ body
     {
         appearance: none;
         margin: 0;
+        border: 0;
         cursor: inherit;
-    }
-}
-
-check-toggle,
-radio-toggle
-{
-    &[label="before"]
-    {
-        .toggle-control
-        {
-            // The icon does not fill its viewbox, so to ensure the right edge
-            // edge aligns with other controls, we translate the icon right.
-            transform: translateX(0.75rem);
-        }
-
-        &[label="before"] > .toggle-label
-        {
-            // Apply reduced spacing between the label and the control,
-            // to compensate for the translation of the icon.
-            padding-left: calc(var(--size-inline-spacing) - 0.75rem);
-        }
-    }
-
-    &[label="after"]
-    {
-        .toggle-control
-        {
-            // The icon does not fill its viewbox, so to ensure the left edge
-            // edge aligns with other controls, we translate the icon left.
-            transform: translateX(-0.75rem);
-        }
-
-        &[label="before"] > .toggle-label
-        {
-            // Apply reduced spacing between the label and the control,
-            // to compensate for the translation of the icon.
-            padding-right: calc(var(--size-inline-spacing) - 0.75rem);
-        }
     }
 }
