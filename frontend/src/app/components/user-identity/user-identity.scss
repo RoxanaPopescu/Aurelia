@@ -24,8 +24,8 @@ user-identity
         identity-picture
         {
             // Set the icon size.
-            width: 12rem;
-            height: 12rem;
+            width: 48rem;
+            height: 48rem;
 
             // Clip as a circle.
             border-radius: 50%;
@@ -57,7 +57,7 @@ user-identity
 
         .user-identity-name
         {
-            margin-bottom: 0.5rem;
+            margin-bottom: 2rem;
             font-weight: 600;
         }
     }

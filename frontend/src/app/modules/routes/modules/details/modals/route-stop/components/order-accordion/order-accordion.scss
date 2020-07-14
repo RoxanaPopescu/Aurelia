@@ -4,7 +4,7 @@ order-accordion
 
     &:not(:first-child)
     {
-        margin-top: 1rem;
+        margin-top: 4rem;
     }
 
     accordion
@@ -13,7 +13,7 @@ order-accordion
         {
             display: grid;
             grid-template-columns: 6.5fr min-content min-content 3fr;
-            column-gap: 5rem;
+            column-gap: 20rem;
         }
 
         .accordion-content
@@ -40,8 +40,8 @@ order-accordion
 
         data-table-cell
         {
-            min-height: calc(var(--font-large-line-height) + 2 * 3rem);
-            padding: 3rem 5rem;
+            min-height: calc(var(--font-large-line-height) + 2 * 12rem);
+            padding: 12rem 20rem;
         }
 
         .data-table-row:last-child data-table-cell
@@ -55,7 +55,7 @@ order-accordion
         border-top: var(--border-width-thin) solid var(--border-color);
         display: flex;
         align-items: center;
-        min-height: calc(var(--font-large-line-height) + 2 * 3rem);
-        padding: 3rem 5rem;
+        min-height: calc(var(--font-large-line-height) + 2 * 12rem);
+        padding: 12rem 20rem;
     }
 }

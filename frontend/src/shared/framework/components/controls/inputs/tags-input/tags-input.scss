@@ -46,13 +46,13 @@ tags-input
     .input-control
     {
         flex-wrap: wrap;
-        padding-right: 1.5rem;
+        padding-right: 6rem;
     }
 
     &.--readonly > text-input > .input-control > .input-control-inner
     {
         visibility: hidden;
-        height: 1rem;
+        height: 4rem;
     }
 
     &.--readonly > text-input > .input-control
@@ -81,14 +81,14 @@ tags-input
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        padding-left: 1rem;
+        padding-left: 4rem;
     }
 
     > text-input > .input-control > .input-control-inner
     {
         flex-grow: 1;
         width: auto !important;
-        min-width: 40rem;
+        min-width: 160rem;
         padding-right: 42px;
     }
 

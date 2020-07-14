@@ -11,19 +11,19 @@ $__summary: comment;
 :root
 {
     // The vertical spacing between the toasts.
-    --toast-margin-top: 4rem;
+    --toast-margin-top: 16rem;
 
     // The horizontal spacing between the toasts and the edge of the viewport.
-    --toast-margin-right: 4rem;
+    --toast-margin-right: 16rem;
 
     // The min height of a toast.
     --toast-min-height: none;
 
     // The max height of a toast.
-    --toast-max-height: 80rem;
+    --toast-max-height: 320rem;
 
     // The min width of a toast.
-    --toast-min-width: 110rem;
+    --toast-min-width: 440rem;
 
     // The max width of a toast.
     --toast-max-width: 50vw;

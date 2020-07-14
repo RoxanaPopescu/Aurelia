@@ -22,8 +22,8 @@ app-sidebar
     app-logo
     {
         // Size and position the app icon.
-        margin: 9rem 0 6rem 0;
-        height: 7rem;
+        margin: 36rem 0 24rem 0;
+        height: 28rem;
 
         // Center horizontally.
         align-self: center;
@@ -40,7 +40,7 @@ app-sidebar
     user-identity
     {
         // Size and position the user icon.
-        margin: 4rem 0 5rem 0;
+        margin: 16rem 0 20rem 0;
         width: auto;
 
         // Center horizontally.
@@ -71,8 +71,8 @@ app-sidebar
             position: absolute;
             top: 0;
             left: 0;
-            right: 2rem;
-            bottom: -2rem;
+            right: 8rem;
+            bottom: -8rem;
 
             // Apply the surface color to the header and footer,
             // so they cover any content scrolling under them.
@@ -81,8 +81,8 @@ app-sidebar
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
                 to bottom,
-                #ffffff calc(100% - 10rem),
-                rgba(#ffffff, 0.9) calc(100% - 4rem),
+                #ffffff calc(100% - 40rem),
+                rgba(#ffffff, 0.9) calc(100% - 16rem),
                 rgba(#ffffff, 0) 100%
             );
         }
@@ -92,12 +92,12 @@ app-sidebar
     {
         // Apply negative vertical margins, so the section overlaps the header and footer.
         // This allows us to apply a gradient fade effect when scrolled.
-        margin-top: -21rem;
-        margin-bottom: -10rem;
+        margin-top: -84rem;
+        margin-bottom: -40rem;
 
         // Apply vertical padding to compensate for the negative margin.
-        padding-top: 23.5rem;
-        padding-bottom: 12.5rem;
+        padding-top: 94rem;
+        padding-bottom: 50rem;
 
         // Shrink to allow scrolling.
         flex-shrink: 1;
@@ -106,7 +106,7 @@ app-sidebar
 
         &::-webkit-scrollbar
         {
-            --scrollbar-thickness: 2rem;
+            --scrollbar-thickness: 8rem;
         }
     }
 
@@ -124,9 +124,9 @@ app-sidebar
             content: "";
 
             position: absolute;
-            top: -2rem;
+            top: -8rem;
             left: 0;
-            right: 2rem;
+            right: 8rem;
             bottom: 0;
 
             // Apply the surface color to the header and footer,
@@ -136,8 +136,8 @@ app-sidebar
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
                 to top,
-                #ffffff calc(100% - 10rem),
-                rgba(#ffffff, 0.9) calc(100% - 4rem),
+                #ffffff calc(100% - 40rem),
+                rgba(#ffffff, 0.9) calc(100% - 16rem),
                 rgba(#ffffff, 0) 100%
             );
         }
@@ -157,18 +157,18 @@ app-sidebar
             right: 0;
 
             // Set the size of the shadow.
-            width: 4rem;
+            width: 16rem;
             height: 100vh;
 
             // Use a gradient to simulate a subtle shadow.
             background: linear-gradient(
                 to left,
                 rgba(0, 0, 0, 0.3) 0,
-                rgba(0, 0, 0, 0.3) 0.25rem,
-                rgba(0, 0, 0, 0.15) 0.25rem,
-                rgba(0, 0, 0, 0.1) 0.25rem,
-                rgba(0, 0, 0, 0.004) 3rem,
-                rgba(0, 0, 0, 0) 0.25rem
+                rgba(0, 0, 0, 0.3) 1rem,
+                rgba(0, 0, 0, 0.15) 1rem,
+                rgba(0, 0, 0, 0.1) 1rem,
+                rgba(0, 0, 0, 0.004) 12rem,
+                rgba(0, 0, 0, 0) 1rem
             );
 
             // Ensure the shadow does not interfere with interaction.
@@ -199,17 +199,17 @@ app-sidebar
         bottom: 0;
 
         // Set the size of the shadow.
-        width: 4rem;
+        width: 16rem;
 
         // Use a gradient to simulate a subtle shadow.
         background: linear-gradient(
             to left,
             rgba(0, 0, 0, 0.3) 0,
-            rgba(0, 0, 0, 0.3) 0.25rem,
-            rgba(0, 0, 0, 0.15) 0.25rem,
-            rgba(0, 0, 0, 0.1) 0.25rem,
-            rgba(0, 0, 0, 0.004) 3rem,
-            rgba(0, 0, 0, 0) 0.25rem
+            rgba(0, 0, 0, 0.3) 1rem,
+            rgba(0, 0, 0, 0.15) 1rem,
+            rgba(0, 0, 0, 0.1) 1rem,
+            rgba(0, 0, 0, 0.004) 12rem,
+            rgba(0, 0, 0, 0) 1rem
         );
 
         // Ensure the shadow does not interfere with interaction.
@@ -233,12 +233,12 @@ app-sidebar
     {
         display: flex;
         align-items: center;
-        min-height: 11rem;
+        min-height: 44rem;
         z-index: 1;
         margin-top: 1px;
-        padding: 1rem;
-        font-size: 2.25rem;
-        line-height: 4.5rem;
+        padding: 4rem;
+        font-size: 9rem;
+        line-height: 18rem;
         text-align: center;
         background-color: var(--surface-nav-link-surface-color--hover);
 
@@ -259,7 +259,7 @@ app-sidebar
     z-index: 1;
 
     // Size and space other icons.
-    padding: 3rem 7rem;
+    padding: 12rem 28rem;
 
     // Animate the hover effect.
     transition: color var(--animation-duration-short);
@@ -308,7 +308,7 @@ app-sidebar
 
     > icon
     {
-        font-size: 6rem;
+        font-size: 24rem;
         color: var(--surface-nav-link-surface-icon-color);
     }
 
@@ -321,7 +321,7 @@ app-sidebar
 
 .sidebar-child-link-container
 {
-    padding: 2rem 0;
+    padding: 8rem 0;
     background: var(--surface-nav-child-surface-color);
 }
 
@@ -329,7 +329,7 @@ app-sidebar
 {
     display: flex;
     align-items: center;
-    padding: 1.75rem 0 1.75rem 8rem;
+    padding: 7rem 0 7rem 32rem;
     border-radius: var(--border-radius-small);
 
     opacity: 0.7;
@@ -342,9 +342,9 @@ app-sidebar
 
     icon
     {
-        font-size: 4rem;
+        font-size: 16rem;
         color: var(--surface-nav-child-link-surface-icon-color);
-        margin-right: 4rem;
+        margin-right: 16rem;
     }
 
     &:hover
@@ -395,16 +395,16 @@ app-sidebar.--expanded
     {
         // Align horizontally with the links.
         align-self: flex-start;
-        margin-left: 7rem;
-        margin-right: 6.5rem;
+        margin-left: 28rem;
+        margin-right: 26rem;
     }
 
     user-identity
     {
         // Align horizontally with the links.
         align-self: flex-start;
-        margin-left: 6rem;
-        margin-right: 6.5rem;
+        margin-left: 24rem;
+        margin-right: 26rem;
     }
 
     .nav-link
@@ -418,19 +418,19 @@ app-sidebar.--expanded
 
     .sidebar-child-link-container
     {
-        padding: 5rem 5rem;
+        padding: 20rem 20rem;
     }
 
     .sidebar-child-link
     {
-        padding: 1.75rem 1rem 1.75rem 3rem;
+        padding: 7rem 4rem 7rem 12rem;
     }
 
     .app-sidebar--powered-by
     {
-        padding-left: 7rem;
-        line-height: 6.5rem;
-        font-size: 2.75rem;
+        padding-left: 28rem;
+        line-height: 26rem;
+        font-size: 11rem;
         text-align: left;
         white-space: nowrap;
     }

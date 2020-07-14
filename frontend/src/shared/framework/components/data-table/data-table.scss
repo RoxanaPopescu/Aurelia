@@ -17,7 +17,7 @@ data-table
 
     &.--selection
     {
-        grid-template-columns: 15rem var(--data-table-columns) min-content;
+        grid-template-columns: 60rem var(--data-table-columns) min-content;
     }
 
     &:not(.--move)
@@ -89,15 +89,15 @@ data-table
 
 data-table[appearance="rows"]
 {
-    --data-table-header-padding: 4rem 5rem;
+    --data-table-header-padding: 16rem 20rem;
     --data-table-header-background: rgba(255, 255, 255, 0.97);
     --data-table-header-border-width: var(--border-width-thin);
     --data-table-header-border-color: var(--data-table-row-border-color);
-    --data-table-cell-padding: 4rem 5rem;
+    --data-table-cell-padding: 16rem 20rem;
     --data-table-cell-background: transparent;
     --data-table-cell-background--hover: var(--surface-color--hover);
     --data-table-cell-background--active: var(--surface-color--active);
-    --data-table-row-gap: 2rem;
+    --data-table-row-gap: 8rem;
     --data-table-row-edge-width: var(--border-width-thick);
     --data-table-row-edge-color: transparent;
     --data-table-row-border-width: var(--border-width-thin);
@@ -109,15 +109,15 @@ data-table[appearance="rows"]
 
 data-table[appearance="cards"]
 {
-    --data-table-header-padding: 4rem 5rem;
+    --data-table-header-padding: 16rem 20rem;
     --data-table-header-background: rgba(255, 255, 255, 0.97);
     --data-table-header-border-width: var(--border-width-thin);
     --data-table-header-border-color: rgba(255, 255, 255, 0.95);
-    --data-table-cell-padding: 4rem 5rem;
+    --data-table-cell-padding: 16rem 20rem;
     --data-table-cell-background: var(--surface-color);
     --data-table-cell-background--hover: var(--surface-color--hover);
     --data-table-cell-background--active: var(--surface-color--active);
-    --data-table-row-gap: 2rem;
+    --data-table-row-gap: 8rem;
     --data-table-row-edge-width: var(--border-width-thick);
     --data-table-row-edge-color: var(--surface-neutral-surface-color);
     --data-table-row-border-width: var(--border-width-thin);

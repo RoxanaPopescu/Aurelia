@@ -2,7 +2,7 @@
 
 .c-pagination {
   z-index: 102;
-  height: 14rem;
+  height: 56rem;
   background-color: white;
   text-align: center;
 }
@@ -38,13 +38,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    height: 9rem;
-    width: 15rem;
+    height: 36rem;
+    width: 60rem;
     border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
     border-radius: var(--border-radius-medium);
-    margin-right: 3rem;
+    margin-right: 12rem;
     color: var(--colorBackgroundPrimary);
-    margin-left: 2rem;
+    margin-left: 8rem;
 
     &.open {
       border-top-left-radius: 0;
@@ -82,8 +82,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    height: 9rem;
-    width: 9rem;
+    height: 36rem;
+    width: 36rem;
     border: var(--border-width-thin) solid var(--colorBackgroundPrimary);
 
     &.inactive {

@@ -1,14 +1,14 @@
 @import "shared/src/webKit/constants.scss";
 
 .pageHeader {
-  padding: 10rem 8rem 0;
+  padding: 40rem 32rem 0;
   border-bottom: var(--border-width-thin) solid var(--colorNeutralLight);
 }
 
 .pageHeader-top {
   display: flex;
   align-items: center;
-  margin-bottom: 7rem;
+  margin-bottom: 28rem;
 }
 
 .pageHeader-actionContainer {
@@ -17,7 +17,7 @@
 
   > * {
     &:not(:last-child) {
-      margin-right: 4rem;
+      margin-right: 16rem;
     }
   }
 }
@@ -39,7 +39,7 @@
   }
 
   .icon {
-    margin: 0 5rem;
+    margin: 0 20rem;
     color: lightgray;
   }
 }
@@ -48,10 +48,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5rem;
+  margin-bottom: 20rem;
 
   &:empty {
-    margin-bottom: 3rem;
+    margin-bottom: 12rem;
   }
 }
 
@@ -66,8 +66,8 @@
 // CSS to be extracted in the wrong order when building for production.
 .pageHeader-tabs-tab {
   min-width: 120px;
-  padding: 0 5rem;
-  line-height: calc(10rem - 2 * var(--border-width-thin));
+  padding: 0 20rem;
+  line-height: calc(40rem - 2 * var(--border-width-thin));
   text-align: center;
   color: var(--colorInteractivePrimary);
   cursor: pointer;
@@ -93,7 +93,7 @@
   }
 
   > :not(:first-child) {
-    margin-left: 5rem;
+    margin-left: 20rem;
   }
 }
 

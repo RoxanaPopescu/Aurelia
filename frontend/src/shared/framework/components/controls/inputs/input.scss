@@ -7,18 +7,18 @@ body
 
     /// The default width of the component.
     /// The default ensures a reasonable width when no width is specified.
-    --input-width: 36rem;
+    --input-width: 144rem;
 
     /// The min-height of the component, if resizing is allowed.
     /// The default prevents resizing to less than the height of a single-line input.
-    --input-min-height: 10rem;
+    --input-min-height: 40rem;
 
     /// The max-height of the component, if resizing is allowed.
     /// The default allows resizing to fit any content.
     --input-max-height: none;
 
     /// The padding of the component.
-    --input-padding: 2.25rem 3rem;
+    --input-padding: 9rem 12rem;
 
     /// The width of the border of the component.
     --input-border-width: var(--border-width-thin);
@@ -329,7 +329,7 @@ body
         validation-message
         {
             // Apply spacing above the validation messages.
-            margin-top: 1.5rem;
+            margin-top: 6rem;
         }
     }
 

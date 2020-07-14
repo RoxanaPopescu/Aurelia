@@ -80,8 +80,8 @@ dropdown-icon
 
 data-table[appearance="rows"]
 {
-    --data-table-header-padding: 2.5rem 3.5rem;
-    --data-table-cell-padding: 2.5rem 3.5rem;
+    --data-table-header-padding: 10rem 14rem;
+    --data-table-cell-padding: 10rem 14rem;
     --data-table-cell-background--hover: var(--palette-color-primary-lighter);
 }
 
@@ -91,12 +91,12 @@ page-sidebar page-footer,
 page-content page-section,
 page-content page-footer,
 {
-    margin: 6rem 7rem !important;
+    margin: 24rem 28rem !important;
 }
 
 page-content page-header,
 {
-    padding: 6rem 7rem !important;
+    padding: 24rem 28rem !important;
 }
 
 html
@@ -126,7 +126,7 @@ html
 html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
     margin: 0;
-    padding: 2rem 0 5px 0;
+    padding: 8rem 0 5px 0;
     border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
     background: none !important;
     color: var(--palette-color-neutral-darker);
@@ -136,7 +136,7 @@ html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 body
 {
     --modal-backdrop-color: rgba(171, 190, 199, 0.5);
-    --app-sidebar-width: 15rem;
+    --app-sidebar-width: 60rem;
     --toggle-height: 1.75em !important;
 }
 
@@ -154,25 +154,25 @@ html app-sidebar
 
     app-logo
     {
-        margin: 9rem 2rem 6rem 2rem;
-        height: 5rem;
+        margin: 36rem 8rem 24rem 8rem;
+        height: 20rem;
     }
 
     user-identity
     {
-        margin-bottom: 3rem;
+        margin-bottom: 12rem;
 
         a identity-picture
         {
-            width: 9rem;
-            height: 9rem;
+            width: 36rem;
+            height: 36rem;
             background: var(--palette-color-primary--child);
         }
 
         + .nav-link
         {
-            padding-top: 1rem !important;
-            padding-bottom: 1rem !important;
+            padding-top: 4rem !important;
+            padding-bottom: 4rem !important;
         }
     }
 
@@ -180,17 +180,17 @@ html app-sidebar
     {
         .nav-link
         {
-            padding: 3rem 4.5rem;
+            padding: 12rem 18rem;
         }
 
         .sidebar-child-link
         {
-            padding: 1.75rem 0 1.75rem 5.5rem;
+            padding: 7rem 0 7rem 22rem;
         }
     }
 
     &.--expanded user-identity
     {
-        margin-left: 6rem;
+        margin-left: 24rem;
     }
 }

@@ -41,12 +41,12 @@ data-table-pager
 
     .data-table-pager-page-size select-input
     {
-        width: 19rem;
+        width: 76rem;
     }
 
     .data-table-pager-page number-input
     {
-        width: 14rem;
+        width: 56rem;
         text-align: center;
         appearance: none;
     }
@@ -57,13 +57,13 @@ data-table-pager
 
         icon
         {
-            font-size: 6rem;
+            font-size: 24rem;
             vertical-align: middle;
         }
 
         button
         {
-            min-width: 10rem !important;
+            min-width: 40rem !important;
         }
 
         button:first-child

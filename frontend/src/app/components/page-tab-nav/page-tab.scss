@@ -9,18 +9,18 @@ page-tab-nav
         position: relative;
         cursor: pointer;
         align-items: center;
-        height: 9rem;
-        width: 50rem;
-        padding: 0 4rem;
+        height: 36rem;
+        width: 200rem;
+        padding: 0 16rem;
         border-top-left-radius: var(--tab-nav-border-radius);
         border-top-right-radius: var(--tab-nav-border-radius);
         border: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
-        margin-bottom: -.25rem;
+        margin-bottom: -1rem;
         background-color: var(--tab-surface-color);
 
         &:not(:first-child)
         {
-            margin-left: 1rem;
+            margin-left: 4rem;
         }
 
         &.--active

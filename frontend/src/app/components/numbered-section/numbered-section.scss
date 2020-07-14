@@ -29,9 +29,9 @@ numbered-section
         display: flex;
         align-items: center;
 
-        margin-left: 5rem;
-        padding-left: 9rem;
-        padding-top: calc((10rem - var(--font-larger-line-height)) / 2);
+        margin-left: 20rem;
+        padding-left: 36rem;
+        padding-top: calc((40rem - var(--font-larger-line-height)) / 2);
     }
 
     .numbered-section-heading
@@ -43,12 +43,12 @@ numbered-section
     .numbered-section-number
     {
         position: absolute;
-        left: -5.25rem;
+        left: -21rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 10rem;
-        height: 10rem;
+        width: 40rem;
+        height: 40rem;
         border-radius: 50%;
         background: var(---accent-surface-color);
         color: var(---accent-text-color);
@@ -66,19 +66,19 @@ numbered-section
         display: flex;
         flex-direction: column;
 
-        padding-top: 5rem;
+        padding-top: 20rem;
     }
 
     .numbered-section-content,
     .numbered-section-line
     {
-        margin-left: 5rem;
-        padding-left: 9rem;
+        margin-left: 20rem;
+        padding-left: 36rem;
     }
 
     .numbered-section-line
     {
-        padding-top: 7rem;
+        padding-top: 28rem;
         padding-bottom: var(--font-larger-margin-bottom);
     }
 
@@ -91,7 +91,7 @@ numbered-section
     .numbered-section-content,
     .numbered-section-line
     {
-        border-left: 0.5rem solid transparent;
+        border-left: 2rem solid transparent;
     }
 
     &:not(:last-of-type)

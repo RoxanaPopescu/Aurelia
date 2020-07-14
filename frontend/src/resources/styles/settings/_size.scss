@@ -9,10 +9,10 @@ $__summary: comment;
 :root
 {
     /// The base size unit on which all spacing values are based.
-    --size-unit: 4px;
+    --size-unit: 1px;
 
     /// The horizontal spacing to apply to an indented block element.
-    --size-indent-spacing: 5rem;
+    --size-indent-spacing: 20rem;
 
     /// The horizontal spacing to apply between an inline element and its neighbor.
     /// Use this to apply spacing between a small element and its related text,
@@ -36,5 +36,5 @@ $__summary: comment;
     /// The vertical spacing to apply between two single-height lines of text.
     /// Use this to apply spacing between a title and and its related subtitle,
     /// such as e.g. the title and subtitle in an identity component.
-    --size-line-spacing: 1.5rem;
+    --size-line-spacing: 6rem;
 }

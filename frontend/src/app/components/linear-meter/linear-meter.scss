@@ -4,14 +4,14 @@
 {
     display: flex;
     align-items: center;
-    padding: 2rem 0;
+    padding: 8rem 0;
 
     &-bar
     {
-        width: 5rem;
-        height: 0.75rem;
+        width: 20rem;
+        height: 3rem;
         background-color: var(--surface-neutral-surface-color);
-        margin-right: 0.5rem;
+        margin-right: 2rem;
     }
 
     &-fill

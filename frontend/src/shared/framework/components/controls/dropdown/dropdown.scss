@@ -17,7 +17,7 @@ body
 
     /// The max-height of the component.
     /// The default allows it to grow, up to a reasonable limit.
-    --dropdown-max-height: 75rem;
+    --dropdown-max-height: 300rem;
 
     /// The width of the border of the component.
     --dropdown-border-width: var(--border-width-thin);
@@ -52,8 +52,8 @@ dropdown
     z-index: var(--z-index-dropdown);
 
     // Add offset above and below the dropdown.
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
 
     // Apply size constraints.
     min-width: var(--dropdown-min-width);

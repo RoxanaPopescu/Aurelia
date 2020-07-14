@@ -11,12 +11,12 @@ toolbar-group
     &:not(:last-child)
     {
         // Apply margin to separate groups.
-        margin-right: 6rem;
+        margin-right: 24rem;
     }
 
     > :not(:last-child)
     {
         // Apply margin to separate items.
-        margin-right: 6rem;
+        margin-right: 24rem;
     }
 }

@@ -1,24 +1,24 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-driverDispatch-table-actionButton {
-  padding-left: 20rem;
+  padding-left: 80rem;
   margin-left: auto;
 }
 
 .c-driverDispatch-checkMark {
-  width: 7rem;
-  height: 7rem;
+  width: 28rem;
+  height: 28rem;
   border-radius: 50%;
   background-color: #1acce2;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: -1rem;
+  margin-left: -4rem;
 
   &:before {
     content: "";
-    height: 3rem;
-    width: 1.5rem;
+    height: 12rem;
+    width: 6rem;
     border-right: 2px solid white;
     border-bottom: 2px solid white;
     transform: rotate(45deg);
@@ -27,7 +27,7 @@
 }
 
 .c-driverDispatch-forecastSlotsInput {
-  width: 16rem;
+  width: 64rem;
 
   input {
     min-height: 1px !important;

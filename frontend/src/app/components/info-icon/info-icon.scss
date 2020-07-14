@@ -32,8 +32,8 @@ info-icon
             opacity: 0;
             pointer-events: none;
             transition: opacity var(--animation-duration-short);
-            width: 72rem;
-            padding: 5rem;
+            width: 288rem;
+            padding: 20rem;
             position: absolute;
             background-color: var(--surface-color);
             border: var(--border-width-thin) solid var(--surface-dropdown-border-color);
@@ -45,8 +45,8 @@ info-icon
             {
                 content: "";
                 position: absolute;
-                height: 3rem;
-                width: 3rem;
+                height: 12rem;
+                width: 12rem;
                 border: var(--border-width-thin) solid var(--surface-dropdown-border-color);
                 background-color: var(--surface-color);
                 transform: rotate(45deg);
@@ -62,14 +62,14 @@ info-icon
         {
             .info-icon-popover
             {
-                left: calc(100% + 2.5rem);
-                top: -3rem;
+                left: calc(100% + 10rem);
+                top: -12rem;
 
                 &:after
                 {
-                    right: calc(100% - .75rem);
-                    top: 3.5rem;
-                    margin-right: -.5rem;
+                    right: calc(100% - 3rem);
+                    top: 14rem;
+                    margin-right: -2rem;
                     border-top: 0;
                     border-right: 0;
                 }
@@ -80,14 +80,14 @@ info-icon
         {
             .info-icon-popover
             {
-                right: calc(100% + 2.5rem);
-                top: -3rem;
+                right: calc(100% + 10rem);
+                top: -12rem;
 
                 &:after
                 {
-                    left: calc(100% - .75rem);
-                    top: 3.5rem;
-                    margin-left: -.5rem;
+                    left: calc(100% - 3rem);
+                    top: 14rem;
+                    margin-left: -2rem;
                     border-bottom: 0;
                     border-left: 0;
                 }
@@ -98,14 +98,14 @@ info-icon
         {
             .info-icon-popover
             {
-                bottom: calc(100% + 1.5rem);
-                left: -3.5rem;
+                bottom: calc(100% + 6rem);
+                left: -14rem;
 
                 &:after
                 {
-                    top: calc(100% - 1rem);
-                    left: 3.5rem;
-                    margin-right: -.25rem;
+                    top: calc(100% - 4rem);
+                    left: 14rem;
+                    margin-right: -1rem;
                     border-top: 0;
                     border-left: 0;
                 }
@@ -116,14 +116,14 @@ info-icon
         {
             .info-icon-popover
             {
-                top: calc(100% + 1.5rem);
-                left: -3.5rem;
+                top: calc(100% + 6rem);
+                left: -14rem;
 
                 &:after
                 {
-                    bottom: calc(100% - 1rem);
-                    left: 3.5rem;
-                    margin-right: -.25rem;
+                    bottom: calc(100% - 4rem);
+                    left: 14rem;
+                    margin-right: -1rem;
                     border-bottom: 0;
                     border-right: 0;
                 }

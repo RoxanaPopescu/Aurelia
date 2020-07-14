@@ -17,7 +17,7 @@ page-content
     page-header
     {
         // Apply default padding.
-        padding: 7rem 9rem;
+        padding: 28rem 36rem;
 
         // Add a border below the header.
         border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
@@ -27,11 +27,11 @@ page-content
 
         h1.font-largest
         {
-            line-height: 10rem;
+            line-height: 40rem;
 
             &.margin-bottom
             {
-                margin-bottom: 4rem;
+                margin-bottom: 16rem;
             }
         }
 
@@ -41,7 +41,7 @@ page-content
             button[appearance="outline"]
             {
                 // HACK: Ensure min-width of buttons match that of the tabs.
-                min-width: 30rem;
+                min-width: 120rem;
             }
         }
     }
@@ -50,14 +50,14 @@ page-content
     page-footer
     {
         // Apply margin to sections and the footer.
-        margin: 8rem 9rem;
+        margin: 32rem 36rem;
     }
 
     .page-content-back-to-top
     {
         position: fixed;
-        top: 3rem;
-        right: 6rem;
+        top: 12rem;
+        right: 24rem;
         z-index: var(--z-index-fixed);
 
         &:not(:hover) icon
@@ -91,7 +91,7 @@ page-content.page-content-center
         margin: auto 0 0 0;
 
         // Apply default padding.
-        padding: 8rem 9rem;
+        padding: 32rem 36rem;
 
         // Apply surface color, so the footer covers the page content when scrolled.
         background: var(--surface-color);

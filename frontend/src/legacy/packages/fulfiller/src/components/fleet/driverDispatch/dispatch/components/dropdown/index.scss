@@ -2,7 +2,7 @@
 
 .c-driverDispatch-buttonDropdown {
   position: relative;
-  width: 66rem;
+  width: 264rem;
 
   .c-driverDispatch-buttonDropdown-button {
     .moverButtonText {
@@ -10,12 +10,12 @@
 
       .arrow {
         margin-left: auto;
-        height: 2rem;
-        width: 2rem;
+        height: 8rem;
+        width: 8rem;
         border-left: var(--border-width-thin) solid var(--colorInteractivePrimary);
         border-bottom: var(--border-width-thin) solid var(--colorInteractivePrimary);
         transform: rotate(-45deg);
-        margin-top: -.5rem;
+        margin-top: -2rem;
       }
     }
   }
@@ -36,16 +36,16 @@
       background-color: white;
       border: 1px solid var(--colorNeutralRegular);
       border-top: 0;
-      border-bottom-left-radius: 1rem;
-      border-bottom-right-radius: 1rem;
+      border-bottom-left-radius: 4rem;
+      border-bottom-right-radius: 4rem;
       overflow: hidden;
       z-index: 10;
 
       .c-driverDispatch-dropdown-value {
-        height: 10rem;
+        height: 40rem;
         display: flex;
         align-items: center;
-        padding: 0 5rem;
+        padding: 0 20rem;
         color: var(--colorInteractivePrimary);
         cursor: pointer;
         border-top: 1px solid white;

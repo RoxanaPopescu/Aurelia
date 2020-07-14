@@ -36,7 +36,7 @@ modal-overlay
         flex-direction: column;
 
         // Apply horizontal padding.
-        padding-right: 9rem;
+        padding-right: 36rem;
 
         // Ensure content is always above the modal actions.
         z-index: 1;
@@ -55,8 +55,8 @@ modal-overlay
         {
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
-            padding-top: 11rem;
-            padding-bottom: 9rem;
+            padding-top: 44rem;
+            padding-bottom: 36rem;
         }
 
         modal-footer
@@ -66,8 +66,8 @@ modal-overlay
 
             // Apply padding.
             // Note that we use padding instead of margin, to enable sticky positioning.
-            padding-top: 9rem;
-            padding-bottom: 11rem;
+            padding-top: 36rem;
+            padding-bottom: 44rem;
         }
     }
 
@@ -89,7 +89,7 @@ modal-overlay
         align-items: center;
 
         // Apply padding.
-        padding: 8.75rem 5rem;
+        padding: 35rem 20rem;
 
         // Prevent selection.
         user-select: none;
@@ -97,13 +97,13 @@ modal-overlay
         > *
         {
             // Provide default item spacing.
-            margin-bottom: 3rem;
+            margin-bottom: 12rem;
         }
 
         button[appearance="icon"]
         {
             // Provide default icon size.
-            font-size: 6rem;
+            font-size: 24rem;
         }
     }
 }

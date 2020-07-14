@@ -52,12 +52,12 @@ modal-dialog
             // Apply padding to header and footer.
             // Note that we use padding instead of margin,
             // to enable sticky positioning.
-            padding: 7rem 7rem 7rem 8rem;
+            padding: 28rem 28rem 28rem 32rem;
 
             button[appearance="icon"]
             {
                 // Provide default icon size.
-                font-size: 6rem;
+                font-size: 24rem;
             }
         }
 
@@ -100,7 +100,7 @@ modal-dialog
             clear: both;
 
             // Apply horizontal padding to sections.
-            padding: 0 7rem 0 8rem;
+            padding: 0 28rem 0 32rem;
         }
 
         modal-footer
@@ -130,7 +130,7 @@ modal-dialog
     .modal-dialog-actions
     {
         // Apply padding.
-        padding: 5.5rem;
+        padding: 22rem;
 
         // Prevent selection.
         user-select: none;
@@ -155,13 +155,13 @@ modal-dialog
         > [slot="actions"] > *
         {
             // Provide default item spacing.
-            margin-left: 3rem;
+            margin-left: 12rem;
         }
 
         button[appearance="icon"]
         {
             // Provide default icon size.
-            font-size: 6rem;
+            font-size: 24rem;
         }
     }
 

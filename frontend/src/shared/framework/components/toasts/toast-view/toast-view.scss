@@ -11,7 +11,7 @@ toast-view
     max-height: 100%;
 
     // Apply spacing at the left and bottom, to prevent clipping of the shadow.
-    padding-left: 8rem;
+    padding-left: 32rem;
     padding-bottom: calc(2 * var(--toast-margin-right) + var(--font-large-font-size));
 
     // Use vertical flex layout.
@@ -32,7 +32,7 @@ toast-view
         line-height: 1;
 
         // Apply half the padding applied to the toasts.
-        padding: 3.5rem 3.5rem 3.5rem 4rem;
+        padding: 14rem 14rem 14rem 16rem;
 
         // Align the clear icon with the close icons of the toasts.
         margin-top: var(--toast-margin-top);
@@ -63,7 +63,7 @@ toast-view
             z-index: var(--z-index-toast);
 
             // Align with the close icons on the toasts.
-            padding: 0 3.5rem;
+            padding: 0 14rem;
 
             // Allow clicks on the button.
             pointer-events: initial;
@@ -72,7 +72,7 @@ toast-view
         span
         {
             // Apply spacing before and after the text.
-            padding: 0 1rem;
+            padding: 0 4rem;
         }
     }
 
@@ -143,13 +143,13 @@ toast-view
         // Apply an overlay behind the toast view, to reduce
         // the visibility of the content behind it.
         position: absolute;
-        left: -2rem;
+        left: -8rem;
         width: 100%;
         height: 1em;
 
         // Apply a backdrop and shadow with the same color as the parent surface,
         // to reduce the visibility of the content behind the toast.
-        box-shadow: 0 0 3.5rem 3.5rem var(--surface-color);
+        box-shadow: 0 0 14rem 14rem var(--surface-color);
         background: var(--surface-color);
         border-radius: var(--border-radius-medium);
 
@@ -173,7 +173,7 @@ toast-view
 
         // Apply a backdrop and shadow with the same color as the parent surface,
         // to reduce the visibility of the content behind the toast.
-        box-shadow: 0 0 3.5rem 3.5rem var(--surface-color);
+        box-shadow: 0 0 14rem 14rem var(--surface-color);
         background: var(--surface-color);
         border-radius: var(--border-radius-medium);
 
