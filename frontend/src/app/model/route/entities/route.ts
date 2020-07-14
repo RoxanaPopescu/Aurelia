@@ -3,6 +3,7 @@ import { RouteStopInfo } from "./route-stop-info";
 import { RouteStop } from "./route-stop";
 import { RoutePrice } from "./route-price";
 import { WeightRange } from "app/model/shared";
+import clone from "clone";
 
 /**
  * Represents details about a route.
@@ -103,5 +104,22 @@ export class Route extends AbstractRoute<RouteStop>
         }
 
         return volume > 0 ? volume : undefined;
+    }
+    public clone(): any
+    {
+        return clone(this);
+    }
+
+    public toJSON(): any
+    {
+        return {
+            id: this.id,
+            slug: this.slug,
+            driverInstructions: this.driverInstructions,
+            status: this.status,
+            tags: this.tags,
+            productType: this.productType,
+            reference: this.reference
+        };
     }
 }

@@ -13,6 +13,7 @@ import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
+import { EditInformationPanel } from "./modals/edit-information/edit-information";
 
 /**
  * Represents the route parameters for the page.
@@ -329,6 +330,17 @@ export class DetailsModule
                 }
             }, { once: true });
         }
+    }
+
+    /**
+     * Called when the `Edit Information` button is clicked.
+     * @param route
+     * @param order
+     */
+
+    protected async onEditRouteClick(route: Route): Promise<void>
+    {
+        await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
     }
 
     /**

@@ -1,0 +1,145 @@
+<template >
+
+    <require from="./edit-information.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel scroll scroll.ref="scroll" name="edit-information" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <div class="modal-panel-content">
+
+            <modal-header scroll-fade >
+
+                <h1 class="font-largest margin-bottom flex-row">
+
+                    <div translate>
+                        Edit route
+                    </div>
+
+                </h1>
+
+            </modal-header>
+
+            <modal-section class="margin-bottom">
+
+
+                <div class="margin-large-bottom">
+
+                    <text-input label="above" value.bind="model.slug" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            ID
+                        </div>
+
+                    </text-input>
+
+                    <text-input label="above" value.bind="model.reference" class="flex-basis-1-of-2 margin-large-top">
+
+                        <div slot="heading" translate>
+                            Reference
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <select-input label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Type
+                        </div>
+
+                        <item repeat.for="type of types" model.bind="type">
+                            ${type.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.type">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                    <select-input label="above" none.bind="false" value.bind="model.status" display-value.bind="model.status.name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Status
+                        </div>
+
+                        <item repeat.for="status of statusValues" model.bind="status">
+                            ${status.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.status">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+
+
+                <div class="control-row">
+
+                    <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" display-value.bind="model.driverInstructions.name" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Instructions
+                        </div>
+
+                        <span slot="placeholder" translate>
+                            Type any instructions that might help the driver
+                        </span>
+
+                    </text-input>
+
+                </div>
+
+                <div class="margin-bottom">
+
+                    <page-section toggle.bind="False" value.bind="model.tags"  >
+
+                        <div slot="header" translate>
+                            Tags
+                        </div>
+
+                        <tags-input
+                            label="above"
+                            value.bind="model.tags"
+                            display-value.bind="model.tags.name"
+                            new.bind="true"
+                        >
+                        </tags-input>
+
+                    </page-section>
+
+                </div>
+
+            </modal-section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

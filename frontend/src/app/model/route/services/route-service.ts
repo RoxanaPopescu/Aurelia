@@ -159,6 +159,21 @@ export class RouteService
         const positions = result.data.results.map(p => new Position(p));
         return new RouteDriverPositionsService(positions);
     }
+    /**
+     * Edit the specific route
+     * @param route
+    */
+   public async updateRoute(route: Route): Promise<void>
+   {
+        await this._apiClient.post("routes/v2/update",
+        {
+            body:
+            {
+                routeId: route.id,
+                route: route.toJSON()
+            }
+        });
+   }
 
     /**
      * Adds the specified route stop at the specified index.
