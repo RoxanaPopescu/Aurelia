@@ -84,7 +84,7 @@ export class PhoneInputCustomElement
         {
             try
             {
-                const phoneNumber = parsePhoneNumber(value);
+                const phoneNumber = parsePhoneNumber(value, this.defaultCountryCode as any);
 
                 if (phoneNumber.isPossible())
                 {
@@ -156,6 +156,13 @@ export class PhoneInputCustomElement
     public autoselect: boolean;
 
     /**
+     * The upper-case ISO 3166-1 Alpha 2 country code to use, if no country calling
+     * code is specified, or undefined to always require a country calling code.
+     */
+    @bindable({ defaultValue: undefined })
+    public defaultCountryCode: string;
+
+    /**
      * Called when the input element receives focus.
      * Selects the content of the input element, if `autoselect` is enabled.
      */
@@ -165,7 +172,7 @@ export class PhoneInputCustomElement
 
         if (this.autoselect)
         {
-            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length), 50);
         }
     }
 

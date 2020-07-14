@@ -36,6 +36,18 @@ page-sidebar
 
             // Apply the primary icon color.
             color: var(--surface-primary-icon-color);
+
+            // Animate color transitions.
+            transition: color var(--animation-duration-medium);
+        }
+    }
+
+    &:hover .page-sidebar-edge-icon
+    {
+        icon
+        {
+            // Apply the primary icon color.
+            color: var(--surface-primary-icon-color);
         }
     }
 

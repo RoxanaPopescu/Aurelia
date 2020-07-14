@@ -1,4 +1,4 @@
-<template surface="card" class="${active ? '--active' : ''}" accent.bind="accent & attr">
+<template surface="card" class="${active ? '--active' : ''} ${disabled ? '--disabled' : ''}" inert.bind="disabled" accent.bind="accent & attr">
 
     <require from="./card.scss"></require>
 

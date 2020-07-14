@@ -108,6 +108,19 @@ body
         }
     }
 
+    &[label="before"],
+    &[label="after"]
+    {
+        > .input-label
+        {
+            .input-description > *
+            {
+                // Apply spacing between the heading and the description.
+                margin-top: var(--font-current-margin-bottom);
+            }
+        }
+    }
+
     &[label="before"]
     {
         // Define the grid with the label inline with the control.
@@ -156,6 +169,9 @@ body
     {
         // Position the element within the grid.
         grid-area: label;
+
+        // Allow content to be positioned relative to this element.
+        position: relative;
 
         // Always use the default cursor.
         cursor: default;

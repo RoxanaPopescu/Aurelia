@@ -63,7 +63,7 @@ export class ResponseStubInterceptor implements IApiInterceptor
 
             const totalDelay = this._latency + (stub.delay || 0);
 
-            console.warn(`Using response stub for '${method} ${request.url}'${totalDelay ? ` (${totalDelay}ms)` : ""}`);
+            console.warn(`Using response stub for '${method} ${request.url}'${totalDelay ? ` (${totalDelay}ms)` : ""}\n`, { request, stub });
 
             const status = stub.status != null ? stub.status : 200;
             const statusText = stub.statusText;

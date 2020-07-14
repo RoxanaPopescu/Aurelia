@@ -205,12 +205,22 @@ export class ApiClient
         };
 
         // Merge the headers specified in the defaults, settings and options.
+
         mergedOptions.headers =
         {
             ...apiRequestDefaults.headers,
             ...this._settings.defaults ? this._settings.defaults.headers : undefined,
             ...options ? options.headers : undefined
         };
+
+        for (const key of Object.keys(mergedOptions.headers))
+        {
+            if (mergedOptions.headers[key] === undefined)
+            {
+                // tslint:disable-next-line: no-dynamic-delete
+                delete mergedOptions.headers[key];
+            }
+        }
 
         return mergedOptions;
     }
@@ -348,15 +358,15 @@ export class ApiClient
         // Add the body, if specified.
         if (options.body !== undefined)
         {
-            // Determine whether the request body should be stringified as JSON.
+            // Determine whether the request body should be serialized as JSON.
             const contentType = options.headers ? options.headers["content-type"] : undefined;
             const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
             // Stringify the request body, if needed.
-            const body = hasJsonBody ? JSON.stringify(options.body) : options.body as any;
+            const body = hasJsonBody && typeof options.body !== "string" ? JSON.stringify(options.body) : options.body as any;
 
             // Obfuscate the body, if enabled.
-            if (endpointSettings.obfuscate)
+            if (endpointSettings.obfuscate && typeof body === "string")
             {
                 fetchOptions.body = obfuscate(body, this._settings.cipher);
             }
@@ -552,19 +562,19 @@ export class ApiClient
             return "";
         }
 
-        // If the value is a `Date` instance, convert it to ISO-8601 format.
+        // If the value is a `Date` instance, convert it to ISO 8601 format.
         if (value instanceof Date)
         {
             return value.toISOString();
         }
 
-        // If the value is a `DateTime` instance, convert it to ISO-8601 format.
+        // If the value is a `DateTime` instance, convert it to ISO 8601 format.
         if (value instanceof DateTime)
         {
             return value.toISO();
         }
 
-        // If the value is a `Duration`instance, convert it to ISO-8601 format.
+        // If the value is a `Duration`instance, convert it to ISO 8601 format.
         if (value instanceof Duration)
         {
             return value.toISO();

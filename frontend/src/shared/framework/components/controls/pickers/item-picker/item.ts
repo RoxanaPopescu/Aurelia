@@ -85,8 +85,8 @@ export class ItemCustomElement
         // Get the view model for the item picker
         this._itemPicker = (this._itemPickerElement as any).au.controller.viewModel;
 
-        // If the item is not disabled, attach the item to the item picker.
-        this._itemPicker!.attachItem(this);
+        // Attach the item to the item picker.
+        this._itemPicker!.attachItem();
 
         // If the item is focused, ensure it is scrolled into view.
         if (this.model === this._itemPicker!.value)
@@ -158,6 +158,25 @@ export class ItemCustomElement
         else if (top + this._element.offsetHeight > this._itemPickerElement.scrollTop + this._itemPickerElement.offsetHeight)
         {
             this._itemPickerElement.scrollTo({ top: top - this._itemPickerElement.offsetHeight + this._element.offsetHeight });
+        }
+    }
+
+    /**
+     * Called by the framework when the `model` property changes.
+     * Re-attaches the item to the item picker.
+     */
+    protected modelChanged(): void
+    {
+        if (this._itemPicker != null)
+        {
+            // If the item is not disabled, attach the item to the item picker.
+            this._itemPicker.attachItem();
+
+            // If the item is focused, ensure it is scrolled into view.
+            if (this.model === this._itemPicker.value)
+            {
+                this.scrollIntoView();
+            }
         }
     }
 

@@ -10,11 +10,11 @@ export class Appointment
     public constructor(data: any)
     {
         const fromDate = DateTime.fromISO(data.earliestArrivalDate, { setZone: true });
-        const fromDuration = Duration.fromMillis(TimeOfDay.fromISO(data.earliestArrivalTime).valueOf());
+        const fromDuration = Duration.fromMillis(TimeOfDay.fromString(data.earliestArrivalTime).valueOf());
         this.earliestArrivalDate = fromDate.plus(fromDuration)
 
         const toDate = DateTime.fromISO(data.latestArrivalDate, { setZone: true });
-        const toDuration = Duration.fromMillis(TimeOfDay.fromISO(data.latestArrivalTime).valueOf());
+        const toDuration = Duration.fromMillis(TimeOfDay.fromString(data.latestArrivalTime).valueOf());
         this.latestArrivalDate = toDate.plus(toDuration)
     }
 

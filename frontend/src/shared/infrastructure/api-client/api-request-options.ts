@@ -15,12 +15,11 @@ export interface IApiRequestOptions extends IApiRequestSettings
     query?: MapObject;
 
     /**
-     * The body associated with the request, represented as an object that will be
-     * serialized to JSON. Note that `HEAD`, `GET` and `DELETE` requests cannot
-     * have a body.
+     * The body associated with the request, which if represented as an object, and the content type is a JSON
+     * variant, will be serialized as JSON. Note that `HEAD`, `GET` and `DELETE` requests cannot have a body.
      * The default is undefined.
      */
-    body?: object;
+    body?: object | string | Blob | BufferSource | FormData | URLSearchParams | ReadableStream<Uint8Array>;
 
     /**
      * The signal associated with the request, which is an `AbortSignal` object indicating

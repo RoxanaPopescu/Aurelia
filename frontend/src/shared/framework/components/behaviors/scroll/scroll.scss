@@ -62,6 +62,7 @@
 
         &::-webkit-scrollbar-track
         {
+            // stylelint-disable-next-line selector-pseudo-class-no-unknown
             &:vertical
             {
                 border-left: 1rem solid var(--surface-scrollbar-track-color);
@@ -72,6 +73,7 @@
                 }
             }
 
+            // stylelint-disable-next-line selector-pseudo-class-no-unknown
             &:horizontal
             {
                 border-top: 1rem solid var(--surface-scrollbar-track-color);

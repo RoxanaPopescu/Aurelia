@@ -116,10 +116,23 @@ page-section
         }
     }
 
+    &.--header-slot-empty .page-section-header
+    {
+        // Hide the header when empty.
+        display: none;
+    }
+
     &:not(.--header-slot-empty) .page-section-content
     {
         // Apply spacing between the header and the content.
         margin-top: var(--font-large-margin-top);
+    }
+
+    &:not(.--expanded) .page-section-content,
+    &.--default-slot-empty .page-section-content
+    {
+        // Hide the content when empty or not expanded.
+        display: none;
     }
 
     &:not(.--expanded).--invalid

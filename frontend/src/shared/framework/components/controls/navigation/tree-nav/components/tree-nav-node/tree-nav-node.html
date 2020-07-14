@@ -9,7 +9,9 @@
             ${active ? '--active' : ''}
             ${dragover ? '--dragover' : ''}
             ${folderLike ? '--folder-like' : ''}
-            ${model.expanded ? '--expanded' : ''}"
+            ${model.expanded ? '--expanded' : ''}
+            ${tree.editable ? '--editable' : ''}
+            ${tree.nodeSettings != null ? '--settings' : ''}"
         tabindex.bind="active ? 0 : -1"
         click.trigger="onClick(false, $event)"
         dragover.trigger="onDragOver($event, model)"
@@ -21,7 +23,7 @@
             <icon name.bind="iconName" click.trigger="onClick(true, $event)"></icon>
         </icon>
 
-        <div class="tree-nav-node-title">
+        <div class="tree-nav-node-title text-truncate">
 
             <div class="text-truncate ${renaming ? 'visibility-hidden' : ''}">
                 ${model.name}
@@ -37,9 +39,14 @@
 
         </div>
 
-        <div if.bind="tree.editable" class="tree-nav-node-actions ${renaming ? 'visibility-hidden' : ''}">
+        <div if.bind="tree.editable || tree.nodeSettings != null" class="tree-nav-node-actions ${renaming ? 'visibility-hidden' : ''}">
 
-            <icon name="md-settings"></icon>
+            <icon
+                title.bind="tree.settingsIconTitle"
+                name.bind="tree.settingsIcon || 'md-settings'"
+                tabindex.bind="tree.editable ? -1 : 0"
+                click.trigger="onSettingsClick($event)">
+            </icon>
 
             <div if.bind="!renaming">
 
@@ -71,6 +78,10 @@
 
             </div>
 
+        </div>
+
+        <div if.bind="model.badgeCount" class="tree-nav-node-badge">
+            ${model.badgeCount}
         </div>
 
     </div>

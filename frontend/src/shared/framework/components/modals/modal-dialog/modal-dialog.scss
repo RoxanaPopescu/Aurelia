@@ -86,7 +86,7 @@ modal-dialog
                 // Apply a mask to fade out the background.
                 mask-image: linear-gradient(
                     to bottom,
-                    #ffffff 0%,
+                    rgba(#ffffff, 1) 0%,
                     rgba(#ffffff, 0.95) 65%,
                     rgba(#ffffff, 0.8) 80%,
                     rgba(#ffffff, 0) 100%
@@ -119,11 +119,18 @@ modal-dialog
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
                 to top,
-                #ffffff 0%,
+                rgba(#ffffff, 1) 0%,
                 rgba(#ffffff, 0.95) 65%,
                 rgba(#ffffff, 0.8) 80%,
                 rgba(#ffffff, 0) 100%
             );
+
+            modal-footer button[appearance="outline"],
+            modal-footer button[appearance="solid"]
+            {
+                // Ensure buttons have a reasonable min-width.
+                min-width: 140rem;
+            }
         }
     }
 
@@ -141,6 +148,7 @@ modal-dialog
             // Position at the top-right corner of the dialog.
             position: sticky;
             top: 0;
+            right: 0;
             z-index: 2;
             float: right;
 

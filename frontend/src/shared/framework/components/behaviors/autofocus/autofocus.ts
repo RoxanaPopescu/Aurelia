@@ -49,7 +49,7 @@ export class AutofocusCustomAttribute
         // which if applied will also attempt to focus an element after a timeout.
         setTimeout(() => setTimeout(() =>
         {
-            if (this.enabled || this.enabled === "")
+            if (this.enabled === true || this.enabled === "")
             {
                 const customFocusOptions: IExtendedFocusOptions =
                 {
@@ -60,5 +60,22 @@ export class AutofocusCustomAttribute
             }
 
         }), this.delay);
+    }
+
+    /**
+     * Called by the framework when the `enabled` property changes.
+     * Focuses the element if the property changed to true.
+     */
+    protected enabledChanged(): void
+    {
+        if (this.enabled === true)
+        {
+            const customFocusOptions: IExtendedFocusOptions =
+            {
+                focusVisible: this.visible
+            };
+
+            this._element.focus(customFocusOptions);
+        }
     }
 }

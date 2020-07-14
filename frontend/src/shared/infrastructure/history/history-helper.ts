@@ -58,7 +58,7 @@ export class HistoryHelper
     /**
      * Creates a new instance of the type.
      * @param history The `History` instance.
-     * @param router The `Router` instance.
+     * @param router The `AppRouter` instance.
      * @param eventAggregator The `EventAggregator` instance.
      */
     public constructor(history: History, router: AppRouter, eventAggregator: EventAggregator)
@@ -67,18 +67,28 @@ export class HistoryHelper
         this._router = router;
         this._eventAggregator = eventAggregator;
 
+        let isNavigatingNew = false;
+
         this._eventAggregator.subscribe("router:navigation:processing", () =>
         {
             this._navigating = true;
+            isNavigatingNew = router.isNavigatingNew;
         });
 
         this._eventAggregator.subscribe("router:navigation:success", () =>
         {
             this._state = this.getState();
+
+            // Reset the scroll position if navigating to a new history entry.
+            if (isNavigatingNew)
+            {
+                window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+            }
         });
 
         this._eventAggregator.subscribe("router:navigation:complete", (event: any) =>
         {
+            isNavigatingNew = false;
             this._navigating = false;
 
             this._eventAggregator.publish("router:navigation:idle", event);

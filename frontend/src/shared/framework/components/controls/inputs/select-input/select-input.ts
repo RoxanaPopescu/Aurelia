@@ -43,7 +43,7 @@ export class SelectInputCustomElement
     {
         if (this.open)
         {
-            if (this.filter !== "none" && this.filterValue != null)
+            if (this.filter !== "off" && this.filterValue != null)
             {
                 return this.filterValue;
             }
@@ -110,12 +110,12 @@ export class SelectInputCustomElement
     public none: boolean;
 
     /**
-     * The type of filtering to use, where `none` means no filtering, `auto` means filtering based on
+     * The type of filtering to use, where `off` means no filtering, `auto` means filtering based on
      * the text presented in the items, and `custom` means that the input element is enabled, but the
      * actual filtering the items is an external concern.
      */
-    @bindable({ defaultValue: "none" })
-    public filter: "none" | "auto" | "custom";
+    @bindable({ defaultValue: "off" })
+    public filter: "off" | "auto" | "custom";
 
     /**
      * The value entered in the input element, or undefined if no value is entered.
@@ -241,7 +241,7 @@ export class SelectInputCustomElement
             {
                 this.openDropdown(true);
             }
-            else if (this.filter === "none")
+            else if (this.filter === "off")
             {
                 this.closeDropdown(false);
             }

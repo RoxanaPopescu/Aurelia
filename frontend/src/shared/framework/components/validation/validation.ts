@@ -302,6 +302,7 @@ export class ValidationCustomAttribute implements IValidation
     public attachValidation(validation: ValidationCustomAttribute): void
     {
         this.childValidations.push(validation);
+        this.update();
     }
 
     /**
@@ -323,6 +324,7 @@ export class ValidationCustomAttribute implements IValidation
     public attachValidator(validator: Validator): void
     {
         this.validators.push(validator);
+        this.update();
     }
 
     /**

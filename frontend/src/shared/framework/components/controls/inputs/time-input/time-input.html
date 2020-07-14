@@ -1,5 +1,5 @@
 <template
-    class="${open ? '--open' : ''} ${filter != 'none' ? '--filter' : ''}"
+    class="${open ? '--open' : ''}"
     inert.bind="disabled || readonly"
     validation
     forward-focus>
@@ -11,7 +11,7 @@
         value.bind="inputValue"
         label.bind="label & attr"
         disabled.bind="disabled"
-        readonly.bind="filter === 'none' || readonly"
+        readonly.bind="readonly"
         autocomplete.bind="autocomplete"
         autoselect.bind="autoselect"
         mousedown.trigger="onInputMouseDown($event)"
@@ -36,6 +36,7 @@
             <slot name="after"></slot>
 
             <dropdown-icon
+                if.bind="!readonly"
                 ref="toggleElement"
                 open.bind="open"
                 toggle.call="toggleDropdown()">

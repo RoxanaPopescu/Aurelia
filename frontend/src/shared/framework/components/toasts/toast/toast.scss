@@ -79,7 +79,7 @@ toast
                 // Apply a mask to fade out the background.
                 mask-image: linear-gradient(
                     to bottom,
-                    #ffffff 0%,
+                    rgba(#ffffff, 1) 0%,
                     rgba(#ffffff, 0.95) 65%,
                     rgba(#ffffff, 0.8) 80%,
                     rgba(#ffffff, 0) 100%
@@ -112,7 +112,7 @@ toast
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
                 to top,
-                #ffffff 0%,
+                rgba(#ffffff, 1) 0%,
                 rgba(#ffffff, 0.95) 65%,
                 rgba(#ffffff, 0.8) 80%,
                 rgba(#ffffff, 0) 100%
