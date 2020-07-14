@@ -240,6 +240,28 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
    * The current or next stop on the route, or undefined
    * if all stops have been visited or cancelled.
    */
+  public get currentStop(): TRouteStop {
+    let stops = this.stops.filter(
+      s => s instanceof RouteStop && s.status.slug !== "cancelled" && s.status.slug !== "failed"
+    );
+
+    let stop = stops.find(
+        s => s.status.slug === "not-visited" || s.status.slug === "arrived"
+      ) as TRouteStop;
+
+    console.log("STOP", stop);
+
+    if (stop) {
+      return stop;
+    } else {
+      return stops[0] as TRouteStop;
+    }
+  }
+
+  /**
+   * The current or next stop on the route, or undefined
+   * if all stops have been visited or cancelled.
+   */
   public get currentStopIndex(): number | undefined {
     return this.stops
       .filter(

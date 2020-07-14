@@ -399,6 +399,8 @@
   "Routes_List_TotalCount": "{count} ruter",
   "Route_Count": "Antal ruter",
   "Route_Loading": "Henter ruter...",
+  "Route_Summary_ArrivedAtStop": "Ankommet til stop {number}",
+  "Route_Summary_EnRouteToStop": "På vej til stop {number}",
   "Route_TableHeader_Fulfiller": "Logistikpartner",
   "Route_TableHeader_Id": "ID",
   "Route_TableHeader_Reference": "Reference",

@@ -66,12 +66,6 @@ export class ToggleGroupCustomElement
             // Remove the toggle from the list of toggles.
             this._toggles.splice(this._toggles.indexOf(toggle), 1);
         }
-
-        // If the toggle is active, update the group value.
-        if (toggle.value)
-        {
-            this.onToggleDeactivated(toggle);
-        }
     }
 
     /**

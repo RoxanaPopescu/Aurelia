@@ -16,5 +16,7 @@ name-value-pair
     .name-value-pair-value
     {
         flex-grow: 1;
+
+        user-select: text;
     }
 }

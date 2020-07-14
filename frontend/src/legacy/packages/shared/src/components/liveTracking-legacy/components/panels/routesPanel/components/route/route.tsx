@@ -79,6 +79,10 @@ export class Route extends React.Component<RoutesLayerProps> {
             </div>
 
             <div className="c-liveTracking-routesPanel-route-info">
+              {this.props.routesService.summary(this.props.route)}
+            </div>
+
+            <div className="c-liveTracking-routesPanel-route-info">
 
               <div>{driverOrFulfillerName}</div>
 

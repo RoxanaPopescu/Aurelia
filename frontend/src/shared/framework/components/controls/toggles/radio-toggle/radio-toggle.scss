@@ -1,17 +1,69 @@
 radio-toggle
 {
-    icon
+    .toggle-control
     {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
+        width: var(--toggle-height);
+        height: var(--toggle-height);
+
+        icon
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        input
+        {
+            width: 100%;
+            height: 100%;
+        }
     }
 
-    input
+    // The width of the horizontal padding within the SVG icon.
+    --icon-padding-width: calc(var(--toggle-height) * (24 - 18) / 2 / 24);
+
+    &.toggle[label="before"]
     {
-        min-width: var(--toggle-height);
-        width: 100%;
+        > .toggle-control icon
+        {
+            // The icon does not fill its viewbox, so to ensure the right edge
+            // edge aligns with other controls, we translate the icon right.
+            transform: translateX(var(--icon-padding-width));
+        }
+
+        > .toggle-label
+        {
+            // Apply reduced spacing between the label and the control,
+            // to compensate for the translation of the icon.
+            padding-right: calc(var(--size-inline-spacing) - var(--icon-padding-width));
+        }
+    }
+
+    &.toggle[label="after"]
+    {
+        > .toggle-control icon
+        {
+            // The icon does not fill its viewbox, so to ensure the left edge
+            // edge aligns with other controls, we translate the icon left.
+            transform: translateX(calc(var(--icon-padding-width) * -1));
+        }
+
+        > .toggle-label
+        {
+            // Apply reduced spacing between the label and the control,
+            // to compensate for the translation of the icon.
+            padding-left: calc(var(--size-inline-spacing) - var(--icon-padding-width));
+        }
+    }
+
+    &.toggle[label="above"]
+    {
+        > .toggle-control icon
+        {
+            // The icon does not fill its viewbox, so to ensure the left edge
+            // edge aligns with other controls, we translate the icon left.
+            transform: translateX(calc(var(--icon-padding-width) * -1));
+        }
     }
 }

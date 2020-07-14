@@ -54,19 +54,19 @@
 
                 <div>
 
-                    <div class="margin-bottom" empty-value>
+                    <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.reference}
                     </div>
 
-                    <div class="margin-bottom" empty-value>
+                    <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                     </div>
 
-                    <div if.bind="model.routeStop.arrivedTime != null" empty-value>
+                    <div class="user-select-text" if.bind="model.routeStop.arrivedTime != null" empty-value>
                         ${model.routeStop.arrivedTime | dateTime: 'narrow' : false}
                     </div>
 
-                    <div if.bind="model.routeStop.arrivedTime == null" empty-value>
+                    <div class="user-select-text" if.bind="model.routeStop.arrivedTime == null" empty-value>
                         ${model.routeStop.estimates.arrivalTime | dateTime: 'narrow' : false}
                     </div>
 
@@ -94,15 +94,15 @@
 
                 <div>
 
-                    <div class="margin-bottom" empty-value>
+                    <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.type.name}
                     </div>
 
-                    <div class="margin-bottom" empty-value>
+                    <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.estimates.taskTime | duration: 'narrow'}
                     </div>
 
-                    <div empty-value>
+                    <div class="user-select-text" empty-value>
                         ${model.routeStop.taskTime | duration: 'narrow'}
                     </div>
 
@@ -128,7 +128,7 @@
             <div class="opacity-faded flex-grow" translate>
                 Address
             </div>
-            <span>
+            <span class="user-select-text">
                 ${model.routeStop.location.address}
             </span>
         </div>
@@ -137,7 +137,7 @@
             <div class="opacity-faded flex-grow" translate>
                 Company
             </div>
-            <span>
+            <span class="user-select-text">
                 ${model.routeStop.outfit.companyName}
             </span>
         </div>
@@ -146,7 +146,7 @@
             <div class="opacity-faded flex-grow" translate>
                 Name
             </div>
-            <span>
+            <span class="user-select-text">
                 ${model.routeStop.outfit.personName}
             </span>
         </div>
@@ -173,7 +173,7 @@
                 Instructions
             </div>
 
-            <div if.bind="model.routeStop.driverInstructions">
+            <div class="user-select-text" if.bind="model.routeStop.driverInstructions">
                 ${model.routeStop.driverInstructions}
             </div>
 
