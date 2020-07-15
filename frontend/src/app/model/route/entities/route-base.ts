@@ -249,6 +249,25 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     }
 
     /**
+     * The current active stop
+     */
+    public get currentStop(): TRouteStop {
+        let stops = this.stops.filter(
+        s => s instanceof RouteStopBase && s.status.slug !== "cancelled" && s.status.slug !== "failed"
+        );
+
+        let stop = stops.find(
+            s => s.status.slug === "not-visited" || s.status.slug === "arrived"
+        ) as TRouteStop;
+
+        if (stop) {
+            return stop;
+        } else {
+            return stops[0] as TRouteStop;
+        }
+    }
+
+    /**
      * The current or next stop on the route, or undefined
      * if all stops have been visited or cancelled.
      */

@@ -146,7 +146,7 @@ export class OrderService
     {
         await this._apiClient.post("orders/updatestatus",
         {
-            body: { orderId: order.id, status: status }
+            body: { id: order.id, slug: order.slug, status: status }
         });
     }
 }

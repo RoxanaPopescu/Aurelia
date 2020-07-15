@@ -201,6 +201,26 @@ export class LiveTrackingService {
   }
 
   /**
+   * Calculates the summary of the route
+   */
+  public summary(route: RouteInfo): string {
+    if (route.status.slug === "in-progress") {
+      let stop = route.currentStop;
+      let stopNumber = stop.stopNumber.toString();
+
+      if (stop.status.slug === "arrived") {
+        return Localization.sharedValue("Route_Summary_ArrivedAtStop")
+               .replace("{number}", stopNumber);
+      } else {
+        return Localization.sharedValue("Route_Summary_EnRouteToStop")
+               .replace("{number}", stopNumber);
+      }
+    } else {
+      return route.status.name;
+    }
+  }
+
+  /**
    * Triggers change detection for the `routes` property.
    */
   public triggerRoutesChanged() {
