@@ -132,7 +132,7 @@ export abstract class RouteStopBase extends RouteStopInfo
             return false;
         }
 
-        return this.arrivalTimeFrame.to > this.estimates.arrivalTime;
+        return this.estimates.arrivalTime > this.arrivalTimeFrame.to;
     }
 
     /**
