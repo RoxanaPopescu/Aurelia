@@ -1,7 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 import { RouteStatus, Route } from 'app/model/route';
-import { IValidation } from "shared/framework";
 import { ProductType } from '../../../../../../model/product/entities/product-type';
 import { Log } from "shared/infrastructure";
 import { RouteService } from '../../../../../../model/route/services/route-service';
@@ -33,10 +32,6 @@ export class EditInformationPanel
     private readonly _modal: Modal;
     private _result: Route | undefined;
 
-     /**
-     * The validation for the modal.
-     */
-    protected validation: IValidation;
      /**
      * The available statuses.
      */
