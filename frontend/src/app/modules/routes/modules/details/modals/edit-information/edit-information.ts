@@ -81,7 +81,7 @@ export class EditInformationPanel
 
             // Set the result of the modal.
             this._result = this.model;
-            this._modal.close();
+            await this._modal.close();
         }
         catch (error)
         {
