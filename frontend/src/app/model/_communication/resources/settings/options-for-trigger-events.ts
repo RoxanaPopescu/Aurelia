@@ -92,7 +92,7 @@ export default
             "DriverPhone",
             "DriverName"
         ])
-    },
+    }
 };
 
 function getPlaceholders(placeholders: string[]): { placeholder: string; description: string }[]

@@ -3,6 +3,14 @@
   "extends": [
     "stylelint-config-standard"
   ],
+  "ignoreFiles":
+  [
+    "*/node_modules/**",
+    "*/artifacts/**",
+    "*/src/legacy/**",
+    "**/.*",
+    "**/~*"
+  ],
   "defaultSeverity": "warning",
   "plugins": [
     "stylelint-scss"
