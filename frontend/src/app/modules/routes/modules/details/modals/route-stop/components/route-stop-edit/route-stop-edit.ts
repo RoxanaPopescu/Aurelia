@@ -96,22 +96,27 @@ export class RouteStopEditCustomElement
             this.timeFrom = this.model.routeStop.arrivalTimeFrame.from?.diff(this.model.routeStop.arrivalTimeFrame.from?.startOf("day"));
             this.timeTo = this.model.routeStop.arrivalTimeFrame.to?.diff(this.model.routeStop.arrivalTimeFrame.to?.startOf("day"));
 
-        } else {
+        }
+        else
+        {
             // New stop, default to last index
-            if (this.model.route.stops[0] instanceof RouteStop) {
+            if (this.model.route.stops[0] instanceof RouteStop)
+            {
                 this.date = this.model.route.stops[0].arrivalTimeFrame.from?.startOf("day");
             }
         }
 
-        if (this.model.routeStop.arrivedTime != null) {
-            const arrivedDateTime = this.model.routeStop.arrivedTime.plus({ seconds: 0});
+        if (this.model.routeStop.arrivedTime != null)
+        {
+            const arrivedDateTime = this.model.routeStop.arrivedTime.plus({ seconds: 0 });
             const date = arrivedDateTime.startOf("day");
             this.arrivedDate = date;
             this.arrivedTime = arrivedDateTime.diff(date);
         }
 
-        if (this.model.routeStop.completedTime != null) {
-            const completedDateTime = this.model.routeStop.completedTime.plus({ seconds: 0});
+        if (this.model.routeStop.completedTime != null)
+        {
+            const completedDateTime = this.model.routeStop.completedTime.plus({ seconds: 0 });
             const date = completedDateTime.startOf("day");
             this.completedDate = date;
             this.completedTime = completedDateTime.diff(date);
@@ -123,7 +128,8 @@ export class RouteStopEditCustomElement
      */
     protected completedDateTimeChanged(): void
     {
-        if (this.completedDate == null || this.completedTime == null) {
+        if (this.completedDate == null || this.completedTime == null)
+        {
             this.model.routeStop.completedTime = undefined;
             return;
         }
@@ -137,7 +143,8 @@ export class RouteStopEditCustomElement
      */
     protected arrivedDateTimeChanged(): void
     {
-        if (this.arrivedDate == null || this.arrivedTime == null) {
+        if (this.arrivedDate == null || this.arrivedTime == null)
+        {
             this.model.routeStop.arrivedTime = undefined;
             return;
         }
@@ -155,28 +162,37 @@ export class RouteStopEditCustomElement
         {
             if (this.model.routeStop.arrivalTimeFrame == null)
             {
-                this.model.routeStop.arrivalTimeFrame = new DateTimeRange({
-                                                            from: newValue,
-                                                            to: newValue
-                                                        }, { setZone: true });
+                this.model.routeStop.arrivalTimeFrame = new DateTimeRange(
+                {
+                    from: newValue.setZone("UTC"),
+                    to: newValue.setZone("UTC")
+                });
             }
             else
             {
-                if (this.model.routeStop.arrivalTimeFrame.from != null) {
+                if (this.model.routeStop.arrivalTimeFrame.from != null)
+                {
                     this.model.routeStop.arrivalTimeFrame.from = this.model.routeStop.arrivalTimeFrame.from.set({
                         day: newValue.day,
                         month: newValue.month,
-                        year: newValue.year });
-                } else {
+                        year: newValue.year
+                    });
+                }
+                else
+                {
                     this.model.routeStop.arrivalTimeFrame.from = newValue;
                 }
 
-                if (this.model.routeStop.arrivalTimeFrame.to != null) {
+                if (this.model.routeStop.arrivalTimeFrame.to != null)
+                {
                     this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.set({
                         day: newValue.day,
                         month: newValue.month,
-                        year: newValue.year });
-                } else {
+                        year: newValue.year
+                    });
+                }
+                else
+                {
                     this.model.routeStop.arrivalTimeFrame.to = newValue;
                 }
 
@@ -216,7 +232,8 @@ export class RouteStopEditCustomElement
      */
     protected dateTimeChanged(): void
     {
-        if (this.model.routeStop.arrivalTimeFrame.to == null || this.model.routeStop.arrivalTimeFrame.from == null) {
+        if (this.model.routeStop.arrivalTimeFrame.to == null || this.model.routeStop.arrivalTimeFrame.from == null)
+        {
             return;
         }
 
