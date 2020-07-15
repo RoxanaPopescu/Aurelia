@@ -21,7 +21,7 @@
 
             <modal-header scroll-fade >
 
-                <h1 class="font-largest flex-row">
+                <h1 class="font-largest flex-row" tabindex="-1" autoFocus= "visible.bind: false" >
 
                     <div translate>
                         Edit route
@@ -33,10 +33,9 @@
 
             <modal-section class="margin-bottom">
 
-
                 <div class="control-row flex-row">
 
-                    <select-input label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-1">
+                    <select-input  label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
                             Type
@@ -69,6 +68,8 @@
                     </text-input>
 
                 </div>
+
+
 
 
 
