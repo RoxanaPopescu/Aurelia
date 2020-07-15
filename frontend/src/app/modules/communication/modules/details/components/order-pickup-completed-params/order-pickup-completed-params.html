@@ -3,7 +3,7 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesAddedToEstimate | scale: 1/60"
+        value.bind="model.timeAddedToEstimate | scale: 1/60"
         class="margin-large-bottom"
         min.bind="0">
 
@@ -18,12 +18,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesAddedToEstimate">
+                value.bind="model.timeAddedToEstimate">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesAddedToEstimate"
+                value.bind="model.timeAddedToEstimate"
                 min.bind="0">
             </range-validator>
 
@@ -34,7 +34,7 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesSubtractedFromEstimate | scale: 1/60"
+        value.bind="model.timeSubtractedFromEstimate | scale: 1/60"
         min.bind="0">
 
         <div slot="heading" translate>
@@ -48,12 +48,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesSubtractedFromEstimate">
+                value.bind="model.timeSubtractedFromEstimate">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesSubtractedFromEstimate"
+                value.bind="model.timeSubtractedFromEstimate"
                 min.bind="0">
             </range-validator>
 
