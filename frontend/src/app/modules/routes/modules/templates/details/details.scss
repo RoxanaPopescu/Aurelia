@@ -18,8 +18,8 @@ page[name="routes"] page[name="templates-details"]
     .route-template-stop-number
     {
         border-radius: 50%;
-        width: 9rem;
-        line-height: 9rem;
+        width: 36rem;
+        line-height: 36rem;
         text-align: center;
         color: var(--surface-color);
         background: gray;
@@ -31,12 +31,12 @@ page[name="routes"] page[name="templates-details"]
         .route-template-stop-number::before
         {
             content: "";
-            width: 1rem;
-            height: 13rem;
+            width: 4rem;
+            height: 52rem;
             background: gray;
             display: block;
             position: fixed;
-            margin: 8rem 4rem;
+            margin: 32rem 16rem;
             z-index: 1;
             opacity: 0.7;
         }
@@ -52,7 +52,7 @@ page[name="routes"] page[name="templates-details"]
     {
         check-toggle
         {
-            width: 40rem;
+            width: 160rem;
         }
 
         .control-row
@@ -60,12 +60,12 @@ page[name="routes"] page[name="templates-details"]
             &.--all-days > check-toggle,
             &.--all-days > span
             {
-                margin-top: 6rem;
+                margin-top: 24rem;
             }
 
             > span
             {
-                line-height: 10rem;
+                line-height: 40rem;
             }
         }
     }

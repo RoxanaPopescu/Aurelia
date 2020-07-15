@@ -8,7 +8,7 @@ card-skeleton
     // brightness is closer to that of a card.
     filter: brightness(99.75%);
 
-    // Apply the card skeleton opacity, or default to 1.
+    // Apply the card-skeleton opacity, or use the default.
     opacity: var(--card-skeleton-opacity, 1);
 
     // Apply the card size set by the layout.

@@ -59,7 +59,7 @@ export class Theme
     public readonly color: string;
 
     /**
-     * True if the market should only be available if debugging is enabled, otherwise false.
+     * True if the theme should only be available if debugging is enabled, otherwise false.
      */
     public readonly debug: boolean;
 }

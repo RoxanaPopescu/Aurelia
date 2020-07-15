@@ -11,15 +11,15 @@
     border: 0;
 
     .pageHeader-top {
-      margin-bottom: 5rem;
+      margin-bottom: 20rem;
     }
 
     .c-assignRoutes-closeButton {
       position: absolute;
-      top: 8rem;
-      right: 8rem;
-      width: 4rem;
-      height: 4rem;
+      top: 32rem;
+      right: 32rem;
+      width: 16rem;
+      height: 16rem;
       transform: rotate(45deg);
       cursor: pointer;
 
@@ -50,19 +50,19 @@
   .c-assignRoutes-complexityContainer {
     display: flex;
     align-items: center;
-    margin-right: 2rem;
+    margin-right: 8rem;
 
     .c-assignRoutes-complexity {
       display: flex;
-      margin-right: 2rem;
+      margin-right: 8rem;
 
       .c-assignRoutes-complexity-bar {
-        width: 2.5rem;
-        height: 1rem;
+        width: 10rem;
+        height: 4rem;
         background-color: var(--colorNeutralLight);
 
         &:not(:last-child) {
-          margin-right: 1.25rem;
+          margin-right: 5rem;
         }
 
         .c-assignRoutes-complexity-filler {
@@ -83,7 +83,7 @@
 }
 
 .c-assignRoutes-topContainer {
-  padding: 0 8rem;
+  padding: 0 32rem;
   height: 50%;
   border-bottom: var(--border-width-thin) solid var(--colorNeutralExtraLight);
   display: flex;
@@ -100,22 +100,22 @@
     overflow: overlay;
 
     > * {
-      padding: 0 10rem;
+      padding: 0 40rem;
       border: var(--border-width-thin) solid var(--colorNeutralExtraLight);
       border-radius: var(--border-radius-small);
       flex: 1;
       overflow: overlay;
 
       &:first-child {
-        margin-right: 5rem;
+        margin-right: 20rem;
       }
 
       > * {
         &:first-child {
-          margin-top: 5rem;
+          margin-top: 20rem;
         }
         &:last-child {
-          margin-bottom: 5rem;
+          margin-bottom: 20rem;
         }
       }
     }
@@ -123,7 +123,7 @@
 
   .c-assignRoutes-topActionContainer {
     width: 100%;
-    height: 23rem;
+    height: 92rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -131,20 +131,20 @@
 }
 
 .c-assignRoutes-assignedRoutes {
-  padding: 0 8rem 0;
+  padding: 0 32rem 0;
   flex-grow: 1;
   overflow: overlay;
 
   .gridTable-container-new {
-    margin-top: 7rem;
+    margin-top: 28rem;
   }
 }
 
 .c-assignRoutes-actionContainer {
   align-self: flex-end;
   width: 100%;
-  height: 19rem;
-  padding: 0 8rem;
+  height: 76rem;
+  padding: 0 32rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;

@@ -30,10 +30,10 @@ react-module
     // the top and bottom of the app-sidebar.
     z-index: 1;
 
-    --font-label-base-line-height: 5rem;
-    --font-label-base-font-size: 3.5rem;
-    --font-label-base-margin-top: 3rem;
-    --font-label-base-margin-bottom: 3rem;
+    --font-label-base-line-height: 20rem;
+    --font-label-base-font-size: 14rem;
+    --font-label-base-margin-top: 12rem;
+    --font-label-base-margin-bottom: 12rem;
     --font-label-base-font-weight: 500;
 
     /// Text style for base text.
@@ -53,10 +53,10 @@ react-module
         }
     }
 
-    --font-label-small-line-height: 4rem;
-    --font-label-small-font-size: 3rem;
-    --font-label-small-margin-top: 2rem;
-    --font-label-small-margin-bottom: 2rem;
+    --font-label-small-line-height: 16rem;
+    --font-label-small-font-size: 12rem;
+    --font-label-small-margin-top: 8rem;
+    --font-label-small-margin-bottom: 8rem;
     --font-label-small-font-weight: 600;
 
     /// Text style for small text.
@@ -87,7 +87,7 @@ react-module
     // Change page header to better match the new pages.
     .pageHeader
     {
-        padding: 8.5rem 9rem 0 9rem;
+        padding: 34rem 36rem 0 36rem;
         border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
 
         --colorNeutralDark: var(--surface-neutral-surface-color);
@@ -96,7 +96,7 @@ react-module
         .pageHeader-top
         {
             height: auto;
-            margin-bottom: 5.5rem;
+            margin-bottom: 22rem;
 
             .pageHeader-path,
             .pageHeader-path-segment
@@ -117,7 +117,7 @@ react-module
 
         .pageHeader-toolbar:not(:empty)
         {
-            margin-bottom: 7rem;
+            margin-bottom: 28rem;
         }
 
         .pageHeader-tabs
@@ -127,7 +127,7 @@ react-module
 
             .pageHeader-tabs-tab
             {
-                line-height: calc(10rem - 2 * var(--border-width-medium));
+                line-height: calc(40rem - 2 * var(--border-width-medium));
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
@@ -180,7 +180,7 @@ react-module
     .c-driverDispatch-filters
     {
         background-color: var(--palette-color-neutral-lightest);
-        border-right: 0.25rem solid var(--palette-color-neutral-light);
+        border-right: 1rem solid var(--palette-color-neutral-light);
     }
 
     .c-driverDispatch-filters-slider-header
@@ -202,8 +202,8 @@ react-module
         .c-orderDetails-headline,
         .c-routeDetails-info-section-heading
         {
-            margin: 0 -8rem var(--font-large-margin-top) -8rem;
-            padding: 2rem 5rem 2rem 9rem;
+            margin: 0 -32rem var(--font-large-margin-top) -32rem;
+            padding: 8rem 20rem 8rem 36rem;
             font: inherit;
             background: var(--palette-color-neutral-light) !important;
             color: var(--palette-color-neutral-dark);

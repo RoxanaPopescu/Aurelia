@@ -1,16 +1,16 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-driverDispatch-forecastDialog {
-  width: 120rem;
+  width: 480rem;
 
   .c-dialog-content {
     display: flex;
     flex-direction: column;
-    padding: 10rem 8rem;
+    padding: 40rem 32rem;
 
     > * {
       &:not(:last-child) {
-        margin-bottom: 6rem;
+        margin-bottom: 24rem;
       }
     }
 
@@ -20,12 +20,12 @@
       justify-content: space-between;
 
       > * {
-        width: calc(100% / 3 - 5rem * 2 / 3);
+        width: calc(100% / 3 - 20rem * 2 / 3);
       }
     }
 
     .c-driverDispatch-forecastDialog-slots {
-      width: calc(100% / 3 - 5rem * 2 / 3);
+      width: calc(100% / 3 - 20rem * 2 / 3);
     }
   }
 }

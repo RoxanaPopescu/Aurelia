@@ -73,7 +73,7 @@ accordion
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 3rem 4rem;
+        padding: 12rem 16rem;
         background-color: var(--surface-color);
         transition: background-color var(--animation-duration-medium);
 
@@ -84,14 +84,14 @@ accordion
 
         .accordion-header-toggle
         {
-            margin-left: 5rem;
+            margin-left: 20rem;
             font-size: var(--font-larger-font-size);
         }
     }
 
     .accordion-content
     {
-        padding: 4rem;
+        padding: 16rem;
         background-color: var(--surface-color);
     }
 

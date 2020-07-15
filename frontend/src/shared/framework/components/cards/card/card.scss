@@ -47,6 +47,11 @@ card
         background: transparent;
     }
 
+    &.--disabled
+    {
+        opacity: var(--opacity-disabled);
+    }
+
     &.--active > a
     {
         background: var(--surface-color--active);
@@ -123,9 +128,9 @@ card
         {
             // Position the action container along the right edge of the card.
             position: absolute;
-            top: 3rem;
-            right: 3rem;
-            bottom: 3rem;
+            top: 12rem;
+            right: 12rem;
+            bottom: 12rem;
 
             // Disable pointer events so the container does not block clicks.
             pointer-events: none;
@@ -143,7 +148,7 @@ card
 
                 // Provide vertical layout for items.
                 display: block;
-                margin-bottom: 2rem;
+                margin-bottom: 8rem;
 
                 // Fade the items so they are barely visible.
                 opacity: var(--opacity-faded-more);
@@ -151,8 +156,8 @@ card
                 // Apply surface style.
                 color: var(--surface-neutral-icon-color);
 
-                &:hover,
-                body.focus-visible &:focus
+                &:not(:disabled):hover,
+                body.focus-visible &:not(:disabled):focus
                 {
                     // Highlight when hovered or focused.
                     opacity: var(--opacity-faded-more);
@@ -163,8 +168,11 @@ card
 
                 &.--active
                 {
-                    // Highlight when active.
-                    opacity: var(--opacity-faded-less);
+                    &:not(:disabled)
+                    {
+                        // Highlight when active.
+                        opacity: var(--opacity-faded-less);
+                    }
 
                     // Apply surface style.
                     color: var(--surface-icon-color--active);

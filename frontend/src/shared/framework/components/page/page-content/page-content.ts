@@ -25,7 +25,7 @@ export class PageContentCustomElement
     protected readonly element: HTMLElement;
 
     /**
-     * Called when the "Back to top" icon is clicked.
+     * Called when the `Back to top` icon is clicked.
      * Scrolls the page back to the top.
      */
     protected onBackToTopClick(): void

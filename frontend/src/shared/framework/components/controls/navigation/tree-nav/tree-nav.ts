@@ -42,6 +42,18 @@ export class TreeNavCustomElement
     public selectSubtree: boolean | undefined;
 
     /**
+     * The name of the settings icon shown when a node is hovered.
+     */
+    @bindable({ defaultValue: undefined })
+    public settingsIcon: string | undefined;
+
+    /**
+     * The title of the settings icon shown when a node is hovered.
+     */
+    @bindable({ defaultValue: undefined })
+    public settingsIconTitle: string | undefined;
+
+    /**
      * Called when an element is dropped on a node.
      * @param params The parameters available for binding.
      */
@@ -154,6 +166,20 @@ export class TreeNavCustomElement
         node: TreeNode;
 
     }) => Promise<boolean>);
+
+    /**
+     * Called when the settings icon for a node is clicked.
+     * @param params The parameters available for binding.
+     */
+    @bindable
+    public nodeSettings: undefined | ((params:
+    {
+        /**
+         * The node whose settings icon was clicked.
+         */
+        node: TreeNode;
+
+    }) => void);
 
     /**
      * Called after a node was deleted.

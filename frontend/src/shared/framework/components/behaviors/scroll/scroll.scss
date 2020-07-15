@@ -38,7 +38,7 @@
     &.scroll--custom
     {
         // The thickness of the scrollbar.
-        --scrollbar-thickness: 3rem;
+        --scrollbar-thickness: 12rem;
 
         // The min length of the scrollbar.
         --scrollbar-min-length: calc(var(--scrollbar-thickness) * 3);
@@ -62,23 +62,25 @@
 
         &::-webkit-scrollbar-track
         {
+            // stylelint-disable-next-line selector-pseudo-class-no-unknown
             &:vertical
             {
-                border-left: 0.25rem solid var(--surface-scrollbar-track-color);
+                border-left: 1rem solid var(--surface-scrollbar-track-color);
 
                 &:hover
                 {
-                    border-left: 0.25rem solid var(--surface-scrollbar-track-color--hover);
+                    border-left: 1rem solid var(--surface-scrollbar-track-color--hover);
                 }
             }
 
+            // stylelint-disable-next-line selector-pseudo-class-no-unknown
             &:horizontal
             {
-                border-top: 0.25rem solid var(--surface-scrollbar-track-color);
+                border-top: 1rem solid var(--surface-scrollbar-track-color);
 
                 &:hover
                 {
-                    border-top: 0.25rem solid var(--surface-scrollbar-track-color--hover);
+                    border-top: 1rem solid var(--surface-scrollbar-track-color--hover);
                 }
             }
         }
@@ -91,7 +93,7 @@
         &::-webkit-scrollbar-thumb
         {
             min-height: calc(var(--scrollbar-thickness) * 3);
-            border: 0.5rem solid transparent;
+            border: 2rem solid transparent;
             border-radius: calc(var(--scrollbar-thickness) / 2);
             box-shadow: inset 0 0 var(--scrollbar-thickness) var(--scrollbar-thickness) var(--surface-scrollbar-thumb-color);
 

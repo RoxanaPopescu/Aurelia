@@ -40,7 +40,7 @@
               left: 0;
               top: 0;
               bottom: 0;
-              width: 1rem;
+              width: 4rem;
               background-color: var(--colorBackgroundPrimary);
               border-top-left-radius: $listItemBorderRadius;
               border-bottom-left-radius: $listItemBorderRadius;
@@ -75,7 +75,7 @@
       align-self: center;
       position: sticky;
       z-index: 101;
-      padding: 0 5rem;
+      padding: 0 20rem;
       top: 0;
       background-color: white;
       line-height: 20px;
@@ -98,7 +98,7 @@
 
       .c-gridTable-header-arrows {
         height: 100%;
-        margin-left: 2rem;
+        margin-left: 8rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -114,12 +114,12 @@
 
         &:before {
           border-bottom: $arrowHeight solid var(--colorBackgroundPrimary);
-          margin-bottom: .5rem;
+          margin-bottom: 2rem;
         }
 
         &:after {
           border-top: $arrowHeight solid var(--colorBackgroundPrimary);
-          margin-top: .5rem;
+          margin-top: 2rem;
         }
       }
 
@@ -158,7 +158,7 @@
       align-items: center;
       background-color: var(--colorNeutralExtraLight);
       text-align: left;
-      padding: 2rem 5rem;
+      padding: 8rem 20rem;
       transition: background-color 100ms;
       color: var(--colorNeutralDark);
       margin-bottom: 4px;
@@ -349,7 +349,7 @@
     .c-gridTable-header {
       display: flex;
       align-items: center;
-      height: 10rem;
+      height: 40rem;
       text-align: left;
       position: sticky;
       z-index: 2;
@@ -357,7 +357,7 @@
       border-top: var(--border-width-thin) solid var(--colorNeutralLight);
       top: 0;
       background-color: var(--colorNeutralExtraExtraLight);
-      padding: 0 5rem;
+      padding: 0 20rem;
       transition: all 150ms;
 
       $arrowHeight: 4px;
@@ -382,14 +382,14 @@
     .c-gridTable-content {
       display: flex;
       align-items: center;
-      height: 10rem;
-      padding: 0 5rem;
+      height: 40rem;
+      padding: 0 20rem;
       border-bottom: 1px solid var(--colorNeutralLight);
       transition: background-color 100ms;
 
       &.c-gridTable-skeleton {
-        height: 10rem;
-        margin-bottom: 2rem;
+        height: 40rem;
+        margin-bottom: 8rem;
         animation: animation-table-skeleton 2s ease-in-out 0s infinite normal none running;
       }
 
@@ -420,7 +420,7 @@
 
     .c-gridTable-accordionContent {
       grid-column: 1 / -1;
-      padding: 7rem 5rem 10rem;
+      padding: 28rem 20rem 40rem;
       background-color: var(--colorNeutralExtraExtraLight);
     }
   }
@@ -437,7 +437,7 @@
     height: 100%;
 
     .c-gridTable-noResults-headline {
-      padding-right: 10rem;
+      padding-right: 40rem;
       align-self: center;
       justify-self: center;
       position: sticky;

@@ -123,7 +123,7 @@ export class TextInputCustomElement
     {
         if (this.autoselect)
         {
-            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length), 50);
         }
         else if (this.value && this.value.includes("\n"))
         {

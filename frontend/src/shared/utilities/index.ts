@@ -11,3 +11,4 @@ export * from "./text";
 export * from "./timing/debounce";
 export * from "./timing/delay";
 export * from "./timing/throttle";
+export * from "./pick-and-upload-file/pick-and-upload-file";

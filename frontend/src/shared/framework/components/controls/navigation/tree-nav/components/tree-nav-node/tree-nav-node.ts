@@ -174,6 +174,20 @@ export class TreeNavNodeCustomElement
     }
 
     /**
+     * Called when the settings icon is clicked.
+     * @param event The mouse event.
+     */
+    protected onSettingsClick(event: MouseEvent): void
+    {
+        if (this.tree.nodeSettings != null)
+        {
+            this.tree.nodeSettings({ node: this.model });
+        }
+
+        event.stopPropagation();
+    }
+
+    /**
      * Called when the rename option is clicked.
      * @param event The mouse event.
      */

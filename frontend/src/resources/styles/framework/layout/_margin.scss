@@ -39,6 +39,62 @@ $__summary: comment;
     &,
     &-top
     {
+        margin-top: 80rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 80rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 80rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 80rem;
+    }
+}
+
+/// Modifier class that applies the larger margin.
+.margin-larger
+{
+    &,
+    &-top
+    {
+        margin-top: 32rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 32rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 32rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 32rem;
+    }
+}
+
+/// Modifier class that applies the large margin.
+.margin-large
+{
+    &,
+    &-top
+    {
         margin-top: 20rem;
     }
 
@@ -61,8 +117,64 @@ $__summary: comment;
     }
 }
 
-/// Modifier class that applies the larger margin.
-.margin-larger
+/// Modifier class that applies the medium margin.
+.margin-medium
+{
+    &,
+    &-top
+    {
+        margin-top: 16rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 16rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 16rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 16rem;
+    }
+}
+
+/// Modifier class that applies the small margin.
+.margin-small
+{
+    &,
+    &-top
+    {
+        margin-top: 12rem;
+    }
+
+    &,
+    &-left
+    {
+        margin-left: 12rem;
+    }
+
+    &,
+    &-right
+    {
+        margin-right: 12rem;
+    }
+
+    &,
+    &-bottom
+    {
+        margin-bottom: 12rem;
+    }
+}
+
+/// Modifier class that applies the smaller margin.
+.margin-smaller
 {
     &,
     &-top
@@ -89,36 +201,8 @@ $__summary: comment;
     }
 }
 
-/// Modifier class that applies the large margin.
-.margin-large
-{
-    &,
-    &-top
-    {
-        margin-top: 5rem;
-    }
-
-    &,
-    &-left
-    {
-        margin-left: 5rem;
-    }
-
-    &,
-    &-right
-    {
-        margin-right: 5rem;
-    }
-
-    &,
-    &-bottom
-    {
-        margin-bottom: 5rem;
-    }
-}
-
-/// Modifier class that applies the medium margin.
-.margin-medium
+/// Modifier class that applies the smallest margin.
+.margin-smallest
 {
     &,
     &-top
@@ -142,90 +226,6 @@ $__summary: comment;
     &-bottom
     {
         margin-bottom: 4rem;
-    }
-}
-
-/// Modifier class that applies the small margin.
-.margin-small
-{
-    &,
-    &-top
-    {
-        margin-top: 3rem;
-    }
-
-    &,
-    &-left
-    {
-        margin-left: 3rem;
-    }
-
-    &,
-    &-right
-    {
-        margin-right: 3rem;
-    }
-
-    &,
-    &-bottom
-    {
-        margin-bottom: 3rem;
-    }
-}
-
-/// Modifier class that applies the smaller margin.
-.margin-smaller
-{
-    &,
-    &-top
-    {
-        margin-top: 2rem;
-    }
-
-    &,
-    &-left
-    {
-        margin-left: 2rem;
-    }
-
-    &,
-    &-right
-    {
-        margin-right: 2rem;
-    }
-
-    &,
-    &-bottom
-    {
-        margin-bottom: 2rem;
-    }
-}
-
-/// Modifier class that applies the smallest margin.
-.margin-smallest
-{
-    &,
-    &-top
-    {
-        margin-top: 1rem;
-    }
-
-    &,
-    &-left
-    {
-        margin-left: 1rem;
-    }
-
-    &,
-    &-right
-    {
-        margin-right: 1rem;
-    }
-
-    &,
-    &-bottom
-    {
-        margin-bottom: 1rem;
     }
 }
 

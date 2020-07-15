@@ -19,10 +19,10 @@ $__summary: comment;
 :root
 {
     // The margin between the panel and the edge of the viewport.
-    --modal-panel-margin: 0.5rem 0.5rem 0.5rem 0.25rem;
+    --modal-panel-margin: 2rem 2rem 2rem 1rem;
 
     // The min width of the panel, as a fixed size.
-    --modal-panel-min-width: 140rem;
+    --modal-panel-min-width: 560rem;
 
     // The max width of the panel, as a percentage of the available space.
     --modal-panel-max-width: 70%;
@@ -38,10 +38,10 @@ $__summary: comment;
     @media ($media-smallest-max)
     {
         // The margin between the panel and the edge of the viewport.
-        --modal-panel-margin: 0.75rem 0.75rem 0.75rem 0.25rem;
+        --modal-panel-margin: 3rem 3rem 3rem 1rem;
 
         // When the viewport is too small for the default panel width, fill the viewport instead.
-        --modal-panel-min-width: calc(100vw - 0.25rem - 0.75rem);
+        --modal-panel-min-width: calc(100vw - 1rem - 3rem);
         --modal-panel-max-width: var(--modal-panel-min-width);
     }
 }
@@ -49,36 +49,36 @@ $__summary: comment;
 :root
 {
     // The margin to apply around the dialog.
-    --modal-dialog-margin-top: 22rem;
-    --modal-dialog-margin-left: 40rem;
-    --modal-dialog-margin-right: 40rem;
-    --modal-dialog-margin-bottom: 27rem;
+    --modal-dialog-margin-top: 88rem;
+    --modal-dialog-margin-left: 160rem;
+    --modal-dialog-margin-right: 160rem;
+    --modal-dialog-margin-bottom: 108rem;
 
     // The max width of the dialog, as a percentage of the available space.
     --modal-dialog-max-height: calc(100vh - var(--modal-dialog-margin-top) - var(--modal-dialog-margin-bottom));
 
     // The min height of the dialog, as a fixed size.
-    --modal-dialog-min-height: 20rem;
+    --modal-dialog-min-height: 80rem;
 
     // The max width of the dialog, as a percentage of the available space.
     --modal-dialog-max-width: calc(100vw - var(--modal-dialog-margin-left) - var(--modal-dialog-margin-right));
 
     // The min width of the dialog, as a fixed size.
-    --modal-dialog-min-width: 150rem;
+    --modal-dialog-min-width: 600rem;
 
     @media ($media-smallest-max)
     {
         // The margin to apply around the dialog.
-        --modal-dialog-margin-top: 0.5rem;
-        --modal-dialog-margin-left: 0.5rem;
-        --modal-dialog-margin-right: 0.5rem;
-        --modal-dialog-margin-bottom: 0.5rem;
+        --modal-dialog-margin-top: 2rem;
+        --modal-dialog-margin-left: 2rem;
+        --modal-dialog-margin-right: 2rem;
+        --modal-dialog-margin-bottom: 2rem;
 
         // The max width of the dialog, as a percentage of the available space.
         --modal-dialog-max-height: calc(100vh - var(--modal-dialog-margin-top) - var(--modal-dialog-margin-bottom));
 
         // The min height of the dialog, as a fixed size.
-        --modal-dialog-min-height: 20rem;
+        --modal-dialog-min-height: 80rem;
 
         // The max width of the dialog, as a percentage of the available space.
         --modal-dialog-max-width: calc(100vw - var(--modal-dialog-margin-left) - var(--modal-dialog-margin-right));

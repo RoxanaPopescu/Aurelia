@@ -2,6 +2,10 @@ import { DateTime, LocaleOptions, DateTimeFormatOptions } from "luxon";
 
 /**
  * Represents a time of a day.
+ * @deprecated This class is deprecated and should not be used.
+ * Use the `Duration` class from Luxon instead, and note that in JSON,
+ * time should ideally be represented as an ISO 8601 period, or
+ * alternatively as seconds since midnight.
  */
 export class TimeOfDay
 {
@@ -67,12 +71,21 @@ export class TimeOfDay
     }
 
     /**
+     * Gets the primitive value of the instance, as the number of milliseconds since midnight.
+     * @returns The number of milliseconds since midnight.
+     */
+    public valueOf(): number
+    {
+        return (this.hour * 60 * 60 * 1000) + (this.minute * 60 * 1000) + (this.second * 1000) + (this.millisecond);
+    }
+
+    /**
      * Creates a new instance of the class, based on the specified string,
      * which must be in the ISO8601 time-of-day format.
      * @param text The string from which the instance should be created..
      * @returns The new instance.
      */
-    public static fromISO(text: string): TimeOfDay
+    public static fromString(text: string): TimeOfDay
     {
         const parts = text.split(/:|\./g);
         const result = new TimeOfDay();
@@ -83,14 +96,5 @@ export class TimeOfDay
         result.millisecond = parseFloat(`0.${parts[3] || "0"}`) * 1000;
 
         return result;
-    }
-
-    /**
-     * Gets the primitive value of the instance, as the number of milliseconds since midnight.
-     * @returns The number of milliseconds since midnight.
-     */
-    public valueOf(): number
-    {
-        return (this.hour * 60 * 60 * 1000) + (this.minute * 60 * 1000) + (this.second * 1000) + (this.millisecond);
     }
 }

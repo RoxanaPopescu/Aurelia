@@ -16,13 +16,13 @@ empty-indicator
     {
         .empty-indicator
         {
-            height: 40rem;
+            height: 160rem;
         }
 
         .empty-indicator-icon
         {
-            height: 15rem;
-            width: 15rem;
+            height: 60rem;
+            width: 60rem;
             opacity: var(--opacity-faded);
             margin-bottom: var(--font-base-margin-bottom);
         }
@@ -48,8 +48,8 @@ empty-indicator
 
         .empty-indicator-icon
         {
-            height: 20rem;
-            width: 20rem;
+            height: 80rem;
+            width: 80rem;
             opacity: var(--opacity-faded);
             margin-bottom: var(--font-large-margin-bottom);
         }
@@ -75,8 +75,8 @@ empty-indicator
 
         .empty-indicator-icon
         {
-            height: 25rem;
-            width: 25rem;
+            height: 100rem;
+            width: 100rem;
             opacity: var(--opacity-faded);
             margin-bottom: var(--font-large-margin-bottom);
         }

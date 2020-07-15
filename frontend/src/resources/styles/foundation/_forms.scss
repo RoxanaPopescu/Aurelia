@@ -122,9 +122,9 @@ a[appearance]
     &:not([appearance="none"])
     {
         // Style to appear as a button.
-        padding: 0 3.5rem;
-        min-width: 10rem;
-        min-height: 10rem;
+        padding: 0 14rem;
+        min-width: 40rem;
+        min-height: 40rem;
         border: var(--border-width-medium) solid;
         border-radius: var(--border-radius-medium);
         border-color: transparent;
@@ -531,9 +531,9 @@ input[type="search"]::-webkit-search-decoration
         // Remove the default browser styling.
         appearance: none;
         margin: 0;
-        padding: 0 3rem;
+        padding: 0 12rem;
         max-width: 100%;
-        min-height: 10rem;
+        min-height: 40rem;
         border: var(--border-width-thin) solid var(--surface-input-border-color);
         border-radius: var(--border-radius-medium);
         font-size: inherit;
@@ -556,10 +556,10 @@ input[type="search"]::-webkit-search-decoration
             padding-right: 0;
 
             // Reduce the min-height to compensate for the border on the label.
-            min-height: calc(10rem - 2 * var(--border-width-thin));
+            min-height: calc(40rem - 2 * var(--border-width-thin));
 
             // Reduce the min-width to prevent overflow.
-            min-width: 10rem;
+            min-width: 40rem;
         }
     }
 
@@ -577,14 +577,14 @@ input[type="search"]::-webkit-search-decoration
     textarea
     {
         // Set the default height.
-        min-height: 20rem;
+        min-height: 80rem;
 
         // Set the default min-width to prevent horizontal resizing.
         min-width: 100%;
 
         // Ensure consistent padding.
-        padding-top: 2.25rem;
-        padding-bottom: 2.25rem;
+        padding-top: 9rem;
+        padding-bottom: 9rem;
     }
 
     select

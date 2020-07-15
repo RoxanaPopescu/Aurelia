@@ -4,7 +4,7 @@ route-overview
 
     card
     {
-        --card-height: 62.5rem;
+        --card-height: 250rem;
 
         > a
         {
@@ -24,33 +24,33 @@ route-overview
 
             .card-section-top
             {
-                padding-bottom: 3rem;
+                padding-bottom: 12rem;
             }
 
             .card-section-bottom
             {
-                padding-top: 3rem;
+                padding-top: 12rem;
             }
 
             .card-section-ratingStar
             {
                 color: var(--surface-primary-text-color);
-                margin-bottom: 0.5rem;
+                margin-bottom: 2rem;
             }
         }
 
         circular-meter
         {
-            height: 45rem;
-            width: 45rem;
+            height: 180rem;
+            width: 180rem;
             align-self: center;
 
             .route-cancelled-warning
             {
                 icon
                 {
-                    height: 6rem;
-                    width: 5rem;
+                    height: 24rem;
+                    width: 20rem;
                 }
             }
         }

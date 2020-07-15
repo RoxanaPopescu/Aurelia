@@ -71,7 +71,7 @@ modal-panel
         modal-header
         {
             // Apply default margin.
-            margin-bottom: 9rem;
+            margin-bottom: 36rem;
         }
 
         modal-footer
@@ -84,7 +84,7 @@ modal-panel
     &.--left .modal-panel-content
     {
         // Apply padding, making room for the actions.
-        padding: 9rem 12rem 9rem 0;
+        padding: 36rem 48rem 36rem 0;
 
         // Position the content to the right.
         right: 0;
@@ -93,7 +93,7 @@ modal-panel
     &.--right .modal-panel-content
     {
         // Apply padding, making room for the actions.
-        padding: 9rem 0 9rem 12rem;
+        padding: 36rem 0 36rem 48rem;
 
         // Position the content to the left.
         left: 0;
@@ -117,7 +117,7 @@ modal-panel
         align-items: center;
 
         // Apply padding.
-        padding: 7.5rem 5rem;
+        padding: 30rem 20rem;
 
         // Prevent selection.
         user-select: none;
@@ -126,13 +126,13 @@ modal-panel
         > [slot="actions"] > *
         {
             // Provide default item spacing.
-            margin-bottom: 4.5rem;
+            margin-bottom: 18rem;
         }
 
         button[appearance="icon"]
         {
             // Provide default icon size.
-            font-size: 6rem;
+            font-size: 24rem;
         }
     }
 

@@ -4,17 +4,17 @@ design-row
 
     &:not(:first-child)
     {
-        padding-top: 6rem;
+        padding-top: 24rem;
         border-top: var(--border-width-thin) solid var(--surface-separator-color);
     }
 
     &:not(:last-child)
     {
-        padding-bottom: 6rem;
+        padding-bottom: 24rem;
     }
 
     .design-row-heading
     {
-        margin-bottom: 6rem;
+        margin-bottom: 24rem;
     }
 }

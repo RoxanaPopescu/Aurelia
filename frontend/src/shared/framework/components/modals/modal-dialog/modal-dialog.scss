@@ -52,12 +52,12 @@ modal-dialog
             // Apply padding to header and footer.
             // Note that we use padding instead of margin,
             // to enable sticky positioning.
-            padding: 7rem 7rem 7rem 8rem;
+            padding: 28rem 28rem 28rem 32rem;
 
             button[appearance="icon"]
             {
                 // Provide default icon size.
-                font-size: 6rem;
+                font-size: 24rem;
             }
         }
 
@@ -86,7 +86,7 @@ modal-dialog
                 // Apply a mask to fade out the background.
                 mask-image: linear-gradient(
                     to bottom,
-                    #ffffff 0%,
+                    rgba(#ffffff, 1) 0%,
                     rgba(#ffffff, 0.95) 65%,
                     rgba(#ffffff, 0.8) 80%,
                     rgba(#ffffff, 0) 100%
@@ -100,7 +100,7 @@ modal-dialog
             clear: both;
 
             // Apply horizontal padding to sections.
-            padding: 0 7rem 0 8rem;
+            padding: 0 28rem 0 32rem;
         }
 
         modal-footer
@@ -119,18 +119,25 @@ modal-dialog
             // Apply a mask to fade out the background.
             mask-image: linear-gradient(
                 to top,
-                #ffffff 0%,
+                rgba(#ffffff, 1) 0%,
                 rgba(#ffffff, 0.95) 65%,
                 rgba(#ffffff, 0.8) 80%,
                 rgba(#ffffff, 0) 100%
             );
+
+            modal-footer button[appearance="outline"],
+            modal-footer button[appearance="solid"]
+            {
+                // Ensure buttons have a reasonable min-width.
+                min-width: 140rem;
+            }
         }
     }
 
     .modal-dialog-actions
     {
         // Apply padding.
-        padding: 5.5rem;
+        padding: 22rem;
 
         // Prevent selection.
         user-select: none;
@@ -141,6 +148,7 @@ modal-dialog
             // Position at the top-right corner of the dialog.
             position: sticky;
             top: 0;
+            right: 0;
             z-index: 2;
             float: right;
 
@@ -155,13 +163,13 @@ modal-dialog
         > [slot="actions"] > *
         {
             // Provide default item spacing.
-            margin-left: 3rem;
+            margin-left: 12rem;
         }
 
         button[appearance="icon"]
         {
             // Provide default icon size.
-            font-size: 6rem;
+            font-size: 24rem;
         }
     }
 

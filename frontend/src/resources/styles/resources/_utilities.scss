@@ -31,7 +31,7 @@ $__summary: comment;
 
     @if (length($values) < 2)
     {
-        @return nth($values, 1) * 1rem;
+        @return nth($values, 1) * 4rem;
     }
 
     @for $n from 1 through length($values)
@@ -40,7 +40,7 @@ $__summary: comment;
 
         @if $value != null and unit($value) == ""
         {
-            $values: set-nth($values, $n, $value * 1rem);
+            $values: set-nth($values, $n, $value * 4rem);
         }
     }
 

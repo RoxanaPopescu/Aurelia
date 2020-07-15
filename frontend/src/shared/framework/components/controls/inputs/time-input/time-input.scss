@@ -27,8 +27,7 @@ time-input
         }
     }
 
-    &:not(.--open) > text-input,
-    &:not(.--filter) > text-input
+    &:not(.--open) > text-input
     {
         // Use cursor to indicate the element is clickable, when not accepting text input.
         cursor: pointer;

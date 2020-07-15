@@ -3,14 +3,14 @@ grid-layout
     display: block;
 
     // Set the default card size.
-    --card-width: 75rem;
-    --card-height: 40rem;
+    --card-width: 300rem;
+    --card-height: 160rem;
 
     // The distance between each column.
-    --grid-layout-column-gap: 5rem;
+    --grid-layout-column-gap: 20rem;
 
     // The distance between each row.
-    --grid-layout-row-gap: 5rem;
+    --grid-layout-row-gap: 20rem;
 
     .grid-layout-items
     {

@@ -1,6 +1,5 @@
 import { autoinject } from "aurelia-framework";
 import { DateTime, LocaleOptions, DateTimeFormatOptions, Duration } from "luxon";
-import { TimeOfDay } from "shared/types";
 import { LocaleService } from "../../services/locale";
 
 // The available formats.
@@ -47,7 +46,7 @@ export class TimeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTime | Duration | TimeOfDay | undefined | null, style?: TimeStyle, convert = true): string | null | undefined
+    public toView(value: DateTime | Duration | undefined | null, style?: TimeStyle, convert = true): string | null | undefined
     {
         if (value == null)
         {

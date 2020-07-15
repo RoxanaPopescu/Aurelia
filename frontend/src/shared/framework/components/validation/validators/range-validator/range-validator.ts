@@ -13,6 +13,16 @@ import { ValidationReason } from "../../validation-trigger";
 export class RangeValidatorCustomElement extends Validator
 {
     /**
+     * True if the value is outside the range, otherwise false.
+     */
+    protected invalidValue = false;
+
+    /**
+     * True if the value is not a multiple of the step size, otherwise false.
+     */
+    protected invalidStep = false;
+
+    /**
      * The value to validate, or undefined.
      */
     @bindable
@@ -63,12 +73,26 @@ export class RangeValidatorCustomElement extends Validator
         {
             const value = this.value.valueOf();
 
-            this.invalid =
+            this.invalidValue =
                 this.min != null && (this.minInclusive ? value < this.min.valueOf() : value <= this.min.valueOf()) ||
-                this.max != null && (this.maxInclusive ? value > this.max.valueOf() : value >= this.max.valueOf()) ||
-                this.step != null && value % this.step.valueOf() !== 0;
+                this.max != null && (this.maxInclusive ? value > this.max.valueOf() : value >= this.max.valueOf());
+
+            this.invalidStep = this.step != null && value % this.step.valueOf() !== 0;
+
+            this.invalid = this.invalidValue || this.invalidStep;
         }
 
         return !this.invalid;
+    }
+
+    /**
+     * Resets this validator to the default validity state, then updates the ancestor validations.
+     */
+    public reset(): void
+    {
+        this.invalidValue = false;
+        this.invalidStep = false;
+
+        super.reset();
     }
 }

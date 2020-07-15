@@ -34,4 +34,10 @@ export class CardCustomElement
      */
     @bindable({ defaultValue: false })
     public active: boolean;
+
+    /**
+     * True if the card is disabled, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public disabled: boolean;
 }

@@ -2,17 +2,17 @@
 {
     tag
     {
-        min-width: 60rem;
+        min-width: 240rem;
     }
 }
 
 .role-item-name-input
 {
-    margin: -3.25rem;
-    min-width: 80rem;
+    margin: -13rem;
+    min-width: 320rem;
 
     &.--invalid
     {
-        margin-top: -2.5rem;
+        margin-top: -10rem;
     }
 }

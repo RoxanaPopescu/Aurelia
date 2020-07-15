@@ -31,6 +31,11 @@ export interface ITreeNode<TTreeNode extends TreeNode<TTreeNode> = any>
      * True if the node is expanded, otherwise false,
      */
     expanded?: boolean;
+
+    /**
+     * The number to show on the node badge, if any,
+     */
+    badgeCount?: number;
 }
 
 /**
@@ -50,6 +55,7 @@ export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements IT
         this.expanded = data.expanded;
         this.children = data.children;
         this.parent = parent;
+        this.badgeCount = data.badgeCount;
     }
 
     /**
@@ -76,6 +82,11 @@ export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements IT
      * True if the node is expanded, otherwise false,
      */
     public expanded?: boolean;
+
+    /**
+     * The number to show on the node badge, if any,
+     */
+    public badgeCount?: number;
 
     /**
      * The sequence of slugs, separated by "/", that identify the node within the tree.

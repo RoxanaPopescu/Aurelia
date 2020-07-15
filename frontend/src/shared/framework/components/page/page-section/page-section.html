@@ -3,7 +3,8 @@
     ${sticky ? '--sticky' : ''}
     ${expanded ? '--expanded' : ''}
     ${invalid || invalid == null && validation.invalid ? '--invalid' : ''}
-    ${headerSlotEmpty ? '--header-slot-empty' : ''}"
+    ${headerSlotEmpty ? '--header-slot-empty' : ''}
+    ${defaultSlotEmpty ? '--default-slot-empty' : ''}"
     validation
     validation.ref="validation">
 
@@ -20,7 +21,7 @@
         </div>
 
         <div
-            if.bind="toggle"
+            if.bind="toggle && !defaultSlotEmpty"
             class="page-section-header-toggle ${expanded ? 'opacity-faded-more' : ''}"
             accent.bind="expanded ? 'neutral' : 'primary' & attr">
 
@@ -34,7 +35,7 @@
 
     </button>
 
-    <div show.bind="expanded && !defaultSlotEmpty" class="page-section-content">
+    <div class="page-section-content">
         <slot></slot>
     </div>
 

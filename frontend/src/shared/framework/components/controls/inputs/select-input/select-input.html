@@ -1,5 +1,5 @@
 <template
-    class="${open ? '--open' : ''} ${filter != 'none' ? '--filter' : ''}"
+    class="${open ? '--open' : ''} ${filter != 'off' ? '--filter' : ''}"
     inert.bind="disabled || readonly"
     validation
     forward-focus>
@@ -11,7 +11,7 @@
         value.bind="inputValue"
         label.bind="label & attr"
         disabled.bind="disabled"
-        readonly.bind="filter === 'none' || readonly"
+        readonly.bind="filter === 'off' || readonly"
         autocomplete.bind="autocomplete"
         autoselect.bind="autoselect"
         mousedown.trigger="onInputMouseDown($event)"
@@ -26,13 +26,13 @@
 
         <span slot="placeholder">
 
-            <span show.bind="!readonly && (!open || filter === 'none')">
+            <span show.bind="!readonly && (!open || filter === 'off')">
 
                 <slot name="placeholder"></slot>
 
             </span>
 
-            <span show.bind="open && filter !== 'none'" translate>
+            <span show.bind="open && filter !== 'off'" translate>
                 Type to filter…
             </span>
 
@@ -43,6 +43,7 @@
             <slot name="after"></slot>
 
             <dropdown-icon
+                if.bind="!readonly"
                 ref="toggleElement"
                 open.bind="open"
                 toggle.call="toggleDropdown()">

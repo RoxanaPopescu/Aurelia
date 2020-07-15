@@ -1,13 +1,13 @@
 body
 {
     // The default width of the component.
-    --date-picker-width: 84.5rem;
+    --date-picker-width: 338rem;
 
     // The padding of the component.
-    --date-picker-padding: 4rem;
+    --date-picker-padding: 16rem;
 
     // The gap between items in the grid.
-    --date-picker-item-gap: 1rem;
+    --date-picker-item-gap: 4rem;
 }
 
 date-picker
@@ -94,7 +94,7 @@ date-picker
         align-items: center;
 
         // Apply spacing between the header and the weekdays.
-        margin-bottom: 0.5rem;
+        margin-bottom: 2rem;
 
         > div
         {
@@ -192,7 +192,7 @@ date-picker
                         left: 50%;
                         right: 50%;
                         bottom: 20%;
-                        width: 2px;
+                        width: 2rem;
                         background: currentColor;
                         transform: rotate(45deg);
                     }
@@ -236,7 +236,7 @@ date-picker
         bottom: 0;
 
         // Reduce padding to align with column content.
-        padding: 0 2.5rem !important;
+        padding: 0 10rem !important;
 
         // The computed width of a single item in the grid.
         --date-picker-item-width-small: calc((100% - 6 * var(--date-picker-column-gap)) / 7);

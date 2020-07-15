@@ -1,4 +1,4 @@
-﻿import { autoinject } from "aurelia-framework";
+import { autoinject } from "aurelia-framework";
 import { textCase } from "shared/utilities";
 import * as platforms from "./detectors/platforms";
 import * as features from "./detectors/features";
@@ -70,10 +70,10 @@ export class DeviceService
     /**
      * Formats the specified detector name as a class name.
      * @param detectorName The detector name to format.
-     * @returns The detector name formatted as snake case, or 'unknown' if null or undefined.
+     * @returns The detector name formatted as kebab case, or 'unknown' if null or undefined.
      */
     private formatClassName(detectorName: string): string
     {
-        return detectorName ? textCase(detectorName, "camel", "snake") : "unknown";
+        return detectorName ? textCase(detectorName, "camel", "kebab") : "unknown";
     }
 }

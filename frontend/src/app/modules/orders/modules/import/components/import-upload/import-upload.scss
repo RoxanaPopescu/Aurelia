@@ -8,15 +8,15 @@ import-upload
 
     select-input
     {
-        width: 105rem;
-        margin-bottom: 10rem;
+        width: 420rem;
+        margin-bottom: 40rem;
     }
 
     file-dropzone.dropzone
     {
         width: 50%;
-        height: 95rem;
-        margin-bottom: 10rem;
+        height: 380rem;
+        margin-bottom: 40rem;
 
         .dz-message
         {
@@ -27,13 +27,13 @@ import-upload
 
             .upload-text
             {
-                line-height: 8rem;
+                line-height: 32rem;
             }
 
             .upload-icon
             {
-                width: 22rem;
-                margin-top: 10rem;
+                width: 88rem;
+                margin-top: 40rem;
             }
         }
 
@@ -48,7 +48,7 @@ import-upload
 
                 icon
                 {
-                    margin-right: 1.5rem;
+                    margin-right: 6rem;
                 }
             }
 

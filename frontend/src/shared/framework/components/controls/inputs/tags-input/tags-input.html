@@ -1,7 +1,7 @@
 <template class="
     ${open ? '--open' : ''}
     ${readonly ? '--readonly' : ''}
-    ${filter != 'none' ? '--filter' : ''}
+    ${filter != 'off' ? '--filter' : ''}
     ${new ? '--new' : ''}"
     inert.bind="disabled || readonly"
     validation
@@ -14,7 +14,7 @@
         value.bind="inputValue"
         label.bind="label & attr"
         disabled.bind="disabled"
-        readonly.bind="(!new && filter === 'none') || readonly"
+        readonly.bind="(!new && filter === 'off') || readonly"
         autocomplete.bind="autocomplete"
         autoselect.bind="autoselect"
         keydown.trigger="onInputKeyDown($event)"
@@ -29,19 +29,19 @@
 
         <span slot="placeholder">
 
-            <span show.bind="!readonly && (!open || (!new && filter === 'none'))">
+            <span show.bind="!readonly && (!open || (!new && filter === 'off'))">
 
                 <slot name="placeholder"></slot>
 
             </span>
 
-            <span show.bind="open && (filter !== 'none' || new)">
+            <span show.bind="open && (filter !== 'off' || new)">
 
-                <template if.bind="new && filter == 'none'" translate>
+                <template if.bind="new && filter == 'off'" translate>
                     Type to add…
                 </template>
 
-                <template if.bind="new && filter != 'none'" translate>
+                <template if.bind="new && filter != 'off'" translate>
                     Type to filter or add…
                 </template>
 

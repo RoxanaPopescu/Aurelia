@@ -96,7 +96,7 @@ export class EmailInputCustomElement
     {
         if (this.autoselect)
         {
-            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length));
+            setTimeout(() => this.inputElement.setSelectionRange(0, this.inputElement.value.length), 50);
         }
     }
 

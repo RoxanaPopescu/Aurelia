@@ -9,20 +9,20 @@ $__summary: comment;
 :root
 {
     /// The shadow to use for tooltips.
-    --shadow-tooltip: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-tooltip: 0 0 4rem 0 rgba(0, 0, 0, 0.1);
 
     /// The shadow to use for popovers.
-    --shadow-popover: 0 0 2rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-popover: 0 0 8rem 0 rgba(0, 0, 0, 0.1);
 
     /// The shadow to use for dropdowns, when positioned above the owner element.
-    --shadow-dropdown-above: 0 -0.5rem 2rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-dropdown-above: 0 -2rem 8rem 0 rgba(0, 0, 0, 0.1);
 
     /// The shadow to use for dropdowns, when positioned below the owner element.
-    --shadow-dropdown-below: 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-dropdown-below: 0 2rem 8rem 0 rgba(0, 0, 0, 0.1);
 
     // The shadow to use for toasts.
-    --shadow-toast: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2), 0 0 3rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-toast: 0 0 2rem 0 rgba(0, 0, 0, 0.2), 0 0 12rem 0 rgba(0, 0, 0, 0.1);
 
     // The shadow to use for modals.
-    --shadow-modal: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 0 25rem 0 rgba(0, 0, 0, 0.1);
+    --shadow-modal: 0 0 4rem 0 rgba(0, 0, 0, 0.2), 0 0 100rem 0 rgba(0, 0, 0, 0.1);
 }

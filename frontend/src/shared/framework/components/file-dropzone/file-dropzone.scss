@@ -3,9 +3,9 @@ file-dropzone
     &.dropzone
     {
         display: flex;
-        padding: 10rem;
-        width: 100rem;
-        height: 60rem;
+        padding: 40rem;
+        width: 400rem;
+        height: 240rem;
         background: var(--surface-color);
         border: var(--border-width-thin) dashed var(--palette-color-primary);
         padding: 0;
@@ -28,8 +28,8 @@ file-dropzone
 
             .dz-image
             {
-                height: 35rem;
-                width: 35rem;
+                height: 140rem;
+                width: 140rem;
                 border-radius: var(--border-radius-large);
                 background: none;
                 border: var(--border-width-thin) solid var(--border-color);
@@ -50,7 +50,7 @@ file-dropzone
             {
                 position: static;
                 padding: 0;
-                margin-top: 2.5rem;
+                margin-top: 10rem;
                 opacity: 1;
 
                 .dz-size
@@ -74,9 +74,9 @@ file-dropzone
             {
                 position: static;
                 margin: 0;
-                margin-top: 2rem;
+                margin-top: 8rem;
                 border-radius: var(--border-radius-medium);
-                height: 1rem;
+                height: 4rem;
                 width: 100%;
 
                 .dz-upload {

@@ -107,9 +107,8 @@ export class ItemPickerCustomElement
      * Called when a child item is attached.
      * Updates the collection of attached items to match the items present in the DOM.
      * This approach is needed, because we cannot rely on the order in which items are attached.
-     * @param item The child item to attach.
      */
-    public attachItem(item: ItemCustomElement): void
+    public attachItem(): void
     {
         const newItems: ItemCustomElement[] = [];
 
@@ -339,7 +338,7 @@ export class ItemPickerCustomElement
         {
             let index: number | undefined;
 
-            if (this.focusedValue != null)
+            if (this.focusedValue !== undefined)
             {
                 index = this._items.findIndex(i => i.model === this.focusedValue);
             }

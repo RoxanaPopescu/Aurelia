@@ -1,7 +1,7 @@
 import { autoinject, bindable, bindingMode } from "aurelia-framework";
+import { Placement } from "popper.js";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 import { AccentColor } from "resources/styles";
-import { Placement } from "popper.js";
 
 /**
  * Custom element representing an button for picking a single item from a list.
