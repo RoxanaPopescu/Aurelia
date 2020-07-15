@@ -46,7 +46,7 @@ export class ExpressRouteService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the routes.
      */
-    public async getDriverRoutes(date: DateTime,signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
+    public async getDriverRoutes(date: DateTime, signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
     {
         const result = await this._apiClient.get("expressdispatch/driverroutes",
         {

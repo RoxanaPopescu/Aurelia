@@ -1,4 +1,4 @@
-import { Appointment } from './appointment';
+import { Appointment } from "./appointment";
 import { Location } from "app/model/shared";
 import { OrderStopType, OrderStopTypeSlug } from "./order-stop-type";
 
