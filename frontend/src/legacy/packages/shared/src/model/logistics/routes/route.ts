@@ -249,8 +249,6 @@ export abstract class Route<TRouteStop extends RouteStop = RouteStop>
         s => s.status.slug === "not-visited" || s.status.slug === "arrived"
       ) as TRouteStop;
 
-    console.log("STOP", stop);
-
     if (stop) {
       return stop;
     } else {
