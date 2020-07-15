@@ -114,9 +114,7 @@ export class Route extends AbstractRoute<RouteStop>
     {
         return {
             id: this.id,
-            slug: this.slug,
             driverInstructions: this.driverInstructions,
-            status: this.status,
             tags: this.tags,
             productType: this.productType,
             reference: this.reference

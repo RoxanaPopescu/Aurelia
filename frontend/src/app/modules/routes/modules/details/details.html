@@ -520,12 +520,6 @@
                         </template>
                     </button>
 
-                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onEditRouteClick()">
-                        <div slot="label" translate>
-                            Edit Route
-                        </div>
-                    </button>
-
                     <select-button if-claims="edit-routes" appearance="outline" accent="primary">
 
                         <div slot="label" translate>
@@ -559,6 +553,14 @@
                         <div slot="icon">
                             <icon name="more"></icon>
                         </div>
+
+                        <item
+                            if-claims="edit-routes"
+                            if.bind="!route.driver"
+                            click.trigger="onEditRouteClick()"
+                            translate>
+                            Edit route
+                        </item>
 
                         <item disabled.bind="!route.driverListUrl" click.trigger="onShowDriverListClick()" translate>
                             Print route

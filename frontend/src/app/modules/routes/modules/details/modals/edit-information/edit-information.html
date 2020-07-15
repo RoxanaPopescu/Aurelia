@@ -17,7 +17,7 @@
 
         </div>
 
-        <div class="modal-panel-content">
+        <div >
 
             <modal-header scroll-fade >
 
@@ -34,29 +34,9 @@
             <modal-section class="margin-bottom">
 
 
-                <div class="margin-large-bottom">
+                <div class="control-row flex-row">
 
-                    <text-input label="above" value.bind="model.slug" class="flex-basis-1-of-2">
-
-                        <div slot="heading" translate>
-                            ID
-                        </div>
-
-                    </text-input>
-
-                    <text-input label="above" value.bind="model.reference" class="flex-basis-1-of-2 margin-large-top">
-
-                        <div slot="heading" translate>
-                            Reference
-                        </div>
-
-                    </text-input>
-
-                </div>
-
-                <div class="control-row margin-large-bottom">
-
-                    <select-input label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-2">
+                    <select-input label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
                             Type
@@ -76,31 +56,23 @@
 
                     </select-input>
 
-                    <select-input label="above" none.bind="false" value.bind="model.status" display-value.bind="model.status.name" class="flex-basis-1-of-2">
+                </div>
+
+                <div class="margin-large-bottom">
+
+                    <text-input label="above" value.bind="model.reference" class="flex-basis-1-of-1 margin-large-top">
 
                         <div slot="heading" translate>
-                            Status
+                            Reference
                         </div>
 
-                        <item repeat.for="status of statusValues" model.bind="status">
-                            ${status.name}
-                        </item>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="model.status">
-                            </required-validator>
-
-                        </div>
-
-                    </select-input>
+                    </text-input>
 
                 </div>
 
 
 
-                <div class="control-row">
+                <div class="control-row margin-large-bottom">
 
                     <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" display-value.bind="model.driverInstructions.name" class="flex-basis-1-of-1">
 
@@ -116,11 +88,11 @@
 
                 </div>
 
-                <div class="margin-bottom">
+                <div class="control-row">
 
-                    <page-section toggle.bind="False" value.bind="model.tags"  >
+                    <div class="flex-basis-1-of-1">
 
-                        <div slot="header" translate>
+                        <div class="heading" translate>
                             Tags
                         </div>
 
@@ -132,7 +104,7 @@
                         >
                         </tags-input>
 
-                    </page-section>
+                    </div>
 
                 </div>
 
