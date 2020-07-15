@@ -317,7 +317,7 @@
                                 Ready
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('cancelled')" translate>
+                            <item disabled.bind="!['placed', 'ready'].includes(order.state.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
                                 Cancelled
                             </item>
 
