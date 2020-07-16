@@ -19,7 +19,7 @@ export class CommunicationTrigger
             this.id = data.id;
             this.slug = data.slug;
             this.name = data.name;
-            this.customerId = data.customerId;
+            this.shipmentCreatorIds = data.shipmentCreatorIds ?? [];
             this.routeTags = data.routeTags;
             this.stopTags = data.stopTags;
             this.orderTags = data.orderTags;
@@ -68,7 +68,7 @@ export class CommunicationTrigger
     /**
      * The customer for which this trigger should be enabled.
      */
-    public customerId?: string;
+    public shipmentCreatorIds: string[];
 
     /**
      * The route tags for which this trigger should be enabled.
@@ -141,7 +141,7 @@ export class CommunicationTrigger
             slug: this.slug,
             name: this.name,
             ownerOutfitId: this.ownerOutfitId,
-            customerId: this.customerId,
+            shipmentCreatorIds: this.shipmentCreatorIds,
             routeTags: this.routeTags,
             stopTags: this.stopTags,
             orderTags: this.orderTags,

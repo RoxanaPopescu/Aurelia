@@ -290,7 +290,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                   }
                 }}
             >
-              {this.props.store.approving ? "Godkender..." : "Godkend ruteplan"}
+              {this.props.store.approving ? Localization.operationsValue("RoutePlanning_Approving") : Localization.operationsValue("RoutePlanning_ApproveButton")}
             </Button>
           }
           </div>}
