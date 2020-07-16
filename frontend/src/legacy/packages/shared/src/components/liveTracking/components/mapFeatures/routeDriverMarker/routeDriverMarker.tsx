@@ -151,7 +151,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
         {this.props.route.driverPosition && this.props.route.driverPosition.timestamp &&
           <div className="c-worldMap-popup-section-row">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp")}</div>
-            <div>{Localization.formatDuration(this.props.route.driverPosition.timestamp.diffNow())}</div>
+            <div>{Localization.formatDateTime(this.props.route.driverPosition.timestamp)}</div>
           </div>
         }
         </div>

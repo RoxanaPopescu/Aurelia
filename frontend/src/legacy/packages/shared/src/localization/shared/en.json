@@ -283,7 +283,7 @@
   "RouteDetails_Map_RouteDriverMarker_Driver_Heading": "Driver",
   "RouteDetails_Map_RouteDriverMarker_Driver_NoneAssigned": "No assigned driver, starts {time}",
   "RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber": "Phone number",
-  "RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp": "Online position age",
+  "RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp": "Position was recorded",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_FulfillerID": "Fulfiller ID",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_Heading": "Fulfiller",
   "RouteDetails_Map_RouteDriverMarker_Fulfiller_PhoneNumber": "Phone number",
