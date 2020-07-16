@@ -27,6 +27,8 @@ export class Filters extends React.Component<RoutesLayerProps> {
       .filter(r => r.criticality.slug === "medium")
       .length;
 
+    const lowCriticalityCount = this.props.service.filteredRoutes.length - highCriticalityCount - mediumCriticalityCount;
+
     return (
       <React.Fragment>
         <div className="c-liveTracking-routesPanel-filters">
@@ -46,11 +48,20 @@ export class Filters extends React.Component<RoutesLayerProps> {
               {mediumCriticalityCount}
             </span>
             <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-white"}>
-              {this.props.service.filteredRoutes.length - highCriticalityCount - mediumCriticalityCount}
+              {lowCriticalityCount}
             </span>
           </span>
-          {Localization.sharedValue("LiveTracking_FiltersEnabled")
+          <span>
+            <div>
+            {Localization.sharedValue("LiveTracking_FiltersEnabled")
           .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
+            </div>
+            <div className="c-liveTracking-routesPanel-filters-count">
+            {Localization.sharedValue("Route_FilterCount")
+          .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
+          .replace("{total_count}", this.props.service.routes.length.toString())}
+            </div>
+          </span>
         </div>
 
         <Input
@@ -72,7 +83,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.criticalityEnableDisable("high")
               }
             >
-              {new RouteCriticality("high").name}
+              {new RouteCriticality("high").name} - {highCriticalityCount}
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -80,7 +91,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.criticalityEnableDisable("medium")
               }
             >
-              {new RouteCriticality("medium").name}
+              {new RouteCriticality("medium").name} - {mediumCriticalityCount}
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -88,7 +99,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.criticalityEnableDisable("low")
               }
             >
-              {new RouteCriticality("low").name}
+              {new RouteCriticality("low").name} - {lowCriticalityCount}
             </InputCheckbox>
           </div>
           <div>
@@ -99,7 +110,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.statusEnableDisable("in-progress")
               }
             >
-              {new RouteStatus("in-progress").name}
+              {new RouteStatus("in-progress").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.status.slug === "in-progress")
+                .length
+              }
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -107,7 +122,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.statusEnableDisable("not-started")
               }
             >
-              {new RouteStatus("not-started").name}
+              {new RouteStatus("not-started").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.status.slug === "not-started")
+                .length
+              }
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -115,7 +134,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.statusEnableDisable("not-approved")
               }
             >
-              {new RouteStatus("not-approved").name}
+              {new RouteStatus("not-approved").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.status.slug === "not-approved")
+                .length
+              }
             </InputCheckbox>
           </div>
           <div>
@@ -126,7 +149,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.productEnableDisable("solution")
               }
             >
-              {new ProductType("solution").name}
+              {new ProductType("solution").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "solution")
+                .length
+              }
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -134,7 +161,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.productEnableDisable("courier-eco")
               }
             >
-              {new ProductType("courier-eco").name}
+              {new ProductType("courier-eco").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "courier-eco")
+                .length
+              }
             </InputCheckbox>
             <InputCheckbox
               className="c-liveTracking-routesPanel-filters-criticality"
@@ -142,7 +173,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={() => this.props.service.filter.productEnableDisable("courier-express")
               }
             >
-              {new ProductType("courier-express").name}
+              {new ProductType("courier-express").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "courier-express")
+                .length
+              }
             </InputCheckbox>
           </div>
           <div>
@@ -155,7 +190,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 onChange={() => this.props.service.filter.vehicleTypeEnableDisable(v.slug)
                 }
               >
-                {v.name}
+                {v.name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.vehicleType.slug === v.slug)
+                .length
+              }
               </InputCheckbox>
             )}
           </div>

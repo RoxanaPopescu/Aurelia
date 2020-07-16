@@ -43,7 +43,7 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
     if (
       event.state == null ||
       event.state.state == null ||
-      this.service.routes == null
+      this.service.filteredRoutes == null
     ) {
       this.service.setSelectedRouteSlug(undefined);
     } else if (event.state.state.routeSlug) {

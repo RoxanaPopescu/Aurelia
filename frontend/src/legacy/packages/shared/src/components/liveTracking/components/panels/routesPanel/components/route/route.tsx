@@ -134,6 +134,8 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
     if (stop instanceof RouteStopBase && stop.arrivalTimeFrame.from != null) {
       info = info.replace("{time}", Localization.formatDateTime(stop.arrivalTimeFrame.from));
+    } else {
+      info = info.replace("{time}", "");
     }
 
     return (

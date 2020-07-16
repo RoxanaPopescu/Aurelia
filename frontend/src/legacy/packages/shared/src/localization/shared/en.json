@@ -398,6 +398,7 @@
   "Routes_List_Title": "Routes",
   "Routes_List_TotalCount": "{count} routes",
   "Route_Count": "Route count",
+  "Route_FilterCount": "{filtered_count}/{total_count} routes",
   "Route_Loading": "Loading routes...",
   "Route_Summary_ArrivedAtStop": "Arrived at stop {number}",
   "Route_Summary_EnRouteToStop": "En route to stop {number}",

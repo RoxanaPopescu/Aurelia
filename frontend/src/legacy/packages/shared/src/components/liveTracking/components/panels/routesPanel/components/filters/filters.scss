@@ -3,6 +3,7 @@
 .c-liveTracking-routesPanel-filters {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 16px;
   border-bottom: 1px solid var(--colorNeutralLight);
 }
@@ -28,13 +29,19 @@
   font-size: 12px;
 }
 
+.c-liveTracking-routesPanel-filters-count {
+  margin-top: -3px;
+  text-align: right;
+}
+
 .c-liveTracking-routesPanel-filters-input {
   margin-left: 10px;
-  width: 55%;
+  height: 100%;
+  width: 50%;
 }
 
 .c-liveTracking-routesPanel-filters-info {
-  width: 45%;
+  width: 50%;
   background-color: var(--colorNeutralRegular) !important;
 }
 

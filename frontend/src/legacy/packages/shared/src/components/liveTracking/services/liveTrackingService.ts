@@ -38,13 +38,13 @@ export class LiveTrackingService {
   public pollInterval = pollIntervalFocus;
 
   @observable
-  public routesNotStarted: RouteInfo[] | undefined;
+  private routesNotStarted: RouteInfo[] | undefined;
 
   @observable
-  public routesInProgress: RouteInfo[] | undefined;
+  private routesInProgress: RouteInfo[] | undefined;
 
   @observable
-  public routesNoDriver: RouteInfo[] | undefined;
+  private routesNoDriver: RouteInfo[] | undefined;
 
   @observable
   drivers: Driver[] | undefined;
@@ -99,7 +99,8 @@ export class LiveTrackingService {
     return false;
   }
 
-  @computed get selectedListRoute(): RouteInfo | undefined {
+  @computed
+  get selectedListRoute(): RouteInfo | undefined {
     let slug = this.selectedRouteSlug;
     if (!slug) {
       return undefined;
@@ -109,7 +110,7 @@ export class LiveTrackingService {
   }
 
   @computed
-  public get routes(): RouteInfo[] {
+  get routes(): RouteInfo[] {
     let routes: RouteInfo[] = [];
 
     if (this.routesNotStarted != null) {
@@ -158,7 +159,9 @@ export class LiveTrackingService {
    */
   @computed
   public get filteredRoutes(): RouteInfo[] {
-    if (this.routes.length <= 0) {
+    let routes = this.routes;
+
+    if (routes.length <= 0) {
       return [];
     }
 
@@ -167,10 +170,10 @@ export class LiveTrackingService {
         this.filter.vehicleTypes.length == 0 &&
         this.filter.statuses.length == 0 &&
         this.filter.products.length == 0) {
-      return this.routes;
+      return routes;
     }
 
-    return this.routes
+    return routes
       .filter(route => {
         if (this.filter.criticalities.length > 0) {
           if (!this.filter.criticalities.includes(route.criticality.slug)) {
