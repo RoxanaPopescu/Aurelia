@@ -5,6 +5,7 @@ import { Panel } from "../panel";
 import { Filters } from "./components/filters/filters";
 import { RouteComponent } from "./components/route/route";
 import "./routesPanel.scss";
+import { GUID } from "shared/src/webKit";
 
 export interface RoutesPanelProps {
   service: LiveTrackingService;
@@ -24,7 +25,7 @@ export class RoutesPanel extends React.Component<RoutesPanelProps> {
           {this.props.service.filteredRoutes
               .map(route => (
                 <RouteComponent
-                  key={route.id}
+                  key={GUID.generate()}
                   route={route}
                   service={this.props.service}
                 />

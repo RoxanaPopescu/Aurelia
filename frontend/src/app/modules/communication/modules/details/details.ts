@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
@@ -81,12 +81,12 @@ export class DetailsPage
     protected availableCustomers: Outfit[];
 
     /**
-     * The selected customer, if any.
+     * Called to link the creator id to customerName in the UI
+     * @param params the id of the creator
+     * @returns The outfit if found
      */
-    @computedFrom("model.customerId", "availableCustomers")
-    protected get selectedCustomer(): Outfit | undefined
-    {
-        return this.availableCustomers.find(c => c.id === this.model.customerId);
+    protected getCreatorFromId(id: string): Outfit | undefined {
+        return this.availableCustomers.find(c => c.id === id);
     }
 
     /**

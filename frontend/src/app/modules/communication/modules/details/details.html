@@ -160,21 +160,34 @@
 
                         </select-input>
 
-                        <select-input
+                        <tags-input
                             label="above"
-                            value.bind="model.customerId"
-                            display-value.bind="selectedCustomer.primaryName"
+                            value.bind="model.shipmentCreatorIds"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
-                                Applies to the customer
+                                Applies to
+                            </div>
+
+                            <div slot="value">
+                                <tag repeat.for="id of model.shipmentCreatorIds" model.bind="id">
+                                    ${getCreatorFromId(id).primaryName}
+                                </tag>
                             </div>
 
                             <item repeat.for="customer of availableCustomers" model.bind="customer.id">
                                 ${customer.primaryName}
                             </item>
 
-                        </select-input>
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.shipmentCreatorIds.length > 0 ? true : undefined">
+                                </required-validator>
+
+                            </div>
+
+                        </tags-input>
 
                     </div>
 
