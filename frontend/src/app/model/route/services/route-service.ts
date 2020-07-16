@@ -175,6 +175,22 @@ export class RouteService
         });
    }
 
+   /**
+     * Edit the specific route
+     * @param route
+    */
+   public async addOrder(route: Route, orderSlug: String): Promise<void>
+   {
+        await this._apiClient.post("routes/v2/addOrder",
+        {
+            body:
+            {
+                routeSlug: route.slug,
+                orderSlug: orderSlug
+            }
+        });
+   }
+
     /**
      * Adds the specified route stop at the specified index.
      * @param route The route owning the stop.

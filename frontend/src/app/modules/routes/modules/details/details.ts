@@ -14,6 +14,7 @@ import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
+import { AddOrderPanel } from './modals/add-order/add-order';
 
 /**
  * Represents the route parameters for the page.
@@ -341,6 +342,16 @@ export class DetailsModule
     protected async onEditRouteClick(route: Route): Promise<void>
     {
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
+    }
+    /**
+     * Called when the `Edit Information` button is clicked.
+     * @param route
+     * @param order
+     */
+
+    protected async onAddOrder(route: Route): Promise<void>
+    {
+        await this._modalService.open(AddOrderPanel, { route: this.route! }).promise;
     }
 
     /**

@@ -1,0 +1,43 @@
+<template>
+
+    <require from="./add-order.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog validation validation.ref="validation" name="add-support-note" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
+                Add order
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <text-input label="above" value.bind="_orderSlug" class="flex-basis-1-of-1 margin-bottom">
+
+                <div slot="heading" translate>
+                    Order id
+                </div>
+
+            </text-input>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="solid" accent="primary" click.trigger="onAddClick()" translate>
+                    Add order
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>
