@@ -101,15 +101,6 @@ page-content page-header,
 
 html
 {
-    .input-heading > *,
-    .input-description > *,
-    .toggle-heading > *,
-    .toggle-description > *
-    {
-        opacity: var(--opacity-faded-less) !important;
-        color: inherit !important;
-    }
-
     page-sidebar
     {
         .input-heading > *,
