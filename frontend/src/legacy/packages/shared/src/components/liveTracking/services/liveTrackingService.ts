@@ -353,7 +353,7 @@ export class LiveTrackingService {
       } else {
         statuses = ["not-started"];
         assignedDriver = true;
-        from = from.minus(Duration.fromObject({hours: 4}));
+        from = from.minus(Duration.fromObject({hours: 1}));
         to = to.plus(Duration.fromObject({hours: 1}));
       }
 

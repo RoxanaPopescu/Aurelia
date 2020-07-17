@@ -7,6 +7,7 @@ import "./routeLayer.scss";
 import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { DriverMarker } from "../../mapFeatures/driverMarker/driverMarker";
 import { RouteStop, Route, RouteBase } from "app/model/route";
+import { GUID } from "shared/src/webKit";
 
 export interface RouteLayerProps {
   service: LiveTrackingService;
@@ -85,7 +86,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
         {this.renderStops(selectedRoute)}
         {(currentRoute!.driverPosition || selectedRoute == null) &&
         <RouteDriverMarker
-          key={`RouteDriverMarker-${currentRoute!.id}`}
+          key={`RouteDriverMarker-${GUID.generate()}`}
           route={currentRoute!}
           onClick={() => this.onDriverMarkerClick(currentRoute)}
         />}
