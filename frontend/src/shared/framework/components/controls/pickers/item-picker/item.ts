@@ -28,7 +28,7 @@ export class ItemCustomElement
     {
         if (this._itemPicker != null)
         {
-            return this._itemPicker.focusedValue === this.model;
+            return this.equals(this._itemPicker.focusedValue, this.model);
         }
 
         return false;
@@ -42,7 +42,7 @@ export class ItemCustomElement
     {
         if (this._itemPicker != null)
         {
-            if (this._itemPicker.excludeValues && this._itemPicker.excludeValues.includes(this.model))
+            if (this._itemPicker.excludeValues && this._itemPicker.excludeValues.some(value => this.equals(value, this.model)))
             {
                 return false;
             }
@@ -89,7 +89,7 @@ export class ItemCustomElement
         this._itemPicker!.attachItem();
 
         // If the item is focused, ensure it is scrolled into view.
-        if (this.model === this._itemPicker!.value)
+        if (this.equals(this.model, this._itemPicker!.value))
         {
             this.scrollIntoView();
         }
@@ -173,7 +173,7 @@ export class ItemCustomElement
             this._itemPicker.attachItem();
 
             // If the item is focused, ensure it is scrolled into view.
-            if (this.model === this._itemPicker.value)
+            if (this.equals(this.model, this._itemPicker.value))
             {
                 this.scrollIntoView();
             }
@@ -196,5 +196,16 @@ export class ItemCustomElement
         this.scrollIntoView();
 
         return false;
+    }
+
+    /**
+     * Determines whether the specified values represent the same primitive value.
+     * @param value1 The first value.
+     * @param value2 The second value.
+     * @returns True if the values represent the same primitive value, otherwise false.
+     */
+    private equals(value1: any, value2: any): boolean
+    {
+        return (value1?.valueOf() ?? value1) === (value2?.valueOf() ?? value2);
     }
 }

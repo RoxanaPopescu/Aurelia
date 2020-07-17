@@ -155,7 +155,7 @@ export class DatesModel
 
         if (offset != null)
         {
-            const value = (this._datePicker.focusedValue || this._datePicker.today).plus(offset);
+            const value = (this._datePicker.focusedValue?.startOf("day") || this._datePicker.today).plus(offset);
             const item = new DateItem(this._datePicker, value);
 
             if (!item.isDisabled)

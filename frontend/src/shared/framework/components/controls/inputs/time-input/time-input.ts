@@ -131,11 +131,16 @@ export class TimeInputCustomElement
 
         if (value)
         {
-            const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
-
             // Try to parse the value.
             try
             {
+                if (!this.timeFormat.inputPattern.test(value) || value.length !== 5)
+                {
+                    throw new Error("Invalid time of day.");
+                }
+
+                const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
+
                 if (isNaN(hour) || hour < 0 || hour > 23 || isNaN(minute) || minute < 0 || minute > 59)
                 {
                     throw new Error("Invalid time of day.");
@@ -308,25 +313,28 @@ export class TimeInputCustomElement
     {
         this.open = false;
 
-        if (pick && this.focusedValue !== this.value)
+        if (pick)
         {
-            this.value = this.focusedValue;
-
-            if (this.value !== null)
+            if (this.focusedValue !== this.value)
             {
-                this.enteredValue = undefined;
-                this.isValid = true;
+                this.value = this.focusedValue;
+
+                if (this.value !== null)
+                {
+                    this.enteredValue = undefined;
+                    this.isValid = true;
+                }
+
+                // Dispatch the `input` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+                // Dispatch the `change` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
             }
-
-            // Dispatch the `input` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
-
-            // Dispatch the `change` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
         else
         {
-            this.focusedValue = this.value;
+            this.focusedValue = this.isValid ? this.value : null;
             this.enteredValue = undefined;
             this.isValid = true;
         }
