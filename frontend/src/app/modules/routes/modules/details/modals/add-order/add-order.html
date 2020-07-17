@@ -14,12 +14,25 @@
 
         </modal-header>
 
-        <modal-section>
+        <modal-section validation validation.ref="validation">
+
+            <p class="margin-larger-bottom" translate>
+                Here you can add a order to the route. The status has to be "Ready". <br>
+                The two stops will be added at the end of the route.
+            </p>
 
             <text-input label="above" value.bind="_orderSlug" class="flex-basis-1-of-1 margin-bottom">
 
                 <div slot="heading" translate>
                     Order id
+                </div>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="_orderSlug">
+                    </required-validator>
+
                 </div>
 
             </text-input>
