@@ -3,7 +3,7 @@
     <number-input
         label="above"
         none.bind="false"
-        value.bind="model.minutesBeforeDelivery | scale: 1/60"
+        value.bind="model.timeBeforeDelivery | scale: 1/60"
         class="margin-large-bottom"
         min.bind="0">
 
@@ -18,12 +18,12 @@
         <div slot="validation">
 
             <required-validator
-                value.bind="model.minutesBeforeDelivery">
+                value.bind="model.timeBeforeDelivery">
             </required-validator>
 
             <range-validator
                 active.bind="true"
-                value.bind="model.minutesBeforeDelivery"
+                value.bind="model.timeBeforeDelivery"
                 min.bind="0">
             </range-validator>
 
