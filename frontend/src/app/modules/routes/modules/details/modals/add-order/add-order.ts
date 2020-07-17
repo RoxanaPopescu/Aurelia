@@ -7,7 +7,7 @@ import { RouteService } from '../../../../../../model/route/services/route-servi
 
 
 @autoinject
-export class EditInformationPanel
+export class AddOrderPanel
 {
     /**
      * Creates a new instance of the class.
@@ -31,6 +31,7 @@ export class EditInformationPanel
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
     private _result: Route | undefined;
+    private _orderSlug: String;
 
      /**
      * The available statuses.
@@ -63,7 +64,7 @@ export class EditInformationPanel
     {
         return this._result;
     }
-    protected async onSaveClick(): Promise<void>
+    protected async onAddClick(): Promise<void>
     {
         try
         {
@@ -71,7 +72,7 @@ export class EditInformationPanel
             this._modal.busy = true;
 
             // Save the changes.
-            await this._routeService.updateRoute(this.model);
+            await this._routeService.addOrder(this.model, this._orderSlug);
 
             // Set the result of the modal.
             this._result = this.model;
@@ -79,7 +80,7 @@ export class EditInformationPanel
         }
         catch (error)
         {
-            Log.error("Could not update route", error);
+            Log.error("Could not add Route", error);
         }
         finally
         {
