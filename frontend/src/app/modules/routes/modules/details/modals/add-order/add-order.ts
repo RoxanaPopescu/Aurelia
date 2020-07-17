@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { Modal } from "shared/framework/services/modal";
+import { IValidation, Modal } from "shared/framework";
 import { RouteStatus, Route } from 'app/model/route';
 import { ProductType } from '../../../../../../model/product/entities/product-type';
 import { Log } from "shared/infrastructure";
@@ -32,6 +32,11 @@ export class AddOrderPanel
     private readonly _modal: Modal;
     private _result: Route | undefined;
     private _orderSlug: String;
+
+    /**
+     * The validation for the modal.
+     */
+    protected validation: IValidation;
 
      /**
      * The available statuses.
@@ -68,6 +73,16 @@ export class AddOrderPanel
     {
         try
         {
+
+             // Activate validation so any further changes will be validated immediately.
+             this.validation.active = true;
+
+             // Validate the form.
+             if (!await this.validation.validate())
+             {
+                 return;
+             }
+
             // Mark the modal as busy.
             this._modal.busy = true;
 
