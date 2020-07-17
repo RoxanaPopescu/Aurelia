@@ -186,6 +186,7 @@ export class RouteService
             body:
             {
                 routeSlug: route.slug,
+                routeId: route.id,
                 orderSlug: orderSlug
             }
         });
