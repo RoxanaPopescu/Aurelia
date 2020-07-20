@@ -142,7 +142,7 @@ export class DatePickerCustomElement
     public unbind(): void
     {
         // Stop refreshing the `today` value.
-        clearInterval(this._todayTimeoutHandle);
+        clearTimeout(this._todayTimeoutHandle);
     }
 
     /**

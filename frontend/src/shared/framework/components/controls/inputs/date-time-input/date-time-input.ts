@@ -7,6 +7,9 @@ import { DateTime, Zone, Duration } from "luxon";
 @autoinject
 export class DateTimeInputCustomElement
 {
+    private _nowIntervalHandle: any;
+    private _now: DateTime;
+
     /**
      * True if the value property is being updated due to an internal change, otherwise false.
      */
@@ -27,14 +30,22 @@ export class DateTimeInputCustomElement
     /**
      * The computed min time.
      */
-    @computedFrom("min", "minTime", "dateValue", "zone")
+    @computedFrom("min", "minTime", "dateValue", "zone", "_now")
     protected get computedMinTime(): Duration | undefined
     {
         let minTime: Duration | undefined;
 
         if (typeof this.minTime === "string")
         {
-            minTime = Duration.fromISO(this.minTime);
+            if (this.minTime.startsWith("P"))
+            {
+                minTime = Duration.fromISO(this.minTime);
+            }
+            else
+            {
+                const [hour, minute] = this.minTime.split(":").map(s => parseInt(s));
+                minTime = Duration.fromObject({ hour, minute });
+            }
         }
         else
         {
@@ -43,11 +54,9 @@ export class DateTimeInputCustomElement
 
         if (this.min === "now")
         {
-            const now = DateTime.local().setZone(this.zone);
-
-            if (this.dateValue?.hasSame(now, "day"))
+            if (this.dateValue?.hasSame(this._now, "day"))
             {
-                const timeNow = now.diff(now.startOf("day"));
+                const timeNow = this._now.diff(this._now.startOf("day"));
 
                 if (minTime == null || timeNow.valueOf() > minTime.valueOf())
                 {
@@ -62,14 +71,22 @@ export class DateTimeInputCustomElement
     /**
      * The computed max time.
      */
-    @computedFrom("max", "maxTime", "dateValue", "zone")
+    @computedFrom("max", "maxTime", "dateValue", "zone", "_now")
     protected get computedMaxTime(): Duration | undefined
     {
         let maxTime: Duration | undefined;
 
         if (typeof this.maxTime === "string")
         {
-            maxTime = Duration.fromISO(this.maxTime);
+            if (this.maxTime.startsWith("P"))
+            {
+                maxTime = Duration.fromISO(this.maxTime);
+            }
+            else
+            {
+                const [hour, minute] = this.maxTime.split(":").map(s => parseInt(s));
+                maxTime = Duration.fromObject({ hour, minute });
+            }
         }
         else
         {
@@ -78,11 +95,9 @@ export class DateTimeInputCustomElement
 
         if (this.max === "now")
         {
-            const now = DateTime.local().setZone(this.zone);
-
-            if (this.dateValue?.hasSame(now, "day"))
+            if (this.dateValue?.hasSame(this._now, "day"))
             {
-                const timeNow = now.diff(now.startOf("day"));
+                const timeNow = this._now.diff(this._now.startOf("day"));
 
                 if (maxTime == null || timeNow.valueOf() < maxTime.valueOf())
                 {
@@ -175,6 +190,24 @@ export class DateTimeInputCustomElement
     public fixed: boolean;
 
     /**
+     * Called by the framework when the component is binding.
+     */
+    public bind(): void
+    {
+        this._now = DateTime.local().setZone(this.zone);
+        this.scheduleNowRefresh();
+    }
+
+    /**
+     * Called by the framework when the component is unbinding.
+     */
+    public unbind(): void
+    {
+        // Stop refreshing the `now` value.
+        clearInterval(this._nowIntervalHandle);
+    }
+
+    /**
      * Called by the framework when the `value` property changes.
      * @param newValue The new value.
      * @param oldValue The old value.
@@ -248,5 +281,16 @@ export class DateTimeInputCustomElement
         {
             this.value = undefined;
         }
+    }
+
+    /**
+     * Schedules updates of the `now` value.
+     */
+    private scheduleNowRefresh(): void
+    {
+        this._nowIntervalHandle = setInterval(() =>
+        {
+            this._now = DateTime.local().setZone(this.zone);
+        }, 1000);
     }
 }
