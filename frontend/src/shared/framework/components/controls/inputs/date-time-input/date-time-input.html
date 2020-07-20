@@ -1,0 +1,71 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    inert.bind="disabled || readonly"
+    forward-focus
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./date-time-input.scss"></require>
+
+    <label class="input-label" for="input-${id}">
+
+        <div class="input-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="input-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <div class="input-controls">
+
+        <slot name="before"></slot>
+
+        <div class="input-controls-inner" id="input-${id}">
+
+            <date-input
+                zone.bind="zone"
+                value.to-view="dateValue"
+                min.bind="min === 'now' ? 'today' : min"
+                max.bind="max === 'now' ? 'today' : max"
+                open.bind="open"
+                disabled.bind="disabled"
+                readonly.bind="readonly"
+                autoselect.bind="autoselect"
+                fixed.bind="fixed"
+                change.trigger="onDateValueChange($event.detail.value)">
+            </date-input>
+
+            <time-input
+                zone.bind="zone"
+                none.bind="false"
+                value.to-view="timeValue"
+                min.bind="computedMinTime"
+                max.bind="computedMaxTime"
+                open.bind="open"
+                disabled.bind="disabled"
+                readonly.bind="readonly"
+                autoselect.bind="autoselect"
+                fixed.bind="fixed"
+                change.trigger="onTimeValueChange($event.detail.value)">
+            </time-input>
+
+        </div>
+
+        <slot name="after"></slot>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="input-validation font-small">
+        <slot name="validation"></slot>
+    </div>
+
+</template>

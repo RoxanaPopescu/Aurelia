@@ -420,6 +420,58 @@
 
             </design-item>
 
+            <design-item heading="date-time-input">
+
+                <design-row heading="date-time-input">
+
+                    <design-column heading="enabled">
+
+                        <date-time-input
+                            label.bind="labelPosition & attr"
+                            value.bind="dateValue"
+                            min="now"
+                            min-time="PT10H00M"
+                            max-time="PT16H00M">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </date-time-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <date-time-input
+                            disabled.one-time="true"
+                            label.bind="labelPosition & attr"
+                            value.bind="dateValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </date-time-input>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>comitted: ${dateValue | dateTime}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="time-input">
 
                 <design-row heading="time-input">
