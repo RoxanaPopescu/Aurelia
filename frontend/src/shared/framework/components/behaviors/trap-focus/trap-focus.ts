@@ -23,7 +23,7 @@ export class TrapFocusCustomAttribute implements Options
     private _active = false;
 
     /**
-     * True or empty string to enable the focus trap, otherwise false.
+     * True or an empty string to enable the focus trap, otherwise false.
      * The default is true.
      */
     @bindable({ primaryProperty: true, defaultValue: true })
