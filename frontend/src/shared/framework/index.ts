@@ -226,6 +226,5 @@ export * from "./converters/trim/trim";
 // Services
 export * from "./services/focus";
 export * from "./services/modal";
-export * from "./services/scroll";
 export * from "./services/theme";
 export * from "./services/toast";
