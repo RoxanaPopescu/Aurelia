@@ -71,7 +71,7 @@ export class Cookies
             throw new Error("The 'name' argument is required.");
         }
 
-        const cookieOptions = { ...this._defaults, ...options };
+        const cookieOptions = { secure: false, sameSite: "lax", ...this._defaults, ...options };
 
         let cookie = `${encodeURIComponent(name)}=`;
 

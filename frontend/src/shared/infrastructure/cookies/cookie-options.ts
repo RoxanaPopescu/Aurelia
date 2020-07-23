@@ -20,14 +20,16 @@ export interface ICookieOptions
     /**
      * True if the cookie should only be transmitted over a secure connection.
      * Set this to mitigate the risk of man-in-the-middle attacks stealing a sensitive cookie.
+     * The default, if not changed, is false.
      */
     secure?: boolean;
 
     /**
      * The same site policy to use for the cookie.
      * Set this to mitigate the risk of cross-site-scripting attacks stealing a sensitive cookie.
+     * The default, if not changed, is `lax`.
      */
-    sameSite?: "strict" | "lax";
+    sameSite?: "none" | "lax" | "strict";
 
     /**
      * The date at which the value expires, or undefined to set no expiry data.
