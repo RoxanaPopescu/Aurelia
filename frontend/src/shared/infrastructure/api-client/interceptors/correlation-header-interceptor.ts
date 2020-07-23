@@ -1,5 +1,6 @@
 import { Id } from "shared/utilities";
 import { IApiInterceptor } from "../api-interceptor";
+import { IApiRequestOptions } from "../api-request-options";
 
 /**
  * Represents an interceptor that adds a header with a correlation ID to the request.
@@ -21,9 +22,10 @@ export class CorrelationHeaderInterceptor implements IApiInterceptor
     /**
      * Called when a request is intercepted.
      * @param request The request that was intercepted.
+     * @param options The request options to use.
      * @returns A promise that will be resolved with the request to send, or the stubbed response, if available.
      */
-    public async request(request: Request): Promise<Request | Response>
+    public async request(request: Request, options: IApiRequestOptions): Promise<Request | Response>
     {
         if (!request.headers.has(this._headerName))
         {

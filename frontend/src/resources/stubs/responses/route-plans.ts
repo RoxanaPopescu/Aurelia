@@ -4,7 +4,7 @@ export default
 {
     "POST /api/v1/routeplanning/plans/list":
     {
-      data:
+      body:
       {
         "results": [
             {

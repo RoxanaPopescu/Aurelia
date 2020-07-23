@@ -86,7 +86,7 @@ export default
     "POST /api/v1/route-templates/list":
     {
         delay: 1000,
-        data:
+        body:
         {
             templates: [routeTemplate],
             templateCount: 1
@@ -95,17 +95,17 @@ export default
 
     "POST /api/v1/route-templates/details":
     {
-        data: routeTemplate
+        body: routeTemplate
     },
 
     "POST /api/v1/route-templates/create":
     {
-        data: routeTemplate
+        body: routeTemplate
     },
 
     "POST /api/v1/route-templates/update":
     {
-        data: routeTemplate
+        body: routeTemplate
     },
 
     "POST /api/v1/route-templates/delete":

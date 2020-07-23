@@ -3,7 +3,7 @@ export default
 {
     "GET /api/v1/vehicle-types":
     {
-      data:
+      body:
       [
         {
           "deprecated": false,
