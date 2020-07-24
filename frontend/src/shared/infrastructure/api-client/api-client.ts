@@ -209,8 +209,9 @@ export class ApiClient
         mergedOptions.headers =
         {
             ...apiRequestDefaults.headers,
-            ...this._settings.defaults ? this._settings.defaults.headers : undefined,
-            ...options ? options.headers : undefined
+            ...this._settings.defaults?.headers,
+            ...(options?.body == null || options?.body === "" ? { "content-type": undefined } : undefined),
+            ...options?.headers
         };
 
         for (const key of Object.keys(mergedOptions.headers))

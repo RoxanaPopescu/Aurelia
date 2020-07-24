@@ -61,23 +61,30 @@ export class ResponseStubInterceptor implements IApiInterceptor
         if (key in this._stubs)
         {
             // Get the response stub.
-            const stub = this._stubs[key];
+            const stub = { ...this._stubs[key] };
 
             // Determine the content type to use.
-            const contentType = stub.headers?.["content-type"] ?? (stub.body ? "application/json" : undefined);
+            const hasBody = stub.body != null && stub.body !== "";
+            const contentType = stub.headers?.["content-type"] ?? (hasBody ? "application/json" : undefined);
 
             // Determine whether the request body should be serialized as JSON.
             const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
-            // Determine the headers to use.
-            const headers =
+            // Set the content type of the stub, if not specified.
+            if (contentType != null)
             {
-                "content-type": contentType,
-                ...stub.headers
-            };
+                stub.headers =
+                {
+                    "content-type": contentType,
+                    ...stub.headers
+                };
+            }
 
-            // Determine the status to use.
-            const status = stub.status ?? 200;
+            // Set the status of the stub, if not specified.
+            if (stub.status == null)
+            {
+                stub.status = 200;
+            }
 
             // Determine the response delay to use.
             const stubDelay = this._latency + (stub.delay || 0);
@@ -85,8 +92,8 @@ export class ResponseStubInterceptor implements IApiInterceptor
             // Log a warning to the console, including info about the request and response.
             console.warn(`Using response stub for '${method} ${request.url}'\n`,
             {
-                request: { ...options, headers },
-                response: { ...stub, status },
+                request: { ...options },
+                response: { ...stub },
                 delay: stubDelay
             });
 
@@ -105,7 +112,7 @@ export class ResponseStubInterceptor implements IApiInterceptor
             {
                 status: stub.status ?? 200,
                 statusText: stub.statusText,
-                headers: Object.keys(headers).map(name => [name, headers[name]])
+                headers: Object.keys(stub.headers!).map(name => [name, stub.headers![name]])
             });
         }
 
