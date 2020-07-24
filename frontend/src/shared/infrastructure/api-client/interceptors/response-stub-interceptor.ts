@@ -49,19 +49,52 @@ export class ResponseStubInterceptor implements IApiInterceptor
      */
     public async request(request: Request, options: IApiRequestOptions): Promise<Request | Response>
     {
-        // Split the request URL.
-        const [, host, pathAndQuery] = /(?:https?:\/\/([^/]+))?(.*)/.exec(request.url)!;
-
-        // Determine the key identifying the response stub.
         const method = request.method.toUpperCase();
-        const url = (host == null || host === location.host) ? pathAndQuery : `//${host}${pathAndQuery}`;
-        const key = `${method} ${url}`;
+        const url = new URL(request.url);
+
+        // Try to get the response stub.
+
+        const stubUrl = (url.host == null || url.host === location.host)
+            ? url.pathname + url.search
+            : `//${url.host}${url.pathname + url.search}`;
+
+        const stubKey = `${method} ${stubUrl}`;
+        const stubValue = this._stubs[stubKey];
 
         // Do we have a response stub for this request?
-        if (key in this._stubs)
+        if (stubValue != null)
         {
-            // Get the response stub.
-            const stub = { ...this._stubs[key] };
+            // Resolve the stub value.
+
+            let stub: IResponseStub;
+
+            if (stubValue instanceof Function)
+            {
+                // Get the result of the stub.
+                const stubResult  = await stubValue(method, url, options);
+
+                // If the result is a request or response, return that.
+                if (stubResult instanceof Request || stubResult instanceof Response)
+                {
+                    // Log a warning to the console, including info about the request and response.
+                    console.warn(`Using response stub for '${method} ${request.url}'\n`,
+                    {
+                        request: { ...options },
+                        response: stubResult
+                    });
+
+                    return stubResult;
+                }
+
+                stub = { ...stubResult };
+            }
+            else
+            {
+                stub = { ...stubValue };
+            }
+
+            // Determine the response delay to use.
+            const stubDelay = this._latency + (stub.delay || 0);
 
             // Determine the content type to use.
             const hasBody = stub.body != null && stub.body !== "";
@@ -86,9 +119,6 @@ export class ResponseStubInterceptor implements IApiInterceptor
                 stub.status = 200;
             }
 
-            // Determine the response delay to use.
-            const stubDelay = this._latency + (stub.delay || 0);
-
             // Log a warning to the console, including info about the request and response.
             console.warn(`Using response stub for '${method} ${request.url}'\n`,
             {
@@ -97,12 +127,17 @@ export class ResponseStubInterceptor implements IApiInterceptor
                 delay: stubDelay
             });
 
-            // Determine the body to use, and if needed, serialize it as JSON.
+            // Get the body to use for the request.
             const body =
                 stub.body == null ? undefined :
                 typeof stub.body === "string" ? stub.body :
                 hasJsonBody ? JSON.stringify(stub.body) :
                 stub.body as any;
+
+            // Get the headers to use for the request.
+            const headers =
+                stub.headers == null ? undefined :
+                Object.keys(stub.headers).map(name => [name, stub.headers![name]]);
 
             // Delay the response.
             await delay(stubDelay, request.signal);
@@ -110,9 +145,9 @@ export class ResponseStubInterceptor implements IApiInterceptor
             // Create and return the response.
             return new Response(body,
             {
-                status: stub.status ?? 200,
+                status: stub.status,
                 statusText: stub.statusText,
-                headers: Object.keys(stub.headers!).map(name => [name, stub.headers![name]])
+                headers: headers
             });
         }
 
@@ -131,7 +166,8 @@ export interface IResponseStubs
      * where `METHOD` is the HTTP verb to match and `url` is the URL to match.
      * Note that the URL must start with either `/` or `//`.
      */
-    [url: string]: IResponseStub;
+    [url: string]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
+        => IResponseStub | Request | Response | Promise<IResponseStub | Request | Response>);
 }
 
 /**
