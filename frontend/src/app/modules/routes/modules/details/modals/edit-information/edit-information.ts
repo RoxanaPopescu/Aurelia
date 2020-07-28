@@ -55,6 +55,7 @@ export class EditInformationPanel
     {
         this.model = model.route.clone();
     }
+
     /**
      * Called by the framework when the modal is deactivated.
      * @returns The result of the modal.

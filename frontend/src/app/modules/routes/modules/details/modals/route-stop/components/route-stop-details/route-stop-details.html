@@ -310,10 +310,11 @@
 
                 </div>
 
-                <a href.bind="model.routeStop.signature.imageUrl" target="_blank">
-                    <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
-                </a>
-
+                <div class="flex-row flex-basis-1-of-6">
+                    <button click.trigger="onSignatureClick()" align="left">
+                        <image  class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
+                    </button>
+                </div>
             </template>
 
         </data-section>

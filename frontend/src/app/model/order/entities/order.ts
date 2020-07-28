@@ -85,7 +85,7 @@ export class Order
             tags: this.tags,
             requirements: this.requirements,
             actualColli: this.actualColli,
-            estimatedColli: this.estimatedColli
+            estimatedColli: this.estimatedColli 
         };
     }
 }

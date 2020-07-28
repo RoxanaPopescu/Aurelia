@@ -2,6 +2,8 @@ import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { Log } from "shared/infrastructure";
+import { ModalService} from "shared/framework";
+import { SignatureImage } from "../../../signature-image/signature-image"
 
 @autoinject
 export class RouteStopDetailsCustomElement
@@ -9,13 +11,17 @@ export class RouteStopDetailsCustomElement
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(routeService: RouteService)
+    public constructor(routeService: RouteService, modalService: ModalService)
     {
         this._routeService = routeService;
+        this._modalService = modalService
     }
 
     private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+
 
     /**
      * The available stop status values.
@@ -66,6 +72,17 @@ export class RouteStopDetailsCustomElement
 
         return false;
     }
+    protected async onSignatureClick(): Promise<void>
+    {
+        try
+        {
+            await this._modalService.open(SignatureImage/*, this.model.routeStop*/).promise;
+        }
+        catch (error)
+        {
+            Log.error("Could not change route stop status", error);
+        }
+    }
 
     /**
      * Called when the user changes the status of the stop.
@@ -85,7 +102,7 @@ export class RouteStopDetailsCustomElement
         }
         catch (error)
         {
-            Log.error("Could not change route stop status", error);
+            Log.error("Can't load signature image", error);
         }
     }
 
