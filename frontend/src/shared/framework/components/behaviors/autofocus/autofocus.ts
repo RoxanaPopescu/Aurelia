@@ -19,7 +19,7 @@ export class AutofocusCustomAttribute
     private readonly _element: HTMLElement | SVGElement;
 
     /**
-     * True or empty string to enable autofocus, otherwise false.
+     * True or an empty string to enable autofocus, otherwise false.
      * The default is true.
      */
     @bindable({ primaryProperty: true, defaultValue: true })

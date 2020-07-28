@@ -5,7 +5,7 @@ export default
     {
         delay: 1000,
         // status: 204,
-        data:
+        body:
         {
             "routeSlug": "M567-12",
         }

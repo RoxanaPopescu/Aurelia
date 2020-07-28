@@ -60,7 +60,7 @@ export class DatePickerCustomElement
     public maxValue: DateTime | undefined;
 
     /**
-     * The IANA Time Zone Identifier to use, "local" to use the local zone, or "utc" to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
      */
     @bindable({ defaultValue: "local" })
     public zone: string | Zone;
@@ -79,17 +79,24 @@ export class DatePickerCustomElement
 
     /**
      * The earliest date that can be selected, or undefined to disable this constraint.
-     * Note that for can be an ISO 8601 string, "today", or a `DateTime` instance.
+     * This may be a `DateTime` instance, an ISO 8601 string, or the string `today`.
      */
     @bindable({ defaultValue: undefined })
-    public min: string | DateTime | undefined;
+    public min: DateTime | string | "today" | undefined;
 
     /**
      * The latest date that can be selected, or undefined to disable this constraint.
-     * Note that for can be an ISO 8601 string, "today", or a `DateTime` instance.
+     * This may be a `DateTime` instance, an ISO 8601 string, or the string `today`.
      */
     @bindable({ defaultValue: undefined })
-    public max: string | DateTime | undefined;
+    public max: DateTime | string | "today" | undefined;
+
+    /**
+     * True to preserve the time of the current value when changing the date,
+     * false to always choose the start of the day.
+     */
+    @bindable({ defaultValue: true })
+    public preserveTime: boolean | undefined;
 
     /**
      * The element that has input focus.
@@ -135,7 +142,7 @@ export class DatePickerCustomElement
     public unbind(): void
     {
         // Stop refreshing the `today` value.
-        clearInterval(this._todayTimeoutHandle);
+        clearTimeout(this._todayTimeoutHandle);
     }
 
     /**
@@ -155,6 +162,13 @@ export class DatePickerCustomElement
      */
     public changeValue(value: DateTime | undefined, pick = false): void
     {
+        // If enabled, preserve the time of the current value.
+        if (this.preserveTime && value != null && this.focusedValue != null)
+        {
+            // tslint:disable-next-line: no-parameter-reassignment
+            value = value.plus(this.focusedValue.diff(this.focusedValue.startOf("day")));
+        }
+
         // Set the focused value to match the new value.
         this.focusedValue = value;
 

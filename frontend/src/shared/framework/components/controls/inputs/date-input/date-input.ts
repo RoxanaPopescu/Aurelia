@@ -99,7 +99,13 @@ export class DateInputCustomElement
         if (value)
         {
             // Try to parse the value.
-            const date = DateTime.fromFormat(value, this.dateFormat.inputFormat);
+            let date = DateTime.fromFormat(value, this.dateFormat.inputFormat);
+
+            // If enabled, preserve the time of the current value.
+            if (this.preserveTime && value != null && this.focusedValue != null)
+            {
+                date = date.plus(this.focusedValue.diff(this.focusedValue.startOf("day")));
+            }
 
             // Update the focused value.
             this.focusedValue = date.isValid ? date : null;
@@ -122,7 +128,7 @@ export class DateInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The IANA Time Zone Identifier to use, "local" to use the local zone, or "utc" to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
      */
     @bindable({ defaultValue: "local" })
     public zone: string | Zone;
@@ -143,19 +149,24 @@ export class DateInputCustomElement
 
     /**
      * The earliest date that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO 8601 string or "today",
-     * but once the component is bound, only `DateTime` instances are valid.
+     * This may be a `DateTime` instance, an ISO 8601 string, or the string `today`.
      */
     @bindable({ defaultValue: undefined })
-    public min: DateTime | undefined;
+    public min: DateTime | string | "today" | undefined;
 
     /**
      * The latest date that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO 8601 string or "today",
-     * but once the component is bound, only `DateTime` instances are valid.
+     * This may be a `DateTime` instance, an ISO 8601 string, or the string `today`.
      */
     @bindable({ defaultValue: undefined })
-    public max: DateTime | undefined;
+    public max: DateTime | string | "today" | undefined;
+
+    /**
+     * True to preserve the time of the current value when selecting a date,
+     * false to always selecting the start of the day.
+     */
+    @bindable({ defaultValue: true })
+    public preserveTime: boolean | undefined;
 
     /**
      * True if the dropdown is open, otherwise false.

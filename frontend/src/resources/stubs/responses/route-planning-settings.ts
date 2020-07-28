@@ -2,7 +2,7 @@ export default
 {
     "POST /api/v1/routeplanning/rulesets/details":
     {
-        data:
+        body:
         {
             metadata:
             {
@@ -408,7 +408,7 @@ export default
 
     "POST /api/v1/routeplanning/settingsv2/create":
     {
-        data:
+        body:
         {
             metadata:
             {
@@ -424,7 +424,7 @@ export default
 
     "POST /api/v1/routeplanning/settingsv2/update":
     {
-        data:
+        body:
         {
             metadata:
             {

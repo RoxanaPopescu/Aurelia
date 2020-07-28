@@ -116,7 +116,7 @@ export class Modal<TModel = any, TResult = any>
 
         const compose = this.compose as any;
 
-        if (compose && compose.currentViewModel && compose.currentViewModel.deactivate)
+        if (compose?.currentViewModel?.deactivate)
         {
             try
             {
@@ -135,6 +135,10 @@ export class Modal<TModel = any, TResult = any>
 
                 return false;
             }
+        }
+        else
+        {
+            await Promise.resolve();
         }
 
         const index = this._modals.findIndex(m => m === this);

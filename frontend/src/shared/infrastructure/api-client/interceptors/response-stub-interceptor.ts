@@ -1,6 +1,7 @@
 import { MapObject } from "shared/types";
 import { delay } from "shared/utilities";
 import { IApiInterceptor } from "../api-interceptor";
+import { IApiRequestOptions } from "../api-request-options";
 
 /**
  * Represents an interceptor that responds with a stubbed response, if one is available for the request.
@@ -17,18 +18,14 @@ export class ResponseStubInterceptor implements IApiInterceptor
         this._stubs = stubs;
         this._latency = latency;
 
-        // Validate the stubs to prevent the most common mistakes.
+        // Validate the stubs to prevent some of the most common mistakes.
         if (ENVIRONMENT.debug)
         {
             const invalidStubs: any[] = [];
 
             for (const key of Object.keys(this._stubs))
             {
-                if (!/^[A-Z]+ \/\/?/.test(key) || (this._stubs[key].body != null && this._stubs[key].data != null))
-                {
-                    invalidStubs.push(key);
-                }
-                else if ("body" in this._stubs[key] && "data" in this._stubs[key])
+                if (!/^[A-Z]+ \/\/?/.test(key))
                 {
                     invalidStubs.push(key);
                 }
@@ -47,49 +44,114 @@ export class ResponseStubInterceptor implements IApiInterceptor
     /**
      * Called when a request is intercepted.
      * @param request The request that was intercepted.
+     * @param options The request options to use.
      * @returns A promise that will be resolved with the request to send, or the stubbed response, if available.
      */
-    public async request(request: Request): Promise<Request | Response>
+    public async request(request: Request, options: IApiRequestOptions): Promise<Request | Response>
     {
-        const [, host, pathAndQuery] = /(?:https?:\/\/([^/]+))?(.*)/.exec(request.url)!;
         const method = request.method.toUpperCase();
-        const url = (host == null || host === location.host) ? pathAndQuery : `//${host}${pathAndQuery}`;
+        const url = new URL(request.url);
 
-        const key = `${method} ${url}`;
+        // Try to get the response stub.
 
-        if (key in this._stubs)
+        const stubUrl = (url.host == null || url.host === location.host)
+            ? url.pathname + url.search
+            : `//${url.host}${url.pathname + url.search}`;
+
+        const stubKey = `${method} ${stubUrl}`;
+        const stubValue = this._stubs[stubKey];
+
+        // Do we have a response stub for this request?
+        if (stubValue != null)
         {
-            const stub = this._stubs[key];
+            // Resolve the stub value.
 
-            const totalDelay = this._latency + (stub.delay || 0);
+            let stub: IResponseStub;
 
-            console.warn(`Using response stub for '${method} ${request.url}'${totalDelay ? ` (${totalDelay}ms)` : ""}\n`, { request, stub });
-
-            const status = stub.status != null ? stub.status : 200;
-            const statusText = stub.statusText;
-
-            const body =
-                stub.body != null ? stub.body :
-                stub.data != null ? JSON.stringify(stub.data) :
-                undefined;
-
-            const headers =
+            if (stubValue instanceof Function)
             {
-                "content-type": body ? "application/json" : undefined,
-                ...stub.headers
+                // Get the result of the stub.
+                const stubResult  = await stubValue(method, url, options);
 
-            } as MapObject<string>;
+                // If the result is a request or response, return that.
+                if (stubResult instanceof Request || stubResult instanceof Response)
+                {
+                    // Log a warning to the console, including info about the request and response.
+                    console.warn(`Using response stub for '${method} ${request.url}'\n`,
+                    {
+                        request: { ...options },
+                        response: stubResult
+                    });
 
-            await delay(totalDelay, request.signal);
+                    return stubResult;
+                }
 
+                stub = { ...stubResult };
+            }
+            else
+            {
+                stub = { ...stubValue };
+            }
+
+            // Determine the response delay to use.
+            const stubDelay = this._latency + (stub.delay || 0);
+
+            // Determine the content type to use.
+            const hasBody = stub.body != null && stub.body !== "";
+            const contentType = stub.headers?.["content-type"] ?? (hasBody ? "application/json" : undefined);
+
+            // Determine whether the request body should be serialized as JSON.
+            const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
+
+            // Set the content type of the stub, if not specified.
+            if (contentType != null)
+            {
+                stub.headers =
+                {
+                    "content-type": contentType,
+                    ...stub.headers
+                };
+            }
+
+            // Set the status of the stub, if not specified.
+            if (stub.status == null)
+            {
+                stub.status = 200;
+            }
+
+            // Log a warning to the console, including info about the request and response.
+            console.warn(`Using response stub for '${method} ${request.url}'\n`,
+            {
+                request: { ...options },
+                response: { ...stub },
+                delay: stubDelay
+            });
+
+            // Get the body to use for the request.
+            const body =
+                stub.body == null ? undefined :
+                typeof stub.body === "string" ? stub.body :
+                hasJsonBody ? JSON.stringify(stub.body) :
+                stub.body as any;
+
+            // Get the headers to use for the request.
+            const headers =
+                stub.headers == null ? undefined :
+                Object.keys(stub.headers).map(name => [name, stub.headers![name]]);
+
+            // Delay the response.
+            await delay(stubDelay, request.signal);
+
+            // Create and return the response.
             return new Response(body,
             {
-                status,
-                statusText,
-                headers: Object.keys(headers).map(name => [name, headers[name]])
+                status: stub.status,
+                statusText: stub.statusText,
+                headers: headers
             });
         }
 
+        // No response stub was found, so continue with the original request.
         return request;
     }
 }
@@ -102,9 +164,10 @@ export interface IResponseStubs
     /**
      * The response stubs, where the keys must be of the form `METHOD url`,
      * where `METHOD` is the HTTP verb to match and `url` is the URL to match.
-     * Note that the URL must start with either "/" or "//".
+     * Note that the URL must start with either `/` or `//`.
      */
-    [url: string]: IResponseStub;
+    [url: string]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
+        => IResponseStub | Request | Response | Promise<IResponseStub | Request | Response>);
 }
 
 /**
@@ -120,34 +183,28 @@ export interface IResponseStub
 
     /**
      * The response status text.
-     * The default is "ok" for status code 200, otherwise "".
+     * The default is `ok` for status code 200, otherwise an empty string.
      */
     statusText?: string;
 
     /**
-     * The response headers, .
-     * The default is {}.
+     * The response headers.
+     * The default is `{ "content-type": "application/json" }` if a body is
+     * specified, or `{}` if no body is specified.
      */
     headers?: MapObject<string>;
 
     /**
-     * The response body, represented as a string.
-     * Note that `body` and `data` cannot both be specified at the same time.
-     * The default is "".
+     * The response body, which if represented as an object, and the content type
+     * is a JSON variant, will be serialized as JSON.
+     * The default is undefined;
      */
-    body?: string;
+    body?: object | string | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>;
 
     /**
-     * The response body, represented as an object that will be serialized as JSON.
-     * Note that `body` and `data` cannot both be specified at the same time.
-     * default is undefined;
-     */
-    data?: any;
-
-    /**
-     * The number of milliseconds to delay the response,
-     * or undefined to respond without delay.
-     * Use this to simulate a realistic response time.
+     * The number of milliseconds to delay the response, in addition to the configured stub latency,
+     * undefined to respond with no additional delay, or null to respond immediately.
+     * The default is undefined;
      */
     delay?: number;
 }

@@ -20,7 +20,7 @@ export class ForwardFocusCustomAttribute
     private readonly _element: HTMLElement;
 
     /**
-     * True or empty string to enable focus forwarding, otherwise false.
+     * True or an empty string to enable focus forwarding, otherwise false.
      * The default is true.
      */
     @bindable({ primaryProperty: true, defaultValue: true })

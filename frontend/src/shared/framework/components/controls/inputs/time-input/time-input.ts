@@ -1,5 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
-import { Duration } from "luxon";
+import { Duration, DateTime, Zone } from "luxon";
 import { TimeValueConverter, TimeFormat } from "shared/localization";
 import { LabelPosition } from "../../control";
 import { AutocompleteHint } from "../input";
@@ -39,6 +39,8 @@ export class TimeInputCustomElement
 
     private readonly _element: HTMLElement;
     private readonly _timeValueConverter: TimeValueConverter;
+    private _nowIntervalHandle: any;
+    private _now: DateTime;
 
     /**
      * The format info for the current locale.
@@ -78,13 +80,13 @@ export class TimeInputCustomElement
     /**
      * Gets the items that satisfy the min and max constraints.
      */
-    @computedFrom("items", "min", "max")
+    @computedFrom("items", "computedMin", "computedMax")
     protected get filteredItems(): Duration[]
     {
         return this.items.filter(item => item == null ||
         (
-            (this.min == null || (this.minInclusive ? item.valueOf() >= this.min.valueOf() : item.valueOf() > this.min.valueOf())) &&
-            (this.max == null || (this.minInclusive ? item.valueOf() <= this.max.valueOf() : item.valueOf() < this.max.valueOf()))
+            (this.computedMin == null || (this.minInclusive ? item.valueOf() >= this.computedMin.valueOf() : item.valueOf() > this.computedMin.valueOf())) &&
+            (this.computedMax == null || (this.minInclusive ? item.valueOf() <= this.computedMax.valueOf() : item.valueOf() < this.computedMax.valueOf()))
         ));
     }
 
@@ -131,11 +133,16 @@ export class TimeInputCustomElement
 
         if (value)
         {
-            const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
-
             // Try to parse the value.
             try
             {
+                if (!this.timeFormat.inputPattern.test(value) || value.length !== 5)
+                {
+                    throw new Error("Invalid time of day.");
+                }
+
+                const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
+
                 if (isNaN(hour) || hour < 0 || hour > 23 || isNaN(minute) || minute < 0 || minute > 59)
                 {
                     throw new Error("Invalid time of day.");
@@ -171,10 +178,68 @@ export class TimeInputCustomElement
     }
 
     /**
+     * The computed min value.
+     */
+    @computedFrom("min", "zone", "_now")
+    protected get computedMin(): Duration | undefined
+    {
+        if (this.min === "now")
+        {
+            return this._now.diff(this._now.startOf("day"));
+        }
+
+        if (typeof this.min === "string")
+        {
+            if (this.min.startsWith("P"))
+            {
+                return Duration.fromISO(this.min);
+            }
+
+            const [hour, minute, second, millisecond] = this.min.split(/:|\./g).map(s => parseInt(s));
+
+            return Duration.fromObject({ hour, minute, second, millisecond });
+        }
+
+        return this.min;
+    }
+
+    /**
+     * The computed max value.
+     */
+    @computedFrom("max", "zone", "_now")
+    protected get computedMax(): Duration | undefined
+    {
+        if (this.max === "now")
+        {
+            return this._now.diff(this._now.startOf("day"));
+        }
+
+        if (typeof this.max === "string")
+        {
+            if (this.max.startsWith("P"))
+            {
+                return Duration.fromISO(this.max);
+            }
+
+            const [hour, minute, second, millisecond] = this.max.split(/:|\./g).map(s => parseInt(s));
+
+            return Duration.fromObject({ hour, minute, second, millisecond });
+        }
+
+        return this.max;
+    }
+
+    /**
      * The position of the label, or undefined to show no label.
      */
     @bindable({ defaultValue: undefined })
     public label: LabelPosition | undefined;
+
+    /**
+     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
+     */
+    @bindable({ defaultValue: "local" })
+    public zone: string | Zone;
 
     /**
      * The time picked by the user, null if the entered value could not be parsed,
@@ -192,19 +257,17 @@ export class TimeInputCustomElement
 
     /**
      * The earliest time that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO8601 time-of-day string,
-     * but once the component is bound, only `Duration` instances are valid.
+     * This may be an ISO 8601 string, the string `now`, or a `Duration` instance.
      */
     @bindable({ defaultValue: undefined })
-    public min: Duration | undefined;
+    public min: string | Duration | "now" | undefined;
 
     /**
      * The latest time that can be selected, or undefined to disable this constraint.
-     * Note that for the initial binding, this can be an ISO8601 time-of-day string,
-     * but once the component is bound, only `Duration` instances are valid.
+     * This may be an ISO 8601 string, the string `now`, or a `Duration` instance.
      */
     @bindable({ defaultValue: undefined })
-    public max: Duration | undefined;
+    public max: string | Duration | "now" | undefined;
 
     /**
      * True to include the min value as a valid value, otherwise false.
@@ -268,17 +331,17 @@ export class TimeInputCustomElement
      */
     public bind(): void
     {
-        if (typeof this.min === "string")
-        {
-            const [hour, minute] = (this.min as string).split(":").map(s => parseInt(s));
-            this.min = Duration.fromObject({ hour, minute });
-        }
+        this._now = DateTime.local().setZone(this.zone);
+        this.scheduleNowRefresh();
+    }
 
-        if (typeof this.max === "string")
-        {
-            const [hour, minute] = (this.max as string).split(":").map(s => parseInt(s));
-            this.max = Duration.fromObject({ hour, minute });
-        }
+    /**
+     * Called by the framework when the component is unbinding.
+     */
+    public unbind(): void
+    {
+        // Stop refreshing the `now` value.
+        clearInterval(this._nowIntervalHandle);
     }
 
     /**
@@ -308,25 +371,28 @@ export class TimeInputCustomElement
     {
         this.open = false;
 
-        if (pick && this.focusedValue !== this.value)
+        if (pick)
         {
-            this.value = this.focusedValue;
-
-            if (this.value !== null)
+            if (this.focusedValue !== this.value)
             {
-                this.enteredValue = undefined;
-                this.isValid = true;
+                this.value = this.focusedValue;
+
+                if (this.value !== null)
+                {
+                    this.enteredValue = undefined;
+                    this.isValid = true;
+                }
+
+                // Dispatch the `input` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+                // Dispatch the `change` event to indicate that the comitted value, has changed.
+                this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
             }
-
-            // Dispatch the `input` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
-
-            // Dispatch the `change` event to indicate that the comitted value, has changed.
-            this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
         else
         {
-            this.focusedValue = this.value;
+            this.focusedValue = this.isValid ? this.value : null;
             this.enteredValue = undefined;
             this.isValid = true;
         }
@@ -448,5 +514,16 @@ export class TimeInputCustomElement
     protected valueChanged(): void
     {
         this.focusedValue = this.value;
+    }
+
+    /**
+     * Schedules updates of the `now` value.
+     */
+    private scheduleNowRefresh(): void
+    {
+        this._nowIntervalHandle = setInterval(() =>
+        {
+            this._now = DateTime.local().setZone(this.zone);
+        }, 1000);
     }
 }

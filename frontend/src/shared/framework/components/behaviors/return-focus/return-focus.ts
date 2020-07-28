@@ -23,7 +23,7 @@ export class ReturnFocusCustomAttribute
     private _lastFocusedElement: HTMLElement | SVGElement;
 
     /**
-     * True or empty string to enable focus return, otherwise false.
+     * True or an empty string to enable focus return, otherwise false.
      * The default is true.
      */
     @bindable({ primaryProperty: true, defaultValue: true })

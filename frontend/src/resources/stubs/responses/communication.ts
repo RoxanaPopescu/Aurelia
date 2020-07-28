@@ -3,7 +3,7 @@ export default
 {
     "POST /api/v1/communication/triggers/list":
     {
-      data:
+      body:
       [
         {
           "id": "trigger-1-id",
@@ -19,7 +19,7 @@ export default
 
     "POST /api/v1/communication/triggers/details":
     {
-      data:
+      body:
       {
         metadata:
         {
@@ -50,7 +50,7 @@ export default
 
     "POST /api/v1/communication/triggers/update":
     {
-      data:
+      body:
       {
         metadata:
         {
@@ -66,7 +66,7 @@ export default
 
     "POST /api/v1/communication/triggers/create":
     {
-      data:
+      body:
       {
         metadata:
         {

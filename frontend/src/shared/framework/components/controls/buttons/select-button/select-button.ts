@@ -89,9 +89,8 @@ export class SelectButtonCustomElement
      * Closes the dropdown, clears the filter value and optionally focuses the toggle icon.
      * Also reverts the focused value if no value was picked.
      * @param focusToggle True to focus the toggle icon, otherwise false.
-     * @param pick True if the user picked a value, otherwise false.
      */
-    protected closeDropdown(focusToggle: boolean, pick = false): void
+    protected closeDropdown(focusToggle: boolean): void
     {
         this.open = false;
         this.focusedValue = null;
@@ -110,7 +109,7 @@ export class SelectButtonCustomElement
     {
         if (this.open)
         {
-            this.closeDropdown(true, true);
+            this.closeDropdown(true);
         }
         else
         {

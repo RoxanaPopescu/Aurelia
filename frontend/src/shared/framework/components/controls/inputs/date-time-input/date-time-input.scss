@@ -1,0 +1,53 @@
+date-time-input
+{
+    display: block;
+
+    > .input-controls > .input-controls-inner
+    {
+        display: flex;
+
+        &.--disabled
+        {
+            opacity: 1;
+        }
+
+        date-input,
+        time-input
+        {
+            flex-grow: 1;
+
+            .--disabled
+            {
+                opacity: 1;
+
+                .input-control > *
+                {
+                    opacity: var(--opacity-disabled);
+                }
+            }
+        }
+
+        date-input
+        {
+            --input-width: 136rem;
+
+            .input-control
+            {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        time-input
+        {
+            --input-width: 104rem;
+
+            .input-control
+            {
+                border-left: none;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}

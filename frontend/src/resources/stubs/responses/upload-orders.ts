@@ -5,7 +5,7 @@ export default
     {
         delay: 1000,
         // status: 204,
-        data:
+        body:
         {
             "errorsByType": [
                 {
@@ -84,7 +84,7 @@ export default
     "POST /api/v1/upload/excel":
     {
         delay: 250,
-        data:
+        body:
         {
             "fileId": "ihgas978678wtkb"
         }

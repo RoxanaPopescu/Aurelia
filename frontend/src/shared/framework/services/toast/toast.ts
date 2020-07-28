@@ -111,7 +111,7 @@ export class Toast<TModel = any, TResult = any>
 
         const compose = this.compose as any;
 
-        if (compose && compose.currentViewModel && compose.currentViewModel.deactivate)
+        if (compose?.currentViewModel?.deactivate)
         {
             try
             {
@@ -130,6 +130,10 @@ export class Toast<TModel = any, TResult = any>
 
                 return false;
             }
+        }
+        else
+        {
+            await Promise.resolve();
         }
 
         const index = this._toasts.findIndex(m => m === this);

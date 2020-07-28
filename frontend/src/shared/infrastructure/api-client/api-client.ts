@@ -209,8 +209,9 @@ export class ApiClient
         mergedOptions.headers =
         {
             ...apiRequestDefaults.headers,
-            ...this._settings.defaults ? this._settings.defaults.headers : undefined,
-            ...options ? options.headers : undefined
+            ...this._settings.defaults?.headers,
+            ...(options?.body == null || options?.body === "" ? { "content-type": undefined } : undefined),
+            ...options?.headers
         };
 
         for (const key of Object.keys(mergedOptions.headers))
@@ -394,7 +395,7 @@ export class ApiClient
         while (current instanceof Request)
         {
             // Apply the interceptors to the request.
-            current = await this.interceptRequest(current);
+            current = await this.interceptRequest(current, options);
 
             if (current instanceof Request)
             {
@@ -402,7 +403,7 @@ export class ApiClient
             }
 
             // Apply the interceptors to the response.
-            current = await this.interceptResponse(current);
+            current = await this.interceptResponse(current, options);
         }
 
         return current;
@@ -543,7 +544,7 @@ export class ApiClient
      */
     private encodeQueryComponent(text: any): string
     {
-        // Encode the text, taking into account that the characters '/' and '?'
+        // Encode the text, taking into account that the characters `/` and `?`
         // do not need to be encoded in the query part of an URL.
         return encodeURIComponent(text.toString()).replace(/%2F/g, "/").replace(/%3F/g, "?");
     }
@@ -562,19 +563,19 @@ export class ApiClient
             return "";
         }
 
-        // If the value is a `Date` instance, convert it to ISO 8601 format.
+        // If the value is a `Date` instance, convert it to ISO-8601 format.
         if (value instanceof Date)
         {
             return value.toISOString();
         }
 
-        // If the value is a `DateTime` instance, convert it to ISO 8601 format.
+        // If the value is a `DateTime` instance, convert it to ISO-8601 format.
         if (value instanceof DateTime)
         {
             return value.toISO();
         }
 
-        // If the value is a `Duration`instance, convert it to ISO 8601 format.
+        // If the value is a `Duration`instance, convert it to ISO-8601 format.
         if (value instanceof Duration)
         {
             return value.toISO();
@@ -592,13 +593,13 @@ export class ApiClient
             return Array.from(value).map(v => this.encodeQueryValue(v, true)).join(",");
         }
 
-        // If the value is a `Map` instance, convert it to a comma-separated list of 'key:value' pairs.
+        // If the value is a `Map` instance, convert it to a comma-separated list of `key:value` pairs.
         if (!isNested && value instanceof Map)
         {
             return Array.from(value).map(([k, v]) => `${k}:${this.encodeQueryValue(v, true)}`).join(",");
         }
 
-        // If the value is an `Object` instance, convert it to comma-separated list of 'key:value' pairs.
+        // If the value is an `Object` instance, convert it to comma-separated list of `key:value` pairs.
         if (!isNested && value instanceof Object)
         {
             return Object.keys(value).map(k => `${k}:${this.encodeQueryValue(value[k], true)}`).join(",");
@@ -611,9 +612,10 @@ export class ApiClient
     /**
      * Applies any registered interceptors to the specified request.
      * @param request The request to intercept.
+     * @param options The request options to use.
      * @returns The request or response to use, or the specified request if not intercepted.
      */
-    private async interceptRequest(request: Request): Promise<Request | Response>
+    private async interceptRequest(request: Request, options: IApiRequestOptions): Promise<Request | Response>
     {
         let current = request;
 
@@ -621,7 +623,7 @@ export class ApiClient
         {
             if (interceptor.request != null)
             {
-                const result = await interceptor.request(current);
+                const result = await interceptor.request(current, options);
 
                 if (result instanceof Request)
                 {
@@ -640,9 +642,10 @@ export class ApiClient
     /**
      * Applies any registered interceptors to the specified response.
      * @param response The response to intercept.
+     * @param options The request options that were used.
      * @returns The response to use, or a new request.
      */
-    private async interceptResponse(response: Response): Promise<Request | Response>
+    private async interceptResponse(response: Response, options: IApiRequestOptions): Promise<Request | Response>
     {
         let current = response;
 
@@ -650,7 +653,7 @@ export class ApiClient
         {
             if (interceptor.response != null)
             {
-                const result = await interceptor.response(current);
+                const result = await interceptor.response(current, options);
 
                 if (result instanceof Response)
                 {

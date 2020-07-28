@@ -1335,6 +1335,6 @@ export default
 {
     "GET /api/v1/routes/details?routeSlug=R32234927583":
     {
-        data: route
+        body: route
     }
 };

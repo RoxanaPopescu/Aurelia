@@ -168,16 +168,19 @@ export class ItemPickerCustomElement
      */
     public changeValue(value: any, pick = false): void
     {
-        // Set the focused value to match the new value.
-        this.focusedValue = value;
+        if (!this.equals(value, this.focusedValue))
+        {
+            // Set the focused value to match the new value.
+            this.focusedValue = value;
 
-        // Dispatch the `input` event to indicate that the focused value, and possibly the value, has changed.
-        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
+            // Dispatch the `input` event to indicate that the focused value, and possibly the value, has changed.
+            this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value } }));
+        }
 
         // Did the user pick the value?
         if (pick)
         {
-            if (this.focusedValue !== this.value)
+            if (!this.equals(this.focusedValue, this.value))
             {
                 // Set the value.
                 this.value = value;
@@ -201,7 +204,7 @@ export class ItemPickerCustomElement
      */
     public scrollToFocusedValue(): void
     {
-        const item = this._items.find(i => i.model === this.focusedValue);
+        const item = this._items.find(i => this.equals(i.model, this.focusedValue));
 
         if (item != null)
         {
@@ -240,7 +243,7 @@ export class ItemPickerCustomElement
      */
     protected focusedValueChanged(): void
     {
-        const item = this._items.find(i => i.model === this.focusedValue);
+        const item = this._items.find(i => this.equals(i.model, this.focusedValue));
 
         if (item != null)
         {
@@ -256,7 +259,7 @@ export class ItemPickerCustomElement
     {
         // Delay updating the empty state, in case some bindings need time to update.
         // This is specifically needed for the case where the content of an item is bound
-        // to the filter value, thereby making it represent a 'New item'.
+        // to the filter value, thereby making it represent a `New item`.
         // tslint:disable-next-line: no-floating-promises
         Promise.resolve().then(() => this.empty = !this._items.some(i => i.visible));
     }
@@ -340,7 +343,7 @@ export class ItemPickerCustomElement
 
             if (this.focusedValue !== undefined)
             {
-                index = this._items.findIndex(i => i.model === this.focusedValue);
+                index = this._items.findIndex(i => this.equals(i.model, this.focusedValue));
             }
             else if (this.none)
             {
@@ -366,5 +369,16 @@ export class ItemPickerCustomElement
 
             event.preventDefault();
         }
+    }
+
+    /**
+     * Determines whether the specified values represent the same primitive value.
+     * @param value1 The first value.
+     * @param value2 The second value.
+     * @returns True if the values represent the same primitive value, otherwise false.
+     */
+    private equals(value1: any, value2: any): boolean
+    {
+        return (value1?.valueOf() ?? value1) === (value2?.valueOf() ?? value2);
     }
 }

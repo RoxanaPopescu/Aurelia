@@ -41,13 +41,13 @@ export default
 {
     "POST /api/v1/ordergroups/tags":
     {
-        data: ["tag-1", "tag-2", "tag-3", "tag-4", "tag-5", "tag-6"]
+        body: ["tag-1", "tag-2", "tag-3", "tag-4", "tag-5", "tag-6"]
     },
 
     "POST /api/v1/ordergroups/list":
     {
         delay: 1000,
-        data:
+        body:
         {
             orderGroups: [orderGroup],
             orderGroupCount: 1
@@ -56,17 +56,17 @@ export default
 
     "POST /api/v1/ordergroups/details":
     {
-        data: orderGroup
+        body: orderGroup
     },
 
     "POST /api/v1/ordergroups/create":
     {
-        data: orderGroup
+        body: orderGroup
     },
 
     "POST /api/v1/ordergroups/update":
     {
-        data: orderGroup
+        body: orderGroup
     },
 
     "POST /api/v1/ordergroups/pause":

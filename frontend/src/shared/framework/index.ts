@@ -25,6 +25,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/dropdown/dropdown-icon"),
         PLATFORM.moduleName("./components/controls/inputs/color-input/color-input"),
         PLATFORM.moduleName("./components/controls/inputs/date-input/date-input"),
+        PLATFORM.moduleName("./components/controls/inputs/date-time-input/date-time-input"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
@@ -107,6 +108,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./converters/scale/scale"),
         PLATFORM.moduleName("./converters/skip/skip"),
         PLATFORM.moduleName("./converters/take/take"),
+        PLATFORM.moduleName("./converters/time-of-day/time-of-day"),
         PLATFORM.moduleName("./converters/trim/trim")
     ]);
 
@@ -133,6 +135,7 @@ export * from "./components/controls/dropdown/dropdown-icon";
 export * from "./components/controls/inputs/input";
 export * from "./components/controls/inputs/color-input/color-input";
 export * from "./components/controls/inputs/date-input/date-input";
+export * from "./components/controls/inputs/date-time-input/date-time-input";
 export * from "./components/controls/inputs/email-input/email-input";
 export * from "./components/controls/inputs/number-input/number-input";
 export * from "./components/controls/inputs/password-input/password-input";
@@ -217,6 +220,7 @@ export * from "./converters/reverse/reverse";
 export * from "./converters/scale/scale";
 export * from "./converters/skip/skip";
 export * from "./converters/take/take";
+export * from "./converters/time-of-day/time-of-day";
 export * from "./converters/trim/trim";
 
 // Services
