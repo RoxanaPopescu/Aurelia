@@ -208,7 +208,7 @@
 
         </div>
 
-        <div class="control-row">
+        <div class="control-row margin-large-bottom">
 
             <text-input label="above" value.bind="model.routeStop.outfit.contactPhone.number" class="flex-basis-1-of-2">
 
@@ -218,6 +218,17 @@
 
             </text-input>
 
+            <text-input label="above" value.bind="model.routeStop.email" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    email
+                </div>
+
+            </text-input>
+        </div>
+
+        <div class="control-row">
+
             <text-input label="above" value.bind="model.routeStop.port" class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
@@ -225,6 +236,11 @@
                 </div>
 
             </text-input>
+
+            <div class="flex-basis-1-of-2">
+
+            </div>
+
         </div>
 
     </modal-section>
@@ -451,6 +467,31 @@
             </check-toggle>
 
         </div>
+
+        <modal-section class=" --line-above">
+
+            <div slot="header" translate>
+                Tags
+            </div>
+
+            <div class="control-row">
+
+                <div class="flex-basis-1-of-1">
+
+                    <div>
+
+                        <tags-input
+                            label="above"
+                            value.bind="model.routeStop.tags"
+                            new.bind="true">
+                        </tags-input>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </modal-section>
 
         <modal-section class="margin-bottom --line-above">
 
