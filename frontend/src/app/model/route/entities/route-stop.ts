@@ -228,7 +228,8 @@ export class RouteStop extends RouteStopBase
             driverInstructions: this.driverInstructions,
             actions: this.actions,
             arrivedTime: this.arrivedTime,
-            completedTime: this.completedTime
+            completedTime: this.completedTime,
+            tags: this.tags
         };
     }
 }

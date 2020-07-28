@@ -151,6 +151,15 @@
             </span>
         </div>
 
+        <div if.bind="model.routeStop.outfit.contactEmail" class="flex-row margin-top">
+            <div class="opacity-faded flex-grow" translate>
+                Email
+            </div>
+            <span class="user-select-text">
+                ${model.routeStop.outfit.contactEmail}
+            </span>
+        </div>
+
         <div if.bind="model.routeStop.outfit.contactPhone" class="flex-row margin-top">
             <div class="opacity-faded flex-grow" translate>
                 Phone
