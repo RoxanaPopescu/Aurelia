@@ -7,9 +7,9 @@ type TemplateStringParts = (Expression | string)[];
 const cache = new Map<string, TemplateStringParts>();
 
 /**
- * Represents an interpolation expression, such as "The price is ${price | currency}",
+ * Represents an interpolation expression, such as `The price is ${price | currency}`,
  * which when evaluated against a binding context results in a formatted string,
- * such as "The price is 42 USD".
+ * such as `The price is 42 USD`.
  */
 @autoinject
 export class TemplateString
@@ -81,7 +81,7 @@ export class TemplateString
 
 /**
  * Represents a parser that parses strings representing interpolation expressions,
- * such as "The price is ${price | currency}".
+ * such as `The price is ${price | currency}`.
  */
 @autoinject
 export class TemplateStringParser

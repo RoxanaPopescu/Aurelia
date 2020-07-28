@@ -252,7 +252,7 @@ export class TreeNavNodeCustomElement
      * Allows the changes to be committed by pressing the `Enter` key, or discarded
      * by pressing the `Escape` key.
      * @param event The keyboard event.
-     * @returns True to not prevent default, otherwise false.
+     * @returns True to continue, false to prevent default.
      */
     protected onTextInputKeyDown(event: KeyboardEvent): boolean
     {

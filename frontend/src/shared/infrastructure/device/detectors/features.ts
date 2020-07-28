@@ -1,5 +1,5 @@
 /**
- * Returns true if 'sessionStorage' is supported and writable, otherwise false.
+ * Returns true if `sessionStorage` is supported and writable, otherwise false.
  */
 export function sessionStorage(): boolean
 {
@@ -18,7 +18,7 @@ export function sessionStorage(): boolean
 }
 
 /**
- * Returns true if 'localStorage' is supported and writable, otherwise false.
+ * Returns true if `localStorage` is supported and writable, otherwise false.
  */
 export function localStorage(): boolean
 {

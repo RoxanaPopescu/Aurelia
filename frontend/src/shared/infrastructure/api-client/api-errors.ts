@@ -140,7 +140,7 @@ export class ApiOriginError extends ApiError<IApiProblem>
  * when the response indicate that an error occurred.
  *
  * This conforms to the RFC-7807 specification for the body of
- * a response with content type "application/problem+json".
+ * a response with content type `application/problem+json`.
  * See: https://datatracker.ietf.org/doc/rfc7807
  */
 export interface IApiProblem
@@ -216,7 +216,7 @@ export class ApiValidationError extends ApiOriginError
  * when the response indicate that validation errors occurred.
  *
  * This conforms to the RFC-7807 specification for the body of
- * a response with content type "application/problem+json".
+ * a response with content type `application/problem+json`.
  * See: https://datatracker.ietf.org/doc/rfc7807
  *
  * Note that this extends the problem details with properties

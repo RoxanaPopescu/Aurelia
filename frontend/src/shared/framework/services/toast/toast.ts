@@ -94,7 +94,7 @@ export class Toast<TModel = any, TResult = any>
     /**
      * Closes the toast.
      * @param reason The reason for closing the toast, which may affect how the toast responds.
-     * Standard reasons include "backdrop-clicked" and "navigation", but it may be anything.
+     * Standard reasons include `backdrop-clicked` and `navigation`, but it may be anything.
      * @returns A promise that will be resolved with true if the toast accepted the close request,
      * or false if it rejected it with a reason other than an `Error` instance.
      */

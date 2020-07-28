@@ -49,11 +49,11 @@ export class ToggleCustomElement
     public model: any;
 
     /**
-     * True if the toggle is in the active state, false if the toggle is in the inactive state,
-     * or undefined if the toggle is in the indeterminate state.
+     * True if the toggle is in the active state, false or undefined if the toggle is
+     * in the inactive state, or null if the toggle is in the indeterminate state.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })
-    public value: boolean | undefined;
+    public value: boolean | null | undefined;
 
     /**
      * True if the toggle is disabled, otherwise false.

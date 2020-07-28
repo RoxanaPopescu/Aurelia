@@ -19,6 +19,9 @@ modal-overlay
     background: var(--surface-color);
     color: var(--surface-text-color);
 
+    // Hint that sizing, layout and paint is contained to this element.
+    contain: strict;
+
     .modal-overlay-content
     {
         // Position at the top-right and allow content to

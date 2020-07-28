@@ -37,7 +37,7 @@ export namespace TextSplitFuncs
 
     /**
      * Splits the specified text using 'kebab-case' rules,
-     * meaning that the text will be split when one or more "-" characters are encountered.
+     * meaning that the text will be split when one or more `-` characters are encountered.
      * @param text The text to split.
      * @param preserveWhitespace True to also extract the separators as whitespace, false to only extract words.
      * @returns The strings extracted from the text.
@@ -49,7 +49,7 @@ export namespace TextSplitFuncs
 
     /**
      * Splits the specified text using 'snake_case' rules,
-     * meaning that the text will be split when one or more "_" characters are encountered.
+     * meaning that the text will be split when one or more `_` characters are encountered.
      * @param text The text to split.
      * @param preserveWhitespace True to also extract the separators as whitespace, false to only extract words.
      * @returns The strings extracted from the text.

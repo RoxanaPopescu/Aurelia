@@ -5,10 +5,13 @@ toast-view
     --private-toast-backdrop-opacity: var(--toast-backdrop-opacity, 0);
 
     // Position along the right edge of the viewport.
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     max-height: 100%;
+
+    // Apply the z-index for toasts.
+    z-index: var(--z-index-toast);
 
     // Apply spacing at the left and bottom, to prevent clipping of the shadow.
     padding-left: 32rem;
@@ -192,7 +195,7 @@ toast-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --toast-view-compose-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }
 
@@ -203,6 +206,6 @@ toast-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --toast-view-compose-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }

@@ -34,8 +34,8 @@
             click.trigger="onToggleClick(event)">
 
         <icon if.bind="value === true" name="md-check-toggle-checked" accent.bind="accent & attr"></icon>
-        <icon if.bind="value === false" name="md-check-toggle-unchecked" accent.bind="accent & attr"></icon>
-        <icon if.bind="value !== true && value !== false" name="md-check-toggle-indeterminate" accent.bind="accent & attr"></icon>
+        <icon if.bind="value === false || value === undefined" name="md-check-toggle-unchecked" accent.bind="accent & attr"></icon>
+        <icon if.bind="value === null" name="md-check-toggle-indeterminate" accent.bind="accent & attr"></icon>
 
         <slot></slot>
 

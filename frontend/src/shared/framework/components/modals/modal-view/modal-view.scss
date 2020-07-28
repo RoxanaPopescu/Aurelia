@@ -62,7 +62,7 @@ modal-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --modal-view-compose-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }
 
@@ -73,6 +73,6 @@ modal-view
         // This is needed to ensure the animation events are triggered.
         // Without it, the `aurelia-animator-css` plugin will misbehave.
         // Note that the enter and leave animations cannot be the same.
-        --modal-view-compose-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }

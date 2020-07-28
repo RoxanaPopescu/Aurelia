@@ -1,6 +1,6 @@
 // Note:
 // The input components in this folder depend on the patch
-// "src/shared/patches/browser/placeholder-shown-api", which
+// `src/shared/patches/browser/placeholder-shown-api`, which
 // provides support for reliable input placeholder detection.
 
 /**
@@ -30,14 +30,14 @@ export type AutocorrectHint =
 
 /**
  * Represents the type of autocapitalization to use for an input.
- * Note that we exclude the values "none" and "on" here to enforce consistency.
+ * Note that we exclude the values `none` and `on` here to enforce consistency.
  */
 export type AutocapitalizeHint =
     "off" | "characters" | "words" | "sentences";
 
 /**
  * Represents the type of spellchecking to use for an input.
- * Note that we include a non-standard "multiline" value here, which means only when the input allows multiple lines.
+ * Note that we include a non-standard `multiline` value here, which means only when the input allows multiple lines.
  */
 export type SpellcheckHint =
     "on" | "off" | "multiline";

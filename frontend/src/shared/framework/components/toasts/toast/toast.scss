@@ -29,6 +29,9 @@ toast
     background: var(--surface-color);
     color: var(--surface-text-color);
 
+    // Hint that layout and paint is contained to this element.
+    contain: content;
+
     .toast-content
     {
         position: relative;

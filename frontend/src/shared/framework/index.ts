@@ -14,6 +14,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/behaviors/empty/empty"),
         PLATFORM.moduleName("./components/behaviors/empty-value/empty-value"),
         PLATFORM.moduleName("./components/behaviors/forward-focus/forward-focus"),
+        PLATFORM.moduleName("./components/behaviors/intersection/intersection"),
         PLATFORM.moduleName("./components/behaviors/scroll/scroll"),
         PLATFORM.moduleName("./components/behaviors/scroll-sentinel/scroll-sentinel"),
         PLATFORM.moduleName("./components/behaviors/surface/surface"),
@@ -121,6 +122,7 @@ export * from "./components/behaviors/autofocus/autofocus";
 export * from "./components/behaviors/empty/empty";
 export * from "./components/behaviors/empty-value/empty-value";
 export * from "./components/behaviors/forward-focus/forward-focus";
+export * from "./components/behaviors/intersection/intersection";
 export * from "./components/behaviors/scroll/scroll";
 export * from "./components/behaviors/scroll-sentinel/scroll-sentinel";
 export * from "./components/behaviors/surface/surface";

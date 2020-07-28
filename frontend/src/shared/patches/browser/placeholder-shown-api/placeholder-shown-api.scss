@@ -20,7 +20,7 @@ select
     // Note that the enter and leave animations cannot be the same.
     from
     {
-        --placeholder-shown-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }
 
@@ -31,6 +31,6 @@ select
     // Note that the enter and leave animations cannot be the same.
     from
     {
-        --placeholder-shown-animation-trigger: not-a-real-value;
+        --animation-trigger: not-a-real-value;
     }
 }

@@ -1,22 +1,10 @@
-:root
+busy-overlay
 {
     --busy-overlay-color: var(--surface-color);
     --busy-overlay-opacity: 0.95;
     --busy-overlay-message-max-width: 65%;
     --busy-overlay-message-text-align: center;
 
-    busy-overlay
-    {
-        --busy-indicator-max-width: 50%;
-        --busy-indicator-max-height: 50%;
-        --busy-indicator-stroke-width: 4rem;
-        --busy-indicator-color: #000000;
-        --busy-indicator-opacity: 0.05;
-    }
-}
-
-busy-overlay
-{
     // Fill the available space.
     position: absolute;
     top: 0;
@@ -102,5 +90,14 @@ busy-overlay
             // does not affect the position of the `busy-indicator`.
             display: none;
         }
+    }
+
+    busy-indicator
+    {
+        --busy-indicator-max-width: 50%;
+        --busy-indicator-max-height: 50%;
+        --busy-indicator-stroke-width: 4rem;
+        --busy-indicator-color: #000000;
+        --busy-indicator-opacity: 0.05;
     }
 }

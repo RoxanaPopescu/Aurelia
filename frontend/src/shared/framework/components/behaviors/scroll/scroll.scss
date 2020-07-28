@@ -15,18 +15,11 @@
     // The timing function to use for opacity transitions.
     --fade-timing-function: ease-out;
 
-    [scroll-fade]
-    {
-        // Apply transition to smoothe opacity changes.
-        transition: opacity var(--fade-duration);
-        transition-timing-function: var(--fade-timing-function);
-    }
-
     // Enable momentum-based scrolling.
     -webkit-overflow-scrolling: touch;
 
     // Prevent pull-to-refresh.
-    overscroll-behavior-y: none;
+    overscroll-behavior: none;
 
     &.disable-hover *
     {
@@ -107,5 +100,12 @@
         {
             display: none;
         }
+    }
+
+    [scroll-fade]
+    {
+        // Apply transition to smoothe opacity changes.
+        transition: opacity var(--fade-duration);
+        transition-timing-function: var(--fade-timing-function);
     }
 }

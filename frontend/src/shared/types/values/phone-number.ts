@@ -10,7 +10,7 @@ export interface IPhoneNumber
     countryCode?: string;
 
     /**
-     * The country calling code, without the "+", or undefined if not known.
+     * The country calling code, without the `+`, or undefined if not known.
      * Note that some countries share the same country calling code.
      */
     countryCallingCode?: string;

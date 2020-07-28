@@ -29,14 +29,14 @@ export function slugify(text: string, strict: boolean, localeCode = document.doc
         .toLocaleLowerCase()
         .replace(/[^\w\s\d-]/g, char =>
         {
-            // Replace any character that would be sorted before "0" with the separator character.
+            // Replace any character that would be sorted before `0` with the separator character.
             // This should include all punctuation characters, etc.
             if (char.localeCompare("0", localeCode, { sensitivity: "base" }) < 0)
             {
                 return "-";
             }
 
-            // For any other character, try to find a matching base character, or default to "?".
+            // For any other character, try to find a matching base character, or default to `?`.
             return baseChars.find(baseChar =>
                 char.localeCompare(baseChar, localeCode, { sensitivity: "base" }) === 0) || "?";
         });

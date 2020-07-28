@@ -21,7 +21,7 @@ export namespace AlphaNumeric
     /**
      * Gets the HEX code for the specified integer value.
      * @param value The integer value, in the range [0, 255].
-     * @returns The HEX code, in the range ["00", "ff"].
+     * @returns The HEX code, in the range [00, ff].
      */
     function getHexCode(value: number): string
     {

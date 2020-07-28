@@ -40,6 +40,9 @@ modal-panel
     // Apply a shadow to the panel.
     box-shadow: var(--shadow-modal);
 
+    // Hint that layout and paint is contained to this element.
+    contain: content;
+
     .modal-panel-content
     {
         // Position at the top and allow content to

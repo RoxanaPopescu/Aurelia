@@ -89,7 +89,7 @@ export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements IT
     public badgeCount?: number;
 
     /**
-     * The sequence of slugs, separated by "/", that identify the node within the tree.
+     * The sequence of slugs, separated by `/`, that identify the node within the tree.
      */
     @computedFrom("parent.path", "slug")
     public get path(): string
@@ -128,7 +128,7 @@ export class TreeNode<TTreeNode extends TreeNode<TTreeNode> = any> implements IT
 
     /**
      * Finds the node matching the specified path.
-     * @param path The sequence of node slugs, separated by "/", that identify the node within the tree.
+     * @param path The sequence of node slugs, separated by `/`, that identify the node within the tree.
      * @returns The matched node, or undefined if not found.
      */
     public find(path: string): this | TTreeNode | undefined;
