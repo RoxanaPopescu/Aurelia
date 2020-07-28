@@ -3,7 +3,7 @@ import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } 
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
 import { Log } from "shared/infrastructure";
 import { ModalService} from "shared/framework";
-import { SignatureImage } from "../../../signature-image/signature-image"
+import { SignatureImage } from "../../modals/signature-image/signature-image"
 
 @autoinject
 export class RouteStopDetailsCustomElement
@@ -76,7 +76,7 @@ export class RouteStopDetailsCustomElement
     {
         try
         {
-            await this._modalService.open(SignatureImage/*, this.model.routeStop*/).promise;
+            await this._modalService.open(SignatureImage, this.model.routeStop).promise;
         }
         catch (error)
         {

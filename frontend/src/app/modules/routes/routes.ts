@@ -56,7 +56,7 @@ export class RoutesModule
                     ]
                 },
                 title: routeTitles.liveTracking,
-                nav: true,
+                nav: false,
                 icon: "route-tracking"
             },
             {
@@ -71,7 +71,8 @@ export class RoutesModule
                     ]
                 },
                 title: routeTitles.liveTracking,
-                nav: false
+                nav: true,
+                icon: "route-tracking"
             },
             {
                 name: "list",

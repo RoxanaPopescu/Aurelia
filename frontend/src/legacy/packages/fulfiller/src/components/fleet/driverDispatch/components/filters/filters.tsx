@@ -175,7 +175,7 @@ export default class extends React.Component<Props, State> {
                 this.setState({ startTimeInSeconds: seconds });
                 this.props.onTopFilterChange();
               }}
-              interval={60}
+              interval={15}
             />
             <TimeComponent
               headline={Localization.operationsValue("Dispatch_TimeEnd")}
@@ -213,7 +213,7 @@ export default class extends React.Component<Props, State> {
                 this.setState({ endTimeInSeconds: seconds });
                 this.props.onTopFilterChange();
               }}
-              interval={60}
+              interval={15}
             />
           </div>
           {this.props.page === "dispatch" && (

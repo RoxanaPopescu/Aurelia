@@ -13,6 +13,15 @@ export class SignatureImage
         this.model = this._model;
     }
 
+    /**
+     * Called by the framework when the modal is activated.
+     * @param model The route and the stop to edit or create.
+     */
+    public activate(model: RouteStop): void
+    {
+        this.model = model;
+    }
+
     private readonly _model: RouteStop
     /**
      * The model for the modal.
