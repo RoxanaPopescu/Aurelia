@@ -338,7 +338,6 @@ export class DetailsModule
      * @param route
      * @param order
      */
-
     protected async onEditRouteClick(route: Route): Promise<void>
     {
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
