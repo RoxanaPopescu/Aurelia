@@ -130,7 +130,7 @@ export default class extends React.Component<Props, State> {
             onChange={seconds => {
               this.setState({ timeFrom: seconds });
             }}
-            interval={60}
+            interval={15}
             error={this.state.validate && !this.state.timeFrom}
           />
           <TimeComponent
@@ -141,7 +141,7 @@ export default class extends React.Component<Props, State> {
             onChange={seconds => {
               this.setState({ timeTo: seconds });
             }}
-            interval={60}
+            interval={15}
             error={this.state.validate && !this.state.timeTo}
           />
         </div>
