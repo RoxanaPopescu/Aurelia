@@ -4,6 +4,7 @@ import { LiveTrackingService } from "../../../services/liveTrackingService";
 import { RouteDriverMarker } from "../../mapFeatures/routeDriverMarker/routeDriverMarker";
 import "./routesLayer.scss";
 import { RouteInfo } from "app/model/route";
+import { DriverMarker } from "../../mapFeatures/driverMarker/driverMarker";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
@@ -30,6 +31,12 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
         {routes.map(r =>
           this.renderRoute(r)
         )}
+
+        { this.props.service.onlineDrivers != null &&
+          this.props.service.onlineDrivers.map(d =>
+            <DriverMarker faded={false} driver={d} key={"online-driver" + d.id} />
+          )
+        }
       </React.Fragment>
     );
   }

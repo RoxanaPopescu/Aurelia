@@ -16,6 +16,7 @@ import { Log } from "shared/infrastructure";
 import { DriversPanel } from "./components/panels/driversPanel/driversPanel";
 import { LiveTrackingService } from "./services/liveTrackingService";
 import { RouteService, RouteStop, Route } from "app/model/route";
+import { Button, ButtonType } from "shared/src/webKit";
 
 export interface ILiveTrackingProps
 {
@@ -103,6 +104,14 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
         </div>
       );
     } else {
+      let driversOnlineTitle = Localization.sharedValue("Map_DriversInArea");
+      if (this.service.loadingDriversInArea) {
+        driversOnlineTitle = Localization.sharedValue("General_Loading");
+      } else if (this.service.onlineDrivers) {
+        driversOnlineTitle = Localization.sharedValue("Map_DriversInArea_Remove")
+          .replace("{count}", this.service.onlineDrivers.length.toString());
+      }
+
       return (
         <div className="c-liveTracking">
           <div>
@@ -146,6 +155,26 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
           </div>
 
           <div className="c-liveTracking-map">
+            <div className="c-liveTracking-map-buttons">
+                  <Button
+                      className="routeDetails-map-fit-button"
+                      type={ButtonType.Light}
+                      disabled={this.service.loadingDriversInArea}
+                      onClick={() => {
+                        if (this.service.onlineDrivers) {
+                          this.service.onlineDrivers = undefined;
+                          return;
+                        }
+
+                        this.service.fetchOnlineDrivers(
+                          this.map.getBounds().getNorthEast(),
+                          this.map.getBounds().getSouthWest()
+                        );
+                      }}>
+                      {driversOnlineTitle}
+                  </Button>
+              </div>
+
             <WorldMap
               onMapReady={map => this.onMapReady(map)}
               onBoundsChanged={() => this.onMapBoundsChanged()}
@@ -159,6 +188,7 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
                 <RouteLayer service={this.service} /> :
                 <RoutesLayer service={this.service} />
               }
+
             </WorldMap>
           </div>
         </div>

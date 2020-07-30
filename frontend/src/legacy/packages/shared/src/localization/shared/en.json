@@ -170,6 +170,8 @@
   "Location_Headline_BestMatched": "BEST MATCHED",
   "Login_VerifyRemoveCurrentLogin": "You currently have a logged in your. Do you want to change your login?",
   "Logout": "Logout",
+  "Map_DriversInArea": "Show drivers in this area",
+  "Map_DriversInArea_Remove": "Remove {count} drivers",
   "Map_ZoomToFit": "Zoom to fit",
   "Menu_Kpi": "KPI",
   "Menu_Order_List": "All orders",

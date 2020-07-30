@@ -52,10 +52,19 @@ export class LiveTrackingService {
   @observable
   selectedDrivers: Driver[] = [];
 
+  @observable
+  onlineDrivers: Driver[] | undefined;
+
   /**
    * True if the service is stopped
    */
   private stopped = false;
+
+  /**
+   * True if the service is loading drivers in the area
+   */
+  @observable
+  public loadingDriversInArea = false;
 
   /**
    * True if the details polling is stopped
@@ -323,6 +332,29 @@ export class LiveTrackingService {
     }
   }
 
+  async fetchOnlineDrivers(northEast: google.maps.LatLng, southWest: google.maps.LatLng) {
+    this.loadingDriversInArea = true;
+
+    let body = {
+      "northEastPosition": { "latitude": northEast.lat(), "longitude": northEast.lng() },
+      "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() }
+    };
+
+    const response = await fetch(
+      BaseService.url("drivers/onlineInArea"),
+      BaseService.defaultConfig(body)
+    );
+
+    this.loadingDriversInArea = false;
+
+    if (!response.ok) {
+      throw new Error("Could not fetch drivers.");
+    }
+
+    const data = await response.json();
+    this.onlineDrivers = data.results.map(r => new Driver(r));
+  }
+
   /**
    * Fetches the tracked routes, then schedules the next poll.
    */
@@ -452,23 +484,6 @@ export class LiveTrackingService {
 
     return drivers;
   }
-
-  /**
-   * Migrates the client-side state of the routes by migrating it to the corresponding new routes.
-   * @param newRoutes The new routes, just fetched from the server.
-   */
-  /*
-  private migrateDetailsState(route: Route): void {
-    if (this._routes != null) {
-      for (const newRoute of newRoutes) {
-        const oldRoute = this._routes.find(r => r.id === newRoute.id);
-        if (oldRoute != null) {
-          oldRoute.migrateState(newRoute);
-        }
-      }
-    }
-  }
-  */
 
   onSelectDriver(driver: Driver) {
     let index = this.selectedDrivers.indexOf(driver);

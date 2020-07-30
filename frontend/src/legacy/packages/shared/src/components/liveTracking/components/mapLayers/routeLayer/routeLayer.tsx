@@ -27,6 +27,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
     for (let d of drivers) {
       items.push(<DriverMarker
         driver={d}
+        faded={true}
         key={`Driver-${d.id}`}
         onClick={driver =>  this.props.service.onSelectDriver(driver)}
       />);

@@ -8,6 +8,7 @@ import { Driver } from "app/model/driver";
 
 export interface DriverMarkerProps {
   driver: Driver;
+  faded: boolean;
   onClick?: (route: Driver) => void;
 }
 
@@ -30,7 +31,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
       >
         <React.Fragment>
 
-          <div className="c-liveTracking-routeDriverMarker --faded">
+          <div className={"c-liveTracking-routeDriverMarker " + this.props.faded ? "--faded" : ""}>
 
             <div
               className={`
@@ -63,7 +64,9 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
         <div className="c-liveTracking-routeDriverMarker-popup user-select-text">
           {this.renderDriverInfo()}
-          {this.renderVehicleInfo()}
+          {this.props.driver.onlineVehicle &&
+            this.renderVehicleInfo()
+          }
         </div>
 
       </Popup>
@@ -126,6 +129,13 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
             <a href={"tel:" + this.props.driver!.phone.toString()}>{this.props.driver!.phone.toString()}</a>
           </div>
+
+          {this.props.driver.position && this.props.driver.position.timestamp &&
+          <div className="c-worldMap-popup-section-row">
+            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PositionTimestamp")}</div>
+            <div>{Localization.formatDateTime(this.props.driver.position.timestamp)}</div>
+          </div>
+        }
 
         </div>
 

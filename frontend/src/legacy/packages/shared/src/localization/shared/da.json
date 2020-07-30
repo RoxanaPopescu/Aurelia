@@ -170,6 +170,8 @@
   "Location_Headline_BestMatched": "BEDST MATCHEDE",
   "Login_VerifyRemoveCurrentLogin": "Du er allerede logged ind. Vil du ændre dit login?",
   "Logout": "Log ud",
+  "Map_DriversInArea": "Vis chauffører i dette areal",
+  "Map_DriversInArea_Remove": "Fjern {count} chauffører",
   "Map_ZoomToFit": "Zoom til at tilpasse",
   "Menu_Kpi": "KPI",
   "Menu_Order_List": "Alle ordre",
