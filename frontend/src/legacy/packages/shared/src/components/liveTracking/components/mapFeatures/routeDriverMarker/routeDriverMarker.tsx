@@ -9,6 +9,7 @@ import { RouteStop, RouteBase } from "app/model/route";
 
 export interface RouteDriverMarkerProps {
   route: RouteBase;
+  faded: boolean;
   onClick?: (route: RouteBase) => void;
 }
 
@@ -66,7 +67,8 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
             <div
               className={`
                 c-liveTracking-routeDriverMarker-base
-                c-liveTracking-routeDriverMarker-${additionalBaseClass}`}
+                c-liveTracking-routeDriverMarker-${additionalBaseClass}
+                ${this.props.faded ? "c-liveTracking-routeDriverMarker-faded" : ""}`}
             >
               {labelText}
 
@@ -116,6 +118,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
   }
 
   private renderDriverInfo() {
+    let problemColor = this.props.route.criticality.slug === "high" ? "routeDetails-color-negative" : "routeDetails-color-warning";
 
     return (
       <React.Fragment>
@@ -144,7 +147,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
           {!this.props.route.driverOnline &&
           <div className="c-worldMap-popup-section-row">
             <div/>
-            <div className="routeDetails-color-negative">{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
+            <div className={problemColor}>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline")}</div>
           </div>
           }
 

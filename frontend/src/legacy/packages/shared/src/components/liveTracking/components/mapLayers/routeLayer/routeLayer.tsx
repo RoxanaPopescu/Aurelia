@@ -89,6 +89,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
         <RouteDriverMarker
           key={`RouteDriverMarker-${GUID.generate()}`}
           route={currentRoute!}
+          faded={false}
           onClick={() => this.onDriverMarkerClick(currentRoute)}
         />}
         {this.renderDrivers()}

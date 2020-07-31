@@ -18,6 +18,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
       <RouteDriverMarker
           key={`RouteDriverMarker-${route.id}`}
           route={route}
+          faded={this.props.service.onlineDrivers != null}
           onClick={route => this.onClick(route)}
         />
     );

@@ -39,6 +39,10 @@
   }
 }
 
+.c-liveTracking-routeDriverMarker-faded {
+  opacity: .3;
+}
+
 .c-liveTracking-routeDriverMarker-driver {
   border-radius: 12px;
   border: 1px solid var(--colorBackgroundPrimaryDarken);

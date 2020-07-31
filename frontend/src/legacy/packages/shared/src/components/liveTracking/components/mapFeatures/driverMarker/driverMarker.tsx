@@ -24,7 +24,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
         icon=" "
         labelAnchor={new google.maps.Point(17, 18)}
         position={this.props.driver.position!.toGoogleLatLng()}
-        zIndex={200}
+        zIndex={500}
         onMouseOver={() => this.showPopup()}
         onMouseOut={() => this.hidePopup()}
         onClick={() => this.props.onClick && this.props.onClick(this.props.driver)}
