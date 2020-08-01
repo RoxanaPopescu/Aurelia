@@ -67,12 +67,12 @@ dropdown
     background: var(--dropdown-surface-color);
     color: var(--dropdown-surface-text-color);
 
-    &[x-placement*="bottom"]
+    &[placement*="bottom"]
     {
         box-shadow: var(--shadow-dropdown-below);
     }
 
-    &[x-placement*="top"]
+    &[placement*="top"]
     {
         box-shadow: var(--shadow-dropdown-above);
     }

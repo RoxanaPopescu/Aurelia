@@ -17,9 +17,6 @@ modal-backdrop
 
     // Prevent clicks from passing through.
     pointer-events: initial;
-
-    // Hint that sizing, layout and paint is contained to this element.
-    contain: strict;
 }
 
 // Animate the backdrop.

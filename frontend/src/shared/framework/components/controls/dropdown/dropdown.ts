@@ -139,6 +139,9 @@ export class DropdownCustomElement
             }
         });
 
+        // Set the `placement` attribute so it can be used for styling.
+        this._element.setAttribute("placement", this.placement);
+
         // Update the visibility and position.
         this.updateVisibilityAndPosition();
     }
