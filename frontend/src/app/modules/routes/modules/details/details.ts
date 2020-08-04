@@ -15,6 +15,7 @@ import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
 import { AddOrderPanel } from './modals/add-order/add-order';
+import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 
 /**
  * Represents the route parameters for the page.
@@ -336,19 +337,27 @@ export class DetailsModule
     /**
      * Called when the `Edit Information` button is clicked.
      * @param route
-     * @param order
      */
     protected async onEditRouteClick(route: Route): Promise<void>
     {
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
     }
-    /**
-     * Called when the `Edit Information` button is clicked.
-     * @param route
-     * @param order
-     */
 
-    protected async onAddOrder(route: Route): Promise<void>
+    /**
+     * Called when the `Remove driver` button is clicked.
+     * @param route
+     */
+    protected async onRemoveDriverClick(route: Route): Promise<void>
+    {
+        // FIXME:
+        await this._modalService.open(RemoveDriverPanel, { route: this.route! }).promise;
+    }
+
+    /**
+     * Called when the `Add order` button is clicked.
+     * @param route
+     */
+    protected async onAddOrderClick(route: Route): Promise<void>
     {
         await this._modalService.open(AddOrderPanel, { route: this.route! }).promise;
     }

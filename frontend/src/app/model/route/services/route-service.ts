@@ -176,7 +176,23 @@ export class RouteService
    }
 
    /**
-     * Edit the specific route
+     * Removes the current driver
+     * @param route
+    */
+   public async removeDriver(route: Route): Promise<void>
+   {
+        await this._apiClient.post("routes/v2/removeDriver",
+        {
+            body:
+            {
+                routeSlug: route.slug,
+                routeId: route.id
+            }
+        });
+   }
+
+   /**
+     * Add an order to the route
      * @param route
     */
    public async addOrder(route: Route, orderSlug: String): Promise<void>

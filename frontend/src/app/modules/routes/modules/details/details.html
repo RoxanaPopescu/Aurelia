@@ -600,8 +600,16 @@
 
                         <item
                             if-claims="edit-routes"
+                            if.bind="route.driver"
+                            click.trigger="onRemoveDriverClick()"
+                            translate>
+                            Remove driver
+                        </item>
+
+                        <item
+                            if-claims="edit-routes"
                             if.bind="route"
-                            click.trigger="onAddOrder()"
+                            click.trigger="onAddOrderClick()"
                             translate>
                             Add order
                         </item>
