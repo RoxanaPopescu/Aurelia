@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { LiveTrackingService } from "../../../../../services/liveTrackingService";
-import { Input, InputCheckbox } from "shared/src/webKit";
+import { Input, InputCheckbox, Icon } from "shared/src/webKit";
 import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
@@ -30,15 +30,12 @@ export class Filters extends React.Component<RoutesLayerProps> {
     const lowCriticalityCount = this.props.service.filteredRoutes.length - highCriticalityCount - mediumCriticalityCount;
 
     return (
-      <React.Fragment>
+      <div className="c-liveTracking-routesPanel-filters-outer ">
         <div className="c-liveTracking-routesPanel-filters">
 
         <div
         onClick={() => this.expanded ? this.expanded = false : this.expanded = true}
-         className="
-        c-liveTracking-routesPanel-filters-info
-        c-liveTracking-box-clickable
-        c-liveTracking-routesPanel-filters
+         className="c-liveTracking-routesPanel-filters-info c-liveTracking-box-clickable
         ">
           <span className="c-liveTracking-routesPanel-filters-criticality">
             <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-negative"}>
@@ -47,33 +44,37 @@ export class Filters extends React.Component<RoutesLayerProps> {
             <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-warning"}>
               {mediumCriticalityCount}
             </span>
-            <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-white"}>
+            <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-gray"}>
               {lowCriticalityCount}
             </span>
           </span>
-          <span>
+          <span className="c-liveTracking-routesPanel-filters-infoRight">
             <div>
-            {Localization.sharedValue("LiveTracking_FiltersEnabled")
-          .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
+              <div className="c-liveTracking-routesPanel-filters-enabledCount">
+              {Localization.sharedValue("LiveTracking_FiltersEnabled")
+            .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
+              </div>
+              <div className="c-liveTracking-routesPanel-filters-count">
+              {Localization.sharedValue("Route_FilterCount")
+            .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
+            .replace("{total_count}", this.props.service.routes.length.toString())}
+              </div>
             </div>
-            <div className="c-liveTracking-routesPanel-filters-count">
-            {Localization.sharedValue("Route_FilterCount")
-          .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
-          .replace("{total_count}", this.props.service.routes.length.toString())}
-            </div>
+            <Icon className="c-livetracking-filter" name="live-tracking-filter"/>
           </span>
         </div>
-
         <Input
           type="search"
+          height="40"
           className="c-liveTracking-routesPanel-filters-input"
           value={this.props.service.filter.searchQuery}
           onChange={value =>
             this.props.service.filter.searchQuery = value || undefined}
-          placeholder={Localization.sharedValue("Input_Placeholder_Filter")}
+          placeholder={Localization.sharedValue("Route_SearchForDriversRoutes")}
         />
         </div>
         {this.expanded &&
+        <div className="c-liveTracking-routesPanel-filters-expandedOuter">
         <div className="c-liveTracking-routesPanel-filters-expanded">
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Criticality")}</div>
@@ -198,8 +199,8 @@ export class Filters extends React.Component<RoutesLayerProps> {
               </InputCheckbox>
             )}
           </div>
-        </div>}
-      </React.Fragment>
+        </div></div>}
+      </div>
     );
   }
 }

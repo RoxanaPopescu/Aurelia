@@ -1,19 +1,21 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-liveTracking-routesPanel-filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
+.c-liveTracking-routesPanel-filters-outer {
+  border-radius: $listItemBorderRadius;
   border-bottom: 1px solid var(--colorNeutralLight);
+}
+
+.c-liveTracking-routesPanel-filters {
+  margin: 20px;
+  font-size: 12px;
 }
 
 .c-liveTracking-routesPanel-filters-badge {
   display: inline-block;
   margin-left: 6px;
-  padding: 1px 3px;
+  padding: 4px 4px;
   min-width: 2em;
-  border-radius: 2px;
+  border-radius: 12px;
   line-height: 1.33;
   font-size: 12px;
   text-align: center;
@@ -21,28 +23,39 @@
   color: white;
 }
 
-.c-liveTracking-routesPanel-filters {
+.c-livetracking-filter {
+  margin-left: 10px;
+  color: var(--colorInteractivePrimary);
+  font-size: 20rem;
+}
+
+.c-liveTracking-routesPanel-filters-infoRight {
   display: flex;
-  justify-content: space-between;
-  padding: 6px;
-  border-radius: $listItemBorderRadius;
-  font-size: 12px;
+  flex-direction: row;
+  align-items: center;
 }
 
 .c-liveTracking-routesPanel-filters-count {
   margin-top: -3px;
   text-align: right;
+  color: var(--colorInteractivePrimary);
+}
+
+.c-liveTracking-routesPanel-filters-enabledCount {
+  color: var(--colorInteractivePrimary);
 }
 
 .c-liveTracking-routesPanel-filters-input {
-  margin-left: 10px;
-  height: 100%;
-  width: 50%;
+  height: 40px;
+  width: 100%;
 }
 
 .c-liveTracking-routesPanel-filters-info {
-  width: 50%;
-  background-color: var(--colorNeutralRegular) !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 14px;
 }
 
 .c-liveTracking-routesPanel-filters-criticality {
@@ -55,15 +68,25 @@
   color: #555;
 }
 
+.c-liveTracking-box-gray {
+  color: white;
+  background-color: #9d9d9d;
+}
+
 .c-liveTracking-routesPanel-filters-title {
-  font-size: 18px;
-  margin-bottom: 10px !important;
+  font-size: 14px;
+  padding-bottom: 5px;
+  margin-bottom: 14px !important;
+  border-bottom: 1px solid var(--colorNeutralLight);
+}
+
+.c-liveTracking-routesPanel-filters-expandedOuter {
+  border-top: 1px solid var(--colorNeutralLight);
+  background-color: #f8f9f9;
 }
 
 .c-liveTracking-routesPanel-filters-expanded {
-  margin: 6px 6px 6px 6px;
-  padding: 10px;
-  background-color: var(--colorNeutralRegular);
+  padding: 20px;
 
   > div {
     > div:not(:last-child) {

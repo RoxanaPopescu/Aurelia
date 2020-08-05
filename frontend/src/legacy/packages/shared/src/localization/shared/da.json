@@ -402,6 +402,7 @@
   "Route_Count": "Antal ruter",
   "Route_FilterCount": "{filtered_count}/{total_count} ruter",
   "Route_Loading": "Henter ruter...",
+  "Route_SearchForDriversRoutes": "Søg efter chauffører eller ruter",
   "Route_Summary_ArrivedAtStop": "Ankommet til stop {number}",
   "Route_Summary_EnRouteToStop": "På vej til stop {number}",
   "Route_TableHeader_Fulfiller": "Logistikpartner",
