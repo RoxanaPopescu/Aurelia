@@ -168,26 +168,6 @@ jobs:
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
-            
-  client-setup-test-proxy:
-    executor: azure-cli/azure-docker
-    steps:
-      - setup-azure-command:
-          account: "Test"
-          resource-group: "test-client-platform"
-      - run:
-          name: Create resources
-          command: az group deployment create
-            -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file .circleci/azure-arm-template.json
-            --parameters
-            dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
-            environment="test"
-            serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
-            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
-            type="proxy"
 
   client-setup-test:
     executor: azure-cli/azure-docker
@@ -208,26 +188,6 @@ jobs:
             dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="client"
-
-  client-setup-production-proxy:
-    executor: azure-cli/azure-docker
-    steps:
-      - setup-azure-command:
-          account: "Production"
-          resource-group: "prod-client-platform"
-      - run:
-          name: Create resources
-          command: az group deployment create
-            -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
-            --template-file .circleci/azure-arm-template.json
-            --parameters
-            dockerImage="DOCKER|dockerbuilds.azurecr.io/client-nginx:latest"
-            environment="prod"
-            serviceName=${PROJECT_NAME}
-            dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
-            dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
-            dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
-            type="proxy"
 
   client-setup-production:
     executor: azure-cli/azure-docker
@@ -445,23 +405,11 @@ workflows:
           requires:
             - client-approve-test
 
-      - client-approve-proxy-test:
-          type: approval
-      - client-setup-test-proxy:
-          requires:
-            - client-approve-proxy-test
-
       - client-approve-production:
           type: approval
       - client-setup-production:
           requires:
             - client-approve-production
-
-      - client-approve-proxy-production:
-          type: approval
-      - client-setup-production-proxy:
-          requires:
-            - client-approve-proxy-production
 
   bff-build-and-deploy:
     jobs:
@@ -480,18 +428,12 @@ workflows:
       - client-deploy-build-production:
           requires:
             - client-build-production
-      - client-production-approval:
-          type: approval
-          requires:
-            - client-build-production
       - client-deploy-production:
           requires:
-            - client-build-production
-            - client-production-approval
+            - client-deploy-build-production
       - sentry-release/sentry-release:
           requires:
             - client-deploy-production
-            - client-production-approval
           sentry-environment: production
           sentry-project: platform
             

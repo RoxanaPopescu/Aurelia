@@ -43,23 +43,20 @@
     "type": {
       "type": "string",
       "defaultValue": "client",
-      "allowedValues": ["proxy", "client", "bff"],
+      "allowedValues": ["client", "bff"],
       "metadata": {
         "description": "What type is this"
       }
     }
   },
   "variables": {
-    "webappNameProxy": "[concat('client-proxy-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "webappNameClient": "[concat('client-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "webappNameBFF": "[concat(parameters('serviceName'), '-', parameters('environment'), '-mover')]",
-    "webappName": "[if(equals(parameters('type'), 'bff'), variables('webappNameBFF'), if(equals(parameters('type'), 'proxy'), variables('webappNameProxy'), variables('webappNameClient')))]",
+    "webappName": "[if(equals(parameters('type'), 'bff'), variables('webappNameBFF'), variables('webappNameClient')))]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNameBuild": "build",
     "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]",
-    "proxyWebappURL": "[concat('https://', variables('webappNameClient'), '.azurewebsites.net')]",
-    "proxyWebappAPI": "[if(equals(parameters('environment'), 'test'), 'https://consignor-bff.mover.systems/api', 'https://consignor-bff.mover.dk/api')]"
   },
   "resources": [
     {
@@ -98,8 +95,6 @@
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
-            "API_URL": "[variables('proxyWebappAPI')]",
-            "CLIENT_URL": "[variables('proxyWebappURL')]"
           }
         },
         {
@@ -135,8 +130,6 @@
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
                 "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
-                "API_URL": "[variables('proxyWebappAPI')]",
-                "CLIENT_URL": "[variables('proxyWebappURL')]"
               }
             }
           ]
@@ -176,8 +169,6 @@
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
                 "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
-                "API_URL": "[variables('proxyWebappAPI')]",
-                "CLIENT_URL": "[variables('proxyWebappURL')]"
               }
             }
           ]
