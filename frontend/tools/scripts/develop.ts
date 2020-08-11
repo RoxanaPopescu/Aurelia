@@ -12,9 +12,13 @@ commander
         "The target locale",
         "en-US")
 
-    .option("--api <url>",
+    .option("--apiLegacy <url>",
         "The URL to which API requests should be proxied, including a trailing `/`",
         "https://bff-v1-test-mover.azurewebsites.net/")
+
+    .option("--api <url>",
+        "The URL to which API requests should be proxied, including a trailing `/`",
+        "https://bff-v2-test-mover.azurewebsites.net/")
 
     .option("--port <number>",
         "The port on which the server should listen",
@@ -72,6 +76,13 @@ const serverOptions: IServerOptions =
         "/api/v1/":
         {
             pathRewrite: { "^/api/v1/": "" },
+            changeOrigin: true,
+            target: commander.apiLegacy,
+            secure: false
+        },
+        "/api/":
+        {
+            pathRewrite: { "^/api/": "" },
             changeOrigin: true,
             target: commander.api,
             secure: false

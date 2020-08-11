@@ -471,9 +471,13 @@
                         Legacy id
                     </div>
 
-                    <div slot="value" empty-value>
+                    <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}" if.bind="route.driver" slot="value" empty-value>
                         ${route.legacyId}
-                    </div>
+                    </a>
+
+                    <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}" if.bind="!route.driver" slot="value" empty-value>
+                        ${route.legacyId}
+                    </a>
 
                 </name-value-pair>
 

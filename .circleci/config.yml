@@ -417,6 +417,10 @@ workflows:
       - bff-deploy-test:
           requires:
             - bff-build-test
+      - bff-build-prod
+      - bff-deploy-prod:
+          requires:
+            - bff-build-prod
 
   client-build-and-deploy:
     jobs:
