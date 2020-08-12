@@ -25,33 +25,27 @@ export class RouteTemplateService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route templates.
      */
-    public async getAll(signal?: AbortSignal): Promise<{ templates: RouteTemplateInfo[]; templateCount: number }>
+    public async getAll(signal?: AbortSignal): Promise<RouteTemplateInfo[]>
     {
-        const result = await this._apiClient.post("route-templates/list",
+        const result = await this._apiClient.post("routes/templates/list",
         {
-            body:
-            {
-            },
             signal
         });
 
-        return {
-            templates: result.data.templates.map((data: any) => new RouteTemplateInfo(data)),
-            templateCount: result.data.templateCount
-        };
+        return result.data.results.map((data: any) => new RouteTemplateInfo(data));
     }
 
     /**
      * Gets the specified route template.
-     * @param id The ID identifying the route template.
+     * @param slug The slug identifying the route template.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the route template.
      */
-    public async get(id: string, signal?: AbortSignal): Promise<RouteTemplate>
+    public async get(slug: string, signal?: AbortSignal): Promise<RouteTemplate>
     {
-        const result = await this._apiClient.post("route-templates/details",
+        const result = await this._apiClient.post("routes/templates/details",
         {
-            body: { id },
+            body: { slug },
             signal
         });
 
@@ -65,12 +59,13 @@ export class RouteTemplateService
      */
     public async create(routeTemplate: Partial<RouteTemplate>): Promise<void>
     {
-        const result = await this._apiClient.post("route-templates/create",
+        const result = await this._apiClient.post("routes/templates/create",
         {
             body: routeTemplate
         });
 
         routeTemplate.id = result.data.id;
+        routeTemplate.slug = result.data.slug;
     }
 
     /**

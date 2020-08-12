@@ -21,8 +21,8 @@ export class RouteTemplateStop
             this.type = new RouteStopType(data.type);
             this.consignee = new Consignee(data.consignee);
             this.requirements = data.requirements;
-            this.instructions = data.instructions;
-            this.port = data.port;
+            this.driverInstructions = data.driverInstructions;
+            this.gate = data.gate;
             this.arrivalTimeFrame = new TimeRange(data.arrivalTimeFrame);
         }
         else
@@ -73,12 +73,12 @@ export class RouteTemplateStop
     /**
      * The instructions associated with the stop.
      */
-    public instructions: string | undefined;
+    public driverInstructions: string | undefined;
 
     /**
-     * The port the driver should use, if any.
+     * The gate the driver should use, if any.
      */
-    public port: number | undefined;
+    public gate: number | undefined;
 
     /**
      * The time frame within which the driver is should arrive at the stop.
@@ -103,8 +103,8 @@ export class RouteTemplateStop
             type: this.type.slug,
             consigneeId: this.consignee.id,
             requirements: this.requirements,
-            instructions: this.instructions,
-            port: this.port,
+            instructions: this.driverInstructions,
+            port: this.gate,
             arrivalTimeFrame: this.arrivalTimeFrame
         };
     }
@@ -120,8 +120,8 @@ export class RouteTemplateStop
             type: this.type.slug,
             consignee: this.consignee,
             requirements: this.requirements,
-            instructions: this.instructions,
-            port: this.port,
+            instructions: this.driverInstructions,
+            port: this.gate,
             arrivalTimeFrame: this.arrivalTimeFrame
         })));
     }

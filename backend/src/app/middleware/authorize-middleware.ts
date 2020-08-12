@@ -33,11 +33,13 @@ export class User
 
         this.username = jwtObject["unique_name"];
 
-        this.outfitId = jwtObject["primary-outfit"];
+        // We add hypons to the GUID - this should be removed in the future
+        this.outfitId = jwtObject["primary-outfit"].replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
 
+        // We convert the claim
         this.permissions = new Set<string>(Object.keys(jwtObject)
             .filter(key => jwtObject[key] === "true")
-            .map(key => key.replace(/([^A-Z\s])([A-Z])/g, "$1 $2").toLowerCase().split(/\s+/).join("-")));
+            .map(key => key.toLowerCase().split(/\s+/).join("-")));
 
         // tslint:enable
     }
@@ -117,7 +119,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                     throw new AuthorizationError("The request did not contain a valid JWT.");
                 }
 
-                if (permissions.some(permission => context.user!.permissions.has(permission)))
+                if (!permissions.some(permission => context.user!.permissions.has(permission)))
                 {
                     throw new AuthorizationError("The request contained a JWT with insufficient permissions.");
                 }

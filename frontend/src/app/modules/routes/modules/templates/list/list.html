@@ -47,34 +47,34 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
                                 Reference
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
-                                Consignor
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                Start date
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                End date
+                                Id
                             </span>
                         </data-table-cell>
 
                     </data-table-headers>
 
-                    <template repeat.for="template of templates">
+                    <template repeat.for="template of results">
 
                         <data-table-row
-                            href="/routes/templates/details/${template.id}">
+                            href="/routes/templates/details/${template.slug}">
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${template.name}
+                                </span>
+                            </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
@@ -84,19 +84,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${template.consignor.primaryName}
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${template.startDateTime | dateTime: 'narrow' : false}
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${template.endDateTime | dateTime: 'narrow' : false}
+                                    ${template.slug}
                                 </span>
                             </data-table-cell>
 
@@ -106,9 +94,9 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="templates == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="templates.length == 0" class="margin-largest">
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 

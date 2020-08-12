@@ -36,7 +36,7 @@
                         Delete template
                     </button>
 
-                    <button if.bind="template && !template.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                    <button if.bind="template && !template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                         Create template
                     </button>
 
@@ -55,37 +55,77 @@
                     <page-section>
 
                         <div slot="header" translate>
-                            Route information
+                            Template information
                         </div>
 
                         <div class="control-row margin-large-bottom">
 
-                            <text-input label="above" class="flex-grow" value.bind="template.reference">
+                            <text-input label="above" class="flex-grow" value.bind="template.name">
 
                                 <div slot="heading" translate>
-                                    Route reference
+                                    Name
                                 </div>
 
                                 <div slot="validation">
 
                                     <required-validator
-                                        value.bind="template.reference">
+                                        value.bind="template.name">
                                     </required-validator>
 
                                 </div>
 
                             </text-input>
 
+                        </div>
+
+                        <text-input label="above" lines.bind="3" value.bind="template.description">
+
+                            <div slot="heading" translate>
+                                Description
+                            </div>
+
+                        </text-input>
+
+                    </page-section>
+
+                    <page-section>
+
+                        <div slot="header" translate>
+                            Route information
+                        </div>
+
+                        <div class="control-row margin-large-bottom">
+
+                            <select-input label="above" none.bind="false" value.bind="template.vehicleType" display-value.bind="template.vehicleType.name" class="flex-basis-1-of-2">
+
+                                <div slot="heading" translate>
+                                    Vehicle type
+                                </div>
+
+                                <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                                    ${vehicleType.name}
+                                </item>
+
+                                <div slot="validation">
+
+                                    <required-validator
+                                        value.bind="template.vehicleType">
+                                    </required-validator>
+
+                                </div>
+
+                            </select-input>
+
                             <select-input
                                 label="above"
                                 class="flex-grow"
-                                value.bind="template.consignor"
-                                display-value.bind="template.consignor.primaryName"
+                                value.bind="template.routeOwner"
+                                display-value.bind="template.routeOwner.primaryName"
                                 none.bind="false"
                                 filter="auto">
 
                                 <div slot="heading" translate>
-                                    Consignor
+                                    Route owner
                                 </div>
 
                                 <item repeat.for="consignor of consignors" model.bind="consignor">
@@ -95,7 +135,7 @@
                                 <div slot="validation">
 
                                     <required-validator
-                                        value.bind="template.consignor">
+                                        value.bind="template.routeOwner">
                                     </required-validator>
 
                                 </div>
@@ -106,39 +146,13 @@
 
                         <div class="control-row margin-large-bottom">
 
-                            <select-input
-                                label="above"
-                                class="flex-grow"
-                                value.bind="template.routeCreationTime"
-                                display-value.translate="${template.routeCreationTime} ${template.routeCreationTime | plural: 'day in advance' : 'days in advance'}"
-                                none.bind="false"
-                                filter="auto">
+                            <text-input label="above" class="flex-grow" value.bind="template.reference">
 
                                 <div slot="heading" translate>
-                                    Route creation time
+                                    Reference
                                 </div>
 
-                                <item model.bind="1" translate>
-                                    1 day in advance
-                                </item>
-
-                                <item model.bind="7" translate>
-                                    7 days in advance
-                                </item>
-
-                                <item model.bind="30" translate>
-                                    30 days in advance
-                                </item>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.routeCreationTime">
-                                    </required-validator>
-
-                                </div>
-
-                            </select-input>
+                            </text-input>
 
                             <number-input label="above" class="flex-grow" value.bind="template.price.amount">
 
@@ -154,64 +168,10 @@
 
                         </div>
 
-                        <div class="control-row margin-large-bottom">
-
-                            <date-input label="above" class="flex-grow" value.bind="template.startDateTime" max.bind="template.endDateTime" max-inclusive.bind="false">
-
-                                <div slot="heading" translate>
-                                    Recurrence start
-                                </div>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.startDateTime">
-                                    </required-validator>
-
-                                    <range-validator
-                                        value.bind="template.startDateTime"
-                                        max.bind="template.endDateTime"
-                                        max-inclusive.bind="false">
-
-                                        <template replace-part="invalid-max" translate>
-                                            Please choose a time before the end time.
-                                        </template>
-
-                                    </range-validator>
-
-                                </div>
-
-                            </date-input>
-
-                            <date-input label="above" class="flex-grow" value.bind="template.endDateTime" min.bind="template.startDateTime" min-inclusive.bind="false">
-
-                                <div slot="heading" translate>
-                                    Recurrence end
-                                </div>
-
-                                <div slot="validation">
-
-                                    <range-validator
-                                        value.bind="template.endDateTime"
-                                        min.bind="template.startDateTime"
-                                        min-inclusive.bind="false">
-
-                                        <template replace-part="invalid-min" translate>
-                                            Please choose a time after the start time.
-                                        </template>
-
-                                    </range-validator>
-
-                                </div>
-
-                            </date-input>
-
-                        </div>
-
                         <text-input label="above" lines.bind="3" value.bind="template.instructions">
 
                             <div slot="heading" translate>
-                                Instructions
+                                Driver instructions
                             </div>
 
                         </text-input>
@@ -453,19 +413,10 @@
 
                         </data-table>
 
-                        <div if.bind="hasInvalidStopCount || hasInvalidFirstStop || hasInvalidLastStop || hasInvalidReturnStop" class="font-small margin-top">
+                        <div if.bind="hasInvalidFirstStop || hasInvalidLastStop || hasInvalidReturnStop" class="font-small margin-top">
 
                             <custom-validator
-                                valid.bind="!hasInvalidStopCount">
-
-                                <template replace-part="invalid" translate>
-                                    The route must have at least two stops.
-                                </template>
-
-                            </custom-validator>
-
-                            <custom-validator
-                                valid.bind="!hasInvalidFirstStop || hasInvalidStopCount">
+                                valid.bind="!hasInvalidFirstStop">
 
                                 <template replace-part="invalid" translate>
                                     The first stop must be a pickup stop.
@@ -474,7 +425,7 @@
                             </custom-validator>
 
                             <custom-validator
-                                valid.bind="!hasInvalidLastStop || hasInvalidStopCount">
+                                valid.bind="!hasInvalidLastStop">
 
                                 <template replace-part="invalid" translate>
                                     The last stop cannot be a pickup stop.
@@ -483,7 +434,7 @@
                             </custom-validator>
 
                             <custom-validator
-                                valid.bind="!hasInvalidReturnStop || hasInvalidStopCount">
+                                valid.bind="!hasInvalidReturnStop">
 
                                 <template replace-part="invalid" translate>
                                     Only the last stop can be a return stop.

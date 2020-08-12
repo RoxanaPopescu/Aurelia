@@ -4,7 +4,7 @@ import { RouteStatus } from "./route-status";
 /**
  * Represents the recurrence settings to use for a template.
  */
-export class RouteRecurrence
+export class RouteTemplateSchedule
 {
     /**
      * Creates a new instance of the type.

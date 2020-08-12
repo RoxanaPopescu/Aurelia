@@ -1,5 +1,5 @@
 import { RouteTemplateInfo } from "./route-template-info";
-import { RouteRecurrence } from "./route-recurrence";
+import { RouteTemplateSchedule } from "./route-template-schedule";
 import { RouteTemplateStop } from "./route-template-stop";
 
 /**
@@ -17,20 +17,20 @@ export class RouteTemplate extends RouteTemplateInfo
 
         if (data != null)
         {
-            this.recurrence = data.recurrence.map(r => new RouteRecurrence(r));
+            this.schedules = data.recurrence.map(r => new RouteTemplateSchedule(r));
             this.stops = data.stops.map(s => new RouteTemplateStop(s));
         }
         else
         {
-            this.recurrence = Array(7).fill(null).map(i => new RouteRecurrence());
+            this.schedules = [];
             this.stops = [];
         }
     }
 
     /**
-     * The recurrence settings to use for the template.
+     * The schedules settings to use for the template.
      */
-    public recurrence: RouteRecurrence[];
+    public schedules: RouteTemplateSchedule[];
 
     /**
      * The stops to use for routes based on this template.

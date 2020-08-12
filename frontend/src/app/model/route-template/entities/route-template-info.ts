@@ -1,6 +1,6 @@
-import { DateTime, Duration } from "luxon";
-import { Fulfiller, Consignor } from "app/model/outfit";
 import { ICurrencyValue } from "shared/types/values/currency-value";
+import { Outfit, Consignor } from "app/model/outfit";
+import { VehicleType } from "app/model/vehicle";
 
 export class RouteTemplateInfo
 {
@@ -13,17 +13,15 @@ export class RouteTemplateInfo
         if (data != null)
         {
             this.id = data.id;
+            this.slug = data.slug;
+            this.ownerId = data.ownerId;
+            this.routeOwner = new Consignor(data.routeOwner);
+            this.name = data.name;
+            this.description = data.description;
             this.reference = data.reference;
-            this.consignor = new Fulfiller(data.consignor);
             this.price = data.price;
-            this.routeCreationTime = data.routeCreationTime;
-            this.startDateTime = DateTime.fromISO(data.startDateTime, { setZone: true });
-            this.endDateTime = DateTime.fromISO(data.endDateTime, { setZone: true });
-            this.instructions = data.instructions;
-        }
-        else
-        {
-            this.price = { currencyCode: "DKK" };
+            this.driverInstructions = data.driverInstructions;
+            this.vehicleType = VehicleType.get(data.vehicleTypeId);
         }
     }
 
@@ -33,37 +31,59 @@ export class RouteTemplateInfo
     public id: string;
 
     /**
+     * The ID of the route template.
+     */
+    public slug: string;
+
+    /**
+     * The ID of the route template owner.
+     */
+    public ownerId: string;
+
+    /**
+     * The ID of the route owner.
+     */
+    public routeOwner: Outfit;
+
+    /**
+     * The name of the route template.
+     */
+    public name: string;
+
+    /**
+     * The description of the route template.
+     */
+    public description?: string;
+
+    /**
+     * The type of vehicle required for the route.
+     */
+    public readonly vehicleType: VehicleType;
+
+    /**
      * The reference to use for routes based on this template.
      */
     public readonly reference: string;
 
     /**
-     * The consignor to use for routes based on this template.
-     */
-    public readonly consignor: Consignor;
-
-    /**
      * The price, ex. VAT, to use for routes based on this template.
      */
-    public price: Partial<ICurrencyValue>;
+    public price?: Partial<ICurrencyValue>;
 
     /**
-     * The date and time at which this template starts generating routes.
+     * The driver instructions to use for routes based on this template.
      */
-    public readonly startDateTime: DateTime;
+    public driverInstructions: string | undefined;
 
     /**
-     * The date and time at which this template stops generating routes.
+     * Gets the data representing this instance.
      */
-    public readonly endDateTime: DateTime;
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+        data.routeOwnerId = this.routeOwner.id;
+        data.vehicleTypeId = this.vehicleType.id;
 
-    /**
-     * The time before a route starts, at which this template should generate the route.
-     */
-    public readonly routeCreationTime: Duration;
-
-    /**
-     * The instructions to use for routes based on this template.
-     */
-    public instructions: string | undefined;
+        return data;
+    }
 }

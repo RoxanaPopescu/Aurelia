@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { IScroll } from "shared/framework";
 import { RouteTemplateService, RouteTemplateInfo } from "app/model/route-template";
+import { Log } from "shared/infrastructure";
 
 /**
  * Represents the page.
@@ -26,6 +27,11 @@ export class ListPage
     protected scroll: IScroll;
 
     /**
+     * True if initial loading failed
+     */
+    protected failed: boolean = false;
+
+    /**
      * The most recent update operation.
      */
     protected fetchOperation: Operation;
@@ -38,7 +44,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected templates: RouteTemplateInfo[];
+    protected results?: RouteTemplateInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -48,11 +54,15 @@ export class ListPage
         // Create and execute the new operation.
         this.fetchOperation = new Operation(async signal =>
         {
-            // Fetch the data.
-            const result = await this._routeTemplateService.getAll(signal);
+            this.failed = false;
 
-            // Update the state.
-            this.templates = result.templates;
+            try {
+                const result = await this._routeTemplateService.getAll(signal);
+                this.results = result;
+            } catch (error) {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.\n", error);
+            }
         });
     }
 
