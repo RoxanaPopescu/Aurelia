@@ -129,7 +129,7 @@ jobs:
           command: mkdir -p workspace
       - run:
           name: Prepare docker image file for workspace
-          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+          command: echo ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io/${BACKEND_NAME}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
           root: workspace
           paths:
