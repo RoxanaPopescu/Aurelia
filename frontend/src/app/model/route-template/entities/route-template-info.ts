@@ -1,6 +1,7 @@
 import { ICurrencyValue } from "shared/types/values/currency-value";
 import { Outfit, Consignor } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
+import { Metadata } from "app/model/shared";
 
 export class RouteTemplateInfo
 {
@@ -22,6 +23,7 @@ export class RouteTemplateInfo
             this.price = data.price;
             this.driverInstructions = data.driverInstructions;
             this.vehicleType = VehicleType.get(data.vehicleTypeId);
+            this.metadata = new Metadata(data.metadata);
         }
     }
 
@@ -54,6 +56,11 @@ export class RouteTemplateInfo
      * The description of the route template.
      */
     public description?: string;
+
+    /**
+     * The metadata for the entity.
+     */
+    public metadata: Metadata | undefined;
 
     /**
      * The type of vehicle required for the route.

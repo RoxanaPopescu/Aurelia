@@ -14,20 +14,17 @@ export class Metadata
     {
         if (data != null)
         {
-            if (data.created != null)
-            {
-                this.created = DateTime.fromISO(data.created);
-            }
+            this.created = DateTime.fromISO(data.created);
+            this.createdById = data.createdById;
 
             if (data.createdBy != null)
             {
                 this.createdBy = new UserInfo(data.createdBy);
             }
 
-            if (data.lastModified != null)
-            {
-                this.lastModified = DateTime.fromISO(data.lastModified);
-            }
+
+            this.lastModified = DateTime.fromISO(data.lastModified);
+            this.lastModifiedById = data.lastModifiedById;
 
             if (data.lastModifiedBy != null)
             {
@@ -39,7 +36,7 @@ export class Metadata
     /**
      * The date at which the entity was last modified.
      */
-    public readonly created?: DateTime;
+    public readonly created: DateTime;
 
     /**
      * The user who last modified the entity.
@@ -47,12 +44,22 @@ export class Metadata
     public readonly createdBy?: UserInfo;
 
     /**
+     * The user who last modified the entity.
+     */
+    public readonly createdById: string;
+
+    /**
      * The date at which the entity was last modified.
      */
-    public readonly lastModified?: DateTime;
+    public readonly lastModified: DateTime;
 
     /**
      * The user who last modified the entity.
      */
     public readonly lastModifiedBy?: UserInfo;
+
+    /**
+     * The user who last modified the entity.
+     */
+    public readonly lastModifiedById: string;
 }

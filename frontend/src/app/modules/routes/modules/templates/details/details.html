@@ -1,14 +1,17 @@
 <template>
 
     <require from="./details.scss"></require>
+    <require from="./modules/general/general"></require>
+    <require from="./modules/stops/stops"></require>
+    <require from="./modules/schedules/schedules"></require>
 
     <page name="templates-details" validation validation.ref="validation">
 
         <page-content scroll>
 
-            <page-header scroll-fade class="flex-row">
+            <page-header scroll-fade>
 
-                <h1 class="font-largest">
+                <h1 class="font-largest margin-bottom">
                     <path-nav>
 
                         <a accent="inherit" href="/routes" translate>
@@ -30,438 +33,60 @@
                     </path-nav>
                 </h1>
 
-                <toolbar class="flex-push-right">
+                <toolbar>
 
-                    <button if.bind="template && template.id" appearance="outline" accent="primary" click.trigger="onDeleteClick()" translate>
-                        Delete template
-                    </button>
+                    <tab-nav appearance="solid" value.bind="tab">
 
-                    <button if.bind="template && !template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                        Create template
-                    </button>
+                        <tab name="general" invalid.bind="generalValidation.invalid" translate>
+                            General
+                        </tab>
 
-                    <button if.bind="template && template.id" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                        Save template
-                    </button>
+                        <tab name="stops" translate>
+                            Stops
+                        </tab>
+
+                        <tab name="schedules" translate>
+                            Schedules
+                        </tab>
+
+                    </tab-nav>
+
+                    <div class="flex-push-right control-row">
+
+                        <button if.bind="template && template.id" appearance="outline" accent="primary" click.trigger="onDeleteClick()" translate>
+                            Delete template
+                        </button>
+
+                        <button if.bind="template && !template.id && tab === 'general'" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Create template
+                        </button>
+
+                        <button if.bind="template && template.id && tab === 'general'" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Save template
+                        </button>
+
+                    </div>
 
                 </toolbar>
 
             </page-header>
 
-            <div class="flex-row">
-
-                <div class="route-template-details-column">
-
-                    <page-section>
-
-                        <div slot="header" translate>
-                            Template information
-                        </div>
-
-                        <div class="control-row margin-large-bottom">
-
-                            <text-input label="above" class="flex-grow" value.bind="template.name">
-
-                                <div slot="heading" translate>
-                                    Name
-                                </div>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.name">
-                                    </required-validator>
-
-                                </div>
-
-                            </text-input>
-
-                        </div>
-
-                        <text-input label="above" lines.bind="3" value.bind="template.description">
-
-                            <div slot="heading" translate>
-                                Description
-                            </div>
-
-                        </text-input>
-
-                    </page-section>
-
-                    <page-section>
-
-                        <div slot="header" translate>
-                            Route information
-                        </div>
-
-                        <div class="control-row margin-large-bottom">
-
-                            <select-input label="above" none.bind="false" value.bind="template.vehicleType" display-value.bind="template.vehicleType.name" class="flex-basis-1-of-2">
-
-                                <div slot="heading" translate>
-                                    Vehicle type
-                                </div>
-
-                                <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
-                                    ${vehicleType.name}
-                                </item>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.vehicleType">
-                                    </required-validator>
-
-                                </div>
-
-                            </select-input>
-
-                            <select-input
-                                label="above"
-                                class="flex-grow"
-                                value.bind="template.routeOwner"
-                                display-value.bind="template.routeOwner.primaryName"
-                                none.bind="false"
-                                filter="auto">
-
-                                <div slot="heading" translate>
-                                    Route owner
-                                </div>
-
-                                <item repeat.for="consignor of consignors" model.bind="consignor">
-                                    ${consignor.primaryName}
-                                </item>
-
-                                <div slot="validation">
-
-                                    <required-validator
-                                        value.bind="template.routeOwner">
-                                    </required-validator>
-
-                                </div>
-
-                            </select-input>
-
-                        </div>
-
-                        <div class="control-row margin-large-bottom">
-
-                            <text-input label="above" class="flex-grow" value.bind="template.reference">
-
-                                <div slot="heading" translate>
-                                    Reference
-                                </div>
-
-                            </text-input>
-
-                            <number-input label="above" class="flex-grow" value.bind="template.price.amount">
-
-                                <div slot="heading" translate>
-                                    Price ex. VAT
-                                </div>
-
-                                <span slot="after" class="opacity-faded">
-                                    ${template.price.currencyCode}
-                                </span>
-
-                            </number-input>
-
-                        </div>
-
-                        <text-input label="above" lines.bind="3" value.bind="template.instructions">
-
-                            <div slot="heading" translate>
-                                Driver instructions
-                            </div>
-
-                        </text-input>
-
-                    </page-section>
-
-                    <page-section class="route-recurrence-section --line-above">
-
-                        <div slot="header" translate>
-                            Route recurrence
-                        </div>
-
-                        <div class="control-row margin-large-bottom --all-days">
-
-                            <check-toggle label="after" value.bind="allDays.enabled" change.trigger="onAllDaysRecurrenceChanged('enabled')">
-
-                                <div slot="heading" translate>
-                                    All days
-                                </div>
-
-                            </check-toggle>
-
-                            <select-input
-                                label="above"
-                                value.bind="allDays.driver"
-                                display-value.bind="allDays.driver.name"
-                                none.bind="false"
-                                change.trigger="onAllDaysRecurrenceChanged('driver')"
-                                class="flex-grow">
-
-                                <div slot="heading" translate>
-                                    Driver
-                                </div>
-
-                                <item repeat.for="driver of drivers" model.bind="driver">
-                                    ${driver.name}
-                                </item>
-
-                            </select-input>
-
-                            <span translate>or</span>
-
-                            <select-input
-                                label="above"
-                                value.bind="allDays.status"
-                                display-value.bind="allDays.status.name"
-                                none.bind="false"
-                                change.trigger="onAllDaysRecurrenceChanged('status')"
-                                class="flex-grow">
-
-                                <div slot="heading" translate>
-                                    Status
-                                </div>
-
-                                <item repeat.for="status of statuses" model.bind="status">
-                                    ${status.name}
-                                </item>
-
-                            </select-input>
-
-                        </div>
-
-                        <hr class="hr-line margin-large-bottom">
-
-                        <div repeat.for="i of 7" class="control-row margin-bottom">
-
-                            <check-toggle
-                                label="after"
-                                value.bind="template.recurrence[i].enabled"
-                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'enabled')">
-
-                                <div slot="heading">
-                                    ${i + 1 | weekday}
-                                </div>
-
-                            </check-toggle>
-
-                            <select-input
-                                disabled.bind="!template.recurrence[i].enabled"
-                                none.bind="false"
-                                value.bind="template.recurrence[i].driver"
-                                display-value.bind="template.recurrence[i].driver.name"
-                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'driver')"
-                                class="flex-grow">
-
-                                <item repeat.for="driver of drivers" model.bind="driver">
-                                    ${driver.name}
-                                </item>
-
-                            </select-input>
-
-                            <span translate>or</span>
-
-                            <select-input
-                                disabled.bind="!template.recurrence[i].enabled"
-                                none.bind="false"
-                                value.bind="template.recurrence[i].status"
-                                display-value.bind="template.recurrence[i].status.name"
-                                change.trigger="onWeekdayRecurrenceChanged(template.recurrence[i], 'status')"
-                                class="flex-grow">
-
-                                <item repeat.for="status of statuses" model.bind="status">
-                                    ${status.name}
-                                </item>
-
-                            </select-input>
-
-                        </div>
-
-                    </page-section>
-
-                </div>
-
-                <div class="route-template-details-column">
-
-                    <page-section>
-
-                        <div slot="header" translate>
-                            Route stops
-                        </div>
-
-                        <data-table
-                            appearance="cards"
-                            sorting.bind="sorting"
-                            busy.bind="updateOperation.pending"
-                            move.call="onMoveStop(source, target)">
-
-                            <data-table-headers>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Stop
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Address
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Type
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Consignee phone
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Requirements
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell align="right">
-                                    <span class="text-truncate" translate>
-                                        Port
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate" translate>
-                                        Arrival time
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell align="right">
-                                    <!-- Icons -->
-                                </data-table-cell>
-
-                            </data-table-headers>
-
-                            <data-table-row repeat.for="stop of template.stops" model.bind="stop">
-
-                                <data-table-cell>
-                                    <div class="route-template-stop-number">
-                                        ${$index + 1}
-                                    </div>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${stop.location.address}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${stop.type.name}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${stop.consignee.contactPhone}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${stop.activeRequirementNames | list: 'short' : 'unit'}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell align="right">
-                                    <span class="text-truncate">
-                                        ${stop.port}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell>
-                                    <span class="text-truncate">
-                                        ${stop.arrivalTimeFrame | timeRange}
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell align="right">
-
-                                    <div class="icon-row">
-
-                                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
-                                            <icon name="edit-small"></icon>
-                                        </button>
-
-                                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
-                                            <icon name="delete-small"></icon>
-                                        </button>
-
-                                    </div>
-
-                                </data-table-cell>
-
-                            </data-table-row>
-
-                        </data-table>
-
-                        <div if.bind="hasInvalidFirstStop || hasInvalidLastStop || hasInvalidReturnStop" class="font-small margin-top">
-
-                            <custom-validator
-                                valid.bind="!hasInvalidFirstStop">
-
-                                <template replace-part="invalid" translate>
-                                    The first stop must be a pickup stop.
-                                </template>
-
-                            </custom-validator>
-
-                            <custom-validator
-                                valid.bind="!hasInvalidLastStop">
-
-                                <template replace-part="invalid" translate>
-                                    The last stop cannot be a pickup stop.
-                                </template>
-
-                            </custom-validator>
-
-                            <custom-validator
-                                valid.bind="!hasInvalidReturnStop">
-
-                                <template replace-part="invalid" translate>
-                                    Only the last stop can be a return stop.
-                                </template>
-
-                            </custom-validator>
-
-                        </div>
-
-                        <empty-indicator if.bind="template.stops.length == 0" class="margin-large-top">
-                            <div slot="heading" translate>No stops</div>
-                        </empty-indicator>
-
-                        <button
-                            if.bind="template.stops != null"
-                            appearance="outline"
-                            accent="primary"
-                            class="margin-large-top"
-                            click.trigger="onAddStopClick()">
-                            <icon name="md-add" class="font-larger line-height-1">
-                        </button>
-
-                    </page-section>
-
-                </div>
-
-            </div>
+            <general
+                show.bind="tab === 'general'"
+                template.bind="template"
+                validation
+                validation.ref="generalValidation">
+            </general>
+
+            <stops
+                show.bind="tab === 'stops'"
+                template.bind="template">
+            </stops>
+
+            <schedules
+                show.bind="tab === 'schedules'"
+                template.bind="template">
+            </schedules>
 
         </page-content>
 

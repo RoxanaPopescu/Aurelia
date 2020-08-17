@@ -1,8 +1,8 @@
 import { TimeRange } from "shared/types/index";
-import { Consignee } from "app/model/outfit";
 import { Location } from "app/model/shared";
 import { RouteStopType } from "app/model/route";
 import requirementNames from "./resources/strings/requirement-names.json";
+import { Contact } from "app/model/shared/entities/contact";
 
 /**
  * Represents a stop defined in a route template.
@@ -19,7 +19,7 @@ export class RouteTemplateStop
         {
             this.location = new Location(data.location);
             this.type = new RouteStopType(data.type);
-            this.consignee = new Consignee(data.consignee);
+            this.contact = new Contact(data.contact);
             this.requirements = data.requirements;
             this.driverInstructions = data.driverInstructions;
             this.gate = data.gate;
@@ -28,7 +28,7 @@ export class RouteTemplateStop
         else
         {
             this.location = new Location();
-            this.consignee = new Consignee();
+            this.contact = new Contact();
             this.requirements =
             {
                 photo: false,
@@ -53,9 +53,9 @@ export class RouteTemplateStop
     public type: RouteStopType;
 
     /**
-     * The consignee associated witht the stop.
+     * The contact associated witht the stop.
      */
-    public consignee: Consignee;
+    public contact: Contact;
 
     /**
      * The requirements associated with the stop.
@@ -101,7 +101,7 @@ export class RouteTemplateStop
         return {
             location: this.location,
             type: this.type.slug,
-            consigneeId: this.consignee.id,
+            contact: this.contact,
             requirements: this.requirements,
             instructions: this.driverInstructions,
             port: this.gate,
@@ -118,7 +118,7 @@ export class RouteTemplateStop
         {
             location: this.location,
             type: this.type.slug,
-            consignee: this.consignee,
+            contact: this.contact,
             requirements: this.requirements,
             instructions: this.driverInstructions,
             port: this.gate,

@@ -4,7 +4,7 @@ import { RouteTemplateStop } from "app/model/route-template";
 import { RouteStopType } from "app/model/route";
 
 @autoinject
-export class StopDetailsPanelCustomElement
+export class TemplateStopDetailsPanel
 {
     /**
      * Creates a new instance of the type.

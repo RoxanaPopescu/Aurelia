@@ -1,0 +1,189 @@
+<template>
+
+    <require from="app/components/info-icon/info-icon"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+
+    <require from="./stops.scss"></require>
+
+    <page-section>
+
+        <div class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            Stops
+        </div>
+
+        <div translate>
+            Here you can add or edit stops for this template
+        </div>
+
+    </page-section>
+
+    <page-section class="--line-above">
+
+        <data-table
+            appearance="cards"
+            sorting.bind="sorting"
+            busy.bind="updateOperation.pending"
+            move.call="onMoveStop(source, target)">
+
+            <data-table-headers>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Stop
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Address
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Type
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Consignee phone
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Requirements
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <span class="text-truncate" translate>
+                        Port
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Arrival time
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <!-- Icons -->
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <data-table-row repeat.for="stop of template.stops" model.bind="stop">
+
+                <data-table-cell>
+                    <div class="route-template-stop-number">
+                        ${$index + 1}
+                    </div>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${stop.location.address}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${stop.type.name}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${stop.consignee.contactPhone}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${stop.activeRequirementNames | list: 'short' : 'unit'}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+                    <span class="text-truncate">
+                        ${stop.port}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${stop.arrivalTimeFrame | timeRange}
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell align="right">
+
+                    <div class="icon-row">
+
+                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
+                            <icon name="edit-small"></icon>
+                        </button>
+
+                        <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
+                            <icon name="delete-small"></icon>
+                        </button>
+
+                    </div>
+
+                </data-table-cell>
+
+            </data-table-row>
+
+        </data-table>
+
+        <div if.bind="hasInvalidFirstStop || hasInvalidLastStop || hasInvalidReturnStop" class="font-small margin-top">
+
+            <custom-validator
+                valid.bind="!hasInvalidFirstStop">
+
+                <template replace-part="invalid" translate>
+                    The first stop must be a pickup stop.
+                </template>
+
+            </custom-validator>
+
+            <custom-validator
+                valid.bind="!hasInvalidLastStop">
+
+                <template replace-part="invalid" translate>
+                    The last stop cannot be a pickup stop.
+                </template>
+
+            </custom-validator>
+
+            <custom-validator
+                valid.bind="!hasInvalidReturnStop">
+
+                <template replace-part="invalid" translate>
+                    Only the last stop can be a return stop.
+                </template>
+
+            </custom-validator>
+
+        </div>
+
+        <empty-indicator if.bind="template.stops.length == 0" class="margin-large-top">
+            <div slot="heading" translate>No stops</div>
+        </empty-indicator>
+
+        <button
+            if.bind="template.stops != null"
+            appearance="outline"
+            accent="primary"
+            class="margin-large-top"
+            click.trigger="onAddStopClick()">
+            <icon name="md-add" class="font-larger line-height-1">
+        </button>
+
+    </page-section>
+
+</template>

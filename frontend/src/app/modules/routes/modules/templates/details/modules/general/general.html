@@ -1,0 +1,124 @@
+<template>
+
+    <require from="app/components/info-icon/info-icon"></require>
+    <require from="./general.scss"></require>
+
+    <page-section>
+
+        <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            General
+        </h1>
+
+        <div class="margin-large-bottom" translate>
+            Here you can specify the general settings for this template.
+        </div>
+
+        <text-input class="margin-large-bottom" label="above" value.bind="template.name">
+
+            <div slot="heading" translate>
+                Name of the template
+            </div>
+
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="template.name">
+                </required-validator>
+
+            </div>
+
+        </text-input>
+
+        <text-input label="above" lines.bind="3" value.bind="template.description">
+
+            <div slot="heading" translate>
+                Description
+            </div>
+
+        </text-input>
+
+    </page-section>
+
+    <page-section class="--line-above">
+
+        <div slot="header" translate>
+            Route information
+        </div>
+
+        <div class="margin-large-bottom" translate>
+            Here you can specify the route information for this template
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <select-input label="above" none.bind="false" value.bind="template.vehicleType" display-value.bind="template.vehicleType.name" class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Vehicle type
+                </div>
+
+                <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                    ${vehicleType.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="template.vehicleType">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <select-input
+                label="above"
+                class="flex-grow"
+                value.bind="template.routeOwner"
+                display-value.bind="template.routeOwner.primaryName"
+                none.bind="false"
+                filter="auto">
+
+                <div slot="heading" translate>
+                    Route owner
+                </div>
+
+                <item repeat.for="consignor of consignors" model.bind="consignor">
+                    ${consignor.primaryName}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="template.routeOwner">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <text-input label="above" class="flex-grow" value.bind="template.reference">
+
+                <div slot="heading" translate>
+                    Reference
+                </div>
+
+            </text-input>
+
+        </div>
+
+        <text-input label="above" lines.bind="3" value.bind="template.instructions">
+
+            <div slot="heading" translate>
+                Driver instructions
+            </div>
+
+        </text-input>
+
+    </page-section>
+
+</template>
