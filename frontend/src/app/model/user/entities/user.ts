@@ -19,7 +19,7 @@ export class User
         this.email = data.email;
         this.outfitId = data.outfitId;
         this.role = new RoleInfo({ id: data.roleId, name: data.roleName });
-        this.status = new UserStatus(data.status.name);
+        this.status = new UserStatus(data.status);
         this.canDeactivate = data.canDeactivate;
         this.canActivate = data.canActivate;
     }

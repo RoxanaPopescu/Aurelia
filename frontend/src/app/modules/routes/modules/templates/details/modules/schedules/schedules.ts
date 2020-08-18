@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, bindable } from "aurelia-framework";
 import { RouteTemplate, RouteTemplateSchedule } from "app/model/route-template";
 import { RouteStatus } from "app/model/route";
 
@@ -12,6 +12,7 @@ export class Schedules
     /**
      * The template to present.
      */
+    @bindable
     protected template: RouteTemplate;
 
     /**

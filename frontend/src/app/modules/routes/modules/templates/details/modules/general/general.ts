@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, bindable} from "aurelia-framework";
 import { RouteTemplate } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
 import { Session } from "shared/src/model/session";
@@ -33,6 +33,7 @@ export class General
     /**
      * The template to present.
      */
+    @bindable
     protected template: RouteTemplate;
 
     /**

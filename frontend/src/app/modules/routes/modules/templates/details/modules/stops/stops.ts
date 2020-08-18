@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, bindable } from "aurelia-framework";
 import { RouteTemplate, RouteTemplateStop, RouteTemplateService } from "app/model/route-template";
 import { ModalService, ToastService, IValidation } from "shared/framework";
 import { TemplateStopDetailsPanel } from "./modals/stop-details/stop-details";
@@ -37,6 +37,7 @@ export class Stops
     /**
      * The template to present.
      */
+    @bindable
     protected template: RouteTemplate;
 
     /**

@@ -339,7 +339,7 @@ export namespace SubPage {
       case SubPage.UsersCreate:
         return NavigationPage.path("Users") + "/create";
       case SubPage.UsersManagement:
-        return NavigationPage.path("Users") + "/management/:page";
+        return NavigationPage.path("Users");
       case SubPage.UsersDetails:
         return NavigationPage.path("Users") + "/details/:id";
       case SubPage.FulfillerKpiFulfillers:

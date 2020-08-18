@@ -80,7 +80,7 @@ export class RouteTemplateService
             body: routeTemplate
         });
 
-        routeTemplate.id = result.data.id;
+        routeTemplate.slug = result.data.slug;
     }
 
     /**

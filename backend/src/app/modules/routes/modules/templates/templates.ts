@@ -62,9 +62,32 @@ export class RouteTemplatesModule extends AppModule
 
             let body = context.request.body;
             body.ownerId = context.user?.outfitId;
-            body.changedBy = context.user?.id;
+            body.lastModifiedById = context.user?.id;
 
             const routesResult = await this.apiClient.post("routetemplate/create",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Creates a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/update", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.lastModifiedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/update",
             {
                 body: body
             });
