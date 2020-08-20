@@ -61,6 +61,11 @@ export class DetailsPage
     protected fetchOperation: Operation;
 
     /**
+     * If the template is being created / updated.
+     */
+    protected saving: boolean = false;
+
+    /**
      * The template to present.
      */
     protected template: RouteTemplate;
@@ -81,8 +86,11 @@ export class DetailsPage
             // Create and execute the new operation.
             this.fetchOperation = new Operation(async signal =>
             {
-                // Fetch the data.
-                this.template = await this._routeTemplateService.get(params.id!, signal);
+                try {
+                    this.template = await this._routeTemplateService.get(params.id!, signal);
+                } catch (error) {
+                    Log.error("An error occurred while loading the details.\n", error);
+                }
             });
         }
         else
@@ -146,6 +154,7 @@ export class DetailsPage
         try
         {
             let toastHeading: string;
+            this.saving = true;
 
             if (!this.template.id)
             {
@@ -160,6 +169,7 @@ export class DetailsPage
                 toastHeading = toast["heading-updated"];
             }
 
+            this.saving = false;
             this._toastService.open("info",
             {
                 "heading": toastHeading
@@ -167,6 +177,7 @@ export class DetailsPage
         }
         catch (error)
         {
+            this.saving = false;
             Log.error("Could not save template", error);
         }
 

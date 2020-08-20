@@ -75,7 +75,7 @@ export class RouteTemplateService
      */
     public async update(routeTemplate: RouteTemplate): Promise<void>
     {
-        const result = await this._apiClient.post("route-templates/update",
+        const result = await this._apiClient.post("routes/templates/update",
         {
             body: routeTemplate
         });
@@ -90,7 +90,7 @@ export class RouteTemplateService
      */
     public async delete(id: string): Promise<void>
     {
-        await this._apiClient.post("route-templates/delete",
+        await this._apiClient.post("routes/templates/delete",
         {
             body: { id }
         });

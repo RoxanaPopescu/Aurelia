@@ -1,4 +1,4 @@
-import { autoinject, bindable} from "aurelia-framework";
+import { autoinject, bindable, computedFrom} from "aurelia-framework";
 import { RouteTemplate } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
 import { Session } from "shared/src/model/session";
@@ -40,6 +40,26 @@ export class General
      * The available consignors.
      */
     protected consignors: Consignor[];
+
+    /**
+     * The current consignor.
+     */
+    @computedFrom("consignors", "template.routeOwnerId")
+    protected get currentRouteOwner(): undefined | Consignor
+    {
+        if (this.template == null || this.template.routeOwnerId == null || this.consignors == null) {
+            return undefined
+        }
+
+        return this.consignors.find(c => c.id === this.template.routeOwnerId);
+    }
+
+    protected set currentRouteOwner(consignor: undefined | Consignor)
+    {
+        if (this.template != null && consignor != null) {
+            this.template.routeOwnerId = consignor?.id;
+        }
+    }
 
     /**
      * The available vehicle types.

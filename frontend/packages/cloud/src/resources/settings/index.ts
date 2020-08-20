@@ -25,7 +25,7 @@ export default
              * We should cache them for a while, as resources rarely change and are unlikely to
              * break things if outdated - and if they do, we can renaming them.
              */
-            artifact: 7 * 24 * 60 * 60, // 7 days
+            artifact: 30 * 24 * 60 * 60, // 30 days
 
             /**
              * Static files are unversioned files that are not produced by the build process.

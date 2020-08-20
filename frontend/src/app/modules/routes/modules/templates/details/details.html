@@ -57,12 +57,22 @@
                             Delete template
                         </button>
 
-                        <button if.bind="template && !template.id && tab === 'general'" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                            Create template
+                        <button if.bind="template && !template.id && tab === 'general'" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                            <span translate if.bind="!saving">
+                                Create template
+                            </span>
+                            <span translate if.bind="saving">
+                                Creating template...
+                            </span>
                         </button>
 
-                        <button if.bind="template && template.id && tab === 'general'" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                            Save template
+                        <button if.bind="template && template.id && tab === 'general'" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                            <span translate if.bind="!saving">
+                                Save template
+                            </span>
+                            <span translate if.bind="saving">
+                                Updating template...
+                            </span>
                         </button>
 
                     </div>

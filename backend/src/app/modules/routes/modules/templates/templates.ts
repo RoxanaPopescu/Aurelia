@@ -62,7 +62,7 @@ export class RouteTemplatesModule extends AppModule
 
             let body = context.request.body;
             body.ownerId = context.user?.outfitId;
-            body.lastModifiedById = context.user?.id;
+            body.changedById = context.user?.id;
 
             const routesResult = await this.apiClient.post("routetemplate/create",
             {
@@ -85,7 +85,7 @@ export class RouteTemplatesModule extends AppModule
 
             let body = context.request.body;
             body.ownerId = context.user?.outfitId;
-            body.lastModifiedById = context.user?.id;
+            body.changedById = context.user?.id;
 
             const routesResult = await this.apiClient.post("routetemplate/update",
             {
@@ -95,6 +95,28 @@ export class RouteTemplatesModule extends AppModule
             context.internal();
 
             context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Deletes a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/delete", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            await this.apiClient.post("routetemplate/delete",
+            {
+                body: body
+            });
+
+            context.internal();
+
             context.response.status = 200;
         });
     }

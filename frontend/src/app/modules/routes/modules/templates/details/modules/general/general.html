@@ -74,8 +74,8 @@
             <select-input
                 label="above"
                 class="flex-grow"
-                value.bind="template.routeOwner"
-                display-value.bind="template.routeOwner.primaryName"
+                value.bind="currentRouteOwner"
+                display-value.bind="currentRouteOwner.primaryName"
                 none.bind="false"
                 filter="auto">
 
@@ -90,7 +90,7 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="template.routeOwner">
+                        value.bind="currentRouteOwner">
                     </required-validator>
 
                 </div>
@@ -111,7 +111,7 @@
 
         </div>
 
-        <text-input label="above" lines.bind="3" value.bind="template.instructions">
+        <text-input label="above" lines.bind="3" value.bind="template.driverInstructions">
 
             <div slot="heading" translate>
                 Driver instructions

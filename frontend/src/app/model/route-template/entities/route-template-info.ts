@@ -1,5 +1,4 @@
 import { ICurrencyValue } from "shared/types/values/currency-value";
-import { Outfit, Consignor } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
 import { Metadata } from "app/model/shared";
 
@@ -16,7 +15,7 @@ export class RouteTemplateInfo
             this.id = data.id;
             this.slug = data.slug;
             this.ownerId = data.ownerId;
-            this.routeOwner = new Consignor(data.routeOwner);
+            this.routeOwnerId = data.routeOwnerId;
             this.name = data.name;
             this.description = data.description;
             this.reference = data.reference;
@@ -45,7 +44,7 @@ export class RouteTemplateInfo
     /**
      * The ID of the route owner.
      */
-    public routeOwner: Outfit;
+    public routeOwnerId: string;
 
     /**
      * The name of the route template.
@@ -88,7 +87,6 @@ export class RouteTemplateInfo
     public toJSON(): any
     {
         const data = { ...this } as any;
-        data.routeOwnerId = this.routeOwner.id;
         data.vehicleTypeId = this.vehicleType.id;
 
         return data;

@@ -17,7 +17,7 @@ export class RouteTemplate extends RouteTemplateInfo
 
         if (data != null)
         {
-            this.schedules = data.recurrence.map(r => new RouteTemplateSchedule(r));
+            this.schedules = data.schedules.map(r => new RouteTemplateSchedule(r));
             this.stops = data.stops.map(s => new RouteTemplateStop(s));
         }
         else
