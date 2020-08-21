@@ -36,6 +36,11 @@ export class Stops
     protected validation: IValidation;
 
     /**
+     * The data table element.
+     */
+    protected dataTableElement: HTMLElement;
+
+    /**
      * The template to present.
      */
     @bindable
@@ -70,17 +75,29 @@ export class Stops
      * Called when the "Add stop" button is clicked.
      * Opens at modal for creating a new stop.
      */
-    protected async onAddStopClick(): Promise<void>
+    protected async onAddStopClick(index?: number): Promise<void>
     {
-        const newStop = await this._modalService.open(TemplateStopDetailsPanel, { template: this.template }).promise;
+        let stopNumber: number;
+        if (index != null) {
+            // Index exist, 1-index it since it's stopNumber
+            stopNumber = index + 1;
+        } else {
+            // End of list, since it's a stopNumber we add one to the list length
+            stopNumber = this.template.stops.length + 1;
+        }
 
-        if (newStop != null)
+        const newStop = new RouteTemplateStop(undefined, stopNumber);
+        const savedStop = await this._modalService.open(TemplateStopDetailsPanel, { template: this.template, stop: newStop }).promise;
+
+        if (savedStop != null)
         {
-            this.template.stops.push(newStop);
-
-            if (this.validation.active)
+            if (index != null)
             {
-                this.validate().catch();
+                this.template.stops.splice(index, 0, savedStop);
+            }
+            else
+            {
+                this.template.stops.push(savedStop);
             }
         }
     }
@@ -110,14 +127,26 @@ export class Stops
      * @param source The stop being moved.
      * @param target The stop currently occupying the target position.
      */
-    protected onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): void
+    protected async onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): Promise<void>
     {
-        // FIXME: NETWORK!
+        try
+        {
+            const sourceIndex = this.template.stops.indexOf(source);
+            const targetIndex = this.template.stops.indexOf(target);
 
-        const sourceIndex = this.template.stops.indexOf(source);
-        const targetIndex = this.template.stops.indexOf(target);
+            const stop = this.template.stops[sourceIndex];
+            await this._routeTemplateService.moveStop(
+                this.template,
+                stop,
+                targetIndex
+            );
 
-        this.template.stops.splice(targetIndex, 0, ...this.template.stops.splice(sourceIndex, 1));
+            this.template.stops.splice(targetIndex, 0, ...this.template.stops.splice(sourceIndex, 1));
+        }
+        catch (error)
+        {
+            Log.error("Could not delete the stop", error);
+        }
     }
 
     /**

@@ -53,9 +53,9 @@ export class TemplateStopDetailsPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { template: RouteTemplate, stop?: RouteTemplateStop}): void
+    public activate(model: { template: RouteTemplate, stop: RouteTemplateStop}): void
     {
-        this.model = model.stop?.clone() ?? new RouteTemplateStop();
+        this.model = model.stop.clone();
         this.template = model.template;
     }
 

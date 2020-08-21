@@ -106,6 +106,7 @@ export class RouteTemplateService
     {
         let json = stop.toJSON();
         json.templateId = template.id;
+        json.atIndex = stop.stopNumber - 1;
 
         const result = await this._apiClient.post("routes/templates/stops/add",
         {
@@ -151,7 +152,7 @@ export class RouteTemplateService
      * @param newIndex The index to which the stop should be moved.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async moveRouteStop(template: RouteTemplate, stop: RouteTemplateStop, newIndex: number): Promise<void>
+    public async moveStop(template: RouteTemplate, stop: RouteTemplateStop, newIndex: number): Promise<void>
     {
         const sourceIndex = template.stops.indexOf(stop);
 

@@ -15,15 +15,15 @@
                 <span if.bind="!model.id">
 
                     <span if.bind="model.stopNumber - 1 !== template.stops.length && model.stopNumber !== 1" translate>
-                        New stop after stop ${model.routeStop.stopNumber - 1}
+                        New stop after stop ${model.stopNumber - 1}
                     </span>
 
                     <span if.bind="model.stopNumber - 1 === template.stops.length" translate>
-                        New stop at the end of the route
+                        New stop at the end of the template
                     </span>
 
                     <span if.bind="model.stopNumber === 1" translate>
-                        New stop at the beginning of the route
+                        New stop at the beginning of the template
                     </span>
 
                 </span>
