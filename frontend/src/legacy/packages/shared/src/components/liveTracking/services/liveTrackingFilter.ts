@@ -36,13 +36,13 @@ export class LiveTrackingFilter {
     public products: ProductTypeSlug[] = [];
 
     /**
-     * The statues to show
+     * The statuses to show
      */
     @observable
     public statuses: RouteStatusSlug[] = [];
 
     /**
-     * The statues to show
+     * The vehicle types to show
      */
     @observable
     public vehicleTypes: string[] = [];

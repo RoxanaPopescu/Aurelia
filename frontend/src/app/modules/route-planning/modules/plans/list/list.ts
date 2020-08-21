@@ -203,7 +203,7 @@ export class ListPage
                         createdDateFrom: this.createdDateFromFilter,
                         createdDateTo: this.createdDateToFilter?.endOf("day"),
                         searchQuery: this.textFilter,
-                        statues: this.statusFilter
+                        statuses: this.statusFilter
                     },
                     this.sorting,
                     this.paging,

@@ -1,0 +1,87 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./create-route.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="create-route" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
+                Create route from template
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-larger-bottom">
+
+                <date-input label="above" value.bind="date" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="date">
+                        </required-validator>
+
+                    </div>
+
+                </date-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input label="above" none.bind="false" value.bind="status" display-value.bind="status.name" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Status
+                    </div>
+
+                    <item repeat.for="status of statuses" model.bind="status">
+                        ${status.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="status">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="driverId" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Driver (FIXME SELEC )
+                    </div>
+
+                </text-input>
+
+
+            </div>
+
+
+        </modal-section>
+
+        <button appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
+            Create route FIXME - toast
+        </button>
+
+    </modal-panel>
+
+</template>

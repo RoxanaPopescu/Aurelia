@@ -15,6 +15,7 @@ export class RouteTemplateSchedule
         if (data != null)
         {
             this.enabled = data.enabled;
+            this.id = data.id;
 
             if (data.driver != null)
             {
@@ -31,6 +32,11 @@ export class RouteTemplateSchedule
             this.enabled = false;
         }
     }
+
+    /**
+     * The ID of the route template schedule.
+     */
+    public id: string;
 
     /**
      * True if this recurrence is enabled, otherwise false.

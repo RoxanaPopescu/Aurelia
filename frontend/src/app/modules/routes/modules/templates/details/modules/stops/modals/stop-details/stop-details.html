@@ -12,13 +12,33 @@
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
-                <span if.bind="isNew" translate>
-                    New stop
+                <span if.bind="!model.id">
+
+                    <span if.bind="model.stopNumber - 1 !== template.stops.length && model.stopNumber !== 1" translate>
+                        New stop after stop ${model.routeStop.stopNumber - 1}
+                    </span>
+
+                    <span if.bind="model.stopNumber - 1 === template.stops.length" translate>
+                        New stop at the end of the route
+                    </span>
+
+                    <span if.bind="model.stopNumber === 1" translate>
+                        New stop at the beginning of the route
+                    </span>
+
                 </span>
 
-                <span if.bind="!isNew" translate>
-                    Edit stop
-                </span>
+                <path-nav if.bind="model.id">
+
+                    <a accent="inherit" click.trigger="onCancel()" translate>
+                        Stop ${model.stopNumber}
+                    </a>
+
+                    <div translate>
+                        Edit
+                    </div>
+
+                </path-nav>
 
             </h1>
 
@@ -110,15 +130,15 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.consignee.personName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.contact.fullName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Name
+                        Full name
                     </div>
 
                 </text-input>
 
-                <text-input label="above" value.bind="model.consignee.companyName" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="model.contact.companyName" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Company
@@ -130,29 +150,42 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="model.consignee.contactPhone.number" class="flex-basis-1-of-2">
+                <phone-input label="above" value.bind="model.contact.phoneNumber" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Phone number
                     </div>
 
-                </text-input>
+                </phone-input>
 
-                <text-input label="above" value.bind="model.port" class="flex-basis-1-of-2">
+                <email-input label="above" value.bind="model.contact.email" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Port
+                        Email
+                    </div>
+
+                </email-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input label="above" value.bind="model.gate" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Gate
                     </div>
 
                 </text-input>
+
             </div>
 
             <div class="control-row">
 
-                <text-input label="above" lines.bind="3" value.bind="model.instructions" class="flex-basis-1-of-1">
+                <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Instructions
+                        Driver instructions
                     </div>
 
                     <span slot="placeholder" translate>
@@ -168,7 +201,7 @@
         <modal-section>
 
             <div slot="header" translate>
-                Requirements
+                Driver tasks
             </div>
 
             <div class="control-row margin-large-bottom">
@@ -233,8 +266,13 @@
 
         </modal-section>
 
-        <button if.bind="isNew" appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
-            Create stop
+        <button appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()">
+            <span translate if.bind="!model.id">
+                Create stop
+            </span>
+            <span translate if.bind="model.id">
+                Update stop
+            </span>
         </button>
 
     </modal-panel>

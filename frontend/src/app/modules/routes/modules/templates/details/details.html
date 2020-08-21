@@ -45,15 +45,19 @@
                             Stops
                         </tab>
 
-                        <tab name="schedules" translate>
+                        <!--<tab name="schedules" translate>
                             Schedules
-                        </tab>
+                        </tab>-->
 
                     </tab-nav>
 
                     <div class="flex-push-right control-row">
 
-                        <button if.bind="template && template.id" appearance="outline" accent="primary" click.trigger="onDeleteClick()" translate>
+                        <button if.bind="template && template.id" disabled.bind="template.stops.length < 2" appearance="outline" accent="primary" click.trigger="onCreateRouteClick()" translate>
+                            Create route
+                        </button>
+
+                        <button if.bind="template && template.id && tab === 'general'" appearance="outline" accent="primary" click.trigger="onDeleteClick()" translate>
                             Delete template
                         </button>
 

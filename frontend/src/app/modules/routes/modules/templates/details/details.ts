@@ -6,6 +6,7 @@ import { Log } from "shared/infrastructure";
 import { AppRouter } from "aurelia-router";
 import { ModalService, IValidation, ToastService } from "shared/framework";
 import toast from "./resources/strings/toast.json";
+import { CreateRoutePanel } from "./modals/create-route/create-route";
 
 /**
  * Represents the route parameters for the page.
@@ -113,6 +114,15 @@ export class DetailsPage
     }
 
     /**
+     * Called when the "Create route" button is clicked.
+     * Shows the create route modal
+     */
+    protected async onCreateRouteClick(): Promise<void>
+    {
+        await this._modalService.open(CreateRoutePanel, this.template!).promise
+    }
+
+    /**
      * Called when the "Delete template" button is clicked.
      * Deletes the template.
      */
@@ -133,7 +143,6 @@ export class DetailsPage
         {
             Log.error("Could not delete template", error);
         }
-
     }
 
     /**

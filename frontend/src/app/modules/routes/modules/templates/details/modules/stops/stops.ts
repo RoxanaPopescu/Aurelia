@@ -2,6 +2,7 @@ import { autoinject, bindable } from "aurelia-framework";
 import { RouteTemplate, RouteTemplateStop, RouteTemplateService } from "app/model/route-template";
 import { ModalService, ToastService, IValidation } from "shared/framework";
 import { TemplateStopDetailsPanel } from "./modals/stop-details/stop-details";
+import { Log } from "shared/infrastructure";
 
 /**
  * Represents the page.
@@ -25,7 +26,7 @@ export class Stops
         this._toastService = toastService;
     }
 
-    protected readonly _routeTemplateService: RouteTemplateService;
+    private readonly _routeTemplateService: RouteTemplateService;
     private readonly _modalService: ModalService;
     protected readonly _toastService: ToastService;
 
@@ -71,7 +72,7 @@ export class Stops
      */
     protected async onAddStopClick(): Promise<void>
     {
-        const newStop = await this._modalService.open(TemplateStopDetailsPanel).promise;
+        const newStop = await this._modalService.open(TemplateStopDetailsPanel, { template: this.template }).promise;
 
         if (newStop != null)
         {
@@ -91,7 +92,7 @@ export class Stops
      */
     protected async onEditStopClick(stop: RouteTemplateStop): Promise<void>
     {
-        const newStop = await this._modalService.open(TemplateStopDetailsPanel, stop).promise;
+        const newStop = await this._modalService.open(TemplateStopDetailsPanel, { template: this.template, stop: stop }).promise;
 
         if (newStop != null)
         {
@@ -111,6 +112,8 @@ export class Stops
      */
     protected onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): void
     {
+        // FIXME: NETWORK!
+
         const sourceIndex = this.template.stops.indexOf(source);
         const targetIndex = this.template.stops.indexOf(target);
 
@@ -122,16 +125,20 @@ export class Stops
      * Removes the stop from teh template.
      * @param index The index of teh stop to remove.
      */
-    protected onRemoveStopClick(index: number): void
+    protected async onRemoveStopClick(index: number): Promise<void>
     {
-        this.template.stops.splice(index, 1);
-
-        if (this.validation.active)
+        try
         {
-            this.validate().catch();
+            const stop = this.template.stops[index];
+            await this._routeTemplateService.deleteStop(stop.id);
+
+            this.template.stops.splice(index, 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not delete the stop", error);
         }
     }
-
 
     /**
      * Validates the page.

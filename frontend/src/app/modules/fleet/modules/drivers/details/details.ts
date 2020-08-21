@@ -82,7 +82,7 @@ export class DetailsPage
     protected updating: boolean = false;
 
     /**
-     * The available statues for the driver
+     * The available statuses for the driver
      */
     protected statuses = Object.keys(DriverStatus.values).map(slug => new DriverStatus(slug as any));
 

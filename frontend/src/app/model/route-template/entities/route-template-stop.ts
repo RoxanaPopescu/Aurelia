@@ -1,8 +1,8 @@
 import { TimeRange } from "shared/types/index";
 import { Location } from "app/model/shared";
 import { RouteStopType } from "app/model/route";
-import requirementNames from "./resources/strings/requirement-names.json";
 import { Contact } from "app/model/shared/entities/contact";
+import clone from "clone";
 
 /**
  * Represents a stop defined in a route template.
@@ -13,34 +13,42 @@ export class RouteTemplateStop
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data?: any)
+    public constructor(data?: any, stopNumber?: number)
     {
         if (data != null)
         {
             this.location = new Location(data.location);
             this.type = new RouteStopType(data.type);
             this.contact = new Contact(data.contact);
-            this.requirements = data.requirements;
+            this.tasks = data.tasks;
             this.driverInstructions = data.driverInstructions;
             this.gate = data.gate;
             this.arrivalTimeFrame = new TimeRange(data.arrivalTimeFrame);
+            this.id = data.id;
         }
         else
         {
             this.location = new Location();
             this.contact = new Contact();
-            this.requirements =
-            {
-                photo: false,
-                signature: false,
-                scanColli: false,
-                verifyTimeframe: false,
-                customerCode: false,
-                acceptInstructions: false
-            };
+            this.tasks = [];
             this.arrivalTimeFrame = new TimeRange();
         }
+
+        if (stopNumber != null)
+        {
+            this.stopNumber = stopNumber;
+        }
     }
+
+    /**
+     * The ID of the route template stop.
+     */
+    public id: string;
+
+    /**
+     * The number this stop has on the route.
+     */
+    public stopNumber: number;
 
     /**
      * The location of the stop.
@@ -58,17 +66,9 @@ export class RouteTemplateStop
     public contact: Contact;
 
     /**
-     * The requirements associated with the stop.
+     * The driver tasks associated with the stop.
      */
-    public requirements:
-    {
-        photo: boolean;
-        signature: boolean;
-        scanColli: boolean;
-        verifyTimeframe: boolean;
-        customerCode: boolean;
-        acceptInstructions: boolean;
-    };
+    public tasks: any[];
 
     /**
      * The instructions associated with the stop.
@@ -88,10 +88,12 @@ export class RouteTemplateStop
     /**
      * Gets the localized names of the active requirements.
      */
+    /*
     public get activeRequirementNames(): string[]
     {
         return Object.keys(this.requirements).filter(key => this.requirements[key]).map(key => requirementNames[key]);
     }
+    */
 
     /**
      * Gets the data representing this instance.
@@ -99,12 +101,13 @@ export class RouteTemplateStop
     public toJSON(): any
     {
         return {
+            id: this.id,
             location: this.location,
             type: this.type.slug,
             contact: this.contact,
-            requirements: this.requirements,
-            instructions: this.driverInstructions,
-            port: this.gate,
+            tasks: this.tasks,
+            driverInstructions: this.driverInstructions,
+            gate: this.gate,
             arrivalTimeFrame: this.arrivalTimeFrame
         };
     }
@@ -114,15 +117,6 @@ export class RouteTemplateStop
      */
     public clone(): any
     {
-        return new RouteTemplateStop(JSON.parse(JSON.stringify(
-        {
-            location: this.location,
-            type: this.type.slug,
-            contact: this.contact,
-            requirements: this.requirements,
-            instructions: this.driverInstructions,
-            port: this.gate,
-            arrivalTimeFrame: this.arrivalTimeFrame
-        })));
+        return clone(this);
     }
 }

@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { RouteTemplateInfo } from "../entities/route-template-info";
 import { RouteTemplate } from "../entities/route-template";
+import { RouteTemplateStop } from "../entities/route-template-stop";
 
 /**
  * Represents a service that manages route templates.
@@ -93,6 +94,77 @@ export class RouteTemplateService
         await this._apiClient.post("routes/templates/delete",
         {
             body: { id }
+        });
+    }
+
+    /**
+     * Creates the specified route template.
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async addStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
+    {
+        let json = stop.toJSON();
+        json.templateId = template.id;
+
+        const result = await this._apiClient.post("routes/templates/stops/add",
+        {
+            body: json
+        });
+
+        stop.id = result.data.id;
+    }
+
+    /**
+     * Creates the specified route template.
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async updateStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
+    {
+        let json = stop.toJSON();
+        json.templateId = template.id;
+
+        await this._apiClient.post("routes/templates/stops/update",
+        {
+            body: json
+        });
+    }
+
+    /**
+     * Deletes the specified route stop.
+     * @param id The ID identifying the route template.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async deleteStop(id: string): Promise<void>
+    {
+        await this._apiClient.post("routes/templates/stops/delete",
+        {
+            body: { id }
+        });
+    }
+
+    /**
+     * Moves the specified route stop to the specified index.
+     * @param route The route owning the stop.
+     * @param stop The route stop to move.
+     * @param newIndex The index to which the stop should be moved.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async moveRouteStop(template: RouteTemplate, stop: RouteTemplateStop, newIndex: number): Promise<void>
+    {
+        const sourceIndex = template.stops.indexOf(stop);
+
+        template.stops.splice(newIndex, 0, ...template.stops.splice(sourceIndex, 1));
+
+        for (let i = 0; i < template.stops.length; i++)
+        {
+            template.stops[i].stopNumber = i + 1;
+        }
+
+        await this._apiClient.post("routes/templates/stop/move",
+        {
+            body: { templateId: template.id, stopId: stop.id, newIndex }
         });
     }
 }

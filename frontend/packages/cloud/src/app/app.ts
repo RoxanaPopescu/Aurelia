@@ -62,6 +62,16 @@ export class App
             });
         }
 
+        // Serve static assets.
+        this._app.use(express.static(staticFolderPath,
+        {
+            index: false,
+            redirect: false,
+
+            // Set the max-age of the response.
+            maxAge: environment.name === "production" ? settings.app.maxAge.static * 1000 : 0
+        }));
+
         // Handle requests for debug info.
         this._app.get(/^[/]debug$/i, (request, response) =>
         {
@@ -146,16 +156,6 @@ export class App
 
             // Set the max-age of the response.
             maxAge: environment.name === "production" ? settings.app.maxAge.artifact * 1000 : 0
-        }));
-
-        // Serve static assets.
-        this._app.use(express.static(staticFolderPath,
-        {
-            index: false,
-            redirect: false,
-
-            // Set the max-age of the response.
-            maxAge: environment.name === "production" ? settings.app.maxAge.static * 1000 : 0
         }));
 
         // Serve the localized `index.html` file for any page request.

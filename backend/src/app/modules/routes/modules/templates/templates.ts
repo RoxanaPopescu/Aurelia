@@ -119,5 +119,96 @@ export class RouteTemplatesModule extends AppModule
 
             context.response.status = 200;
         });
+
+        /**
+         * Creates a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/create", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/create",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Creates a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/stops/add", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/stops/add",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Creates a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/stops/update", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/stops/update",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Deletes a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/templates/stops/delete", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            await this.apiClient.post("routetemplate/stops/delete",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.status = 200;
+        });
     }
 }

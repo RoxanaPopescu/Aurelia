@@ -35,7 +35,7 @@ export class RoutePlanService
             createdDateFrom?: DateTime,
             createdDateTo?: DateTime,
             searchQuery?:  string,
-            statues?: RoutePlanStatusSlug[]
+            statuses?: RoutePlanStatusSlug[]
         },
         sorting?: ISorting,
         paging?: IPaging,
@@ -51,7 +51,7 @@ export class RoutePlanService
                 createdDateFrom: filter?.createdDateFrom,
                 createdDateTo: filter?.createdDateTo,
                 searchQuery: filter?.searchQuery,
-                statuses: filter?.statues
+                statuses: filter?.statuses
             },
             signal
         });

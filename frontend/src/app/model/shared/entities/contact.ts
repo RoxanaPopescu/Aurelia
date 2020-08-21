@@ -1,5 +1,4 @@
 import { Phone } from "./phone";
-import { Name } from "./name";
 
 /**
  * Represents an contact
@@ -14,22 +13,20 @@ export class Contact
     {
         if (data != null)
         {
-            if (data.name)
-            {
-                this.name = new Name(data.name);
-            }
             if (data.phoneNumber)
             {
                 this.phoneNumber = new Phone(data.phoneNumber);
             }
+            this.fullName = data.fullName;
             this.companyName = data.companyName;
+            this.email = data.email;
         }
     }
 
     /**
      * The full name of the contact.
      */
-    public name: Name;
+    public fullName: string;
 
     /**
      * The name identifying the provider of the address.
@@ -40,4 +37,9 @@ export class Contact
      * The name of the company.
      */
     public companyName: string;
+
+    /**
+     * The email.
+     */
+    public email: string;
 }
