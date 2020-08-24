@@ -1,8 +1,11 @@
 import { autoinject } from "aurelia-framework";
-import { Modal, IValidation } from "shared/framework";
+import { Modal, IValidation, ModalService, ToastService } from "shared/framework";
 import { RouteTemplate } from "app/model/route-template";
 import { DateTime } from "luxon";
 import { RouteStatus } from "app/model/route";
+import { Driver } from "app/model/driver";
+import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
+import createdToast from "./resources/strings/created-toast.json";
 
 @autoinject
 export class CreateRoutePanel
@@ -10,13 +13,19 @@ export class CreateRoutePanel
     /**
      * Creates a new instance of the type.
      * @param modal The `Modal` instance representing the modal.
+     * @param toastService The `ToastService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(modal: Modal)
+    public constructor(modal: Modal, modalService: ModalService, toastService: ToastService)
     {
         this._modal = modal;
+        this._modalService = modalService;
+        this._toastService = toastService;
     }
 
     private readonly _modal: Modal;
+    private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
 
     /**
      * The model for the modal.
@@ -34,9 +43,9 @@ export class CreateRoutePanel
     protected status: RouteStatus;
 
     /**
-     * The id of the driver
+     * The driver for the route
      */
-    protected driverId: string;
+    protected driver: Driver;
 
     /**
      * The possible statuses
@@ -67,13 +76,44 @@ export class CreateRoutePanel
     }
 
     /**
+     * Called when the "Assign driver" button is clicked.
+     */
+    protected async onAssignDriverClick(): Promise<void>
+    {
+        const driver = await this._modalService.open(
+            AssignDriverPanel
+        ).promise;
+
+        if (driver != null)
+        {
+            this.driver = driver;
+        }
+    }
+
+    /**
      * Called when the "Create stop" button is clicked.
      */
     protected async onCreateClick(): Promise<void>
     {
-        //this._result = this.model;
+        this.validation.active = true;
 
-        // FIXME: LOADING
+        // Validate the form.
+        if (!await this.validation.validate())
+        {
+            return;
+        }
+
+        // Mark the modal as busy.
+        this._modal.busy = true;
+
+        const newRoutesSlug = "fixme-slug";
+        createdToast.body = createdToast.body.replace("{routeSlug}", newRoutesSlug);
+        createdToast.url = createdToast.url.replace("{routeSlug}", newRoutesSlug);
+
+        this._toastService.open(
+            "info",
+            createdToast
+        );
 
         await this._modal.close();
     }

@@ -3,6 +3,7 @@ import { Location } from "app/model/shared";
 import { RouteStopType } from "app/model/route";
 import { Contact } from "app/model/shared/entities/contact";
 import clone from "clone";
+import { Task } from "app/model/route/entities/task";
 
 /**
  * Represents a stop defined in a route template.
@@ -20,7 +21,7 @@ export class RouteTemplateStop
             this.location = new Location(data.location);
             this.type = new RouteStopType(data.type);
             this.contact = new Contact(data.contact);
-            this.tasks = data.tasks;
+            this.tasks = data.tasks.map(t => new Task(t));
             this.driverInstructions = data.driverInstructions;
             this.gate = data.gate;
             this.arrivalTimeFrame = new TimeRange(data.arrivalTimeFrame);
@@ -68,7 +69,7 @@ export class RouteTemplateStop
     /**
      * The driver tasks associated with the stop.
      */
-    public tasks: any[];
+    public tasks: Task[];
 
     /**
      * The instructions associated with the stop.

@@ -1,0 +1,5 @@
+{
+    "heading": "Success",
+    "body": "The route ({routeSlug}) has been created",
+    "url": "/routes/details/{routeSlug}"
+}

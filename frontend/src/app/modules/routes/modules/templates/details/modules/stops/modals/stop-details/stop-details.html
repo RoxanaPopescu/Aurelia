@@ -226,18 +226,18 @@
 
             <div class="control-row margin-large-bottom">
 
-                <check-toggle label="after" value.bind="model.requirements.scanColli" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Scan colli
-                    </div>
-
-                </check-toggle>
-
                 <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Verify timeframe
+                    </div>
+
+                </check-toggle>
+
+                <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Accept instruction
                     </div>
 
                 </check-toggle>
@@ -250,14 +250,6 @@
 
                     <div slot="heading" translate>
                         Customer code
-                    </div>
-
-                </check-toggle>
-
-                <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Accept instruction
                     </div>
 
                 </check-toggle>

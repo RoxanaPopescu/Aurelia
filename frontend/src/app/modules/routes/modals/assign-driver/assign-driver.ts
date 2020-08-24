@@ -74,10 +74,10 @@ export class AssignDriverPanel
      * Called by the framework when the modal is activated.
      * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model: { route?: RouteBase, assignOnSelect: boolean }): void
+    public activate(model?: { route?: RouteBase, assignOnSelect: boolean }): void
     {
-        this.route = model.route;
-        this.assignOnSelect = model.assignOnSelect;
+        this.route = model?.route;
+        this.assignOnSelect = model?.assignOnSelect ?? false;
         this.update();
     }
 

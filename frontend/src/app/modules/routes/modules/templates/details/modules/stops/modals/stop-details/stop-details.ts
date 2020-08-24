@@ -74,8 +74,6 @@ export class TemplateStopDetailsPanel
     protected async onCreateClick(): Promise<void>
     {
         try {
-            console.log(this.model);
-
             // Activate validation so any further changes will be validated immediately.
             this.validation.active = true;
 

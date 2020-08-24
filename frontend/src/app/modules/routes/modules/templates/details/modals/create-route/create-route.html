@@ -4,7 +4,7 @@
 
     <require from="./create-route.scss"></require>
 
-    <modal-backdrop close="all"></modal-backdrop>
+    <modal-backdrop></modal-backdrop>
 
     <modal-panel name="create-route" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
@@ -64,14 +64,14 @@
 
             <div class="control-row margin-large-bottom">
 
-                <text-input label="above" value.bind="driverId" class="flex-basis-1-of-1">
-
-                    <div slot="heading" translate>
-                        Driver (FIXME SELEC )
-                    </div>
-
-                </text-input>
-
+                <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
+                    <template if.bind="!driver" translate>
+                        Assign driver
+                    </template>
+                    <template if.bind="driver" translate>
+                        Assigned to ${driver.name} (${driver.id})
+                    </template>
+                </button>
 
             </div>
 
@@ -79,7 +79,7 @@
         </modal-section>
 
         <button appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()" translate>
-            Create route FIXME - toast
+            Create route
         </button>
 
     </modal-panel>

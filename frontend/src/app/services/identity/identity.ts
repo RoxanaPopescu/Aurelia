@@ -59,5 +59,5 @@ export class Identity
     /**
      * The the tokens to use when accessing the API.
      */
-    public readonly tokens: { refresh: string; access: string };
+    public tokens: { refresh: string; access: string };
 }

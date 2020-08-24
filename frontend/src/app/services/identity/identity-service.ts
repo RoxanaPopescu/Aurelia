@@ -2,9 +2,10 @@ import { autoinject } from "aurelia-framework";
 import { Identity } from "./identity";
 import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
-import { getUserClaims } from "legacy/helpers/identity-helper";
+import { getUserClaims, getAccessTokenExpireDuration } from "legacy/helpers/identity-helper";
 import settings from "resources/settings";
-import { Log } from "shared/infrastructure";
+import { Log, ApiClient } from "shared/infrastructure";
+import { Duration, DateTime } from "luxon";
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -12,7 +13,19 @@ import { Log } from "shared/infrastructure";
 @autoinject
 export class IdentityService
 {
+    /**
+     * Creates a new instance of the type.
+     * @param apiClient The `ApiClient` instance.
+     */
+    public constructor(apiClient: ApiClient)
+    {
+        this._apiClient = apiClient;
+    }
+
+    private readonly _apiClient: ApiClient;
     private _identity: Identity | undefined;
+    private _refreshTokenTimeout: any;
+    private _lastReauthenticate: DateTime | undefined;
 
     /**
      * The identity of the currently authenticated user, or undefined if not authenticated.
@@ -55,7 +68,30 @@ export class IdentityService
      */
     public authenticated(): void
     {
+        // Update tokens in identity
+        if (Profile.tokens != null && this.identity != null) {
+            this.identity.tokens = Profile.tokens;
+        }
         this.configureInfrastructure();
+        this.verifyAccessTokenExpireDate();
+    }
+
+    /**
+     * Attempts to start the session for logged in users
+     * @returns A promise that will be resolved with a boolean indicating whether reauthentication succeeded.
+     */
+    public async startSession(): Promise<boolean>
+    {
+        try
+        {
+            await Profile.autoLogin();
+        }
+        finally
+        {
+            this.authenticated();
+        }
+
+        return Promise.resolve(this.identity != null);
     }
 
     /**
@@ -64,13 +100,24 @@ export class IdentityService
      */
     public async reauthenticate(): Promise<boolean>
     {
+        // Verify a minimum of 1 minutes since last reauthenticate (It can continiously call if tokens are not set correctly)
+        if (
+            this._lastReauthenticate != null &&
+            DateTime.local().diff(this._lastReauthenticate).get("milliseconds") < 1000 * 60
+        ) {
+            return Promise.resolve(false);
+        }
+
         try
         {
-            await Profile.autoLogin();
-        }
-        finally
+            this._lastReauthenticate = DateTime.local();
+            const result = await this._apiClient.get("RefreshTokens");
+            Profile.setTokens(result.data.accessToken, result.data.refreshToken);
+        } catch {
+            // For now we do nothing
+        } finally
         {
-            this.configureInfrastructure();
+            this.authenticated();
         }
 
         return Promise.resolve(this.identity != null);
@@ -89,6 +136,8 @@ export class IdentityService
         finally
         {
             this.configureInfrastructure();
+            this._lastReauthenticate = undefined;
+            clearTimeout(this._refreshTokenTimeout);
         }
 
         return Promise.resolve(true);
@@ -115,5 +164,27 @@ export class IdentityService
             Log.setUser(undefined);
         }
         // tslint:disable
+    }
+
+    /**
+     * Verifies the access token's expire date
+     * This will also call a new re-authentication one minute before expiring.
+     */
+    private verifyAccessTokenExpireDate(): void
+    {
+        clearTimeout(this._refreshTokenTimeout);
+
+        if (this.identity?.tokens == null) {
+            return;
+        }
+
+        const expires = getAccessTokenExpireDuration(this.identity.tokens.access);
+        const refreshBeforeExpire = Duration.fromMillis(1000 * 60 * 1);
+        const refresh = expires.minus(refreshBeforeExpire);
+
+        this._refreshTokenTimeout = setTimeout(
+            () => this.reauthenticate(),
+            refresh.get("milliseconds")
+        );
     }
 }
