@@ -163,7 +163,7 @@ export class RouteTemplateService
             template.stops[i].stopNumber = i + 1;
         }
 
-        await this._apiClient.post("routes/templates/stop/move",
+        await this._apiClient.post("routes/templates/stops/move",
         {
             body: { templateId: template.id, stopId: stop.id, newIndex }
         });

@@ -1,0 +1,52 @@
+<template>
+
+    <require from="app/components/check-filter/check-filter"></require>
+    <require from="app/components/check-filter/check-filter-item"></require>
+    <require from="./dao-relabel.scss"></require>
+
+    <page name="dao-relabel">
+
+        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
+            <page-header class="flex-row" scroll-fade>
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/orders" translate>
+                            Orders
+                        </a>
+
+                        <span translate>
+                            DAO Relabel
+                        </span>
+                    </path-nav>
+                </h1>
+
+            </page-header>
+
+            <page-section >
+                <!--<embed
+                    id="testPdf"
+                    src="https://api.dao.as/HentLabel.php?kundeid=2270&kode=aso9cy94joa9&stregkode=00057151270083668443&papir=150x100&format=json"
+                    width="500"
+                    height="375"
+                    type="application/pdf"
+                />-->
+
+                <embed
+                    id="testPdf"
+                    src="https://api.dao.as/HentLabel.php?kundeid=2270&kode=aso9cy94joa9&stregkode=00057151270083668443&papir=150x100&format=json"
+                    width="500"
+                    height="375"
+                    type="application/pdf"
+                />
+
+                <button appearance="solid" accent="primary" click.trigger="onPrintClick()" translate>
+                    Print it
+                </button>
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>
