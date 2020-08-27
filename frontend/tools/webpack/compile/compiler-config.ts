@@ -104,6 +104,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             hints: false
         },
         devtool: compilerOptions.environment.optimize ? "source-map" : "eval-source-map",
+        target: compilerOptions.environment.platform === "cloud" ? "web" : "electron-renderer",
+        externals: compilerOptions.environment.platform === "cloud" ? [ "electron" ] : undefined,
         module:
         {
             rules:

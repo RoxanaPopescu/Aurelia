@@ -24,25 +24,35 @@
             </page-header>
 
             <page-section >
-                <!--<embed
-                    id="testPdf"
-                    src="https://api.dao.as/HentLabel.php?kundeid=2270&kode=aso9cy94joa9&stregkode=00057151270083668443&papir=150x100&format=json"
-                    width="500"
-                    height="375"
-                    type="application/pdf"
-                />-->
 
-                <embed
-                    id="testPdf"
-                    src="https://api.dao.as/HentLabel.php?kundeid=2270&kode=aso9cy94joa9&stregkode=00057151270083668443&papir=150x100&format=json"
-                    width="500"
-                    height="375"
-                    type="application/pdf"
-                />
+                <div class="control-row margin-large-bottom">
 
-                <button appearance="solid" accent="primary" click.trigger="onPrintClick()" translate>
-                    Print it
-                </button>
+                    <text-input label="above" value.bind="barcode" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Barcode
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+                    <button class="flex-basis-1-of-2" appearance="solid" accent="primary" disabled.bind="barcode == null || loading" click.trigger="onSearchBarcode()">
+                        <template if.bind="!loading">
+                            <template if.bind="barcode">
+                                Print barcode
+                            </template>
+                            <template if.bind="!barcode">
+                                Type in barcode
+                            </template>
+                        </template>
+                        <template if.bind="loading">
+                            Loading..
+                        </template>
+                    </button>
+                </div>
+
             </page-section>
 
         </page-content>

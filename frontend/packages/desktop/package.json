@@ -2,7 +2,7 @@
   "name": "@mover/frontend-desktop",
   "author": "Thomas Darling",
   "description": "Frontend for the Mover logistics platform, packaged as a desktop app.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "UNLICENSED",
   "private": true,
   "repository": {
@@ -19,7 +19,9 @@
     "build": "cross-env rimraf \"artifacts/{build,client}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/client\" && tsc",
     "start": "cross-env electron \"artifacts/build/\" --debug",
     "lint": "cross-env tslint --project \"tsconfig.json\"",
-    "release": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\""
+    "release-all": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\" --fml",
+    "release-osx": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\"",
+    "release-win": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\" --win"
   },
   "dependencies": {},
   "peerDependencies": {},
@@ -29,6 +31,7 @@
     "cross-env": "^7.0.2",
     "electron": "^10.0.0",
     "electron-builder": "^22.8.0",
+    "electron-pdf-window": "^1.0.12",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",

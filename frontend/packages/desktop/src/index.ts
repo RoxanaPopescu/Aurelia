@@ -1,5 +1,6 @@
-import path from "path";
-import { app, BrowserWindow, Menu } from "electron";
+const path = require("path");
+import { app, BrowserWindow, Menu, ipcMain } from "electron";
+const PDFWindow = require('electron-pdf-window');
 import { environment } from "./env";
 
 // The locale code for the client build that should be served.
@@ -20,7 +21,10 @@ function createWindow(): void
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
-        show: false
+        show: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     if (environment.devTools)
@@ -47,6 +51,45 @@ function createWindow(): void
         if (mainWindow)
         {
             mainWindow.show();
+
+            // Print pdf action
+            ipcMain.on('print-pdf', (event, arg) => {
+                try {
+
+                    let url = arg.url;
+                    let winPdf = new BrowserWindow({
+                        parent: mainWindow,
+                        width: 800,
+                        height: 600,
+                        webPreferences: { // You need this options to load pdfs
+                            plugins: true
+                        }
+                    });
+                    PDFWindow.addSupport(winPdf);
+
+                    winPdf.loadURL(url);
+
+                    winPdf.webContents.on('did-finish-load', () => {
+                        setTimeout(() => {
+                            const options = { silent: true, printBackground: true };
+
+                            winPdf.webContents.print(options || {}, (success) => {
+                                if (success) {
+                                  console.log('Finished printing with success');
+                                } else {
+                                  console.error('Finished printing with error');
+                                }
+                                winPdf.close();
+                            })
+                        }, 3000);
+                    });
+
+
+
+                } catch {
+                    // Do nothing
+                }
+            });
         }
     });
 }

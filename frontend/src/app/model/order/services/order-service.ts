@@ -107,6 +107,21 @@ export class OrderService
     }
 
     /**
+     * Gets the relabel url.
+     * @param barcode The barcode in our system to relabel.
+     * @returns A promise that will be resolved with the url of the relabel.
+     */
+    public async getRelabelUrl(barcode: string): Promise<string | undefined>
+    {
+        const result = await this._apiClient.post("orders/relabel",
+        {
+            body: { barcode: barcode }
+        });
+
+        return result.data.urlToLabel;
+    }
+
+    /**
      * Gets the specified order.
      * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the events.

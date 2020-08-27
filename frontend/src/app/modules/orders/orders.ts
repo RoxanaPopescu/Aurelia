@@ -71,25 +71,25 @@ export class OrdersModule
                 },
                 title: routeTitles.create
             },
+            {
+                name: "dao-relabel",
+                route: "dao-relabel",
+                moduleId: PLATFORM.moduleName("./modules/dao-relabel/dao-relabel"),
+                settings:
+                {
+                    claims:
+                    [
+                        "create-order"
+                    ]
+                },
+                title: routeTitles.daoRelabel,
+                nav: true,
+                icon: "orders"
+            },
 
             ...
             ENVIRONMENT.name === "development" ?
             [
-                {
-                    name: "dao-relabel",
-                    route: "dao-relabel",
-                    moduleId: PLATFORM.moduleName("./modules/dao-relabel/dao-relabel"),
-                    settings:
-                    {
-                        claims:
-                        [
-                            "create-order"
-                        ]
-                    },
-                    title: routeTitles.daoRelabel,
-                    nav: true,
-                    icon: "orders"
-                },
                 {
                     name: "import",
                     route: "import",

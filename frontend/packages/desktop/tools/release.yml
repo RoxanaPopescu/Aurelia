@@ -4,7 +4,6 @@ appId: com.mover
 productName: Mover
 
 directories:
-  app: "."
   buildResources: "resources"
   output: "artifacts/release"
 
@@ -13,9 +12,7 @@ asarUnpack:
   - "**/*.node"
 
 files:
-
   - "artifacts/build"
-  - "artifacts/client"
   - "resources"
 
   # Exclude source maps.
