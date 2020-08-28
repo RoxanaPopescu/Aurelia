@@ -10,6 +10,7 @@
     "mousetrap": "1.6.x",
     "njwt": "^0.4.0",
     "node-jose": "^1.1.0",
+    "patch-package": "5.1.x",
     "query-string": "6.2.x",
     "react": "16.8.x",
     "react-autosize-textarea": "0.x",
@@ -28,8 +29,7 @@
     "react-swipeable": "4.3.x",
     "react-transition-group": "1.x",
     "throttle-debounce": "2.0.x",
-    "universal-cookie": "2.x",
-    "patch-package": "5.1.x"
+    "universal-cookie": "2.x"
   },
   "devDependencies": {
     "@babel/core": "7.1.x",

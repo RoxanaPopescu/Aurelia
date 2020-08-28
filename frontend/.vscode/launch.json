@@ -87,6 +87,10 @@
       "name": "Debug desktop app",
       "cwd": "${workspaceFolder}/packages/desktop",
       "runtimeExecutable": "${workspaceFolder}/packages/desktop/node_modules/.bin/electron",
+      "runtimeArgs":
+      [
+        "--lang=en-US"
+      ],
       "program": "${workspaceFolder}/packages/desktop/artifacts/build/index.js",
       "console": "integratedTerminal",
       "skipFiles":

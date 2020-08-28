@@ -23,7 +23,7 @@ commander
     .option("--port <number>",
         "The port on which the server should listen",
         value => parseInt(value),
-        "8080")
+        8080)
 
     .option("--public",
         "Allow connections from any host and any device on the network, despite security risks",

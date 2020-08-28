@@ -120,7 +120,7 @@ export class AppModule
         [
             {
                 name: "default",
-                route: "",
+                route: ["", "index.html"],
                 redirect: "routes"
             },
             {

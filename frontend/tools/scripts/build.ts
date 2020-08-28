@@ -49,7 +49,7 @@ const compilerOptions: ICompilerOptions =
         :
         commander.platform === "desktop" ?
         {
-            pushState: false,
+            pushState: true,
             publicPath: paths.artifacts.desktopClientBuildFolder,
             appBaseUrl: "",
             apiBaseUrl: commander.api || "http://localhost:8008/"

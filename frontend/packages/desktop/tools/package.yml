@@ -1,0 +1,37 @@
+# Configuration for `electron-builder`.
+
+# Build configuration.
+
+appId: com.mover
+
+directories:
+  buildResources: "resources"
+  output: "artifacts/package"
+
+files:
+
+  # Include the build.
+  - "artifacts/build"
+
+  # Include resources.
+  - "resources"
+
+  # Exclude source maps.
+  - "!**/*.map"
+
+  # Exclude bundle analysis.
+  - "!bundle-analysis.html"
+
+# Platform configurations.
+
+mac:
+  target: "dmg"
+  artifactName: "${productName} ${version}.${ext}"
+
+win:
+  target: "nsis"
+  artifactName: "${productName} Setup ${version}.${ext}"
+
+linux:
+  target: "AppImage"
+  artifactName: "${productName} ${version}.${ext}"
