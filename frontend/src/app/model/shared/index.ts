@@ -13,3 +13,5 @@ export * from "./entities/time-of-week-range";
 export * from "./entities/weight-range";
 export * from "./entities/dimensions";
 export * from "./types/day-of-week";
+export * from "./entities/task";
+export * from "./entities/task-type";

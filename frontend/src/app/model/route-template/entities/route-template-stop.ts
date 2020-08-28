@@ -1,9 +1,8 @@
 import { TimeRange } from "shared/types/index";
-import { Location } from "app/model/shared";
+import { Location, Task } from "app/model/shared";
 import { RouteStopType } from "app/model/route";
 import { Contact } from "app/model/shared/entities/contact";
 import clone from "clone";
-import { Task } from "app/model/route/entities/task";
 
 /**
  * Represents a stop defined in a route template.

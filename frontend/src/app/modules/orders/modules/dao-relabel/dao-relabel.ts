@@ -54,10 +54,10 @@ export class DaoRelabelPage
 
     private async getPdfLink(barcode: string): Promise<void>
     {
+        this.loading = true;
+
         try {
             const url = await this._orderService.getRelabelUrl(barcode);
-            this.loading = false;
-
             window.open(url,'_blank');
 
             // Send data to electron - we need to discuss how we do this

@@ -4,6 +4,7 @@ import { RouteTemplateStop, RouteTemplateService, RouteTemplate } from "app/mode
 import { RouteStopType } from "app/model/route";
 import { Log } from "shared/infrastructure";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
+import { TaskType, Task } from "app/model/shared";
 
 @autoinject
 export class TemplateStopDetailsPanel
@@ -45,6 +46,11 @@ export class TemplateStopDetailsPanel
     protected types = Object.keys(RouteStopType.values).map(slug => new RouteStopType(slug as any));
 
     /**
+     * The available tasks.
+     */
+    protected tasks: Task[];
+
+    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
@@ -57,6 +63,19 @@ export class TemplateStopDetailsPanel
     {
         this.model = model.stop.clone();
         this.template = model.template;
+
+        // We create the initial array of tasks. If it does not exist we create it
+        let tasks: Task[] = [];
+        Object.keys(TaskType.values).forEach(slug => {
+            const found = this.model.tasks.find(t => t.type.slug === slug);
+            if (found != null) {
+                tasks.push(found);
+            } else {
+                tasks.push(new Task({ type: slug }));
+            }
+        });
+
+        this.tasks = tasks;
     }
 
     /**
@@ -83,6 +102,10 @@ export class TemplateStopDetailsPanel
                 return;
             }
 
+            // We do not send undefined tasks to the server
+            const tasks = this.tasks.filter(t => t.enabled != null);
+            this.model.tasks = tasks;
+
             // Mark the modal as busy.
             this._modal.busy = true;
 
@@ -96,7 +119,6 @@ export class TemplateStopDetailsPanel
                 catch (error)
                 {
                     Log.error("Could not resolve address location.", error);
-
                     return;
                 }
             }

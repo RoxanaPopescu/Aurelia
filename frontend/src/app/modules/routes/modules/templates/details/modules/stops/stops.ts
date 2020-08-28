@@ -30,6 +30,9 @@ export class Stops
     private readonly _modalService: ModalService;
     protected readonly _toastService: ToastService;
 
+    private _isMovingStop = false;
+    private _targetIndex: number | undefined;
+
     /**
      * The validation for the modal.
      */
@@ -129,23 +132,38 @@ export class Stops
      */
     protected async onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): Promise<void>
     {
-        try
-        {
-            const sourceIndex = this.template.stops.indexOf(source);
-            const targetIndex = this.template.stops.indexOf(target);
+        const sourceIndex = this.template.stops.indexOf(source);
+        this._targetIndex = this.template.stops.indexOf(target);
+        this.template.stops.splice(this._targetIndex, 0, ...this.template.stops.splice(sourceIndex, 1));
 
-            const stop = this.template.stops[sourceIndex];
-            await this._routeTemplateService.moveStop(
-                this.template,
-                stop,
-                targetIndex
-            );
-
-            this.template.stops.splice(targetIndex, 0, ...this.template.stops.splice(sourceIndex, 1));
-        }
-        catch (error)
+        if (!this._isMovingStop)
         {
-            Log.error("Could not delete the stop", error);
+            this._isMovingStop = true;
+
+            document.addEventListener("mouseup", async () =>
+            {
+                if (this._targetIndex != null && this._targetIndex !== source.stopNumber - 1)
+                {
+                    try
+                    {
+                        const stop = this.template.stops[sourceIndex];
+                        await this._routeTemplateService.moveStop(
+                            this.template,
+                            stop,
+                            this._targetIndex
+                        );
+                    }
+                    catch (error)
+                    {
+                        Log.error("Could not move template stop", error);
+                    }
+                    finally
+                    {
+                        this._isMovingStop = false;
+                        this._targetIndex = undefined;
+                    }
+                }
+            }, { once: true });
         }
     }
 

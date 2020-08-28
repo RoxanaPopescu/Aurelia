@@ -86,6 +86,7 @@
             <data-table-row
                 repeat.for="stop of template.stops"
                 model.bind="stop"
+                click.call="onEditStopClick(stop)"
                 insert.call="onAddStopClick($index)"
             >
 
@@ -140,10 +141,6 @@
                 <data-table-cell align="right">
 
                     <div class="icon-row">
-
-                        <button appearance="none" accent="primary" click.trigger="onEditStopClick(stop)">
-                            <icon name="edit-small"></icon>
-                        </button>
 
                         <button appearance="none" accent="primary" click.trigger="onRemoveStopClick($index)">
                             <icon name="delete-small"></icon>

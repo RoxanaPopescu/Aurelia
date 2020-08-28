@@ -1,7 +1,7 @@
 <template>
 
     <require from="app/components/address-input/address-input"></require>
-
+    <require from="app/components/info-icon/info-icon"></require>
     <require from="./stop-details.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
@@ -204,52 +204,24 @@
                 Driver tasks
             </div>
 
-            <div class="control-row margin-large-bottom">
+            <div repeat.for="task of tasks" class="control-row margin-large-bottom">
 
-                <check-toggle label="after" value.bind="model.requirements.photo" class="flex-basis-1-of-2">
+                <check-toggle
+                    label="after"
+                    value.bind="task.enabled"
+                    class="flex-basis-1-of-2">
+                    <div slot="heading">
+                        <span>
+                            ${task.type.name}
+                        </span>
 
-                    <div slot="heading" translate>
-                        Photo
-                    </div>
+                        <info-icon position="right">
 
-                </check-toggle>
+                            <span slot="body">
+                                ${task.type.description}
+                            </span>
 
-                <check-toggle label="after" value.bind="model.requirements.signature" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Signature
-                    </div>
-
-                </check-toggle>
-
-            </div>
-
-            <div class="control-row margin-large-bottom">
-
-                <check-toggle label="after" value.bind="model.requirements.verifyTimeframe" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Verify timeframe
-                    </div>
-
-                </check-toggle>
-
-                <check-toggle label="after" value.bind="model.requirements.acceptInstructions" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Accept instruction
-                    </div>
-
-                </check-toggle>
-
-            </div>
-
-            <div class="control-row">
-
-                <check-toggle label="after" value.bind="model.requirements.customerCode" class="flex-basis-1-of-2">
-
-                    <div slot="heading" translate>
-                        Customer code
+                        </info-icon>
                     </div>
 
                 </check-toggle>

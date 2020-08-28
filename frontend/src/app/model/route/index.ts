@@ -13,6 +13,5 @@ export * from "./entities/delivery";
 export * from "./entities/route";
 export * from "./entities/route-stop";
 export * from "./entities/route-price";
-export * from "./entities/task";
 export * from "./services/route-service";
 export * from "./services/route-assignment-service";
