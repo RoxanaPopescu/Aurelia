@@ -299,7 +299,6 @@ export class DetailsModule
      */
     protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
-
         const sourceIndex = this.route!.stops.indexOf(source);
         this._targetIndex = this.route!.stops.indexOf(target);
 
@@ -315,7 +314,7 @@ export class DetailsModule
                 {
                     try
                     {
-                        await this.routeService.moveRouteStop(this.route!, source, this._targetIndex!)
+                        await this.routeService.moveRouteStop(this.route!, source, this._targetIndex!);
 
                         this.fetchRoute();
                     }

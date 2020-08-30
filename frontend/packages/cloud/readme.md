@@ -6,7 +6,19 @@
 
 # Getting started
 
-> Note that the steps for the repository must be completed first.
+> Note that the instructions in the `readme.md` for the `frontend` package must be completed first.
+
+## Install dependencies
+
+1. **Install NPM dependencies**
+
+   In a terminal in this folder, execute the command:
+
+   ```
+   npm ci
+   ```
+
+   This will install the dependencies listed in the `package-lock.json` file.
 
 ## Build and debug
 
@@ -58,15 +70,15 @@
 
 * **Build for production**
 
-  First, build the `frontend` package for each locale, with the `cloud` platform and `production` environment as target.
+  > Note that before building this package, you must first build the `frontend` package for each locale, with the `cloud` platform and `production` environment as target, to produce a build to be served.
 
-  Then, in a terminal in this package folder, execute the command:
+  In a terminal in this package folder, execute the command:
 
   ```
   npm run build
   ```
 
-  This will produce a `build` artifact.
+  This will remove any existing `build` artifacts, and then produce a new `build` artifact.
 
 * **Start the production build**
 
@@ -75,6 +87,5 @@
   ```
   npm run start
   ```
-
 
   This will start the server on the port specified by the environment variable `PORT`, or default to `8080`.

@@ -15,6 +15,8 @@ export class DesktopEnvironment
         const defaultName = "development";
 
         this.name = (process.env.NODE_ENV || defaultName).trim() as DesktopEnvironmentName;
+        this.debug = this.name === "development";
+        this.devTools = this.name === "development";
     }
 
     /**
@@ -26,13 +28,13 @@ export class DesktopEnvironment
      * True to enable debugging features, otherwise false.
      * Recommended in the `development` environment.
      */
-    public debug: boolean = true;
+    public debug: boolean;
 
     /**
-     * True to open the development tools, otherwise false.
+     * True to open the development tools when the app starts, otherwise false.
      * Recommended in the `development` environment.
      */
-    public devTools: boolean = true;
+    public devTools: boolean;
 }
 
 /**

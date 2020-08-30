@@ -1,6 +1,7 @@
 {
   "name": "@mover/frontend-desktop",
-  "author": "Thomas Darling",
+  "author": "Mover Systems ApS",
+  "productName": "Mover",
   "description": "Frontend for the Mover logistics platform, packaged as a desktop app.",
   "version": "0.1.0",
   "license": "UNLICENSED",
@@ -16,27 +17,27 @@
   "main": "artifacts/build/index.js",
   "scripts": {
     "postinstall": "cross-env electron-builder install-app-deps",
-    "build": "cross-env rimraf \"artifacts/{build,client}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/client\" && tsc",
+    "build": "cross-env rimraf \"artifacts/{build}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/frontend\" && tsc",
     "start": "cross-env electron \"artifacts/build/\" --debug",
     "lint": "cross-env tslint --project \"tsconfig.json\"",
-    "release-all": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\" --fml",
-    "release-osx": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\"",
-    "release-win": "cross-env rimraf \"artifacts/release\" && electron-builder --config \"tools/release.yml\" --win"
+    "package": "cross-env rimraf 'artifacts/package' && electron-builder --publish=never --config 'tools/package.yml' -mwl"
   },
-  "dependencies": {},
+  "dependencies": {
+    "electron-pdf-window": "^1.0.12",
+    "tslib": "^2.0.1"
+  },
   "peerDependencies": {},
   "devDependencies": {
-    "@types/node": "^14.6.0",
+    "@types/node": "^14.6.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.2",
-    "electron": "^10.0.0",
+    "electron": "^10.0.1",
     "electron-builder": "^22.8.0",
     "electron-pdf-window": "^1.0.12",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
-    "tslib": "^2.0.1",
-    "tslint": "^6.0.0",
+    "tslint": "^6.1.3",
     "typescript": "^4.0.2"
   }
 }

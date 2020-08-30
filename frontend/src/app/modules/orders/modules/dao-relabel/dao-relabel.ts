@@ -1,7 +1,6 @@
 import { autoinject, observable } from "aurelia-framework";
 import { OrderService } from "app/model/order";
 import { Log } from "shared/infrastructure";
-// const { ipcRenderer } = require('electron');
 
 /**
  * Represents the module.
@@ -37,7 +36,8 @@ export class DaoRelabelPage
      */
     protected update(newValue?: string, oldValue?: string, propertyName?: string): void
     {
-        if (newValue != null && newValue.length === 11) {
+        if (newValue != null && newValue.length === 11)
+        {
             this.getPdfLink(newValue);
         }
     }
@@ -47,7 +47,8 @@ export class DaoRelabelPage
      */
     protected async onSearchBarcode(): Promise<void>
     {
-        if (this.barcode != null) {
+        if (this.barcode != null)
+        {
             this.getPdfLink(this.barcode);
         }
     }
@@ -56,23 +57,23 @@ export class DaoRelabelPage
     {
         this.loading = true;
 
-        try {
+        try
+        {
             const url = await this._orderService.getRelabelUrl(barcode);
-            window.open(url,'_blank');
 
-            // Send data to electron - we need to discuss how we do this
-            /*
-            const data = {
-                url: url
-            };
+            window.open(url, "_blank");
 
-            ipcRenderer.send('print-pdf', data);
-            */
+            // TODO: This should work, but hasn't been tested yet.
+            // (window as any).ipc.send("print-pdf", { url: url });
 
             this.barcode = undefined;
-        } catch (error) {
-            Log.error("An error occurred while loading the barcode.\n", error);
-        } finally {
+        }
+        catch (error)
+        {
+            Log.error("An error occurred while loading the barcode.", error);
+        }
+        finally
+        {
             this.loading = false;
         }
     }

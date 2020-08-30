@@ -140,7 +140,7 @@ export default class SimulationResultComponent extends React.Component<Props> {
 
             </div>
 
-            <div className="font-large">>Indstillinger for {selectedName}</div>
+            <div className="font-large">Indstillinger for {selectedName}</div>
 
             <SimulationParametersComponent
               parameters={this.routeSimulationResult.summaries[this.selectedIndex].parameters}

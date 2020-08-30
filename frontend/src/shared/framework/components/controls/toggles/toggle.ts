@@ -75,6 +75,12 @@ export class ToggleCustomElement
     public accent: AccentColor;
 
     /**
+     * True to allow toggling to the indeterminate state, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public triState: boolean;
+
+    /**
      * Called by the framework when the component is attached.
      * Detaches the toggle from the toggle group.
      */
@@ -145,7 +151,22 @@ export class ToggleCustomElement
      */
     protected onToggleClick(): boolean
     {
-        this.value = !this.value;
+        // Toggle the value.
+
+        if (this.triState)
+        {
+            switch (this.value)
+            {
+                case undefined: this.value = true; break;
+                case false: this.value = true; break;
+                case true: this.value = null; break;
+                case null: this.value = false; break;
+            }
+        }
+        else
+        {
+            this.value = !this.value;
+        }
 
         // Dispatch the `input` event to indicate that the comitted value, has changed.
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));

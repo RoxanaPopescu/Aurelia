@@ -1,6 +1,6 @@
 import { singleton, computedFrom } from "aurelia-framework";
 import { History } from "aurelia-history";
-import { AppRouter, PipelineResult } from "aurelia-router";
+import { AppRouter, NavigationInstruction, PipelineResult } from "aurelia-router";
 import { EventAggregator } from "aurelia-event-aggregator";
 import { MapObject } from "shared/types";
 
@@ -75,9 +75,14 @@ export class HistoryHelper
             isNavigatingNew = router.isNavigatingNew;
         });
 
-        this._eventAggregator.subscribe("router:navigation:success", () =>
+        this._eventAggregator.subscribe("router:navigation:success", (event: { instruction: NavigationInstruction }) =>
         {
             this._state = this.getState();
+
+            // Set the content of the `description` meta element.
+            const instructions = event.instruction.getAllInstructions();
+            const description = instructions.slice().reverse().find(i => i.config.description != null)?.config.description;
+            this.setDescription(description);
 
             // Reset the scroll position if navigating to a new history entry.
             if (isNavigatingNew)
@@ -98,17 +103,8 @@ export class HistoryHelper
     private readonly _history: History;
     private readonly _router: AppRouter;
     private readonly _eventAggregator: EventAggregator;
-    private _navigating = true;
     private _state: IHistoryState;
-
-    /**
-     * True if the router is navigating, otherwise false.
-     */
-    @computedFrom("_navigating")
-    public get navigating(): boolean
-    {
-        return this._navigating;
-    }
+    private _navigating = true;
 
     /**
      * The current history state.
@@ -118,6 +114,15 @@ export class HistoryHelper
     public get state(): IHistoryState
     {
         return this._state;
+    }
+
+    /**
+     * True if the router is navigating, otherwise false.
+     */
+    @computedFrom("_navigating")
+    public get navigating(): boolean
+    {
+        return this._navigating;
     }
 
     /**
@@ -271,6 +276,47 @@ export class HistoryHelper
         }
 
         return success;
+    }
+
+    /**
+     * Sets the title of the document, either explicitly, or as a title path, where multiple titles are
+     * joined by a separator, ending with the separator and title defined in the `AppRouter`.
+     * @param titles The title to set, or the array of titles to set as the title path.
+     * @param separator The separator to use, or undefined to use the separator defined in the `AppRouter`.
+     */
+    public setTitle(title: string | string[], separator?: string): void
+    {
+        if (title instanceof Array)
+        {
+            document.title =
+            [
+                title.join(separator ?? this._router.titleSeparator),
+                this._router.title
+            ]
+            .join(this._router.titleSeparator);
+        }
+        else
+        {
+            document.title = title;
+        }
+    }
+
+    /**
+     * Sets description of the document.
+     * @param description The description to set.
+     */
+    public setDescription(description: string): void
+    {
+        let metaDescriptionElement = document.head.querySelector("meta[name='description']");
+
+        if (metaDescriptionElement == null)
+        {
+            metaDescriptionElement = document.createElement("meta");
+            metaDescriptionElement.setAttribute("name", "description");
+            document.head.appendChild(metaDescriptionElement);
+        }
+
+        metaDescriptionElement?.setAttribute("content", description ?? "");
     }
 
     /**

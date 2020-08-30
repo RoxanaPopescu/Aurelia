@@ -1,5 +1,6 @@
 import path from "path";
 import autoprefixer from "autoprefixer";
+import htmlMinifierTerser from "html-minifier-terser";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import PreloadWebpackPlugin from "preload-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
@@ -10,6 +11,7 @@ import { Configuration, DefinePlugin } from "webpack";
 import { ICompilerOptions } from "./compiler-options";
 import { translateConfig } from "../../translate";
 import { paths } from "../../paths";
+import themeSettings from "../../../src/resources/settings/themes.json";
 
 /**
  * Creates a Webpack compiler config based on the specified options.
@@ -43,7 +45,38 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         [
             "last 1 version",
             "not dead"
-        ] : undefined
+        ]
+        :
+        undefined
+    };
+
+    // The options for the `autoprefixer` plugin.
+    // When building for the `development` environment, we override the browser list
+    // specified in `package.json`, to reducing the clutter caused by prefixes.
+    const htmlMinifierTerserOptions: htmlMinifierTerser.Options =
+    {
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        removeComments: true,
+        minifyCSS: true,
+        minifyJS: true,
+        ignoreCustomFragments:
+        [
+            // HACK:
+            //
+            // Ignore binding expressions, as they may contain strings in which whitespace should not
+            // be collapsed, or may contain character sequences that would cause parse errors.
+            //
+            // Note that this only matches up to 5 levels of nested brace pairs, and will fail if a brace
+            // appears within a string literal, or if text nodes or attribute values contain a character
+            // sequence that could be mistaken for the beginning of an interpolation or binding command.
+
+            // Ignore interpolations, i.e. `${expression}`.
+            new RegExp(`\\$\\{${"[^{]*?(\\{[^{]*?".repeat(5)}${"\\}[^{]*?)*".repeat(5)}\\}`, "s"),
+
+            // Ignore binding commands, i.e. `something.command="expression"`.
+            /[\w-]+\.([\w-]+)\s*=\s*("[^"]*[^\\]"|'[^']*[^\\]'|`[^`]*[^\\]`)/s
+        ]
     };
 
     const config: Configuration =
@@ -73,11 +106,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             // Only apply hashes to source file names if needed.
             // See: https://www.mistergoodcat.com/post/the-joy-that-is-source-maps-with-vuejs-and-typescript
             devtoolModuleFilenameTemplate: "webpack:///[resource-path]",
-            devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]",
-
-            // Needed to ensure web workers load correctly.
-            // See: https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
-            globalObject: "this"
+            devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]"
         },
         optimization:
         {
@@ -95,8 +124,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             },
 
             // TODO: Find a solution that does not require this optimization to be disabled.
-            // Needed to avoid an "Cannot determine default view strategy for object."
-            // errors when opening modals referenced by class.
+            // Needed to avoid a `Cannot determine default view strategy for object` error
+            // when opening a modal referenced by class.
             concatenateModules: false
         },
         performance:
@@ -104,14 +133,12 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             hints: false
         },
         devtool: compilerOptions.environment.optimize ? "source-map" : "eval-source-map",
-        target: compilerOptions.environment.platform === "cloud" ? "web" : "electron-renderer",
-        externals: compilerOptions.environment.platform === "cloud" ? [ "electron" ] : undefined,
         module:
         {
             rules:
             [
                 // Loader for `.scss` files defining themes, one of which will be loaded during app start.
-                // Note that we need `style-loader` to inject the these.
+                // Note that we need `style-loader` to inject those.
                 {
                     test: /\.s?css$/,
                     include: [path.join(paths.srcFolder, "resources/themes")],
@@ -131,7 +158,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 },
 
                 // Loader for `.scss` files required in `.ts` or `.tsx` files.
-                // Note that we need `style-loader` to inject the these.
+                // Note that we need `style-loader` to inject those.
                 {
                     test: /\.s?css$/,
                     exclude: [path.join(paths.srcFolder, "resources/themes")],
@@ -152,7 +179,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 },
 
                 // Loader for `.scss` files required in `.html` files.
-                // Note that we do not need `style-loader` to inject the these, as Aurelia handles that itself.
+                // Note that we do not need `style-loader` to inject those, as Aurelia handles that itself.
                 {
                     test: /\.s?css$/,
                     exclude: [path.join(paths.srcFolder, "resources/themes")],
@@ -176,8 +203,14 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     test: /\.html$/i,
                     use:
                     [
-                        { loader: "html-loader" },
-                        { loader: "translation-loader", options: translateConfig }
+                        {
+                            loader: "html-loader",
+                            options: { minimize: htmlMinifierTerserOptions }
+                        },
+                        {
+                            loader: "translation-loader",
+                            options: translateConfig
+                        }
                     ]
                 },
 
@@ -186,7 +219,10 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     test: /[\\/]resources[\\/]strings[\\/].*\.json$/,
                     use:
                     [
-                        { loader: "translation-loader", options: translateConfig }
+                        {
+                            loader: "translation-loader",
+                            options: translateConfig
+                        }
                     ]
                 },
 
@@ -266,18 +302,17 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             {
                 template: path.join(paths.srcFolder, "index.ejs"),
 
-                // Variables available in `index.ejs`.
-                environment: compilerOptions.environment,
-
                 ...
                 compilerOptions.environment.optimize ?
                 {
-                    minify:
-                    {
-                        removeComments: true,
-                        collapseWhitespace: true
-                    }
-                } : {}
+                    minify: htmlMinifierTerserOptions
+                }
+                :
+                {},
+
+                // Variables available in `index.ejs`.
+                environment: compilerOptions.environment,
+                themes: themeSettings
             }),
 
             new PreloadWebpackPlugin(
@@ -287,13 +322,19 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 fileBlacklist: [/\.map$/, /\.hot-update\.js$/]
             }),
 
-            new CopyWebpackPlugin(paths.resources.includeGlobs.map(includeGlob =>
-            ({
-                context: paths.srcFolder,
-                from: includeGlob,
-                to: buildFolder,
-                ignore: paths.resources.excludeGlobs
-            }))),
+            new CopyWebpackPlugin(
+            {
+                patterns: paths.resources.includeGlobs.map(includeGlob =>
+                ({
+                    context: paths.srcFolder,
+                    from: includeGlob,
+                    to: buildFolder,
+                    globOptions:
+                    {
+                        ignore: paths.resources.excludeGlobs
+                    }
+                }))
+            }),
 
             ...
             compilerOptions.analyze ?
@@ -307,7 +348,9 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     generateStatsFile: false,
                     logLevel: "warn"
                 })
-            ] : []
+            ]
+            :
+            []
         ]
     };
 

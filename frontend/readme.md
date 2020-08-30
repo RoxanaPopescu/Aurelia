@@ -6,7 +6,21 @@
 
 # Getting started
 
-> Note that the steps for the repository must be completed first.
+> Note that the instructions in the `readme.md` for the repository must be completed first.
+
+## Install dependencies
+
+1. **Install NPM dependencies**
+
+   In a terminal in this folder, execute the commands:
+
+   ```
+   npm ci
+   cd src/legacy
+   npm ci
+   ```
+
+   This will install the dependencies listed in the `package-lock.json` file.
 
 ## Build and debug
 
@@ -23,17 +37,40 @@
    * In a terminal in this package folder, execute the command:
 
      ```
-     npm run develop
+     npm run develop -- --environment={environment} --locale={locale} --api={api} --port={port}
      ```
+
+     Where:
+
+     * `{environment}` should be replaced with either `development`, `preview` or `production`.<br>
+       The default is `development`.
+
+     * `{locale}` should be replaced with the locale code for which to build.<br>
+       The default is `en-US`.
+
+     * `{api}` should be replaced with the URL to which API requests should be proxied, including a trailing `/`.<br>
+       The default is `http://localhost:8008/`.
+
+     * `{port}` should be replaced with the port on which the development server should listen.<br>
+       The default is `8080`.
+
+    > Note that for security reasons, only connections from `localhost` are accepted be default.
+    >
+    > You may specify the argument `--public` to allow connections from any host and any device on the network,
+    > but be aware that this is a major security risk, exposing you to CSRF and DNS Rebinding attacks, as explained
+    > [here](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a).
 
 2. **The app should now be available on http://localhost:8080**
 
    Use the `Chrome` browser to test and debug the app.
 
-   > Note that you can also start debugging in `Visual Studio Code`, using the `Debug` configuration.
+   >  Note that on `macOS`, the shortcut to open the development tools is `Command + Option + I`.
+
+   >  Note that on `Windows`, the shortcut to open the development tools is `F12`.
+
+   Alternatively, you can also debug in `Visual Studio Code`, using the `Debug` configuration.
 
 ## Additional tasks
-
 
 * **Translate to Danish**
 
@@ -72,28 +109,33 @@
   npm run clean
   ```
 
-  This will remove any existing `build` artifacts, as preparation for new builds.
+  This will remove any existing `build` artifacts.
 
 * **Build for specific locale, platform and environment**
 
-  > Note that you should remove existing `build` artifacts before building the new ones.
+  > Note that you should remove any existing `build` artifacts before building the new ones.
 
   In a terminal in this package folder, execute the command:
 
   ```
-  npm run build -- --locale={locale} --platform={platform} --environment={environment}
+  npm run build -- --environment={environment} --platform={platform} --locale={locale} --api={api} --commit={commit}
   ```
 
   Where:
 
-  * `{locale}` should be replaced with the locale code for which to build.
+  * `{environment}` should be replaced with either `development`, `preview` or `production`.<br>
+    The default is `development`.
 
-  * `{platform}` should be replaced with either `cloud` or `desktop`.
+  * `{locale}` should be replaced with the locale code for which to build.<br>
+    The default is `en-US`.
 
-  * `{environment}` should be replaced with either `development`, `preview` or `production`.
+  * `{api}` should be replaced with the URL to which API requests should be sent, including a trailing `/`.<br>
+    The default is `/api/` for the `cloud` platform, and `http://localhost:8008/` for the `desktop` platform.
 
+  * `{commit}` should be replaced with the SHA identifying the commit being built.<br>
+    Note that this argument should only be specified for production builds.
 
-  This will produce a `build` artifact for the specified locale, to be served by one of the app packages.
+  This will produce a `build` artifact for the specified locale, to be served by one of the host packages.
 
 * **Debug a build script**
 
@@ -119,7 +161,7 @@
   npm run translate-pseudo
   ```
 
-  This will produce a translation file for the custom locale `x-pseudo`, which is based on the exported strings, but mutated so it can be used during testing, e.g. to help identify missing `translate` annotations.
+  This will produce a translation file for the custom locale `en-US-x-pseudo`, which is based on the exported strings, but mutated such that it can be used during testing, e.g. to help identify missing `translate` annotations, unwanted concatenations and potential layout issues.
 
 ---
 
