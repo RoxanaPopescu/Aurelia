@@ -64,7 +64,10 @@ export class DaoRelabelPage
             window.open(url, "_blank");
 
             // TODO: This should work, but hasn't been tested yet.
-            // (window as any).ipc.send("print-pdf", { url: url });
+            // if ("ipc" in window)
+            // {
+            //     window.ipc.send("print-pdf", { url: url });
+            // }
 
             this.barcode = undefined;
         }
