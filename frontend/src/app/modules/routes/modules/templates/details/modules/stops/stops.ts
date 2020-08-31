@@ -146,10 +146,9 @@ export class Stops
                 {
                     try
                     {
-                        const stop = this.template.stops[sourceIndex];
                         await this._routeTemplateService.moveStop(
                             this.template,
-                            stop,
+                            source,
                             this._targetIndex
                         );
                     }

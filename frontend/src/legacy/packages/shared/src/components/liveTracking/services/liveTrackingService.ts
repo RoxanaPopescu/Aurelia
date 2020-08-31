@@ -175,6 +175,7 @@ export class LiveTrackingService {
     }
 
     if (this.filter.searchQuery == null &&
+        this.filter.assignedToDriver == null &&
         this.filter.criticalities.length == 0 &&
         this.filter.vehicleTypes.length == 0 &&
         this.filter.statuses.length == 0 &&
@@ -204,6 +205,14 @@ export class LiveTrackingService {
 
         if (this.filter.vehicleTypes.length > 0) {
           if (!this.filter.vehicleTypes.includes(route.vehicleType.slug)) {
+            return false;
+          }
+        }
+
+        if (this.filter.assignedToDriver != null) {
+          if (route.driver == null && this.filter.assignedToDriver) {
+            return false;
+          } else if (route.driver != null && !this.filter.assignedToDriver) {
             return false;
           }
         }

@@ -4,6 +4,7 @@ import { VehicleType } from "shared/src/model/session";
 import { RouteCriticalitySlug, RouteStatusSlug, RouteCriticality } from "app/model/route";
 
 const filterProductTypesKey = "live-tracking-filter-products";
+const filterTypesKey = "live-tracking-filter";
 
 /**
  * Represents the filters that determien which routes are shown in live tracking.
@@ -14,6 +15,12 @@ export class LiveTrackingFilter {
       let productTypes = localStorage.getItem(filterProductTypesKey);
       if (productTypes != null) {
         this.products = JSON.parse(productTypes);
+      }
+
+      let filters = localStorage.getItem(filterTypesKey);
+      if (filters != null) {
+        const filterObject = JSON.parse(filters);
+        this.assignedToDriver = filterObject.assignedToDriver;
       }
     }
 
@@ -48,6 +55,12 @@ export class LiveTrackingFilter {
     public vehicleTypes: string[] = [];
 
     /**
+     * If the driver is assigned
+     */
+    @observable
+    public assignedToDriver: boolean | undefined;
+
+    /**
      * The amount of filters applied
      */
     @computed
@@ -71,6 +84,10 @@ export class LiveTrackingFilter {
       }
 
       if (this.searchQuery != null) {
+        count++;
+      }
+
+      if (this.assignedToDriver != null) {
         count++;
       }
 
@@ -172,5 +189,15 @@ export class LiveTrackingFilter {
 
       this.products = results;
       localStorage.setItem(filterProductTypesKey, JSON.stringify(results));
+    }
+
+    assignedDriversChanged(assigned: boolean | undefined) {
+      this.assignedToDriver = assigned;
+
+      const data = {
+        assignedToDriver: assigned
+      };
+
+      localStorage.setItem(filterTypesKey, JSON.stringify(data));
     }
   }

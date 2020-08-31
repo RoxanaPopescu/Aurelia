@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { LiveTrackingService } from "../../../../../services/liveTrackingService";
-import { Input, InputCheckbox, Icon } from "shared/src/webKit";
+import { Input, InputCheckbox, Icon, InputRadioGroup } from "shared/src/webKit";
 import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
@@ -142,6 +142,36 @@ export class Filters extends React.Component<RoutesLayerProps> {
               }
             </InputCheckbox>
           </div>
+
+          <div>
+          <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Drivers")}</div>
+
+            <InputRadioGroup
+                radioButtons={[
+                  { value: "both", headline: Localization.sharedValue("Not_Active") },
+                  { value: "assigned", headline: Localization.sharedValue("Routes_Assigned_drivers") + " - " + this.props.service.filteredRoutes
+                  .filter(r => r.driver != null)
+                  .length },
+                  { value: "not-assigned", headline: Localization.sharedValue("Routes_Not_Assigned_drivers") + " - " + this.props.service.filteredRoutes
+                  .filter(r => r.driver == null)
+                  .length }
+                ]}
+                onChange={value => {
+                  if (value === "assigned") {
+                    this.props.service.filter.assignedDriversChanged(true);
+                  } else if (value === "not-assigned") {
+                    this.props.service.filter.assignedDriversChanged(false);
+                  } else {
+                    this.props.service.filter.assignedDriversChanged(undefined);
+                  }
+                }}
+                checkedValue={
+                  this.props.service.filter.assignedToDriver == null ? "both" :
+                  this.props.service.filter.assignedToDriver ? "assigned" : "not-assigned"
+                }
+              />
+          </div>
+
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Products")}</div>
             <InputCheckbox
