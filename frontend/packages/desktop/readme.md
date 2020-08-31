@@ -28,6 +28,10 @@
 
    > Note that you cannot use the `develop` task here, as that does not persist the artifacts.
 
+   > Note that stubs probably won't work. As a workaround, you can start the development server for the `frontend` package,
+   > using the command `npm run develop`, and specify the option `--api=http://localhost:8080/api/` when building the
+   > `frontend` package for the `desktop` platform. That way, the development server will be serving the stubs.
+
 2. **Build this package**
 
    > Note that this automatically removes any existing `build` artifacts.
