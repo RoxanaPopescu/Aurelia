@@ -549,6 +549,7 @@
             </h1>
 
             <tags-input
+                class="margin-large-bottom"
                 label="above"
                 value.bind="model.orderTagsOneRequired"
                 new.bind="true">
@@ -560,6 +561,24 @@
                     <info-icon position="right">
                         <div slot="body" translate>
                             The order may have multiple tags, but must at least contain all the tags listed in the list below
+                        </div>
+                    </info-icon>
+                </div>
+
+            </tags-input>
+
+            <tags-input
+                label="above"
+                value.bind="model.orderTagsOneNotAllowed"
+                new.bind="true">
+
+                <div slot="heading">
+                    <span translate>
+                        Order must not have one of the following tags
+                    </span>
+                    <info-icon position="right">
+                        <div slot="body" translate>
+                            The order may have multiple tags, but may not have any of the tags listed in the list below
                         </div>
                     </info-icon>
                 </div>
