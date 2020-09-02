@@ -540,6 +540,131 @@
 
         <modal-section class="--line-above">
 
+            <div class="flex-row" slot="header">
+
+                <div translate>
+                    Revisit
+                </div>
+
+                <div if.bind="model.revisit.location.address != null && model.startLocation.location.address == null" accent="attention">
+                    <span class="opacity-faded margin-left-large margin-right-large">
+                        –
+                    </span>
+                    <span translate>Not active, required start address</span>
+                </div>
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+               Specify how the vehicle group should revisit a location.
+            </h1>
+
+            <div class="control-row margin-medium-bottom">
+
+                <address-input
+                    label="above"
+                    value.bind="model.revisit.location.address"
+                    class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                </address-input>
+
+                <number-input
+                    value.bind="model.revisit.taskTime | scale: 1/60"
+                    min.bind="0"
+                    label="above"
+                    class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Task time
+                    </div>
+
+                    <span slot="after" class="opacity-faded">
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.revisit.taskTime"
+                            min.bind="0">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <time-input
+                    label="above"
+                    value.bind="selectedRevisitEarliestArrival"
+                    class="flex-basis-1-of-2"
+                    max.bind="selectedRevisitLatestDeparture">
+
+                    <div slot="heading" translate>
+                        Earliest arrival
+                    </div>
+
+                    <div slot="validation">
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="selectedRevisitEarliestArrival"
+                            max.bind="selectedRevisitLatestDeparture"
+                            max-inclusive.bind="false">
+
+                            <template replace-part="invalid-max" translate>
+                                Please choose a time before the latest departure time.
+                            </template>
+
+                        </range-validator>
+
+                    </div>
+
+                </time-input>
+
+                <time-input
+                    label="above"
+                    value.bind="selectedRevisitLatestDeparture"
+                    class="flex-basis-1-of-2"
+                    min.bind="selectedRevisitEarliestArrival">
+
+                    <div slot="heading">
+                        <span translate>
+                            Latest departure
+                        </span>
+                    </div>
+
+                    <div slot="validation">
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="selectedRevisitLatestDeparture"
+                            min.bind="selectedRevisitEarliestArrival"
+                            min-inclusive.bind="false">
+
+                            <template replace-part="invalid-min" translate>
+                                Please choose a time after the earliest arrival time.
+                            </template>
+
+                        </range-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
             <div slot="header" translate>
                 Order tags
             </div>

@@ -5,6 +5,7 @@ import { VehicleGroup, VehicleGroupLocation } from "app/model/_route-planning-se
 import { VehicleType } from "app/model/vehicle";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { Uuid } from "shared/utilities/id/uuid";
+import { Duration } from "luxon";
 
 @autoinject
 export class VehicleGroupPanel
@@ -45,6 +46,16 @@ export class VehicleGroupPanel
     protected validation: IValidation;
 
     /**
+     * The selected duration for earliest arrival.
+     */
+    protected selectedRevisitEarliestArrival: Duration | undefined;
+
+    /**
+     * The selected duration for latest departure.
+     */
+    protected selectedRevisitLatestDeparture: Duration | undefined;
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
@@ -61,6 +72,14 @@ export class VehicleGroupPanel
         if (this.model.endLocation == null)
         {
             this.model.endLocation = new VehicleGroupLocation();
+        }
+
+        if (this.model.revisit?.earliestArrivalTime != null) {
+            this.selectedRevisitEarliestArrival = Duration.fromObject({ seconds: this.model.revisit.earliestArrivalTime });
+        }
+
+        if (this.model.revisit?.latestDepartureTime != null) {
+            this.selectedRevisitLatestDeparture = Duration.fromObject({ seconds: this.model.revisit.latestDepartureTime });
         }
     }
 
@@ -134,6 +153,25 @@ export class VehicleGroupPanel
                     return;
                 }
             }
+
+            // Resolve end location, if needed.
+            if (this.model.revisit.location?.address?.id != null)
+            {
+                try
+                {
+                    this.model.revisit.location = await this._addressService.getLocation(this.model.revisit.location.address);
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+
+                    return;
+                }
+            }
+
+            // Transfer revisit times
+            this.model.revisit.earliestArrivalTime = this.selectedRevisitEarliestArrival?.as("seconds");
+            this.model.revisit.latestDepartureTime = this.selectedRevisitLatestDeparture?.as("seconds");
 
             if (this.model.id == null)
             {
