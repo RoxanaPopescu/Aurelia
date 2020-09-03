@@ -123,6 +123,15 @@ export class VehicleGroup
             delete data.endLocation;
         }
 
+        if (
+            data.distributionCenterEnRoute?.location?.address == null ||
+            data.distributionCenterEnRoute?.taskTime == null ||
+            data.distributionCenterEnRoute?.earliestArrivalTime == null ||
+            data.distributionCenterEnRoute?.latestDepartureTime == null
+        ){
+            delete data.distributionCenterEnRoute;
+        }
+
         delete data.vehicleType;
         data.vehicleTypeId = this.vehicleType.id;
 
