@@ -48,12 +48,12 @@ export class VehicleGroupPanel
     /**
      * The selected duration for earliest arrival.
      */
-    protected selectedRevisitEarliestArrival: Duration | undefined;
+    protected selectedEarliestArrival: Duration | undefined;
 
     /**
      * The selected duration for latest departure.
      */
-    protected selectedRevisitLatestDeparture: Duration | undefined;
+    protected selectedLatestDeparture: Duration | undefined;
 
     /**
      * Called by the framework when the modal is activated.
@@ -74,12 +74,12 @@ export class VehicleGroupPanel
             this.model.endLocation = new VehicleGroupLocation();
         }
 
-        if (this.model.revisit?.earliestArrivalTime != null) {
-            this.selectedRevisitEarliestArrival = Duration.fromObject({ seconds: this.model.revisit.earliestArrivalTime });
+        if (this.model.distributionCenterEnRoute?.earliestArrivalTime != null) {
+            this.selectedEarliestArrival = Duration.fromObject({ seconds: this.model.distributionCenterEnRoute.earliestArrivalTime });
         }
 
-        if (this.model.revisit?.latestDepartureTime != null) {
-            this.selectedRevisitLatestDeparture = Duration.fromObject({ seconds: this.model.revisit.latestDepartureTime });
+        if (this.model.distributionCenterEnRoute?.latestDepartureTime != null) {
+            this.selectedLatestDeparture = Duration.fromObject({ seconds: this.model.distributionCenterEnRoute.latestDepartureTime });
         }
     }
 
@@ -155,11 +155,11 @@ export class VehicleGroupPanel
             }
 
             // Resolve end location, if needed.
-            if (this.model.revisit.location?.address?.id != null)
+            if (this.model.distributionCenterEnRoute.location?.address?.id != null)
             {
                 try
                 {
-                    this.model.revisit.location = await this._addressService.getLocation(this.model.revisit.location.address);
+                    this.model.distributionCenterEnRoute.location = await this._addressService.getLocation(this.model.distributionCenterEnRoute.location.address);
                 }
                 catch (error)
                 {
@@ -170,8 +170,8 @@ export class VehicleGroupPanel
             }
 
             // Transfer revisit times
-            this.model.revisit.earliestArrivalTime = this.selectedRevisitEarliestArrival?.as("seconds");
-            this.model.revisit.latestDepartureTime = this.selectedRevisitLatestDeparture?.as("seconds");
+            this.model.distributionCenterEnRoute.earliestArrivalTime = this.selectedEarliestArrival?.as("seconds");
+            this.model.distributionCenterEnRoute.latestDepartureTime = this.selectedLatestDeparture?.as("seconds");
 
             if (this.model.id == null)
             {

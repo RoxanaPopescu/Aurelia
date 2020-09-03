@@ -540,39 +540,38 @@
 
         <modal-section class="--line-above">
 
-            <div class="flex-row" slot="header">
-
-                <div translate>
-                    Revisit
-                </div>
-
-                <div if.bind="model.revisit.location.address != null && model.startLocation.location.address == null" accent="attention">
-                    <span class="opacity-faded margin-left-large margin-right-large">
-                        –
-                    </span>
-                    <span translate>Not active, required start address</span>
-                </div>
+            <div slot="header" translate>
+                Distribution center en route
             </div>
 
             <h1 class="margin-large-bottom" translate>
-               Specify how the vehicle group should revisit a location.
+               Specify the distribution center to revisit while the route is active.
             </h1>
 
             <div class="control-row margin-medium-bottom">
 
                 <address-input
                     label="above"
-                    value.bind="model.revisit.location.address"
+                    value.bind="model.distributionCenterEnRoute.location.address"
                     class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Address
                     </div>
 
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.distributionCenterEnRoute.location.address"
+                            enabled.bind="(model.distributionCenterEnRoute.location.address || model.distributionCenterEnRoute.taskTime || selectedEarliestArrival || selectedLatestDeparture) ? undefined : false">
+                        </required-validator>
+
+                    </div>
+
                 </address-input>
 
                 <number-input
-                    value.bind="model.revisit.taskTime | scale: 1/60"
+                    value.bind="model.distributionCenterEnRoute.taskTime | scale: 1/60"
                     min.bind="0"
                     label="above"
                     class="flex-basis-1-of-2">
@@ -587,9 +586,14 @@
 
                     <div slot="validation">
 
+                        <required-validator
+                            value.bind="model.distributionCenterEnRoute.taskTime"
+                            enabled.bind="(model.distributionCenterEnRoute.location.address || model.distributionCenterEnRoute.taskTime || selectedEarliestArrival || selectedLatestDeparture) ? undefined : false">
+                        </required-validator>
+
                         <range-validator
                             active.bind="true"
-                            value.bind="model.revisit.taskTime"
+                            value.bind="model.distributionCenterEnRoute.taskTime"
                             min.bind="0">
                         </range-validator>
 
@@ -603,9 +607,9 @@
 
                 <time-input
                     label="above"
-                    value.bind="selectedRevisitEarliestArrival"
+                    value.bind="selectedEarliestArrival"
                     class="flex-basis-1-of-2"
-                    max.bind="selectedRevisitLatestDeparture">
+                    max.bind="selectedLatestDeparture">
 
                     <div slot="heading" translate>
                         Earliest arrival
@@ -613,10 +617,15 @@
 
                     <div slot="validation">
 
+                        <required-validator
+                            value.bind="selectedEarliestArrival"
+                            enabled.bind="(model.distributionCenterEnRoute.location.address || model.distributionCenterEnRoute.taskTime || selectedEarliestArrival || selectedLatestDeparture) ? undefined : false">
+                        </required-validator>
+
                         <range-validator
                             active.bind="true"
-                            value.bind="selectedRevisitEarliestArrival"
-                            max.bind="selectedRevisitLatestDeparture"
+                            value.bind="selectedEarliestArrival"
+                            max.bind="selectedLatestDeparture"
                             max-inclusive.bind="false">
 
                             <template replace-part="invalid-max" translate>
@@ -631,9 +640,9 @@
 
                 <time-input
                     label="above"
-                    value.bind="selectedRevisitLatestDeparture"
+                    value.bind="selectedLatestDeparture"
                     class="flex-basis-1-of-2"
-                    min.bind="selectedRevisitEarliestArrival">
+                    min.bind="selectedEarliestArrival">
 
                     <div slot="heading">
                         <span translate>
@@ -643,10 +652,15 @@
 
                     <div slot="validation">
 
+                        <required-validator
+                            value.bind="selectedLatestDeparture"
+                            enabled.bind="(model.distributionCenterEnRoute.location.address || model.distributionCenterEnRoute.taskTime || selectedEarliestArrival || selectedLatestDeparture) ? undefined : false">
+                        </required-validator>
+
                         <range-validator
                             active.bind="true"
-                            value.bind="selectedRevisitLatestDeparture"
-                            min.bind="selectedRevisitEarliestArrival"
+                            value.bind="selectedLatestDeparture"
+                            min.bind="selectedEarliestArrival"
                             min-inclusive.bind="false">
 
                             <template replace-part="invalid-min" translate>

@@ -3,7 +3,7 @@ import { VehicleGroupCost } from "./vehicle-group-cost";
 import { VehicleGroupLimits } from "./vehicle-group-limits";
 import { VehicleGroupLocation } from "./vehicle-group-location";
 import clone from "clone";
-import { VehicleGroupRevisit } from "./vehicle-group-revisit";
+import { VehicleGroupDistributionCenterEnRoute } from "./vehicle-group-distribution-center-en-route";
 
 /**
  * Represents settings associated with a vehicle group.
@@ -20,7 +20,7 @@ export class VehicleGroup
         {
             this.name = data.name;
             this.id = data.id;
-            this.revisit = new VehicleGroupRevisit(data.revisit);
+            this.distributionCenterEnRoute = new VehicleGroupDistributionCenterEnRoute(data.distributionCenterEnRoute);
             this.cost = new VehicleGroupCost(data.cost);
             this.vehicleType = VehicleType.get(data.vehicleTypeId);
             this.limits = new VehicleGroupLimits(data.limits);
@@ -32,7 +32,7 @@ export class VehicleGroup
         }
         else
         {
-            this.revisit = new VehicleGroupRevisit();
+            this.distributionCenterEnRoute = new VehicleGroupDistributionCenterEnRoute();
             this.cost = new VehicleGroupCost();
             this.limits = new VehicleGroupLimits();
             this.orderTagsOneRequired = [];
@@ -54,9 +54,9 @@ export class VehicleGroup
     public id: string;
 
     /**
-     * The revisit associated with the vehicle group.
+     * The distribution center en route associated with the vehicle group.
      */
-    public revisit: VehicleGroupRevisit;
+    public distributionCenterEnRoute: VehicleGroupDistributionCenterEnRoute;
 
     /**
      * The cost associated with the vehicle group.

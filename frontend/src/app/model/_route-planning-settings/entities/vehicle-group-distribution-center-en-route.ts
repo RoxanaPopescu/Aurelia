@@ -1,10 +1,10 @@
 import { Location } from "app/model/shared";
 
 /**
- * Represents the revisit of a location associated with a vehicle group.
+ * Represents the revisit to a distribution center while en route on a vehicle group.
  * Usually happend when the vehicle has empties its colli and returns to the distribution center
  */
-export class VehicleGroupRevisit
+export class VehicleGroupDistributionCenterEnRoute
 {
     /**
      * Creates a new instance of the type.

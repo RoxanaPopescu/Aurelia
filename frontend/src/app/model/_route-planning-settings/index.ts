@@ -18,7 +18,7 @@ export * from "./entities/task-times-scenario";
 export * from "./entities/task-times";
 export * from "./entities/time-window-adjustment";
 export * from "./entities/uturn-strategy";
-export * from "./entities/vehicle-group-revisit";
+export * from "./entities/vehicle-group-distribution-center-en-route";
 export * from "./entities/vehicle-group-cost";
 export * from "./entities/vehicle-group-limits";
 export * from "./entities/vehicle-group-location";
