@@ -332,7 +332,8 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     globOptions:
                     {
                         ignore: paths.resources.excludeGlobs
-                    }
+                    },
+                    noErrorOnMissing: true
                 }))
             }),
 
