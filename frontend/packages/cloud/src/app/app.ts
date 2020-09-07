@@ -162,15 +162,15 @@ export class App
         // We ignore requests where the last path segment contains a `.`, as those are for files that do not exist.
         this._app.get(/(^|\/)[^/.]*$/i, (request, response) =>
         {
-            const indexFilePath = path.join(clientFolderPath, response.locals.localeCode, "index.html");
+            const indexFilePath = path.join(response.locals.localeCode, "index.html");
 
-            // Set the max-age of the response.
-            if (environment.name === "production")
+            response.sendFile(indexFilePath,
             {
-                response.setHeader("cache-control", `public, max-age=${settings.app.maxAge.index}`);
-            }
+                root: clientFolderPath,
 
-            response.sendFile(indexFilePath);
+                // Set the max-age of the response.
+                maxAge: "production" ? settings.app.maxAge.index * 1000 : 0
+            });
         });
     }
 
