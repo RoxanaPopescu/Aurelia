@@ -98,6 +98,13 @@ jobs:
           name: Start staging slot
           command: az webapp start -s staging
       - run:
+          name: Wait to make sure webapp has started
+          command: sleep 20
+      - run:
+          name: Smoketest
+          command: |
+            curl -f -LI https://bff-v2-test-mover-staging.azurewebsites.net
+      - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
             -n bff-v2-test-mover
@@ -159,6 +166,13 @@ jobs:
       - run:
           name: Start staging slot
           command: az webapp start -s staging
+      - run:
+          name: Wait to make sure webapp has started
+          command: sleep 20
+      - run:
+          name: Smoketest
+          command: |
+            curl -f -LI https://bff-v2-prod-mover-staging.azurewebsites.net
       - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
@@ -265,6 +279,13 @@ jobs:
           name: Start staging slot
           command: az webapp start -s staging
       - run:
+          name: Wait to make sure webapp has started
+          command: sleep 20
+      - run:
+          name: Smoketest the website
+          command: |
+            curl -f -LI https://client-platform-test-mover-staging.azurewebsites.net
+      - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
             -n client-platform-test-mover
@@ -341,25 +362,41 @@ jobs:
           command: az configure
             --defaults web="client-platform-prod-mover"
       - run:
-          name: Add docker image to staging slot
-          command: az webapp config container set
-            -u ${DOCKER_REGISTRY_PRODUCTION}
-            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
-            -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
-            -s staging
-            -i $(cat /tmp/workspace/docker-image)
-      - run:
           name: Start staging slot
           command: az webapp start -s staging
       - run:
-          name: Swap slot with production
+          name: Start staging slot
+          command: az webapp start -s build
+      - run:
+          name: Wait to make sure webapp has started
+          command: sleep 20
+      - run:
+          name: Smoketest the build slot
+          command: |
+            curl -f -LI https://client-platform-prod-mover-build.azurewebsites.net
+      - run:
+          name: Swap build -> staging slot
           command: az webapp deployment slot swap
-            -n client-platform-prod-mover
+            -n client-website-prod-mover
+            -s build
+            --action swap
+            --target-slot staging
+      - run:
+          name: Smoketest the staging slot
+          command: |
+            curl -f -LI https://client-platform-prod-mover-staging.azurewebsites.net
+      - run:
+          name: Swap staging -> production
+          command: az webapp deployment slot swap
+            -n client-website-prod-mover
             -s staging
             --action swap
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
+      - run:
+          name: Stop build slot
+          command: az webapp stop -s build
     
   client-rollback:
     executor: azure-cli/azure-docker
@@ -375,6 +412,9 @@ jobs:
       - run:
           name: Start staging slot
           command: az webapp start -s staging
+      - run:
+          name: Wait to make sure webapp has started
+          command: sleep 20
       - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
