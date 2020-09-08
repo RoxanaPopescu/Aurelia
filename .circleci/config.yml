@@ -507,7 +507,7 @@ commands:
           steps:
             - run:
                 name: Verify changes to app path
-                command: git diff --name-only --diff-filter=ADMR @~..@ << parameters.changes-in-folder >> | grep . && echo “Changes in directory found, continuing…“ || exit 1
+                command: git diff --name-only --diff-filter=ADMR @~..@ << parameters.changes-in-folder >> | grep . && echo “Changes in directory found, continuing…“ || circleci step halt
 
   setup-azure-command:
     description: "Deploy to azure"
