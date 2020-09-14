@@ -20,31 +20,6 @@ export class Schedules
      */
     protected statuses = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
-
-    /**
-     * True if the number of stops is less than two,
-     * or undefined if not yet validated.
-     */
-    protected hasInvalidStopCount: boolean;
-
-    /**
-     * True if the first stop is not a pickup stop,
-     * or undefined if not yet validated.
-     */
-    protected hasInvalidFirstStop: boolean;
-
-    /**
-     * True if the last stop is a pickup stop,
-     * or undefined if not yet validated.
-     */
-    protected hasInvalidLastStop: boolean;
-
-    /**
-     * True if any stop other than the last is a return stop,
-     * or undefined if not yet validated.
-     */
-    protected hasInvalidReturnStop: boolean;
-
     /**
      * Called when a change is made to the recurrence settings for a specific weekday.
      * Ensures driver and status are not both selected, and triggers an update of the "All days" settings.
@@ -56,14 +31,14 @@ export class Schedules
         {
             case "driver":
             {
-                schedule.status = undefined;
+                schedule.routeStatus = undefined;
 
                 break;
             }
 
             case "status":
             {
-                schedule.driver = undefined;
+                schedule.routeStatus = undefined;
 
                 break;
             }

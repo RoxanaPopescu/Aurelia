@@ -1,5 +1,7 @@
-import { Driver } from "app/model/driver";
 import { RouteStatus } from "./route-status";
+import { DayOfWeek } from "app/model/shared";
+import { Duration, DateTime } from "luxon";
+import { DateTimeRange } from "shared/types";
 
 /**
  * Represents the recurrence settings to use for a template.
@@ -14,22 +16,20 @@ export class RouteTemplateSchedule
     {
         if (data != null)
         {
-            this.enabled = data.enabled;
+            this.paused = data.paused;
             this.id = data.id;
 
-            if (data.driver != null)
+            if (data.driverId != null)
             {
-                this.driver = new Driver(data.driver);
+                // this.driver = new Driver(data.driver);
+                // FIXME -> How - to?
             }
 
-            if (data.status != null)
-            {
-                this.status = new RouteStatus(data.status);
-            }
+            this.routeStatus = new RouteStatus(data.routeStatus);
         }
         else
         {
-            this.enabled = false;
+            this.paused = false;
         }
     }
 
@@ -39,28 +39,53 @@ export class RouteTemplateSchedule
     public id: string;
 
     /**
-     * True if this recurrence is enabled, otherwise false.
+     * True if this recurrence is paused, otherwise false.
      */
-    public enabled: boolean;
+    public paused: boolean;
 
     /**
-     * The ID of the driver to use for this recurrence.
+     * The day of the week this schedule is being executed
      */
-    public driver: Driver | undefined;
+    public executeDayOfWeek: DayOfWeek;
 
     /**
-     * TODO: The status of the route ???
+     * The time of day at which this schedule is being executed.
      */
-    public status: RouteStatus | undefined;
+    public executeTime: Duration;
+
+    /**
+     * The next dateTime where this schedule is being executed.
+     */
+    public nextExecution: DateTime;
+
+    /**
+     * The time range of which this is active.
+     */
+    public activeTimeRange?: DateTimeRange;
+
+    /**
+     * The day of the week for the route to be created
+     */
+    public routeDayOfWeek: DayOfWeek;
+
+    /**
+     * The Driver id to use for the route.
+     */
+    public routedriverId: number | undefined;
+
+    /**
+     * The status of the rout to create
+     */
+    public routeStatus: RouteStatus | undefined;
 
     /**
      * Gets the data representing this instance.
-     */
     public toJSON(): any
     {
         return {
-            driverId: this.driver != null ? this.driver.id : undefined,
+            routedriverId: this.driver != null ? this.driver.id : undefined,
             status: this.status != null ? this.status.slug : undefined
         };
     }
+    */
 }

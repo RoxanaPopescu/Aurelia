@@ -20,51 +20,43 @@
 
         <data-table
             appearance="cards"
-            sorting.bind="sorting"
-            busy.bind="updateOperation.pending"
-            move.call="onMoveStop(source, target)">
+            sorting.bind="sorting">
 
             <data-table-headers>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Stop
+                        Next execution
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Address
+                        Execution
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Type
+                        Route status
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Consignee phone
+                        Route driver
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Requirements
-                    </span>
-                </data-table-cell>
-
-                <data-table-cell align="right">
-                    <span class="text-truncate" translate>
-                        Port
+                        Route day of week
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Arrival time
+                        Status
                     </span>
                 </data-table-cell>
 
@@ -77,44 +69,38 @@
             <data-table-row repeat.for="stop of template.stops" model.bind="stop">
 
                 <data-table-cell>
-                    <div class="route-template-stop-number">
-                        ${$index + 1}
-                    </div>
-                </data-table-cell>
-
-                <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.location.address}
+                        Next executoon
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.type.name}
+                        Monday, 12:00
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.consignee.contactPhone}
+                        Route status
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.activeRequirementNames | list: 'short' : 'unit'}
-                    </span>
-                </data-table-cell>
-
-                <data-table-cell align="right">
-                    <span class="text-truncate">
-                        ${stop.port}
+                        Yes / No
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.arrivalTimeFrame | timeRange}
+                        Monday
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        Not-accepted
                     </span>
                 </data-table-cell>
 
