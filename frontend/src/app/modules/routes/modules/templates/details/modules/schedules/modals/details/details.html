@@ -1,0 +1,200 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+    <require from="app/components/info-icon/info-icon"></require>
+    <require from="./details.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+                <span if.bind="!model.id" translate>
+                    New schedule
+                </span>
+
+                <path-nav if.bind="model.id">
+
+                    <a accent="inherit" click.trigger="onCancel()" translate>
+                        Schedule ${model.name}
+                    </a>
+
+                    <div translate>
+                        Edit
+                    </div>
+
+                </path-nav>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-medium-bottom">
+
+                <select-input
+                    label="above"
+                    value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
+                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'"
+                    none.bind="false"
+                    filter="auto"
+                    class="flex-basis-1-of-2"
+                    fixed.bind="true">
+
+                    <div slot="heading" translate>
+                        Day of week
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Choose a day
+                    </span>
+
+                    <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
+                        ${dayOfWeek | weekday | case: 'sentence'}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.routePlanningTime.delivery.from.dayOfWeek">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <time-input
+                    label="above"
+                    value.bind="model.routePlanningTime.delivery.from.timeOfDay"
+                    none.bind="false"
+                    max.bind="model.routePlanningTime.delivery.to.timeOfDay"
+                    max-inclusive.bind="false"
+                    class="flex-basis-1-of-2"
+                    fixed.bind="true">
+
+                    <div slot="heading" translate>
+                        Time
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.routePlanningTime.delivery.from.timeOfDay">
+                        </required-validator>
+
+                    </div>
+
+                </time-input>
+
+            </div>
+
+            <div class="control-row margin-larger-bottom">
+
+                <date-time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Next execution
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.arrivalTimeFrame.from">
+                        </required-validator>
+
+                    </div>
+
+                </date-time-input>
+
+            </div>
+
+            <hr class="hr-line margin-larger-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input
+                    label="above"
+                    value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
+                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'"
+                    none.bind="false"
+                    filter="auto"
+                    class="flex-basis-1-of-2"
+                    fixed.bind="true">
+
+                    <div slot="heading" translate>
+                        Route day of week
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Choose a day
+                    </span>
+
+                    <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
+                        ${dayOfWeek | weekday | case: 'sentence'}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.routePlanningTime.delivery.from.dayOfWeek">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+                <select-input label="above" none.bind="false" value.bind="model.routeStatus" display-value.bind="model.routeStatus.name" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Route status
+                    </div>
+
+                    <item repeat.for="status of statuses" model.bind="status">
+                        ${status.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.routeStatus">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <check-toggle
+                    label="after"
+                    value.bind="model.paused"
+                    class="flex-basis-1-of-2">
+                    <div slot="heading" translate>
+                        Paused
+                    </div>
+
+                </check-toggle>
+
+            </div>
+
+        </modal-section>
+
+
+        <button appearance="solid" accent="primary" class="margin-larger-top" click.delegate="onCreateClick()">
+            <span translate if.bind="!model.id">
+                Create schedule
+            </span>
+            <span translate if.bind="model.id">
+                Update schedule
+            </span>
+        </button>
+
+    </modal-panel>
+
+</template>

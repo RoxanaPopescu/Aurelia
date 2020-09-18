@@ -3,6 +3,7 @@ import { ApiClient } from "shared/infrastructure";
 import { RouteTemplateInfo } from "../entities/route-template-info";
 import { RouteTemplate } from "../entities/route-template";
 import { RouteTemplateStop } from "../entities/route-template-stop";
+import { RouteTemplateSchedule } from "../entities/route-template-schedule";
 
 /**
  * Represents a service that manages route templates.
@@ -140,6 +141,53 @@ export class RouteTemplateService
     public async deleteStop(id: string): Promise<void>
     {
         await this._apiClient.post("routes/templates/stops/delete",
+        {
+            body: { id }
+        });
+    }
+
+    /**
+     * Adds a schedule to the tmeplate
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async addSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
+    {
+        let json: any = schedule;
+        json.templateId = template.id;
+
+        const result = await this._apiClient.post("routes/templates/schedules/add",
+        {
+            body: json
+        });
+
+        schedule.id = result.data.id;
+    }
+
+    /**
+     * Creates the specified route template.
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async updateSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
+    {
+        let json: any = schedule;
+        json.templateId = template.id;
+
+        await this._apiClient.post("routes/templates/schedules/update",
+        {
+            body: json
+        });
+    }
+
+    /**
+     * Deletes the specified route stop.
+     * @param id The ID identifying the route template.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async deleteSchedule(id: string): Promise<void>
+    {
+        await this._apiClient.post("routes/templates/schedules/delete",
         {
             body: { id }
         });

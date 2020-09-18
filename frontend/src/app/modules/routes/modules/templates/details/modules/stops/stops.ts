@@ -73,7 +73,6 @@ export class Stops
      */
     protected hasInvalidReturnStop: boolean;
 
-
     /**
      * Called when the "Add stop" button is clicked.
      * Opens at modal for creating a new stop.

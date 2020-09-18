@@ -2,6 +2,7 @@ import { RouteStatus } from "./route-status";
 import { DayOfWeek } from "app/model/shared";
 import { Duration, DateTime } from "luxon";
 import { DateTimeRange } from "shared/types";
+import clone from "clone";
 
 /**
  * Represents the recurrence settings to use for a template.
@@ -88,4 +89,12 @@ export class RouteTemplateSchedule
         };
     }
     */
+
+    /**
+     * Gets a clone of this instance, suitable for editing.
+     */
+    public clone(): any
+    {
+        return clone(this);
+    }
 }
