@@ -4,6 +4,7 @@ import { RouteTemplateInfo } from "../entities/route-template-info";
 import { RouteTemplate } from "../entities/route-template";
 import { RouteTemplateStop } from "../entities/route-template-stop";
 import { RouteTemplateSchedule } from "../entities/route-template-schedule";
+import { CreateRoute } from "../entities/create-route";
 
 /**
  * Represents a service that manages route templates.
@@ -52,6 +53,19 @@ export class RouteTemplateService
         });
 
         return new RouteTemplate(result.data);
+    }
+
+    /**
+     * Creates the specified route template.
+     * @param routeTemplate The route template to create.
+     * @returns A promise that will be resolved when teh operation succeedes.
+     */
+    public async createRoute(route: CreateRoute): Promise<void>
+    {
+        await this._apiClient.post("routes/create-from-template",
+        {
+            body: route.toJSON()
+        });
     }
 
     /**
@@ -153,7 +167,7 @@ export class RouteTemplateService
      */
     public async addSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
-        let json: any = schedule;
+        let json = schedule.toJSON();
         json.templateId = template.id;
 
         const result = await this._apiClient.post("routes/templates/schedules/add",
@@ -171,7 +185,7 @@ export class RouteTemplateService
      */
     public async updateSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
-        let json: any = schedule;
+        let json = schedule.toJSON();
         json.templateId = template.id;
 
         await this._apiClient.post("routes/templates/schedules/update",

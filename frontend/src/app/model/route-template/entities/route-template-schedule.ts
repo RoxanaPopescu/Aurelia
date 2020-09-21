@@ -1,8 +1,8 @@
-import { RouteStatus } from "./route-status";
 import { DayOfWeek } from "app/model/shared";
 import { Duration, DateTime } from "luxon";
 import { DateTimeRange } from "shared/types";
 import clone from "clone";
+import { RouteStatus } from "app/model/route";
 
 /**
  * Represents the recurrence settings to use for a template.
@@ -19,18 +19,18 @@ export class RouteTemplateSchedule
         {
             this.paused = data.paused;
             this.id = data.id;
-
-            if (data.driverId != null)
-            {
-                // this.driver = new Driver(data.driver);
-                // FIXME -> How - to?
-            }
-
-            this.routeStatus = new RouteStatus(data.routeStatus);
+            this.executeDayOfWeek = data.executeDayOfWeek;
+            this.executeTime = Duration.fromObject({ seconds: data.executeTime });
+            this.nextExecution = DateTime.fromISO(data.nextExecution, { setZone: true });
+            this.activeDateTimeRange = new DateTimeRange(data.activeDateTimeRange);
+            this.routeDayOfWeek = data.routeDayOfWeek;
+            this.routeDriverId = data.routeDriverId;
+            this.statusOfCreatedRoute = new RouteStatus(data.statusOfCreatedRoute);
         }
         else
         {
             this.paused = false;
+            this.activeDateTimeRange = new DateTimeRange();
         }
     }
 
@@ -62,7 +62,7 @@ export class RouteTemplateSchedule
     /**
      * The time range of which this is active.
      */
-    public activeTimeRange?: DateTimeRange;
+    public activeDateTimeRange?: DateTimeRange;
 
     /**
      * The day of the week for the route to be created
@@ -72,23 +72,31 @@ export class RouteTemplateSchedule
     /**
      * The Driver id to use for the route.
      */
-    public routedriverId: number | undefined;
+    public routeDriverId: number | undefined;
 
     /**
      * The status of the rout to create
      */
-    public routeStatus: RouteStatus | undefined;
+    public statusOfCreatedRoute: RouteStatus | undefined;
 
     /**
      * Gets the data representing this instance.
+     */
     public toJSON(): any
     {
-        return {
-            routedriverId: this.driver != null ? this.driver.id : undefined,
-            status: this.status != null ? this.status.slug : undefined
-        };
+        const data = { ...this } as any;
+        data.routeStatus = this.statusOfCreatedRoute?.slug;
+        data.executeTime = this.executeTime.as("seconds");
+
+        if (
+            data.activeDateTimeRange?.from == null &&
+            data.activeDateTimeRange?.to == null
+        ){
+            delete data.activeDateTimeRange;
+        }
+
+        return data;
     }
-    */
 
     /**
      * Gets a clone of this instance, suitable for editing.

@@ -1,5 +1,4 @@
 {
-    "heading": "Success",
-    "body": "The route ({routeSlug}) has been created",
-    "url": "/routes/details/{routeSlug}"
+    "heading": "Process started",
+    "body": "The route is being created, check routes in 1 minutes to see the route"
 }

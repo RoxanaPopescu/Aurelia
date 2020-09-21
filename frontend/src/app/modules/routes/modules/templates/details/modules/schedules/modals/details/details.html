@@ -16,17 +16,9 @@
                     New schedule
                 </span>
 
-                <path-nav if.bind="model.id">
-
-                    <a accent="inherit" click.trigger="onCancel()" translate>
-                        Schedule ${model.name}
-                    </a>
-
-                    <div translate>
-                        Edit
-                    </div>
-
-                </path-nav>
+                <span if.bind="model.id" translate>
+                    Edit schedule
+                </span>
 
             </h1>
 
@@ -38,8 +30,8 @@
 
                 <select-input
                     label="above"
-                    value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
-                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'"
+                    value.bind="model.executeDayOfWeek"
+                    display-value.bind="model.executeDayOfWeek | weekday | case: 'sentence'"
                     none.bind="false"
                     filter="auto"
                     class="flex-basis-1-of-2"
@@ -60,7 +52,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routePlanningTime.delivery.from.dayOfWeek">
+                            value.bind="model.executeDayOfWeek">
                         </required-validator>
 
                     </div>
@@ -69,9 +61,8 @@
 
                 <time-input
                     label="above"
-                    value.bind="model.routePlanningTime.delivery.from.timeOfDay"
+                    value.bind="model.executeTime"
                     none.bind="false"
-                    max.bind="model.routePlanningTime.delivery.to.timeOfDay"
                     max-inclusive.bind="false"
                     class="flex-basis-1-of-2"
                     fixed.bind="true">
@@ -83,7 +74,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routePlanningTime.delivery.from.timeOfDay">
+                            value.bind="model.executeTime">
                         </required-validator>
 
                     </div>
@@ -94,7 +85,7 @@
 
             <div class="control-row margin-larger-bottom">
 
-                <date-time-input label="above" value.bind="model.arrivalTimeFrame.from" class="flex-basis-1-of-1">
+                <date-time-input label="above" value.bind="model.nextExecution" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Next execution
@@ -103,7 +94,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.arrivalTimeFrame.from">
+                            value.bind="model.nextExecution">
                         </required-validator>
 
                     </div>
@@ -114,12 +105,16 @@
 
             <hr class="hr-line margin-larger-bottom">
 
+            <div class="margin-large-bottom" translate>
+                The specific time of the days is defined in the stops, if you create a route for Monday that would mean Mondag 12:00 if the first stop has this time.
+            </div>
+
             <div class="control-row margin-large-bottom">
 
                 <select-input
                     label="above"
-                    value.bind="model.routePlanningTime.delivery.from.dayOfWeek"
-                    display-value.bind="model.routePlanningTime.delivery.from.dayOfWeek | weekday | case: 'sentence'"
+                    value.bind="model.routeDayOfWeek"
+                    display-value.bind="model.routeDayOfWeek | weekday | case: 'sentence'"
                     none.bind="false"
                     filter="auto"
                     class="flex-basis-1-of-2"
@@ -140,14 +135,14 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routePlanningTime.delivery.from.dayOfWeek">
+                            value.bind="model.routeDayOfWeek">
                         </required-validator>
 
                     </div>
 
                 </select-input>
 
-                <select-input label="above" none.bind="false" value.bind="model.routeStatus" display-value.bind="model.routeStatus.name" class="flex-basis-1-of-2">
+                <select-input label="above" none.bind="false" value.bind="model.statusOfCreatedRoute" display-value.bind="model.statusOfCreatedRoute.name" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Route status
@@ -160,12 +155,38 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.routeStatus">
+                            value.bind="model.statusOfCreatedRoute">
                         </required-validator>
 
                     </div>
 
                 </select-input>
+
+            </div>
+
+            <hr class="hr-line margin-large-bottom">
+
+            <div class="margin-large-bottom" translate>
+                The schedule can be limited to inbetween two dates, if these are not set the schedule will always be active.
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <date-time-input label="above" value.bind="model.activeDateTimeRange.from" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Enabled from
+                    </div>
+
+                </date-time-input>
+
+                <date-time-input label="above" value.bind="model.activeDateTimeRange.to" class="flex-basis-1-of-2">
+
+                    <div slot="heading" translate>
+                        Enabled to
+                    </div>
+
+                </date-time-input>
 
             </div>
 

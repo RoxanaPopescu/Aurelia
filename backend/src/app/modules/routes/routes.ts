@@ -106,5 +106,28 @@ export class RoutesModule extends AppModule
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
+
+                /**
+         * Creates a route template
+         * @returns The id and slug of the new template
+         */
+        this.router.post("/v2/routes/create-from-template", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("route-template-orchestrator/CreateRoute",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
     }
 }

@@ -1,11 +1,10 @@
 import { autoinject } from "aurelia-framework";
 import { Modal, IValidation, ModalService, ToastService } from "shared/framework";
-import { RouteTemplate } from "app/model/route-template";
-import { DateTime } from "luxon";
+import { RouteTemplate, RouteTemplateService } from "app/model/route-template";
 import { RouteStatus } from "app/model/route";
-import { Driver } from "app/model/driver";
 import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
 import createdToast from "./resources/strings/created-toast.json";
+import { CreateRoute } from "app/model/route-template/entities/create-route";
 
 @autoinject
 export class CreateRoutePanel
@@ -15,37 +14,29 @@ export class CreateRoutePanel
      * @param modal The `Modal` instance representing the modal.
      * @param toastService The `ToastService` instance.
      * @param modalService The `ModalService` instance.
+     * @param routeTemplateService The `RouteTemplateService` instance.
      */
-    public constructor(modal: Modal, modalService: ModalService, toastService: ToastService)
+    public constructor(
+        modal: Modal,
+        modalService: ModalService,
+        toastService: ToastService,
+        routeTemplateService: RouteTemplateService)
     {
         this._modal = modal;
         this._modalService = modalService;
         this._toastService = toastService;
+        this._routeTemplateService = routeTemplateService;
     }
 
     private readonly _modal: Modal;
     private readonly _modalService: ModalService;
     private readonly _toastService: ToastService;
+    private readonly _routeTemplateService: RouteTemplateService;
 
     /**
-     * The model for the modal.
+     * The route structure to be created.
      */
-    protected template: RouteTemplate;
-
-    /**
-     * The date of which the route is executed
-     */
-    protected date: DateTime;
-
-    /**
-     * The status of the created route
-     */
-    protected status: RouteStatus;
-
-    /**
-     * The driver for the route
-     */
-    protected driver: Driver;
+    protected model: CreateRoute;
 
     /**
      * The possible statuses
@@ -63,7 +54,7 @@ export class CreateRoutePanel
      */
     public activate(model: RouteTemplate): void
     {
-        this.template = model;
+        this.model = new CreateRoute(model);
     }
 
     /**
@@ -86,7 +77,7 @@ export class CreateRoutePanel
 
         if (driver != null)
         {
-            this.driver = driver;
+            this.model.driver = driver;
         }
     }
 
@@ -103,12 +94,10 @@ export class CreateRoutePanel
             return;
         }
 
+        await this._routeTemplateService.createRoute(this.model);
+
         // Mark the modal as busy.
         this._modal.busy = true;
-
-        const newRoutesSlug = "fixme-slug";
-        createdToast.body = createdToast.body.replace("{routeSlug}", newRoutesSlug);
-        createdToast.url = createdToast.url.replace("{routeSlug}", newRoutesSlug);
 
         this._toastService.open(
             "info",

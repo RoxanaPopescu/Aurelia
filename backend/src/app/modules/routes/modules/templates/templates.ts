@@ -233,5 +233,72 @@ export class RouteTemplatesModule extends AppModule
 
             context.response.status = 200;
         });
+
+        /**
+         * Creates a schedule
+         * @returns The id and slug of the new schedule
+         */
+        this.router.post("/v2/routes/templates/schedules/add", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/schedules/add",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Updated a schedule
+         * @returns The updated schedule
+         */
+        this.router.post("/v2/routes/templates/schedules/update", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("routetemplate/schedules/update",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Deletes a route template schedule
+         */
+        this.router.post("/v2/routes/templates/schedules/delete", async context =>
+        {
+            context.authorize("create-route-template");
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.changedById = context.user?.id;
+
+            await this.apiClient.post("routetemplate/schedules/delete",
+            {
+                body: body
+            });
+
+            context.internal();
+
+            context.response.status = 200;
+        });
     }
 }

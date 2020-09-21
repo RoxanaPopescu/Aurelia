@@ -56,7 +56,7 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Paused / active
+                        Paused or active
                     </span>
                 </data-table-cell>
 
@@ -66,17 +66,17 @@
 
             </data-table-headers>
 
-            <data-table-row repeat.for="schedule of template.stops" model.bind="schedule">
+            <data-table-row repeat.for="schedule of template.schedules" model.bind="schedule">
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        Next executoon
+                        ${schedule.nextExecution | dateTime: 'narrow' : false}
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        Monday, 12:00
+                        ${schedule.executeDayOfWeek | weekday | case: 'sentence'}, ${schedule.executeTime | time: 'narrow' : false}
                     </span>
                 </data-table-cell>
 
@@ -88,19 +88,29 @@
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        Yes / No
+                        <template if.bind="!schedule.routeDriverId" translate>
+                            Yes
+                        </template>
+                        <template if.bind="schedule.routeDriverId" translate>
+                            No
+                        </template>
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        Monday
+                        ${schedule.routeDayOfWeek | weekday | case: 'sentence'}
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        Paused / Active
+                        <template if.bind="schedule.paused" translate>
+                            Paused
+                        </template>
+                        <template if.bind="!schedule.paused" translate>
+                            Active
+                        </template>
                     </span>
                 </data-table-cell>
 
@@ -130,7 +140,7 @@
         </data-table>
 
         <empty-indicator if.bind="template.schedules.length == 0" class="margin-large-top">
-            <div slot="heading" translate>No stops</div>
+            <div slot="heading" translate>No schedules</div>
         </empty-indicator>
 
         <button
