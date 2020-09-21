@@ -15,6 +15,12 @@ export class RequiredValidatorCustomElement extends Validator
     public value: any;
 
     /**
+     * True to show a validation message, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public showMessage: boolean;
+
+    /**
      * Called by the validation when this validator should run.
      * @param reason The reason for the validation run.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.

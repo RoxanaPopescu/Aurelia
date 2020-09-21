@@ -1,31 +1,27 @@
 <template>
 
-    <template if.bind="invalid === true">
+    <validation-message if.bind="invalid === true" accent="negative">
 
-        <validation-message if.bind="min != null && max != null && min === max" accent="negative">
-            <template replaceable part="invalid-exactly" translate>
+        <template replaceable part="invalid">
+
+            <template if.bind="min != null && max != null && min === max" replaceable part="invalid-exactly" translate>
                 Please provide a value with a length of exactly ${min | number}.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="min != null && max != null && min !== max" accent="negative">
-            <template replaceable part="invalid-min-max" translate>
+            <template if.bind="min != null && max != null && min !== max" replaceable part="invalid-min-max" translate>
                 Please provide a value with a length between ${min | number} and ${max | number}.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="min != null && max == null" accent="negative">
-            <template replaceable part="invalid-min" translate>
+            <template if.bind="min != null && max == null" replaceable part="invalid-min" translate>
                 Please provide a value with a length of at least ${min | number}.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="min == null && max != null" accent="negative">
-            <template replaceable part="invalid-max" translate>
+            <template if.bind="min == null && max != null" replaceable part="invalid-max" translate>
                 Please provide a value with a length of at most ${max | number}.
             </template>
-        </validation-message>
 
-    </template>
+        </template>
+
+    </validation-message>
 
 </template>

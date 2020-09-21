@@ -1,31 +1,27 @@
 <template>
 
-    <template if.bind="invalid === true">
+    <validation-message if.bind="invalid === true" accent="negative">
 
-        <validation-message if.bind="min != null && max != null && invalidValue" accent="negative">
-            <template replaceable part="invalid-min-max" translate>
+        <template replaceable part="invalid">
+
+            <template if.bind="min != null && max != null && invalidValue" replaceable part="invalid-min-max" translate>
                 Please provide a value <kbd>${minInclusive ? '≥' : '>'} ${min | number}</kbd> and <kbd>${maxInclusive ? '≤' : '<'} ${max | number}</kbd>.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="min != null && max == null && invalidValue" accent="negative">
-            <template replaceable part="invalid-min" translate>
+            <template if.bind="min != null && max == null && invalidValue" replaceable part="invalid-min" translate>
                 Please provide a value <kbd>${minInclusive ? '≥' : '>'} ${min | number}</kbd>.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="min == null && max != null && invalidValue" accent="negative">
-            <template replaceable part="invalid-max" translate>
+            <template if.bind="min == null && max != null && invalidValue" replaceable part="invalid-max" translate>
                 Please provide a value <kbd>${maxInclusive ? '≤' : '<'} ${max | number}</kbd>.
             </template>
-        </validation-message>
 
-        <validation-message if.bind="step != null && invalidStep" accent="negative">
-            <template replaceable part="invalid-step" translate>
+            <template if.bind="step != null && invalidStep" replaceable part="invalid-step" translate>
                 Please provide a value that is a multiple of ${step | number}</kbd>.
             </template>
-        </validation-message>
 
-    </template>
+        </template>
+
+    </validation-message>
 
 </template>

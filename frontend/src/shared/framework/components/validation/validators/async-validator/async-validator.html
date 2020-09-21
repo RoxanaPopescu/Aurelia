@@ -1,33 +1,21 @@
 <template>
 
-    <template if.bind="operation.pending">
+    <validation-message if.bind="operation.pending" accent="neutral">
+        <template replaceable part="validating" translate>
+            Validating…
+        </template>
+    </validation-message>
 
-        <validation-message accent="neutral">
-            <template replaceable part="validating" translate>
-                Validating…
-            </template>
-        </validation-message>
+    <validation-message if.bind="operation.error" accent="negative">
+        <template replaceable part="error" translate>
+            Validation failed.
+        </template>
+    </validation-message>
 
-    </template>
-
-    <template if.bind="operation.error">
-
-        <validation-message accent="negative">
-            <template replaceable part="error" translate>
-                Validation failed.
-            </template>
-        </validation-message>
-
-    </template>
-
-    <template if.bind="invalid === true && !operation.pending && !operation.error && !operation.aborted">
-
-        <validation-message accent="negative">
-            <template replaceable part="invalid" translate>
-                Please provide a valid value.
-            </template>
-        </validation-message>
-
-    </template>
+    <validation-message if.bind="invalid === true && !operation.pending && !operation.error && !operation.aborted" accent="negative">
+        <template replaceable part="invalid" translate>
+            Please provide a valid value.
+        </template>
+    </validation-message>
 
 </template>
