@@ -385,7 +385,7 @@ jobs:
       - run:
           name: Swap build -> staging slot
           command: az webapp deployment slot swap
-            -n client-website-prod-mover
+            -n client-platform-prod-mover
             -s build
             --action swap
             --target-slot staging
@@ -396,7 +396,7 @@ jobs:
       - run:
           name: Swap staging -> production
           command: az webapp deployment slot swap
-            -n client-website-prod-mover
+            -n client-platform-prod-mover
             -s staging
             --action swap
       - run:

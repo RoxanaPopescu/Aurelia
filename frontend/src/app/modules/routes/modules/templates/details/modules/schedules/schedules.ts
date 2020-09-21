@@ -110,7 +110,7 @@ export class Schedules
             const schedule = this.template.schedules[index];
             await this._routeTemplateService.deleteSchedule(schedule.id);
 
-            this.template.stops.splice(index, 1);
+            this.template.schedules.splice(index, 1);
         }
         catch (error)
         {
