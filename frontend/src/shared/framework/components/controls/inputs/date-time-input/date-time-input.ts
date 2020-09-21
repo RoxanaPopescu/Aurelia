@@ -19,13 +19,13 @@ export class DateTimeInputCustomElement
      * The date value.
      */
     @observable
-    protected dateValue: DateTime | undefined;
+    protected dateValue: DateTime | null | undefined;
 
     /**
      * The time value.
      */
     @observable
-    protected timeValue: Duration | undefined;
+    protected timeValue: Duration | null | undefined;
 
     /**
      * The computed min time.
@@ -195,6 +195,7 @@ export class DateTimeInputCustomElement
     public bind(): void
     {
         this._now = DateTime.local().setZone(this.zone);
+        this.valueChanged(this.value, undefined);
         this.scheduleNowRefresh();
     }
 
@@ -212,7 +213,7 @@ export class DateTimeInputCustomElement
      * @param newValue The new value.
      * @param oldValue The old value.
      */
-    protected valueChanged(newValue: DateTime, oldValue: DateTime): void
+    protected valueChanged(newValue: DateTime | null | undefined, oldValue: DateTime | null | undefined): void
     {
         if (!this.isInternalUpdate)
         {
@@ -223,8 +224,8 @@ export class DateTimeInputCustomElement
             }
             else
             {
-                this.dateValue = undefined;
-                this.timeValue = undefined;
+                this.dateValue = newValue;
+                this.timeValue = newValue;
             }
         }
 
