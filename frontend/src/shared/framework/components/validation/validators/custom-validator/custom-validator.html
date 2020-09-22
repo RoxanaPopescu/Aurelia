@@ -1,13 +1,9 @@
 <template>
 
-    <template if.bind="invalid === true">
-
-        <validation-message accent="negative">
-            <template replaceable part="invalid" translate>
-                Please provide a valid value.
-            </template>
-        </validation-message>
-
-    </template>
+    <validation-message if.bind="invalid === true" accent="negative">
+        <template replaceable part="invalid" translate>
+            Please provide a valid value.
+        </template>
+    </validation-message>
 
 </template>
