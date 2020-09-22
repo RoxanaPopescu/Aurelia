@@ -264,14 +264,6 @@ jobs:
           account: "Test"
           resource-group: "test-client-platform"
       - run:
-          name: Add docker image to staging slot
-          command: az webapp config container set
-            -u ${DOCKER_REGISTRY_PRODUCTION}
-            -p ${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
-            -r ${DOCKER_REGISTRY_PRODUCTION}.azurecr.io
-            -s staging
-            -i $(cat /tmp/workspace/docker-image)  
-      - run:
           name: Set defaults
           command: az configure
             --defaults web="client-platform-test-mover"

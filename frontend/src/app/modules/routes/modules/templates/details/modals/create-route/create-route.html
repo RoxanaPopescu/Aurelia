@@ -20,7 +20,7 @@
 
             <div class="control-row margin-larger-bottom">
 
-                <date-input label="above" value.bind="date" class="flex-basis-1-of-1">
+                <date-input label="above" value.bind="model.date" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Date
@@ -29,7 +29,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="date">
+                            value.bind="model.date">
                         </required-validator>
 
                     </div>
@@ -40,7 +40,7 @@
 
             <div class="control-row margin-large-bottom">
 
-                <select-input label="above" none.bind="false" value.bind="status" display-value.bind="status.name" class="flex-basis-1-of-1">
+                <select-input label="above" none.bind="false" value.bind="model.status" display-value.bind="model.status.name" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Status
@@ -62,16 +62,23 @@
 
             </div>
 
-            <div class="control-row margin-large-bottom">
+            <div class="margin-large-bottom">
+                <div class="input-heading" translate>
+                    Driver
+                </div>
 
-                <button appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
-                    <template if.bind="!driver" translate>
-                        Assign driver
+                <div>
+                    <template if.bind="model.driver">
+                        {driver.name} (${driver.id})
                     </template>
-                    <template if.bind="driver" translate>
-                        Assigned to ${driver.name} (${driver.id})
+                    <template if.bind="!model.driver" translate>
+                        None selected
                     </template>
-                </button>
+                </div>
+
+                <a if.bind="!model.driver" click.trigger="onAssignDriverClick()" translate>
+                    Assign driver
+                </a>
 
             </div>
 

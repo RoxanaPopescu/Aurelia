@@ -389,15 +389,16 @@ export class LiveTrackingService {
       } else if (type == "no-driver") {
         statuses = ["not-started", "not-approved"];
         assignedDriver = false;
-        from = from.minus(Duration.fromObject({hours: 24}));
-        to = to.plus(Duration.fromObject({hours: 12}));
+        from = from.minus(Duration.fromObject({hours: 6}));
+        to = to.plus(Duration.fromObject({hours: 3}));
       } else {
         statuses = ["not-started"];
         assignedDriver = true;
-        from = from.minus(Duration.fromObject({hours: 24}));
-        to = to.plus(Duration.fromObject({hours: 12}));
+        from = from.minus(Duration.fromObject({hours: 2}));
+        to = to.plus(Duration.fromObject({hours: 3}));
       }
 
+      
       const result = await this.routeService.getAll(
           {
               statuses: statuses,

@@ -25,7 +25,7 @@ export class RouteTemplateSchedule
             this.activeDateTimeRange = new DateTimeRange(data.activeDateTimeRange);
             this.routeDayOfWeek = data.routeDayOfWeek;
             this.routeDriverId = data.routeDriverId;
-            this.statusOfCreatedRoute = new RouteStatus(data.statusOfCreatedRoute);
+            this.routeStatus = new RouteStatus(data.routeStatus);
         }
         else
         {
@@ -77,7 +77,7 @@ export class RouteTemplateSchedule
     /**
      * The status of the rout to create
      */
-    public statusOfCreatedRoute: RouteStatus | undefined;
+    public routeStatus: RouteStatus | undefined;
 
     /**
      * Gets the data representing this instance.
@@ -85,7 +85,7 @@ export class RouteTemplateSchedule
     public toJSON(): any
     {
         const data = { ...this } as any;
-        data.routeStatus = this.statusOfCreatedRoute?.slug;
+        data.routeStatus = this.routeStatus?.slug;
         data.executeTime = this.executeTime.as("seconds");
 
         if (
