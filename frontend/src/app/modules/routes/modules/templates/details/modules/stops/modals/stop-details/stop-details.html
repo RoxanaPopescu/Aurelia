@@ -18,7 +18,7 @@
                         New stop after stop ${model.stopNumber - 1}
                     </span>
 
-                    <span if.bind="model.stopNumber - 1 === template.stops.length" translate>
+                    <span if.bind="model.stopNumber - 1 === template.stops.length && model.stopNumber > 1" translate>
                         New stop at the end of the template
                     </span>
 

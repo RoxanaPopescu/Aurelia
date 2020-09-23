@@ -97,7 +97,7 @@ export class DetailsPage
 
         if (!this.isNew)
         {
-            this.driver = await this._driverService.get(Number(params.id!));
+            this.driver = await this._driverService.get(params.id!);
             this.update();
         }
         else

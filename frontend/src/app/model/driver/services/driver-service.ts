@@ -102,7 +102,7 @@ export class DriverService
      * @param newPassword The new password for the driver .
      * @returns A promise that will be resolved.
      */
-    public async updatePassword(driverId: number, newPassword: string): Promise<void>
+    public async updatePassword(driverId: string, newPassword: string): Promise<void>
     {
         await this._apiClient.post("drivers/setpassword",
         {
@@ -115,7 +115,7 @@ export class DriverService
      * @param driverId The id of the driver.
      * @returns A promise that will be resolved with the drivers.
      */
-    public async get(driverId: number): Promise<Driver>
+    public async get(driverId: string): Promise<Driver>
     {
         const result = await this._apiClient.get("drivers/details",
         {
@@ -130,7 +130,7 @@ export class DriverService
      * @param driverId The ID of the driver to be deleted.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async delete(id: number): Promise<void>
+    public async delete(id: string): Promise<void>
     {
         await this._apiClient.post("drivers/delete",
         {

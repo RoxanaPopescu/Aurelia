@@ -77,6 +77,7 @@ export default
             {
                 "distribution-center": { version: "2", obfuscate: false },
                 "routes/templates": { version: "2", obfuscate: false },
+                "routes/create-from-template": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

@@ -30,7 +30,7 @@ export class VehiclePanel
     /**
      * The driver this vehicle belongs to.
      */
-    protected driverId?: number;
+    protected driverId?: string;
 
     /**
      * The available vehicle types.
@@ -51,7 +51,7 @@ export class VehiclePanel
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
-    public async activate(model?: { vehicle?: Vehicle, driverId?: number}): Promise<void>
+    public async activate(model?: { vehicle?: Vehicle, driverId?: string}): Promise<void>
     {
         this.vehicleTypes = await this._vehicleService.getTypes();
         this.driverId = model?.driverId;

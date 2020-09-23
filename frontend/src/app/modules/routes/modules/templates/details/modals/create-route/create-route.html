@@ -53,7 +53,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="status">
+                            value.bind="model.status">
                         </required-validator>
 
                     </div>
@@ -62,23 +62,33 @@
 
             </div>
 
-            <div class="margin-large-bottom">
-                <div class="input-heading" translate>
-                    Driver
+            <div>
+                <div class="flex-row margin-smaller-bottom">
+                    <div class="input-heading" translate>
+                        Driver
+                    </div>
+
+                    <div if.bind="model.driver" class="opacity-faded-more margin-left-large margin-right-large">
+                        –
+                    </div>
+
+                    <div if.bind="model.driver" class="margin-right-large">
+                        ${model.driver.name} (${model.driver.id})
+                    </div>
+
+                    <button if.bind="model.driver" appearance="none" accent="primary" click.trigger="onRemoveDriverClick()">
+                        <icon name="close"></icon>
+                    </button>
                 </div>
 
-                <div>
-                    <template if.bind="model.driver">
-                        {driver.name} (${driver.id})
-                    </template>
+                <button appearance="solid" accent="secondary" click.delegate="onAssignDriverClick()">
                     <template if.bind="!model.driver" translate>
-                        None selected
+                        Assign driver
                     </template>
-                </div>
-
-                <a if.bind="!model.driver" click.trigger="onAssignDriverClick()" translate>
-                    Assign driver
-                </a>
+                    <template if.bind="model.driver" translate>
+                        Reassign
+                    </template>
+                </button>
 
             </div>
 

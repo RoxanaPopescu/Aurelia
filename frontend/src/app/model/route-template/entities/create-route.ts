@@ -54,6 +54,9 @@ export class CreateRoute
             delete data.driver;
         }
 
+        data.templateId = data.template.id;
+        delete data.template;
+
         return data;
     }
 }

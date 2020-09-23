@@ -54,12 +54,6 @@
                     </span>
                 </data-table-cell>
 
-                <data-table-cell>
-                    <span class="text-truncate" translate>
-                        Paused or active
-                    </span>
-                </data-table-cell>
-
                 <data-table-cell align="right">
                     <!-- Icons -->
                 </data-table-cell>
@@ -103,17 +97,6 @@
                     </span>
                 </data-table-cell>
 
-                <data-table-cell>
-                    <span class="text-truncate">
-                        <template if.bind="schedule.paused" translate>
-                            Paused
-                        </template>
-                        <template if.bind="!schedule.paused" translate>
-                            Active
-                        </template>
-                    </span>
-                </data-table-cell>
-
                 <data-table-cell align="right">
 
                     <div class="icon-row">
@@ -138,10 +121,6 @@
             </data-table-row>
 
         </data-table>
-
-        <empty-indicator if.bind="template.schedules.length == 0" class="margin-large-top">
-            <div slot="heading" translate>No schedules</div>
-        </empty-indicator>
 
         <button
             appearance="outline"

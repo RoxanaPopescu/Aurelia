@@ -51,7 +51,7 @@ export class VehicleService
      * @param driverId The ID of the driver the vehicle should be associated with. If none is supplied the current user will create it.
      * @returns A promise that will be resolved with the new vehicle.
      */
-    public async create(vehicle: Vehicle, driverId?: number): Promise<Vehicle>
+    public async create(vehicle: Vehicle, driverId?: string): Promise<Vehicle>
     {
         const result = await this._apiClient.post("vehicles/create",
         {
@@ -66,7 +66,7 @@ export class VehicleService
      * @param driverId The ID of the driver whose vehicles should be returned.
      * @returns A promise that will be resolved with the vehicles.
      */
-    public async getAllFromDriver(driverId: number, signal?: AbortSignal): Promise<Vehicle[]>
+    public async getAllFromDriver(driverId: string, signal?: AbortSignal): Promise<Vehicle[]>
     {
         const result = await this._apiClient.post("vehicles/list",
         {

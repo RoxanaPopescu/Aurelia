@@ -28,7 +28,7 @@ export class TestService
      */
     public async copyRequest(
         id: string,
-        driverId: number | undefined = undefined,
+        driverId: string | undefined = undefined,
         date: DateTime | undefined
     ): Promise<{ slug: string }>
     {
@@ -36,7 +36,7 @@ export class TestService
         {
             body: {
                 requestId: id,
-                driverId: driverId?.toString(),
+                driverId: driverId,
                 date: date
             }
         });

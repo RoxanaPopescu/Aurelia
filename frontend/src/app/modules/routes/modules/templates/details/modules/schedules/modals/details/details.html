@@ -85,7 +85,7 @@
 
             <div class="control-row margin-larger-bottom">
 
-                <date-time-input label="above" value.bind="model.nextExecution" class="flex-basis-1-of-1">
+                <date-time-input label="above" value.bind="model.nextExecution" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
                         Next execution
@@ -161,6 +161,36 @@
                     </div>
 
                 </select-input>
+
+            </div>
+
+            <div class="margin-large-bottom">
+                <div class="flex-row margin-smaller-bottom">
+                    <div class="input-heading" translate>
+                        Driver
+                    </div>
+
+                    <div if.bind="driver" class="opacity-faded-more margin-left-large margin-right-large">
+                        –
+                    </div>
+
+                    <div if.bind="driver" class="margin-right-large">
+                        ${driver.name} (${driver.id})
+                    </div>
+
+                    <button if.bind="driver" appearance="none" accent="primary" click.trigger="onRemoveDriverClick()">
+                        <icon name="close"></icon>
+                    </button>
+                </div>
+
+                <button appearance="solid" accent="secondary" click.delegate="onAssignDriverClick()">
+                    <template if.bind="!driver" translate>
+                        Assign driver
+                    </template>
+                    <template if.bind="driver" translate>
+                        Reassign
+                    </template>
+                </button>
 
             </div>
 

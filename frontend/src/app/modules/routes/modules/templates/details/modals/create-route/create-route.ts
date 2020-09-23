@@ -5,6 +5,7 @@ import { RouteStatus } from "app/model/route";
 import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
 import createdToast from "./resources/strings/created-toast.json";
 import { CreateRoute } from "app/model/route-template/entities/create-route";
+import { Log } from "shared/infrastructure";
 
 @autoinject
 export class CreateRoutePanel
@@ -82,6 +83,14 @@ export class CreateRoutePanel
     }
 
     /**
+     * Called when the "Remove driver" icon is clicked.
+     */
+    protected async onRemoveDriverClick(): Promise<void>
+    {
+        this.model.driver = undefined;
+    }
+
+    /**
      * Called when the "Create stop" button is clicked.
      */
     protected async onCreateClick(): Promise<void>
@@ -94,16 +103,23 @@ export class CreateRoutePanel
             return;
         }
 
-        await this._routeTemplateService.createRoute(this.model);
+        try
+        {
+            this._modal.busy = true;
 
-        // Mark the modal as busy.
-        this._modal.busy = true;
+            await this._routeTemplateService.createRoute(this.model);
 
-        this._toastService.open(
-            "info",
-            createdToast
-        );
+            this._toastService.open(
+                "info",
+                createdToast
+            );
 
-        await this._modal.close();
+            await this._modal.close();
+        }
+        catch (error)
+        {
+            this._modal.busy = false;
+            Log.error("Could not create the route from the template", error);
+        }
     }
 }

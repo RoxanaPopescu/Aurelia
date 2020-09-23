@@ -40,7 +40,7 @@ export class RouteSplitService {
   public async splitRoute(
     route: Route,
     vehicleTypeId: string,
-    selectedDriverId: number,
+    selectedDriverId: string,
     selectedStopIds: string[]
   ): Promise<void> {
     const response = await fetch(
@@ -49,7 +49,7 @@ export class RouteSplitService {
         routeId: route.id,
         routeStopIds: selectedStopIds,
         vehicleTypeId: vehicleTypeId,
-        driverId: selectedDriverId
+        driverId: Number(selectedDriverId)
       })
     );
 

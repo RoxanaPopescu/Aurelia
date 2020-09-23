@@ -72,7 +72,7 @@ export class RouteTemplateSchedule
     /**
      * The Driver id to use for the route.
      */
-    public routeDriverId: number | undefined;
+    public routeDriverId: string | undefined;
 
     /**
      * The status of the rout to create

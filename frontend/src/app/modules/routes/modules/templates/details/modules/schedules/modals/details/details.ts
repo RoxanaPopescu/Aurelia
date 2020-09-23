@@ -1,8 +1,10 @@
 import { autoinject } from "aurelia-framework";
-import { Modal, IValidation } from "shared/framework";
+import { Modal, IValidation, ModalService } from "shared/framework";
 import { RouteTemplateService, RouteTemplate, RouteTemplateSchedule } from "app/model/route-template";
 import { RouteStatus } from "app/model/route";
 import { Log } from "shared/infrastructure";
+import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
+import { Driver, DriverService } from "app/model/driver";
 
 @autoinject
 export class TemplateScheduleDetailsPanel
@@ -10,17 +12,25 @@ export class TemplateScheduleDetailsPanel
     /**
      * Creates a new instance of the type.
      * @param routeTemplateService The `RouteTemplateService` instance.
+     * @param modalService The `ModalService` instance.
+     * @param driverService The `DriverService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
     public constructor(
         routeTemplateService: RouteTemplateService,
+        modalService: ModalService,
+        driverService: DriverService,
         modal: Modal)
     {
         this._routeTemplateService = routeTemplateService;
+        this._modalService = modalService;
+        this._driverService = driverService;
         this._modal = modal;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
+    private readonly _modalService: ModalService;
+    private readonly _driverService: DriverService;
     private readonly _modal: Modal;
     private _result: RouteTemplateSchedule | undefined;
 
@@ -45,6 +55,11 @@ export class TemplateScheduleDetailsPanel
     protected validation: IValidation;
 
     /**
+     * The driver for the route
+     */
+    public driver?: Driver;
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
@@ -53,7 +68,15 @@ export class TemplateScheduleDetailsPanel
         this.model = model.schedule.clone();
         this.template = model.template;
 
-        // FIXME: FETCH DRIVER
+        // Fetch driver if exists
+        if (this.model.routeDriverId)
+        {
+            // tslint:disable-next-line: no-floating-promises
+            (async () =>
+            {
+                this.driver = await this._driverService.get(this.model.routeDriverId!);
+            })();
+        }
     }
 
     /**
@@ -63,6 +86,29 @@ export class TemplateScheduleDetailsPanel
     public async deactivate(): Promise<RouteTemplateSchedule | undefined>
     {
         return this._result;
+    }
+
+    /**
+     * Called when the "Assign driver" button is clicked.
+     */
+    protected async onAssignDriverClick(): Promise<void>
+    {
+        const driver = await this._modalService.open(
+            AssignDriverPanel
+        ).promise;
+
+        if (driver != null)
+        {
+            this.driver = driver;
+        }
+    }
+
+    /**
+     * Called when the "Remove driver" icon is clicked.
+     */
+    protected async onRemoveDriverClick(): Promise<void>
+    {
+        this.driver = undefined;
     }
 
     /**
@@ -80,7 +126,7 @@ export class TemplateScheduleDetailsPanel
                 return;
             }
 
-            // Mark the modal as busy.
+            this.model.routeDriverId = this.driver?.id;
             this._modal.busy = true;
 
             if (this.model.id) {
