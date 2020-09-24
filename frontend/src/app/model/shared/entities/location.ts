@@ -25,6 +25,9 @@ export class Location
             if (data.timeZone != null)
             {
                 this.timeZone = new IANAZone(data.timeZone);
+            } else {
+                // FIXME: Remove when backend always returns it
+                this.timeZone = new IANAZone("Europe/Copenhagen");
             }
         }
     }
@@ -43,4 +46,16 @@ export class Location
      * The IANA Time Zone Identifier for the time zone associated with the location.
      */
     public timeZone: IANAZone;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+
+        data.timeZone = this.timeZone.name;
+
+        return data;
+    }
 }

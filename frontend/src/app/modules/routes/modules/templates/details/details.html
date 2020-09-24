@@ -53,7 +53,7 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button if.bind="template && template.id" appearance="outline" accent="primary" click.trigger="onCreateRouteClick()" translate>
+                        <button if.bind="template && template.id" disabled.bind="template.stops.length < 2" appearance="outline" accent="primary" click.trigger="onCreateRouteClick()" translate>
                             Create route
                         </button>
 

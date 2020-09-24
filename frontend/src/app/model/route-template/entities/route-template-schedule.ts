@@ -1,5 +1,5 @@
 import { DayOfWeek } from "app/model/shared";
-import { Duration, DateTime } from "luxon";
+import { Duration, DateTime, IANAZone } from "luxon";
 import { DateTimeRange } from "shared/types";
 import clone from "clone";
 import { RouteStatus } from "app/model/route";
@@ -26,11 +26,15 @@ export class RouteTemplateSchedule
             this.routeDayOfWeek = data.routeDayOfWeek;
             this.routeDriverId = data.routeDriverId;
             this.routeStatus = new RouteStatus(data.routeStatus);
+            this.timeZone = new IANAZone(data.timeZone);
         }
         else
         {
             this.paused = false;
             this.activeDateTimeRange = new DateTimeRange();
+
+            // FIXME: FROM UI!
+            this.timeZone = new IANAZone("Europe/Copenhagen");
         }
     }
 
@@ -38,6 +42,11 @@ export class RouteTemplateSchedule
      * The ID of the route template schedule.
      */
     public id: string;
+
+    /**
+     * The IANA Time Zone Identifier for the time zone associated with the schedule.
+     */
+    public timeZone: IANAZone;
 
     /**
      * True if this recurrence is paused, otherwise false.
@@ -94,6 +103,8 @@ export class RouteTemplateSchedule
         ){
             delete data.activeDateTimeRange;
         }
+
+        data.timeZone = this.timeZone.name;
 
         return data;
     }
