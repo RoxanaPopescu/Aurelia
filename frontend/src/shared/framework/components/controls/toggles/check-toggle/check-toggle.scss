@@ -25,7 +25,7 @@ check-toggle
 
     &.toggle[label="before"]
     {
-        > .toggle-control icon
+        > .toggle-control
         {
             // The icon does not fill its viewbox, so to ensure the right edge
             // edge aligns with other controls, we translate the icon right.
@@ -42,7 +42,7 @@ check-toggle
 
     &.toggle[label="after"]
     {
-        > .toggle-control icon
+        > .toggle-control
         {
             // The icon does not fill its viewbox, so to ensure the left edge
             // edge aligns with other controls, we translate the icon left.
@@ -59,7 +59,7 @@ check-toggle
 
     &.toggle[label="above"]
     {
-        > .toggle-control icon
+        > .toggle-control
         {
             // The icon does not fill its viewbox, so to ensure the left edge
             // edge aligns with other controls, we translate the icon left.

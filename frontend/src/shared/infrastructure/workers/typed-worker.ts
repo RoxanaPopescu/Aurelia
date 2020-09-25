@@ -3,7 +3,7 @@
  * See: https://github.com/webpack-contrib/worker-loader
  *
  * Note that when importing this into a worker, you must import import directly from this file,
- * not from the `index` file of the `infrastructure`folder. This is required to avoid pulling
+ * not from the `index` file of the `infrastructure` folder. This is required to avoid pulling
  * in other things that are not compatible with web workers.
  */
 export class TypedWorker<TMessage> extends Worker

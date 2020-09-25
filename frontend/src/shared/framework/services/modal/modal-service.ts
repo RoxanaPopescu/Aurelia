@@ -83,7 +83,7 @@ export class ModalService
 
     public open(nameOrType: string | Type, model?: any): Modal
     {
-        console.info("Attempting to open modal.", { nameOrType, model });
+        console.info("Attempting to open modal", { nameOrType, model });
 
         let registration: IModalRegistration | undefined;
 
@@ -121,7 +121,7 @@ export class ModalService
             return true;
         }
 
-        console.info("Attempting to close all modals.", { modals: this.modals, reason });
+        console.info("Attempting to close all modals", { modals: this.modals, reason });
 
         for (const modal of this.modals.slice().reverse())
         {

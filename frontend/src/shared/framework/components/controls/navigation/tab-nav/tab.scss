@@ -15,12 +15,12 @@ tab
     --tab-spacing: 24rem;
 
     /// The color of the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tab-surface-color: transparent;
     --tab-surface-color--active: var(--surface-neutral-surface-color);
 
     /// The color of the text on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tab-surface-text-color: var(--surface-neutral-text-color);
     --tab-surface-text-color--active: var(--surface-neutral-text-color);
 }

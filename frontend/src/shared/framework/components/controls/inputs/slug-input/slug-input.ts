@@ -32,7 +32,7 @@ export class SlugInputCustomElement
      */
     protected set inputValue(value: string)
     {
-        this.value = value || undefined;
+        this.value = value.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") || undefined;
     }
 
     /**

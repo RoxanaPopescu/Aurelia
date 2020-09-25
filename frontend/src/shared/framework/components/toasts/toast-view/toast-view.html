@@ -9,7 +9,7 @@
 
         <button appearance="none" click.delegate="toastService.closeAll('close-all')">
             <span translate>
-                Dismiss all <b>${toastService.toasts.length}</b> notifications
+                Dismiss all <b>${toastService.toasts.length | number & debounce}</b> notifications
             </span>
             <icon name="close"></icon>
         </button>

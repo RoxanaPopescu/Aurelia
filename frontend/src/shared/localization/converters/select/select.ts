@@ -42,6 +42,6 @@ export class SelectValueConverter
             return defaultValue;
         }
 
-        throw new Error(`Could not find a value for the key '${key}' and no default is specified.`);
+        throw new Error(`The 'values' argument does not include the key '${key}' and no default value was specified.`);
     }
 }

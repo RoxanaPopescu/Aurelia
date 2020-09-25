@@ -9,7 +9,7 @@
 .toggle
 {
     /// The color of the indicator on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --toggle-surface-indicator-color: var(--surface-toggle-surface-indicator-color);
     --toggle-surface-indicator-color--hover: var(--surface-toggle-surface-indicator-color--hover);
     --toggle-surface-indicator-color--focus: var(--surface-toggle-surface-indicator-color--focus);
@@ -144,7 +144,7 @@
         // Position the element within the grid.
         grid-area: control;
         justify-self: flex-start;
-        align-self: stretch;
+        align-self: center;
 
         // Allow content to be positioned relative to this element.
         position: relative;

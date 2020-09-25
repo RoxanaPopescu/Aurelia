@@ -74,7 +74,7 @@ export class Modal<TModel = any, TResult = any>
      */
     public async closeAll(reason?: ModalCloseReason): Promise<boolean>
     {
-        console.info("Attempting to close all modals, starting from this.", { modal: this, reason, modals: this._modals });
+        console.info("Attempting to close all modals, starting from this", { modal: this, reason, modals: this._modals });
 
         const index = this._modals.findIndex(m => m === this);
 
@@ -105,11 +105,11 @@ export class Modal<TModel = any, TResult = any>
             return true;
         }
 
-        console.info("Attempting to close modal.", { modal: this, reason });
+        console.info("Attempting to close modal", { modal: this, reason });
 
         if (this._modals[this._modals.length - 1] !== this)
         {
-            console.error("The modal being closed is not at the top of the stack.", { modal: this });
+            console.error("The modal being closed is not at the top of the stack", { modal: this });
         }
 
         let result: TResult | undefined;
@@ -126,12 +126,12 @@ export class Modal<TModel = any, TResult = any>
             {
                 if (reason instanceof Error)
                 {
-                    console.warn("Modal failed to close.", { modal: this, reason });
+                    console.warn("Modal failed to close", { modal: this, reason });
 
                     throw reason;
                 }
 
-                console.warn("Modal refused to close.", { modal: this, reason });
+                console.warn("Modal refused to close", { modal: this, reason });
 
                 return false;
             }
@@ -146,7 +146,7 @@ export class Modal<TModel = any, TResult = any>
 
         this._closed = true;
 
-        console.info("Modal closed.", { modal: this, result });
+        console.info("Modal closed", { modal: this, result });
 
         this._promiseController.resolve(result);
 
@@ -163,7 +163,7 @@ export class Modal<TModel = any, TResult = any>
         {
             await compose.pendingTask;
 
-            console.info("Modal opened.", { modal: this });
+            console.info("Modal opened", { modal: this });
         }
         catch (reason)
         {
@@ -178,11 +178,11 @@ export class Modal<TModel = any, TResult = any>
 
             if (reason instanceof Error)
             {
-                console.error("Modal failed to open.", { modal: this, reason });
+                console.error("Modal failed to open", { modal: this, reason });
             }
             else
             {
-                console.warn("Modal refused to open.", { modal: this, reason });
+                console.warn("Modal refused to open", { modal: this, reason });
             }
 
             this._promiseController.reject(reason);

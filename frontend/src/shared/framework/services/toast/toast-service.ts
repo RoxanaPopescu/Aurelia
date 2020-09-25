@@ -83,7 +83,7 @@ export class ToastService
 
     public open(nameOrType: string | Type, model?: any): Toast
     {
-        console.info("Attempting to open toast.", { nameOrType, model });
+        console.info("Attempting to open toast", { nameOrType, model });
 
         let registration: IToastRegistration | undefined;
 
@@ -121,7 +121,7 @@ export class ToastService
             return true;
         }
 
-        console.info("Attempting to close all toasts.", { toasts: this.toasts, reason });
+        console.info("Attempting to close all toasts", { toasts: this.toasts, reason });
 
         const promises: Promise<boolean>[] = [];
 

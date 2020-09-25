@@ -158,6 +158,12 @@ export class NumberInputCustomElement
     public useGrouping: boolean;
 
     /**
+     * The input mode to use, which affects which virtual keyboard is presented.
+     */
+    @bindable({ defaultValue: "decimal" })
+    public inputmode: "numeric" | "decimal";
+
+    /**
      * Called when the input element receives focus.
      * Selects the content of the input element, if `autoselect` is enabled.
      */

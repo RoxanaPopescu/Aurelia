@@ -6,10 +6,6 @@ import "./modal-href.scss";
 /**
  * Custom attribute that makes the element to which it is applied
  * open or toggle the specified modal when clicked.
- *
- * ### How to use:
- * Place on the element that should open or toggle a modal when clicked,
- * and specify the modal to open in the options.
  */
 @autoinject
 export class ModalHrefCustomAttribute
@@ -34,7 +30,7 @@ export class ModalHrefCustomAttribute
      * Note that the modal must be registered with the `ModalService`,
      * otherwise an error will be thrown when the element is clicked.
      */
-    @bindable
+    @bindable({ primaryProperty: true })
     public modal?: string;
 
     /**
@@ -55,9 +51,24 @@ export class ModalHrefCustomAttribute
      */
     public attached(): void
     {
+        // Listen for events that should trigger navigation.
+
         this._element.addEventListener("click", (event: MouseEvent) =>
         {
-            if (!event.defaultPrevented)
+            // tslint:disable-next-line: no-floating-promises
+            this.onElementClick(event);
+        });
+
+        this._element.addEventListener("keydown", (event: KeyboardEvent) =>
+        {
+            // Ignore the event if any modifier key is pressed.
+            if (!event.key || event.key.length > 1 || event.metaKey || event.ctrlKey)
+            {
+                return;
+            }
+
+            // Handle the event as a click if the `Enter` key is pressed.
+            if (event.key === "Enter")
             {
                 // tslint:disable-next-line: no-floating-promises
                 this.onElementClick(event);
@@ -69,26 +80,30 @@ export class ModalHrefCustomAttribute
      * Called when the element is clicked.
      * Opens or toggles the specified modal.
      */
-    private async onElementClick(event: MouseEvent): Promise<void>
+    private async onElementClick(event: Event): Promise<void>
     {
-        // Don't handle the event if it originated from an anchor with an href nested inside the element.
-        if (event.target !== this._element && event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href"))
-        {
-            return;
-        }
-
         // Don't handle the event if default has been prevented.
         if (event.defaultPrevented)
         {
             return;
         }
 
-        event.preventDefault();
+        // Don't handle the event if it originated from an anchor with an href nested inside the element.
+        if (event.target !== this._element && event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href"))
+        {
+            return;
+        }
 
+        // Do nothing if no modal is specified.
         if (!this.modal)
         {
             return;
         }
+
+        // Prevent default for the event, as it will be handled by this attribute.
+        event.preventDefault();
+
+        // Open or toggle the modal.
 
         try
         {
@@ -99,6 +114,7 @@ export class ModalHrefCustomAttribute
             else
             {
                 this._modal = this._modalService.open(this.modal, this.model);
+
                 await this._modal.promise;
             }
         }

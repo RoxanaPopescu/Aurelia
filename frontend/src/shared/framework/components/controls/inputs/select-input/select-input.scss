@@ -4,7 +4,8 @@ select-input
 
     > text-input
     {
-        &.input > .input-control > .input-control-inner .input-input
+        &.input > .input-control > .input-control-inner .input-input,
+        &.input > .input-control > .input-control-inner .input-placeholder
         {
             // Remove padding at the end closest to the toggle icon.
             padding-right: 0;

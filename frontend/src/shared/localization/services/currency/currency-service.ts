@@ -89,12 +89,14 @@ export class CurrencyService
      */
     public async setCurrency(currencyCode: string): Promise<Currency>
     {
-        if (this._currency != null && currencyCode === this._currency.code)
+        const canonicalCurrencyCode = currencyCode.toUpperCase();
+
+        if (this._currency != null && canonicalCurrencyCode === this._currency.code)
         {
             return Promise.resolve(this._currency);
         }
 
-        const currency = this.getCurrency(currencyCode);
+        const currency = this.getCurrency(canonicalCurrencyCode);
 
         await this._changeFunc(currency, this._currency);
 

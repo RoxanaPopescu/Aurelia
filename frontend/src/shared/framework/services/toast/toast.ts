@@ -74,7 +74,7 @@ export class Toast<TModel = any, TResult = any>
      */
     public async closeAll(reason?: ToastCloseReason): Promise<boolean>
     {
-        console.info("Attempting to close all toasts, starting from this.", { toast: this, reason, toasts: this._toasts });
+        console.info("Attempting to close all toasts, starting from this", { toast: this, reason, toasts: this._toasts });
 
         const index = this._toasts.findIndex(m => m === this);
 
@@ -105,7 +105,7 @@ export class Toast<TModel = any, TResult = any>
             return true;
         }
 
-        console.info("Attempting to close toast.", { toast: this, reason });
+        console.info("Attempting to close toast", { toast: this, reason });
 
         let result: TResult | undefined;
 
@@ -121,12 +121,12 @@ export class Toast<TModel = any, TResult = any>
             {
                 if (reason instanceof Error)
                 {
-                    console.warn("Toast failed to close.", { toast: this, reason });
+                    console.warn("Toast failed to close", { toast: this, reason });
 
                     throw reason;
                 }
 
-                console.warn("Toast refused to close.", { toast: this, reason });
+                console.warn("Toast refused to close", { toast: this, reason });
 
                 return false;
             }
@@ -141,7 +141,7 @@ export class Toast<TModel = any, TResult = any>
 
         this._closed = true;
 
-        console.info("Toast closed.", { toast: this, result });
+        console.info("Toast closed", { toast: this, result });
 
         this._promiseController.resolve(result);
 
@@ -158,7 +158,7 @@ export class Toast<TModel = any, TResult = any>
         {
             await compose.pendingTask;
 
-            console.info("Toast opened.", { toast: this });
+            console.info("Toast opened", { toast: this });
         }
         catch (reason)
         {
@@ -173,11 +173,11 @@ export class Toast<TModel = any, TResult = any>
 
             if (reason instanceof Error)
             {
-                console.error("Toast failed to open.", { toast: this, reason });
+                console.error("Toast failed to open", { toast: this, reason });
             }
             else
             {
-                console.warn("Toast refused to open.", { toast: this, reason });
+                console.warn("Toast refused to open", { toast: this, reason });
             }
 
             this._promiseController.reject(reason);
