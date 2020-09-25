@@ -710,7 +710,7 @@
   "0b689e74b": "Edit schedule",
   "b180a219a": "Next execution",
   "92272c585": "TimeZone",
-  "730694c65": "The specific time of the days is defined in the stops, if you create a route for Monday that would mean Mondag 12:00 if the first stop has this time.",
+  "915fd5c3a": "The specific time of the days is defined in the stops, if you create a route for Monday that would mean Monday 12:00 if the first stop has this time.",
   "c79fc82ae": "Route day of week",
   "bc6dec974": "The schedule can be limited to inbetween two dates, if these are not set the schedule will always be active.",
   "8a31607fb": "Enabled from",

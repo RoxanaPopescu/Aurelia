@@ -710,7 +710,7 @@
   "0b689e74b": "Rediger schedule",
   "b180a219a": "Næste eksekvering",
   "92272c585": "TimeZone",
-  "730694c65": "Det specifikke tidspunkt for dagene er defineret i stop, hvis du opretter en rute til mandag, der vil betyde mandag 12:00, hvis det første stop har denne tid.",
+  "915fd5c3a": "Det specifikke tidspunkt for dagene er defineret i stop, hvis du opretter en rute til mandag, der vil betyde mandag 12:00, hvis det første stop har denne tid.",
   "c79fc82ae": "Rute dag på ugen",
   "bc6dec974": "Tidsplanen kan begrænses til mellem to datoer, hvis disse ikke er indstillet, vil tidsplanen altid være aktiv.",
   "8a31607fb": "Aktiv fra",
