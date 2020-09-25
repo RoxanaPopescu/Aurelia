@@ -62,36 +62,35 @@
 
             </div>
 
-            <div>
-                <div class="flex-row margin-smaller-bottom">
-                    <div class="input-heading" translate>
+            <div class="control-row margin-smaller-bottom">
+
+                <text-input readonly.bind="true" value.bind="model.driver" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
                         Driver
                     </div>
 
-                    <div if.bind="model.driver" class="opacity-faded-more margin-left-large margin-right-large">
-                        –
+                    <div slot="placeholder" translate>
+                        No driver selected
                     </div>
 
-                    <div if.bind="model.driver" class="margin-right-large">
-                        ${model.driver.name} (${model.driver.id})
+                    <div slot="after">
+                        <button if.bind="model.driver" class="margin-right-large margin-left-large" appearance="none" accent="primary" click.trigger="onRemoveDriverClick()">
+                            <icon name="close"></icon>
+                        </button>
+                        <button appearance="solid" accent="secondary" click.delegate="onAssignDriverClick()">
+                            <template if.bind="!model.driver" translate>
+                                Assign driver
+                            </template>
+                            <template if.bind="model.driver" translate>
+                                Reassign
+                            </template>
+                        </button>
                     </div>
 
-                    <button if.bind="model.driver" appearance="none" accent="primary" click.trigger="onRemoveDriverClick()">
-                        <icon name="close"></icon>
-                    </button>
-                </div>
-
-                <button appearance="solid" accent="secondary" click.delegate="onAssignDriverClick()">
-                    <template if.bind="!model.driver" translate>
-                        Assign driver
-                    </template>
-                    <template if.bind="model.driver" translate>
-                        Reassign
-                    </template>
-                </button>
+                </text-input>
 
             </div>
-
 
         </modal-section>
 

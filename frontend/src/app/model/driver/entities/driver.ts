@@ -94,4 +94,8 @@ export class Driver
      * The current online vehicle
      */
     public onlineVehicle?: Vehicle;
+
+    public toString() {
+        return `${this.name} (${this.id})`
+    }
 }

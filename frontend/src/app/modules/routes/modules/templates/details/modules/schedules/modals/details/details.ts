@@ -5,6 +5,7 @@ import { RouteStatus } from "app/model/route";
 import { Log } from "shared/infrastructure";
 import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
 import { Driver, DriverService } from "app/model/driver";
+import { IANAZone } from "luxon";
 
 @autoinject
 export class TemplateScheduleDetailsPanel
@@ -45,6 +46,11 @@ export class TemplateScheduleDetailsPanel
     protected model: RouteTemplateSchedule;
 
     /**
+     * The timezone for the schedule.
+     */
+    protected timeZone: string;
+
+    /**
      * The possible statuses
      */
     protected statuses: RouteStatus[] = [new RouteStatus("not-started"), new RouteStatus("not-approved")];
@@ -66,6 +72,7 @@ export class TemplateScheduleDetailsPanel
     public activate(model: { template: RouteTemplate, schedule: RouteTemplateSchedule}): void
     {
         this.model = model.schedule.clone();
+        this.timeZone = model.schedule.timeZone?.name;
         this.template = model.template;
 
         // Fetch driver if exists
@@ -126,6 +133,7 @@ export class TemplateScheduleDetailsPanel
                 return;
             }
 
+            this.model.timeZone = new IANAZone(this.timeZone) ?? "Europe/Copenhagen";
             this.model.routeDriverId = this.driver?.id;
             this._modal.busy = true;
 
