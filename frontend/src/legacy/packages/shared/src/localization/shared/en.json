@@ -149,6 +149,7 @@
   "LiveTracking_Actions_SplitRoute": "Split route",
   "LiveTracking_Actions_SplitRoute_Tooltip": "To split a route, first select the stops for the other driver,\nstarting with the stop at which the drivers should meet.",
   "Livetracking_Driver_Message": "Message for driver",
+  "Livetracking_Driver_Message_Sent": "The message: \"{message}\"  was sent to {driver}.",
   "LiveTracking_FiltersEnabled": "{enabled-filter} filters enabled",
   "LiveTracking_Filters_Criticality_Label": "Show only important",
   "LiveTracking_NewRoute_ChooseVehicleAndDriverHint": "Choose the vehicle and driver for the new route",

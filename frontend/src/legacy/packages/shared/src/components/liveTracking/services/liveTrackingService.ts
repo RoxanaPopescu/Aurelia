@@ -7,6 +7,8 @@ import { RouteService, Route, RouteInfo, RouteStatus, RouteStatusSlug, RouteStop
 import { LiveTrackingFilter } from "./liveTrackingFilter";
 import { DateTime, Duration } from "luxon";
 import { CommunicationService } from "app/model/_communication";
+import { ToastType } from "shared/src/webKit";
+import { Log } from "shared/infrastructure";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -39,6 +41,9 @@ export class LiveTrackingService {
     noDriver: undefined,
     selectedRoute: undefined
   };
+
+  @observable
+  public toast?: { type: ToastType.Success, content: string };
 
   public pollInterval = pollIntervalFocus;
 
@@ -275,12 +280,21 @@ export class LiveTrackingService {
     }
   }
 
-  public sendSms(driver: Driver) {
-    // FIXME: DO IT!
+  public async sendSms(driver: Driver) {
     const message = prompt(`${Localization.sharedValue("Livetracking_Driver_Message")} ${driver.name} (${driver.id})`);
 
     if (message != null && message != "") {
-      this.communicationService.sendSms(message, driver.phone);
+      try {
+        await this.communicationService.sendSms(message, driver.phone);
+
+        const toastContent = Localization.sharedValue("Livetracking_Driver_Message_Sent")
+          .replace("{message}", message)
+          .replace("{driver}", `${driver.name} (${driver.id})`);
+
+        this.toast = { type: ToastType.Success, content: toastContent }
+      } catch (error) {
+        Log.error(error);
+      }
     }
   }
 

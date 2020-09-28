@@ -16,7 +16,7 @@ import { Log } from "shared/infrastructure";
 import { DriversPanel } from "./components/panels/driversPanel/driversPanel";
 import { LiveTrackingService } from "./services/liveTrackingService";
 import { RouteService, RouteStop, Route } from "app/model/route";
-import { Button, ButtonType } from "shared/src/webKit";
+import { Button, ButtonType, Toast } from "shared/src/webKit";
 import { CommunicationService } from "app/model/_communication";
 
 export interface ILiveTrackingProps
@@ -193,6 +193,15 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
 
             </WorldMap>
           </div>
+          { this.service.toast &&
+            <Toast
+              key="toast"
+              type={this.service.toast.type}
+              remove={() => this.service.toast = undefined}
+            >
+              {this.service.toast.content}
+          </Toast>
+          }
         </div>
       );
     }
