@@ -82,10 +82,10 @@
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        <template if.bind="!schedule.routeDriverId" translate>
+                        <template if.bind="schedule.routeDriverId" translate>
                             Yes
                         </template>
-                        <template if.bind="schedule.routeDriverId" translate>
+                        <template if.bind="!schedule.routeDriverId" translate>
                             No
                         </template>
                     </span>

@@ -32,8 +32,6 @@ export class RouteTemplateSchedule
         {
             this.paused = false;
             this.activeDateTimeRange = new DateTimeRange();
-
-            // FIXME: FROM UI!
             this.timeZone = new IANAZone("Europe/Copenhagen");
         }
     }

@@ -15,7 +15,7 @@ export class Driver
     public constructor(data?: any, vehicleTypes?: VehicleType[])
     {
         if (data) {
-            this.id = data.id.toString();
+            this.id = `${data.id}`;
             this.status = new DriverStatus(data.status);
             this.name = new PersonName(data.name);
             this.phone = new PhoneNumber(data.phone);
