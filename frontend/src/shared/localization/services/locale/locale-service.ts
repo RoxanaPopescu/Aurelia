@@ -85,12 +85,14 @@ export class LocaleService
      */
     public async setLocale(localeCode: string): Promise<Locale>
     {
-        if (this._locale != null && localeCode === this._locale.code)
+        const canonicalLocaleCode = Intl.getCanonicalLocales([localeCode])[0];
+
+        if (this._locale != null && canonicalLocaleCode === this._locale.code)
         {
             return Promise.resolve(this._locale);
         }
 
-        const locale = this.getLocale(localeCode);
+        const locale = this.getLocale(canonicalLocaleCode);
 
         await this._changeFunc(locale, this._locale);
 

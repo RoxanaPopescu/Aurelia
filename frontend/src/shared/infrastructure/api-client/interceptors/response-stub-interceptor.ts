@@ -2,6 +2,7 @@ import { MapObject } from "shared/types";
 import { delay } from "shared/utilities";
 import { IApiInterceptor } from "../api-interceptor";
 import { IApiRequestOptions } from "../api-request-options";
+import { IApiClientSettings } from "../api-client-settings";
 
 /**
  * Represents an interceptor that responds with a stubbed response, if one is available for the request.
@@ -45,20 +46,25 @@ export class ResponseStubInterceptor implements IApiInterceptor
      * Called when a request is intercepted.
      * @param request The request that was intercepted.
      * @param options The request options to use.
+     * @param settings The settings used by the `ApiClient`.
      * @returns A promise that will be resolved with the request to send, or the stubbed response, if available.
      */
-    public async request(request: Request, options: IApiRequestOptions): Promise<Request | Response>
+    public async request(request: Request, options: IApiRequestOptions, settings: IApiClientSettings): Promise<Request | Response>
     {
-        const method = request.method.toUpperCase();
-        const url = new URL(request.url);
+        const requestMethod = request.method.toUpperCase();
+        const requestUrl = new URL(request.url);
 
         // Try to get the response stub.
 
-        const stubUrl = (url.host == null || url.host === location.host)
-            ? url.pathname + url.search
-            : `//${url.host}${url.pathname + url.search}`;
+        const apiHost = settings.endpointUrlPattern.startsWith("/")
+            ? location.host
+            : new URL(settings.endpointUrlPattern).host;
 
-        const stubKey = `${method} ${stubUrl}`;
+        const stubUrl = requestUrl.host === apiHost
+            ? requestUrl.pathname + requestUrl.search
+            : `//${requestUrl.host}${requestUrl.pathname + requestUrl.search}`;
+
+        const stubKey = `${requestMethod} ${stubUrl}`;
         const stubValue = this._stubs[stubKey];
 
         // Do we have a response stub for this request?
@@ -71,16 +77,16 @@ export class ResponseStubInterceptor implements IApiInterceptor
             if (stubValue instanceof Function)
             {
                 // Get the result of the stub.
-                const stubResult  = await stubValue(method, url, options);
+                const stubResult  = await stubValue(requestMethod, requestUrl, options);
 
                 // If the result is a request or response, return that.
                 if (stubResult instanceof Request || stubResult instanceof Response)
                 {
                     // Log a warning to the console, including info about the request and response.
-                    console.warn(`Using response stub for '${method} ${request.url}'\n`,
+                    console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
                     {
                         request: { ...options },
-                        response: stubResult
+                        stub: stubResult
                     });
 
                     return stubResult;
@@ -120,10 +126,10 @@ export class ResponseStubInterceptor implements IApiInterceptor
             }
 
             // Log a warning to the console, including info about the request and response.
-            console.warn(`Using response stub for '${method} ${request.url}'\n`,
+            console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
             {
                 request: { ...options },
-                response: { ...stub },
+                stub: { ...stub },
                 delay: stubDelay
             });
 

@@ -135,6 +135,9 @@ card
             // Disable pointer events so the container does not block clicks.
             pointer-events: none;
 
+            // Prevent selection.
+            user-select: none;
+
             icon
             {
                 // Set the icon size.

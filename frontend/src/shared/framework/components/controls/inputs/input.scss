@@ -25,33 +25,36 @@
 
     /// The radius of the border of the component.
     --input-border-radius: var(--border-radius-medium);
+
+    // The size of icons that are part of the input.
+    --input-icon-size: calc(20 / 14 * 1em);
 }
 
 .input
 {
     /// The color of the border of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --input-border-color: var(--surface-input-border-color);
     --input-border-color--hover: var(--surface-input-border-color--hover);
     --input-border-color--focus: var(--surface-input-border-color--focus);
     --input-border-color--invalid: var(--surface-input-border-color--invalid);
 
     /// The color of the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --input-surface-color: var(--surface-input-surface-color);
     --input-surface-color--hover: var(--surface-input-surface-color--hover);
     --input-surface-color--focus: var(--surface-input-surface-color--focus);
     --input-surface-color--invalid: var(--surface-input-surface-color--invalid);
 
     /// The color of the text on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --input-surface-text-color: var(--surface-input-surface-text-color);
     --input-surface-text-color--hover: var(--surface-input-surface-text-color--hover);
     --input-surface-text-color--focus: var(--surface-input-surface-text-color--focus);
     --input-surface-text-color--invalid: var(--surface-input-surface-text-color--invalid);
 
     /// The color of icons on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --input-surface-icon-color: var(--surface-input-surface-icon-color);
     --input-surface-icon-color--hover: var(--surface-input-surface-icon-color--hover);
     --input-surface-icon-color--focus: var(--surface-input-surface-icon-color--focus);
@@ -452,6 +455,8 @@
 {
     > .input-control dropdown-icon
     {
+        --dropdown-icon-size: var(--input-icon-size);
+
         color: var(--input-surface-icon-color);
     }
 

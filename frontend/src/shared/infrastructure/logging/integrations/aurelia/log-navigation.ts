@@ -1,4 +1,5 @@
 import { singleton } from "aurelia-framework";
+import { RouterEvent, NavigationInstruction, PipelineResult } from "aurelia-router";
 import { EventAggregator } from "aurelia-event-aggregator";
 
 /**
@@ -13,13 +14,13 @@ export class LogNavigation
      */
     public constructor(eventAggregator: EventAggregator)
     {
-        eventAggregator.subscribe("router:navigation:processing", (event: any) =>
+        eventAggregator.subscribe(RouterEvent.Processing, (event: { instruction: NavigationInstruction }) =>
         {
             const i = event.instruction;
             console.group(`Navigation to '${i.fragment}${i.queryString ? `?${i.queryString}` : ""}'`);
         });
 
-        eventAggregator.subscribe("router:navigation:idle", (event: any) =>
+        eventAggregator.subscribe("router:navigation:idle", (event: { result: PipelineResult }) =>
         {
             if (event.result.status === "completed")
             {

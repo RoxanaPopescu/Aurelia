@@ -16,19 +16,19 @@
 tag
 {
     /// The color of the border of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tag-border-color: var(--surface-input-surface-tag-border-color);
 
     /// The color of the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tag-surface-color: var(--surface-input-surface-tag-surface-color);
 
     /// The color of text on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tag-surface-text-color: var(--surface-input-surface-tag-surface-text-color);
 
     /// The color of icons on the surface of the component.
-    /// NOTE: This should be customized for each theme surface.
+    /// Note: This should be customized for each theme surface.
     --tag-surface-icon-color: var(--surface-input-surface-tag-surface-icon-color);
     --tag-surface-icon-color--hover: var(--surface-input-surface-tag-surface-icon-color--hover);
 }

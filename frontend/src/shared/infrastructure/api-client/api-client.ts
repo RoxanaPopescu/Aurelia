@@ -563,19 +563,19 @@ export class ApiClient
             return "";
         }
 
-        // If the value is a `Date` instance, convert it to ISO-8601 format.
+        // If the value is a `Date` instance, convert it to ISO 8601 format.
         if (value instanceof Date)
         {
             return value.toISOString();
         }
 
-        // If the value is a `DateTime` instance, convert it to ISO-8601 format.
+        // If the value is a `DateTime` instance, convert it to ISO 8601 format.
         if (value instanceof DateTime)
         {
             return value.toISO();
         }
 
-        // If the value is a `Duration`instance, convert it to ISO-8601 format.
+        // If the value is a `Duration`instance, convert it to ISO 8601 format.
         if (value instanceof Duration)
         {
             return value.toISO();
@@ -623,7 +623,7 @@ export class ApiClient
         {
             if (interceptor.request != null)
             {
-                const result = await interceptor.request(current, options);
+                const result = await interceptor.request(current, options, this._settings);
 
                 if (result instanceof Request)
                 {
@@ -653,7 +653,7 @@ export class ApiClient
         {
             if (interceptor.response != null)
             {
-                const result = await interceptor.response(current, options);
+                const result = await interceptor.response(current, options, this._settings);
 
                 if (result instanceof Response)
                 {
