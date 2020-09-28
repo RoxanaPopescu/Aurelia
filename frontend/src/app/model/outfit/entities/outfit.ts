@@ -1,4 +1,4 @@
-import { Phone } from "app/model/shared";
+import { PhoneNumber } from "app/model/shared";
 import { OutfitType } from "./outfit-type";
 import { computedFrom } from "aurelia-binding";
 
@@ -25,7 +25,7 @@ export class Outfit
 
         if (data != null && data.contactPhone != null && data.contactPhone.number)
         {
-            this.contactPhone = new Phone(data.contactPhone);
+            this.contactPhone = new PhoneNumber(data.contactPhone);
         }
     }
 
@@ -60,7 +60,7 @@ export class Outfit
      * The phone number at which the outfit can be contacted,
      * or undefined if the outfit has no phone.
      */
-    public readonly contactPhone?: Phone;
+    public readonly contactPhone?: PhoneNumber;
 
     /**
      * The email address at which the outfit can be contacted,

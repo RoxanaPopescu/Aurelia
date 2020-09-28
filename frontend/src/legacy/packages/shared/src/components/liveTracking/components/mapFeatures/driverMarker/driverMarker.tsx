@@ -10,6 +10,7 @@ export interface DriverMarkerProps {
   driver: Driver;
   faded: boolean;
   onClick?: (route: Driver) => void;
+  onSendSms: (driver: Driver) => void;
 }
 
 @observer
@@ -129,6 +130,13 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
             <a href={"tel:" + this.props.driver!.phone.toString()}>{this.props.driver!.phone.toString()}</a>
           </div>
+
+          { this.props.driver != null && this.props.onSendSms != null &&
+            <div className="c-worldMap-popup-section-row">
+              <div />
+              <a onClick={() => this.props.onSendSms!(this.props.driver!)} >{Localization.sharedValue("Send_Sms")}</a>
+            </div>
+          }
 
           {this.props.driver.position && this.props.driver.position.timestamp &&
           <div className="c-worldMap-popup-section-row">

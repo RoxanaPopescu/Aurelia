@@ -1,4 +1,4 @@
-import { Phone } from "./phone";
+import { PhoneNumber } from "./phone";
 
 /**
  * Represents an contact
@@ -15,7 +15,7 @@ export class Contact
         {
             if (data.phoneNumber)
             {
-                this.phoneNumber = new Phone(data.phoneNumber);
+                this.phoneNumber = new PhoneNumber(data.phoneNumber);
             }
             this.fullName = data.fullName;
             this.companyName = data.companyName;
@@ -31,7 +31,7 @@ export class Contact
     /**
      * The name identifying the provider of the address.
      */
-    public phoneNumber: Phone;
+    public phoneNumber: PhoneNumber;
 
     /**
      * The name of the company.

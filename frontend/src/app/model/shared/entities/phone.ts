@@ -1,7 +1,7 @@
 /**
  * Represents a phone
  */
-export class Phone
+export class PhoneNumber
 {
     /**
      * Creates a new instance of the type.
@@ -12,6 +12,9 @@ export class Phone
         if (data != null)
         {
             this.countryCallingCode = data.countryCallingCode;
+            if (data.countryCallingCode == null && data.countryPrefix) {
+                this.countryCallingCode = data.countryPrefix;
+            }
 
             if (data.countryCode) {
                 this.countryCode = data.countryCode;

@@ -17,10 +17,12 @@ import { DriversPanel } from "./components/panels/driversPanel/driversPanel";
 import { LiveTrackingService } from "./services/liveTrackingService";
 import { RouteService, RouteStop, Route } from "app/model/route";
 import { Button, ButtonType } from "shared/src/webKit";
+import { CommunicationService } from "app/model/_communication";
 
 export interface ILiveTrackingProps
 {
-    routeService: RouteService
+    routeService: RouteService;
+    communicationService: CommunicationService;
 }
 
 @observer
@@ -28,7 +30,7 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
   // tslint:disable-next-line: no-any
   public constructor(props: LiveTrackingService) {
     super(props);
-    this.service = new LiveTrackingService(this.props.routeService);
+    this.service = new LiveTrackingService(this.props.routeService, this.props.communicationService);
   }
 
   private service: LiveTrackingService;

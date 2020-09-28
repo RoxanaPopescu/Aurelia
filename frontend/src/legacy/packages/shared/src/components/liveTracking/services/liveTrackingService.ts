@@ -6,6 +6,7 @@ import { Driver } from "app/model/driver";
 import { RouteService, Route, RouteInfo, RouteStatus, RouteStatusSlug, RouteStopBase } from "app/model/route";
 import { LiveTrackingFilter } from "./liveTrackingFilter";
 import { DateTime, Duration } from "luxon";
+import { CommunicationService } from "app/model/_communication";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -20,12 +21,16 @@ type ListType = "not-started" | "in-progress" | "no-driver";
  */
 
 export class LiveTrackingService {
-  constructor(routeService: RouteService) {
+  constructor(routeService: RouteService, communicationService: CommunicationService) {
     this.routeService = routeService;
+    this.communicationService = communicationService;
     this.startPolling();
+
+    console.log(this.communicationService);
   }
 
   public routeService: RouteService;
+  public communicationService: CommunicationService;
 
   /* tslint:disable-next-line: no-any */
   private pollTimeout: { notStarted: any, inProgress: any, noDriver: any, selectedRoute: any } = {
@@ -270,6 +275,15 @@ export class LiveTrackingService {
     }
   }
 
+  public sendSms(driver: Driver) {
+    // FIXME: DO IT!
+    const message = prompt(`${Localization.sharedValue("Livetracking_Driver_Message")} ${driver.name} (${driver.id})`);
+
+    if (message != null && message != "") {
+      this.communicationService.sendSms(message, driver.phone);
+    }
+  }
+
   /**
    * Starts polling for route data.
    * @returns A promise that will be resolved when the initial request succeedes.
@@ -398,7 +412,7 @@ export class LiveTrackingService {
         to = to.plus(Duration.fromObject({hours: 3}));
       }
 
-      
+
       const result = await this.routeService.getAll(
           {
               statuses: statuses,

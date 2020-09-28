@@ -5,6 +5,7 @@ import { RouteService } from "app/model/route";
 
 // Import the component that should be wrapped.
 import Component from "shared/src/components/liveTracking/index";
+import { CommunicationService } from "app/model/_communication";
 
 @noView
 @autoinject
@@ -26,10 +27,14 @@ export class LiveTrackingCustomElement extends Wrapper
     {
         super.attached(Component, {},
         {
-            routeService: this.service
+            routeService: this.service,
+            communicationService: this.communication
         });
     }
 
     @bindable
     public service: RouteService;
+
+    @bindable
+    public communication: CommunicationService;
 }

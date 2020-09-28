@@ -1,4 +1,4 @@
-import { PersonName, Phone, Position } from "app/model/shared";
+import { PersonName, PhoneNumber, Position } from "app/model/shared";
 import { VehicleType, Vehicle } from "app/model/vehicle";
 import { DriverStatus } from "./driver-status";
 
@@ -18,7 +18,7 @@ export class Driver
             this.id = data.id.toString();
             this.status = new DriverStatus(data.status);
             this.name = new PersonName(data.name);
-            this.phone = new Phone(data.phone);
+            this.phone = new PhoneNumber(data.phone);
             this.email = data.email;
             this.pictureUrl = data.pictureUrl;
             this.vehicleTypes = vehicleTypes;
@@ -33,7 +33,7 @@ export class Driver
         } else {
             this.status = new DriverStatus("approved");
             this.name = new PersonName();
-            this.phone = new Phone();
+            this.phone = new PhoneNumber();
             this.phone.countryCode = "45";
         }
 
@@ -67,7 +67,7 @@ export class Driver
     /**
      * The phone number at which the driver can be contacted.
      */
-    public phone: Phone;
+    public phone: PhoneNumber;
 
     /**
      * The phone number at which the driver can be contacted.

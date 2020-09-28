@@ -6,11 +6,13 @@ import { Marker, Popup } from "shared/src/components/worldMap";
 import "./routeDriverMarker.scss";
 import { Position } from "app/model/shared";
 import { RouteStop, RouteBase } from "app/model/route";
+import { Driver } from "app/model/driver";
 
 export interface RouteDriverMarkerProps {
   route: RouteBase;
   faded: boolean;
   onClick?: (route: RouteBase) => void;
+  onSendSms: (driver: Driver) => void;
 }
 
 @observer
@@ -143,6 +145,13 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
             <a href={"tel:" + this.props.route.driver!.phone.toString()}>{this.props.route.driver!.phone.toString()}</a>
           </div>
+
+          { this.props.route.driver != null && this.props.onSendSms != null &&
+            <div className="c-worldMap-popup-section-row">
+              <div />
+              <a onClick={() => this.props.onSendSms!(this.props.route.driver!)} >{Localization.sharedValue("Send_Sms")}</a>
+            </div>
+          }
 
           {!this.props.route.driverOnline &&
           <div className="c-worldMap-popup-section-row">

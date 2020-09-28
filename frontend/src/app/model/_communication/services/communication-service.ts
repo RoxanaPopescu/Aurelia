@@ -5,6 +5,7 @@ import { CommunicationTrigger } from "../entities/communication-trigger";
 import { Metadata } from "app/model/shared/entities/metadata";
 import { CommunicationTriggerEventSlug } from "../entities/communication-trigger-event";
 import optionsForTriggerEvents from "../resources/settings/options-for-trigger-events";
+import { PhoneNumber } from "app/model/shared";
 
 /**
  * Represents a service that manages communication triggers.
@@ -31,6 +32,22 @@ export class CommunicationService
     public getOptions(eventTypeSlug: CommunicationTriggerEventSlug): any
     {
         return optionsForTriggerEvents[eventTypeSlug];
+    }
+
+    /**
+     * Deletes the specified communication trigger.
+     * @param id The ID of the communication trigger to delete.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    public async sendSms(message: string, phone: PhoneNumber): Promise<void>
+    {
+        await this._apiClient.post("communication/sms/send",
+        {
+            body: {
+                message: message,
+                phone: phone
+            }
+        });
     }
 
     /**

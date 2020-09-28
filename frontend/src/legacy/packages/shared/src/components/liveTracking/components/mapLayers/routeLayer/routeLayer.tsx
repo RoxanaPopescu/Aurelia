@@ -30,6 +30,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
         faded={true}
         key={`Driver-${d.id}`}
         onClick={driver =>  this.props.service.onSelectDriver(driver)}
+        onSendSms={(driver) => this.props.service.sendSms(driver)}
       />);
     }
 
@@ -91,6 +92,7 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
           route={currentRoute!}
           faded={false}
           onClick={() => this.onDriverMarkerClick(currentRoute)}
+          onSendSms={(driver) => this.props.service.sendSms(driver)}
         />}
         {this.renderDrivers()}
       </React.Fragment>

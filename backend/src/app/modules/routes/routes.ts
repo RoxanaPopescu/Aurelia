@@ -107,7 +107,7 @@ export class RoutesModule extends AppModule
             context.response.status = 200;
         });
 
-                /**
+        /**
          * Creates a route template
          * @returns The id and slug of the new template
          */
