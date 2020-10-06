@@ -1,5 +1,5 @@
 /**
- * Represents a dimension of any object, could be a colli or vehicle inner dimension.
+ * Represents a dimension of an object.
  */
 export class Dimensions
 {
@@ -15,24 +15,25 @@ export class Dimensions
     }
 
     /**
-     * The width of the vehicle in meters.
+     * The width in meters.
      */
     public width: number;
 
     /**
-     * The lenght of the vehicle in meters.
+     * The lenght in meters.
      */
     public length: number;
 
     /**
-     * The height of the vehicle in meters.
+     * The height in meters.
      */
     public height: number;
 
     /**
-     * The volume of the dimensions in m3.
+     * The volume in cubic meters.
      */
-    public get volume(): number {
+    public get volume(): number
+    {
         return this.width * this.length * this.height;
     }
 
