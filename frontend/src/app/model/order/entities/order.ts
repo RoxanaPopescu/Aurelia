@@ -19,7 +19,7 @@ export class Order
             canBeCancelled: data.state.canBeCancelled,
             canBeEdited: data.state.canBeEdited,
             isDeleted: data.state.isDeleted,
-            status: new OrderStatus(data.state.status.name.toLowerCase())
+            status: new OrderStatus(data.state.status.name)
         };
 
         this.pickup = new OrderStop(data.pickup, "pickup");
@@ -85,7 +85,7 @@ export class Order
             tags: this.tags,
             requirements: this.requirements,
             actualColli: this.actualColli,
-            estimatedColli: this.estimatedColli 
+            estimatedColli: this.estimatedColli
         };
     }
 }

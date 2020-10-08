@@ -14,7 +14,7 @@ export class OrderInfo
         this.id = data.internalId;
         this.slug = data.publicId;
         this.tags = data.tags;
-        this.status = new OrderStatus(data.status.name.toLowerCase());
+        this.status = new OrderStatus(data.status.name);
         this.earliestPickupDate = DateTime.fromISO(data.earliestPickupDate, { setZone: true });
         this.earliestPickupTime = TimeOfDay.fromString(data.earliestPickupTime);
         this.latestPickupDate = DateTime.fromISO(data.latestPickupDate, { setZone: true });
