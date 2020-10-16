@@ -114,5 +114,115 @@ export class LinehaulsModule extends AppModule
             context.response.body = result.data;
             context.response.status = 200;
         });
+
+        /**
+         * Saves the loaded event
+         * @returns 202 ok
+         */
+        this.router.post("/v2/linehauls/collo/loaded", async context =>
+        {
+            context.authorize();
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.actionById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("linehauls/collo/loaded",
+            {
+                body: body
+            });
+
+            context.internal();
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Saves the unloaded event
+         * @returns 202 ok
+         */
+        this.router.post("/v2/linehauls/collo/unloaded", async context =>
+        {
+            context.authorize();
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.actionById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("linehauls/collo/unloaded",
+            {
+                body: body
+            });
+
+            context.internal();
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Saves the damaged event
+         * @returns 202 ok
+         */
+        this.router.post("/v2/linehauls/collo/damaged", async context =>
+        {
+            context.authorize();
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.actionById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("linehauls/collo/damaged",
+            {
+                body: body
+            });
+
+            context.internal();
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Saves the missing event
+         * @returns 202 ok
+         */
+        this.router.post("/v2/linehauls/collo/missing", async context =>
+        {
+            context.authorize();
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.actionById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("linehauls/collo/missing",
+            {
+                body: body
+            });
+
+            context.internal();
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Saves the removed event
+         * @returns 202 ok
+         */
+        this.router.post("/v2/linehauls/collo/remove", async context =>
+        {
+            context.authorize();
+
+            let body = context.request.body;
+            body.ownerId = context.user?.outfitId;
+            body.actionById = context.user?.id;
+
+            const routesResult = await this.apiClient.post("linehauls/collo/remove",
+            {
+                body: body
+            });
+
+            context.internal();
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
     }
 }
