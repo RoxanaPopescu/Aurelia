@@ -1,7 +1,7 @@
 import { AppModule } from "../../app-module";
 
 /**
- * Represents a module exposing endpoints related to depots.
+ * Represents a module exposing endpoints related to distribution centers.
  */
 export class DepotsModule extends AppModule
 {
