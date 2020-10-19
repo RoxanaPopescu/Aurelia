@@ -3,7 +3,7 @@
     "short_name": "Mover",
     "start_url": "/",
     "display": "minimal-ui",
-    "background_color": "#11253E",
+    "background_color": "#fbfbfb",
     "theme_color": "#11253E",
     "icons":
     [

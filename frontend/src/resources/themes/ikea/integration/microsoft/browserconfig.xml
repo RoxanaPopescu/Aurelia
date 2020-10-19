@@ -7,7 +7,7 @@
             <square150x150logo src="/resources/themes/mover/integration/microsoft/tile-square.png"/>
             <square310x310logo src="/resources/themes/mover/integration/microsoft/tile-square.png"/>
             <wide310x150logo src="/resources/themes/mover/integration/microsoft/tile-wide.png"/>
-            <TileColor>#0051ba</TileColor>
+            <TileColor>#11253e</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
