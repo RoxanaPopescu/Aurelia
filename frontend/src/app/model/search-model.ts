@@ -18,10 +18,9 @@ export class SearchModel
     /**
      * Determines whether the search model contains the specified text.
      * @param text The text to search for.
-     * @param caseSensitive True to do a case sensitive search, otherwise false.
      * @returns True if the model contains the specified text, otherwise false.
      */
-    public contains(text?: string, caseSensitive = false): boolean
+    public contains(text?: string): boolean
     {
         // An empty query is always a match.
         if (!text)
@@ -33,7 +32,6 @@ export class SearchModel
 
         const objects = new Set<any>();
 
-        objects.add(this);
         objects.add(this._entity);
 
         if (this._json == null)
@@ -59,16 +57,33 @@ export class SearchModel
         }
 
         let found = true;
-        for(const q of s) {
-            const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-            const foundSingle = new RegExp(
-                `^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`,
-                "m"
-            ).test(this._json)
+        for(let q of s) {
+            let minusQuery = false;
+            if (q.length > 0) {
+                const firstCharacter = q.charAt(0);
+                if (firstCharacter == "-") {
+                    minusQuery = true;
+                    q = q.substring(1).trim();
+                }
+            }
 
-            if (!foundSingle) {
-                found = false;
+            if (q.length > 0) {
+                const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const foundSingle = new RegExp(
+                    `^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`,
+                    "m"
+                ).test(this._json);
+
+                if (minusQuery) {
+                    if (foundSingle) {
+                        return false;
+                    }
+                } else {
+                    if (!foundSingle) {
+                        found = false;
+                    }
+                }
             }
         }
 
