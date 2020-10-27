@@ -91,11 +91,17 @@ export class App
         this._app.get("*", (request, response, next) =>
         {
             // Check for old browsers like IE
-            if (request.headers["user-agent"] && /msie|trident/i.test(request.headers["user-agent"])) {
-                const indexFilePath = path.join(staticFolderPath, "outdated-browsers/index.html");
-                response.sendFile(indexFilePath);
+            if (request.headers["user-agent"]) {
+                const userAgent = request.headers["user-agent"];
+                const isLegacy = /msie|trident|edge/i.test(userAgent);
+                // Chromium edge uses "edg" the legacy 'EdgeHtml' uses "edge".
 
-                return;
+                if (isLegacy) {
+                    const indexFilePath = path.join(staticFolderPath, "outdated-browsers/index.html");
+                    response.sendFile(indexFilePath);
+
+                    return;
+                }
             }
 
             // Get the settings for the hostname specified in the request.
