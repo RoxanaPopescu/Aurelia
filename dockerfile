@@ -123,7 +123,7 @@ COPY ["/frontend/packages/cloud/package-lock.json", "./"]
 RUN npm ci --production
 
 ## Copy the artifacts from the `build-frontend-stage`.
-COPY --from=build-frontend-stage ["/usr/app/frontend/artifacts/build", "./artifacts/build/client"]
+COPY --from=build-frontend-stage ["/usr/app/frontend/artifacts/build", "./artifacts/build/frontend"]
 
 ## Copy the artifacts from the `build-frontend-cloud-stage`.
 COPY --from=build-frontend-cloud-stage ["/usr/app/frontend/packages/cloud/artifacts/build/server", "./artifacts/build/server"]
