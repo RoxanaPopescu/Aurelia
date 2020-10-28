@@ -5,7 +5,7 @@ import { paths } from "../paths";
 const locales =
 [
     "da",
-    "en-x-ikea"
+    "en-US-x-ikea"
 ];
 
 // The path for the export file that was just created.

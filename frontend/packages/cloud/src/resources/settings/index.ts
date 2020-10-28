@@ -81,13 +81,13 @@ export default
         },
         {
             hostname: /(^|\.)ikea\.(dk|com)$/,
-            localeCode: "en-x-ikea",
+            localeCode: "en-US-x-ikea",
             currencyCode: "DKK",
             themeSlug: "ikea"
         },
         {
             hostname: /(^|\.)ikea.mover.dev$/,
-            localeCode: "en-x-ikea",
+            localeCode: "en-US-x-ikea",
             currencyCode: "DKK",
             themeSlug: "ikea"
         },
