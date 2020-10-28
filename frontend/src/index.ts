@@ -64,7 +64,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
         // Load and use response stubs, if enabled.
         if (ENVIRONMENT.stubs)
         {
-            const { stubs } = await import("resources/stubs");
+            const { stubs } = await import(/* webpackChunkName: "stubs" */"resources/stubs");
             settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs, 20));
         }
 
@@ -98,13 +98,13 @@ export async function configure(aurelia: Aurelia): Promise<void>
             async () =>
             {
                 // Import style resources.
-                await import("resources/styles/index.scss" as any);
-                await import(`resources/themes/${themeService.theme.slug}/styles/index.scss`);
+                await import(/* webpackChunkName: "styles" */"resources/styles/index.scss" as any);
+                await import(/* webpackChunkName: "theme-" */`resources/themes/${themeService.theme.slug}/styles/index.scss`);
             },
             async () =>
             {
                 // Import icon resources.
-                await import("resources/icons");
+                await import(/* webpackChunkName: "icons" */"resources/icons");
             },
             async () =>
             {

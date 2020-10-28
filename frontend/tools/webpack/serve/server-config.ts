@@ -1,3 +1,4 @@
+import path from "path";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 import { IServerOptions } from "./server-options";
@@ -15,11 +16,13 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
     const config: WebpackDevServer.Configuration =
     {
         // Configure host and host check.
-        ...serverOptions.public ?
+        ...
+        serverOptions.public ?
         {
             host: "0.0.0.0",
             disableHostCheck: true
-        } :
+        }
+        :
         {
             host: "localhost"
         },
@@ -30,7 +33,11 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
         open: serverOptions.open,
         proxy: serverOptions.proxy,
         publicPath: compilerConfig.output!.publicPath,
-        historyApiFallback: true,
+        contentBasePublicPath: compilerConfig.output!.publicPath,
+        historyApiFallback:
+        {
+            index: path.resolve(compilerConfig.output!.publicPath!, "index.html")
+        },
         compress: true,
         contentBase:
         [

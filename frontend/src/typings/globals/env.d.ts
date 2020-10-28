@@ -82,13 +82,6 @@ declare interface IClientEnvironment
     obfuscate: boolean;
 
     /**
-     * True to use path-based routing, false to use fragment-based routing.
-     * When building for the `frontend-cloud` package, this should be enabled.
-     * When building for any other package, this must be disabled.
-     */
-    pushState: boolean;
-
-    /**
      * The public path for the JavaScript bundles.
      * When building for the `frontend-cloud` package, this should be the domain-relative path on which the app will be hosted.
      * When building for any other package, this should be the file system path for the folder representing the copy of the

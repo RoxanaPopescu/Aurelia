@@ -1,6 +1,5 @@
 import { PLATFORM, autoinject } from "aurelia-framework";
 import { Router, RouterConfiguration, NavigationInstruction, Redirect, Next, PipelineStep } from "aurelia-router";
-import { setPrerenderStatusCode } from "shared/infrastructure";
 import { ToastService, ModalService } from "shared/framework";
 import { AuthorizationService } from "./services/authorization";
 import { IdentityService } from "./services/identity";
@@ -330,17 +329,11 @@ export class AppModule
         config.map(routeConfigs);
 
         // Map unknown routes.
-        config.mapUnknownRoutes(() =>
+        config.mapUnknownRoutes(
         {
-            // Set the status code that should be returned to crawlers.
-            setPrerenderStatusCode(404);
-
-            // Present the `unknown` page.
-            return {
-                route: "page-not-found",
-                title: routeTitles.pageNotFound,
-                moduleId: PLATFORM.moduleName("./modules/page-not-found/page-not-found")
-            };
+            route: "unknown",
+            title: routeTitles.unknown,
+            moduleId: PLATFORM.moduleName("./modules/unknown/unknown", "unknown")
         });
 
         // Add a router pipeline step that checks whether the user is authorized to access the route.
@@ -350,7 +343,7 @@ export class AppModule
         config.addPipelineStep("preActivate", CloseModalsPipelineStep);
 
         // Configure history usage.
-        config.options.pushState = ENVIRONMENT.pushState;
+        config.options.pushState = true;
 
         // Configure title generation.
         config.title = document.title;

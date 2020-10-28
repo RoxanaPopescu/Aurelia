@@ -8,7 +8,7 @@ commander
         "The target environment",
         "development")
 
-    .option("--locale [en-US, x-pseudo]",
+    .option("--locale [en-US, en-US-x-pseudo]",
         "The target locale",
         "en-US")
 
@@ -49,8 +49,7 @@ const compilerOptions: ICompilerOptions =
 
         // Platform-specific configuration.
 
-        pushState: true,
-        publicPath: "./",
+        publicPath: "/",
         appBaseUrl: "/",
         apiBaseUrl: "/api/",
 
