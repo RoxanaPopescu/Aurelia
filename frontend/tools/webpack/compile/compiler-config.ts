@@ -59,7 +59,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         conservativeCollapse: true,
         removeComments: true,
         minifyCSS: true,
-        minifyJS: true,
+        minifyJS: false,
         ignoreCustomFragments:
         [
             // HACK:
@@ -77,6 +77,14 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             // Ignore binding commands, i.e. `something.command="expression"`.
             /[\w-]+\.([\w-]+)\s*=\s*("[^"]*[^\\]"|'[^']*[^\\]'|`[^`]*[^\\]`)/s
         ]
+    };
+
+    // The options for the `file-loader` loader.
+    const fileLoaderOptions =
+    {
+        esModule: false,
+        context: paths.srcFolder,
+        name: compilerOptions.environment.optimize ? "[path][name].[ext]?[contenthash]" : "[path][name].[ext]"
     };
 
     const config: Configuration =
@@ -98,10 +106,10 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         output:
         {
             path: buildFolder,
-            publicPath: compilerOptions.environment.appBaseUrl,
-            filename: compilerOptions.environment.optimize ? "[name].[chunkhash].bundle.js" : "[name].[hash].bundle.js",
-            chunkFilename: compilerOptions.environment.optimize ? "[name].[chunkhash].chunk.js" : "[name].[hash].chunk.js",
-            sourceMapFilename: compilerOptions.environment.optimize ? "[file].map" : "[file].map",
+            publicPath: compilerOptions.environment.publicPath,
+            filename: compilerOptions.environment.optimize ? "[name].entry.js?[contenthash]" : "[name].entry.js",
+            chunkFilename: compilerOptions.environment.optimize ? "[name].chunk.js?[contenthash]" : "[name].chunk.js",
+            sourceMapFilename: "[file].map",
 
             // Only apply hashes to source file names if needed.
             // See: https://www.mistergoodcat.com/post/the-joy-that-is-source-maps-with-vuejs-and-typescript
@@ -144,8 +152,12 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     include: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
-                        "style-loader",
-                        "css-loader",
+                        {
+                            loader: "style-loader"
+                        },
+                        {
+                            loader: "css-loader"
+                        },
                         {
                             loader: "postcss-loader",
                             options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
@@ -161,11 +173,16 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Note that we need `style-loader` to inject those.
                 {
                     test: /\.s?css$/,
+                    issuer: /\.tsx?$/i,
                     exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
-                        "style-loader",
-                        "css-loader",
+                        {
+                            loader: "style-loader"
+                        },
+                        {
+                            loader: "css-loader"
+                        },
                         {
                             loader: "postcss-loader",
                             options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
@@ -174,18 +191,20 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                             loader: "sass-loader",
                             options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
                         }
-                    ],
-                    issuer: /\.tsx?$/i
+                    ]
                 },
 
                 // Loader for `.scss` files required in `.html` files.
                 // Note that we do not need `style-loader` to inject those, as Aurelia handles that itself.
                 {
                     test: /\.s?css$/,
+                    issuer: /\.html$/i,
                     exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
                     [
-                        "css-loader",
+                        {
+                            loader: "css-loader"
+                        },
                         {
                             loader: "postcss-loader",
                             options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
@@ -194,8 +213,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                             loader: "sass-loader",
                             options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
                         }
-                    ],
-                    issuer: /\.html$/i
+                    ]
                 },
 
                 // Loader for `.html` files.
@@ -218,12 +236,10 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 {
                     test: /[\\/]resources[\\/]strings[\\/].*\.json$/,
                     use:
-                    [
-                        {
-                            loader: "translation-loader",
-                            options: translateConfig
-                        }
-                    ]
+                    {
+                        loader: "translation-loader",
+                        options: translateConfig
+                    }
                 },
 
                 // Loader for `.worker.ts` files, representing modules that should executed in a Web Worker.
@@ -238,7 +254,10 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for `.ts` and `.tsx` files.
                 {
                     test: /\.tsx?$/,
-                    loader: "ts-loader"
+                    use:
+                    {
+                        loader: "ts-loader"
+                    }
                 },
 
                 // Loader for `.svg` icon files, which bundles them as symbols
@@ -246,34 +265,40 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 {
                     test: /\.svg$/,
                     include: paths.iconFolders,
-                    loader: "svg-sprite-loader",
-                    options: { symbolId: "icon-[name]" }
+                    use:
+                    {
+                        loader: "svg-sprite-loader",
+                        options: { symbolId: "icon-[name]" }
+                    }
                 },
 
                 // Loaders that embed small files as Data URLs and fetches larger files separately.
                 {
-                    test: /\.(png|gif|jpg|cur|svg)$/i,
+                    test: /\.(svg|png|jpg|gif|cur|mp4)$/i,
                     exclude: paths.iconFolders,
-                    loader: "url-loader",
-                    options: { esModule: false, limit: 10000 }
+                    use:
+                    {
+                        loader: "url-loader",
+                        options: { ...fileLoaderOptions, limit: 10000 }
+                    }
                 },
                 {
-                    test: /\.woff2$/i,
-                    loader: "url-loader",
-                    options: { esModule: false, limit: 10000 }
-                },
-                {
-                    test: /\.woff$/i,
-                    loader: "url-loader",
-                    options: { esModule: false, limit: 10000 }
+                    test: /\.(woff|woff2)$/i,
+                    use:
+                    {
+                        loader: "url-loader",
+                        options: { ...fileLoaderOptions, limit: 10000 }
+                    }
                 },
 
                 // Loader for files that should be fetched separately.
                 {
                     test: /\.(ttf|eot|otf)$/i,
-                    exclude: paths.iconFolders,
-                    loader: "file-loader",
-                    options: { esModule: false }
+                    use:
+                    {
+                        loader: "file-loader",
+                        options: { ...fileLoaderOptions }
+                    }
                 }
             ]
         },

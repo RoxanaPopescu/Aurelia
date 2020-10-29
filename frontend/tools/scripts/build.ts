@@ -1,5 +1,4 @@
 import commander from "commander";
-import { paths } from "../paths";
 import { ICompilerOptions, compile } from "../webpack/compile";
 
 commander
@@ -12,7 +11,7 @@ commander
         "The target platform",
         "cloud")
 
-    .option("--locale [en-US, x-pseudo]",
+    .option("--locale [en-US, en-US-x-pseudo]",
         "The target locale",
         "en-US")
 
@@ -41,16 +40,14 @@ const compilerOptions: ICompilerOptions =
         ...
         commander.platform === "cloud" ?
         {
-            pushState: true,
-            publicPath: "./",
+            publicPath: "/",
             appBaseUrl: "/",
             apiBaseUrl: commander.api || "/api/"
         }
         :
         commander.platform === "desktop" ?
         {
-            pushState: true,
-            publicPath: paths.artifacts.desktopClientBuildFolder,
+            publicPath: "/",
             appBaseUrl: "/",
             apiBaseUrl: commander.api || "http://localhost:8008/"
         }

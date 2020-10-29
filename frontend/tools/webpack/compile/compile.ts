@@ -1,5 +1,5 @@
 import webpack from "webpack";
-import { logTaskInfo } from "../helpers";
+import { logBuildInfo } from "../helpers";
 import { ICompilerOptions } from "./compiler-options";
 import { getCompilerConfig } from "./compiler-config";
 import { compilerCallback } from "./compiler-callback";
@@ -12,7 +12,7 @@ import { compilerCallback } from "./compiler-callback";
  */
 export async function compile(compilerOptions: ICompilerOptions): Promise<void>
 {
-    logTaskInfo(compilerOptions);
+    logBuildInfo(compilerOptions);
 
     return new Promise<void>((resolve, reject) =>
     {

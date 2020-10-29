@@ -57,10 +57,10 @@ RUN npm run translate-export
 RUN npm run translate-pseudo
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US --commit=${COMMIT}
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=x-pseudo --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US-x-pseudo --commit=${COMMIT}
 
 # TODO: The following is to support "colli" -> "shipment" for IKEA temporarily
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-x-ikea --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US-x-ikea --commit=${COMMIT}
 
 # Stage 2: Build the `frontend-cloud` package.
 
@@ -123,7 +123,7 @@ COPY ["/frontend/packages/cloud/package-lock.json", "./"]
 RUN npm ci --production
 
 ## Copy the artifacts from the `build-frontend-stage`.
-COPY --from=build-frontend-stage ["/usr/app/frontend/artifacts/build", "./artifacts/build/client"]
+COPY --from=build-frontend-stage ["/usr/app/frontend/artifacts/build", "./artifacts/build/frontend"]
 
 ## Copy the artifacts from the `build-frontend-cloud-stage`.
 COPY --from=build-frontend-cloud-stage ["/usr/app/frontend/packages/cloud/artifacts/build/server", "./artifacts/build/server"]

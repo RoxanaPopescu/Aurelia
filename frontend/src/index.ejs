@@ -1,10 +1,14 @@
-<!DOCTYPE html>
+<% const environment = htmlWebpackPlugin.options.environment; %>
+<% const integrationPath = `${environment.publicPath}resources/themes/current/integration` %>
 
-<% var environment = htmlWebpackPlugin.options.environment; %>
+<!DOCTYPE html>
 
 <html lang="<%- environment.locale %>" env="<%- environment.name %>" class="app">
 
     <head>
+
+        <!-- Preconnect hints -->
+        <link rel="preconnect" href="https://polyfill.app/api/polyfill?features=es,intersection-observer,intl|locale=<%- environment.locale %>" as="script">
 
         <!-- Technical metadata -->
         <meta charset="utf-8">
@@ -21,22 +25,20 @@
         <meta name="description" content="Modernize your logistics with Mover.">
 
         <!-- Standard integration metadata -->
-        <link rel="icon" href="/resources/themes/mover/integration/standard/favicon.png" type="image/png">
-        <link rel="mask-icon" href="/resources/themes/mover/integration/standard/icon-mask.svg" color="#0747a6">
-        <link rel="manifest" href="/resources/themes/mover/integration/standard/manifest.json">
-        <meta name="theme-color" content="#0747a6">
+        <link rel="icon" href="<%- integrationPath %>/standard/favicon.png" type="image/png">
+        <link rel="mask-icon" href="<%- integrationPath %>/standard/icon-mask.svg" color="#0747a6">
+        <link rel="manifest" href="<%- integrationPath %>/standard/manifest.json">
         <meta name="application-name" content="Mover">
 
         <!-- Apple specific integration metadata -->
-        <link rel="apple-touch-icon" href="/resources/themes/mover/integration/apple/icon.png">
+        <link rel="apple-touch-icon" href="<%- integrationPath %>/apple/icon.png">
         <meta name="apple-mobile-web-app-title" content="Mover">
 
         <!-- Google specific integration metadata -->
         <meta name="google" content="notranslate">
 
         <!-- Microsoft specific integration metadata -->
-        <meta name="msapplication-config" content="/resources/themes/mover/integration/microsoft/browserconfig.xml">
-        <meta name="msapplication-navbutton-color" content="#0747a6">
+        <meta name="msapplication-config" content="<%- integrationPath %>/microsoft/browserconfig.xml">
 
         <!-- Analytics -->
         <% if (environment.integrations.googleAnalytics) { %>

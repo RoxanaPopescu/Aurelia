@@ -11,16 +11,20 @@ export class CloudEnvironment
 {
     public constructor()
     {
-        // The default environment to use if `NODE_ENV` is undefined.
+        // The default environment to use if the `NODE_ENV` variable is undefined.
         const defaultName = "development";
 
-        // The default port to use if `PORT` is undefined.
+        // The default port to use if the `PORT` variable is undefined.
         const defaultPort = "8080";
+
+        // The default base path to use if the `BASE_URL` variable is undefined.
+        const defaultBasePath = "/";
 
         // Configure environment.
         this.name = (process.env.NODE_ENV || defaultName).trim() as CloudEnvironmentName;
         this.port = parseInt(process.env.PORT || defaultPort);
         this.protect = this.name !== "development";
+        this.baseUrl = process.env.BASE_URL || defaultBasePath;
     }
 
     /**
@@ -30,7 +34,7 @@ export class CloudEnvironment
 
     /**
      * The port to which the server should bind.
-     * The default is `8080`.
+     * The default is 8080.
      */
     public port: number;
 
@@ -41,6 +45,12 @@ export class CloudEnvironment
      * Recommended in the `production` environment.
      */
     public protect: boolean;
+
+    /**
+     * The base URL for the app, which should be the host-relative path on which the app will be hosted.
+     * The default is `/`.
+     */
+    public baseUrl: string;
 }
 
 /**

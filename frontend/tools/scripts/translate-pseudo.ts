@@ -10,7 +10,7 @@ import { Format } from "../webpack/helpers";
 const exportFilePath = paths.artifacts.translatables;
 
 // The path for the import file to create.
-const importFilePath = paths.resources.translations.replace("{locale}", "x-pseudo");
+const importFilePath = paths.resources.translations.replace("{locale}", "en-US-x-pseudo");
 
 // Create the translate task.
 const plugin = new Plugin(translateConfig);

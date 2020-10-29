@@ -1,6 +1,6 @@
 import WebpackDevServer from "webpack-dev-server";
 import webpack from "webpack";
-import { logTaskInfo } from "../helpers";
+import { logBuildInfo } from "../helpers";
 import { ICompilerOptions } from "../compile/compiler-options";
 import { getCompilerConfig } from "../compile/compiler-config";
 import { compilerCallback } from "../compile/compiler-callback";
@@ -16,7 +16,7 @@ import { serverCallback } from "./server-callback";
  */
 export async function serve(compilerOptions: ICompilerOptions, serverOptions: IServerOptions): Promise<void>
 {
-    logTaskInfo(compilerOptions);
+    logBuildInfo(compilerOptions);
 
     return new Promise<void>((resolve, reject) =>
     {

@@ -2,7 +2,11 @@ import chalk from "chalk";
 import { environment } from "../env";
 import { ICompilerOptions } from "./compile/compiler-options";
 
-export function logTaskInfo(compilerOptions: ICompilerOptions): void
+/**
+ * Logs info about the build task to the console.
+ * @param compilerConfig The compiler options.
+ */
+export function logBuildInfo(compilerOptions: ICompilerOptions): void
 {
     // tslint:disable: prefer-template
 

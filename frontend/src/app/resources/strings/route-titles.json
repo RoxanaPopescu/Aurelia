@@ -13,5 +13,5 @@
     "users": "Users",
     "agreements": "Agreements",
     "design": "Design",
-    "pageNotFound": "404 - page not found"
+    "unknown": "404 - page not found"
 }
