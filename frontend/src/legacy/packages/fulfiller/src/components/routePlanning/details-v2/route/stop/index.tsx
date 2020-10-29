@@ -36,8 +36,6 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
 
     return (
       <div
-        draggable={true}
-        onDragStart={e => this.onDragStart(e)}
         className={classNames}
         onClick={() => this.props.store.focusStop(stop)}
         style={{
