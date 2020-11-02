@@ -23,7 +23,7 @@ export default
         debugToken: "not-to-be-shared",
 
         /**
-         * The max-age in seconds to set when serving responses.
+         * The max-age to set when serving responses.
          */
         maxAge:
         {
@@ -59,6 +59,16 @@ export default
 
             }[environment.name]
         }
+    },
+
+    /**
+     * Settings for the `prerender-node` middleware.
+     * See: https://prerender.io/documentation
+     */
+    prerender:
+    {
+        serviceToken: "XMPM5fAwKjqOwjmySgvA",
+        serviceUrl: "http://service.prerender.io/"
     },
 
     /**

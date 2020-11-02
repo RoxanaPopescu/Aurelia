@@ -60,11 +60,13 @@ export class ThemeService
      */
     public getTheme(themeSlug: string): Theme
     {
-        const theme = this._themes.find(t => t.slug === themeSlug);
+        const resolvedThemeSlug = this.resolveThemeSlug(themeSlug);
+
+        const theme = this._themes.find(t => t.slug === resolvedThemeSlug);
 
         if (theme == null)
         {
-            throw new Error(`The theme '${themeSlug}' is not supported.`);
+            throw new Error(`The theme '${resolvedThemeSlug}' is not supported.`);
         }
 
         return theme;
@@ -77,17 +79,44 @@ export class ThemeService
      */
     public async setTheme(themeSlug: string): Promise<Theme>
     {
-        if (this._theme != null && themeSlug === this._theme.slug)
+        const resolvedThemeSlug = this.resolveThemeSlug(themeSlug);
+
+        if (this._theme != null && resolvedThemeSlug === this._theme.slug)
         {
             return Promise.resolve(this._theme);
         }
 
-        const theme = this.getTheme(themeSlug);
+        const theme = this.getTheme(resolvedThemeSlug);
 
         await this._changeFunc(theme, this._theme);
+
+        if (this.theme != null && this.theme.classes.length > 0)
+        {
+            document.documentElement.classList.remove(...this.theme.classes);
+        }
+
+        if (theme.classes.length > 0)
+        {
+            document.documentElement.classList.add(...theme.classes);
+        }
 
         this._theme = theme;
 
         return this._theme;
+    }
+
+    /**
+     * Resolves the specified theme slug, replacing any `{variant}` placeholder with either
+     * `light` or `dark`, depending on the color scheme preference of the user agent.
+     * @param themeSlug The slug identifying the theme, which may contain a placeholder.
+     * @returns The slug identifying the theme.
+     */
+    private resolveThemeSlug(themeSlug: string): string
+    {
+        // Determine whether the client prefers a dark color scheme.
+        const prefersDarkColorScheme = matchMedia("(prefers-color-scheme: dark)").matches;
+
+        // Resolve the theme variant, if specified as a placeholder.
+        return themeSlug.replace("{variant}", prefersDarkColorScheme ? "dark" : "light");
     }
 }

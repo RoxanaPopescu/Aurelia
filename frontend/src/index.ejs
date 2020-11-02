@@ -1,9 +1,9 @@
 <% const environment = htmlWebpackPlugin.options.environment; %>
-<% const integrationPath = `${environment.publicPath}resources/themes/current/integration` %>
+<% const integrationPath = `${environment.publicPath}resources/theme/integration` %>
 
 <!DOCTYPE html>
 
-<html lang="<%- environment.locale %>" env="<%- environment.name %>" class="app">
+<html lang="<%- environment.locale %>" class="app">
 
     <head>
 
@@ -24,10 +24,16 @@
         <title>Mover</title>
         <meta name="description" content="Modernize your logistics with Mover.">
 
+        <!-- Determine the preferred color scheme, and set a cookie so the server knows which resources to serve -->
+        <script>
+            const preferredColorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.cookie = `prefers-color-scheme=${preferredColorScheme};path=<%- environment.appBaseUrl %>;`
+        </script>
+
         <!-- Standard integration metadata -->
         <link rel="icon" href="<%- integrationPath %>/standard/favicon.png" type="image/png">
         <link rel="mask-icon" href="<%- integrationPath %>/standard/icon-mask.svg" color="#0747a6">
-        <link rel="manifest" href="<%- integrationPath %>/standard/manifest.json">
+        <link rel="manifest" href="<%- integrationPath %>/standard/manifest.json" crossorigin="use-credentials">
         <meta name="application-name" content="Mover">
 
         <!-- Apple specific integration metadata -->

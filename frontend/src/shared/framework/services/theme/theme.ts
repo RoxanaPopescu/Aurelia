@@ -15,14 +15,40 @@ export interface ITheme
     name: string;
 
     /**
-     * The primary color of the theme, as an RGB HEX value.
+     * The variant of the theme, if any.
      */
-    color: string;
+    variant?: string;
+
+    /**
+     * The description of the theme, if any.
+     */
+    description?: string;
+
+    /**
+     * The style to use for a theme preview.
+     */
+    preview: IThemePreview;
+
+    /**
+     * The theme-specific class names to apply to the HTML element.
+     */
+    classes?: string[];
 
     /**
      * True if the theme should only be available if debugging is enabled, otherwise false.
      */
     debug?: boolean;
+}
+
+/**
+ * Represents the style to use for a theme preview.
+ */
+export interface IThemePreview
+{
+    /**
+     * The primary color of the theme.
+     */
+    primary: string;
 }
 
 /**
@@ -38,7 +64,10 @@ export class Theme
     {
         this.slug = data.slug;
         this.name = data.name;
-        this.color = data.color;
+        this.variant = data.variant;
+        this.description = data.description;
+        this.preview = data.preview;
+        this.classes = data.classes ?? [];
         this.debug = data.debug ?? false;
     }
 
@@ -54,9 +83,24 @@ export class Theme
     public readonly name: string;
 
     /**
-     * The primary color of the theme, as an RGB HEX value.
+     * The variant of the theme, if any.
      */
-    public readonly color: string;
+    public readonly variant: string | undefined;
+
+    /**
+     * The description of the theme, if any.
+     */
+    public readonly description: string | undefined;
+
+    /**
+     * The style to use for the theme preview, as RGB HEX values.
+     */
+    public readonly preview: IThemePreview;
+
+    /**
+     * The theme-specific class names to apply to the HTML element.
+     */
+    public readonly classes: string[];
 
     /**
      * True if the theme should only be available if debugging is enabled, otherwise false.

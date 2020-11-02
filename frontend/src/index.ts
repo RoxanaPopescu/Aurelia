@@ -26,6 +26,10 @@ export async function configure(aurelia: Aurelia): Promise<void>
 {
     console.group("Configuration");
 
+    // Configure cookies.
+    const cookies = aurelia.container.get(Cookies);
+    cookies.configure(settings.infrastructure.cookies);
+
     // Create the visitor.
     const visitor = aurelia.container.get(Visitor);
 
@@ -69,9 +73,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
         }
 
         // Configure features.
-
-        const cookies = aurelia.container.get(Cookies);
-        cookies.configure(settings.infrastructure.cookies);
 
         const apiClient = aurelia.container.get(ApiClient);
         apiClient.configure(settings.infrastructure.api);

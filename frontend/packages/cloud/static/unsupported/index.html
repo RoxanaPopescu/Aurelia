@@ -1,132 +1,265 @@
-<html lang="en">
+<!DOCTYPE html>
+
+<html lang="en-US">
 
     <head>
 
-        <title>
-            Mover - Outdated browser
-        </title>
+        <!-- Technical metadata -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+
+        <!-- Crawler metadata -->
+        <meta name="robots" content="noindex,nofollow">
+
+        <!-- Content metadata -->
+        <title>Mover</title>
+
+        <!-- Standard integration metadata -->
+        <link rel="icon" href="/resources/integration/standard/favicon.png" type="image/png">
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
         <style>
 
-            html, body
+            html
             {
-                margin: 0;
+                box-sizing: border-box;
                 height: 100%;
+                width: 100%;
+                user-select: none;
             }
 
             body
             {
                 display: table;
+                margin: 0;
+                height: 100%;
                 width: 100%;
+                overflow-y: auto;
+                background: #ffffff;
+                color: #172b4d;
+                font-family:
+                    "Open Sans",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Roboto",
+                    "Segoe UI",
+                    "Helvetica",
+                    "Arial",
+                    sans-serif,
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji",
+                    "Segoe UI Symbol";
             }
 
-            body > span
+            main
             {
                 display: table-cell;
                 vertical-align: middle;
-                text-align: center;
             }
 
-            div.container
+            .container
             {
-                width: 600px;
-                margin-left: auto;
-                margin-right: auto;
+                display: inline-block;
+                margin: 108px 128px;
+                max-width: 840px;
                 text-align: left;
-            }
-
-            h1, p
-            {
-                font-family: "Open Sans", sans-serif;
             }
 
             h1
             {
-                font-size: 38px;
-                color: #05375f;
-                line-height: 1.36;
-                text-align: left;
+                margin-top: 0;
+                margin-bottom: 56px;
+                line-height: 72px;
+                font-size: 64px;
+                font-weight: 500;
             }
 
             p
             {
-                font-size: 14px;
-                color: #0e2a48;
-                text-align: left;
+                margin-top: 0;
+                margin-bottom: 0;
+                line-height: 32px;
+                font-size: 20px;
+                font-weight: 400;
             }
 
             a
             {
-                color: #008dd5;
+                color: #0747a6;
+                text-decoration: none;
             }
 
-            .browser
+            .suggested-browsers
+            {
+                margin-top: 56px;
+            }
+
+            .suggested-browser
             {
                 display: inline-block;
-                margin-right: 40px;
-                text-align: center;
-                margin-left: 15px;
-                margin-top: 25px;
-                margin-bottom: 12px;
-            }
-
-            .browser p
-            {
+                margin-right: 64px;
+                margin-bottom: 56px;
                 text-align: center;
             }
 
-            .browser img
+            .suggested-browser img
             {
-                height: 70px;
-                width: auto;
                 display: block;
-                margin-bottom: 10px;
+                width: 96px;
+                height: 96px;
+                margin-bottom: 16px;
+            }
+
+            @media (max-width: 880px)
+            {
+                h1 br
+                {
+                    display: none;
+                }
+            }
+
+            @media (max-width: 660px)
+            {
+                .container
+                {
+                    margin: 56px 72px;
+                }
+
+                h1
+                {
+                    margin-bottom: 56px;
+                    line-height: 56px;
+                    font-size: 48px;
+                }
+
+                .suggested-browser
+                {
+                    display: block;
+                    text-align: left;
+                }
+
+                .suggested-browser:not(:last-child)
+                {
+                    margin-bottom: 32px;
+                }
+
+                .suggested-browser img
+                {
+                    display: inline-block;
+                    width: 64px;
+                    height: 64px;
+                    margin-right: 16px;
+                    margin-bottom: 0;
+                    vertical-align: middle;
+                }
+
+                .suggested-browser p
+                {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+
+            @media (max-width: 460px)
+            {
+                .container
+                {
+                    margin: 56px 56px;
+                }
+
+                h1
+                {
+                    margin-bottom: 56px;
+                    line-height: 48px;
+                    font-size: 40px;
+                }
+            }
+
+            @media (max-width: 360px)
+            {
+                .container
+                {
+                    margin: 56px 32px;
+                }
+
+                h1
+                {
+                    margin-bottom: 56px;
+                    line-height: 42px;
+                    font-size: 32px;
+                }
             }
 
         </style>
 
     </head>
 
-    <body>
+    <body context="app" surface="base">
 
-        <span>
+        <main>
 
             <div class="container">
 
                 <h1>
-                    We do not support your current browser
+                    Sorry, your browser is<br>
+                    not supported
                 </h1>
 
                 <p>
-                    To see the content we suggest you to update your browser to any of the following browsers:
+                    We strive to provide a modern user experience, but we can only do so in a reasonably modern browser.
+                    To use this site, and stay safe on the internet, we recommend you update to the latest version of one of these browsers:
                 </p>
 
-                <a class="browser" href="https://www.google.com/chrome/">
-                    <img src="https://moverstatic.azureedge.net/illustrations/browsers/chrome.jpg" />
-                    <p>
-                        Chrome
-                    </p>
-                </a>
+                <div class="suggested-browsers">
 
-                <a class="browser" href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="https://moverstatic.azureedge.net/illustrations/browsers/firefox.jpg" />
-                    <p>
-                        Firefox
-                    </p>
-                </a>
+                    <a class="suggested-browser" href="https://www.google.com/chrome">
+                        <img src="/unsupported/resources/images/chrome.png" />
+                        <p>Chrome</p>
+                    </a>
 
-                <a class="browser" href="https://www.microsoft.com/en-us/windows/microsoft-edge">
-                    <img src="https://moverstatic.azureedge.net/illustrations/browsers/edge.jpg" />
-                    <p>
-                        Edge
-                    </p>
-                </a>
+                    <a class="suggested-browser" href="https://www.microsoft.com/en-us/edge">
+                        <img src="/unsupported/resources/images/edge.png" />
+                        <p>Edge</p>
+                    </a>
+
+                    <a class="suggested-browser" href="https://www.mozilla.org/en-us/firefox/new">
+                        <img src="/unsupported/resources/images/firefox.png" />
+                        <p>Firefox</p>
+                    </a>
+
+                    <a class="suggested-browser --apple-only" href="https://support.apple.com/en-us/HT204416">
+                        <img src="/unsupported/resources/images/safari.png" />
+                        <p>Safari</p>
+                    </a>
+
+                </div>
+
+                <p>
+                    You can also <a href="?unsupported">try to continue</a> with your current browser, but it probably won't work.
+                </p>
 
             </div>
 
-        </span>
+        </main>
+
+        <script>
+
+            var ua = navigator.userAgent;
+            var windowsMobile = !/\blike\b.*\b(IEMobile|Windows Phone)\b/.test(ua) && /\b(IEMobile|Windows Phone)\b/.test(ua);
+            var ios = !/\blike\b.*\b(iPod|iPhone|iPad)\b/.test(ua) && /\b(iPod|iPhone|iPad)\b/.test(ua) && !windowsMobile;
+            var macos = !/\blike\b.*\bMac OS\b/.test(ua) && /\bMac OS\b/.test(ua);
+
+            if (ios)
+            {
+                document.querySelectorAll(".--apple-only").forEach(e => { e.parentElement.insertBefore(e, e.parentElement.firstChild)});
+            }
+            else if (!macos)
+            {
+                document.querySelectorAll(".--apple-only").forEach(e => e.parentElement.removeChild(e));
+            }
+
+        </script>
 
     </body>
 

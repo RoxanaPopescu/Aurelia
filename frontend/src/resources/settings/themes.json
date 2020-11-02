@@ -2,32 +2,50 @@
     {
         "slug": "mover",
         "name": "Mover",
-        "color": "#11253E"
+        "preview":
+        {
+            "primary": "#11253E"
+        }
     },
     {
         "slug": "mover-old",
         "name": "Mover (Old)",
-        "color": "#008dd5"
+        "preview":
+        {
+            "primary": "#008dd5"
+        }
     },
     {
         "slug": "coop",
         "name": "Coop",
-        "color": "#c80016"
+        "preview":
+        {
+            "primary": "#c80016"
+        }
     },
     {
         "slug": "ikea",
         "name": "IKEA",
-        "color": "#0051ba"
+        "preview":
+        {
+            "primary": "#0051ba"
+        }
     },
     {
         "slug": "lingu-light",
         "name": "Lingu (Light)",
-        "color": "#0646a6"
+        "preview":
+        {
+            "primary": "#0646a6"
+        }
     },
     {
         "slug": "lingu-dark",
         "name": "Lingu (Dark)",
-        "color": "#252526",
+        "preview":
+        {
+            "primary": "#252526"
+        },
         "debug": true
     }
 ]

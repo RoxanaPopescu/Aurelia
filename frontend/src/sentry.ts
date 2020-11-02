@@ -32,6 +32,12 @@ if (ENVIRONMENT.integrations.sentry != null)
         // Attach stack traces to all entries, regardless of their level.
         attachStacktrace: true,
 
+        // Ignore errors that do not represent a problem.
+        ignoreErrors:
+        [
+            "AbortError:"
+        ],
+
         // Process the entry before it is sent.
         beforeSend: (event, hint) =>
         {

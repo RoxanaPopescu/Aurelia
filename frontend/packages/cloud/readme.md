@@ -54,7 +54,7 @@
 
 4. **The app should now be available on http://localhost:8080**
 
-   Use `Google Chrome` to test and debug the client, and `Visual Studio Code` to debug the server.
+   Use `Google Chrome` to test and debug the frontend, and `Visual Studio Code` to debug the server.
 
 ## Additional tasks
 
@@ -88,4 +88,39 @@
   npm run start
   ```
 
-  This will start the server on the port specified by the environment variable `PORT`, or default to `8080`.
+  This will start the server using the default settings.
+
+  Alternatively, if settings need to be specified, execute the command:
+
+  ```
+  NODE_ENV="{environment}" && PORT={port} && BASE_URL="{base_url}" && node "artifacts/build/server/index.js"
+  ```
+
+  Where:
+
+  * `{environment}` should be replaced with either `development`, `preview` or `production`.<br>
+    The default is `development`.
+
+  * `{port}` should be replaced with the port on which the server should listen.<br>
+    The default is `8080`.
+
+  * `{base_url}` should be replaced with the host-relative path on which the app should be hosted.<br>
+    The default is `/`.
+
+  This will start the server using the specified settings.
+
+  Note that for production use, it is recommended to use a process manager, such as [PM2](https://pm2.keymetrics.io/).
+
+  To install this globally, execute the command:
+
+  ```
+  npm install pm2 -g
+  ```
+
+  To start an app cluster, execute the command:
+
+  ```
+  NODE_ENV="{environment}" && PORT={port} && BASE_URL="{base_url}" && pm2-runtime -i -1 "artifacts/build/server/index.js"
+  ```
+
+  This will start the process manager, with one app instance for each CPU core, except one.

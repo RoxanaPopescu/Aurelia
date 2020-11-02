@@ -5,6 +5,7 @@ import http from "http";
 import express from "express";
 import compression from "compression";
 import cookieParser from "cookie-parser";
+import prerenderNode from "prerender-node";
 import acceptLanguage from "accept-language";
 import { DateTime } from "luxon";
 import { environment } from "../env";
@@ -51,6 +52,11 @@ export class App
         this._app.use(compression());
         this._app.use(cookieParser());
 
+        // Configure prerender middleware.
+        prerenderNode.set("prerenderToken", settings.prerender.serviceToken);
+        prerenderNode.set("prerenderServiceUrl", settings.prerender.serviceUrl);
+        this._app.use(prerenderNode);
+
         // Create and mount the router.
         this._router = express.Router();
         this._app.use(environment.baseUrl, this._router);
@@ -73,12 +79,6 @@ export class App
             });
         }
 
-        // Handle requests for health info.
-        this._router.get(/^\/health$/i, (request, response) =>
-        {
-            response.sendStatus(200);
-        });
-
         // Handle requests for debug info.
         this._router.get(/^\/debug$/i, (request, response) =>
         {
@@ -94,87 +94,58 @@ export class App
             });
         });
 
+        // Handle requests for health info.
+        this._router.get(/^\/health$/i, (request, response) =>
+        {
+            response.sendStatus(200);
+        });
+
+        // Serve static files.
+        this._router.use(express.static(staticFolderPath,
+        {
+            index: false,
+            redirect: false,
+            maxAge: settings.app.maxAge.static.valueOf()
+        }));
+
         // Resolve host settings, set cookies, and rewrite the request.
         this._router.use((request, response, next) =>
         {
-            const rl = response.locals;
+            const context = new RequestContext(request);
+            response.locals.context = context;
 
-            // Get the settings for the hostname specified in the request.
-
-            const hostSettings = settings.hosts.find(s => s.hostname.test(request.hostname));
-
-            if (hostSettings == null)
+            // Rewrite requests without a locale in the path, to to use the resolved locale code.
+            if (!context.localeCodeInPath)
             {
-                throw new Error(`No settings found for the hostname '${request.hostname}'.`);
+                context.preventCaching = true;
+
+                request.url = `/${context.supportedLocaleCode}${request.url}`;
             }
 
-            // tslint:disable: no-string-literal
-
-            // Resolve the locale to use.
-
-            rl.localeCodeInCookie = request.cookies["locale"];
-            rl.localeCodeInPath = request.path.match(/^\/([a-z]{2}(?:-[a-z0-9]+)*)(?:\/|$)/i)?.[1];
-            rl.localeCodeInHeader = acceptLanguage.get(request.header("Accept-Language"));
-            rl.localeCodeInConfig = hostSettings.localeCode;
-
-            rl.requestedLocaleCode = (rl.localeCodeInCookie || rl.localeCodeInPath || rl.localeCodeInHeader || rl.localeCodeInConfig).toLowerCase();
-            rl.supportedLocaleCode = supportedLocaleCodes.find(l => l.toLowerCase() === rl.requestedLocaleCode);
-
-            if (!rl.supportedLocaleCode && rl.localeCodeInCookie)
+            // Ensure the `currency` cookie is set.
+            if (!context.currencyCodeInCookie)
             {
-                rl.supportedLocaleCode =
-                    supportedLocaleCodes.find(l => l.toLowerCase() === rl.localeCodeInPath?.toLowerCase()) ||
-                    supportedLocaleCodes.find(l => l.toLowerCase() === rl.localeCodeInHeader?.toLowerCase()) ||
-                    supportedLocaleCodes.find(l => l.toLowerCase() === rl.localeCodeInConfig?.toLowerCase());
+                response.cookie("currency", context.requestedCurrencyCode, { encode: s => s });
             }
 
-            // Rewrite requests without a locale in the path, to to match the resolved locale.
-
-            if (!rl.localeCodeInPath)
+            // Ensure the `theme` cookie is set.
+            if (!context.themeSlugInCookie && !context.themeSlugInPath)
             {
-                request.url = `/${rl.supportedLocaleCode}${request.url}`;
+                response.cookie("theme", context.requestedThemeSlug, { encode: s => s });
             }
 
-            // Resolve the currency to use.
-
-            rl.currencyCodeInCookie = request.cookies["currency"];
-            rl.currencyCodeInConfig = hostSettings.currencyCode;
-
-            rl.requestedCurrencyCode = (rl.currencyCodeInCookie || rl.currencyCodeInConfig).toUpperCase();
-
-            // Ensure the currency cookie is set.
-
-            if (!rl.currencyCodeInCookie)
+            // Rewrite requests for theme resources, to use the resolved theme slug.
+            if (!context.themeSlugInPath)
             {
-                response.cookie("currency", rl.requestedCurrencyCode, { encode: s => s });
-            }
+                request.url = request.url.replace(/\/resources\/theme\//, () =>
+                {
+                    context.preventCaching = true;
 
-            // Resolve the theme to use.
+                    const themeVariant = context.prefersColorScheme ?? "light";
+                    const themeSlug = context.requestedThemeSlug.replace("{variant}", themeVariant);
 
-            rl.themeSlugInPath = request.path.match(/\/resources\/themes\/([^/]+)\//i)?.[1];
-            rl.themeSlugInCookie = request.cookies["theme"];
-            rl.themeSlugInConfig = hostSettings.themeSlug;
-
-            if (rl.themeSlugInPath === "current")
-            {
-                rl.themeSlugInPath = undefined;
-            }
-
-            rl.requestedThemeSlug = (rl.themeSlugInPath || rl.themeSlugInCookie || rl.themeSlugInConfig).toLowerCase();
-
-            // Ensure the theme cookie is set.
-
-            if (!rl.themeSlugInCookie && !rl.themeSlugInPath)
-            {
-                response.cookie("theme", rl.requestedThemeSlug, { encode: s => s });
-            }
-
-            // Rewrite requests for theme resources, to match the resolved theme.
-
-            if (!rl.themeSlugInPath)
-            {
-                const themeSlug = rl.requestedThemeSlug.replace("{variant}", "light");
-                request.url = request.url.replace(/\/resources\/themes\/current\//, `/resources/themes/${themeSlug}/`);
+                    return `/resources/themes/${themeSlug}/`;
+                });
             }
 
             // tslint:enable
@@ -187,29 +158,35 @@ export class App
         {
             index: false,
             redirect: false,
-            maxAge: settings.app.maxAge.artifact.valueOf()
+            maxAge: settings.app.maxAge.artifact.valueOf(),
+            setHeaders: response =>
+            {
+                const context = response.locals.context as RequestContext;
+
+                if (context.preventCaching)
+                {
+                    response.setHeader("cache-control", "public, max-age=0");
+                }
+            }
         }));
 
-        // Serve static files.
-        this._router.use(express.static(staticFolderPath,
-        {
-            index: false,
-            redirect: false,
-            maxAge: settings.app.maxAge.static.valueOf()
-        }));
-
-        // Handle requests from browsers we do not support.
+        // Handle requests from unsupported browsers.
         this._router.use((request, response, next) =>
         {
             if ((request.method === "GET" || request.method === "HEAD") && request.accepts("text/html"))
             {
-                if (/msie|trident|edge/i.test(request.headers["user-agent"] ?? ""))
+                const isUnsupportedBrowser = /msie|trident|edge/i.test(request.headers["user-agent"] ?? "");
+                const allowUnsupportedBrowser = "unsupported" in request.query;
+
+                if (isUnsupportedBrowser && !allowUnsupportedBrowser)
                 {
+                    const context = response.locals.context as RequestContext;
+
                     response.status(503);
                     response.sendFile("unsupported/index.html",
                     {
                         root: staticFolderPath,
-                        maxAge: settings.app.maxAge.static.valueOf()
+                        maxAge: context.preventCaching ? 0 : settings.app.maxAge.static.valueOf()
                     },
                     error => error && next(error));
 
@@ -225,14 +202,14 @@ export class App
         {
             if ((request.method === "GET" || request.method === "HEAD") && request.accepts("text/html"))
             {
-                const rl = response.locals;
+                const context = response.locals.context as RequestContext;
 
-                if (rl.supportedLocaleCode != null)
+                if (context.supportedLocaleCode != null)
                 {
-                    response.sendFile(path.join(rl.supportedLocaleCode, "index.html"),
+                    response.sendFile(path.join(context.supportedLocaleCode, "index.html"),
                     {
                         root: frontendFolderPath,
-                        maxAge: settings.app.maxAge.index.valueOf()
+                        maxAge: context.preventCaching ? 0 : settings.app.maxAge.index.valueOf()
 
                     }, error => error && next(error));
                 }
@@ -240,14 +217,20 @@ export class App
                 {
                     response.status(503);
 
-                    const localeCookieExpires = DateTime.utc().plus({ years: 10 }).toHTTP();
-                    const localeCookie = `locale=${rl.localeCodeInConfig};path=/;expires=${localeCookieExpires}`;
+                    const localeCookie =
+                    `
+                        locale=${context.localeCodeInConfig};
+                        path=${environment.baseUrl};
+                        expires=${DateTime.utc().plus({ years: 10 }).toHTTP()}
+                    `;
 
                     response.send(
-                        `This site is unavailable in the language <code>${rl.requestedLocaleCode}</code> —
+                    `
+                        This site is unavailable in the language <code>${context.requestedLocaleCode}</code> —
                         <a href="javascript: document.cookie='${localeCookie}'; location.reload();">
-                            try <code>${rl.localeCodeInConfig}</code> instead
-                        </a>`);
+                            try <code>${context.localeCodeInConfig.toLowerCase()}</code> instead
+                        </a>
+                    `);
                 }
             }
             else
@@ -292,4 +275,153 @@ export class App
             });
         }
     }
+}
+
+/**
+ * Represents the context associated with the request.
+ */
+class RequestContext
+{
+    /**
+     * Creates a new instance of the type.
+     * @param request The request currently being handled.
+     */
+    public constructor(request: express.Request)
+    {
+        // Get the settings for the hostname specified in the request.
+
+        const hostSettings = settings.hosts.find(s => s.hostname.test(request.hostname));
+
+        if (hostSettings == null)
+        {
+            throw new Error(`No settings found for the hostname '${request.hostname}'.`);
+        }
+
+        // tslint:disable: no-string-literal
+
+        // Resolve the locale to use.
+
+        this.localeCodeInCookie = request.cookies["locale"];
+        this.localeCodeInPath = request.path.match(/^\/([a-z]{2}(?:-[a-z0-9]+)*)(?:\/|$)/i)?.[1];
+        this.localeCodeInHeader = acceptLanguage.get(request.header("accept-language")) ?? undefined;
+        this.localeCodeInConfig = hostSettings.localeCode;
+
+        this.requestedLocaleCode = (this.localeCodeInCookie || this.localeCodeInPath || this.localeCodeInHeader || this.localeCodeInConfig).toLowerCase();
+        this.supportedLocaleCode = supportedLocaleCodes.find(l => l.toLowerCase() === this.requestedLocaleCode);
+
+        if (!this.supportedLocaleCode && this.localeCodeInCookie)
+        {
+            this.supportedLocaleCode =
+                supportedLocaleCodes.find(l => l.toLowerCase() === this.localeCodeInPath?.toLowerCase()) ||
+                supportedLocaleCodes.find(l => l.toLowerCase() === this.localeCodeInHeader?.toLowerCase()) ||
+                supportedLocaleCodes.find(l => l.toLowerCase() === this.localeCodeInConfig?.toLowerCase());
+        }
+
+        // Resolve the currency to use.
+
+        this.currencyCodeInCookie = request.cookies["currency"];
+        this.currencyCodeInConfig = hostSettings.currencyCode;
+
+        this.requestedCurrencyCode = (this.currencyCodeInCookie || this.currencyCodeInConfig).toUpperCase();
+
+        // Resolve the theme to use.
+
+        this.themeSlugInPath = request.path.match(/\/resources\/themes\/([^/]+)\//i)?.[1];
+        this.themeSlugInCookie = request.cookies["theme"];
+        this.themeSlugInConfig = hostSettings.themeSlug;
+
+        this.requestedThemeSlug = (this.themeSlugInPath || this.themeSlugInCookie || this.themeSlugInConfig).toLowerCase();
+
+        // Get the color scheme preferred by the user agent.
+
+        this.prefersColorScheme = request.cookies["prefers-color-scheme"];
+
+        // tslint:enable
+    }
+
+    /**
+     * The locale code specified in the `locale` cookie,
+     * or undefined if not specified.
+     */
+    public readonly localeCodeInCookie: string | undefined;
+
+    /**
+     * The locale code specified in the request path,
+     * or undefined if not specified.
+     */
+    public readonly localeCodeInPath: string | undefined;
+
+    /**
+     * The locale code specified in the request header, resolved to the best matching supported locale code,
+     * or undefined if not specified or if no matching supported locale code was found.
+     */
+    public readonly localeCodeInHeader: string | undefined;
+
+    /**
+     * The locale code specified in the host config for the request.
+     */
+    public readonly localeCodeInConfig: string;
+
+    /**
+     * The requested locale code, determined based on the request and host config.
+     */
+    public readonly requestedLocaleCode: string;
+
+    /**
+     * The supported locale code, determined based on the requested locale code.
+     * Note that this may be undefined if no frontend build supports the requested locale code.
+     */
+    public readonly supportedLocaleCode: string | undefined;
+
+    /**
+     * The currency code specified in the request cookie,
+     * or undefined if not specified.
+     */
+    public readonly currencyCodeInCookie: string | undefined;
+
+    /**
+     * The currency code specified in the host config for the request.
+     */
+    public readonly currencyCodeInConfig: string;
+
+    /**
+     * The requested currency code, determined based on the request and host config.
+     * Note that this is not validated, and could represent an unsupported currency code.
+     */
+    public readonly requestedCurrencyCode: string;
+
+    /**
+     * The theme slug specified in the request path,
+     * or undefined if not specified.
+     */
+    public readonly themeSlugInPath: string | undefined;
+
+    /**
+     * The theme slug specified in the request cookie,
+     * or undefined if not specified.
+     */
+    public readonly themeSlugInCookie: string | undefined;
+
+    /**
+     * The theme slug specified in the host config for the request.
+     */
+    public readonly themeSlugInConfig: string;
+
+    /**
+     * The requested theme slug, determined based on the request and host config.
+     * Note that this is not validated, and could represent an unsupported theme slug.
+     */
+    public readonly requestedThemeSlug: string;
+
+    /**
+     * The color scheme preferred by the user agent,
+     * or undefined if not specified.
+     */
+    public readonly prefersColorScheme: "light" | "dark" | undefined;
+
+    /**
+     * True to prevent caching of the response, e.g. because it depends on a
+     * cookie or header, otherwise undefined or false.
+     */
+    public preventCaching: boolean | undefined = undefined;
 }
