@@ -20,24 +20,25 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            try {
-                const body = {
-                    reference: context.params.reference,
-                    ownerId: context.user?.outfitId,
-                    actionById: context.user?.id
-                };
-
+            try
+            {
                 const result = await this.apiClient.post("linehauls/details",
                 {
-                    body: body
+                    body:
+                    {
+                        reference: context.params.reference,
+                        ownerId: context.user?.outfitId,
+                        actionById: context.user?.id
+                    }
                 });
 
                 context.response.body = result.data;
                 context.response.status = 200;
-
-            } catch (error) {
-
-                if (error.response.status === 400 || error.response.status === 404) {
+            }
+            catch (error)
+            {
+                if (error.response.status === 400 || error.response.status === 404)
+                {
                     const result = await this.apiClient.post("linehauls/create",
                     {
                         body:
@@ -47,6 +48,8 @@ export class LinehaulsModule extends AppModule
                             actionById: context.user?.id
                         }
                     });
+
+                    context.internal();
 
                     const detailsResult = await this.apiClient.post("linehauls/details",
                     {
@@ -60,7 +63,9 @@ export class LinehaulsModule extends AppModule
 
                     context.response.body = detailsResult.data;
                     context.response.status = 200;
-                } else {
+                }
+                else
+                {
                     throw error;
                 }
             }
@@ -76,15 +81,14 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            const body = {
-                reference: context.params.reference,
-                ownerId: context.user?.outfitId,
-                actionById: context.user?.id
-            };
-
             const result = await this.apiClient.post("linehauls/details",
             {
-                body: body
+                body:
+                {
+                    reference: context.params.reference,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
             context.response.body = result.data;
@@ -100,15 +104,14 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            const body = {
-                id: context.params.id,
-                ownerId: context.user?.outfitId,
-                actionById: context.user?.id
-            };
-
             const result = await this.apiClient.post("linehauls/unload-finalize",
             {
-                body: body
+                body:
+                {
+                    id: context.params.id,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
             context.response.body = result.data;
@@ -123,16 +126,16 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.actionById = context.user?.id;
-
             const routesResult = await this.apiClient.post("linehauls/collo/loaded",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
-            context.internal();
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
@@ -145,16 +148,16 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.actionById = context.user?.id;
-
             const routesResult = await this.apiClient.post("linehauls/collo/unloaded",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
-            context.internal();
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
@@ -167,16 +170,16 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.actionById = context.user?.id;
-
             const routesResult = await this.apiClient.post("linehauls/collo/damaged",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
-            context.internal();
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
@@ -189,16 +192,16 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.actionById = context.user?.id;
-
             const routesResult = await this.apiClient.post("linehauls/collo/missing",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
-            context.internal();
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
@@ -211,16 +214,16 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.actionById = context.user?.id;
-
             const routesResult = await this.apiClient.post("linehauls/collo/remove",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    actionById: context.user?.id
+                }
             });
 
-            context.internal();
             context.response.body = routesResult.data;
             context.response.status = 200;
         });

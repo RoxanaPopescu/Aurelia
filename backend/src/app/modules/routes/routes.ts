@@ -115,16 +115,15 @@ export class RoutesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("route-template-orchestrator/CreateRoute",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;

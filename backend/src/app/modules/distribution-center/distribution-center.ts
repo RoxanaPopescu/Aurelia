@@ -17,11 +17,12 @@ export class DepotsModule extends AppModule
         this.router.post("/v2/distribution-center/list", async context =>
         {
             context.authorize("view-depots");
+
             const result = await this.apiClient.post("logistics/depots/list",
             {
                 body:
                 {
-                    ownerIds: [context.user?.outfitId],
+                    ownerIds: [context.user?.outfitId]
                 }
             });
 
@@ -42,7 +43,7 @@ export class DepotsModule extends AppModule
             {
                 body:
                 {
-                    id: context.params.id,
+                    id: context.params.id
                 }
             });
 

@@ -24,8 +24,6 @@ export class RouteTemplatesModule extends AppModule
                 }
             });
 
-            context.internal();
-
             context.response.body = result.data;
             context.response.status = 200;
         });
@@ -38,15 +36,14 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("view-route-templates");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-
             const routesResult = await this.apiClient.post("routetemplate/details",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -60,16 +57,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/create",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -83,16 +79,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/update",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -106,16 +101,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             await this.apiClient.post("routetemplate/delete",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.status = 200;
         });
@@ -128,16 +122,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/create",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -151,16 +144,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/stops/add",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -174,16 +166,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/stops/move",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -197,16 +188,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/stops/update",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -220,16 +210,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             await this.apiClient.post("routetemplate/stops/delete",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.status = 200;
         });
@@ -242,16 +231,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/schedules/add",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -265,16 +253,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             const routesResult = await this.apiClient.post("routetemplate/schedules/update",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.body = routesResult.data;
             context.response.status = 200;
@@ -287,16 +274,15 @@ export class RouteTemplatesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            let body = context.request.body;
-            body.ownerId = context.user?.outfitId;
-            body.changedById = context.user?.id;
-
             await this.apiClient.post("routetemplate/schedules/delete",
             {
-                body: body
+                body:
+                {
+                    ...context.request.body,
+                    ownerId: context.user?.outfitId,
+                    changedById: context.user?.id
+                }
             });
-
-            context.internal();
 
             context.response.status = 200;
         });

@@ -14,7 +14,7 @@ export class EnvModule extends AppModule
         /**
          * Gets the current environment.
          */
-        this.router.get("/__env", async context =>
+        this.router.get("/__env", context =>
         {
             context.response.body = { environment: environment.name };
             context.response.status = 200;
