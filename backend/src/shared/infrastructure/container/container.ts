@@ -1,6 +1,5 @@
 import "reflect-metadata";
-import { Type } from "../types";
-import { IDisposable } from "../types/disposable";
+import { IDisposable, Type } from "shared/types";
 
 /**
  * Decorator that must be applied to classes, in order to enable dependency injection.

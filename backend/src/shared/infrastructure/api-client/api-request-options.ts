@@ -1,7 +1,8 @@
-import { MapObject } from "../types";
-import { IApiRequestSettings } from "./api-request-settings";
 // tslint:disable-next-line: no-submodule-imports
 import { AbortSignal } from "node-fetch/externals";
+import { BodyInit } from "node-fetch";
+import { MapObject } from "shared/types";
+import { IApiRequestSettings } from "./api-request-settings";
 
 /**
  * Represents the options to use for an HTTP request.
@@ -17,12 +18,11 @@ export interface IApiRequestOptions extends IApiRequestSettings
     query?: MapObject;
 
     /**
-     * The body associated with the request, represented as an object that will be
-     * serialized to JSON. Note that `HEAD`, `GET` and `DELETE` requests cannot
-     * have a body.
+     * The body associated with the request, which if represented as an object, and the content type is a JSON
+     * variant, will be serialized as JSON. Note that `HEAD`, `GET` and `DELETE` requests cannot have a body.
      * The default is undefined.
      */
-    body?: object;
+    body?: object | BodyInit;
 
     /**
      * The signal associated with the request, which is an `AbortSignal` object indicating
@@ -42,7 +42,7 @@ export interface IApiRequestOptions extends IApiRequestSettings
     /**
      * True to indicate that the request can outlive the global in which it was
      * created, otherwise false.
-     * Default is false, or the configured default value.
+     * The default is false, or the configured default value.
      */
     keepalive?: boolean;
 }

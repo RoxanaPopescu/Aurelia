@@ -1,6 +1,6 @@
 import { IApiInterceptor } from "../api-interceptor";
 import { Request, Response } from "node-fetch";
-import { MapObject } from "shared/infrastructure/types";
+import { MapObject } from "shared/types";
 
 /**
  * Represents an interceptor that adds headers from the original request to all upstream requests.
@@ -40,6 +40,11 @@ export class RequestHeadersInterceptor implements IApiInterceptor
         if (headers.localeCode && !request.headers.has("x-locale"))
         {
             request.headers.set("x-locale", headers.localeCode);
+        }
+
+        if (headers.marketCode && !request.headers.has("x-market"))
+        {
+            request.headers.set("x-market", headers.marketCode);
         }
 
         if (headers.currencyCode && !request.headers.has("x-currency"))

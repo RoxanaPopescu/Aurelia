@@ -102,11 +102,11 @@ export class ResponseStubInterceptor implements IApiInterceptor
             // Determine the response delay to use.
             const stubDelay = this._latency + (stub.delay || 0);
 
-            // Determine the content type to use.
+            // Determine the response content type to use.
             const hasBody = stub.body != null && stub.body !== "";
             const contentType = stub.headers?.["content-type"] ?? (hasBody ? "application/json" : undefined);
 
-            // Determine whether the request body should be serialized as JSON.
+            // Determine whether the response body should be serialized as JSON.
             const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
             // Set the content type of the stub, if not specified.
@@ -133,14 +133,14 @@ export class ResponseStubInterceptor implements IApiInterceptor
                 delay: stubDelay
             });
 
-            // Get the body to use for the request.
+            // Get the body to use for the response.
             const body =
                 stub.body == null ? undefined :
                 typeof stub.body === "string" ? stub.body :
                 hasJsonBody ? JSON.stringify(stub.body) :
                 stub.body as any;
 
-            // Get the headers to use for the request.
+            // Get the headers to use for the response.
             const headers =
                 stub.headers == null ? undefined :
                 Object.keys(stub.headers).map(name => [name, stub.headers![name]]);
@@ -205,7 +205,7 @@ export interface IResponseStub
      * is a JSON variant, will be serialized as JSON.
      * The default is undefined;
      */
-    body?: object | string | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>;
+    body?: object | BodyInit;
 
     /**
      * The number of milliseconds to delay the response, in addition to the configured stub latency,

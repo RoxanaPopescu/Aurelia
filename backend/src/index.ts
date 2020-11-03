@@ -7,13 +7,13 @@ import settings from "./resources/settings/settings";
 
 // Add and configure the interceptors used by the API client.
 
-settings.infrastructure.api.interceptors!.push(new RequestHeadersInterceptor(() => getRequestHeaders()));
+settings.infrastructure.api.interceptors.push(new RequestHeadersInterceptor(() => getRequestHeaders()));
 
 if (environment.stubs)
 {
     // tslint:disable-next-line: no-require-imports no-var-requires
     const { stubs } = require("./resources/stubs");
-    settings.infrastructure.api.interceptors!.push(new ResponseStubInterceptor(stubs));
+    settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs));
 }
 
 // Add and configure the API client.

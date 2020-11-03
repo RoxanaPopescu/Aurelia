@@ -33,10 +33,11 @@ export class User
 
         this.username = jwtObject["unique_name"];
 
-        // We add hypons to the GUID - this should be removed in the future
-        this.outfitId = jwtObject["primary-outfit"].replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
+        // Add hypens to the GUID.
+        this.outfitId = jwtObject["primary-outfit"]
+            .replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
 
-        // We convert the claim
+        // Convert boolean claims to a permission set.
         this.permissions = new Set<string>(Object.keys(jwtObject)
             .filter(key => jwtObject[key] === "true")
             .map(key => key.toLowerCase().split(/\s+/).join("-")));

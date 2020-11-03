@@ -19,6 +19,7 @@ export function headersMiddleware(): Middleware
         const authorization = context.request.headers["authorization"];
         const correlationId = context.request.headers["x-correlation"] || uuidV4();
         const localeCode = context.request.headers["x-locale"];
+        const marketCode = context.request.headers["x-market"];
         const currencyCode = context.request.headers["x-currency"];
         // tslint:enable
 
@@ -30,8 +31,10 @@ export function headersMiddleware(): Middleware
             namespace.set("headers-middleware",
             {
                 authorization,
+                // HACK: This shouyld just be `correlation-id`, but for now, we need to support the legacy name.
                 "Mover-CorrelationId": correlationId,
                 localeCode,
+                marketCode,
                 currencyCode
             });
 

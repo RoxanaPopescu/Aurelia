@@ -1,4 +1,4 @@
-import { MapObject } from "../types";
+import { MapObject } from "shared/types";
 import { RequestRedirect, RequestCredentials, RequestCache, RequestMode } from "node-fetch";
 
 /**
@@ -79,7 +79,7 @@ export interface IApiRequestSettings
 
     /**
      * The JSON reviver function to use when deserializing the body of a response.
-     * Default is undefined, or the configured default value.
+     * The default is undefined, or the configured default value.
      */
     /* tslint:disable-next-line: prefer-method-signature */
     jsonReviver?: (key: string, value: any) => any;

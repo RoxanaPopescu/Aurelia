@@ -1,24 +1,37 @@
 import fetch, { Request, Response, RequestInit } from "node-fetch";
-import { once } from "../utilities/decorators/once";
-import { delay } from "../utilities/timing/delay";
+import { Container, inject } from "../container";
+import { once, delay } from "shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
+import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
 import { apiRequestDefaults } from "./api-request-defaults";
-import { IApiInterceptor } from "./api-interceptor";
-import { ApiError, ApiAbortError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
+import { ApiAbortError, ApiError, ApiOriginError, ApiValidationError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
 import { ApiResult } from "./api-result";
-import { container, inject } from "../container";
+
+// TODO: We should ideally refactor those dependencies out,
+// such that a custom obfuscator/deobfuscator can be used.
+import { obfuscate, deobfuscate } from "./api-obfuscation";
 
 // TODO: We should ideally refactor those dependencies out,
 // such that a custom serializer/deserializer can be used.
 import { DateTime, Duration } from "luxon";
 
 /**
- * Represents a specialized HTTP client for interaction with API endpoints.
+ * Represents a specialized HTTP client for interacting with API endpoints.
  */
 @inject
 export class ApiClient
 {
+    /**
+     * Creates a new instance of the type.
+     * @param container The `Container` instance.
+     */
+    public constructor(container: Container)
+    {
+        this._container = container;
+    }
+
+    private readonly _container: Container;
     private _settings: IApiClientSettings;
     private _interceptors: IApiInterceptor[];
 
@@ -32,15 +45,12 @@ export class ApiClient
         this._settings = settings;
         this._interceptors = [];
 
-        // Add, and if needed instantiate, any interceptors specified in the settings.
+        // Addx any interceptors specified in the settings.
         if (this._settings.interceptors != null)
         {
             for (const interceptor of this._settings.interceptors)
             {
-                const interceptorInstance = interceptor instanceof Function
-                    ? container.get(interceptor)
-                    : interceptor;
-
+                const interceptorInstance = interceptor instanceof Function ? this._container.get(interceptor) : interceptor;
                 this._interceptors.push(interceptorInstance);
             }
         }
@@ -48,79 +58,85 @@ export class ApiClient
 
     /**
      * Sends a `HEAD` request to the specified endpoint.
+     * This should get a response identical to that of a `GET` request, but without the response body.
      * Note that a `HEAD` request cannot have a body.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async head<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async head<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
             throw new Error("A HEAD request cannot have a body.");
         }
 
-        return this.fetch<T>("HEAD", path, this.getRequestOptions(options));
+        return this.fetch<T>("HEAD", path, options);
     }
 
     /**
      * Sends a `GET` request to the specified endpoint.
+     * This should get the entity at the specified resource.
      * Note that a `GET` request cannot have a body.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async get<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async get<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
             throw new Error("A GET request cannot have a body.");
         }
 
-        return this.fetch<T>("GET", path, this.getRequestOptions(options));
+        return this.fetch<T>("GET", path, { retry: 0, ...options });
     }
 
     /**
      * Sends a `PUT` request to the specified endpoint.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * This should replace the entity at the specified resource.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async put<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async put<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
-        return this.fetch<T>("PUT", path, this.getRequestOptions({ retry: 0, ...options }));
+        return this.fetch<T>("PUT", path, { retry: 0, ...options });
     }
 
     /**
      * Sends a `POST` request to the specified endpoint.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * This should add an entity to the specified resource, or if the resource is an action, execute it.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async post<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async post<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
-        return this.fetch<T>("POST", path, this.getRequestOptions({ retry: 0, ...options }));
+        return this.fetch<T>("POST", path, { retry: 0, ...options });
     }
 
     /**
      * Sends a `PATCH` request to the specified endpoint.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * This should partially update the entity at the specified resource.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async patch<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async patch<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
-        return this.fetch<T>("PATCH", path, this.getRequestOptions({ retry: 0, ...options }));
+        return this.fetch<T>("PATCH", path, { retry: 0, ...options });
     }
 
     /**
      * Sends a `DELETE` request to the specified endpoint.
+     * This should delete the entity at the specified resource.
      * Note that a `DELETE` request cannot have a body.
-     * @param path The path identifying the endpoint.
-     * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * @param path The path, or path segments, identifying the endpoint.
+     * @param options The request options to use, or undefined to use the default options.
+     * @returns A promise that will be resolved with the result of the request, if successful.
      */
-    public async delete<T = any>(path: string, options?: IApiRequestOptions): Promise<ApiResult<T>>
+    public async delete<T = any>(path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         if (options != null && options.body !== undefined)
         {
@@ -133,34 +149,40 @@ export class ApiClient
     /**
      * Fetches the response from the specified endpoint.
      * @param method The HTTP method to use.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use.
-     * @returns The result of the request, if successful.
+     * @returns A promise that will be resolved with the result of the request.
      */
-    private async fetch<T>(method: string, path: string, options: IApiRequestOptions): Promise<ApiResult<T>>
+    private async fetch<T>(method: string, path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
+        // Get the endpoint path.
+        const endpointPath = path instanceof Array ? path.join("/") : path;
+
         // Get the endpoint settings.
-        const endpointSettings = this.getEndpointSettings(path);
+        const endpointSettings = this.getEndpointSettings(endpointPath);
+
+        // Get the request options to use.
+        const requestOptions = this.getRequestOptions(options);
 
         // Get the request URL.
-        const requestUrl = this.getRequestUrl(path, options, endpointSettings);
+        const requestUrl = this.getRequestUrl(endpointPath, requestOptions, endpointSettings);
 
         // Create the request.
-        const request = this.getRequest(method, requestUrl, options);
+        const request = this.getRequest(method, requestUrl, requestOptions, endpointSettings);
 
-        // Get the response to the request.
-        const response = await this.getResponse(request, options);
+        // Send the request and get the response.
+        const response = await this.getResponse(request, requestOptions);
 
-        // Get the deserialized response body.
-        const responseBody = await this.getResponseBody(response, options);
+        // Get the deobfuscated and deserialized response body.
+        const responseBody = await this.getResponseBody(response, requestOptions, endpointSettings);
 
         // Does the response indicate that the resource is missing?
         const resourceMissing = missingHttpStatusCodes.includes(response.status);
 
         // Throw an `ApiError` if the request was unsuccessful.
-        if (!response.ok && !(resourceMissing && options.optional))
+        if (!response.ok && !(resourceMissing && requestOptions.optional))
         {
-            throw new ApiError(false, request, response, undefined, responseBody);
+            throw this.createApiError(false, request, response, undefined, responseBody);
         }
 
         // Return the result of the request.
@@ -184,19 +206,30 @@ export class ApiClient
         };
 
         // Merge the headers specified in the defaults, settings and options.
+
         mergedOptions.headers =
         {
             ...apiRequestDefaults.headers,
-            ...this._settings.defaults ? this._settings.defaults.headers : undefined,
-            ...options ? options.headers : undefined
+            ...this._settings.defaults?.headers,
+            ...(options?.body == null || options?.body === "" ? { "content-type": undefined } : undefined),
+            ...options?.headers
         };
+
+        for (const key of Object.keys(mergedOptions.headers))
+        {
+            if (mergedOptions.headers[key] === undefined)
+            {
+                // tslint:disable-next-line: no-dynamic-delete
+                delete mergedOptions.headers[key];
+            }
+        }
 
         return mergedOptions;
     }
 
     /**
      * Gets the settings for the endpoint with the specified path.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @returns The settings to use for the endpoint.
      */
     private getEndpointSettings(path: string): IApiEndpointSettings
@@ -207,7 +240,7 @@ export class ApiClient
             .reduce((bestKey, key) => key.length > bestKey.length ? key : bestKey, "");
 
         // Get the settings for the endpoint.
-        let endpointSettings = this._settings.endpointSettings[endpointName];
+        let endpointSettings = { ...this._settings.endpointSettings[endpointName] };
 
         // Verify that the settings were found.
         if (endpointSettings == null)
@@ -227,18 +260,31 @@ export class ApiClient
             throw new Error(`The settings for the endpoint '${path}' must specify a version.`);
         }
 
+        // Resolve whether obfuscation should be used.
+        if (endpointSettings.obfuscate === undefined)
+        {
+            endpointSettings.obfuscate = this._settings.obfuscate;
+        }
+
         return endpointSettings;
     }
 
     /**
      * Gets the URL to be used for the request.
-     * @param path The path identifying the endpoint.
+     * @param path The path, or path segments, identifying the endpoint.
      * @param options The request options to use.
      * @param endpointSettings The endpoint settings to use.
      * @returns The URL to be used for the request.
      */
     private getRequestUrl(path: string, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): string
     {
+        // Obfuscate the path segments, if enabled.
+        if (endpointSettings.obfuscate)
+        {
+            /* tslint:disable-next-line: no-parameter-reassignment */
+            path = path.split("/").map(s => obfuscate(s, this._settings.cipher)).join("/");
+        }
+
         // Construct the endpoint URL.
         let fetchUrl = this._settings.endpointUrlPattern
             .replace("{version}", endpointSettings.version)
@@ -249,7 +295,7 @@ export class ApiClient
         {
             const queryParams: string[] = [];
 
-            // Append the parameters, ordered by name to ensure consistent, cache-friendly URL's.
+            // Append the parameters, ordered by name to ensure consistent, cache-friendly URLs.
             for (const key of Object.keys(options.query).sort())
             {
                 // Get the value of the query parameter.
@@ -268,7 +314,13 @@ export class ApiClient
             if (queryParams.length > 0)
             {
                 // Construct the query string by join the parameters.
-                const query = queryParams.join("&");
+                let query = queryParams.join("&");
+
+                // Obfuscate the query string, if enabled.
+                if (endpointSettings.obfuscate)
+                {
+                    query = obfuscate(query, this._settings.cipher);
+                }
 
                 // Append the query string to the endpoint URL.
                 fetchUrl += `${fetchUrl.includes("?") ? "&" : "?"}${query}`;
@@ -283,9 +335,10 @@ export class ApiClient
      * @param method The HTTP method to use.
      * @param fetchUrl The URL to be used for the request.
      * @param options The request options to use.
+     * @param endpointSettings The endpoint settings to use.
      * @returns The fetch request to be sent.
      */
-    private getRequest(method: string, fetchUrl: string, options: IApiRequestOptions): Request
+    private getRequest(method: string, fetchUrl: string, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): Request
     {
         // Construct the fetch options.
         const fetchOptions: RequestInit =
@@ -297,15 +350,37 @@ export class ApiClient
         };
 
         // Add the body, if specified.
-        if (options.body != null)
+        if (options.body !== undefined)
         {
-            fetchOptions.body = JSON.stringify(options.body);
+            // Determine whether the request body should be serialized as JSON.
+            const contentType = options.headers ? options.headers["content-type"] : undefined;
+            const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
+
+            // Stringify the request body, if needed.
+            const body = hasJsonBody && typeof options.body !== "string" ? JSON.stringify(options.body) : options.body as any;
+
+            // Obfuscate the body, if enabled.
+            if (endpointSettings.obfuscate && typeof body === "string")
+            {
+                fetchOptions.body = obfuscate(body, this._settings.cipher);
+            }
+            else
+            {
+                fetchOptions.body = body;
+            }
         }
 
         // Create the request.
         return new Request(fetchUrl, fetchOptions);
     }
 
+    /**
+     * Gets the response to the specified fetch request, passing the request
+     * and response through any registered interceptors along the way.
+     * @param fetchRequest The request to send.
+     * @param options The request options to use.
+     * @returns A promise that will be resolved with the response to the fetch request.
+     */
     private async getResponse(request: Request, options: IApiRequestOptions): Promise<Response>
     {
         let current: Request | Response = request;
@@ -313,73 +388,15 @@ export class ApiClient
         while (current instanceof Request)
         {
             // Apply the interceptors to the request.
-            current = await this.interceptRequest(current);
+            current = await this.interceptRequest(current, options);
 
             if (current instanceof Request)
             {
-                current = await this.sendRequestAndGetResponse(current, options);
+                current = await this.fetchResponse(current, options);
             }
 
             // Apply the interceptors to the response.
-            current = await this.interceptResponse(current);
-        }
-
-        return current;
-    }
-
-    /**
-     * Applies any registered interceptors to the specified request.
-     * @param request The request to intercept.
-     * @returns The request or response to use, or the specified request if not intercepted.
-     */
-    private async interceptRequest(request: Request): Promise<Request | Response>
-    {
-        let current = request;
-
-        for (const interceptor of this._interceptors)
-        {
-            if (interceptor.request != null)
-            {
-                const result = await interceptor.request(current);
-
-                if (result instanceof Request)
-                {
-                    current = result;
-                }
-                else if (result instanceof Response)
-                {
-                    return result;
-                }
-            }
-        }
-
-        return current;
-    }
-
-    /**
-     * Applies any registered interceptors to the specified response.
-     * @param response The response to intercept.
-     * @returns The response to use, or a new request.
-     */
-    private async interceptResponse(response: Response): Promise<Request | Response>
-    {
-        let current = response;
-
-        for (const interceptor of this._interceptors)
-        {
-            if (interceptor.response != null)
-            {
-                const result = await interceptor.response(current);
-
-                if (result instanceof Response)
-                {
-                    current = result;
-                }
-                else if (result instanceof Request)
-                {
-                    return result;
-                }
-            }
+            current = await this.interceptResponse(current, options);
         }
 
         return current;
@@ -387,13 +404,13 @@ export class ApiClient
 
     /**
      * Sends the specified fetch request and gets the response.
-     * @param request The request to send.
+     * @param fetchRequest The request to send.
      * @param options The request options to use.
-     * @returns The response to the fetch request.
+     * @returns A promise that will be resolved with the response to the fetch request.
      */
-    private async sendRequestAndGetResponse(request: Request, options: IApiRequestOptions): Promise<Response>
+    private async fetchResponse(fetchRequest: Request, options: IApiRequestOptions): Promise<Response>
     {
-        let response: Response | undefined;
+        let fetchResponse: Response | undefined;
 
         // Attempt to get the response, retrying as specified in the options.
         for (let attempt = 0; attempt < options.retry! + 1; attempt++)
@@ -401,34 +418,37 @@ export class ApiClient
             try
             {
                 // Send the request and await the response.
-                response = await fetch(request);
+                fetchResponse = await fetch(fetchRequest);
 
                 // Does the response represent a transient error?
-                if (transientHttpStatusCodes.includes(response.status))
+                if (transientHttpStatusCodes.includes(fetchResponse.status))
                 {
-                    throw new ApiError(true, request, response);
+                    throw this.createApiError(true, fetchRequest, fetchResponse);
                 }
 
+                // Success, skip remaining retry attempts.
                 break;
             }
             catch (error)
             {
+                // TODO: Should we treat an error with no response as transient?
+
                 // Throw an `AbortError` if the request was intentionally aborted.
                 if (error.name === "AbortError")
                 {
-                    throw new ApiAbortError(request);
+                    throw new ApiAbortError(fetchRequest);
                 }
 
                 // Throw an `ApiError` if the error is non-transient.
-                if (error.transient !== false)
+                if (error.transient !== true)
                 {
-                    throw new ApiError(false, request, response, error.message);
+                    throw this.createApiError(false, fetchRequest, fetchResponse, error.message);
                 }
 
                 // Throw an `ApiError` if the error is transient and the retry attempts have been exhausted.
                 if (attempt === options.retry)
                 {
-                    throw new ApiError(true, request, response, error.message);
+                    throw this.createApiError(true, fetchRequest, fetchResponse, error.message);
                 }
 
                 try
@@ -436,41 +456,78 @@ export class ApiClient
                     // Await the next retry.
                     const retryDelayIndex = Math.min(attempt, options.retryDelay!.length - 1);
                     const retryDelay = options.retryDelay![retryDelayIndex];
-                    await delay(retryDelay, options.signal).catch();
+                    await delay(retryDelay, options.signal);
                 }
                 catch (delayError)
                 {
-                    throw new ApiAbortError(request);
+                    throw new ApiAbortError(fetchRequest);
                 }
             }
         }
 
-        return response!;
+        return fetchResponse!;
     }
 
     /**
-     * Gets the deserialized response body, if enabled.
+     * Gets the deobfuscated and deserialized response body, if enabled.
      * @param fetchRequest The request to send.
      * @param options The request options to use.
-     * @returns The deserialized response body, or undefined if deserialization is disabled.
+     * @param endpointSettings The endpoint settings to use.
+     * @returns A promise that will be resolved with the deobfuscated and deserialized
+     * response body, or undefined if deserialization is disabled.
      */
-    private async getResponseBody(fetchResponse: Response, options: IApiRequestOptions): Promise<any>
+    private async getResponseBody(fetchResponse: Response, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): Promise<any>
     {
         // Determine whether the response body can be parsed as JSON.
         const contentType = fetchResponse.headers.get("content-type");
-        const hasJsonBody = contentType && /^application\/(.+\+)?json(;|$)/.test(contentType);
+        const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
         // Deserialize the response body, if enabled.
         if (options.deserialize && hasJsonBody)
         {
             // Await the response body.
-            const body = await fetchResponse.text();
+            let text = await fetchResponse.text();
 
-            // Deserialize the body, using the configured JSON reviver.
-            return JSON.parse(body, options.jsonReviver);
+            if (text.length > 0)
+            {
+                // Deobfuscate the body, if enabled.
+                if (endpointSettings.obfuscate)
+                {
+                    text = deobfuscate(text, this._settings.cipher);
+                }
+
+                // Deserialize the body, using the configured JSON reviver.
+                return JSON.parse(text, options.jsonReviver);
+            }
         }
 
         return undefined;
+    }
+
+    /**
+     * Creates the appropiate error for the specified response.
+     * @param transient True if the error is a transient error, otherwise false.
+     * @param request The request sent to the server.
+     * @param response The response received from the server.
+     * @param message The message describing the error.
+     * @param data The deserialized response body, if available.
+     */
+    private createApiError(transient: boolean, request: Request, response?: Response, message?: string, data?: any): ApiError
+    {
+        // Does the response conform to the RFC-7807 specification,
+        // indicating it came from the origin server?
+        if (response != null && response.headers.get("content-type") === "application/problem+json")
+        {
+            // Does the error represent a validation error?
+            if (data?.status || response.status === 400 && data?.errors)
+            {
+                return new ApiValidationError(transient, request, response, message, data);
+            }
+
+            return new ApiOriginError(transient, request, response, message, data);
+        }
+
+        return new ApiError(transient, request, response, message, data);
     }
 
     /**
@@ -480,7 +537,7 @@ export class ApiClient
      */
     private encodeQueryComponent(text: any): string
     {
-        // Encode the text, taking into account that the characters '/' and '?'
+        // Encode the text, taking into account that the characters `/` and `?`
         // do not need to be encoded in the query part of an URL.
         return encodeURIComponent(text.toString()).replace(/%2F/g, "/").replace(/%3F/g, "?");
     }
@@ -499,50 +556,110 @@ export class ApiClient
             return "";
         }
 
-        // If the value is a native date, convert it to ISO-8601 format.
+        // If the value is a `Date` instance, convert it to ISO 8601 format.
         if (value instanceof Date)
         {
             return value.toISOString();
         }
 
-        // If the value is a Luxon date, convert it to ISO-8601 format.
+        // If the value is a `DateTime` instance, convert it to ISO 8601 format.
         if (value instanceof DateTime)
         {
             return value.toISO();
         }
 
-        // If the value is a Luxon duration, convert it to ISO-8601 format.
+        // If the value is a `Duration`instance, convert it to ISO 8601 format.
         if (value instanceof Duration)
         {
             return value.toISO();
         }
 
-        // If the value is an array, convert it to a comma-separated list of values.
+        // If the value is an `Array` instance, convert it to a comma-separated list of values.
         if (!isNested && value instanceof Array)
         {
             return value.map(v => this.encodeQueryValue(v, true)).join(",");
         }
 
-        // If the value is a set, convert it to a comma-separated list of values.
+        // If the value is a `Set` instance, convert it to a comma-separated list of values.
         if (!isNested && value instanceof Set)
         {
             return Array.from(value).map(v => this.encodeQueryValue(v, true)).join(",");
         }
 
-        // If the value is a map, convert it to a comma-separated list of 'key:value' pairs.
+        // If the value is a `Map` instance, convert it to a comma-separated list of `key:value` pairs.
         if (!isNested && value instanceof Map)
         {
             return Array.from(value).map(([k, v]) => `${k}:${this.encodeQueryValue(v, true)}`).join(",");
         }
 
-        // If the value is an object, convert it to comma-separated list of 'key:value' pairs.
+        // If the value is an `Object` instance, convert it to comma-separated list of `key:value` pairs.
         if (!isNested && value instanceof Object)
         {
             return Object.keys(value).map(k => `${k}:${this.encodeQueryValue(value[k], true)}`).join(",");
         }
 
-        // Otherwise, convert the value to its default string representation,
-        // and encode it for use in the query string.
+        // Otherwise, convert the value to its default string representation.
         return this.encodeQueryComponent(value.toString());
     }
+
+    /**
+     * Applies any registered interceptors to the specified request.
+     * @param request The request to intercept.
+     * @param options The request options to use.
+     * @returns The request or response to use, or the specified request if not intercepted.
+     */
+    private async interceptRequest(request: Request, options: IApiRequestOptions): Promise<Request | Response>
+    {
+        let current = request;
+
+        for (const interceptor of this._interceptors)
+        {
+            if (interceptor.request != null)
+            {
+                const result = await interceptor.request(current, options, this._settings);
+
+                if (result instanceof Request)
+                {
+                    current = result;
+                }
+                else if (result instanceof Response)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return current;
+    }
+
+    /**
+     * Applies any registered interceptors to the specified response.
+     * @param response The response to intercept.
+     * @param options The request options that were used.
+     * @returns The response to use, or a new request.
+     */
+    private async interceptResponse(response: Response, options: IApiRequestOptions): Promise<Request | Response>
+    {
+        let current = response;
+
+        for (const interceptor of this._interceptors)
+        {
+            if (interceptor.response != null)
+            {
+                const result = await interceptor.response(current, options, this._settings);
+
+                if (result instanceof Response)
+                {
+                    current = result;
+                }
+                else if (result instanceof Request)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return current;
+    }
+
 }

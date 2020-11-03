@@ -28,6 +28,7 @@ export class ApiAbortError extends AbortError
         // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
         Object.setPrototypeOf(this, ApiAbortError.prototype);
 
+        this.name = "ApiAbortError";
         this.request = request;
     }
 
@@ -121,6 +122,8 @@ export class ApiOriginError extends ApiError<IApiProblem>
         // Required to ensure a correct prototype chain.
         // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
         Object.setPrototypeOf(this, ApiOriginError.prototype);
+
+        this.name = "ApiOriginError";
     }
 
     /**
@@ -202,6 +205,8 @@ export class ApiValidationError extends ApiOriginError
         // Required to ensure a correct prototype chain.
         // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
         Object.setPrototypeOf(this, ApiValidationError.prototype);
+
+        this.name = "ApiValidationError";
     }
 
     /**

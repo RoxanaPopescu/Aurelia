@@ -526,7 +526,7 @@ export class ApiClient
         if (response != null && response.headers.get("content-type") === "application/problem+json")
         {
             // Does the error represent a validation error?
-            if (data.status || response.status === 400 && data.errors)
+            if (data?.status || response.status === 400 && data?.errors)
             {
                 return new ApiValidationError(transient, request, response, message, data);
             }

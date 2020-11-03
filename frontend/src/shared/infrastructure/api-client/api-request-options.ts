@@ -19,7 +19,7 @@ export interface IApiRequestOptions extends IApiRequestSettings
      * variant, will be serialized as JSON. Note that `HEAD`, `GET` and `DELETE` requests cannot have a body.
      * The default is undefined.
      */
-    body?: object | string | Blob | BufferSource | FormData | URLSearchParams | ReadableStream<Uint8Array>;
+    body?: object | BodyInit;
 
     /**
      * The signal associated with the request, which is an `AbortSignal` object indicating
