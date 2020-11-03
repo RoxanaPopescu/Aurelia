@@ -17,15 +17,6 @@ export default
          */
         identity:
         {
-            refreshToken:
-            {
-                issuer: "Mover Systems Aps",
-                audience: undefined,
-                header: "refresh-token",
-                cookie: "refresh-token",
-                expiresIn: Duration.fromObject({ days: 60 }),
-                secret: "This is my little secret for protecting my resources. Muhahaha!!"
-            },
             accessToken:
             {
                 issuer: "Mover Systems Aps",
@@ -49,7 +40,6 @@ export default
         cookies:
         {
             path: "/"
-
         },
 
         /**
