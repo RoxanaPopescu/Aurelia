@@ -1,6 +1,6 @@
 // tslint:disable-next-line: no-submodule-imports
 import { AbortSignal } from "node-fetch/externals";
-import { AbortError } from "shared/types";
+import { AbortError } from "../../../shared/types";
 
 /**
  * Represents a controller for a promise, which exposes its resolve and reject functions,

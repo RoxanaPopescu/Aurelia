@@ -1,8 +1,8 @@
 import { URL } from "url";
 import { BodyInit, Request, Response } from "node-fetch";
-import { environment } from "env";
-import { MapObject } from "shared/types";
-import { delay } from "shared/utilities";
+import { environment } from "../../../../env";
+import { MapObject } from "../../../../shared/types";
+import { delay } from "../../../../shared/utilities";
 import { IApiInterceptor } from "../api-interceptor";
 import { IApiRequestOptions } from "../api-request-options";
 import { IApiClientSettings } from "../api-client-settings";

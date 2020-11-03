@@ -1,6 +1,6 @@
 import fetch, { Request, Response, RequestInit } from "node-fetch";
 import { Container, inject } from "../container";
-import { once, delay } from "shared/utilities";
+import { once, delay } from "../../../shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";

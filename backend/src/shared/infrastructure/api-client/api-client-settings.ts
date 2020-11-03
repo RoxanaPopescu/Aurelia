@@ -1,4 +1,4 @@
-import { Type } from "shared/types";
+import { Type } from "../../../shared/types";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestSettings } from "./api-request-settings";
 

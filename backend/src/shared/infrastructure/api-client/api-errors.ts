@@ -1,5 +1,5 @@
 import { Request, Response } from "node-fetch";
-import { AbortError } from "shared/types";
+import { AbortError } from "../../../shared/types";
 
 /**
  * The HTTP status codes that represent transient errors.

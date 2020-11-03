@@ -1,7 +1,7 @@
 // tslint:disable-next-line: no-submodule-imports
 import { AbortSignal } from "node-fetch/externals";
 import { BodyInit } from "node-fetch";
-import { MapObject } from "shared/types";
+import { MapObject } from "../../../shared/types";
 import { IApiRequestSettings } from "./api-request-settings";
 
 /**

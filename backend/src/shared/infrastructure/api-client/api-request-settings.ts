@@ -1,4 +1,4 @@
-import { MapObject } from "shared/types";
+import { MapObject } from "../../../shared/types";
 import { RequestRedirect, RequestCredentials, RequestCache, RequestMode } from "node-fetch";
 
 /**

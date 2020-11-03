@@ -1,6 +1,6 @@
 // tslint:disable-next-line: no-submodule-imports
 import { AbortSignal } from "node-fetch/externals";
-import { AbortError } from "shared/types";
+import { AbortError } from "../../../shared/types";
 
 /**
  * Returns a promise that will be resolved when the specified time has elapsed.

@@ -1,6 +1,6 @@
 import { IApiInterceptor } from "../api-interceptor";
 import { Request, Response } from "node-fetch";
-import { MapObject } from "shared/types";
+import { MapObject } from "../../../../shared/types";
 
 /**
  * Represents an interceptor that adds headers from the original request to all upstream requests.

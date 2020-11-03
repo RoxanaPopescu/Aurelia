@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import globs from "globs";
 import KoaRouter from "koa-router";
-import { Type } from "shared/types";
+import { Type } from "../shared/types";
 import { container, inject } from "../shared/infrastructure";
 import { IAppContext } from "./app-context";
 import { AppModule } from "./app-module";

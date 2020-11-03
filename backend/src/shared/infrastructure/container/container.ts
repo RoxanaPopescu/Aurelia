@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { IDisposable, Type } from "shared/types";
+import { IDisposable, Type } from "../../../shared/types";
 
 /**
  * Decorator that must be applied to classes, in order to enable dependency injection.
@@ -15,6 +15,14 @@ export function inject(constructor: Function): void
  */
 export class Container implements IDisposable
 {
+    /**
+     * Creates a new instance of the type.
+     */
+    public constructor()
+    {
+        this.add(this);
+    }
+
     private readonly _container = new Map<Type, any>();
 
     /**
