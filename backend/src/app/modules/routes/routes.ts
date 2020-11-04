@@ -8,8 +8,8 @@ export class RoutesModule extends AppModule
     public configure(): void
     {
         /**
-         * Creates a route template
-         * @returns The id and slug of the new template
+         * Creates a route from a template.
+         * @returns The ID and slug of the new route.
          */
         this.router.post("/v2/routes/create-from-template", async context =>
         {

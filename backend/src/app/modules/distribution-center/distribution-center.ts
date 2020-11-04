@@ -3,7 +3,7 @@ import { AppModule } from "../../app-module";
 /**
  * Represents a module exposing endpoints related to distribution centers.
  */
-export class DepotsModule extends AppModule
+export class DistributionCenterModule extends AppModule
 {
     /**
      * Configures the module.
@@ -11,8 +11,8 @@ export class DepotsModule extends AppModule
     public configure(): void
     {
         /**
-         * Gets the list of depots.
-         * @returns The list of depots.
+         * Gets the list of distribution centers.
+         * @returns The list of distribution centers.
          */
         this.router.post("/v2/distribution-center/list", async context =>
         {
@@ -32,7 +32,7 @@ export class DepotsModule extends AppModule
 
         /**
          * Gets the distribution center with the specified ID.
-         * @param context.params.id The ID of the depot to get.
+         * @param context.params.id The ID of the distribution center to get.
          * @returns The distribution center with the specified ID.
          */
         this.router.get("/v2/distribution-center/details/:id", async context =>
