@@ -27,7 +27,7 @@ export class LinehaulsModule extends AppModule
                     body:
                     {
                         reference: context.params.reference,
-                        ownerId: context.user?.outfitId,
+                        outfitId: context.user?.outfitId,
                         actionById: context.user?.id
                     }
                 });
@@ -56,7 +56,7 @@ export class LinehaulsModule extends AppModule
                         body:
                         {
                             id: result.data.id,
-                            ownerId: context.user?.outfitId,
+                            outfitId: context.user?.outfitId,
                             actionById: context.user?.id
                         }
                     });
@@ -86,7 +86,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     reference: context.params.reference,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -109,7 +109,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     id: context.params.id,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -119,19 +119,19 @@ export class LinehaulsModule extends AppModule
         });
 
         /**
-         * Saves the loaded event
+         * Saves the load event
          * @returns 202 ok
          */
-        this.router.post("/v2/linehauls/collo/loaded", async context =>
+        this.router.post("/v2/linehauls/collo/load", async context =>
         {
             context.authorize();
 
-            const routesResult = await this.apiClient.post("linehauls/collo/loaded",
+            const routesResult = await this.apiClient.post("linehauls/collo/load",
             {
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -141,19 +141,19 @@ export class LinehaulsModule extends AppModule
         });
 
         /**
-         * Saves the unloaded event
+         * Saves the unload event
          * @returns 202 ok
          */
-        this.router.post("/v2/linehauls/collo/unloaded", async context =>
+        this.router.post("/v2/linehauls/collo/unload", async context =>
         {
             context.authorize();
 
-            const routesResult = await this.apiClient.post("linehauls/collo/unloaded",
+            const routesResult = await this.apiClient.post("linehauls/collo/unload",
             {
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -175,7 +175,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -197,7 +197,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
@@ -219,7 +219,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    outfitId: context.user?.outfitId,
                     actionById: context.user?.id
                 }
             });
