@@ -52,6 +52,10 @@ export default
             {
                 headers:
                 {
+                    // HACK: Needed when calling NOI endpoints.
+                    "x-api-key": "moverwebaccess-4Q9BuDEbzcjZfGqa",
+                    "x-version": "5.0.0",
+
                     "Ocp-Apim-Subscription-Key": environment.subscriptionKey,
                     "Api-Version": "v1"
                 }

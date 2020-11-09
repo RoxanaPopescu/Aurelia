@@ -83,4 +83,11 @@ export interface IApiRequestSettings
      */
     /* tslint:disable-next-line: prefer-method-signature */
     jsonReviver?: (key: string, value: any) => any;
+
+    /**
+     * True if interacting with the clusterfuck that is the NOI API.
+     * When enabled, a 200 OK response with no body is handled as a 404 response,
+     * and the response content type is ignored and assumed to be "application/json".
+     */
+    noi?: boolean;
 }

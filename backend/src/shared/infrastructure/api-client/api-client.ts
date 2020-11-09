@@ -5,7 +5,7 @@ import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings"
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
 import { apiRequestDefaults } from "./api-request-defaults";
-import { ApiAbortError, ApiError, ApiOriginError, ApiValidationError, transientHttpStatusCodes, missingHttpStatusCodes } from "./api-errors";
+import { ApiAbortError, ApiError, ApiOriginError, ApiValidationError, transientHttpStatusCodes, missingHttpStatusCodes, NoiApiOriginError } from "./api-errors";
 import { ApiResult } from "./api-result";
 
 // TODO: We should ideally refactor those dependencies out,
@@ -174,7 +174,18 @@ export class ApiClient
         const response = await this.getResponse(request, requestOptions);
 
         // Get the deobfuscated and deserialized response body.
-        const responseBody = await this.getResponseBody(response, requestOptions, endpointSettings);
+        let responseBody = await this.getResponseBody(response, requestOptions, endpointSettings);
+
+        // HACK: The NOI API always responds with status code 200 and a body containing a non-standard status code.
+        if (requestOptions.noi && responseBody != null)
+        {
+            if (responseBody.status < 200 || responseBody.status > 299)
+            {
+                throw this.createApiError(true, false, request, response, "Request to NOI endpoint failed.", responseBody);
+            }
+
+            responseBody = responseBody.data;
+        }
 
         // Does the response indicate that the resource is missing?
         const resourceMissing = missingHttpStatusCodes.includes(response.status);
@@ -182,7 +193,7 @@ export class ApiClient
         // Throw an `ApiError` if the request was unsuccessful.
         if (!response.ok && !(resourceMissing && requestOptions.optional))
         {
-            throw this.createApiError(false, request, response, undefined, responseBody);
+            throw this.createApiError(false, false, request, response, undefined, responseBody);
         }
 
         // Return the result of the request.
@@ -423,7 +434,13 @@ export class ApiClient
                 // Does the response represent a transient error?
                 if (transientHttpStatusCodes.includes(fetchResponse.status))
                 {
-                    throw this.createApiError(true, fetchRequest, fetchResponse);
+                    throw this.createApiError(false, true, fetchRequest, fetchResponse);
+                }
+
+                // HACK: The NOI API responds with status code 200 and no body, when the actual status code should be 404.
+                if (options.noi && fetchResponse.headers.get("content-length") === "0")
+                {
+                    throw this.createApiError(true, false, fetchRequest, fetchResponse, "Request to NOI endpoint failed.");
                 }
 
                 // Success, skip remaining retry attempts.
@@ -442,13 +459,13 @@ export class ApiClient
                 // Throw an `ApiError` if the error is non-transient.
                 if (error.transient !== true)
                 {
-                    throw this.createApiError(false, fetchRequest, fetchResponse, error.message);
+                    throw this.createApiError(false, false, fetchRequest, fetchResponse, error.message);
                 }
 
                 // Throw an `ApiError` if the error is transient and the retry attempts have been exhausted.
                 if (attempt === options.retry)
                 {
-                    throw this.createApiError(true, fetchRequest, fetchResponse, error.message);
+                    throw this.createApiError(false, true, fetchRequest, fetchResponse, error.message);
                 }
 
                 try
@@ -478,8 +495,9 @@ export class ApiClient
      */
     private async getResponseBody(fetchResponse: Response, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): Promise<any>
     {
+        // HACK: The NOI API returns a response with content type "text/html", despite the actual content type being "application/json".
         // Determine whether the response body can be parsed as JSON.
-        const contentType = fetchResponse.headers.get("content-type");
+        const contentType = options.noi ? "application/json" : fetchResponse.headers.get("content-type");
         const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
         // Deserialize the response body, if enabled.
@@ -506,25 +524,36 @@ export class ApiClient
 
     /**
      * Creates the appropiate error for the specified response.
+     * @param noi True if the error represents an error response from a NOI endpoint, otherwise false.
      * @param transient True if the error is a transient error, otherwise false.
      * @param request The request sent to the server.
      * @param response The response received from the server.
      * @param message The message describing the error.
      * @param data The deserialized response body, if available.
      */
-    private createApiError(transient: boolean, request: Request, response?: Response, message?: string, data?: any): ApiError
+    private createApiError(noi: boolean, transient: boolean, request: Request, response?: Response, message?: string, data?: any): ApiError
     {
-        // Does the response conform to the RFC-7807 specification,
-        // indicating it came from the origin server?
-        if (response != null && response.headers.get("content-type") === "application/problem+json")
+        if (noi)
         {
-            // Does the error represent a validation error?
-            if (data?.status || response.status === 400 && data?.errors)
+            if (response != null)
             {
-                return new ApiValidationError(transient, request, response, message, data);
+                return new NoiApiOriginError(transient, request, response, message, data);
             }
+        }
+        else
+        {
+            // Does the response conform to the RFC-7807 specification,
+            // indicating it came from the origin server?
+            if (response != null && response.headers.get("content-type") === "application/problem+json")
+            {
+                // Does the error represent a validation error?
+                if (data?.status || response.status === 400 && data?.errors)
+                {
+                    return new ApiValidationError(transient, request, response, message, data);
+                }
 
-            return new ApiOriginError(transient, request, response, message, data);
+                return new ApiOriginError(transient, request, response, message, data);
+            }
         }
 
         return new ApiError(transient, request, response, message, data);

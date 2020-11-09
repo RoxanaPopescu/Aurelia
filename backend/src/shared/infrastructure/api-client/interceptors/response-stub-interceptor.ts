@@ -65,6 +65,7 @@ export class ResponseStubInterceptor implements IApiInterceptor
         {
             throw new Error("No host specified.");
         }
+
         const stubUrl = `//${host}${pathAndQuery}`;
 
         const stubKey = `${requestMethod} ${stubUrl}`;

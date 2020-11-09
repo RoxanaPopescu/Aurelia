@@ -238,3 +238,43 @@ export interface IApiValidationProblem extends IApiProblem
      */
     readonly errors: { [key: string]: string[] };
 }
+
+/**
+ * Represents the error thrown when the response received from a NOI endpoint
+ * indicate that an error occurred.
+ */
+export class NoiApiOriginError extends ApiOriginError
+{
+    /**
+     * Creates a new instance of the type.
+     * @param transient True if the error is a transient error, otherwise false.
+     * @param request The request sent to the server.
+     * @param response The response received from the server.
+     * @param message The message describing the error.
+     * @param data The deserialized response body, if available.
+     */
+    public constructor(transient: boolean, request: Request, response: Response, message?: string, data?: any)
+    {
+        // tslint:disable-next-line: no-parameter-reassignment
+        const problemData =
+        {
+            status: response.status,
+            type: data?.status != null ? `noi/${data.status}` : `https://httpstatuses.com/${response.status}`,
+            title: data?.data?.text,
+            errorCode: data?.status
+        };
+
+        super(transient, request, response, message, problemData);
+
+        // Required to ensure a correct prototype chain.
+        // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
+        Object.setPrototypeOf(this, ApiOriginError.prototype);
+
+        this.name = "NoiApiOriginError";
+    }
+
+    /**
+     * The response received from the server.
+     */
+    public readonly response: Response;
+}
