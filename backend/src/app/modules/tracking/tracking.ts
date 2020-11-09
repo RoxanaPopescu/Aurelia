@@ -109,7 +109,7 @@ export class TrackingModule extends AppModule
     private async fetchOrderDetails(orderId: string): Promise<any>
     {
         // Fetch the order details.
-        const result = await this.apiClient.get<any[]>("/logistics/orders/consignor/detailOrders",
+        const result = await this.apiClient.post<any[]>("/logistics/orders/consignor/detailOrders",
         {
             body:
             {
@@ -133,7 +133,7 @@ export class TrackingModule extends AppModule
      */
     private async fetchOrderEvents(outfitId: string, orderId: string): Promise<any[]>
     {
-        const result = await this.apiClient.get<any[]>("/logistics/getevents",
+        const result = await this.apiClient.post<any[]>("/logistics/getevents",
         {
             body:
             {
@@ -159,7 +159,7 @@ export class TrackingModule extends AppModule
      */
     private async fetchDriverPosition(driverId: string): Promise<any>
     {
-        const result = await this.apiClient.get("/logistics/drivers/last-cooordinate",
+        const result = await this.apiClient.post("/logistics/drivers/last-cooordinate",
         {
             body:
             {
