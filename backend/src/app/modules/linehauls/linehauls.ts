@@ -104,7 +104,7 @@ export class LinehaulsModule extends AppModule
         {
             context.authorize();
 
-            const result = await this.apiClient.post("linehauls/unload-finalize",
+            const result = await this.apiClient.post("linehauls/unloadFinalize",
             {
                 body:
                 {
