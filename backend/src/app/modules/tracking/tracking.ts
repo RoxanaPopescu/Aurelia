@@ -199,16 +199,6 @@ export class TrackingModule extends AppModule
                 hasOccurred: true
             };
 
-            case "OrderDeliveryCompleted": return {
-                id: data.id,
-                type: "delivery",
-                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
-                title: eventTitles.deliveryCompleted,
-                location: data.deliveryLocation,
-                focusOnMap: true,
-                hasOccurred: true
-            };
-
             case "OrderDeliveryEtaProvided": return {
                 id: "estimated-delivery-event-id",
                 type: "delivery",
@@ -217,6 +207,16 @@ export class TrackingModule extends AppModule
                 location: data.deliveryLocation,
                 focusOnMap: true,
                 hasOccurred: false
+            };
+
+            case "OrderDeliveryCompleted": return {
+                id: data.id,
+                type: "delivery",
+                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
+                title: eventTitles.deliveryCompleted,
+                location: data.deliveryLocation,
+                focusOnMap: true,
+                hasOccurred: true
             };
 
             default: return null;
