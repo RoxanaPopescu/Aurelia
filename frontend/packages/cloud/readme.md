@@ -93,7 +93,7 @@
   Alternatively, if settings need to be specified, execute the command:
 
   ```
-  NODE_ENV="{environment}" && PORT={port} && BASE_URL="{base_url}" && node "artifacts/build/server/index.js"
+  NODE_ENV="{environment}" PORT="{port}" BASE_URL="{base_url}" node "artifacts/build/server/index.js"
   ```
 
   Where:
@@ -120,7 +120,7 @@
   To start an app cluster, execute the command:
 
   ```
-  NODE_ENV="{environment}" && PORT={port} && BASE_URL="{base_url}" && pm2-runtime -i -1 "artifacts/build/server/index.js"
+  NODE_ENV="{environment}" PORT="{port}" BASE_URL="{base_url}" pm2-runtime -i -1 "artifacts/build/server/index.js"
   ```
 
   This will start the process manager, with one app instance for each CPU core, except one.
