@@ -32,43 +32,42 @@ export class LinehaulsModule extends AppModule
                     }
                 });
 
-                if (result.data.status !== "completed") {
-                    context.response.body = result.data;
-                    context.response.status = 200; 
-
-                    return;
-                }
-
-                // If a previous linehaul has been completed we can now create the next chain
-                await this.apiClient.post("linehauls/create",
-                {
-                    body:
-                    {
-                        reference: context.params.reference,
-                        ownerId: context.user?.outfitId,
-                        actionById: context.user?.id
-                    }
-                });
-
-                context.internal();
-
-                // Return the new linehaul that has been created
-                const detailsResult = await this.apiClient.post("linehauls/details",
-                {
-                    body:
-                    {
-                        id: result.data.id,
-                        outfitId: context.user?.outfitId,
-                        actionById: context.user?.id
-                    }
-                });
-
-                context.response.body = detailsResult.data;
+                context.response.body = result.data;
                 context.response.status = 200;
             }
             catch (error)
             {
-                throw error;
+                if (error.response.status === 400 || error.response.status === 404)
+                {
+                    const result = await this.apiClient.post("linehauls/create",
+                    {
+                        body:
+                        {
+                            reference: context.params.reference,
+                            ownerId: context.user?.outfitId,
+                            actionById: context.user?.id
+                        }
+                    });
+
+                    context.internal();
+
+                    const detailsResult = await this.apiClient.post("linehauls/details",
+                    {
+                        body:
+                        {
+                            id: result.data.id,
+                            outfitId: context.user?.outfitId,
+                            actionById: context.user?.id
+                        }
+                    });
+
+                    context.response.body = detailsResult.data;
+                    context.response.status = 200;
+                }
+                else
+                {
+                    throw error;
+                }
             }
         });
 
