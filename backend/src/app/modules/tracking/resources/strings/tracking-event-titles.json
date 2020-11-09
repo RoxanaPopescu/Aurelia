@@ -1,0 +1,8 @@
+{
+    "orderPlaced": "Order placed",
+    "orderScanned": "Scanned",
+    "outForDelivery": "Our for delivery",
+    "deliveryEstimated": "Estimated delivery",
+    "deliveryCompleted": "Delivered",
+    "deliveryFailed": "Delivery failed"
+}
