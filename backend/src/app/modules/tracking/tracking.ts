@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { environment } from "../../../env";
 import { AppModule } from "../../app-module";
 import eventTitles from "./resources/strings/tracking-event-titles.json";
 
@@ -11,57 +12,74 @@ export class TrackingModule extends AppModule
     {
         /**
          * Gets the tracking info for the specified tracking ID.
-         * @param context.params.id The ID of the tracking info to get.
+         * @param context.params.id The ID of the order for which to get tracking info.
          * @returns The tracking info for the specified tracking ID.
          */
         this.router.get("/v2/tracking/:id", async context =>
         {
-            const trackingId = context.params.id.toUpperCase();
-            const trackingIdComponents = trackingId.split("-");
+            const trackingId = context.params.id.toLowerCase();
 
-            // Fetch the order details and events.
-            const [orderDetails, orderEvents] = await Promise.all(
-            [
-                // TODO: This won't work. We need a proper way to get the ID of the order, owner and access outfit based on a tracking ID.
-                await this.fetchOrderDetails(trackingIdComponents[0], trackingIdComponents[1]),
-                await this.fetchOrderEvents(trackingIdComponents[0], trackingIdComponents[1])
-            ]);
+            // Fetch the order details.
+            const orderDetailsData = await this.fetchOrderDetails(trackingId);
 
             context.internal();
 
+            // Fetch the order events.
+            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.internalOrderId);
+
             // Map the relevant order events to tracking events.
-            const trackingEvents = orderEvents.map(e => this.getTrackingEvent(e)).filter(e => e != null);
+            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
 
             // If no `delivery` event exists, create one based on the planned delivery time.
             if (!trackingEvents.some(e => e.type === "delivery"))
             {
-                const a = orderEvents.find(e => e.type === "OrderCreated")?.delivery.appointment;
-
                 trackingEvents.push(
                 {
-                    id: "delivery-event-id",
+                    id: "planned-delivery-event-id",
                     type: "delivery",
                     dateTimeRange:
                     {
-                        start: DateTime.fromISO(a.earliestArrivalDate, { setZone: true }).plus({ seconds: a.earliestArrivalTime }).toISO(),
-                        end: DateTime.fromISO(a.latestArrivalDate, { setZone: true }).plus({ seconds: a.latestArrivalTime }).toISO()
+                        start: DateTime
+                            .fromISO(orderDetailsData.deliveryEarliestDate, { setZone: true })
+                            .plus({ seconds: orderDetailsData.deliveryEarliestTime })
+                            .toISO(),
+
+                        end: DateTime
+                            .fromISO(orderDetailsData.deliveryLatestDate, { setZone: true })
+                            .plus({ seconds: orderDetailsData.deliveryLatestTime })
+                            .toISO()
                     },
                     title: eventTitles.deliveryEstimated,
-                    location: undefined, // TODO: Don't know how to get this
+                    location:
+                    {
+                        address:
+                        {
+                            id: orderDetailsData.consigneeAddressPosition.locationId,
+                            primary: orderDetailsData.consigneeAddress
+                        },
+                        position:
+                        {
+                            latitude: orderDetailsData.consigneeAddressPosition.latitude,
+                            longitude: orderDetailsData.consigneeAddressPosition.longitude
+                        }
+                    },
                     focusOnMap: true,
                     hasOccurred: false
                 });
             }
 
             // Get the data for the driver associated with the estimated delivery.
-            const driverData = orderEvents.find(e => e.type === "OrderDeliveryEtaProvided")?.driver;
+            const driverData = orderEventsData.find(e => e.type === "OrderDeliveryEtaProvided")?.driver;
+
+            // Get the last known position of the driver, if any.
+            const driverPosition = driverData.id ? await this.fetchDriverPosition(driverData.id) : undefined;
 
             // Set the response body.
             context.response.body =
             {
                 trackingId: trackingId,
                 events: trackingEvents,
-                colli: orderDetails.actualColli?.map((c: any) =>
+                colli: orderDetailsData.actualColli?.map((c: any) =>
                 ({
                     id: c.internalId,
                     barcode: c.barcode,
@@ -71,10 +89,10 @@ export class TrackingModule extends AppModule
                 })),
                 driver:
                 {
-                    id: "driver-id",
+                    id: driverData.id,
                     firstName: driverData.firstName,
                     pictureUrl: undefined,
-                    position: undefined // TODO: Don't know how to get this
+                    position: driverPosition
                 }
             };
 
@@ -85,11 +103,10 @@ export class TrackingModule extends AppModule
 
     /**
      * Fetches the details for the specified order.
-     * @param outfitId The ID of the outfit owning the order.
      * @param orderId The ID of the order.
      * @returns A promise that will be resolved with the order details.
      */
-    private async fetchOrderDetails(outfitId: string, orderId: string): Promise<any>
+    private async fetchOrderDetails(orderId: string): Promise<any>
     {
         // Fetch the order details.
         const result = await this.apiClient.get<any[]>("/logistics/orders/consignor/detailOrders",
@@ -97,7 +114,11 @@ export class TrackingModule extends AppModule
             body:
             {
                 internalOrderIds: [orderId],
-                outfitIds: [outfitId]
+
+                // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
+                outfitIds: environment.name === "production"
+                    ? "F1003E94-D520-4D0C-959A-AFB76BDC91F3"
+                    : "5D6DB3D4-7E69-4939-8014-D028A5EB47FF"
             }
         });
 
@@ -112,7 +133,7 @@ export class TrackingModule extends AppModule
      */
     private async fetchOrderEvents(outfitId: string, orderId: string): Promise<any[]>
     {
-        const result = await this.apiClient.get<any[]>("getevents",
+        const result = await this.apiClient.get<any[]>("/logistics/getevents",
         {
             body:
             {
@@ -129,6 +150,24 @@ export class TrackingModule extends AppModule
         });
 
         return result.data!;
+    }
+
+    /**
+     * Fetches the last known position of the specified driver.
+     * @param driverId The ID of the driver.
+     * @returns A promise that will be resolved with the last known position of the driver
+     */
+    private async fetchDriverPosition(driverId: string): Promise<any>
+    {
+        const result = await this.apiClient.get("/logistics/drivers/last-cooordinate",
+        {
+            body:
+            {
+                driverId: driverId
+            }
+        });
+
+        return result.data;
     }
 
     /**
@@ -171,7 +210,7 @@ export class TrackingModule extends AppModule
             };
 
             case "OrderDeliveryEtaProvided": return {
-                id: "estimated-delivery",
+                id: "estimated-delivery-event-id",
                 type: "delivery",
                 dateTimeRange: { start: data.deliveryTimeFrame.from, end: data.deliveryTimeFrame.to },
                 title: eventTitles.deliveryEstimated,
