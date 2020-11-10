@@ -26,7 +26,7 @@ export class TrackingModule extends AppModule
 
             // Fetch the order events.
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
-            
+
             // Map the relevant order events to tracking events.
             const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
 
@@ -37,9 +37,9 @@ export class TrackingModule extends AppModule
                 {
                     id: "order-created-event-id",
                     type: "order",
-                    dateTimeRange: 
-                    { 
-                        start: DateTime.fromISO(orderDetailsData.createdAt), 
+                    dateTimeRange:
+                    {
+                        start: DateTime.fromISO(orderDetailsData.createdAt),
                         end: DateTime.fromISO(orderDetailsData.createdAt)
                     },
                     title: eventTitles.orderPlaced,
@@ -91,12 +91,25 @@ export class TrackingModule extends AppModule
                 });
             }
 
+            //Remove delivery eta event if order is completed
+            const hasDeliveryCompletedEvent = trackingEvents.some(e => e.type === "delivery" && e.hasOccurred);
+            const hasDeliveryEtaEvent = trackingEvents.some(e => e.type === "delivery" && !e.hasOccurred);
+            if (hasDeliveryCompletedEvent && hasDeliveryEtaEvent)
+            {
+                const indexOfEventToBeRemoved = trackingEvents.findIndex(e => e.type === "delivery" && !e.hasOccurred);
+
+                if (indexOfEventToBeRemoved > -1)
+                {
+                    trackingEvents.splice(indexOfEventToBeRemoved, 1);
+                }
+            }
+
             // Get the data for the driver associated with the estimated delivery.
             const driverData = orderEventsData.find(e => e.type === "order-delivery-eta-provided")?.driver;
 
             // Get the last known position of the driver, if any.
             const driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
-            
+
             // Set the response body.
             context.response.body =
             {
@@ -115,14 +128,14 @@ export class TrackingModule extends AppModule
                     },
                     tags: c.tags
                 })),
-                driver: driverData 
+                driver: driverData
                 ?
                 {
                     id: "unknownAtTheMoment",
                     firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
-                } 
+                }
                 : null
             };
 
@@ -144,14 +157,14 @@ export class TrackingModule extends AppModule
             body:
             {
                 internalOrderIds: [orderId],
-                
+
                 // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
                 outfitIds: environment.name === "production"
                 ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3"]
                 : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
             }
         });
-        
+
         return result.data![0];
     }
 
@@ -200,13 +213,13 @@ export class TrackingModule extends AppModule
     }
 
     /**
-     * 
+     *
      * @param dateTime is the exact eta time provided in the event
      * @returns a datetime range with start and from
      */
     private getTimeRangeFromEtaEvents(dateTime: DateTime) : any
     {
-        const result = 
+        const result =
         {
             start: dateTime.minus({minutes: 10}),
             end: dateTime.plus({minutes: 15})
