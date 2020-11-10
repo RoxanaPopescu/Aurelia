@@ -115,13 +115,15 @@ export class TrackingModule extends AppModule
                     },
                     tags: c.tags
                 })),
-                driver:
+                driver: driverData 
+                ?
                 {
                     id: "unknownAtTheMoment",
                     firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
-                }
+                } 
+                : null
             };
 
             // Set the response status.
