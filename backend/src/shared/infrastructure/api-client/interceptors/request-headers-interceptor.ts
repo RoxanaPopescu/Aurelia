@@ -35,6 +35,9 @@ export class RequestHeadersInterceptor implements IApiInterceptor
         if (headers.correlationId && !request.headers.has("x-correlation"))
         {
             request.headers.set("x-correlation", headers.correlationId);
+
+            // HACK: Needed because the backend does not yet recognize the new `correlation-id` header.
+            request.headers.set("Mover-CorrelationId", headers.correlationId);
         }
 
         if (headers.localeCode && !request.headers.has("x-locale"))

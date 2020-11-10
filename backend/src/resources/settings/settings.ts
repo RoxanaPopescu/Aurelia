@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { environment } from "../../env";
 import { IApiClientSettings } from "../../shared/infrastructure";
 import { Duration } from "luxon";
@@ -7,6 +9,23 @@ import { Duration } from "luxon";
  */
 export default
 {
+    /**
+     * Settings for the app.
+     */
+    app:
+    {
+        /**
+         * The codes identifying the supported locales.
+         */
+        supportedLocaleCodes: fs.readdirSync(path.join(__dirname, "../translations"))
+            .map(fileName => fileName.slice(0, -5)),
+
+        /**
+         * The code identifying the default locale.
+         */
+        defaultLocaleCode: "en-US"
+    },
+
     /**
      * Settings for the middleware.
      */

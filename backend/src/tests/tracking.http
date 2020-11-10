@@ -1,6 +1,6 @@
 //Scenario 1, no order events
 GET http://127.0.0.1:8008/v2/tracking/8FB0E813-C7D5-2351-82C8-6C76AFD508BB HTTP/1.1
-x-locale: en
+x-locale: da-DK
 x-market: XX
 user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
 accept: application/json

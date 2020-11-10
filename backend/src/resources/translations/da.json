@@ -1,0 +1,6 @@
+{
+  "./app/modules/tracking/resources/strings/tracking-event-titles:orderPlaced": "Bestilling modtaget",
+  "./app/modules/tracking/resources/strings/tracking-event-titles:outForDelivery": "Levering igang",
+  "./app/modules/tracking/resources/strings/tracking-event-titles:deliveryEstimated": "Forventet levering",
+  "./app/modules/tracking/resources/strings/tracking-event-titles:deliveryCompleted": "Leveret"
+}

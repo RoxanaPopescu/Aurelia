@@ -10,6 +10,8 @@
     "outDir": "artifacts/build"
   },
   "include": [
-    "src"
+    "src",
+    "**/resources/strings/*.json",
+    "src/resources/translations/*.json"
   ]
 }

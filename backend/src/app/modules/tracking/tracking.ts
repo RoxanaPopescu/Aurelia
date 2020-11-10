@@ -1,7 +1,8 @@
 import { DateTime } from "luxon";
+import { getStrings } from "../../../shared/localization";
 import { environment } from "../../../env";
 import { AppModule } from "../../app-module";
-import eventTitles from "./resources/strings/tracking-event-titles.json";
+import { MapObject } from "shared/types";
 
 /**
  * Represents a module exposing endpoints related to tracking.
@@ -17,6 +18,9 @@ export class TrackingModule extends AppModule
          */
         this.router.get("/v2/tracking/:id", async context =>
         {
+            // tslint:disable-next-line: no-require-imports
+            const eventTitles = getStrings("./resources/strings/tracking-event-titles.json");
+
             const trackingId = context.params.id.toLowerCase();
 
             // Fetch the order details.
@@ -27,8 +31,19 @@ export class TrackingModule extends AppModule
             // Fetch the order events.
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
 
+            // If the order is already delivered, remove any `order-delivery-eta-provided` event.
+            if (orderEventsData.some(e => e.type === "order-delivery-completed"))
+            {
+                const indexToRemove = orderEventsData.findIndex(e => e.type === "order-delivery-eta-provided");
+
+                if (indexToRemove > -1)
+                {
+                    orderEventsData.splice(indexToRemove, 1);
+                }
+            }
+
             // Map the relevant order events to tracking events.
-            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
+            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles)).filter(e => e != null);
 
             // Always create the `order` tracking event based on the order details,
             // as `order-placed` order event does not include all the data we need.
@@ -76,19 +91,6 @@ export class TrackingModule extends AppModule
                     focusOnMap: true,
                     hasOccurred: false
                 });
-            }
-
-            //Remove delivery eta event if order is completed
-            const hasDeliveryCompletedEvent = trackingEvents.some(e => e.type === "delivery" && e.hasOccurred);
-            const hasDeliveryEtaEvent = trackingEvents.some(e => e.type === "delivery" && !e.hasOccurred);
-            if (hasDeliveryCompletedEvent && hasDeliveryEtaEvent)
-            {
-                const indexOfEventToBeRemoved = trackingEvents.findIndex(e => e.type === "delivery" && !e.hasOccurred);
-
-                if (indexOfEventToBeRemoved > -1)
-                {
-                    trackingEvents.splice(indexOfEventToBeRemoved, 1);
-                }
             }
 
             // Get the data for the driver associated with the estimated delivery.
@@ -203,9 +205,10 @@ export class TrackingModule extends AppModule
     /**
      * Creates a tracking event based on the specified order event data, if supported.
      * @param eventData The data representing the order event.
+     * @param eventTitles The localized event titles.
      * @returns The tracking event, or null if the order event has no corresponding tracking event.
      */
-    private getTrackingEvent(eventData: any): any | null
+    private getTrackingEvent(eventData: any, eventTitles: MapObject<string>): any | null
     {
         switch (eventData.eventType)
         {
