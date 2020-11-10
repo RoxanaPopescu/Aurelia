@@ -22,6 +22,8 @@
 
    This will install the dependencies listed in the `package-lock.json` file.
 
+   > If you encounter errors related to `node-gyp`, [this may help](https://github.com/nodejs/node-gyp/issues/629).
+
 ## Build and debug
 
 1. **Start the `develop` package task, which builds, watches and serves the project**

@@ -20,6 +20,8 @@
 
    This will install the dependencies listed in the `package-lock.json` file.
 
+   > If you encounter errors related to `node-gyp`, [this may help](https://github.com/nodejs/node-gyp/issues/629).
+
 ## Build and debug
 
 1. **Start the `develop` package task, which builds and watches the project**
@@ -47,6 +49,25 @@
    Use the `REST Client` plugin for `Visual Studio Code` to test the app.
 
 ## Additional tasks
+
+* **Translate to Danish**
+
+  As a temporary solution to support Danish translations, we have a script that updates the
+  Danish translation file, removing any unused strings and adding any new, English strings.
+  It is then the responsibility of the developer to look at the file diff before comitting,
+  and to translate any new strings to Danish.
+
+  > Please study the documentation for
+  > [gulp-translate](https://www.npmjs.com/package/gulp-translate),
+  > to make sure you understand how things work.
+
+  In a terminal in this package folder, execute the command:
+
+  ```
+  npm run translate
+  ```
+
+  This will update the file `src/resources/translations/da.json`.
 
 * **Lint the project**
 

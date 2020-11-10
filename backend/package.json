@@ -17,7 +17,10 @@
     "develop": "rimraf \"artifacts/build\" && tsc --watch",
     "build": "rimraf \"artifacts/build\" && tsc",
     "start": "node \"artifacts/build/index\"",
-    "lint": "tslint --project \"tsconfig.json\" --format stylish"
+    "lint": "tslint --project \"tsconfig.json\" --format stylish",
+    "translate-export": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export\"",
+    "translate-pseudo": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
+    "translate": "npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-update\""
   },
   "dependencies": {
     "@types/cls-hooked": "^4.3.0",
