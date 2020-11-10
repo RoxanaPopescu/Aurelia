@@ -25,7 +25,7 @@ export class TrackingModule extends AppModule
             context.internal();
 
             // Fetch the order events.
-            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.internalOrderId);
+            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
 
             // Map the relevant order events to tracking events.
             const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
@@ -133,7 +133,7 @@ export class TrackingModule extends AppModule
      */
     private async fetchOrderEvents(outfitId: string, orderId: string): Promise<any[]>
     {
-        const result = await this.apiClient.post<any[]>("/logistics/getevents",
+        const result = await this.apiClient.post<any[]>("/orderevents/getevents",
         {
             body:
             {
