@@ -26,28 +26,26 @@ export class TrackingModule extends AppModule
 
             // Fetch the order events.
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
-            
+
             // Map the relevant order events to tracking events.
             const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
 
-            // Always created the order created event, until all data is part of placed
-            // NB: The Order Created event has been removed temporarily from the list of events
-            // Unshift to always have created event first
+            // Always create the `order` tracking event based on the order details,
+            // as `order-placed` order event does not include all the data we need.
             trackingEvents.unshift(
+            {
+                id: "order-created-event-id",
+                type: "order",
+                dateTimeRange:
                 {
-                    id: "order-created-event-id",
-                    type: "order",
-                    dateTimeRange: 
-                    { 
-                        start: DateTime.fromISO(orderDetailsData.createdAt), 
-                        end: DateTime.fromISO(orderDetailsData.createdAt)
-                    },
-                    title: eventTitles.orderPlaced,
-                    location: undefined,
-                    focusOnMap: false,
-                    hasOccurred: true
-                }
-            );
+                    start: DateTime.fromISO(orderDetailsData.createdAt),
+                    end: DateTime.fromISO(orderDetailsData.createdAt)
+                },
+                title: eventTitles.orderPlaced,
+                location: undefined,
+                focusOnMap: false,
+                hasOccurred: true
+            });
 
             // If no `delivery` event exists, create one based on the planned delivery time.
             if (!trackingEvents.some(e => e.type === "delivery"))
@@ -58,19 +56,8 @@ export class TrackingModule extends AppModule
                     type: "delivery",
                     dateTimeRange:
                     {
-                        start: DateTime
-                            .fromISO(orderDetailsData.deliveryEarliestDate, { setZone: true })
-                            .plus({ hours: Number(orderDetailsData.deliveryEarliestTime.substr(0, 2)) })
-                            .plus({ minutes: Number(orderDetailsData.deliveryEarliestTime.substr(3, 2)) })
-                            .plus({ seconds: Number(orderDetailsData.deliveryEarliestTime.substr(6, 2)) })
-                            .toISO(),
-
-                        end: DateTime
-                            .fromISO(orderDetailsData.deliveryLatestDate, { setZone: true })
-                            .plus({ hours: Number(orderDetailsData.deliveryLatestTime.substr(0, 2)) })
-                            .plus({ minutes: Number(orderDetailsData.deliveryLatestTime.substr(3, 2)) })
-                            .plus({ seconds: Number(orderDetailsData.deliveryLatestTime.substr(6, 2)) })
-                            .toISO()
+                        start: this.getDateTimeString(orderDetailsData.deliveryEarliestDate, orderDetailsData.deliveryEarliestTime),
+                        end: this.getDateTimeString(orderDetailsData.deliveryLatestDate, orderDetailsData.deliveryLatestTime)
                     },
                     title: eventTitles.deliveryEstimated,
                     location:
@@ -96,7 +83,7 @@ export class TrackingModule extends AppModule
 
             // Get the last known position of the driver, if any.
             const driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
-            
+
             // Set the response body.
             context.response.body =
             {
@@ -109,21 +96,20 @@ export class TrackingModule extends AppModule
                     weight: c.weight,
                     dimensions:
                     {
-                        length: c.dimension.lenght, //NB Misspelling from api response model
+                        // HACK: Misspelling is intentional, to match the property name in the data.
+                        length: c.dimension.lenght,
                         width: c.dimension.width,
-                        height: c.dimension.height,
+                        height: c.dimension.height
                     },
                     tags: c.tags
                 })),
-                driver: driverData 
-                ?
+                driver: driverData == null ? undefined :
                 {
-                    id: "unknownAtTheMoment",
+                    id: "driver-id",
                     firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
-                } 
-                : null
+                }
             };
 
             // Set the response status.
@@ -144,14 +130,14 @@ export class TrackingModule extends AppModule
             body:
             {
                 internalOrderIds: [orderId],
-                
+
                 // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
                 outfitIds: environment.name === "production"
-                ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3"]
-                : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
+                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3"]
+                    : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
             }
         });
-        
+
         return result.data![0];
     }
 
@@ -200,34 +186,18 @@ export class TrackingModule extends AppModule
     }
 
     /**
-     * 
-     * @param dateTime is the exact eta time provided in the event
-     * @returns a datetime range with start and from
-     */
-    private getTimeRangeFromEtaEvents(dateTime: DateTime) : any
-    {
-        const result = 
-        {
-            start: dateTime.minus({minutes: 10}),
-            end: dateTime.plus({minutes: 15})
-        };
-
-        return result;
-    }
-
-    /**
      * Creates a tracking event based on the specified order event data, if supported.
-     * @param data The data representing the order event.
+     * @param eventData The data representing the order event.
      * @returns The tracking event, or null if the order event has no corresponding tracking event.
      */
-    private getTrackingEvent(data: any): any | null
+    private getTrackingEvent(eventData: any): any | null
     {
-        switch (data.eventType)
+        switch (eventData.eventType)
         {
             case "order-created": return {
-                id: data.id,
+                id: eventData.id,
                 type: "order",
-                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
                 title: eventTitles.orderPlaced,
                 location: undefined,
                 focusOnMap: false,
@@ -235,23 +205,11 @@ export class TrackingModule extends AppModule
             };
 
             case "order-pickup-completed": return {
-                id: data.id,
+                id: eventData.id,
                 type: "pickup",
-                dateTimeRange: { start: data.data.timeOfEvent, end: data.data.timeOfEvent },
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
                 title: eventTitles.outForDelivery,
-                location:
-                {
-                    address:
-                    {
-                        id: data.data.pickupLocation.position.latitude.toString() + data.data.pickupLocation.position.longitude.toString(),
-                        primary: data.data.pickupLocation.name
-                    },
-                    position:
-                    {
-                        latitude: data.data.pickupLocation.position.latitude,
-                        longitude: data.data.pickupLocation.position.longitude
-                    }
-                },
+                location: this.getLocation(eventData.data.pickupLocation),
                 focusOnMap: false,
                 hasOccurred: true
             };
@@ -259,48 +217,84 @@ export class TrackingModule extends AppModule
             case "order-delivery-eta-provided": return {
                 id: "estimated-delivery-event-id",
                 type: "delivery",
-                dateTimeRange: this.getTimeRangeFromEtaEvents(DateTime.fromISO(data.data.deliveryEta)),
+                dateTimeRange: this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta)),
                 title: eventTitles.deliveryEstimated,
-                location:
-                {
-                    address:
-                    {
-                        id: data.data.deliveryLocation.position.latitude.toString() + data.data.deliveryLocation.position.longitude.toString(),
-                        primary: data.data.deliveryLocation.name
-                    },
-                    position:
-                    {
-                        latitude: data.data.deliveryLocation.position.latitude,
-                        longitude: data.data.deliveryLocation.position.longitude
-                    }
-                },
+                location: this.getLocation(eventData.data.deliveryLocation),
                 focusOnMap: true,
                 hasOccurred: false
             };
 
             case "order-delivery-completed": return {
-                id: data.id,
+                id: eventData.id,
                 type: "delivery",
                 title: eventTitles.deliveryCompleted,
-                dateTimeRange: { start: data.data.timeOfEvent, end: data.data.timeOfEvent },
-                location:
-                {
-                    address:
-                    {
-                        id: data.data.deliveryLocation.position.latitude.toString() + data.data.deliveryLocation.position.longitude.toString(),
-                        primary: data.data.deliveryLocation.name
-                    },
-                    position:
-                    {
-                        latitude: data.data.deliveryLocation.position.latitude,
-                        longitude: data.data.deliveryLocation.position.longitude
-                    }
-                },
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
+                location: this.getLocation(eventData.data.deliveryLocation),
                 focusOnMap: true,
                 hasOccurred: true
             };
 
             default: return null;
         }
+    }
+
+    /**
+     * Gets the date-time string representing the specified date and time.
+     * @param isoDateString The date string.
+     * @param isoTimeString The time string.
+     * @returns The date-time string representing the specified date and time.
+     */
+    private getDateTimeString(isoDateString: string, isoTimeString: string): string
+    {
+        return DateTime
+            .fromISO(isoDateString, { setZone: true })
+            .plus({ hours: parseInt(isoTimeString.substr(0, 2)) })
+            .plus({ minutes: parseInt(isoTimeString.substr(3, 2)) })
+            .plus({ seconds: parseInt(isoTimeString.substr(6, 2)) })
+            .toISO();
+    }
+
+    /**
+     * Gets the `Location` model based on the location specified in an order event.
+     * @param locationData The data representing the location specified in an order event.
+     * @returns The specified location, represented as a `Location` model.
+     */
+    private getLocation(locationData: any): any
+    {
+        return {
+            address:
+            {
+                primary: locationData.name
+            },
+            position:
+            {
+                latitude: locationData.position.latitude,
+                longitude: locationData.position.longitude
+            }
+        };
+    }
+
+    /**
+     * Gets the `DateTimeRange` to use as the estimated time of delivery, based on
+     * the `DateTime` representing the estimated time of arrival at the location.
+     * Note that the range will narrow as the estimate approaches the current time.
+     * @param dateTime The estimated time of arrival at the location
+     * @returns The time range to show as the estimated time of delivery
+     */
+    private getPaddedEta(dateTime: DateTime): any
+    {
+        // The threshold in minutes for when narrowing of the estimate should begin.
+        const thresholdForNarrowing = 25;
+
+        const timeUntilEta = Math.max(0, dateTime.diffNow().as("minutes"));
+        const scaleFactor = Math.min(1, timeUntilEta / thresholdForNarrowing);
+
+        const result =
+        {
+            start: dateTime.minus({ minutes: Math.round(scaleFactor * 8) + 2 }),
+            end: dateTime.plus({ minutes: Math.round(scaleFactor * 13) + 2 })
+        };
+
+        return result;
     }
 }
