@@ -2,7 +2,7 @@ import path from "path";
 import pkgDir from "pkg-dir";
 
 // Get the path for the root of the package.
-const packageFolderPath = `${pkgDir.sync()}/`;
+const packageFolder = `${pkgDir.sync()}/`;
 
 /**
  * The paths and globs used by the tasks.
@@ -12,7 +12,12 @@ export const paths =
     /**
      * The path for the package folder.
      */
-    packageFolder: packageFolderPath,
+    packageFolder: packageFolder,
+
+    /**
+     * The path for the `node_modules` folder.
+     */
+    nodeModulesFolder: resolve("node_modules/"),
 
     /**
      * The path for the `src` folder.
@@ -20,27 +25,27 @@ export const paths =
     srcFolder: resolve("src/"),
 
     /**
-     * The paths for the files that should be translated.
+     * The globs matching the paths for the files that should be translated.
      */
-    translatables:
+    translationSources:
     {
         /**
-         * The glob patterns matching files that should be translated.
+         * The globs matching the paths for the files to include.
+         * This should match the tests for the `translation-loader` plugin in the Webpack build config.
          */
-        includedGlobs:
+        includedFileGlobs:
         [
             resolve("src/**/resources/strings/**/*.json")
         ],
 
         /**
-         * The glob patterns matching files that should not be translated.
+         * The globs matching the paths for the files to exclude.
          * Use this to e.g. exclude features that are not yet ready for translation.
-         * BUG: Note that these apparently won't work if resolved.
          */
-        excludedGlobs:
+        excludedFileGlobs:
         [
-            "**/.*",
-            "**/~*"
+            resolve("**/.*"),
+            resolve("**/~*")
         ]
     },
 
@@ -48,7 +53,7 @@ export const paths =
      * The path for the files containing the translations for the app,
      * where `{locale}` is a placeholder for the locale code.
      */
-    translations: resolve("src/resources/translations/{locale}.json"),
+    translationImportFile: resolve("src/resources/translations/{locale}.json"),
 
     /**
      * The artifacts that may be produced.
@@ -56,9 +61,14 @@ export const paths =
     artifacts:
     {
         /**
+         * The path for the folder representing the `build` artifact.
+         */
+        buildFolder: resolve("artifacts/build/"),
+
+        /**
          * The path for the file to which translatable strings will be exported.
          */
-        translatables: resolve("artifacts/translation/export.json")
+        translationExportFile: resolve("artifacts/translation/export.json")
     }
 };
 
@@ -69,5 +79,5 @@ export const paths =
  */
 function resolve(pathOrGlob: string): string
 {
-    return path.join(packageFolderPath, pathOrGlob);
+    return path.join(packageFolder, pathOrGlob);
 }

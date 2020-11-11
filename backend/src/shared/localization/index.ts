@@ -37,7 +37,7 @@ export function getStrings(jsonFilePath: string): MapObject<string>
     const parentModuleDirPath = path.dirname(parentModule()!);
 
     // Construct the cache key.
-    const cacheKey = `${parentModuleDirPath}|${jsonFilePath}`;
+    const cacheKey = `${parentModuleDirPath}|${jsonFilePath}|${localeCode}`;
 
     // Try to get the strings from the cache.
     let result = cache.get(cacheKey);

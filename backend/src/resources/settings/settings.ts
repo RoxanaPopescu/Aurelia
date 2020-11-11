@@ -1,5 +1,5 @@
-import fs from "fs";
 import path from "path";
+import globs from "globs";
 import { environment } from "../../env";
 import { IApiClientSettings } from "../../shared/infrastructure";
 import { Duration } from "luxon";
@@ -17,8 +17,8 @@ export default
         /**
          * The codes identifying the supported locales.
          */
-        supportedLocaleCodes: fs.readdirSync(path.join(__dirname, "../translations"))
-            .map(fileName => fileName.slice(0, -5)),
+        supportedLocaleCodes: globs.sync(path.resolve(__dirname, "../translations/*.json"))
+            .map(fileName => path.basename(fileName, ".json")),
 
         /**
          * The code identifying the default locale.

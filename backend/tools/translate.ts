@@ -17,9 +17,7 @@ export type TranslateOptions = IPluginConfig & IExportTaskConfig &
     includedFilePaths: string[];
 
     /**
-     * An array of glob patterns matching files that should be excluded from import and export.
-     * Use this to exclude files related to features that are not yet ready for translation.
-     * Default is undefined.
+     * An array of glob patterns matching files from which translation should not be exported.
      */
     excludedFilePaths?: string[];
 };
@@ -31,14 +29,16 @@ export type TranslateOptions = IPluginConfig & IExportTaskConfig &
 export const translateConfig: TranslateOptions =
 {
     // Translation options.
+    templateLanguage: "aurelia",
+    allowDirectAnnotation: true,
     prefixIdsInContentFiles: true,
     baseFilePath: paths.srcFolder,
 
     // Export options.
-    exportFilePath: paths.artifacts.translatables,
+    exportFilePath: paths.artifacts.translationExportFile,
     normalizeContent: true,
 
     // File paths.
-    includedFilePaths: paths.translatables.includedGlobs,
-    excludedFilePaths: paths.translatables.excludedGlobs
+    includedFilePaths: paths.translationSources.includedFileGlobs,
+    excludedFilePaths: paths.translationSources.excludedFileGlobs
 };
