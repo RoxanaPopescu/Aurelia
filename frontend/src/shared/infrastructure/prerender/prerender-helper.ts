@@ -11,6 +11,6 @@ export function setPrerenderStatusCode(code: number): void
 
         // Set the status code that should be returned to crawlers.
         const prerenderStatusCodeElement = document.head.querySelector('meta[name="prerender-status-code"]') as HTMLMetaElement;
-        prerenderStatusCodeElement.setAttribute("content", code.toString());
+        prerenderStatusCodeElement?.setAttribute("content", code.toString());
     }
 }
