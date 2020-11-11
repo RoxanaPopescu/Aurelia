@@ -16,11 +16,11 @@
   },
   "main": "artifacts/build/index.js",
   "scripts": {
-    "postinstall": "cross-env electron-builder install-app-deps",
-    "build": "cross-env rimraf \"artifacts/{build}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/frontend\" && tsc",
-    "start": "cross-env electron \"artifacts/build/\" --debug",
-    "lint": "cross-env tslint --project \"tsconfig.json\"",
-    "package": "cross-env rimraf 'artifacts/package' && electron-builder --publish=never --config 'tools/package.yml' -mwl"
+    "postinstall": "electron-builder install-app-deps",
+    "build": "rimraf \"artifacts/{build}\" && cpx \"../../artifacts/build/**\" \"artifacts/build/frontend\" && tsc",
+    "start": "electron \"artifacts/build/\" --debug",
+    "lint": "tslint --project \"tsconfig.json\"",
+    "package": "rimraf 'artifacts/package' && electron-builder --publish=never --config 'tools/package.yml' -mwl"
   },
   "dependencies": {
     "electron-pdf-window": "^1.0.12",
@@ -30,7 +30,6 @@
   "devDependencies": {
     "@types/node": "^14.6.1",
     "cpx": "^1.5.0",
-    "cross-env": "^7.0.2",
     "electron": "^10.0.1",
     "electron-builder": "^22.8.0",
     "electron-pdf-window": "^1.0.12",

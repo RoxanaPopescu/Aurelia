@@ -22,7 +22,7 @@ for (const importFilePath of importFilePaths)
     // Update the import file, such that:
     // - The order of the keys is the same as in the export file.
     // - Any keys that exist in the import file, but not in the export file, are removed.
-    // - Any keys that exist in the export, file but not in the import file, are added with the source string as value.
+    // - Any keys that exist in the export file, but not in the import file, are added with the source string as value.
 
     const newImportFileContents = {} as any;
 
