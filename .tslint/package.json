@@ -17,7 +17,7 @@
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
-    "build": "cross-env tsc"
+    "build": "tsc"
   },
   "peerDependencies": {
     "tslib": "^1.10.0",
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
-    "cross-env": "^6.0.3",
     "tslib": "^1.10.0",
     "tslint": "^6.0.0",
     "typescript": "^3.7.5"

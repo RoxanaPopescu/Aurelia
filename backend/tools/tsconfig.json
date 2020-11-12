@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": [
+      "es2018"
+    ],
+    "module": "commonjs",
+    "target": "es2018",
+
+    // Because these modules does not include types.
+    // See: https://github.com/aurelia/webpack-plugin/issues/143
+    "baseUrl": ".",
+  },
+  "exclude": [
+    "**/~*"
+  ]
+}

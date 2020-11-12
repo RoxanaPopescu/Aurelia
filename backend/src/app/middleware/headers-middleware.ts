@@ -31,8 +31,7 @@ export function headersMiddleware(): Middleware
             namespace.set("headers-middleware",
             {
                 authorization,
-                // HACK: This shouyld just be `correlation-id`, but for now, we need to support the legacy name.
-                "Mover-CorrelationId": correlationId,
+                correlationId,
                 localeCode,
                 marketCode,
                 currencyCode

@@ -1,7 +1,8 @@
 import { DateTime } from "luxon";
+import { getStrings } from "../../../shared/localization";
 import { environment } from "../../../env";
 import { AppModule } from "../../app-module";
-import eventTitles from "./resources/strings/tracking-event-titles.json";
+import { MapObject } from "shared/types";
 
 /**
  * Represents a module exposing endpoints related to tracking.
@@ -17,6 +18,9 @@ export class TrackingModule extends AppModule
          */
         this.router.get("/v2/tracking/:id", async context =>
         {
+            // tslint:disable-next-line: no-require-imports
+            const eventTitles = getStrings("./resources/strings/tracking-event-titles.json");
+
             const trackingId = context.params.id.toLowerCase();
 
             // Fetch the order details.
@@ -25,10 +29,38 @@ export class TrackingModule extends AppModule
             context.internal();
 
             // Fetch the order events.
-            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.internalOrderId);
+            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
+
+            // If the order is already delivered, remove any `order-delivery-eta-provided` event.
+            if (orderEventsData.some(e => e.type === "order-delivery-completed"))
+            {
+                const indexToRemove = orderEventsData.findIndex(e => e.type === "order-delivery-eta-provided");
+
+                if (indexToRemove > -1)
+                {
+                    orderEventsData.splice(indexToRemove, 1);
+                }
+            }
 
             // Map the relevant order events to tracking events.
-            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e)).filter(e => e != null);
+            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles)).filter(e => e != null);
+
+            // Always create the `order` tracking event based on the order details,
+            // as `order-placed` order event does not include all the data we need.
+            trackingEvents.unshift(
+            {
+                id: "order-created-event-id",
+                type: "order",
+                dateTimeRange:
+                {
+                    start: DateTime.fromISO(orderDetailsData.createdAt),
+                    end: DateTime.fromISO(orderDetailsData.createdAt)
+                },
+                title: eventTitles.orderPlaced,
+                location: undefined,
+                focusOnMap: false,
+                hasOccurred: true
+            });
 
             // If no `delivery` event exists, create one based on the planned delivery time.
             if (!trackingEvents.some(e => e.type === "delivery"))
@@ -39,15 +71,8 @@ export class TrackingModule extends AppModule
                     type: "delivery",
                     dateTimeRange:
                     {
-                        start: DateTime
-                            .fromISO(orderDetailsData.deliveryEarliestDate, { setZone: true })
-                            .plus({ seconds: orderDetailsData.deliveryEarliestTime })
-                            .toISO(),
-
-                        end: DateTime
-                            .fromISO(orderDetailsData.deliveryLatestDate, { setZone: true })
-                            .plus({ seconds: orderDetailsData.deliveryLatestTime })
-                            .toISO()
+                        start: this.getDateTimeString(orderDetailsData.deliveryEarliestDate, orderDetailsData.deliveryEarliestTime),
+                        end: this.getDateTimeString(orderDetailsData.deliveryLatestDate, orderDetailsData.deliveryLatestTime)
                     },
                     title: eventTitles.deliveryEstimated,
                     location:
@@ -69,10 +94,10 @@ export class TrackingModule extends AppModule
             }
 
             // Get the data for the driver associated with the estimated delivery.
-            const driverData = orderEventsData.find(e => e.type === "OrderDeliveryEtaProvided")?.driver;
+            const driverData = orderEventsData.find(e => e.type === "order-delivery-eta-provided")?.driver;
 
             // Get the last known position of the driver, if any.
-            const driverPosition = driverData.id ? await this.fetchDriverPosition(driverData.id) : undefined;
+            const driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
 
             // Set the response body.
             context.response.body =
@@ -84,16 +109,24 @@ export class TrackingModule extends AppModule
                     id: c.internalId,
                     barcode: c.barcode,
                     weight: c.weight,
-                    dimensions: c.dimension,
+                    dimensions:
+                    {
+                        // HACK: Misspelling is intentional, to match the property name in the data.
+                        length: c.dimension.lenght,
+                        width: c.dimension.width,
+                        height: c.dimension.height
+                    },
                     tags: c.tags
                 })),
-                driver:
+
+                driver: driverData == null ? undefined :
                 {
-                    id: driverData.id,
-                    firstName: driverData.firstName,
+                    id: "driver-id",
+                    firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
                 }
+
             };
 
             // Set the response status.
@@ -109,7 +142,7 @@ export class TrackingModule extends AppModule
     private async fetchOrderDetails(orderId: string): Promise<any>
     {
         // Fetch the order details.
-        const result = await this.apiClient.get<any[]>("/logistics/orders/consignor/detailOrders",
+        const result = await this.apiClient.post<any[]>("logistics/orders/consignor/DetailOrders",
         {
             body:
             {
@@ -117,8 +150,8 @@ export class TrackingModule extends AppModule
 
                 // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
                 outfitIds: environment.name === "production"
-                    ? "F1003E94-D520-4D0C-959A-AFB76BDC91F3"
-                    : "5D6DB3D4-7E69-4939-8014-D028A5EB47FF"
+                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3"]
+                    : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
             }
         });
 
@@ -133,16 +166,15 @@ export class TrackingModule extends AppModule
      */
     private async fetchOrderEvents(outfitId: string, orderId: string): Promise<any[]>
     {
-        const result = await this.apiClient.get<any[]>("/logistics/getevents",
+        const result = await this.apiClient.post<any[]>("orderevent/GetEvents",
         {
             body:
             {
                 eventTypes:
                 [
-                    "OrderCreated",
-                    "OrderPickupCompleted",
-                    "OrderDeliveryCompleted",
-                    "OrderDeliveryEtaProvided"
+                    "order-pickup-completed",
+                    "order-delivery-completed",
+                    "order-delivery-eta-provided"
                 ],
                 ownerId: outfitId,
                 ownerOrderId: orderId
@@ -159,7 +191,7 @@ export class TrackingModule extends AppModule
      */
     private async fetchDriverPosition(driverId: string): Promise<any>
     {
-        const result = await this.apiClient.get("/logistics/drivers/last-cooordinate",
+        const result = await this.apiClient.post("/logistics/drivers/last-cooordinate",
         {
             body:
             {
@@ -172,54 +204,115 @@ export class TrackingModule extends AppModule
 
     /**
      * Creates a tracking event based on the specified order event data, if supported.
-     * @param data The data representing the order event.
+     * @param eventData The data representing the order event.
+     * @param eventTitles The localized event titles.
      * @returns The tracking event, or null if the order event has no corresponding tracking event.
      */
-    private getTrackingEvent(data: any): any | null
+    private getTrackingEvent(eventData: any, eventTitles: MapObject<string>): any | null
     {
-        switch (data.type)
+        switch (eventData.eventType)
         {
-            case "OrderCreated": return {
-                id: data.id,
+            case "order-created": return {
+                id: eventData.id,
                 type: "order",
-                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
                 title: eventTitles.orderPlaced,
                 location: undefined,
                 focusOnMap: false,
                 hasOccurred: true
             };
 
-            case "OrderPickupCompleted": return {
-                id: data.id,
+            case "order-pickup-completed": return {
+                id: eventData.id,
                 type: "pickup",
-                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
                 title: eventTitles.outForDelivery,
-                location: data.pickupLocation,
+                location: this.getLocation(eventData.data.pickupLocation),
                 focusOnMap: false,
                 hasOccurred: true
             };
 
-            case "OrderDeliveryCompleted": return {
-                id: data.id,
-                type: "delivery",
-                dateTimeRange: { start: data.timeOfEvent, end: data.timeOfEvent },
-                title: eventTitles.deliveryCompleted,
-                location: data.deliveryLocation,
-                focusOnMap: true,
-                hasOccurred: true
-            };
-
-            case "OrderDeliveryEtaProvided": return {
+            case "order-delivery-eta-provided": return {
                 id: "estimated-delivery-event-id",
                 type: "delivery",
-                dateTimeRange: { start: data.deliveryTimeFrame.from, end: data.deliveryTimeFrame.to },
+                dateTimeRange: this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta)),
                 title: eventTitles.deliveryEstimated,
-                location: data.deliveryLocation,
+                location: this.getLocation(eventData.data.deliveryLocation),
                 focusOnMap: true,
                 hasOccurred: false
             };
 
+            case "order-delivery-completed": return {
+                id: eventData.id,
+                type: "delivery",
+                title: eventTitles.deliveryCompleted,
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
+                location: this.getLocation(eventData.data.deliveryLocation),
+                focusOnMap: true,
+                hasOccurred: true
+            };
+
             default: return null;
         }
+    }
+
+    /**
+     * Gets the date-time string representing the specified date and time.
+     * @param isoDateString The date string.
+     * @param isoTimeString The time string.
+     * @returns The date-time string representing the specified date and time.
+     */
+    private getDateTimeString(isoDateString: string, isoTimeString: string): string
+    {
+        return DateTime
+            .fromISO(isoDateString, { setZone: true })
+            .plus({ hours: parseInt(isoTimeString.substr(0, 2)) })
+            .plus({ minutes: parseInt(isoTimeString.substr(3, 2)) })
+            .plus({ seconds: parseInt(isoTimeString.substr(6, 2)) })
+            .toISO();
+    }
+
+    /**
+     * Gets the `Location` model based on the location specified in an order event.
+     * @param locationData The data representing the location specified in an order event.
+     * @returns The specified location, represented as a `Location` model.
+     */
+    private getLocation(locationData: any): any
+    {
+        return {
+            address:
+            {
+                primary: locationData.name
+            },
+            position:
+            {
+                latitude: locationData.position.latitude,
+                longitude: locationData.position.longitude
+            }
+        };
+    }
+
+    /**
+     * Gets the `DateTimeRange` to use as the estimated time of delivery, based on
+     * the `DateTime` representing the estimated time of arrival at the location.
+     * Note that the range will narrow as the estimate approaches the current time.
+     * @param dateTime The estimated time of arrival at the location
+     * @returns The time range to show as the estimated time of delivery
+     */
+    private getPaddedEta(dateTime: DateTime): any
+    {
+        // The threshold in minutes for when narrowing of the estimate should begin.
+        const thresholdForNarrowing = 25;
+
+        const timeUntilEta = Math.max(0, dateTime.diffNow().as("minutes"));
+        const scaleFactor = Math.min(1, timeUntilEta / thresholdForNarrowing);
+
+        const result =
+        {
+            start: dateTime.minus({ minutes: Math.round(scaleFactor * 8) + 2 }),
+            end: dateTime.plus({ minutes: Math.round(scaleFactor * 13) + 2 })
+        };
+
+        return result;
     }
 }

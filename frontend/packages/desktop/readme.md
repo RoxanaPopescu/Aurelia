@@ -20,6 +20,8 @@
 
    This will install the dependencies listed in the `package-lock.json` file.
 
+   > If you encounter errors related to `node-gyp`, [this may help](https://github.com/nodejs/node-gyp/issues/629).
+
 ## Build and debug
 
 1. **Build the `frontend` package for each locale, with the `desktop` platform as target**

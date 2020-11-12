@@ -1,3 +1,5 @@
+import path from "path";
+import globs from "globs";
 import { environment } from "../../env";
 import { IApiClientSettings } from "../../shared/infrastructure";
 import { Duration } from "luxon";
@@ -7,6 +9,23 @@ import { Duration } from "luxon";
  */
 export default
 {
+    /**
+     * Settings for the app.
+     */
+    app:
+    {
+        /**
+         * The codes identifying the supported locales.
+         */
+        supportedLocaleCodes: globs.sync(path.resolve(__dirname, "../translations/*.json"))
+            .map(fileName => path.basename(fileName, ".json")),
+
+        /**
+         * The code identifying the default locale.
+         */
+        defaultLocaleCode: "en-US"
+    },
+
     /**
      * Settings for the middleware.
      */

@@ -22,6 +22,8 @@
 
    This will install the dependencies listed in the `package-lock.json` file.
 
+   > If you encounter errors related to `node-gyp`, [this may help](https://github.com/nodejs/node-gyp/issues/629).
+
 ## Build and debug
 
 1. **Start the `develop` package task, which builds, watches and serves the project**
@@ -72,24 +74,41 @@
 
 ## Additional tasks
 
-* **Translate to Danish**
+* **Translate the project**
 
-  As a temporary solution to support Danish translations, we have a script that updates the
-  Danish translation file, removing any unused strings and adding any new, English strings.
-  It is then the responsibility of the developer to look at the file diff before comitting,
-  and to translate any new strings to Danish.
+  The following is the recommended workflow for manually updating translations.
 
-  > Please study the documentation for
-  > [gulp-translate](https://www.npmjs.com/package/gulp-translate),
-  > to make sure you understand how things work.
+  In a terminal in this package folder, execute the commands:
 
-  In a terminal in this package folder, execute the command:
+  ```
+  npm run translate-export
+  npm run translate-update
+  ```
+
+  This will export all translatable strings found in the application into a translation export file.
+  This file is then used to update any existing translation import files, such that:
+  - The order of the keys is the same as in the export file.
+  - Any keys that exist in the import file, but not in the export file, are removed.
+  - Any keys that exist in the export file, but not in the import file, are added with the source string as value.
+
+  It is then the responsibility of the developer to look at the file diff before comitting the changes,
+  and to translate any strings that were added. If a string cannot be translated before committing the changes,
+  it must be removed, such that it will be added again next time the script is executed.
+
+  Additionally, to generate a pseudo-translation import file, useful for testing, execute the command:
+
+  ```
+  npm run translate-pseudo
+  ```
+
+  Note that you can also execute all of the above, by simply executing the command:
 
   ```
   npm run translate
   ```
 
-  This will update the file `src/resources/translations/da.json`.
+  > Please study the documentation for [gulp-translate](https://www.npmjs.com/package/gulp-translate),
+  > to make sure you understand how this system works.
 
 * **Lint the project**
 
