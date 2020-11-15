@@ -56,9 +56,6 @@
     "@types/react-router-dom": "4.3.x",
     "mobx-react-devtools": "^6.1.1"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "license": "UNLICENSED",
   "scripts": {
     "prepare": "patch-package"

@@ -27,8 +27,9 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
     if (localeCode !== "en-US")
     {
         // To build for the specified locale, set the import file path.
-        translateConfig.importFilePath =
-            translateConfig.importFilePath.replace("{locale}", localeCode);
+        translateConfig.importFilePath = translateConfig.importFilePath instanceof Array
+            ? translateConfig.importFilePath?.map(p => p.replace("{locale}", localeCode))
+            : translateConfig.importFilePath?.replace("{locale}", localeCode);
     }
     else
     {
@@ -71,11 +72,14 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             // appears within a string literal, or if text nodes or attribute values contain a character
             // sequence that could be mistaken for the beginning of an interpolation or binding command.
 
-            // Ignore interpolations, i.e. `${expression}`.
+            // Ignore EJS fragments, i.e. `<%...%>`.
+            /<%[\s\S]*?%>/,
+
+            // Ignore Auralia string interpolations, i.e. `${...}`.
             new RegExp(`\\$\\{${"[^{]*?(\\{[^{]*?".repeat(5)}${"\\}[^{]*?)*".repeat(5)}\\}`, "s"),
 
-            // Ignore binding commands, i.e. `something.command="expression"`.
-            /[\w-]+\.([\w-]+)\s*=\s*("[^"]*[^\\]"|'[^']*[^\\]'|`[^`]*[^\\]`)/s
+            // Ignore Auralia binding commands, i.e. `something.command="..."`.
+            /[\w-]+\.([\w-]+)\s*=\s*("[^"]*"|'[^']*'|`[^`]*`)/s
         ]
     };
 
@@ -145,75 +149,32 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
         {
             rules:
             [
-                // Loader for `.scss` files defining themes, one of which will be loaded during app start.
-                // Note that we need `style-loader` to inject those.
+                // Loader for `.ts` and `.tsx` files.
                 {
-                    test: /\.s?css$/,
-                    include: [path.join(paths.srcFolder, "resources/themes")],
+                    test: /\.(ts|tsx)$/,
                     use:
-                    [
-                        {
-                            loader: "style-loader"
-                        },
-                        {
-                            loader: "css-loader"
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
-                        }
-                    ]
+                    {
+                        loader: "ts-loader"
+                    }
                 },
 
-                // Loader for `.scss` files required in `.ts` or `.tsx` files.
-                // Note that we need `style-loader` to inject those.
+                // Loader for `.worker.ts` files, representing modules that should be executed in a Web Worker.
                 {
-                    test: /\.s?css$/,
-                    issuer: /\.tsx?$/i,
-                    exclude: [path.join(paths.srcFolder, "resources/themes")],
+                    test: /\.worker\.ts$/,
                     use:
-                    [
-                        {
-                            loader: "style-loader"
-                        },
-                        {
-                            loader: "css-loader"
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
-                        }
-                    ]
+                    {
+                        loader: "worker-loader"
+                    }
                 },
 
-                // Loader for `.scss` files required in `.html` files.
-                // Note that we do not need `style-loader` to inject those, as Aurelia handles that itself.
+                // Loader for `.json` files containing translatable strings.
                 {
-                    test: /\.s?css$/,
-                    issuer: /\.html$/i,
-                    exclude: [path.join(paths.srcFolder, "resources/themes")],
+                    test: /[\\/]resources[\\/]strings[\\/].*\.json$/,
                     use:
-                    [
-                        {
-                            loader: "css-loader"
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: { sourceMap: true, plugins: () => [autoprefixer(autoprefixerOptions)] }
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: { sourceMap: true, sassOptions: { includePaths: paths.styleFolders } }
-                        }
-                    ]
+                    {
+                        loader: "translation-loader",
+                        options: translateConfig
+                    }
                 },
 
                 // Loader for `.html` files.
@@ -232,36 +193,78 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     ]
                 },
 
-                // Loader for `.json` files containing translatable strings.
+                // Loader for `.css` and `.scss` files required in `.html` files.
                 {
-                    test: /[\\/]resources[\\/]strings[\\/].*\.json$/,
+                    test: /\.(css|scss)$/,
+                    issuer: /\.html$/i,
+                    exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
-                    {
-                        loader: "translation-loader",
-                        options: translateConfig
-                    }
+                    [
+                        {
+                            loader: "css-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, esModule: false }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, postcssOptions: { plugins: [autoprefixer(autoprefixerOptions)] } }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, sassOptions: { includePaths: paths.styleFolders } }
+                        }
+                    ]
                 },
 
-                // Loader for `.worker.ts` files, representing modules that should executed in a Web Worker.
+                // Loader for `.css` and `.scss` files required in `.ts` or `.tsx` files.
                 {
-                    test: /\.worker\.ts$/,
+                    test: /\.(css|scss)$/,
+                    issuer: /\.(ts|tsx)$/i,
+                    exclude: [path.join(paths.srcFolder, "resources/themes")],
                     use:
-                    {
-                        loader: "worker-loader"
-                    }
+                    [
+                        {
+                            loader: "style-loader"
+                        },
+                        {
+                            loader: "css-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, postcssOptions: { plugins: [autoprefixer(autoprefixerOptions)] } }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, sassOptions: { includePaths: paths.styleFolders } }
+                        }
+                    ]
                 },
 
-                // Loader for `.ts` and `.tsx` files.
+                // Loader for `.css` and `.scss` files defining themes, one of which will be loaded during app start.
                 {
-                    test: /\.tsx?$/,
+                    test: /\.(css|scss)$/,
+                    include: [path.join(paths.srcFolder, "resources/themes")],
                     use:
-                    {
-                        loader: "ts-loader"
-                    }
+                    [
+                        {
+                            loader: "style-loader"
+                        },
+                        {
+                            loader: "css-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, postcssOptions: { plugins: [autoprefixer(autoprefixerOptions)] } }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: { sourceMap: !compilerOptions.environment.optimize, sassOptions: { includePaths: paths.styleFolders } }
+                        }
+                    ]
                 },
 
-                // Loader for `.svg` icon files, which bundles them as symbols
-                // for use with the `icon` component in our framework.
+                // Loader for `.svg` icon files, that bundles them as symbols for use with the `icon` component.
                 {
                     test: /\.svg$/,
                     include: paths.iconFolders,
@@ -349,14 +352,14 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
 
             new CopyWebpackPlugin(
             {
-                patterns: paths.resources.includeGlobs.map(includeGlob =>
+                patterns: paths.resources.includedFileGlobs.map(includedFileGlob =>
                 ({
                     context: paths.srcFolder,
-                    from: includeGlob,
+                    from: includedFileGlob,
                     to: buildFolder,
                     globOptions:
                     {
-                        ignore: paths.resources.excludeGlobs
+                        ignore: paths.resources.excludedFileGlobs
                     },
                     noErrorOnMissing: true
                 }))
@@ -368,7 +371,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 new BundleAnalyzerPlugin(
                 {
                     analyzerMode: "static",
-                    reportFilename: paths.artifacts.bundleAnalysis.replace("{locale}", localeCode),
+                    reportFilename: paths.artifacts.bundleAnalysisFile.replace("{locale}", localeCode),
                     defaultSizes: "parsed",
                     openAnalyzer: false,
                     generateStatsFile: false,

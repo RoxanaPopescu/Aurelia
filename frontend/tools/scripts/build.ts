@@ -59,7 +59,7 @@ const compilerOptions: ICompilerOptions =
         ...
         commander.environment === "development" ?
         {
-            debug: false,
+            debug: true,
             stubs: true,
             optimize: true,
             obfuscate: false,

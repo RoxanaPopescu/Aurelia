@@ -1,4 +1,5 @@
 // tslint:disable: no-submodule-imports
+
 import fs from "fs";
 import globs from "globs";
 import { Plugin } from "gulp-translate/lib/plugin/plugin";

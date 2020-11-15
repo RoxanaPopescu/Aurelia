@@ -68,7 +68,7 @@ export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpa
 
             if (compilerOptions.analyze)
             {
-                const bundleAnalysisPath = paths.artifacts.bundleAnalysis.replace("{locale}", compilerOptions.environment.locale);
+                const bundleAnalysisPath = paths.artifacts.bundleAnalysisFile.replace("{locale}", compilerOptions.environment.locale);
                 console.info(`Bundle analysis saved to:\n${Format.info(bundleAnalysisPath)}\n`);
             }
 

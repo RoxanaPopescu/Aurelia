@@ -1,4 +1,5 @@
 // tslint:disable: no-submodule-imports
+
 import fs from "fs";
 import path from "path";
 import { Plugin } from "gulp-translate/lib/plugin/plugin";
@@ -7,10 +8,10 @@ import { paths } from "../paths";
 import { Format } from "../webpack/helpers";
 
 // The path for the export file that should be translated.
-const exportFilePath = paths.artifacts.translatables;
+const exportFilePath = paths.artifacts.translationExportFile;
 
 // The path for the import file to create.
-const importFilePath = paths.resources.translations.replace("{locale}", "en-US-x-pseudo");
+const importFilePath = paths.translationImportFile.replace("{locale}", "en-x-pseudo");
 
 // Create the translate task.
 const plugin = new Plugin(translateConfig);

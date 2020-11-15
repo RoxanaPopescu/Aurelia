@@ -7,27 +7,27 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/thomas-darling/lingu-io.git"
+    "url": "https://github.com/lingu-io/cli.git"
   },
   "bugs": {
-    "url": "https://github.com/thomas-darling/lingu-io/issues"
+    "url": "https://github.com/lingu-io/cli/issues"
   },
   "engines": {
-    "node": ">=10.13.0 <13.0.0",
+    "node": ">=14.0.0 <15.0.0",
     "npm": ">=6.7.0 <7.0.0"
   },
   "scripts": {
     "build": "tsc"
   },
   "peerDependencies": {
-    "tslib": "^1.10.0",
-    "tslint": "^6.0.0",
-    "typescript": "^3.7.5"
+    "tslib": "^2.0.3",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.5"
   },
   "devDependencies": {
-    "@types/node": "^13.5.0",
-    "tslib": "^1.10.0",
-    "tslint": "^6.0.0",
-    "typescript": "^3.7.5"
+    "@types/node": "^14.14.7",
+    "tslib": "^2.0.3",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.5"
   }
 }

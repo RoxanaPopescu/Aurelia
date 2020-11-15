@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import focusTrap, { FocusTrap, Options, FocusTarget } from "focus-trap";
+import { createFocusTrap, FocusTrap, Options, FocusTarget } from "focus-trap";
 import { EventManager } from "shared/utilities";
 
 /**
@@ -113,7 +113,7 @@ export class TrapFocusCustomAttribute implements Options
      */
     public attached(): void
     {
-        this._focusTrap = focusTrap(this._element,
+        this._focusTrap = createFocusTrap(this._element,
         {
             onActivate: this.onActivating.bind(this),
             onDeactivate: this.onDeactivating.bind(this),

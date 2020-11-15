@@ -1,6 +1,6 @@
 # Stage 1: Build the `frontend` package.
 
-FROM node:10-alpine as build-frontend-stage
+FROM node:14-alpine as build-frontend-stage
 
 ## Setup default build variables.
 ARG ENVIRONMENT=development
@@ -64,7 +64,7 @@ RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-U
 
 # Stage 2: Build the `frontend-cloud` package.
 
-FROM node:10-alpine as build-frontend-cloud-stage
+FROM node:14-alpine as build-frontend-cloud-stage
 
 ## Set the node environment for the build process.
 ENV NODE_ENV build
@@ -103,7 +103,7 @@ RUN npm run build
 
 # Stage 3: Run
 
-FROM node:10-alpine as run-stage
+FROM node:14-alpine as run-stage
 
 ## Set the node environment for the build process.
 ENV NODE_ENV ${ENVIRONMENT}

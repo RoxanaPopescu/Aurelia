@@ -61,12 +61,6 @@ export class ModalHrefCustomAttribute
 
         this._element.addEventListener("keydown", (event: KeyboardEvent) =>
         {
-            // Ignore the event if any modifier key is pressed.
-            if (!event.key || event.key.length > 1 || event.metaKey || event.ctrlKey)
-            {
-                return;
-            }
-
             // Handle the event as a click if the `Enter` key is pressed.
             if (event.key === "Enter")
             {
@@ -88,8 +82,12 @@ export class ModalHrefCustomAttribute
             return;
         }
 
-        // Don't handle the event if it originated from an anchor with an href nested inside the element.
-        if (event.target !== this._element && event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href"))
+        // Determine whether the target is an anchor with an `href` attribute.
+        const targetIsAnchorWithHref = event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href");
+
+        // Don't handle the event if it originated from a nested element,
+        // and that nested element is an anchor with an `href` attribute.
+        if (targetIsAnchorWithHref && event.target !== this._element)
         {
             return;
         }

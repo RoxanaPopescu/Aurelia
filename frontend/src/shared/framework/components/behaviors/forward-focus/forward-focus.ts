@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import tabbable from "tabbable";
+import { tabbable } from "tabbable";
 
 /**
  * Custom attribute that forwards focus to the specified element, or to the first

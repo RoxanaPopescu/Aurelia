@@ -1,12 +1,19 @@
 "use strict";
+// tslint:disable: no-submodule-imports file-name-casing
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Rule = void 0;
 const tslib_1 = require("tslib");
+// HACK: Pretend this module lives in the same `node_modules` folder as the running `tslint` instance.
 if (module.parent) {
     module.paths.unshift(...module.parent.paths);
 }
 const ts = tslib_1.__importStar(require("typescript"));
 const tslint = tslib_1.__importStar(require("tslint/lib"));
 const OPTION_ALLOW_SINGLE_LINE_BLOCKS = "allow-single-line-blocks";
+/**
+ * Represents a custom TSLint rule for validating that braces are placed on separate lines.
+ * Note the configuration option, which allows single-line blocks - you probably want to enable this.
+ */
 class Rule extends tslint.Rules.AbstractRule {
     apply(sourceFile) {
         const oneLineWalker = new OneLineWalker(sourceFile, this.getOptions());
@@ -78,6 +85,8 @@ class OneLineWalker extends tslint.RuleWalker {
             }
         }
         if (finallyBlock != null) {
+            // HACK: The `findChildOfKind` method is marked as internal, but it's there and is used for this purpose:
+            // https://github.com/Microsoft/TypeScript/blob/65125791d2692a54e5eb4183846486993e38040e/src/services/documentHighlights.ts#L489
             const finallyKeyword = ts.findChildOfKind(node, ts.SyntaxKind.FinallyKeyword, sourceFile);
             const finallyKeywordLine = sourceFile.getLineAndCharacterOfPosition(finallyKeyword.getStart()).line;
             if (tryClosingBraceLine === finallyKeywordLine) {
@@ -93,6 +102,7 @@ class OneLineWalker extends tslint.RuleWalker {
                     this.addFailure(failure);
                 }
             }
+            // HACK: There's currently no 'visitFinallyClause' method in TSLint, so for now, we have to explicitly call a custom method.
             this.customVisitFinallyClause(finallyKeyword, finallyBlock);
         }
         super.visitTryStatement(node);

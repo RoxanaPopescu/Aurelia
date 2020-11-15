@@ -2,7 +2,7 @@ import path from "path";
 import pkgDir from "pkg-dir";
 
 // Get the path for the root of the package.
-const packageFolderPath = `${pkgDir.sync()}/`;
+const packageFolder = `${pkgDir.sync()}/`;
 
 /**
  * The paths and globs used by the tasks.
@@ -12,7 +12,7 @@ export const paths =
     /**
      * The path for the package folder.
      */
-    packageFolder: packageFolderPath,
+    packageFolder: packageFolder,
 
     /**
      * The path for the `node_modules` folder.
@@ -44,7 +44,7 @@ export const paths =
     ],
 
     /**
-     * The paths for the folders the SCSS transpiler should look in when resolving imports.
+     * The paths for the root folders to use when resolving imports in `.scss` files.
      */
     styleFolders:
     [
@@ -53,14 +53,14 @@ export const paths =
     ],
 
     /**
-     * The resources that should be copied to the `build` artifact.
+     * The globs matching the paths for the resources that should be copied to the `build` artifact.
      */
     resources:
     {
         /**
-         * The include globs.
+         * The globs matching the paths to include.
          */
-        includeGlobs:
+        includedFileGlobs:
         [
             resolve("src/**/resources/fonts/**"),
             resolve("src/**/resources/images/**"),
@@ -69,23 +69,48 @@ export const paths =
         ],
 
         /**
-         * The exclude globs.
-         * BUG: Note that these apparently won't work if resolved.
+         * The globs matching the paths to exclude.
          */
-        excludeGlobs:
+        excludedFileGlobs:
         [
-            "**/.*",
-            "**/~*",
-            "**/Thumbs.db",
-            "**/*.psd"
+            resolve("**/.*"),
+            resolve("**/~*"),
+            resolve("**/Thumbs.db"),
+            resolve("**/*.psd")
+        ]
+    },
+
+    /**
+     * The globs matching the paths for the files that should be translated.
+     */
+    translationSources:
+    {
+        /**
+         * The globs matching the paths for the files to include.
+         * This should match the tests for the `translation-loader` plugin in the Webpack build config.
+         */
+        includedFileGlobs:
+        [
+            resolve("src/**/*.html"),
+            resolve("src/**/resources/strings/**/*.json")
         ],
 
         /**
-         * The path for the files containing the translations for the app,
-         * where `{locale}` will be replaced with the locale code for the built.
+         * The globs matching the paths for the files to exclude.
+         * Use this to e.g. exclude features that are not yet ready for translation.
          */
-        translations: resolve("src/resources/translations/{locale}.json")
+        excludedFileGlobs:
+        [
+            resolve("**/.*"),
+            resolve("**/~*")
+        ]
     },
+
+    /**
+     * The path for the files containing the translations for the app,
+     * where `{locale}` is a placeholder for the locale code.
+     */
+    translationImportFile: resolve("src/resources/translations/{locale}.json"),
 
     /**
      * The artifacts that may be produced.
@@ -98,14 +123,15 @@ export const paths =
         buildFolder: resolve("artifacts/build/"),
 
         /**
-         * The path for the file to which translatable strings will be exported.
+         * The path for the folder representing the `bundle-analysis` artifact,
+         * where `{locale}` is a placeholder for the locale code.
          */
-        translatables: resolve("artifacts/translation/export.json"),
+        bundleAnalysisFile: resolve("artifacts/build/{locale}/bundle-analysis.html"),
 
         /**
-         * The path for the folder representing the `bundle-analysis` artifact.
+         * The path for the file to which translatable strings will be exported.
          */
-        bundleAnalysis: resolve("artifacts/build/{locale}/bundle-analysis.html")
+        translationExportFile: resolve("artifacts/translation/export.json")
     }
 };
 
@@ -116,5 +142,5 @@ export const paths =
  */
 function resolve(pathOrGlob: string): string
 {
-    return path.join(packageFolderPath, pathOrGlob);
+    return path.join(packageFolder, pathOrGlob);
 }
