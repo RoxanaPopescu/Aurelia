@@ -26,6 +26,9 @@ export class ServerEnvironment
         this.apiBaseUrl = this.name === "development"
             ? "https://test-mover.azure-api.net/"
             : "https://prod-mover.azure-api.net/";
+        this.noiApiBaseUrl = this.name === "development"
+            ? "https://noi.mover.dev/api/"
+            : "https://api.mover.dk/api/";
         this.subscriptionKey = this.name === "development"
             ? "bcf1f656a0844acb9fd5a33d61832afd"
             : "afc3a3e5918b4dec9d3cf96090388532";
@@ -66,6 +69,12 @@ export class ServerEnvironment
      * Note that this is independent of the `appBaseUrl` and must end with a `/`.
      */
     public apiBaseUrl: string;
+
+    /**
+     * The base URL for the NOI API.
+     * Note that this is independent of the `appBaseUrl` and must end with a `/`.
+     */
+    public noiApiBaseUrl: string;
 
     /**
      * The subscription key for our gateway

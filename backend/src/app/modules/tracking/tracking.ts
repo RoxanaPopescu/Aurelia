@@ -79,10 +79,10 @@ export class TrackingModule extends AppModule
                     {
                         address:
                         {
-                            id: orderDetailsData.consigneeAddressPosition.locationId,
+                            id: orderDetailsData.consigneeAddressPosition?.locationId,
                             primary: orderDetailsData.consigneeAddress
                         },
-                        position:
+                        position: orderDetailsData.consigneeAddressPosition == null ? undefined :
                         {
                             latitude: orderDetailsData.consigneeAddressPosition.latitude,
                             longitude: orderDetailsData.consigneeAddressPosition.longitude
@@ -121,7 +121,7 @@ export class TrackingModule extends AppModule
 
                 driver: driverData == null ? undefined :
                 {
-                    id: "driver-id",
+                    id: driverData.id,
                     firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
@@ -193,6 +193,7 @@ export class TrackingModule extends AppModule
     {
         const result = await this.apiClient.post("/logistics/drivers/last-cooordinate",
         {
+            noi: true,
             body:
             {
                 driverId: driverId

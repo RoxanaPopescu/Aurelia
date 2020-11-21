@@ -30,6 +30,12 @@ export interface IApiClientSettings
     endpointUrlPattern: string;
 
     /**
+     * The URL pattern for the NOI endpoints, where `{path}` will be replaced
+     * with the endpoint path.
+     */
+    noiEndpointUrlPattern: string;
+
+    /**
      * The endpoint settings, where the keys represent the path to which
      * the setting applies. If multiple settings match a request, the most
      * specific match will be used. Note that default settings for all

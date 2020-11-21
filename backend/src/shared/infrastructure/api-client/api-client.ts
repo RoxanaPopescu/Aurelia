@@ -297,7 +297,7 @@ export class ApiClient
         }
 
         // Construct the endpoint URL.
-        let fetchUrl = this._settings.endpointUrlPattern
+        let fetchUrl = (options.noi ? this._settings.noiEndpointUrlPattern : this._settings.endpointUrlPattern)
             .replace("{version}", endpointSettings.version)
             .replace("{path}", path);
 
