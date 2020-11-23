@@ -72,6 +72,7 @@ export default
                 {
                     // HACK: Needed when calling NOI endpoints.
                     "x-api-key": "moverwebaccess-4Q9BuDEbzcjZfGqa",
+                    "x-api-token": "jf1OWVm9Yw4qE3f14wHUMlrSh0J",
                     "x-version": "5.0.0",
 
                     "Ocp-Apim-Subscription-Key": environment.subscriptionKey,
