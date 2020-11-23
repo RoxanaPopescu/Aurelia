@@ -14,16 +14,23 @@ export class CollectionPointModule extends AppModule
          */
         this.router.get("/v2/collection-point/details/:id", async context =>
         {
-            const driver = await this.validateDriverLogin(context.request.headers["token"]);
+            const loginResult = await this.validateDriverLogin(context);
+
+            console.log(
+                loginResult.driver.id
+            );
 
             const result = await this.apiClient.post("collection-point/details",
             {
                 body:
                 {
                     id: context.params.id,
-                    outfitId: driver.outfitId
+                    outfitId: loginResult.outfitId,
+                    ownerId: loginResult.outfitId
                 }
             });
+
+            // FIXME: Remove owner id
 
             context.response.body = result.data;
             context.response.status = 200;
@@ -35,13 +42,13 @@ export class CollectionPointModule extends AppModule
      * @param token The login token of the driver.
      * @returns A promise that will be resolved with the details about the driver if valid login.
      */
-    private async validateDriverLogin(token: string): Promise<any>
+    private async validateDriverLogin(context: any): Promise<any>
     {
         const result = await this.apiClient.get("logistics-platform/drivers/details-by-token",
         {
             noi: true,
             query: {
-                userToken: token
+                userToken: context.request.headers["token"]
               },
         });
 
