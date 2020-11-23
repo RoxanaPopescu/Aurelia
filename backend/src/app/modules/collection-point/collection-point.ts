@@ -14,15 +14,14 @@ export class CollectionPointModule extends AppModule
          */
         this.router.get("/v2/collection-point/details/:id", async context =>
         {
-            await this.validateDriverLogin(context.request.headers["token"]);
+            const driver = await this.validateDriverLogin(context.request.headers["token"]);
 
             const result = await this.apiClient.post("collection-point/details",
             {
                 body:
                 {
                     id: context.params.id,
-                    outfitId: context.user?.outfitId,
-                    actionById: context.user?.id
+                    outfitId: driver.outfitId
                 }
             });
 
