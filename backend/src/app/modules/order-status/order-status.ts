@@ -51,20 +51,13 @@ export class OrderStatusModule extends AppModule
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
 
             // If the order is already delivered, remove any `order-delivery-eta-provided` event.
-            if (orderEventsData.some(e => e.type === "order-delivery-completed" || e.type === "order-delivery-failed"))
+            if (orderEventsData.some(e => e.eventType === "order-delivery-completed" || e.eventType === "order-delivery-failed"))
             {
-                while (true)
-                {
-                    const indexToRemove = orderEventsData.findIndex(e => e.type === "order-delivery-eta-provided");
+                const indexToRemove = orderEventsData.findIndex(e => e.eventType === "order-delivery-eta-provided");
 
-                    if (indexToRemove > -1)
-                    {
-                        orderEventsData.splice(indexToRemove, 1);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                if (indexToRemove > -1)
+                {
+                    orderEventsData.splice(indexToRemove, 1);
                 }
             }
 
