@@ -253,6 +253,16 @@ export class OrderStatusModule extends AppModule
                 hasOccurred: true
             };
 
+            case "order-delivery-failed": return {
+                id: eventData.id,
+                type: "delivery-failed",
+                title: eventTitles.deliveryFailed,
+                dateTimeRange: { start: eventData.data.timeOfEvent, end: eventData.data.timeOfEvent },
+                location: this.getLocation(eventData.data.deliveryLocation),
+                focusOnMap: true,
+                hasOccurred: true
+            };
+
             default: return null;
         }
     }
