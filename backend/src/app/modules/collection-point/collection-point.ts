@@ -33,11 +33,11 @@ export class CollectionPointModule extends AppModule
          * Saves the colected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/order/collected", async context =>
+        this.router.post("/v2/collection-point/orders/collected", async context =>
         {
             const loginResult = await this.validateDriverLogin(context);
 
-            const result = await this.apiClient.post("collection-point/order/collected",
+            const result = await this.apiClient.post("collection-point/orders/collected",
             {
                 body:
                 {
@@ -55,11 +55,11 @@ export class CollectionPointModule extends AppModule
          * Saves the missing order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/order/missing", async context =>
+        this.router.post("/v2/collection-point/orders/missing", async context =>
         {
             const loginResult = await this.validateDriverLogin(context);
 
-            const result = await this.apiClient.post("collection-point/order/missing",
+            const result = await this.apiClient.post("collection-point/orders/missing",
             {
                 body:
                 {
@@ -77,11 +77,11 @@ export class CollectionPointModule extends AppModule
          * Saves the damaged order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/order/damaged", async context =>
+        this.router.post("/v2/collection-point/orders/damaged", async context =>
         {
             const loginResult = await this.validateDriverLogin(context);
 
-            const result = await this.apiClient.post("collection-point/order/damaged",
+            const result = await this.apiClient.post("collection-point/orders/damaged",
             {
                 body:
                 {
@@ -99,11 +99,11 @@ export class CollectionPointModule extends AppModule
          * Saves the rejected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/order/rejected", async context =>
+        this.router.post("/v2/collection-point/orders/rejected", async context =>
         {
             const loginResult = await this.validateDriverLogin(context);
 
-            const result = await this.apiClient.post("collection-point/order/rejected",
+            const result = await this.apiClient.post("collection-point/orders/rejected",
             {
                 body:
                 {
@@ -121,11 +121,11 @@ export class CollectionPointModule extends AppModule
          * Saves the not collected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/order/not-collected", async context =>
+        this.router.post("/v2/collection-point/orders/not-collected", async context =>
         {
             const loginResult = await this.validateDriverLogin(context);
 
-            const result = await this.apiClient.post("collection-point/order/NotCollected",
+            const result = await this.apiClient.post("collection-point/orders/NotCollected",
             {
                 body:
                 {
