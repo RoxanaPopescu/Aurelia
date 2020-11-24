@@ -23,10 +23,29 @@ export class OrderStatusModule extends AppModule
 
             const trackingId = context.params.id.toLowerCase();
 
-            // Fetch the order details.
-            const orderDetailsData = await this.fetchOrderDetails(trackingId);
-
             context.internal();
+
+            // Fetch the order details.
+
+            let orderDetailsData: any;
+
+            try
+            {
+                orderDetailsData = await this.fetchOrderDetails(trackingId);
+            }
+            catch (error: any)
+            {
+                // The API returns status 422 if the entity is not found, but the client expects status 404.
+                if (error.response?.status === 422)
+                {
+                    // Set the response status.
+                    context.response.status = 404;
+
+                    return;
+                }
+
+                throw error;
+            }
 
             // Fetch the order events.
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
