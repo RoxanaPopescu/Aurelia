@@ -1,6 +1,6 @@
 {
-  "./app/modules/tracking/resources/strings/tracking-event-titles:orderPlaced": "Bestilling modtaget",
-  "./app/modules/tracking/resources/strings/tracking-event-titles:outForDelivery": "Levering igang",
-  "./app/modules/tracking/resources/strings/tracking-event-titles:deliveryEstimated": "Forventet levering",
-  "./app/modules/tracking/resources/strings/tracking-event-titles:deliveryCompleted": "Leveret"
+  "./app/modules/order-status/resources/strings/order-status-event-titles:orderPlaced": "Bestilling modtaget",
+  "./app/modules/order-status/resources/strings/order-status-event-titles:outForDelivery": "Levering igang",
+  "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryEstimated": "Forventet levering",
+  "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryCompleted": "Leveret"
 }

@@ -1,5 +1,5 @@
 //Scenario 1, no order events
-GET http://127.0.0.1:8008/v2/tracking/8FB0E813-C7D5-2351-82C8-6C76AFD508BB HTTP/1.1
+GET http://127.0.0.1:8008/v2/order-status/8FB0E813-C7D5-2351-82C8-6C76AFD508BB HTTP/1.1
 x-locale: en
 x-market: XX
 user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
@@ -18,7 +18,7 @@ cookie: visitor=b26c1ae0-22e0-11eb-9d51-ff4cfbf4e20c; currency=DKK; theme=ikea; 
 ###
 
 //Scenario 2, only an eta event
-GET http://127.0.0.1:8008/v2/tracking/2EF17236-7AF5-DEA0-29A8-9E9082CF853B HTTP/1.1
+GET http://127.0.0.1:8008/v2/order-status/2EF17236-7AF5-DEA0-29A8-9E9082CF853B HTTP/1.1
 x-locale: en
 x-market: XX
 user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
@@ -36,7 +36,7 @@ cookie: visitor=b26c1ae0-22e0-11eb-9d51-ff4cfbf4e20c; currency=DKK; theme=ikea; 
 ###
 
 //Scenario 3, eta and orderpickupcompleted event
-GET http://127.0.0.1:8008/v2/tracking/6b98f2e1-64ba-2a73-eac5-61634296567c HTTP/1.1
+GET http://127.0.0.1:8008/v2/order-status/6b98f2e1-64ba-2a73-eac5-61634296567c HTTP/1.1
 x-locale: en
 x-market: XX
 user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
@@ -54,7 +54,7 @@ cookie: visitor=b26c1ae0-22e0-11eb-9d51-ff4cfbf4e20c; currency=DKK; theme=ikea; 
 ###
 
 //Scenario 4, eta, orderpickupcompleted, orderdeliverycompleted event
-GET http://127.0.0.1:8008/v2/tracking/D8873210-30AE-C494-58D4-1243B2FBB266 HTTP/1.1
+GET http://127.0.0.1:8008/v2/order-status/D8873210-30AE-C494-58D4-1243B2FBB266 HTTP/1.1
 x-locale: en
 x-market: XX
 user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1

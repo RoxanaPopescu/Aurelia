@@ -7,7 +7,7 @@ import { MapObject } from "shared/types";
 /**
  * Represents a module exposing endpoints related to tracking.
  */
-export class TrackingModule extends AppModule
+export class OrderStatusModule extends AppModule
 {
     public configure(): void
     {
@@ -16,10 +16,10 @@ export class TrackingModule extends AppModule
          * @param context.params.id The ID of the order for which to get tracking info.
          * @returns The tracking info for the specified tracking ID.
          */
-        this.router.get("/v2/tracking/:id", async context =>
+        this.router.get("/v2/order-status/:id", async context =>
         {
             // tslint:disable-next-line: no-require-imports
-            const eventTitles = getStrings("./resources/strings/tracking-event-titles.json");
+            const eventTitles = getStrings("./resources/strings/order-status-event-titles.json");
 
             const trackingId = context.params.id.toLowerCase();
 
