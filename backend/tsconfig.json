@@ -13,5 +13,8 @@
     "src",
     "**/resources/strings/*.json",
     "src/resources/translations/*.json"
+  ],
+  "exclude": [
+    "artifacts"
   ]
 }
