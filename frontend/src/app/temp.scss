@@ -306,7 +306,7 @@ page-sidebar
 
 toolbar
 {
-    & > :not(:last-child)
+    > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing-large);
     }
