@@ -171,8 +171,8 @@ export class Stops
 
     /**
      * Called when the "Remove stop" icon is clicked on a stop.
-     * Removes the stop from teh template.
-     * @param index The index of teh stop to remove.
+     * Removes the stop from the template.
+     * @param index The index of the stop to remove.
      */
     protected async onRemoveStopClick(index: number): Promise<void>
     {

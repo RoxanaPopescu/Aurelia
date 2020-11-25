@@ -58,7 +58,7 @@ export class RouteTemplateService
     /**
      * Creates the specified route template.
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async createRoute(route: CreateRoute): Promise<void>
     {
@@ -71,7 +71,7 @@ export class RouteTemplateService
     /**
      * Creates the specified route template.
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async create(routeTemplate: Partial<RouteTemplate>): Promise<void>
     {
@@ -87,7 +87,7 @@ export class RouteTemplateService
     /**
      * Saves the specified route template.
      * @param routeTemplate The route template to save.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async update(routeTemplate: RouteTemplate): Promise<void>
     {
@@ -115,7 +115,7 @@ export class RouteTemplateService
     /**
      * Creates the specified route template.
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async addStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
     {
@@ -134,7 +134,7 @@ export class RouteTemplateService
     /**
      * Creates the specified route template.
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async updateStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
     {
@@ -163,7 +163,7 @@ export class RouteTemplateService
     /**
      * Adds a schedule to the tmeplate
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async addSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
@@ -181,7 +181,7 @@ export class RouteTemplateService
     /**
      * Creates the specified route template.
      * @param routeTemplate The route template to create.
-     * @returns A promise that will be resolved when teh operation succeedes.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
     public async updateSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
