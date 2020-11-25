@@ -121,6 +121,7 @@ export class OrderStatusModule extends AppModule
             // Set the response body.
             context.response.body =
             {
+                etaEvent: orderEventsData.find(e => e.eventType === "order-delivery-eta-provided"),
                 trackingId: trackingId,
                 events: trackingEvents,
                 colli: orderDetailsData.actualColli?.map((c: any) =>
