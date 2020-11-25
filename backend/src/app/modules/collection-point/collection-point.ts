@@ -151,8 +151,9 @@ export class CollectionPointModule extends AppModule
         {
             noi: true,
             query: {
+                // tslint:disable-next-line: no-string-literal
                 "access-token": context.request.headers["token"]
-            },
+            }
         });
 
         return result.data;
