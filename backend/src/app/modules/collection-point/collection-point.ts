@@ -150,9 +150,11 @@ export class CollectionPointModule extends AppModule
         const result = await this.apiClient.get("logistics-platform/drivers/details-by-token",
         {
             noi: true,
-            query: {
+            query:
+            {
+                // tslint:disable-next-line: no-string-literal
                 userToken: context.request.headers["token"]
-              },
+            }
         });
 
         return result.data;

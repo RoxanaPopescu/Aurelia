@@ -58,7 +58,7 @@ COPY ["/frontend/src", "./frontend/src"]
 WORKDIR /usr/app/.tslint
 
 ## Install the dependencies, only when they have changed.
-RUN npm install
+RUN npm ci
 
 ## Set the working directory.
 WORKDIR /usr/app/frontend
