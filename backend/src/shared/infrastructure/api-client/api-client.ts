@@ -495,9 +495,8 @@ export class ApiClient
      */
     private async getResponseBody(fetchResponse: Response, options: IApiRequestOptions, endpointSettings: IApiEndpointSettings): Promise<any>
     {
-        // HACK: The NOI API returns a response with content type "text/html", despite the actual content type being "application/json".
         // Determine whether the response body can be parsed as JSON.
-        const contentType = options.noi ? "application/json" : fetchResponse.headers.get("content-type");
+        const contentType = fetchResponse.headers.get("content-type");
         const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
 
         // Deserialize the response body, if enabled.
