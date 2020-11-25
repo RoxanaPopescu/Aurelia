@@ -160,7 +160,7 @@ export class OrderStatusModule extends AppModule
                     tags: c.tags
                 })),
 
-                driver: driverData == null ? undefined :
+                driver: driverData == null || driverPosition === null ? undefined :
                 {
                     id: driverData.id,
                     firstName: driverData?.firstName,
