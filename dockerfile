@@ -45,8 +45,8 @@ WORKDIR /usr/app
 COPY ["/tsconfig.json", "./"]
 COPY ["/frontend/tsconfig.json", "./frontend/"]
 
-## Copy the `.tslint` folder ant the `tslint.json` files.
-COPY ["/.tslint", "./"]
+## Copy the `.tslint` folder and the `tslint.json` files.
+COPY ["/.tslint", "./.tslint"]
 COPY ["/tslint.json", "./"]
 COPY ["/frontend/tslint.json", "./frontend/"]
 
@@ -58,7 +58,7 @@ COPY ["/frontend/src", "./frontend/src"]
 WORKDIR /usr/app/frontend
 
 ## Lint the code.
-RUN npm run lint-ci
+RUN npm run lint
 
 ## Start the build.
 RUN npm run translate-export
