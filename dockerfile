@@ -55,6 +55,12 @@ COPY ["/frontend/tools", "./frontend/tools"]
 COPY ["/frontend/src", "./frontend/src"]
 
 ## Set the working directory.
+WORKDIR /usr/app/.tslint
+
+## Install the dependencies, only when they have changed.
+RUN npm install
+
+## Set the working directory.
 WORKDIR /usr/app/frontend
 
 ## Lint the code.

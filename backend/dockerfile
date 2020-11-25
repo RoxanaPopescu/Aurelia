@@ -32,6 +32,12 @@ COPY ["/backend/tslint.json", "./backend/"]
 COPY ["/backend/src", "./backend/src"]
 
 ## Set the working directory.
+WORKDIR /usr/app/.tslint
+
+## Install the dependencies, only when they have changed.
+RUN npm install
+
+## Set the working directory.
 WORKDIR /usr/app/backend
 
 ## Lint the code.
