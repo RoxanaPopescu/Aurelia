@@ -14,7 +14,7 @@ import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
-import { AddOrderPanel } from './modals/add-order/add-order';
+import { AddOrderPanel } from "./modals/add-order/add-order";
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 
 /**
@@ -50,13 +50,13 @@ export class DetailsModule
         this.editable = identityService.identity!.claims.has("edit-routes");
     }
 
-    private _isMovingStop = false;
-    private _targetIndex: number | undefined;
-    private pollTimeout: any;
-
-    protected readonly routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _router: Router;
+    private _isMovingStop = false;
+    private _targetIndex: number | undefined;
+    private _pollTimeout: any;
+
+    protected readonly routeService: RouteService;
     protected readonly identityService: IdentityService;
     protected readonly environment = ENVIRONMENT.name;
 
@@ -112,7 +112,6 @@ export class DetailsModule
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -122,7 +121,7 @@ export class DetailsModule
             this.fetchOperation.abort();
         }
 
-        clearTimeout(this.pollTimeout);
+        clearTimeout(this._pollTimeout);
     }
 
     /**
@@ -241,7 +240,8 @@ export class DetailsModule
         try
         {
             await this.routeService.setRouteStatus(this.route!, status);
-            this.fetchRoute()
+
+            this.fetchRoute();
         }
         catch (error)
         {
@@ -334,7 +334,7 @@ export class DetailsModule
 
     /**
      * Called when the `Edit Information` button is clicked.
-     * @param route
+     * @param route The route to edit.
      */
     protected async onEditRouteClick(route: Route): Promise<void>
     {
@@ -343,7 +343,7 @@ export class DetailsModule
 
     /**
      * Called when the `Remove driver` button is clicked.
-     * @param route
+     * @param route The route from which the driver should be removed.
      */
     protected async onRemoveDriverClick(route: Route): Promise<void>
     {
@@ -353,7 +353,7 @@ export class DetailsModule
 
     /**
      * Called when the `Add order` button is clicked.
-     * @param route
+     * @param route The route to which an order should be added.
      */
     protected async onAddOrderClick(route: Route): Promise<void>
     {
@@ -367,10 +367,14 @@ export class DetailsModule
     protected async onAddStopClick(index?: number): Promise<void>
     {
         let stopNumber: number;
-        if (index != null) {
+
+        if (index != null)
+        {
             // Index exist, 1-index it since it's stopNumber
             stopNumber = index + 1;
-        } else {
+        }
+        else
+        {
             // End of list, since it's a stopNumber we add one to the list length
             stopNumber = this.route!.stops.length + 1;
         }
@@ -410,7 +414,7 @@ export class DetailsModule
      */
     private fetchRoute(): void
     {
-        clearTimeout(this.pollTimeout);
+        clearTimeout(this._pollTimeout);
 
         if (this.fetchOperation != null)
         {
@@ -419,20 +423,26 @@ export class DetailsModule
 
         this.fetchOperation = new Operation(async signal =>
         {
-            try {
+            try
+            {
                 this.route = await this.routeService.get(this.routeId, signal);
 
                 this._router.title = this.route.slug;
                 this._router.updateTitle();
 
-                if (this.route.status.slug === "in-progress") {
-                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
-                } else {
-                    this.pollTimeout = setTimeout(() => this.fetchRoute(), 30000);
+                if (this.route.status.slug === "in-progress")
+                {
+                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
                 }
-
-            } catch (error) {
-                if (!(error instanceof AbortError)) {
+                else
+                {
+                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 30000);
+                }
+            }
+            catch (error)
+            {
+                if (!(error instanceof AbortError))
+                {
                     Log.error("An error occurred while loading this route.\n", error);
                 }
             }

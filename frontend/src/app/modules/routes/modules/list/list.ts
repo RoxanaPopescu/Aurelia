@@ -51,7 +51,9 @@ export class ListPage
         this._constructed = true;
 
         const localData = localStorage.getItem("route-columns");
-        if (localData != null) {
+
+        if (localData != null)
+        {
             const columnsObject = JSON.parse(localData);
             this.customColumns = columnsObject.map(slug => new RouteListColumn(slug));
         }
@@ -77,18 +79,20 @@ export class ListPage
      * The custom grid column widths calculated from the columns
      */
     @computedFrom("columns")
-    protected get tableStyle(): any {
+    protected get tableStyle(): any
+    {
         let size = "";
-        for (const column of this.columns) {
-            if (column.column != "not-added") {
+
+        for (const column of this.columns)
+        {
+            if (column.column !== "not-added")
+            {
                 size += `${column.columSize} `;
             }
         }
 
-        return {
-            'grid-template-columns': `${size} min-content`
-        };
-    };
+        return { "grid-template-columns": `${size} min-content` };
+    }
 
     /**
      * The custom columns the user has selected
@@ -99,7 +103,8 @@ export class ListPage
      * The current columns to show in the list
      */
     @computedFrom("customColumns")
-    protected get columns(): RouteListColumn[] {
+    protected get columns(): RouteListColumn[]
+    {
         return this.customColumns ?? [
             new RouteListColumn("slug"),
             new RouteListColumn("reference"),
@@ -111,7 +116,7 @@ export class ListPage
             new RouteListColumn("status"),
             new RouteListColumn("driver-list")
         ];
-    };
+    }
 
     /**
      * The sorting to use for the table.
@@ -217,9 +222,8 @@ export class ListPage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -232,12 +236,12 @@ export class ListPage
         this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
         this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
         this.notAssignedVehicle = params.notAssignedVehicle != null ? Boolean(params.notAssignedVehicle) : this.notAssignedVehicle;
+
         this.update();
     }
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -253,7 +257,7 @@ export class ListPage
      */
     public onShowDriverLink(route: RouteInfo): void
     {
-        window.open(route.driverListUrl, '_blank');
+        window.open(route.driverListUrl, "_blank");
     }
 
     /**
@@ -261,8 +265,9 @@ export class ListPage
      */
     public delayedStops(route: RouteInfo): string | undefined
     {
-        if (route.delayedStopIndexes) {
-            return route.delayedStopIndexes.map(d => d += 1).join(", ");
+        if (route.delayedStopIndexes)
+        {
+            return route.delayedStopIndexes.map(d => d + 1).join(", ");
         }
 
         return undefined;
@@ -362,15 +367,20 @@ export class ListPage
         {
             this.failed = false;
 
-            try {
+            try
+            {
                 let assignedDriver: boolean | undefined;
-                if (this.assignedDriver != this.notAssignedDriver) {
-                    assignedDriver = this.assignedDriver
+
+                if (this.assignedDriver !== this.notAssignedDriver)
+                {
+                    assignedDriver = this.assignedDriver;
                 }
 
                 let assignedVehicle: boolean | undefined;
-                if (this.assignedVehicle != this.notAssignedVehicle) {
-                    assignedVehicle = this.assignedVehicle
+
+                if (this.assignedVehicle !== this.notAssignedVehicle)
+                {
+                    assignedVehicle = this.assignedVehicle;
                 }
 
                 const result = await this._routeService.getAll(
@@ -383,7 +393,7 @@ export class ListPage
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
-                        assignedVehicle: assignedVehicle,
+                        assignedVehicle: assignedVehicle
                     },
                     {
                         owner: this.columns.map(c => c.slug).includes("owner"),
@@ -429,7 +439,9 @@ export class ListPage
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                 },
                 { trigger: false, replace: true });
-            } catch (error) {
+            }
+            catch (error)
+            {
                 this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }

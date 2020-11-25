@@ -3,7 +3,7 @@ import { ApiClient } from "shared/infrastructure";
 import { Driver } from "app/model/driver";
 import { Fulfiller, Outfit } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
-import { RouteBase } from "..";
+import { RouteBase } from "../entities/route-base";
 import { IdentityService } from "app/services/identity";
 
 /**
@@ -23,8 +23,12 @@ export class RouteAssignmentService
         this._identityService = identityService;
     }
 
-    protected readonly _identityService: IdentityService;
     private readonly _apiClient: ApiClient;
+
+    /**
+     * The `IdentityService` instance.
+     */
+    protected readonly _identityService: IdentityService;
 
     /**
      * Assigns the specified route to the specified driver.
@@ -94,8 +98,6 @@ export class RouteAssignmentService
      */
     public async assignFulfiller(route: RouteBase, fulfiller: Fulfiller, currentOutfit?: Outfit): Promise<void>
     {
-
-
         await this._apiClient.post("dispatch/route/assignfulfiller",
         {
             body:

@@ -76,12 +76,15 @@ export class Route extends AbstractRoute<RouteStop>
      * The total weight of all pickup colli for this route, can be undefined if no colli has weight.
      * In the future all colli should have a weight and dimension!
      */
-    public get totalWeight(): number | undefined {
+    public get totalWeight(): number | undefined
+    {
         let weight = 0;
-
         const stops = this.stops.filter(s => s instanceof RouteStop) as RouteStop[];
-        for (const stop of stops) {
-            for (const pickup of stop.pickups) {
+
+        for (const stop of stops)
+        {
+            for (const pickup of stop.pickups)
+            {
                 weight += pickup.totalWeight ?? 0;
             }
         }
@@ -93,18 +96,22 @@ export class Route extends AbstractRoute<RouteStop>
      * The total volume of all pickup colli for this route, can be undefined if no colli has dimensions.
      * In the future all colli should have a weight and dimension!
      */
-    public get totalVolume(): number | undefined {
+    public get totalVolume(): number | undefined
+    {
         let volume = 0;
-
         const stops = this.stops.filter(s => s instanceof RouteStop) as RouteStop[];
-        for (const stop of stops) {
-            for (const pickup of stop.pickups) {
+
+        for (const stop of stops)
+        {
+            for (const pickup of stop.pickups)
+            {
                 volume += pickup.totalVolume ?? 0;
             }
         }
 
         return volume > 0 ? volume : undefined;
     }
+
     public clone(): any
     {
         return clone(this);

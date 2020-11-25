@@ -52,6 +52,9 @@ COPY ["/frontend/src", "./frontend/src"]
 ## Set the working directory.
 WORKDIR /usr/app/frontend
 
+## Lint the code.
+RUN npm run lint-ci
+
 ## Start the build.
 RUN npm run translate-export
 RUN npm run translate-pseudo

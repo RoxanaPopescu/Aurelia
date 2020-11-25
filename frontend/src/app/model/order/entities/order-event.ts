@@ -23,5 +23,5 @@ export class OrderEvent
 
     public readonly location: string;
 
-    public readonly author: { name: string; affiliation: string; };
+    public readonly author: { name: string; affiliation: string };
 }

@@ -21,7 +21,7 @@
                 The two stops will be added at the end of the route.
             </p>
 
-            <text-input label="above" value.bind="_orderSlug" class="flex-basis-1-of-1 margin-bottom">
+            <text-input label="above" value.bind="orderSlug" class="flex-basis-1-of-1 margin-bottom">
 
                 <div slot="heading" translate>
                     Order id
@@ -30,7 +30,7 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="_orderSlug">
+                        value.bind="orderSlug">
                     </required-validator>
 
                 </div>

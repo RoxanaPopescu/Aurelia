@@ -122,9 +122,8 @@ export class DataTablePage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -136,7 +135,6 @@ export class DataTablePage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -178,7 +176,7 @@ export class DataTablePage
                 {
                     fulfiller: false,
                     owner: false,
-                    driverPosition: false,
+                    driverPosition: false
                 },
                 this.sorting,
                 this.paging,
@@ -208,8 +206,6 @@ export class DataTablePage
             { trigger: false, replace: true });
         });
     }
-
-    // ----------
 
     /**
      * Called when a row is clicked.

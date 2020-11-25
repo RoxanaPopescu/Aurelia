@@ -26,7 +26,8 @@ export class Workspace
     /**
      * Will clear all data currently selected or fetched
      */
-    clearAllData() {
+    public clearAllData(): void
+    {
         this.expressRoutes = [];
         this.selectedExpressRoutes = [];
         this.driverRoutes = [];

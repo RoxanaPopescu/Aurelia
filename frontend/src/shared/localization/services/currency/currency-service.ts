@@ -10,6 +10,7 @@ import { ICurrency, Currency } from "./currency";
  * @param oldCurrency The old currency, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new currency.
  */
+// tslint:disable-next-line: invalid-void
 type CurrencyChangeFunc = (newCurrency: Currency, oldCurrency: Currency | undefined) => void | Promise<void>;
 
 /**

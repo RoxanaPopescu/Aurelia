@@ -87,74 +87,88 @@ export class RouteListColumn
             sortingName: "end-address",
             column: "visible"
         },
-        "tags": {
+        "tags":
+        {
             name: "Tags",
             columSize: "1.3fr",
             column: "visible"
         },
-        "stop-count": {
+        "stop-count":
+        {
             name: "Stop count",
             columSize: "min-content",
             sortingName: "stops",
             column: "visible"
         },
-        "vehicle-type": {
+        "vehicle-type":
+        {
             name: "Vehicle type",
             columSize: "min-content",
             column: "visible"
         },
-        "vehicle": {
+        "vehicle":
+        {
             name: "Vehicle",
             columSize: "1fr",
             column: "visible"
         },
-        "driver": {
+        "driver":
+        {
             name: "Driver",
             columSize: "1fr",
             column: "visible"
         },
-        "fulfiller": {
+        "fulfiller":
+        {
             name: "Fulfiller",
             columSize: "1fr",
             column: "visible"
         },
-        "complexity": {
+        "complexity":
+        {
             name: "Complexity",
             columSize: "min-content",
             column: "visible"
         },
-        "status": {
+        "status":
+        {
             name: "Status",
             columSize: "min-content",
             sortingName: "status",
             column: "visible"
         },
-        "legacy-id": {
+        "legacy-id":
+        {
             name: "Legacy id",
             columSize: "min-content",
             column: "visible"
         },
-        "driver-list": {
+        "driver-list":
+        {
             name: "Driver list",
             columSize: "min-content",
             column: "hidden"
         },
-        "delayed-stops": {
+        "delayed-stops":
+        {
             name: "Delayed stops",
             columSize: "min-content",
             column: "visible"
         },
-        "estimated-completion": {
+        "estimated-completion":
+        {
             name: "Est. completed",
             columSize: "min-content",
             column: "visible"
         },
-        "planned-time-frame": {
+        "planned-time-frame":
+        {
             name: "Planned time",
             columSize: "min-content",
             column: "visible"
         },
-        "criticality": {
+        "criticality":
+        {
             name: "Criticality",
             columSize: "min-content",
             column: "not-added"

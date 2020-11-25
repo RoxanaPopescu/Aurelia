@@ -1,10 +1,10 @@
 import { autoinject } from "aurelia-framework";
+import { DateTime } from "luxon";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
 import { LegacyRoutePlanInfo } from "../entities/legacy/legacy-route-plan-info";
-import { RoutePlan } from "../entities/route-plan";
-import { RoutePlanInfo, RoutePlanStatusSlug } from "..";
-import { DateTime } from "luxon";
+import { RoutePlanInfo } from "../entities/route-plan-info";
+import { RoutePlanStatusSlug } from "../entities/route-plan-status";
 
 /**
  * Represents a service that manages route plans.
@@ -31,11 +31,12 @@ export class RoutePlanService
      * @returns A promise that will be resolved with the route plans.
      */
     public async getAll(
-        filter?: {
-            createdDateFrom?: DateTime,
-            createdDateTo?: DateTime,
-            searchQuery?:  string,
-            statuses?: RoutePlanStatusSlug[]
+        filter?:
+        {
+            createdDateFrom?: DateTime;
+            createdDateTo?: DateTime;
+            searchQuery?: string;
+            statuses?: RoutePlanStatusSlug[];
         },
         sorting?: ISorting,
         paging?: IPaging,
@@ -82,20 +83,5 @@ export class RoutePlanService
             plans: result.data.results.map((data: any) => new LegacyRoutePlanInfo(data)),
             planCount: result.data.results.length
         };
-    }
-
-    /**
-     * Gets the specified route plan.
-     * @param routePlanSlug The slug identifying the route plan.
-     * @returns A promise that will be resolved with the route plan.
-     */
-    public async legacyGet(routePlanSlug: string): Promise<RoutePlan>
-    {
-        const result = await this._apiClient.get("routeplanning/details",
-        {
-            query: { id: routePlanSlug }
-        });
-
-        return new RoutePlan(result.data);
     }
 }

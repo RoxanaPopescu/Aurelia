@@ -6,17 +6,6 @@ import { TaskType } from "./task-type";
 export class Task
 {
     /**
-     * The type identifying the task.
-     */
-    type: TaskType;
-
-    /**
-     * If the task is enabled.
-     * The task can be in three states, not existing, enabled and disabled.
-     */
-    enabled: boolean | undefined;
-
-    /**
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
@@ -25,6 +14,17 @@ export class Task
         this.type = new TaskType(data.type);
         this.enabled = data.enabled;
     }
+
+    /**
+     * The type identifying the task.
+     */
+    public type: TaskType;
+
+    /**
+     * True if the task is enabled, false if the task is disabled,
+     * or undefined if not existing.
+     */
+    public enabled: boolean | undefined;
 
     /**
      * Gets the data representing this instance.

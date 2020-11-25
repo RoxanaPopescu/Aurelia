@@ -28,13 +28,17 @@ export class RoutePlanningModule
      * Legacy: What coop and Mover is still using
      * TODO: This should be removed when we move all customers to the new routeplans
      */
-    private get showLegacy(): boolean {
+    private get showLegacy(): boolean
+    {
         const identity = this._identityService.identity;
-        if (identity == null) {
+
+        if (identity == null)
+        {
             return false;
         }
 
         const legacyOutfitIds = [moverOutfitId, coopOutfitId];
+
         return legacyOutfitIds.includes(identity.outfit.id);
     }
 
@@ -43,14 +47,17 @@ export class RoutePlanningModule
      * Legacy: What coop and Mover is still using
      * TODO: This should be removed when we move all customers to the new routeplans
      */
-    private get showNew(): boolean {
+    private get showNew(): boolean
+    {
         const identity = this._identityService.identity;
 
-        if (identity == null) {
+        if (identity == null)
+        {
             return true;
         }
 
         const legacyOutfitIds = [coopOutfitId];
+
         return !legacyOutfitIds.includes(identity.outfit.id);
     }
 

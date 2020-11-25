@@ -16,8 +16,10 @@ export class OrderInfo
         this.tags = data.tags;
         this.status = new OrderStatus(data.status.name);
         this.earliestPickupDate = DateTime.fromISO(data.earliestPickupDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
         this.earliestPickupTime = TimeOfDay.fromString(data.earliestPickupTime);
         this.latestPickupDate = DateTime.fromISO(data.latestPickupDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
         this.latestPickupTime = TimeOfDay.fromString(data.latestPickupTime);
 
         this.pickupLocation = new Location(
@@ -51,10 +53,12 @@ export class OrderInfo
 
     public readonly earliestPickupDate: DateTime;
 
+    // tslint:disable-next-line: deprecation
     public readonly earliestPickupTime: TimeOfDay;
 
     public readonly latestPickupDate: DateTime;
 
+    // tslint:disable-next-line: deprecation
     public readonly latestPickupTime: TimeOfDay;
 
     public readonly pickupLocation: Location;

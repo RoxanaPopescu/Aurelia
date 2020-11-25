@@ -62,7 +62,7 @@ export class MapColumnCustomElement
             return;
         }
 
-        if ((this._selectedFromStop == null && stop == null) || (this._selectedFromStop != null && stop != null && this._selectedFromStop!.id === stop.id))
+        if ((this._selectedFromStop == null && stop == null) || (this._selectedFromStop != null && stop != null && this._selectedFromStop.id === stop.id))
         {
             this._selectedFromStop = undefined;
 
@@ -164,6 +164,7 @@ export class MapColumnCustomElement
 
         if (this._selectedFromStop !== null)
         {
+            // tslint:disable-next-line: no-unnecessary-type-assertion
             this.workspace.newDriverStops!.splice(insertAfterIndex! + 1, 0, stop);
         }
         else
@@ -184,7 +185,7 @@ export class MapColumnCustomElement
 
     private validateDriverStopConnection(draggedStop: DriverRouteStop | ExpressRouteStop, targetStop: DriverRouteStop | ExpressRouteStop): boolean
     {
-        if (draggedStop!.type.slug === "pickup")
+        if (draggedStop.type.slug === "pickup")
         {
             for (const orderId of draggedStop.orderIds)
             {

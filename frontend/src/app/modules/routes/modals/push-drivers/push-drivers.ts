@@ -26,7 +26,6 @@ export class PushDriversPanel
     private readonly _modal: Modal;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _driverService: DriverService;
-    private _result: Driver | undefined;
     private readonly _constructed;
 
     /**
@@ -89,17 +88,14 @@ export class PushDriversPanel
      * Called by the framework when the modal is deactivated.
      * @returns The selected driver, or undefined if cancelled.
      */
-    public async deactivate(): Promise<Driver | undefined>
+    public deactivate(): void
     {
         // Abort any existing operation.
         if (this.updateOperation != null)
         {
             this.updateOperation.abort();
         }
-
-        return this._result;
     }
-
 
     /**
      * Called when the driver is selected
@@ -107,7 +103,8 @@ export class PushDriversPanel
     protected async onDriverClick(driver: Driver): Promise<void>
     {
         this.selected = [driver];
-        this.onSubmitClick();
+
+        await this.onSubmitClick();
     }
 
     /**
@@ -152,11 +149,15 @@ export class PushDriversPanel
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            try {
-                // Fetch the data. // searchQuery: this.searchQuery,
+            try
+            {
+                // Fetch the data.
                 const data = await this._driverService.getAll(
                     this.sorting,
-                    { page: 1, pageSize: 30 },
+                    {
+                        page: 1,
+                        pageSize: 30
+                    },
                     {
                         statuses: ["approved"],
                         searchQuery: this.searchQuery
@@ -169,7 +170,9 @@ export class PushDriversPanel
 
                 // Scroll to top.
                 this.scroll.reset();
-            } catch (error) {
+            }
+            catch (error)
+            {
                 Log.error("An error occurred while loading the list.\n", error);
             }
         });

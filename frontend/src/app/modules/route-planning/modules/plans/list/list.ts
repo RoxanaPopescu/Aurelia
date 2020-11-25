@@ -78,7 +78,6 @@ export class ListPage
     @observable({ changeHandler: "update" })
     protected statusFilter: RoutePlanStatusSlug[] | undefined;
 
-
     /**
      * The text in the filter text input.
      */
@@ -108,7 +107,6 @@ export class ListPage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public activate(params: IRouteParams): void
     {
@@ -137,7 +135,6 @@ export class ListPage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -194,7 +191,8 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            try {
+            try
+            {
                 this.failed = false;
 
                 // Fetch the data.
@@ -231,7 +229,9 @@ export class ListPage
                     state.params.textFilter = this.textFilter;
                 },
                 { trigger: false, replace: true });
-            } catch (error) {
+            }
+            catch (error)
+            {
                 this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }

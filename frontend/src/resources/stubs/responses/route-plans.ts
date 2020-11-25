@@ -6,7 +6,8 @@ export default
     {
       body:
       {
-        "results": [
+        "results":
+        [
             {
                 "id": "id-here",
                 "status": "succeeded",

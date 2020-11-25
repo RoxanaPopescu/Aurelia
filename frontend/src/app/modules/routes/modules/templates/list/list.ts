@@ -1,8 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
+import { Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
 import { RouteTemplateService, RouteTemplateInfo } from "app/model/route-template";
-import { Log } from "shared/infrastructure";
 
 /**
  * Represents the page.
@@ -56,10 +56,13 @@ export class ListPage
         {
             this.failed = false;
 
-            try {
+            try
+            {
                 const result = await this._routeTemplateService.getAll(signal);
                 this.results = result;
-            } catch (error) {
+            }
+            catch (error)
+            {
                 this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }
@@ -68,7 +71,6 @@ export class ListPage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {

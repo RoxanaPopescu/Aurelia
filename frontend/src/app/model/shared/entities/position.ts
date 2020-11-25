@@ -13,7 +13,8 @@ export class Position
     {
         this.latitude = data.latitude;
         this.longitude = data.longitude;
-        if (data.timestamp) {
+        if (data.timestamp)
+        {
             this.timestamp = DateTime.fromISO(data.timestamp, { setZone: true });
         }
     }

@@ -217,6 +217,7 @@ export class HistoryHelper
 
         if (typeof args[0] === "string")
         {
+            // tslint:disable-next-line: no-shadowed-variable
             const url = args[0];
 
             return this._router.navigate(url, options);
@@ -224,6 +225,7 @@ export class HistoryHelper
 
         if (typeof args[0] === "function")
         {
+            // tslint:disable-next-line: no-shadowed-variable
             let state = { ...this.state };
 
             state = args[0](state) || state;
@@ -265,6 +267,7 @@ export class HistoryHelper
             url += `#${encodeURIComponent(state.fragment).replace(/%2F/g, "/").replace(/%3F/g, "?")}`;
         }
 
+        // tslint:disable-next-line: no-boolean-literal-compare
         const success = this._router.navigate(url, options) !== false;
 
         if (success)

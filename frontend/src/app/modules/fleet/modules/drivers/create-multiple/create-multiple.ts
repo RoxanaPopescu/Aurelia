@@ -5,12 +5,13 @@ import { DateTime } from "luxon";
 import { Uuid } from "shared/utilities/id/uuid";
 import { ApiError } from "shared/infrastructure";
 
-type Result = {
-    driver: Driver,
-    id: string,
-    created: DateTime,
-    failed: "no" | "unknown-error" | "email-or-phone-already-exist"
-};
+interface IResult
+{
+    driver: Driver;
+    id: string;
+    created: DateTime;
+    failed: "no" | "unknown-error" | "email-or-phone-already-exist";
+}
 
 /**
  * Represents the module.
@@ -33,7 +34,7 @@ export class CreateMultiplePage
      * The results of created routes.
      */
     @observable
-    protected results: Result[] = [];
+    protected results: IResult[] = [];
 
     /**
      * The validation for the modal.
@@ -53,9 +54,8 @@ export class CreateMultiplePage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(): Promise<void>
+    public activate(): void
     {
         this.driver = new Driver();
     }
@@ -63,7 +63,7 @@ export class CreateMultiplePage
     /**
      * Called when the "Transfer driver" is clicked when a creation has failed.
      */
-    protected async onTransferClick(driver: Driver)
+    protected onTransferClick(driver: Driver): void
     {
         this.driver = driver;
     }
@@ -84,12 +84,14 @@ export class CreateMultiplePage
 
         const id = Uuid.v1();
         const currentDriver = this.driver;
-        const result: Result = {
+        const result: IResult =
+        {
             failed: "no",
             created: DateTime.local(),
             id: id,
             driver: currentDriver
-        }
+        };
+
         this.results.unshift(result);
 
         // Prepare for the next one
@@ -100,23 +102,29 @@ export class CreateMultiplePage
         {
             const driver = await this._driverService.create(currentDriver);
 
-            let index = this.results.findIndex(r => r.id === id);
-            if (index >= 0) {
+            const index = this.results.findIndex(r => r.id === id);
+
+            if (index >= 0)
+            {
                 this.results[index].driver = driver;
             }
         }
         catch (error)
         {
-            let index = this.results.findIndex(r => r.id === id);
-            if (index < 0) {
+            const index = this.results.findIndex(r => r.id === id);
+
+            if (index < 0)
+            {
                 return;
             }
 
             if (error instanceof ApiError && error.response != null && error.response.status === 409)
             {
-                this.results[index].failed = "email-or-phone-already-exist"
-            } else {
-                this.results[index].failed = "unknown-error"
+                this.results[index].failed = "email-or-phone-already-exist";
+            }
+            else
+            {
+                this.results[index].failed = "unknown-error";
             }
         }
     }

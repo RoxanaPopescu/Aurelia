@@ -98,7 +98,8 @@ export class RouteTemplateSchedule
         if (
             data.activeDateTimeRange?.from == null &&
             data.activeDateTimeRange?.to == null
-        ){
+        )
+        {
             delete data.activeDateTimeRange;
         }
 

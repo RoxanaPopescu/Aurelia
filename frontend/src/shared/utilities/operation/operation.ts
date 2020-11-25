@@ -4,6 +4,7 @@ import { AbortError } from "shared/types";
 /**
  * Represents an async operation, that may succeede, fail with an error, or be aborted.
  */
+// tslint:disable-next-line: invalid-void
 export class Operation<TResult = void>
 {
     /**

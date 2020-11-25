@@ -74,7 +74,7 @@ export class AssignDriverPanel
      * Called by the framework when the modal is activated.
      * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model?: { route?: RouteBase, assignOnSelect: boolean }): void
+    public activate(model?: { route?: RouteBase; assignOnSelect: boolean }): void
     {
         this.route = model?.route;
         this.assignOnSelect = model?.assignOnSelect ?? false;
@@ -96,7 +96,6 @@ export class AssignDriverPanel
         return this._result;
     }
 
-
     /**
      * Called when a driver in the list of drivers is clicked.
      * Assigns the driver to the route and closes the modal.
@@ -105,7 +104,8 @@ export class AssignDriverPanel
     {
         try
         {
-            if (this.route != null && this.assignOnSelect) {
+            if (this.route != null && this.assignOnSelect)
+            {
                 this._modal.busy = true;
                 await this._routeAssignmentService.assignDriver(this.route, driver);
             }
@@ -143,11 +143,15 @@ export class AssignDriverPanel
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            try {
-                // Fetch the data. // searchQuery: this.searchQuery,
+            try
+            {
+                // Fetch the data.
                 const data = await this._driverService.getAll(
                     this.sorting,
-                    { page: 1, pageSize: 30 },
+                    {
+                        page: 1,
+                        pageSize: 30
+                    },
                     {
                         statuses: ["approved"],
                         searchQuery: this.searchQuery
@@ -160,7 +164,9 @@ export class AssignDriverPanel
 
                 // Scroll to top.
                 this.scroll.reset();
-            } catch (error) {
+            }
+            catch (error)
+            {
                 Log.error("An error occurred while loading the list.\n", error);
             }
         });

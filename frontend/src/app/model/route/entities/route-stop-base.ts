@@ -51,7 +51,8 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.taskTime = Duration.fromObject({ seconds: data.taskTime });
             }
 
-            if (data.waitingTime) {
+            if (data.waitingTime)
+            {
                 this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
             }
         }
@@ -124,11 +125,13 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public get isDelayed(): boolean | undefined
     {
-        if (this.estimates == null) {
+        if (this.estimates == null)
+        {
             return undefined;
         }
 
-        if (this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null) {
+        if (this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null)
+        {
             return false;
         }
 
@@ -142,7 +145,8 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public get arrivalDelay(): Duration | undefined
     {
-        if (!this.isDelayed || this.estimates == null) {
+        if (!this.isDelayed || this.estimates == null)
+        {
             return undefined;
         }
 
@@ -158,7 +162,8 @@ export abstract class RouteStopBase extends RouteStopInfo
      */
     public get expectedTooEarly(): Duration | undefined
     {
-        if (this.estimates == null) {
+        if (this.estimates == null)
+        {
             return undefined;
         }
 

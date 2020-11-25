@@ -75,7 +75,8 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
             this.completedTime = DateTime.fromISO(data.completedTime, { setZone: true });
         }
 
-        if (data.estimates != null) {
+        if (data.estimates != null)
+        {
             this.estimates = new RouteEstimates(data.estimates);
         }
     }
@@ -243,28 +244,32 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public get cancelledStopCount(): number
     {
         return this.stops
-            .filter(s =>
-                s instanceof RouteStopBase)
+            .filter(s => s instanceof RouteStopBase)
             .length - this.totalStopCount;
     }
 
     /**
      * The current active stop
      */
-    public get currentStop(): TRouteStop {
-        let stops = this.stops.filter(
-        s => s instanceof RouteStopBase && s.status.slug !== "cancelled" && s.status.slug !== "failed"
-        );
+    public get currentStop(): TRouteStop
+    {
+        const stops = this.stops
+            .filter(s =>
+                s instanceof RouteStopBase &&
+                s.status.slug !== "cancelled" &&
+                s.status.slug !== "failed");
 
-        let stop = stops.find(
-            s => s.status.slug === "not-visited" || s.status.slug === "arrived"
-        ) as TRouteStop;
+        const stop = stops
+            .find(s =>
+                s.status.slug === "not-visited" ||
+                s.status.slug === "arrived") as TRouteStop;
 
-        if (stop) {
+        if (stop)
+        {
             return stop;
-        } else {
-            return stops[0] as TRouteStop;
         }
+
+        return stops[0] as TRouteStop;
     }
 
     /**
@@ -284,11 +289,13 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     /**
      * The future stops at which too early is expected.
      */
-    public get expectedTooEarly(): TRouteStop[] {
-        return this.stops.filter(
-        s =>
-            s instanceof RouteStopBase && s.status.slug === "not-visited" && s.expectedTooEarly != null
-        ) as TRouteStop[];
+    public get expectedTooEarly(): TRouteStop[]
+    {
+        return this.stops
+            .filter(s =>
+                s instanceof RouteStopBase &&
+                s.status.slug === "not-visited" &&
+                s.expectedTooEarly != null) as TRouteStop[];
     }
 
     /**
@@ -315,6 +322,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
             if (stop instanceof RouteStopBase)
             {
                 const newStop = targetRoute.stops.find(s => s.id === stop.id);
+
                 if (newStop instanceof RouteStopBase)
                 {
                     newStop.selected = stop.selected;

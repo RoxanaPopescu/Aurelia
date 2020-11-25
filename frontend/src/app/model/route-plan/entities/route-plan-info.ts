@@ -33,7 +33,8 @@ export class RoutePlanInfo
             this.unscheduledTasksCount = data.unscheduledTasksCount;
         }
 
-        if (data.deliveryTime) {
+        if (data.deliveryTime)
+        {
             this.deliveryTime = new DateTimeRange(data.deliveryTime, { setZone: true });
         }
     }

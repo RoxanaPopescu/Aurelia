@@ -21,7 +21,8 @@ export class Schedules
         routeTemplateService: RouteTemplateService,
         modalService: ModalService,
         toastService: ToastService
-    ){
+    )
+    {
         this._routeTemplateService = routeTemplateService;
         this._modalService = modalService;
         this._toastService = toastService;

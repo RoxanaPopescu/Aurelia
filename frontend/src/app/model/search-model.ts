@@ -50,37 +50,46 @@ export class SearchModel
         // We allow multiple searches when a ',' is added. We trim spaces if this exist
         let s: string[] = [];
         const splitQuery = initialQuery.split(",");
-        if (splitQuery.length > 1) {
+        if (splitQuery.length > 1)
+        {
             s = splitQuery.map(e => e.trim());
-        } else {
+        }
+        else
+        {
             s.push(initialQuery);
         }
 
         let found = true;
 
-        for(let q of s) {
+        for (let q of s)
+        {
             let minusQuery = false;
-            if (q.length > 0) {
+            if (q.length > 0)
+            {
                 const firstCharacter = q.charAt(0);
-                if (firstCharacter == "-") {
+                if (firstCharacter === "-")
+                {
                     minusQuery = true;
                     q = q.substring(1).trim();
                 }
             }
 
-            if (q.length > 0) {
-                const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const foundSingle = new RegExp(
-                    `^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`,
-                    "m"
-                ).test(this._json);
+            if (q.length > 0)
+            {
+                const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+                const foundSingle = new RegExp(`^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`, "m").test(this._json);
 
-                if (minusQuery) {
-                    if (foundSingle) {
+                if (minusQuery)
+                {
+                    if (foundSingle)
+                    {
                         return false;
                     }
-                } else {
-                    if (!foundSingle) {
+                }
+                else
+                {
+                    if (!foundSingle)
+                    {
                         found = false;
                     }
                 }

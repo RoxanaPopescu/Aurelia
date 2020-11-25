@@ -1,9 +1,9 @@
 import { autoinject } from "aurelia-framework";
-import { Order, OrderStatus, OrderService } from "app/model/order";
-import { IValidation, Modal } from "shared/framework";
-import { Log } from "shared/infrastructure";
-import { observable } from 'aurelia-binding';
+import { observable } from "aurelia-binding";
 import { DateTime, Duration } from "luxon";
+import { Log } from "shared/infrastructure";
+import { IValidation, Modal } from "shared/framework";
+import { Order, OrderStatus, OrderService } from "app/model/order";
 
 /**
  * Represents the module.
@@ -32,28 +32,32 @@ export class EditOrderPanel
     protected validation: IValidation;
 
     /**
+     * The available route status values.
+     */
+    protected statusValues = Object.keys(OrderStatus.values).map(slug => new OrderStatus(slug as any));
+
+    /**
      * The model for the modal.
      */
     public model: Order;
 
     @observable
     public pickupDate: DateTime | undefined;
+
     @observable
     public earliestPickupArrivalTime: Duration | undefined;
+
     @observable
     public latestPickupArrivalTime: Duration | undefined;
 
     @observable
     public deliveryDate: DateTime | undefined;
+
     @observable
     public earliestDeliveryArrivalTime: Duration | undefined;
+
     @observable
     public latestDeliveryArrivalTime: Duration | undefined;
-
-    /**
-     * The available route status values.
-     */
-    protected statusValues = Object.keys(OrderStatus.values).map(slug => new OrderStatus(slug as any));
 
     /**
      * Called by the framework when the modal is deactivated.
@@ -108,17 +112,22 @@ export class EditOrderPanel
      */
     protected pickupDateTimeChanged(): void
     {
-        if (this.earliestPickupArrivalTime == null || this.latestPickupArrivalTime == null || this.pickupDate == null) {
+        if (this.earliestPickupArrivalTime == null || this.latestPickupArrivalTime == null || this.pickupDate == null)
+        {
             return;
         }
 
         const date = this.pickupDate.startOf("day");
+
         this.model.pickup.appointment.earliestArrivalDate = date.plus(this.earliestPickupArrivalTime);
+
         let latestDate = date.plus(this.latestPickupArrivalTime);
+
         if (this.latestPickupArrivalTime < this.earliestPickupArrivalTime)
         {
             latestDate = latestDate.plus({ day: 1 });
         }
+
         this.model.pickup.appointment.latestArrivalDate = latestDate;
     }
 
@@ -151,17 +160,22 @@ export class EditOrderPanel
      */
     protected deliveryDateTimeChanged(): void
     {
-        if (this.earliestDeliveryArrivalTime == null || this.latestDeliveryArrivalTime == null || this.deliveryDate == null) {
+        if (this.earliestDeliveryArrivalTime == null || this.latestDeliveryArrivalTime == null || this.deliveryDate == null)
+        {
             return;
         }
 
         const date = this.deliveryDate.startOf("day");
+
         this.model.delivery.appointment.earliestArrivalDate = date.plus(this.earliestDeliveryArrivalTime);
+
         let latestDate = date.plus(this.latestDeliveryArrivalTime);
+
         if (this.latestDeliveryArrivalTime < this.earliestDeliveryArrivalTime)
         {
             latestDate = latestDate.plus({ day: 1 });
         }
+
         this.model.delivery.appointment.latestArrivalDate = latestDate;
     }
 
@@ -190,7 +204,8 @@ export class EditOrderPanel
 
             // Set the result of the modal.
             this._result = this.model;
-            this._modal.close();
+
+            await this._modal.close();
         }
         catch (error)
         {

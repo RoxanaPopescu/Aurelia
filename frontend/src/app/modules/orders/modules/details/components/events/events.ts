@@ -1,9 +1,9 @@
-import { autoinject, bindable } from 'aurelia-framework';
-import { OrderEvent } from '../../../../../../model/order/entities/order-event';
-import { ModalService } from "shared/framework";
-import { EventDetailsPanel } from "./modals/event-details/event-details";
+import { autoinject, bindable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
+import { ModalService } from "shared/framework";
+import { OrderEvent } from "app/model/order/entities/order-event";
 import { OrderService, Order } from "app/model/order";
+import { EventDetailsPanel } from "./modals/event-details/event-details";
 
 /**
  * Represents the module.
@@ -21,7 +21,7 @@ export class Events
         this._modalService = modalService;
     }
 
-    private pollTimeout: any;
+    // private pollTimeout: any;
 
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
@@ -58,15 +58,6 @@ export class Events
     protected showMap = true;
 
     /**
-     * Called when a route stop is clicked.
-     * Opens a modal showing the details of the order, and enables editing.
-     */
-    protected async onEventDetailsClick(event: OrderEvent): Promise<void>
-    {
-        await this._modalService.open(EventDetailsPanel, { event: event } ).promise;
-    }
-
-    /**
      * Counts the number of picked up colli on the route
      */
     public isLatestEvent(events: OrderEvent[], event: OrderEvent): boolean
@@ -88,7 +79,8 @@ export class Events
         {
             this.fetchEvents();
 
-            if (!this.showMap) {
+            if (!this.showMap)
+            {
                 this.showMap = this.order.pickup.location.position != null || this.order.delivery.location.position != null;
             }
         }
@@ -96,7 +88,6 @@ export class Events
 
     /**
      * Called by the framework when the module is detached.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public detached(): void
     {
@@ -106,7 +97,16 @@ export class Events
             this.fetchOperation.abort();
         }
 
-        clearTimeout(this.pollTimeout);
+        // clearTimeout(this.pollTimeout);
+    }
+
+    /**
+     * Called when a route stop is clicked.
+     * Opens a modal showing the details of the order, and enables editing.
+     */
+    protected async onEventDetailsClick(event: OrderEvent): Promise<void>
+    {
+        await this._modalService.open(EventDetailsPanel, { event: event }).promise;
     }
 
     /**
@@ -114,7 +114,7 @@ export class Events
      */
     private fetchEvents(): void
     {
-        clearTimeout(this.pollTimeout);
+        // clearTimeout(this.pollTimeout);
 
         if (this.fetchOperation != null)
         {
@@ -123,7 +123,7 @@ export class Events
 
         this.fetchOperation = new Operation(async signal =>
         {
-            let response = await this._orderService.getEvents(this.order.slug);
+            const response = await this._orderService.getEvents(this.order.slug);
 
             this.futureEvents = response.futureEvents;
             this.completedEvents = response.completedEvents;

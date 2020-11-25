@@ -69,7 +69,7 @@ export class TemplateScheduleDetailsPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { template: RouteTemplate, schedule: RouteTemplateSchedule}): void
+    public activate(model: { template: RouteTemplate; schedule: RouteTemplateSchedule}): void
     {
         this.model = model.schedule.clone();
         this.timeZone = model.schedule.timeZone?.name;
@@ -113,7 +113,7 @@ export class TemplateScheduleDetailsPanel
     /**
      * Called when the "Remove driver" icon is clicked.
      */
-    protected async onRemoveDriverClick(): Promise<void>
+    protected onRemoveDriverClick(): void
     {
         this.driver = undefined;
     }
@@ -123,7 +123,8 @@ export class TemplateScheduleDetailsPanel
      */
     protected async onCreateClick(): Promise<void>
     {
-        try {
+        try
+        {
             // Activate validation so any further changes will be validated immediately.
             this.validation.active = true;
 
@@ -137,17 +138,25 @@ export class TemplateScheduleDetailsPanel
             this.model.routeDriverId = this.driver?.id;
             this._modal.busy = true;
 
-            if (this.model.id) {
+            if (this.model.id)
+            {
                 await this._routeTemplateService.updateSchedule(this.template, this.model);
-            } else {
+            }
+            else
+            {
                 await this._routeTemplateService.addSchedule(this.template, this.model);
             }
 
             this._result = this.model;
+
             await this._modal.close();
-        } catch (error) {
+        }
+        catch (error)
+        {
             Log.error("An error occurred while adding the schedule.\n", error);
-        } finally {
+        }
+        finally
+        {
             this._modal.busy = false;
         }
     }

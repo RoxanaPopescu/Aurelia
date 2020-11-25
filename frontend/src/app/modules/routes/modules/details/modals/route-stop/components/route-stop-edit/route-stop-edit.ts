@@ -131,6 +131,7 @@ export class RouteStopEditCustomElement
         if (this.completedDate == null || this.completedTime == null)
         {
             this.model.routeStop.completedTime = undefined;
+
             return;
         }
 
@@ -146,6 +147,7 @@ export class RouteStopEditCustomElement
         if (this.arrivedDate == null || this.arrivedTime == null)
         {
             this.model.routeStop.arrivedTime = undefined;
+
             return;
         }
 
@@ -237,13 +239,13 @@ export class RouteStopEditCustomElement
             return;
         }
 
-        if (this.model.routeStop.arrivalTimeFrame.to!.diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") < 0)
+        if (this.model.routeStop.arrivalTimeFrame.to.diff(this.model.routeStop.arrivalTimeFrame.from).as("seconds") < 0)
         {
-            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.plus({ day: 1 });
+            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.plus({ day: 1 });
         }
-        else if (this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from!).as("seconds") > 0)
+        else if (this.model.routeStop.arrivalTimeFrame.to.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from).as("seconds") > 0)
         {
-            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to!.minus({ day: 1 });
+            this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.minus({ day: 1 });
         }
     }
 }

@@ -1,10 +1,8 @@
 import { autoinject } from "aurelia-framework";
-import { Modal } from "shared/framework/services/modal";
-import { RouteStatus, Route } from 'app/model/route';
-import { ProductType } from '../../../../../../model/product/entities/product-type';
 import { Log } from "shared/infrastructure";
-import { RouteService } from '../../../../../../model/route/services/route-service';
-
+import { Modal } from "shared/framework";
+import { RouteService, RouteStatus, Route } from "app/model/route";
+import { ProductType } from "app/model/product";
 
 @autoinject
 export class EditInformationPanel
@@ -17,22 +15,23 @@ export class EditInformationPanel
      * @param router The `Router` instance.
      * @param modal The `Modal` instance.
      * @param routeService The `OrderService` instance.
-     * /**
+     */
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
-
-     public constructor(modal: Modal, routeService: RouteService)
+    public constructor(modal: Modal, routeService: RouteService)
     {
         this._modal = modal;
-        this._routeService = routeService
+        this._routeService = routeService;
     }
 
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
     private _result: Route | undefined;
 
-     /**
+    /**
      * The available statuses.
      */
     protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
@@ -40,13 +39,12 @@ export class EditInformationPanel
     /**
      * The available stop types.
      */
-    protected types = Object.keys(ProductType.values).map(slug => new ProductType(slug as any))
+    protected types = Object.keys(ProductType.values).map(slug => new ProductType(slug as any));
 
     /**
      * The model for the modal.
      */
     public model: Route;
-
 
     /**
      * Called by the framework when the modal is activated.
@@ -64,6 +62,7 @@ export class EditInformationPanel
     {
         return this._result;
     }
+
     protected async onSaveClick(): Promise<void>
     {
         try
@@ -76,6 +75,7 @@ export class EditInformationPanel
 
             // Set the result of the modal.
             this._result = this.model;
+
             await this._modal.close();
         }
         catch (error)

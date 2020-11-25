@@ -23,7 +23,7 @@ export class ColloStatus
 
     public slug: ColloStatusSlug;
     public name: string;
-    public accent: { pickup: Accent, delivery: Accent };
+    public accent: { pickup: Accent; delivery: Accent };
 
     /**
      * Gets the data representing this instance.

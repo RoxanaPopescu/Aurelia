@@ -23,7 +23,7 @@ export class ConfirmRemoveFulfillerDialog
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { currentFulfiller: Fulfiller, newFulfiller: Fulfiller }): void
+    public activate(model: { currentFulfiller: Fulfiller; newFulfiller: Fulfiller }): void
     {
         this.currentFulfiller = model.currentFulfiller;
         this.newFulfiller = model.newFulfiller;

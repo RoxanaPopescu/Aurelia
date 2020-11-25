@@ -119,7 +119,7 @@ export class RouteTemplateService
      */
     public async addStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
     {
-        let json = stop.toJSON();
+        const json = stop.toJSON();
         json.templateId = template.id;
         json.atIndex = stop.stopNumber - 1;
 
@@ -138,7 +138,7 @@ export class RouteTemplateService
      */
     public async updateStop(template: RouteTemplate, stop: RouteTemplateStop): Promise<void>
     {
-        let json = stop.toJSON();
+        const json = stop.toJSON();
         json.templateId = template.id;
 
         await this._apiClient.post("routes/templates/stops/update",
@@ -167,7 +167,7 @@ export class RouteTemplateService
      */
     public async addSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
-        let json = schedule.toJSON();
+        const json = schedule.toJSON();
         json.templateId = template.id;
 
         const result = await this._apiClient.post("routes/templates/schedules/add",
@@ -185,7 +185,7 @@ export class RouteTemplateService
      */
     public async updateSchedule(template: RouteTemplate, schedule: RouteTemplateSchedule): Promise<void>
     {
-        let json = schedule.toJSON();
+        const json = schedule.toJSON();
         json.templateId = template.id;
 
         await this._apiClient.post("routes/templates/schedules/update",

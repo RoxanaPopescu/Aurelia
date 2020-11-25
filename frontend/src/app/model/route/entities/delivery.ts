@@ -47,8 +47,10 @@ export class Delivery
      * The total weight of all colli deliver, can be undefined if no colli has weight.
      * In the future all colli should have a weight and dimension!
      */
-    public get totalWeight(): number | undefined {
-        let weight = this.colli.reduce((accu, colli) => accu += colli.weight ?? 0, 0);
+    public get totalWeight(): number | undefined
+    {
+        const weight = this.colli.reduce((accu, colli) => accu + (colli.weight ?? 0), 0);
+
         return weight > 0 ? weight : undefined;
     }
 
@@ -56,8 +58,10 @@ export class Delivery
      * The total volume of colli in this delivery, can be undefined if no colli has weight.
      * In the future all colli should have a weight and dimension!
      */
-    public get totalVolume(): number | undefined {
-        let volume = this.colli.reduce((accu, colli) => accu += colli.dimensions?.volume ?? 0, 0);
+    public get totalVolume(): number | undefined
+    {
+        const volume = this.colli.reduce((accu, colli) => accu + (colli.dimensions?.volume ?? 0), 0);
+
         return volume > 0 ? volume : undefined;
     }
 }

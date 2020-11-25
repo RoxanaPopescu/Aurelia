@@ -1,9 +1,9 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } from "app/model/express-route";
-import { Workspace } from "../../services/workspace";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
+import { ExpressRouteService, DriverRouteStop, ExpressRouteStop, ExpressRoute } from "app/model/express-route";
+import { Workspace } from "../../services/workspace";
 
 interface IExpressRouteStop
 {
@@ -40,13 +40,14 @@ export class MergeColumnCustomElement
 
     protected driverStopsElement: HTMLElement;
 
-    protected driverStops: (IExpressRouteStop | IDriverRouteStop)[];
-    protected get driverStopsFiltered(): (IExpressRouteStop | IDriverRouteStop)[] | undefined {
-        if (this.driverStops == null) {
+    protected driverStops: (IExpressRouteStop | IDriverRouteStop)[];
+    protected get driverStopsFiltered(): (IExpressRouteStop | IDriverRouteStop)[] | undefined {
+        if (this.driverStops == null)
+        {
             return undefined;
         }
 
-        return this.driverStops.filter(s => s.stop.status.slug != "cancelled");
+        return this.driverStops.filter(s => s.stop.status.slug !== "cancelled");
     }
 
     protected expressStops: IExpressRouteStop[];
@@ -77,7 +78,12 @@ export class MergeColumnCustomElement
         });
 
         this.expressStops = this.workspace.remainingExpressStops!
-            .reduce((p, c) => { p.push(...c); return p; }, [])
+            .reduce((p, c) =>
+            {
+                p.push(...c);
+
+                return p;
+            }, [])
             .map(stop => ({ type: "express-route-stop", stop, route: stop.route }));
 
         this.updateWorkspace();
@@ -85,7 +91,6 @@ export class MergeColumnCustomElement
 
     /**
      * Called by the framework when the component is attached to the DOM.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public attached(): void
     {
@@ -111,7 +116,6 @@ export class MergeColumnCustomElement
 
     /**
      * Called by the framework when the component is detached to the DOM.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public detached(): void
     {
@@ -352,7 +356,7 @@ export class MergeColumnCustomElement
             this.workspace.isBusy = true;
             this.addingStops = true;
 
-            const expressStops = this.driverStops.filter(s => s.type == "express-route-stop") as IExpressRouteStop[];
+            const expressStops = this.driverStops.filter(s => s.type === "express-route-stop") as IExpressRouteStop[];
             const addRouteIds = [...new Set(expressStops.map(s => s.route.id))];
 
             await this._expressRouteService.updateDriverRoute(
@@ -513,7 +517,7 @@ export class MergeColumnCustomElement
         {
             this.fetchingEstimate = true;
 
-            const expressStops = this.driverStops.filter(s => s.type == "express-route-stop") as IExpressRouteStop[];
+            const expressStops = this.driverStops.filter(s => s.type === "express-route-stop") as IExpressRouteStop[];
             const addRouteIds = [...new Set(expressStops.map(s => s.route.id))];
 
             const estimatedDriverRoute = await this._expressRouteService.estimateDriverRoute(
@@ -534,7 +538,8 @@ export class MergeColumnCustomElement
 
             this.fetchingEstimate = false;
 
-            if (!this.addingStops) {
+            if (!this.addingStops)
+            {
                 this.canApply = this.expressStops.length === 0;
             }
         }

@@ -21,8 +21,8 @@ export class RouteStopPanel
 
     private readonly _routeService: RouteService;
     private readonly _addressService: AddressService;
+    private readonly _modal: Modal;
     private _result: RouteStop | undefined;
-    private _modal: Modal;
 
     /**
      * True if the model represents a new stop, otherwise false.

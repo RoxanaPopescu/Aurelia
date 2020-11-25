@@ -68,10 +68,13 @@ export class VehicleGroups
     protected async onVehicleGroupClick(vehicleGroup: VehicleGroup): Promise<void>
     {
         const savedVehicleGroup = await this._modalService.open(VehicleGroupPanel, vehicleGroup).promise;
+
         if (savedVehicleGroup != null)
         {
             const index = this.settings.vehicleGroups.findIndex(g => g.id === savedVehicleGroup.id);
-            if (index >= 0) {
+
+            if (index >= 0)
+            {
                 this.settings.vehicleGroups.splice(index, 1, savedVehicleGroup);
             }
         }

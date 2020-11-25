@@ -111,9 +111,8 @@ export class DriversColumnCustomElement
 
     /**
      * Called by the framework when the component is attached to the DOM.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async attached(): Promise<void>
+    public attached(): void
     {
         this.update();
     }

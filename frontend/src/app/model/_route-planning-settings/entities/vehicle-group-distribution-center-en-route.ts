@@ -18,7 +18,9 @@ export class VehicleGroupDistributionCenterEnRoute
             this.taskTime = data.taskTime;
             this.earliestArrivalTime = data.earliestArrivalTime;
             this.latestDepartureTime = data.latestDepartureTime;
-        } else {
+        }
+        else
+        {
             this.location = new Location();
         }
     }

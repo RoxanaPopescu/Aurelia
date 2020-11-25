@@ -5,7 +5,7 @@ import { ApiClient } from "shared/infrastructure";
 import { OrderStatusSlug } from "../entities/order-status";
 import { OrderInfo } from "../entities/order-info";
 import { getLegacyOrderSortProperty, getLegacySortDirection, getLegacyOrderStatus } from "legacy/helpers/api-helper";
-import { Order } from "..";
+import { Order } from "../entities/order";
 import { OrderEvent } from "../entities/order-event";
 
 /**
@@ -99,7 +99,8 @@ export class OrderService
             query: { orderId: orderSlug }
         });
 
-        if (result.data.passages.length > 0) {
+        if (result.data.passages.length > 0)
+        {
             return result.data.passages[0].slug;
         }
 
@@ -126,7 +127,7 @@ export class OrderService
      * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the events.
      */
-    public async getEvents(orderSlug: string): Promise<{completedEvents: OrderEvent[], futureEvents: OrderEvent[]}>
+    public async getEvents(orderSlug: string): Promise<{completedEvents: OrderEvent[]; futureEvents: OrderEvent[]}>
     {
         const result = await this._apiClient.get("orders/v2/events",
         {

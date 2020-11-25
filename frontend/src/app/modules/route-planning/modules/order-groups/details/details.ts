@@ -37,7 +37,8 @@ export class DetailsPage
         agreementService: AgreementService,
         toastService: ToastService,
         routePlanningSettingsService: RoutePlanningSettingsService
-    ){
+    )
+    {
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
         this._agreementService = agreementService;
@@ -122,7 +123,7 @@ export class DetailsPage
      */
     @computedFrom("ruleSets", "orderGroup.routeOptimizationSettingsId")
     protected get currentRuleSet(): RoutePlanningSettingsInfo | undefined {
-        return this.ruleSets?.find(ruleSet => ruleSet.id == this.orderGroup.routeOptimizationSettingsId);
+        return this.ruleSets?.find(ruleSet => ruleSet.id === this.orderGroup.routeOptimizationSettingsId);
     }
 
     protected set currentRuleSet(info: RoutePlanningSettingsInfo | undefined) {
@@ -168,10 +169,7 @@ export class DetailsPage
         try
         {
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
-            this._toastService.open(
-                "info",
-                updatedToast
-            );
+            this._toastService.open("info", updatedToast);
         }
         catch (error)
         {

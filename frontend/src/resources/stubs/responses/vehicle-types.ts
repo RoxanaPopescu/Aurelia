@@ -13,11 +13,13 @@ export default
           "maxWidth": 0.8,
           "maxLength": 0.8,
           "maxWeight": 20.0,
-          "name": {
+          "name":
+          {
             "en": "Car",
             "da": "Bil"
           },
-          "images": {
+          "images":
+          {
             "pin": "https://moverstatic.azureedge.net/vehicle-types/car/pin.png",
             "small": "https://moverstatic.azureedge.net/vehicle-types/car/small.png",
             "large": "https://moverstatic.azureedge.net/vehicle-types/car/large.png"
@@ -31,11 +33,13 @@ export default
           "maxWidth": 1.4,
           "maxLength": 2.2,
           "maxWeight": 900.0,
-          "name": {
+          "name":
+          {
             "en": "Van",
             "da": "Varevogn"
           },
-          "images": {
+          "images":
+          {
             "pin": "https://moverstatic.azureedge.net/vehicle-types/van/pin.png",
             "small": "https://moverstatic.azureedge.net/vehicle-types/van/small.png",
             "large": "https://moverstatic.azureedge.net/vehicle-types/van/large.png"
@@ -49,11 +53,13 @@ export default
           "maxWidth": 2.0,
           "maxLength": 3.5,
           "maxWeight": 900.0,
-          "name": {
+          "name":
+          {
             "en": "Moving van",
             "da": "Liftvogn"
           },
-          "images": {
+          "images":
+          {
             "pin": "https://moverstatic.azureedge.net/vehicle-types/moving-van/pin.png",
             "small": "https://moverstatic.azureedge.net/vehicle-types/moving-van/small.png",
             "large": "https://moverstatic.azureedge.net/vehicle-types/moving-van/large.png"

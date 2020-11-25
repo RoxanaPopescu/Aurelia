@@ -19,22 +19,18 @@ export class TestService
 
     private readonly _apiClient: ApiClient;
 
-
     /**
      * Creates a new vehicle, associated with the specified driver.
      * @param vehicle The vehicle to create.
      * @param driverId The ID of the driver the vehicle should be associated with. If none is supplied the current user will create it.
      * @returns A promise that will be resolved with the new vehicle.
      */
-    public async copyRequest(
-        id: string,
-        driverId: string | undefined = undefined,
-        date: DateTime | undefined
-    ): Promise<{ slug: string }>
+    public async copyRequest(id: string, driverId: string | undefined, date: DateTime | undefined): Promise<{ slug: string }>
     {
         const result = await this._apiClient.post("test/copyRequest",
         {
-            body: {
+            body:
+            {
                 requestId: id,
                 driverId: driverId,
                 date: date

@@ -51,7 +51,7 @@ export class VehiclePanel
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
-    public async activate(model?: { vehicle?: Vehicle, driverId?: string}): Promise<void>
+    public async activate(model?: { vehicle?: Vehicle; driverId?: string}): Promise<void>
     {
         this.vehicleTypes = await this._vehicleService.getTypes();
         this.driverId = model?.driverId;
@@ -94,7 +94,8 @@ export class VehiclePanel
             }
 
             this._modal.busy = true;
-            var updatedVehicle: Vehicle;
+
+            let updatedVehicle: Vehicle;
 
             if (this.vehicle!.id == null)
             {

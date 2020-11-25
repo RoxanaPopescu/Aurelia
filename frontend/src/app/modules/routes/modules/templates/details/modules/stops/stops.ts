@@ -20,7 +20,8 @@ export class Stops
         routeTemplateService: RouteTemplateService,
         modalService: ModalService,
         toastService: ToastService
-    ){
+    )
+    {
         this._routeTemplateService = routeTemplateService;
         this._modalService = modalService;
         this._toastService = toastService;
@@ -28,10 +29,13 @@ export class Stops
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _modalService: ModalService;
-    protected readonly _toastService: ToastService;
-
     private _isMovingStop = false;
     private _targetIndex: number | undefined;
+
+    /**
+     * The `ToastService` instance.
+     */
+    protected readonly _toastService: ToastService;
 
     /**
      * The validation for the modal.
@@ -80,10 +84,14 @@ export class Stops
     protected async onAddStopClick(index?: number): Promise<void>
     {
         let stopNumber: number;
-        if (index != null) {
+
+        if (index != null)
+        {
             // Index exist, 1-index it since it's stopNumber
             stopNumber = index + 1;
-        } else {
+        }
+        else
+        {
             // End of list, since it's a stopNumber we add one to the list length
             stopNumber = this.template.stops.length + 1;
         }
@@ -129,7 +137,7 @@ export class Stops
      * @param source The stop being moved.
      * @param target The stop currently occupying the target position.
      */
-    protected async onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): Promise<void>
+    protected onMoveStop(source: RouteTemplateStop, target: RouteTemplateStop): void
     {
         const sourceIndex = this.template.stops.indexOf(source);
         this._targetIndex = this.template.stops.indexOf(target);
@@ -145,11 +153,7 @@ export class Stops
                 {
                     try
                     {
-                        await this._routeTemplateService.moveStop(
-                            this.template,
-                            source,
-                            this._targetIndex
-                        );
+                        await this._routeTemplateService.moveStop(this.template, source, this._targetIndex);
                     }
                     catch (error)
                     {
