@@ -32,10 +32,19 @@ export class OrderStatusModule extends AppModule
             try
             {
                 orderDetailsData = await this.fetchOrderDetails(trackingId);
+
+                // Was the order found?
+                if (orderDetailsData == null)
+                {
+                    // Set the response status.
+                    context.response.status = 404;
+
+                    return;
+                }
             }
             catch (error: any)
             {
-                // The API returns status 422 if the entity is not found, but the client expects status 404.
+                // The API returns status 422 if a malformed ID is specified - we handle that as not found.
                 if (error.response?.status === 422)
                 {
                     // Set the response status.
@@ -116,7 +125,17 @@ export class OrderStatusModule extends AppModule
             const driverData = undefined as any; // orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
 
             // Get the last known position of the driver, if any.
-            const driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
+
+            let driverPosition: any;
+
+            try
+            {
+                driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
+            }
+            catch (error)
+            {
+                console.error(error);
+            }
 
             // Set the response body.
             context.response.body =
