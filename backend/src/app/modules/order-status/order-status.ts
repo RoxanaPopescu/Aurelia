@@ -211,7 +211,7 @@ export class OrderStatusModule extends AppModule
      */
     private async fetchDriverPosition(driverId: string): Promise<any>
     {
-        const result = await this.apiClient.post("/logistics/drivers/last-cooordinate",
+        const result = await this.apiClient.post("/logistics-platform/drivers/last-coordinate",
         {
             noi: true,
             body:
