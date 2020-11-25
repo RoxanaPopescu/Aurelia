@@ -116,7 +116,7 @@ export class OrderStatusModule extends AppModule
             const driverData = orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
 
             // Get the last known position of the driver, if any.
-            const driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
+            const driverPosition = undefined; // driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
 
             // Set the response body.
             context.response.body =
