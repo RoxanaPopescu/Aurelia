@@ -122,7 +122,7 @@ export class OrderStatusModule extends AppModule
             }
 
             // Get the data for the driver associated with the estimated delivery.
-            const driverData = undefined as any; // orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
+            const driverData = orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
 
             // Get the last known position of the driver, if any.
 
@@ -130,7 +130,10 @@ export class OrderStatusModule extends AppModule
 
             try
             {
-                driverPosition = driverData?.id ? await this.fetchDriverPosition(driverData.id) : undefined;
+                if (driverData?.id)
+                {
+                    driverPosition = await this.fetchDriverPosition(driverData.id);
+                }
             }
             catch (error)
             {
