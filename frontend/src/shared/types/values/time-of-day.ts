@@ -85,9 +85,11 @@ export class TimeOfDay
      * @param text The string from which the instance should be created..
      * @returns The new instance.
      */
+    // tslint:disable-next-line: deprecation
     public static fromString(text: string): TimeOfDay
     {
         const parts = text.split(/:|\./g);
+        // tslint:disable-next-line: deprecation
         const result = new TimeOfDay();
 
         result.hour = parseInt(parts[0]);

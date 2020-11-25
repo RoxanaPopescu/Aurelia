@@ -23,5 +23,5 @@ export class PageTabNavCustomElement
     {
         newValue: string | undefined;
         oldValue: string | undefined;
-    }) => void | boolean);
+    }) => undefined | boolean);
 }

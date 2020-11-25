@@ -78,7 +78,7 @@ export class AssignVehiclePanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { route: RouteBase, assignOnSelect: boolean }): void
+    public activate(model: { route: RouteBase; assignOnSelect: boolean }): void
     {
         this.route = model.route;
         this.assignOnSelect = model.assignOnSelect;
@@ -87,8 +87,10 @@ export class AssignVehiclePanel
         new Operation(async () =>
         {
             this.vehicles = await this._vehicleService.getAll(
-                { status: "approved", minimumVehicleType: this.route.vehicleType }
-            );
+            {
+                status: "approved",
+                minimumVehicleType: this.route.vehicleType
+            });
         });
     }
 
@@ -109,7 +111,8 @@ export class AssignVehiclePanel
     {
         try
         {
-            if (this.assignOnSelect) {
+            if (this.assignOnSelect)
+            {
                 this._modal.busy = true;
                 await this._routeAssignmentService.assignVehicle(this.route, vehicle);
             }

@@ -1,4 +1,4 @@
-import { ImportErrorRow } from "..";
+import { ImportErrorRow } from "../entities/import-error-row";
 
 export class ImportError
 {

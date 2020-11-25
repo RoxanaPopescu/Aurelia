@@ -29,9 +29,12 @@ export class RouteStop extends RouteStopBase
             this.selfies = data.selfies.map(p => new Photo(p));
             this.tags = data.tags;
 
-            if (data.orderIds) {
+            if (data.orderIds)
+            {
                 this.orderIds = data.orderIds;
-            } else {
+            }
+            else
+            {
                 this.orderIds = [];
             }
 
@@ -106,11 +109,7 @@ export class RouteStop extends RouteStopBase
      */
     public get hasAlert(): boolean
     {
-        return (
-            this.getHasAlert() ||
-            this.deviations.length > 0 ||
-            this.hasColliProblem
-        );
+        return (this.getHasAlert() || this.deviations.length > 0 || this.hasColliProblem);
     }
 
     /**
@@ -147,11 +146,13 @@ export class RouteStop extends RouteStopBase
      */
     public get arrivedDelay(): Duration | undefined
     {
-        if (this.arrivedTime == null || this.arrivalTimeFrame?.to == null) {
+        if (this.arrivedTime == null || this.arrivalTimeFrame?.to == null)
+        {
             return undefined;
         }
 
-        let duration = this.arrivedTime.diff(this.arrivalTimeFrame.to);
+        const duration = this.arrivedTime.diff(this.arrivalTimeFrame.to);
+
         return duration.valueOf() > 0 ? duration : undefined;
     }
 
@@ -160,15 +161,18 @@ export class RouteStop extends RouteStopBase
      */
     public get expectedArrivalDelay(): Duration | undefined
     {
-        if (this.arrivedTime != null) {
+        if (this.arrivedTime != null)
+        {
             return undefined;
         }
 
-        if (this.estimates == null || this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null) {
+        if (this.estimates == null || this.arrivalTimeFrame == null || this.arrivalTimeFrame.to == null)
+        {
             return undefined;
         }
 
-        let duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
+        const duration = this.estimates.arrivalTime.diff(this.arrivalTimeFrame.to);
+
         return duration.valueOf() > 0 ? duration : undefined;
     }
 
@@ -178,11 +182,13 @@ export class RouteStop extends RouteStopBase
      */
     public get arrivedTooEarly(): Duration | undefined
     {
-        if (this.arrivedTime == null || this.arrivalTimeFrame?.from == null) {
+        if (this.arrivedTime == null || this.arrivalTimeFrame?.from == null)
+        {
             return undefined;
         }
 
-        let duration = this.arrivalTimeFrame.from.diff(this.arrivedTime);
+        const duration = this.arrivalTimeFrame.from.diff(this.arrivedTime);
+
         return duration.valueOf() > 0 ? duration : undefined;
     }
 
@@ -191,15 +197,18 @@ export class RouteStop extends RouteStopBase
      */
     public get expectedTooEarly(): Duration | undefined
     {
-        if (this.arrivedTime != null) {
+        if (this.arrivedTime != null)
+        {
             return undefined;
         }
 
-        if (this.estimates == null || this.arrivalTimeFrame?.from == null) {
+        if (this.estimates == null || this.arrivalTimeFrame?.from == null)
+        {
             return undefined;
         }
 
-        let duration = this.arrivalTimeFrame.from.diff(this.estimates.arrivalTime);
+        const duration = this.arrivalTimeFrame.from.diff(this.estimates.arrivalTime);
+
         return duration.valueOf() > 0 ? duration : undefined;
     }
 

@@ -45,12 +45,26 @@ WORKDIR /usr/app
 COPY ["/tsconfig.json", "./"]
 COPY ["/frontend/tsconfig.json", "./frontend/"]
 
+## Copy the `.tslint` folder and the `tslint.json` files.
+COPY ["/.tslint", "./.tslint"]
+COPY ["/tslint.json", "./"]
+COPY ["/frontend/tslint.json", "./frontend/"]
+
 ## Copy the remaining package contents.
 COPY ["/frontend/tools", "./frontend/tools"]
 COPY ["/frontend/src", "./frontend/src"]
 
 ## Set the working directory.
+WORKDIR /usr/app/.tslint
+
+## Install the dependencies, only when they have changed.
+RUN npm ci
+
+## Set the working directory.
 WORKDIR /usr/app/frontend
+
+## Lint the code.
+RUN npm run lint
 
 ## Start the build.
 RUN npm run translate-export

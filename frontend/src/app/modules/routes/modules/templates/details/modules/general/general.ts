@@ -1,4 +1,4 @@
-import { autoinject, bindable, computedFrom} from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RouteTemplate } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
 import { Session } from "shared/src/model/session";
@@ -14,9 +14,8 @@ export class General
      * Creates a new instance of the class.
      * @param agreementService The `AgreementService` instance.
      */
-    public constructor(
-        agreementService: AgreementService
-    ){
+    public constructor(agreementService: AgreementService)
+    {
         this._agreementService = agreementService;
 
         // tslint:disable-next-line: no-floating-promises
@@ -47,8 +46,9 @@ export class General
     @computedFrom("consignors", "template.routeOwnerId")
     protected get currentRouteOwner(): undefined | Consignor
     {
-        if (this.template == null || this.template.routeOwnerId == null || this.consignors == null) {
-            return undefined
+        if (this.template == null || this.template.routeOwnerId == null || this.consignors == null)
+        {
+            return undefined;
         }
 
         return this.consignors.find(c => c.id === this.template.routeOwnerId);
@@ -56,7 +56,8 @@ export class General
 
     protected set currentRouteOwner(consignor: undefined | Consignor)
     {
-        if (this.template != null && consignor != null) {
+        if (this.template != null && consignor != null)
+        {
             this.template.routeOwnerId = consignor?.id;
         }
     }

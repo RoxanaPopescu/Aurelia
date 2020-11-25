@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-depots-activity-remarks {
-  & > *:not(:last-child) {
+  > *:not(:last-child) {
     margin-bottom: 20px;
   }
 }

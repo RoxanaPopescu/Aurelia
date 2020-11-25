@@ -174,7 +174,7 @@ export class FleetModule
                 nav: true,
                 href: "/fleet-management/drivers/create-multiple",
                 icon: "fleet"
-            },
+            }
         ]);
     }
 }

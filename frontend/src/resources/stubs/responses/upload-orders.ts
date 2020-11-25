@@ -7,11 +7,13 @@ export default
         // status: 204,
         body:
         {
-            "errorsByType": [
+            "errorsByType":
+            [
                 {
                     "columnName": "Postnummer",
                     "name": "4 cifre i postnummer",
-                    "rows": [
+                    "rows":
+                    [
                         {
                             "rowIndex": 1,
                             "cellValue": "27000"
@@ -45,7 +47,8 @@ export default
                 {
                     "columnName": "Postnummer",
                     "name": "Kun tal i et postnummer",
-                    "rows": [
+                    "rows":
+                    [
                         {
                             "rowIndex": 2,
                             "cellValue": "2700d"

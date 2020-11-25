@@ -55,7 +55,6 @@ export class ListPage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {

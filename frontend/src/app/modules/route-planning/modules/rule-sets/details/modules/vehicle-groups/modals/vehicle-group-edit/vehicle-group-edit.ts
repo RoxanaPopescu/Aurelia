@@ -74,11 +74,13 @@ export class VehicleGroupPanel
             this.model.endLocation = new VehicleGroupLocation();
         }
 
-        if (this.model.distributionCenterEnRoute?.earliestArrivalTime != null) {
+        if (this.model.distributionCenterEnRoute?.earliestArrivalTime != null)
+        {
             this.selectedEarliestArrival = Duration.fromObject({ seconds: this.model.distributionCenterEnRoute.earliestArrivalTime });
         }
 
-        if (this.model.distributionCenterEnRoute?.latestDepartureTime != null) {
+        if (this.model.distributionCenterEnRoute?.latestDepartureTime != null)
+        {
             this.selectedLatestDeparture = Duration.fromObject({ seconds: this.model.distributionCenterEnRoute.latestDepartureTime });
         }
     }

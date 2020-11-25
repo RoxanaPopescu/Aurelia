@@ -60,7 +60,6 @@ export class DetailsPage
      */
     protected driver: Driver;
 
-
     /**
      * True if the route planning rule set is new, otherwise false.
      */
@@ -127,7 +126,8 @@ export class DetailsPage
             this.updateOperation.abort();
         }
 
-        if (this.driver.id == null) {
+        if (this.driver.id == null)
+        {
             return;
         }
 
@@ -247,8 +247,10 @@ export class DetailsPage
             if (error instanceof ApiError && error.response != null && error.response.status === 409)
             {
 
-                this.emailOrPhoneAlreadyExist = true
-            } else {
+                this.emailOrPhoneAlreadyExist = true;
+            }
+            else
+            {
                 Log.error("Could not save the route planning settings", error);
             }
 

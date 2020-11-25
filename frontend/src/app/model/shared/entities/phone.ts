@@ -12,20 +12,28 @@ export class PhoneNumber
         if (data != null)
         {
             this.countryCallingCode = data.countryCallingCode;
-            if (data.countryCallingCode == null && data.countryPrefix) {
+
+            if (data.countryCallingCode == null && data.countryPrefix)
+            {
                 this.countryCallingCode = data.countryPrefix;
             }
 
-            if (data.countryCode) {
+            if (data.countryCode)
+            {
                 this.countryCode = data.countryCode;
-            } else {
+            }
+            else
+            {
                 // TODO: Remove in later release
                 this.countryCode = data.countryPrefix ? data.countryPrefix.replace(/\+|\s/g, "") : "";
             }
 
-            if (data.nationalNumber) {
+            if (data.nationalNumber)
+            {
                 this.nationalNumber = data.nationalNumber;
-            } else {
+            }
+            else
+            {
                 // TODO: Remove in later release
                 this.nationalNumber = data.number;
             }
@@ -68,9 +76,7 @@ export class PhoneNumber
      */
     public get isValid(): boolean
     {
-        return (
-            /^(\s*\d\s*){8}$/.test(this.nationalNumber)
-        );
+        return (/^(\s*\d\s*){8}$/.test(this.nationalNumber));
     }
 
     /**

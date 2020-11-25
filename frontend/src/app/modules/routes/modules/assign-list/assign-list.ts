@@ -174,9 +174,8 @@ export class ListPage
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
-     * @returns A promise that will be resolved when the module is activated.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -195,7 +194,6 @@ export class ListPage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -230,15 +228,20 @@ export class ListPage
         {
             this.failed = false;
 
-            try {
+            try
+            {
                 let assignedDriver: boolean | undefined;
-                if (this.assignedDriver != this.notAssignedDriver) {
-                    assignedDriver = this.assignedDriver
+
+                if (this.assignedDriver !== this.notAssignedDriver)
+                {
+                    assignedDriver = this.assignedDriver;
                 }
 
                 let assignedVehicle: boolean | undefined;
-                if (this.assignedVehicle != this.notAssignedVehicle) {
-                    assignedVehicle = this.assignedVehicle
+
+                if (this.assignedVehicle !== this.notAssignedVehicle)
+                {
+                    assignedVehicle = this.assignedVehicle;
                 }
 
                 const result = await this._routeService.getAll(
@@ -293,7 +296,9 @@ export class ListPage
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                 },
                 { trigger: false, replace: true });
-            } catch (error) {
+            }
+            catch (error)
+            {
                 this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }

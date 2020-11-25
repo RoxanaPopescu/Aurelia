@@ -36,19 +36,19 @@ export class DriverService
     public async getAll(
         sorting?: ISorting,
         paging?: IPaging,
-        filter?: {
-            statuses?: DriverStatusSlug[],
-            searchQuery?: string
-        },
+        filter?: { statuses?: DriverStatusSlug[]; searchQuery?: string },
         signal?: AbortSignal
-    ): Promise<{ results: Driver[]; driverCount?: number }> {
+    ): Promise<{ results: Driver[]; driverCount?: number }>
+    {
         const result = await this._apiClient.post("drivers/list",
         {
             signal,
-            body: {
+            body:
+            {
                 sorting: sorting,
                 paging: paging,
-                filter: {
+                filter:
+                {
                     searchQuery: filter?.searchQuery,
                     statuses: filter?.statuses
                 }
@@ -61,8 +61,9 @@ export class DriverService
             results: result.data.results.map((data: any) =>
             {
                 const driverVehicleTypes = data.vehicleTypeIds.map(id => vehicleTypes.find(vt => vt.id === id));
+
                 return new Driver(data.driver, driverVehicleTypes);
-            }),
+            })
         };
     }
 

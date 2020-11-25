@@ -1,0 +1,52 @@
+# Because this is created by the operating system.
+/**/.DS_STORE
+/**/Thumbs.db
+
+# Because this is a prefix we use to exclude files and folders from version control.
+/**/~*
+
+# Because this contains files specific to GitHub.
+/.github/
+
+# Because this contains files specific to Circle CI.
+/.circleci/
+
+# Because this is specific to the Git source control system.
+/.git/
+/.gitattributes
+/.gitignore
+
+# Because this is specific to deployment using Docker.
+/.dockerignore
+/dockerfile
+/docker-compose.*
+
+# Because this contains temporary files created by Chrome.
+/frontend/.chrome/
+
+# Because this contains files specific to Visual Studio Code.
+/backend/.vscode/
+/frontend/.vscode/
+
+# Because this is specific to publishing using NPM.
+/backend/.npmignore
+/frontend/.npmignore
+/frontend/packages/*/.npmignore
+
+# Because this is a log file that may be created by NPM.
+/backend/npm-debug.log
+/frontend/npm-debug.log
+/frontend/packages/*/npm-debug.log
+
+# Because this contains dependencies installed by NPM.
+/backend/node_modules/
+/frontend/node_modules/
+/frontend/packages/*/node_modules/
+
+# Because this contains build artifacts.
+/backend/artifacts/
+/frontend/artifacts/
+/frontend/packages/*/artifacts/
+
+# Because this is not part of this docker build.
+/frontend/packages/desktop/

@@ -1,4 +1,4 @@
-import { autoinject, bindable, computedFrom } from 'aurelia-framework';
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { RouteService, Route, RouteStop } from "app/model/route";
 import { Order } from "app/model/order";
@@ -38,17 +38,22 @@ export class RouteOverview
      */
     protected route: Route | undefined;
 
-    @computedFrom('route')
-    protected get stops(): RouteStop[] {
-        let stops: RouteStop[] = [];
+    @computedFrom("route")
+    protected get stops(): RouteStop[]
+    {
+        const stops: RouteStop[] = [];
 
-        if (this.route == null) {
+        if (this.route == null)
+        {
             return stops;
         }
 
-        for(let stop of this.route.stops) {
-            if (stop instanceof RouteStop) {
-                if (stop.orderIds.includes(this.order.slug)) {
+        for (const stop of this.route.stops)
+        {
+            if (stop instanceof RouteStop)
+            {
+                if (stop.orderIds.includes(this.order.slug))
+                {
                     stops.push(stop);
                 }
             }
@@ -75,7 +80,6 @@ export class RouteOverview
 
     /**
      * Called by the framework when the module is detached.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public detached(): void
     {
@@ -102,14 +106,18 @@ export class RouteOverview
 
         this.fetchOperation = new Operation(async signal =>
         {
-            try {
+            try
+            {
                 const route = await this._routeService.get(this.id);
                 this.route = route;
 
-                if (this.route.status.slug === "in-progress") {
+                if (this.route.status.slug === "in-progress")
+                {
                     this.pollTimeout = setTimeout(() => this.fetchRoute(), 10000);
                 }
-            } catch {
+            }
+            catch
+            {
                 this.pollTimeout = setTimeout(() => this.fetchRoute(), 10000);
             }
         });

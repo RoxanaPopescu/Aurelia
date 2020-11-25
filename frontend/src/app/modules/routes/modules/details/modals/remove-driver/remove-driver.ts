@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { Modal } from "shared/framework";
-import { Route, RouteService } from 'app/model/route';
 import { Log } from "shared/infrastructure";
+import { Modal } from "shared/framework";
+import { Route, RouteService } from "app/model/route";
 
 @autoinject
 export class RemoveDriverPanel
@@ -14,7 +14,7 @@ export class RemoveDriverPanel
     public constructor(modal: Modal, routeService: RouteService)
     {
         this._modal = modal;
-        this._routeService = routeService
+        this._routeService = routeService;
     }
 
     private readonly _routeService: RouteService;
@@ -58,6 +58,7 @@ export class RemoveDriverPanel
 
             // Set the result of the modal.
             this._result = this.model;
+
             await this._modal.close();
         }
         catch (error)

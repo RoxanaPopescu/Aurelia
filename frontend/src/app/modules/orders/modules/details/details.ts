@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
 import { IdentityService } from "app/services/identity";
@@ -91,7 +91,11 @@ export class DetailsModule
     public activate(params: IOrderParams): void
     {
         this.orderId = params.id;
+
+        // tslint:disable-next-line: no-floating-promises
         this.fetchOrder();
+
+        // tslint:disable-next-line: no-floating-promises
         this.fetchRouteId();
     }
 
@@ -102,7 +106,9 @@ export class DetailsModule
     protected async onEditOrderClick(): Promise<void>
     {
         const savedOrder = await this._modalService.open(EditOrderPanel, { order: this.order! }).promise;
-        if (savedOrder != null) {
+
+        if (savedOrder != null)
+        {
             this.order = savedOrder;
         }
     }
@@ -133,11 +139,14 @@ export class DetailsModule
     /**
      * Fetches the specified order.
      */
-    private async fetchOrder()
+    private async fetchOrder(): Promise<void>
     {
-        try {
+        try
+        {
             this.order = await this._orderService.get(this.orderId);
-        } catch (error) {
+        }
+        catch (error)
+        {
             Log.error("An error occurred while loading the list.\n", error);
         }
     }
@@ -145,12 +154,15 @@ export class DetailsModule
     /**
      * Fetches the linked routeId.
      */
-    private async fetchRouteId()
+    private async fetchRouteId(): Promise<void>
     {
-        try {
+        try
+        {
             this.routeId = await this._orderService.getRouteId(this.orderId);
             this.loadingRouteId = false;
-        } catch (error) {
+        }
+        catch (error)
+        {
             this.loadingRouteId = false;
             Log.error("An error occurred while loading the linked route.\n", error);
         }

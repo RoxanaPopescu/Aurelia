@@ -43,7 +43,8 @@ export class CommunicationService
     {
         await this._apiClient.post("communication/sms/send",
         {
-            body: {
+            body:
+            {
                 message: message,
                 phone: phone
             }

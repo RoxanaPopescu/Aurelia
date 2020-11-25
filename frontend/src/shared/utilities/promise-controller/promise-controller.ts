@@ -5,6 +5,7 @@ import { AbortError } from "shared/types";
  * thus making it possible to resolve or reject the promise from outside the scope of the
  * function passed to the promise constructor.
  */
+// tslint:disable-next-line: invalid-void
 export class PromiseController<T = void>
 {
     /**

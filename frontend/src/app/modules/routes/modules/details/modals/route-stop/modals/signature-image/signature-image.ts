@@ -1,17 +1,14 @@
-import { autoinject, bindable } from 'aurelia-framework';
-import { RouteStop, /*RouteService*/ } from "app/model/route";
+import { autoinject, bindable } from "aurelia-framework";
+import { RouteStop } from "app/model/route";
 
 @autoinject
 export class SignatureImage
 {
     /**
-     * Creates a new instance of the class.
-     * @param model The RouteStop to display signature image.
+     * The model for the modal.
      */
-    public constructor(model: RouteStop)
-    {
-        this.model = this._model;
-    }
+    @bindable
+    public model: RouteStop;
 
     /**
      * Called by the framework when the modal is activated.
@@ -21,11 +18,4 @@ export class SignatureImage
     {
         this.model = model;
     }
-
-    private readonly _model: RouteStop
-    /**
-     * The model for the modal.
-     */
-    @bindable
-    public model: RouteStop;
 }

@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
-import { Route, RouteService } from 'app/model/route';
+import { Route, RouteService } from "app/model/route";
 import { Log } from "shared/infrastructure";
 
 @autoinject
@@ -22,13 +22,17 @@ export class AddOrderPanel
      public constructor(modal: Modal, routeService: RouteService)
     {
         this._modal = modal;
-        this._routeService = routeService
+        this._routeService = routeService;
     }
 
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
     private _result: Route | undefined;
-    private _orderSlug: String;
+
+    /**
+     * The slug identifying the order to add.
+     */
+    protected orderSlug: string;
 
     /**
      * The validation for the modal.
@@ -40,7 +44,6 @@ export class AddOrderPanel
      */
     public model: Route;
 
-
     /**
      * Called by the framework when the modal is activated.
      */
@@ -48,6 +51,7 @@ export class AddOrderPanel
     {
         this.model = model.route.clone();
     }
+
     /**
      * Called by the framework when the modal is deactivated.
      * @returns The result of the modal.
@@ -56,28 +60,30 @@ export class AddOrderPanel
     {
         return this._result;
     }
+
     protected async onAddClick(): Promise<void>
     {
         try
         {
 
-             // Activate validation so any further changes will be validated immediately.
-             this.validation.active = true;
+            // Activate validation so any further changes will be validated immediately.
+            this.validation.active = true;
 
-             // Validate the form.
-             if (!await this.validation.validate())
-             {
-                 return;
-             }
+            // Validate the form.
+            if (!await this.validation.validate())
+            {
+                return;
+            }
 
             // Mark the modal as busy.
             this._modal.busy = true;
 
             // Save the changes.
-            await this._routeService.addOrder(this.model, this._orderSlug);
+            await this._routeService.addOrder(this.model, this.orderSlug);
 
             // Set the result of the modal.
             this._result = this.model;
+
             await this._modal.close();
         }
         catch (error)

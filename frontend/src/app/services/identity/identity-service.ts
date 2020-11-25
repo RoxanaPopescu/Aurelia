@@ -69,9 +69,11 @@ export class IdentityService
     public authenticated(): void
     {
         // Update tokens in identity
-        if (Profile.tokens != null && this.identity != null) {
+        if (Profile.tokens != null && this.identity != null)
+        {
             this.identity.tokens = Profile.tokens;
         }
+
         this.configureInfrastructure();
         this.verifyAccessTokenExpireDate();
     }
@@ -101,10 +103,8 @@ export class IdentityService
     public async reauthenticate(): Promise<boolean>
     {
         // Verify a minimum of 1 minutes since last reauthenticate (It can continiously call if tokens are not set correctly)
-        if (
-            this._lastReauthenticate != null &&
-            DateTime.local().diff(this._lastReauthenticate).get("milliseconds") < 1000 * 60
-        ) {
+        if (this._lastReauthenticate != null && DateTime.local().diff(this._lastReauthenticate).get("milliseconds") < 1000 * 60)
+        {
             return Promise.resolve(false);
         }
 
@@ -113,9 +113,12 @@ export class IdentityService
             this._lastReauthenticate = DateTime.local();
             const result = await this._apiClient.get("RefreshTokens");
             Profile.setTokens(result.data.accessToken, result.data.refreshToken);
-        } catch {
+        }
+        catch
+        {
             // For now we do nothing
-        } finally
+        }
+        finally
         {
             this.authenticated();
         }
@@ -174,7 +177,8 @@ export class IdentityService
     {
         clearTimeout(this._refreshTokenTimeout);
 
-        if (this.identity?.tokens == null) {
+        if (this.identity?.tokens == null)
+        {
             return;
         }
 

@@ -34,11 +34,11 @@ export class DaoRelabelPage
     /**
      * Updates the page by fetching the latest data.
      */
-    protected update(newValue?: string, oldValue?: string, propertyName?: string): void
+    protected async update(newValue?: string, oldValue?: string, propertyName?: string): Promise<void>
     {
         if (newValue != null && newValue.length === 11)
         {
-            this.getPdfLink(newValue);
+            await this.getPdfLink(newValue);
         }
     }
 
@@ -49,7 +49,7 @@ export class DaoRelabelPage
     {
         if (this.barcode != null)
         {
-            this.getPdfLink(this.barcode);
+            await this.getPdfLink(this.barcode);
         }
     }
 

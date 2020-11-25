@@ -20,13 +20,17 @@ export class AddSupportNoteDialog
 
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
-    private note?: string;
     private _result: boolean = false;
+
+    /**
+     * The support note to add.
+     */
+    protected note?: string;
+
     /**
      * The model for the modal.
      */
     protected model: { route: Route };
-
 
     /**
      * The validation for the modal.
@@ -64,7 +68,8 @@ export class AddSupportNoteDialog
      */
     protected async onAddClick(): Promise<void>
     {
-        try {
+        try
+        {
             this.validation.active = true;
 
             // Validate the form.
@@ -78,8 +83,10 @@ export class AddSupportNoteDialog
             await this._routeService.addSupportNote(this.model.route, this.note!);
 
             this._result = true;
+
             await this._modal.close(this.note);
-        } catch (error)
+        }
+        catch (error)
         {
             Log.error("Could not add a support note for this route", error);
         }

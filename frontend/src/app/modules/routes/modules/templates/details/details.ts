@@ -37,7 +37,8 @@ export class DetailsPage
         modalService: ModalService,
         router: AppRouter,
         toastService: ToastService
-    ){
+    )
+    {
         this._routeTemplateService = routeTemplateService;
         this._modalService = modalService;
         this._router = router;
@@ -54,7 +55,6 @@ export class DetailsPage
      */
     @observable
     protected tab: "general" | "stops" | "schedules" = "general";
-
 
     /**
      * The most recent update operation.
@@ -87,9 +87,12 @@ export class DetailsPage
             // Create and execute the new operation.
             this.fetchOperation = new Operation(async signal =>
             {
-                try {
+                try
+                {
                     this.template = await this._routeTemplateService.get(params.id!, signal);
-                } catch (error) {
+                }
+                catch (error)
+                {
                     Log.error("An error occurred while loading the details.\n", error);
                 }
             });
@@ -102,7 +105,6 @@ export class DetailsPage
 
     /**
      * Called by the framework when the module is deactivated.
-     * @returns A promise that will be resolved when the module is activated.
      */
     public deactivate(): void
     {
@@ -119,7 +121,7 @@ export class DetailsPage
      */
     protected async onCreateRouteClick(): Promise<void>
     {
-        await this._modalService.open(CreateRoutePanel, this.template!).promise
+        await this._modalService.open(CreateRoutePanel, this.template).promise;
     }
 
     /**
@@ -189,6 +191,5 @@ export class DetailsPage
             this.saving = false;
             Log.error("Could not save template", error);
         }
-
     }
 }

@@ -10,12 +10,14 @@ export class Appointment
     public constructor(data: any)
     {
         const fromDate = DateTime.fromISO(data.earliestArrivalDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
         const fromDuration = Duration.fromMillis(TimeOfDay.fromString(data.earliestArrivalTime).valueOf());
-        this.earliestArrivalDate = fromDate.plus(fromDuration)
+        this.earliestArrivalDate = fromDate.plus(fromDuration);
 
         const toDate = DateTime.fromISO(data.latestArrivalDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
         const toDuration = Duration.fromMillis(TimeOfDay.fromString(data.latestArrivalTime).valueOf());
-        this.latestArrivalDate = toDate.plus(toDuration)
+        this.latestArrivalDate = toDate.plus(toDuration);
     }
 
     public get timeFrame(): DateTimeRange {
@@ -24,7 +26,6 @@ export class Appointment
 
     public earliestArrivalDate: DateTime;
     public latestArrivalDate: DateTime;
-
 
     /**
      * Gets the data representing this instance.
@@ -36,6 +37,6 @@ export class Appointment
             earliestArrivalTime: this.earliestArrivalDate.toFormat("HH:mm:ss"),
             latestArrivalDate: this.latestArrivalDate.startOf("day").toFormat("yyyy-MM-dd'T'HH:mm:ss"),
             latestArrivalTime: this.latestArrivalDate.toFormat("HH:mm:ss")
-        }
+        };
     }
 }

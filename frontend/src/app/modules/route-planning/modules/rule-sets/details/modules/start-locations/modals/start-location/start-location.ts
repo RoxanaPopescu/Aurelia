@@ -46,7 +46,7 @@ export class StartLocationDialog
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { settings: RoutePlanningSettings, departureTime: DepartureTime, isNew: boolean }): void
+    public activate(model: { settings: RoutePlanningSettings; departureTime: DepartureTime; isNew: boolean }): void
     {
         this.model = { settings: model.settings, departureTime: model.departureTime.clone(), isNew: model.isNew };
     }

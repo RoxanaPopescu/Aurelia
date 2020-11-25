@@ -85,7 +85,7 @@ export class CreateRoutePanel
     /**
      * Called when the "Remove driver" icon is clicked.
      */
-    protected async onRemoveDriverClick(): Promise<void>
+    protected onRemoveDriverClick(): void
     {
         this.model.driver = undefined;
     }
@@ -109,10 +109,7 @@ export class CreateRoutePanel
 
             await this._routeTemplateService.createRoute(this.model);
 
-            this._toastService.open(
-                "info",
-                createdToast
-            );
+            this._toastService.open("info", createdToast);
 
             await this._modal.close();
         }

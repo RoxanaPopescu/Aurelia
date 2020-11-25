@@ -9,7 +9,8 @@ export class RouteStopActions
      */
     public constructor(data?: any)
     {
-        if (data) {
+        if (data)
+        {
             this.instructionsAccept = data.instructionsAccept;
             this.timeFrameVerification = data.timeFrameVerification;
             this.scanColli = data.scanColli;
@@ -18,7 +19,9 @@ export class RouteStopActions
             this.photo = data.photo;
             this.verificationCode = data.verificationCode;
             this.colliCountVerification = data.colliCountVerification;
-        } else {
+        }
+        else
+        {
             this.instructionsAccept = false;
             this.timeFrameVerification = false;
             this.scanColli = false;

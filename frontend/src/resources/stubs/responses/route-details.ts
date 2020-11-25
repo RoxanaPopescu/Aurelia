@@ -1,3 +1,5 @@
+// tslint:disable: max-file-line-count
+
 const route =
 {
     "id": "d7361480-34ae-4cb5-afcf-3dc54b5220a4",
@@ -7,13 +9,16 @@ const route =
     "driverListUrl": "https://www.mover.dk/pdf/customers/trip-overview/?sessionId=384696&token=D9A02B1B",
     "vehicleTypeId": "2321cbd7-5bed-4035-a827-2bfea31bb8e8",
     "criticality": "medium",
-    "driver": {
+    "driver":
+    {
       "id": 302609,
-      "name": {
+      "name":
+      {
         "first": "Fahad",
         "last": "Al-Nahar"
       },
-      "phone": {
+      "phone":
+      {
         "countryPrefix": "45",
         "number": "51325004",
         "formatted": "+45 51 32 50 04"
@@ -21,12 +26,14 @@ const route =
       "pictureUrl": "https://cdn1.thehunt.com/assets/default_avatar-51c8ddf72a3f138adf9443a3be871aa4.png"
     },
     "driverOnline": true,
-    "plannedTimeFrame": {
+    "plannedTimeFrame":
+    {
       "from": "2020-01-10T10:00:00+00:00",
       "to": "2020-01-10T16:00:00+00:00"
     },
     "completionTime": "2020-01-10T12:09:59+00:00",
-    "fulfiller": {
+    "fulfiller":
+    {
       "type": "Fulfiller",
       "id": "2ab2712b-5f60-4439-80a9-a58379cce885",
       "publicId": "MoverLogistics",
@@ -34,35 +41,42 @@ const route =
       "contactPerson": "Operations",
       "contactEmail": "support@mover.dk",
       "address": "",
-      "contactPhone": {
+      "contactPhone":
+      {
         "number": "",
         "countryPrefix": null
       }
     },
-    "stops": [
+    "stops":
+    [
       {
         "hidden": false,
         "id": "aaf058ed-fd56-4d21-a67c-ded397ad3777",
         "status": "not-visited",
         "type": "Pickup",
-        "orderIds": [
+        "orderIds":
+        [
           "S1844095",
           "S1849132",
           "S1849761",
           "S1850792"
         ],
         "outfit": {},
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Vejle Landevej 29, 7000 Fredericia"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.54448541,
             "longitude": 9.6810231
           }
         },
-        "loadingTime": 1800.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 1800,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T10:00:00+00:00",
           "to": "2020-01-10T10:00:00+00:00"
         },
@@ -71,26 +85,31 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 0,
           "loadingTime": 1800,
           "waitingTime": 0,
           "completionTime": "2020-01-10T10:30:00+00:00"
         },
-        "pickups": [
+        "pickups":
+        [
           {
             "orderId": "a33f5b7d-bf5f-f9a6-c8da-faadecf23150",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1850792",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294013",
                 "barcode": "00102280703",
@@ -357,15 +376,18 @@ const route =
             "orderId": "6bd4aba0-71ef-ead1-274d-dd7de3a9ce5f",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1844095",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294001",
                 "barcode": "00102277995",
@@ -442,15 +464,18 @@ const route =
             "orderId": "de031f7d-033e-583e-bfca-3c981d6594d7",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1849761",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294007",
                 "barcode": "00102280677",
@@ -487,15 +512,18 @@ const route =
             "orderId": "5a61e747-e000-7284-a66f-1328041524aa",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1849132",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294003",
                 "barcode": "00102278007",
@@ -597,29 +625,36 @@ const route =
         "id": "97c6fada-ad71-49de-8853-34d9b333bc52",
         "status": "not-visited",
         "type": "Delivery",
-        "orderIds": [
+        "orderIds":
+        [
           "S1850792"
         ],
-        "outfit": {
+        "outfit":
+        {
           "companyName": "Rajinder Pal Singh",
           "contactPerson": "Rajinder Pal Singh",
-          "contactPhone": {
+          "contactPhone":
+          {
             "countryPrefix": "45",
             "number": "60212550",
             "formatted": "+45 60 21 25 50"
           }
         },
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Frejasvej 9, 6000 Kolding"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.50686,
             "longitude": 9.51021191
           }
         },
-        "loadingTime": 840.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 840,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T06:00:00+00:00",
           "to": "2020-01-10T16:00:00+00:00"
         },
@@ -628,27 +663,32 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 968,
           "loadingTime": 840,
           "waitingTime": 0,
           "completionTime": "2020-01-10T11:00:08+00:00"
         },
         "pickups": [],
-        "deliveries": [
+        "deliveries":
+        [
           {
             "orderId": "a33f5b7d-bf5f-f9a6-c8da-faadecf23150",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1850792",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294013",
                 "barcode": "00102280703",
@@ -918,29 +958,36 @@ const route =
         "id": "830f1075-85d1-49ae-9ea8-02c489b8ac5d",
         "status": "not-visited",
         "type": "Delivery",
-        "orderIds": [
+        "orderIds":
+        [
           "S1844095"
         ],
-        "outfit": {
+        "outfit":
+        {
           "companyName": "Elsebeth Aavild Nielsen",
           "contactPerson": "Elsebeth Aavild Nielsen",
-          "contactPhone": {
+          "contactPhone":
+          {
             "countryPrefix": "45",
             "number": "28938025",
             "formatted": "+45 28 93 80 25"
           }
         },
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Brogårdshaven 96, 6000 Kolding"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.50652905,
             "longitude": 9.43929306
           }
         },
-        "loadingTime": 210.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 210,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T06:00:00+00:00",
           "to": "2020-01-10T16:00:00+00:00"
         },
@@ -949,27 +996,32 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 751,
           "loadingTime": 210,
           "waitingTime": 0,
           "completionTime": "2020-01-10T11:16:09+00:00"
         },
         "pickups": [],
-        "deliveries": [
+        "deliveries":
+        [
           {
             "orderId": "6bd4aba0-71ef-ead1-274d-dd7de3a9ce5f",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1844095",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294001",
                 "barcode": "00102277995",
@@ -1049,29 +1101,36 @@ const route =
         "id": "0fceebd6-6ee3-4f76-b3cd-0616097312cb",
         "status": "not-visited",
         "type": "Delivery",
-        "orderIds": [
+        "orderIds":
+        [
           "S1849761"
         ],
-        "outfit": {
+        "outfit":
+        {
           "companyName": "Helle Søtrup",
           "contactPerson": "Helle Søtrup",
-          "contactPhone": {
+          "contactPhone":
+          {
             "countryPrefix": "45",
             "number": "22277158",
             "formatted": "+45 22 27 71 58"
           }
         },
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Hjelmsvej 11, 1. sal, 6000 Kolding"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.48263121,
             "longitude": 9.47184276
           }
         },
-        "loadingTime": 150.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 150,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T06:00:00+00:00",
           "to": "2020-01-10T16:00:00+00:00"
         },
@@ -1080,27 +1139,32 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 567,
           "loadingTime": 150,
           "waitingTime": 0,
           "completionTime": "2020-01-10T11:28:06+00:00"
         },
         "pickups": [],
-        "deliveries": [
+        "deliveries":
+        [
           {
             "orderId": "de031f7d-033e-583e-bfca-3c981d6594d7",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1849761",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294007",
                 "barcode": "00102280677",
@@ -1140,29 +1204,36 @@ const route =
         "id": "e2be3412-841f-4d46-9d75-ef77c0c552b3",
         "status": "not-visited",
         "type": "Delivery",
-        "orderIds": [
+        "orderIds":
+        [
           "S1849132"
         ],
-        "outfit": {
+        "outfit":
+        {
           "companyName": "Anneke Ruppel",
           "contactPerson": "Anneke Ruppel",
-          "contactPhone": {
+          "contactPhone":
+          {
             "countryPrefix": "45",
             "number": "51253102",
             "formatted": "+45 51 25 31 02"
           }
         },
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Klintevej 127, 6000 Kolding"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.48189217,
             "longitude": 9.5010106
           }
         },
-        "loadingTime": 300.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 300,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T12:00:00+00:00",
           "to": "2020-01-10T16:00:00+00:00"
         },
@@ -1171,27 +1242,32 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 409,
           "loadingTime": 300,
           "waitingTime": 1202,
           "completionTime": "2020-01-10T11:39:55+00:00"
         },
         "pickups": [],
-        "deliveries": [
+        "deliveries":
+        [
           {
             "orderId": "5a61e747-e000-7284-a66f-1328041524aa",
             "consignorId": "0f445c2d-2950-4b7c-bdbe-6f30bed493f9",
             "consignorOrderId": "S1849132",
-            "consignee": {
+            "consignee":
+            {
               "companyName": "COOP (MAD)",
-              "contactPhone": {
+              "contactPhone":
+              {
                 "countryPrefix": "45",
                 "number": "60439457",
                 "formatted": "+45 60 43 94 57"
               }
             },
-            "colli": [
+            "colli":
+            [
               {
                 "id": "7294003",
                 "barcode": "00102278007",
@@ -1291,21 +1367,26 @@ const route =
         "id": "adee244b-5848-4390-809c-b21f22e551ba",
         "status": "not-visited",
         "type": "Return",
-        "orderIds": [
+        "orderIds":
+        [
           null
         ],
         "outfit": {},
-        "location": {
-          "address": {
+        "location":
+        {
+          "address":
+          {
             "primary": "Vejle Landevej 29, 7000 Fredericia"
           },
-          "position": {
+          "position":
+          {
             "latitude": 55.54448541,
             "longitude": 9.6810231
           }
         },
-        "loadingTime": 300.0,
-        "arrivalTimeFrame": {
+        "loadingTime": 300,
+        "arrivalTimeFrame":
+        {
           "from": "2020-01-10T01:00:00+00:00",
           "to": "2020-01-10T16:00:00+00:00"
         },
@@ -1314,7 +1395,8 @@ const route =
         "isDelayed": false,
         "signatureRequired": false,
         "photoRequired": false,
-        "estimates": {
+        "estimates":
+        {
           "drivingTime": 1504,
           "loadingTime": 300,
           "waitingTime": 0,
@@ -1324,9 +1406,10 @@ const route =
         "deliveries": []
       }
     ],
-    "totalWeightRange": {
-      "from": 0.0,
-      "to": 0.0
+    "totalWeightRange":
+    {
+      "from": 0,
+      "to": 0
     },
     "allowAssignment": true
   };

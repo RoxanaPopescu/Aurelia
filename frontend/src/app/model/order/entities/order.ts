@@ -15,7 +15,8 @@ export class Order
         this.slug = data.slug;
         this.relationalId = data.relationalId;
 
-        this.state = {
+        this.state =
+        {
             canBeCancelled: data.state.canBeCancelled,
             canBeEdited: data.state.canBeEdited,
             isDeleted: data.state.isDeleted,
@@ -44,7 +45,7 @@ export class Order
         canBeEdited: boolean;
         isDeleted: boolean;
         status: OrderStatus;
-    }
+    };
 
     public pickup: OrderStop;
 

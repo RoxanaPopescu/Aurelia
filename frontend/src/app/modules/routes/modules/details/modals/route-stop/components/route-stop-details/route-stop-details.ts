@@ -1,9 +1,9 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
+import { Log } from "shared/infrastructure";
+import { ModalService } from "shared/framework";
 import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
-import { Log } from "shared/infrastructure";
-import { ModalService} from "shared/framework";
-import { SignatureImage } from "../../modals/signature-image/signature-image"
+import { SignatureImage } from "../../modals/signature-image/signature-image";
 
 @autoinject
 export class RouteStopDetailsCustomElement
@@ -16,12 +16,11 @@ export class RouteStopDetailsCustomElement
     public constructor(routeService: RouteService, modalService: ModalService)
     {
         this._routeService = routeService;
-        this._modalService = modalService
+        this._modalService = modalService;
     }
 
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
-
 
     /**
      * The available stop status values.

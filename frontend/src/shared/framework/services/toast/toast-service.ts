@@ -11,6 +11,7 @@ type Model<TToast> = TToast extends { activate(toast: infer TModel): any } ? TMo
 /**
  * Represents the type of the object returned by the `deactivate` life cycle method of a component.
  */
+// tslint:disable-next-line: invalid-void
 type Result<TToast> = TToast extends { deactivate(): infer TResult } ? TResult : TToast extends never ? any : void;
 
 /**

@@ -14,7 +14,8 @@ export class Driver
      */
     public constructor(data?: any, vehicleTypes?: VehicleType[])
     {
-        if (data) {
+        if (data)
+        {
             this.id = `${data.id}`;
             this.status = new DriverStatus(data.status);
             this.name = new PersonName(data.name);
@@ -23,14 +24,19 @@ export class Driver
             this.pictureUrl = data.pictureUrl;
             this.vehicleTypes = vehicleTypes;
             this.device = data.device;
-            if (data.position) {
+
+            if (data.position)
+            {
                 this.position = new Position(data.position);
             }
 
-            if (data.onlineVehicle) {
+            if (data.onlineVehicle)
+            {
                 this.onlineVehicle = new Vehicle(data.onlineVehicle);
             }
-        } else {
+        }
+        else
+        {
             this.status = new DriverStatus("approved");
             this.name = new PersonName();
             this.phone = new PhoneNumber();
@@ -57,7 +63,7 @@ export class Driver
     /**
      * The device of the driver.
      */
-    public device: { appVersion: string, os: string };
+    public device: { appVersion: string; os: string };
 
     /**
      * The email of the driver.
@@ -95,7 +101,8 @@ export class Driver
      */
     public onlineVehicle?: Vehicle;
 
-    public toString() {
-        return `${this.name} (${this.id})`
+    public toString(): string
+    {
+        return `${this.name.toString()} (${this.id})`;
     }
 }

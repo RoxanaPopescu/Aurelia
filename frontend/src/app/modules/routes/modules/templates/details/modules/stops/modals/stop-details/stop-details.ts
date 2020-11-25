@@ -15,10 +15,7 @@ export class TemplateStopDetailsPanel
      * @param addressService The `AddressService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(
-        routeTemplateService: RouteTemplateService,
-        addressService: AddressService,
-        modal: Modal)
+    public constructor(routeTemplateService: RouteTemplateService, addressService: AddressService, modal: Modal)
     {
         this._routeTemplateService = routeTemplateService;
         this._addressService = addressService;
@@ -59,18 +56,25 @@ export class TemplateStopDetailsPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { template: RouteTemplate, stop: RouteTemplateStop}): void
+    public activate(model: { template: RouteTemplate; stop: RouteTemplateStop }): void
     {
         this.model = model.stop.clone();
         this.template = model.template;
 
         // We create the initial array of tasks. If it does not exist we create it
-        let tasks: Task[] = [];
-        Object.keys(TaskType.values).forEach(slug => {
+
+        const tasks: Task[] = [];
+
+        Object.keys(TaskType.values).forEach(slug =>
+        {
             const found = this.model.tasks.find(t => t.type.slug === slug);
-            if (found != null) {
+
+            if (found != null)
+            {
                 tasks.push(found);
-            } else {
+            }
+            else
+            {
                 tasks.push(new Task({ type: slug }));
             }
         });
@@ -92,7 +96,8 @@ export class TemplateStopDetailsPanel
      */
     protected async onCreateClick(): Promise<void>
     {
-        try {
+        try
+        {
             // Activate validation so any further changes will be validated immediately.
             this.validation.active = true;
 
@@ -119,21 +124,30 @@ export class TemplateStopDetailsPanel
                 catch (error)
                 {
                     Log.error("Could not resolve address location.", error);
+
                     return;
                 }
             }
 
-            if (this.model.id) {
+            if (this.model.id)
+            {
                 await this._routeTemplateService.updateStop(this.template, this.model);
-            } else {
+            }
+            else
+            {
                 await this._routeTemplateService.addStop(this.template, this.model);
             }
 
             this._result = this.model;
+
             await this._modal.close();
-        } catch (error) {
+        }
+        catch (error)
+        {
             Log.error("An error occurred while adding the stop.\n", error);
-        } finally {
+        }
+        finally
+        {
             this._modal.busy = false;
         }
     }

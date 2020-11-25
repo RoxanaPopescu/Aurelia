@@ -1,6 +1,6 @@
 import { Location } from "app/model/shared";
 import { RouteBase } from "./route-base";
-import { RouteStop } from "..";
+import { RouteStop } from "../entities/route-stop";
 
 export class RouteInfo extends RouteBase
 {
@@ -13,13 +13,16 @@ export class RouteInfo extends RouteBase
         const stops = data.stops?.map((s, i: number) => new RouteStop(s, i + 1)) ?? [];
         super(data, stops);
         this.stopCount = data.stopCount;
-        if (data.startLocation) {
+        if (data.startLocation)
+        {
             this.startLocation = new Location(data.startLocation);
         }
-        if (data.endLocation) {
+        if (data.endLocation)
+        {
             this.endLocation = new Location(data.endLocation);
         }
-        if (data.delayedStopIndexes) {
+        if (data.delayedStopIndexes)
+        {
             this.delayedStopIndexes = data.delayedStopIndexes;
         }
     }

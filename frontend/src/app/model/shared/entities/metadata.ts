@@ -22,7 +22,6 @@ export class Metadata
                 this.createdBy = new UserInfo(data.createdBy);
             }
 
-
             this.lastModified = DateTime.fromISO(data.lastModified);
             this.lastModifiedById = data.lastModifiedById;
 

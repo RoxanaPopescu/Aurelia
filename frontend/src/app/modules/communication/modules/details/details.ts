@@ -81,15 +81,6 @@ export class DetailsPage
     protected availableCustomers: Outfit[];
 
     /**
-     * Called to link the creator id to customerName in the UI
-     * @param params the id of the creator
-     * @returns The outfit if found
-     */
-    protected getCreatorFromId(id: string): Outfit | undefined {
-        return this.availableCustomers.find(c => c.id === id);
-    }
-
-    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -108,6 +99,16 @@ export class DetailsPage
         }
 
         this.availableCustomers = (await this._agreementService.getAll()).agreements.filter(a => a.type.slug === "consignor");
+    }
+
+    /**
+     * Called to link the creator id to customerName in the UI
+     * @param params the id of the creator
+     * @returns The outfit if found
+     */
+    protected getCreatorFromId(id: string): Outfit | undefined
+    {
+        return this.availableCustomers.find(c => c.id === id);
     }
 
     /**

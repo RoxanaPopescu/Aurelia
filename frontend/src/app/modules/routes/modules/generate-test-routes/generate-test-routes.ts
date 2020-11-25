@@ -8,15 +8,17 @@ import { Uuid } from "shared/utilities/id/uuid";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 
 type Type = "by-id" | "template";
-type Result = {
-    type: Type,
-    name: string,
-    failed: boolean,
-    id: string,
-    requestId: string,
-    slug?: string,
-    created: DateTime
-};
+
+interface IResult
+{
+    type: Type;
+    name: string;
+    failed: boolean;
+    id: string;
+    requestId: string;
+    slug?: string;
+    created: DateTime;
+}
 
 /**
  * Represents the page.
@@ -47,7 +49,7 @@ export class GenerateTestRoutes
      * The results of created routes.
      */
     @observable
-    protected results: Result[] = [];
+    protected results: IResult[] = [];
 
     /**
      * The request id.
@@ -63,6 +65,11 @@ export class GenerateTestRoutes
      * The template.
      */
     protected template?: RequestTemplate;
+
+    /**
+     * The available U-turn strategies.
+     */
+    protected availableTemplates = Object.keys(RequestTemplate.values).map(id => new RequestTemplate(id as any));
 
     /**
      * The date to create from
@@ -82,17 +89,12 @@ export class GenerateTestRoutes
     public dateTime: DateTime | undefined;
 
     /**
-     * The available U-turn strategies.
-     */
-    protected availableTemplates = Object.keys(RequestTemplate.values).map(id => new RequestTemplate(id as any));
-
-    /**
      * Gets the template.
      */
     @computedFrom("availableTemplates", "template")
     protected get selectedTemplate(): RequestTemplate | undefined
     {
-        return this.availableTemplates?.find(s => s.id === this.template?.id)
+        return this.availableTemplates?.find(s => s.id === this.template?.id);
     }
 
     /**
@@ -124,7 +126,8 @@ export class GenerateTestRoutes
      */
     protected dateTimeChanged(): void
     {
-        if (this.date == null || this.time == null) {
+        if (this.date == null || this.time == null)
+        {
             return;
         }
 
@@ -137,16 +140,18 @@ export class GenerateTestRoutes
     protected async onGenerate(): Promise<void>
     {
         this.validation.active = true;
+
         if (!await this.validation.validate())
         {
             return;
         }
+
         this.validation.active = false;
 
-        let requestId = this.template?.requestId ?? this.requestId;
-
+        const requestId = this.template?.requestId ?? this.requestId;
         const id = Uuid.v1();
-        const result: Result = {
+        const result: IResult =
+        {
             type: this.template ? "template" : "by-id",
             failed: false,
             created: DateTime.local(),
@@ -154,23 +159,26 @@ export class GenerateTestRoutes
             slug: undefined,
             name: this.template?.name ?? this.requestId!,
             requestId: this.template?.requestId ?? this.requestId!
-        }
+        };
+
         this.results.unshift(result);
 
-        try {
-            let response = await this._testService.copyRequest(
-                requestId!,
-                this.driver?.id,
-                this.dateTime
-            );
+        try
+        {
+            const response = await this._testService.copyRequest(requestId!, this.driver?.id, this.dateTime);
+            const index = this.results.findIndex(r => r.id === id);
 
-            let index = this.results.findIndex(r => r.id === id);
-            if (index >= 0) {
+            if (index >= 0)
+            {
                 this.results[index].slug = response.slug;
             }
-        } catch {
-            let index = this.results.findIndex(r => r.id === id);
-            if (index >= 0) {
+        }
+        catch
+        {
+            const index = this.results.findIndex(r => r.id === id);
+
+            if (index >= 0)
+            {
                 this.results[index].failed = true;
             }
         }

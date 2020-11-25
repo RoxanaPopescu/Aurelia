@@ -43,29 +43,31 @@ export class RouteService
      * @returns A promise that will be resolved with the routes.
      */
     public async getAll(
-        filter?: {
-            statuses?: RouteStatusSlug[],
-            searchQuery?: string,
-            tagsAllMatching?: string[],
-            tagsOneMatching?: string[],
-            startTimeFrom?: DateTime,
-            startTimeTo?: DateTime,
-            createdTimeFrom?: DateTime,
-            createdTimeTo?: DateTime,
-            assignedDriver?: boolean,
-            assignedVehicle?: boolean
+        filter?:
+        {
+            statuses?: RouteStatusSlug[];
+            searchQuery?: string;
+            tagsAllMatching?: string[];
+            tagsOneMatching?: string[];
+            startTimeFrom?: DateTime;
+            startTimeTo?: DateTime;
+            createdTimeFrom?: DateTime;
+            createdTimeTo?: DateTime;
+            assignedDriver?: boolean;
+            assignedVehicle?: boolean;
         },
-        include?: {
-            owner?: boolean,
-            fulfiller?: boolean,
-            vehicle?: boolean,
-            driver?: boolean,
-            driverPosition?: boolean,
-            tags?: boolean,
-            criticality?: boolean,
-            estimates?: boolean,
-            delayedStops?: boolean,
-            stops?: boolean
+        include?:
+        {
+            owner?: boolean;
+            fulfiller?: boolean;
+            vehicle?: boolean;
+            driver?: boolean;
+            driverPosition?: boolean;
+            tags?: boolean;
+            criticality?: boolean;
+            estimates?: boolean;
+            delayedStops?: boolean;
+            stops?: boolean;
         },
         sorting?: ISorting,
         paging?: IPaging,
@@ -78,7 +80,11 @@ export class RouteService
             {
                 page: paging ? paging.page : undefined,
                 pageSize: paging ? paging.pageSize : undefined,
-                sorting: sorting ? { field: getLegacyRouteSortProperty(sorting.property), direction: getLegacySortDirection(sorting.direction) } : undefined,
+                sorting: sorting ?
+                {
+                    field: getLegacyRouteSortProperty(sorting.property),
+                    direction: getLegacySortDirection(sorting.direction)
+                } : undefined,
                 statuses: filter?.statuses?.map(v => new RouteStatus(v).value),
                 searchQuery: filter?.searchQuery,
                 startTimeFrom: filter?.startTimeFrom,
@@ -111,10 +117,11 @@ export class RouteService
     {
         const result = await this._apiClient.get("routes/v2/details",
         {
-            query: {
+            query:
+            {
                 slug,
                 outfitType: this._identityService.identity?.outfit.type.slug
-             },
+            },
             signal
         });
 
@@ -157,14 +164,16 @@ export class RouteService
         });
 
         const positions = result.data.results.map(p => new Position(p));
+
         return new RouteDriverPositionsService(positions);
     }
+
     /**
-     * Edit the specific route
-     * @param route
-    */
-   public async updateRoute(route: Route): Promise<void>
-   {
+     * Updates the specified route route.
+     * @param route The route to update.
+     */
+    public async updateRoute(route: Route): Promise<void>
+    {
         await this._apiClient.post("routes/v2/update",
         {
             body:
@@ -173,14 +182,14 @@ export class RouteService
                 route: route.toJSON()
             }
         });
-   }
+    }
 
-   /**
-     * Removes the current driver
-     * @param route
-    */
-   public async removeDriver(route: Route): Promise<void>
-   {
+    /**
+     * Removes the current driver from the specified route.
+     * @param route The route from which the driver should be removed.
+     */
+    public async removeDriver(route: Route): Promise<void>
+    {
         await this._apiClient.post("routes/v2/removeDriver",
         {
             body:
@@ -189,14 +198,15 @@ export class RouteService
                 routeId: route.id
             }
         });
-   }
+    }
 
-   /**
-     * Add an order to the route
-     * @param route
-    */
-   public async addOrder(route: Route, orderSlug: String): Promise<void>
-   {
+    /**
+     * Associate an the specified route with the specified order.
+     * @param route The route.
+     * @param orderSlug The slug identifying the order to associate with the route.
+     */
+    public async addOrder(route: Route, orderSlug: string): Promise<void>
+    {
         await this._apiClient.post("routes/v2/addOrder",
         {
             body:
@@ -206,7 +216,7 @@ export class RouteService
                 orderSlug: orderSlug
             }
         });
-   }
+    }
 
     /**
      * Adds the specified route stop at the specified index.

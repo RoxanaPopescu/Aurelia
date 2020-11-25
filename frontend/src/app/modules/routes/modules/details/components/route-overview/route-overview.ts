@@ -27,6 +27,7 @@ export class RouteOverview
         }
 
         let pickedUpColliCount = 0;
+
         if (this.route != null)
         {
             this.route.stops
@@ -35,12 +36,12 @@ export class RouteOverview
                 .forEach((s: RouteStop) =>
                 {
                     s.pickups.forEach(p => p.colli.forEach(c =>
+                    {
+                        if (c.status.slug !== "not-picked-up" && c.status.slug !== "no-action")
                         {
-                            if (c.status.slug !== "not-picked-up" && c.status.slug !== "no-action")
-                            {
-                                pickedUpColliCount++;
-                            }
-                        }));
+                            pickedUpColliCount++;
+                        }
+                    }));
                 });
         }
 
@@ -59,6 +60,7 @@ export class RouteOverview
         }
 
         let deliveredColliCount = 0;
+
         if (this.route != null)
         {
             this.route.stops
@@ -67,12 +69,12 @@ export class RouteOverview
                 .forEach((s: RouteStop) =>
                 {
                     s.deliveries.forEach(p => p.colli.forEach(c =>
+                    {
+                        if (c.status.slug === "delivered")
                         {
-                            if (c.status.slug === "delivered")
-                            {
-                                deliveredColliCount++;
-                            }
-                        }));
+                            deliveredColliCount++;
+                        }
+                    }));
                 });
         }
 
@@ -91,6 +93,7 @@ export class RouteOverview
         }
 
         let totalColliCount = 0;
+
         if (this.route != null)
         {
             this.route.stops
@@ -116,6 +119,7 @@ export class RouteOverview
         }
 
         let totalColliCount = 0;
+
         if (this.route != null)
         {
             this.route.stops
@@ -177,8 +181,11 @@ export class RouteOverview
             else
             {
                 // We get the last stop's estimates
-                const lastStop = this.route.stops[this.route.stops.length-1];
-                if (lastStop instanceof RouteStop && lastStop.estimates != null) {
+
+                const lastStop = this.route.stops[this.route.stops.length - 1];
+
+                if (lastStop instanceof RouteStop && lastStop.estimates != null)
+                {
                     duration = lastStop.estimates.completionTime.diff(from);
                 }
             }
@@ -232,11 +239,13 @@ export class RouteOverview
     public get totalLoadingDuration(): Duration
     {
         const totalLoadingDuration = Duration.fromMillis(0);
+
         if (this.route != null)
         {
             this.route.stops
                 .filter(s => s instanceof RouteStop)
-                .forEach((s: RouteStop) => {
+                .forEach((s: RouteStop) =>
+                {
                     if (s.status.slug === "completed" && s.taskTime != null)
                     {
                         totalLoadingDuration.plus(s.taskTime);
@@ -281,11 +290,12 @@ export class RouteOverview
     {
         if (this.route != null)
         {
-            if ((this.route.status.slug === 'completed' || this.route.status.slug === 'in-progress') && this.delayedStart)
+            if ((this.route.status.slug === "completed" || this.route.status.slug === "in-progress") && this.delayedStart)
             {
                 return  true;
             }
         }
+
         return false;
     }
 
@@ -311,14 +321,19 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get notPickedUpColli(): Collo[]
     {
-        let notPickedUpColli: Collo[] = [];
+        const notPickedUpColli: Collo[] = [];
+
         if (this.route != null)
         {
-            let completedPickupStops = this.route.stops.filter(s => s.type.slug === "pickup" &&
-                                                                s instanceof RouteStop);
-            completedPickupStops.forEach((s: RouteStop) => {
-                s.pickups.forEach(p => {
-                    p.colli.forEach(c => {
+            const completedPickupStops = this.route.stops
+                .filter(s => s.type.slug === "pickup" && s instanceof RouteStop);
+
+            completedPickupStops.forEach((s: RouteStop) =>
+            {
+                s.pickups.forEach(p =>
+                {
+                    p.colli.forEach(c =>
+                    {
                         if (c.status.slug === "no-action" || c.status.slug === "not-picked-up")
                         {
                             notPickedUpColli.push(c);
@@ -337,15 +352,19 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get notDeliveredColli(): Collo[]
     {
-        let notDeliveredColli: Collo[] = [];
+        const notDeliveredColli: Collo[] = [];
+
         if (this.route != null)
         {
-            let completedPickupStops = this.route.stops.filter(s => s.type.slug === "delivery" &&
-                                                                s.status.slug === "completed" &&
-                                                                s instanceof RouteStop);
-            completedPickupStops.forEach((s: RouteStop) => {
-                s.pickups.forEach(p => {
-                    p.colli.forEach(c => {
+            const completedPickupStops = this.route.stops
+                .filter(s => s.type.slug === "delivery" && s.status.slug === "completed" && s instanceof RouteStop);
+
+            completedPickupStops.forEach((s: RouteStop) =>
+            {
+                s.pickups.forEach(p =>
+                {
+                    p.colli.forEach(c =>
+                    {
                         if (c.status.slug !== "delivered")
                         {
                             notDeliveredColli.push(c);
@@ -366,8 +385,9 @@ export class RouteOverview
     {
         if (this.route != null)
         {
-            return this.route.stops.filter(s => s instanceof RouteStop)
-                                    .filter((s: RouteStop) => s.status.slug === "failed") as RouteStop[];
+            return this.route.stops
+                .filter(s => s instanceof RouteStop)
+                .filter((s: RouteStop) => s.status.slug === "failed") as RouteStop[];
         }
 
         return [];
@@ -381,8 +401,9 @@ export class RouteOverview
     {
         if (this.route != null)
         {
-            return this.route.stops.filter(s => s instanceof RouteStop)
-                                    .filter((s: RouteStop) => s.status.slug === "failed" || s.status.slug === "cancelled") as RouteStop[];
+            return this.route.stops
+                .filter(s => s instanceof RouteStop)
+                .filter((s: RouteStop) => s.status.slug === "failed" || s.status.slug === "cancelled") as RouteStop[];
         }
 
         return [];

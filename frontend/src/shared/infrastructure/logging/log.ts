@@ -122,8 +122,10 @@ export namespace Log
     export function error(...args: any[]): void
     {
         let message: string | undefined;
-        let error: Error | string | undefined;
         let context: MapObject | undefined;
+
+        // tslint:disable-next-line: no-shadowed-variable
+        let error: Error | string | undefined;
 
         if (args[0] instanceof Error)
         {

@@ -30,10 +30,14 @@ export class AssignFulfillerPanel
 
     private readonly _modal: Modal;
     private readonly _modalService: ModalService;
-    protected readonly identityService: IdentityService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _agreementService: AgreementService;
     private _result: Fulfiller | undefined;
+
+    /**
+     * The `IdentityService` instance.
+     */
+    protected readonly identityService: IdentityService;
 
     /**
      * The searchg query, or undefined if ne search query is entered.
@@ -85,7 +89,7 @@ export class AssignFulfillerPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { route: RouteBase, assignOnSelect: boolean }): void
+    public activate(model: { route: RouteBase; assignOnSelect: boolean }): void
     {
         this.route = model.route;
         this.assignOnSelect = model.assignOnSelect;
@@ -115,14 +119,14 @@ export class AssignFulfillerPanel
      */
     protected async onFulfillerClick(fulfiller: Fulfiller): Promise<void>
     {
-        if (this.route.fulfiller.id != this.identityService.identity?.outfit.id) {
+        if (this.route.fulfiller.id !== this.identityService.identity?.outfit.id)
+        {
             const confirmed = await this._modalService.open(
                 ConfirmRemoveFulfillerDialog,
                 {
                     currentFulfiller: this.route.fulfiller,
                     newFulfiller: fulfiller
-                }
-            ).promise;
+                }).promise;
 
             if (!confirmed)
             {
@@ -132,7 +136,8 @@ export class AssignFulfillerPanel
 
         try
         {
-            if (this.assignOnSelect) {
+            if (this.assignOnSelect)
+            {
                 this._modal.busy = true;
                 await this._routeAssignmentService.assignFulfiller(this.route, fulfiller, this.identityService.identity!.outfit);
             }

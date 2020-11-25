@@ -2,7 +2,7 @@ import { Driver } from "app/model/driver";
 import { RouteStatus } from "app/model/route";
 import { DateTime } from "luxon";
 import { Uuid } from "shared/utilities/id/uuid";
-import { RouteTemplate } from "..";
+import { RouteTemplate } from "../entities/route-template";
 
 export class CreateRoute
 {
@@ -47,9 +47,8 @@ export class CreateRoute
     {
         const data = { ...this } as any;
 
-        if (
-            data.driver != null
-        ){
+        if (data.driver != null)
+        {
             data.driverId = data.driver.id;
             delete data.driver;
         }

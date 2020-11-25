@@ -25,7 +25,9 @@ export class Location
             if (data.timeZone != null)
             {
                 this.timeZone = new IANAZone(data.timeZone);
-            } else {
+            }
+            else
+            {
                 // FIXME: Remove when backend always returns it
                 this.timeZone = new IANAZone("Europe/Copenhagen");
             }
