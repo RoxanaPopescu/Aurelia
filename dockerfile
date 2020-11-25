@@ -45,7 +45,8 @@ WORKDIR /usr/app
 COPY ["/tsconfig.json", "./"]
 COPY ["/frontend/tsconfig.json", "./frontend/"]
 
-## Copy the `tslint.json` files.
+## Copy the `.tslint` folder ant the `tslint.json` files.
+COPY ["/.tslint", "./"]
 COPY ["/tslint.json", "./"]
 COPY ["/frontend/tslint.json", "./frontend/"]
 
