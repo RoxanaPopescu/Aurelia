@@ -1,5 +1,5 @@
 <template>
-
+    <require from="app/components/address-input/address-input"></require>
     <require from="./list.scss"></require>
 
     <page name="list">
@@ -181,6 +181,18 @@
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Pickup nearby
+                </div>
+
+                <address-input label="above" value.bind="pickupNearbyAddress" class="flex-basis-1-of-1">
+
+                </address-input>
 
             </page-section>
 

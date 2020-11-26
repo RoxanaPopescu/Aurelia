@@ -10,6 +10,8 @@ import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
 import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
+import { Address, Location } from "app/model/shared";
+import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
 /**
  * Represents the route parameters for the page.
@@ -42,12 +44,13 @@ export class ListPage
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routeService: RouteService, routeAssignmentService: RouteAssignmentService, modalService: ModalService, historyHelper: HistoryHelper)
+    public constructor(routeService: RouteService, addressService: AddressService, routeAssignmentService: RouteAssignmentService, modalService: ModalService, historyHelper: HistoryHelper)
     {
         this._routeService = routeService;
         this._modalService = modalService;
         this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
+        this._addressService = addressService;
         this._constructed = true;
 
         const localData = localStorage.getItem("route-columns");
@@ -61,6 +64,7 @@ export class ListPage
 
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
+    private readonly _addressService: AddressService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
@@ -142,6 +146,17 @@ export class ListPage
      * True if initial loading failed
      */
     protected failed: boolean = false;
+
+    /**
+     * The nearby pickup address
+     */
+    @observable({ changeHandler: "update" })
+    protected pickupNearbyAddress?: Address;
+
+    /**
+     * The nearby pickup location
+     */
+    protected pickupNearbyLocation: Location = new Location();
 
     /**
      * The name identifying the selected status tab.
@@ -383,6 +398,21 @@ export class ListPage
                     assignedVehicle = this.assignedVehicle;
                 }
 
+                // Resolve stop location, if needed.
+                if (this.pickupNearbyAddress != null && this.pickupNearbyLocation.position == null)
+                {
+                    try
+                    {
+                        this.pickupNearbyLocation = await this._addressService.getLocation(this.pickupNearbyAddress);
+                    }
+                    catch (error)
+                    {
+                        Log.error("Could not resolve address location.", error);
+
+                        return;
+                    }
+                }
+
                 const result = await this._routeService.getAll(
                     {
                         statuses: this.statusFilter,
@@ -393,7 +423,8 @@ export class ListPage
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
-                        assignedVehicle: assignedVehicle
+                        assignedVehicle: assignedVehicle,
+                        pickupNearby: (this.pickupNearbyLocation.position != null) ? { position: this.pickupNearbyLocation.position, precision: 3 } : undefined
                     },
                     {
                         owner: this.columns.map(c => c.slug).includes("owner"),
@@ -403,7 +434,7 @@ export class ListPage
                         tags: this.columns.map(c => c.slug).includes("tags"),
                         criticality: this.columns.map(c => c.slug).includes("criticality"),
                         estimates: this.columns.map(c => c.slug).includes("estimated-completion"),
-                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops")
+                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops"),
                     },
                     this.sorting,
                     this.paging,

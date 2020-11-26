@@ -55,7 +55,7 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Company name
+                        Company
                     </span>
                 </data-table-cell>
 
@@ -110,13 +110,13 @@
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.contact.phoneNumber.number}
+                        ${stop.contact.fullName}
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${stop.activeRequirementNames | list: 'short' : 'unit'}
+                        ${stop.contact.companyName}
                     </span>
                 </data-table-cell>
 

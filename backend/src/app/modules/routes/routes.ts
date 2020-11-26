@@ -15,7 +15,7 @@ export class RoutesModule extends AppModule
         {
             context.authorize("create-route-template");
 
-            const routesResult = await this.apiClient.post("route-template-orchestrator/CreateRoute",
+            const routesResult = await this.apiClient.post("route-template-orchestrator/create-route",
             {
                 body:
                 {

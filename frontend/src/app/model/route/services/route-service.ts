@@ -55,6 +55,7 @@ export class RouteService
             createdTimeTo?: DateTime;
             assignedDriver?: boolean;
             assignedVehicle?: boolean;
+            pickupNearby?: { position: Position, precision?: number }
         },
         include?:
         {
@@ -96,7 +97,8 @@ export class RouteService
                 tagsAllMatching: filter?.tagsAllMatching,
                 tagsOneMatching: filter?.tagsOneMatching,
                 include: include ? include : {},
-                outfitType: this._identityService.identity?.outfit.type.slug
+                outfitType: this._identityService.identity?.outfit.type.slug,
+                pickupNearby: filter?.pickupNearby
             },
             signal
         });
