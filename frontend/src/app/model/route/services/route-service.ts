@@ -55,7 +55,7 @@ export class RouteService
             createdTimeTo?: DateTime;
             assignedDriver?: boolean;
             assignedVehicle?: boolean;
-            pickupNearby?: { position: Position, precision?: number }
+            pickupNearby?: { position: Position; precision?: number };
         },
         include?:
         {
