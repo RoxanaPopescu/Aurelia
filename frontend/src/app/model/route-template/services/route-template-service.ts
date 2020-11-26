@@ -5,6 +5,7 @@ import { RouteTemplate } from "../entities/route-template";
 import { RouteTemplateStop } from "../entities/route-template-stop";
 import { RouteTemplateSchedule } from "../entities/route-template-schedule";
 import { CreateRoute } from "../entities/create-route";
+import { Uuid } from "shared/utilities/id/uuid";
 
 /**
  * Represents a service that manages route templates.
@@ -62,9 +63,11 @@ export class RouteTemplateService
      */
     public async createRoute(route: CreateRoute): Promise<void>
     {
+        const json = route.toJSON();
+        json.jobId = Uuid.v1();
         await this._apiClient.post("routes/create-from-template",
         {
-            body: route.toJSON()
+            body: json
         });
     }
 
