@@ -30,7 +30,7 @@ export class ServerEnvironment
             ? "https://noi.mover.dev/api/"
             : "https://api.mover.dk/api/";
         this.subscriptionKey = this.name === "development"
-            ? "e843f41f26424df48da007d061823599"
+            ? "bcf1f656a0844acb9fd5a33d61832afd"
             : "afc3a3e5918b4dec9d3cf96090388532";
     }
 
