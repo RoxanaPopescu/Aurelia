@@ -10,7 +10,7 @@ import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
 import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
-import { Address, Location } from "app/model/shared";
+import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
 /**
@@ -70,6 +70,11 @@ export class ListPage
     private readonly _constructed;
 
     /**
+     * The nearby pickup position
+     */
+    private pickupNearbyPosition?: Position;
+
+    /**
      * The scroll manager for the page.
      */
     protected scroll: IScroll;
@@ -78,6 +83,11 @@ export class ListPage
      * The most recent update operation.
      */
     protected updateOperation: Operation;
+
+    /**
+     * The most recent update operation.
+     */
+    protected pickupNearbyOperation: Operation;
 
     /**
      * The custom grid column widths calculated from the columns
@@ -150,13 +160,8 @@ export class ListPage
     /**
      * The nearby pickup address
      */
-    @observable({ changeHandler: "update" })
+    @observable
     protected pickupNearbyAddress?: Address;
-
-    /**
-     * The nearby pickup location
-     */
-    protected pickupNearbyLocation: Location = new Location();
 
     /**
      * The name identifying the selected status tab.
@@ -306,6 +311,36 @@ export class ListPage
     }
 
     /**
+     * Called when the pickup nearby address has updated
+     */
+    protected pickupNearbyAddressChanged(): void
+    {
+        this.pickupNearbyPosition = undefined;
+        if (this.pickupNearbyOperation != null)
+        {
+            this.pickupNearbyOperation.abort();
+        }
+
+        if (this.pickupNearbyAddress != null)
+        {
+            this.pickupNearbyOperation = new Operation(async signal =>
+            {
+                try
+                {
+                    const location = await this._addressService.getLocation(this.pickupNearbyAddress!);
+                    this.pickupNearbyPosition = location.position;
+
+                    this.update();
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+                }
+            });
+        }
+    }
+
+    /**
      * Called when the `Assign vehicle` button is clicked.
      * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
      */
@@ -398,21 +433,6 @@ export class ListPage
                     assignedVehicle = this.assignedVehicle;
                 }
 
-                // Resolve stop location, if needed.
-                if (this.pickupNearbyAddress != null && this.pickupNearbyLocation.position == null)
-                {
-                    try
-                    {
-                        this.pickupNearbyLocation = await this._addressService.getLocation(this.pickupNearbyAddress);
-                    }
-                    catch (error)
-                    {
-                        Log.error("Could not resolve address location.", error);
-
-                        return;
-                    }
-                }
-
                 const result = await this._routeService.getAll(
                     {
                         statuses: this.statusFilter,
@@ -424,7 +444,7 @@ export class ListPage
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
-                        pickupNearby: (this.pickupNearbyLocation.position != null) ? { position: this.pickupNearbyLocation.position, precision: 3 } : undefined
+                        pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined
                     },
                     {
                         owner: this.columns.map(c => c.slug).includes("owner"),
