@@ -113,6 +113,9 @@ export class RouteStopPanel
                 }
             }
 
+            this.model.routeStop.arrivedTime?.setZone("UTC");
+            this.model.routeStop.completedTime?.setZone("UTC");
+
             // Save the route stop.
             if (this.isNew)
             {
