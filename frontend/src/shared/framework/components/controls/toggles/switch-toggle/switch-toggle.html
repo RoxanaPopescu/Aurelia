@@ -2,7 +2,7 @@
     toggle
     ${disabled || toggleGroup.disabled ? '--disabled' : ''}
     ${readonly || toggleGroup.readonly ? '--readonly' : ''}
-    ${value !== false ? '--active' : ''}
+    ${value === true || value === null ? '--active' : ''}
     ${validation.invalid ? '--invalid' : ''}"
     forward-focus
     validation

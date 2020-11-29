@@ -21,6 +21,10 @@ interface IRouteParams
     sortDirection?: SortingDirection;
     statusFilter?: string;
     textFilter?: string;
+    consignorFilter?: string;
+    orderTagsFilter?: string;
+    fromDateFilter?: string;
+    toDateFilter?: string;
 }
 
 /**
@@ -152,7 +156,7 @@ export class ListPage
      * Called by the framework when the module is activated.
      * @param params The order parameters from the URL.
      */
-    public activate(params: IRouteParams): void
+    public async activate(params: IRouteParams): Promise<void>
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
@@ -160,18 +164,32 @@ export class ListPage
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.textFilter = params.textFilter || this.textFilter;
+        this.orderTagsFilter = params.orderTagsFilter?.split(",") || this.orderTagsFilter;
+        this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
+        this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
 
-        this.update();
-
-        // Execute tasks that should not block rendering.
-
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
+        if (params.consignorFilter)
         {
             const agreements = await this._agreementService.getAll();
             this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
 
-        })();
+            this.consignorFilter = params.consignorFilter?.split(",")
+                .map(id => this.consignors.find(o => o.id === id)) || this.consignorFilter;
+        }
+        else
+        {
+            // Execute tasks that should not block rendering.
+
+            // tslint:disable-next-line: no-floating-promises
+            (async () =>
+            {
+                const agreements = await this._agreementService.getAll();
+                this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+
+            })();
+        }
+
+        this.update();
     }
 
     /**
@@ -329,10 +347,14 @@ export class ListPage
                 {
                     state.params.page = this.paging.page;
                     state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.statusFilter = this.statusFilter?.join(",");
+                    state.params.sortProperty = this.sorting?.property;
+                    state.params.sortDirection = this.sorting?.direction;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
                     state.params.textFilter = this.textFilter || undefined;
+                    state.params.consignorFilter = this.consignorFilter?.map(o => o.id).join(",") || undefined;
+                    state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
+                    state.params.fromDateFilter = this.fromDateFilter?.toISO();
+                    state.params.toDateFilter = this.toDateFilter?.toISO();
                 },
                 { trigger: false, replace: true });
 
