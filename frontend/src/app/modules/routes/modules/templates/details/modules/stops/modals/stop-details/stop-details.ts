@@ -40,7 +40,7 @@ export class TemplateStopDetailsPanel
     /**
      * The available types.
      */
-    protected types = Object.keys(RouteStopType.values).map(slug => new RouteStopType(slug as any));
+    protected types: RouteStopType[] = Object.keys(RouteStopType.values).map(slug => new RouteStopType(slug as any));
 
     /**
      * The available tasks.
@@ -67,15 +67,18 @@ export class TemplateStopDetailsPanel
 
         Object.keys(TaskType.values).forEach(slug =>
         {
-            const found = this.model.tasks.find(t => t.type.slug === slug);
+            if (slug !== "contact-code")
+            {
+                const found = this.model.tasks.find(t => t.type.slug === slug);
 
-            if (found != null)
-            {
-                tasks.push(found);
-            }
-            else
-            {
-                tasks.push(new Task({ type: slug }));
+                if (found != null)
+                {
+                    tasks.push(found);
+                }
+                else
+                {
+                    tasks.push(new Task({ type: slug }));
+                }
             }
         });
 
