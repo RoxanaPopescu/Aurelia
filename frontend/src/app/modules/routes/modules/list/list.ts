@@ -29,6 +29,10 @@ interface IRouteParams
     notAssignedDriver?: boolean;
     assignedVehicle?: boolean;
     notAssignedVehicle?: boolean;
+    startTimeFromFilter?: string;
+    startTimeToFilter?: string;
+    createdTimeFromFilter?: string;
+    createdTimeToFilter?: string;
 }
 
 /**
@@ -256,6 +260,10 @@ export class ListPage
         this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
         this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
         this.notAssignedVehicle = params.notAssignedVehicle != null ? Boolean(params.notAssignedVehicle) : this.notAssignedVehicle;
+        this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter, { setZone: true }) : undefined;
+        this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter, { setZone: true }) : undefined;
+        this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
+        this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
 
         this.update();
     }
@@ -479,15 +487,19 @@ export class ListPage
                 {
                     state.params.page = this.paging.page;
                     state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
-                    state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
-                    state.params.statusFilter = this.statusFilter?.join(",");
+                    state.params.sortProperty = this.sorting?.property;
+                    state.params.sortDirection = this.sorting?.direction;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
                     state.params.searchQuery = this.searchQuery || undefined;
-                    state.params.tagsFilter = this.tagsFilter.length > 0 ? this.tagsFilter.join(",") : undefined;
+                    state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
                     state.params.assignedDriver = this.assignedDriver ? true : undefined;
                     state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
                     state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
+                    state.params.startTimeFromFilter = this.startTimeFromFilter?.toISO();
+                    state.params.startTimeToFilter = this.startTimeToFilter?.toISO();
+                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
+                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
                 },
                 { trigger: false, replace: true });
             }
