@@ -21,7 +21,7 @@ export class RoutesModule extends AppModule
                 {
                     ...context.request.body,
                     ownerId: context.user?.outfitId,
-                    changedById: context.user?.id
+                    actionById: context.user?.id
                 }
             });
 
