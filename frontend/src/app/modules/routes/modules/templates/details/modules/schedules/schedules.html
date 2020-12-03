@@ -26,6 +26,12 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
+                        Status
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
                         Next execution
                     </span>
                 </data-table-cell>
@@ -38,19 +44,13 @@
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Route status
+                        Day of week
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate" translate>
-                        Route driver
-                    </span>
-                </data-table-cell>
-
-                <data-table-cell>
-                    <span class="text-truncate" translate>
-                        Route day of week
+                        Assigned driver
                     </span>
                 </data-table-cell>
 
@@ -61,6 +61,12 @@
             </data-table-headers>
 
             <data-table-row repeat.for="schedule of template.schedules" model.bind="schedule">
+
+                <data-table-cell>
+                    <span class="text-truncate">
+                        ${schedule.routeStatus.name}
+                    </span>
+                </data-table-cell>
 
                 <data-table-cell>
                     <span class="text-truncate">
@@ -76,7 +82,7 @@
 
                 <data-table-cell>
                     <span class="text-truncate">
-                        ${schedule.routeStatus.name}
+                        ${schedule.routeDayOfWeek | weekday | case: 'sentence'}
                     </span>
                 </data-table-cell>
 
@@ -88,12 +94,6 @@
                         <template if.bind="!schedule.routeDriverId" translate>
                             No
                         </template>
-                    </span>
-                </data-table-cell>
-
-                <data-table-cell>
-                    <span class="text-truncate">
-                        ${schedule.routeDayOfWeek | weekday | case: 'sentence'}
                     </span>
                 </data-table-cell>
 
@@ -125,9 +125,12 @@
         <button
             appearance="outline"
             accent="primary"
-            class="margin-large-top"
+            class="margin-large-top add-schedule-button flex-push-left"
             click.trigger="onAddClick()">
-            <icon name="md-add" class="font-larger line-height-1">
+            <icon name="plus-small" class="margin-right"></icon>
+            <span translate>
+                New schedule
+            </span>
         </button>
 
     </page-section>

@@ -26,12 +26,16 @@
 
         <modal-section class="margin-bottom">
 
+            <h2 class="font-larger margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Execution
+            </h2>
+
             <div class="control-row margin-medium-bottom">
 
                 <select-input
                     label="above"
-                    value.bind="model.executeDayOfWeek"
-                    display-value.bind="model.executeDayOfWeek | weekday | case: 'sentence'"
+                    value.bind="executeDayOfWeek"
+                    display-value.bind="executeDayOfWeek | weekday | case: 'sentence'"
                     none.bind="false"
                     filter="auto"
                     class="flex-basis-1-of-2"
@@ -52,7 +56,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.executeDayOfWeek">
+                            value.bind="executeDayOfWeek">
                         </required-validator>
 
                     </div>
@@ -61,7 +65,7 @@
 
                 <time-input
                     label="above"
-                    value.bind="model.executeTime"
+                    value.bind="executeTime"
                     none.bind="false"
                     max-inclusive.bind="false"
                     class="flex-basis-1-of-2"
@@ -74,7 +78,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.executeTime">
+                            value.bind="executeTime">
                         </required-validator>
 
                     </div>
@@ -147,6 +151,10 @@
 
             <hr class="hr-line margin-larger-bottom">
 
+            <h2 class="font-larger margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Route
+            </h2>
+
             <div class="margin-large-bottom" translate>
                 The specific time of the days is defined in the stops, if you create a route for Monday that would mean Monday 12:00 if the first stop has this time.
             </div>
@@ -163,7 +171,7 @@
                     fixed.bind="true">
 
                     <div slot="heading" translate>
-                        Route day of week
+                        Day of week
                     </div>
 
                     <span slot="placeholder" translate>
@@ -187,7 +195,7 @@
                 <select-input label="above" none.bind="false" value.bind="model.routeStatus" display-value.bind="model.routeStatus.name" class="flex-basis-1-of-2">
 
                     <div slot="heading" translate>
-                        Route status
+                        Status
                     </div>
 
                     <item repeat.for="status of statuses" model.bind="status">
@@ -237,6 +245,10 @@
             </div>
 
             <hr class="hr-line margin-large-bottom">
+
+            <h2 class="font-larger margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Limitations
+            </h2>
 
             <div class="margin-large-bottom" translate>
                 The schedule can be limited to inbetween two dates, if these are not set the schedule will always be active.

@@ -1,11 +1,12 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, observable } from "aurelia-framework";
 import { Modal, IValidation, ModalService } from "shared/framework";
 import { RouteTemplateService, RouteTemplate, RouteTemplateSchedule } from "app/model/route-template";
 import { RouteStatus } from "app/model/route";
 import { Log } from "shared/infrastructure";
 import { AssignDriverPanel } from "app/modules/routes/modals/assign-driver/assign-driver";
 import { Driver, DriverService } from "app/model/driver";
-import { IANAZone } from "luxon";
+import { DateTime, Duration, IANAZone } from "luxon";
+import { DayOfWeek } from "app/model/shared";
 
 @autoinject
 export class TemplateScheduleDetailsPanel
@@ -63,7 +64,19 @@ export class TemplateScheduleDetailsPanel
     /**
      * The driver for the route
      */
-    public driver?: Driver;
+    protected driver?: Driver;
+
+    /**
+     * The day of the week this schedule is being executed
+     */
+    @observable
+    protected executeDayOfWeek: DayOfWeek;
+
+    /**
+     * The time of day at which this schedule is being executed.
+     */
+    @observable
+    protected executeTime: Duration;
 
     /**
      * Called by the framework when the modal is activated.
@@ -74,6 +87,8 @@ export class TemplateScheduleDetailsPanel
         this.model = model.schedule.clone();
         this.timeZone = model.schedule.timeZone?.name;
         this.template = model.template;
+        this.executeDayOfWeek = this.model.executeDayOfWeek;
+        this.executeTime = this.model.executeTime;
 
         // Fetch driver if exists
         if (this.model.routeDriverId)
@@ -93,6 +108,57 @@ export class TemplateScheduleDetailsPanel
     public async deactivate(): Promise<RouteTemplateSchedule | undefined>
     {
         return this._result;
+    }
+
+    /**
+     * Update the model and check if the next execution should be set.
+     */
+    protected executeDayOfWeekChanged(): void
+    {
+        this.model.executeDayOfWeek = this.executeDayOfWeek;
+        this.addDefaultExecutionIfNeeded();
+    }
+
+    /**
+     * Update the model and check if the next execution should be set.
+     */
+    protected executeTimeChanged(): void
+    {
+        this.model.executeTime = this.executeTime;
+        this.addDefaultExecutionIfNeeded();
+    }
+
+    /**
+     * If time and day is set, this will default the execution datetime.
+     */
+    protected addDefaultExecutionIfNeeded(): void
+    {
+        if (this.model.executeTime == null || this.model.executeDayOfWeek == null || this.model.nextExecution != null)
+        {
+            return;
+        }
+
+        const now = DateTime.local();
+        const weekday = now.weekday;
+
+        const nextExecution = now.startOf("day").plus(this.model.executeTime);
+        if (weekday === this.model.executeDayOfWeek)
+        {
+            const durationInDay = now.diff(DateTime.local().startOf("day"));
+            if (durationInDay > this.model.executeTime)
+            {
+                this.model.nextExecution = nextExecution.plus({ days: 7 });
+            }
+            else
+            {
+                this.model.nextExecution = nextExecution;
+            }
+        }
+        else
+        {
+            const difference = Math.abs(this.model.executeDayOfWeek - weekday);
+            this.model.nextExecution = nextExecution.plus({ days: difference + 1 });
+        }
     }
 
     /**
