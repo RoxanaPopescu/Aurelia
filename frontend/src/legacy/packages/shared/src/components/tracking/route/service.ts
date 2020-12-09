@@ -105,9 +105,9 @@ export default class DriverLocationHistoryServices {
 
   private static baseURL(): string {
     if (Base.isProduction) {
-      return "https://mover.dk/api/v3/";
+      return "https://api.mover.dk/api/v3/";
     } else {
-      return "https://mover.systems/api/v3/";
+      return "https://noi.mover.dev/api/v3/";
     }
   }
 }
