@@ -5,6 +5,7 @@ import { Modal } from "shared/framework/services/modal/modal";
 import { OrderInfo } from "app/model/order";
 import { RouteService } from "app/model/route";
 import { VehicleType } from "app/model/vehicle";
+import { DateTime } from "luxon";
 
 @autoinject
 export class CreateRoutePanel
@@ -22,7 +23,7 @@ export class CreateRoutePanel
 
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
-    private _result: string | undefined;
+    private _result?: { slug: string; collectionPointIds?: string[] };
 
     /**
      * The model for the modal.
@@ -46,6 +47,21 @@ export class CreateRoutePanel
     protected routeReference: string | undefined;
 
     /**
+     * If collection points should be created
+     */
+    protected createCollectionPoints: boolean = false;
+
+    /**
+     * The pickup gate for the route being created.
+     */
+    protected pickupGate: string | undefined;
+
+    /**
+     * The start date for the route being created.
+     */
+    protected startDateTime: DateTime | undefined;
+
+    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
@@ -63,7 +79,7 @@ export class CreateRoutePanel
      * Called by the framework when the modal is deactivated.
      * @returns The new route's slug, or undefined if cancelled.
      */
-    public async deactivate(): Promise<string | undefined>
+    public async deactivate(): Promise<{ slug: string; collectionPointIds?: string[] } | undefined>
     {
         return this._result;
     }
@@ -106,11 +122,25 @@ export class CreateRoutePanel
             // Mark the modal as busy.
             this._modal.busy = true;
 
-            // Create the route
-            const routeSlug = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
+            if (this.createCollectionPoints)
+            {
+                const result = await this._routeService.createCollectionPoints(
+                    this.model.orders.map(o => o.id),
+                    {
+                        startDateTime: this.startDateTime!,
+                        vehicleType: this.selectedVehicleType!,
+                        reference: this.routeReference,
+                        pickupGate: this.pickupGate
+                    }
+                );
 
-            // Set the result of the modal.
-            this._result = routeSlug;
+                this._result = result;
+            }
+            else
+            {
+                const routeSlug = await this._routeService.createRoute(this.model.orders.map(o => o.id), this.routeReference!, this.selectedVehicleType!);
+                this._result = { slug: routeSlug };
+            }
 
             await this._modal.close();
         }

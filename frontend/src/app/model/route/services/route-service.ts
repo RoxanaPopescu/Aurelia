@@ -13,6 +13,7 @@ import { DateTime } from "luxon";
 import { IdentityService } from "app/services/identity";
 import { Position } from "app/model/shared";
 import { RouteDriverPositionsService } from "shared/src/services/route-driver-positions-service";
+import { Uuid } from "shared/utilities/id/uuid";
 
 /**
  * Represents a service that manages routes.
@@ -250,6 +251,34 @@ export class RouteService
         });
 
         return result.data.slug;
+    }
+
+    /**
+     * Adds the specified route stop at the specified index.
+     * @param orders The orders from which the route is created from.
+     * @param route The route specific parameters.
+     * @returns A promise that will be resolved with a route slug.
+     */
+    public async createCollectionPoints(orderIds: string[], route: {
+        startDateTime: DateTime;
+        vehicleType: VehicleType;
+        pickupGate?: string;
+        reference?: string;
+    }): Promise<{ slug: string, collectionPointIds: string[] }>
+{
+        const result = await this._apiClient.post("routes/create/collection-points-from-orders",
+        {
+            body: {
+                orderIds: orderIds,
+                startDateTime: route.startDateTime,
+                vehicleTypeId: route.vehicleType.id,
+                routeReference: route.reference,
+                pickupGate: route.pickupGate,
+                jobId: Uuid.v4()
+            }
+        });
+
+        return result.data;
     }
 
     /**

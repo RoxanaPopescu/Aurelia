@@ -7,8 +7,9 @@ import { IScroll, ModalService, ToastService } from "shared/framework";
 import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
 import { Consignor } from "app/model/outfit";
-import createdToast from "./resources/strings/created-toast.json";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
+import createdRouteToast from "./resources/strings/created-route-toast.json";
+import createdCollectionPointToast from "./resources/strings/created-collection-point-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -253,19 +254,30 @@ export class ListPage
      */
     protected async onCreateRouteClick(orders: OrderInfo[]): Promise<void>
     {
-        const newRoutesSlug = await this._modalService.open(CreateRoutePanel, { orders: orders }).promise;
+        const result = await this._modalService.open(CreateRoutePanel, { orders: orders }).promise;
 
-        if (newRoutesSlug != null)
+        if (result != null)
         {
-            createdToast.body = createdToast.body.replace("{routeSlug}", newRoutesSlug);
-            createdToast.url = createdToast.url.replace("{routeSlug}", newRoutesSlug);
+            if (result.collectionPointIds != null) {
+                createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{routeSlug}", result.slug);
+                createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{collectionPointCount}", String(result.collectionPointIds.length));
+                createdCollectionPointToast.url = createdCollectionPointToast.url.replace("{routeSlug}", result.slug);
 
-            this._toastService.open("info", createdToast);
+                this._toastService.open("info", createdCollectionPointToast);
+            }
+            else
+            {
+                createdRouteToast.body = createdRouteToast.body.replace("{routeSlug}", result.slug);
+                createdRouteToast.url = createdRouteToast.url.replace("{routeSlug}", result.slug);
+
+                this._toastService.open("info", createdRouteToast);
+            }
 
             this.selectedOrders = [];
             this.update();
         }
     }
+
 
     /**
      * Called when the from date changes.

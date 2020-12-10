@@ -66,7 +66,7 @@ export class RouteTemplateService
         const json = route.toJSON();
         json.jobId = Uuid.v1();
 
-        await this._apiClient.post("routes/create-from-template",
+        await this._apiClient.post("routes/create/from-template",
         {
             body: json
         });
