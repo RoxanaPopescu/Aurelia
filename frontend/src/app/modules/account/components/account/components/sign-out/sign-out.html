@@ -1,0 +1,29 @@
+<template>
+
+    <require from="./sign-out.scss"></require>
+
+    <template if.bind="model.busy && !model.done">
+
+        <busy-indicator class="font-largest animation-fade-in-medium au-enter-active" translate>
+            Signing out…
+        </busy-indicator>
+
+    </template>
+
+    <template if.bind="!model.busy && model.done">
+
+        <div class="font-large" translate>
+            Signed out
+        </div>
+
+    </template>
+
+    <template if.bind="!model.busy && model.error">
+
+        <div class="font-large" accent="negative" translate>
+            Failed to sign out
+        </div>
+
+    </template>
+
+</template>

@@ -20,8 +20,8 @@ export class _Profile {
   @observable isAuthenticated = false;
 
   constructor() {
-    const accessToken = localStorage.getItem(Path.AccessToken);
-    const refreshToken = localStorage.getItem(Path.RefreshToken);
+    const accessToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.AccessToken);
+    const refreshToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.RefreshToken);
 
     if (accessToken && refreshToken) {
       this.tokens = { access: accessToken, refresh: refreshToken };
@@ -39,8 +39,8 @@ export class _Profile {
   }
 
   public setTokens(accessToken: string, refreshToken: string) {
-    localStorage.setItem(Path.RefreshToken, refreshToken);
-    localStorage.setItem(Path.AccessToken, accessToken);
+    // localStorage.setItem(Path.RefreshToken, refreshToken);
+    // localStorage.setItem(Path.AccessToken, accessToken);
     this.tokens = { access: accessToken, refresh: refreshToken };
     this.claims = new Set(getUserClaims());
   }
@@ -57,8 +57,8 @@ export class _Profile {
     this.isAuthenticated = false;
     this.tokens = undefined;
 
-    localStorage.removeItem(Path.AccessToken);
-    localStorage.removeItem(Path.RefreshToken);
+    // localStorage.removeItem(Path.AccessToken);
+    // localStorage.removeItem(Path.RefreshToken);
     this.claims = new Set();
   }
 

@@ -282,12 +282,13 @@ export class HistoryHelper
     }
 
     /**
-     * Sets the title of the document, either explicitly, or as a title path, where multiple titles are
-     * joined by a separator, ending with the separator and title defined in the `AppRouter`.
-     * @param titles The title to set, or the array of titles to set as the title path.
+     * Sets the title of the document, either as a single title, as multiple titles joined by a separator,
+     * ending with the separator and title defined in the `AppRouter`. If the specified title is undefined,
+     * the title of the current navigation instruction will be used.
+     * @param titles The title or title path to set, or undefined to use the title of the current navigation instruction.
      * @param separator The separator to use, or undefined to use the separator defined in the `AppRouter`.
      */
-    public setTitle(title: string | string[], separator?: string): void
+    public setTitle(title?: string | string[], separator?: string): void
     {
         if (title instanceof Array)
         {
@@ -298,9 +299,13 @@ export class HistoryHelper
             ]
             .join(this._router.titleSeparator);
         }
-        else
+        else if (title != null)
         {
             document.title = title;
+        }
+        else
+        {
+            this._router.updateTitle();
         }
     }
 
@@ -319,7 +324,7 @@ export class HistoryHelper
             document.head.appendChild(metaDescriptionElement);
         }
 
-        metaDescriptionElement?.setAttribute("content", description ?? "");
+        metaDescriptionElement.setAttribute("content", description ?? "");
     }
 
     /**

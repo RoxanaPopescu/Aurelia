@@ -8,6 +8,99 @@ $__summary: comment;
 
 /* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
 
+[context="marketing"]
+{
+    &
+    {
+        /// The line height of the marketing title text.
+        --font-largest-line-height: 72rem;
+
+        /// The font size of the marketing title text.
+        --font-largest-font-size: 64rem;
+
+        /// The margin above the marketing title text.
+        --font-largest-margin-top: 64rem;
+
+        /// The margin below the marketing title text.
+        --font-largest-margin-bottom: 64rem;
+
+        /// The font weight of the marketing title text.
+        --font-largest-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the marketing subtitle text.
+        --font-larger-line-height: 32rem;
+
+        /// The font size of the marketing subtitle text.
+        --font-larger-font-size: 20rem;
+
+        /// The margin above the marketing subtitle text.
+        --font-larger-margin-top: 12rem;
+
+        /// The margin below the marketing subtitle text.
+        --font-larger-margin-bottom: 12rem;
+
+        /// The font weight of the marketing subtitle text.
+        --font-larger-font-weight: 300;
+    }
+
+    &
+    {
+        /// The line height of the marketing base text.
+        --font-large-line-height: 20rem;
+
+        /// The font size of the marketing base text.
+        --font-large-font-size: 16rem;
+
+        /// The margin above the marketing base text.
+        --font-large-margin-top: 24rem;
+
+        /// The margin below the marketing base text.
+        --font-large-margin-bottom: 12rem;
+
+        /// The font weight of the marketing base text.
+        --font-large-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the base text.
+        --font-base-line-height: 20rem;
+
+        /// The font size of the base text.
+        --font-base-font-size: 14rem;
+
+        /// The margin above the base text.
+        --font-base-margin-top: 12rem;
+
+        /// The margin below the base text.
+        --font-base-margin-bottom: 12rem;
+
+        /// The font weight of the base text.
+        --font-base-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the small text.
+        --font-small-line-height: 16rem;
+
+        /// The font size of the small text.
+        --font-small-font-size: 12rem;
+
+        /// The margin above the small text.
+        --font-small-margin-top: 8rem;
+
+        /// The margin below the small text.
+        --font-small-margin-bottom: 8rem;
+
+        /// The font weight of the small text.
+        --font-small-font-weight: 400;
+    }
+}
+
 [context="app"]
 {
     &

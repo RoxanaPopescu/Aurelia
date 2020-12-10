@@ -1,4 +1,7 @@
-import { Session } from "shared/src/model/session";
+import { Container } from "aurelia-framework";
+import { LocaleService } from "shared/localization";
+
+let supportedVehicleTypes: VehicleType[];
 
 /**
  * Represents a vehicle types.
@@ -11,13 +14,15 @@ export class VehicleType
      */
     public constructor(data: any)
     {
+        const localeService = Container.instance.get(LocaleService);
+
         this.deprecated = data.deprecated;
         this.id = data.id;
         this.slug = data.slug;
         this.maxHeight = data.maxHeight;
         this.maxWidth = data.maxWidth;
         this.maxWeight = data.maxWeight;
-        this.name = data.name;
+        this.name = data.name[localeService.locale.code.substring(0, 2)];
         this.images = data.images;
     }
 
@@ -71,14 +76,22 @@ export class VehicleType
      */
     public static get(id: string): VehicleType
     {
-        return Session.vehicleTypes.find(vt => vt.id === id)!;
+        return supportedVehicleTypes.find(vt => vt.id === id)!;
     }
 
     /**
-     * Gets all supported vehicle types.
+     * Gets the supported vehicle types.
      */
     public static getAll(): VehicleType[]
     {
-        return Session.vehicleTypes;
+        return supportedVehicleTypes;
+    }
+
+    /**
+     * Sets the supported vehicle types.
+     */
+    public static setAll(vehicleTypes: VehicleType[]): void
+    {
+        supportedVehicleTypes = vehicleTypes;
     }
 }

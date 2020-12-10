@@ -1,0 +1,154 @@
+<template>
+
+    <require from="./sign-up.scss"></require>
+
+    <template if.bind="!model.busy && !model.done">
+
+        <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
+
+            <text-input value.bind="model.fullName" autocomplete="name" autofocus>
+
+                <span slot="placeholder" translate>
+                    Full name, e.g. John Doe
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.fullName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input class="margin-top" value.bind="model.preferredName" autocomplete="given-name">
+
+                <span slot="placeholder" translate>
+                    Preferred name, e.g. ${preferredNameSuggestion || "John"}
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.preferredName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <email-input class="margin-top" value.bind="model.email" autocomplete="email">
+
+                <span slot="placeholder" translate>
+                    Email address
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.email">
+                    </required-validator>
+
+                </div>
+
+            </email-input>
+
+            <password-input class="margin-top" value.bind="model.password" autocomplete="new-password">
+
+                <span slot="placeholder" translate>
+                    Password
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.password">
+                    </required-validator>
+
+                    <length-validator
+                        value.bind="model.password"
+                        min.bind="8">
+                    </length-validator>
+
+                </div>
+
+            </password-input>
+
+            <check-toggle class="margin-top" label="after" value.bind="model.agreeToTerms">
+
+                <span slot="heading" translate>
+                    I agree to the <a page-href="/terms" target="_blank" accent="info">terms of service</a>
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.agreeToTerms || undefined">
+
+                        <template replace-part="invalid">
+                            Please accept the terms of service.
+                        </template>
+
+                    </required-validator>
+
+                </div>
+
+            </check-toggle>
+
+            <div surface="base">
+
+                <button class="margin-top" appearance="solid" accent="primary" click.delegate="onSignUpClick()" translate>
+                    Sign up
+                </button>
+
+            </div>
+
+        </div>
+
+        <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
+
+        <div surface="base">
+
+            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
+                Sign up with <b>Google</b>
+            </button>
+
+            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signInWithMicrosoft()" translate>
+                Sign in with <b>Microsoft</b>
+            </button>
+
+        </div>
+
+    </template>
+
+    <template if.bind="model.busy && !model.done">
+
+        <busy-indicator class="font-largest" translate>
+            Signing up…
+        </busy-indicator>
+
+    </template>
+
+    <template if.bind="!model.busy && model.done">
+
+        <div class="font-large" translate>
+            Please check your email
+        </div>
+
+        <p class="opacity-faded-less" translate>
+            We just sent you an email with a link to confirm your signup.
+            If you don't see the email, make sure to check your junk folder.
+        </p>
+
+    </template>
+
+    <template if.bind="!model.busy && model.error">
+
+        <div class="font-large" accent="negative" translate>
+            Failed to sign up
+        </div>
+
+    </template>
+
+</template>

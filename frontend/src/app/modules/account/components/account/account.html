@@ -1,0 +1,154 @@
+<template forward-focus>
+
+    <require from="./components/sign-up/sign-up"></require>
+    <require from="./components/sign-in/sign-in"></require>
+    <require from="./components/sign-out/sign-out"></require>
+    <require from="./components/activate/activate"></require>
+    <require from="./components/forgot-password/forgot-password"></require>
+    <require from="./components/change-password/change-password"></require>
+
+    <require from="./account.scss"></require>
+
+    <template if.bind="model.view === 'sign-up'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Sign up
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+                Sign in
+            </a>
+
+        </div>
+
+        <sign-up model.bind="model"></sign-up>
+
+    </template>
+
+    <template if.bind="model.view === 'sign-in'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Sign in
+            </span>
+
+            <!--
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a if.bind="!model.done" tabindex="0" click.trigger="setView('sign-up')" translate>
+                Sign up
+            </a>
+            -->
+
+            <template if.bind="model.done">
+
+                <span class="opacity-faded-more margin-left margin-right">—</span>
+
+                <a if.bind="model.done" tabindex="0" click.trigger="setView('sign-out')" translate>
+                    Sign out
+                </a>
+
+            </template>
+
+        </div>
+
+        <sign-in model.bind="model"></sign-in>
+
+    </template>
+
+    <template if.bind="model.view === 'sign-out'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Sign out
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+                Sign in
+            </a>
+
+        </div>
+
+        <sign-out model.bind="model"></sign-out>
+
+    </template>
+
+    <template if.bind="model.view === 'activate'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <!--
+            <span translate>
+                Sign up
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+            -->
+
+            <span translate>
+                Activate account
+            </span>
+
+            <!--
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+                Sign in
+            </a>
+            -->
+
+        </div>
+
+        <activate model.bind="model"></activate>
+
+    </template>
+
+    <template if.bind="model.view === 'forgot-password'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Forgot password
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+                Sign in
+            </a>
+
+        </div>
+
+        <forgot-password model.bind="model"></forgot-password>
+
+    </template>
+
+    <template if.bind="model.view === 'change-password'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Change password
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+                Sign in
+            </a>
+
+        </div>
+
+        <change-password model.bind="model"></change-password>
+
+    </template>
+
+</template>

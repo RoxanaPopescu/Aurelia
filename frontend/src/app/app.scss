@@ -17,6 +17,12 @@ router-view
     height: 100%;
 }
 
+html[route^="account/"] app-sidebar
+{
+    // Hide the sidebar when presenting an account page.
+    display: none;
+}
+
 // Import styles for legacy components.
 @import "../legacy/styles/react-module.scss";
 
