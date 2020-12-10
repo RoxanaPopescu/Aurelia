@@ -264,7 +264,7 @@ export class RouteService
         vehicleType: VehicleType;
         pickupGate?: string;
         reference?: string;
-    }): Promise<{ slug: string, collectionPointIds: string[] }>
+    }): Promise<{ slug: string; collectionPointIds: string[] }>
 {
         const result = await this._apiClient.post("routes/create/collection-points-from-orders",
         {

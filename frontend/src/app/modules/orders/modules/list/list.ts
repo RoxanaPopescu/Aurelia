@@ -258,7 +258,8 @@ export class ListPage
 
         if (result != null)
         {
-            if (result.collectionPointIds != null) {
+            if (result.collectionPointIds != null)
+            {
                 createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{routeSlug}", result.slug);
                 createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{collectionPointCount}", String(result.collectionPointIds.length));
                 createdCollectionPointToast.url = createdCollectionPointToast.url.replace("{routeSlug}", result.slug);
@@ -277,7 +278,6 @@ export class ListPage
             this.update();
         }
     }
-
 
     /**
      * Called when the from date changes.
