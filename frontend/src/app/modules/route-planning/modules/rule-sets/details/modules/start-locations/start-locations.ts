@@ -45,7 +45,7 @@ export class StartLocations
     /**
      * The weekdays for which gate slots should be presented.
      */
-    protected weekdaysFilter: DayOfWeek[] = [];
+    protected weekdaysFilter: DayOfWeek[] | undefined;
 
     /**
      * The name of the departure time currently being presented.
@@ -55,6 +55,7 @@ export class StartLocations
     /**
      * Gets the current active departure time.
      */
+    @computedFrom("settings.departureTimes.length", "activeDepartureTimeName")
     protected get activeDepartureTime(): DepartureTime | undefined
     {
         return this.settings?.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
@@ -78,7 +79,7 @@ export class StartLocations
     /**
      * Gets the scenarios of the current departure time, filtered by date range and weekdays.
      */
-    @computedFrom("activeDepartureTime.scenarios", "dateFromFilter", "dateToFilter", "weekdaysFilter")
+    @computedFrom("activeDepartureTime.scenarios.length", "dateFromFilter", "dateToFilter", "weekdaysFilter")
     protected get filteredScenarios(): DepartureTimeScenario[]
     {
         let scenarios = this.activeDepartureTime?.scenarios ?? [];
@@ -95,7 +96,7 @@ export class StartLocations
                 s.criteria.datePeriod.from == null || s.criteria.datePeriod.from?.startOf("day").diff(this.dateToFilter!).as("seconds") <= 0);
         }
 
-        if (this.weekdaysFilter.length > 0)
+        if (this.weekdaysFilter != null && this.weekdaysFilter.length > 0)
         {
             this.weekdaysFilter.forEach(w =>
                 scenarios = scenarios.filter(s => s.criteria.weekdays.includes(w)));
