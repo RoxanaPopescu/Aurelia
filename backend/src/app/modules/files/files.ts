@@ -7,7 +7,7 @@ export class FilesModule extends AppModule
 {
     public configure(): void
     {
-       /**
+        /**
          * Creates a route from a template.
          * @returns The ID and slug of the new route.
          */
@@ -19,7 +19,7 @@ export class FilesModule extends AppModule
             {
                 body:
                 {
-                    ...context.request.body,
+                    ...context.request.body
                 }
             });
 

@@ -7,7 +7,7 @@ export class RouteCreateModule extends AppModule
 {
     public configure(): void
     {
-       /**
+        /**
          * Creates a route from a template.
          * @returns The ID and slug of the new route.
          */
