@@ -29,6 +29,8 @@ export class AccountService
      */
     public async create(accountInit: IAccountInit): Promise<void>
     {
+        await Promise.resolve();
+
         throw new Error("Not implemented");
     }
 
