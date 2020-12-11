@@ -123,21 +123,30 @@ export class IdentityService
         {
             this.setTokens(tokens);
 
-            const result = await this._apiClient.post("session/start",
+            if (this.identity != null)
             {
-                retry: 3
-            });
+                const result = await this._apiClient.get("refreshtokens");
 
-            const identity = new Identity(result, tokens);
+                this.setTokens(new IdentityTokens({ ...result.data, remember: tokens.remember }));
+            }
+            else
+            {
+                const result = await this._apiClient.post("session/start",
+                {
+                    retry: 3
+                });
 
-            await this._changeFunc?.(identity, this._identity);
+                const identity = new Identity(result, tokens);
 
-            this.setTokens(identity.tokens);
-            this._identity = identity;
+                await this._changeFunc?.(identity, this._identity);
 
-            VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
+                this.setTokens(identity.tokens);
+                this._identity = identity;
 
-            await Session.start(result);
+                VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
+
+                await Session.start(result);
+            }
 
             return true;
         }
