@@ -78,7 +78,8 @@ export default
                 "distribution-center": { version: "2", obfuscate: false },
                 "communication/sms": { version: "2", obfuscate: false },
                 "routes/templates": { version: "2", obfuscate: false },
-                "routes/create": { version: "2", obfuscate: false },
+                "routes/create/from-template": { version: "2", obfuscate: false },
+                "routes/create/collection-points-from-orders": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

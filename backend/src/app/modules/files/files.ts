@@ -11,16 +11,38 @@ export class FilesModule extends AppModule
          * Creates a route from a template.
          * @returns The ID and slug of the new route.
          */
-        this.router.post("/v2/files/upload", async context =>
+        this.router.post("/v2/files/upload-public", async context =>
         {
             context.authorize();
 
-            const routesResult = await this.apiClient.post("files/upload",
+            const routesResult = await this.apiClient.post("file/uploadpublic",
             {
                 body:
                 {
                     ...context.request.body
-                }
+                },
+                headers: context.headers
+            });
+
+            context.response.body = routesResult.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Creates a route from a template.
+         * @returns The ID and slug of the new route.
+         */
+        this.router.post("/v2/files/upload-sensitive", async context =>
+        {
+            context.authorize();
+
+            const routesResult = await this.apiClient.post("file/uploadsensitive",
+            {
+                body:
+                {
+                    ...context.request.body
+                },
+                headers: context.headers
             });
 
             context.response.body = routesResult.data;
