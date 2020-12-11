@@ -1,5 +1,5 @@
 <% const environment = htmlWebpackPlugin.options.environment; %>
-<% const integrationPath = `${environment.publicPath}resources/theme/integration` %>
+<% const integrationPath = environment.name === "development" ? `${environment.publicPath}resources/themes/mover/integration` : `${environment.publicPath}resources/theme/integration` %>
 
 <!DOCTYPE html>
 

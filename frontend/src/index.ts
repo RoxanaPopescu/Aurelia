@@ -12,7 +12,7 @@ import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log, setPrere
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
 import { Visitor } from "app/services/visitor";
-import { IdentityService } from "app/services/identity";
+import { IdentityService, Identity } from "app/services/identity";
 import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
@@ -111,7 +111,8 @@ export async function configure(aurelia: Aurelia): Promise<void>
             {
                 // Attempt to reauthenticate using a token stored on the device.
                 const identityService = aurelia.container.get(IdentityService);
-                await identityService.startSession();
+                identityService.configure(setIdentity);
+                await identityService.reauthenticate();
             }
         ]
         .map(f => f()));
@@ -295,5 +296,24 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined): Promise
 
         // The app is reloading, so return a promise that will never be resolved.
         return new Promise(() => undefined);
+    }
+}
+
+/**
+ * Called when the identity changes.
+ * @param newIdentity The new identity that was authenticated, if any.
+ * @param oldIdentity The old identity that was unauthenticated, if any.
+ */
+function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined): void
+{
+    if (newIdentity != null)
+    {
+        // Set the user associated with log entries.
+        Log.setUser(newIdentity);
+    }
+    else
+    {
+        // Reset the user associated with log entries.
+        Log.setUser(undefined);
     }
 }

@@ -1,11 +1,24 @@
-import { autoinject } from "aurelia-framework";
-import { Identity } from "./identity";
+import { autoinject, computedFrom } from "aurelia-framework";
+import { Duration } from "luxon";
+import { once } from "shared/utilities";
+import { ApiClient } from "shared/infrastructure";
+import { VehicleType } from "app/model/vehicle";
+import { Identity, IdentityTokens, IIdentityTokens } from "./identity";
+import settings from "resources/settings";
+
+// Needed to ensure the legacy code still works.
 import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
-import { getUserClaims, getAccessTokenExpireDuration } from "legacy/helpers/identity-helper";
-import settings from "resources/settings";
-import { Log, ApiClient } from "shared/infrastructure";
-import { Duration, DateTime } from "luxon";
+
+/**
+ * Represents a function that will be invoked before the identity changes.
+ * Use this to prepare the app for the new identity, if any.
+ * @param newIdentity The new identity that was authenticated, if any.
+ * @param oldIdentity The old identity that was unauthenticated, if any.
+ * @returns Nothing, or a promise that will be resolved when the app is ready for the new identity.
+ */
+// tslint:disable-next-line: invalid-void
+type IdentityChangeFunc = (newIdentity: Identity | undefined, oldIdentity: Identity | undefined) => void | Promise<void>;
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -24,171 +37,237 @@ export class IdentityService
 
     private readonly _apiClient: ApiClient;
     private _identity: Identity | undefined;
-    private _refreshTokenTimeout: any;
-    private _lastReauthenticate: DateTime | undefined;
+    private _changeFunc: IdentityChangeFunc | undefined;
+    private _refreshTokenTimeouthandle: any;
 
     /**
      * The identity of the currently authenticated user, or undefined if not authenticated.
      */
+    @computedFrom("_identity")
     public get identity(): Identity | undefined
     {
-        if (!Profile.isAuthenticated || Session.userInfo == null)
-        {
-            if (this._identity != null)
-            {
-                this._identity = undefined;
-
-                this.configureInfrastructure();
-            }
-
-            return undefined;
-        }
-
-        if (this._identity == null || this._identity.username !== Session.userInfo.username)
-        {
-            this._identity = new Identity(
-            {
-                username: Session.userInfo.username,
-                fullName: Session.userInfo.fullName,
-                preferredName: Session.userInfo.firstName,
-                pictureUrl: undefined,
-                outfit: Session.outfit,
-                claims: getUserClaims(),
-                tokens: Profile.tokens
-            });
-
-            this.configureInfrastructure();
-        }
-
         return this._identity;
     }
 
     /**
-     * Called when the user is authenticated, to configure the app.
+     * Configures the instance.
+     * @param _changeFunc The function that is invoked before the identity changes.
      */
-    public authenticated(): void
+    @once
+    public configure(identityChangeFunc?: IdentityChangeFunc): void
     {
-        // Update tokens in identity
-        if (Profile.tokens != null && this.identity != null)
-        {
-            this.identity.tokens = Profile.tokens;
-        }
-
-        this.configureInfrastructure();
-        this.verifyAccessTokenExpireDate();
+        this._changeFunc = identityChangeFunc;
     }
 
     /**
-     * Attempts to start the session for logged in users
-     * @returns A promise that will be resolved with a boolean indicating whether reauthentication succeeded.
+     * Called when authentication is completed as part of account activation or password recovery.
+     * @param tokens The tokens to use.
+     * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
      */
-    public async startSession(): Promise<boolean>
+    public async authenticated(tokens: IIdentityTokens): Promise<boolean>
+    {
+        this.setTokens(new IdentityTokens(tokens));
+
+        return this.reauthenticate();
+    }
+
+    /**
+     * Authenticates the specified user.
+     * @param username The username identifying the user.
+     * @param password The users password.
+     * @param remember True to store the auth tokens on the device, otherwise false.
+     * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
+     * @throws If the operation fails for any reason, other than invalid credentials.
+     */
+    public async authenticate(username: string, password: string, remember = false): Promise<boolean>
     {
         try
         {
-            await Profile.autoLogin();
-        }
-        finally
-        {
-            this.authenticated();
-        }
+            const result = await this._apiClient.post("login",
+            {
+                body: { username, password, remember },
+                retry: 3
+            });
 
-        return Promise.resolve(this.identity != null);
+            this.setTokens({ ...result.data, remember });
+
+            return this.reauthenticate();
+        }
+        catch (error)
+        {
+            await this.unauthenticate();
+
+            if (error.response == null || ![401, 403].includes(error.response.status))
+            {
+                throw error;
+            }
+
+            return false;
+        }
     }
 
     /**
      * Attempts to reauthenticate the user using the authentication cookie stored on the device.
-     * @returns A promise that will be resolved with a boolean indicating whether reauthentication succeeded.
+     * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
      */
     public async reauthenticate(): Promise<boolean>
     {
-        // Verify a minimum of 1 minutes since last reauthenticate (It can continiously call if tokens are not set correctly)
-        if (this._lastReauthenticate != null && DateTime.local().diff(this._lastReauthenticate).get("milliseconds") < 1000 * 60)
+        const tokens = this.getTokens();
+
+        if (tokens == null)
         {
-            return Promise.resolve(false);
+            return false;
         }
 
         try
         {
-            this._lastReauthenticate = DateTime.local();
-            const result = await this._apiClient.get("RefreshTokens");
-            Profile.setTokens(result.data.accessToken, result.data.refreshToken);
-        }
-        catch
-        {
-            // For now we do nothing
-        }
-        finally
-        {
-            this.authenticated();
-        }
+            this.setTokens(tokens);
 
-        return Promise.resolve(this.identity != null);
+            const result = await this._apiClient.post("session/start",
+            {
+                retry: 3
+            });
+
+            const identity = new Identity(result, tokens);
+
+            await this._changeFunc?.(identity, this._identity);
+
+            this.setTokens(identity.tokens);
+            this._identity = identity;
+
+            VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
+
+            await Session.start(result);
+
+            return true;
+        }
+        catch (error)
+        {
+            await this.unauthenticate();
+
+            if (error.response == null || ![401, 403].includes(error.response.status))
+            {
+                console.error(error);
+            }
+
+            return false;
+        }
     }
 
     /**
-     * Unauthenticate the user, removing the authentication token stored on the device.
-     * @returns A promise that will be resolved with a boolean indicating whether unauthentication succeeded.
+     * Unauthenticates the user, removing the authentication token stored on the device.
+     * @returns A promise that will be resolved with true if unauthentication succeeded, otherwise false.
+     * @throws If the request fails for any reason.
      */
     public async unauthenticate(): Promise<boolean>
     {
-        try
+        if (this._identity != null)
         {
-            Profile.logout();
-        }
-        finally
-        {
-            this.configureInfrastructure();
-            this._lastReauthenticate = undefined;
-            clearTimeout(this._refreshTokenTimeout);
+            await this._changeFunc?.(undefined, this._identity);
+
+            this._identity = undefined;
+            this.setTokens(undefined);
         }
 
-        return Promise.resolve(true);
+        return true;
     }
 
     /**
-     * Configures the infrastructure.
-     * Adds or removes the tokens to the set of default headers used by the `ApiClient`,
-     * and sets the user associated with log entries.
+     * Gets the tokens to use.
+     * @returns The tokens to use.
      */
-    private configureInfrastructure(): void
+    private getTokens(): IdentityTokens | undefined
     {
+        let tokens =
+        {
+            accessToken: sessionStorage.getItem("access-token"),
+            refreshToken: sessionStorage.getItem("refresh-token"),
+            remember: false
+        };
+
+        if (!tokens.accessToken || !tokens.refreshToken)
+        {
+            tokens =
+            {
+                accessToken: localStorage.getItem("access-token"),
+                refreshToken: localStorage.getItem("refresh-token"),
+                remember: true
+            };
+
+            if (!tokens.accessToken || !tokens.refreshToken)
+            {
+                return undefined;
+            }
+        }
+
+        return new IdentityTokens(tokens as IIdentityTokens);
+    }
+
+    /**
+     * Sets the tokens to use and schedules a reauthentication before they expire.
+     * @param tokens The tokens to use, or undefined to clear the tokens.
+     */
+    private setTokens(tokens?: IdentityTokens): void
+    {
+        localStorage.removeItem("access-token");
+        sessionStorage.removeItem("access-token");
+
+        localStorage.removeItem("refresh-token");
+        sessionStorage.removeItem("refresh-token");
+
+        Profile.reset();
+
         // tslint:disable: no-string-literal no-dynamic-delete
-        if (this.identity != null)
+
+        if (tokens != null)
         {
-            settings.infrastructure.api.defaults!.headers!["authorization"] = `Bearer ${this.identity.tokens.access}`;
-            settings.infrastructure.api.defaults!.headers!["refresh-token"] = this.identity.tokens.refresh;
-            Log.setUser(this._identity);
+            const storage = tokens?.remember ? localStorage : sessionStorage;
+
+            if (tokens.accessToken)
+            {
+                settings.infrastructure.api.defaults!.headers!["authorization"] = `Bearer ${tokens.accessToken}`;
+                storage.setItem("access-token", tokens.accessToken);
+            }
+            else
+            {
+                delete settings.infrastructure.api.defaults!.headers!["authorization"];
+            }
+
+            if (tokens.refreshToken)
+            {
+                settings.infrastructure.api.defaults!.headers!["refresh-token"] = tokens.refreshToken;
+                storage.setItem("refresh-token", tokens.refreshToken);
+            }
+            else
+            {
+                delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
+            }
+
+            Profile.setTokens(tokens.accessToken, tokens.refreshToken);
         }
-        else
-        {
-            delete settings.infrastructure.api.defaults!.headers!["authorization"];
-            delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
-            Log.setUser(undefined);
-        }
+
         // tslint:disable
+
+        this.scheduleReauthentication(tokens);
     }
 
     /**
-     * Verifies the access token's expire date
-     * This will also call a new re-authentication one minute before expiring.
+     * Schedules a reauthentication before the current tokens expire.
+     * @param tokens The current tokens, for which reauthentication should be scheduled.
      */
-    private verifyAccessTokenExpireDate(): void
+    private scheduleReauthentication(tokens?: IdentityTokens): void
     {
-        clearTimeout(this._refreshTokenTimeout);
+        clearTimeout(this._refreshTokenTimeouthandle);
 
-        if (this.identity?.tokens == null)
+        if (tokens?.expires != null)
         {
-            return;
+            const padding = Duration.fromObject({ minutes: 1 });
+            const timeout = tokens.expires.diffNow().minus(padding).as("milliseconds");
+
+            if (timeout > 0)
+            {
+                this._refreshTokenTimeouthandle = setTimeout(() => this.reauthenticate(), timeout);
+            }
         }
-
-        const expires = getAccessTokenExpireDuration(this.identity.tokens.access);
-        const refreshBeforeExpire = Duration.fromMillis(1000 * 60 * 1);
-        const refresh = expires.minus(refreshBeforeExpire);
-
-        this._refreshTokenTimeout = setTimeout(
-            () => this.reauthenticate(),
-            refresh.get("milliseconds")
-        );
     }
 }

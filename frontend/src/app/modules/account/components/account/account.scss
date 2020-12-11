@@ -1,0 +1,26 @@
+account
+{
+    display: block;
+
+    button[appearance="solid"]
+    {
+        width: 100%;
+    }
+
+    busy-indicator
+    {
+        opacity: 1;
+
+        --busy-indicator-stroke-width: 4rem;
+
+        svg
+        {
+            opacity: var(--busy-indicator-opacity);
+        }
+    }
+
+    [validation] button[appearance="solid"]
+    {
+        margin-top: 32rem;
+    }
+}

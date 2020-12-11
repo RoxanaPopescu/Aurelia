@@ -11,4 +11,4 @@
 /artifacts/
 
 # Because it is generated when building the docker image.
-/src/resources/translations/x-pseudo.json
+/src/resources/translations/en-US-x-pseudo.json

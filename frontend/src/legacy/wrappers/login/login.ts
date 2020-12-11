@@ -64,7 +64,8 @@ export class LoginCustomElement extends Wrapper
     {
         if (newValue)
         {
-            this._identityService.authenticated();
+            // TODO: what was the side effects of accessign the authenticated property?
+            this._identityService.identity;
             this._router.navigate("/");
         }
     }

@@ -1,0 +1,48 @@
+<template>
+
+    <require from="app/components/app-logo/app-logo"></require>
+    <require from="./account.scss"></require>
+
+    <page name="account" scroll>
+
+        <div class="account-background"></div>
+
+        <header class="account-header">
+
+            <app-logo size="wide"></app-logo>
+
+        </header>
+
+        <section class="account-hero">
+
+            <div context="marketing">
+
+                <h1 class="font-largest margin-bottom" translate>
+                    The future of logistics<br>
+                    starts here
+                </h1>
+
+                <h2 class="font-larger" translate>
+                    Fleet and Transport Management System that automates<br class="br-hint">
+                    and optimizes transport and logistics operations<br class="br-hint">
+                    while reducing costs and waste.
+                </h2>
+
+                <a
+                    if.bind="showPoweredBy"
+                    class="account-powered-by font-larger margin-larger-top opacity-faded"
+                    href="https://www.movertransport.com"
+                    target="_blank">
+                    <span translate>Powered by</span>
+                    <img src="/resources/themes/mover/images/logo-wide.svg">
+                </a>
+
+            </div>
+
+            <router-view></router-view>
+
+        </section>
+
+    </page>
+
+</template>

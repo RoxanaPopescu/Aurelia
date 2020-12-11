@@ -117,28 +117,30 @@ export class AppModule
     {
         const routeConfigs =
         [
+
+            // TODO: Remove once the email template is updated to reference the correct route.
+            {
+                name: "activation",
+                route: "activation",
+                redirect: "account/activate"
+            },
+
+            // TODO: Remove once the email template is updated to reference the correct route.
+            {
+                name: "reset-password",
+                route: "reset-password",
+                redirect: "account/change-password"
+            },
+
             {
                 name: "default",
                 route: ["", "index.html"],
                 redirect: "routes"
             },
             {
-                name: "account/sign-in",
-                route: "account/sign-in",
-                moduleId: PLATFORM.moduleName("./modules/account/modules/sign-in/sign-in"),
-                title: routeTitles.signIn
-            },
-            {
-                name: "account/activate",
-                route: "activation",
-                moduleId: PLATFORM.moduleName("./modules/account/modules/activate/activate"),
-                title: routeTitles.activateAccount
-            },
-            {
-                name: "account/reset-password",
-                route: "reset-password",
-                moduleId: PLATFORM.moduleName("./modules/account/modules/reset-password/reset-password"),
-                title: routeTitles.resetPassword
+                name: "account",
+                route: "account",
+                moduleId: PLATFORM.moduleName("./modules/account/pages/account/account")
             },
             {
                 name: "kpi",
@@ -342,6 +344,9 @@ export class AppModule
         // Add a router pipeline step that attempts to close any open modals before navigating.
         config.addPipelineStep("preActivate", CloseModalsPipelineStep);
 
+        // Add a router pipeline step that updates the attributes on the document element.
+        config.addPipelineStep("preRender", UpdateAttributesPipelineStep);
+
         // Configure history usage.
         config.options.pushState = true;
 
@@ -418,6 +423,45 @@ class CloseModalsPipelineStep implements PipelineStep
     public async run(instruction: NavigationInstruction, next: Next): Promise<any>
     {
         await this._modalService.closeAll("navigation");
+
+        return next();
+    }
+}
+
+/**
+ * Represents a router pipeline step that updates the attributes on the document element.
+ */
+@autoinject
+class UpdateAttributesPipelineStep implements PipelineStep
+{
+    /**
+     * True if the document is initially allowed to scroll, otherwise false.
+     */
+    private readonly _scroll = document.documentElement.hasAttribute("scroll");
+
+    /**
+     * Called by the router when this step should execute.
+     * @param instruction The current navigation instruction.
+     * @param next A callback to indicate when pipeline processing should advance to the next step or be aborted.
+     * @returns A promise that will be resolved when this step is complete.
+     */
+    public async run(instruction: NavigationInstruction, next: Next): Promise<any>
+    {
+        const instructions = instruction.getAllInstructions();
+
+        // Toggle the attribute that indicates whether the document is allowed to scroll.
+
+        const scroll = instructions
+            .reduce((r, i) => i.config.settings?.scroll ?? r, this._scroll);
+
+        document.documentElement.toggleAttribute("scroll", scroll);
+
+        // Set the attribute that can be used to style the document, based on the name of the route.
+
+        const route = instructions
+            .map(i => i.config.name).join("/");
+
+        document.documentElement.setAttribute("route", route);
 
         return next();
     }
