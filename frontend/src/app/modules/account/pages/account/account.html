@@ -11,6 +11,18 @@
 
             <app-logo size="wide"></app-logo>
 
+            <select-button appearance="text" accent="primary">
+
+                <span slot="label">
+                    ${localeService.locale.name}
+                </span>
+
+                <item repeat.for="locale of locales" click.trigger="localeService.setLocale(locale.code)">
+                    ${locale.name}
+                </item>
+
+            </select-button>
+
         </header>
 
         <section class="account-hero">

@@ -83,9 +83,14 @@ page[name="account"]
         left: 0;
         right: 0;
 
+        padding-top: 20rem;
+        padding-right: 120rem;
+
         // Use horizontal flex layout.
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
         // Set the height of the header.
         height: var(--account-header-height);
@@ -110,6 +115,17 @@ page[name="account"]
             // Set the size of the app name.
             height: 32rem;
             line-height: 1;
+
+            margin-top: 12rem;
+            margin-right: 24rem;
+            flex-shrink: 0;
+        }
+
+        select-button
+        {
+            margin: 12rem -16rem 0 -16rem;
+            pointer-events: initial;
+            flex-shrink: 0;
         }
     }
 
@@ -152,6 +168,11 @@ page[name="account"]
     {
         padding: 0 80rem 0 80rem;
 
+        .account-header
+        {
+            padding-right: 0;
+        }
+
         .account-hero
         {
             [context="marketing"]
@@ -181,6 +202,7 @@ page[name="account"]
         .account-header
         {
             position: relative;
+            padding-right: 0;
         }
 
         .account-hero
@@ -228,6 +250,7 @@ page[name="account"]
         .account-header
         {
             position: relative;
+            padding-right: 0;
         }
 
         .account-hero

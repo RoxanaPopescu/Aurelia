@@ -1,6 +1,7 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration } from "aurelia-router";
 import { ThemeService } from "shared/framework";
+import { Locale, LocaleService } from "shared/localization";
 import routeTitles from "./resources/strings/route-titles.json";
 
 /**
@@ -13,16 +14,31 @@ export class AccountPage
     /**
      * Creates a new instance of the type.
      * @param themeService The `ThemeService` instance.
+     * @param localeService The `LocaleService` instance.
      */
-    public constructor(themeService: ThemeService)
+    public constructor(themeService: ThemeService, localeService: LocaleService)
     {
         this.showPoweredBy = !/^mover(-|$)/.test(themeService.theme.slug);
+        this.localeService = localeService;
+
+        // Get the available locales.
+        this.locales = this.localeService.locales.filter(t => !/^x-|-x-/.test(t.code));
     }
+
+    /**
+     * The `LocaleService` instance.
+     */
+    protected readonly localeService: LocaleService;
 
     /**
      * True to show the `Powered by Mover`, otherwise false.
      */
     protected readonly showPoweredBy: boolean;
+
+    /**
+     * The supported locales.
+     */
+    protected readonly locales: ReadonlyArray<Locale>;
 
     /**
      * Called to configure the router for the page.
