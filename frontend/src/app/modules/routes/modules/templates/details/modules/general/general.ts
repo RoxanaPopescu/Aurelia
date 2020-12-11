@@ -1,8 +1,8 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RouteTemplate } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
-import { Session } from "shared/src/model/session";
 import { AgreementService } from "app/model/agreement";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents the page.
@@ -65,5 +65,5 @@ export class General
     /**
      * The available vehicle types.
      */
-    protected vehicleTypes = Session.vehicleTypes;
+    protected vehicleTypes = VehicleType.getAll();
 }

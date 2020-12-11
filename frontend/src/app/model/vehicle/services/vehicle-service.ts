@@ -1,7 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { Vehicle, VehicleType } from "app/model/vehicle";
-import { Session } from "shared/src/model/session";
 import { VehicleStatusSlug } from "../entities/vehicle-status";
 
 /**
@@ -27,7 +26,7 @@ export class VehicleService
      */
     public async getTypes(): Promise<VehicleType[]>
     {
-        return Session.vehicleTypes.map(vt => new VehicleType(vt));
+        return VehicleType.getAll();
     }
 
     /**
