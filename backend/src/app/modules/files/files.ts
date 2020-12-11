@@ -1,4 +1,5 @@
 import { AppModule } from "../../app-module";
+import { Stream } from "stream";
 
 /**
  * Represents a module exposing endpoints related to files.
@@ -13,15 +14,19 @@ export class FilesModule extends AppModule
          */
         this.router.post("/v2/files/upload-public", async context =>
         {
-            context.authorize();
+            // context.authorize();
+
+            let headers = context.headers;
+            delete headers.host;
+            delete headers["user-agent"];
+
+            const stream = new Stream.Writable();
+            context.req.pipe(stream);
 
             const routesResult = await this.apiClient.post("file/uploadpublic",
             {
-                body:
-                {
-                    ...context.request.body
-                },
-                headers: context.headers
+                body: stream,
+                headers: headers
             });
 
             context.response.body = routesResult.data;
@@ -34,15 +39,14 @@ export class FilesModule extends AppModule
          */
         this.router.post("/v2/files/upload-sensitive", async context =>
         {
-            context.authorize();
+            // context.authorize();
 
             const routesResult = await this.apiClient.post("file/uploadsensitive",
             {
                 body:
                 {
                     ...context.request.body
-                },
-                headers: context.headers
+                }
             });
 
             context.response.body = routesResult.data;
