@@ -24,8 +24,16 @@ export class _Profile {
     const refreshToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.RefreshToken);
 
     if (accessToken && refreshToken) {
-      this.tokens = { access: accessToken, refresh: refreshToken };
-      this.claims = new Set(getUserClaims(this.tokens));
+      try
+      {
+        const tokens = { access: accessToken, refresh: refreshToken };
+        this.claims = new Set(getUserClaims(this.tokens));
+        this.tokens = tokens;
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
     }
   }
 

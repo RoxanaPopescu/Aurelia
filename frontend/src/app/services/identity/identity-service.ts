@@ -209,7 +209,18 @@ export class IdentityService
             }
         }
 
-        return new IdentityTokens(tokens as IIdentityTokens);
+        try
+        {
+            return new IdentityTokens(tokens as IIdentityTokens);
+        }
+        catch (error)
+        {
+            console.error(error);
+
+            this.setTokens(undefined);
+
+            return undefined;
+        }
     }
 
     /**

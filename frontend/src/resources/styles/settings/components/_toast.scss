@@ -23,7 +23,7 @@ $__summary: comment;
     --toast-max-height: 320rem;
 
     // The min width of a toast.
-    --toast-min-width: 440rem;
+    --toast-min-width: min(440rem, 100vw - 2 * 12rem - 6rem);
 
     // The max width of a toast.
     --toast-max-width: 50vw;
