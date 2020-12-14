@@ -51,8 +51,9 @@ export class ActivateAccountPage
         this.model =
         {
             view: "activate",
-            email: params.email,
-            token: params.token,
+            // TODO: Remove alternate param names once the email template is updated to reference the correct route.
+            email: params.email || (params as any).username,
+            token: params.token || (params as any).activationCode,
             onViewChanged: () => this.onViewChanged(),
             onActivated: () => this.onActivated("/"),
             onSignedUp: () => this.onSignedUp("/"),

@@ -51,7 +51,8 @@ export class ChangePasswordPage
         this.model =
         {
             view: "change-password",
-            email: params.email,
+            // TODO: Remove alternate param names once the email template is updated to reference the correct route.
+            email: params.email || (params as any).username,
             token: params.token,
             onViewChanged: () => this.onViewChanged(),
             onPasswordChanged: () => this.onPasswordChanged("/"),
