@@ -16,7 +16,7 @@ export class FilesModule extends AppModule
         {
             // context.authorize();
 
-            let headers = context.headers;
+            const headers = context.headers;
             delete headers.host;
             delete headers["user-agent"];
 
