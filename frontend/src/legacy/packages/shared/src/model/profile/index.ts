@@ -27,7 +27,7 @@ export class _Profile {
       try
       {
         const tokens = { access: accessToken, refresh: refreshToken };
-        this.claims = new Set(getUserClaims(this.tokens));
+        this.claims = new Set(getUserClaims(tokens));
         this.tokens = tokens;
       }
       catch (error)
@@ -50,7 +50,7 @@ export class _Profile {
     // localStorage.setItem(Path.RefreshToken, refreshToken);
     // localStorage.setItem(Path.AccessToken, accessToken);
     this.tokens = { access: accessToken, refresh: refreshToken };
-    this.claims = new Set(getUserClaims());
+    this.claims = new Set(getUserClaims(this.tokens));
   }
 
   public async autoLogin() {
