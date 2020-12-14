@@ -127,7 +127,10 @@ export class IdentityService
 
             if (this.identity != null)
             {
-                const result = await this._apiClient.get("refreshtokens");
+                const result = await this._apiClient.get("refreshtokens",
+                {
+                    retry: 3
+                });
 
                 this.setTokens(new IdentityTokens({ ...result.data, remember: tokens.remember }));
             }
