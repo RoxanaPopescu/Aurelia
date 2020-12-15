@@ -112,14 +112,15 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                 }
             }
 
+            // Verify that the JWT contains the user.
+            if (context.user == null)
+            {
+                throw new AuthorizationError("The request did not contain a valid JWT.");
+            }
+
             // Verify that the JWT contains the specified permissions.
             if (permissions.length > 0)
             {
-                if (context.user == null)
-                {
-                    throw new AuthorizationError("The request did not contain a valid JWT.");
-                }
-
                 if (!permissions.some(permission => context.user!.permissions.has(permission)))
                 {
                     throw new AuthorizationError("The request contained a JWT with insufficient permissions.");
