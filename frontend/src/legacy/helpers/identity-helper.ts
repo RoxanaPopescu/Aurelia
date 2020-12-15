@@ -1,15 +1,13 @@
-import { Profile, Tokens } from "shared/src/model/profile";
 import njwt from "njwt";
 import { DateTime, Duration } from "luxon";
 
 /**
- * Gets the claims for the currently authenticated user.
- * @returns The claims for the currently authenticated user.
+ * Gets the claims from the specified tokens.
+ * @param tokens The tokens encoding the claims.
+ * @returns The claims from the specified tokens.
  */
-export function getUserClaims(currentTokens?: Tokens): string[]
+export function getUserClaims(tokens?: { access: string; refresh: string; }): string[]
 {
-    let tokens: Tokens | undefined = currentTokens ? currentTokens : Profile.tokens;
-
     if (tokens == null)
     {
         throw new Error("Cannot get claims when the user is not authenticated.");

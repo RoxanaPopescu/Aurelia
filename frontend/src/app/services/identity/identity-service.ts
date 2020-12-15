@@ -83,6 +83,8 @@ export class IdentityService
     {
         try
         {
+            this.setTokens(undefined);
+
             const result = await this._apiClient.post("login",
             {
                 body: { username, password, remember },
@@ -125,7 +127,10 @@ export class IdentityService
 
             if (this.identity != null)
             {
-                const result = await this._apiClient.get("refreshtokens");
+                const result = await this._apiClient.get("refreshtokens",
+                {
+                    retry: 3
+                });
 
                 this.setTokens(new IdentityTokens({ ...result.data, remember: tokens.remember }));
             }
@@ -170,12 +175,13 @@ export class IdentityService
      */
     public async unauthenticate(): Promise<boolean>
     {
+        this.setTokens(undefined);
+
         if (this._identity != null)
         {
             await this._changeFunc?.(undefined, this._identity);
 
             this._identity = undefined;
-            this.setTokens(undefined);
         }
 
         return true;
