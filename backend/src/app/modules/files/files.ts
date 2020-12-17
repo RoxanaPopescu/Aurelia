@@ -58,7 +58,7 @@ export class FilesModule extends AppModule
          * Forwards a public url to a file
          * @returns forward of url
          */
-        this.router.post("/v2/files/public/:id", context =>
+        this.router.get("/v2/files/public/:id", context =>
         {
             const filePath = `https://filestoragetestmover.blob.core.windows.net/public/${context.params.id}`;
 
@@ -69,7 +69,7 @@ export class FilesModule extends AppModule
          * Forwards a sensitive temporaraly url to a file
          * @returns forward of url
          */
-        this.router.post("/v2/files/sensitive/:id", async context =>
+        this.router.get("/v2/files/sensitive/:id", async context =>
         {
             await this.validateLogin(context);
 
