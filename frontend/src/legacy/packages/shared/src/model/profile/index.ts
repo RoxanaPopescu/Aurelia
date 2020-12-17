@@ -21,7 +21,7 @@ export class _Profile {
 
   constructor() {
     const accessToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.AccessToken);
-    const refreshToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.RefreshToken);
+    const refreshToken = sessionStorage.getItem(Path.RefreshToken) || localStorage.getItem(Path.RefreshToken);
 
     if (accessToken && refreshToken) {
       try
