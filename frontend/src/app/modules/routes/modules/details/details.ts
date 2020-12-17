@@ -47,7 +47,6 @@ export class DetailsModule
         this._modalService = modalService;
         this._router = router;
         this.identityService = identityService;
-        this.editable = identityService.identity!.claims.has("edit-routes");
     }
 
     private readonly _modalService: ModalService;
@@ -69,11 +68,6 @@ export class DetailsModule
      * The data table element.
      */
     protected dataTableElement: HTMLElement;
-
-    /**
-     * If the current user is allowed to edit the route.
-     */
-    protected editable = false;
 
     /**
      * True to show the map, otherwise false.
