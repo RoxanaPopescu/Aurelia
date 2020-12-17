@@ -389,7 +389,9 @@ class AuthorizePipelineStep implements PipelineStep
 
         if (!authorized)
         {
-            return next.cancel(new Redirect("account/sign-in"));
+            const url = location.pathname + location.search + location.hash;
+
+            return next.cancel(new Redirect(`account/sign-in${url !== "/" ? `?url=${url}` : ""}`));
         }
 
         return next();

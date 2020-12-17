@@ -195,18 +195,18 @@ export class IdentityService
     {
         let tokens =
         {
-            accessToken: sessionStorage.getItem("access-token"),
-            refreshToken: sessionStorage.getItem("refresh-token"),
-            remember: false
+            accessToken: localStorage.getItem("access-token"),
+            refreshToken: localStorage.getItem("refresh-token"),
+            remember: true
         };
 
         if (!tokens.accessToken || !tokens.refreshToken)
         {
             tokens =
             {
-                accessToken: localStorage.getItem("access-token"),
-                refreshToken: localStorage.getItem("refresh-token"),
-                remember: true
+                accessToken: sessionStorage.getItem("access-token"),
+                refreshToken: sessionStorage.getItem("refresh-token"),
+                remember: false
             };
 
             if (!tokens.accessToken || !tokens.refreshToken)
