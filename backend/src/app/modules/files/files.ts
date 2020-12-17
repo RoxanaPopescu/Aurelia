@@ -1,6 +1,7 @@
 import { IAppContext } from "app/app-context";
 import { ParameterizedContext } from "koa";
 import Router from "koa-router";
+import { Readable } from "stream";
 import { AppModule } from "../../app-module";
 
 /**
@@ -25,7 +26,7 @@ export class FilesModule extends AppModule
                     "content-type": context.request.headers["content-type"],
                     "content-length": context.request.headers["content-length"]
                 },
-                body: context.req
+                body: await this.readStream(context.req)
             });
 
             context.response.body = routesResult.data;
@@ -47,7 +48,7 @@ export class FilesModule extends AppModule
                     "content-type": context.request.headers["content-type"],
                     "content-length": context.request.headers["content-length"]
                 },
-                body: context.req
+                body: await this.readStream(context.req)
             });
 
             context.response.body = routesResult.data;
@@ -108,5 +109,21 @@ export class FilesModule extends AppModule
         {
             context.authorize();
         }
+    }
+
+    /**
+     * Reads the specified stream into a buffer.
+     * @param stream The stream to read.
+     * @returns A buffer representing the data read from the stream.
+     */
+    private async readStream(stream: Readable): Promise<Buffer>
+    {
+        return new Promise<Buffer>((resolve, reject) =>
+        {
+            const chunks: Buffer[] = [];
+            stream.on("data", chunk => chunks.push(chunk));
+            stream.on("error", error => reject(error));
+            stream.on("end", () => resolve(Buffer.concat(chunks)));
+        });
     }
 }
