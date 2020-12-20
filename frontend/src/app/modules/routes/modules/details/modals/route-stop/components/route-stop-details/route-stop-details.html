@@ -331,7 +331,7 @@
     </template>
 
     <!-- Actions -->
-    <template if.bind="model.routeStop.actions.photo || model.routeStop.actions.signature || model.routeStop.actions.colliCountVerification || model.routeStop.actions.timeFrameVerification || model.routeStop.actions.scanColli || model.routeStop.actions.instructionsAccept">
+    <template if.bind="model.routeStop.collectionPointId || model.routeStop.actions.photo || model.routeStop.actions.signature || model.routeStop.actions.colliCountVerification || model.routeStop.actions.timeFrameVerification || model.routeStop.actions.scanColli || model.routeStop.actions.instructionsAccept">
 
         <hr class="hr-line margin-bottom">
 
@@ -341,11 +341,15 @@
                 Requirements
             </div>
 
-            <div class="opacity-faded margin-bottom">
+            <div class="opacity-faded margin-bottom" translate>
                 The following is required of the driver at this stop
             </div>
 
             <ul class="ul-disc">
+
+                <li if.bind="model.routeStop.collectionPointId" translate>
+                    Collection point
+                </li>
 
                 <li if.bind="model.routeStop.actions.photo" translate>
                     Photo

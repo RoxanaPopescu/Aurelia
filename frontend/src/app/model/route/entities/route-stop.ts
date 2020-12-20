@@ -90,6 +90,11 @@ export class RouteStop extends RouteStopBase
     public readonly signature?: Signature;
 
     /**
+     * The collection point id related to this stop
+     */
+    public readonly collectionPointId?: string;
+
+    /**
      * The photo captured to prove that the deliveries were completed.
      */
     public readonly photo?: Photo;
