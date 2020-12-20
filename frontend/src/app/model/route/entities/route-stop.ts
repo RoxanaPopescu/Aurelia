@@ -28,6 +28,7 @@ export class RouteStop extends RouteStopBase
             this.deviations = data.deviations.map(p => new RouteStopDeviation(p));
             this.selfies = data.selfies.map(p => new Photo(p));
             this.tags = data.tags;
+            this.collectionPointId = data.collectionPointId;
 
             if (data.orderIds)
             {
