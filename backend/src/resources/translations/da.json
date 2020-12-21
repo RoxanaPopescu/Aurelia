@@ -3,5 +3,6 @@
   "./app/modules/order-status/resources/strings/order-status-event-titles:outForDelivery": "Levering igang",
   "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryEstimated": "Forventet levering",
   "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryCompleted": "Leveret",
-  "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryFailed": "Levering fejlede"
+  "./app/modules/order-status/resources/strings/order-status-event-titles:deliveryFailed": "Levering fejlede",
+  "./app/modules/order-status/resources/strings/order-status-event-titles:orderCancelled": "Ordre annulleret"
 }

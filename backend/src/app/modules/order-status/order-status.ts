@@ -59,8 +59,8 @@ export class OrderStatusModule extends AppModule
             // Fetch the order events.
             const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
 
-            // If the order is already delivered, remove any `order-delivery-eta-provided` event.
-            if (orderEventsData.some(e => e.eventType === "order-delivery-completed" || e.eventType === "order-delivery-failed"))
+            // If the order is already delivered, failed or cancelled, remove any `order-delivery-eta-provided` event.
+            if (orderEventsData.some(e => ["order-delivery-completed", "order-delivery-failed", "order-cancelled"].includes(e.eventType)))
             {
                 const indexToRemove = orderEventsData.findIndex(e => e.eventType === "order-delivery-eta-provided");
 
@@ -90,8 +90,27 @@ export class OrderStatusModule extends AppModule
                 hasOccurred: true
             });
 
+            // If the order is cancelled, create an `order-cancelled` event.
+            if (orderDetailsData.state.isCancelled)
+            {
+                trackingEvents.push(
+                {
+                    id: "order-cancelled-event-id",
+                    type: "order-cancelled",
+                    dateTimeRange:
+                    {
+                        start: undefined,
+                        end: undefined
+                    },
+                    title: eventTitles.orderCancelled,
+                    location: undefined,
+                    focusOnMap: false,
+                    hasOccurred: true
+                });
+            }
+
             // If no `delivery` event exists, create one based on the planned delivery time.
-            if (!trackingEvents.some(e => e.type === "delivery"))
+            else if (!trackingEvents.some(e => e.type === "delivery"))
             {
                 trackingEvents.push(
                 {

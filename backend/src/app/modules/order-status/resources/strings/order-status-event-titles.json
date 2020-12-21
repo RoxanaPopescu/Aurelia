@@ -3,5 +3,6 @@
     "outForDelivery": "Out for delivery",
     "deliveryEstimated": "Estimated time of delivery",
     "deliveryCompleted": "Delivered",
-    "deliveryFailed": "Delivery failed"
+    "deliveryFailed": "Delivery failed",
+    "orderCancelled": "Order cancelled"
 }
