@@ -22,6 +22,7 @@ export class User
         this.status = new UserStatus(data.status);
         this.canDeactivate = data.canDeactivate;
         this.canActivate = data.canActivate;
+        this.canRequestPasswordReset = data.canRequestPasswordReset;
     }
 
     /**
@@ -73,6 +74,11 @@ export class User
      * True if the user can be deactivated, otherwise false.
      */
     public canDeactivate: boolean;
+
+    /**
+     * True if a password reset can be requested for the user, otherwise false.
+     */
+    public canRequestPasswordReset: boolean;
 
     /**
      * Get the string representation of this user, which is the full name of the user.

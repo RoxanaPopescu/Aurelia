@@ -41,7 +41,7 @@ export class UserStatus
     {
         "created":
         {
-            name: "Created",
+            name: "Not activated",
             accent: "attention",
             value: 1
         },

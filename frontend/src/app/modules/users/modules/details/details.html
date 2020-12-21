@@ -1,10 +1,199 @@
 <template>
 
-    <require from="legacy/wrappers/users/details" as="react-module"></require>
+    <require from="./details.scss"></require>
 
     <page name="details">
 
-        <react-module id.bind="id"></react-module>
+        <page-content scroll validation validation.ref="validation">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/users" translate>
+                            Users
+                        </a>
+
+                        <span>
+                            ${user.firstName} ${user.lastName}
+                            <span if.bind="user != null && user.status.slug !== 'activated'" class="opacity-faded">
+                                (${user.status.name})
+                            </span>
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button
+                        appearance="outline"
+                        accent="primary"
+                        click.trigger="onDeactivateClick()"
+                        disabled.bind="operation.pending || !user.canDeactivate"
+                        translate>
+                        Deactivate
+                    </button>
+
+                    <button
+                        appearance="outline"
+                        accent="primary"
+                        click.trigger="onResetPasswordClick()"
+                        disabled.bind="operation.pending || !user.canRequestPasswordReset"
+                        translate>
+                        Reset password
+                    </button>
+
+                    <button
+                        appearance="solid"
+                        accent="primary"
+                        click.trigger="onSaveClick()"
+                        disabled.bind="operation.pending || user == null"
+                        translate>
+                        Save changes
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section class="user-section">
+
+                <div class="control-row margin-bottom">
+
+                    <text-input
+                        class="flex-basis-1-of-2"
+                        label="above"
+                        value.bind="user.firstName"
+                        readonly.bind="true">
+
+                        <div slot="heading" translate>
+                            First name
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="user.firstName">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                    <text-input
+                        class="flex-basis-1-of-2"
+                        label="above"
+                        value.bind="user.lastName"
+                        readonly.bind="true">
+
+                        <div slot="heading" translate>
+                            Last name
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="user.lastName">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="control-row margin-bottom">
+
+                    <email-input
+                        class="flex-basis-1-of-1"
+                        label="above"
+                        value.bind="user.email"
+                        readonly.bind="true">
+
+                        <div slot="heading" translate>
+                            Email
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="user.email">
+                            </required-validator>
+
+                        </div>
+
+                    </email-input>
+
+                </div>
+
+                <div class="control-row margin-bottom">
+
+                    <select-input
+                        class="flex-basis-1-of-1"
+                        label="above"
+                        value.bind="user.outfitId"
+                        display-value.bind="selectedDepartment.primaryName"
+                        none.bind="false"
+                        filter="auto"
+                        readonly.bind="false">
+
+                        <div slot="heading" translate>
+                            Department
+                        </div>
+
+                        <item repeat.for="department of departments" model.bind="department.id">
+                            ${department.primaryName}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="user.outfitId">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="control-row">
+
+                    <select-input
+                        class="flex-basis-1-of-1"
+                        label="above"
+                        value.bind="user.role"
+                        display-value.bind="selectedRole.name"
+                        none.bind="false"
+                        filter="auto">
+
+                        <div slot="heading" translate>
+                            Role
+                        </div>
+
+                        <item repeat.for="role of roles" model.bind="role">
+                            ${role.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="user.role">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <busy-overlay if.bind="operation.pending || user == null" animate.bind="false"></busy-overlay>
+
+            </page-section>
+
+        </page-content>
 
     </page>
 
