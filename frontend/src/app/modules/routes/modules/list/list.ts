@@ -386,7 +386,7 @@ export class ListPage
      * Called when the `Select columns` button is clicked.
      * Opens the panel for selecting the columns to see.
      */
-    protected async onSelctColumnsClick(route: RouteInfo): Promise<void>
+    protected async onSelectColumnsClick(): Promise<void>
     {
         const columns = await this._modalService.open(
             SelectColumnsPanel,

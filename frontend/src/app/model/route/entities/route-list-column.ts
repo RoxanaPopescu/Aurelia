@@ -16,7 +16,7 @@ export class RouteListColumn
      */
     public constructor(slug: RouteListColumnSlug)
     {
-        this.slug = slug ? textCase(slug, "pascal", "kebab") as any : "pickup";
+        this.slug = slug ? textCase(slug, "pascal", "kebab") as any : "slug";
         Object.assign(this, RouteListColumn.values[this.slug]);
     }
 

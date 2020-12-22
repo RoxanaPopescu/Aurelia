@@ -1,15 +1,16 @@
-import { autoinject, observable } from "aurelia-framework";
+import { autoinject, observable, computedFrom } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService, ToastService } from "shared/framework";
 import { AgreementService } from "app/model/agreement";
-import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
+import { OrderService, OrderInfo, OrderStatusSlug, OrderListColumn } from "app/model/order";
 import { Consignor } from "app/model/outfit";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
 import createdRouteToast from "./resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "./resources/strings/created-collection-point-toast.json";
+import { OrderSelectColumnsPanel } from "./modals/select-columns/select-columns";
 
 /**
  * Represents the route parameters for the page.
@@ -53,6 +54,14 @@ export class ListPage
         this._toastService = toastService;
         this._agreementService = agreementService;
         this._constructed = true;
+
+        const localData = localStorage.getItem("order-columns");
+
+        if (localData != null)
+        {
+            const columnsObject = JSON.parse(localData);
+            this.customColumns = columnsObject.map(slug => new OrderListColumn(slug));
+        }
     }
 
     private readonly _orderService: OrderService;
@@ -71,6 +80,47 @@ export class ListPage
      * The most recent update operation.
      */
     protected updateOperation: Operation;
+
+    /**
+     * The custom grid column widths calculated from the columns
+     */
+    @computedFrom("columns")
+    protected get tableStyle(): any
+    {
+        let size = "";
+
+        for (const column of this.columns)
+        {
+            if (column.column !== "not-added")
+            {
+                size += `${column.columSize} `;
+            }
+        }
+
+        return { "grid-template-columns": `60rem ${size} min-content` };
+    }
+
+    /**
+     * The custom columns the user has selected
+     */
+    protected customColumns: OrderListColumn[] | undefined;
+
+    /**
+     * The current columns to show in the list
+     */
+    @computedFrom("customColumns")
+    protected get columns(): OrderListColumn[]
+    {
+        return this.customColumns ?? [
+            new OrderListColumn("slug"),
+            new OrderListColumn("tags"),
+            new OrderListColumn("pickup-date"),
+            new OrderListColumn("pickup-time"),
+            new OrderListColumn("pickup-address"),
+            new OrderListColumn("delivery-address"),
+            new OrderListColumn("status")
+        ];
+    }
 
     /**
      * The sorting to use for the table.
@@ -141,7 +191,7 @@ export class ListPage
     /**
      * The items to present in the table.
      */
-    protected orders: OrderInfo[];
+    protected results: OrderInfo[] | undefined;
 
     /**
      * The items selected in the table
@@ -237,13 +287,18 @@ export class ListPage
      */
     protected onToggleAll(selected: boolean): void
     {
+        if (this.results == null)
+        {
+            return;
+        }
+
         if (selected)
         {
-            this.selectedOrders = [...new Set(this.selectedOrders.concat(this.orders))];
+            this.selectedOrders = [...new Set(this.selectedOrders.concat(this.results))];
         }
         else
         {
-            this.selectedOrders = this.selectedOrders.filter(so => !this.orders.find(o => o.id === so.id));
+            this.selectedOrders = this.selectedOrders.filter(so => !this.results!.find(o => o.id === so.id));
         }
     }
 
@@ -304,6 +359,25 @@ export class ListPage
     }
 
     /**
+     * Called when the `Select columns` button is clicked.
+     * Opens the panel for selecting the columns to see.
+     */
+    protected async onSelectColumnsClick(): Promise<void>
+    {
+        const columns = await this._modalService.open(
+            OrderSelectColumnsPanel,
+            this.columns
+        ).promise;
+
+        if (columns != null)
+        {
+            this.customColumns = columns;
+            this.results = undefined;
+            this.update();
+        }
+    }
+
+    /**
      * Updates the page by fetching the latest data.
      */
     protected update(newValue?: any, oldValue?: any, propertyName?: string): void
@@ -342,7 +416,7 @@ export class ListPage
                     signal);
 
                 // Update the state.
-                this.orders = result.orders;
+                this.results = result.orders;
                 this.orderCount = result.orderCount;
 
                 // Reset page.

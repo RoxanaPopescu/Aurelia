@@ -182,6 +182,10 @@
 
                     </button>
 
+                    <button appearance="outline" accent="primary" click.trigger="onSelectColumnsClick()" translate>
+                        List columns
+                    </button>
+
                     <button if-claims="create-order" appearance="outline" accent="primary" page-href="path: /orders/create" class="flex-row">
 
                         <icon name="add" class="font-larger margin-right"></icon>
@@ -200,6 +204,7 @@
 
                 <data-table
                     appearance="rows"
+                    style.bind="tableStyle"
                     sorting.bind="sorting"
                     selection="multiple"
                     toggle-all.call="onToggleAll(value)"
@@ -207,101 +212,71 @@
 
                     <data-table-headers>
 
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                ID
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell>
-                            <span class="text-truncate" translate>
-                                Tags
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="pickup-date">
-                            <span class="text-truncate" translate>
-                                Pickup date
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="pickup-time">
-                            <span class="text-truncate" translate>
-                                Pickup timeframe
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="pickup-address">
-                            <span class="text-truncate" translate>
-                                Pickup address
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="delivery-address">
-                            <span class="text-truncate" translate>
-                                Deliverey address
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell name="status">
-                            <span class="text-truncate" translate>
-                                Status
-                            </span>
-                        </data-table-cell>
+                        <template repeat.for="column of columns">
+                            <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
+                                <span if.bind="column.column == 'visible'" class="text-truncate">
+                                    ${column.name}
+                                </span>
+                            </data-table-cell>
+                        </template>
 
                     </data-table-headers>
 
-                    <template repeat.for="order of orders">
+                    <template repeat.for="result of results">
 
                         <data-table-row
-                            accent.bind="order.status.accent == 'neutral' ? undefined : route.status.accent"
-                            selected.bind="orderSelected(order)"
-                            toggle.call="onRowToggle(order, value)"
-                            href="/orders/details/${order.slug}">
+                            accent.bind="result.status.accent == 'neutral' ? undefined : result.status.accent"
+                            selected.bind="orderSelected(result)"
+                            toggle.call="onRowToggle(result, value)"
+                            href="/orders/details/${result.slug}">
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.slug}
-                                </span>
-                            </data-table-cell>
+                            <template repeat.for="column of columns">
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.tags | list: 'short' : 'unit'}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'slug'">
+                                    <span class="text-truncate">
+                                        ${result.slug}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.earliestPickupDate | date: 'narrow' : false}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'tags'">
+                                    <span class="text-truncate">
+                                        ${result.tags | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.earliestPickupTime | time: 'narrow' : false}
-                                    –
-                                    ${order.latestPickupTime | time: 'narrow' : false}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'pickup-date'">
+                                    <span class="text-truncate">
+                                        ${result.earliestPickupDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.pickupLocation.address}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'pickup-time'">
+                                    <span class="text-truncate">
+                                        ${result.earliestPickupTime | time: 'narrow' : false}
+                                        –
+                                        ${result.latestPickupTime | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.deliveryLocation.address}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'pickup-address'">
+                                    <span class="text-truncate">
+                                        ${result.pickupLocation.address}
+                                    </span>
+                                </data-table-cell>
 
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${order.status.name}
-                                </span>
-                            </data-table-cell>
+                                <data-table-cell if.bind="column.slug === 'delivery-address'">
+                                    <span class="text-truncate">
+                                        ${result.deliveryLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'status'">
+                                    <span class="text-truncate">
+                                        ${result.status.name}
+                                    </span>
+                                </data-table-cell>
+
+                            </template>
 
                         </data-table-row>
 
@@ -309,16 +284,16 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="orders == null && !failed" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="orders.length == 0" class="margin-largest">
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="orders.length > 0"
+                        if.bind="results.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="paging"
                         list-size.bind="orderCount">
