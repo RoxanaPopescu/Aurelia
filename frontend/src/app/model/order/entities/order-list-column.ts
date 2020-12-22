@@ -23,7 +23,7 @@ export class OrderListColumn
     public slug: OrderListColumnSlug;
     public name: string;
     public column: "hidden" | "visible" | "not-added";
-    public columSize: string;
+    public columnSize: string;
     public sortingName?: string;
 
     /**
@@ -42,48 +42,96 @@ export class OrderListColumn
         "slug":
         {
             name: "Id",
-            columSize: "1.2fr",
+            columnSize: "1.2fr",
             column: "visible"
         },
         "tags":
         {
             name: "Tags",
-            columSize: "1.2fr",
+            columnSize: "1.2fr",
             column: "visible"
         },
         "pickup-date":
         {
             name: "Pickup date",
-            columSize: "1fr",
+            columnSize: "1fr",
             sortingName: "pickup-date",
             column: "visible"
         },
         "pickup-time":
         {
             name: "Pickup timeframe",
-            columSize: "1fr",
+            columnSize: "1fr",
             sortingName: "pickup-time",
             column: "visible"
         },
         "pickup-address":
         {
             name: "Pickup address",
-            columSize: "1fr",
+            columnSize: "1fr",
             sortingName: "pickup-address",
             column: "visible"
         },
         "delivery-address":
         {
             name: "Delivery address",
-            columSize: "1fr",
+            columnSize: "1fr",
             sortingName: "delivery-address",
             column: "visible"
         },
         "status":
         {
             name: "Status",
-            columSize: "min-content",
+            columnSize: "min-content",
             sortingName: "status",
+            column: "visible"
+        },
+        "relational-id":
+        {
+            name: "Relational id",
+            columnSize: "1.2fr",
+            column: "visible"
+        },
+        "colli-count":
+        {
+            name: "Colli count",
+            columName: "Colli",
+            columnSize: "min-content",
+            column: "visible"
+        },
+        "colli-total-weight":
+        {
+            name: "Colli total weight",
+            columName: "Total weight",
+            columnSize: "1.0fr",
+            column: "visible"
+        },
+        "colli-total-volume":
+        {
+            name: "Colli total volume",
+            columName: "Total volume",
+            columnSize: "1.0fr",
+            column: "visible"
+        },
+        "estimated-colli-count":
+        {
+            name: "Estimated colli count",
+            columName: "Estimated colli",
+            columnSize: "min-content",
+            column: "visible"
+        },
+        "estimated-colli-total-weight":
+        {
+            name: "Estimated colli total weight",
+            columName: "Est. total weight",
+            columnSize: "1.0fr",
+            column: "visible"
+        },
+        "estimated-colli-total-volume":
+        {
+            name: "Estimated colli total volume",
+            columName: "Est. Total volume",
+            columnSize: "1.0fr",
             column: "visible"
         }
     };

@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { TimeOfDay } from "shared/types";
 import { Location } from "app/model/shared";
 import { OrderStatus } from "./order-status";
+import { OrderColliInfo } from "..";
 
 export class OrderInfo
 {
@@ -12,8 +13,11 @@ export class OrderInfo
     public constructor(data: any)
     {
         this.id = data.internalId;
+        this.relationalId = data.relationalId;
         this.slug = data.publicId;
         this.tags = data.tags;
+        this.actualColliInfo = new OrderColliInfo(data.actualColliInfo);
+        this.estimatedColliInfo = new OrderColliInfo(data.estimatedColliInfo);
         this.status = new OrderStatus(data.status.name);
         this.earliestPickupDate = DateTime.fromISO(data.earliestPickupDate, { setZone: true });
         // tslint:disable-next-line: deprecation
@@ -45,6 +49,8 @@ export class OrderInfo
 
     public readonly id: string;
 
+    public readonly relationalId: string;
+
     public readonly slug: string;
 
     public readonly tags: string[];
@@ -64,4 +70,8 @@ export class OrderInfo
     public readonly pickupLocation: Location;
 
     public readonly deliveryLocation: Location;
+
+    public readonly actualColliInfo: OrderColliInfo;
+
+    public readonly estimatedColliInfo: OrderColliInfo;
 }

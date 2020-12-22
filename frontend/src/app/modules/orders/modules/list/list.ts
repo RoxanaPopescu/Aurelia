@@ -93,7 +93,7 @@ export class ListPage
         {
             if (column.column !== "not-added")
             {
-                size += `${column.columSize} `;
+                size += `${column.columnSize} `;
             }
         }
 

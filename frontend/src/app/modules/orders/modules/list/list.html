@@ -215,7 +215,12 @@
                         <template repeat.for="column of columns">
                             <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
                                 <span if.bind="column.column == 'visible'" class="text-truncate">
-                                    ${column.name}
+                                    <template if.bind="column.columName">
+                                        ${column.columName}
+                                    </template>
+                                    <template if.bind="!column.columName">
+                                        ${column.name}
+                                    </template>
                                 </span>
                             </data-table-cell>
                         </template>
@@ -273,6 +278,48 @@
                                 <data-table-cell if.bind="column.slug === 'status'">
                                     <span class="text-truncate">
                                         ${result.status.name}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'relational-id'">
+                                    <span class="text-truncate">
+                                        ${result.relationalId}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-count'">
+                                    <span class="text-truncate">
+                                        ${result.actualColliInfo.colliCount}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-total-weight'">
+                                    <span class="text-truncate">
+                                        ${result.actualColliInfo.totalWeight | number}kg
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-total-volume'">
+                                    <span class="text-truncate">
+                                        ${result.actualColliInfo.totalVolume | number}m³
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
+                                    <span class="text-truncate">
+                                        ${result.estimatedColliInfo.colliCount}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-total-weight'">
+                                    <span class="text-truncate">
+                                        ${result.estimatedColliInfo.totalWeight | number}kg
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-total-volume'">
+                                    <span class="text-truncate">
+                                        ${result.estimatedColliInfo.totalVolume | number}m³
                                     </span>
                                 </data-table-cell>
 
