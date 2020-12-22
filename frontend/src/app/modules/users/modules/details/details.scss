@@ -1,0 +1,16 @@
+@import "resources/index";
+
+page[name="users"] page[name="details"]
+{
+    display: block;
+
+    page-content
+    {
+        height: 100%;
+    }
+
+    .user-section
+    {
+        width: 40%;
+    }
+}

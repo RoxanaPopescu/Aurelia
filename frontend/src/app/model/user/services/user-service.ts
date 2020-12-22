@@ -49,7 +49,7 @@ export class UserService
      */
     public async get(userId: string, signal?: AbortSignal): Promise<User>
     {
-        const result = await this._apiClient.get("users/details",
+        const result = await this._apiClient.post("users/details",
         {
             body: { userId },
             signal
@@ -67,7 +67,7 @@ export class UserService
     {
         try
         {
-            await this._apiClient.post("users/createUser",
+            await this._apiClient.post("createUser",
             {
                 body: invite
             });
@@ -107,27 +107,27 @@ export class UserService
 
     /**
      * Requests a password reset for the specified user.
-     * @param userId The ID of the user for which a password reset should be requested.
+     * @param userId The username of the user for which a password reset should be requested.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async resetPassword(userId: string): Promise<void>
+    public async resetPassword(username: string): Promise<void>
     {
-        await this._apiClient.post("RequestPasswordReset",
+        await this._apiClient.post("requestPasswordReset",
         {
-            body: { userId }
+            body: { username }
         });
     }
 
     /**
      * Deactivates the specified user.
-     * @param userId The ID of the user to deactivate.
+     * @param username The username of the user to deactivate.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async deactivate(userId: string): Promise<void>
+    public async deactivate(username: string): Promise<void>
     {
-        await this._apiClient.post("users/Deactivate",
+        await this._apiClient.post("users/deactivate",
         {
-            body: { userId }
+            body: { username }
         });
     }
 }

@@ -121,12 +121,11 @@ export class AssignFulfillerPanel
     {
         if (this.route.fulfiller.id !== this.identityService.identity?.outfit.id)
         {
-            const confirmed = await this._modalService.open(
-                ConfirmRemoveFulfillerDialog,
-                {
-                    currentFulfiller: this.route.fulfiller,
-                    newFulfiller: fulfiller
-                }).promise;
+            const confirmed = await this._modalService.open(ConfirmRemoveFulfillerDialog,
+            {
+                currentFulfiller: this.route.fulfiller,
+                newFulfiller: fulfiller
+            }).promise;
 
             if (!confirmed)
             {
