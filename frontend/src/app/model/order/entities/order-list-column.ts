@@ -116,7 +116,7 @@ export class OrderListColumn
         "estimated-colli-count":
         {
             name: "Estimated colli count",
-            columName: "Estimated colli",
+            columName: "Est. colli",
             columnSize: "min-content",
             column: "visible"
         },
