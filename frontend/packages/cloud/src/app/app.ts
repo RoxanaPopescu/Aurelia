@@ -5,7 +5,6 @@ import http from "http";
 import express from "express";
 import compression from "compression";
 import cookieParser from "cookie-parser";
-import prerenderNode from "prerender-node";
 import acceptLanguage from "accept-language";
 import { DateTime } from "luxon";
 import { environment } from "../env";
@@ -51,11 +50,6 @@ export class App
         // Configure server middleware.
         this._app.use(compression());
         this._app.use(cookieParser());
-
-        // Configure prerender middleware.
-        prerenderNode.set("prerenderToken", settings.prerender.serviceToken);
-        prerenderNode.set("prerenderServiceUrl", settings.prerender.serviceUrl);
-        this._app.use(prerenderNode);
 
         // Create and mount the router.
         this._router = express.Router();

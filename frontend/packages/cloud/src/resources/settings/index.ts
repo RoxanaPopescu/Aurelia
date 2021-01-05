@@ -65,11 +65,7 @@ export default
      * Settings for the `prerender-node` middleware.
      * See: https://prerender.io/documentation
      */
-    prerender:
-    {
-        serviceToken: "XMPM5fAwKjqOwjmySgvA",
-        serviceUrl: "http://service.prerender.io/"
-    },
+    prerender: undefined,
 
     /**
      * The settings for the hostnames supported by the app.
