@@ -128,7 +128,7 @@ data-table[appearance="rows"]
             position: relative;
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-of-type:before
+            &:first-of-type::before
             {
                 content: "";
                 position: absolute;
@@ -137,7 +137,7 @@ data-table[appearance="rows"]
                 bottom: 2rem;
             }
 
-            &:first-of-type:before,
+            &:first-of-type::before,
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
             }
@@ -181,7 +181,7 @@ data-table[appearance="cards"]
             border-top: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
             border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
 
-            &:first-of-type:before
+            &:first-of-type::before
             {
                 content: "";
                 position: absolute;
@@ -191,19 +191,20 @@ data-table[appearance="cards"]
             }
 
             &:first-of-type,
-            &:first-of-type:before,
+            &:first-of-type::before,
             {
                 border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
                 border-top-left-radius: var(--data-table-row-border-radius);
                 border-bottom-left-radius: var(--data-table-row-border-radius);
             }
+        }
 
-            &:last-of-type
-            {
-                border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
-                border-top-right-radius: var(--data-table-row-border-radius);
-                border-bottom-right-radius: var(--data-table-row-border-radius);
-            }
+        &.--movable data-table-cell:nth-last-of-type(1),
+        &:not(.--movable) data-table-cell:nth-last-of-type(2)
+        {
+            border-right: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+            border-top-right-radius: var(--data-table-row-border-radius);
+            border-bottom-right-radius: var(--data-table-row-border-radius);
         }
 
         &:first-of-type
