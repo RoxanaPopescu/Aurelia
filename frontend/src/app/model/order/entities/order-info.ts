@@ -26,6 +26,13 @@ export class OrderInfo
         // tslint:disable-next-line: deprecation
         this.latestPickupTime = TimeOfDay.fromString(data.latestPickupTime);
 
+        this.earliestDeliveryDate = DateTime.fromISO(data.earliestDeliveryDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
+        this.earliestDeliveryTime = TimeOfDay.fromString(data.earliestDeliveryTime);
+        this.latestDeliveryDate = DateTime.fromISO(data.latestDeliveryDate, { setZone: true });
+        // tslint:disable-next-line: deprecation
+        this.latestDeliveryTime = TimeOfDay.fromString(data.latestDeliveryTime);
+
         this.pickupLocation = new Location(
         {
             address:
@@ -66,6 +73,16 @@ export class OrderInfo
 
     // tslint:disable-next-line: deprecation
     public readonly latestPickupTime: TimeOfDay;
+
+    public readonly earliestDeliveryDate: DateTime;
+
+    // tslint:disable-next-line: deprecation
+    public readonly earliestDeliveryTime: TimeOfDay;
+
+    public readonly latestDeliveryDate: DateTime;
+
+    // tslint:disable-next-line: deprecation
+    public readonly latestDeliveryTime: TimeOfDay;
 
     public readonly pickupLocation: Location;
 

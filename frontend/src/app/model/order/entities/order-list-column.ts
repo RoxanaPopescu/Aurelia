@@ -72,6 +72,20 @@ export class OrderListColumn
             sortingName: "pickup-address",
             column: "visible"
         },
+        "delivery-date":
+        {
+            name: "Delivery date",
+            columnSize: "1fr",
+            sortingName: "delivery-date",
+            column: "visible"
+        },
+        "delivery-time":
+        {
+            name: "Delivery timeframe",
+            columnSize: "1fr",
+            sortingName: "delivery-time",
+            column: "visible"
+        },
         "delivery-address":
         {
             name: "Delivery address",

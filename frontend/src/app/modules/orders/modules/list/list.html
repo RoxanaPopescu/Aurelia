@@ -263,6 +263,20 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'delivery-date'">
+                                    <span class="text-truncate">
+                                        ${result.earliestDeliveryDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delivery-time'">
+                                    <span class="text-truncate">
+                                        ${result.earliestDeliveryTime | time: 'narrow' : false}
+                                        –
+                                        ${result.latestDeliveryTime | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'pickup-address'">
                                     <span class="text-truncate">
                                         ${result.pickupLocation.address}
