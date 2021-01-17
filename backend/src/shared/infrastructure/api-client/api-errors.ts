@@ -23,7 +23,7 @@ export class ApiAbortError extends AbortError
      */
     public constructor(request: Request, message?: string)
     {
-        super(message || `Request type '${request.method}' for '${request.url}' was aborted.`);
+        super(message || `Request of type '${request.method}' for '${request.url}' was aborted.`);
 
         // Required to ensure a correct prototype chain.
         // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
@@ -58,8 +58,8 @@ export class ApiError<TData = any> extends Error
         super(message ||
         (
             response != null ?
-                `Request of type '${request.method}' for '${request.url}' failed with status code ${response.status}${response.statusText ? ` (${response.statusText})` : ""}.` :
-                `Request type '${request.method}' for '${request.url}' failed.`
+                `Request of type '${request.method}' for '${request.url}' failed with status code ${response.status}.` :
+                `Request of type '${request.method}' for '${request.url}' failed.`
         ));
 
         // Required to ensure a correct prototype chain.

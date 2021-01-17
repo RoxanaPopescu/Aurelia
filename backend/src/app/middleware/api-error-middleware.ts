@@ -1,4 +1,5 @@
 import { Middleware } from "koa";
+import { environment } from "../../env";
 import { ApiError } from "../../shared/infrastructure";
 
 /**
@@ -31,12 +32,27 @@ export function apiErrorMiddleware(): Middleware
                 // and should we forward that status downstream?
                 if (error.response)
                 {
-                    context.body = `Upstream request for ${error.request.url} failed with status ${error.response.status}:\n${error.message}`;
+                    context.body = `Upstream request of type '${error.request.method}' for '${error.request.url}' failed with status ${error.response.status}.\n\n${error.message}`;
                     context.status = context.state.internal ? 500 : error.response.status;
+
+                    // When not in the `production` environment, include the upstream
+                    // response body in the response to the client, to ease debugging.
+                    if (environment.name !== "production")
+                    {
+                        const responseBody =
+                            error.data != null ? JSON.stringify(error.data, undefined, 2) :
+                            !error.response.bodyUsed ? await error.response.text() :
+                            undefined;
+
+                        if (responseBody)
+                        {
+                            context.body += `\n\nResponse body:\n${responseBody}`;
+                        }
+                    }
                 }
                 else
                 {
-                    context.body = `Upstream request for ${error.request.url} failed:\n${error.message}`;
+                    context.body = `Upstream request of type '${error.request.method}' for '${error.request.url}' failed:\n\n${error.message}`;
                     context.status = 500;
                 }
             }
