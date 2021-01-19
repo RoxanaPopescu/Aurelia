@@ -54,7 +54,7 @@ export class DateTimeRangeValueConverter
 
         if (omitEndDate && value.from != null && value.to != null && value.to.diff(value.from).as("hours") <= 24)
         {
-            end = this._timeValueConverter.toView(value.to, "narrow", convert)
+            end = this._timeValueConverter.toView(value.to, "narrow", convert);
         }
 
         return `${start || ""} – ${end || ""}`.trim();

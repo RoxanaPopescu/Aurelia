@@ -542,23 +542,43 @@
                             Change status
                         </div>
 
-                        <item disabled.bind="['not-started'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-started')" translate>
+                        <item
+                            model="not-started"
+                            disabled.bind="['not-started'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('not-started')"
+                            translate>
                             Not started
                         </item>
 
-                        <item disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('not-approved')" translate>
+                        <item
+                            model="not-approved"
+                            disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('not-approved')"
+                            translate>
                             Not approved
                         </item>
 
-                        <item disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('in-progress')" translate>
+                        <item
+                            model="in-progress"
+                            disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('in-progress')"
+                            translate>
                             In progress
                         </item>
 
-                        <item disabled.bind="['completed', 'not-approved'].includes(route.status.slug)" click.trigger="onStatusItemClick('completed')" translate>
+                        <item
+                            model="completed"
+                            disabled.bind="['completed', 'not-approved'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('completed')"
+                            translate>
                             Completed
                         </item>
 
-                        <item disabled.bind="['cancelled'].includes(route.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
+                        <item
+                            model="cancelled"
+                            disabled.bind="['cancelled'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('cancelled')"
+                            translate>
                             Cancelled
                         </item>
 
@@ -570,53 +590,69 @@
                             <icon name="more"></icon>
                         </div>
 
-                        <item
-                            if-claims="edit-routes"
-                            if.bind="route"
-                            click.trigger="onEditRouteClick()"
-                            translate>
-                            Edit route
-                        </item>
+                        <template if-claims="edit-routes">
 
-                        <item disabled.bind="!route.driverListUrl" click.trigger="onShowDriverListClick()" translate>
+                            <item
+                                if.bind="route"
+                                model="edit-route"
+                                click.trigger="onEditRouteClick()"
+                                translate>
+                                Edit route
+                            </item>
+
+                        </template>
+
+                        <item
+                            model="print-route"
+                            disabled.bind="!route.driverListUrl"
+                            click.trigger="onShowDriverListClick()"
+                            translate>
                             Print route
                         </item>
 
-                        <item if-claims="edit-routes" if.bind="route.driver" click.trigger="onReloadRouteInAppClick()" translate>
-                            Reload route in app
-                        </item>
+                        <template if-claims="edit-routes">
 
-                        <item
-                            if-claims="edit-routes"
-                            if.bind="!route.driver"
-                            click.trigger="onPushToDriversClick()"
-                            translate>
-                            Push to drivers
-                        </item>
+                            <item
+                                if.bind="route.driver"
+                                model="reload-route-in-app"
+                                click.trigger="onReloadRouteInAppClick()"
+                                translate>
+                                Reload route in app
+                            </item>
 
-                        <item
-                            if-claims="edit-routes"
-                            if.bind="environment == 'development' || route.isPrimaryFulfiller"
-                            click.trigger="onAddSupportNoteClick()"
-                            translate>
-                            Add support note
-                        </item>
+                            <item
+                                if.bind="!route.driver"
+                                model="push-to-drivers"
+                                click.trigger="onPushToDriversClick()"
+                                translate>
+                                Push to drivers
+                            </item>
 
-                        <item
-                            if-claims="edit-routes"
-                            if.bind="route.driver"
-                            click.trigger="onRemoveDriverClick()"
-                            translate>
-                            Remove driver
-                        </item>
+                            <item
+                                if.bind="environment == 'development' || route.isPrimaryFulfiller"
+                                model="add-support-note"
+                                click.trigger="onAddSupportNoteClick()"
+                                translate>
+                                Add support note
+                            </item>
 
-                        <item
-                            if-claims="edit-routes"
-                            if.bind="route"
-                            click.trigger="onAddOrderClick()"
-                            translate>
-                            Add order
-                        </item>
+                            <item
+                                if.bind="route.driver"
+                                model="remove-driver"
+                                click.trigger="onRemoveDriverClick()"
+                                translate>
+                                Remove driver
+                            </item>
+
+                            <item
+                                if.bind="route"
+                                model="add-order"
+                                click.trigger="onAddOrderClick()"
+                                translate>
+                                Add order
+                            </item>
+
+                        </template>
 
                     </select-button>
 
