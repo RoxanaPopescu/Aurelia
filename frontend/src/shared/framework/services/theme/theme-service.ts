@@ -9,7 +9,6 @@ import { once } from "shared/utilities";
  * @param oldTheme The old theme, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new theme.
  */
-// tslint:disable-next-line: invalid-void
 type ThemeChangeFunc = (newTheme: Theme, oldTheme: Theme | undefined) => void | Promise<void>;
 
 /**

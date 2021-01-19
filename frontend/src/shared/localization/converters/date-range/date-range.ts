@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { DateTimeRange } from "shared/types";
-import { DateStyle, DateValueConverter } from "../date/date";
+import { DateTime } from "luxon";
+import { DateValueConverter, DateStyle } from "../date/date";
 
 /**
  * Represents a value converter that formats a date and time range value as a localized date range string.
@@ -32,16 +32,21 @@ export class DateRangeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTimeRange, style?: DateStyle, convert?: boolean): string | null | undefined
+    public toView(value: { from?: DateTime; to?: DateTime }, style?: DateStyle, convert?: boolean): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const from = this._dateValueConverter.toView(value.from, style, convert);
-        const to = this._dateValueConverter.toView(value.to, style, convert);
+        const start = this._dateValueConverter.toView(value.from, style, convert);
+        const end = this._dateValueConverter.toView(value.to, style, convert);
 
-        return `${from || ""} – ${to || ""}`.trim();
+        if (start === end)
+        {
+            return start;
+        }
+
+        return `${start || ""} – ${end || ""}`.trim();
     }
 }

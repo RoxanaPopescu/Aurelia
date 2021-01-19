@@ -2,12 +2,25 @@
 
     <require from="./page-sidebar.scss"></require>
 
-    <div class="page-sidebar-edge" click.trigger="onEdgeClick($event)"><div></div></div>
+    <div
+        title.translate="${expanded ? 'Hide sidebar' : 'Show sidebar'}"
+        class="page-sidebar-edge"
+        click.trigger="onEdgeClick($event)">
+
+        <div></div>
+
+    </div>
 
     <slot></slot>
 
-    <button appearance="icon" class="page-sidebar-edge-icon" click.trigger="onEdgeClick($event)">
+    <button
+        title.translate="${expanded ? 'Hide sidebar' : 'Show sidebar'}"
+        class="page-sidebar-edge-icon"
+        appearance="icon"
+        click.trigger="onEdgeClick($event)">
+
         <icon name="${expanded ? 'md-arrow-backward-ios' : 'md-arrow-forward-ios'}"></icon>
+
     </button>
 
 </template>

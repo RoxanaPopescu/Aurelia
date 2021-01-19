@@ -1,6 +1,27 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { IDisposable } from "shared/types";
-import { EventManager } from "shared/utilities";
+
+/**
+ * Represents a rectangular area.
+ */
+interface IRect
+{
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+    height: number;
+    width: number;
+}
+
+/**
+ * Represents a scrollable ancestor element.
+ */
+interface IScrollParent
+{
+    overflowY: string;
+    overflowX: string;
+    element: HTMLElement;
+}
 
 /**
  * Represents a busy overlay that covers its parent element, and optionally hides its contents.
@@ -18,13 +39,10 @@ export class BusyOverlayCustomElement
         this._element = element as HTMLElement;
     }
 
-    private readonly _eventManager = new EventManager(this);
     private readonly _element: HTMLElement;
     private _parentElement: HTMLElement;
-    private _xScrollElement: HTMLElement;
-    private _yScrollElement: HTMLElement;
+    private _scrollParents: IScrollParent[];
     private _scheduledUpdateHandle: any;
-    private _eventSubscription: IDisposable;
 
     /**
      * The element containing the busy indicator.
@@ -67,9 +85,8 @@ export class BusyOverlayCustomElement
         // Prevent interaction with the parent element.
         this._parentElement.inert = true;
 
-        // Find the scroll parent or parents.
-        this._xScrollElement = this.findScrollParent(true, true, false);
-        this._yScrollElement = this.findScrollParent(true, false, true);
+        // Find the scroll parents.
+        this._scrollParents = this.findScrollParents(this._element, true, true, true);
 
         // Begin scheduling size updates.
         this.beginUpdatingSize();
@@ -84,11 +101,14 @@ export class BusyOverlayCustomElement
         // Stop scheduling size updates.
         cancelAnimationFrame(this._scheduledUpdateHandle);
 
-        // Dispose event listeners.
-        this._eventManager.removeEventListeners();
-
         // Allow interaction with the parent element.
         this._parentElement.inert = false;
+
+        // Remove any styles applied to compensate for scroll offsets.
+        this._element.style.top = "";
+        this._element.style.height = "";
+        this._element.style.left = "";
+        this._element.style.width = "";
     }
 
     /**
@@ -98,36 +118,19 @@ export class BusyOverlayCustomElement
     {
         this._scheduledUpdateHandle = requestAnimationFrame(() =>
         {
-            this.busyOverlayContainerElement.style.height = `${this.getVisibleHeight()}px`;
-            this.busyOverlayContainerElement.style.width = `${this.getVisibleWidth()}px`;
+            const visibleRect = this.getVisibleParentRect();
 
-            if (this._xScrollElement === this._element.parentElement)
-            {
-                this._element.style.top = `${this._xScrollElement.scrollTop}px`;
-                this._element.style.height = `${this.getVisibleHeight()}px`;
-                this.blockScrolling();
-            }
-            else
-            {
-                this._element.style.top = "";
-                this._element.style.height = "";
-            }
+            this.busyOverlayContainerElement.style.height = `${visibleRect.height}px`;
+            this.busyOverlayContainerElement.style.width = `${visibleRect.width}px`;
+            this.busyOverlayContainerElement.style.top = `${visibleRect.top}px`;
+            this.busyOverlayContainerElement.style.left = `${visibleRect.left}px`;
 
-            if (this._yScrollElement === this._element.parentElement)
+            if (this._scrollParents[0].element === this._element.parentElement)
             {
-                this._element.style.left = `${this._xScrollElement.scrollLeft}px`;
-                this._element.style.width = `${this.getVisibleWidth()}px`;
-                this.blockScrolling();
-            }
-            else
-            {
-                this._element.style.left = "";
-                this._element.style.width = "";
-            }
-
-            if (this._xScrollElement !== this._element.parentElement && this._yScrollElement !== this._element.parentElement)
-            {
-                this.unblockScrolling();
+                this._element.style.top = `${this._scrollParents[0].element.scrollTop}px`;
+                this._element.style.height = `${this._scrollParents[0].element.scrollHeight - this._scrollParents[0].element.scrollTop}px`;
+                this._element.style.left = `${this._scrollParents[0].element.scrollLeft}px`;
+                this._element.style.width = `${this._scrollParents[0].element.scrollWidth - this._scrollParents[0].element.scrollLeft}px`;
             }
 
             this.beginUpdatingSize();
@@ -137,29 +140,34 @@ export class BusyOverlayCustomElement
     // TODO: Consider refactoring the below methods out into a shared helper library.
 
     /**
-     * Finds the closest ancestor element that is scrollable.
-     * @param includeHidden True to include elements with hidden overflow, otherwise false.
-     * @param overflowX True to require horizontal scrolling, false to not consider this axis.
+     * Finds all scrollable ancestor elements.
      * @param overflowY True to require vertical scrolling, false to not consider this axis.
-     * @returns The closest ancestor element that is scrollable.
+     * @param overflowX True to require horizontal scrolling, false to not consider this axis.
+     * @param includeHidden True to include elements with hidden overflow, otherwise false.
+     * @returns The scrollable ancestor elements, with the last element always being the document element.
      */
-    private findScrollParent(includeHidden = true, overflowX = true, overflowY = true): HTMLElement
+    private findScrollParents(element: HTMLElement, overflowY = true, overflowX = true, includeHidden = true): IScrollParent[]
     {
-        // Based on port of the JQuery `scrollParent` method.
+        let style = getComputedStyle(document.documentElement);
+
+        const scrollParents: IScrollParent[] = [];
+
+        // Based on a port of the JQuery `scrollParent` method.
         // See: https://stackoverflow.com/a/42543908
 
-        let style = getComputedStyle(this._element);
+        style = getComputedStyle(element);
+
         const excludeStaticParent = style.position === "absolute";
-        const overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
+        const overflowRegex = includeHidden ? /(auto|scroll|overlay|hidden)/ : /(auto|scroll|overlay)/;
 
         if (style.position === "fixed")
         {
-            return document.documentElement;
+            return scrollParents;
         }
 
-        let parent: HTMLElement | null = this._element;
+        let parent: HTMLElement | null = element;
 
-        while (parent != null)
+        while (parent != null && parent !== document.documentElement)
         {
             style = getComputedStyle(parent);
 
@@ -170,72 +178,91 @@ export class BusyOverlayCustomElement
                 continue;
             }
 
-            if (overflowRegex.test(`${style.overflow} ${overflowX && style.overflowX} ${overflowY && style.overflowY}`))
+            if (overflowY && overflowRegex.test(`${style.overflowY}`) || overflowX && overflowRegex.test(`${style.overflowX}`))
             {
-                return parent;
+                scrollParents.push({ overflowX: style.overflowX, overflowY: style.overflowY, element: parent });
             }
 
             parent = parent.parentElement;
         }
 
-        return document.documentElement;
+        scrollParents.push({
+            overflowY: style.overflowY,
+            overflowX: style.overflowX,
+            element: document.documentElement
+        });
+
+        return scrollParents;
     }
 
     /**
-     * Gets the width of the visible area of the element in which this component is located.
+     * Gets the rectangle for the visible area of the parent element.
      */
-    private getVisibleWidth(): number
+    private getVisibleParentRect(): IRect
     {
-        if (this._xScrollElement === this._element.parentElement)
+        let visibleRect = this.getInnerBoundingClientRect(this._element.parentElement!);
+
+        for (const scrollParent of this._scrollParents)
         {
-            return this._xScrollElement.offsetWidth;
+            if (visibleRect.width === 0 || visibleRect.height === 0)
+            {
+                break;
+            }
+
+            const scrollParentRect = this.getInnerBoundingClientRect(scrollParent.element);
+
+            const newVisibleRect: any =
+            {
+                top: Math.max(0, Math.max(visibleRect.top, scrollParentRect.top)),
+                left: Math.max(0, Math.max(visibleRect.left, scrollParentRect.left)),
+                right: Math.max(0, Math.min(visibleRect.left + visibleRect.width, scrollParentRect.left + scrollParentRect.width)),
+                bottom: Math.max(0, Math.min(visibleRect.top + visibleRect.height, scrollParentRect.top + scrollParentRect.height))
+            };
+
+            newVisibleRect.width = Math.max(0, newVisibleRect.right - newVisibleRect.left);
+            newVisibleRect.height = Math.max(0, newVisibleRect.bottom - newVisibleRect.top);
+
+            visibleRect = newVisibleRect;
         }
 
-        const scrollElementWidth = this._xScrollElement.offsetWidth;
-        const scrollElementLeftToElementLeft = Math.max(this._element.parentElement!.getBoundingClientRect().left, 0);
-        const scrollElementLeftToElementRight = Math.max(Math.min(this._element.parentElement!.getBoundingClientRect().right, scrollElementWidth), 0);
-
-        return scrollElementLeftToElementRight - scrollElementLeftToElementLeft;
+        return visibleRect;
     }
 
     /**
-     * Gets the height of the visible area of the element in which this component is located.
+     * Gets the rectangle for the content area of the specified element.
+     * @param element The element for which to get the content area.
+     * @returns An object representing the rectangle for the content area.
      */
-    private getVisibleHeight(): number
+    private getInnerBoundingClientRect(element: HTMLElement): IRect
     {
-        if (this._yScrollElement === this._element.parentElement)
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+
+        const result =
         {
-            return this._yScrollElement.offsetHeight;
+            top: rect.top,
+            left: rect.left,
+            right: rect.right,
+            bottom: rect.bottom,
+            width: rect.width,
+            height: rect.height
+        };
+
+        if (style.boxSizing === "border-box")
+        {
+            const borderTop = parseFloat(style.borderTop);
+            const borderLeft = parseFloat(style.borderLeft);
+            const borderRight = parseFloat(style.borderRight);
+            const borderBottom = parseFloat(style.borderBottom);
+
+            result.top += borderTop;
+            result.left += borderLeft;
+            result.right -= borderRight;
+            result.bottom -= borderBottom;
+            result.width -= (borderLeft + borderRight);
+            result.height -= (borderTop + borderBottom);
         }
 
-        const scrollElementHeight = this._yScrollElement.offsetHeight;
-        const scrollElementTopToElementTop = Math.max(this._element.parentElement!.getBoundingClientRect().top, 0);
-        const scrollElementTopToElementBottom = Math.max(Math.min(this._element.parentElement!.getBoundingClientRect().bottom, scrollElementHeight), 0);
-
-        return scrollElementTopToElementBottom - scrollElementTopToElementTop;
-    }
-
-    /**
-     * Block scrolling by preventing default on the relevant DOM events.
-     */
-    private blockScrolling(): void
-    {
-        if (this._eventSubscription == null)
-        {
-            // Add event listener to prevent scrolling.
-            this._eventSubscription = this._eventManager.addEventListener(this._element, ["wheel", "touchstart", "pointerdown"],
-                (event: Event) => event.preventDefault(), { passive: false, capture: true });
-        }
-    }
-
-    /**
-     * Unblocks scrolling by disposing the relevant event subscriptions.
-     */
-    private unblockScrolling(): void
-    {
-        if (this._eventSubscription != null)
-        {
-            this._eventSubscription.dispose();
-        }
+        return result;
     }
 }

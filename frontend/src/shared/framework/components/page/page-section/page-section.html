@@ -14,7 +14,8 @@
         appearance="none"
         class="page-section-header font-large"
         disabled.bind="headerSlotEmpty"
-        click.trigger="onHeaderClick()">
+        click.trigger="onHeaderClick()"
+        aria-hidden="${headerSlotEmpty}">
 
         <div class="page-section-header-content">
             <slot name="header"></slot>

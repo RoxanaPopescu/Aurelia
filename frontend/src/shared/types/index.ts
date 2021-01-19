@@ -1,3 +1,4 @@
+export * from "./aurelia/aurelia";
 export * from "./errors/abort-error";
 export * from "./general/disposable";
 export * from "./general/map-object";

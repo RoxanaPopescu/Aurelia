@@ -67,6 +67,9 @@ dropdown
     background: var(--dropdown-surface-color);
     color: var(--dropdown-surface-text-color);
 
+    // Use default cursor.
+    cursor: default;
+
     &[placement*="bottom"]
     {
         box-shadow: var(--shadow-dropdown-below);

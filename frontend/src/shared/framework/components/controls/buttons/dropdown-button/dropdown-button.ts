@@ -4,10 +4,10 @@ import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 import { AccentColor } from "resources/styles";
 
 /**
- * Custom element representing an button for picking a single item from a list.
+ * Custom element representing an button that, when clicked, presents a dropdown.
  */
 @autoinject
-export class SelectButtonCustomElement
+export class DropdownButtonCustomElement
 {
     /**
      * The element representing the button.
@@ -18,18 +18,6 @@ export class SelectButtonCustomElement
      * The view model for the item picker.
      */
     protected itemPicker: ItemPickerCustomElement;
-
-    /**
-     * The value of the item that is focused, but not yet picked, or undefined if no item has been focused.
-     */
-    @bindable({ defaultValue: null, defaultBindingMode: bindingMode.twoWay })
-    public focusedValue: any | undefined;
-
-    /**
-     * True to show the `None` option, otherwise false.
-     */
-    @bindable({ defaultValue: false })
-    public none: boolean;
 
     /**
      * True if the dropdown is open, otherwise false.
@@ -77,8 +65,6 @@ export class SelectButtonCustomElement
     {
         this.open = true;
 
-        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
-
         if (focusButton)
         {
             setTimeout(() => this.buttonElement.focus());
@@ -93,7 +79,6 @@ export class SelectButtonCustomElement
     protected closeDropdown(focusToggle: boolean): void
     {
         this.open = false;
-        this.focusedValue = null;
 
         if (focusToggle)
         {
@@ -105,15 +90,18 @@ export class SelectButtonCustomElement
      * Called when the toggle icon is clicked, and if filtering is disabled, when the button element is clicked.
      * Toggles the dropdown between its open and closed state, focusing either the button element or toggle icon.
      */
-    protected toggleDropdown(): void
+    protected toggleDropdown(event: MouseEvent): void
     {
-        if (this.open)
+        if (!event.defaultPrevented)
         {
-            this.closeDropdown(true);
-        }
-        else
-        {
-            this.openDropdown(true);
+            if (this.open)
+            {
+                this.closeDropdown(true);
+            }
+            else
+            {
+                this.openDropdown(true);
+            }
         }
     }
 }

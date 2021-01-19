@@ -57,10 +57,10 @@ busy-overlay
 
     .busy-overlay-inner
     {
-        // Note: The size of this element will be set programmatically.
+        // Note: The size and position of this element will be set programmatically.
 
-        // Stick to the top-left corner.
-        position: sticky;
+        // Use fixed positioning.
+        position: fixed;
         left: 0;
         top: 0;
 
@@ -84,11 +84,9 @@ busy-overlay
         // Limit the width of the message.
         max-width: var(--busy-overlay-message-max-width);
 
-        &:empty
+        > :first-child
         {
-            // Hide the message if it has no content, so its margin
-            // does not affect the position of the `busy-indicator`.
-            display: none;
+            margin-top: var(--font-current-margin-top);
         }
     }
 
@@ -97,7 +95,5 @@ busy-overlay
         --busy-indicator-max-width: 50%;
         --busy-indicator-max-height: 50%;
         --busy-indicator-stroke-width: 4rem;
-        --busy-indicator-color: #000000;
-        --busy-indicator-opacity: 0.05;
     }
 }

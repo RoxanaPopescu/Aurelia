@@ -1,4 +1,5 @@
 import { autoinject, bindable, Container } from "aurelia-framework";
+import { Callback } from "shared/types";
 import { TagsInputCustomElement } from "./tags-input";
 
 /**
@@ -8,7 +9,7 @@ import { TagsInputCustomElement } from "./tags-input";
 export class TagCustomElement
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param container The `Container` instance associated with the component.
      */
     public constructor(container: Container)
@@ -34,7 +35,7 @@ export class TagCustomElement
      * Called when the remove icon is clicked.
      */
     @bindable
-    public remove: (() => void) | undefined;
+    public remove: Callback | undefined;
 
     /**
      * Called when the remove icon is clicked.

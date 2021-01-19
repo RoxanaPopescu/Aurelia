@@ -1,4 +1,5 @@
 import { bindable, containerless } from "aurelia-framework";
+import { AsyncCallbackWithContext } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Validator } from "../../validator";
 import { ValidationReason } from "../../validation-trigger";
@@ -26,14 +27,14 @@ export class AsyncValidatorCustomElement extends Validator
      * @returns A promise that resolves
      */
     @bindable
-    public function: (params:
+    public function: AsyncCallbackWithContext<
     {
         /**
          * The abort signal, which will be triggered if a new validation run starts.
          */
         signal: AbortSignal;
-
-    }) => Promise<boolean>;
+    },
+    boolean>;
 
     /**
      * Called by the validation when this validator should run.

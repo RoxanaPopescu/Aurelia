@@ -1,5 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import Popper, { Placement } from "popper.js";
+import { CallbackWithContext } from "shared/types";
 import { EventManager } from "shared/utilities";
 
 /**
@@ -50,15 +51,14 @@ export class DropdownCustomElement
      * The function to call when the dropdown wants to close.
      */
     @bindable
-    public close: (params:
+    public close: CallbackWithContext<
     {
         // True if closing because the `Escape` key was pressed, otherwise false.
         escape: boolean;
 
         // True if closing because focus is no longer within the dropdown or its owner, otherwise false.
         focusout: boolean;
-
-    }) => void;
+    }>;
 
     /**
      * Called by the framework when the component is attached.

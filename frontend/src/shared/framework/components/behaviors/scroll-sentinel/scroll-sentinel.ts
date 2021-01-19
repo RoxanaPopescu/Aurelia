@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { AsyncCallback } from "shared/types";
 
 /**
  * Custom element that acts as a sentinel for infinite scrolling.
@@ -25,7 +26,7 @@ export class ScrollSentinelCustomElement
      * remain in the `pending` state until the promise is settled.
      */
     @bindable
-    public intersect: (() => any | Promise<any>) | undefined;
+    public intersect: AsyncCallback | undefined;
 
     /**
      * True if the `intersect` function returned a promise, and that
@@ -41,14 +42,14 @@ export class ScrollSentinelCustomElement
     {
         this._intersectionObserver = new IntersectionObserver(async entries =>
         {
-            if (entries[0].intersectionRatio > 0 && this.intersect != null)
+            if (entries[0].intersectionRatio > 0)
             {
                 try
                 {
                     this.pending = true;
                     this._pendingIntersects++;
 
-                    await this.intersect();
+                    await this.intersect?.();
                 }
                 finally
                 {

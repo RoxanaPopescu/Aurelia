@@ -3,14 +3,14 @@
     inert.bind="disabled"
     forward-focus>
 
-    <require from="./select-button.scss"></require>
+    <require from="./dropdown-button.scss"></require>
 
     <button
         ref="buttonElement"
         disabled.bind="disabled"
         appearance.bind="appearance & attr"
         accent.bind="accent & attr"
-        click.trigger="toggleDropdown()">
+        click.trigger="toggleDropdown($event)">
 
         <slot name="label"></slot>
 
@@ -29,21 +29,10 @@
         owner.bind="buttonElement"
         close.call="closeDropdown(escape || !focusout, !escape)"
         fixed.bind="fixed"
-        placement.bind="placement">
+        placement.bind="placement"
+        scroll>
 
-        <item-picker
-            view-model.ref="itemPicker"
-            focused-value.bind="focusedValue"
-            focused-element.bind="buttonElement"
-            keyboard.bind="open"
-            none.bind="none"
-            pick.call="closeDropdown(true)"
-            tabindex="-1"
-            scroll>
-
-            <slot></slot>
-
-        </item-picker>
+        <slot></slot>
 
     </dropdown>
 

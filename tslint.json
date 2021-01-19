@@ -35,6 +35,7 @@
       "kebab-case"
     ],
     "increment-decrement": false,
+    "invalid-void": false,
     "linebreak-style": [
       false,
       "LF"

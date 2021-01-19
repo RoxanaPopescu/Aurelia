@@ -21,4 +21,16 @@ list-layout
             margin-bottom: var(--list-layout-row-gap);
         }
     }
+
+    &.--row-gap-before .list-layout-items > :first-child
+    {
+        // Set the row gap.
+        margin-top: var(--list-layout-row-gap);
+    }
+
+    &.--row-gap-after .list-layout-items > :last-child
+    {
+        // Set the row gap.
+        margin-bottom: var(--list-layout-row-gap);
+    }
 }

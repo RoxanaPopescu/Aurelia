@@ -1,0 +1,34 @@
+:root
+{
+    --no-results-indicator-max-width: 160rem;
+    --no-results-indicator-max-height: 160rem;
+    --no-results-indicator-color: currentColor;
+    --no-results-indicator-opacity: calc(var(--opacity-faded-more) / 4);
+}
+
+no-results-indicator
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    > div
+    {
+        display: flex;
+        align-items: center;
+
+        > icon
+        {
+            // Set the max-width and max-height.
+            width: var(--no-results-indicator-max-width);
+            height: var(--no-results-indicator-max-height);
+
+            // Set the color.
+            color: var(--no-results-indicator-color);
+
+            // Set the opacity.
+            opacity: var(--no-results-indicator-opacity);
+        }
+    }
+}

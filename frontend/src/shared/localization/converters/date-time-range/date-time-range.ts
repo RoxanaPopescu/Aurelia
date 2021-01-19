@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { DateTimeRange } from "shared/types";
-import { DateTimeStyle, DateTimeValueConverter } from "../date-time/date-time";
+import { DateTime } from "luxon";
+import { DateTimeValueConverter, DateTimeStyle } from "../date-time/date-time";
 import { TimeValueConverter } from "../time/time";
 
 /**
@@ -34,26 +34,29 @@ export class DateTimeRangeValueConverter
      * @param value The value to format.
      * @param style The style to use. The default is `short`.
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
+     * @param omitEndDate True to omit the end date if less than 24 hours from the start, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTimeRange, style?: DateTimeStyle, convert?: boolean): string | null | undefined
+    public toView(value: { from?: DateTime; to?: DateTime }, style?: DateTimeStyle, convert?: boolean, omitEndDate = true): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const includeToDate =
-            value.from != null &&
-            value.to != null &&
-            value.to.diff(value.from).as("day") > 1;
+        const start = this._dateTimeValueConverter.toView(value.from, style, convert);
+        let end = this._dateTimeValueConverter.toView(value.to, style, convert);
 
-        const from = this._dateTimeValueConverter.toView(value.from, style, convert);
+        if (start === end)
+        {
+            return start;
+        }
 
-        const to = includeToDate
-            ? this._dateTimeValueConverter.toView(value.to, style, convert)
-            : this._timeValueConverter.toView(value.to, "narrow", convert);
+        if (omitEndDate && value.from != null && value.to != null && value.to.diff(value.from).as("hours") <= 24)
+        {
+            end = this._timeValueConverter.toView(value.to, "narrow", convert)
+        }
 
-        return `${from || ""} – ${to || ""}`.trim();
+        return `${start || ""} – ${end || ""}`.trim();
     }
 }

@@ -49,7 +49,7 @@ export class ScrollCustomAttribute implements IScroll
     public position: undefined | ScrollToOptions &
     {
         /**
-         * True if this position was created as a result of a scroll event, false or undefined
+         * True if this position was created initially or as a result of a scroll event, false or undefined
          * if the position represents a position to which the element should attempt to scroll.
          */
         internal?: boolean;
@@ -137,6 +137,22 @@ export class ScrollCustomAttribute implements IScroll
         {
             // Scroll to the specified position.
             this._element.scrollTo(this.position);
+        }
+        else
+        {
+            // Get the scroll position.
+            // We need to limit this to 0, as the offset may become negative due to scroll bouncing.
+            const scrollTop = Math.max(this._element.scrollTop, 0);
+            const scrollLeft = Math.max(this._element.scrollLeft, 0);
+
+            // Update the bindable scroll position.
+            this.position =
+            {
+                top: scrollTop,
+                left: scrollLeft,
+
+                internal: true
+            };
         }
     }
 

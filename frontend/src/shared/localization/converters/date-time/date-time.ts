@@ -68,6 +68,7 @@ export class DateTimeValueConverter
         return valueToFormat.toLocaleString(formatOptions)
 
             // HACK: Fix common format errors in the browser locale data.
+            // See: https://github.com/moment/luxon/issues/726#issuecomment-675151145
             .replace(/(^|\s)24:/, "$100:")
             .replace("24시", "0시");
     }

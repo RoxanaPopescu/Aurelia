@@ -12,7 +12,8 @@
         appearance="none"
         class="modal-section-header font-large"
         disabled.bind="headerSlotEmpty"
-        click.trigger="onHeaderClick()">
+        click.trigger="onHeaderClick()"
+        aria-hidden="${headerSlotEmpty}">
 
         <div class="modal-section-header-content">
             <slot name="header"></slot>

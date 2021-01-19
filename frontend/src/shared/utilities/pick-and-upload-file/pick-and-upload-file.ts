@@ -35,6 +35,7 @@ export async function pickAndUploadFile<TResult = any>(method: string, path: str
     {
         const form = document.createElement("form");
         form.setAttribute("enctype", "multipart/form-data");
+        form.setAttribute("style", "display: none");
 
         const input = document.createElement("input");
         input.setAttribute("type", "file");
@@ -60,7 +61,14 @@ export async function pickAndUploadFile<TResult = any>(method: string, path: str
             });
 
             resolve({ operation, file: input.files![0] });
+
+            document.documentElement.removeChild(form);
+            done = true;
         });
+
+        let done = false;
+        document.documentElement.appendChild(form);
+        setTimeout(() => done || document.documentElement.removeChild(form), 10 * 60 * 1000);
 
         input.click();
     });

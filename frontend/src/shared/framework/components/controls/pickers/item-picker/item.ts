@@ -8,7 +8,7 @@ import { ItemPickerCustomElement } from "./item-picker";
 export class ItemCustomElement
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param element The element representing the component.
      */
     public constructor(element: Element)

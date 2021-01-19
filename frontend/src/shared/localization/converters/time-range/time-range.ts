@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { DateTimeRange, TimeRange } from "shared/types";
+import { DateTime, Duration } from "luxon";
 import { TimeValueConverter } from "../time/time";
 
 /**
@@ -32,16 +32,21 @@ export class TimeRangeValueConverter
      * @param convert True to convert to the current time zone, otherwise false. The default is true.
      * @returns A localized string representing the value.
      */
-    public toView(value: DateTimeRange | TimeRange, convert?: boolean): string | null | undefined
+    public toView(value: { from?: DateTime | Duration; to?: DateTime | Duration }, convert?: boolean): string | null | undefined
     {
         if (value == null)
         {
             return value;
         }
 
-        const from = this._timeValueConverter.toView(value.from, "narrow", convert);
-        const to = this._timeValueConverter.toView(value.to, "narrow", convert);
+        const start = this._timeValueConverter.toView(value.from, "narrow", convert);
+        const end = this._timeValueConverter.toView(value.to, "narrow", convert);
 
-        return `${from || ""} – ${to || ""}`.trim();
+        if (start === end)
+        {
+            return start;
+        }
+
+        return `${start || ""} – ${end || ""}`.trim();
     }
 }

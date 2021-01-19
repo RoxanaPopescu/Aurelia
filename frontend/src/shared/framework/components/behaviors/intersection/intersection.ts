@@ -45,7 +45,7 @@ export class IntersectionCustomAttribute
     public rootMargin: string;
 
     /**
-     * The fraction of the element that must enter the viewport, before the intersection to be detected.
+     * The fraction of the element that must enter the viewport, before the intersection is detected.
      * The default is 0, meaning that the intersection is detected when the first pixel enters the viewport.
      */
     @bindable

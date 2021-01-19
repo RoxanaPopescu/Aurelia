@@ -10,7 +10,7 @@ import { ToggleGroupCustomElement } from "./toggle-group/toggle-group";
 export class ToggleCustomElement
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      * @param element The element representing the component.
      * @param container The `Container` instance.
      */

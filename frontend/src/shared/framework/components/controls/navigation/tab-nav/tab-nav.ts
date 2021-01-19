@@ -24,7 +24,7 @@ export class TabNavCustomElement
         newValue: string | undefined;
         oldValue: string | undefined;
 
-    }) => undefined | boolean);
+    }) => void | boolean);
 
     /**
      * The appearance to use for the tabs.

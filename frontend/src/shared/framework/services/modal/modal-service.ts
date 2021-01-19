@@ -11,7 +11,6 @@ type Model<TModal> = TModal extends { activate(modal: infer TModel): any } ? TMo
 /**
  * Represents the type of the object returned by the `deactivate` life cycle method of a component.
  */
-// tslint:disable-next-line: invalid-void
 type Result<TModal> = TModal extends { deactivate(): infer TResult } ? TResult : TModal extends never ? any : void;
 
 /**

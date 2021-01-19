@@ -10,7 +10,7 @@ import * as features from "./detectors/features";
 export class DeviceService
 {
     /**
-     * Creates a new instance of the class.
+     * Creates a new instance of the type.
      */
     public constructor()
     {

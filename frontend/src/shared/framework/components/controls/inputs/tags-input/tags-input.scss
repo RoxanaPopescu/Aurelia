@@ -30,9 +30,8 @@ tags-input
         }
     }
 
-    &:not(.--open) > text-input,
-    &:not(.--filter) > text-input,
-    &:not(.--new) > text-input
+    &:not(.--open):not(.--new) > text-input,
+    &:not(.--filter):not(.--new) > text-input
     {
         // Use cursor to indicate the element is clickable, when not accepting text input.
         cursor: pointer;

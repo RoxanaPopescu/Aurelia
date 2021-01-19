@@ -4,10 +4,12 @@
 
     <div class="busy-overlay-inner" ref="busyOverlayContainerElement">
 
-        <busy-indicator></busy-indicator>
-
-        <div class="busy-overlay-message opacity-faded margin-top">
+        <busy-indicator>
             <slot></slot>
+        </busy-indicator>
+
+        <div class="busy-overlay-message opacity-faded">
+            <slot name="below-indicator"></slot>
         </div>
 
     </div>

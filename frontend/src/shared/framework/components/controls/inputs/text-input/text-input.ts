@@ -36,6 +36,25 @@ export class TextInputCustomElement
     }
 
     /**
+     * Gets the value of the autosize element.
+     */
+    @computedFrom("inputValue")
+    protected get autosizeValue(): string
+    {
+        if (this.lines)
+        {
+            const lines = this.inputValue.split("\n").length;
+
+            if (lines < this.lines)
+            {
+                return this.inputValue + "\n".repeat(this.lines - lines);
+            }
+        }
+
+        return this.inputValue;
+    }
+
+    /**
      * The value of the input, or undefined if the input is empty.
      */
     @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.twoWay })

@@ -198,12 +198,7 @@ export class TagsInputCustomElement
      */
     protected closeDropdown(focusToggle: boolean, pick = false): void
     {
-        // Click outside or escape.
-        if (!focusToggle || !pick)
-        {
-            this.open = false;
-        }
-
+        this.open = false;
         this.filterValue = undefined;
 
         if (pick && this.focusedValue && !this.value?.includes(this.focusedValue))

@@ -27,6 +27,13 @@
         pointer-events: none !important;
     }
 
+    [scroll-fade]
+    {
+        // Apply transition to smoothe opacity changes.
+        transition: opacity var(--fade-duration);
+        transition-timing-function: var(--fade-timing-function);
+    }
+
     html:not(.platform-macos):not(.platform-ios) &,
     &.scroll--custom
     {
@@ -80,7 +87,7 @@
 
         &::-webkit-scrollbar-corner
         {
-            background-color: var(--surface-scrollbar-track-color);
+            background-color: transparent;
         }
 
         &::-webkit-scrollbar-thumb
@@ -100,12 +107,5 @@
         {
             display: none;
         }
-    }
-
-    [scroll-fade]
-    {
-        // Apply transition to smoothe opacity changes.
-        transition: opacity var(--fade-duration);
-        transition-timing-function: var(--fade-timing-function);
     }
 }

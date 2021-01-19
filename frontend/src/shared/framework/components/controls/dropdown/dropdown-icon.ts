@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { Callback } from "shared/types";
 
 /**
  * Custom element representing the toggle icon for a dropdown,
@@ -11,7 +12,7 @@ export class DropdownIconCustomElement
      * The function to call when the icon is toggled.
      */
     @bindable
-    public toggle: () => void;
+    public toggle: Callback;
 
     /**
      * True if the dropdown is open, otherwise false.

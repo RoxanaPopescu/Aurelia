@@ -9,7 +9,6 @@ import { ILocale, Locale } from "./locale";
  * @param oldLocale The old locale, or undefined if not previously set.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new locale.
  */
-// tslint:disable-next-line: invalid-void
 type LocaleChangeFunc = (newLocale: Locale, oldLocale: Locale | undefined) => void | Promise<void>;
 
 /**

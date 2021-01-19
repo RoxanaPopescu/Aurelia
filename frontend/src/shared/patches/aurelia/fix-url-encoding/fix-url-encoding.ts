@@ -28,14 +28,14 @@ RouteRecognizer.prototype.recognize = function(path: string, ...rest: any[]): an
 {
     const tempPath = path.replace(/^([^?]*)([^#]*)(.*)/, ($0, $1, $2, $3) =>
     {
-        return `${$1}${$2.replace(/\+/g, "AURELIA_PLUS")}${$3}`;
+        return `${$1}${$2.replace(/\+/g, "__PLUS__")}${$3}`;
     });
 
     const result = recognizeFunc.call(this, tempPath, ...rest) as any;
 
     if (result != null && result.queryParams != null)
     {
-        result.queryParams = JSON.parse(JSON.stringify(result.queryParams).replace(/AURELIA_PLUS/g, "+"));
+        result.queryParams = JSON.parse(JSON.stringify(result.queryParams).replace(/__PLUS__/g, "+"));
     }
 
     return result;
