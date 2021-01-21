@@ -40,7 +40,8 @@ export class OrderInfo
                 primary: data.pickupLocation.address,
                 secondary: ""
             },
-            position: data.pickupLocation.position
+            position: data.pickupLocation.position,
+            timeZone: data.pickupLocation.timeZone
         });
 
         this.deliveryLocation = new Location(
@@ -50,7 +51,8 @@ export class OrderInfo
                 primary: data.deliveryLocation.address,
                 secondary: ""
             },
-            position: data.deliveryLocation.position
+            position: data.deliveryLocation.position,
+            timeZone: data.pickupLocation.timeZone
         });
     }
 

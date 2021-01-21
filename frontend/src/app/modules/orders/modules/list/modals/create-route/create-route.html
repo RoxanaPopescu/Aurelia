@@ -79,8 +79,9 @@
                 Collection point
             </div>
 
-            <div translate class="margin-bottom">
-                Collection points will be created for each unique delivery address
+            <div class="margin-bottom" translate>
+                Collection points will be created for each unique delivery address.
+                Please note that collection points can only be created for orders that share the same pickup address.
             </div>
 
             <div class="control-row">
@@ -100,7 +101,9 @@
                 <date-time-input
                     label="above"
                     value.bind="startDateTime"
-                    class="flex-basis-1-of-1">
+                    class="flex-basis-1-of-1"
+                    min="now"
+                    zone.bind="startTimeZone">
 
                     <div slot="heading" translate>
                         Start date

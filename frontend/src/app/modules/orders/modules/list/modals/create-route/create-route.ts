@@ -5,7 +5,7 @@ import { Modal } from "shared/framework/services/modal/modal";
 import { OrderInfo } from "app/model/order";
 import { RouteService } from "app/model/route";
 import { VehicleType } from "app/model/vehicle";
-import { DateTime } from "luxon";
+import { DateTime, Zone } from "luxon";
 
 @autoinject
 export class CreateRoutePanel
@@ -57,6 +57,11 @@ export class CreateRoutePanel
     protected pickupGate: string | undefined;
 
     /**
+     * The time zone of the start date for the route being created.
+     */
+    protected startTimeZone: Zone | undefined;
+
+    /**
      * The start date for the route being created.
      */
     protected startDateTime: DateTime | undefined;
@@ -73,6 +78,8 @@ export class CreateRoutePanel
     public activate(model: { orders: OrderInfo[] }): void
     {
         this.model = { orders: model.orders.slice() };
+
+        this.startTimeZone = model.orders[0].pickupLocation.timeZone;
     }
 
     /**

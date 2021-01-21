@@ -122,6 +122,11 @@ export class DatePickerCustomElement
      */
     public bind(): void
     {
+        if (!this.zone)
+        {
+            console.warn("Date picker created with local time zone; this might be an error.");
+        }
+
         this.focusedElement = this.focusedElement || this._element;
         this.today = DateTime.local().setZone(this.zone).startOf("day");
         this.cursor = this.value?.setZone(this.zone).startOf("day") || this.today;
