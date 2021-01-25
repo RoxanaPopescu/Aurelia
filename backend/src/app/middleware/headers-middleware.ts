@@ -1,6 +1,6 @@
 import { Middleware } from "koa";
-import cls from "cls-hooked";
 import { v4 as uuidV4 } from "uuid";
+import cls from "cls-hooked";
 
 // The continuation-local storage namespace for this middleware.
 const namespace = cls.createNamespace("headers-middleware");
@@ -15,14 +15,6 @@ export function headersMiddleware(): Middleware
 {
     return async (context, next) =>
     {
-        // tslint:disable: no-string-literal
-        const authorization = context.request.headers["authorization"];
-        const correlationId = context.request.headers["x-correlation"] || uuidV4();
-        const localeCode = context.request.headers["x-locale"];
-        const marketCode = context.request.headers["x-market"];
-        const currencyCode = context.request.headers["x-currency"];
-        // tslint:enable
-
         return new Promise(namespace.bind((resolve, reject) =>
         {
             namespace.bindEmitter(context.req);
@@ -30,11 +22,13 @@ export function headersMiddleware(): Middleware
 
             namespace.set("headers-middleware",
             {
-                authorization,
-                correlationId,
-                localeCode,
-                marketCode,
-                currencyCode
+                // tslint:disable: no-string-literal
+                correlationId: context.request.headers["x-correlation"] || uuidV4(),
+                localeCode: context.request.headers["x-locale"],
+                marketCode: context.request.headers["x-market"],
+                currencyCode: context.request.headers["x-currency"],
+                authorization: context.request.headers["authorization"]
+                // tslint:enable
             });
 
             return next().then(resolve).catch(reject);

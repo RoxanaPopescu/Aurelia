@@ -32,7 +32,12 @@ export function apiErrorMiddleware(): Middleware
                 // and should we forward that status downstream?
                 if (error.response)
                 {
-                    context.body = `Upstream request of type '${error.request.method}' for '${error.request.url}' failed with status ${error.response.status}.\n\n${error.message}`;
+                    context.body =
+                        // tslint:disable-next-line: prefer-template
+                        `Upstream request of type '${error.request.method}' for '${error.request.url}' `+
+                        `failed with status ${error.response.status}.\n\n${error.message}`;
+
+                    context.status = context.state.internal ? 500 : error.response.status;
                     context.status = context.state.internal ? 500 : error.response.status;
 
                     // When not in the `production` environment, include the upstream
