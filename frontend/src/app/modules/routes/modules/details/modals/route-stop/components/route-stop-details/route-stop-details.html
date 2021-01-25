@@ -232,7 +232,7 @@
                                 ${tagSet.count}
                             </div>
                             <div>
-                                ${tagSet.tags | list}
+                                ${tagSet.tags | list: 'short' : 'unit'}
                             </div>
                         </tag>
                     </div>
@@ -276,7 +276,7 @@
                                     ${tagSet.count}
                                 </div>
                                 <div>
-                                    ${tagSet.tags | list}
+                                    ${tagSet.tags | list: 'short' : 'unit'}
                                 </div>
                             </tag>
                         </div>
