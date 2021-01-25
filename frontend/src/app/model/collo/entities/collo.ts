@@ -19,6 +19,7 @@ export class Collo
         this.orderSlug = data.orderSlug;
         this.consignorId = data.consignorId;
         this.barcode = data.barcode;
+        this.tags = data.tags;
         this.status = new ColloStatus(data.status);
         this.origin = new ColloOrigin(data.origin);
         this.scanImageUrl = data.scanImageUrl;
@@ -59,6 +60,11 @@ export class Collo
      * The barcode identifying the collo.
      */
     public readonly barcode: string;
+
+    /**
+     * The tags associated with the collo, if any.
+     */
+    public readonly tags?: string[];
 
     /**
      * The weight of the collo in kg.

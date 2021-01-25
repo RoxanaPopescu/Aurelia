@@ -190,7 +190,7 @@
 
     </template>
 
-    <!-- Devitiona -->
+    <!-- Deviations -->
     <template if.bind="model.routeStop.deviations.length > 0">
 
         <hr class="hr-line margin-bottom">
@@ -218,6 +218,33 @@
                 Deliveries
             </div>
 
+            <template if.bind="deliveryColliTagSets.length > 0">
+
+                <tags-input label="above" readonly.bind="true" class="margin-large-bottom --tags-only">
+
+                    <div slot="heading" translate>
+                        Colli tags summary
+                    </div>
+
+                    <div slot="value">
+                        <tag repeat.for="tagSet of deliveryColliTagSets" class="--with-count">
+                            <div>
+                                ${tagSet.count}
+                            </div>
+                            <div>
+                                ${tagSet.tags | list}
+                            </div>
+                        </tag>
+                    </div>
+
+                </tags-input>
+
+            </template>
+
+            <div class="opacity-faded margin-smallest-bottom" translate>
+                Orders and colli
+            </div>
+
             <order-accordion repeat.for="delivery of model.routeStop.deliveries" model.bind="delivery"></order-accordion>
 
         </data-section>
@@ -233,6 +260,33 @@
 
             <div slot="header" translate>
                 Pickups
+            </div>
+
+            <template if.bind="pickupColliTagSets.length > 0">
+
+                    <tags-input label="above" readonly.bind="true" class="margin-large-bottom --tags-only">
+
+                        <div slot="heading" translate>
+                            Colli tags summary
+                        </div>
+
+                        <div slot="value">
+                            <tag repeat.for="tagSet of pickupColliTagSets" class="--with-count">
+                                <div>
+                                    ${tagSet.count}
+                                </div>
+                                <div>
+                                    ${tagSet.tags | list}
+                                </div>
+                            </tag>
+                        </div>
+
+                    </tags-input>
+
+            </template>
+
+            <div class="opacity-faded margin-smallest-bottom" translate>
+                Orders and colli
             </div>
 
             <order-accordion repeat.for="pickup of model.routeStop.pickups" model.bind="pickup"></order-accordion>
@@ -400,7 +454,7 @@
 
     </template>
 
-    <!-- Tags -->
+    <!-- Stop tags -->
     <template if.bind="model.routeStop.tags.length > 0">
 
         <hr class="hr-line margin-bottom">

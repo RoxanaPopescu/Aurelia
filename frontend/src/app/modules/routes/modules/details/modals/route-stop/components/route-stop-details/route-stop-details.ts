@@ -71,6 +71,75 @@ export class RouteStopDetailsCustomElement
 
         return false;
     }
+
+    /**
+     * The number of colli with each unique combination of colli tags,
+     * aggregated across all pickups.
+     */
+    @computedFrom("model.routeStop.pickups.length")
+    protected get pickupColliTagSets(): { tags: string[]; count: number }[]
+    {
+        const tagSets = new Map<string, { tags: string[]; count: number }>();
+
+        for (const pickup of this.model.routeStop.pickups)
+        {
+            for (const collo of pickup.colli)
+            {
+                if (collo.tags != null && collo.tags.length > 0)
+                {
+                    const key = collo.tags.map(t => t.toLowerCase()).sort().join(",");
+                    let tagSet = tagSets.get(key);
+
+                    if (tagSet != null)
+                    {
+                        tagSet.count++;
+                    }
+                    else
+                    {
+                        tagSet = { tags: collo.tags, count: 1 };
+                        tagSets.set(key, tagSet);
+                    }
+                }
+            }
+        }
+
+        return Array.from(tagSets.values());
+    }
+
+    /**
+     * The number of colli with each unique combination of colli tags,
+     * aggregated across all deliveries.
+     */
+    @computedFrom("model.routeStop.deliveries.length")
+    protected get deliveryColliTagSets(): { tags: string[]; count: number }[]
+    {
+        const tagSets = new Map<string, { tags: string[]; count: number }>();
+
+        for (const delivery of this.model.routeStop.deliveries)
+        {
+            for (const collo of delivery.colli)
+            {
+                if (collo.tags != null && collo.tags.length > 0)
+                {
+                    const key = collo.tags.map(t => t.toLowerCase()).sort().join(",");
+                    let tagSet = tagSets.get(key);
+
+                    if (tagSet != null)
+                    {
+                        tagSet.count++;
+                    }
+                    else
+                    {
+                        tagSet = { tags: collo.tags, count: 1 };
+                        tagSets.set(key, tagSet);
+                    }
+                }
+            }
+        }
+
+        return Array.from(tagSets.values());
+    }
+
     protected async onSignatureClick(): Promise<void>
     {
         try

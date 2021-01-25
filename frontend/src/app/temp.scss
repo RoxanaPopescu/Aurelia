@@ -362,6 +362,21 @@ tags-input.--tags-only
     }
 }
 
+tag.--with-count
+{
+    padding: 0;
+
+    > *
+    {
+        padding: var(--tag-padding);
+    }
+
+    > :first-child
+    {
+        border-right: var(--tag-border-width) solid var(--tag-border-color);
+    }
+}
+
 data-table.--reduce-header-whitespace
 {
     margin-top: -12rem;
