@@ -1,6 +1,6 @@
 # Stage 1: Build the `backend` package.
 
-FROM node:14-alpine as build-backend-stage
+FROM node:12-alpine as build-backend-stage
 
 ## Add additional packages.
 RUN apk add --no-cache git python make g++
