@@ -17,6 +17,7 @@ export class FilesModule extends AppModule
          */
         this.router.post("/v2/files/upload/public", async context =>
         {
+            const body = await this.readStream(context.req);
             await this.validateLogin(context);
 
             const routesResult = await this.apiClient.post("file/uploadpublic",
@@ -26,7 +27,7 @@ export class FilesModule extends AppModule
                     "content-type": context.request.headers["content-type"],
                     "content-length": context.request.headers["content-length"]
                 },
-                body: await this.readStream(context.req)
+                body: body
             });
 
             context.response.body = routesResult.data;
@@ -39,6 +40,7 @@ export class FilesModule extends AppModule
          */
         this.router.post("/v2/files/upload/sensitive", async context =>
         {
+            const body = await this.readStream(context.req);
             await this.validateLogin(context);
 
             const routesResult = await this.apiClient.post("file/uploadsensitive",
@@ -48,7 +50,7 @@ export class FilesModule extends AppModule
                     "content-type": context.request.headers["content-type"],
                     "content-length": context.request.headers["content-length"]
                 },
-                body: await this.readStream(context.req)
+                body: body
             });
 
             context.response.body = routesResult.data;

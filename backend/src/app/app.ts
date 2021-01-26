@@ -43,7 +43,7 @@ export class App extends Koa<any, IAppContext>
         this.use(koaConditionalGet());
         this.use(koaEtag());
         this.use(koaCompress());
-        this.use(koaBodyparser());
+        this.use(koaBodyparser({enableTypes: ["json"]}));
 
         // Add custom middleware.
         this.use(headersMiddleware());
