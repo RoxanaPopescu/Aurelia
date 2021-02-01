@@ -91,8 +91,8 @@ export class FilesModule extends AppModule
     /**
      * Validates the login - works for both legacy and new login
      */
-   private async validateLogin(
-    context: ParameterizedContext<any, IAppContext & Router.IRouterParamContext<any, IAppContext>>): Promise<void>
+    private async validateLogin(
+        context: ParameterizedContext<any, IAppContext & Router.IRouterParamContext<any, IAppContext>>): Promise<void>
     {
         const noiOrigin = context.request.headers["x-noi-origin"];
         if (noiOrigin != null && noiOrigin === "true")
