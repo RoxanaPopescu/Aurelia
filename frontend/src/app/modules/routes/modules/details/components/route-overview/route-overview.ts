@@ -135,6 +135,29 @@ export class RouteOverview
     }
 
     /**
+     * Counts the number of stops not cancelled
+     */
+    @computedFrom("route.stops.length")
+    public get notCancelledStops(): number | undefined
+    {
+        if (this.route == null)
+        {
+            return undefined;
+        }
+
+        let stopsCount = 0;
+
+        if (this.route != null)
+        {
+            stopsCount = this.route.stops
+                .filter(s => s instanceof RouteStop)
+                .filter((s: RouteStop) => s.status.slug !== "cancelled").length;
+        }
+
+        return stopsCount;
+    }
+
+    /**
      * Counts the number of colli on the completed stops
      */
     @computedFrom("route.stops.length")

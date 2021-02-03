@@ -15,12 +15,12 @@
                     Completed stops
                 </div>
 
-                <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / route.stops.length">
+                <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / notCancelledStops">
 
                     <div if.bind="route.status.slug !== 'cancelled'">
 
                         <div class="font-largest">
-                            <span empty-value>${completedStops}</span>/<span empty-value>${route.stops.length}</span>
+                            <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
                         </div>
 
                         <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top" translate>
