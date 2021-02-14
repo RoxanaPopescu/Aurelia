@@ -5,6 +5,7 @@ import { DepartureTime } from "./departure-time";
 import { TaskTimes } from "./task-times";
 import { SpecialArea } from "./special-area";
 import { Metadata } from "app/model/shared/entities/metadata";
+import { CollectionPoint } from "./collection-point";
 
 /**
  * Represents a route planning rule set.
@@ -39,6 +40,7 @@ export class RoutePlanningSettings
             this.departureTimes = [];
             this.taskTimes = new TaskTimes();
             this.specialAreas = [];
+            this.collectionPoint = new CollectionPoint();
         }
     }
 
@@ -91,4 +93,9 @@ export class RoutePlanningSettings
      * The special area rules to use.
      */
     public specialAreas: SpecialArea[];
+
+    /**
+     * The settings controlling the creation of collection points.
+     */
+    public collectionPoint: CollectionPoint;
 }

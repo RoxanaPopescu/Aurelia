@@ -364,7 +364,7 @@
 
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-larger-bottom">
 
                 <number-input
                     value.bind="model.limits.time | scale: 1/60"
@@ -427,6 +427,21 @@
                     </div>
 
                 </number-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <check-toggle
+                    label="after"
+                    value.one-time="model.handlesCollectionPoint"
+                    class="flex-basis-1-of-2">
+
+                    <div slot="heading">
+                        Can function as a collection point
+                    </div>
+
+                </check-toggle>
 
             </div>
 
