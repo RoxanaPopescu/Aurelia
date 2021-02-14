@@ -150,8 +150,8 @@ export class CollectionPointModule extends AppModule
         const result = await this.apiClient.get("logistics-platform/drivers/validate-login",
         {
             noi: true,
-            query: {
-                // tslint:disable-next-line: no-string-literal
+            query:
+            {
                 "access-token": context.request.headers["token"]
             }
         });

@@ -12,6 +12,7 @@
     ]
   },
   "rules": {
+    "no-string-literal": false,
     "no-submodule-imports": [
       true,
       "env",

@@ -22,13 +22,11 @@ export function headersMiddleware(): Middleware
 
             namespace.set("headers-middleware",
             {
-                // tslint:disable: no-string-literal
                 correlationId: context.request.headers["x-correlation"] || uuidV4(),
                 localeCode: context.request.headers["x-locale"],
                 marketCode: context.request.headers["x-market"],
                 currencyCode: context.request.headers["x-currency"],
                 authorization: context.request.headers["authorization"]
-                // tslint:enable
             });
 
             return next().then(resolve).catch(reject);

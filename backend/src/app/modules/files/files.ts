@@ -91,18 +91,19 @@ export class FilesModule extends AppModule
     /**
      * Validates the login - works for both legacy and new login
      */
-    private async validateLogin(
-        context: ParameterizedContext<any, IAppContext & Router.IRouterParamContext<any, IAppContext>>): Promise<void>
+    private async validateLogin(context: ParameterizedContext<any, IAppContext & Router.IRouterParamContext<any, IAppContext>>): Promise<void>
     {
         const noiOrigin = context.request.headers["x-noi-origin"];
-        if (noiOrigin != null && noiOrigin === "true")
+
+        if (noiOrigin === "true")
         {
-            const token = context.headers.token;
+            const token = context.request.headers["token"];
 
             await this.apiClient.get("logistics-platform/drivers/validate-login",
             {
                 noi: true,
-                query: {
+                query:
+                {
                     "access-token": token
                 }
             });

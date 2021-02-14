@@ -27,8 +27,6 @@ export class User
     {
         // HACK: This is more complex than it should be, as it needs to support the legacy JWT format.
 
-        // tslint:disable: no-string-literal
-
         this.id = jwtObject["nameid"];
 
         this.username = jwtObject["unique_name"];
@@ -41,8 +39,6 @@ export class User
         this.permissions = new Set<string>(Object.keys(jwtObject)
             .filter(key => jwtObject[key] === "true")
             .map(key => key.toLowerCase().split(/\s+/).join("-")));
-
-        // tslint:enable
     }
 
     /**
