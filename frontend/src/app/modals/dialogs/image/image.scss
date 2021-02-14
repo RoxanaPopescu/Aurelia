@@ -1,0 +1,12 @@
+modal-dialog[name="image"]
+{
+    .modal-dialog-content
+    {
+        line-height: 0;
+
+        img
+        {
+            margin-top: -84rem;
+        }
+    }
+}

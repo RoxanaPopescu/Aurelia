@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 
 @autoinject
-export class ConfirmDiscardDialogCustomElement
+export class ConfirmDiscardDialog
 {
     /**
      * Creates a new instance of the type.

@@ -99,6 +99,10 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/modals/dialogs/confirm-discard/confirm-discard")
             },
             {
+                name: "image",
+                moduleId: PLATFORM.moduleName("app/modals/dialogs/image/image")
+            },
+            {
                 name: "account",
                 moduleId: PLATFORM.moduleName("app/modules/account/modals/account/account")
             }

@@ -1,4 +1,5 @@
 import { autoinject } from "aurelia-framework";
+import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
 import { IdentityService } from "app/services/identity";
@@ -24,16 +25,20 @@ export class DetailsModule
 {
     /**
      * Creates a new instance of the class.
+     * @param router The `Router` instance.
      * @param orderService The `OrderService` instance.
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
      */
-    public constructor(orderService: OrderService, modalService: ModalService, identityService: IdentityService)
+    public constructor(router: Router, orderService: OrderService, modalService: ModalService, identityService: IdentityService)
     {
+        this._router = router;
         this._orderService = orderService;
         this._modalService = modalService;
         this.identityService = identityService;
     }
+
+    private readonly _router: Router;
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
     protected readonly identityService: IdentityService;
@@ -144,6 +149,8 @@ export class DetailsModule
         try
         {
             this.order = await this._orderService.get(this.orderId);
+            this._router.title = this.order.slug;
+            this._router.updateTitle();
         }
         catch (error)
         {

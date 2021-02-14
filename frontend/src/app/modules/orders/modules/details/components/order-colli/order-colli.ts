@@ -5,7 +5,7 @@ import { Order } from "app/model/order";
  * Represents the module.
  */
 @autoinject
-export class Colli
+export class OrderColli
 {
     /**
      * Current tab page the user is routed to.

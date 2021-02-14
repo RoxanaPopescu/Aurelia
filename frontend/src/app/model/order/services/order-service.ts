@@ -123,21 +123,18 @@ export class OrderService
     }
 
     /**
-     * Gets the specified order.
+     * Gets the events for the specified order.
      * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the events.
      */
-    public async getEvents(orderSlug: string): Promise<{completedEvents: OrderEvent[]; futureEvents: OrderEvent[]}>
+    public async getEvents(orderSlug: string): Promise<OrderEvent[]>
     {
-        const result = await this._apiClient.get("orders/v2/events",
+        const result = await this._apiClient.get("orders/events",
         {
             query: { slug: orderSlug }
         });
 
-        return {
-            completedEvents: result.data.completedEvents.map(ce => new OrderEvent(ce)),
-            futureEvents: result.data.futureEvents.map(fe => new OrderEvent(fe))
-        };
+        return result.data.map(e => new OrderEvent(e));
     }
 
     /**

@@ -124,49 +124,48 @@
             Consignee
         </div>
 
-        <div if.bind="model.routeStop.location.address" class="flex-row">
-            <div class="opacity-faded flex-grow" translate>
-                Address
-            </div>
-            <span class="user-select-text">
-                ${model.routeStop.location.address}
-            </span>
-        </div>
+        <div class="flex-row margin-large-bottom">
 
-        <div if.bind="model.routeStop.outfit.companyName" class="flex-row margin-top">
-            <div class="opacity-faded flex-grow" translate>
-                Company
+            <div>
+                <div if.bind="model.routeStop.location.address" class="margin-bottom margin-large-right opacity-faded" translate>
+                    Address
+                </div>
+                <div if.bind="model.routeStop.outfit.companyName" class="margin-bottom margin-large-right opacity-faded" translate>
+                    Company
+                </div>
+                <div if.bind="model.routeStop.outfit.personName" class="margin-bottom margin-large-right opacity-faded" translate>
+                    Name
+                </div>
+                <div if.bind="model.routeStop.outfit.contactEmail" class="margin-bottom margin-large-right opacity-faded" translate>
+                    Email
+                </div>
+                <div if.bind="model.routeStop.outfit.contactPhone" class="margin-large-right opacity-faded" translate>
+                    Phone
+                </div>
             </div>
-            <span class="user-select-text">
-                ${model.routeStop.outfit.companyName}
-            </span>
-        </div>
 
-        <div if.bind="model.routeStop.outfit.personName" class="flex-row margin-top">
-            <div class="opacity-faded flex-grow" translate>
-                Name
+            <div>
+                <div if.bind="model.routeStop.location.address" class="margin-bottom user-select-text">
+                    ${model.routeStop.location.address}
+                </div>
+                <div if.bind="model.routeStop.outfit.companyName" class="margin-bottom user-select-text">
+                    ${model.routeStop.outfit.companyName}
+                </div>
+                <div if.bind="model.routeStop.outfit.personName" class="margin-bottom user-select-text">
+                    ${model.routeStop.outfit.personName}
+                </div>
+                <div if.bind="model.routeStop.outfit.contactEmail" class="margin-bottom user-select-text">
+                    <a href="mailto:${model.routeStop.outfit.contactEmail}" class="user-select-text">
+                        ${model.routeStop.outfit.contactEmail}
+                    </a>
+                </div>
+                <div if.bind="model.routeStop.outfit.contactPhone" class="user-select-text">
+                    <a href="tel:${model.routeStop.outfit.contactPhone.number}" class="user-select-text">
+                        ${model.routeStop.outfit.contactPhone | phone}
+                    </a>
+                </div>
             </div>
-            <span class="user-select-text">
-                ${model.routeStop.outfit.personName}
-            </span>
-        </div>
 
-        <div if.bind="model.routeStop.outfit.contactEmail" class="flex-row margin-top">
-            <div class="opacity-faded flex-grow" translate>
-                Email
-            </div>
-            <span class="user-select-text">
-                ${model.routeStop.outfit.contactEmail}
-            </span>
-        </div>
-
-        <div if.bind="model.routeStop.outfit.contactPhone" class="flex-row margin-top">
-            <div class="opacity-faded flex-grow" translate>
-                Phone
-            </div>
-            <a href="tel: ${model.routeStop.outfit.contactPhone.number}">
-                ${model.routeStop.outfit.contactPhone.number}
-            </a>
         </div>
 
     </data-section>
@@ -324,7 +323,7 @@
 
                 </div>
 
-                <a href.bind="model.routeStop.photo.imageUrl" target="_blank">
+                <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
                     <img if.bind="model.routeStop.photo" class="image-thumbnail" src.bind="model.routeStop.photo.imageUrl">
                 </a>
 
@@ -374,9 +373,9 @@
                 </div>
 
                 <div class="flex-row flex-basis-1-of-6">
-                    <button click.trigger="onSignatureClick()" align="left">
-                        <image  class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
-                    </button>
+                    <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
+                        <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
+                    </a>
                 </div>
             </template>
 

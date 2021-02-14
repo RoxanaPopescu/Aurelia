@@ -3,13 +3,13 @@ import { Operation } from "shared/utilities";
 import { ModalService } from "shared/framework";
 import { OrderEvent } from "app/model/order/entities/order-event";
 import { OrderService, Order } from "app/model/order";
-import { EventDetailsPanel } from "./modals/event-details/event-details";
+import { OrderEventDetailsPanel } from "./modals/order-event-details/order-event-details";
 
 /**
  * Represents the module.
  */
 @autoinject
-export class Events
+export class OrderEvents
 {
     /**
      * Creates a new instance of the class.
@@ -21,36 +21,25 @@ export class Events
         this._modalService = modalService;
     }
 
-    // private pollTimeout: any;
-
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
+    // private pollTimeout: any;
 
     /**
-     * The data table element.
-     */
-    protected dataTableElement: HTMLElement;
-
-    /**
-     * True to show the map, otherwise false.
+     * The order to present.
      */
     @bindable
     protected order: Order;
 
     /**
-     * The most recent update operation.
+     * The most recent fetch operation.
      */
     protected fetchOperation: Operation;
 
     /**
-     * The current events.
+     * The order events, where consecutive events of the same type at the same location are grouped together.
      */
-    protected completedEvents: OrderEvent[];
-
-    /**
-     * The future events.
-     */
-    protected futureEvents: OrderEvent[];
+    protected groupedOrderEvents: OrderEvent[][];
 
     /**
      * True to show the map, otherwise false.
@@ -58,20 +47,7 @@ export class Events
     protected showMap = true;
 
     /**
-     * Counts the number of picked up colli on the route
-     */
-    public isLatestEvent(events: OrderEvent[], event: OrderEvent): boolean
-    {
-        if (events[events.length - 1].id === event.id)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Called by the framework when the module is activated.
+     * Called by the framework when the `order` property changes.
      */
     public orderChanged(newValue: string): void
     {
@@ -101,12 +77,20 @@ export class Events
     }
 
     /**
-     * Called when a route stop is clicked.
-     * Opens a modal showing the details of the order, and enables editing.
+     * Called when an event is clicked.
+     * Opens a modal showing the details of the event.
      */
     protected async onEventDetailsClick(event: OrderEvent): Promise<void>
     {
-        await this._modalService.open(EventDetailsPanel, { event: event }).promise;
+        await this._modalService.open(OrderEventDetailsPanel, { event: event }).promise;
+    }
+
+    /**
+     * Called when a show more/less row is clicked.
+     */
+    protected onToggleShowMoreClick(orderEventGroup: OrderEvent[] & { __expanded?: boolean}): void
+    {
+        orderEventGroup.__expanded = !orderEventGroup.__expanded;
     }
 
     /**
@@ -123,10 +107,23 @@ export class Events
 
         this.fetchOperation = new Operation(async signal =>
         {
-            const response = await this._orderService.getEvents(this.order.slug);
+            const orderEvents = await this._orderService.getEvents(this.order.slug);
 
-            this.futureEvents = response.futureEvents;
-            this.completedEvents = response.completedEvents;
+            const groupedOrderEvents: OrderEvent[][] = [];
+
+            for (let i = 0; i < orderEvents.length; i++)
+            {
+                if (orderEvents[i].eventType.slug !== orderEvents[i - 1]?.eventType.slug)
+                {
+                    groupedOrderEvents.push([orderEvents[i]]);
+                }
+                else
+                {
+                    groupedOrderEvents[groupedOrderEvents.length - 1].push(orderEvents[i]);
+                }
+            }
+
+            this.groupedOrderEvents = groupedOrderEvents;
 
             // this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
         });

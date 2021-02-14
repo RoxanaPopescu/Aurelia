@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { OrderEventType } from "./order-event-type";
 
 export class OrderEvent
 {
@@ -9,19 +10,31 @@ export class OrderEvent
     public constructor(data: any)
     {
         this.id = data.id;
-        this.date = data.date;
-        this.name = data.name;
-        this.location = data.location;
-        this.author = data.author;
+        this.eventType = new OrderEventType(data.eventType);
+        this.eventTime = DateTime.fromISO(data.eventTime, { setZone: true });
+        this.data = data.data;
+
+        if (this.data?.timeOfEvent != null)
+        {
+            this.data.timeOfEvent = DateTime.fromISO(this.data.timeOfEvent, { setZone: true });
+        }
+
+        if (this.data?.signature?.date != null)
+        {
+            this.data.signature.date = DateTime.fromISO(this.data.signature.date, { setZone: true });
+        }
+
+        if (this.data?.photo?.date != null)
+        {
+            this.data.photo.date = DateTime.fromISO(this.data.photo.date, { setZone: true });
+        }
     }
 
     public readonly id: string;
 
-    public readonly date: DateTime;
+    public readonly eventType: OrderEventType;
 
-    public readonly name: string;
+    public readonly eventTime: DateTime;
 
-    public readonly location: string;
-
-    public readonly author: { name: string; affiliation: string };
+    public readonly data: any;
 }

@@ -2,10 +2,10 @@ import { autoinject } from "aurelia-framework";
 import { OrderEvent } from "app/model/order/entities/order-event";
 
 /**
- * Represents the module.
+ * Represents the panel.
  */
 @autoinject
-export class EventDetailsPanel
+export class OrderEventDetailsPanel
 {
     /**
      * The model for the modal.

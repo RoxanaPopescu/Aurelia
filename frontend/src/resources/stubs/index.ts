@@ -1,4 +1,5 @@
 import { IResponseStubs } from "shared/infrastructure";
+import orderEvents from "./responses/order-events";
 // import routesCreate from "./responses/routes-create";
 // import expressRoutes from "./responses/express-routes";
 // import orderGroups from "./responses/order-groups";
@@ -29,6 +30,7 @@ export const stubs: IResponseStubs =
     // ...routeDetails,
     // ...routePlanningSettings,
     // ...routePlans,
-    // ...communication
-    // ...routesCreate
+    // ...communication,
+    // ...routesCreate,
+    ...orderEvents
 };

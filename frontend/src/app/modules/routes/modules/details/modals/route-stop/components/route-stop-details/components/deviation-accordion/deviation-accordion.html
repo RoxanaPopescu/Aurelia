@@ -36,7 +36,10 @@
 
                 <div class="margin-top">
 
-                    <a repeat.for="imageUrl of model.imageUrls" href.bind="imageUrl" target="_blank" class="margin-right-large">
+                    <a
+                        repeat.for="imageUrl of model.imageUrls"
+                        modal-href="modal: image; model.bind: { imageUrl: imageUrl };"
+                        class="margin-right-large">
                         <img class="image-thumbnail" src.bind="imageUrl">
                     </a>
 
