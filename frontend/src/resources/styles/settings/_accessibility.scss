@@ -8,9 +8,15 @@ $__summary: comment;
 
 :root
 {
-    /// The width of the outline applied to an element when it has keyboard focus.
-    --accessibility-focus-outline-width: 2px;
-
     /// The offset of the outline applied to an element when it has keyboard focus.
-    --accessibility-focus-outline-offset: 2px;
+    --accessibility-focus-outline-offset: 2rem;
+
+    /// The width of the outline applied to an element when it has keyboard focus.
+    --accessibility-focus-outline-width: 2rem;
+
+    /// The style of the outline applied to an element when it has keyboard focus.
+    --accessibility-focus-outline-style: dotted;
+
+    /// The color of the outline applied to an element when it has keyboard focus.
+    --accessibility-focus-outline-color: #cccccc80;
 }

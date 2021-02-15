@@ -60,6 +60,7 @@ declare interface IClientEnvironment
 
     /**
      * True to enable API response stubs, otherwise false.
+     * Recommended in the `development` environment.
      */
     stubs: boolean;
 

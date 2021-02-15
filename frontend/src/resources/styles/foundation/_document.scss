@@ -82,7 +82,7 @@ body
 *:focus
 {
     // Remove default focus style.
-    transition: outline 0;
+    transition: outline 0s;
     outline: none;
 
     // Show focus indicator during keyboard navigation or when an element
@@ -90,15 +90,16 @@ body
     .focus-visible &:not(.focus-hidden)
     {
         // Set the focus style to use during keyboard navigation.
-        outline: dotted hsla(0, 0, 80, 0.5);
-        outline-width: var(--accessibility-focus-outline-width);
         outline-offset: var(--accessibility-focus-outline-offset);
+        outline-width: var(--accessibility-focus-outline-width);
+        outline-style: var(--accessibility-focus-outline-style);
+        outline-color: var(--accessibility-focus-outline-color);
     }
 }
 
 .focus-debug
 {
-    :focus
+    *:focus
     {
         // Set the focus style to use during keyboard navigation.
         outline: dotted #ff0000;
