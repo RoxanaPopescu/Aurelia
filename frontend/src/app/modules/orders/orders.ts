@@ -1,6 +1,9 @@
+import { IdentityService } from "app/services/identity";
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
+
+const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
 
 /**
  * Represents the module.
@@ -8,6 +11,39 @@ import routeTitles from "./resources/strings/route-titles.json";
 @autoinject
 export class OrdersModule
 {
+    /**
+     * Creates a new instance of the class.
+     * @param identityService The `IdentityService` instance.
+     */
+    public constructor(identityService: IdentityService)
+    {
+        this._identityService = identityService;
+    }
+
+    private readonly _identityService: IdentityService;
+
+    /**
+     * Legacy: What coop is using
+     * TODO: This should be removed when we have figured out the real solution for new user system
+     */
+    private get showDAORelabel(): boolean
+    {
+        if (ENVIRONMENT.name === "development") {
+            return true;
+        }
+
+        const identity = this._identityService.identity;
+
+        if (identity == null)
+        {
+            return true;
+        }
+
+        const legacyOutfitIds = [coopOutfitId];
+
+        return legacyOutfitIds.includes(identity.outfit.id);
+    }
+
     /**
      * Called to configure the router for the module.
      * @param config The router configuration associated with the module.
@@ -83,7 +119,7 @@ export class OrdersModule
                     ]
                 },
                 title: routeTitles.daoRelabel,
-                nav: true,
+                nav: this.showDAORelabel,
                 icon: "orders"
             },
 
