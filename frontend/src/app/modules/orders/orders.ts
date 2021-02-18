@@ -28,7 +28,8 @@ export class OrdersModule
      */
     private get showDAORelabel(): boolean
     {
-        if (ENVIRONMENT.name === "development") {
+        if (ENVIRONMENT.name === "development")
+        {
             return true;
         }
 
