@@ -40,7 +40,7 @@ export function getLegacyRouteSortProperty(property: string): number
         case "status": return 6;
         case "start-date": return 4;
         case "start-address": return 3;
-        case "stops": return 5;
+        case "stop-count": return 5;
         default: throw new Error("Unexpected sort property.");
     }
 }
@@ -55,11 +55,15 @@ export function getLegacyOrderSortProperty(property: string): number | undefined
     switch (property)
     {
         case "slug": return 1;
-        case "status": return 20;
-        case "pickup-date": return 14;
+        case "pickup-date": return 6;
         case "pickup-time": return 7;
-        case "pickup-address": return 3;
-        case "delivery-address": return 12
+        case "pickup-address": return 4;
+        case "delivery-date": return 14;
+        case "delivery-time": return 15;
+        case "delivery-address": return 12;
+        case "status": return 20;
+        case "colli-count": return 19;
+        case "estimated-colli-count": return 18;
         default: throw new Error("Unexpected sort property.");
     }
 }

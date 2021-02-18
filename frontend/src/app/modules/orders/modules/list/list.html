@@ -213,7 +213,7 @@
                     <data-table-headers>
 
                         <template repeat.for="column of columns">
-                            <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
+                            <data-table-cell if.bind="column.column != 'not-added'" name.bind="column.sortingName">
                                 <span if.bind="column.column == 'visible'" class="text-truncate">
                                     <template if.bind="column.columName">
                                         ${column.columName}

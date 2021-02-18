@@ -77,14 +77,12 @@ export class RouteListColumn
         {
             name: "End date",
             columnSize: "1fr",
-            sortingName: "end-date",
             column: "visible"
         },
         "end-address":
         {
             name: "End address",
             columnSize: "1.3fr",
-            sortingName: "end-address",
             column: "visible"
         },
         "tags":
@@ -97,7 +95,7 @@ export class RouteListColumn
         {
             name: "Stop count",
             columnSize: "min-content",
-            sortingName: "stops",
+            sortingName: "stop-count",
             column: "visible"
         },
         "vehicle-type":

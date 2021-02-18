@@ -43,6 +43,7 @@ export class OrderListColumn
         {
             name: "Id",
             columnSize: "1.2fr",
+            sortingName: "slug",
             column: "visible"
         },
         "tags":
@@ -111,6 +112,7 @@ export class OrderListColumn
             name: "Colli count",
             columName: "Colli",
             columnSize: "min-content",
+            sortingName: "colli-count",
             column: "visible"
         },
         "colli-total-weight":
@@ -132,6 +134,7 @@ export class OrderListColumn
             name: "Estimated colli count",
             columName: "Est. colli",
             columnSize: "min-content",
+            sortingName: "estimated-colli-count",
             column: "visible"
         },
         "estimated-colli-total-weight":
