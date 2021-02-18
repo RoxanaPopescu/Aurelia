@@ -9,6 +9,7 @@ import { Log } from "shared/infrastructure";
 import { ConfirmDeleteStartLocationDialog } from "./modals/confirm-delete-start-location/confirm-delete-start-location";
 import { DateTime } from "luxon";
 import { DayOfWeek } from "app/model/shared";
+import { ISorting } from "shared/types";
 
 /**
  * Represents the page.
@@ -53,6 +54,15 @@ export class StartLocations
     protected activeDepartureTimeName: string | undefined;
 
     /**
+     * The sorting to use for the table.
+     */
+    protected sorting: ISorting =
+    {
+        property: "name",
+        direction: "ascending"
+    };
+
+    /**
      * Gets the current active departure time.
      */
     @computedFrom("settings.departureTimes.length", "activeDepartureTimeName")
@@ -79,8 +89,8 @@ export class StartLocations
     /**
      * Gets the scenarios of the current departure time, filtered by date range and weekdays.
      */
-    @computedFrom("activeDepartureTime.scenarios.length", "dateFromFilter", "dateToFilter", "weekdaysFilter")
-    protected get filteredScenarios(): DepartureTimeScenario[]
+    @computedFrom("activeDepartureTime.scenarios.length", "dateFromFilter", "dateToFilter", "weekdaysFilter", "sorting")
+    protected get orderedAndFilteredScenarios(): DepartureTimeScenario[]
     {
         let scenarios = this.activeDepartureTime?.scenarios ?? [];
 
@@ -102,7 +112,34 @@ export class StartLocations
                 scenarios = scenarios.filter(s => s.criteria.weekdays.includes(w)));
         }
 
-        return scenarios;
+        const offset = this.sorting.direction === "ascending" ? 1 : -1;
+        const getPropertyValue = (scenario: DepartureTimeScenario, property: string) =>
+        {
+            switch (property)
+            {
+                case "name": return scenario.name;
+                case "gate": return scenario.gates[0].name;
+                case "weekdays": return scenario.criteria.weekdays.join(",");
+                case "from-date": return scenario.criteria.datePeriod.from?.valueOf() ?? "";
+                case "to-date": return scenario.criteria.datePeriod.to?.valueOf() ?? "";
+                case "vehicle-group": return this.getVehicleGroupName(scenario.gates[0].slots[0].vehicleGroup) ?? "";
+                default: return "";
+            }
+        };
+
+        return scenarios
+            .slice()
+            .sort((a, b) =>
+            {
+                const aPropertyValue = getPropertyValue(a, this.sorting.property);
+                const bPropertyValue = getPropertyValue(b, this.sorting.property);
+
+                // Sort by selected column and direction.
+                if (aPropertyValue < bPropertyValue) { return -offset; }
+                if (aPropertyValue > bPropertyValue) { return offset; }
+
+                return 0;
+            });
     }
 
     /**

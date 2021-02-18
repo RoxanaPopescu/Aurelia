@@ -248,31 +248,31 @@
 
             <page-section class="--line-above">
 
-                <data-table appearance="rows" class="--reduce-header-whitespace">
+                <data-table appearance="rows" sorting.bind="sorting" class="--reduce-header-whitespace">
 
                     <data-table-headers>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="name" translate>
                             Name
                         </data-table-cell>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="gate" translate>
                             Gate
                         </data-table-cell>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="weekdays" translate>
                             Reserved weekdays
                         </data-table-cell>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="from-date" translate>
                             From date
                         </data-table-cell>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="to-date" translate>
                             To date
                         </data-table-cell>
 
-                        <data-table-cell translate>
+                        <data-table-cell name="vehicle-group" translate>
                             Vehicle group
                         </data-table-cell>
 
@@ -282,7 +282,7 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="scenario of filteredScenarios">
+                    <template repeat.for="scenario of orderedAndFilteredScenarios">
 
                         <data-table-row click.call="onScenarioClick(scenario)">
 
