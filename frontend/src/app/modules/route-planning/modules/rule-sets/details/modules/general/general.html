@@ -262,6 +262,78 @@
 
     <page-section class="--line-above">
 
+        <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            Collection points
+        </h1>
+
+        <div class="margin-large-bottom" translate>
+            Here you can specify how collection points should be created
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <tags-input
+                label="above"
+                new.bind="true"
+                value.bind="settings.collectionPoint.orderTagsAllRequired"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    Create collection points for orders that have all those tags
+                </div>
+
+            </tags-input>
+
+        </div>
+
+        <div class="control-row">
+
+            <number-input
+                label="above"
+                none.bind="false"
+                disabled.bind="!(settings.collectionPoint.orderTagsAllRequired.length > 0)"
+                value.bind="settings.collectionPoint.preparationTime | scale: 1/60"
+                class="flex-basis-1-of-2"
+                min.bind="0">
+
+                <div slot="heading">
+                    <span translate>
+                        Arrive early, so there is time to prepare
+                    </span>
+                    <info-icon position="right">
+                        <div slot="body" translate>
+                            To plan with early arrival so there is time to prepare the collection point before customers arrive
+                        </div>
+                    </info-icon>
+                </div>
+
+                <span slot="after" class="opacity-faded" translate>
+                    min
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        enabled.bind="settings.collectionPoint.orderTagsAllRequired.length > 0"
+                        value.bind="settings.collectionPoint.preparationTime">
+                    </required-validator>
+
+                    <range-validator
+                        active.bind="true"
+                        value.bind="settings.collectionPoint.preparationTime"
+                        min.bind="0">
+                    </range-validator>
+
+                </div>
+
+            </number-input>
+
+        </div>
+
+    </page-section>
+
+    <page-section class="--line-above">
+
         <div slot="header" translate>
             Route creation
         </div>

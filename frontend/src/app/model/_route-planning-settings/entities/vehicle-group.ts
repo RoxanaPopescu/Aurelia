@@ -29,6 +29,7 @@ export class VehicleGroup
             this.startLocation = new VehicleGroupLocation(data.startLocation);
             this.endLocation = new VehicleGroupLocation(data.endLocation);
             this.routeTags = data.routeTags;
+            this.handlesCollectionPoint = data.handlesCollectionPoint;
         }
         else
         {
@@ -40,6 +41,7 @@ export class VehicleGroup
             this.startLocation = new VehicleGroupLocation();
             this.endLocation = new VehicleGroupLocation();
             this.routeTags = [];
+            this.handlesCollectionPoint = false;
         }
     }
 
@@ -97,6 +99,11 @@ export class VehicleGroup
      * The route tags to associate with routes using this vehicle group.
      */
     public routeTags: string[];
+
+    /**
+     * True if the vehicle can function as a collection point, otherwise false.
+     */
+    public handlesCollectionPoint: boolean;
 
     /**
      * Gets a clone of this instance, suitable for editing.
