@@ -235,19 +235,22 @@ export class IdentityService
      */
     private setTokens(tokens?: IdentityTokens): void
     {
+        // tslint:disable: no-string-literal no-dynamic-delete
+
         localStorage.removeItem("access-token");
         sessionStorage.removeItem("access-token");
 
         localStorage.removeItem("refresh-token");
         sessionStorage.removeItem("refresh-token");
 
-        Profile.reset();
+        delete settings.infrastructure.api.defaults!.headers!["authorization"];
+        delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
 
-        // tslint:disable: no-string-literal no-dynamic-delete
+        Profile.reset();
 
         if (tokens != null)
         {
-            const storage = tokens?.remember ? localStorage : sessionStorage;
+            const storage = tokens.remember ? localStorage : sessionStorage;
 
             if (tokens.accessToken)
             {
@@ -272,9 +275,9 @@ export class IdentityService
             Profile.setTokens(tokens.accessToken, tokens.refreshToken);
         }
 
-        // tslint:disable
-
         this.scheduleReauthentication(tokens);
+
+        // tslint:disable
     }
 
     /**

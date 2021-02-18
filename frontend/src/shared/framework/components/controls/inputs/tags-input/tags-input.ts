@@ -195,11 +195,15 @@ export class TagsInputCustomElement
      * Also reverts the focused value if no value was picked.
      * @param focusToggle True to focus the toggle icon, otherwise false.
      * @param pick True if the user picked a value, otherwise false.
+     * @param keepOpen True to keep the dropdown open, otherwise false.
      */
-    protected closeDropdown(focusToggle: boolean, pick = false): void
+    protected closeDropdown(focusToggle: boolean, pick = false, keepOpen = false): void
     {
-        this.open = false;
-        this.filterValue = undefined;
+        if (!keepOpen)
+        {
+            this.open = false;
+            this.filterValue = undefined;
+        }
 
         if (pick && this.focusedValue && !this.value?.includes(this.focusedValue))
         {
@@ -216,7 +220,10 @@ export class TagsInputCustomElement
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
 
-        this.focusedValue = undefined;
+        if (!keepOpen)
+        {
+            this.focusedValue = undefined;
+        }
 
         if (focusToggle && !pick)
         {
