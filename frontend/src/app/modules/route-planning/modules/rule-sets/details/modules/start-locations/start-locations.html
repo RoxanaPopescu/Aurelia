@@ -19,7 +19,7 @@
                     accent="primary"
                     click.delegate="onAddDepartureTimeClick()">
 
-                    <icon name="plus-small" class="margin-right"></icon>
+                    <icon name="plus-small" inline class="margin-right"></icon>
 
                     <span translate>
                         New start location
@@ -36,13 +36,13 @@
 
         <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
 
-            <page-tab class="font-large" repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
+            <page-tab repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
 
                 <span class="text-truncate" title.bind="departureTime.name">
                     ${departureTime.name}
                 </span>
 
-                <div class="button-container">
+                <div if.bind="departureTime === activeDepartureTime" class="button-container">
 
                     <button
                         appearance="none"
@@ -50,7 +50,7 @@
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Edit start location"
                         click.delegate="onEditDepartureTimeClick(departureTime)">
-                        <icon name="edit-small"></icon>
+                        <icon name="edit-small" inline></icon>
                     </button>
 
                     <button
@@ -59,7 +59,7 @@
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Delete start location"
                         click.delegate="onDeleteDepartureTimeClick(departureTime)">
-                        <icon name="delete-small"></icon>
+                        <icon name="delete-small" inline></icon>
                     </button>
 
                 </div>
@@ -68,10 +68,10 @@
 
             <button
                 appearance="none"
-                class="add-location-button font-large"
+                class="add-location-button"
                 click.delegate="onAddDepartureTimeClick()">
 
-                <icon name="plus-small"></icon>
+                <icon name="plus-small" inline class="margin-right"></icon>
 
                 <span translate>
                     New start location
@@ -112,7 +112,7 @@
                         accent="primary"
                         click.delegate="onAddScenarioClick()">
 
-                        <icon name="plus-small" class="margin-right"></icon>
+                        <icon name="plus-small" inline class="margin-right"></icon>
 
                         <span translate>
                             New reservation
@@ -151,7 +151,7 @@
                             accent="primary"
                             click.delegate="onAddScenarioClick()">
 
-                            <icon name="plus-small"></icon>
+                            <icon name="plus-small" inline class="margin-right"></icon>
 
                             <span translate>
                                 New reservation

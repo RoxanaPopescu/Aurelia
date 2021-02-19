@@ -2,20 +2,31 @@
 
 page-tab-nav
 {
+
+    /// The color of the surface of the component.
+    /// Note: This should be customized for each theme surface.
+    --tab-surface-color: transparent;
+    --tab-surface-color--active: var(--surface-neutral-surface-color);
+
+    /// The color of the text on the surface of the component.
+    /// Note: This should be customized for each theme surface.
+    --tab-surface-text-color: var(--surface-neutral-text-color);
+    --tab-surface-text-color--active: var(--surface-neutral-text-color);
+
     page-tab
     {
-
         display: flex;
         position: relative;
         cursor: pointer;
         align-items: center;
-        height: 36rem;
+        height: 40rem;
         width: 200rem;
+        min-width: 50rem;
         padding: 0 16rem;
         border-top-left-radius: var(--tab-nav-border-radius);
         border-top-right-radius: var(--tab-nav-border-radius);
         border: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
-        margin-bottom: -1rem;
+        margin-bottom: calc(-1 * var(--tab-nav-border-width));
         background-color: var(--tab-surface-color);
 
         &:not(:first-child)
@@ -25,9 +36,9 @@ page-tab-nav
 
         &.--active
         {
-            border-bottom-color: var(--tab-surface-color--active);
-            background-color: var(--tab-surface-color--active);
+            background: var(--tab-surface-color--active);
             color: var(--tab-surface-text-color--active);
+            min-width: 200rem;
             cursor: initial;
         }
 

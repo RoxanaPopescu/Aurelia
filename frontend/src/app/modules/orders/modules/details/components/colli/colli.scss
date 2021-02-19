@@ -1,22 +1,5 @@
 colli
 {
-    page-tab-nav
-    {
-        z-index: 1000;
-        page-tab
-        {
-            margin-bottom: -2rem;
-            background-color: var(--palette-color-neutral-light);
-
-            &.--active
-            {
-                border-bottom-color: white;
-                background-color: white;
-                color: black;
-            }
-        }
-    }
-
     data-table
     {
         --data-table-columns: 2fr 2fr 3fr 1.25fr;

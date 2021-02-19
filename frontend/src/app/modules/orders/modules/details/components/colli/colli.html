@@ -6,7 +6,7 @@
 
     <page-tab-nav class="margin-larger-top" appearance="tabs" value.bind="tab">
 
-        <page-tab class="font-large" name.bind="'actual'">
+        <page-tab name.bind="'actual'">
 
             <span class="text-truncate" title.bind="'actual'" translate>
                 Actual (${order.actualColli.length})
@@ -14,7 +14,7 @@
 
         </page-tab>
 
-        <page-tab class="font-large" name.bind="'estimated'">
+        <page-tab name.bind="'estimated'">
 
             <span class="text-truncate" title.bind="'estimated'" translate>
                 Estimated (${order.estimatedColli.length})

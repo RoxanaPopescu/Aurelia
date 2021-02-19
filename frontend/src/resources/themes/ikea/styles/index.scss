@@ -50,6 +50,19 @@ tab-nav
      --tab-nav-border-width: var(--border-width-thin);
 }
 
+page-tab-nav
+{
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-thin);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--palette-color-neutral);;
+}
+
 body
 {
     /**
