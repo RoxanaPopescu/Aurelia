@@ -8,10 +8,7 @@ export default
         [
             {
                 id: "order-event-4c-id",
-                subject: "https://",
                 eventType: "OrderDeliveryEtaProvided",
-                eventTime: "2020-08-24T15:50:00+01:00",
-                dataVersion: "1.0",
                 data:
                 {
                     timeOfEvent: "2020-08-24T16:00:00+01:00",

@@ -23,7 +23,7 @@ export class OrderEvents
 
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
-    // private pollTimeout: any;
+    private pollTimeout: any;
 
     /**
      * The order to present.
@@ -73,7 +73,7 @@ export class OrderEvents
             this.fetchOperation.abort();
         }
 
-        // clearTimeout(this.pollTimeout);
+        clearTimeout(this.pollTimeout);
     }
 
     /**
@@ -98,7 +98,7 @@ export class OrderEvents
      */
     private fetchEvents(): void
     {
-        // clearTimeout(this.pollTimeout);
+        clearTimeout(this.pollTimeout);
 
         if (this.fetchOperation != null)
         {
@@ -107,25 +107,30 @@ export class OrderEvents
 
         this.fetchOperation = new Operation(async signal =>
         {
-            const orderEvents = await this._orderService.getEvents(this.order.slug);
-
-            const groupedOrderEvents: OrderEvent[][] = [];
-
-            for (let i = 0; i < orderEvents.length; i++)
+            try
             {
-                if (orderEvents[i].eventType.slug !== orderEvents[i - 1]?.eventType.slug)
+                const orderEvents = await this._orderService.getEvents(this.order.consignorId, this.order.id);
+
+                const groupedOrderEvents: OrderEvent[][] = [];
+
+                for (let i = 0; i < orderEvents.length; i++)
                 {
-                    groupedOrderEvents.push([orderEvents[i]]);
+                    if (orderEvents[i].eventType.slug !== orderEvents[i - 1]?.eventType.slug)
+                    {
+                        groupedOrderEvents.push([orderEvents[i]]);
+                    }
+                    else
+                    {
+                        groupedOrderEvents[groupedOrderEvents.length - 1].push(orderEvents[i]);
+                    }
                 }
-                else
-                {
-                    groupedOrderEvents[groupedOrderEvents.length - 1].push(orderEvents[i]);
-                }
+
+                this.groupedOrderEvents = groupedOrderEvents;
             }
-
-            this.groupedOrderEvents = groupedOrderEvents;
-
-            // this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
+            finally
+            {
+                this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
+            }
         });
     }
 }
