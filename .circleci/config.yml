@@ -453,6 +453,10 @@ workflows:
 
   bff-build-and-deploy:
     jobs:
+      filters:
+        branches:
+          only:
+            - master
       - bff-build-test
       - bff-deploy-test:
           requires:
@@ -464,6 +468,10 @@ workflows:
 
   client-build-and-deploy:
     jobs:
+      filters:
+        branches:
+          only:
+            - master
       - client-build-test
       - client-deploy-test:
           requires:
