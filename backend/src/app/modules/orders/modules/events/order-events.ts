@@ -16,7 +16,7 @@ export class OrderEventsModule extends AppModule
         this.router.post("/v2/orders/events", async context =>
         {
             // Fetch the order events.
-            const result = await this.apiClient.post("orderevent/GetEventsV2",
+            const result = await this.apiClient.post("orderevent/v2/getevents",
             {
                 body:
                 {
