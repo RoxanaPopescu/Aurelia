@@ -453,30 +453,38 @@ workflows:
 
   bff-build-and-deploy:
     jobs:
-      filters:
-        branches:
-          only:
-            - master
-      - bff-build-test
+      - bff-build-test:
+          filters:
+            branches:
+              only:
+                - master
       - bff-deploy-test:
           requires:
             - bff-build-test
-      - bff-build-prod
+      - bff-build-prod:
+          filters:
+            branches:
+              only:
+                - master
       - bff-deploy-prod:
           requires:
             - bff-build-prod
 
   client-build-and-deploy:
     jobs:
-      filters:
-        branches:
-          only:
-            - master
-      - client-build-test
+      - client-build-test:
+        filters:
+          branches:
+            only:
+              - master
       - client-deploy-test:
           requires:
             - client-build-test
-      - client-build-production
+      - client-build-production:
+          filters:
+            branches:
+              only:
+                - master
       - client-deploy-build-production:
           requires:
             - client-build-production
