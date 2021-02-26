@@ -3,18 +3,6 @@ import { HistoryHelper } from "shared/infrastructure";
 
 import "./page-href.scss";
 
-// Listen for keyboard events and track whether any modifier key is pressed.
-
-let modifierKeyPressed = false;
-
-function onKeyboardEvent(event: KeyboardEvent): void
-{
-    modifierKeyPressed = event.metaKey || event.shiftKey || event.ctrlKey || event.altKey;
-}
-
-window.addEventListener("keydown", onKeyboardEvent, { capture: true, passive: true });
-window.addEventListener("keyup", onKeyboardEvent, { capture: true, passive: true });
-
 /**
  * Custom attribute used to specify an href for an element.
  * The href may be assigned to an attribute on the element or a property on its view model,
@@ -36,7 +24,7 @@ export class PageHrefCustomAttribute
 
     private readonly _element: (HTMLElement | SVGElement) & { au?: any };
     private readonly _historyHelper: HistoryHelper;
-        private _navigate: boolean;
+    private _navigate: boolean;
 
     /**
      * The URL to set or navigate to when the element is clicked.
@@ -75,7 +63,7 @@ export class PageHrefCustomAttribute
         this._element.addEventListener("click", (event: MouseEvent) =>
         {
             // tslint:disable-next-line: no-floating-promises
-            this.onElementClick(event);
+            this.onElementClickOrEnter(event);
         });
 
         this._element.addEventListener("keydown", (event: KeyboardEvent) =>
@@ -84,7 +72,7 @@ export class PageHrefCustomAttribute
             if (event.key === "Enter")
             {
                 // tslint:disable-next-line: no-floating-promises
-                this.onElementClick(event);
+                this.onElementClickOrEnter(event);
             }
         });
     }
@@ -115,10 +103,11 @@ export class PageHrefCustomAttribute
     }
 
     /**
-     * Called when the element is clicked.
+     * Called when the element is clicked, or enter is pressed while the element has keyboard focus.
      * Navigates to the specified href.
+     * @param event The mouse or keyboard event.
      */
-    private async onElementClick(event: Event): Promise<void>
+    private async onElementClickOrEnter(event: MouseEvent | KeyboardEvent): Promise<void>
     {
         // Don't handle the event if default has been prevented.
         if (event.defaultPrevented)
@@ -142,6 +131,10 @@ export class PageHrefCustomAttribute
             return;
         }
 
+        // Determine whether any modifier key is pressed.
+        const modifierKeyPressed = event.metaKey || event.shiftKey || event.ctrlKey || event.altKey;
+
+        // Determine whether to navigate in the current window, or open a new window.
         if (modifierKeyPressed || (targetIsAnchorWithHref && this._element.getAttribute("target") === "_blank"))
         {
             // Prevent default for the event, as it will be handled by this attribute.
