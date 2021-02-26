@@ -16,16 +16,15 @@
 
 :root
 {
-    // Default padding for cards.
-    // TODO: Should we define variables for standard margin and padding instead?
     --card-padding: 14rem 12rem;
     --card-padding-large: 50rem 52rem;
 }
 
 body
 {
-    /// The min-height of the component.
     --toggle-height: 2em;
+    --page-sidebar-min-width: 372rem;
+    --page-sidebar-max-width: 372rem;
 }
 
 .--button-position-right
