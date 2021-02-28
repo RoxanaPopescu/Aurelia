@@ -61,7 +61,7 @@
 
                     </div>
 
-                    <div class="font-largest" accent.bind="'neutral' & attr">
+                    <div class="font-largest">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value>
                             ${totalColliCount}
@@ -74,13 +74,22 @@
                     </div>
 
                     <div class="font-small">
-                        <span if.bind="route != null && notPickedUpColli.length === 0 && totalColliCount !== 0" translate>
-                            &nbsp;All colli picked up
+
+                        <span if.bind="(route == null || totalColliCount === 0) && (route.status.slug === 'completed' || route.status.slug === 'in-progress')">
+                            &nbsp;
                         </span>
 
-                        <span if.bind="route != null && notPickedUpColli.length > 0" translate>
-                            &nbsp;${notPickedUpColli.length} has not been picked up
-                        </span>
+                        <template if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'">
+
+                            <span if.bind="route != null && totalColliCount > 0 && notPickedUpColli.length === 0" translate>
+                                All colli picked up
+                            </span>
+
+                            <span if.bind="route != null && totalColliCount > 0 && notPickedUpColli.length > 0" accent="negative" translate>
+                                ${notPickedUpColli.length} failed
+                            </span>
+
+                        </template>
 
                     </div>
 
@@ -95,11 +104,9 @@
                         Colli delivered
                     </div>
 
-                    <div class="font-largest" accent.bind="notDeliveredColli.length > 0 ? 'negative' : 'neutral' & attr">
+                    <div class="font-largest">
 
-                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value>
-                            ${totalColliCount}
-                        </span>
+                        <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" empty-value></span>
 
                         <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" empty-value>
                             ${deliveredColliCount}
@@ -109,13 +116,21 @@
 
                     <div class="font-small">
 
-                        <span if.bind="route != null && notDeliveredColli.length === 0 && totalColliCount !== 0" translate>
-                            &nbsp;Every colli has been delivered
+                        <span if.bind="(route == null || totalColliCount === 0) && (route.status.slug === 'completed' || route.status.slug === 'in-progress')">
+                            &nbsp;
                         </span>
 
-                        <span if.bind="route != null && notDeliveredColli.length > 0" translate>
-                            &nbsp;${notDeliveredColli.length} has not been picked up
-                        </span>
+                        <template if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'">
+
+                            <span if.bind="route != null && totalColliCount > 0 && notDeliveredColli.length === 0" translate>
+                                All colli delivered
+                            </span>
+
+                            <span if.bind="route != null && totalColliCount > 0 && notDeliveredColli.length > 0" accent="negative" translate>
+                                ${notDeliveredColli.length} failed
+                            </span>
+
+                        </template>
 
                     </div>
 
@@ -149,9 +164,7 @@
                     </div>
 
                     <div class="font-small">
-
-                        <span>&nbsp;</span>
-
+                        &nbsp;
                     </div>
 
                 </div>
@@ -187,7 +200,7 @@
                         Estimated completion time
                     </div>
 
-                    <div class="font-largest" accent.bind="isRouteDelayed ? 'negative' : 'neutral' & attr">
+                    <div class="font-largest">
 
                         <span empty-value>
                             ${route.estimates.completionTime | time: 'narrow' : false}
@@ -197,12 +210,12 @@
 
                     <div class="font-small">
 
-                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'in-progress') && delayedStart">
+                        <span if.bind="!(route.status.slug === 'completed' || route.status.slug === 'in-progress') || !earlyStart">
+                            &nbsp;
+                        </span>
 
-                            <span if.bind="delayedStart" translate>
-                                &nbsp;Arrived ${delayedStart | duration} too early
-                            </span>
-
+                        <span if.bind="(route.status.slug === 'completed' || route.status.slug === 'in-progress') && earlyStart" accent="negative" translate>
+                            Arrived ${earlyStart | duration} too early
                         </span>
 
                     </div>
@@ -242,18 +255,18 @@
                         Rating
                     </div>
 
-                    <div if.bind="route.overallRating != null" class="font-largest">
-                        <icon class="card-section-ratingStar" name="star"></icon>${route.overallRating}/5
+                    <div class="font-largest">
+
+                        <template if.bind="route.overallRating != null">
+                            <icon class="card-section-ratingStar" name="star"></icon>${route.overallRating}/5
+                        </template>
+
+                        <div if.bind="route.overallRating != null" empty-value></div>
+
                     </div>
 
-                    <div if.bind="route.overallRating == null" empty-value></div>
-
                     <div class="font-small">
-
-                        <span if.bind="route.overallRating != null">
-                            &nbsp;
-                        </span>
-
+                        &nbsp;
                     </div>
 
                 </div>
@@ -265,7 +278,9 @@
                     </div>
 
                     <div class="font-largest" empty-value>
-                        ${route.complexity | number}%
+                        <template if.bind="route.complexity != null">
+                            ${route.complexity | number}%
+                        </template>
                     </div>
 
                     <div class="font-small">

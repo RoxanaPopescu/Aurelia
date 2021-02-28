@@ -153,7 +153,9 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.complexity | number}%
+                        <template if.bind="route.complexity != null">
+                            ${route.complexity | number}%
+                        </template>
                     </div>
 
                 </name-value-pair>
@@ -298,7 +300,9 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.driver.device.os} (${route.driver.device.appVersion})
+                        <template if.bind="route.driver != null">
+                            ${route.driver.device.os} (${route.driver.device.appVersion})
+                        </template>
                     </div>
 
                 </name-value-pair>

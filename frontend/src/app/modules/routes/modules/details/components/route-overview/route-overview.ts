@@ -37,7 +37,7 @@ export class RouteOverview
                 {
                     s.pickups.forEach(p => p.colli.forEach(c =>
                     {
-                        if (c.status.slug !== "not-picked-up" && c.status.slug !== "no-action")
+                        if (c.status.slug !== "no-action" && c.status.slug !== "not-picked-up")
                         {
                             pickedUpColliCount++;
                         }
@@ -108,7 +108,7 @@ export class RouteOverview
     }
 
     /**
-     * Counts the number of colli on the route
+     * Counts the number of colli on completed stops
      */
     @computedFrom("route.stops.length")
     public get completedColliCount(): number | undefined
@@ -158,7 +158,7 @@ export class RouteOverview
     }
 
     /**
-     * Counts the number of colli on the completed stops
+     * Counts the number of completed stops
      */
     @computedFrom("route.stops.length")
     public get completedStops(): number | undefined
@@ -183,7 +183,7 @@ export class RouteOverview
     /**
      * Calculates the duration of the route
      */
-    @computedFrom("route.stops.length")
+    @computedFrom("route.stops.length", "route.completedTime")
     public get routeDuration(): Duration | undefined
     {
         if (this.route == null)
@@ -203,8 +203,6 @@ export class RouteOverview
             }
             else
             {
-                // We get the last stop's estimates
-
                 const lastStop = this.route.stops[this.route.stops.length - 1];
 
                 if (lastStop instanceof RouteStop && lastStop.estimates != null)
@@ -217,10 +215,7 @@ export class RouteOverview
         return duration.get("seconds") > 0 ? duration : undefined;
     }
 
-    /**
-     * Calculates the duration of the route
-     */
-    @computedFrom("route.stops.length")
+    @computedFrom("route.stops.length", "route.estimates.completionTime")
     public get routeDelay(): Duration | undefined
     {
         if (this.route == null || this.route.estimates == null)
@@ -228,7 +223,8 @@ export class RouteOverview
             return undefined;
         }
 
-        const lastStop = this.route.stops[this.route.stops.length - 1] as RouteStop;
+        const notCancelledStops = this.route.stops.filter(s => s.status.slug !== "cancelled");
+        const lastStop = notCancelledStops[notCancelledStops.length - 1] as RouteStop;
         const completionTime = this.route.estimates.completionTime;
 
         if (lastStop.arrivalTimeFrame.to != null &&
@@ -241,10 +237,7 @@ export class RouteOverview
         return undefined;
     }
 
-    /**
-     * Calculates the duration of the route
-     */
-    @computedFrom("route.stops.length")
+    @computedFrom("route.stops.driverOnline")
     public get driverOnline(): boolean | undefined
     {
         if (this.route != null)
@@ -255,9 +248,6 @@ export class RouteOverview
         return undefined;
     }
 
-    /**
-     * Calculates the duration of the route
-     */
     @computedFrom("route.stops.length")
     public get totalLoadingDuration(): Duration
     {
@@ -280,10 +270,10 @@ export class RouteOverview
     }
 
     /**
-     * Calculates the duration of the route
+     * The time the driver arrived too early at the first stop.
      */
     @computedFrom("route.status")
-    public get delayedStart(): Duration | undefined
+    public get earlyStart(): Duration | undefined
     {
         if (this.route != null && this.route.stops[0] instanceof RouteStop)
         {
@@ -305,26 +295,6 @@ export class RouteOverview
         return undefined;
     }
 
-    /**
-     * Calculates the duration of the route
-     */
-    @computedFrom("route.status")
-    public get isRouteDelayed(): boolean
-    {
-        if (this.route != null)
-        {
-            if ((this.route.status.slug === "completed" || this.route.status.slug === "in-progress") && this.delayedStart)
-            {
-                return  true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Calculates the duration of the route
-     */
     @computedFrom("route.stops.length")
     public get routeStopsOkay(): boolean
     {
@@ -339,7 +309,7 @@ export class RouteOverview
     }
 
     /**
-     * Calculates the amount of colli not picked up
+     * The colli that failed to be picked up on stops that have been completed.
      */
     @computedFrom("route.stops.length")
     public get notPickedUpColli(): Collo[]
@@ -349,7 +319,7 @@ export class RouteOverview
         if (this.route != null)
         {
             const completedPickupStops = this.route.stops
-                .filter(s => s.type.slug === "pickup" && s instanceof RouteStop);
+                .filter(s => s.type.slug === "pickup" && s.status.slug === "completed" && s instanceof RouteStop);
 
             completedPickupStops.forEach((s: RouteStop) =>
             {
@@ -370,25 +340,26 @@ export class RouteOverview
     }
 
     /**
-     * Calculates the amount of colli not delivered
+     * The colli that failed to be delivered on stops that have been visited.
      */
     @computedFrom("route.stops.length")
     public get notDeliveredColli(): Collo[]
     {
+        const notPickedUpColli = this.notPickedUpColli;
         const notDeliveredColli: Collo[] = [];
 
         if (this.route != null)
         {
-            const completedPickupStops = this.route.stops
-                .filter(s => s.type.slug === "delivery" && s.status.slug === "completed" && s instanceof RouteStop);
+            const stopsToConsider = this.route.stops
+                .filter(s => s.type.slug === "delivery" && (s.status.slug !== "not-visited" && s.status.slug !== "arrived") && s instanceof RouteStop);
 
-            completedPickupStops.forEach((s: RouteStop) =>
+            stopsToConsider.forEach((s: RouteStop) =>
             {
                 s.pickups.forEach(p =>
                 {
                     p.colli.forEach(c =>
                     {
-                        if (c.status.slug !== "delivered")
+                        if (c.status.slug !== "delivered" && !notPickedUpColli.includes(c))
                         {
                             notDeliveredColli.push(c);
                         }
