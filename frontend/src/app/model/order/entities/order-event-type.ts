@@ -18,7 +18,21 @@ export class OrderEventType
     public constructor(slug: OrderEventTypeSlug)
     {
         this.slug = textCase(slug, "pascal", "kebab") as any;
-        Object.assign(this, OrderEventType.values[this.slug]);
+
+        if (this.slug in OrderEventType.values)
+        {
+            Object.assign(this, OrderEventType.values[this.slug]);
+        }
+        else
+        {
+            // HACK: Due to lack of proper docs, we support unknown events here. ¯\_(ツ)_/¯
+            Object.assign(this,
+            {
+                name: textCase(this.slug, "kebab", "sentence"),
+                description: "Unknown order event.",
+                accent: "attention"
+            });
+        }
     }
 
     public slug: OrderEventTypeSlug;
@@ -45,10 +59,22 @@ export class OrderEventType
             description: "The order was created.",
             accent: "positive"
         },
+        "order-added-to-route":
+        {
+            name: "Order added to route",
+            description: "The order was added to a route.",
+            accent: "positive"
+        },
         "order-ready":
         {
             name: "Order ready",
             description: "TODO",
+            accent: "positive"
+        },
+        "order-pickup-arrived":
+        {
+            name: "Arrived at pickup location",
+            description: "The driver has arrived at the pickup location.",
             accent: "positive"
         },
         "order-pickup-completed":

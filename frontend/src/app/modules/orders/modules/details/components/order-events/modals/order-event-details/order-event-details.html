@@ -3,6 +3,16 @@
     <require from="app/components/data-section/data-section"></require>
     <require from="./order-event-details.scss"></require>
 
+
+    <let
+        order-event-location.bind="model.event.data.deliveryLocation || model.event.data.pickupLocation || model.event.data.location"
+        order-event-contact.bind="model.event.data.deliveryContact || model.event.data.pickupContact || model.event.data.contact"
+        order-event-time.bind="
+            model.event.eventType.slug === 'order-pickup-eta-provided' ? model.event.data.pickupEta :
+            model.event.eventType.slug === 'order-delivery-eta-provided' ? model.event.data.deliveryEta :
+            model.event.data.timeOfEvent">
+    </let>
+
     <modal-backdrop close="all"></modal-backdrop>
 
     <modal-panel name="order-event-details" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
@@ -40,13 +50,13 @@
                     <div>
 
                         <div class="margin-bottom user-select-text" empty-value>
-                            ${model.event.data.timeOfEvent | dateTime: 'narrow' : false}
+                            ${orderEventTime | dateTime: 'narrow' : false}
                         </div>
 
                         <div class="margin-bottom user-select-text" empty-value>
-                            <template if.bind="model.event.data.location.address">
-                                ${model.event.data.location.address.primary}<br>
-                                ${model.event.data.location.address.secondary}
+                            <template if.bind="orderEventLocation.address">
+                                ${orderEventLocation.address.primary}<br>
+                                ${orderEventLocation.address.secondary}
                             </template>
                         </div>
 
@@ -94,7 +104,7 @@
         </data-section>
 
         <!-- Contact -->
-        <template if.bind="model.event.data.contact != null">
+        <template if.bind="orderEventContact != null">
 
             <hr class="hr-line margin-bottom">
 
@@ -107,35 +117,35 @@
                 <div class="flex-row margin-bottom">
 
                     <div>
-                        <div if.bind="model.event.data.contact.companyName" class="margin-bottom margin-large-right opacity-faded" translate>
+                        <div if.bind="orderEventContact.companyName" class="margin-bottom margin-large-right opacity-faded" translate>
                             Company
                         </div>
-                        <div if.bind="model.event.data.contact.fullName" class="margin-bottom margin-large-right opacity-faded" translate>
+                        <div if.bind="orderEventContact.fullName" class="margin-bottom margin-large-right opacity-faded" translate>
                             Name
                         </div>
-                        <div if.bind="model.event.data.contact.email" class="margin-bottom margin-large-right opacity-faded" translate>
+                        <div if.bind="orderEventContact.email" class="margin-bottom margin-large-right opacity-faded" translate>
                             Email
                         </div>
-                        <div if.bind="model.event.data.contact.phone" class="margin-large-right opacity-faded" translate>
+                        <div if.bind="orderEventContact.phone" class="margin-large-right opacity-faded" translate>
                             Phone
                         </div>
                     </div>
 
                     <div>
-                        <div if.bind="model.event.data.contact.companyName" class="margin-bottom user-select-text">
-                            ${model.event.data.contact.companyName}
+                        <div if.bind="orderEventContact.companyName" class="margin-bottom user-select-text">
+                            ${orderEventContact.companyName}
                         </div>
-                        <div if.bind="model.event.data.contact.fullName" class="margin-bottom user-select-text">
-                            ${model.event.data.contact.fullName}
+                        <div if.bind="orderEventContact.fullName" class="margin-bottom user-select-text">
+                            ${orderEventContact.fullName}
                         </div>
-                        <div if.bind="model.event.data.contact.email" class="margin-bottom user-select-text">
-                            <a href="mailto:${model.event.data.contact.email}" class="user-select-text">
-                                ${model.event.data.contact.email}
+                        <div if.bind="orderEventContact.email" class="margin-bottom user-select-text">
+                            <a href="mailto:${orderEventContact.email}" class="user-select-text">
+                                ${orderEventContact.email}
                             </a>
                         </div>
-                        <div if.bind="model.event.data.contact.phone" class="user-select-text">
-                            <a href="${model.event.data.contact.phone | phone: 'rfc3966'}" class="user-select-text">
-                                ${model.event.data.contact.phone | phone}
+                        <div if.bind="orderEventContact.phone" class="user-select-text">
+                            <a href="${orderEventContact.phone | phone: 'rfc3966'}" class="user-select-text">
+                                ${orderEventContact.phone | phone}
                             </a>
                         </div>
                     </div>

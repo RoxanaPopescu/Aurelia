@@ -12,11 +12,24 @@ export class OrderEvent
         this.id = data.id;
         this.eventType = new OrderEventType(data.eventType);
         this.eventTime = DateTime.fromISO(data.eventTime, { setZone: true });
+
+        // HACK: Due to lack of proper docs, we can't model the data properly, so we just patch it as needed. ¯\_(ツ)_/¯
+
         this.data = data.data;
 
         if (this.data?.timeOfEvent != null)
         {
             this.data.timeOfEvent = DateTime.fromISO(this.data.timeOfEvent, { setZone: true });
+        }
+
+        if (this.data?.pickupEta != null)
+        {
+            this.data.pickupEta = DateTime.fromISO(this.data.pickupEta, { setZone: true });
+        }
+
+        if (this.data?.deliveryEta != null)
+        {
+            this.data.deliveryEta = DateTime.fromISO(this.data.deliveryEta, { setZone: true });
         }
 
         if (this.data?.signature?.date != null)

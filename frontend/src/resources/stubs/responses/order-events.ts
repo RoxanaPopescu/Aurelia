@@ -1,7 +1,7 @@
 // tslint:disable
 export default
 {
-    "GET /api/v1/orders/events?slug=22935":
+    "POST /api/v2/orders/events":
     {
         delay: 1000,
         body:

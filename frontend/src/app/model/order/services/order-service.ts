@@ -135,7 +135,27 @@ export class OrderService
             body: { consignorId, orderId }
         });
 
-        return result.data.map(e => new OrderEvent(e));
+        const orderEvents = result.data.map(e => new OrderEvent(e));
+
+        // Ensure the `order-pickup-eta-provided` event, if present, is the first event.
+
+        const pickupEtaProvidedIndex = orderEvents.findIndex(e => e.eventType.slug === "order-pickup-eta-provided");
+
+        if (pickupEtaProvidedIndex > -1)
+        {
+            orderEvents.unshift(...orderEvents.splice(pickupEtaProvidedIndex, 1));
+        }
+
+        // Ensure the `order-delivery-eta-provided` event, if present, is the first event.
+
+        const deliveryEtaProvidedIndex = orderEvents.findIndex(e => e.eventType.slug === "order-delivery-eta-provided");
+
+        if (deliveryEtaProvidedIndex > -1)
+        {
+            orderEvents.unshift(...orderEvents.splice(deliveryEtaProvidedIndex, 1));
+        }
+
+        return orderEvents;
     }
 
     /**
