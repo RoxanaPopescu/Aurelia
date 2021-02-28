@@ -59,14 +59,6 @@ export class RouteLayer extends React.Component<RouteLayerProps> {
 
                 {this.props.route.stops.length > 0 &&
                 <>
-                    {this.props.route.driverPosition &&
-                        <RouteSegmentLine
-                            key={`RouteSegmentLine-driver-${this.props.route.stops[0].id}`}
-                            routeStops={[this.props.route.driverPosition!, this.props.route.stops[0]]}
-                            faded={showingPastPositions}
-                            onClick={() => this.props.onRouteClick?.(this.props.route)}
-                        />}
-
                     {!showingPastPositions && this.props.route.stops
                         .filter(s =>
                             s.status.slug !== "cancelled")
