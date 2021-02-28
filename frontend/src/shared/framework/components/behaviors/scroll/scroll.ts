@@ -4,6 +4,9 @@ import { EventManager } from "shared/utilities";
 // Load the CSS associated with this attribute.
 import "./scroll.scss";
 
+// True to enable the scroll fade effect, otherwise false.
+const useScrollFade = false;
+
 /**
  * Represents the public interface for a `ScrollCustomAttribute`.
  */
@@ -96,39 +99,42 @@ export class ScrollCustomAttribute implements IScroll
                         internal: true
                     };
 
-                    // Is this the first scroll event in a sequence?
-                    if (timeoutHandle == null)
+                    if (useScrollFade)
                     {
-                        if (fadeTargets == null)
+                        // Is this the first scroll event in a sequence?
+                        if (timeoutHandle == null)
                         {
-                            // Get the fade targets immediately, as we otherwise have nothing to fade.
-                            fadeTargets = this.getFadeTargets();
+                            if (fadeTargets == null)
+                            {
+                                // Get the fade targets immediately, as we otherwise have nothing to fade.
+                                fadeTargets = this.getFadeTargets();
+                            }
+                            else
+                            {
+                                // Get the fade targets in an animation frame, so we can fade the already known targets immediately.
+                                requestAnimationFrame(() =>
+                                {
+                                    // Get any elements that should be faded.
+                                    fadeTargets = this.getFadeTargets();
+                                });
+                            }
                         }
                         else
                         {
-                            // Get the fade targets in an animation frame, so we can fade the already known targets immediately.
-                            requestAnimationFrame(() =>
-                            {
-                                // Get any elements that should be faded.
-                                fadeTargets = this.getFadeTargets();
-                            });
+                            // Still scrolling, so the end of the sequence should be rescheduled.
+                            clearTimeout(timeoutHandle);
                         }
-                    }
-                    else
-                    {
-                        // Still scrolling, so the end of the sequence should be rescheduled.
-                        clearTimeout(timeoutHandle);
-                    }
 
-                    // Fade elements relative to the scroll offset.
-                    for (const fadeTarget of fadeTargets)
-                    {
-                        fadeTarget.element.style.opacity =
-                            Math.max(0, 1 - (scrollTop / fadeTarget.height) * fadeTarget.fadeFactor).toString();
-                    }
+                        // Fade elements relative to the scroll offset.
+                        for (const fadeTarget of fadeTargets)
+                        {
+                            fadeTarget.element.style.opacity =
+                                Math.max(0, 1 - (scrollTop / fadeTarget.height) * fadeTarget.fadeFactor).toString();
+                        }
 
-                    // Schedule the end of the sequernce.
-                    timeoutHandle = setTimeout(() => timeoutHandle = undefined, 300);
+                        // Schedule the end of the sequernce.
+                        timeoutHandle = setTimeout(() => timeoutHandle = undefined, 300);
+                    }
                 }
             });
         });
