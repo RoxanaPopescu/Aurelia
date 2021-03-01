@@ -4,6 +4,7 @@ import { ModalService } from "shared/framework";
 import { OrderEvent } from "app/model/order/entities/order-event";
 import { OrderService, Order } from "app/model/order";
 import { OrderEventDetailsPanel } from "./modals/order-event-details/order-event-details";
+import settings from "resources/settings";
 
 /**
  * Represents the module.
@@ -24,6 +25,11 @@ export class OrderEvents
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
     private pollTimeout: any;
+
+    /**
+     * The base URL to use when fetching public images based on their ID.
+     */
+    protected readonly publicImageBaseUrl = settings.app.publicImageBaseUrl;
 
     /**
      * The order to present.
@@ -129,7 +135,10 @@ export class OrderEvents
             }
             finally
             {
-                this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
+                if (!ENVIRONMENT.stubs)
+                {
+                    this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
+                }
             }
         });
     }

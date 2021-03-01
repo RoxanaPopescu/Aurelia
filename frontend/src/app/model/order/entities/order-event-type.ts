@@ -68,7 +68,7 @@ export class OrderEventType
         "order-ready":
         {
             name: "Order ready",
-            description: "TODO",
+            description: "The order was marked as ready.",
             accent: "positive"
         },
         "order-pickup-arrived":
@@ -115,14 +115,14 @@ export class OrderEventType
         },
         "order-delivery-arrived":
         {
-            name: "Order delivery arrived",
-            description: "TODO",
+            name: "Arrived at delivery location",
+            description: "The driver has arrived at the delivery location.",
             accent: "positive"
         },
         "order-cancelled-en-route":
         {
             name: "Order cancelled en route",
-            description: "TODO",
+            description: "The order was cancelled while en rute.",
             accent: "positive"
         },
         "order-return-completed":
@@ -140,25 +140,25 @@ export class OrderEventType
         "order-delivery-eta-provided":
         {
             name: "Estimated delivery",
-            description: "The estimated time of delivery.",
+            description: "The estimated time of arrival at the delivery location.",
             accent: "neutral"
         },
         "order-pickup-eta-provided":
         {
             name: "Estimated pickup",
-            description: "The estimated time of pickup.",
+            description: "The estimated time of arrival at the pickup location.",
             accent: "neutral"
         },
         "collo-loaded-on-linehaul":
         {
             name: "Collo loaded on linehaul",
-            description: "TODO",
+            description: "The collo was loaded on a linehaul.",
             accent: "positive"
         },
         "collo-unloaded-from-linehaul":
         {
             name: "Collo unloaded from linehaul",
-            description: "TODO",
+            description: "The collo was loaded off a linehaul.",
             accent: "positive"
         },
         "collo-enterede-storage":
@@ -177,13 +177,13 @@ export class OrderEventType
         "collo-missing":
         {
             name: "Collo missing",
-            description: "TODO",
+            description: "The collo was reported as missing.",
             accent: "negative"
         },
         "collo-damaged":
         {
             name: "Collo damaged",
-            description: "TODO",
+            description: "The collo was reported as damaged.",
             accent: "negative"
         },
         "collo-removed-from-linehaul":

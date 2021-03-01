@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { OrderEvent } from "app/model/order/entities/order-event";
+import settings from "resources/settings";
 
 /**
  * Represents the panel.
@@ -7,6 +8,11 @@ import { OrderEvent } from "app/model/order/entities/order-event";
 @autoinject
 export class OrderEventDetailsPanel
 {
+    /**
+     * The base URL to use when fetching public images based on their ID.
+     */
+    protected readonly publicImageBaseUrl = settings.app.publicImageBaseUrl;
+
     /**
      * The model for the modal.
      */

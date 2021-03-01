@@ -41,7 +41,12 @@ export default
         /**
          * The time in milliseconds before a toast, by default, disappears.
          */
-        defaultToastTimeout: 10000
+        defaultToastTimeout: 10000,
+
+        /**
+         * The base URL to use when fetching public images based on their ID.
+         */
+        publicImageBaseUrl: "https://filestoragetestmover.blob.core.windows.net/public/"
     },
 
     /**

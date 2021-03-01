@@ -287,7 +287,7 @@
 
                 </div>
 
-                <div if.bind="model.event.data.deviation.imageUrls.length > 0">
+                <div if.bind="model.event.data.deviation.imageIds.length > 0">
 
                     <div class="margin-small-bottom opacity-faded" translate>
                         Photo documentation
@@ -296,10 +296,10 @@
                     <div>
 
                         <a
-                            repeat.for="imageUrl of model.event.data.deviation.imageUrls"
-                            modal-href="modal: image; model.bind: { imageUrl: imageUrl };"
+                            repeat.for="imageId of model.event.data.deviation.imageIds"
+                            modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + imageId };"
                             class="margin-right-large">
-                            <img class="image-thumbnail" src.bind="imageUrl">
+                            <img class="image-thumbnail" src.bind="imageId">
                         </a>
 
                     </div>
@@ -325,7 +325,7 @@
                     Photo required, but not yet captured
                 </div>
 
-                <template if.bind="model.event.data.photo.imageUrl">
+                <template if.bind="model.event.data.photo.imageId">
 
                     <div class="flex-row margin-bottom">
 
@@ -339,8 +339,8 @@
 
                     </div>
 
-                    <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
-                        <img if.bind="model.event.data.photo" class="image-thumbnail" src.bind="model.event.data.photo.imageUrl">
+                    <a modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + model.event.data.photo.imageId };">
+                        <img if.bind="model.event.data.photo" class="image-thumbnail" src.bind="model.event.data.photo.imageId">
                     </a>
 
                 </template>
@@ -383,8 +383,8 @@
                 </div>
 
                 <div class="flex-row flex-basis-1-of-6">
-                    <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
-                        <image  class="image-thumbnail" src.bind="model.event.data.signature.imageUrl">
+                    <a modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + model.event.data.photo.imageId };">
+                        <image  class="image-thumbnail" src.bind="model.event.data.signature.imageId">
                     </a>
                 </div>
 
