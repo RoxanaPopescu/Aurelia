@@ -51,7 +51,7 @@ export class OrdersEventsModule extends AppModule
                             version: "2.0"
                         },
                         {
-                            eventType: "collection-point-collo-managed",
+                            eventType: "collection-point-collo-damaged",
                             version: "1.0"
                         },
                         {
