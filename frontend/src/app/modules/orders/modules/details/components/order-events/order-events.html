@@ -67,10 +67,18 @@
             <template repeat.for="orderEventGroup of groupedOrderEvents">
 
                 <let
-                    previous-order-event.bind="groupedOrderEvents[$index - 1][groupedOrderEvents[$index - 1].length - 1]">
+                    first-group.bind="$first"
+                    last-group.bind="$last"
+                    last-order-event-in-previous-group.bind="groupedOrderEvents[$index - 1][groupedOrderEvents[$index - 1].length - 1]">
                 </let>
 
                 <template repeat.for="orderEvent of orderEventGroup">
+
+                    <let
+                        first-event.bind="$first"
+                        last-event.bind="$last"
+                        previous-order-event.bind="$index === 0 ? lastOrderEventInPreviousGroup : orderEventGroup[$index - 1]">
+                    </let>
 
                     <let
                         order-event-location.bind="orderEvent.data.deliveryLocation || orderEvent.data.pickupLocation || orderEvent.data.location"
@@ -103,8 +111,8 @@
                         </data-table-cell>
 
                         <data-table-cell class="order-events-timeline-cell">
-                            <div class="order-events-timeline-before accent-${previousOrderEvent.eventType.accent}"></div>
-                            <div class="order-events-timeline-after accent-${orderEvent.eventType.accent}"></div>
+                            <div if.bind="!firstGroup || !firstEvent" class="order-events-timeline-before accent-${previousOrderEvent.eventType.accent}"></div>
+                            <div if.bind="!lastGroup || !lastEvent" class="order-events-timeline-after accent-${orderEvent.eventType.accent}"></div>
                             <div class="order-events-timeline-marker text-truncate accent-${orderEvent.eventType.accent}">
                                 <icon
                                     if.bind="orderEvent.eventType.accent !== 'negative' && orderEvent.data.deviation != null"

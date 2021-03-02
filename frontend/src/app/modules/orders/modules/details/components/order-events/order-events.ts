@@ -115,7 +115,7 @@ export class OrderEvents
         {
             try
             {
-                const orderEvents = await this._orderService.getEvents(this.order.consignorId, this.order.id);
+                const orderEvents = await this._orderService.getEvents(this.order.consignorId, this.order.slug);
 
                 const groupedOrderEvents: OrderEvent[][] = [];
 

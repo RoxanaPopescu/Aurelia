@@ -125,14 +125,14 @@ export class OrderService
     /**
      * Gets the events for the specified order.
      * @param consignorId The ID of the consignor owning of the order.
-     * @param orderId The ID of the order.
+     * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the events.
      */
-    public async getEvents(consignorId: string, orderId: string): Promise<OrderEvent[]>
+    public async getEvents(consignorId: string, orderSlug: string): Promise<OrderEvent[]>
     {
         const result = await this._apiClient.post("orders/events",
         {
-            body: { consignorId, orderId }
+            body: { consignorId, orderId: orderSlug }
         });
 
         const orderEvents = result.data.map(e => new OrderEvent(e));

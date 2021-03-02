@@ -47,7 +47,7 @@
 
                     </div>
 
-                    <div>
+                    <div class="margin-large-right">
 
                         <div class="margin-bottom user-select-text" empty-value>
                             ${orderEventTime | dateTime: 'narrow' : false}
@@ -299,7 +299,7 @@
                             repeat.for="imageId of model.event.data.deviation.imageIds"
                             modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + imageId };"
                             class="margin-right-large">
-                            <img class="image-thumbnail" src.bind="imageId">
+                            <img class="image-thumbnail" src.bind="publicImageBaseUrl + imageId">
                         </a>
 
                     </div>
@@ -340,7 +340,7 @@
                     </div>
 
                     <a modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + model.event.data.photo.imageId };">
-                        <img if.bind="model.event.data.photo" class="image-thumbnail" src.bind="model.event.data.photo.imageId">
+                        <img if.bind="model.event.data.photo" class="image-thumbnail" src.bind="publicImageBaseUrl + model.event.data.photo.imageId">
                     </a>
 
                 </template>
@@ -384,7 +384,7 @@
 
                 <div class="flex-row flex-basis-1-of-6">
                     <a modal-href="modal: image; model.bind: { imageUrl: publicImageBaseUrl + model.event.data.photo.imageId };">
-                        <image  class="image-thumbnail" src.bind="model.event.data.signature.imageId">
+                        <image  class="image-thumbnail" src.bind="publicImageBaseUrl + model.event.data.signature.imageId">
                     </a>
                 </div>
 
