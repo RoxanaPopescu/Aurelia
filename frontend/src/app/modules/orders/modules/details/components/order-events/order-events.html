@@ -92,7 +92,7 @@
                     <data-table-row
                         click.call="onEventDetailsClick(orderEvent)"
                         clickable.bind="true"
-                        class="${$index > 0 && !orderEventGroup.__expanded ? '--hide' : ''}">
+                        class="${$index > 0 && !orderEventGroup.__expanded && orderEventGroup.length > 2 ? '--hide' : ''}">
 
                         <data-table-cell align="right">
 
@@ -195,7 +195,7 @@
                 </template>
 
                 <data-table-row
-                    if.bind="orderEventGroup.length > 1"
+                    if.bind="orderEventGroup.length > 2"
                     clickable.bind="true"
                     click.call="onToggleShowMoreClick(orderEventGroup)">
                     <data-table-cell></data-table-cell>

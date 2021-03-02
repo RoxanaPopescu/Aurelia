@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework"
+import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import settings from "resources/settings";
 
@@ -44,9 +44,8 @@ export class ImageInfoValueConverter
             this._apiClient.get(`files/sensitive/${value}`, { redirect: "manual" }).then(result =>
             {
                 imageInfo.url = result.response.headers.get("location") ?? undefined;
-            });
+            }).catch();
         }
-
 
         return imageInfo;
     }
