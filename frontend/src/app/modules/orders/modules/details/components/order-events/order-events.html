@@ -165,8 +165,9 @@
 
                             <template if.bind="orderEvent.data.actionBy != null">
 
+                                <let image-info.bind="orderEvent.data.actionBy.user.imageId | imageInfo: false"></let>
                                 <identity-picture
-                                    src.bind="orderEvent.data.actionBy.user.imageId ? publicImageBaseUrl + orderEvent.data.actionBy.user.imageId : undefined"
+                                    src.bind="imageInfo.url"
                                     class="order-events-action-by-image">
                                     ${orderEvent.data.actionBy.user.fullName[0] || orderEvent.data.actionBy.organization.name[0]}
                                 </identity-picture>

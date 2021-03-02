@@ -84,7 +84,7 @@ export class FilesModule extends AppModule
                 }
             });
 
-            context.redirect(result.data.uri);
+            context.redirect(result.data.url);
         });
     }
 

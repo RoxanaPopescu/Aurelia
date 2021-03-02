@@ -59,7 +59,8 @@ export async function configure(aurelia: Aurelia): Promise<void>
     [
         PLATFORM.moduleName("app/components/if-environment/if-environment"),
         PLATFORM.moduleName("app/components/if-claims/if-claims"),
-        PLATFORM.moduleName("app/components/info-icon/info-icon")
+        PLATFORM.moduleName("app/components/info-icon/info-icon"),
+        PLATFORM.moduleName("app/converters/image-info/image-info")
     ]);
 
     // Add task that will run after all plugins and features have been loaded.
