@@ -11,9 +11,18 @@ export class HealthModule extends AppModule
     public configure(): void
     {
         /**
-         * Gets the current environment.
+         * Gets the current health status.
          */
-        this.router.get(["/health", "/v2/health"], context =>
+        this.router.get("/health", context =>
+        {
+            context.response.body = "OK";
+            context.response.status = 200;
+        });
+
+        /**
+         * Gets the current health status.
+         */
+        this.router.get("/v2/health", context =>
         {
             context.response.body = "OK";
             context.response.status = 200;

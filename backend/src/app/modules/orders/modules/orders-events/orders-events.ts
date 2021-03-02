@@ -3,7 +3,7 @@ import { AppModule } from "../../../../app-module";
 /**
  * Represents a module exposing endpoints related to order events.
  */
-export class OrderEventsModule extends AppModule
+export class OrdersEventsModule extends AppModule
 {
     public configure(): void
     {
