@@ -39,7 +39,7 @@ export class Order
     public readonly slug: string;
 
     public readonly relationalId: string;
-    
+
     public readonly consignorId: string;
 
     public state:
