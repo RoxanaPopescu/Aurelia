@@ -210,11 +210,11 @@
 
         </data-table>
 
-        <busy-indicator if.bind="groupedOrderEvents == null" class="margin-largest"></busy-indicator>
+        <busy-indicator if.bind="groupedOrderEvents == null && fetchOperation.error == null" class="margin-largest"></busy-indicator>
 
-        <empty-indicator if.bind="groupedOrderEvents.length == 0" class="margin-largest">
-            <div slot="heading">
-                No event translates
+        <empty-indicator if.bind="groupedOrderEvents.length == 0 || fetchOperation.error != null" class="margin-largest">
+            <div slot="heading" translate>
+                No events
             </div>
         </empty-indicator>
 

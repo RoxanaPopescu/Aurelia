@@ -247,6 +247,7 @@
   "e4aee9011": "Show map",
   "145b83550": "Show fewer events like this",
   "31944317b": "Show ${orderEventGroup.length - 1 | number} more events like this",
+  "d411a46ee": "No events",
   "dbc61610f": "Order status",
   "0f9f40d3c": "Delivery date",
   "3712f5b49": "Delivery interval",
