@@ -1,9 +1,9 @@
 <template>
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
-    <require from="./components/events/events"></require>
+    <require from="./components/order-events/order-events"></require>
     <require from="./components/order-overview/order-overview"></require>
-    <require from="./components/colli/colli"></require>
+    <require from="./components/order-colli/order-colli"></require>
     <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
 
@@ -265,7 +265,7 @@
                             ${order.slug}
                         </span>
 
-                        <div if.bind="order.slug == null" class="text-skeleton" style="width: 240rem"></div>
+                        <div if.bind="order.slug == null" class="text-skeleton" style="width: 240rem;"></div>
 
                     </path-nav>
 
@@ -335,13 +335,14 @@
 
                         </select-button>
 
-                        <button if-claims="edit-order" disabled.bind="!order.state.canBeEdited" appearance="outline" accent="primary" click.trigger="onEditOrderClick()">
-                            <template if.bind="order.state.canBeEdited" translate>
-                                Edit order
-                            </template>
-                            <template if.bind="!order.state.canBeEdited" translate>
-                                Not possible to edit
-                            </template>
+                        <button
+                            if-claims="edit-order"
+                            disabled.bind="!order.state.canBeEdited"
+                            appearance="outline"
+                            accent="primary"
+                            click.trigger="onEditOrderClick()"
+                            translate>
+                            Edit order
                         </button>
 
                     </div>
@@ -352,26 +353,20 @@
 
             <order-overview show.bind="tab === 'events'" order.bind="order"></order-overview>
 
-            <events
+            <order-events
                 if.bind="tab === 'events'"
-                order.bind="order"
-                validation
-                validation.ref="eventsValidation">
-            </events>
+                order.bind="order">
+            </order-events>
 
-            <colli
+            <order-colli
                 if.bind="tab === 'colli'"
-                order.bind="order"
-                validation
-                validation.ref="colliValidation">
-            </colli>
+                order.bind="order">
+            </order-colli>
 
             <route-overview
                 if.bind="tab === 'route'"
                 id.bind="routeId"
-                order.bind="order"
-                validation
-                validation.ref="routeValidation">
+                order.bind="order">
             </route-overview>
 
         </page-content>

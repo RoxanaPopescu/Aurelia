@@ -1,0 +1,105 @@
+@import "resources/index";
+
+order-events
+{
+    data-table
+    {
+        --data-table-columns: min-content min-content 1fr 1fr 1fr 1fr;
+    }
+
+    .data-table-row.--hide
+    {
+        display: none;
+    }
+
+    .order-events-action-by-image
+    {
+        border-radius: 50%;
+        margin-right: var(--size-inline-spacing-large);
+        width: 32rem;
+        height: 32rem;
+        font-size: var(--font-small-font-size);
+    }
+
+    .order-events-timeline-marker,
+    .order-events-timeline-before,
+    .order-events-timeline-after
+    {
+        position: relative;
+        z-index: 1;
+
+        @each $accent in $accents
+        {
+            &.accent-#{$accent}
+            {
+                --surface-accent-surface-color: var(--surface-#{$accent}-text-color, inherit);
+            }
+
+            &.accent-neutral
+            {
+                --surface-accent-surface-color: var(--palette-color-neutral-dim);
+            }
+        }
+    }
+
+    .order-events-timeline-marker
+    {
+        position: relative;
+        overflow: visible;
+        border-radius: 50%;
+        width: 32rem;
+        height: 32rem;
+        line-height: calc(32rem - 2 * var(--border-width-medium));
+        text-align: center;
+        background: var(--surface-accent-surface-color);
+        color: var(--palette-color-whitepoint);
+        border: var(--border-width-medium) solid transparent;
+
+        icon
+        {
+            font-size: var(--font-larger-font-size);
+            position: absolute;
+            top: -8rem;
+            right: -10rem;
+            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+        }
+    }
+
+    .order-events-timeline-cell
+    {
+        overflow: visible;
+
+        .data-table-cell-content
+        {
+            justify-content: center;
+        }
+    }
+
+    .order-events-timeline-before
+    {
+        position: absolute;
+        top: calc(50% - 50rem);
+        height: 60rem;
+        width: var(--border-width-thick);
+        background: var(--surface-accent-surface-color);
+    }
+
+    .order-events-timeline-after
+    {
+        position: absolute;
+        top: 50%;
+        height: 60rem;
+        width: var(--border-width-thick);
+        background: var(--surface-accent-surface-color);
+    }
+
+    .data-table-row:first-of-type .order-events-timeline-before
+    {
+        display: none;
+    }
+
+    .data-table-row:last-of-type .order-events-timeline-after
+    {
+        display: none;
+    }
+}

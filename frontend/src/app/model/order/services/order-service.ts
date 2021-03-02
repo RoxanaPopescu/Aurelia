@@ -123,21 +123,39 @@ export class OrderService
     }
 
     /**
-     * Gets the specified order.
-     * @param orderSlug The slug identifying the order.
+     * Gets the events for the specified order.
+     * @param consignorId The ID of the consignor owning of the order.
+     * @param orderId The ID of the order.
      * @returns A promise that will be resolved with the events.
      */
-    public async getEvents(orderSlug: string): Promise<{completedEvents: OrderEvent[]; futureEvents: OrderEvent[]}>
+    public async getEvents(consignorId: string, orderId: string): Promise<OrderEvent[]>
     {
-        const result = await this._apiClient.get("orders/v2/events",
+        const result = await this._apiClient.post("orders/events",
         {
-            query: { slug: orderSlug }
+            body: { consignorId, orderId }
         });
 
-        return {
-            completedEvents: result.data.completedEvents.map(ce => new OrderEvent(ce)),
-            futureEvents: result.data.futureEvents.map(fe => new OrderEvent(fe))
-        };
+        const orderEvents = result.data.map(e => new OrderEvent(e));
+
+        // Ensure the `order-pickup-eta-provided` event, if present, is the first event.
+
+        const pickupEtaProvidedIndex = orderEvents.findIndex(e => e.eventType.slug === "order-pickup-eta-provided");
+
+        if (pickupEtaProvidedIndex > -1)
+        {
+            orderEvents.unshift(...orderEvents.splice(pickupEtaProvidedIndex, 1));
+        }
+
+        // Ensure the `order-delivery-eta-provided` event, if present, is the first event.
+
+        const deliveryEtaProvidedIndex = orderEvents.findIndex(e => e.eventType.slug === "order-delivery-eta-provided");
+
+        if (deliveryEtaProvidedIndex > -1)
+        {
+            orderEvents.unshift(...orderEvents.splice(deliveryEtaProvidedIndex, 1));
+        }
+
+        return orderEvents;
     }
 
     /**

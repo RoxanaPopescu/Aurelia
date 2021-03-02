@@ -79,8 +79,7 @@ export class OrdersModule
                     [
                         "view-orders"
                     ]
-                },
-                title: routeTitles.details
+                }
             },
             {
                 name: "edit",

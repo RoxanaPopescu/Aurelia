@@ -3,7 +3,7 @@ import { Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
 import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
-import { SignatureImage } from "../../modals/signature-image/signature-image";
+import { ImageDialog } from "app/modals/dialogs/image/image";
 
 @autoinject
 export class RouteStopDetailsCustomElement
@@ -140,16 +140,12 @@ export class RouteStopDetailsCustomElement
         return Array.from(tagSets.values());
     }
 
+    /**
+     * Called when the user clicks the signature.
+     */
     protected async onSignatureClick(): Promise<void>
     {
-        try
-        {
-            await this._modalService.open(SignatureImage, this.model.routeStop).promise;
-        }
-        catch (error)
-        {
-            Log.error("Could not change route stop status", error);
-        }
+        await this._modalService.open(ImageDialog, { imageUrl: this.model.routeStop.signature!.imageUrl }).promise;
     }
 
     /**

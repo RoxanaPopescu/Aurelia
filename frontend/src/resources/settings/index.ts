@@ -41,7 +41,12 @@ export default
         /**
          * The time in milliseconds before a toast, by default, disappears.
          */
-        defaultToastTimeout: 10000
+        defaultToastTimeout: 10000,
+
+        /**
+         * The base URL to use when fetching public images based on their ID.
+         */
+        publicImageBaseUrl: "https://filestoragetestmover.blob.core.windows.net/public/"
     },
 
     /**
@@ -80,6 +85,7 @@ export default
                 "routes/templates": { version: "2", obfuscate: false },
                 "routes/create/from-template": { version: "2", obfuscate: false },
                 "routes/create/collection-points-from-orders": { version: "2", obfuscate: false },
+                "orders/events": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

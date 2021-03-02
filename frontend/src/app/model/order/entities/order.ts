@@ -14,6 +14,7 @@ export class Order
         this.id = data.id;
         this.slug = data.slug;
         this.relationalId = data.relationalId;
+        this.consignorId = data.consignorId;
 
         this.state =
         {
@@ -38,6 +39,8 @@ export class Order
     public readonly slug: string;
 
     public readonly relationalId: string;
+    
+    public readonly consignorId: string;
 
     public state:
     {

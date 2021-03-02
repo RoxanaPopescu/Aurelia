@@ -28,7 +28,7 @@ export class OrderStopMarker extends Marker<OrderStopMarkerProps>
         return (
             <MarkerWithLabel
                 icon=" "
-                labelAnchor={new google.maps.Point(24, 17)}
+                labelAnchor={new google.maps.Point(26, 17)}
                 position={position}
                 zIndex={3}
                 onClick={() => this.props.onClick && this.props.onClick()}>
@@ -38,8 +38,11 @@ export class OrderStopMarker extends Marker<OrderStopMarkerProps>
                     <div className={`orderDetails-orderStopMarker ${this.props.faded ? "--faded" : ""}`}>
                         <div className={`
                             orderDetails-orderStopMarker-shape`}>
+
                             {labelText}
+
                         </div>
+
                     </div>
 
                 </React.Fragment>

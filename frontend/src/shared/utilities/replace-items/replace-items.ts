@@ -6,7 +6,7 @@
  */
 export function replaceItems(array: any[], newItems: any[]): void
 {
-    // Fil the array with the new items, while removing them from their existing positions.
+    // Fillthe array with the new items, while removing them from their existing positions.
     for (let newIndex = 0; newIndex < newItems.length; newIndex++)
     {
         const item = newItems[newIndex];

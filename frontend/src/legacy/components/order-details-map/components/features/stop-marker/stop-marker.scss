@@ -11,10 +11,10 @@
 
 .orderDetails-orderStopMarker-shape {
   position: relative;
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  line-height: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  line-height: 28px;
   font-size: 10px;
   font-weight: bold;
   text-align: center;
@@ -23,6 +23,8 @@
   background: black;
   border: 2px solid black;
   box-shadow: 0 0 1px 1px white;
+  background: var(--palette-color-neutral-dark);
+  border-color: var(--palette-color-neutral-dark);
 
   &.orderDetails-orderStopMarker--pending {
     background: gray;

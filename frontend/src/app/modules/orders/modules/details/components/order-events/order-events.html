@@ -1,0 +1,223 @@
+<template>
+
+    <require from="./order-events.scss"></require>
+    <require from="legacy/components/order-details-map/wrapper" as="order-details-map"></require>
+    <require from="app/components/identity-picture/identity-picture"></require>
+
+    <page-section>
+
+        <div slot="header" class="flex-row">
+
+            <div slot="heading" translate>
+                Order events
+            </div>
+
+            <toolbar class="font-base flex-push-right">
+                <switch-toggle label="before" value.bind="showMap">
+
+                    <div slot="heading" translate>
+                        Show map
+                    </div>
+
+                </switch-toggle>
+            </toolbar>
+        </div>
+
+        <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" class="margin-bottom"></order-details-map>
+
+        <data-table appearance="rows">
+
+            <data-table-headers>
+
+                <data-table-cell align="right">
+                    <span class="text-truncate timeline-header" translate>
+                        Time
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Event
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Location
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Route
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="text-truncate" translate>
+                        Action by
+                    </span>
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <template repeat.for="orderEventGroup of groupedOrderEvents">
+
+                <let
+                    previous-order-event.bind="groupedOrderEvents[$index - 1][groupedOrderEvents[$index - 1].length - 1]">
+                </let>
+
+                <template repeat.for="orderEvent of orderEventGroup">
+
+                    <let
+                        order-event-location.bind="orderEvent.data.deliveryLocation || orderEvent.data.pickupLocation || orderEvent.data.location"
+                        order-event-contact.bind="orderEvent.data.deliveryContact || orderEvent.data.pickupContact || orderEvent.data.contact"
+                        order-event-time.bind="
+                            orderEvent.eventType.slug === 'order-pickup-eta-provided' ? orderEvent.data.pickupEta :
+                            orderEvent.eventType.slug === 'order-delivery-eta-provided' ? orderEvent.data.deliveryEta :
+                            orderEvent.data.timeOfEvent">
+                    </let>
+
+                    <data-table-row
+                        click.call="onEventDetailsClick(orderEvent)"
+                        clickable.bind="true"
+                        class="${$index > 0 && !orderEventGroup.__expanded ? '--hide' : ''}">
+
+                        <data-table-cell align="right">
+
+                            <div>
+
+                                <div class="text-truncate">
+                                    ${orderEventTime | date: 'narrow' : false}
+                                </div>
+
+                                <div class="text-truncate">
+                                    ${orderEventTime | time: 'narrow' : false}
+                                </div>
+
+                            </div>
+
+                        </data-table-cell>
+
+                        <data-table-cell class="order-events-timeline-cell">
+                            <div class="order-events-timeline-before accent-${previousOrderEvent.eventType.accent}"></div>
+                            <div class="order-events-timeline-after accent-${orderEvent.eventType.accent}"></div>
+                            <div class="order-events-timeline-marker text-truncate accent-${orderEvent.eventType.accent}">
+                                <icon
+                                    if.bind="orderEvent.eventType.accent !== 'negative' && orderEvent.data.deviation != null"
+                                    name="warning"
+                                    accent="negative">
+                                </icon>
+                            </div>
+                        </data-table-cell>
+
+                        <data-table-cell>
+
+                            <div class="text-truncate">
+                                ${orderEvent.eventType.name}
+                            </div>
+
+                        </data-table-cell>
+
+                        <data-table-cell>
+
+                            <div empty-value class="text-truncate">
+                                <template if.bind="orderEventLocation.address != null">
+                                    ${orderEventLocation.address.primary}<br>
+                                    ${orderEventLocation.address.secondary}
+                                </template>
+                            </div>
+
+                        </data-table-cell>
+
+                        <data-table-cell>
+
+                            <div empty-value>
+                                <template if.bind="orderEvent.data.route != null">
+
+                                    <div class="text-truncate">
+                                        <a page-href="path.bind: '/routes/details/' + orderEvent.data.route.slug" target="_blank">
+                                            ${orderEvent.data.route.slug}
+                                        </a>
+                                    </div>
+
+                                    <div class="text-truncate">
+                                        ${orderEvent.data.route.reference}
+                                    </div>
+
+                                </template>
+                            </div>
+
+                        </data-table-cell>
+
+                        <data-table-cell>
+
+                            <template if.bind="orderEvent.data.actionBy != null">
+
+                                <identity-picture
+                                    src.bind="orderEvent.data.actionBy.user.imageId ? publicImageBaseUrl + orderEvent.data.actionBy.user.imageId : undefined"
+                                    class="order-events-action-by-image">
+                                    ${orderEvent.data.actionBy.user.fullName[0] || orderEvent.data.actionBy.organization.name[0]}
+                                </identity-picture>
+
+                                <div>
+
+                                    <div class="text-truncate">
+                                        ${orderEvent.data.actionBy.user.fullName}
+                                    </div>
+
+                                    <div class="text-truncate">
+                                        ${orderEvent.data.actionBy.organization.name}
+                                    </div>
+
+                                </div>
+
+                            </template>
+
+                            <div if.bind="orderEvent.data.actionBy == null" empty-value></div>
+
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+                <data-table-row
+                    if.bind="orderEventGroup.length > 1"
+                    clickable.bind="true"
+                    click.call="onToggleShowMoreClick(orderEventGroup)">
+                    <data-table-cell></data-table-cell>
+                    <data-table-cell></data-table-cell>
+                    <data-table-cell accent="primary">
+                        <div class="user-select-none">
+                            <template if.bind="orderEventGroup.__expanded" translate>
+                                Show fewer events like this
+                            </template>
+                            <template if.bind="!orderEventGroup.__expanded" translate>
+                                Show ${orderEventGroup.length - 1 | number} more events like this
+                            </template>
+                        </div>
+                    </data-table-cell>
+                    <data-table-cell></data-table-cell>
+                    <data-table-cell></data-table-cell>
+                    <data-table-cell></data-table-cell>
+                </data-table-row>
+
+            </template>
+
+        </data-table>
+
+        <busy-indicator if.bind="groupedOrderEvents == null && fetchOperation.error == null" class="margin-largest"></busy-indicator>
+
+        <empty-indicator if.bind="groupedOrderEvents.length == 0 || fetchOperation.error != null" class="margin-largest">
+            <div slot="heading" translate>
+                No events
+            </div>
+        </empty-indicator>
+
+    </page-section>
+
+</template>
