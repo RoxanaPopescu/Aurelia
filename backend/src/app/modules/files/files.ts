@@ -58,19 +58,20 @@ export class FilesModule extends AppModule
         });
 
         /**
-         * Forwards a public url to a file
-         * @returns forward of url
+         * Gets info about a public file, including its URL.
+         * @returns An object representing info about the file.
          */
         this.router.get("/v2/files/public/:id", context =>
         {
-            const filePath = `https://filestoragetestmover.blob.core.windows.net/public/${context.params.id}`;
+            const url = `https://filestoragetestmover.blob.core.windows.net/public/${context.params.id}`;
 
-            context.redirect(filePath);
+            context.response.body = { url };
+            context.response.status = 200;
         });
 
         /**
-         * Forwards a sensitive temporaraly url to a file
-         * @returns forward of url
+         * Gets info about a public file, including its temporary URL.
+         * @returns An object representing info about the file.
          */
         this.router.get("/v2/files/sensitive/:id", async context =>
         {
@@ -84,7 +85,8 @@ export class FilesModule extends AppModule
                 }
             });
 
-            context.redirect(result.data.url);
+            context.response.body = { url: result.data.url };
+            context.response.status = 200;
         });
     }
 

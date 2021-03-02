@@ -33,18 +33,21 @@ export class ImageInfoValueConverter
             return undefined;
         }
 
-        const imageInfo = {} as any;
+        const imageInfo = { resolved: false } as any;
 
         if (!secure)
         {
             imageInfo.url = `${settings.app.publicImageBaseUrl}${value}`;
+            imageInfo.resolved = true;
         }
         else
         {
-            this._apiClient.get(`files/sensitive/${value}`, { redirect: "manual" }).then(result =>
+            this._apiClient.get(`files/sensitive/${value}`).then(result =>
             {
-                imageInfo.url = result.response.headers.get("location") ?? undefined;
-            }).catch();
+                imageInfo.url = result.data.url;
+                imageInfo.resolved = true;
+
+            }).catch(error => console.log(error));
         }
 
         return imageInfo;
