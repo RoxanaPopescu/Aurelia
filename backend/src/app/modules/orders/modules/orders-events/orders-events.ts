@@ -51,11 +51,11 @@ export class OrdersEventsModule extends AppModule
                             version: "2.0"
                         },
                         {
-                            eventType: "collection-point-collo-mamaged",
+                            eventType: "collection-point-collo-managed",
                             version: "1.0"
                         },
                         {
-                            eventType: "collection-point-collo-mollected",
+                            eventType: "collection-point-collo-collected",
                             version: "1.0"
                         },
                         {
