@@ -38,7 +38,6 @@ export function apiErrorMiddleware(): Middleware
                         `failed with status ${error.response.status}.\n\n${error.message}`;
 
                     context.status = context.state.internal ? 500 : error.response.status;
-                    context.status = context.state.internal ? 500 : error.response.status;
 
                     // When not in the `production` environment, include the upstream
                     // response body in the response to the client, to ease debugging.

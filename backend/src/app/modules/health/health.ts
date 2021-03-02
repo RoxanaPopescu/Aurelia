@@ -13,7 +13,7 @@ export class HealthModule extends AppModule
         /**
          * Gets the current environment.
          */
-        this.router.get("/health", context =>
+        this.router.get("/v2/health", context =>
         {
             context.response.body = "OK";
             context.response.status = 200;
