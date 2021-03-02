@@ -80,7 +80,7 @@ export class FilesModule extends AppModule
             {
                 body:
                 {
-                    id: context.params.id
+                    fileName: context.params.id
                 }
             });
 
