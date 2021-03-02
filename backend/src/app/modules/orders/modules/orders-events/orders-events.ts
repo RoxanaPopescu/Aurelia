@@ -20,6 +20,69 @@ export class OrdersEventsModule extends AppModule
             {
                 body:
                 {
+                    eventQueryFilter:
+                    [
+                        {
+                            eventType: "order-pickup-arrived",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-delivery-completed",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-delivery-arrived",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-delivery-failed",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-pickup-completed",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-pickup-failed",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "order-added-to-route",
+                            version: "2.0"
+                        },
+                        {
+                            eventType: "collection-point-collo-mamaged",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "collection-point-collo-mollected",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "collection-point-collo-missing",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "collection-point-collo-not-collected",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "collection-point-collo-missing",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "staging-collo-validated",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "staging-collo-damaged",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "staging-collo-missing",
+                            version: "1.0"
+                        }
+                    ],
                     ownerId: context.request.body.consignorId,
                     ownerOrderId: context.request.body.orderId
                 }
