@@ -140,6 +140,7 @@ export class VehicleGroup
 
         delete data.vehicleType;
         data.vehicleTypeId = this.vehicleType.id;
+        data.handlesCollectionPoint = this.handlesCollectionPoint;
 
         return data;
     }
