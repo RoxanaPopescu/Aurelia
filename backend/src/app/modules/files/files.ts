@@ -3,6 +3,7 @@ import { ParameterizedContext } from "koa";
 import Router from "koa-router";
 import { Readable } from "stream";
 import { AppModule } from "../../app-module";
+import settings from "../../../resources/settings/settings";
 
 /**
  * Represents a module exposing endpoints related to files.
@@ -63,7 +64,7 @@ export class FilesModule extends AppModule
          */
         this.router.get("/v2/files/public/:id", context =>
         {
-            const url = `https://filestoragetestmover.blob.core.windows.net/public/${context.params.id}`;
+            const url = `${settings.app.publicImageBaseUrl}${context.params.id}`;
 
             context.response.body = { url };
             context.response.status = 200;

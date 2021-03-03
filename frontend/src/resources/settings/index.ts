@@ -44,9 +44,12 @@ export default
         defaultToastTimeout: 10000,
 
         /**
-         * The base URL to use when fetching public images based on their ID.
+         * The base URL to use when fetching public images based on their ID,
+         * including a trailing `/`.
          */
-        publicImageBaseUrl: "https://filestoragetestmover.blob.core.windows.net/public/"
+        publicImageBaseUrl: ENVIRONMENT.name === "production"
+            ? "https://filestorageprodmover.blob.core.windows.net/public/"
+            : "https://filestoragetestmover.blob.core.windows.net/public/"
     },
 
     /**

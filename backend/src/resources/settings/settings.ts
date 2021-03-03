@@ -23,7 +23,15 @@ export default
         /**
          * The code identifying the default locale.
          */
-        defaultLocaleCode: "en-US"
+        defaultLocaleCode: "en-US",
+
+        /**
+         * The base URL to use when fetching public images based on their ID,
+         * including a trailing `/`.
+         */
+        publicImageBaseUrl: environment.name === "production"
+            ? "https://filestorageprodmover.blob.core.windows.net/public/"
+            : "https://filestoragetestmover.blob.core.windows.net/public/"
     },
 
     /**

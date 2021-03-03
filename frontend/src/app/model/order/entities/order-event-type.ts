@@ -29,7 +29,7 @@ export class OrderEventType
             Object.assign(this,
             {
                 name: textCase(this.slug, "kebab", "sentence"),
-                description: "Unknown order event.",
+                description: undefined,
                 accent: "attention"
             });
         }
@@ -37,7 +37,7 @@ export class OrderEventType
 
     public slug: OrderEventTypeSlug;
     public name: string;
-    public description: string;
+    public description: string | undefined;
     public accent: { pickup: Accent; delivery: Accent };
 
     /**
@@ -59,7 +59,7 @@ export class OrderEventType
             description: "The order was created.",
             accent: "positive"
         },
-        "order-added-to-route":
+        "order-assigned-to-route":
         {
             name: "Order added to route",
             description: "The order was added to a route.",
@@ -104,13 +104,13 @@ export class OrderEventType
         "order-provider-accepted":
         {
             name: "Order provider accepted",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "order-pickup-accepted":
         {
             name: "Order pickup accepted",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "order-delivery-arrived":
@@ -128,13 +128,7 @@ export class OrderEventType
         "order-return-completed":
         {
             name: "Order return completed",
-            description: "TODO",
-            accent: "positive"
-        },
-        "order-assigned-to-route":
-        {
-            name: "Order assigned to route",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "order-delivery-eta-provided":
@@ -189,91 +183,91 @@ export class OrderEventType
         "collo-removed-from-linehaul":
         {
             name: "Collo removed from linehaul",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collo-delivery-completed":
         {
             name: "Collo delivery completed",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collo-pickup-completed":
         {
             name: "Collo pickup completed",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collo-delivery-arrived":
         {
             name: "Collo delivery arrived",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collo-delivery-failed":
         {
             name: "Collo delivery failed",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "collo-pickup-failed":
         {
             name: "Collo pickup failed",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "collo-pickup-accepted":
         {
             name: "Collo pickup accepted",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "staging-collo-missing":
         {
             name: "Staging collo missing",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "staging-collo-damaged":
         {
             name: "Staging collo damaged",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "staging-collo-validated":
         {
             name: "Staging collo validated",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collection-point-collo-missing":
         {
             name: "Collection point collo missing",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "collection-point-collo-damaged":
         {
             name: "Collection point collo damaged",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "collection-point-collo-collected":
         {
             name: "Collection point collo collected",
-            description: "TODO",
+            description: undefined,
             accent: "positive"
         },
         "collection-point-collo-not-collected":
         {
             name: "Collection point collo not collected",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         },
         "collection-point-collo-rejected":
         {
             name: "Collection point collo rejected",
-            description: "TODO",
+            description: undefined,
             accent: "negative"
         }
     };
