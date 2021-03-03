@@ -182,8 +182,6 @@ export class TagsInputCustomElement
         this.open = true;
         this.focusedValue = undefined;
 
-        setTimeout(() => this.itemPicker?.scrollToFocusedValue());
-
         if (focusInput)
         {
             setTimeout(() => this.inputElement.focus());
@@ -202,6 +200,13 @@ export class TagsInputCustomElement
         if (!keepOpen)
         {
             this.open = false;
+        }
+
+        // Determine whether the picked value is a new value.
+        const isNewValue = this.new && this.filterValue && !this.value?.includes(this.filterValue) && this.filterValue === this.focusedValue;
+
+        if (!keepOpen || isNewValue)
+        {
             this.filterValue = undefined;
         }
 
@@ -220,7 +225,7 @@ export class TagsInputCustomElement
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
 
-        if (!keepOpen)
+        if (!keepOpen || isNewValue)
         {
             this.focusedValue = undefined;
         }
