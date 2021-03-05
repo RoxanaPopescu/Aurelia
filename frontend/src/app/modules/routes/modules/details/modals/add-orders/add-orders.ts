@@ -27,7 +27,7 @@ export class AddOrdersPanel
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _modal: Modal;
-    private _result: Route | undefined;
+    private _result: boolean = false;
 
     /**
      * The orders to add
@@ -102,7 +102,7 @@ export class AddOrdersPanel
      * Called by the framework when the modal is deactivated.
      * @returns The result of the modal.
      */
-    public async deactivate(): Promise<Route | undefined>
+    public async deactivate(): Promise<boolean>
     {
         return this._result;
     }
@@ -160,7 +160,7 @@ export class AddOrdersPanel
             );
 
             // Set the result of the modal.
-            this._result = this.model;
+            this._result = true;
 
             await this._modal.close();
         }

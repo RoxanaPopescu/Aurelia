@@ -91,7 +91,10 @@
 
                                 <data-table-cell>
                                     <span class="text-truncate">
-                                        15:00-15:55
+                                        ${result.earliestDeliveryDate | date: 'narrow' : false}
+                                        ${result.earliestDeliveryTime | time: 'narrow' : false}
+                                        –
+                                        ${result.latestDeliveryTime | time: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
@@ -129,6 +132,9 @@
 
                     </data-table>
 
+                </div>
+
+                <div class="control-row flex-row">
                     <custom-validator
                         class="font-small margin-medium-top"
                         if.bind="orders.length == 0"
@@ -138,8 +144,8 @@
                             Add atleast one order.
                         </template>
                     </custom-validator>
-
                 </div>
+
             </modal-section>
 
             <hr class="hr-line margin-larger-bottom" if.bind="orders.length == 0">

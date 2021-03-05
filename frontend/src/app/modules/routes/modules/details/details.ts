@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { ModalService, IScroll } from "shared/framework";
+import { ModalService, IScroll, ToastService } from "shared/framework";
 import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
@@ -17,6 +17,7 @@ import { EditInformationPanel } from "./modals/edit-information/edit-information
 import { AddOrderLegacyPanel } from "./modals/add-order-legacy/add-order";
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 import { AddOrdersPanel } from "./modals/add-orders/add-orders";
+import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -38,15 +39,22 @@ export class DetailsModule
     /**
      * Creates a new instance of the class.
      * @param routeService The `RouteService` instance.
+     * @param toastService The `ToastService` instance.
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
      * @param router The `Router` instance.
      */
-    public constructor(routeService: RouteService, modalService: ModalService, identityService: IdentityService, router: Router)
+    public constructor(
+        routeService: RouteService,
+        modalService: ModalService,
+        identityService: IdentityService,
+        toastService: ToastService,
+        router: Router)
     {
         this.routeService = routeService;
         this._modalService = modalService;
         this._router = router;
+        this.toastService = toastService;
         this.identityService = identityService;
     }
 
@@ -57,6 +65,7 @@ export class DetailsModule
     private _pollTimeout: any;
 
     protected readonly routeService: RouteService;
+    protected readonly toastService: ToastService;
     protected readonly identityService: IdentityService;
     protected readonly environment = ENVIRONMENT.name;
 
@@ -350,7 +359,7 @@ export class DetailsModule
      * Called when the `Add order` button is clicked.
      * @param route The route to which an order should be added.
      */
-    protected async onAddOrderLegacyClick(route: Route): Promise<void>
+    protected async onAddOrderLegacyClick(): Promise<void>
     {
         await this._modalService.open(AddOrderLegacyPanel, { route: this.route! }).promise;
     }
@@ -359,9 +368,14 @@ export class DetailsModule
      * Called when the `Add order` button is clicked.
      * @param route The route to which an order should be added.
      */
-    protected async onAddOrdersClick(route: Route): Promise<void>
+    protected async onAddOrdersClick(): Promise<void>
     {
-        await this._modalService.open(AddOrdersPanel, { route: this.route! }).promise;
+        const added = await this._modalService.open(AddOrdersPanel, { route: this.route! }).promise;
+
+        if (added)
+        {
+            this.toastService.open("info", addedOrdersToast);
+        }
     }
 
     /**

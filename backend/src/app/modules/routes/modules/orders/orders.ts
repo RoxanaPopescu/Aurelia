@@ -116,6 +116,9 @@ export class RouteOrdersModule extends AppModule
                 orderObject["pickup"] = pickup;
                 orderObject["delivery"] = delivery;
                 orderObject["colli"] = colli;
+
+                console.log(pickup.appointment.from?.toString());
+
                 orders.push(orderObject);
             }
 
@@ -135,8 +138,6 @@ export class RouteOrdersModule extends AppModule
                     "name": "no-name"
                 }
             };
-
-            console.log(body);
 
             // Sent updated data to NOI
             await this.apiClient.post("logistics-platform/routes/v4/add-orders-to-routes",

@@ -82,7 +82,10 @@
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                10:00 - 12:00
+                                ${result.earliestDeliveryDate | date: 'narrow' : false}
+                                ${result.earliestDeliveryTime | time: 'narrow' : false}
+                                –
+                                ${result.latestDeliveryTime | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
