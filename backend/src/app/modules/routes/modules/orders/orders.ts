@@ -28,11 +28,12 @@ export class RouteOrdersModule extends AppModule
             });
 
             // Mapping
-            let orders: any[] = [];
+            const orders: any[] = [];
 
             for (const order of ordersResult.data)
             {
-                let orderObject: any = {
+                const orderObject: any =
+                {
                     "id": order.internalOrderId,
                     "creatorOrderId": order.orderId,
                     "creatorId": order.consignorId,
@@ -42,7 +43,9 @@ export class RouteOrdersModule extends AppModule
                 };
 
                 // TODO: Backend should really fix their spelling mistake with lenght...
-                const colli = order.actualColli.map((c: any) => {
+                const colli = order.actualColli.map((c: any) =>
+                {
+
                     return {
                         "id": c.internalId,
                         "barcode": c.barcode,
@@ -56,7 +59,8 @@ export class RouteOrdersModule extends AppModule
                     }
                 });
 
-                const pickup = {
+                const pickup =
+                {
                     "contact": {
                         "preferredName": order.consignorPersonName,
                         "fullName": order.consignorPersonName,
@@ -68,21 +72,22 @@ export class RouteOrdersModule extends AppModule
                         "email": order.consignorEmail,
                         "companyName": order.consignorCompanyName,
                     },
-                    "location":{
+                    "location": {
                         "address": {
                             "primary": order.consignorAddress
                         },
                         "position": order.consignorAddressPosition,
                         "timeZone": "Europe/Copenhagen"
                     },
-                    "appointment":{
+                    "appointment": {
                         "from": this.combine(order.pickupEarliestDate, order.pickupEarliestTime),
                         "to": this.combine(order.pickupLatestDate, order.pickupLatestTime)
                     },
                     "instructions": order.pickupInstructions
                 };
 
-                const delivery = {
+                const delivery =
+                {
                     "contact": {
                         "preferredName": order.consigneePersonName,
                         "fullName": order.consigneePersonName,
@@ -94,14 +99,14 @@ export class RouteOrdersModule extends AppModule
                         "email": order.consigneeEmail,
                         "companyName": order.consigneeCompanyName
                     },
-                    "location":{
+                    "location": {
                         "address": {
                             "primary": order.consigneeAddress
                         },
                         "position": order.consigneeAddressPosition,
                         "timeZone": "Europe/Copenhagen"
                     },
-                    "appointment":{
+                    "appointment": {
                         "from": this.combine(order.deliveryEarliestDate, order.deliveryEarliestTime),
                         "to": this.combine(order.deliveryLatestDate, order.deliveryLatestTime)
                     },
@@ -117,7 +122,8 @@ export class RouteOrdersModule extends AppModule
             body.orders = orders;
             delete body.orderIds;
 
-            body.actionBy = {
+            body.actionBy =
+            {
                 "user": {
                     "id": context.user?.id,
                     "preferredName": context.user?.username,
@@ -128,7 +134,7 @@ export class RouteOrdersModule extends AppModule
                     "id": context.user?.outfitId,
                     "name": "no-name"
                 }
-            }
+            };
 
             console.log(body);
 
