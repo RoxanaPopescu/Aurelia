@@ -117,7 +117,8 @@ export class AddOrdersPanel
             { }
         ).promise;
 
-        if (order != null) {
+        if (order != null)
+        {
             this.orders.push(order);
         }
     }

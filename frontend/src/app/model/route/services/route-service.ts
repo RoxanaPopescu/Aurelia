@@ -231,7 +231,7 @@ export class RouteService
     public async addOrders(
         route: Route,
         orders: OrderInfo[],
-        stopInformation: { newPickupStops: boolean, newDeliveryStops: boolean, pickupStop: RouteStop | undefined, deliveryStop: RouteStop | undefined }
+        stopInformation: { newPickupStops: boolean; newDeliveryStops: boolean; pickupStop: RouteStop | undefined; deliveryStop: RouteStop | undefined }
     ): Promise<void>
     {
         await this._apiClient.post("routes/orders/add",
