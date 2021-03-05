@@ -47,7 +47,7 @@ export class DataTablePagerCustomElement
     /**
      * The page sizes the user may choose from.
      */
-    @bindable({ defaultValue: [10, 20, 30, 40, 50] })
+    @bindable({ defaultValue: [10, 20, 30, 40, 50, 100] })
     public pageSizes: number[];
 
     /**

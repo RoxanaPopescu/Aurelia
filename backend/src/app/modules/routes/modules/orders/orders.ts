@@ -39,7 +39,7 @@ export class RouteOrdersModule extends AppModule
                     "creatorId": order.consignorId,
                     "relationalid": order.relationalid,
                     "tags": order.tags,
-                    "estimatedColliCount": (order.estimatedColli ?? []).length,
+                    "estimatedColliCount": (order.estimatedColli ?? []).length
                 };
 
                 // TODO: Backend should really fix their spelling mistake with lenght...
@@ -56,7 +56,7 @@ export class RouteOrdersModule extends AppModule
                             "length": c.dimensions.length ?? c.dimensions.lenght,
                             "height": c.dimensions.height
                         }
-                    }
+                    };
                 });
 
                 const pickup =
@@ -70,7 +70,7 @@ export class RouteOrdersModule extends AppModule
                             "countryCode": "DK"
                         },
                         "email": order.consignorEmail,
-                        "companyName": order.consignorCompanyName,
+                        "companyName": order.consignorCompanyName
                     },
                     "location": {
                         "address": {
