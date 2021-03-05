@@ -649,11 +649,19 @@
                             </item>
 
                             <item
-                                if.bind="route"
+                                if.bind="environment == 'development' && route"
                                 model="add-order"
-                                click.trigger="onAddOrderClick()"
+                                click.trigger="onAddOrdersClick()"
                                 translate>
-                                Add order
+                                Add orders
+                            </item>
+
+                            <item
+                                if.bind="environment != 'development' && route"
+                                model="add-order"
+                                click.trigger="onAddOrderLegacyClick()"
+                                translate>
+                                Add orders
                             </item>
 
                         </template>

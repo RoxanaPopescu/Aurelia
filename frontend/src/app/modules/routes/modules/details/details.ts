@@ -14,8 +14,9 @@ import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
-import { AddOrderPanel } from "./modals/add-order/add-order";
+import { AddOrderLegacyPanel } from "./modals/add-order-legacy/add-order";
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
+import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 
 /**
  * Represents the route parameters for the page.
@@ -341,17 +342,26 @@ export class DetailsModule
      */
     protected async onRemoveDriverClick(route: Route): Promise<void>
     {
-        // FIXME:
         await this._modalService.open(RemoveDriverPanel, { route: this.route! }).promise;
+    }
+
+    /**
+     * FIXME: Remove this when new add order page has competed
+     * Called when the `Add order` button is clicked.
+     * @param route The route to which an order should be added.
+     */
+    protected async onAddOrderLegacyClick(route: Route): Promise<void>
+    {
+        await this._modalService.open(AddOrderLegacyPanel, { route: this.route! }).promise;
     }
 
     /**
      * Called when the `Add order` button is clicked.
      * @param route The route to which an order should be added.
      */
-    protected async onAddOrderClick(route: Route): Promise<void>
+    protected async onAddOrdersClick(route: Route): Promise<void>
     {
-        await this._modalService.open(AddOrderPanel, { route: this.route! }).promise;
+        await this._modalService.open(AddOrdersPanel, { route: this.route! }).promise;
     }
 
     /**

@@ -14,6 +14,7 @@ import { IdentityService } from "app/services/identity";
 import { Position } from "app/model/shared";
 import { RouteDriverPositionsService } from "shared/src/services/route-driver-positions-service";
 import { Uuid } from "shared/utilities/id/uuid";
+import { OrderInfo } from "app/model/order";
 
 /**
  * Represents a service that manages routes.
@@ -204,6 +205,7 @@ export class RouteService
     }
 
     /**
+     * FIXME: Remove when we use new add-order
      * Associate an the specified route with the specified order.
      * @param route The route.
      * @param orderSlug The slug identifying the order to associate with the route.
@@ -217,6 +219,35 @@ export class RouteService
                 routeSlug: route.slug,
                 routeId: route.id,
                 orderSlug: orderSlug
+            }
+        });
+    }
+
+    /**
+     * Associate an the specified route with the specified order.
+     * @param route The route.
+     * @param orderSlug The slug identifying the order to associate with the route.
+     */
+    public async addOrders(
+        route: Route,
+        orders: OrderInfo[],
+        stopInformation: { newPickupStops: boolean, newDeliveryStops: boolean, pickupStop: RouteStop | undefined, deliveryStop: RouteStop | undefined }
+    ): Promise<void>
+    {
+        await this._apiClient.post("routes/orders/add",
+        {
+            body:
+            {
+                orderIds: orders.map(o => o.id),
+                routeId: route.id,
+                pickup: {
+                    addOrdersAsNewStops: stopInformation.newPickupStops,
+                    stopId: stopInformation.pickupStop?.id
+                },
+                delivery: {
+                    addOrdersAsNewStops: stopInformation.newDeliveryStops,
+                    stopId: stopInformation.deliveryStop?.id
+                }
             }
         });
     }

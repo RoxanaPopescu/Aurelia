@@ -1,0 +1,278 @@
+<template >
+
+    <require from="./add-orders.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel scroll scroll.ref="scroll" validation validation.ref="validation" name="add-orders" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <div>
+
+            <modal-header scroll-fade >
+
+                <h1 class="font-largest flex-row" tabindex="-1" autoFocus= "visible.bind: false" translate >
+                    Add orders to route
+                </h1>
+
+            </modal-header>
+
+            <modal-section class="margin-bottom">
+
+                <div class="control-row flex-row">
+
+                    <data-table
+                        appearance="rows"
+                        append.call="onAddOrderClick()"
+                    >
+                        <data-table-headers if.bind="orders.length > 0">
+
+                            <data-table-cell>
+                                <span class="text-truncate" translate>
+                                    Id
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" translate>
+                                    Pickup address
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" translate>
+                                    Delivery address
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" translate>
+                                    Pickup timeframe
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" translate>
+                                    Delivery timeframe
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <!-- Icons -->
+                            </data-table-cell>
+
+                        </data-table-headers>
+
+                        <template repeat.for="result of orders">
+
+                            <data-table-row>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${result.slug}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${result.pickupLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        ${result.deliveryLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        fixme
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell>
+                                    <span class="text-truncate">
+                                        fixme
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell align="right">
+
+                                    <button
+                                        title.translate="Remove order"
+                                        class="icon-row"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onRemoveOrderClick(result)">
+
+                                        <icon name="delete-small"></icon>
+
+                                    </button>
+
+                                </data-table-cell>
+
+                            </data-table-row>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    enabled.bind="!newPickupStops"
+                                    value.bind="selectedPickupStop">
+                                </required-validator>
+
+                            </div>
+
+                        </template>
+
+                        <template replace-part="append" translate>
+                            Add order
+                        </template>
+
+                    </data-table>
+
+                    <custom-validator
+                        class="font-small margin-medium-top"
+                        if.bind="orders.length == 0"
+                        valid.bind="orders.length != 0">
+
+                        <template replace-part="invalid" translate>
+                            Add atleast one order.
+                        </template>
+                    </custom-validator>
+
+                </div>
+            </modal-section>
+
+            <hr class="hr-line margin-larger-bottom" if.bind="orders.length == 0">
+
+            <modal-section class="margin-bottom">
+                <h2 class="font-larger flex-row margin-bottom" tabindex="-1" autoFocus= "visible.bind: false" translate >
+                    Pickup
+                </h2>
+
+                <div class="control-row flex-row margin-bottom">
+
+                    <select-input disabled.bind="newPickupStops" label="above" none.bind="false" value.bind="selectedPickupStop" display-value.bind="selectedPickupStop.location.address" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Specific pickup stop
+                        </div>
+
+                        <item repeat.for="stop of pickupStops" model.bind="stop">
+                            Stop ${stop.stopNumber} - ${stop.location.address}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                enabled.bind="!newPickupStops"
+                                value.bind="selectedPickupStop">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="control-row flex-row">
+
+                    <check-toggle label="after" value.bind="newPickupStops" class="flex-basis-1-of-1">
+
+                        <div slot="heading">
+
+                            <span translate>
+                                Add new pickup stops
+                            </span>
+
+                            <info-icon position="right">
+
+                                <span slot="body" translate>
+                                    One stop is created for each order
+                                </span>
+
+                            </info-icon>
+
+                        </div>
+
+                    </check-toggle>
+
+                </div>
+
+            </modal-section>
+
+            <hr class="hr-line margin-larger-bottom">
+
+            <modal-section class="margin-bottom">
+                <h2 class="font-larger flex-row margin-bottom" tabindex="-1" autoFocus= "visible.bind: false" translate >
+                    Delivery
+                </h2>
+
+                <div class="control-row flex-row margin-bottom">
+
+                    <select-input disabled.bind="newDeliveryStops" label="above" none.bind="false" value.bind="selectedDeliveryStop" display-value.bind="selectedDeliveryStop.location.address" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Specific delivery stop
+                        </div>
+
+                        <item repeat.for="stop of deliveryStops" model.bind="stop">
+                            Stop ${stop.stopNumber} - ${stop.location.address}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                enabled.bind="!newDeliveryStops"
+                                value.bind="selectedDeliveryStop">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="control-row flex-row">
+
+                    <check-toggle label="after" value.bind="newDeliveryStops" class="flex-basis-1-of-1">
+
+                        <div slot="heading">
+
+                            <span translate>
+                                Add new delivery stops
+                            </span>
+
+                            <info-icon position="right">
+
+                                <span slot="body" translate>
+                                    One stop is created for each order
+                                </span>
+
+                            </info-icon>
+
+
+                        </div>
+
+                    </check-toggle>
+
+                </div>
+
+            </modal-section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

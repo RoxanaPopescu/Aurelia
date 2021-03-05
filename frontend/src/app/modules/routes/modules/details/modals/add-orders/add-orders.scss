@@ -1,0 +1,9 @@
+modal-panel[name="add-orders"]
+{
+    --modal-panel-min-width: 780rem;
+
+    data-table
+    {
+        --data-table-columns: 1fr 1fr 0.7fr 0.7fr 0.7fr min-content;
+    }
+}

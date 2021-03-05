@@ -4,7 +4,7 @@ import { Route, RouteService } from "app/model/route";
 import { Log } from "shared/infrastructure";
 
 @autoinject
-export class AddOrderPanel
+export class AddOrderLegacyPanel
 {
     /**
      * Creates a new instance of the class.
