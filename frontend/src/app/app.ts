@@ -320,7 +320,7 @@ export class AppModule
             },
 
             ...
-            ENVIRONMENT.name === "development" ?
+            ENVIRONMENT.name !== "production" ?
             [
                 {
                     name: "design",
