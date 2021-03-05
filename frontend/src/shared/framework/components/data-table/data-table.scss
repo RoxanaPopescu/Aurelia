@@ -22,7 +22,7 @@ data-table
 
     &:not(.--move)
     {
-        data-table-cell:last-of-type
+        data-table-cell:last-of-type:not(.data-table-add)
         {
             visibility: hidden;
             padding: 0 !important;

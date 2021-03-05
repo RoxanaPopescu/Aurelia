@@ -31,6 +31,8 @@ export class User
 
         this.username = jwtObject["unique_name"];
 
+        this.roleName = jwtObject["role"];
+
         // Add hypens to the GUID.
         this.outfitId = jwtObject["primary-outfit"]
             .replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
@@ -50,6 +52,11 @@ export class User
      * The username of the user.
      */
     public username: string;
+
+    /**
+     * The role of the user.
+     */
+    public roleName: string;
 
     /**
      * The ID of the outfit to which the user belongs.
