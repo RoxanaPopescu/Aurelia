@@ -4,6 +4,7 @@ modal-panel[name="add-orders"]
 
     data-table
     {
-        --data-table-columns: 1fr 1fr 0.7fr 0.7fr 0.7fr min-content;
+        --data-table-columns: 0.7fr 0.7fr 0.7fr 0.7fr min-content;
+        min-width: 100%;
     }
 }

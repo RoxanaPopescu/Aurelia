@@ -1,3 +1,4 @@
+import { DateTime, Duration } from "luxon";
 import { AppModule } from "../../../../app-module";
 
 /**
@@ -15,7 +16,7 @@ export class RouteOrdersModule extends AppModule
         {
             context.authorize("edit-routes");
 
-            let body = context.request.body;;
+            const body = context.request.body;
 
             // Fetch order details
             const ordersResult = await this.apiClient.post("logistics/orders/system/detailOrders",
@@ -29,7 +30,8 @@ export class RouteOrdersModule extends AppModule
             // Mapping
             let orders: any[] = [];
 
-            for (const order of ordersResult.data) {
+            for (const order of ordersResult.data)
+            {
                 let orderObject: any = {
                     "id": order.internalOrderId,
                     "creatorOrderId": order.orderId,
@@ -74,11 +76,11 @@ export class RouteOrdersModule extends AppModule
                         "timeZone": "Europe/Copenhagen"
                     },
                     "appointment":{
-                        "from": "",
-                        "to": ""
+                        "from": this.combine(order.pickupEarliestDate, order.pickupEarliestTime),
+                        "to": this.combine(order.pickupLatestDate, order.pickupLatestTime)
                     },
                     "instructions": order.pickupInstructions
-                }
+                };
 
                 const delivery = {
                     "contact": {
@@ -100,11 +102,11 @@ export class RouteOrdersModule extends AppModule
                         "timeZone": "Europe/Copenhagen"
                     },
                     "appointment":{
-                        "from": "",
-                        "to": ""
+                        "from": this.combine(order.deliveryEarliestDate, order.deliveryEarliestTime),
+                        "to": this.combine(order.deliveryLatestDate, order.deliveryLatestTime)
                     },
                     "instructions": order.deliveryInstructions
-                }
+                };
 
                 orderObject["pickup"] = pickup;
                 orderObject["delivery"] = delivery;
@@ -139,5 +141,21 @@ export class RouteOrdersModule extends AppModule
 
             context.response.status = 200;
         });
+    }
+
+    /**
+     * Combines date and time into one datetime
+     */
+    private combine(dateString?: string, timeString?: string): DateTime | undefined
+    {
+        if (dateString == null || timeString == null)
+        {
+            return undefined;
+        }
+
+        const date = DateTime.fromISO(dateString).startOf("day");
+        const time = Duration.fromISOTime(timeString);
+
+        return date.plus(time);
     }
 }
