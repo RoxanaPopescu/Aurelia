@@ -323,7 +323,7 @@
 
                 </div>
 
-                <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
+                <a modal-href="modal: image; model.bind: { imageUrl: model.routeStop.photo.imageUrl };">
                     <img if.bind="model.routeStop.photo" class="image-thumbnail" src.bind="model.routeStop.photo.imageUrl">
                 </a>
 
@@ -373,7 +373,7 @@
                 </div>
 
                 <div class="flex-row flex-basis-1-of-6">
-                    <a modal-href="modal: image; model.bind: { imageUrl: model.event.data.photo.imageUrl };">
+                    <a modal-href="modal: image; model.bind: { imageUrl: model.routeStop.signature.imageUrl };">
                         <img class="image-thumbnail" src.bind="model.routeStop.signature.imageUrl">
                     </a>
                 </div>
