@@ -62,10 +62,7 @@ export class ListPage
         if (localData != null)
         {
             const columnsObject = JSON.parse(localData);
-
-            columnsObject.push("tester")
-
-            let customColumns: RouteListColumn[] = [];
+            const customColumns: RouteListColumn[] = [];
             for (const slug of columnsObject)
             {
                 if (Object.keys(RouteListColumn.values).includes(slug))

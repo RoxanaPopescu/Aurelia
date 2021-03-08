@@ -317,9 +317,9 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public get distance(): number
     {
         let distance = 0;
-        for(let i = 1; i < this.stops.length; i++)
+        for (let i = 1; i < this.stops.length; i++)
         {
-            const from = this.stops[i-1].location.position;
+            const from = this.stops[i - 1].location.position;
             const to = this.stops[i].location.position;
 
             if (from != null && to != null)

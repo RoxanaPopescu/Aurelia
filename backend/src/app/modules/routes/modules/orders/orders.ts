@@ -117,8 +117,6 @@ export class RouteOrdersModule extends AppModule
                 orderObject["delivery"] = delivery;
                 orderObject["colli"] = colli;
 
-                console.log(pickup.appointment.from?.toString());
-
                 orders.push(orderObject);
             }
 
