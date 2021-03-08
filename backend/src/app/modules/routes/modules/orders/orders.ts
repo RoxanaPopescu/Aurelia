@@ -138,7 +138,7 @@ export class RouteOrdersModule extends AppModule
             };
 
             // Sent updated data to NOI
-            await this.apiClient.post("logistics-platform/routes/v4/add-orders-to-routes",
+            await this.apiClient.post("logistics-platform/routes/v4/add-orders-to-route",
             {
                 noi: true,
                 body: body

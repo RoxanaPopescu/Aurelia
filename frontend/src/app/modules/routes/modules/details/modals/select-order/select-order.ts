@@ -132,12 +132,9 @@ export class SelectOrderPanel
                 {
                     this.failed = false;
 
-                    // FIXME: TWO DAYS?
-
-                    // Fetch the data.
                     const result = await this._orderService.getAll(
-                        DateTime.local().minus({ day: 100 }),
-                        DateTime.local().plus({ day: 100 }),
+                        DateTime.local().minus({ day: 1 }),
+                        DateTime.local().plus({ day: 2 }),
                         ["ready"],
                         undefined,
                         undefined,
