@@ -276,6 +276,7 @@ export class ListPage
         }
 
         const legacyOrganizationIds = [moverOrganizationId];
+
         return legacyOrganizationIds.includes(identity.outfit.id);
     }
 

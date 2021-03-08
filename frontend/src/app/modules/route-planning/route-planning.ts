@@ -3,7 +3,6 @@ import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
 import { coopOrganizationId, IdentityService, moverOrganizationId } from "app/services/identity";
 
-
 /**
  * Represents the module.
  */
@@ -36,6 +35,7 @@ export class RoutePlanningModule
         }
 
         const legacyOrganizationIds = [moverOrganizationId, coopOrganizationId];
+
         return legacyOrganizationIds.includes(identity.outfit.id);
     }
 
