@@ -10,6 +10,9 @@ import settings from "resources/settings";
 import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
 
+export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
+export const coopOrganizationId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
+
 /**
  * Represents a function that will be invoked before the identity changes.
  * Use this to prepare the app for the new identity, if any.

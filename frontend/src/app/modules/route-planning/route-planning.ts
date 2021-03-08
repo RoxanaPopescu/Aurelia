@@ -1,10 +1,8 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
-import { IdentityService } from "app/services/identity";
+import { coopOrganizationId, IdentityService, moverOrganizationId } from "app/services/identity";
 
-const moverOutfitId = "2ab2712b-5f60-4439-80a9-a58379cce885";
-const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
 
 /**
  * Represents the module.
@@ -37,9 +35,8 @@ export class RoutePlanningModule
             return false;
         }
 
-        const legacyOutfitIds = [moverOutfitId, coopOutfitId];
-
-        return legacyOutfitIds.includes(identity.outfit.id);
+        const legacyOrganizationIds = [moverOrganizationId, coopOrganizationId];
+        return legacyOrganizationIds.includes(identity.outfit.id);
     }
 
     /**
@@ -56,9 +53,9 @@ export class RoutePlanningModule
             return true;
         }
 
-        const legacyOutfitIds = [coopOutfitId];
+        const legacyOrganizationIds = [coopOrganizationId];
 
-        return !legacyOutfitIds.includes(identity.outfit.id);
+        return !legacyOrganizationIds.includes(identity.outfit.id);
     }
 
     /**

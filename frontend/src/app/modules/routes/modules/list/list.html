@@ -196,6 +196,21 @@
 
             </page-section>
 
+            <page-section if.bind="showLegacy" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Owner ids
+                </div>
+
+                <tags-input
+                    label="above"
+                    value.bind="legacyOwnerIdsFilter"
+                    new.bind="true"
+                    class="margin-large-bottom">
+                </tags-input>
+
+            </page-section>
+
         </page-sidebar>
 
         <page-content scroll scroll.ref="scroll">
@@ -370,15 +385,15 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'distance'">
-                                    <span class="text-truncate">
-                                        ${route.distance | scale: 1/1000 | number} km
-                                    </span>
-                                </data-table-cell>
-
                                 <data-table-cell if.bind="column.slug === 'planned-time-frame'">
                                     <span class="text-truncate">
                                         ${route.plannedTimeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'distance'">
+                                    <span class="text-truncate">
+                                        ${route.distance | scale: 1/1000 | number} km
                                     </span>
                                 </data-table-cell>
 

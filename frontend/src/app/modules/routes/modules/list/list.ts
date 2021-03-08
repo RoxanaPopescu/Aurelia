@@ -12,6 +12,7 @@ import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfi
 import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
 import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
+import { IdentityService, moverOrganizationId } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -47,14 +48,22 @@ export class ListPage
      * @param modalService The `ModalService` instance.
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(routeService: RouteService, addressService: AddressService, routeAssignmentService: RouteAssignmentService, modalService: ModalService, historyHelper: HistoryHelper)
+    public constructor(
+        routeService: RouteService,
+        addressService: AddressService,
+        routeAssignmentService: RouteAssignmentService,
+        modalService: ModalService,
+        historyHelper: HistoryHelper,
+        identityService: IdentityService)
     {
         this._routeService = routeService;
         this._modalService = modalService;
         this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
         this._addressService = addressService;
+        this._identityService = identityService;
         this._constructed = true;
 
         const localData = localStorage.getItem("route-columns");
@@ -80,6 +89,7 @@ export class ListPage
     private readonly _addressService: AddressService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _identityService: IdentityService;
     private readonly _constructed;
 
     /**
@@ -241,6 +251,33 @@ export class ListPage
      */
     @observable({ changeHandler: "update" })
     protected createdTimeToFilter: DateTime | undefined;
+
+    /**
+     * The legacy owner ids to show, only used by Mover Transport in a transition phase.
+     */
+    @observable({ changeHandler: "update" })
+    protected legacyOwnerIdsFilter: any[] = [];
+
+    /**
+     * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
+     */
+    protected get showLegacy(): boolean
+    {
+        if (ENVIRONMENT.name !== "production")
+        {
+            return true;
+        }
+
+        const identity = this._identityService.identity;
+
+        if (identity == null)
+        {
+            return false;
+        }
+
+        const legacyOrganizationIds = [moverOrganizationId];
+        return legacyOrganizationIds.includes(identity.outfit.id);
+    }
 
     /**
      * The total number of items matching the query, or undefined if unknown.
@@ -461,7 +498,8 @@ export class ListPage
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
-                        pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined
+                        pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined,
+                        legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
                         owner: this.columns.map(c => c.slug).includes("owner"),

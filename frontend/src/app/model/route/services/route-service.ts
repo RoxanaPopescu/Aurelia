@@ -58,6 +58,7 @@ export class RouteService
             assignedDriver?: boolean;
             assignedVehicle?: boolean;
             pickupNearby?: { position: Position; precision?: number };
+            legacyOwnerIds?: string[];
         },
         include?:
         {
@@ -100,7 +101,8 @@ export class RouteService
                 tagsOneMatching: filter?.tagsOneMatching,
                 include: include ? include : {},
                 outfitType: this._identityService.identity?.outfit.type.slug,
-                pickupNearby: filter?.pickupNearby
+                pickupNearby: filter?.pickupNearby,
+                legacyOwnerIds: filter?.legacyOwnerIds
             },
             signal
         });
