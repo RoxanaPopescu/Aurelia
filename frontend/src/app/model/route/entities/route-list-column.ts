@@ -153,9 +153,9 @@ export class RouteListColumn
             columnSize: "min-content",
             column: "visible"
         },
-        "estimated-completion":
+        "estimated-time-frame":
         {
-            name: "Est. completed",
+            name: "Estimated time",
             columnSize: "min-content",
             column: "visible"
         },
@@ -170,6 +170,12 @@ export class RouteListColumn
             name: "Criticality",
             columnSize: "min-content",
             column: "not-added"
+        },
+        "distance":
+        {
+            name: "Distance",
+            columnSize: "min-content",
+            column: "visible"
         }
     };
 }

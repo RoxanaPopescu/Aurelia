@@ -62,7 +62,19 @@ export class ListPage
         if (localData != null)
         {
             const columnsObject = JSON.parse(localData);
-            this.customColumns = columnsObject.map(slug => new RouteListColumn(slug));
+
+            columnsObject.push("tester")
+
+            let customColumns: RouteListColumn[] = [];
+            for (const slug of columnsObject)
+            {
+                if (Object.keys(RouteListColumn.values).includes(slug))
+                {
+                    customColumns.push(new RouteListColumn(slug));
+                }
+            }
+
+            this.customColumns = customColumns;
         }
     }
 
@@ -461,8 +473,9 @@ export class ListPage
                         driver: this.columns.map(c => c.slug).includes("driver"),
                         tags: this.columns.map(c => c.slug).includes("tags"),
                         criticality: this.columns.map(c => c.slug).includes("criticality"),
-                        estimates: this.columns.map(c => c.slug).includes("estimated-completion"),
-                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops")
+                        estimates: this.columns.map(c => c.slug).includes("estimated-time-frame"),
+                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops"),
+                        stops: this.columns.map(c => c.slug).includes("distance")
                     },
                     this.sorting,
                     this.paging,

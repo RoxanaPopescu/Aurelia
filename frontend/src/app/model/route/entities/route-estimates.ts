@@ -1,4 +1,5 @@
 import { DateTime, Duration } from "luxon";
+import { DateTimeRange } from "shared/types";
 
 /**
  * Represents a estimates for a stop
@@ -46,4 +47,11 @@ export class RouteEstimates
      * The estimated driving time
      */
     public readonly drivingTime?: Duration;
+
+    /**
+     * The time range of the estimate
+     */
+    public get timeFrame(): DateTimeRange {
+        return new DateTimeRange({ from: this.arrivalTime, to: this.completionTime }, { setZone: true });
+    }
 }

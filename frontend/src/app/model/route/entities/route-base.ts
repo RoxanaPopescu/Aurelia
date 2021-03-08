@@ -12,6 +12,7 @@ import { RouteStopBase } from "./route-stop-base";
 import { RouteStopInfo } from "./route-stop-info";
 import { RouteCriticality } from "./route-criticality";
 import { RouteEstimates } from "./route-estimates";
+import { calculateDistance } from "shared/utilities";
 
 /**
  * Represents a route.
@@ -308,6 +309,26 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
                 s instanceof RouteStopBase &&
                 s.status.slug === "not-visited" &&
                 s.isDelayed) as TRouteStop[];
+    }
+
+    /**
+     * The birds-eye distance between all stops
+     */
+    public get distance(): number
+    {
+        let distance = 0;
+        for(let i = 1; i < this.stops.length; i++)
+        {
+            const from = this.stops[i-1].location.position;
+            const to = this.stops[i].location.position;
+
+            if (from != null && to != null)
+            {
+                distance += calculateDistance(from, to);
+            }
+        }
+
+        return distance;
     }
 
     /**

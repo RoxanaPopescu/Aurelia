@@ -364,9 +364,15 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'estimated-completion'">
+                                <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
                                     <span class="text-truncate">
-                                        ${route.estimates.completionTime | dateTime: 'narrow' : false}
+                                        ${route.estimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'distance'">
+                                    <span class="text-truncate">
+                                        ${route.distance | scale: 1/1000 | number} km
                                     </span>
                                 </data-table-cell>
 
