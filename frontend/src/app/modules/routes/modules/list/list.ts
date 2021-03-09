@@ -364,9 +364,12 @@ export class ListPage
             const previousValue = route.fulfiller;
             route.fulfiller = fulfiller;
 
-            try {
+            try
+            {
                 await this._routeAssignmentService.assignFulfiller(route, fulfiller);
-            } catch {
+            }
+            catch
+            {
                 route.fulfiller = previousValue;
                 Log.error(`Could not assign fulfiller '${fulfiller.companyName}'`);
             }
@@ -419,9 +422,12 @@ export class ListPage
             const previousValue = route.vehicle;
             route.vehicle = vehicle;
 
-            try {
+            try
+            {
                 await this._routeAssignmentService.assignVehicle(route, vehicle);
-            } catch {
+            }
+            catch
+            {
                 route.vehicle = previousValue;
                 Log.error(`Could not assign the vehicle '${vehicle.name}'`);
             }
@@ -444,9 +450,12 @@ export class ListPage
             const previousValue = route.driver;
             route.driver = driver;
 
-            try {
+            try
+            {
                 await this._routeAssignmentService.assignDriver(route, driver);
-            } catch {
+            }
+            catch
+            {
                 route.driver = previousValue;
                 Log.error(`Could not assign the driver '${driver.name.toString()}'`);
             }
