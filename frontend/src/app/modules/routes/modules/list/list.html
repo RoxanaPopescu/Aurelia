@@ -393,7 +393,7 @@
 
                                 <data-table-cell if.bind="column.slug === 'distance'">
                                     <span class="text-truncate">
-                                        ${route.distance | scale: 1/1000 | number} km
+                                        ${route.distance/1000 | number : undefined : 1 } km
                                     </span>
                                 </data-table-cell>
 
