@@ -361,7 +361,15 @@ export class ListPage
 
         if (fulfiller != null)
         {
-            await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+            const previousValue = route.fulfiller;
+            route.fulfiller = fulfiller;
+
+            try {
+                await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+            } catch {
+                route.fulfiller = previousValue;
+                Log.error(`Could not assign fulfiller '${fulfiller.companyName}'`);
+            }
         }
     }
 
@@ -408,7 +416,15 @@ export class ListPage
 
         if (vehicle != null)
         {
-            await this._routeAssignmentService.assignVehicle(route, vehicle);
+            const previousValue = route.vehicle;
+            route.vehicle = vehicle;
+
+            try {
+                await this._routeAssignmentService.assignVehicle(route, vehicle);
+            } catch {
+                route.vehicle = previousValue;
+                Log.error(`Could not assign the vehicle '${vehicle.name}'`);
+            }
         }
     }
 
@@ -425,7 +441,15 @@ export class ListPage
 
         if (driver != null)
         {
-            await this._routeAssignmentService.assignDriver(route, driver);
+            const previousValue = route.driver;
+            route.driver = driver;
+
+            try {
+                await this._routeAssignmentService.assignDriver(route, driver);
+            } catch {
+                route.driver = previousValue;
+                Log.error(`Could not assign the driver '${driver.name.toString()}'`);
+            }
         }
     }
 
