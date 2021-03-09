@@ -96,6 +96,16 @@ export class AddOrdersPanel
     public activate(model: { route: Route }): void
     {
         this.model = model.route.clone();
+
+        if (this.pickupStops.length == 0)
+        {
+            this.newPickupStops = true;
+        }
+
+        if (this.deliveryStops.length == 0)
+        {
+            this.newDeliveryStops = true;
+        }
     }
 
     /**
