@@ -97,12 +97,12 @@ export class AddOrdersPanel
     {
         this.model = model.route.clone();
 
-        if (this.pickupStops.length == 0)
+        if (this.pickupStops.length === 0)
         {
             this.newPickupStops = true;
         }
 
-        if (this.deliveryStops.length == 0)
+        if (this.deliveryStops.length === 0)
         {
             this.newDeliveryStops = true;
         }

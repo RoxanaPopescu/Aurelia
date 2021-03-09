@@ -116,6 +116,12 @@ export class RouteListColumn
             columnSize: "1fr",
             column: "visible"
         },
+        "driver-id":
+        {
+            name: "Driver id",
+            columnSize: "1fr",
+            column: "visible"
+        },
         "fulfiller":
         {
             name: "Fulfiller",

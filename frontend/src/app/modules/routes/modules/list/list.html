@@ -353,6 +353,16 @@
                                     </a>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'driver-id'">
+                                    <a
+                                        class="text-truncate"
+                                        target="_blank"
+                                        href="/fleet-management/drivers/details/${route.driver.id}"
+                                    >
+                                        ${route.driver.id}
+                                    </a>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'vehicle'">
                                     <a
                                         class="text-truncate"

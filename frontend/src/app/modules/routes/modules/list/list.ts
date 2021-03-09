@@ -506,7 +506,7 @@ export class ListPage
                         owner: this.columns.map(c => c.slug).includes("owner"),
                         vehicle: this.columns.map(c => c.slug).includes("vehicle"),
                         fulfiller: this.columns.map(c => c.slug).includes("fulfiller"),
-                        driver: this.columns.map(c => c.slug).includes("driver"),
+                        driver: this.columns.map(c => c.slug).includes("driver") || this.columns.map(c => c.slug).includes("driver-id"),
                         tags: this.columns.map(c => c.slug).includes("tags"),
                         criticality: this.columns.map(c => c.slug).includes("criticality"),
                         estimates: this.columns.map(c => c.slug).includes("estimated-time-frame"),
