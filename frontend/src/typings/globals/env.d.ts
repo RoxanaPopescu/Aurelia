@@ -120,6 +120,17 @@ declare interface IClientEnvironment
         }
 
         /**
+         * The settings to use for the Google Tag Manager integration, or undefined to disable the integration.
+         */
+        googleTagManager?:
+        {
+            /**
+             * The data layer ID.
+             */
+            dataLayerId: string;
+        }
+
+        /**
          * The settings to use for the Google Analytics integration, or undefined to disable the integration.
          */
         googleAnalytics?:

@@ -100,6 +100,11 @@ const compilerOptions: ICompilerOptions =
             obfuscate: false,
             integrations:
             {
+                googleTagManager:
+                {
+                    dataLayerId: "GTM-TDRC52X"
+                },
+
                 googleMaps:
                 {
                     key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
