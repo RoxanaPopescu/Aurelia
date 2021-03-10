@@ -135,7 +135,7 @@ export class OrderService
             body: { consignorId, orderId: orderSlug }
         });
 
-        const orderEvents = result.data.map(e => new OrderEvent(e));
+        const orderEvents = result.data.map(e => new OrderEvent(e)) as OrderEvent[];
 
         // Ensure the `order-pickup-eta-provided` event, if present, is the first event.
 
@@ -154,6 +154,10 @@ export class OrderService
         {
             orderEvents.unshift(...orderEvents.splice(deliveryEtaProvidedIndex, 1));
         }
+
+        // Ensure events are sorted by descending date.
+
+        orderEvents.sort((a, b) => b.data.timeOfEvent.valueOf() - a.data.timeOfEvent.valueOf());
 
         return orderEvents;
     }
