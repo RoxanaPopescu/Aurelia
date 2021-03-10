@@ -38,7 +38,7 @@ export class RouteOrdersModule extends AppModule
                     "creatorOrderId": order.orderId,
                     "creatorId": order.consignorId,
                     "relationalid": order.relationalid,
-                    "tags": order.tags,
+                    "tags": order.tags == null ? [] : order.tags.map((t: any) => t.tag),
                     "estimatedColliCount": (order.estimatedColli ?? []).length
                 };
 
