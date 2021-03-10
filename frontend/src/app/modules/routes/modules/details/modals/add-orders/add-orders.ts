@@ -124,7 +124,7 @@ export class AddOrdersPanel
     {
         const order = await this._modalService.open(
             SelectOrderPanel,
-            { }
+            { removeOrderIds: this.orders.map(o => o.id) }
         ).promise;
 
         if (order != null)

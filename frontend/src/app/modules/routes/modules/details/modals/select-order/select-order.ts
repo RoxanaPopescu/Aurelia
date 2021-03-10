@@ -73,11 +73,17 @@ export class SelectOrderPanel
     protected results: OrderInfo[] | undefined;
 
     /**
+     * The order ids to filter out
+     */
+    protected removeOrderIds: string[] | undefined
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model?: {  }): void
+    public activate(model?: { removeOrderIds: string[] | undefined }): void
     {
+        this.removeOrderIds = model?.removeOrderIds;
         this.update();
     }
 
@@ -143,8 +149,25 @@ export class SelectOrderPanel
                         this.paging,
                         signal);
 
+                    let orders = result.orders;
+
+                    // Filter orders
+                    const reduceOrders: OrderInfo[] = [];
+                    const removeOrderIds = this.removeOrderIds;
+
+                    if (removeOrderIds != null) {
+                        orders = orders.reduce((res, order) => {
+                            if (!removeOrderIds.includes(order.id))
+                            {
+                                res.push(order);
+                            }
+
+                            return res;
+                        }, reduceOrders);
+                    }
+
                     // Update the state.
-                    this.results = result.orders;
+                    this.results = orders;
                 }
                 catch (error)
                 {
