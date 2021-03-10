@@ -60,21 +60,6 @@ export class RoutesModule
                 icon: "route-tracking"
             },
             {
-                name: "list",
-                route: "assignment",
-                moduleId: PLATFORM.moduleName("./modules/assign-list/assign-list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "edit-routes"
-                    ]
-                },
-                title: routeTitles.assignment,
-                nav: true,
-                icon: "routes"
-            },
-            {
                 name: "auto-dispatch",
                 route: "auto-dispatch",
                 moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
