@@ -655,6 +655,7 @@
   "2a311037c": "Afhentningsadresse",
   "4428e67f6": "leveringsadresse",
   "7af2af4cd": "Leveringstidsramme",
+  "cb8876ae9": "Ordrestatus skal være 'Ready' for at dukke op på denne liste",
   "4405b7fed": "Tilføj mindst en ordrer.",
   "5e0e7df72": "Specifikt leveringsstop",
   "31e0cf554": "Tilføj nyt afhentningsstop",

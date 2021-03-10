@@ -655,6 +655,7 @@
   "2a311037c": "Pickup address",
   "4428e67f6": "Delivery address",
   "7af2af4cd": "Delivery timeframe",
+  "cb8876ae9": "The order status has to be ‘Ready’ in order to show up in this list",
   "4405b7fed": "Add atleast one order.",
   "5e0e7df72": "Specific pickup stop",
   "31e0cf554": "Add new pickup stops",

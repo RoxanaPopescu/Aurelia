@@ -130,8 +130,16 @@
 
                         </template>
 
-                        <template replace-part="append" translate>
-                            Add order
+                        <template replace-part="append">
+                            <span translate>Add order</span>
+
+                            <info-icon position="right">
+
+                                <span slot="body" translate>
+                                    The order status has to be ‘Ready’ in order to show up in this list
+                                </span>
+
+                            </info-icon>
                         </template>
 
                     </data-table>
