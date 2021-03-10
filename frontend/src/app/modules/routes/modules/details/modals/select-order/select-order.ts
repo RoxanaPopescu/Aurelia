@@ -75,7 +75,7 @@ export class SelectOrderPanel
     /**
      * The order ids to filter out
      */
-    protected removeOrderIds: string[] | undefined
+    protected removeOrderIds: string[] | undefined;
 
     /**
      * Called by the framework when the modal is activated.
@@ -155,8 +155,10 @@ export class SelectOrderPanel
                     const reduceOrders: OrderInfo[] = [];
                     const removeOrderIds = this.removeOrderIds;
 
-                    if (removeOrderIds != null) {
-                        orders = orders.reduce((res, order) => {
+                    if (removeOrderIds != null)
+                    {
+                        orders = orders.reduce((res, order) =>
+                        {
                             if (!removeOrderIds.includes(order.id))
                             {
                                 res.push(order);
