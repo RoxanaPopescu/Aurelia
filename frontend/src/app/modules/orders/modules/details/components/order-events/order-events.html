@@ -81,8 +81,8 @@
                     </let>
 
                     <let
-                        order-event-location.bind="orderEvent.data.deliveryLocation || orderEvent.data.pickupLocation || orderEvent.data.location"
-                        order-event-contact.bind="orderEvent.data.deliveryContact || orderEvent.data.pickupContact || orderEvent.data.contact"
+                        order-event-location.bind="orderEvent.data.location || (orderEvent.eventType.stopType != null ? orderEvent.data[orderEvent.eventType.stopType + 'Location'] : undefined)"
+                        order-event-contact.bind="orderEvent.data.contact || (orderEvent.eventType.stopType != null ? orderEvent.data[orderEvent.eventType.stopType + 'Contact'] : undefined)"
                         order-event-time.bind="
                             orderEvent.eventType.slug === 'order-pickup-eta-provided' ? orderEvent.data.pickupEta :
                             orderEvent.eventType.slug === 'order-delivery-eta-provided' ? orderEvent.data.deliveryEta :

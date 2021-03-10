@@ -5,8 +5,8 @@
 
 
     <let
-        order-event-location.bind="model.event.data.deliveryLocation || model.event.data.pickupLocation || model.event.data.location"
-        order-event-contact.bind="model.event.data.deliveryContact || model.event.data.pickupContact || model.event.data.contact"
+        order-event-location.bind="model.event.data.location || (model.event.eventType.stopType != null ? model.event.data[model.event.eventType.stopType + 'Location'] : undefined)"
+        order-event-contact.bind="model.event.data.contact || (model.event.eventType.stopType != null ? model.event.data[model.event.eventType.stopType + 'Contact'] : undefined)"
         order-event-time.bind="
             model.event.eventType.slug === 'order-pickup-eta-provided' ? model.event.data.pickupEta :
             model.event.eventType.slug === 'order-delivery-eta-provided' ? model.event.data.deliveryEta :
@@ -314,7 +314,7 @@
 
         </template>
 
-        <!-- Photo of delivery -->
+        <!-- Photo -->
         <template if.bind="model.event.data.photo != null">
 
             <hr class="hr-line margin-bottom">
@@ -322,11 +322,7 @@
             <data-section class="margin-bottom" toggle.bind="true">
 
                 <div slot="header" translate>
-                    Photo of delivery
-                </div>
-
-                <div if.bind="!model.event.data.photo" class="opacity-faded" translate>
-                    Photo required, but not yet captured
+                    Photo
                 </div>
 
                 <template if.bind="model.event.data.photo.imageId">
