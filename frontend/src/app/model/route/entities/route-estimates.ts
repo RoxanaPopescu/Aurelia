@@ -20,6 +20,7 @@ export class RouteEstimates
             this.taskTime = Duration.fromObject({ seconds: data.taskTime });
             this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
             this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
+            this.distance = data.distance;
         }
     }
 
@@ -47,6 +48,11 @@ export class RouteEstimates
      * The estimated driving time
      */
     public readonly drivingTime?: Duration;
+
+    /**
+     * The distance in meters
+     */
+     public readonly distance?: Number;
 
     /**
      * The time range of the estimate

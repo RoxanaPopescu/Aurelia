@@ -215,10 +215,10 @@
                         <template repeat.for="column of columns">
                             <data-table-cell if.bind="column.column != 'not-added'" name.bind="column.sortingName">
                                 <span if.bind="column.column == 'visible'" class="text-truncate">
-                                    <template if.bind="column.columName">
-                                        ${column.columName}
+                                    <template if.bind="column.columnName">
+                                        ${column.columnName}
                                     </template>
-                                    <template if.bind="!column.columName">
+                                    <template if.bind="!column.columnName">
                                         ${column.name}
                                     </template>
                                 </span>

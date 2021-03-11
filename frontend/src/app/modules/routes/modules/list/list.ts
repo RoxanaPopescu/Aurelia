@@ -80,6 +80,8 @@ export class ListPage
                 }
             }
 
+            console.log(customColumns);
+
             this.customColumns = customColumns;
         }
     }
@@ -151,7 +153,7 @@ export class ListPage
             new RouteListColumn("stop-count"),
             new RouteListColumn("vehicle-type"),
             new RouteListColumn("status"),
-            new RouteListColumn("driver-list")
+            new RouteListColumn("driving-list")
         ];
     }
 
@@ -352,7 +354,7 @@ export class ListPage
      * Called when the `Assign fulfiller` button is clicked.
      * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignFulfillerClick(route: RouteInfo): Promise<void>
+    protected async onAssignFulfillerClick(route: RouteInfo, updating: any): Promise<void>
     {
         const fulfiller = await this._modalService.open(
             AssignFulfillerPanel,
@@ -363,6 +365,7 @@ export class ListPage
         {
             const previousValue = route.fulfiller;
             route.fulfiller = fulfiller;
+            updating.executor = true;
 
             try
             {
@@ -373,6 +376,8 @@ export class ListPage
                 route.fulfiller = previousValue;
                 Log.error(`Could not assign fulfiller '${fulfiller.companyName}'`);
             }
+
+            updating.executor = false;
         }
     }
 
@@ -410,7 +415,7 @@ export class ListPage
      * Called when the `Assign vehicle` button is clicked.
      * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignVehicleClick(route: RouteInfo): Promise<void>
+    protected async onAssignVehicleClick(route: RouteInfo, updating: any): Promise<void>
     {
         const vehicle = await this._modalService.open(
             AssignVehiclePanel,
@@ -421,6 +426,7 @@ export class ListPage
         {
             const previousValue = route.vehicle;
             route.vehicle = vehicle;
+            updating.vehicle = true;
 
             try
             {
@@ -431,6 +437,8 @@ export class ListPage
                 route.vehicle = previousValue;
                 Log.error(`Could not assign the vehicle '${vehicle.name}'`);
             }
+
+            updating.vehicle = false;
         }
     }
 
@@ -438,7 +446,7 @@ export class ListPage
      * Called when the `Assign driver` button is clicked.
      * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignDriverClick(route: RouteInfo): Promise<void>
+    protected async onAssignDriverClick(route: RouteInfo, updating: any): Promise<void>
     {
         const driver = await this._modalService.open(
             AssignDriverPanel,
@@ -449,6 +457,7 @@ export class ListPage
         {
             const previousValue = route.driver;
             route.driver = driver;
+            updating.driver = true;
 
             try
             {
@@ -459,6 +468,8 @@ export class ListPage
                 route.driver = previousValue;
                 Log.error(`Could not assign the driver '${driver.name.toString()}'`);
             }
+
+            updating.driver = false;
         }
     }
 

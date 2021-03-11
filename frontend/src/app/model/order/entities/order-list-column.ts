@@ -110,7 +110,7 @@ export class OrderListColumn
         "colli-count":
         {
             name: "Colli count",
-            columName: "Colli",
+            columnName: "Colli",
             columnSize: "min-content",
             sortingName: "colli-count",
             column: "visible"
@@ -118,21 +118,21 @@ export class OrderListColumn
         "colli-total-weight":
         {
             name: "Colli total weight",
-            columName: "Total weight",
+            columnName: "Total weight",
             columnSize: "1.0fr",
             column: "visible"
         },
         "colli-total-volume":
         {
             name: "Colli total volume",
-            columName: "Total volume",
+            columnName: "Total volume",
             columnSize: "1.0fr",
             column: "visible"
         },
         "estimated-colli-count":
         {
             name: "Estimated colli count",
-            columName: "Est. colli",
+            columnName: "Est. colli",
             columnSize: "min-content",
             sortingName: "estimated-colli-count",
             column: "visible"
@@ -140,14 +140,14 @@ export class OrderListColumn
         "estimated-colli-total-weight":
         {
             name: "Estimated colli total weight",
-            columName: "Est. total weight",
+            columnName: "Est. total weight",
             columnSize: "1.0fr",
             column: "visible"
         },
         "estimated-colli-total-volume":
         {
             name: "Estimated colli total volume",
-            columName: "Est. Total volume",
+            columnName: "Est. Total volume",
             columnSize: "1.0fr",
             column: "visible"
         }

@@ -813,7 +813,7 @@
   "04fedac94": "Roles",
   "b61efdf66": "New role",
   "44b7a5a05": "Oops! Something went wrong",
-  "cfbd85b1d": "The error has been logged, and will be investigated asap.",
+  "cfbd85b1d": "The error has been logged, and will be investigated.",
   "1daaad008": "Details",
   "a40414035": "Please provide a valid date, formatted as <kbd>${dateFormat.displayFormat}</kbd>.",
   "36aec3d48": "Please provide a valid email.",

@@ -93,7 +93,8 @@ export class RouteListColumn
         },
         "stop-count":
         {
-            name: "Stop count",
+            name: "Stops count",
+            columnName: "Stops",
             columnSize: "min-content",
             sortingName: "stop-count",
             column: "visible"
@@ -147,9 +148,9 @@ export class RouteListColumn
             columnSize: "min-content",
             column: "visible"
         },
-        "driver-list":
+        "driving-list":
         {
-            name: "Driver list",
+            name: "Driving list",
             columnSize: "min-content",
             column: "hidden"
         },
@@ -162,12 +163,21 @@ export class RouteListColumn
         "estimated-time-frame":
         {
             name: "Estimated time",
+            columnName: "Estimate",
+            columnSize: "min-content",
+            column: "visible"
+        },
+        "original-estimated-time-frame":
+        {
+            name: "Original estimated time",
+            columnName: "Original estimate",
             columnSize: "min-content",
             column: "visible"
         },
         "planned-time-frame":
         {
             name: "Planned time",
+            columnName: "Planned",
             columnSize: "min-content",
             column: "visible"
         },

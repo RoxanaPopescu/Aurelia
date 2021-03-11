@@ -80,6 +80,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         {
             this.estimates = new RouteEstimates(data.estimates);
         }
+
+        if (data.initialEstimates != null)
+        {
+            this.initialEstimates = new RouteEstimates(data.initialEstimates);
+        }
     }
 
     /**
@@ -195,6 +200,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The estimates for this route.
      */
     public estimates?: RouteEstimates;
+
+    /**
+     * The initial estimates for this route.
+     */
+     public initialEstimates?: RouteEstimates;
 
     /**
      * The date and time at which the driver completed, or is estimated to complete,

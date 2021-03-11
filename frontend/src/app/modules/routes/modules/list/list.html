@@ -248,7 +248,12 @@
                         <template repeat.for="column of columns">
                             <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
                                 <span if.bind="column.column == 'visible'" class="text-truncate">
-                                    ${column.name}
+                                    <template if.bind="column.columnName">
+                                        ${column.columnName}
+                                    </template>
+                                    <template if.bind="!column.columnName">
+                                        ${column.name}
+                                    </template>
                                 </span>
                             </data-table-cell>
                         </template>
@@ -260,6 +265,8 @@
                             accent.bind="route.criticality.accent"
                         >
                             <template repeat.for="column of columns">
+
+                                <let updating.bind="{ driver: false, vehicle: false, executor: false }"></let>
 
                                 <data-table-cell if.bind="column.slug === 'slug'">
                                     <a href="/routes/details/${route.slug}" class="text-truncate">
@@ -325,10 +332,10 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'fulfiller'">
+                                <data-table-cell if.bind="column.slug === 'fulfiller'" class="${updating.executor ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        click.trigger="onAssignFulfillerClick(route)"
+                                        click.trigger="onAssignFulfillerClick(route, updating)"
                                     >
                                         <template if.bind="route.fulfiller.companyName">
                                             ${route.fulfiller.companyName}
@@ -339,10 +346,10 @@
                                     </a>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'driver'">
+                                <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        click.trigger="onAssignDriverClick(route)"
+                                        click.trigger="onAssignDriverClick(route, updating)"
                                     >
                                         <template if.bind="!route.driver" translate>
                                             Assign driver
@@ -363,16 +370,19 @@
                                     </a>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'vehicle'">
+                                <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        click.trigger="onAssignVehicleClick(route)"
+                                        click.trigger="onAssignVehicleClick(route, updating)"
                                     >
                                         <template if.bind="!route.vehicle" translate>
                                             Assign Vehicle
                                         </template>
-                                        <template if.bind="route.vehicle">
+                                        <template if.bind="route.vehicle && route.vehicle.name">
                                             ${route.vehicle.name}
+                                        </template>
+                                        <template if.bind="route.vehicle && !route.vehicle.name">
+                                            ${route.vehicle.model} - ${route.vehicle.make}
                                         </template>
                                     </a>
                                 </data-table-cell>
@@ -385,13 +395,25 @@
 
                                 <data-table-cell if.bind="column.slug === 'legacy-id'">
                                     <span class="text-truncate">
-                                        ${route.legacyId}
+                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}" if.bind="route.driver">
+                                            ${route.legacyId}
+                                        </a>
+
+                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}" if.bind="!route.driver">
+                                            ${route.legacyId}
+                                        </a>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
                                     <span class="text-truncate">
                                         ${route.estimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'original-estimated-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.initialEstimates.timeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
@@ -402,7 +424,10 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'distance'">
-                                    <span class="text-truncate">
+                                    <span if.bind="route.initialEstimates.distance" class="text-truncate">
+                                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                                    </span>
+                                    <span if.bind="!route.initialEstimates.distance" class="text-truncate">
                                         ${route.distance/1000 | number : undefined : 1 } km
                                     </span>
                                 </data-table-cell>
@@ -413,7 +438,7 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'driver-list'" align="right">
+                                <data-table-cell if.bind="column.slug === 'driving-list'" align="right">
 
                                     <div class="icon-row">
 
