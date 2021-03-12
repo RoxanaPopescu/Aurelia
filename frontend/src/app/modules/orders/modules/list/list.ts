@@ -88,7 +88,6 @@ export class ListPage
     protected get tableStyle(): any
     {
         let size = "";
-
         for (const column of this.columns)
         {
             if (column.column !== "not-added")
