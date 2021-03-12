@@ -24,7 +24,8 @@ export class RoutesListModule extends AppModule
             if (body.organizationType === "fulfiller")
             {
                 body.fulfillerIds = [context.user?.outfitId];
-            } else
+            }
+            else
             {
                 body.consignorIds = [context.user?.outfitId];
             }
@@ -55,7 +56,8 @@ export class RoutesListModule extends AppModule
                     if (fulfuller != null)
                     {
                         route.fulfiller = fulfuller;
-                    } else
+                    }
+                    else
                     {
                         delete route.fulfiller;
                     }
