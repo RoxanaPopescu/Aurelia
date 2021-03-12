@@ -21,9 +21,11 @@ export class RoutesListModule extends AppModule
             const body = context.request.body;
             body.includeTotalCount = false;
 
-            if (body.organizationType === "fulfiller") {
+            if (body.organizationType === "fulfiller")
+            {
                 body.fulfillerIds = [context.user?.outfitId];
-            } else {
+            } else
+            {
                 body.consignorIds = [context.user?.outfitId];
             }
 
@@ -46,12 +48,15 @@ export class RoutesListModule extends AppModule
                 });
                 const fulfillers = fulfillerResult.data.results;
 
-                for (const route of data.routes) {
+                for (const route of data.routes)
+                {
                     const id = route.fulfiller.id;
-                    const fulfuller = fulfillers.find((f: any) => f.id == id);
-                    if (fulfuller != null){
+                    const fulfuller = fulfillers.find((f: any) => f.id === id);
+                    if (fulfuller != null)
+                    {
                         route.fulfiller = fulfuller;
-                    } else {
+                    } else
+                    {
                         delete route.fulfiller;
                     }
                 }

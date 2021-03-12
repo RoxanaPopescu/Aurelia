@@ -18,18 +18,19 @@ export class RoutesListModule extends AppModule
         {
             context.authorize();
 
-            const body: any = {
+            const body: any =
+            {
                 slug: context.query.slug,
                 currentOutfit: context.user?.outfitId
             };
 
-            if (context.query.organizationType === "fulfiller") {
+            if (context.query.organizationType === "fulfiller")
+            {
                 body.fulfillerIds = [context.user?.outfitId];
-            } else {
+            } else
+            {
                 body.consignorIds = [context.user?.outfitId];
             }
-
-            console.log(body);
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/details",
             {
