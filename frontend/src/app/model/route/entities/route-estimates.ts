@@ -52,7 +52,7 @@ export class RouteEstimates
     /**
      * The distance in meters
      */
-     public readonly distance?: Number;
+     public readonly distance?: number;
 
     /**
      * The time range of the estimate
