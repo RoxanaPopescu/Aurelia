@@ -90,8 +90,6 @@ export default
                 "routes/create/collection-points-from-orders": { version: "2", obfuscate: false },
                 "orders/events": { version: "2", obfuscate: false },
                 "routes/orders": { version: "2", obfuscate: false },
-                "routes/list": { version: "2", obfuscate: false },
-                "routes/details": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
