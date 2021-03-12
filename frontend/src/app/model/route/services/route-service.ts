@@ -128,7 +128,7 @@ export class RouteService
             {
                 slug,
                 organizationType: this._identityService.identity?.outfit.type.slug,
-                outfitType: this._identityService.identity?.outfit.type.slug,
+                outfitType: this._identityService.identity?.outfit.type.slug
             },
             signal
         });
