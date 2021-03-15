@@ -4,6 +4,7 @@ import { Route, RouteService, RouteStop } from "app/model/route";
 import { Log } from "shared/infrastructure";
 import { SelectOrderPanel } from "../select-order/select-order";
 import { OrderInfo } from "app/model/order";
+import { DateTime } from "luxon";
 
 @autoinject
 export class AddOrdersPanel
@@ -122,9 +123,18 @@ export class AddOrdersPanel
      */
     protected async onAddOrderClick(): Promise<void>
     {
+        const from = (this.model.plannedTimeFrame?.from ?? DateTime.local()).minus({ day: 1 }).startOf("day");
+        const to = (this.model.plannedTimeFrame?.to ?? DateTime.local()).plus({ day: 2 }).endOf("day");
+
         const order = await this._modalService.open(
             SelectOrderPanel,
-            { removeOrderIds: this.orders.map(o => o.id) }
+            {
+                removeOrderIds: this.orders.map(o => o.id),
+                filter: {
+                    fromDate: from,
+                    toDate: to
+                }
+            }
         ).promise;
 
         if (order != null)

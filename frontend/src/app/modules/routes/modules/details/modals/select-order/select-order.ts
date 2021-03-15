@@ -78,12 +78,18 @@ export class SelectOrderPanel
     protected removeOrderIds: string[] | undefined;
 
     /**
+     * The search filter
+     */
+    protected filter?: { fromDate?: DateTime, toDate?: DateTime };
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model?: { removeOrderIds: string[] | undefined }): void
+    public activate(model?: { removeOrderIds: string[] | undefined, filter?: { fromDate?: DateTime, toDate?: DateTime } }): void
     {
         this.removeOrderIds = model?.removeOrderIds;
+        this.filter = model?.filter;
         this.update();
     }
 
@@ -139,8 +145,8 @@ export class SelectOrderPanel
                     this.failed = false;
 
                     const result = await this._orderService.getAll(
-                        DateTime.local().minus({ day: 1 }),
-                        DateTime.local().plus({ day: 2 }),
+                        this.filter?.fromDate,
+                        this.filter?.toDate,
                         ["ready"],
                         undefined,
                         undefined,
