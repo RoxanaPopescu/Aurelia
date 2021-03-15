@@ -46,10 +46,10 @@ export class OrdersEventsModule extends AppModule
                             eventType: "order-pickup-failed",
                             version: "2.0"
                         },
-                        // {
-                        //     eventType: "order-added-to-route",
-                        //     version: "2.0"
-                        // },
+                        {
+                            eventType: "order-added-to-route",
+                            version: "2.0"
+                        },
                         {
                             eventType: "collection-point-collo-damaged",
                             version: "1.0"
