@@ -86,7 +86,7 @@ export class SelectOrderPanel
      * Called by the framework when the modal is activated.
      * @param model The route to add the driver too, if undefined it will not be assigned.
      */
-    public activate(model?: { removeOrderIds: string[] | undefined, filter?: { fromDate?: DateTime, toDate?: DateTime } }): void
+    public activate(model?: { removeOrderIds: string[] | undefined; filter?: { fromDate?: DateTime; toDate?: DateTime } }): void
     {
         this.removeOrderIds = model?.removeOrderIds;
         this.filter = model?.filter;
