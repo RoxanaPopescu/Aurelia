@@ -80,7 +80,7 @@ export class SelectOrderPanel
     /**
      * The search filter
      */
-    protected filter?: { fromDate?: DateTime, toDate?: DateTime };
+    protected filter?: { fromDate?: DateTime; toDate?: DateTime };
 
     /**
      * Called by the framework when the modal is activated.
