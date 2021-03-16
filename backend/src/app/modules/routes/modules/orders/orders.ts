@@ -51,10 +51,10 @@ export class RouteOrdersModule extends AppModule
                         "barcode": c.barcode,
                         "tags": [],
                         "weight": c.weight,
-                        "dimension": c.dimensions == null ? undefined : {
-                            "width": c.dimensions.width,
-                            "length": c.dimensions.length ?? c.dimensions.lenght,
-                            "height": c.dimensions.height
+                        "dimension": c.dimension == null ? undefined : {
+                            "width": c.dimension.width,
+                            "length": c.dimension.length ?? c.dimension.lenght,
+                            "height": c.dimension.height
                         }
                     };
                 });
