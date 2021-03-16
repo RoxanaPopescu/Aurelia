@@ -62,7 +62,7 @@ export class OrderEventType
             accent: "positive",
             stopType: undefined
         },
-        "order-assigned-to-route":
+        "order-added-to-route":
         {
             name: "Order added to route",
             description: "The order was added to a route.",

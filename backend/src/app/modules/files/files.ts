@@ -13,8 +13,7 @@ export class FilesModule extends AppModule
     public configure(): void
     {
         /**
-         * Creates a route from a template.
-         * @returns The ID and slug of the new route.
+         * Uploads a file to the public file storage.
          */
         this.router.post("/v2/files/upload/public", async context =>
         {
@@ -36,8 +35,7 @@ export class FilesModule extends AppModule
         });
 
         /**
-         * Creates a route from a template.
-         * @returns The ID and slug of the new route.
+         * Uploads a file to the secure file storage.
          */
         this.router.post("/v2/files/upload/sensitive", async context =>
         {

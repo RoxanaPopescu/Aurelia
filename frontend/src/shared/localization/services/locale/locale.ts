@@ -89,9 +89,9 @@ export class Locale
     {
         if (Intl.DisplayNames != null)
         {
-            const privateUseSubtag = this.code.split("-x-", 2)[1];
-            const displayNames = new Intl.DisplayNames(this.code, { type: "language", fallback: "none" });
-            let displayName = displayNames.of(this.code);
+            const [code, privateUseSubtag] = this.code.split("-x-", 2);
+            const displayNames = new Intl.DisplayNames(code, { type: "language", fallback: "none" });
+            let displayName = displayNames.of(code);
 
             if (privateUseSubtag)
             {

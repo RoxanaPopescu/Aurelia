@@ -47,7 +47,7 @@ export class OrdersEventsModule extends AppModule
                             version: "2.0"
                         },
                         {
-                            eventType: "order-assigned-to-route",
+                            eventType: "order-added-to-route",
                             version: "2.0"
                         },
                         {
