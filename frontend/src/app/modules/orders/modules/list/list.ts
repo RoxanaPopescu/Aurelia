@@ -314,18 +314,27 @@ export class ListPage
         {
             if (result.collectionPointIds != null)
             {
-                createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{routeSlug}", result.slug);
-                createdCollectionPointToast.body = createdCollectionPointToast.body.replace("{collectionPointCount}", String(result.collectionPointIds.length));
-                createdCollectionPointToast.url = createdCollectionPointToast.url.replace("{routeSlug}", result.slug);
+                const toastModel =
+                {
+                    heading: createdCollectionPointToast.heading,
+                    body: createdCollectionPointToast.body
+                        .replace("{routeSlug}", result.slug)
+                        .replace("{collectionPointCount}", String(result.collectionPointIds.length)),
+                    url: createdCollectionPointToast.url.replace("{routeSlug}", result.slug)
+                };
 
-                this._toastService.open("info", createdCollectionPointToast);
+                this._toastService.open("success", toastModel);
             }
             else
             {
-                createdRouteToast.body = createdRouteToast.body.replace("{routeSlug}", result.slug);
-                createdRouteToast.url = createdRouteToast.url.replace("{routeSlug}", result.slug);
+                const toastModel =
+                {
+                    heading: createdRouteToast.heading,
+                    body: createdRouteToast.body.replace("{routeSlug}", result.slug),
+                    url: createdRouteToast.url.replace("{routeSlug}", result.slug)
+                };
 
-                this._toastService.open("info", createdRouteToast);
+                this._toastService.open("success", toastModel);
             }
 
             this.selectedOrders = [];

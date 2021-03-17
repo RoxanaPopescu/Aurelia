@@ -169,7 +169,7 @@ export class DetailsPage
         try
         {
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
-            this._toastService.open("info", updatedToast);
+            this._toastService.open("success", updatedToast);
         }
         catch (error)
         {

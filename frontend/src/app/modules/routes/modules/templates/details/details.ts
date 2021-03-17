@@ -181,7 +181,7 @@ export class DetailsPage
             }
 
             this.saving = false;
-            this._toastService.open("info",
+            this._toastService.open("success",
             {
                 "heading": toastHeading
             });

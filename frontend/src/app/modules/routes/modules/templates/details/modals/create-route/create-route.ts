@@ -109,7 +109,7 @@ export class CreateRoutePanel
 
             await this._routeTemplateService.createRoute(this.model);
 
-            this._toastService.open("info", createdToast);
+            this._toastService.open("success", createdToast);
 
             await this._modal.close();
         }
