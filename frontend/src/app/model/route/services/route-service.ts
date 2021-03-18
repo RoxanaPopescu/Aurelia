@@ -101,7 +101,6 @@ export class RouteService
                 tagsOneMatching: filter?.tagsOneMatching,
                 include: include ? include : {},
                 organizationType: this._identityService.identity?.outfit.type.slug,
-                outfitType: this._identityService.identity?.outfit.type.slug,
                 pickupNearby: filter?.pickupNearby,
                 legacyOwnerIds: filter?.legacyOwnerIds
             },
@@ -122,13 +121,12 @@ export class RouteService
      */
     public async get(slug: string, signal?: AbortSignal): Promise<Route>
     {
-        const result = await this._apiClient.get("routes/v2/details",
+        const result = await this._apiClient.get("routes/details",
         {
             query:
             {
                 slug,
-                organizationType: this._identityService.identity?.outfit.type.slug,
-                outfitType: this._identityService.identity?.outfit.type.slug
+                organizationType: this._identityService.identity?.outfit.type.slug
             },
             signal
         });
