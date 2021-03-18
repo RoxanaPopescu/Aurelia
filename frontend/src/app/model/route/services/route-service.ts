@@ -263,7 +263,7 @@ export class RouteService
      */
     public async addRouteStop(route: Route, stop: RouteStop, atIndex: number): Promise<void>
     {
-        await this._apiClient.post("routes/stop/add",
+        await this._apiClient.post("routes/stops/add",
         {
             body: { routeId: route.id, stop, atIndex }
         });
@@ -322,7 +322,7 @@ export class RouteService
      */
     public async saveRouteStop(route: Route, stop: RouteStop): Promise<void>
     {
-        await this._apiClient.post("routes/stop/update",
+        await this._apiClient.post("routes/stops/update",
         {
             body: { routeId: route.id, stop }
         });
@@ -346,7 +346,7 @@ export class RouteService
             route.stops[i].stopNumber = i + 1;
         }
 
-        await this._apiClient.post("routes/stop/move",
+        await this._apiClient.post("routes/stops/move",
         {
             body: { routeId: route.id, stopId: stop.id, newIndex }
         });
@@ -376,7 +376,7 @@ export class RouteService
     {
         stop.status = new RouteStopStatus(routeStopStatusSlug);
 
-        await this._apiClient.post("routes/stop/update",
+        await this._apiClient.post("routes/stops/update",
         {
             body: { routeId: route.id, stop }
         });

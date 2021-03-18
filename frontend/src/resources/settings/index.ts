@@ -91,6 +91,7 @@ export default
                 "orders/events": { version: "2", obfuscate: false },
                 "routes/orders": { version: "2", obfuscate: false },
                 "routes/list": { version: "2", obfuscate: false },
+                "routes/stops": { version: "2", obfuscate: false },
                 "routes/details": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
