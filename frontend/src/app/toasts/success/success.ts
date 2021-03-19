@@ -6,7 +6,7 @@ import settings from "resources/settings";
 /**
  * Represents the model for a toast that notifies the user of a success.
  */
-export interface IInfoToastModel
+export interface ISuccessToastModel
 {
     /**
      * The heading text to show.
@@ -36,10 +36,10 @@ export interface IInfoToastModel
 }
 
 /**
- * Represents a toast that notifies the user of an event or new info.
+ * Represents a toast that notifies the user of a success.
  */
 @autoinject
-export class InfoToast
+export class SuccessToast
 {
     /**
      * Creates a new instance of the type.
@@ -59,13 +59,13 @@ export class InfoToast
     /**
      * The model to for the toast.
      */
-    protected model: IInfoToastModel;
+    protected model: ISuccessToastModel;
 
     /**
      * Called by the framework when the toast is activated.
      * @param model The model to use for the toast.
      */
-    public activate(model: IInfoToastModel): void
+    public activate(model: ISuccessToastModel): void
     {
         // Sets the model for the toast.
         this.model = model;
