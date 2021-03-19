@@ -58,6 +58,10 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/toasts/warning/warning")
             },
             {
+                name: "success",
+                moduleId: PLATFORM.moduleName("app/toasts/success/success")
+            },
+            {
                 name: "info",
                 moduleId: PLATFORM.moduleName("app/toasts/info/info")
             }
