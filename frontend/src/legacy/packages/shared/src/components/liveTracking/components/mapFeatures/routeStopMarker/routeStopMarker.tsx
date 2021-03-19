@@ -254,6 +254,19 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
             </div>
           )}
 
+          {this.props.routeStop.authorityToLeave && (
+            <div className="c-worldMap-popup-section-row">
+              <div>
+                Authority to leave
+              </div>
+              { this.props.routeStop.authorityToLeave.deliveryInstructions &&
+                <div>
+                  {this.props.routeStop.authorityToLeave.deliveryInstructions}
+                </div>
+              }
+            </div>
+          )}
+
           {this.props.routeStop.driverInstructions && (
             <div className="c-worldMap-popup-section-row">
               <div>

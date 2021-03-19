@@ -170,6 +170,29 @@
 
     </data-section>
 
+    <!-- Authority to leave -->
+    <template if.bind="model.routeStop.authorityToLeave">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" translate>
+                Authority to leave
+            </div>
+
+            <div class="user-select-text" if.bind="model.routeStop.authorityToLeave.deliveryInstructions">
+                ${model.routeStop.authorityToLeave.deliveryInstructions}
+            </div>
+
+            <div class="opacity-faded" if.bind="!model.routeStop.authorityToLeave.deliveryInstructions" translate>
+                No delivery instruction
+            </div>
+
+        </data-section>
+
+    </template>
+
     <!-- Instructions -->
     <template if.bind="model.routeStop.driverInstructions">
 

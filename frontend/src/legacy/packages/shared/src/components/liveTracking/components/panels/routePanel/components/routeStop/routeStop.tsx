@@ -211,6 +211,19 @@ export class RouteStopComponent extends React.Component<RoutesLayerProps> {
               </div>
             )}
 
+            {this.props.routeStop.authorityToLeave && (
+              <div className="c-liveTracking-panel-section-row">
+                <div>
+                  Authority to leave
+                </div>
+                { this.props.routeStop.authorityToLeave.deliveryInstructions &&
+                  <div>
+                    {this.props.routeStop.authorityToLeave.deliveryInstructions}
+                  </div>
+                }
+              </div>
+            )}
+
             {this.props.routeStop.orderIds.length > 0 && (
               <div className="c-liveTracking-panel-section-row">
                 <div>

@@ -5,6 +5,7 @@ import { Outfit } from "app/model/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopInfo } from "./route-stop-info";
 import { RouteEstimates } from "./route-estimates";
+import { RouteStopAuthorityToLeave } from "..";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -51,6 +52,10 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.taskTime = Duration.fromObject({ seconds: data.taskTime });
             }
 
+            if (data.authorityToLeave != null) {
+                this.authorityToLeave = new RouteStopAuthorityToLeave(data.authorityToLeave);
+            }
+
             if (data.waitingTime)
             {
                 this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
@@ -77,6 +82,11 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The estimates for this stop.
      */
     public estimates?: RouteEstimates;
+
+    /**
+     * The estimates for this stop.
+     */
+    public authorityToLeave?: RouteStopAuthorityToLeave;
 
     /**
      * The port to use at this stop.
