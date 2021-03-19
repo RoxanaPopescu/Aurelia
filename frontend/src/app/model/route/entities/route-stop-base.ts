@@ -52,7 +52,8 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.taskTime = Duration.fromObject({ seconds: data.taskTime });
             }
 
-            if (data.authorityToLeave != null) {
+            if (data.authorityToLeave != null)
+            {
                 this.authorityToLeave = new RouteStopAuthorityToLeave(data.authorityToLeave);
             }
 
