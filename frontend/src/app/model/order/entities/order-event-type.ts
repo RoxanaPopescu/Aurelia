@@ -1,5 +1,7 @@
 import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
+import eventTitles from "../resources/strings/order-event-titles.json";
+import eventDescriptions from "../resources/strings/order-event-descriptions.json";
 
 /**
  * Represents the slug identifying a `OrderEventType`.
@@ -57,268 +59,254 @@ export class OrderEventType
     {
         "order-created":
         {
-            name: "Order created",
-            description: "The order was created.",
+            name: eventTitles.orderCreated,
+            description: eventDescriptions.orderCreated,
             accent: "positive",
             stopType: undefined
         },
         "order-added-to-route":
         {
-            name: "Order added to route",
-            description: "The order was added to a route.",
+            name: eventTitles.orderAddedToRoute,
+            description: eventDescriptions.orderAddedToRoute,
             accent: "positive",
             stopType: undefined
         },
         "order-ready":
         {
-            name: "Order marked as ready",
-            description: "The order was marked as ready.",
+            name: eventTitles.orderReady,
+            description: eventDescriptions.orderReady,
             accent: "positive",
             stopType: undefined
         },
         "order-pickup-arrived":
         {
-            name: "Arrived at pickup location",
-            description: "The driver has arrived at the pickup location.",
+            name: eventTitles.orderPickupArrived,
+            description: eventDescriptions.orderPickupArrived,
             accent: "positive",
             stopType: "pickup"
         },
         "order-pickup-completed":
         {
-            name: "Pickup completed",
-            description: "The order was picked up by the driver.",
+            name: eventTitles.orderPickupCompleted,
+            description: eventDescriptions.orderPickupCompleted,
             accent: "positive",
             stopType: "pickup"
         },
         "order-delivery-completed":
         {
-            name: "Delivery completed",
-            description: "The order was delivered to the recipient.",
+            name: eventTitles.orderDeliveryCompleted,
+            description: eventDescriptions.orderDeliveryCompleted,
             accent: "positive",
             stopType: "delivery"
         },
         "order-pickup-failed":
         {
-            name: "Order pickup failed",
-            description: "The order could not be picked up from the sender.",
+            name: eventTitles.orderPickupFailed,
+            description: eventDescriptions.orderPickupFailed,
             accent: "negative",
             stopType: "pickup"
         },
         "order-delivery-failed":
         {
-            name: "Delivery failed",
-            description: "The order could not be delivered to the recipient.",
+            name: eventTitles.orderDeliveryFailed,
+            description: eventDescriptions.orderDeliveryFailed,
             accent: "negative",
             stopType: "delivery"
         },
         "order-provider-accepted":
         {
-            name: "Order provider accepted",
-            description: undefined,
+            name: eventTitles.orderProviderAccepted,
+            description: eventDescriptions.orderProviderAccepted,
             accent: "positive",
             stopType: undefined
         },
         "order-pickup-accepted":
         {
-            name: "Order pickup accepted",
-            description: undefined,
+            name: eventTitles.orderPickupAccepted,
+            description: eventDescriptions.orderPickupAccepted,
             accent: "positive",
             stopType: undefined
         },
         "order-delivery-arrived":
         {
-            name: "Arrived at delivery location",
-            description: "The driver has arrived at the delivery location.",
+            name: eventTitles.orderDeliveryArrived,
+            description: eventDescriptions.orderDeliveryArrived,
             accent: "positive",
             stopType: "delivery"
         },
-        "order-cancelled-en-route":
-        {
-            name: "Order cancelled en route",
-            description: "The order was cancelled while en rute.",
-            accent: "positive",
-            stopType: undefined
-        },
-        "order-return-completed":
-        {
-            name: "Order return completed",
-            description: undefined,
-            accent: "positive",
-            stopType: "return"
-        },
         "order-delivery-eta-provided":
         {
-            name: "Estimated delivery",
-            description: "The estimated time of arrival at the delivery location.",
+            name: eventTitles.orderDeliveryEtaProvided,
+            description: eventDescriptions.orderDeliveryEtaProvided,
             accent: "neutral",
             stopType: "delivery"
         },
         "order-pickup-eta-provided":
         {
-            name: "Estimated pickup",
-            description: "The estimated time of arrival at the pickup location.",
+            name: eventTitles.orderPickupEtaProvided,
+            description: eventDescriptions.orderPickupEtaProvided,
             accent: "neutral",
             stopType: "pickup"
         },
         "collo-loaded-on-linehaul":
         {
-            name: "Collo loaded on linehaul",
-            description: "The collo was loaded on a linehaul.",
+            name: eventTitles.colloLoadedOnLinehaul,
+            description: eventDescriptions.colloLoadedOnLinehaul,
             accent: "positive",
             stopType: undefined
         },
         "collo-unloaded-from-linehaul":
         {
-            name: "Collo unloaded from linehaul",
-            description: "The collo was loaded off a linehaul.",
+            name: eventTitles.colloUnloadedFromLinehaul,
+            description: eventDescriptions.colloUnloadedFromLinehaul,
             accent: "positive",
             stopType: undefined
         },
         "collo-enterede-storage":
         {
-            name: "Collo entered storage",
-            description: "The collo entered storage.",
+            name: eventTitles.colloEnteredeStorage,
+            description: eventDescriptions.colloEnteredeStorage,
             accent: "positive",
             stopType: undefined
         }
         ,
         "collo-left-storage":
         {
-            name: "Collo left storage",
-            description: "The collo left storage.",
+            name: eventTitles.colloLeftStorage,
+            description: eventDescriptions.colloLeftStorage,
             accent: "positive",
             stopType: undefined
         },
         "collo-label-created":
         {
-            name: "Collo label created",
-            description: "The label for the collo was created.",
+            name: eventTitles.colloLabelCreated,
+            description: eventDescriptions.colloLabelCreated,
             accent: "positive",
             stopType: undefined
         },
         "collo-missing":
         {
-            name: "Collo missing",
-            description: "The collo was reported as missing.",
+            name: eventTitles.colloMissing,
+            description: eventDescriptions.colloMissing,
             accent: "negative",
             stopType: undefined
         },
         "collo-damaged":
         {
-            name: "Collo damaged",
-            description: "The collo was reported as damaged.",
+            name: eventTitles.colloDamaged,
+            description: eventDescriptions.colloDamaged,
             accent: "negative",
             stopType: undefined
         },
         "collo-removed-from-linehaul":
         {
-            name: "Collo removed from linehaul",
-            description: undefined,
+            name: eventTitles.colloRemovedFromLinehaul,
+            description: eventDescriptions.colloRemovedFromLinehaul,
             accent: "positive",
             stopType: undefined
         },
         "collo-delivery-completed":
         {
-            name: "Collo delivery completed",
-            description: undefined,
+            name: eventTitles.colloDeliveryCompleted,
+            description: eventDescriptions.colloDeliveryCompleted,
             accent: "positive",
             stopType: "delivery"
         },
         "collo-pickup-completed":
         {
-            name: "Collo pickup completed",
-            description: undefined,
+            name: eventTitles.colloPickupCompleted,
+            description: eventDescriptions.colloPickupCompleted,
             accent: "positive",
             stopType: "pickup"
         },
         "collo-delivery-arrived":
         {
-            name: "Collo delivery arrived",
-            description: undefined,
+            name: eventTitles.colloDeliveryArrived,
+            description: eventDescriptions.colloDeliveryArrived,
             accent: "positive",
             stopType: "delivery"
         },
         "collo-delivery-failed":
         {
-            name: "Collo delivery failed",
-            description: undefined,
+            name: eventTitles.colloDeliveryFailed,
+            description: eventDescriptions.colloDeliveryFailed,
             accent: "negative",
             stopType: "delivery"
         },
         "collo-pickup-failed":
         {
-            name: "Collo pickup failed",
-            description: undefined,
+            name: eventTitles.colloPickupFailed,
+            description: eventDescriptions.colloPickupFailed,
             accent: "negative",
             stopType: "pickup"
         },
         "collo-pickup-accepted":
         {
-            name: "Collo pickup accepted",
-            description: undefined,
+            name: eventTitles.colloPickupAccepted,
+            description: eventDescriptions.colloPickupAccepted,
             accent: "positive",
             stopType: undefined
         },
         "staging-collo-missing":
         {
-            name: "Staging collo missing",
-            description: undefined,
+            name: eventTitles.stagingColloMissing,
+            description: eventDescriptions.stagingColloMissing,
             accent: "negative",
             stopType: undefined
         },
         "staging-collo-damaged":
         {
-            name: "Staging collo damaged",
-            description: undefined,
+            name: eventTitles.stagingColloDamaged,
+            description: eventDescriptions.stagingColloDamaged,
             accent: "negative",
             stopType: undefined
         },
         "staging-collo-validated":
         {
-            name: "Staging collo validated",
-            description: undefined,
+            name: eventTitles.stagingColloValidated,
+            description: eventDescriptions.stagingColloValidated,
             accent: "positive",
             stopType: undefined
         },
         "collection-point-order-deleted":
         {
-            name: "Collection point order deleted",
-            description: undefined,
+            name: eventTitles.collectionPointOrderDeleted,
+            description: eventDescriptions.collectionPointOrderDeleted,
             accent: "neutral",
             stopType: undefined
         },
         "collection-point-collo-missing":
         {
-            name: "Collection point collo missing",
-            description: undefined,
+            name: eventTitles.collectionPointColloMissing,
+            description: eventDescriptions.collectionPointColloMissing,
             accent: "negative",
             stopType: undefined
         },
         "collection-point-collo-damaged":
         {
-            name: "Collection point collo damaged",
-            description: undefined,
+            name: eventTitles.collectionPointColloDamaged,
+            description: eventDescriptions.collectionPointColloDamaged,
             accent: "negative",
             stopType: undefined
         },
         "collection-point-collo-collected":
         {
-            name: "Collection point collo collected",
-            description: undefined,
+            name: eventTitles.collectionPointColloCollected,
+            description: eventDescriptions.collectionPointColloCollected,
             accent: "positive",
             stopType: undefined
         },
         "collection-point-collo-not-collected":
         {
-            name: "Collection point collo not collected",
-            description: undefined,
+            name: eventTitles.collectionPointColloNotCollected,
+            description: eventDescriptions.collectionPointColloNotCollected,
             accent: "negative",
             stopType: undefined
         },
         "collection-point-collo-rejected":
         {
-            name: "Collection point collo rejected",
-            description: undefined,
+            name: eventTitles.collectionPointColloRejected,
+            description: eventDescriptions.collectionPointColloRejected,
             accent: "negative",
             stopType: undefined
         }
