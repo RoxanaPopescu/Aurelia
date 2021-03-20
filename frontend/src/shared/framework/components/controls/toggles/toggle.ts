@@ -151,6 +151,11 @@ export class ToggleCustomElement
      */
     protected onToggleClick(): boolean
     {
+        if (this.disabled || this.readonly)
+        {
+            return false;
+        }
+
         // Toggle the value.
 
         if (this.triState)
