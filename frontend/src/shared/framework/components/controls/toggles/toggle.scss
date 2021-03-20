@@ -176,7 +176,11 @@
     {
         // Reduce opacity when disabled.
         opacity: var(--opacity-disabled);
+    }
 
+    &.--disabled,
+    &.--readonly
+    {
         > .toggle-label,
         > .toggle-control
         {
