@@ -139,8 +139,10 @@ export class HistoryHelper
         {
             history.go(-offset);
         }
-
-        throw new Error("Offset must be a positive integer or undefined.");
+        else
+        {
+            throw new Error("Offset must be a positive integer or undefined.");
+        }
     }
 
     /**
@@ -157,8 +159,10 @@ export class HistoryHelper
         {
             history.go(offset);
         }
-
-        throw new Error("Offset must be a positive integer or undefined.");
+        else
+        {
+            throw new Error("Offset must be a positive integer or undefined.");
+        }
     }
 
     /**
