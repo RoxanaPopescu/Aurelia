@@ -163,6 +163,8 @@ export class OrderStatusModule extends AppModule
             context.response.body =
             {
                 trackingId: trackingId,
+                ownerId: orderDetailsData.consignorId,
+                ownerOrderId: orderDetailsData.orderId,
                 events: trackingEvents,
                 colli: orderDetailsData.actualColli?.map((c: any) =>
                 ({
@@ -178,13 +180,19 @@ export class OrderStatusModule extends AppModule
                     },
                     tags: c.tags
                 })),
-
                 driver: driverData == null || driverPosition == null ? undefined :
                 {
                     id: driverData.id,
                     firstName: driverData?.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
+                },
+                options:
+                {
+                    authorityToLeave: orderDetailsData.authorityToLeave == null ? undefined :
+                    {
+                        instructions: orderDetailsData.authorityToLeave.deliveryInstructions
+                    }
                 }
 
             };

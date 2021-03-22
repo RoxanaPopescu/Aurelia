@@ -9,8 +9,8 @@ export class OrdersEventsModule extends AppModule
     {
         /**
          * Gets the order events for the specified order.
-         * @param context.request.body.consignorId The ID of the consignor owner of the order.
-         * @param context.request.body.orderId The ID of the order for which to get events.
+         * @param context.request.body.ownerId The ID of the owner of the order.
+         * @param context.request.body.ownerOrderId The ID of the order for which to get events.
          * @returns The order events for the specified order.
          */
         this.router.post("/v2/orders/events", async context =>
