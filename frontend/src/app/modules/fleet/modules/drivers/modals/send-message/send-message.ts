@@ -99,7 +99,7 @@ export class SendMessagePanel
                 {
                     heading: messageSentToast.heading,
                     body: messageSentToast.body
-                        .replace("{name}", this.model.name.toString())
+                        .replace("{name}", this.model.name.first)
                 };
 
             this._toastService.open("success", toastModel);

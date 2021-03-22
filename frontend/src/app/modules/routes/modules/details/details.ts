@@ -14,7 +14,6 @@ import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
 import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
-import { AddOrderLegacyPanel } from "./modals/add-order-legacy/add-order";
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 import addedOrdersToast from "./resources/strings/added-orders-toast.json";
@@ -352,16 +351,6 @@ export class DetailsModule
     protected async onRemoveDriverClick(route: Route): Promise<void>
     {
         await this._modalService.open(RemoveDriverPanel, { route: this.route! }).promise;
-    }
-
-    /**
-     * FIXME: Remove this when new add order page has competed
-     * Called when the `Add order` button is clicked.
-     * @param route The route to which an order should be added.
-     */
-    protected async onAddOrderLegacyClick(): Promise<void>
-    {
-        await this._modalService.open(AddOrderLegacyPanel, { route: this.route! }).promise;
     }
 
     /**
