@@ -25,7 +25,7 @@ export class AuthorityToLeaveModule extends AppModule
                         organization:
                         {
                             id: context.request.body.ownerId,
-                            name: "(Tracking user)"
+                            name: "Track & Trace"
                         }
                     }
                 }
@@ -52,7 +52,7 @@ export class AuthorityToLeaveModule extends AppModule
                         organization:
                         {
                             id: context.request.body.ownerId,
-                            name: "(Tracking user)"
+                            name: "Track & Trace"
                         }
                     }
                 }
