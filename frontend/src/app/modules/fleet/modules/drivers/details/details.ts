@@ -8,6 +8,7 @@ import { Operation } from "shared/utilities";
 import { Log, ApiError } from "shared/infrastructure";
 import { DriverStatus } from "app/model/driver/entities/driver-status";
 import { ChangePasswordPanel } from "./modals/change-password/change-password";
+import { SendMessagePanel } from "../modals/send-message/send-message";
 
 /**
  * Represents the route parameters for the page.
@@ -150,6 +151,15 @@ export class DetailsPage
     {
         await this._modalService.open(ChangePasswordPanel, this.driver).promise;
     }
+
+    /**
+     * Called when the `Send message` button is clicked.
+     * Opens a modal for sending a message.
+     */
+     protected async onSendMessageClick(): Promise<void>
+     {
+         await this._modalService.open(SendMessagePanel, this.driver).promise;
+     }
 
     /**
      * Called when a vehicle is clicked.

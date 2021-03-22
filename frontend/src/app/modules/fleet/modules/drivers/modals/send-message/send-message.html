@@ -1,0 +1,106 @@
+<template >
+
+    <require from="./send-message.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel scroll scroll.ref="scroll" name="send-message" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Send messsage"
+                click.trigger="onSendClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <div>
+
+            <modal-header scroll-fade >
+
+                <h1 class="font-largest flex-row" tabindex="-1" autoFocus= "visible.bind: false" >
+
+                    <div translate>
+                        Send message to ${model.name}
+                    </div>
+
+                </h1>
+
+            </modal-header>
+
+            <modal-section class="margin-bottom">
+
+                <div class="control-row flex-row">
+
+                    <select-input label="above" none.bind="false" value.bind="type" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Type
+                        </div>
+
+                        <item model="push">
+                            push
+                        </item>
+
+                        <item model="sms">
+                            sms
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="type">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="margin-large-bottom">
+
+                    <text-input label="above" value.bind="title" class="flex-basis-1-of-1 margin-large-top">
+
+                        <div slot="heading" translate>
+                            Title
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <text-input label="above" lines.bind="3" value.bind="message" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Message
+                        </div>
+
+                        <span slot="placeholder" translate>
+                            Type any message for the driver
+                        </span>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="message">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+            </modal-section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

@@ -6,6 +6,7 @@ import { IScroll, ModalService } from "shared/framework";
 import { DriverService, Driver } from "app/model/driver";
 import { DeleteDriverDialog } from "./modals/confirm-delete/confirm-delete";
 import { DriverStatusSlug } from "app/model/driver/entities/driver-status";
+import { SendMessagePanel } from "../modals/send-message/send-message";
 
 /**
  * Represents the route parameters for the page.
@@ -121,6 +122,16 @@ export class ListPage
             this.updateOperation.abort();
         }
     }
+
+    /**
+     * Called when the `Communication driver` icon is clicked on a driver.
+     * Shows the driver communication modal
+     * @param driver The driver to communicate to.
+     */
+     protected async onCommunicationDriverClick(driver: Driver): Promise<void>
+     {
+        await this._modalService.open(SendMessagePanel, driver).promise;
+     }
 
     /**
      * Called when the `Remove driver` icon is clicked on a driver.

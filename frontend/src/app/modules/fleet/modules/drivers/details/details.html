@@ -31,6 +31,9 @@
                             New vehicle
                         </span>
                     </button>
+                    <button if.bind="driver.id" translate if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onSendMessageClick()">
+                        Send message
+                    </button>
                     <button if.bind="driver.id" translate if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onChangePasswordClick()">
                         Change password
                     </button>

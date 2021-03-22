@@ -72,6 +72,24 @@ export class DriverService
      * @param driver The vehicle to save.
      * @returns A promise that will be resolved with the updated driver.
      */
+    public async sendMessage(driver: Driver, type: "sms" | "push", message: string, title?: string): Promise<void>
+    {
+        await this._apiClient.post("drivers/send-message",
+        {
+            body: {
+                driverId: driver.id,
+                type: type,
+                message: message,
+                title: title
+            }
+        });
+    }
+
+    /**
+     * Saves the specified driver.
+     * @param driver The vehicle to save.
+     * @returns A promise that will be resolved with the updated driver.
+     */
     public async update(driver: Driver): Promise<Driver>
     {
         const result = await this._apiClient.post("drivers/update",

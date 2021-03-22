@@ -135,11 +135,12 @@
 
                     <template repeat.for="driver of results">
 
-                        <data-table-row
-                            href="/fleet-management/drivers/details/${driver.id}">
+                        <data-table-row>
 
                             <data-table-cell>
-                                ${driver.name}
+                                <a href="/fleet-management/drivers/details/${driver.id}" class="text-truncate">
+                                    ${driver.name}
+                                </a>
                             </data-table-cell>
 
                             <data-table-cell>
@@ -168,10 +169,14 @@
 
                             <data-table-cell align="right">
 
-                                <div if-claims="invite-driver" class="icon-row">
+                                <div class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onCommunicationDriverClick(driver)">
+                                        <icon name="communication"></icon>
+                                    </button>
 
                                     <button appearance="none" accent="primary" click.trigger="onRemoveDriverClick(driver)">
-                                        <icon name="delete-small"></icon>
+                                        <icon name="delete"></icon>
                                     </button>
 
                                 </div>
