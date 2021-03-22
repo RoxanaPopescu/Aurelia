@@ -1,4 +1,4 @@
-import { Base64 } from "../../../shared/utilities";
+import { Base64 } from "../../utilities";
 
 // This is a simple implementation of an obfuscator and deobfuscator for use in API protection.
 // This is obviously not intended to provide any real security, but simply attempts to obscure

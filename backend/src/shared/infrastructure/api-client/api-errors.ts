@@ -1,5 +1,5 @@
 import { Request, Response } from "node-fetch";
-import { AbortError } from "../../../shared/types";
+import { AbortError } from "../../types";
 
 /**
  * The HTTP status codes that represent transient errors.
@@ -58,7 +58,7 @@ export class ApiError<TData = any> extends Error
         super(message ||
         (
             response != null ?
-                `Request of type '${request.method}' for '${request.url}' failed with status code ${response.status}.` :
+                `Request of type '${request.method}' for '${request.url}' failed with status code ${response.status}${response.statusText ? ` (${response.statusText})` : ""}.` :
                 `Request of type '${request.method}' for '${request.url}' failed.`
         ));
 

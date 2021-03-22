@@ -1,7 +1,7 @@
 // tslint:disable-next-line: no-submodule-imports
-import { AbortSignal } from "node-fetch/externals";
+import { AbortSignal } from "abort-controller";
 import { BodyInit } from "node-fetch";
-import { MapObject } from "../../../shared/types";
+import { MapObject } from "../../types";
 import { IApiRequestSettings } from "./api-request-settings";
 
 /**
@@ -30,19 +30,4 @@ export interface IApiRequestOptions extends IApiRequestSettings
      * The default is undefined.
      */
     signal?: AbortSignal;
-
-    /**
-     * The subresource integrity metadata for the request, which is a cryptographic
-     * hash of the resource being fetched. Its value consists of multiple hashes
-     * separated by whitespace.
-     * The default is undefined.
-     */
-    integrity?: string;
-
-    /**
-     * True to indicate that the request can outlive the global in which it was
-     * created, otherwise false.
-     * The default is false, or the configured default value.
-     */
-    keepalive?: boolean;
 }

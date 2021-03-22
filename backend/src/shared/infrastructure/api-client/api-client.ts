@@ -1,6 +1,8 @@
+import http from "http";
+import https from "https";
 import fetch, { Request, Response, RequestInit } from "node-fetch";
 import { Container, inject } from "../container";
-import { once, delay } from "../../../shared/utilities";
+import { once, delay } from "../../utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
@@ -34,6 +36,8 @@ export class ApiClient
     private readonly _container: Container;
     private _settings: IApiClientSettings;
     private _interceptors: IApiInterceptor[];
+    private _httpAgent: http.Agent | undefined;
+    private _httpsAgent: https.Agent | undefined;
 
     /**
      * Configures the instance.
@@ -45,7 +49,7 @@ export class ApiClient
         this._settings = settings;
         this._interceptors = [];
 
-        // Addx any interceptors specified in the settings.
+        // Add any interceptors specified in the settings.
         if (this._settings.interceptors != null)
         {
             for (const interceptor of this._settings.interceptors)
@@ -272,9 +276,9 @@ export class ApiClient
         }
 
         // Resolve whether obfuscation should be used.
-        if (endpointSettings.obfuscate === undefined)
+        if (endpointSettings.obfuscate !== false)
         {
-            endpointSettings.obfuscate = this._settings.obfuscate;
+            endpointSettings.obfuscate = this._settings.cipher != null;
         }
 
         return endpointSettings;
@@ -293,7 +297,7 @@ export class ApiClient
         if (endpointSettings.obfuscate)
         {
             /* tslint:disable-next-line: no-parameter-reassignment */
-            path = path.split("/").map(s => obfuscate(s, this._settings.cipher)).join("/");
+            path = path.split("/").map(s => obfuscate(s, this._settings.cipher!)).join("/");
         }
 
         // Construct the endpoint URL.
@@ -330,7 +334,7 @@ export class ApiClient
                 // Obfuscate the query string, if enabled.
                 if (endpointSettings.obfuscate)
                 {
-                    query = obfuscate(query, this._settings.cipher);
+                    query = obfuscate(query, this._settings.cipher!);
                 }
 
                 // Append the query string to the endpoint URL.
@@ -360,6 +364,21 @@ export class ApiClient
             signal: options.signal
         };
 
+        // If keepalive is enabled, use a custom HTTP or HTTPS agent.
+        if (options.keepalive)
+        {
+            if (fetchUrl.startsWith("http:"))
+            {
+                this._httpAgent ??= new http.Agent({ keepAlive: true });
+                fetchOptions.agent = this._httpAgent;
+            }
+            else if (fetchUrl.startsWith("https:"))
+            {
+                this._httpsAgent ??= new https.Agent({ keepAlive: true });
+                fetchOptions.agent = this._httpsAgent;
+            }
+        }
+
         // Add the body, if specified.
         if (options.body !== undefined)
         {
@@ -373,7 +392,7 @@ export class ApiClient
             // Obfuscate the body, if enabled.
             if (endpointSettings.obfuscate && typeof body === "string")
             {
-                fetchOptions.body = obfuscate(body, this._settings.cipher);
+                fetchOptions.body = obfuscate(body, this._settings.cipher!);
             }
             else
             {
@@ -510,7 +529,7 @@ export class ApiClient
                 // Deobfuscate the body, if enabled.
                 if (endpointSettings.obfuscate)
                 {
-                    text = deobfuscate(text, this._settings.cipher);
+                    text = deobfuscate(text, this._settings.cipher!);
                 }
 
                 // Deserialize the body, using the configured JSON reviver.

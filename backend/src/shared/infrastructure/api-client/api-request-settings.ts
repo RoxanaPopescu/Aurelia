@@ -1,5 +1,5 @@
-import { MapObject } from "../../../shared/types";
-import { RequestRedirect, RequestCredentials, RequestCache, RequestMode } from "node-fetch";
+import { RequestRedirect } from "node-fetch";
+import { MapObject } from "../../types";
 
 /**
  * Represents the settings to use for an HTTP request.
@@ -28,28 +28,6 @@ export interface IApiRequestSettings
     retryDelay?: number[];
 
     /**
-     * The mode associated with the request, which is a string indicating whether
-     * the request will use CORS, or will be restricted to same-origin URLs.
-     * The default is `cors`, or the configured default value.
-     */
-    mode?: RequestMode;
-
-    /**
-     * The cache mode associated with request, which is a string indicating
-     * how the the request will interact with the browser cache when fetching.
-     * The default is `default`, or the configured default value.
-     */
-    cache?: RequestCache;
-
-    /**
-     * The credentials mode associated with request, which is a string indicating
-     * whether credentials will be sent with the request always, never, or only when
-     * sent to a same-origin URL.
-     * The default is `same-origin`, or the configured default value.
-     */
-    credentials?: RequestCredentials;
-
-    /**
      * The redirect mode associated with request, which is a string indicating how
      * redirects for the request will be handled during fetching.
      * The default is `follow`, or the configured default value.
@@ -57,11 +35,10 @@ export interface IApiRequestSettings
     redirect?: RequestRedirect;
 
     /**
-     * The referrer associated with the request, which is the string `no-referrer`,
-     * `client`, or a same-origin URL.
-     * The default is `client`, or the configured default value.
+     * True to keep sockets around in a pool to be used by other requests in the future, otherwise false.
+     * The default is false, or the configured default value.
      */
-    referrer?: "no-referrer" | "client" | string;
+    keepalive?: boolean;
 
     /**
      * True to treat a response with status code 404 or 410 as valid, false to throw an error.

@@ -1,8 +1,8 @@
 import { URL } from "url";
 import { BodyInit, Request, Response } from "node-fetch";
 import { environment } from "../../../../env";
-import { MapObject } from "../../../../shared/types";
-import { delay } from "../../../../shared/utilities";
+import { MapObject } from "../../../types";
+import { delay } from "../../../utilities";
 import { IApiInterceptor } from "../api-interceptor";
 import { IApiRequestOptions } from "../api-request-options";
 import { IApiClientSettings } from "../api-client-settings";
@@ -59,14 +59,11 @@ export class ResponseStubInterceptor implements IApiInterceptor
 
         // Try to get the response stub.
 
-        const [, host, pathAndQuery] = /(?:https?:\/\/([^/]+))?(.*)/.exec(request.url)!;
+        const apiHost = new URL(settings.endpointUrlPattern).host;
 
-        if (!host)
-        {
-            throw new Error("No host specified.");
-        }
-
-        const stubUrl = `//${host}${pathAndQuery}`;
+        const stubUrl = requestUrl.host === apiHost
+            ? requestUrl.pathname + requestUrl.search
+            : `//${requestUrl.host}${requestUrl.pathname + requestUrl.search}`;
 
         const stubKey = `${requestMethod} ${stubUrl}`;
         const stubValue = this._stubs[stubKey];

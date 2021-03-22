@@ -12,14 +12,10 @@ export const apiRequestDefaults: IApiRequestOptions =
     },
     retry: 3,
     retryDelay: [100, 1000, 3000],
-    mode: "cors",
-    cache: "default",
-    credentials: "same-origin",
     redirect: "follow",
-    referrer: "client",
+    keepalive: false,
     optional: false,
     deserialize: true,
     jsonReviver: undefined,
-    keepalive: false,
     noi: false
 };

@@ -76,6 +76,7 @@ export default
         {
             defaults:
             {
+                keepalive: true,
                 headers:
                 {
                     // HACK: Needed when calling NOI endpoints.
@@ -87,8 +88,6 @@ export default
                     "Api-Version": "v1"
                 }
             },
-            obfuscate: false,
-            cipher: "svrmZIDJCKab+o8n-h7wTR6l4XO1Qz95PHMp3BFNiqeYGdEAUx0_SckLVufy2jtgW",
             endpointUrlPattern: `${environment.apiBaseUrl}{path}`,
             noiEndpointUrlPattern: `${environment.noiApiBaseUrl}{path}`,
             endpointSettings:

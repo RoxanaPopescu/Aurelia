@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-submodule-imports
-import { AbortSignal } from "node-fetch/externals";
+import { AbortSignal } from "abort-controller";
 import { AbortError } from "../../../shared/types";
 
 /**

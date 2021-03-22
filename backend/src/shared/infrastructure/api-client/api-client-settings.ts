@@ -1,4 +1,4 @@
-import { Type } from "../../../shared/types";
+import { Type } from "../../types";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestSettings } from "./api-request-settings";
 
@@ -13,15 +13,10 @@ export interface IApiClientSettings
     defaults?: IApiRequestSettings;
 
     /**
-     * The cipher to use for obfuscation, which must be a string
-     * of 65 unique, URL-safe characters.
+     * The cipher to use for obfuscation, which must be a string of 65 unique,
+     * URL-safe characters, or undefined to disable obfuscation.
      */
-    cipher: string;
-
-    /**
-     * True to enable obfuscation, otherwise false.
-     */
-    obfuscate: boolean;
+    cipher?: string;
 
     /**
      * The URL pattern for the endpoints, where `{version}` will be replaced with
@@ -63,9 +58,8 @@ export interface IApiEndpointSettings
     version: string;
 
     /**
-     * True to always use obfuscation, false to never use obfuscation, or undefined
-     * to use obfuscation only when the client `obfuscate` setting is true.
-     * The default is undefined.
+     * True to use obfuscation if a cipher is specified, otherwise false.
+     * The default is true.
      */
     obfuscate?: boolean;
 }
