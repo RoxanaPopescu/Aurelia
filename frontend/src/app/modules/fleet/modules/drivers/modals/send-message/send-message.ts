@@ -32,11 +32,6 @@ export class SendMessagePanel
     private _result: boolean = false;
 
     /**
-     * The model for the modal.
-     */
-    public model: Driver;
-
-    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
@@ -57,9 +52,14 @@ export class SendMessagePanel
     protected type: "push" | "sms" = "push";
 
     /**
+     * The model for the modal.
+     */
+    public model: Driver;
+
+    /**
      * Called by the framework when the modal is activated.
      */
-    public activate(model: Driver ): void
+    public activate(model: Driver): void
     {
         this.model = model;
     }
