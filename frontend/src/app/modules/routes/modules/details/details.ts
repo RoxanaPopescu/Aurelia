@@ -363,7 +363,7 @@ export class DetailsModule
 
         if (added)
         {
-            this.toastService.open("info", addedOrdersToast);
+            this.toastService.open("success", addedOrdersToast);
         }
     }
 
