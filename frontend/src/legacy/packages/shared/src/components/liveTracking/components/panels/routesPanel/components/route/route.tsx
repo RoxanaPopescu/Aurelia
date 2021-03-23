@@ -18,11 +18,6 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
   public render() {
     let route = this.props.route;
 
-    const driverOrFulfillerName =
-      route.driver
-      ? route.driver.name.toString()
-      : route.fulfiller.primaryName;
-
     const driverOrFulfillerPhone = route.driver
       ? route.driver.phone.toString()
       : route.fulfiller.contactPhone ? route.fulfiller.contactPhone!.toString()
@@ -84,10 +79,16 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
             <div className="c-liveTracking-routesPanel-route-info">
 
-              <div>{driverOrFulfillerName}</div>
+            { route.driver &&
+              <a href={"fleet-management/drivers/details/" + route.driver.id} target="_blank">{route.driver.name.toString()}</a>
+            }
+
+            { !route.driver &&
+              <div>{route.fulfiller.primaryName}</div>
+            }
 
               {driverOrFulfillerPhone &&
-              <div>{driverOrFulfillerPhone}</div>}
+              <a href={"tel:" + driverOrFulfillerPhone}>{driverOrFulfillerPhone}</a>}
 
               <div>{route.vehicleType.name}</div>
 

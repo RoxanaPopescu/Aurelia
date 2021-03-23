@@ -22,6 +22,7 @@ export class Outfit
         this.personName = data.contactPerson;
         this.contactEmail = data.contactEmail;
         this.address = data.address;
+        this.legacyId = data.legacyId;
 
         if (data != null && data.contactPhone != null && data.contactPhone.number)
         {
@@ -75,6 +76,11 @@ export class Outfit
     public readonly address?: string;
 
     /**
+     * The legacy id of this outfit in NOI
+     */
+    public readonly legacyId?: string;
+
+    /**
      * Gets the primary name of the outfit.
      */
     @computedFrom("companyName", "personName")
@@ -105,7 +111,8 @@ export class Outfit
             contactPerson: this.personName,
             contactPhone: this.contactPhone,
             contactEmail: this.contactEmail,
-            address: this.address
+            address: this.address,
+            legacyId: this.legacyId
         };
     }
 }
