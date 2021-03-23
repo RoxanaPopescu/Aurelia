@@ -444,7 +444,9 @@ export class DetailsModule
                 {
                     Log.error("An error occurred while loading this route.\n", error);
                 }
-            } finally {
+            }
+            finally
+            {
 
                 if (this.route != null && this.route.status.slug === "in-progress")
                 {
