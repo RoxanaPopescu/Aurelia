@@ -68,98 +68,103 @@ export class ResponseStubInterceptor implements IApiInterceptor
         const stubKey = `${requestMethod} ${stubUrl}`;
         const stubValue = this._stubs[stubKey];
 
-        // Do we have a response stub for this request?
-        if (stubValue != null)
+        // If no response stub was found, continue with the original request.
+        if (stubValue == null)
         {
-            // Resolve the stub value.
-
-            let stub: IResponseStub;
-
-            if (stubValue instanceof Function)
-            {
-                // Get the result of the stub.
-                const stubResult  = await stubValue(requestMethod, requestUrl, options);
-
-                // If the result is a request or response, return that.
-                if (stubResult instanceof Request || stubResult instanceof Response)
-                {
-                    // Log a warning to the console, including info about the request and response.
-                    console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
-                    {
-                        request: { ...options },
-                        stub: stubResult
-                    });
-
-                    return stubResult;
-                }
-
-                stub = { ...stubResult };
-            }
-            else
-            {
-                stub = { ...stubValue };
-            }
-
-            // Determine the response delay to use.
-            const stubDelay = this._latency + (stub.delay || 0);
-
-            // Determine the response content type to use.
-            const hasBody = stub.body != null && stub.body !== "";
-            const contentType = stub.headers?.["content-type"] ?? (hasBody ? "application/json" : undefined);
-
-            // Determine whether the response body should be serialized as JSON.
-            const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
-
-            // Set the content type of the stub, if not specified.
-            if (contentType != null)
-            {
-                stub.headers =
-                {
-                    "content-type": contentType,
-                    ...stub.headers
-                };
-            }
-
-            // Set the status of the stub, if not specified.
-            if (stub.status == null)
-            {
-                stub.status = 200;
-            }
-
-            // Log a warning to the console, including info about the request and response.
-            console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
-            {
-                request: { ...options },
-                stub: { ...stub },
-                delay: stubDelay
-            });
-
-            // Get the body to use for the response.
-            const body =
-                stub.body == null ? undefined :
-                typeof stub.body === "string" ? stub.body :
-                hasJsonBody ? JSON.stringify(stub.body) :
-                stub.body as any;
-
-            // Get the headers to use for the response.
-            const headers =
-                stub.headers == null ? undefined :
-                Object.keys(stub.headers).map(name => [name, stub.headers![name]]);
-
-            // Delay the response.
-            await delay(stubDelay, options.signal);
-
-            // Create and return the response.
-            return new Response(body,
-            {
-                status: stub.status,
-                statusText: stub.statusText,
-                headers: headers
-            });
+            return request;
         }
 
-        // No response stub was found, so continue with the original request.
-        return request;
+        // Resolve the stub value.
+
+        let stub: IResponseStub;
+
+        if (stubValue instanceof Function)
+        {
+            // Get the result of the stub.
+            const stubResult  = await stubValue(requestMethod, requestUrl, options);
+
+            // If no response stub was returned, continue with the original request.
+            if (stubResult == null)
+            {
+                return request;
+            }
+
+            // If the result is a request or response, return that.
+            if (stubResult instanceof Request || stubResult instanceof Response)
+            {
+                // Log a warning to the console, including info about the request and response.
+                console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
+                {
+                    request: { ...options },
+                    stub: stubResult
+                });
+
+                return stubResult;
+            }
+
+            stub = { ...stubResult };
+        }
+        else
+        {
+            stub = { ...stubValue };
+        }
+
+        // Determine the response delay to use.
+        const stubDelay = this._latency + (stub.delay || 0);
+
+        // Determine the response content type to use.
+        const hasBody = stub.body != null && stub.body !== "";
+        const contentType = stub.headers?.["content-type"] ?? (hasBody ? "application/json" : undefined);
+
+        // Determine whether the response body should be serialized as JSON.
+        const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
+
+        // Set the content type of the stub, if not specified.
+        if (contentType != null)
+        {
+            stub.headers =
+            {
+                "content-type": contentType,
+                ...stub.headers
+            };
+        }
+
+        // Set the status of the stub, if not specified.
+        if (stub.status == null)
+        {
+            stub.status = 200;
+        }
+
+        // Log a warning to the console, including info about the request and response.
+        console.warn(`Using response stub for '${requestMethod} ${request.url}'\n`,
+        {
+            request: { ...options },
+            stub: { ...stub },
+            delay: stubDelay
+        });
+
+        // Get the body to use for the response.
+        const body =
+            stub.body == null ? undefined :
+            typeof stub.body === "string" ? stub.body :
+            hasJsonBody ? JSON.stringify(stub.body) :
+            stub.body as any;
+
+        // Get the headers to use for the response.
+        const headers =
+            stub.headers == null ? undefined :
+            Object.keys(stub.headers).map(name => [name, stub.headers![name]]);
+
+        // Delay the response.
+        await delay(stubDelay, options.signal);
+
+        // Create and return the response.
+        return new Response(body,
+        {
+            status: stub.status,
+            statusText: stub.statusText,
+            headers: headers
+        });
     }
 }
 
@@ -173,7 +178,7 @@ export interface IResponseStubs
      * where `METHOD` is the HTTP verb to match and `url` is the URL to match.
      * Note that the URL must start with either `/` or `//`.
      */
-    [url: string]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
+    [key: string]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
         => IResponseStub | Request | Response | Promise<IResponseStub | Request | Response>);
 }
 
