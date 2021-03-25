@@ -15,7 +15,7 @@ export class AuthorityToLeaveModule extends AppModule
          */
         this.router.post("/v2/orders/authority-to-leave/grant", async context =>
         {
-            await this.apiClient.post("Orders/GrantAuthorityToLeave",
+            await this.apiClient.post("Logistics/Orders/GrantAuthorityToLeave",
             {
                 body:
                 {
@@ -42,7 +42,7 @@ export class AuthorityToLeaveModule extends AppModule
          */
         this.router.post("/v2/orders/authority-to-leave/revoke", async context =>
         {
-            await this.apiClient.post("Orders/RevokeAuthorityToLeave",
+            await this.apiClient.post("Logistics/Orders/RevokeAuthorityToLeave",
             {
                 body:
                 {
