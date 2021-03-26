@@ -66,7 +66,6 @@ export class RoutesListModule extends AppModule
 
             context.response.body = data;
             context.response.status = 200;
-
         });
     }
 }

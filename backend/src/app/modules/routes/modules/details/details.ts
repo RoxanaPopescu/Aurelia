@@ -55,9 +55,9 @@ export class RoutesListModule extends AppModule
                 data.fulfiller = fulfillers[0];
             }
 
+            context.response.ctx.set("cache-control", "private,max-age=4");
             context.response.body = data;
             context.response.status = 200;
-
         });
     }
 }

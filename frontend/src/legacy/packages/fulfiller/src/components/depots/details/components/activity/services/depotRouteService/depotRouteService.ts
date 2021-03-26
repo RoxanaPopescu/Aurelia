@@ -110,7 +110,18 @@ export class DepotRouteService {
     }
 
     if (!response.ok) {
-      throw new Error("Request failed with status code " + response.status);
+      this.pausePolling();
+
+      if (response.status === 401)
+      {
+        // Somehow we get many 401 from this endpoint. We really should research this problem more in detail. I have removed this for now since there is 110k events in sentry.io
+
+        return;
+      }
+      else
+      {
+        throw new Error("Request failed with status code " + response.status);
+      }
     }
 
     const data = await response.json();

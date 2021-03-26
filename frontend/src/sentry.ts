@@ -35,7 +35,9 @@ if (ENVIRONMENT.integrations.sentry != null)
         // Ignore errors that do not represent a problem.
         ignoreErrors:
         [
-            "AbortError:"
+            "AbortError:",
+            // TODO: Resolve: https://usemover.atlassian.net/browse/TECH-5325 and remove this.
+            "You have included the Google Maps API multiple times on this page. This may cause unexpected errors"
         ],
 
         // Process the entry before it is sent.
