@@ -312,7 +312,8 @@ export class IdentityService
                 // Allow re-authenticate if refresh token is still valid
                 if (refreshTokenExpiresIn > 0)
                 {
-                    this.reauthenticate();
+                    // this.reauthenticate();
+                    // Resolve this monday
                 }
                 else
                 {
