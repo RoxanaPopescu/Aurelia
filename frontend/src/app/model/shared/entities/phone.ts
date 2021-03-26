@@ -90,10 +90,7 @@ export class PhoneNumber
 
             return this.countryCallingCode ? `+${this.countryCallingCode} ${this.nationalNumber}` : this.nationalNumber;
         }
-        else
-        {
 
-            return this.nationalNumber;
-        }
+        return this.nationalNumber;
     }
 }
