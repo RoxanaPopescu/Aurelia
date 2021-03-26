@@ -40,12 +40,14 @@ export class IdentityTokens
         this.refreshToken = data.refreshToken;
         this.remember = data.remember;
 
-        const jwt = this.parseJwt(this.accessToken);
+        const accessJwt = this.parseJwt(this.accessToken);
+        this.accessTokenExpires = accessJwt.exp ? DateTime.fromMillis(accessJwt.exp * 1000) : undefined;
 
-        this.expires = jwt.exp ? DateTime.fromMillis(jwt.exp * 1000) : undefined;
+        const refreshJwt = this.parseJwt(this.refreshToken);
+        this.refreshTokenExpires = refreshJwt.exp ? DateTime.fromMillis(refreshJwt.exp * 1000) : undefined;
 
-        this.claims = new Set<string>(Object.keys(jwt)
-            .filter(claim => jwt[claim] === "true")
+        this.claims = new Set<string>(Object.keys(accessJwt)
+            .filter(claim => accessJwt[claim] === "true")
             .map(claim => claim.toLowerCase().replace(/\s/g, "-")));
     }
 
@@ -60,10 +62,16 @@ export class IdentityTokens
     public readonly accessToken: string;
 
     /**
-     * The date and time before which the tokens must be refreshed,
+     * The date and time before which the access token must be refreshed,
      * in order to ensure continuous access.
      */
-    public readonly expires?: DateTime;
+    public readonly accessTokenExpires?: DateTime;
+
+    /**
+     * The date and time before which the refresh token must be refreshed,
+     * in order to ensure continuous access.
+     */
+     public readonly refreshTokenExpires?: DateTime;
 
     /**
      * The claims assigned to the user.
@@ -181,5 +189,5 @@ export class Identity
     /**
      * The the tokens to use when accessing the API.
      */
-    public readonly tokens: IdentityTokens;
+    public tokens: IdentityTokens;
 }

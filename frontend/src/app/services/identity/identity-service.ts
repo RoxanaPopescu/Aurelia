@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
 import { once } from "shared/utilities";
-import { ApiClient } from "shared/infrastructure";
+import { ApiClient, Log } from "shared/infrastructure";
 import { VehicleType } from "app/model/vehicle";
 import { Identity, IdentityTokens, IIdentityTokens } from "./identity";
 import settings from "resources/settings";
@@ -253,6 +253,11 @@ export class IdentityService
 
         if (tokens != null)
         {
+            if (this._identity != null)
+            {
+                this._identity.tokens = tokens;
+            }
+
             const storage = tokens.remember ? localStorage : sessionStorage;
 
             if (tokens.accessToken)
@@ -291,14 +296,29 @@ export class IdentityService
     {
         clearTimeout(this._refreshTokenTimeouthandle);
 
-        if (tokens?.expires != null)
+        if (tokens?.accessTokenExpires != null)
         {
             const padding = Duration.fromObject({ minutes: 1 });
-            const timeout = tokens.expires.diffNow().minus(padding).as("milliseconds");
+            const accessTokenTimeout = tokens.accessTokenExpires.diffNow().minus(padding).as("milliseconds");
 
-            if (timeout > 0)
+            if (accessTokenTimeout > 0)
             {
-                this._refreshTokenTimeouthandle = setTimeout(() => this.reauthenticate(), timeout);
+                this._refreshTokenTimeouthandle = setTimeout(() => this.reauthenticate(), accessTokenTimeout);
+            }
+            else
+            {
+                const refreshTokenExpiresIn = tokens.refreshTokenExpires != null ? tokens.refreshTokenExpires.diffNow().as("seconds") : 1000;
+
+                // Allow re-authenticate if refresh token is still valid
+                if (refreshTokenExpiresIn > 0)
+                {
+                    this.reauthenticate();
+                }
+                else
+                {
+                    Log.error("Not possible to authenticate, logging in again can solve the issue");
+                    // TODO: We really should logout here
+                }
             }
         }
     }
