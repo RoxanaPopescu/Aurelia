@@ -382,15 +382,23 @@ export class OrderStatusModule extends AppModule
     private getPaddedEta(dateTime: DateTime): any
     {
         // The threshold in minutes for when narrowing of the estimate should begin.
-        const thresholdForNarrowing = 25;
+        const thresholdForNarrowing = 120;
+
+        // The max and min padding to use for the start time.
+        const paddingStartMax = 20;
+        const paddingStartMin = 2;
+
+        // The max and min padding to use for the end time.
+        const paddingEndMax = 45;
+        const paddingEndMin = 2;
 
         const timeUntilEta = Math.max(0, dateTime.diffNow().as("minutes"));
         const scaleFactor = Math.min(1, timeUntilEta / thresholdForNarrowing);
 
         const result =
         {
-            start: dateTime.minus({ minutes: Math.round(scaleFactor * 8) + 2 }),
-            end: dateTime.plus({ minutes: Math.round(scaleFactor * 13) + 2 })
+            start: dateTime.minus({ minutes: Math.round(scaleFactor * (paddingStartMax - paddingStartMin)) + paddingStartMin }),
+            end: dateTime.plus({ minutes: Math.round(scaleFactor * (paddingEndMax - paddingEndMin)) + paddingEndMin })
         };
 
         return result;
