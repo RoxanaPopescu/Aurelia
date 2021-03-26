@@ -110,6 +110,7 @@ export class DepotRouteService {
     }
 
     if (!response.ok) {
+
       this.pausePolling();
 
       if (response.status === 401)
