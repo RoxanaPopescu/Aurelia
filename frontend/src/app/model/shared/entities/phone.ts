@@ -85,9 +85,14 @@ export class PhoneNumber
      */
     public toString(): string
     {
-        if (this.countryCallingCode != null) {
+        if (this.countryCallingCode != null)
+        {
+
             return this.countryCallingCode ? `+${this.countryCallingCode} ${this.nationalNumber}` : this.nationalNumber;
-        } else {
+        }
+        else
+        {
+
             return this.nationalNumber;
         }
     }
