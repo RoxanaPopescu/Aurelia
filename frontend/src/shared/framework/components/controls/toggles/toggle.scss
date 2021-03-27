@@ -237,5 +237,9 @@
         margin: 0;
         border: 0;
         cursor: inherit;
+
+        // Ensure the opacity remains the same, even if opacity
+        // is generally applied to disabled elements.
+        opacity: 1;
     }
 }
