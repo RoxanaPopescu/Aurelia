@@ -137,18 +137,18 @@ export class IdentityService
                 if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
                 {
 
-                    const result = await this._apiClient.get("refreshtokens",
+                    const refreshResult = await this._apiClient.get("refreshtokens",
                     {
                         retry: 3
                     });
 
-                    tokens = new IdentityTokens({ ...result.data, remember: tokens.remember });
+                    tokens = new IdentityTokens({ ...refreshResult.data, remember: tokens.remember });
                     this.setTokens(tokens);
                 }
                 else
                 {
-                    Log.error("Not possible to authenticate your user");
-                    this.unauthenticate();
+                    Log.error("You have been logged out");
+                    await this.unauthenticate();
 
                     return false;
                 }
@@ -176,6 +176,7 @@ export class IdentityService
         catch (error)
         {
             await this.unauthenticate();
+            Log.error("You have been logged out");
 
             if (error.response == null || ![401, 403].includes(error.response.status))
             {
@@ -307,8 +308,6 @@ export class IdentityService
      */
     private checkReauthentication(): void
     {
-        console.log("DO RE-AUTH");
-
         const tokens = this.identity?.tokens;
 
         if (tokens == null)
@@ -318,8 +317,6 @@ export class IdentityService
 
         const padding = Duration.fromObject({ minutes: 2 });
         const expires = tokens.accessTokenExpires.diffNow().minus(padding).as("seconds");
-
-        console.log("EXPIRES", expires / 60);
 
         if (expires < 0)
         {
