@@ -40,11 +40,13 @@ export class IdentityTokens
         this.refreshToken = data.refreshToken;
         this.remember = data.remember;
 
+        const defaultExpires = DateTime.local().plus({ year: 1 });
+
         const accessJwt = this.parseJwt(this.accessToken);
-        this.accessTokenExpires = accessJwt.exp ? DateTime.fromMillis(accessJwt.exp * 1000) : undefined;
+        this.accessTokenExpires = accessJwt.exp ? DateTime.fromMillis(accessJwt.exp * 1000) : defaultExpires;
 
         const refreshJwt = this.parseJwt(this.refreshToken);
-        this.refreshTokenExpires = refreshJwt.exp ? DateTime.fromMillis(refreshJwt.exp * 1000) : undefined;
+        this.refreshTokenExpires = refreshJwt.exp ? DateTime.fromMillis(refreshJwt.exp * 1000) : defaultExpires;
 
         this.claims = new Set<string>(Object.keys(accessJwt)
             .filter(claim => accessJwt[claim] === "true")
@@ -65,13 +67,13 @@ export class IdentityTokens
      * The date and time before which the access token must be refreshed,
      * in order to ensure continuous access.
      */
-    public readonly accessTokenExpires?: DateTime;
+    public readonly accessTokenExpires: DateTime;
 
     /**
      * The date and time before which the refresh token must be refreshed,
      * in order to ensure continuous access.
      */
-     public readonly refreshTokenExpires?: DateTime;
+    public readonly refreshTokenExpires: DateTime;
 
     /**
      * The claims assigned to the user.

@@ -41,7 +41,6 @@ export class IdentityService
     private readonly _apiClient: ApiClient;
     private _identity: Identity | undefined;
     private _changeFunc: IdentityChangeFunc | undefined;
-    private _refreshTokenTimeouthandle: any;
 
     /**
      * The identity of the currently authenticated user, or undefined if not authenticated.
@@ -60,6 +59,9 @@ export class IdentityService
     public configure(identityChangeFunc?: IdentityChangeFunc): void
     {
         this._changeFunc = identityChangeFunc;
+
+        // Validate each minute if the tokens are invalid, we have to do it this way since the setTimeout can fail
+        setInterval(() => this.checkReauthentication(), 60 * 1000);
     }
 
     /**
@@ -94,7 +96,7 @@ export class IdentityService
                 retry: 3
             });
 
-            this.setTokens({ ...result.data, remember });
+            this.setTokens(new IdentityTokens({ ...result.data, remember }));
 
             return this.reauthenticate();
         }
@@ -117,7 +119,7 @@ export class IdentityService
      */
     public async reauthenticate(): Promise<boolean>
     {
-        const tokens = this.getTokens();
+        let tokens = this.getTokens();
 
         if (tokens == null)
         {
@@ -128,33 +130,46 @@ export class IdentityService
         {
             this.setTokens(tokens);
 
-            if (this.identity != null)
+            // Verify if we need to update the tokens
+            if (tokens.accessTokenExpires.diffNow().as("seconds") < 0)
             {
-                const result = await this._apiClient.get("refreshtokens",
+                // Allow re-authenticate if refresh token is still valid
+                if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
                 {
-                    retry: 3
-                });
 
-                this.setTokens(new IdentityTokens({ ...result.data, remember: tokens.remember }));
+                    const result = await this._apiClient.get("refreshtokens",
+                    {
+                        retry: 3
+                    });
+
+                    tokens = new IdentityTokens({ ...result.data, remember: tokens.remember });
+                    this.setTokens(tokens);
+                }
+                else
+                {
+                    Log.error("Not possible to authenticate your user");
+                    this.unauthenticate();
+
+                    return false;
+                }
             }
-            else
+
+            // Start session
+            const result = await this._apiClient.post("session/start",
             {
-                const result = await this._apiClient.post("session/start",
-                {
-                    retry: 3
-                });
+                retry: 3
+            });
 
-                const identity = new Identity(result, tokens);
+            const identity = new Identity(result, tokens);
 
-                await this._changeFunc?.(identity, this._identity);
+            await this._changeFunc?.(identity, this._identity);
 
-                this.setTokens(identity.tokens);
-                this._identity = identity;
+            this.setTokens(identity.tokens);
+            this._identity = identity;
 
-                VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
+            VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
 
-                await Session.start(result);
-            }
+            await Session.start(result);
 
             return true;
         }
@@ -283,8 +298,6 @@ export class IdentityService
             Profile.setTokens(tokens.accessToken, tokens.refreshToken);
         }
 
-        this.scheduleReauthentication(tokens);
-
         // tslint:disable
     }
 
@@ -292,35 +305,25 @@ export class IdentityService
      * Schedules a reauthentication before the current tokens expire.
      * @param tokens The current tokens, for which reauthentication should be scheduled.
      */
-    private scheduleReauthentication(tokens?: IdentityTokens): void
+    private checkReauthentication(): void
     {
-        clearTimeout(this._refreshTokenTimeouthandle);
+        console.log("DO RE-AUTH");
 
-        if (tokens?.accessTokenExpires != null)
+        const tokens = this.identity?.tokens;
+
+        if (tokens == null)
         {
-            const padding = Duration.fromObject({ minutes: 1 });
-            const accessTokenTimeout = tokens.accessTokenExpires.diffNow().minus(padding).as("milliseconds");
+            return;
+        }
 
-            if (accessTokenTimeout > 0)
-            {
-                this._refreshTokenTimeouthandle = setTimeout(() => this.reauthenticate(), accessTokenTimeout);
-            }
-            else
-            {
-                const refreshTokenExpiresIn = tokens.refreshTokenExpires != null ? tokens.refreshTokenExpires.diffNow().as("seconds") : 1000;
+        const padding = Duration.fromObject({ minutes: 2 });
+        const expires = tokens.accessTokenExpires.diffNow().minus(padding).as("seconds");
 
-                // Allow re-authenticate if refresh token is still valid
-                if (refreshTokenExpiresIn > 0)
-                {
-                    // this.reauthenticate();
-                    // Resolve this monday
-                }
-                else
-                {
-                    Log.error("Not possible to authenticate, logging in again can solve the issue");
-                    // TODO: We really should logout here
-                }
-            }
+        console.log("EXPIRES", expires / 60);
+
+        if (expires < 0)
+        {
+            this.reauthenticate();
         }
     }
 }
