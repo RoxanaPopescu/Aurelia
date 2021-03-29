@@ -13,8 +13,8 @@ import { Log } from "shared/infrastructure";
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
 
-const pollIntervalFocus = 6000;
-const pollIntervalOutOfFocus = 30000;
+const pollIntervalFocus = 7000;
+const pollIntervalOutOfFocus = 120000;
 
 type ListType = "not-started" | "in-progress" | "no-driver";
 
@@ -305,6 +305,11 @@ export class LiveTrackingService {
   private async startPolling() {
     this.stopped = false;
 
+    clearTimeout(this.pollTimeout.inProgress);
+    clearTimeout(this.pollTimeout.noDriver);
+    clearTimeout(this.pollTimeout.notStarted);
+    clearTimeout(this.pollTimeout.selectedRoute);
+
     this.poll("in-progress");
     this.poll("no-driver");
     this.poll("not-started");
@@ -327,6 +332,9 @@ export class LiveTrackingService {
 
   public setInFocus() {
     this.pollInterval = pollIntervalFocus;
+
+    // Force one poll
+    this.startPolling();
   }
 
   /**

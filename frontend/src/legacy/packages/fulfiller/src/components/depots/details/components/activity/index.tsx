@@ -62,11 +62,11 @@ export default class DepotActivityComponent extends React.Component<Props> {
   }
 
   onBlur = () => {
-    this.service.pausePolling();
+    this.service.setNotInFocus();
   }
 
   onFocus = () => {
-    this.service.resumePolling();
+    this.service.setInFocus();
   }
 
   public render() {

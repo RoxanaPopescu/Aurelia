@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
 import { once } from "shared/utilities";
-import { ApiClient, Log } from "shared/infrastructure";
+import { ApiClient } from "shared/infrastructure";
 import { VehicleType } from "app/model/vehicle";
 import { Identity, IdentityTokens, IIdentityTokens } from "./identity";
 import settings from "resources/settings";
@@ -131,7 +131,8 @@ export class IdentityService
             this.setTokens(tokens);
 
             // Verify if we need to update the tokens
-            if (tokens.accessTokenExpires.diffNow().as("seconds") < 0)
+            const padding = Duration.fromObject({ minutes: 2 });
+            if (tokens.accessTokenExpires.diffNow().minus(padding).as("seconds") < 0)
             {
                 // Allow re-authenticate if refresh token is still valid
                 if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
@@ -147,8 +148,8 @@ export class IdentityService
                 }
                 else
                 {
-                    Log.error("You have been logged out");
                     await this.unauthenticate();
+                    // TODO: Show toast that you have been logged out. Does not currently work
 
                     return false;
                 }
@@ -175,12 +176,15 @@ export class IdentityService
         }
         catch (error)
         {
-            await this.unauthenticate();
-            Log.error("You have been logged out");
-
-            if (error.response == null || ![401, 403].includes(error.response.status))
+            if (error.response != null && ![401, 403].includes(error.response.status))
             {
-                console.error(error);
+                await this.unauthenticate();
+                // TODO: Show toast that you have been logged out. Does not currently work
+            }
+            else
+            {
+                await this.unauthenticate();
+                // TODO: Show inline that you can retry instead of us logging out.
             }
 
             return false;

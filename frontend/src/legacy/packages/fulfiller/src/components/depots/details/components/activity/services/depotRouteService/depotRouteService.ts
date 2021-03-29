@@ -5,11 +5,14 @@ import { DepotRoute } from "./depotRoute";
 import { remarks } from "./data/depotRouteRemarks";
 
 let currentSessionId = 0;
+const pollIntervalFocus = 10000;
+const pollIntervalOutOfFocus = 120000;
 
 export class DepotRouteService {
   private paused = false;
   private depotId: string;
   private date: DateTime;
+  public pollInterval = pollIntervalFocus;
 
   // tslint:disable-next-line:no-any
   private pollTimeoutHandle: any;
@@ -32,6 +35,18 @@ export class DepotRouteService {
     } catch {
       // Do nothing
     }
+  }
+
+  public setNotInFocus() {
+    this.pollInterval = pollIntervalOutOfFocus;
+  }
+
+  public setInFocus() {
+    clearTimeout(this.pollTimeoutHandle);
+    this.pollInterval = pollIntervalFocus;
+
+    // Force one poll
+    this.resumePolling();
   }
 
   public stopPolling() {
@@ -61,7 +76,7 @@ export class DepotRouteService {
       } catch {
         // Do nothing
       }
-    }, 10000);
+    }, this.pollInterval);
   }
 
   public async saveRoute(route: DepotRoute): Promise<void> {
@@ -111,18 +126,13 @@ export class DepotRouteService {
 
     if (!response.ok) {
 
-      this.pausePolling();
-
-      if (response.status === 401)
+      // 500 errors we can't retry with
+      if (response.status === 500)
       {
-        // Somehow we get many 401 from this endpoint. We really should research this problem more in detail. I have removed this for now since there is 110k events in sentry.io
+        this.pausePolling();
+      }
 
-        return;
-      }
-      else
-      {
-        throw new Error("Request failed with status code " + response.status);
-      }
+      throw new Error("Request failed with status code " + response.status);
     }
 
     const data = await response.json();
