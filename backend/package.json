@@ -30,6 +30,8 @@
     "@types/passport-local": "^1.0.33",
     "abort-controller": "^3.0.0",
     "accept-language": "^3.0.18",
+    "@sentry/node": "^6.2.3",
+    "@sentry/tracing": "^6.2.3",
     "bcrypt": "^5.0.0",
     "chalk": "^4.1.0",
     "cls-hooked": "^4.2.2",
