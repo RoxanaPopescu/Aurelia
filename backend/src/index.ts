@@ -10,7 +10,7 @@ import settings from "./resources/settings/settings";
 Sentry.init({
     dsn: environment.sentryDns,
     environment: environment.name,
-    tracesSampleRate: 0.8,
+    tracesSampleRate: 0.8
 });
 
 // Add and configure the interceptors used by the API client.
