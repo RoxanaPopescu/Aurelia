@@ -36,7 +36,9 @@ if (ENVIRONMENT.integrations.sentry != null)
         ignoreErrors:
         [
             "AbortError:",
-            "You have included the Google Maps JavaScript API multiple times"
+            "You have included the Google Maps JavaScript API multiple times",
+            "NOT_A_NUMBER",
+            "InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D'"
         ],
 
         // Process the entry before it is sent.

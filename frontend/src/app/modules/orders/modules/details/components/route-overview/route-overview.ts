@@ -50,7 +50,7 @@ export class RouteOverview
 
         for (const stop of this.route.stops)
         {
-            if (stop instanceof RouteStop)
+            if (stop instanceof RouteStop && this.order.slug != null)
             {
                 if (stop.orderIds.includes(this.order.slug))
                 {
