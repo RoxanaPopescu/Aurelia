@@ -36,6 +36,7 @@ export class RouteOrdersModule extends AppModule
                 {
                     "id": order.internalOrderId,
                     "creatorOrderId": order.orderId,
+                    "authorityToLeave": order.authorityToLeave,
                     "creatorId": order.consignorId,
                     "relationalid": order.relationalid,
                     "tags": order.tags == null ? [] : order.tags.map((t: any) => t.tag),

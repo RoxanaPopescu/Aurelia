@@ -258,10 +258,9 @@ export class NoiApiOriginError extends ApiOriginError
         // tslint:disable-next-line: no-parameter-reassignment
         const problemData =
         {
-            status: response.status,
+            status: data?.status ?? response.status,
             type: data?.status != null ? `noi/${data.status}` : `https://httpstatuses.com/${response.status}`,
-            title: data?.data?.text,
-            errorCode: data?.status
+            title: data?.data?.text
         };
 
         super(transient, request, response, message, problemData);
