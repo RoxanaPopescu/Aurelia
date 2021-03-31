@@ -1,7 +1,7 @@
 {
     "orderPlaced": "Order placed",
     "outForDelivery": "Out for delivery",
-    "deliveryEstimated": "Estimated time of delivery",
+    "deliveryEstimated": "Estimated delivery",
     "deliveryCompleted": "Delivered",
     "deliveryFailed": "Delivery failed",
     "orderCancelled": "Order cancelled"
