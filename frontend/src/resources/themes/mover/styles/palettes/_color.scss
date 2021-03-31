@@ -11,15 +11,15 @@ $__summary: comment;
 /// The neutral color and its variations.
 :root
 {
-    --palette-color-whitepoint: white;
+    --palette-color-whitepoint: #ffffff;
     --palette-color-neutral-lightest: #f8f9f9;
     --palette-color-neutral-lighter: #f6f9fe;
     --palette-color-neutral-light: #eaebed;
     --palette-color-neutral: #d8e1ee;
     --palette-color-neutral-dim: #abbec7;
-    --palette-color-neutral-dark: #68737D;
-    --palette-color-neutral-darker: #2F3941;
-    --palette-color-blackpoint: black;
+    --palette-color-neutral-dark: #68737d;
+    --palette-color-neutral-darker: #2f3941;
+    --palette-color-blackpoint: #000000;
 }
 
 /// The primary color and its variations.
