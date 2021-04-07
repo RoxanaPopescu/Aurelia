@@ -394,6 +394,25 @@
 
         </template>
 
+        <!-- Delivery instructions -->
+        <template if.bind="model.event.data.deliveryInstructions">
+
+            <hr class="hr-line margin-bottom">
+
+            <data-section class="margin-bottom" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Delivery instructions
+                </div>
+
+                <div class="margin-bottom">
+                    ${model.event.data.deliveryInstructions}
+                </div>
+
+            </data-section>
+
+        </template>
+
     </modal-panel>
 
 </template>
