@@ -41,11 +41,12 @@ export class App extends Koa<any, IAppContext>
         // Send errors to sentry
         this.on("error", (err, ctx) =>
         {
-            Sentry.withScope(function(scope)
+            Sentry.withScope(scope =>
             {
-                scope.addEventProcessor(function(event)
+                scope.addEventProcessor(event =>
                 {
-                  return Sentry.Handlers.parseRequest(event, ctx.request);
+
+                    return Sentry.Handlers.parseRequest(event, ctx.request);
                 });
 
                 Sentry.captureException(err);
