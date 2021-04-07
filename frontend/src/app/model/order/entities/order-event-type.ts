@@ -309,6 +309,20 @@ export class OrderEventType
             description: eventDescriptions.collectionPointColloRejected,
             accent: "negative",
             stopType: undefined
+        },
+        "authority-to-leave-granted":
+        {
+            name: eventTitles.authorityToLeaveGranted,
+            description: eventDescriptions.authorityToLeaveGranted,
+            accent: "negative",
+            stopType: undefined
+        },
+        "authority-to-leave-revoked":
+        {
+            name: eventTitles.authorityToLeaveRevoked,
+            description: eventDescriptions.authorityToLeaveRevoked,
+            accent: "negative",
+            stopType: undefined
         }
     };
 }

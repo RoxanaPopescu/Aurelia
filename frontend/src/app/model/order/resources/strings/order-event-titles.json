@@ -34,5 +34,7 @@
     "collectionPointColloRejected": "Collo rejected at collection point",
     "colloLabelCreated": "Label created",
     "collectionPointOrderDeleted": "Collo deleted at collection point",
-    "orderPickupArrived": "Arrived at pickup location"
+    "orderPickupArrived": "Arrived at pickup location",
+    "authorityToLeaveGranted": "Authority to leave was granted",
+    "authorityToLeaveRevoked": "Authority to leave was revoked"
 }

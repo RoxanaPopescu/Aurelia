@@ -35,6 +35,6 @@
     "colloLabelCreated": "The label was generated and created",
     "collectionPointOrderDeleted": "The collo was deleted at the collection point",
     "orderPickupArrived": "The driver has arrived with the collo at the the pick up location",
-    "AuthorityToLeavedGranted": "Authority to leave was granted",
-    "AuthorityToLeaveRevoked": "Authority to leave was revoked"
+    "authorityToLeaveGranted": "Authority to leave was granted",
+    "authorityToLeaveRevoked": "Authority to leave was revoked"
 }
