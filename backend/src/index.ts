@@ -1,17 +1,9 @@
 import { environment } from "./env";
-import * as Sentry from "@sentry/node";
 import { container, ApiClient, RequestHeadersInterceptor, ResponseStubInterceptor } from "./shared/infrastructure";
 import { getRequestHeaders } from "./app/middleware/headers-middleware";
 import { App } from "./app/app";
 import { AppRouter } from "./app/app-router";
 import settings from "./resources/settings/settings";
-
-// Configure sentry
-Sentry.init({
-    dsn: environment.sentryDns,
-    environment: environment.name,
-    tracesSampleRate: 0.8
-});
 
 // Add and configure the interceptors used by the API client.
 settings.infrastructure.api.interceptors.push(new RequestHeadersInterceptor(() => getRequestHeaders()));

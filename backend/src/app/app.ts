@@ -11,8 +11,16 @@ import { headersMiddleware } from "../app/middleware/headers-middleware";
 import { authorizeMiddleware } from "../app/middleware/authorize-middleware";
 import { pagingMiddleware } from "../app/middleware/paging-middleware";
 import { sortingMiddleware } from "../app/middleware/sorting-middleware";
+import * as Sentry from "@sentry/node";
 import { AppRouter } from "./app-router";
 import { IAppContext } from "./app-context";
+
+// Configure sentry
+Sentry.init({
+    dsn: environment.sentryDns,
+    environment: environment.name,
+    tracesSampleRate: 0.8
+});
 
 /**
  * Represents the app.
@@ -29,6 +37,20 @@ export class App extends Koa<any, IAppContext>
         super();
 
         this._appRouter = appRouter;
+
+        // Send errors to sentry
+        this.on("error", (err, ctx) =>
+        {
+            Sentry.withScope(function(scope)
+            {
+                scope.addEventProcessor(function(event)
+                {
+                  return Sentry.Handlers.parseRequest(event, ctx.request);
+                });
+
+                Sentry.captureException(err);
+            });
+        });
     }
 
     private readonly _appRouter: AppRouter;
