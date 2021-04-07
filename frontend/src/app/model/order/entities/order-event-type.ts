@@ -314,14 +314,14 @@ export class OrderEventType
         {
             name: eventTitles.authorityToLeaveGranted,
             description: eventDescriptions.authorityToLeaveGranted,
-            accent: "negative",
+            accent: "positive",
             stopType: undefined
         },
         "authority-to-leave-revoked":
         {
             name: eventTitles.authorityToLeaveRevoked,
             description: eventDescriptions.authorityToLeaveRevoked,
-            accent: "negative",
+            accent: "positive",
             stopType: undefined
         }
     };
