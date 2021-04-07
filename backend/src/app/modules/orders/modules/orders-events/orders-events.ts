@@ -81,6 +81,14 @@ export class OrdersEventsModule extends AppModule
                         {
                             eventType: "staging-collo-missing",
                             version: "1.0"
+                        },
+                        {
+                            eventType: "authority-to-leave-granted",
+                            version: "1.0"
+                        },
+                        {
+                            eventType: "authority-to-leave-revoked",
+                            version: "1.0"
                         }
                     ],
                     ownerId: context.request.body.consignorId,
