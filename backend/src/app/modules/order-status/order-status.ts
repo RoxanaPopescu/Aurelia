@@ -373,7 +373,7 @@ export class OrderStatusModule extends AppModule
                     longitude: locationData.position.longitude
                 }
             };
-        };
+        }
 
         return locationData;
     }
