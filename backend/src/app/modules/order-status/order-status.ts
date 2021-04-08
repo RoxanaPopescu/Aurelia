@@ -359,17 +359,23 @@ export class OrderStatusModule extends AppModule
      */
     private getLocation(locationData: any): any
     {
-        return {
-            address:
-            {
-                primary: locationData.name
-            },
-            position:
-            {
-                latitude: locationData.position.latitude,
-                longitude: locationData.position.longitude
-            }
+        // Legacy version - #todo: Remove when we stop supporting v1 events
+        if (locationData.name != null)
+        {
+            return {
+                address:
+                {
+                    primary: locationData.name
+                },
+                position:
+                {
+                    latitude: locationData.position.latitude,
+                    longitude: locationData.position.longitude
+                }
+            };
         };
+
+        return locationData;
     }
 
     /**
