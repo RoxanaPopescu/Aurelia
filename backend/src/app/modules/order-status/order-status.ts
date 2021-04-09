@@ -360,6 +360,11 @@ export class OrderStatusModule extends AppModule
     private getLocation(locationData: any): any
     {
         // Legacy version - #todo: Remove when we stop supporting v1 events
+        if (locationData == null)
+        {
+            return null;
+        }
+
         if (locationData.name != null)
         {
             return {
