@@ -82,6 +82,10 @@ export class RouteStopDeviation
         {
             name: "No capacity in vehicle"
         },
+        "not-possible-to-leave-colli":
+        {
+            name: "Not possible to leave colli"
+        },
         "other-damage":
         {
             name: "Other damage"
