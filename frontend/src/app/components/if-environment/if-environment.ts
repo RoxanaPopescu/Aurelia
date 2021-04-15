@@ -18,6 +18,12 @@ export class IfEnvironmentCustomAttribute extends If
     public constructor(boundViewFactory: BoundViewFactory, viewSlot: ViewSlot)
     {
         super(boundViewFactory, viewSlot);
+
+        // HACK: Without this the `else` attribute won't work.
+        Object.defineProperty((viewSlot as any).anchor.au, "if",
+        {
+            get: () => (viewSlot as any).anchor.au["if-claims"]
+        });
     }
 
     private _bound = false;

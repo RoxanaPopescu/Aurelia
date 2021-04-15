@@ -21,6 +21,12 @@ export class IfClaimsCustomAttribute extends If
         super(boundViewFactory, viewSlot);
 
         this._identityService = identityService;
+
+        // HACK: Without this the `else` attribute won't work.
+        Object.defineProperty((viewSlot as any).anchor.au, "if",
+        {
+            get: () => (viewSlot as any).anchor.au["if-claims"]
+        });
     }
 
     private readonly _identityService: IdentityService;
