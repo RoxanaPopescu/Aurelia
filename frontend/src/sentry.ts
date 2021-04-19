@@ -15,6 +15,9 @@ if (ENVIRONMENT.integrations.sentry != null)
     {
         dsn: ENVIRONMENT.integrations.sentry.dsn,
 
+        // Set the traces sample rate.
+        tracesSampleRate: 1,
+
         // Associate entries with the current environment.
         environment: ENVIRONMENT.name,
 
@@ -36,6 +39,7 @@ if (ENVIRONMENT.integrations.sentry != null)
         ignoreErrors:
         [
             "AbortError:",
+            "ChunkLoadError:",
             "You have included the Google Maps JavaScript API multiple times",
             "NOT_A_NUMBER",
             "InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D'"
