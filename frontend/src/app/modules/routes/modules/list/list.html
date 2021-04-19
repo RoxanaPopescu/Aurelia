@@ -335,20 +335,27 @@
                                 <data-table-cell if.bind="column.slug === 'fulfiller'" class="${updating.executor ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
+                                        if-claims="assign-executor-route"
                                         click.trigger="onAssignFulfillerClick(route, updating)"
                                     >
                                         <template if.bind="route.fulfiller.companyName">
                                             ${route.fulfiller.companyName}
                                         </template>
                                         <template if.bind="!route.fulfiller.companyName" translate>
-                                            Assign fulfiller
+                                            Assign executor
                                         </template>
                                     </a>
+                                    <span else empty-value>
+                                        <template if.bind="route.fulfiller.companyName">
+                                            ${route.fulfiller.companyName}
+                                        </template>
+                                    </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
+                                        if-claims="assign-driver-route"
                                         click.trigger="onAssignDriverClick(route, updating)"
                                     >
                                         <template if.bind="!route.driver" translate>
@@ -358,6 +365,11 @@
                                             ${route.driver.name}
                                         </template>
                                     </a>
+                                    <span else empty-value>
+                                        <template if.bind="route.driver">
+                                            ${route.driver.name}
+                                        </template>
+                                    </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'driver-id'">

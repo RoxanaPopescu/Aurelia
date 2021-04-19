@@ -357,7 +357,7 @@ export namespace FulfillerSubPage {
         );
       case FulfillerSubPage.DriverEdit:
         return (
-          FulfillerNavigationPage.path("FleetManagement") + "/drivers/edit/:id"
+          FulfillerNavigationPage.path("FleetManagement") + "/drivers/details/:id"
         );
     }
   }
