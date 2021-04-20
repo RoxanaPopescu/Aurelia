@@ -40,25 +40,6 @@ export class RoutePlanningModule
     }
 
     /**
-     * Routeplan rule sets supports two implementations.
-     * Legacy: What coop and Mover is still using
-     * TODO: This should be removed when we move all customers to the new routeplans
-     */
-    private get showNew(): boolean
-    {
-        const identity = this._identityService.identity;
-
-        if (identity == null)
-        {
-            return true;
-        }
-
-        const legacyOrganizationIds = [coopOrganizationId];
-
-        return !legacyOrganizationIds.includes(identity.outfit.id);
-    }
-
-    /**
      * Called to configure the router for the module.
      * @param config The router configuration associated with the module.
      * @param router The router associated with the module.
@@ -138,8 +119,8 @@ export class RoutePlanningModule
                         "view-routeplans"
                     ]
                 },
-                title: (this.showNew && this.showLegacy) ? routeTitles.routePlansNew : routeTitles.routePlans,
-                nav: (this.showNew && this.showLegacy),
+                title: this.showLegacy ? routeTitles.routePlansNew : routeTitles.routePlans,
+                nav: this.showLegacy,
                 icon: "route-planning"
             },
             {
@@ -166,8 +147,8 @@ export class RoutePlanningModule
                         "view-routeplan-settings"
                     ]
                 },
-                title: (this.showLegacy && this.showNew) ? routeTitles.rulesListNew : routeTitles.rulesList,
-                nav: this.showNew,
+                title: this.showLegacy ? routeTitles.rulesListNew : routeTitles.rulesList,
+                nav: true,
                 icon: "settings"
             },
             {
