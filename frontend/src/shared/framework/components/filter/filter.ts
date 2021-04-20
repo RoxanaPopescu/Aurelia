@@ -30,29 +30,43 @@ export abstract class FilterCustomElement<TEntity>
      */
     public fromUrlParam(param: string | undefined): void
     {
-        param?.split(/\s*,\s*/)
-            .forEach(formattedKey =>
-            {
-                const parts = formattedKey.split(":", 2);
+        if (param)
+        {
+            const [keys, keyValue] = param.split(/(?:^|,|\s*)([^,]+:.*)/);
 
-                this[textCase(parts[0], "kebab", "camel")] = parts.length === 1 ? true : decodeURIComponent(parts[1]);
-            });
+            if (keyValue)
+            {
+                const [key, value] = keyValue.split(/:(.*)/);
+                this[textCase(key, "kebab", "camel")] = value;
+            }
+
+            for (const key of keys.split(/\s*,\s*/))
+            {
+                if (key)
+                {
+                    this[textCase(key, "kebab", "camel")] = true;
+                }
+            }
+        }
     }
 
     /**
      * Gets the URL parameter value representing the filter state.
-     * @returns The comma-separated list of active filters.
+     * @returns The URL parameter value representing the active filters.
      */
-    public toUrlParam(): string | undefined
+    public toUrlParam(): string[] | undefined
     {
-        return Array.from(this.activeFilters)
+        const keys = this.getAllPropertyNames(this);
+        const result = Array.from(this.activeFilters)
+            .sort((a, b) => keys.indexOf(a) - keys.indexOf(b))
             .map(key =>
             {
                 const formattedKey = textCase(key, "camel", "kebab");
 
-                return this[key] === true ? formattedKey : `${formattedKey}:${encodeURIComponent(this[key])}`;
-            })
-            .join(",") || undefined;
+                return this[key] === true ? formattedKey : `${formattedKey}:${this[key].toString()}`;
+            });
+
+        return result.length > 0 ? result : undefined;
     }
 
     /**
@@ -87,4 +101,17 @@ export abstract class FilterCustomElement<TEntity>
      * @returns True if the entity matches the filters, otherwise false.
      */
     protected abstract filter(entity: TEntity): boolean;
+
+    /**
+     * Gets the names of all properties of the specified object, including those defined in the subclass.
+     * @param obj The object for which to get property names.
+     * @returns The list of property names.
+     */
+    private getAllPropertyNames(obj: any): string[]
+    {
+        const proto = Object.getPrototypeOf(obj);
+        const inherited = proto ? this.getAllPropertyNames(proto) : [];
+
+        return [...new Set(Object.getOwnPropertyNames(obj).concat(inherited))];
+    }
 }

@@ -261,7 +261,7 @@ export abstract class Validator implements IValidator
      * @param reason The for the validation run.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
      */
-    public abstract async validate(reason?: ValidationReason): Promise<boolean>;
+    public abstract validate(reason?: ValidationReason): Promise<boolean>;
 
     /**
      * Resets this validator to the default validity state, then updates the ancestor validations.

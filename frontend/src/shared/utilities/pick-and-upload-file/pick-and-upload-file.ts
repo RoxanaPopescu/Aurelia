@@ -1,5 +1,5 @@
 import { Container } from "aurelia-framework";
-import { ApiClient, ApiResult } from "shared/infrastructure";
+import { ApiClient, ApiResult } from "shared/infrastructure/api-client";
 import { MapObject } from "shared/types";
 import { Operation } from "../operation/operation";
 
