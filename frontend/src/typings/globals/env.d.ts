@@ -111,7 +111,7 @@ declare interface IClientEnvironment
         /**
          * The settings to use for the Google Maps integration, or undefined to disable the integration.
          */
-        googleMaps?:
+        googleMaps:
         {
             /**
              * The ID of the account.

@@ -11,6 +11,7 @@ import { Settings as LuxonSettings } from "luxon";
 import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log, setPrerenderStatusCode } from "shared/infrastructure";
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { ThemeService, ITheme } from "shared/framework";
+import { GoogleMapsService } from "shared/google-maps";
 import { Visitor } from "app/services/visitor";
 import { IdentityService, Identity } from "app/services/identity";
 import settings from "resources/settings";
@@ -52,7 +53,8 @@ export async function configure(aurelia: Aurelia): Promise<void>
     aurelia.use
         .feature(PLATFORM.moduleName("shared/infrastructure/index"))
         .feature(PLATFORM.moduleName("shared/localization/index"))
-        .feature(PLATFORM.moduleName("shared/framework/index"));
+        .feature(PLATFORM.moduleName("shared/framework/index"))
+        .feature(PLATFORM.moduleName("shared/google-maps/index"));
 
     // Register global resources.
     aurelia.use.globalResources(
@@ -90,6 +92,9 @@ export async function configure(aurelia: Aurelia): Promise<void>
         themeService.configure(settings.app.themes, setTheme);
         await themeService.setTheme(getThemeSlug());
 
+        const googleMapsService = aurelia.container.get(GoogleMapsService);
+        googleMapsService.configure(settings.integrations.googleMaps);
+
         // Configure legacy features.
 
         Localization.configure(localeService.locale.code, localeService.locale.code);
@@ -102,6 +107,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
                 // Import style resources.
                 await import(/* webpackChunkName: "styles" */"resources/styles/index.scss" as any);
                 await import(/* webpackChunkName: "theme-" */`resources/themes/${themeService.theme.slug}/styles/index.scss`);
+                await import(/* webpackChunkName: "theme-" */`resources/themes/${themeService.theme.slug}/index.ts`);
             },
             async () =>
             {

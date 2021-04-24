@@ -1,0 +1,164 @@
+:host
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use block layout.
+    display: block;
+
+    // The surface color to show, while tiles are loading.
+    --google-map-surface-color: var(--surface-color);
+
+    // The filter to apply to map controls, if any.
+    --google-map-control-filter: "none";
+
+    // Ensure the map content is positioned within the safe area of the viewport.
+    --google-map-inset-top: env(safe-area-inset-top);
+    --google-map-inset-left: env(safe-area-inset-left);
+    --google-map-inset-right: env(safe-area-inset-right);
+    --google-map-inset-bottom: env(safe-area-inset-bottom);
+}
+
+.google-map-element,
+.google-map-content
+{
+    // Fill the available space.
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.google-map-content
+{
+    // Disable pointer events for the content container.
+    pointer-events: none;
+
+    > *
+    {
+        // Enable pointer events for elements directly within the content container.
+        pointer-events: initial;
+    }
+}
+
+// Show focus indicator during keyboard navigation or when an element
+// was programmatically focused - unless it has explicitly opted out.
+
+*:focus
+{
+    outline-offset: var(--accessibility-focus-outline-offset);
+    outline-width: var(--accessibility-focus-outline-width);
+    outline-style: var(--accessibility-focus-outline-style);
+    outline-color: var(--accessibility-focus-outline-color);
+    transition: outline 0s;
+
+    :host-context(body:not(.focus-visible)) &,
+    :host-context(.focus-hidden) &
+    {
+        outline: none !important;
+    }
+}
+
+// HACK: Apply fixes and custom styles to internal elements.
+
+.google-map-element > div > .gm-style
+{
+    // Apply the inset, if specified.
+
+    top: var(--google-map-inset-top, 0) !important;
+    left: var(--google-map-inset-left, 0) !important;
+    height: calc(100% - var(--google-map-inset-top, 0) - var(--google-map-inset-bottom, 0)) !important;
+    width: calc(100% - var(--google-map-inset-left, 0) - var(--google-map-inset-right, 0)) !important;
+
+    > [aria-roledescription="map"],
+    > div[style*="border:"]
+    {
+        top: calc(-1 * var(--google-map-inset-top, 0)) !important;
+        left: calc(-1 * var(--google-map-inset-left, 0)) !important;
+        height: calc(100% + var(--google-map-inset-top, 0) + var(--google-map-inset-bottom, 0)) !important;
+        width: calc(100% + var(--google-map-inset-left, 0) + var(--google-map-inset-right, 0)) !important;
+    }
+
+    // Apply the surface color to show, while tiles are loading.
+
+    > [aria-roledescription="map"]
+    {
+        background-color: var(--google-map-surface-color);
+    }
+
+    // Show focus indicator during keyboard navigation or when the map
+    // was programmatically focused - unless it has explicitly opted out.
+
+    > div[style*="border:"]
+    {
+        border-width: var(--accessibility-focus-outline-width) !important;
+        border-style: var(--accessibility-focus-outline-style) !important;
+        border-color: var(--accessibility-focus-outline-color) !important;
+        transition: border 0s;
+
+        :host-context(body:not(.focus-visible)) &,
+        :host-context(.focus-hidden) &
+        {
+            border: none !important;
+        }
+    }
+
+    // Hide unwanted map content.
+
+    .gm-style-cc,
+    a[href^="https://maps.google.com"]
+    {
+        display: none !important;
+    }
+
+    .gm-fullscreen-control
+    {
+        display: none !important;
+    }
+
+    // Use base font for controls.
+
+    label,
+    button,
+    [role="button"]
+    {
+        font: var(--font-base) !important;
+        font-size: calc(var(--font-base-font-size) / var(--size-unit));
+    }
+
+    label[aria-pressed="true"],
+    button[aria-pressed="true"],
+    [role="button"][aria-pressed="true"]
+    {
+        font-weight: 600 !important;
+    }
+
+    // Use standard spacing for control.
+
+    [role="checkbox"] + label
+    {
+        margin-left: var(--size-inline-spacing);
+    }
+
+    // Remove unwanted control styles.
+
+    .gm-style-mtc *,
+    .gm-bundled-control *,
+    .gm-fullscreen-control *
+    {
+        box-shadow: none !important;
+    }
+
+    // Apply filter to controls, if specified.
+
+    .gmnoprint
+    {
+        filter: var(--google-map-control-filter);
+
+        .gmnoprint
+        {
+            filter: none;
+        }
+    }
+}

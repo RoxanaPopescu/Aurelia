@@ -1,0 +1,20 @@
+<template class="
+    ${ready === true ? '--ready' : ready === false ? '--error' : '--loading'}
+    ${touched ? '--touched' : ''}
+    ${type ? '--type-' + type : ''}">
+
+    <require from="./google-map.scss" as="scoped"></require>
+
+    <div
+        class="google-map-element"
+        pointerdown.capture="onInteraction()"
+        keydown.capture="onInteraction()"
+        wheel.capture="onInteraction()"
+        ref="mapElement">
+    </div>
+
+    <div class="google-map-content">
+        <slot></slot>
+    </div>
+
+</template>

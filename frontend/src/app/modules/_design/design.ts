@@ -42,6 +42,13 @@ export class DesignPage
                 nav: true
             },
             {
+                name: "google-map",
+                route: "google-map",
+                moduleId: PLATFORM.moduleName("./modules/google-map/google-map"),
+                title: "Google map",
+                nav: true
+            },
+            {
                 name: "playground",
                 route: "playground",
                 moduleId: PLATFORM.moduleName("./modules/playground/playground"),

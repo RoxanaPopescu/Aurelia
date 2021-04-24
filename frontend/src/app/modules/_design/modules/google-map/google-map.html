@@ -1,0 +1,116 @@
+<template>
+
+    <require from="./google-map.scss"></require>
+    <require from="./components/custom-map-marker/custom-map-marker"></require>
+
+    <page name="google-map">
+
+        <toolbar>
+
+            <let
+                show-map.bind="true"
+                show-custom-markers.bind="false"
+                show-markers.bind="true"
+                show-popovers.bind="true"
+            ></let>
+
+            <button appearance="solid" click.trigger="showMap = !showMap">
+                Map: ${showMap}
+            </button>
+
+            <button appearance="solid" click.trigger="showCustomMarkers = !showCustomMarkers">
+                Custom markers: ${showCustomMarkers}
+            </button>
+
+            <button appearance="solid" click.trigger="showMarkers = !showMarkers">
+                Markers in template: ${showMarkers}
+            </button>
+
+            <button appearance="solid" click.trigger="showPopovers = !showPopovers">
+                Popovers in template: ${showPopovers}
+            </button>
+
+            <button if.bind="markersAdded.length == 0" appearance="solid" click.trigger="addMarkers()">
+                Markers in code: false
+            </button>
+
+            <button if.bind="markersAdded.length > 0" appearance="solid" click.trigger="removeMarkers()">
+                Markers in code: true
+            </button>
+
+        </toolbar>
+
+        <template if.bind="showMap">
+
+            <google-map
+                configure.call="onMapConfigure(options)"
+                configured.call="onMapConfigured(map)"
+                touched.bind="mapTouched"
+                type.bind="mapType"
+                view-model.ref="mapViewModel">
+
+                <template if.bind="showCustomMarkers">
+
+                    <custom-map-marker
+                        repeat.for="marker of markers"
+                        model.bind="marker">
+                    </custom-map-marker>
+
+                </template>
+
+                <template if.bind="showMarkers">
+
+                    <google-map-marker
+                        repeat.for="marker of markers"
+                        point.bind="marker.point"
+                        title.bind="marker.title"
+                        z-index.bind="marker.zIndex">
+
+                        <template if.bind="showPopovers">
+
+                            <google-map-popover>
+
+                                <style>
+
+                                    google-map-popover
+                                    {
+                                        color: #000000;
+                                    }
+
+                                    h1
+                                    {
+                                        margin: 0 0 10rem 0;
+                                        font: var(--font-large);
+                                    }
+
+                                    p
+                                    {
+                                        margin: 0;
+                                        font: var(--font-base);
+                                    }
+
+                                </style>
+
+                                <h1>
+                                    My fancy popover
+                                </h1>
+
+                                <p>
+                                    With live data binding: ${i | number: 2}
+                                </p>
+
+                            </google-map-popover>
+
+                        </template>
+
+                    </google-map-marker>
+
+                </template>
+
+            </google-map>
+
+        </template>
+
+    </page>
+
+</template>

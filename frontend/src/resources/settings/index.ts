@@ -2,6 +2,7 @@ import { IApiClientSettings, ICookieOptions, CorrelationHeaderInterceptor } from
 import locales from "./locales.json";
 import currencies from "./currencies.json";
 import themes from "./themes.json";
+import { IGoogleMapsSettings } from "shared/google-maps";
 
 /**
  * Represents the settings related to infrastructure, framework and environment.
@@ -103,5 +104,37 @@ export default
             ]
 
         } as IApiClientSettings
+    },
+
+    /**
+     * Settings related to integrations.
+     */
+    integrations:
+    {
+        /**
+         * Settings related to the Google Maps integration.
+         */
+        googleMaps:
+        {
+            parameters:
+            {
+                key: ENVIRONMENT.integrations.googleMaps.key,
+                language: ENVIRONMENT.locale,
+                libraries: ["drawing", "geometry"],
+
+                // Note: This will be set when the theme loads.
+                mapIds: undefined
+            },
+            defaults:
+            {
+                center: { lat: 55.691, lng: 12.567 },
+                zoom: 4,
+                controlSize: 32,
+
+                // Note: This will be set when the theme loads.
+                mapId: undefined
+            }
+
+        } as IGoogleMapsSettings
     }
 };
