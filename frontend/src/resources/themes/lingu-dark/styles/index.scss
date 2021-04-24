@@ -123,3 +123,16 @@ page-content page-header
 {
     --data-table-row-edge-color: var(--palette-color-neutral-light);
 }
+
+google-map
+{
+    --google-map-surface-color: #222222 !important;
+    --google-map-control-shadow: none !important;
+    --google-map-control-text-color: #333333 !important;
+    --google-map-control-text-color--active: #000000 !important;
+
+    &:not(.--type-street)
+    {
+        --google-map-control-filter: saturate(0) brightness(0.92) invert(1);
+    }
+}

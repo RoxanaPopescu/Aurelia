@@ -66,6 +66,19 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
                     this._visible = true;
                     this._infoWindow?.open(map, marker);
                 }
+
+                let element = this._infoWindow?.getContent() as HTMLElement | null;
+
+                while (element != null)
+                {
+                    if (element.classList.contains("gm-style-iw"))
+                    {
+                        element.classList.toggle("--keep-open", this._visible);
+                        break;
+                    }
+
+                    element = element.parentElement;
+                }
             }),
 
             google.maps.event.addListener(marker, "mouseover", () =>

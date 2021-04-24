@@ -18,6 +18,18 @@ $__summary: comment;
     padding: var(--outline-spacing);
 }
 
+// Nested selector that matches if the focus outline should be hidden.
+@mixin if-focus-hidden
+{
+    :host-context(body:not(.focus-visible)) &,
+    :host-context(.focus-hidden) &,
+    body:not(.focus-visible) &,
+    .focus-hidden &
+    {
+        @content;
+    }
+}
+
 /// Gets the specified multiples of the base size unit.
 /// Note that any arguments with a unit will be passed through unchanged.
 /// @param {number | list} $values The base size multiplier, or list of size multipliers.

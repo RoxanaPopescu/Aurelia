@@ -8,6 +8,9 @@ $__summary: comment;
 
 :root
 {
+    /// The shadow to use for floats.
+    --shadow-float: 0 0 4rem 0 rgba(0, 0, 0, 0.1);
+
     /// The shadow to use for tooltips.
     --shadow-tooltip: 0 0 4rem 0 rgba(0, 0, 0, 0.1);
 
