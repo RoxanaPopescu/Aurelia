@@ -97,11 +97,6 @@
         <!-- Polyfills -->
         <script src="https://polyfill.app/api/polyfill?features=es,intersection-observer,intl|locale=<%- environment.locale %>" crossorigin></script>
 
-        <!-- Google Maps -->
-        <%if (environment.integrations.googleMaps) { %>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%- environment.integrations.googleMaps.key %>&libraries=drawing,geometry"></script>
-        <% } %>
-
         <!-- Injected content -->
 
     </body>

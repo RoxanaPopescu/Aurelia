@@ -4,6 +4,7 @@ import { Router as ReactRouter } from "react-router";
 import { autoinject, noView, Container } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Type } from "shared/types";
+import { GoogleMapsService } from "shared/google-maps";
 
 const history =
 {
@@ -26,9 +27,12 @@ export class Wrapper
      * Creates a new instance of the type.
      * @param element The element representing the component.
      */
-    public constructor(element: Element,)
+    public constructor(element: Element)
     {
         this._element = element;
+
+        // Ensure Google Maps is loaded, as legacy code may depend on it.
+        Container.instance.get(GoogleMapsService).load();
     }
 
     private readonly _element: Element;
