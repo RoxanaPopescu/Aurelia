@@ -1,7 +1,7 @@
 <template>
 
     <require from="./google-map.scss"></require>
-    <require from="./components/custom-map-marker/custom-map-marker"></require>
+    <require from="./components/custom-map-marker-2/custom-map-marker"></require>
 
     <page name="google-map">
 
@@ -72,9 +72,9 @@
 
                                 <style>
 
-                                    google-map-popover
+                                    :host
                                     {
-                                        color: #000000;
+                                        color: #00aa00;
                                     }
 
                                     h1
@@ -92,7 +92,7 @@
                                 </style>
 
                                 <h1>
-                                    My fancy popover
+                                    ${marker.title}
                                 </h1>
 
                                 <p>

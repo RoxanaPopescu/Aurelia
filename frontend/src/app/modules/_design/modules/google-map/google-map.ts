@@ -104,6 +104,7 @@ export class GoogleMapPage
             marker.title = m.title;
             marker.zIndex = m.zIndex;
             marker.attached();
+
             this.markersAdded.push(marker);
         }
     }

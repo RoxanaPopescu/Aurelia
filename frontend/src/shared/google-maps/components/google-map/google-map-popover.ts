@@ -42,9 +42,20 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
         const map = this._map.map!;
         const marker = this._marker.marker!;
 
+        const content = document.createElement("div");
+
+        if (this._element.parentNode instanceof ShadowRoot)
+        {
+            content.appendChild(this._element.parentNode);
+        }
+        else
+        {
+            content.appendChild(this._element);
+        }
+
         this._infoWindow = new google.maps.InfoWindow(
         {
-            content: this._element
+            content
         });
 
         this._eventListeners =
@@ -67,9 +78,9 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
                     this._infoWindow?.open(map, marker);
                 }
 
-                let element = this._infoWindow?.getContent() as HTMLElement | null;
+                let element = this._infoWindow?.getContent() as HTMLElement | ShadowRoot | null;
 
-                while (element != null)
+                while (element instanceof HTMLElement)
                 {
                     if (element.classList.contains("gm-style-iw"))
                     {
