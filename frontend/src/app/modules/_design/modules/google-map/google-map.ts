@@ -9,13 +9,18 @@ export class GoogleMapPage
     {
         setInterval(() => this.i++, 1000);
 
-        const markerCount = 90;
+        const radius = 3;
+        const markerCount = 50;
 
         for (let i = 0; i < markerCount; i++)
         {
+            const angle = (360 / markerCount * i) * (Math.PI / 180);
+            const offsetX = radius *  Math.cos(angle);
+            const offsetY = radius *  Math.sin(angle);
+
             this.markers.push(
             {
-                point: new GeoJsonPoint([55.632, (i - markerCount / 2) + 12.579]),
+                point: new GeoJsonPoint([offsetX + 55.632, offsetY * 5 + 12.579]),
                 title: `Marker ${i}`,
                 zIndex: i
             });
@@ -100,7 +105,7 @@ export class GoogleMapPage
         for (const m of this.markers)
         {
             const marker = new GoogleMapMarkerCustomElement(this.mapViewModel);
-            marker.point = new GeoJsonPoint([m.point.coordinates[0] - 5, m.point.coordinates[1]]);
+            marker.point = new GeoJsonPoint([m.point.coordinates[0], m.point.coordinates[1]]);
             marker.title = m.title;
             marker.zIndex = m.zIndex;
             marker.attached();

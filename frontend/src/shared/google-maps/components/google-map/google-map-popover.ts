@@ -1,37 +1,32 @@
 import { autoinject, useShadowDOM, view, bindable } from "aurelia-framework";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { GoogleMapMarkerCustomElement } from "./google-map-marker";
 
 /**
- * Represents a popover associated with a marker on a map.
+ * Represents a popover associated with a owner on a map.
  */
 @autoinject
 @useShadowDOM
 @view("<template><slot></slot></template>")
-export class GoogleMapPopoverCustomElement extends GoogleMapObject
+export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.InfoWindow>
 {
     /**
      * Creates a new instance of the type.
      * @param element The element representing the component.
      * @param map The `GoogleMapCustomElement` instance owning the component.
-     * @param marker The `GoogleMapMarkerCustomElement` instance owning the component.
+     * @param owner The `GoogleMapObject` instance owning this instance.
      */
-    public constructor(element: Element, map: GoogleMapCustomElement, marker: GoogleMapMarkerCustomElement)
+    public constructor(element: Element, map: GoogleMapCustomElement, owner: GoogleMapObject)
     {
-        super(marker);
+        super(owner);
 
         this._element = element as HTMLElement;
         this._map = map;
-        this._marker = marker;
     }
 
     private readonly _element: HTMLElement;
     private readonly _map: GoogleMapCustomElement;
-    private readonly _marker: GoogleMapMarkerCustomElement;
-
     private _eventListeners: google.maps.MapsEventListener[] | undefined;
-    private _infoWindow: google.maps.InfoWindow | undefined;
     private _visible = false;
 
     /**
@@ -47,14 +42,14 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
     {
         this._eventListeners =
         [
-            google.maps.event.addListener(this._marker.marker!, "click", event =>
+            google.maps.event.addListener(this.owner.instance!, "click", event =>
             {
                 if (!event.domEvent.defaultPrevented)
                 {
                     if (this._visible)
                     {
                         this._visible = false;
-                        this._infoWindow?.close();
+                        this.instance?.close();
                     }
                     else
                     {
@@ -64,7 +59,7 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
                 }
             }),
 
-            google.maps.event.addListener(this._marker.marker!, "mouseover", event =>
+            google.maps.event.addListener(this.owner.instance!, "mouseover", event =>
             {
                 if (!event.domEvent.defaultPrevented && !this._visible)
                 {
@@ -83,25 +78,26 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
     {
         super.detach();
 
+        this.instance?.close();
+        this.instance = undefined;
+
         for (const eventListener of this._eventListeners!)
         {
             eventListener.remove();
         }
 
         this._eventListeners = undefined;
-
-        this._infoWindow?.close();
     }
 
     /**
      * Opens the info window at the specified position.
-     * @param latLng The anchor position.
+     * @param latLng The owner position.
      * @param pinned True if the info window should be pinned, otherwise false.
      */
     protected openInfoWindow(latLng: google.maps.LatLng, pinned: boolean): void
     {
         // Create the info window, if not already created.
-        if (this._infoWindow == null)
+        if (this.instance == null)
         {
             // Create the info window.
             // Note that if the parent node of this custom element is a shadow root, it is assumed the host of
@@ -109,14 +105,14 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
 
             if (this._element.parentNode instanceof ShadowRoot)
             {
-                this._infoWindow = new google.maps.InfoWindow(
+                this.instance = new google.maps.InfoWindow(
                 {
                     content: this._element.parentNode.host
                 });
             }
             else
             {
-                this._infoWindow = new google.maps.InfoWindow(
+                this.instance = new google.maps.InfoWindow(
                 {
                     content: this._element
                 });
@@ -126,15 +122,15 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
 
             this._eventListeners!.push(...
             [
-                google.maps.event.addListener(this._marker.marker!, "mouseout", () =>
+                google.maps.event.addListener(this.owner.instance!, "mouseout", () =>
                 {
                     if (!this._visible)
                     {
-                        this._infoWindow!.close();
+                        this.instance!.close();
                     }
                 }),
 
-                google.maps.event.addListener(this._infoWindow, "closeclick", () =>
+                google.maps.event.addListener(this.instance, "closeclick", () =>
                 {
                     this._visible = false;
                 })
@@ -142,16 +138,16 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
         }
 
         // Position the info window at the coordinates associated with the event.
-        this._infoWindow.setPosition(latLng);
+        this.instance.setPosition(latLng);
 
         // Open the info window, if not already open.
         if (!this._visible)
         {
             // Open the info window.
-            this._infoWindow.open(this._map.map, this._marker.marker);
+            this.instance.open(this._map.instance, this.owner.instance);
 
             // Find the info window element.
-            const contentElement = this._infoWindow.getContent() as HTMLElement;
+            const contentElement = this.instance.getContent() as HTMLElement;
             const infoWindowElement = contentElement.closest(".gm-style-iw");
 
             if (infoWindowElement != null)

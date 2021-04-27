@@ -44,6 +44,17 @@
                 type.bind="mapType"
                 view-model.ref="mapViewModel">
 
+                <google-map-line
+                    points.bind="markers | map: 'point'"
+                    stroke-color="#0000ff"
+                    stroke-width="3">
+
+                    <google-map-popover>
+                        Popover for line
+                    </google-map-popover>
+
+                </google-map-line>
+
                 <template if.bind="showCustomMarkers">
 
                     <custom-map-marker
@@ -66,6 +77,7 @@
 
                             <style>
 
+                                /* BUG: This somehow leaks into the popover for the line */
                                 :host
                                 {
                                     color: #00aa00;

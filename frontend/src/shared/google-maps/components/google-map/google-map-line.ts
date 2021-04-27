@@ -8,12 +8,12 @@ import { geoJsonPointToLatLng } from "./utilities/geo-json-helper";
 const eventNames = ["click", "dblclick", "drag", "dragend", "dragstart", "mousedown", "mouseout", "mouseover", "mouseup", "rightclick"];
 
 /**
- * Represents a marker on a map.
+ * Represents a line on a map.
  */
 @autoinject
 @containerless
 @noView
-export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Marker>
+export class GoogleMapLineCustomElement extends GoogleMapObject<google.maps.Polyline>
 {
     /**
      * Creates a new instance of the type.
@@ -33,10 +33,10 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
     private _eventListeners: google.maps.MapsEventListener[] | undefined;
 
     /**
-     * The point at which the marker is located.
+     * The points on the line..
      */
     @bindable
-    public point: GeoJsonPoint;
+    public points: GeoJsonPoint[];
 
     /**
      * The z-index of the marker.
@@ -48,13 +48,25 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
      * The icon to use for the marker.
      */
     @bindable
-    public icon: google.maps.ReadonlyIcon | google.maps.ReadonlySymbol | undefined;
+    public icons: google.maps.IconSequence[] | undefined;
 
     /**
-     * The title of the marker.
+     * The stroke color, as a CSS color string.
      */
-    @bindable
-    public title: string | undefined;
+    @bindable({ defaultValue: "#000000" })
+    public strokeColor: string;
+
+    /**
+     * The stroke WIDTH, in pixels.
+     */
+    @bindable({ defaultValue: 1 })
+    public strokeWidth: number;
+
+    /**
+     * The stroke opacity, which must be in the range [0, 1].
+     */
+    @bindable({ defaultValue: 1 })
+    public strokeOpacity: number;
 
     /**
      * The function to call when a `clicked` event is dispatched on the marker.
@@ -121,14 +133,17 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
      */
     public attach(): void
     {
-        this.instance = new google.maps.Marker(
+        this.instance = new google.maps.Polyline(
         {
             map: this._map.instance,
-            position: geoJsonPointToLatLng(this.point),
-            title: this.title,
+            geodesic: false,
+            path: this.points.map(p => geoJsonPointToLatLng(p)),
             zIndex: this.zIndex,
             clickable: true,
-            icon: this.icon
+            icons: this.icons,
+            strokeColor: this.strokeColor,
+            strokeWeight: this.strokeWidth,
+            strokeOpacity: this.strokeOpacity
         });
 
         this._eventListeners = [];
@@ -163,11 +178,11 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
     }
 
     /**
-     * Called by the framework when the `position` property changes.
+     * Called by the framework when the `points` property changes.
      */
-    protected positionChanged(): void
+    protected pointsChanged(): void
     {
-        this.instance?.setPosition(geoJsonPointToLatLng(this.point));
+        this.instance?.setPath(this.points.map(p => geoJsonPointToLatLng(p)));
     }
 
     /**
@@ -175,22 +190,38 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
      */
     protected zIndexChanged(): void
     {
-        this.instance?.setZIndex(this.zIndex || null);
+        this.instance?.setOptions({ zIndex: this.zIndex });
     }
 
     /**
      * Called by the framework when the `icon` property changes.
      */
-    protected iconChanged(): void
+    protected iconsChanged(): void
     {
-        this.instance?.setIcon(this.icon || null);
+        this.instance?.setOptions({ icons: this.icons });
     }
 
     /**
-     * Called by the framework when the `title` property changes.
+     * Called by the framework when the `strokeColor` property changes.
      */
-    protected titleChanged(): void
+    protected strokeColorChanged(): void
     {
-        this.instance?.setTitle(this.title || null);
+        this.instance?.setOptions({ strokeColor: this.strokeColor });
+    }
+
+    /**
+     * Called by the framework when the `strokeWidth` property changes.
+     */
+    protected strokeWidthChanged(): void
+    {
+        this.instance?.setOptions({ strokeWeight: this.strokeWidth });
+    }
+
+    /**
+     * Called by the framework when the `strokeOpacity` property changes.
+     */
+    protected strokeOpacityChanged(): void
+    {
+        this.instance?.setOptions({ strokeOpacity: this.strokeOpacity });
     }
 }

@@ -1,24 +1,13 @@
 /**
- * Represents an object presented on a map.
- */
-export interface IGoogleMapObject
-{
-    /**
-     * Called when the component should attach to the owner.
-     */
-    attach(): void;
-
-    /**
-     * Called when the component should detach from the owner.
-     */
-    detach(): void;
-}
-
-/**
- * Represents an object presented on a map.
+ * Represents an object that owns one or more objects presented on a map.
  */
 export interface IGoogleMapObjectOwner
 {
+    /**
+     * The `google.maps.MVCObject` instance representing the object.
+     */
+    instance: google.maps.MVCObject | undefined;
+
     /**
      * Registers the specified objects as owned by this object.
      */
@@ -33,7 +22,23 @@ export interface IGoogleMapObjectOwner
 /**
  * Represents an object presented on a map.
  */
-export abstract class GoogleMapObject implements IGoogleMapObject
+export interface IGoogleMapObject
+{
+    /**
+     * Called by the owner when the component should attach to the map.
+     */
+    attach(): void;
+
+    /**
+     * Called by the owner when the component should detach from the map.
+     */
+    detach(): void;
+}
+
+/**
+ * Represents an object presented on a map.
+ */
+export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = google.maps.MVCObject> implements IGoogleMapObject
 {
     /**
      * Creates a new instance of the type.
@@ -48,9 +53,14 @@ export abstract class GoogleMapObject implements IGoogleMapObject
     private _attached = false;
 
     /**
-     * The `IGoogleMapObjectOwner` instance owning this instance.
+     * The `IGoogleMapObjectOwner` instance owning this object.
      */
-    protected owner: IGoogleMapObjectOwner;
+    public readonly owner: IGoogleMapObjectOwner;
+
+    /**
+     * The `google.maps.MVCObject` instance representing the object.
+     */
+    public instance: TObject | undefined;
 
     /**
      * Called by the framework when the component is attached.
@@ -61,7 +71,7 @@ export abstract class GoogleMapObject implements IGoogleMapObject
     }
 
     /**
-     * Called when the component should attach to the owner.
+     * Called by the owner when the component should attach itself to the map.
      */
     public attach(): void
     {
@@ -82,7 +92,7 @@ export abstract class GoogleMapObject implements IGoogleMapObject
     }
 
     /**
-     * Called when the component should detach from the owner.
+     * Called by the owner when the component should detach itself from the map.
      */
     public detach(): void
     {

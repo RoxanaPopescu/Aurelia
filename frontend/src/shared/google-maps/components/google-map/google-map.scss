@@ -290,8 +290,8 @@
     {
         > button
         {
-            top: 0 !important;
-            right: 0 !important;
+            top: -4px !important;
+            right: -4px !important;
         }
 
         &:not(.--pinned) > button

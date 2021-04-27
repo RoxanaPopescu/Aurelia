@@ -9,7 +9,7 @@ import { IGoogleMapObject, IGoogleMapObjectOwner } from "./google-map-object";
 export type GoogleMapType = google.maps.MapTypeId | "street";
 
 /**
- * Represents a Google Map.
+ * Represents a map.
  */
 @autoinject
 @useShadowDOM({ mode: "closed" })
@@ -43,7 +43,7 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
     /**
      * The map instance.
      */
-    public map: google.maps.Map | undefined;
+    public instance: google.maps.Map | undefined;
 
     /**
      * The function to call before configuring and creating the map.
@@ -116,28 +116,28 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                 options = await this.configure?.({ options }) ?? options;
 
                 // Create the map instance.
-                this.map = new googleMaps.Map(this.mapElement,
+                this.instance = new googleMaps.Map(this.mapElement,
                 {
                     backgroundColor: "none",
                     ...options
                 });
 
                 // Get the street view panorama associated with the map instance.
-                const streetView = this.map.getStreetView();
+                const streetView = this.instance.getStreetView();
 
                 // Resolve the initial map type.
-                this.type = streetView.getVisible() ? "street" : this.map.getMapTypeId();
+                this.type = streetView.getVisible() ? "street" : this.instance.getMapTypeId();
 
                 // Detect when the street view visibility is changed.
                 googleMaps.event.addListener(streetView, "visible_changed", () =>
                 {
-                    this.type = streetView.getVisible() ? "street" : this.map!.getMapTypeId();
+                    this.type = streetView.getVisible() ? "street" : this.instance!.getMapTypeId();
                 });
 
                 // Detect when the map type is changed.
-                googleMaps.event.addListener(this.map, "maptypeid_changed", () =>
+                googleMaps.event.addListener(this.instance, "maptypeid_changed", () =>
                 {
-                    this.type = streetView.getVisible() ? "street" : this.map!.getMapTypeId();
+                    this.type = streetView.getVisible() ? "street" : this.instance!.getMapTypeId();
                 });
 
                 // Indicate that the component is attached.
@@ -150,7 +150,7 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                 }
 
                 // Call the `created` callback.
-                await this.configured?.({ map: this.map });
+                await this.configured?.({ map: this.instance });
             })
 
             .catch(error =>
