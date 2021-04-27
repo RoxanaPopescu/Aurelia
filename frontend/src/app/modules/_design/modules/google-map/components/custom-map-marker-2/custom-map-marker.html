@@ -5,7 +5,8 @@
     <google-map-marker
         point.bind="model.point"
         title.bind="model.title"
-        z-index.bind="model.zIndex">
+        z-index.bind="model.zIndex"
+        click.call="onMarkerClick(event)">
 
         <custom-map-popover
             model.bind="model">

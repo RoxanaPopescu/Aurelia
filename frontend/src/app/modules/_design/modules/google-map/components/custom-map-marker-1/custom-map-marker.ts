@@ -16,4 +16,9 @@ export class CustomMapMarkerCustomElement
      */
     @bindable
     public model: any;
+
+    protected onMarkerClick(event): void
+    {
+        console.log("Marker clicked:", event);
+    }
 }

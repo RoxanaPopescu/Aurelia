@@ -1,4 +1,4 @@
-import { autoinject, useShadowDOM, view } from "aurelia-framework";
+import { autoinject, useShadowDOM, view, bindable } from "aurelia-framework";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
 import { GoogleMapMarkerCustomElement } from "./google-map-marker";
@@ -30,81 +30,45 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
     private readonly _map: GoogleMapCustomElement;
     private readonly _marker: GoogleMapMarkerCustomElement;
 
-    private _eventListeners: google.maps.MapsEventListener[];
+    private _eventListeners: google.maps.MapsEventListener[] | undefined;
     private _infoWindow: google.maps.InfoWindow | undefined;
     private _visible = false;
+
+    /**
+     * The classes to apply to the info window element.
+     */
+    @bindable
+    public classes: string | string[] | undefined;
 
     /**
      * Called when the component should attach to the owner.
      */
     public attach(): void
     {
-        const map = this._map.map!;
-        const marker = this._marker.marker!;
-
-        const content = document.createElement("div");
-
-        if (this._element.parentNode instanceof ShadowRoot)
-        {
-            content.appendChild(this._element.parentNode);
-        }
-        else
-        {
-            content.appendChild(this._element);
-        }
-
-        this._infoWindow = new google.maps.InfoWindow(
-        {
-            content
-        });
-
         this._eventListeners =
         [
-            google.maps.event.addListener(this._infoWindow, "closeclick", () =>
+            google.maps.event.addListener(this._marker.marker!, "click", event =>
             {
-                this._visible = false;
-            }),
-
-            google.maps.event.addListener(marker, "click", () =>
-            {
-                if (this._visible)
+                if (!event.domEvent.defaultPrevented)
                 {
-                    this._visible = false;
-                    this._infoWindow?.close();
-                }
-                else
-                {
-                    this._visible = true;
-                    this._infoWindow?.open(map, marker);
-                }
-
-                let element = this._infoWindow?.getContent() as HTMLElement | ShadowRoot | null;
-
-                while (element instanceof HTMLElement)
-                {
-                    if (element.classList.contains("gm-style-iw"))
+                    if (this._visible)
                     {
-                        element.classList.toggle("--keep-open", this._visible);
-                        break;
+                        this._visible = false;
+                        this._infoWindow?.close();
                     }
-
-                    element = element.parentElement;
+                    else
+                    {
+                        this.openInfoWindow(event.latLng, true);
+                        this._visible = true;
+                    }
                 }
             }),
 
-            google.maps.event.addListener(marker, "mouseover", () =>
+            google.maps.event.addListener(this._marker.marker!, "mouseover", event =>
             {
-                if (!this._visible)
+                if (!event.domEvent.defaultPrevented && !this._visible)
                 {
-                    this._infoWindow?.open(map, marker);
-                }
-            }),
-
-            google.maps.event.addListener(marker, "mouseout", () =>
-            {
-                if (!this._visible)
-                {
-                    this._infoWindow?.close();
+                    this.openInfoWindow(event.latLng, false);
                 }
             })
         ];
@@ -119,11 +83,91 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject
     {
         super.detach();
 
-        for (const eventListener of this._eventListeners)
+        for (const eventListener of this._eventListeners!)
         {
             eventListener.remove();
         }
 
+        this._eventListeners = undefined;
+
         this._infoWindow?.close();
+    }
+
+    /**
+     * Opens the info window at the specified position.
+     * @param latLng The anchor position.
+     * @param pinned True if the info window should be pinned, otherwise false.
+     */
+    protected openInfoWindow(latLng: google.maps.LatLng, pinned: boolean): void
+    {
+        // Create the info window, if not already created.
+        if (this._infoWindow == null)
+        {
+            // Create the info window.
+            // Note that if the parent node of this custom element is a shadow root, it is assumed the host of
+            // that shadow root is a custom element, representing a custom popover component.
+
+            if (this._element.parentNode instanceof ShadowRoot)
+            {
+                this._infoWindow = new google.maps.InfoWindow(
+                {
+                    content: this._element.parentNode.host
+                });
+            }
+            else
+            {
+                this._infoWindow = new google.maps.InfoWindow(
+                {
+                    content: this._element
+                });
+            }
+
+            // Listener for the `closeclick` event.
+
+            this._eventListeners!.push(...
+            [
+                google.maps.event.addListener(this._marker.marker!, "mouseout", () =>
+                {
+                    if (!this._visible)
+                    {
+                        this._infoWindow!.close();
+                    }
+                }),
+
+                google.maps.event.addListener(this._infoWindow, "closeclick", () =>
+                {
+                    this._visible = false;
+                })
+            ]);
+        }
+
+        // Position the info window at the coordinates associated with the event.
+        this._infoWindow.setPosition(latLng);
+
+        // Open the info window, if not already open.
+        if (!this._visible)
+        {
+            // Open the info window.
+            this._infoWindow.open(this._map.map, this._marker.marker);
+
+            // Find the info window element.
+            const contentElement = this._infoWindow.getContent() as HTMLElement;
+            const infoWindowElement = contentElement.closest(".gm-style-iw");
+
+            if (infoWindowElement != null)
+            {
+                if (pinned)
+                {
+                    // Apply the `--pinned` class to the info window element.
+                    infoWindowElement.classList.add("--pinned");
+                }
+
+                // Apply any additional classes to the info window element.
+                if (this.classes != null)
+                {
+                    infoWindowElement.classList.add(...this.classes);
+                }
+            }
+        }
     }
 }

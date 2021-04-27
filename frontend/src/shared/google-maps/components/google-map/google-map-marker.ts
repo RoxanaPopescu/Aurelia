@@ -1,5 +1,5 @@
-import { autoinject, containerless, view, bindable } from "aurelia-framework";
-import { GeoJsonPoint } from "shared/types";
+import { autoinject, containerless, noView, bindable } from "aurelia-framework";
+import { CallbackWithContext, GeoJsonPoint } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
 import { geoJsonPointToLatLng } from "./utilities/geo-json-helper";
@@ -12,7 +12,7 @@ const eventNames = ["click", "dblclick", "drag", "dragend", "dragstart", "moused
  */
 @autoinject
 @containerless
-@view("<template></template>")
+@noView
 export class GoogleMapMarkerCustomElement extends GoogleMapObject
 {
     /**
@@ -54,7 +54,67 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject
      * The icon to use for the marker.
      */
     @bindable
-    public icon: any | undefined;
+    public icon: google.maps.ReadonlyIcon | google.maps.ReadonlySymbol | undefined;
+
+    /**
+     * The function to call when a `clicked` event is dispatched on the marker.
+     */
+    @bindable
+    public click: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `dblclick` event is dispatched on the marker.
+     */
+    @bindable
+    public dblclick: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `drag` event is dispatched on the marker.
+     */
+    @bindable
+    public drag: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `dragend` event is dispatched on the marker.
+     */
+    @bindable
+    public dragend: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `dragstart` event is dispatched on the marker.
+     */
+    @bindable
+    public dragstart: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `mousedown` event is dispatched on the marker.
+     */
+    @bindable
+    public mousedown: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `mouseout` event is dispatched on the marker.
+     */
+    @bindable
+    public mouseout: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `mouseover` event is dispatched on the marker.
+     */
+    @bindable
+    public mouseover: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `mouseup` event is dispatched on the marker.
+     */
+    @bindable
+    public mouseup: CallbackWithContext<{ event: PointerEvent }>;
+
+    /**
+     * The function to call when a `rightclick` event is dispatched on the marker.
+     */
+    @bindable
+    public rightclick: CallbackWithContext<{ event: PointerEvent }>;
 
     /**
      * Called by the map when the component should attach to the map.
@@ -75,10 +135,7 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject
         {
             for (const eventName of eventNames)
             {
-                // TODO: Fix this
-                // tslint:disable-next-line: deprecation
-                // this.marker.addListener(eventName, event => this.element!.dispatchEvent(event.domEvent));
-                this.marker.addListener(eventName, event => console.log("TODO: Dispatch event:", eventName));
+                this.marker.addListener(eventName as any, event => this[eventName]?.({ event: event.domEvent }));
             }
         }
 

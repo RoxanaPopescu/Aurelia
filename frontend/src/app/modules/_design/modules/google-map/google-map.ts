@@ -119,6 +119,11 @@ export class GoogleMapPage
         this.markersAdded = [];
     }
 
+    protected onMarkerClick(event): void
+    {
+        console.log("Marker clicked:", event);
+    }
+
     /**
      * Centers the map on the current position of the user.
      */

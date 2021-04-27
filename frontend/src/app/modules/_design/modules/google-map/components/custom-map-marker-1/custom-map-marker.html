@@ -5,7 +5,8 @@
     <google-map-marker
         point.bind="model.point"
         title.bind="model.title"
-        z-index.bind="model.zIndex">
+        z-index.bind="model.zIndex"
+        click.call="onMarkerClick(event)">
 
         <google-map-popover>
 
@@ -35,7 +36,7 @@
             </h1>
 
             <p>
-                With live data binding: ${i | number: 2}
+                Live data binding: ${i | number: 2}
             </p>
 
         </google-map-popover>

@@ -12,7 +12,7 @@ export class CustomMapPopoverCustomElement
     protected i = 0;
 
     /**
-     * The model to use for the marker.
+     * The model to use for the popover.
      */
     @bindable
     public model: any;

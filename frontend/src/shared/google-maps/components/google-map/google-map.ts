@@ -12,7 +12,7 @@ export type GoogleMapType = google.maps.MapTypeId | "street";
  * Represents a Google Map.
  */
 @autoinject
-@useShadowDOM
+@useShadowDOM({ mode: "closed" })
 export class GoogleMapCustomElement implements IGoogleMapObjectOwner
 {
     /**

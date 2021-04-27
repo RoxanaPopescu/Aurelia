@@ -294,7 +294,7 @@
             right: 0 !important;
         }
 
-        &:not(.--keep-open) > button
+        &:not(.--pinned) > button
         {
             display: none !important;
         }
