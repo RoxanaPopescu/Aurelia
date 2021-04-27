@@ -7,8 +7,6 @@ export class GoogleMapPage
 {
     public constructor()
     {
-        setInterval(() => this.i++, 1000);
-
         const radius = 3;
         const markerCount = 50;
 
@@ -26,9 +24,6 @@ export class GoogleMapPage
             });
         }
     }
-
-    protected i = 0;
-    protected test = false;
 
     protected markers: any[] = [];
     protected markersAdded: GoogleMapMarkerCustomElement[] = [];
@@ -100,6 +95,26 @@ export class GoogleMapPage
         // this.centerCurrentPosition();
     }
 
+    /**
+     * Centers the map on the current position of the user.
+     */
+    protected centerCurrentPosition(): void
+    {
+        if (navigator.geolocation)
+        {
+            navigator.geolocation.getCurrentPosition(position =>
+            {
+                if (!this.mapTouched)
+                {
+                    const currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    this.mapInstance.setCenter(currentPosition);
+                    this.mapInstance.setZoom(Math.max(this.mapInstance.getZoom(), 14));
+                }
+            },
+            error => console.error(error));
+        }
+    }
+
     protected addMarkers(): void
     {
         for (const m of this.markers)
@@ -122,30 +137,5 @@ export class GoogleMapPage
         }
 
         this.markersAdded = [];
-    }
-
-    protected onMarkerClick(event): void
-    {
-        console.log("Marker clicked:", event);
-    }
-
-    /**
-     * Centers the map on the current position of the user.
-     */
-    protected centerCurrentPosition(): void
-    {
-        if (navigator.geolocation)
-        {
-            navigator.geolocation.getCurrentPosition(position =>
-            {
-                if (!this.mapTouched)
-                {
-                    const currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    this.mapInstance.setCenter(currentPosition);
-                    this.mapInstance.setZoom(Math.max(this.mapInstance.getZoom(), 14));
-                }
-            },
-            error => console.error(error));
-        }
     }
 }
