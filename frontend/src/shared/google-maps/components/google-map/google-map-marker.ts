@@ -135,7 +135,7 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
 
         for (const eventName of eventNames)
         {
-            this._eventListeners.push(this.instance.addListener(eventName as any, event =>
+            this._eventListeners.push(this.instance.addListener(eventName as any, (event: any) =>
             {
                 this[eventName]?.({ event: event.domEvent });
             }));

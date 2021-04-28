@@ -140,17 +140,20 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                     this.type = streetView.getVisible() ? "street" : this.instance!.getMapTypeId();
                 });
 
-                // Indicate that the component is attached.
-                this._componentState = "attached";
-
-                // Attach objects.
-                for (const object of this._objects.slice())
+                googleMaps.event.addListenerOnce(this.instance, "idle", async () =>
                 {
-                    object.attach();
-                }
+                    // Indicate that the component is attached.
+                    this._componentState = "attached";
 
-                // Call the `created` callback.
-                await this.configured?.({ map: this.instance });
+                    // Attach objects.
+                    for (const object of this._objects.slice())
+                    {
+                        object.attach();
+                    }
+
+                    // Call the `created` callback.
+                    await this.configured?.({ map: this.instance! });
+                });
             })
 
             .catch(error =>

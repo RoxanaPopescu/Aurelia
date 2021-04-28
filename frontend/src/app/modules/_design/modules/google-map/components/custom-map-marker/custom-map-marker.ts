@@ -10,7 +10,7 @@ export class CustomMapMarkerCustomElement
     @bindable
     public model: any;
 
-    protected onMarkerClick(event): void
+    protected onMarkerClick(event: MouseEvent): void
     {
         console.log("Marker clicked:", event);
     }

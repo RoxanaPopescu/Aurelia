@@ -44,12 +44,23 @@
                 type.bind="mapType"
                 view-model.ref="mapViewModel">
 
+                <google-map-marker
+                    point.bind="centerMarker.point"
+                    title.bind="centerMarker.title"
+                    z-index.bind="centerMarker.zIndex">
+
+                    <google-map-popover pinned.one-time="true">
+                        Popover for marker
+                    </google-map-popover>
+
+                </google-map-marker>
+
                 <template if.bind="showLine">
 
                     <google-map-line
                         points.bind="markers | map: 'point'"
                         stroke-color="#0000ff"
-                        stroke-width="3">
+                        stroke-width="5">
 
                         <google-map-popover>
                             Popover for line

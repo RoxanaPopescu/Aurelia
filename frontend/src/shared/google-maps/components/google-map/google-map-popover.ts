@@ -1,4 +1,5 @@
-import { autoinject, useShadowDOM, view, bindable } from "aurelia-framework";
+import { autoinject, useShadowDOM, view, bindable, bindingMode } from "aurelia-framework";
+import { delay } from "shared/utilities";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
 
@@ -27,10 +28,15 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
     private readonly _element: HTMLElement;
     private readonly _map: GoogleMapCustomElement;
     private _eventListeners: google.maps.MapsEventListener[] | undefined;
-    private _visible = false;
 
     /**
-     * The classes to apply to the info window element.
+     * True if the popover is pinned open, otherwise false.
+     */
+     @bindable({ defaultBindingMode: bindingMode.twoWay, defaultValue: false })
+    private pinned = false;
+
+    /**
+     * The classes to apply to the info window element, if any.
      */
     @bindable
     public classes: string | string[] | undefined;
@@ -46,27 +52,39 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
             {
                 if (!event.domEvent.defaultPrevented)
                 {
-                    if (this._visible)
+                    if (this.pinned)
                     {
-                        this._visible = false;
-                        this.instance?.close();
+                        this.closeInfoWindow();
                     }
                     else
                     {
                         this.openInfoWindow(event.latLng, true);
-                        this._visible = true;
+                        this.pinned = true;
                     }
                 }
             }),
 
             google.maps.event.addListener(this.owner.instance!, "mouseover", event =>
             {
-                if (!event.domEvent.defaultPrevented && !this._visible)
+                if (!event.domEvent.defaultPrevented && !this.pinned)
                 {
                     this.openInfoWindow(event.latLng, false);
                 }
+            }),
+
+            google.maps.event.addListener(this.owner.instance!, "mouseout", event =>
+            {
+                if (!event.domEvent.defaultPrevented && !this.pinned)
+                {
+                    this.closeInfoWindow();
+                }
             })
         ];
+
+        if (this.pinned)
+        {
+            this.openInfoWindow(undefined, true);
+        }
 
         super.attach();
     }
@@ -78,8 +96,7 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
     {
         super.detach();
 
-        this.instance?.close();
-        this.instance = undefined;
+        this.closeInfoWindow();
 
         for (const eventListener of this._eventListeners!)
         {
@@ -90,13 +107,36 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
     }
 
     /**
-     * Opens the info window at the specified position.
-     * @param latLng The owner position.
-     * @param pinned True if the info window should be pinned, otherwise false.
+     * Called by the framework when the `pinned` property changes.
      */
-    protected openInfoWindow(latLng: google.maps.LatLng, pinned: boolean): void
+    protected pinnedChanged(): void
     {
-        // Create the info window, if not already created.
+        if (this.isAttached)
+        {
+            if (this.pinned)
+            {
+                if (this.instance == null)
+                {
+                    this.openInfoWindow(undefined, true);
+                }
+            }
+            else
+            {
+                if (this.instance != null)
+                {
+                    this.closeInfoWindow();
+                }
+            }
+        }
+    }
+
+    /**
+     * Opens the info window at the specified position.
+     * @param latLng The position at which the info window should be anchored.
+     * @param pinned True if the info window should be pinned open, otherwise false.
+     */
+    private openInfoWindow(latLng?: google.maps.LatLng, pinned = false): void
+    {
         if (this.instance == null)
         {
             // Create the info window.
@@ -122,33 +162,55 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
 
             this._eventListeners!.push(...
             [
-                google.maps.event.addListener(this.owner.instance!, "mouseout", () =>
-                {
-                    if (!this._visible)
-                    {
-                        this.instance!.close();
-                    }
-                }),
-
                 google.maps.event.addListener(this.instance, "closeclick", () =>
                 {
-                    this._visible = false;
+                    this.pinned = false;
+                    this.instance = undefined;
                 })
             ]);
         }
 
-        // Position the info window at the coordinates associated with the event.
-        this.instance.setPosition(latLng);
+        // Position the info window at the specified position.
 
-        // Open the info window, if not already open.
-        if (!this._visible)
+        if (latLng != null)
         {
-            // Open the info window.
-            this.instance.open(this._map.instance, this.owner.instance);
+            this.instance.setPosition(latLng);
+        }
 
-            // Find the info window element.
-            const contentElement = this.instance.getContent() as HTMLElement;
-            const infoWindowElement = contentElement.closest(".gm-style-iw");
+        // Open the info window.
+        this.instance.open(this._map.instance, this.owner.instance);
+
+        // Find the info window element.
+        // tslint:disable-next-line: no-floating-promises
+        this.applyInfoWindowClasses(pinned);
+    }
+
+    /**
+     * Closes the info window.
+     */
+    private closeInfoWindow(): void
+    {
+        if (this.instance != null)
+        {
+            this.instance.close();
+            this.instance = undefined;
+            this.pinned = false;
+        }
+    }
+
+    /**
+     * Find the info window element and apply classes.
+     * @param pinned True if the info window should be pinned open, otherwise false.
+     */
+    private async applyInfoWindowClasses(pinned: boolean): Promise<void>
+    {
+        const contentElement = this.instance!.getContent() as HTMLElement;
+        let infoWindowElement: HTMLElement | null;
+        let remainingAttempts = 10;
+
+        do
+        {
+            infoWindowElement = contentElement.closest(".gm-style-iw");
 
             if (infoWindowElement != null)
             {
@@ -163,7 +225,12 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
                 {
                     infoWindowElement.classList.add(...this.classes);
                 }
+
+                return;
             }
+
+            await delay(200 / remainingAttempts);
         }
+        while (this.instance != null && infoWindowElement == null && --remainingAttempts > 0);
     }
 }

@@ -50,7 +50,11 @@ export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = go
     }
 
     private readonly _objects: GoogleMapObject[] = [];
-    private _attached = false;
+
+    /**
+     * True if the object is attached to the map, otherwise false.
+     */
+    protected isAttached = false;
 
     /**
      * The `IGoogleMapObjectOwner` instance owning this object.
@@ -75,7 +79,7 @@ export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = go
      */
     public attach(): void
     {
-        this._attached = true;
+        this.isAttached = true;
 
         for (const object of this._objects.slice())
         {
@@ -101,7 +105,7 @@ export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = go
             object.detach();
         }
 
-        this._attached = false;
+        this.isAttached = false;
     }
 
     /**
@@ -117,7 +121,7 @@ export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = go
             {
                 this._objects.push(object);
 
-                if (this._attached)
+                if (this.isAttached)
                 {
                     object.attach();
                 }
@@ -138,7 +142,7 @@ export abstract class GoogleMapObject<TObject extends google.maps.MVCObject = go
             {
                 this._objects.splice(index, 1);
 
-                if (this._attached)
+                if (this.isAttached)
                 {
                     object.detach();
                 }

@@ -7,8 +7,8 @@ export class GoogleMapPage
 {
     public constructor()
     {
-        const radius = 3;
-        const markerCount = 50;
+        const radius = 10;
+        const markerCount = 20;
 
         for (let i = 0; i < markerCount; i++)
         {
@@ -23,8 +23,16 @@ export class GoogleMapPage
                 zIndex: i
             });
         }
+
+        this.centerMarker =
+        {
+            point: new GeoJsonPoint([55.632, 12.579]),
+            title: "Center marker",
+            zIndex: markerCount + 1
+        };
     }
 
+    protected centerMarker: any;
     protected markers: any[] = [];
     protected markersAdded: GoogleMapMarkerCustomElement[] = [];
 
