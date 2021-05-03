@@ -1,8 +1,8 @@
 import { IApiClientSettings, ICookieOptions, CorrelationHeaderInterceptor } from "shared/infrastructure";
+import { IGoogleMapsSettings } from "shared/google-maps";
 import locales from "./locales.json";
 import currencies from "./currencies.json";
 import themes from "./themes.json";
-import { IGoogleMapsSettings } from "shared/google-maps";
 
 /**
  * Represents the settings related to infrastructure, framework and environment.

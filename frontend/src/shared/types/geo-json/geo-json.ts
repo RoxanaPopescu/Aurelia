@@ -2,27 +2,32 @@
 // See: https://tools.ietf.org/html/rfc7946
 
 /**
- * Provides methods for working with GeoJSON objects, including methods for creating typed GeoJSON
- * geometry objects, based on GeoJSON strings or data.
+ * Represents the type of a GeoJson object.
  */
-export abstract class GeoJson
+export type GeoJsonType = "Point" | "Polygon" | "MultiPolygon" | "GeometryCollection";
+
+/**
+ * Provides methods for working with GeoJSON objects, including methods for creating typed GeoJSON
+ * objects, based on GeoJSON strings or data.
+ */
+export namespace GeoJson
 {
     /**
-     * Parses the specified GeoJSON string, returning an instance of the appropiate GeoJsonGeometry type.
+     * Parses the specified GeoJSON string, returning an instance of the appropiate GeoJsonObject type.
      * @param geoJsonString A JSON string representing a serialized GeoJSON object.
-     * @returns A GeoJsonGeometry instance representing the geometry.
+     * @returns A GeoJsonObject instance representing the object.
      */
-    public static parse(geoJsonString: string): GeoJsonGeometry
+    export function parse(geoJsonString: string): GeoJsonObject
     {
-        return GeoJson.create(JSON.parse(geoJsonString));
+        return create(JSON.parse(geoJsonString));
     }
 
     /**
-     * Creates an instance of the appropiate GeoJsonGeometry type, based on the specified GeoJSON data.
-     * @param geoJson An object representing a GeoJSON geometry.
-     * @returns A GeoJSON Geometry object.
+     * Creates an instance of the appropiate GeoJsonObject type, based on the specified GeoJSON data.
+     * @param geoJson An object representing a GeoJSON Object.
+     * @returns A GeoJSON object.
      */
-    public static create(geoJson: GeoJsonGeometry): GeoJsonGeometry
+    export function create(geoJson: GeoJsonGeometry): GeoJsonObject
     {
         switch (geoJson.type)
         {
@@ -34,6 +39,9 @@ export abstract class GeoJson
 
             case "MultiPolygon":
                 return new GeoJsonMultiPolygon(geoJson);
+
+            case "GeometryCollection":
+                return new GeoJsonGeometryCollection(geoJson);
 
             default:
                 throw new Error(`The GeoJSON type '${geoJson.type}' is not supported.`);
@@ -59,11 +67,11 @@ export abstract class GeoJsonObject
      */
     public constructor(geoJson: GeoJsonObject)
 
-    public constructor(...args)
+    public constructor(...args: any[])
     {
         if (typeof args[0] === "string")
         {
-            this.type = args[0];
+            this.type = args[0] as GeoJsonType;
             this.bbox = args[1];
         }
         else
@@ -76,12 +84,12 @@ export abstract class GeoJsonObject
     /**
      * The GeoJSON object type.
      */
-    public type: string;
+    public type: GeoJsonType;
 
     /**
      * The coordinates of the bounding box of the object, if specified.
      */
-    public bbox: number[];
+    public bbox: number[] | undefined;
 }
 
 /**
@@ -103,7 +111,7 @@ export abstract class GeoJsonGeometry extends GeoJsonObject
      */
     public constructor(geoJson: GeoJsonGeometry)
 
-    public constructor(...args)
+    public constructor(...args: any[])
     {
         if (typeof args[0] === "string")
         {
@@ -124,44 +132,6 @@ export abstract class GeoJsonGeometry extends GeoJsonObject
 }
 
 /**
- * Represents a GeoJSON GeometryCollection.
- */
-export class GeoJsonGeometryCollection extends GeoJsonObject
-{
-    /**
-     * Creates a new instance of the GeoJsonGeometryCollection type.
-     * @param geometries The GeoJSON geometry objects in the collection.
-     * @param bbox The coordinates of the bounding box of the object.
-     */
-    public constructor(geometries: any, bbox?: number[])
-
-    /**
-     * Creates a new instance of the GeoJsonGeometryCollection type.
-     * @param geoJson A GeoJSON GeometryCollection object.
-     */
-    public constructor(geoJson: GeoJsonGeometryCollection)
-
-    public constructor(...args)
-    {
-        if (typeof args[0] === "string")
-        {
-            super(args[0], args[2]);
-            this.geometries = args[1];
-        }
-        else
-        {
-            super(args[0]);
-            this.geometries = args[0].geometries;
-        }
-    }
-
-    /**
-     * The GeoJSON geometry objects in the collection.
-     */
-    public geometries: GeoJsonGeometry[];
-}
-
-/**
  * Represents a GeoJSON Point.
  */
 export class GeoJsonPoint extends GeoJsonGeometry
@@ -178,7 +148,7 @@ export class GeoJsonPoint extends GeoJsonGeometry
      */
     public constructor(geoJson: GeoJsonPoint)
 
-    public constructor(...args)
+    public constructor(...args: any[])
     {
         if (args[0] instanceof Array)
         {
@@ -199,7 +169,7 @@ export class GeoJsonPoint extends GeoJsonGeometry
      * The GeoJSON coordinates of the point, represented by an array,
      * in which the items are longitude, latitude, and optionally altitude.
      */
-    public coordinates: [number, number];
+    public coordinates: [number, number, number?];
 }
 
 /**
@@ -227,7 +197,7 @@ export class GeoJsonPolygon extends GeoJsonArea
      */
     public constructor(geoJson: GeoJsonPolygon)
 
-    public constructor(...args)
+    public constructor(...args: any[])
     {
         if (args[0] instanceof Array)
         {
@@ -249,7 +219,7 @@ export class GeoJsonPolygon extends GeoJsonArea
      * in which the items are a sequence of positions, where each position is represented by an array,
      * in which the the items are longitude, latitude, and optionally altitude.
      */
-    public coordinates: number[][][];
+    public coordinates: [number, number, number?][][];
 }
 
 /**
@@ -270,7 +240,7 @@ export class GeoJsonMultiPolygon extends GeoJsonArea
      */
     public constructor(geoJson: GeoJsonMultiPolygon)
 
-    public constructor(...args)
+    public constructor(...args: any[])
     {
         if (args[0] instanceof Array)
         {
@@ -290,7 +260,45 @@ export class GeoJsonMultiPolygon extends GeoJsonArea
     /**
      * The GeoJSON coordinates of the points in the polygons, represented by an array of polygons, where each
      * polygon is represented as an array of 'LinearRing' arrays, in which the items are sequences of positions,
-     * where each position is represented by an array, in which the first item is the latitude and the second is the longitude.
+     * where each position is represented by an array, in which the the items are longitude, latitude, and optionally altitude.
      */
-    public coordinates: number[][][][];
+    public coordinates: [number, number, number?][][][];
+}
+
+/**
+ * Represents a GeoJSON GeometryCollection.
+ */
+export class GeoJsonGeometryCollection extends GeoJsonObject
+{
+    /**
+     * Creates a new instance of the GeoJsonGeometryCollection type.
+     * @param geometries The GeoJSON geometry objects in the collection.
+     * @param bbox The coordinates of the bounding box of the object.
+     */
+    public constructor(geometries: any, bbox?: number[])
+
+    /**
+     * Creates a new instance of the GeoJsonGeometryCollection type.
+     * @param geoJson A GeoJSON GeometryCollection object.
+     */
+    public constructor(geoJson: GeoJsonGeometryCollection)
+
+    public constructor(...args: any[])
+    {
+        if (typeof args[0] === "string")
+        {
+            super(args[0], args[2]);
+            this.geometries = args[1];
+        }
+        else
+        {
+            super(args[0]);
+            this.geometries = args[0].geometries;
+        }
+    }
+
+    /**
+     * The GeoJSON geometry objects in the collection.
+     */
+    public geometries: GeoJsonGeometry[];
 }

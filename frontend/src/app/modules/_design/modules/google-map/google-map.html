@@ -10,6 +10,7 @@
             <let
                 show-map.bind="true"
                 show-line.bind="true"
+                show-area.bind="true"
                 show-markers.bind="true"
             ></let>
 
@@ -19,6 +20,10 @@
 
             <button appearance="solid" click.trigger="showLine = !showLine">
                 Line in view: ${showLine}
+            </button>
+
+            <button appearance="solid" click.trigger="showArea = !showArea">
+                Area in view: ${showArea}
             </button>
 
             <button appearance="solid" click.trigger="showMarkers = !showMarkers">
@@ -59,7 +64,7 @@
 
                     <google-map-line
                         points.bind="markers | map: 'point'"
-                        stroke-color="#0000ff"
+                        stroke-color="--palette-color-positive"
                         stroke-width="5">
 
                         <google-map-popover>
@@ -67,6 +72,22 @@
                         </google-map-popover>
 
                     </google-map-line>
+
+                </template>
+
+                <template if.bind="showArea">
+
+                    <google-map-area
+                        area.bind="area"
+                        fill-color="--palette-color-positive"
+                        stroke-color="--palette-color-positive"
+                        stroke-width="1">
+
+                        <google-map-popover>
+                            Popover for area
+                        </google-map-popover>
+
+                    </google-map-area>
 
                 </template>
 

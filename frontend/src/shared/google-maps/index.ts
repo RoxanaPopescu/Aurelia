@@ -12,6 +12,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/google-map/google-map"),
         PLATFORM.moduleName("./components/google-map/google-map-marker"),
         PLATFORM.moduleName("./components/google-map/google-map-line"),
+        PLATFORM.moduleName("./components/google-map/google-map-area"),
         PLATFORM.moduleName("./components/google-map/google-map-popover")
     ]);
 }
@@ -21,6 +22,7 @@ export * from "./components/google-map/google-map";
 export * from "./components/google-map/google-map-object";
 export * from "./components/google-map/google-map-marker";
 export * from "./components/google-map/google-map-line";
+export * from "./components/google-map/google-map-area";
 export * from "./components/google-map/google-map-popover";
 
 // Services

@@ -2,7 +2,7 @@ import { Container, autoinject, containerless, noView, bindable } from "aurelia-
 import { CallbackWithContext, GeoJsonPoint } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { geoJsonPointToLatLng } from "./utilities/geo-json-helper";
+import { geoJsonPointToLatLng, resolveColorString } from "./google-map-utilities";
 
 // The names of the mouse events on the marker that should be re-dispatched from the element.
 const eventNames = ["click", "dblclick", "drag", "dragend", "dragstart", "mousedown", "mouseout", "mouseover", "mouseup", "rightclick"];
@@ -33,19 +33,19 @@ export class GoogleMapLineCustomElement extends GoogleMapObject<google.maps.Poly
     private _eventListeners: google.maps.MapsEventListener[] | undefined;
 
     /**
-     * The points on the line..
+     * The points on the line.
      */
     @bindable
     public points: GeoJsonPoint[];
 
     /**
-     * The z-index of the marker.
+     * The z-index of the object.
      */
     @bindable
     public zIndex: number | undefined;
 
     /**
-     * The icon to use for the marker.
+     * The icons to use for the object.
      */
     @bindable
     public icons: google.maps.IconSequence[] | undefined;
@@ -57,7 +57,7 @@ export class GoogleMapLineCustomElement extends GoogleMapObject<google.maps.Poly
     public strokeColor: string;
 
     /**
-     * The stroke WIDTH, in pixels.
+     * The stroke width, in pixels.
      */
     @bindable({ defaultValue: 1 })
     public strokeWidth: number;
@@ -141,7 +141,7 @@ export class GoogleMapLineCustomElement extends GoogleMapObject<google.maps.Poly
             zIndex: this.zIndex,
             clickable: true,
             icons: this.icons,
-            strokeColor: this.strokeColor,
+            strokeColor: resolveColorString(this._map, this.strokeColor),
             strokeWeight: this.strokeWidth,
             strokeOpacity: this.strokeOpacity
         });
@@ -206,7 +206,7 @@ export class GoogleMapLineCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected strokeColorChanged(): void
     {
-        this.instance?.setOptions({ strokeColor: this.strokeColor });
+        this.instance?.setOptions({ strokeColor: resolveColorString(this._map, this.strokeColor) });
     }
 
     /**

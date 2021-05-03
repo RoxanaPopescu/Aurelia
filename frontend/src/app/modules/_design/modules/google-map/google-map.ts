@@ -1,39 +1,52 @@
 import { autoinject } from "aurelia-framework";
 import { GoogleMapCustomElement, GoogleMapMarkerCustomElement, GoogleMapType } from "shared/google-maps";
-import { GeoJsonPoint } from "shared/types";
+import { GeoJsonArea, GeoJsonPoint, GeoJsonPolygon } from "shared/types";
 
 @autoinject
 export class GoogleMapPage
 {
     public constructor()
     {
-        const radius = 10;
-        const markerCount = 20;
-
-        for (let i = 0; i < markerCount; i++)
+        function getMarkerCircle(center: [number, number], radius: number, markerCount: number): any
         {
-            const angle = (360 / markerCount * i) * (Math.PI / 180);
-            const offsetX = radius *  Math.cos(angle);
-            const offsetY = radius *  Math.sin(angle);
+            const markers: any[] = [];
 
-            this.markers.push(
+            for (let i = 0; i < markerCount; i++)
             {
-                point: new GeoJsonPoint([offsetX + 55.632, offsetY * 5 + 12.579]),
-                title: `Marker ${i}`,
-                zIndex: i
-            });
+                const angle = Math.PI / 2 + Math.PI * 2 / markerCount * i;
+                const offsetX = radius *  Math.cos(angle);
+                const offsetY = radius *  Math.sin(angle);
+
+                markers.push(
+                {
+                    point: new GeoJsonPoint([offsetX + center[0], offsetY / 3 + center[1]]),
+                    title: `Marker ${i}`,
+                    zIndex: i
+                });
+            }
+
+            return markers;
         }
+
+        this.markers = getMarkerCircle([12.579, 55.632], 30, 30);
+
+        this.area = new GeoJsonPolygon(
+        [
+            getMarkerCircle([12.579, 55.632], 20, 30).map(m => m.point.coordinates),
+            getMarkerCircle([12.579, 55.632], 10, 30).map(m => m.point.coordinates).reverse()
+        ]);
 
         this.centerMarker =
         {
-            point: new GeoJsonPoint([55.632, 12.579]),
+            point: new GeoJsonPoint([12.579, 55.632]),
             title: "Center marker",
-            zIndex: markerCount + 1
+            zIndex: 21
         };
     }
 
     protected centerMarker: any;
     protected markers: any[] = [];
+    protected area: GeoJsonArea;
     protected markersAdded: GoogleMapMarkerCustomElement[] = [];
 
     /**

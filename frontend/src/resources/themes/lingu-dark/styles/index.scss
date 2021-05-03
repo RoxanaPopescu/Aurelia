@@ -130,6 +130,7 @@ google-map
     --google-map-control-shadow: none !important;
     --google-map-control-text-color: #333333 !important;
     --google-map-control-text-color--active: #000000 !important;
+    --google-map-popover-close-filter: invert(1) !important;
 
     &:not(.--type-street)
     {

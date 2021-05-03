@@ -31,6 +31,16 @@
     --google-map-inset-right: env(safe-area-inset-right);
     --google-map-inset-bottom: env(safe-area-inset-bottom);
 
+    // The style to use for popovers.
+    --google-map-popover-surface-color: var(--surface-color);
+    --google-map-popover-surface-text-color: var(--surface-text-color);
+    --google-map-popover-surface-text-color: var(--surface-text-color);
+    --google-map-popover-border-width: 1px;
+    --google-map-popover-border-color: rgba(92, 92, 92, 0.3);
+    --google-map-popover-close-filter: invert(0.2);
+    --google-map-popover-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+    --google-map-popover-arrow-shadow: -2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+
     // Show focus indicator during keyboard navigation or when an element
     // was programmatically focused - unless it has explicitly opted out.
 
@@ -286,12 +296,37 @@
 
     // Improve styling of info windows.
 
+    .gm-style-iw-d::-webkit-scrollbar-track,
+    .gm-style-iw-d::-webkit-scrollbar-track-piece,
+    .gm-style-iw-c,
+    .gm-style-iw-t::after
+    {
+        color: var(--google-map-popover-surface-text-color) !important;
+        background: var(--google-map-popover-surface-color) !important;
+    }
+
+    .gm-style-iw-c
+    {
+        box-shadow: var(--google-map-popover-shadow) !important;
+        border: solid var(--google-map-popover-border-width) var(--google-map-popover-border-color) !important;
+    }
+
+    .gm-style-iw-t::after
+    {
+        clip-path: polygon(-100% -100%, 200% 200%, -100% 200%);
+        box-shadow: var(--google-map-popover-arrow-shadow) !important;
+        border: solid var(--google-map-popover-border-width) var(--google-map-popover-border-color) !important;
+        top: calc(var(--google-map-popover-border-width) * -1);
+    }
+
     .gm-style-iw
     {
         > button
         {
             top: -4px !important;
             right: -4px !important;
+            opacity: var(--opacity-faded-less) !important;
+            filter: var(--google-map-popover-close-filter);
         }
 
         &:not(.--pinned) > button
@@ -301,7 +336,7 @@
 
         > .gm-ui-hover-effect:not(:hover)
         {
-            opacity: var(--opacity-faded-more);
+            opacity: var(--opacity-faded-more) !important;
         }
 
         .gm-style-iw-t::after
