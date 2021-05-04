@@ -3,15 +3,19 @@ select-button
     position: relative;
     display: block;
 
-    > button
+    > dropdown
     {
         display: flex;
 
-        dropdown
+        > item-picker
         {
-            display: flex;
-            text-align: left;
+            flex-grow: 1;
         }
+    }
+
+    > button
+    {
+        display: flex;
 
         dropdown-icon
         {
