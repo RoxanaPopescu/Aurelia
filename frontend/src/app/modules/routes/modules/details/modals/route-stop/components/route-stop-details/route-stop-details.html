@@ -317,6 +317,24 @@
 
     </template>
 
+    <template if.bind="model.routeStop.deliveryMethod">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" translate>
+                Delivery method
+            </div>
+
+            <div class="user-select-text">
+                ${model.routeStop.deliveryMethod.name}
+            </div>
+
+        </data-section>
+
+    </template>
+
     <!-- Photo of delivery -->
     <template if.bind="model.routeStop.actions.photo || model.routeStop.photo != null">
 

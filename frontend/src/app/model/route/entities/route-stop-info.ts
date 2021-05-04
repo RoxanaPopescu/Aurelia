@@ -1,4 +1,5 @@
 import { Location } from "app/model/shared";
+import { RouteStopDeliveryMethod } from "./route-stop-delivery-method";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopType } from "./route-stop-type";
 
@@ -28,6 +29,11 @@ export class RouteStopInfo
         {
             this.stopNumber = stopNumber;
         }
+
+        if (data.deliveryMethod != null)
+        {
+            this.deliveryMethod = new RouteStopDeliveryMethod(data.deliveryMethod);
+        }
     }
 
     /**
@@ -54,6 +60,11 @@ export class RouteStopInfo
      * The status of this route stop.
      */
     public readonly status: RouteStopStatus;
+
+    /**
+     * The delivery method of this route stop.
+     */
+     public readonly deliveryMethod?: RouteStopDeliveryMethod;
 
     /**
      * The address identifying the location of the stop,
