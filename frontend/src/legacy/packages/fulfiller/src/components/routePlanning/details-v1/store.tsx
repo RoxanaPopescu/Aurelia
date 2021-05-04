@@ -24,7 +24,7 @@ export class RoutePlanningStore {
   minuteToPixel = 5;
 
   @observable
-  mapCenter: google.maps.LatLng;
+  mapCenter: any; // Specifying type causes a crash: google.maps.LatLng;
 
   @observable
   mapZoom = 7;
@@ -64,11 +64,11 @@ export class RoutePlanningStore {
     subTitle?: string;
     rows: { headline: string; value: string }[];
     color: string;
-    point: google.maps.LatLng;
+    point: any; /* Specifying type causes a crash: google.maps.LatLng; */
     mouseOwner?: string;
     infoWindowOffset: number;
   };
-  lastBounds?: google.maps.LatLngBounds;
+  lastBounds?: any; /* Specifying type causes a crash: google.maps.LatLng; */
 
   @observable
   timeScale = 1;
@@ -295,7 +295,7 @@ export class RoutePlanningStore {
   }
 
   @action
-  zoomToCoordinate(coordinate: google.maps.LatLng) {
+  zoomToCoordinate(coordinate: any /* Specifying type causes a crash: google.maps.LatLng */) {
     this.mapCenter = coordinate;
     this.mapZoom = 15;
   }

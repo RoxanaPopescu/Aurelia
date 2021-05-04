@@ -24,7 +24,7 @@ export class RoutePlanningSettingsStore {
   map?: GoogleMap;
 
   @observable
-  currentDrawing?: google.maps.Polygon;
+  currentDrawing?: any; // Specifying type causes a crash: google.maps.Polygon;
 
   @observable
   editingSpecialCondition?: SpecialCondition;
@@ -117,7 +117,7 @@ export class RoutePlanningSettingsStore {
   }
 
   @action
-  completedDrawing(polygon: google.maps.Polygon) {
+  completedDrawing(polygon: any /* Specifying type causes a crash: google.maps.Polygon */) {
     this.clearDrawing();
     this.currentDrawing = polygon;
     this.mode = "drawingComplete";
