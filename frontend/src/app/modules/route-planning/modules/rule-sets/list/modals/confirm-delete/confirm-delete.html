@@ -4,12 +4,12 @@
 
     <modal-backdrop close-modal.bind="true"></modal-backdrop>
 
-    <modal-dialog name="confirm-delete-ordergroup-rule" accent="negative" close-button.bind="false" close-shortcut.bind="true" scroll>
+    <modal-dialog name="confirm-delete-rule-set" accent="negative" close-button.bind="false" close-shortcut.bind="true" scroll>
 
         <modal-header>
 
             <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
-                Are you sure you want to delete the rule <b>${rule.name}</b>?
+                Are you sure you want to delete the rule <b>${model.name}</b>?
             </h1>
 
         </modal-header>

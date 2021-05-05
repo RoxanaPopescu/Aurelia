@@ -17,7 +17,7 @@ export class DeleteRoutePlanRuleDialog
     private readonly _modal: Modal;
     private _result = false;
 
-    protected rule: RoutePlanningSettingsInfo;
+    protected model: RoutePlanningSettingsInfo;
 
     /**
      * Called by the framework when the modal is activated.
@@ -25,7 +25,7 @@ export class DeleteRoutePlanRuleDialog
      */
     public activate(model: RoutePlanningSettingsInfo): void
     {
-        this.rule = model;
+        this.model = model;
     }
 
     /**
