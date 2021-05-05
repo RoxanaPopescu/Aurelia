@@ -115,6 +115,19 @@ export class OrderGroupService
     }
 
     /**
+     * Deletes the specified order group.
+     * @param id The ID of the order group to delete.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async delete(id: string): Promise<void>
+    {
+        await this._apiClient.post("ordergroups/delete",
+        {
+            body: { id }
+        });
+    }
+
+    /**
      * Pauses the specified order group.
      * @param orderGroup The order group to pause.
      * @returns A promise that will be resolved updated entity data, such as the new etag.

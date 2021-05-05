@@ -1,11 +1,12 @@
 import { autoinject, observable } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
+import { IScroll, ModalService } from "shared/framework";
 import { OrderGroupService, OrderGroup } from "app/model/order-group";
 import { AgreementService } from "app/model/agreement";
 import { Consignor } from "app/model/outfit";
+import { DeleteOrderGroupDialog } from "./modals/confirm-delete/confirm-delete";
 
 /**
  * Represents the route parameters for the page.
@@ -29,18 +30,21 @@ export class ListPage
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param agreementService The `AgreementService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper, agreementService: AgreementService)
+    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper, agreementService: AgreementService, modalService: ModalService)
     {
         this._orderGroupsService = orderGroupsService;
         this._historyHelper = historyHelper;
         this._agreementService = agreementService;
+        this._modalService = modalService;
         this._constructed = true;
     }
 
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _agreementService: AgreementService;
+    private readonly _modalService: ModalService;
     private readonly _constructed;
 
     /**
@@ -204,5 +208,32 @@ export class ListPage
             },
             { trigger: false, replace: true });
         });
+    }
+
+    /**
+     * Called when the "Delete" button is clicked on a order group item.
+     * Deletes the order group.
+     * @param orderGroup The order group to delete.
+     */
+    protected async onDeleteClick(orderGroup: OrderGroup): Promise<void>
+    {
+        const confirmed = await this._modalService.open(DeleteOrderGroupDialog, orderGroup).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._orderGroupsService.delete(orderGroup.id);
+
+            this.orderGroups.splice(this.orderGroups.indexOf(orderGroup), 1);
+            this.orderGroupCount!--;
+        }
+        catch (error)
+        {
+            Log.error("Could not delete the order group", error);
+        }
     }
 }

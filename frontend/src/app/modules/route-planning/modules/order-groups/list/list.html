@@ -139,6 +139,10 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="orderGroup of orderGroups">
@@ -180,6 +184,19 @@
                                     Active
                                 </span>
                             </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button if-claims="edit-order-group" appearance="none" accent="primary" click.trigger="onDeleteClick(orderGroup)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
 
                         </data-table-row>
 
