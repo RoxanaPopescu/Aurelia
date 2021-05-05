@@ -116,14 +116,14 @@ export class OrderGroupService
 
     /**
      * Deletes the specified order group.
-     * @param id The ID of the order group to delete.
+     * @param orderGroup The order group to delete.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async delete(id: string): Promise<void>
+    public async delete(orderGroup: OrderGroup): Promise<void>
     {
         await this._apiClient.post("ordergroups/delete",
         {
-            body: { id }
+            body: { id: orderGroup.id, etag: orderGroup.etag }
         });
     }
 

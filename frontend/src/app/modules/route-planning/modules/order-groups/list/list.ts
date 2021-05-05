@@ -226,7 +226,7 @@ export class ListPage
 
         try
         {
-            await this._orderGroupsService.delete(orderGroup.id);
+            await this._orderGroupsService.delete(orderGroup);
 
             this.orderGroups.splice(this.orderGroups.indexOf(orderGroup), 1);
             this.orderGroupCount!--;
