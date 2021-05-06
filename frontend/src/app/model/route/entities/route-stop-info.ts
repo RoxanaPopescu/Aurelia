@@ -23,16 +23,16 @@ export class RouteStopInfo
             this.status = new RouteStopStatus(data.status);
             this.location = new Location(data.location);
             this.reference = data.reference;
+
+            if (data.deliveryMethod != null)
+            {
+                this.deliveryMethod = new RouteStopDeliveryMethod(data.deliveryMethod);
+            }
         }
 
         if (stopNumber != null)
         {
             this.stopNumber = stopNumber;
-        }
-
-        if (data.deliveryMethod != null)
-        {
-            this.deliveryMethod = new RouteStopDeliveryMethod(data.deliveryMethod);
         }
     }
 
