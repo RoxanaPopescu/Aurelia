@@ -52,7 +52,7 @@
   "variables": {
     "webappNameClient": "[concat('client-', parameters('serviceName'), '-', parameters('environment'), '-mover')]",
     "webappNameBFF": "[concat(parameters('serviceName'), '-', parameters('environment'), '-mover')]",
-    "webappName": "[if(equals(parameters('type'), 'bff'), variables('webappNameBFF'), variables('webappNameClient')))]",
+    "webappName": "[if(equals(parameters('type'), 'bff'), variables('webappNameBFF'), variables('webappNameClient'))]",
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNameBuild": "build",
