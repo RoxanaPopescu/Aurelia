@@ -45,12 +45,12 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
             type="bff"
 
-  bff-user-managment-setup-test:
+  bff-user-management-setup-test:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-bff-user-managment-v2"
+          resource-group: "test-bff-user-management-v2"
       - run:
           name: Create resources
           command: az deployment group create
@@ -59,20 +59,20 @@ jobs:
             --parameters
             dockerImage="DOCKER|nginx"
             environment="test"
-            serviceName="bff-user-managment-v2"
+            serviceName="bff-user-management-v2"
             dockerRegistryURL=${DOCKER_REGISTRY_TEST}
             dockerRegistryUsername=${DOCKER_REGISTRY_TEST}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="bff"
 
-  bff-user-managment-build-test:
+  bff-user-management-build-test:
     executor: azure-cli/azure-docker
 
     steps:
 
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-bff-user-managment-v2"
+          resource-group: "test-bff-user-management-v2"
       - run:
           name: Set defaults
           command: az configure
@@ -80,20 +80,20 @@ jobs:
       - run:
           name: Build docker image
           command: az acr build
-            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}_user_managment:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}_user_management:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f backend/dockerfile .
       - run:
           name: Create workspace folder
           command: mkdir -p workspace
       - run:
           name: Prepare docker image file for workspace
-          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}_user_managment:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${BACKEND_NAME}_user_management:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
           root: workspace
           paths:
             - docker-image
   
-  bff-user-managment-deploy-test:
+  bff-user-management-deploy-test:
     executor: azure-cli/azure-docker
 
     steps:
@@ -101,11 +101,11 @@ jobs:
           at: /tmp/workspace
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-bff-user-managment-v2"
+          resource-group: "test-bff-user-management-v2"
       - run:
           name: Set defaults
           command: az configure
-            --defaults web="bff-user-managment-v2-test-mover"
+            --defaults web="bff-user-management-v2-test-mover"
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
@@ -123,11 +123,11 @@ jobs:
       - run:
           name: Smoketest
           command: |
-            curl -f -LI https://bff-user-managment-v2-test-mover-staging.azurewebsites.net/health
+            curl -f -LI https://bff-user-management-v2-test-mover-staging.azurewebsites.net/health
       - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
-            -n bff-user-managment-v2-test-mover
+            -n bff-user-management-v2-test-mover
             -s staging
             --action swap
       - run:
@@ -343,12 +343,12 @@ jobs:
           paths:
             - docker-image
 
-  client-user-managment-setup-test:
+  client-user-management-setup-test:
     executor: azure-cli/azure-docker
     steps:
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-client-platform-user-managment"
+          resource-group: "test-client-platform-user-management"
       - run:
           name: Create resources
           command: az deployment group create
@@ -363,7 +363,7 @@ jobs:
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_TEST}
             type="client"
 
-  client-user-managment-build-test:
+  client-user-management-build-test:
     executor: azure-cli/azure-docker
 
     steps:
@@ -371,7 +371,7 @@ jobs:
           changes-in-folder: "frontend"
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-client-platform-user-managment"
+          resource-group: "test-client-platform-user-management"
       - run:
           name: Set defaults
           command: az configure
@@ -379,7 +379,7 @@ jobs:
       - run:
           name: Build docker image
           command: az acr build
-            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client_user_managment:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+            -t ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client_user_management:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
             -f dockerfile .
             --build-arg ENVIRONMENT=preview
             --build-arg COMMIT=${CIRCLE_SHA1}
@@ -388,13 +388,13 @@ jobs:
           command: mkdir -p workspace
       - run:
           name: Prepare docker image file for workspace
-          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client_user_managment:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
+          command: echo ${DOCKER_REGISTRY_TEST}.azurecr.io/${PROJECT_NAME}_client_user_management:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM} > workspace/docker-image
       - persist_to_workspace:
           root: workspace
           paths:
             - docker-image
   
-  client-user-managment-deploy-test:
+  client-user-management-deploy-test:
     executor: azure-cli/azure-docker
 
     steps:
@@ -402,11 +402,11 @@ jobs:
           at: /tmp/workspace
       - setup-azure-command:
           account: "Test"
-          resource-group: "test-client-platform-user-managment"
+          resource-group: "test-client-platform-user-management"
       - run:
           name: Set defaults
           command: az configure
-            --defaults web="client-platform-user-managment-test-mover"
+            --defaults web="client-platform-user-management-test-mover"
       - run:
           name: Add docker image to webapp
           command: az webapp config container set
@@ -424,11 +424,11 @@ jobs:
       - run:
           name: Smoketest the website
           command: |
-            curl -f -LI https://client-platform-user-managment-test-mover-staging.azurewebsites.net
+            curl -f -LI https://client-platform-user-management-test-mover-staging.azurewebsites.net
       - run:
           name: Swap slot with production
           command: az webapp deployment slot swap
-            -n client-platform-user-managment-test-mover
+            -n client-platform-user-management-test-mover
             -s staging
             --action swap
       - run:
@@ -609,16 +609,16 @@ jobs:
 workflows:
   setup-azure:
     jobs:
-      - bff-user-managment-approve-test:
+      - bff-user-management-approve-test:
           type: approval
-      - bff-user-managment-setup-test:
+      - bff-user-management-setup-test:
           requires:
-            - bff-user-managment-approve-test
-      - client-user-managment-approve-test:
+            - bff-user-management-approve-test
+      - client-user-management-approve-test:
           type: approval
-      - client-user-managment-setup-test:
+      - client-user-management-setup-test:
           requires:
-            - client-user-managment-approve-test
+            - client-user-management-approve-test
 
 
       - bff-approve-test:
@@ -644,27 +644,27 @@ workflows:
           requires:
             - client-approve-production
 
-  bff-user-managment-build-and-deploy:
+  bff-user-management-build-and-deploy:
     jobs:
-      - bff-user-managment-build-test:
+      - bff-user-management-build-test:
           filters:
             branches:
               only:
-                - user-managment
-      - bff-user-managment-deploy-test:
+                - user-management
+      - bff-user-management-deploy-test:
           requires:
-            - bff-user-managment-build-test
+            - bff-user-management-build-test
   
-  client-user-managment-build-and-deploy:
+  client-user-management-build-and-deploy:
     jobs:
-      - client-user-managment-build-test:
+      - client-user-management-build-test:
         filters:
           branches:
             only:
-              - user-managment
-      - client-user-managment-deploy-test:
+              - user-management
+      - client-user-management-deploy-test:
           requires:
-            - client-user-managment-build-test
+            - client-user-management-build-test
 
   bff-build-and-deploy:
     jobs:
