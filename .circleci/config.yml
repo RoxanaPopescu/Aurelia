@@ -13,7 +13,7 @@ jobs:
           resource-group: "test-bff-v2"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
@@ -33,7 +33,7 @@ jobs:
           resource-group: "prod-bff-v2"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
@@ -53,7 +53,7 @@ jobs:
           resource-group: "test-bff-user-managment-v2"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
@@ -280,7 +280,7 @@ jobs:
           resource-group: "test-client-platform"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
@@ -300,7 +300,7 @@ jobs:
           resource-group: "prod-client-platform"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_PROD_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
@@ -351,7 +351,7 @@ jobs:
           resource-group: "test-client-platform-user-managment"
       - run:
           name: Create resources
-          command: az group deployment create
+          command: az deployment group create
             -n ${AZURE_TEST_RESOURCE_GROUP}-${CIRCLE_BUILD_NUM}
             --template-file .circleci/azure-arm-template.json
             --parameters
