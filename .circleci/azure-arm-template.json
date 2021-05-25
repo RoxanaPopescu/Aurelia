@@ -56,7 +56,7 @@
     "servicePlanName": "[concat('asp-client-linux-', parameters('environment'))]",
     "slotNameStaging": "staging",
     "slotNameBuild": "build",
-    "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]",
+    "applicationInsightsName": "[concat('appinsights-', parameters('environment'), '-client-mover')]"
   },
   "resources": [
     {
@@ -94,7 +94,7 @@
             "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
-            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
           }
         },
         {
@@ -129,7 +129,7 @@
                 "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
-                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
               }
             }
           ]
@@ -168,7 +168,7 @@
                 "WEBSITES_PORT": "[if(equals(parameters('type'), 'bff'), 8008, 8080)]",
                 "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
                 "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryURL')]",
-                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+                "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]"
               }
             }
           ]
