@@ -684,10 +684,10 @@ workflows:
   client-build-and-deploy:
     jobs:
       - client-build-test:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
       - client-deploy-test:
           requires:
             - client-build-test
