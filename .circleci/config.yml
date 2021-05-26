@@ -69,7 +69,6 @@ jobs:
     executor: azure-cli/azure-docker
 
     steps:
-
       - setup-azure-command:
           account: "Test"
           resource-group: "test-bff-user-management-v2"
@@ -92,7 +91,7 @@ jobs:
           root: workspace
           paths:
             - docker-image
-  
+
   bff-user-management-deploy-test:
     executor: azure-cli/azure-docker
 
@@ -138,7 +137,6 @@ jobs:
     executor: azure-cli/azure-docker
 
     steps:
-
       - setup-azure-command:
           account: "Test"
           resource-group: "test-bff-v2"
@@ -161,7 +159,7 @@ jobs:
           root: workspace
           paths:
             - docker-image
-  
+
   bff-deploy-test:
     executor: azure-cli/azure-docker
 
@@ -202,12 +200,11 @@ jobs:
       - run:
           name: Stop staging slot
           command: az webapp stop -s staging
-  
+
   bff-build-prod:
     executor: azure-cli/azure-docker
 
     steps:
-
       - setup-azure-command:
           account: "Production"
           resource-group: "prod-bff-v2"
@@ -393,7 +390,7 @@ jobs:
           root: workspace
           paths:
             - docker-image
-  
+
   client-user-management-deploy-test:
     executor: azure-cli/azure-docker
 
@@ -578,7 +575,7 @@ jobs:
       - run:
           name: Stop build slot
           command: az webapp stop -s build
-    
+
   client-rollback:
     executor: azure-cli/azure-docker
 
@@ -620,7 +617,6 @@ workflows:
           requires:
             - client-user-management-approve-test
 
-
       - bff-approve-test:
           type: approval
       - bff-setup-test:
@@ -654,14 +650,14 @@ workflows:
       - bff-user-management-deploy-test:
           requires:
             - bff-user-management-build-test
-  
+
   client-user-management-build-and-deploy:
     jobs:
       - client-user-management-build-test:
-        filters:
-          branches:
-            only:
-              - user-management
+          filters:
+            branches:
+              only:
+                - user-management
       - client-user-management-deploy-test:
           requires:
             - client-user-management-build-test
@@ -711,7 +707,7 @@ workflows:
             - client-deploy-production
           sentry-environment: production
           sentry-project: platform
-            
+
   rollback:
     jobs:
       - client-approval:
