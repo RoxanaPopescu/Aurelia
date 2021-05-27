@@ -3,6 +3,7 @@ import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { AccountService } from "app/modules/account/services/account";
 import { IAccountInit } from "app/modules/account/services/account/account-init";
+import { PhoneNumber } from "app/model/shared";
 
 export interface ISignUpModel extends Partial<IAccountInit>
 {
@@ -30,6 +31,11 @@ export interface ISignUpModel extends Partial<IAccountInit>
      * The password specified by the user.
      */
     password?: string;
+
+    /**
+     * The phone number specified by the user.
+     */
+    phoneNumber?: PhoneNumber;
 
     /**
      * True if the user accepts the terms of service, otherwise false.

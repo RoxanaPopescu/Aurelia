@@ -38,6 +38,18 @@
 
             </text-input>
 
+            <phone-input class="margin-top" value.bind="model.phoneNumber">
+
+                <div slot="placeholder" translate>
+                    Phone number
+                </div>
+
+                <required-validator
+                    value.bind="model.phoneNumber">
+                </required-validator>
+
+            </phone-input>
+
             <email-input class="margin-top" value.bind="model.email" autocomplete="email">
 
                 <span slot="placeholder" translate>
@@ -75,10 +87,11 @@
 
             </password-input>
 
+
             <check-toggle class="margin-top" label="after" value.bind="model.agreeToTerms">
 
                 <span slot="heading" translate>
-                    I agree to the <a page-href="/terms" target="_blank" accent="info">terms of service</a>
+                    I agree to the <a href="https://www.movertransport.com/terms" target="_blank" accent="info">terms of service</a>
                 </span>
 
                 <div slot="validation">
@@ -103,20 +116,6 @@
                 </button>
 
             </div>
-
-        </div>
-
-        <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
-
-        <div surface="base">
-
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
-                Sign up with <b>Google</b>
-            </button>
-
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signInWithMicrosoft()" translate>
-                Sign in with <b>Microsoft</b>
-            </button>
 
         </div>
 
