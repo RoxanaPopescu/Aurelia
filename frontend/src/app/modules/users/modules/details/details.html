@@ -30,10 +30,21 @@
                     <button
                         appearance="outline"
                         accent="primary"
+                        if.bind="user != null && user.status.slug !== 'deactivated'"
                         click.trigger="onDeactivateClick()"
-                        disabled.bind="operation.pending || !user.canDeactivate"
+                        disabled.bind="operation.pending"
                         translate>
                         Deactivate
+                    </button>
+
+                    <button
+                        appearance="outline"
+                        accent="primary"
+                        if.bind="user != null && user.status.slug === 'deactivated'"
+                        click.trigger="onRectivateClick()"
+                        disabled.bind="operation.pending"
+                        translate>
+                        Reactivate
                     </button>
 
                     <button

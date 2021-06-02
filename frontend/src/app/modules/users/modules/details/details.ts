@@ -173,6 +173,22 @@ export class DetailsModule
     }
 
     /**
+     * Called when the "Deactivate account" button is clicked.
+     */
+     protected async onRectivateClick(): Promise<void>
+     {
+         this.operation = new Operation(async signal =>
+         {
+             await this._userService.reactivate(this.user.username);
+
+             this.user = await this._userService.get(this.user.id);
+         });
+
+         this.operation.promise.catch(error =>
+             Log.error("Could not reactivate the user", error));
+     }
+
+    /**
      * Called when the "Reset password" button is clicked.
      */
     protected async onResetPasswordClick(): Promise<void>
