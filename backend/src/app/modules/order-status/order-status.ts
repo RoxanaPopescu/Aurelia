@@ -81,8 +81,8 @@ export class OrderStatusModule extends AppModule
                 type: "order",
                 dateTimeRange:
                 {
-                    start: DateTime.fromISO(orderDetailsData.createdAt),
-                    end: DateTime.fromISO(orderDetailsData.createdAt)
+                    start: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true }),
+                    end: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true })
                 },
                 title: eventTitles.orderPlaced,
                 location: undefined,
@@ -306,10 +306,10 @@ export class OrderStatusModule extends AppModule
                 id: "estimated-delivery-event-id",
                 type: "delivery",
                 dateTimeRange: eventData.data.driver?.id
-                    ? this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta))
+                    ? this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta, { setZone: true }))
                     : {
-                        start: DateTime.fromISO(eventData.data.deliveryTimeFrame.from),
-                        end: DateTime.fromISO(eventData.data.deliveryTimeFrame.to)
+                        start: DateTime.fromISO(eventData.data.deliveryTimeFrame.from, { setZone: true }),
+                        end: DateTime.fromISO(eventData.data.deliveryTimeFrame.to, { setZone: true })
                     },
                 title: eventTitles.deliveryEstimated,
                 location: this.getLocation(eventData.data.deliveryLocation),
