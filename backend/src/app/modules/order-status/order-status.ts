@@ -180,10 +180,10 @@ export class OrderStatusModule extends AppModule
                     },
                     tags: c.tags
                 })),
-                driver: driverData == null || driverPosition == null ? undefined :
+                driver: driverData?.id == null || driverPosition == null ? undefined :
                 {
                     id: driverData.id,
-                    firstName: driverData?.firstName,
+                    firstName: driverData.firstName,
                     pictureUrl: undefined,
                     position: driverPosition
                 },
@@ -305,7 +305,12 @@ export class OrderStatusModule extends AppModule
             case "order-delivery-eta-provided": return {
                 id: "estimated-delivery-event-id",
                 type: "delivery",
-                dateTimeRange: this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta)),
+                dateTimeRange: eventData.data.driver?.id
+                    ? this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta))
+                    : {
+                        start: DateTime.fromISO(eventData.data.deliveryTimeFrame.from),
+                        end: DateTime.fromISO(eventData.data.deliveryTimeFrame.to)
+                    },
                 title: eventTitles.deliveryEstimated,
                 location: this.getLocation(eventData.data.deliveryLocation),
                 focusOnMap: true,
@@ -400,7 +405,7 @@ export class OrderStatusModule extends AppModule
         const paddingStartMin = 2;
 
         // The max and min padding to use for the end time.
-        const paddingEndMax = 45;
+        const paddingEndMax = 60;
         const paddingEndMin = 2;
 
         const timeUntilEta = Math.max(0, dateTime.diffNow().as("minutes"));
