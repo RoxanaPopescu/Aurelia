@@ -323,6 +323,13 @@ export class OrderEventType
             description: eventDescriptions.authorityToLeaveRevoked,
             accent: "positive",
             stopType: undefined
+        },
+        "order-notification-sms-sent":
+        {
+            name: eventTitles.orderNotificationSmsSent,
+            description: eventDescriptions.orderNotificationSmsSent,
+            accent: "positive",
+            stopType: undefined
         }
     };
 }
