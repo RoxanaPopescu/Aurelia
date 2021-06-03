@@ -12,6 +12,7 @@ export class UsersModule extends AppModule
          */
         this.router.post("/v2/users/reactivate", async context =>
         {
+            context.authorize("create-user");
 
             const routesResult = await this.apiClient.post("infrastructure/authentication/reactivateuser",
             {
@@ -25,5 +26,5 @@ export class UsersModule extends AppModule
             context.response.body = routesResult.data;
             context.response.status = 200;
         });
-
+    }
 }
