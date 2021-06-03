@@ -175,7 +175,7 @@ export class DetailsModule
     /**
      * Called when the "Deactivate account" button is clicked.
      */
-     protected async onRectivateClick(): Promise<void>
+     protected onRectivateClick(): void
      {
          this.operation = new Operation(async signal =>
          {
