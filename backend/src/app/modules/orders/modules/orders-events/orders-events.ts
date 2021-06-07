@@ -92,7 +92,7 @@ export class OrdersEventsModule extends AppModule
                         }
                         // TODO: Enable once supported by the backend.
                         // {
-                        //     eventType: "order-notification-sms-sent",
+                        //     eventType: "notification-order-sms-sent",
                         //     version: "1.0"
                         // }
                     ],

@@ -324,10 +324,10 @@ export class OrderEventType
             accent: "positive",
             stopType: undefined
         },
-        "order-notification-sms-sent":
+        "notification-order-sms-sent":
         {
-            name: eventTitles.orderNotificationSmsSent,
-            description: eventDescriptions.orderNotificationSmsSent,
+            name: eventTitles.notificationOrderSmsSent,
+            description: eventDescriptions.notificationOrderSmsSent,
             accent: "positive",
             stopType: undefined
         }

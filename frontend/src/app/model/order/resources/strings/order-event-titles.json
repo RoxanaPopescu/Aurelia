@@ -37,5 +37,5 @@
     "orderPickupArrived": "Arrived at pickup location",
     "authorityToLeaveGranted": "Authority to leave was granted",
     "authorityToLeaveRevoked": "Authority to leave was revoked",
-    "orderNotificationSmsSent": "SMS notification sent"
+    "notificationOrderSmsSent": "SMS notification sent"
 }
