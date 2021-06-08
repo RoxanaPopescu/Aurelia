@@ -80,8 +80,6 @@ export class ListPage
                 }
             }
 
-            console.log(customColumns);
-
             this.customColumns = customColumns;
         }
     }

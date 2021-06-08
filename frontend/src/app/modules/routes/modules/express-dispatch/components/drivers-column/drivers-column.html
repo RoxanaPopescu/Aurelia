@@ -84,6 +84,12 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="Route id" name="route.slug">
+                        <span class="text-truncate" translate>
+                            Route id
+                        </span>
+                    </data-table-cell>
+
                     <data-table-cell title.translate="Id" name="driver.id">
                         <span class="text-truncate" translate>
                             Id
@@ -137,6 +143,12 @@
                                     Offline
                                 </template>
                             </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="route.slug">
+                            <a href="/routes/details/${item.slug}" class="text-truncate">
+                                ${item.slug}
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.id">

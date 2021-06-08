@@ -8,7 +8,7 @@ export class UsersModule extends AppModule
     public configure(): void
     {
         /**
-         * Uploads a file to the public file storage.
+         * Reactivates a user.
          */
         this.router.post("/v2/users/reactivate", async context =>
         {

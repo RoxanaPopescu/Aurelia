@@ -19,11 +19,11 @@ export class DriverRouteLayer extends React.Component<DriverRouteLayerProps> {
         return (
             <React.Fragment>
 
-                {this.props.route.stops.length > 0 &&
+                {this.props.route.stops.length > 0 && this.props.route.selected &&
                 <>
                     {this.props.route.stops
                         .filter(s =>
-                            s.status.slug !== "cancelled")
+                            !["completed", "cancelled", "failed"].includes(s.status.slug))
                         .map((s, i, a) => i > 0 &&
                             <DriverRouteSegmentLine
                                 key={`DriverRouteSegmentLine-${a[i - 1].id}-${s.id}`}
@@ -33,6 +33,8 @@ export class DriverRouteLayer extends React.Component<DriverRouteLayerProps> {
                             />)}
 
                     {this.props.route.stops
+                        .filter(s =>
+                            !["completed"].includes(s.status.slug))
                         .map(s => s instanceof DriverRouteStop &&
                             <DriverRouteStopMarker
                                 key={`DriverRouteStopMarker-${s.id}`}
