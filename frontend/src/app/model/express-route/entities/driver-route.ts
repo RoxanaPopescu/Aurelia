@@ -47,6 +47,20 @@ export class DriverRoute
 
         this.stops = data.stops
             .map((s, i: number) => new DriverRouteStop(s, i + 1));
+
+        // The driver is available if all but the last stop is either "completed", "failed" or "cancelled"
+        let available = true;
+        for(let i = 0; i <= this.stops.length-2; i++)
+        {
+            const stop = this.stops[i];
+
+            if(!["completed", "failed", "canceled"].includes(stop.status.slug))
+            {
+                available = false;
+            }
+        }
+
+        this.available = available;
     }
 
     /**
@@ -111,6 +125,11 @@ export class DriverRoute
      * True if the route has been selected by the user, otherwise false.
      */
     public selected: boolean;
+
+    /**
+     * True if the driver is available for new routes, otherwise false.
+     */
+    public available: boolean;
 
     /**
      * The model representing the searchable text in the entity.

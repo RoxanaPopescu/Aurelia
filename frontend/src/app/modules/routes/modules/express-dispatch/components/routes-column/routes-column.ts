@@ -64,7 +64,7 @@ export class RoutesColumnCustomElement
     @computedFrom("workspace.expressRoutes", "textFilter", "sorting")
     protected get orderedAndFilteredItems(): ExpressRoute[]
     {
-        if (this.workspace.expressRoutes == null)
+        if (this.workspace == null || this.workspace.expressRoutes == null)
         {
             return [];
         }
