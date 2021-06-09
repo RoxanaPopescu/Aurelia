@@ -68,7 +68,7 @@ export class DriversColumnCustomElement
                     const vehicleTypes = this.workspace.selectedExpressRoutes.map(r => r.vehicleType);
 
                     // All vehicle types has to be the same if we want to filter
-                    if (vehicleTypes.every( (val, _, arr) => val === arr[0]))
+                    if (vehicleTypes.every((val, _, arr) => val === arr[0]))
                     {
                         const vehicleType = this.workspace.selectedExpressRoutes[0].vehicleType;
                         let allowedTypes = [vehicleType.slug];
