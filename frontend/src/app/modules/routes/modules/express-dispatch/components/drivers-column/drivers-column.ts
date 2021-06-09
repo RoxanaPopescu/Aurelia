@@ -63,17 +63,22 @@ export class DriversColumnCustomElement
             .sort((a, b) =>
             {
                 // If routes are selected first sort by vehicle type
-                if (this.workspace.selectedExpressRoutes.length > 0 && a.vehicle != null && b.vehicle != null) {
+                if (this.workspace.selectedExpressRoutes.length > 0 && a.vehicle != null && b.vehicle != null)
+                {
                     const vehicleTypes = this.workspace.selectedExpressRoutes.map(r => r.vehicleType);
 
                     // All vehicle types has to be the same if we want to filter
-                    if (vehicleTypes.every( (val, _, arr) => val === arr[0] )) {
+                    if (vehicleTypes.every( (val, _, arr) => val === arr[0]))
+                    {
                         const vehicleType = this.workspace.selectedExpressRoutes[0].vehicleType;
                         let allowedTypes = [vehicleType.slug];
 
-                        if (vehicleType.slug == "van") {
+                        if (vehicleType.slug === "van")
+                        {
                             allowedTypes = ["van", "moving-van"];
-                        } else if (vehicleType.slug == "car") {
+                        }
+                        else if (vehicleType.slug === "car")
+                        {
                             allowedTypes = ["moving-van", "van", "car"];
                         }
 
@@ -89,9 +94,9 @@ export class DriversColumnCustomElement
                 if (a.available > b.available) { return -1; }
                 if (a.available < b.available) { return 1; }
 
-
                 // Sort by done time
-                if (a.completionTime != null && b.completionTime != null) {
+                if (a.completionTime != null && b.completionTime != null)
+                {
                     const aCompletion = a.completionTime.valueOf();
                     const bCompletion = b.completionTime.valueOf();
 

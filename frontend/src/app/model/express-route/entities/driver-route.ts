@@ -50,11 +50,11 @@ export class DriverRoute
 
         // The driver is available if all but the last stop is either "completed", "failed" or "cancelled"
         let available = true;
-        for(let i = 0; i <= this.stops.length-2; i++)
+        for (let i = 0; i <= this.stops.length - 2; i++)
         {
             const stop = this.stops[i];
 
-            if(!["completed", "failed", "canceled"].includes(stop.status.slug))
+            if (!["completed", "failed", "canceled"].includes(stop.status.slug))
             {
                 available = false;
             }
