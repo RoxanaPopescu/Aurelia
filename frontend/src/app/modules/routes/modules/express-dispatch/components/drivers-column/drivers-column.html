@@ -71,12 +71,6 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Deadline">
-                        <span class="text-truncate" translate>
-                            Status
-                        </span>
-                    </data-table-cell>
-
                     <data-table-cell title.translate="Online">
                         <span class="text-truncate" translate>
                             Online/Offline
@@ -95,6 +89,12 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="Name">
+                        <span class="text-truncate" translate>
+                            Phone
+                        </span>
+                    </data-table-cell>
+
                     <data-table-cell title.translate="Vehicle">
                         <span class="text-truncate" translate>
                             Vehicle
@@ -107,21 +107,9 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Last stop address">
-                        <span class="text-truncate" translate>
-                            Last stop address
-                        </span>
-                    </data-table-cell>
-
                     <data-table-cell title.translate="Route id">
                         <span class="text-truncate" translate>
                             Route id
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Id">
-                        <span class="text-truncate" translate>
-                            Id
                         </span>
                     </data-table-cell>
 
@@ -130,13 +118,6 @@
                 <template repeat.for="item of orderedAndFilteredItems">
 
                     <data-table-row accent.bind="item.selected ? 'neutral' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
-
-                        <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
-                            <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
-                            <span class="text-truncate">
-                                ${item.status.name}
-                            </span>
-                        </data-table-cell>
 
                         <data-table-cell title.bind="item.slug">
                             <icon name="md-warning" if.bind="!item.driverOnline"></icon>
@@ -162,9 +143,17 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.name">
-                            <span class="text-truncate">
+
+                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
                                 ${item.driver.name}
-                            </span>
+                            </a>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.driver.phone">
+
+                            <a class="text-truncate" href="tel:${item.driver.phone}">
+                                ${item.driver.phone}
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.vehicle.vehicleType.name">
@@ -179,23 +168,12 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.lastStop.location.address">
-                            <span class="text-truncate">
-                                ${item.lastStop.location.address}
-                            </span>
-                        </data-table-cell>
-
                         <data-table-cell title.bind="route.slug">
                             <a href="/routes/details/${item.slug}" class="text-truncate">
                                 ${item.slug}
                             </a>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.driver.id">
-                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
-                                ${item.driver.id}
-                            </a>
-                        </data-table-cell>
 
                     </data-table-row>
 

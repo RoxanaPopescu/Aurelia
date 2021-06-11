@@ -16,7 +16,7 @@ page[name="routes"] page[name="express-dispatch"] routes-column
 
     data-table
     {
-        --data-table-columns: min-content 0.8fr 1fr min-content min-content 2fr min-content min-content 2fr min-content min-content;
+        --data-table-columns: 0.8fr 1fr min-content min-content 2fr min-content min-content 2fr min-content min-content;
     }
 
     .data-table-row.--selected + .data-table-row:not(.--selected)
