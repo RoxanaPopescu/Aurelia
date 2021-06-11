@@ -71,15 +71,21 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Online">
+                    <data-table-cell title.translate="Vehicle">
                         <span class="text-truncate" translate>
-                            Online/Offline
+                            Vehicle
                         </span>
                     </data-table-cell>
 
                     <data-table-cell title.translate="Online">
                         <span class="text-truncate" translate>
                             Available
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Online">
+                        <span class="text-truncate" translate>
+                            Online/Offline
                         </span>
                     </data-table-cell>
 
@@ -92,12 +98,6 @@
                     <data-table-cell title.translate="Name">
                         <span class="text-truncate" translate>
                             Phone
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Vehicle">
-                        <span class="text-truncate" translate>
-                            Vehicle
                         </span>
                     </data-table-cell>
 
@@ -119,15 +119,9 @@
 
                     <data-table-row accent.bind="item.selected ? 'neutral' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
 
-                        <data-table-cell title.bind="item.slug">
-                            <icon name="md-warning" if.bind="!item.driverOnline"></icon>
+                        <data-table-cell title.bind="item.vehicle.vehicleType.name">
                             <span class="text-truncate">
-                                <template if.bind="item.driverOnline" translate>
-                                    Online
-                                </template>
-                                <template if.bind="!item.driverOnline" translate>
-                                    Offline
-                                </template>
+                                ${item.vehicle.type.name}
                             </span>
                         </data-table-cell>
 
@@ -138,6 +132,18 @@
                                 </template>
                                 <template if.bind="!item.available" translate>
                                     No
+                                </template>
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.slug">
+                            <icon name="md-warning" if.bind="!item.driverOnline"></icon>
+                            <span class="text-truncate">
+                                <template if.bind="item.driverOnline" translate>
+                                    Online
+                                </template>
+                                <template if.bind="!item.driverOnline" translate>
+                                    Offline
                                 </template>
                             </span>
                         </data-table-cell>
@@ -154,12 +160,6 @@
                             <a class="text-truncate" href="tel:${item.driver.phone}">
                                 ${item.driver.phone}
                             </a>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.vehicle.vehicleType.name">
-                            <span class="text-truncate">
-                                ${item.vehicle.type.name}
-                            </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.completionTime | time: 'narrow' : false">

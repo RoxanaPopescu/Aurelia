@@ -365,6 +365,8 @@ export class MergeColumnCustomElement
                 addRouteIds);
 
             this.workspace.selectedDriverRoutes[0].selected = false;
+            this.workspace.selectedDriverRoutes.splice(0, 1);
+
             this.canApply = true;
             this.addingStops = false;
             history.back();

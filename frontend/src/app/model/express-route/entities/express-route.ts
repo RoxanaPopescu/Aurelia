@@ -245,6 +245,19 @@ export class ExpressRoute implements IRouteReference
     }
 
     /**
+     * The estimated length of the route
+     */
+     public get estimatedDuration(): Duration | undefined
+     {
+        if (this.stops[0].estimates == null || this.stops[this.stops.length-1].estimates == null)
+        {
+            return undefined;
+        }
+
+        return this.stops[this.stops.length-1].estimates!.completionTime.diff(this.stops[0].estimates!.arrivalTime);
+     }
+
+    /**
      * The total number of cancelled stops on the route,
      * excluding stops the user is not allowed to see.
      */
