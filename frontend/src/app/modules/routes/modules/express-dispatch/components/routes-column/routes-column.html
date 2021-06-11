@@ -59,9 +59,9 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Vehicle" name="vehicleType.name">
+                    <data-table-cell title.translate="ID" name="slug">
                         <span class="text-truncate" translate>
-                            Vehicle
+                            Id
                         </span>
                     </data-table-cell>
 
@@ -71,22 +71,15 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Estimate" name="estimate">
+                    <data-table-cell title.translate="Vehicle" name="vehicleType.name">
                         <span class="text-truncate" translate>
-                            Estimated duration
+                            Vehicle
                         </span>
                     </data-table-cell>
-
 
                     <data-table-cell title.translate="Weight" name="totalWeightRange">
                         <span class="text-truncate" translate>
                             Weight
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Stops count" name="stopsCount">
-                        <span class="text-truncate" translate>
-                            Stops
                         </span>
                     </data-table-cell>
 
@@ -108,28 +101,15 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Delivery address" name="deliveryLocation.address">
+                    <data-table-cell title.translate="Stops count" name="stopsCount">
                         <span class="text-truncate" translate>
-                            Delivery address
+                            Stops
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="From" name="earliestDeliveryDate">
+                    <data-table-cell title.translate="Estimate" name="estimate">
                         <span class="text-truncate" translate>
-                            From
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="To" name="latestDeliveryDate">
-                        <span class="text-truncate" translate>
-                            To
-                        </span>
-                    </data-table-cell>
-
-
-                    <data-table-cell title.translate="ID" name="slug">
-                        <span class="text-truncate" translate>
-                            Id
+                            Estimated duration
                         </span>
                     </data-table-cell>
 
@@ -142,11 +122,10 @@
                         selected.bind="item.selected"
                         toggle.call="onRowToggle(item, value)">
 
-
-                        <data-table-cell title.bind="item.vehicleType.name">
-                            <span class="text-truncate">
-                                ${item.vehicleType.name}
-                            </span>
+                        <data-table-cell title.bind="item.slug">
+                            <a href="/routes/details/${item.slug}" class="text-truncate">
+                                ${item.slug}
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
@@ -155,21 +134,15 @@
                             </a>
                         </data-table-cell>
 
-                        <data-table-cell title="item.estimate">
+                        <data-table-cell title.bind="item.vehicleType.name">
                             <span class="text-truncate">
-                                ${item.estimatedDuration | duration}
+                                ${item.vehicleType.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg">
                             <span if.bind="item.totalWeightRange != null" class="text-truncate">
                                 ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.stopsCount">
-                            <span class="text-truncate">
-                                ${item.stops.length} stops
                             </span>
                         </data-table-cell>
 
@@ -191,28 +164,16 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.deliveryLocation.address">
+                        <data-table-cell title.bind="item.stopsCount">
                             <span class="text-truncate">
-                                ${item.deliveryLocation.address}
+                                ${item.stops.length} stops
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.earliestDeliveryDate | time: 'narrow' : false">
+                        <data-table-cell title="item.estimate">
                             <span class="text-truncate">
-                                ${item.earliestDeliveryDate | time: 'narrow' : false}
+                                ${item.estimatedDuration | duration}
                             </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false">
-                            <span class="text-truncate">
-                                ${item.latestDeliveryDate | time: 'narrow' : false}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.slug">
-                            <a href="/routes/details/${item.slug}" class="text-truncate">
-                                ${item.slug}
-                            </a>
                         </data-table-cell>
 
                     </data-table-row>

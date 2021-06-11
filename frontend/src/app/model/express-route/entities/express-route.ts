@@ -249,12 +249,15 @@ export class ExpressRoute implements IRouteReference
      */
      public get estimatedDuration(): Duration | undefined
      {
-        if (this.stops[0].estimates == null || this.stops[this.stops.length - 1].estimates == null)
+        const firstStop = this.stops[0];
+        const lastStop = this.stops[this.stops.length - 1];
+
+        if (firstStop.estimates == null || lastStop.estimates == null)
         {
             return undefined;
         }
 
-        return this.stops[this.stops.length - 1].estimates!.completionTime.diff(this.stops[0].estimates!.arrivalTime);
+        return lastStop.estimates.completionTime.diff(firstStop.estimates.arrivalTime);
      }
 
     /**
