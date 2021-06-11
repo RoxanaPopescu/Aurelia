@@ -71,7 +71,8 @@ export class OrderStatusModule extends AppModule
             }
 
             // Map the relevant order events to tracking events.
-            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles)).filter(e => e != null);
+            const isPickedUp = orderEventsData.some(e => e.eventType === "order-pickup-completed");
+            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles, isPickedUp)).filter(e => e != null);
 
             // Always create the `order` tracking event based on the order details,
             // as `order-placed` order event does not include all the data we need.
@@ -276,9 +277,10 @@ export class OrderStatusModule extends AppModule
      * Creates a tracking event based on the specified order event data, if supported.
      * @param eventData The data representing the order event.
      * @param eventTitles The localized event titles.
+     * @param isPickedUp True if the order has been picked up, otherwise false.
      * @returns The tracking event, or null if the order event has no corresponding tracking event.
      */
-    private getTrackingEvent(eventData: any, eventTitles: MapObject<string>): any | null
+    private getTrackingEvent(eventData: any, eventTitles: MapObject<string>, isPickedUp: boolean): any | null
     {
         switch (eventData.eventType)
         {
@@ -305,7 +307,7 @@ export class OrderStatusModule extends AppModule
             case "order-delivery-eta-provided": return {
                 id: "estimated-delivery-event-id",
                 type: "delivery",
-                dateTimeRange: eventData.data.driver?.id
+                dateTimeRange: isPickedUp
                     ? this.getPaddedEta(DateTime.fromISO(eventData.data.deliveryEta, { setZone: true }))
                     : {
                         start: DateTime.fromISO(eventData.data.deliveryTimeFrame.from, { setZone: true }),
