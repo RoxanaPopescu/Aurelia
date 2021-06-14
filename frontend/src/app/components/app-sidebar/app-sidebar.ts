@@ -22,7 +22,7 @@ export class AppSidebarCustomElement
 
     protected readonly environment = ENVIRONMENT.name;
 
-    @computedFrom("_router.navigation")
+    @computedFrom("_router.navigation", "_router.currentInstruction")
     protected get navModels(): NavModel[]
     {
         return this._router.navigation
@@ -32,7 +32,7 @@ export class AppSidebarCustomElement
             ]));
     }
 
-    @computedFrom("_router.currentInstruction")
+    @computedFrom("_router.navigation", "_router.currentInstruction")
     protected get childNavModels(): NavModel[] | undefined
     {
         if (this._router.currentInstruction == null)
