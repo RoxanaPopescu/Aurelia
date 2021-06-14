@@ -107,6 +107,12 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="Last stop">
+                        <span class="text-truncate" translate>
+                            Last stop
+                        </span>
+                    </data-table-cell>
+
                     <data-table-cell title.translate="Route id">
                         <span class="text-truncate" translate>
                             Route id
@@ -165,6 +171,12 @@
                         <data-table-cell title.bind="item.completionTime | time: 'narrow' : false">
                             <span class="text-truncate">
                                 ${item.completionTime | time: 'narrow' : false}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.lastStop.location.address">
+                            <span class="text-truncate">
+                                ${item.lastStop.location.address}
                             </span>
                         </data-table-cell>
 

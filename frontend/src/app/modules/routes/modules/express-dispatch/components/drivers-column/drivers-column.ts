@@ -94,6 +94,13 @@ export class DriversColumnCustomElement
                 if (a.available > b.available) { return -1; }
                 if (a.available < b.available) { return 1; }
 
+                // Sort by payload capacity
+                if (a.vehicle != null && b.vehicle != null)
+                {
+                    if (a.vehicle.type.maxPayloadDimensions > b.vehicle.type.maxPayloadDimensions) { return -1; }
+                    if (a.vehicle.type.maxPayloadDimensions < b.vehicle.type.maxPayloadDimensions) { return 1; }
+                }
+
                 // Sort by done time
                 if (a.completionTime != null && b.completionTime != null)
                 {

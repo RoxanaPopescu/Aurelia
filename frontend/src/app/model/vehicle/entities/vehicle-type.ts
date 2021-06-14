@@ -72,6 +72,14 @@ export class VehicleType
     public readonly images: { [type: string]: string };
 
     /**
+     * Gets max payload dimensions
+     */
+    public get maxPayloadDimensions(): number
+    {
+        return this.maxHeight * this.maxLength * this.maxWidth;
+    }
+
+    /**
      * Gets the vehicle type with the specified ID.
      */
     public static get(id: string): VehicleType
