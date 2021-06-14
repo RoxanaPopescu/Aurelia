@@ -59,7 +59,7 @@ export class ChangePasswordPage
      */
     private async onViewChanged(): Promise<void>
     {
-        await this._historyHelper.navigate(`/account/${this.model.view}`, { replace: true });
+        await this._historyHelper.navigate(`/account/${this.model.view}`);
         this._historyHelper.setTitle();
     }
 

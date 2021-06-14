@@ -46,7 +46,7 @@ export class SignInPage
     {
         if (this._identityService.identity != null && this._identityService.organization == null)
         {
-            return new Redirect(params.url ? `/account/choose-organization?url=${params.url}` : "/account/choose-organization");
+            return new Redirect(params.url && params.url !== "/" ? `/account/choose-organization?url=${params.url}` : "/account/choose-organization");
         }
 
         if (this._identityService.identity != null)
@@ -77,7 +77,7 @@ export class SignInPage
      */
     private async onViewChanged(): Promise<void>
     {
-        await this._historyHelper.navigate(`/account/${this.model.view}`, { replace: true });
+        await this._historyHelper.navigate(`/account/${this.model.view}`);
         this._historyHelper.setTitle();
     }
 
@@ -103,6 +103,7 @@ export class SignInPage
     {
         // TODO: If only one organization exists, automatically authorize and navigate to that.
 
-        await this._historyHelper.navigate(`/account/choose-organization?url=${url}`, { replace: true });
+        await this._historyHelper.navigate("/account/sign-out", { trigger: false, replace: true });
+        await this._historyHelper.navigate(url && url !== "/" ? `/account/choose-organization?url=${url}` : "/account/choose-organization");
     }
 }
