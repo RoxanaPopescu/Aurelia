@@ -84,6 +84,15 @@ export class ChooseOrganizationCustomElement
     }
 
     /**
+     * Called when the `Create organization` button is pressed.
+     */
+    protected onCreateOrganizationClick(): void
+    {
+        this.model.view = "create-organization" as any;
+        this.model.onViewChanged?.();
+    }
+
+    /**
      * Called when an organization is pressed.
      * Signs the user in to the organization.
      * @param organization The organization to sign into.

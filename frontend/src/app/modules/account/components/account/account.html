@@ -4,6 +4,7 @@
     <require from="./components/sign-in/sign-in"></require>
     <require from="./components/sign-out/sign-out"></require>
     <require from="./components/choose-organization/choose-organization"></require>
+    <require from="./components/create-organization/create-organization"></require>
     <require from="./components/confirm-email/confirm-email"></require>
     <require from="./components/forgot-password/forgot-password"></require>
     <require from="./components/change-password/change-password"></require>
@@ -91,6 +92,26 @@
         </div>
 
         <choose-organization model.bind="model"></choose-organization>
+
+    </template>
+
+    <template if.bind="model.view === 'create-organization'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
+            <span translate>
+                Create organization
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('choose-organization')" translate>
+                Cancel
+            </a>
+
+        </div>
+
+        <create-organization model.bind="model"></create-organization>
 
     </template>
 

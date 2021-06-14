@@ -6,6 +6,7 @@ import { IConfirmEmailModel } from "./components/confirm-email/confirm-email";
 import { IForgotPasswordModel } from "./components/forgot-password/forgot-password";
 import { IChangePasswordModel } from "./components/change-password/change-password";
 import { IChooseOrganizationModel } from "./components/choose-organization/choose-organization";
+import { ICreateOrganizationModel } from "./components/create-organization/create-organization";
 
 type AccountCallbacks = Pick<ISignUpModel, "onSignedUp"> & Pick<ISignInModel, "onSignedIn">;
 
@@ -20,7 +21,8 @@ export type AccountModel =
     IForgotPasswordModel & AccountCallbacks |
     IChangePasswordModel & AccountCallbacks |
     ISignOutModel & AccountCallbacks |
-    IChooseOrganizationModel & AccountCallbacks
+    IChooseOrganizationModel & AccountCallbacks |
+    ICreateOrganizationModel & AccountCallbacks
 ) &
 {
     /**

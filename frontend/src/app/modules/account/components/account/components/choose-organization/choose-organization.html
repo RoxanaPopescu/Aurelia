@@ -10,10 +10,14 @@
                 ${organization.name}
             </button>
 
+            <div if.bind="organizations.length == 0" class="font-large" translate>
+                You are not a member of any organizations
+            </div>
+
             <toolbar class="margin-top">
 
                 <a tabindex="0" click.trigger="onCreateOrganizationClick()" translate>
-                    Create new organization
+                    Create organization
                 </a>
 
             </toolbar>

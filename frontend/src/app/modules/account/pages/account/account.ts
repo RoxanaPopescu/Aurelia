@@ -74,6 +74,12 @@ export class AccountPage
                 title: routeTitles.chooseOrganization
             },
             {
+                name: "create-organization",
+                route: "create-organization",
+                moduleId: PLATFORM.moduleName("./pages/create-organization/create-organization"),
+                title: routeTitles.createOrganization
+            },
+            {
                 name: "forgot-password",
                 route: "forgot-password",
                 moduleId: PLATFORM.moduleName("./pages/forgot-password/forgot-password"),
