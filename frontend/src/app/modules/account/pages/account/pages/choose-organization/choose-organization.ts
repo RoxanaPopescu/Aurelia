@@ -1,4 +1,5 @@
 import { autoinject } from "aurelia-framework";
+import { NavigationCommand, Redirect } from "aurelia-router";
 import { HistoryHelper } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
@@ -7,16 +8,16 @@ import { ISignUpModel } from "app/modules/account/components/account/components/
 /**
  * Represents the URL parameters expected by the page.
  */
-interface IChangePasswordPageParams
+interface IChooseOrganizationPageParams
 {
     /**
-     * The account confirmation token.
+     * The URL to navigate to after signing in, or undefiend to not navigate.
      */
-    token: string;
+    url?: string;
 }
 
 @autoinject
-export class ChangePasswordPage
+export class ChooseOrganizationPage
 {
     /**
      * Creates a new instance of the type.
@@ -38,19 +39,31 @@ export class ChangePasswordPage
     protected model: AccountModel;
 
     /**
+     * Called by the framework before the page activates.
+     * @param params The route parameters from the URL.
+     */
+    public canActivate(params: IChooseOrganizationPageParams): NavigationCommand | boolean
+    {
+        if (this._identityService.identity == null)
+        {
+            return new Redirect(params.url ? `/account/sign-in?url=${params.url}` : "/account/sign-in");
+        }
+
+        return true;
+    }
+
+    /**
      * Called by the framework when the page is activating.
      * @param params The route parameters from the URL.
      */
-    public activate(params: IChangePasswordPageParams): void
+    public activate(params: IChooseOrganizationPageParams): void
     {
         this.model =
         {
-            view: "change-password",
-            token: params.token,
+            view: "choose-organization",
             onViewChanged: () => this.onViewChanged(),
-            onPasswordChanged: () => this.onPasswordChanged("/"),
             onSignedUp: () => this.onSignedUp("/"),
-            onSignedIn: () => this.onSignedIn("/")
+            onSignedIn: () => this.onSignedIn(params.url ?? "/")
         };
     }
 
@@ -65,7 +78,7 @@ export class ChangePasswordPage
 
     /**
      * Called when the sign up operation completes.
-     * @param url The URL to navigate to after signing up.
+     * @param url The URL to navigate to.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     private async onSignedUp(url: string): Promise<void>
@@ -82,15 +95,6 @@ export class ChangePasswordPage
      * @param url The URL to navigate to.
      */
     private async onSignedIn(url: string): Promise<void>
-    {
-        await this._historyHelper.navigate(url);
-    }
-
-    /**
-     * Called when the change password operation completes.
-     * @param url The URL to navigate to.
-     */
-    private async onPasswordChanged(url: string): Promise<void>
     {
         await this._historyHelper.navigate(url);
     }

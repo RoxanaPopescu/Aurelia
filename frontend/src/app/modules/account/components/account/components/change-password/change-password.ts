@@ -12,11 +12,6 @@ export interface IChangePasswordModel
     view: "change-password";
 
     /**
-     * The email address identifying the user.
-     */
-    email?: string;
-
-    /**
      * The token specified in the recovery link sent to the user,
      * or undefined if already authenticated.
      */
@@ -46,11 +41,6 @@ export interface IChangePasswordModel
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
@@ -96,11 +86,6 @@ export class ChangePasswordCustomElement
      */
     public attached(): void
     {
-        if (!this.model.email)
-        {
-            Log.error("No email specified.");
-        }
-
         if (!this.model.token)
         {
             Log.error("No token specified.");
@@ -110,6 +95,7 @@ export class ChangePasswordCustomElement
     /**
      * Called when a key is pressed.
      * Submits the form if the `Enter` key is pressed.
+     * @param event The keyboard event.
      * @returns True to continue, false to prevent default.
      */
     protected onKeyDown(event: KeyboardEvent): boolean
@@ -121,7 +107,8 @@ export class ChangePasswordCustomElement
 
         if (event.key === "Enter")
         {
-            this.onChangePasswordClick().catch();
+            // tslint:disable-next-line: no-floating-promises
+            this.onChangePasswordClick();
 
             return false;
         }
@@ -146,7 +133,7 @@ export class ChangePasswordCustomElement
         {
             this.model.busy = true;
 
-            const tokens = await this._accountService.changePassword(this.model.email!, this.model.password!, this.model.token!);
+            const tokens = await this._accountService.changePassword(this.model.password!, this.model.token!);
 
             try
             {
@@ -154,8 +141,6 @@ export class ChangePasswordCustomElement
             }
             catch (error)
             {
-                this.model.error = error;
-
                 Log.error("Sign in failed.", error);
 
                 return;
@@ -164,13 +149,10 @@ export class ChangePasswordCustomElement
             // tslint:disable-next-line: await-promise
             await this.model.onPasswordChanged?.();
 
-            this.model.error = undefined;
             this.model.done = true;
         }
         catch (error)
         {
-            this.model.error = error;
-
             Log.error("Password change failed.", error);
         }
         finally

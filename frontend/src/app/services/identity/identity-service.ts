@@ -9,6 +9,7 @@ import settings from "resources/settings";
 // Needed to ensure the legacy code still works.
 import { Profile } from "shared/src/model/profile";
 import { Session } from "shared/src/model/session";
+import { OrganizationInfo } from "app/model/organization";
 
 export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
 export const coopOrganizationId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
@@ -40,6 +41,7 @@ export class IdentityService
 
     private readonly _apiClient: ApiClient;
     private _identity: Identity | undefined;
+    private _organization: any | undefined;
     private _changeFunc: IdentityChangeFunc | undefined;
 
     /**
@@ -49,6 +51,15 @@ export class IdentityService
     public get identity(): Identity | undefined
     {
         return this._identity;
+    }
+
+    /**
+     * The currently selected organization, or undefined if no organization is selected.
+     */
+    @computedFrom("_organization")
+    public get organization(): OrganizationInfo | undefined
+    {
+        return this._organization;
     }
 
     /**
@@ -192,6 +203,50 @@ export class IdentityService
     }
 
     /**
+     * Authorizes the user to access the specified organization.
+     * @param organization The organization for which the user should be authorized.
+     * @returns A promise that will be resolved with true if authorization succeeded, otherwise false.
+     * @throws If the operation fails for any reason.
+     */
+    public async authorize(organization: OrganizationInfo): Promise<boolean>
+    {
+        try
+        {
+            const remember = this.getTokens()?.remember;
+
+            // TODO: Call the correct endpoint, once supported; until then, we just refresh the tokens.
+
+            const result = await this._apiClient.get("refreshtokens",
+            {
+                retry: 3
+            });
+
+            // const result = await this._apiClient.post("identity/authorize",
+            // {
+            //     body: { organizationId: organization.id },
+            //     retry: 3
+            // });
+
+            this.setTokens(new IdentityTokens({ ...result.data, remember }));
+
+            this._organization = organization;
+
+            return this.reauthenticate();
+        }
+        catch (error)
+        {
+            await this.unauthenticate();
+
+            if (error.response == null || ![401, 403].includes(error.response.status))
+            {
+                throw error;
+            }
+
+            return false;
+        }
+    }
+
+    /**
      * Unauthenticates the user, removing the authentication token stored on the device.
      * @returns A promise that will be resolved with true if unauthentication succeeded, otherwise false.
      * @throws If the request fails for any reason.
@@ -199,6 +254,8 @@ export class IdentityService
     public async unauthenticate(): Promise<boolean>
     {
         this.setTokens(undefined);
+
+        this._organization = undefined;
 
         if (this._identity != null)
         {

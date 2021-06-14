@@ -1,6 +1,6 @@
-import { IIdentityTokens } from "app/services/identity";
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
+import { IIdentityTokens } from "app/services/identity";
 import { IAccountInit } from "./account-init";
 
 /**
@@ -22,36 +22,28 @@ export class AccountService
 
     /**
      * Creates a new user with the specified name, email and password.
-     * Note that the new user will initailly be unconfirmed, and that an
-     * initial username will be automatically assigned, based on the name.
+     * Note that the new user will initailly be unconfirmed.
      * @param accountInit The data for the new account.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async create(accountInit: IAccountInit): Promise<void>
     {
-        await Promise.resolve();
-
-        throw new Error("Not implemented");
+        await this._apiClient.post("user/create",
+        {
+            body: accountInit
+        });
     }
 
     /**
-     * Confirms the creation of a new user by verifying the specified token
-     * and setting the specified password.
-     * @param email The email address identifying the user.
-     * @param password The new password chosen by the user.
+     * Confirms the creation of a new user, by verifying the specified token.
      * @param token The token specified in the confirmation link sent to the new user.
      * @returns A promise that will be resolved with the identity tokens.
      */
-    public async activate(email: string, password: string, token: string): Promise<IIdentityTokens>
+    public async confirmEmail(token: string): Promise<IIdentityTokens>
     {
-        const result = await this._apiClient.post("Activation",
+        const result = await this._apiClient.post("user/confirm",
         {
-            body:
-            {
-                username: email,
-                newPassword: password,
-                activationCode: token
-            }
+            body: { token }
         });
 
         return result.data;
@@ -64,34 +56,38 @@ export class AccountService
      */
     public async forgotPassword(email: string): Promise<void>
     {
-        await this._apiClient.post("RequestPasswordReset",
+        await this._apiClient.post("user/forgot-password",
         {
-            body:
-            {
-                username: email
-            }
+            body: { email }
         });
     }
 
     /**
-     * Changes the password for the specified user.
-     * @param email The email address identifying the user.
+     * Changes the password for the current user, or the user identified by the specified recovery token.
      * @param password The new password chosen by the user.
-     * @param token The token specified in the recovery link sent to the user.
+     * @param token The token specified in the recovery link sent to the user, or undefined if already authenticated.
      * @returns A promise that will be resolved with the identity tokens.
      */
-    public async changePassword(email: string, password: string, token?: string): Promise<IIdentityTokens>
+    public async changePassword(password: string, token?: string): Promise<IIdentityTokens>
     {
-        const result = await this._apiClient.post("ResetPassword",
+        const result = await this._apiClient.post("user/change-password",
         {
-            body:
-            {
-                username: email,
-                newPassword: password,
-                token: token
-            }
+            body: { password, token }
         });
 
         return result.data;
+    }
+
+    /**
+     * Deletes the user with the specified email.
+     * @param email The email address identifying the user.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async delete(email: string): Promise<void>
+    {
+        await this._apiClient.post("user/delete",
+        {
+            body: { email }
+        });
     }
 }

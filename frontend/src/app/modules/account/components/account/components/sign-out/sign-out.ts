@@ -23,11 +23,6 @@ export interface ISignOutModel
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
@@ -74,13 +69,10 @@ export class SignOutCustomElement
             // tslint:disable-next-line: await-promise
             await this.model.onSignedOut?.();
 
-            this.model.error = undefined;
             this.model.done = true;
         }
         catch (error)
         {
-            this.model.error = error;
-
             Log.error("Sign out failed.", error);
         }
         finally

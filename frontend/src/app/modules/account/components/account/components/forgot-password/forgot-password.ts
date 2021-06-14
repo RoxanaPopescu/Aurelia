@@ -24,11 +24,6 @@ export interface IForgotPasswordModel
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
@@ -69,6 +64,7 @@ export class ForgotPasswordCustomElement
     /**
      * Called when a key is pressed.
      * Submits the form if the `Enter` key is pressed.
+     * @param event The keyboard event.
      * @returns True to continue, false to prevent default.
      */
     protected onKeyDown(event: KeyboardEvent): boolean
@@ -80,7 +76,8 @@ export class ForgotPasswordCustomElement
 
         if (event.key === "Enter")
         {
-            this.onRequestNewPasswordClick().catch();
+            // tslint:disable-next-line: no-floating-promises
+            this.onRequestNewPasswordClick();
 
             return false;
         }
@@ -107,13 +104,10 @@ export class ForgotPasswordCustomElement
 
             await this._accountService.forgotPassword(this.model.email!);
 
-            this.model.error = undefined;
             this.model.done = true;
         }
         catch (error)
         {
-            this.model.error = error;
-
             Log.error("Password recovery failed.", error);
         }
         finally

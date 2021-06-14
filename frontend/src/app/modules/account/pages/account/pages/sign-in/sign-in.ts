@@ -44,6 +44,11 @@ export class SignInPage
      */
     public canActivate(params: ISignInPageParams): NavigationCommand | boolean
     {
+        if (this._identityService.identity != null && this._identityService.organization == null)
+        {
+            return new Redirect(params.url ? `/account/choose-organization?url=${params.url}` : "/account/choose-organization");
+        }
+
         if (this._identityService.identity != null)
         {
             return new Redirect(params.url ?? "/");
@@ -96,6 +101,8 @@ export class SignInPage
      */
     private async onSignedIn(url: string): Promise<void>
     {
-        await this._historyHelper.navigate(url);
+        // TODO: If only one organization exists, automatically authorize and navigate to that.
+
+        await this._historyHelper.navigate(`/account/choose-organization?url=${url}`, { replace: true });
     }
 }

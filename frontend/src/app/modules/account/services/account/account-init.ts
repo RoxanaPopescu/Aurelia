@@ -1,7 +1,5 @@
-import { PhoneNumber } from "app/model/shared";
-
 /**
- * Represents the data needed to create a new glossary.
+ * Represents the data needed to create a new account.
  */
 export interface IAccountInit
 {
@@ -24,9 +22,4 @@ export interface IAccountInit
      * The password specified by the user.
      */
     password: string;
-
-    /**
-     * The phone number specified by the user.
-     */
-    phoneNumber?: PhoneNumber;
 }

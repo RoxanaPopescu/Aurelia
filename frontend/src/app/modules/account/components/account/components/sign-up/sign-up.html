@@ -6,7 +6,23 @@
 
         <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
 
-            <text-input value.bind="model.fullName" autocomplete="name" autofocus>
+            <text-input value.bind="model.organizationName" autocomplete="organization" autofocus>
+
+                <span slot="placeholder" translate>
+                    Organization name
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.organizationName">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+            <text-input class="margin-top" value.bind="model.fullName" autocomplete="name">
 
                 <span slot="placeholder" translate>
                     Full name, e.g. John Doe
@@ -37,18 +53,6 @@
                 </div>
 
             </text-input>
-
-            <phone-input class="margin-top" value.bind="model.phoneNumber">
-
-                <div slot="placeholder" translate>
-                    Phone number
-                </div>
-
-                <required-validator
-                    value.bind="model.phoneNumber">
-                </required-validator>
-
-            </phone-input>
 
             <email-input class="margin-top" value.bind="model.email" autocomplete="email">
 
@@ -87,7 +91,6 @@
 
             </password-input>
 
-
             <check-toggle class="margin-top" label="after" value.bind="model.agreeToTerms">
 
                 <span slot="heading" translate>
@@ -119,6 +122,20 @@
 
         </div>
 
+        <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
+
+        <div surface="base">
+
+            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
+                Sign up with <b>Google</b>
+            </button>
+
+            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithMicrosoft()" translate>
+                Sign up with <b>Microsoft</b>
+            </button>
+
+        </div>
+
     </template>
 
     <template if.bind="model.busy && !model.done">
@@ -139,14 +156,6 @@
             We just sent you an email with a link to confirm your signup.
             If you don't see the email, make sure to check your junk folder.
         </p>
-
-    </template>
-
-    <template if.bind="!model.busy && model.error">
-
-        <div class="font-large" accent="negative" translate>
-            Failed to sign up
-        </div>
 
     </template>
 

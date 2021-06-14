@@ -1,25 +1,14 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
 import { AccountService } from "app/modules/account/services/account";
 import { IdentityService } from "app/services/identity";
 
-export interface IActivateModel
+export interface IConfirmEmailModel
 {
     /**
      * The slug identifying the current view presented by the component.
      */
-    view: "activate";
-
-    /**
-     * The email address identifying the user.
-     */
-    email?: string;
-
-    /**
-     * The new password chosen by the user.
-     */
-    password?: string;
+    view: "confirm-email";
 
     /**
      * The token specified in the confirmation link sent to the user.
@@ -27,14 +16,9 @@ export interface IActivateModel
     token?: string;
 
     /**
-     * True to store the auth tokens on the device, otherwise false.
-     */
-    remember?: boolean;
-
-    /**
      * The function to call when the operation completes.
      */
-    onActivated?: () => unknown | Promise<unknown>;
+    onConfirmedEmail?: () => unknown | Promise<unknown>;
 
     /**
      * True if the operation is pending, otherwise false.
@@ -45,15 +29,10 @@ export interface IActivateModel
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
-export class ActivateCustomElement
+export class ConfirmEmailCustomElement
 {
     /**
      * Creates a new instance of the type.
@@ -73,12 +52,7 @@ export class ActivateCustomElement
      * The model representing the state of the component.
      */
     @bindable
-    protected model: IActivateModel;
-
-    /**
-     * The validation for the component.
-     */
-    protected validation: IValidation;
+    protected model: IConfirmEmailModel;
 
     /**
      * Called by the framework when the component is binding.
@@ -95,53 +69,10 @@ export class ActivateCustomElement
      */
     public async attached(): Promise<void>
     {
-        if (!this.model.email)
-        {
-            Log.error("No email specified.");
-
-            return;
-        }
-
         if (!this.model.token)
         {
             Log.error("No token specified.");
 
-            return;
-        }
-    }
-
-    /**
-     * Called when a key is pressed.
-     * Submits the form if the `Enter` key is pressed.
-     * @returns True to continue, false to prevent default.
-     */
-    protected onKeyDown(event: KeyboardEvent): boolean
-    {
-        if (event.defaultPrevented || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
-        {
-            return true;
-        }
-
-        if (event.key === "Enter")
-        {
-            this.onActivateAccountClick().catch();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Called when the `Activate account` button is pressed.
-     * Submits the form.
-     */
-    protected async onActivateAccountClick(): Promise<void>
-    {
-        this.validation.active = true;
-
-        if (!await this.validation.validate())
-        {
             return;
         }
 
@@ -149,32 +80,27 @@ export class ActivateCustomElement
         {
             this.model.busy = true;
 
-            const tokens = await this._accountService.activate(this.model.email!, this.model.password!, this.model.token!);
+            const tokens = await this._accountService.confirmEmail(this.model.token);
 
             try
             {
-                await this._identityService.authenticated({ ...tokens, remember: !!this.model.remember });
+                await this._identityService.authenticated({ ...tokens });
             }
             catch (error)
             {
-                this.model.error = error;
-
                 Log.error("Sign in failed.", error);
 
                 return;
             }
 
             // tslint:disable-next-line: await-promise
-            await this.model.onActivated?.();
+            await this.model.onConfirmedEmail?.();
 
-            this.model.error = undefined;
             this.model.done = true;
         }
         catch (error)
         {
-            this.model.error = error;
-
-            Log.error("Failed to activate the account.", error);
+            Log.error("Could not confirm the account.", error);
         }
         finally
         {

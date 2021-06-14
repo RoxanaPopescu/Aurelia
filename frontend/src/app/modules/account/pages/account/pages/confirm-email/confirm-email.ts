@@ -7,13 +7,8 @@ import { ISignUpModel } from "app/modules/account/components/account/components/
 /**
  * Represents the URL parameters expected by the page.
  */
-interface IActivateAccountPageParams
+interface IConfirmEmailPageParams
 {
-    /**
-     * The email address identifying the user.
-     */
-    email: string;
-
     /**
      * The account confirmation token.
      */
@@ -21,7 +16,7 @@ interface IActivateAccountPageParams
 }
 
 @autoinject
-export class ActivateAccountPage
+export class ConfirmEmailPage
 {
     /**
      * Creates a new instance of the type.
@@ -46,16 +41,14 @@ export class ActivateAccountPage
      * Called by the framework when the page is activating.
      * @param params The route parameters from the URL.
      */
-    public activate(params: IActivateAccountPageParams): void
+    public activate(params: IConfirmEmailPageParams): void
     {
         this.model =
         {
-            view: "activate",
-            // TODO: Remove alternate param names once the email template is updated to reference the correct route.
-            email: params.email || (params as any).username,
-            token: params.token || (params as any).activationCode,
+            view: "confirm-email",
+            token: params.token,
             onViewChanged: () => this.onViewChanged(),
-            onActivated: () => this.onActivated("/"),
+            onConfirmedEmail: () => this.onConfirmedEmail("/"),
             onSignedUp: () => this.onSignedUp("/"),
             onSignedIn: () => this.onSignedIn("/")
         };
@@ -94,10 +87,10 @@ export class ActivateAccountPage
     }
 
     /**
-     * Called when the activate operation completes.
+     * Called when the confirm email operation completes.
      * @param url The URL to navigate to.
      */
-    private async onActivated(url: string): Promise<void>
+    private async onConfirmedEmail(url: string): Promise<void>
     {
         await this._historyHelper.navigate(url);
     }

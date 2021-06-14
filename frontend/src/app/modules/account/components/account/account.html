@@ -3,7 +3,8 @@
     <require from="./components/sign-up/sign-up"></require>
     <require from="./components/sign-in/sign-in"></require>
     <require from="./components/sign-out/sign-out"></require>
-    <require from="./components/activate/activate"></require>
+    <require from="./components/choose-organization/choose-organization"></require>
+    <require from="./components/confirm-email/confirm-email"></require>
     <require from="./components/forgot-password/forgot-password"></require>
     <require from="./components/change-password/change-password"></require>
 
@@ -43,15 +44,9 @@
                 Sign up
             </a>
 
-            <template if.bind="model.done">
-
-                <span class="opacity-faded-more margin-left margin-right">—</span>
-
-                <a if.bind="model.done" tabindex="0" click.trigger="setView('sign-out')" translate>
-                    Sign out
-                </a>
-
-            </template>
+            <a if.bind="model.done" tabindex="0" click.trigger="setView('sign-out')" translate>
+                Sign out
+            </a>
 
         </div>
 
@@ -79,33 +74,43 @@
 
     </template>
 
-    <template if.bind="model.view === 'activate'">
+    <template if.bind="model.view === 'choose-organization'">
 
         <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
 
-            <!--
+            <span translate>
+                Choose organization
+            </span>
+
+            <span class="opacity-faded-more margin-left margin-right">—</span>
+
+            <a tabindex="0" click.trigger="setView('sign-out')" translate>
+                Sign out
+            </a>
+
+        </div>
+
+        <choose-organization model.bind="model"></choose-organization>
+
+    </template>
+
+    <template if.bind="model.view === 'confirm-email'">
+
+        <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
+
             <span translate>
                 Sign up
             </span>
 
             <span class="opacity-faded-more margin-left margin-right">—</span>
-            -->
-
-            <span translate>
-                Activate account
-            </span>
-
-            <!--
-            <span class="opacity-faded-more margin-left margin-right">—</span>
 
             <a tabindex="0" click.trigger="setView('sign-in')" translate>
                 Sign in
             </a>
-            -->
 
         </div>
 
-        <activate model.bind="model"></activate>
+        <confirm-email model.bind="model"></confirm-email>
 
     </template>
 

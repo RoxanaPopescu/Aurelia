@@ -1,11 +1,11 @@
 <template>
 
-    <require from="./sign-out.scss"></require>
+    <require from="./confirm-email.scss"></require>
 
     <template if.bind="model.busy && !model.done">
 
         <busy-indicator class="font-largest animation-fade-in-medium au-enter-active" translate>
-            Signing out…
+            Confirming email…
         </busy-indicator>
 
     </template>
@@ -13,7 +13,7 @@
     <template if.bind="!model.busy && model.done">
 
         <div class="font-large" translate>
-            Signed out
+            Email confirmed
         </div>
 
     </template>

@@ -56,16 +56,22 @@ export class AccountPage
                 title: routeTitles.sighUp
             },
             {
-                name: "activate",
-                route: "activate",
-                moduleId: PLATFORM.moduleName("./pages/activate/activate"),
-                title: routeTitles.activate
+                name: "confirm-email",
+                route: "confirm-email",
+                moduleId: PLATFORM.moduleName("./pages/confirm-email/confirm-email"),
+                title: routeTitles.confirmEmail
             },
             {
                 name: "sign-in",
                 route: "sign-in",
                 moduleId: PLATFORM.moduleName("./pages/sign-in/sign-in"),
                 title: routeTitles.signIn
+            },
+            {
+                name: "choose-organization",
+                route: "choose-organization",
+                moduleId: PLATFORM.moduleName("./pages/choose-organization/choose-organization"),
+                title: routeTitles.chooseOrganization
             },
             {
                 name: "forgot-password",

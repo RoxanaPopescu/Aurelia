@@ -44,11 +44,6 @@ export interface ISignInModel
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
@@ -89,6 +84,7 @@ export class SignInCustomElement
     /**
      * Called when a key is pressed.
      * Submits the form if the `Enter` key is pressed.
+     * @param event The keyboard event.
      * @returns True to continue, false to prevent default.
      */
     protected onKeyDown(event: KeyboardEvent): boolean
@@ -100,7 +96,8 @@ export class SignInCustomElement
 
         if (event.key === "Enter")
         {
-            this.onSignInClick().catch();
+            // tslint:disable-next-line: no-floating-promises
+            this.onSignInClick();
 
             return false;
         }
@@ -110,7 +107,6 @@ export class SignInCustomElement
 
     /**
      * Called when the `Forgot password` button is pressed.
-     * Submits the form.
      */
     protected onForgotPasswordClick(): void
     {
@@ -144,7 +140,6 @@ export class SignInCustomElement
                 // tslint:disable-next-line: await-promise
                 await this.model.onSignedIn?.();
 
-                this.model.error = undefined;
                 this.model.done = true;
             }
             else
@@ -154,8 +149,6 @@ export class SignInCustomElement
         }
         catch (error)
         {
-            this.model.error = error;
-
             Log.error("Sign in failed.", error);
         }
         finally

@@ -1,8 +1,9 @@
 {
     "sighUp": "Sign up",
     "signIn": "Sign in",
+    "chooseOrganization": "Choose organization",
     "sighOut": "Sign out",
-    "activate": "Activate account",
+    "confirmEmail": "Confirm email",
     "forgotPassword": "Forgot password",
     "changePassword": "Change password"
 }

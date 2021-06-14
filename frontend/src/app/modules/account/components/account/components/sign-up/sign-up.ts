@@ -1,9 +1,9 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
-import { AccountService } from "app/modules/account/services/account";
+import { OrganizationService } from "app/model/organization";
+import { AccountService } from "app/modules/account/services/account/account-service";
 import { IAccountInit } from "app/modules/account/services/account/account-init";
-import { PhoneNumber } from "app/model/shared";
 
 export interface ISignUpModel extends Partial<IAccountInit>
 {
@@ -11,6 +11,11 @@ export interface ISignUpModel extends Partial<IAccountInit>
      * The slug identifying the current view presented by the component.
      */
     view: "sign-up";
+
+    /**
+     * The name of the organization.
+     */
+    organizationName?: string;
 
     /**
      * The full name of the user.
@@ -33,11 +38,6 @@ export interface ISignUpModel extends Partial<IAccountInit>
     password?: string;
 
     /**
-     * The phone number specified by the user.
-     */
-    phoneNumber?: PhoneNumber;
-
-    /**
      * True if the user accepts the terms of service, otherwise false.
      */
     acceptTerms?: boolean;
@@ -56,11 +56,6 @@ export interface ISignUpModel extends Partial<IAccountInit>
      * True if the operation was completed, otherwise false.
      */
     done?: boolean;
-
-    /**
-     * The error that occurred while executing the operation, if any.
-     */
-    error?: Error;
 }
 
 @autoinject
@@ -69,13 +64,16 @@ export class SignUpCustomElement
     /**
      * Creates a new instance of the type.
      * @param accountService The `AccountService` instance.
+     * @param organizationService The `OrganizationService` instance.
      */
-    public constructor(accountService: AccountService)
+    public constructor(accountService: AccountService, organizationService: OrganizationService)
     {
         this._accountService = accountService;
+        this._organizationService = organizationService;
     }
 
     private readonly _accountService: AccountService;
+    private readonly _organizationService: OrganizationService;
 
     /**
      * The model representing the state of the component.
@@ -110,6 +108,7 @@ export class SignUpCustomElement
     /**
      * Called when a key is pressed.
      * Submits the form if the `Enter` key is pressed.
+     * @param event The keyboard event.
      * @returns True to continue, false to prevent default.
      */
     protected onKeyDown(event: KeyboardEvent): boolean
@@ -121,7 +120,8 @@ export class SignUpCustomElement
 
         if (event.key === "Enter")
         {
-            this.onSignUpClick().catch();
+            // tslint:disable-next-line: no-floating-promises
+            this.onSignUpClick();
 
             return false;
         }
@@ -154,16 +154,18 @@ export class SignUpCustomElement
                 password: this.model.password!
             });
 
+            await this._organizationService.create(
+            {
+                name: this.model.organizationName!
+            });
+
             // tslint:disable-next-line: await-promise
             await this.model.onSignedUp?.();
 
-            this.model.error = undefined;
             this.model.done = true;
         }
         catch (error)
         {
-            this.model.error = error;
-
             Log.error("Sign up failed.", error);
         }
         finally

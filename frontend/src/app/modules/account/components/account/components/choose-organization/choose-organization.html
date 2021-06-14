@@ -1,0 +1,41 @@
+<template>
+
+    <require from="./choose-organization.scss"></require>
+
+    <template if.bind="!model.busy && !model.done">
+
+        <div surface="base">
+
+            <button repeat.for="organization of organizations" class="choose-organization-item margin-top" appearance="solid" accent="primary" click.delegate="onOrganizationClick(organization)">
+                ${organization.name}
+            </button>
+
+            <toolbar class="margin-top">
+
+                <a tabindex="0" click.trigger="onCreateOrganizationClick()" translate>
+                    Create new organization
+                </a>
+
+            </toolbar>
+
+        </div>
+
+    </template>
+
+    <template if.bind="model.busy && !model.done">
+
+        <busy-indicator class="font-largest animation-fade-in-medium au-enter-active" translate>
+            Signing in…
+        </busy-indicator>
+
+    </template>
+
+    <template if.bind="!model.busy && model.done">
+
+        <div class="font-large" translate>
+            Signed in
+        </div>
+
+    </template>
+
+</template>

@@ -2,9 +2,10 @@ import { autoinject, bindable } from "aurelia-framework";
 import { ISignUpModel } from "./components/sign-up/sign-up";
 import { ISignInModel } from "./components/sign-in/sign-in";
 import { ISignOutModel } from "./components/sign-out/sign-out";
-import { IActivateModel } from "./components/activate/activate";
+import { IConfirmEmailModel } from "./components/confirm-email/confirm-email";
 import { IForgotPasswordModel } from "./components/forgot-password/forgot-password";
 import { IChangePasswordModel } from "./components/change-password/change-password";
+import { IChooseOrganizationModel } from "./components/choose-organization/choose-organization";
 
 type AccountCallbacks = Pick<ISignUpModel, "onSignedUp"> & Pick<ISignInModel, "onSignedIn">;
 
@@ -14,12 +15,12 @@ type AccountCallbacks = Pick<ISignUpModel, "onSignedUp"> & Pick<ISignInModel, "o
 export type AccountModel =
 (
     ISignUpModel & AccountCallbacks |
-    IActivateModel & AccountCallbacks |
+    IConfirmEmailModel & AccountCallbacks |
     ISignInModel & AccountCallbacks |
     IForgotPasswordModel & AccountCallbacks |
     IChangePasswordModel & AccountCallbacks |
-    ISignOutModel & AccountCallbacks
-
+    ISignOutModel & AccountCallbacks |
+    IChooseOrganizationModel & AccountCallbacks
 ) &
 {
     /**

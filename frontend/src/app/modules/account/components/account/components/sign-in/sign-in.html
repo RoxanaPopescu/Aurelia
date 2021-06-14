@@ -40,6 +40,14 @@
 
             <toolbar class="margin-top">
 
+                <check-toggle label="after" value.bind="model.remember">
+
+                    <span slot="heading" translate>
+                        Remember me
+                    </span>
+
+                </check-toggle>
+
                 <a tabindex="0" class="flex-push-right text-align-right" click.trigger="onForgotPasswordClick()" translate>
                     Forgot your password?
                 </a>
@@ -56,7 +64,6 @@
 
         </div>
 
-        <!--
         <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
 
         <div surface="base">
@@ -70,7 +77,6 @@
             </button>
 
         </div>
-        -->
 
     </template>
 
@@ -86,14 +92,6 @@
 
         <div class="font-large" translate>
             Signed in
-        </div>
-
-    </template>
-
-    <template if.bind="!model.busy && model.error">
-
-        <div class="font-large" accent="negative" translate>
-            Failed to sign in
         </div>
 
     </template>
