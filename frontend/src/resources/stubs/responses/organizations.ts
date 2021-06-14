@@ -1,19 +1,25 @@
+import { IApiRequestOptions } from "shared/infrastructure";
+
+const organizations =
+[
+  { name: "Mover", id: "mover-organization-id" },
+  { name: "IKEA", id: "ikea-organization-id" },
+  { name: "Coop", id: "coop-organization-id" }
+];
+
 // tslint:disable
 export default
 {
-    "POST /api/v1/organizations/create":
+    "POST /api/v1/organizations/create": (method: string, url: URL, options: IApiRequestOptions) =>
     {
-      status: 201
+      organizations.push(options.body as any);
+
+      return { status: 201 };
     },
 
     "GET /api/v1/organizations":
     {
-      body:
-      [
-        { name: "Mover", id: "mover-organization-id" },
-        { name: "IKEA", id: "ikea-organization-id" },
-        { name: "Coop", id: "coop-organization-id" }
-      ]
+      body: organizations
     },
 
     "GET /api/v1/organizations/mover-organization-id":
