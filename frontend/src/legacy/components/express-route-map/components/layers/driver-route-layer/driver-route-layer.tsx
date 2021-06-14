@@ -49,7 +49,6 @@ export class DriverRouteLayer extends React.Component<DriverRouteLayerProps> {
                         key={`DriverMarker-${this.props.route.driver.id}`}
                         route={this.props.route}
                         onClick={() => this.onRouteClick()}
-                        faded={!this.props.route.selected}
                     />}
 
             </React.Fragment>

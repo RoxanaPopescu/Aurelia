@@ -82,6 +82,23 @@ export class RoutesColumnCustomElement
                 let aPropertyValue = a[this.sorting.property];
                 let bPropertyValue = b[this.sorting.property];
 
+                // We can't access properties with . in them
+                if (this.sorting.property === "vehicleType.name")
+                {
+                    aPropertyValue = a.vehicleType.name;
+                    bPropertyValue = b.vehicleType.name;
+                }
+                else if (this.sorting.property === "pickupLocation.address")
+                {
+                    aPropertyValue = a.pickupLocation.address;
+                    bPropertyValue = b.pickupLocation.address;
+                }
+                else if (this.sorting.property === "consignor.primaryName")
+                {
+                    aPropertyValue = a.consignor?.primaryName;
+                    bPropertyValue = b.consignor?.primaryName;
+                }
+
                 if (aPropertyValue instanceof Duration || aPropertyValue instanceof DateTime)
                 {
                     aPropertyValue = aPropertyValue.valueOf();

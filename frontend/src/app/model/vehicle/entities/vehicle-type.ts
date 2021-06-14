@@ -21,7 +21,7 @@ export class VehicleType
         this.slug = data.slug;
         this.maxHeight = data.maxHeight;
         this.maxWidth = data.maxWidth;
-        this.maxWeight = data.maxWeight;
+        this.maxLength = data.maxLength;
         this.name = data.name[localeService.locale.code.substring(0, 2)];
         this.images = data.images;
     }

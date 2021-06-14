@@ -21,7 +21,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
     const position = this.props.route.driverPosition!.toGoogleLatLng();
 
-    const labelText = this.props.route.driver.name.initials;
+    const labelText = (this.props.route.vehicle?.type.name[0] ?? "").toUpperCase();
 
     return (
       <MarkerWithLabel

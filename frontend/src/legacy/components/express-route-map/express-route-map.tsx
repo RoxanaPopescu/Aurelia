@@ -205,7 +205,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         <DriverMarker
                             key={`DriverMarker-${this.props.driverRoutes![0].driver.id}`}
                             route={this.props.driverRoutes![0]}
-                            faded={!this.props.driverRoutes![0].selected}
+                            faded={!this.props.driverRoutes![0].available}
                             onClick={() =>
                                 { this.isConnecting = !this.isConnecting; this.props.onConnectedStopClick(null); }}
                         />}
