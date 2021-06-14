@@ -202,16 +202,14 @@ export class DriverRoute
      */
      public get nextStop(): DriverRouteStop | undefined
      {
-         const lastStop = this.stops
-         .find(s =>
-             s.status.slug === "not-visited");
+        const lastStop = this.stops.find(s => s.status.slug === "not-visited");
 
         if (lastStop?.stopNumber === this.stops.length)
         {
             return undefined;
-        } else {
-            return lastStop;
         }
+
+        return lastStop;
      }
 
     /**
