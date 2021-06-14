@@ -197,6 +197,24 @@ export class DriverRoute
     }
 
     /**
+     * The next stop on the route, or undefined
+     * if all stops have been visited or cancelled.
+     */
+     public get nextStop(): DriverRouteStop | undefined
+     {
+         const lastStop = this.stops
+         .find(s =>
+             s.status.slug === "not-visited");
+
+        if (lastStop?.stopNumber === this.stops.length)
+        {
+            return undefined;
+        } else {
+            return lastStop;
+        }
+     }
+
+    /**
      * The current or next stop on the route, or undefined
      * if all stops have been visited or cancelled.
      */
