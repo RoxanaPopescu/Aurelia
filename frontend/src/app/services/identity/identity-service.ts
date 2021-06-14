@@ -141,11 +141,12 @@ export class IdentityService
         {
             this.setTokens(tokens);
 
-            // Verify if we need to update the tokens
+            // Verify if we need to update the tokens.
             const padding = Duration.fromObject({ minutes: 2 });
+
             if (tokens.accessTokenExpires.diffNow().minus(padding).as("seconds") < 0)
             {
-                // Allow re-authenticate if refresh token is still valid
+                // Allow re-authenticate if refresh token is still valid.
                 if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
                 {
 
@@ -160,7 +161,6 @@ export class IdentityService
                 else
                 {
                     await this.unauthenticate();
-                    // TODO: Show toast that you have been logged out. Does not currently work
 
                     return false;
                 }
@@ -190,12 +190,10 @@ export class IdentityService
             if (error.response != null && ![401, 403].includes(error.response.status))
             {
                 await this.unauthenticate();
-                // TODO: Show toast that you have been logged out. Does not currently work
             }
             else
             {
                 await this.unauthenticate();
-                // TODO: Show inline that you can retry instead of us logging out.
             }
 
             return false;
