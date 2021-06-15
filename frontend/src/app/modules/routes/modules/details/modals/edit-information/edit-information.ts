@@ -49,7 +49,7 @@ export class EditInformationPanel
     /**
      * The available vehicle types.
      */
-    protected vehicleTypes: VehicleType[];
+     public vehicleTypes: VehicleType[];
 
     /**
      * Called by the framework when the modal is activated.
