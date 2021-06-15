@@ -89,12 +89,11 @@ export class OrdersEventsModule extends AppModule
                         {
                             eventType: "authority-to-leave-revoked",
                             version: "1.0"
+                        },
+                        {
+                            eventType: "notification-order-sms-sent",
+                            version: "1.0"
                         }
-                        // TODO: Enable once supported by the backend.
-                        // {
-                        //     eventType: "notification-order-sms-sent",
-                        //     version: "1.0"
-                        // }
                     ],
                     ownerId: context.request.body.consignorId,
                     ownerOrderId: context.request.body.orderId
