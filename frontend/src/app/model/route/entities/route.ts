@@ -124,7 +124,8 @@ export class Route extends AbstractRoute<RouteStop>
             driverInstructions: this.driverInstructions,
             tags: this.tags,
             productType: this.productType,
-            reference: this.reference
+            reference: this.reference,
+            vehicleType: this.vehicleType.id
         };
     }
 }

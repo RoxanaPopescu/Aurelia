@@ -3,31 +3,31 @@ import { Log } from "shared/infrastructure";
 import { Modal } from "shared/framework";
 import { RouteService, RouteStatus, Route } from "app/model/route";
 import { ProductType } from "app/model/product";
+import { VehicleService, VehicleType } from "app/model/vehicle";
 
 @autoinject
 export class EditInformationPanel
 {
     /**
      * Creates a new instance of the class.
-     * @param routeService The `RouteService` instance.
-     * @param modalService The `ModalService` instance.
-     * @param identityService The `IdentityService` instance.
-     * @param router The `Router` instance.
      * @param modal The `Modal` instance.
      * @param routeService The `OrderService` instance.
+     * @param vehicleService The `VehicleService` instance.
      */
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
-    public constructor(modal: Modal, routeService: RouteService)
+    public constructor(modal: Modal, routeService: RouteService, vehicleService: VehicleService)
     {
         this._modal = modal;
         this._routeService = routeService;
+        this._vehicleService = vehicleService;
     }
 
     private readonly _routeService: RouteService;
+    private readonly _vehicleService: VehicleService;
     private readonly _modal: Modal;
     private _result: Route | undefined;
 
@@ -47,10 +47,16 @@ export class EditInformationPanel
     public model: Route;
 
     /**
+     * The available vehicle types.
+     */
+    protected vehicleTypes: VehicleType[];
+
+    /**
      * Called by the framework when the modal is activated.
      */
-    public activate(model: { route: Route }): void
+    public async activate(model: { route: Route }): Promise<void>
     {
+        this.vehicleTypes = await this._vehicleService.getTypes();
         this.model = model.route.clone();
     }
 

@@ -69,6 +69,30 @@
 
                 </div>
 
+                <div class="margin-large-bottom">
+
+                    <select-input label="above" none.bind="false" value.bind="model.vehicleType" display-value.bind="model.vehicleType.name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Vehicle type
+                        </div>
+
+                        <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                            ${vehicleType.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.vehicleType.type">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
                 <div class="control-row margin-large-bottom">
 
                     <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" display-value.bind="model.driverInstructions.name" class="flex-basis-1-of-1">
