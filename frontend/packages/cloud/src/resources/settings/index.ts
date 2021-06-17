@@ -98,6 +98,12 @@ export default
             themeSlug: "ikea"
         },
         {
+            hostname: /(^|\.)tms.interflora.dk$/,
+            localeCode: "da",
+            currencyCode: "DKK",
+            themeSlug: "ikea"
+        },
+        {
             hostname: /./,
             localeCode: "en-US",
             currencyCode: "DKK",

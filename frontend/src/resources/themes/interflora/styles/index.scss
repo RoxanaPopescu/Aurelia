@@ -1,0 +1,187 @@
+////
+/// @group resources/themes/interflora
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+@import "./settings/font-family";
+
+// Export the surfaces.
+// Surfaces define theme specific overrides to the base surfaces.
+@import "./surfaces/index";
+
+// HACK: Override default styles.
+
+button[appearance="outline"]
+{
+    border-width: var(--border-width-thin) !important;
+    border-color: var(--palette-color-neutral) !important;
+}
+
+modal-panel[position="right"] .modal-panel-actions button[appearance="icon"]:not([accent]),
+.modal-dialog-actions button[appearance="icon"]:not([accent]),
+.toast-actions
+{
+    color: var(--surface-primary-icon-color);
+}
+
+tab-nav
+{
+    /**
+     * The color of the border of tabs.
+     */
+    --tab-nav-border-color: var(--palette-color-neutral);
+
+    /**
+     * The width of the border of tabs.
+     */
+     --tab-nav-border-width: var(--border-width-thin);
+}
+
+page-tab-nav
+{
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-thin);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--palette-color-neutral);;
+}
+
+body
+{
+    /**
+     * The width of the border of inputs.
+     */
+    --input-border-width: var(--border-width-thin);
+}
+
+dropdown-icon
+{
+    opacity: 1;
+}
+
+// NEW:
+
+data-table[appearance="rows"]
+{
+    --data-table-header-padding: 10rem 14rem;
+    --data-table-cell-padding: 10rem 14rem;
+    --data-table-cell-background--hover: var(--palette-color-primary-lighter);
+}
+
+page-sidebar page-header,
+page-sidebar page-section,
+page-sidebar page-footer,
+page-content page-section,
+page-content page-footer,
+{
+    margin: 24rem 28rem !important;
+}
+
+page-content page-header,
+{
+    padding: 24rem 28rem !important;
+}
+
+html
+{
+    page-sidebar
+    {
+        .input-heading > *,
+        .input-description > *,
+        .toggle-heading > *,
+        .toggle-description > *
+        {
+            opacity: 0.9 !important;
+            color: inherit !important;
+        }
+    }
+}
+
+html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    margin: 0;
+    padding: 8rem 0 5px 0;
+    border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
+    background: none !important;
+    color: var(--palette-color-neutral-darker);
+    font-weight: 600;
+}
+
+body
+{
+    --modal-backdrop-color: rgba(200, 192, 172, 0.5);
+    --app-sidebar-width: 60rem;
+    --toggle-height: 1.75em !important;
+}
+
+html app-sidebar
+{
+    --surface-nav-link-surface-icon-color: hsl(43, 10%, 58%) !important;
+    --surface-nav-child-link-surface-icon-color: hsl(43, 10%, 70%) !important;
+
+    &,
+    header::before,
+    footer::before
+    {
+        --surface-color: var(--palette-color-neutral-darker) !important;
+    }
+
+    app-logo
+    {
+        margin: 36rem 8rem 24rem 8rem;
+        height: 36rem;
+    }
+
+    user-identity
+    {
+        margin-bottom: 12rem;
+
+        a identity-picture
+        {
+            width: 36rem;
+            height: 36rem;
+            background: var(--palette-color-primary--child);
+        }
+
+        + .nav-link
+        {
+            padding-top: 4rem !important;
+            padding-bottom: 4rem !important;
+        }
+    }
+
+    &:not(.--expanded)
+    {
+        .nav-link
+        {
+            padding: 12rem 18rem;
+        }
+
+        .sidebar-child-link
+        {
+            padding: 7rem 0 7rem 22rem;
+        }
+    }
+
+    &.--expanded user-identity
+    {
+        margin-left: 24rem;
+    }
+}

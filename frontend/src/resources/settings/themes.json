@@ -32,6 +32,14 @@
         }
     },
     {
+        "slug": "interflora",
+        "name": "Interflora",
+        "preview":
+        {
+            "primary": "#cbad61"
+        }
+    },
+    {
         "slug": "lingu-light",
         "name": "Lingu (Light)",
         "preview":
