@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  azure-cli: circleci/azure-cli@1.0.3
+  azure-cli: circleci/azure-cli@1.2.0
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
