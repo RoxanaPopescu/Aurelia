@@ -7,7 +7,7 @@
             <square150x150logo src="/resources/themes/interflora/integration/microsoft/tile-square.png"/>
             <square310x310logo src="/resources/themes/interflora/integration/microsoft/tile-square.png"/>
             <wide310x150logo src="/resources/themes/interflora/integration/microsoft/tile-wide.png"/>
-            <TileColor>#11253E</TileColor>
+            <TileColor>#1e1e1e</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
