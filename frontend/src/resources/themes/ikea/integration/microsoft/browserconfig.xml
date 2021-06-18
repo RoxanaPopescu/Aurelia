@@ -7,7 +7,7 @@
             <square150x150logo src="/resources/themes/ikea/integration/microsoft/tile-square.png"/>
             <square310x310logo src="/resources/themes/ikea/integration/microsoft/tile-square.png"/>
             <wide310x150logo src="/resources/themes/ikea/integration/microsoft/tile-wide.png"/>
-            <TileColor>#11253e</TileColor>
+            <TileColor>#0051ba</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
