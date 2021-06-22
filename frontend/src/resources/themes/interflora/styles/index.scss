@@ -24,6 +24,11 @@ $__summary: comment;
 
 // HACK: Override default styles.
 
+page[name="account"]
+{
+    background-color: #060606 !important;
+}
+
 button[appearance="outline"]
 {
     border-width: var(--border-width-thin) !important;
