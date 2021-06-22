@@ -1,11 +1,10 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { IValidation } from "shared/framework";
+import { DateTime, Zone } from "luxon";
 import { Log } from "shared/infrastructure";
-import { Modal } from "shared/framework/services/modal/modal";
+import { IValidation, Modal } from "shared/framework";
+import { VehicleType } from "app/model/vehicle";
 import { OrderInfo } from "app/model/order";
 import { RouteService } from "app/model/route";
-import { VehicleType } from "app/model/vehicle";
-import { DateTime, Zone } from "luxon";
 
 @autoinject
 export class CreateRoutePanel
@@ -23,7 +22,7 @@ export class CreateRoutePanel
 
     private readonly _routeService: RouteService;
     private readonly _modal: Modal;
-    private _result?: { slug: string; collectionPointIds?: string[] };
+    private _result: { slug: string; collectionPointIds?: string[] } | undefined;
 
     /**
      * The model for the modal.
@@ -153,7 +152,7 @@ export class CreateRoutePanel
         }
         catch (error)
         {
-            Log.error("Could not save the route stop", error);
+            Log.error("Could not create the route", error);
         }
         finally
         {

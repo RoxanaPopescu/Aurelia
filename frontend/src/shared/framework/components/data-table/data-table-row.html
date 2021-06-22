@@ -10,6 +10,7 @@
         ${movable && dataTable.move != null && model != null ? '--movable' : ''}
         ${class}"
         href.bind="clickable !== false ? href : undefined"
+        target.bind="target"
         accent.bind="accent & attr"
         click.delegate="onClick($event)"
         mouseenter.trigger="onMouseEnter($event)">
