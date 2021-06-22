@@ -165,23 +165,6 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button
-                        disabled.bind="selectedOrders.length === 0"
-                        if-claims="edit-routes"
-                        click.delegate="onCreateRouteClick(selectedOrders)"
-                        appearance="outline"
-                        accent="primary">
-
-                        <span if.bind="selectedOrders.length === 0" translate>
-                            Create route
-                        </span>
-
-                        <span if.bind="selectedOrders.length !== 0" translate>
-                            Create route (${selectedOrders.length})
-                        </span>
-
-                    </button>
-
                     <button if-claims="create-order" appearance="outline" accent="primary" page-href="path: /orders/create" class="flex-row">
 
                         <icon name="add" class="font-larger margin-right"></icon>
@@ -201,6 +184,28 @@
                         <item click.trigger="onSelectColumnsClick()" translate>
                             List columns
                         </item>
+
+                        <item
+                            disabled.bind="selectedOrders.length === 0"
+                            if-claims="edit-routes"
+                            click.delegate="onCreateRouteClick(selectedOrders)"
+                            translate>
+
+                            Create route from selected orders
+
+                        </item>
+
+                        <template if-environment="development">
+                            <item
+                                disabled.bind="selectedOrders.length === 0"
+                                if-claims="edit-order"
+                                click.trigger="onChangePickupAddressClick(selectedOrders)"
+                                translate>
+
+                                Change pickup address of selected orders
+
+                            </item>
+                        </template>
 
                     </select-button>
 

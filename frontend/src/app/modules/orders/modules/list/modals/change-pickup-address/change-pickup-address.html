@@ -1,0 +1,113 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+    <require from="./change-pickup-address.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="change-pickup-address" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade="0.3">
+
+            <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
+
+                <div translate>
+                    Change pickup address
+                </div>
+
+            </h1>
+
+        </modal-header>
+
+        <modal-section>
+
+            <div class="control-row">
+
+                <address-input label="above" value.bind="selectedPickupAddress" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        New pickup address
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="selectedPickupAddress">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Selected orders
+            </div>
+
+            <data-table
+                appearance="rows">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            ID
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+                        <!-- Icons -->
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="order of model.orders">
+
+                    <data-table-row href="/orders/details/${order.slug}" target="_blank">
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${order.slug}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+
+                            <button
+                                if.bind="model.orders.length > 1"
+                                title.translate="Remove order"
+                                class="icon-row"
+                                appearance="none"
+                                accent="primary"
+                                click.trigger="onRemoveOrderClick(order)">
+
+                                <icon name="delete-small"></icon>
+
+                            </button>
+
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+        </modal-section>
+
+        <div class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="primary" click.trigger="onChangePickupAddressClick()" translate>
+                Change pickup address
+            </button>
+
+        </div>
+
+    </modal-panel>
+
+</template>

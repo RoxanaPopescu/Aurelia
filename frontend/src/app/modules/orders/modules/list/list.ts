@@ -7,10 +7,12 @@ import { IScroll, ModalService, ToastService } from "shared/framework";
 import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug, OrderListColumn } from "app/model/order";
 import { Consignor } from "app/model/outfit";
+import { OrderSelectColumnsPanel } from "./modals/select-columns/select-columns";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
+import { ChangePickupAddressPanel } from "./modals/change-pickup-address/change-pickup-address";
 import createdRouteToast from "./resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "./resources/strings/created-collection-point-toast.json";
-import { OrderSelectColumnsPanel } from "./modals/select-columns/select-columns";
+import changedPickupAddressToast from "./resources/strings/changed-pickup-address-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -302,9 +304,28 @@ export class ListPage
     }
 
     /**
-     * Called when a "Create route" is clicked.
-     * Opens a modal showing the details of creating the route.
-     * @param orders The orders to makes the route from.
+     * Called when the `Select columns` button is clicked.
+     * Opens the panel for selecting the columns to see.
+     */
+    protected async onSelectColumnsClick(): Promise<void>
+    {
+        const columns = await this._modalService.open(
+            OrderSelectColumnsPanel,
+            this.columns
+        ).promise;
+
+        if (columns != null)
+        {
+            this.customColumns = columns;
+            this.results = undefined;
+            this.update();
+        }
+    }
+
+    /**
+     * Called when the `Create route from selected orders` button is clicked.
+     * Opens the create route panel.
+     * @param orders The selected orders.
      */
     protected async onCreateRouteClick(orders: OrderInfo[]): Promise<void>
     {
@@ -343,6 +364,31 @@ export class ListPage
     }
 
     /**
+     * Called when the `Change pickup address of selected orders` button is clicked.
+     * Opens the change pickup address panel.
+     * @param orders The selected orders.
+     */
+    protected async onChangePickupAddressClick(orders: OrderInfo[]): Promise<void>
+    {
+        const result = await this._modalService.open(ChangePickupAddressPanel, { orders: orders }).promise;
+
+        if (result)
+        {
+            const toastModel =
+            {
+                heading: changedPickupAddressToast.heading,
+                body: changedPickupAddressToast.body
+                    .replace("{orderCount}", orders.length.toString())
+            };
+
+            this._toastService.open("success", toastModel);
+
+            this.selectedOrders = [];
+            this.update();
+        }
+    }
+
+    /**
      * Called when the from date changes.
      * Ensures the to date remains valid.
      */
@@ -363,25 +409,6 @@ export class ListPage
         if (this.fromDateFilter && this.toDateFilter && this.toDateFilter.valueOf() < this.fromDateFilter.valueOf())
         {
             this.fromDateFilter = this.toDateFilter;
-        }
-    }
-
-    /**
-     * Called when the `Select columns` button is clicked.
-     * Opens the panel for selecting the columns to see.
-     */
-    protected async onSelectColumnsClick(): Promise<void>
-    {
-        const columns = await this._modalService.open(
-            OrderSelectColumnsPanel,
-            this.columns
-        ).promise;
-
-        if (columns != null)
-        {
-            this.customColumns = columns;
-            this.results = undefined;
-            this.update();
         }
     }
 

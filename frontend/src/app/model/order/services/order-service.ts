@@ -7,6 +7,7 @@ import { OrderInfo } from "../entities/order-info";
 import { getLegacyOrderSortProperty, getLegacySortDirection, getLegacyOrderStatus } from "legacy/helpers/api-helper";
 import { Order } from "../entities/order";
 import { OrderEvent } from "../entities/order-event";
+import { Address } from "app/model/shared";
 
 /**
  * Represents a service that manages orders.
@@ -186,5 +187,21 @@ export class OrderService
         {
             body: { id: order.id, slug: order.slug, status: status }
         });
+    }
+
+    /**
+     * Changes the pickup address of the specified orders.
+     * @param orders The orders for which the pickup address should be changed.
+     * @param address The new pickup address.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async changePickupAddress(orderIds: string[], address: Address): Promise<void>
+    {
+        const result = await this._apiClient.post("orders/change-pickup-address",
+        {
+            body: { orderIds, address }
+        });
+
+        return result.data;
     }
 }
