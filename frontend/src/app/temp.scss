@@ -70,6 +70,12 @@ path-nav > *:not(:last-child)::after, path-nav > a[accent="inherit"]:not(:last-c
     mask-position: center;
 }
 
+page-header
+{
+    // Preven z-order bugs when the header fades out on scroll.
+    z-index: 3;
+}
+
 page-header tab-nav tab button
 {
     min-width: 160rem !important;
