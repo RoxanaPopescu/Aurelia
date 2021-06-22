@@ -101,7 +101,7 @@ export default
             hostname: /(^|\.)tms.interflora.dk$/,
             localeCode: "da",
             currencyCode: "DKK",
-            themeSlug: "ikea"
+            themeSlug: "interflora"
         },
         {
             hostname: /./,
