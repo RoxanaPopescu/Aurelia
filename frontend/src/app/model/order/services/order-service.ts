@@ -194,6 +194,7 @@ export class OrderService
      * @param orders The orders for which the pickup address should be changed.
      * @param address The new pickup address.
      * @returns A promise that will be resolved when the operation succeedes.
+     * @deprecaated Not yet implemented in BFF or backend; see TECH-5714.
      */
     public async changePickupAddress(orderIds: string[], address: Address): Promise<void>
     {
