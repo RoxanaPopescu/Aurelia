@@ -444,6 +444,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'planned-start-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.stops[0].arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'delayed-stops'">
                                     <span class="text-truncate">
                                         ${delayedStops(route)}

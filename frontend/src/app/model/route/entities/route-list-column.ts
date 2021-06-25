@@ -181,6 +181,13 @@ export class RouteListColumn
             columnSize: "min-content",
             column: "visible"
         },
+        "planned-start-time-frame":
+        {
+            name: "Planned start time",
+            columnName: "Starttime",
+            columnSize: "min-content",
+            column: "visible"
+        },
         "criticality":
         {
             name: "Criticality",
