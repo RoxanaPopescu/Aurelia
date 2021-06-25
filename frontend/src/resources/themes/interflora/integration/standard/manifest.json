@@ -1,0 +1,19 @@
+{
+    "name": "Interflora",
+    "short_name": "Interflora",
+    "start_url": "/",
+    "display": "minimal-ui",
+    "background_color": "#ffffff",
+    "theme_color": "#cbad61",
+    "icons":
+    [
+        {
+            "src": "/resources/themes/interflora/integration/standard/icon.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "related_applications":
+    [
+    ]
+}

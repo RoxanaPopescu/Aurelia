@@ -7,7 +7,7 @@
             <square150x150logo src="/resources/themes/coop/integration/microsoft/tile-square.png"/>
             <square310x310logo src="/resources/themes/coop/integration/microsoft/tile-square.png"/>
             <wide310x150logo src="/resources/themes/coop/integration/microsoft/tile-wide.png"/>
-            <TileColor>#0747a6</TileColor>
+            <TileColor>#c80016</TileColor>
         </tile>
     </msapplication>
 </browserconfig>

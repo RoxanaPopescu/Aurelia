@@ -93,7 +93,7 @@ export class RouteListColumn
         },
         "stop-count":
         {
-            name: "Stops count",
+            name: "Stop count",
             columnName: "Stops",
             columnSize: "min-content",
             sortingName: "stop-count",

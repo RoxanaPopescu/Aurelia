@@ -35,6 +35,12 @@ export class DataTableRowCustomElement
     public href: string | undefined;
 
     /**
+     * The browsing context in which to open the specified URL.
+     */
+    @bindable({ defaultValue: "_self" })
+    public target: "_self" | "_blank" | "_parent" | "_top";
+
+    /**
      * The accent to apply to the row, or undefined to apply no accent.
      */
     @bindable
