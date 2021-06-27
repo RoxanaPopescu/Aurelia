@@ -97,11 +97,21 @@ export class PasswordInputCustomElement
     }
 
     /**
+     * Called when the input looses focus.
+     * Ensures the password is hidden.
+     */
+    protected onBlur(): void
+    {
+        this.reveal = false;
+    }
+
+    /**
      * Called when the `Reveal password` icon is clicked.
      * Toggles whether the password is revealed or hidden.
      */
     protected onToggleRevealClick(): void
     {
         this.reveal = !this.reveal;
+        this.inputElement.focus();
     }
 }

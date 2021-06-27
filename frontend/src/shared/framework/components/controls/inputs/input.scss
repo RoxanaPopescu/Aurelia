@@ -260,14 +260,13 @@
                 // Apply the input padding before the icon.
                 margin: var(--input-padding);
                 margin-top: 0;
-                margin-right: 0;
                 margin-bottom: 0;
             }
 
-            > icon:not(:first-child)
+            > icon
             {
-                // Apply inline spacing before the icon.
-                margin-left: var(--size-inline-spacing);
+                // Apply inline spacing after the icon.
+                margin-right: var(--size-inline-spacing);
             }
         }
 
@@ -288,14 +287,13 @@
                 // Apply the input padding after the icon.
                 margin: var(--input-padding);
                 margin-top: 0;
-                margin-left: 0;
                 margin-bottom: 0;
             }
 
-            > icon:not(:last-child)
+            > icon
             {
-                // Apply inline spacing after the icon.
-                margin-right: var(--size-inline-spacing);
+                // Apply inline spacing before the icon.
+                margin-left: var(--size-inline-spacing);
             }
         }
 

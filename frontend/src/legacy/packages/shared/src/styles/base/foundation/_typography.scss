@@ -516,12 +516,17 @@ img, svg, iframe, embed, object, video, audio
     // Ensure consistent border.
     border: none;
 
-    // Scale the content to fit the width of its container, while preserving its aspect ratio.
-    width: 100%;
-    height: auto;
+    // HACK: This should probably be a `--responsive` selector, but for now, we just scoped this
+    // to images within the `main` element, so we don't risk breaking anything.
+    main &
+    {
+        // Scale the content to fit the width of its container, while preserving its aspect ratio.
+        width: 100%;
+        height: auto;
 
-    // Prevent the content from scaling beyond the width of its container.
-    max-width: 100%;
+        // Prevent the content from scaling beyond the width of its container.
+        max-width: 100%;
+    }
 }
 
 a img
