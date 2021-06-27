@@ -183,7 +183,7 @@
         display: none;
     }
 
-    &:focus-within > .input-label
+    &.--open:focus-within > .input-label
     {
         // Make the label non-clickable when focus is already within.
         pointer-events: none;
@@ -236,6 +236,11 @@
                 --input-border-width: 0;
                 --input-border-radius: 0;
             }
+
+            > icon.--clickable
+            {
+                cursor: pointer;
+            }
         }
 
         > span[slot="before"]
@@ -248,6 +253,24 @@
             white-space: nowrap;
         }
 
+        > div[slot="before"]
+        {
+            > icon:first-child
+            {
+                // Apply the input padding before the icon.
+                margin: var(--input-padding);
+                margin-top: 0;
+                margin-right: 0;
+                margin-bottom: 0;
+            }
+
+            > icon:not(:first-child)
+            {
+                // Apply inline spacing before the icon.
+                margin-left: var(--size-inline-spacing);
+            }
+        }
+
         > span[slot="after"]
         {
             // Apply the input padding, except at the end closest to the input value.
@@ -256,6 +279,24 @@
 
             // Prevent wrapping.
             white-space: nowrap;
+        }
+
+        > div[slot="after"]
+        {
+            > icon:last-child
+            {
+                // Apply the input padding after the icon.
+                margin: var(--input-padding);
+                margin-top: 0;
+                margin-left: 0;
+                margin-bottom: 0;
+            }
+
+            > icon:not(:last-child)
+            {
+                // Apply inline spacing after the icon.
+                margin-right: var(--size-inline-spacing);
+            }
         }
 
         > .input-control-inner

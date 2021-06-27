@@ -895,6 +895,54 @@
 
             </design-item>
 
+            <design-item heading="password-input">
+
+                <design-row heading="password-input">
+
+                    <design-column heading="enabled">
+
+                        <password-input value.bind="password" label.bind="labelPosition & attr">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                            <span slot="placeholder">
+                                Placeholder
+                            </span>
+
+                        </password-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <password-input value.bind="password" label.bind="labelPosition & attr" disabled.one-time="true">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                            <span slot="placeholder">
+                                Placeholder
+                            </span>
+
+                        </password-input>
+
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="text-input">
 
                 <design-row heading="Single-line text input">

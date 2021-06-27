@@ -79,10 +79,10 @@ export class PasswordInputCustomElement
     public maxlength: number | undefined;
 
     /**
-     * True to remove leading and trailing whitespace, otherwise false.
+     * True if the password is revealed, otherwise false.
      */
     @bindable({ defaultValue: false })
-    public trim: boolean;
+    public reveal: boolean;
 
     /**
      * Called when the input receives focus.
@@ -97,14 +97,11 @@ export class PasswordInputCustomElement
     }
 
     /**
-     * Called when the input looses focus.
-     * If enabled, trims the value to remove leading and trailing whitespace.
+     * Called when the `Reveal password` icon is clicked.
+     * Toggles whether the password is revealed or hidden.
      */
-    protected onBlur(): void
+    protected onToggleRevealClick(): void
     {
-        if (this.trim && this.value)
-        {
-            this.value = this.value.trim();
-        }
+        this.reveal = !this.reveal;
     }
 }
