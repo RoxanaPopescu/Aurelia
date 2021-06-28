@@ -27,5 +27,26 @@ export class DriversModule extends AppModule
             context.response.body = result.data;
             context.response.status = 200;
         });
+
+        /**
+         * Returns online drivers in the specific area
+         * @returns 200 OK if successfull
+         */
+         this.router.post("/v2/drivers/online-in-area", async context =>
+         {
+             context.authorize();
+
+             const body = context.request.body;
+             body.fulfillerIds = [context.user?.outfitId];
+
+             const result = await this.apiClient.post("logistics-platform/drivers/online-in-area",
+             {
+                 noi: true,
+                 body: body
+             });
+
+             context.response.body = result.data;
+             context.response.status = 200;
+         });
     }
 }
