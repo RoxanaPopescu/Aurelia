@@ -1,5 +1,4 @@
 import { Profile } from "../model/profile";
-import { Base } from "shared/src/webKit";
 import { GUID } from "shared/src/webKit";
 
 export default class BaseService {
@@ -60,10 +59,6 @@ export default class BaseService {
   }
 
   static baseURL(version: "v1" | "v2"): string {
-    if (Base.isProduction) {
-      return "https://consignor-bff.mover.dk/";
-    } else {
-      return `${ENVIRONMENT.apiBaseUrl}${version}/`;
-    }
+    return `api/${version}/`;
   }
 }
