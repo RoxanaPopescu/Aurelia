@@ -385,11 +385,12 @@ export class LiveTrackingService {
 
     let body = {
       "northEastPosition": { "latitude": northEast.lat(), "longitude": northEast.lng() },
-      "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() }
+      "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() },
+      "vehicleTypes": this.filter.vehicleTypeIds
     };
 
     const response = await fetch(
-      BaseService.url("drivers/onlineInArea"),
+      BaseService.url("drivers/online-in-area", undefined, "v2"),
       BaseService.defaultConfig(body)
     );
 

@@ -6,7 +6,7 @@ interface Props {}
 export default class DeploymentComponent extends React.Component {
   constructor(props: Props) {
     super(props);
-    document.title = Base.baseURL() + "DeploymentEnvironment";
+    document.title = Base.baseURL("v1") + "DeploymentEnvironment";
   }
 
   render() {

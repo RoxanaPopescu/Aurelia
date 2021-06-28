@@ -96,6 +96,7 @@ export default
                 "routes/details": { version: "2", obfuscate: false },
                 "users/reactivate": { version: "2", obfuscate: false },
                 "drivers/send-message": { version: "2", obfuscate: false },
+                "drivers/online-in-area": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
