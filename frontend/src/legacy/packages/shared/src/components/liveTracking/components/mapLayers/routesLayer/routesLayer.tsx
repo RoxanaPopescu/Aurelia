@@ -18,7 +18,7 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
       <RouteDriverMarker
           key={`RouteDriverMarker-${route.id}`}
           route={route}
-          faded={this.props.service.onlineDrivers != null}
+          faded={false}
           onClick={route => this.onClick(route)}
           onSendSms={(driver) => this.props.service.sendSms(driver)}
         />
@@ -30,9 +30,12 @@ export class RoutesLayer extends React.Component<RoutesLayerProps> {
 
     return (
       <React.Fragment>
-        {routes.map(r =>
-          this.renderRoute(r)
-        )}
+
+        { this.props.service.onlineDrivers == null &&
+          routes.map(r =>
+            this.renderRoute(r)
+          )
+        }
 
         { this.props.service.onlineDrivers != null &&
           this.props.service.onlineDrivers.map(d =>
