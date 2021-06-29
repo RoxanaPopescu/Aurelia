@@ -38,6 +38,7 @@ export class DriversModule extends AppModule
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.outfitId];
+            body.currentOutfit = context.user?.outfitId;
 
             const result = await this.apiClient.post("logistics-platform/drivers/online-in-area",
             {
