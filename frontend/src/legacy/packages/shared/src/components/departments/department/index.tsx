@@ -161,7 +161,7 @@ export default class DepartmentComponent extends React.Component<Props> {
           ]}
         >
 
-          {Profile.claims.has("edit-department") &&
+          {Profile.claims.has("create-department") &&
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -203,7 +203,7 @@ export default class DepartmentComponent extends React.Component<Props> {
               departmentStore.validate &&
               departmentStore.departmentName === undefined
             }
-            readonly={!Profile.claims.has("edit-department")}
+            readonly={!Profile.claims.has("create-department")}
           />
           <Input
             className="c-departments-input"
