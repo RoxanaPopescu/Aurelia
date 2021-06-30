@@ -19,6 +19,7 @@ const departmentStore = new DepartmentStore();
 interface Props {
   // tslint:disable-next-line:no-any
   match?: any;
+  parentId: string;
   history?: H.History;
 }
 
@@ -35,13 +36,18 @@ export default class DepartmentComponent extends React.Component<Props> {
   componentDidMount() {
     this.startUp();
   }
-
   private startUp() {
     departmentStore.reset();
     departmentStore.departmentPublicId =
       this.props.match.params.id !== null
         ? this.props.match.params.id
         : undefined;
+
+    if (departmentStore.departmentPublicId == "create")
+    {
+      departmentStore.departmentPublicId = undefined;
+      // departmentStore.departmentParentId = this.props.parentId;
+    }
 
     if (departmentStore.departmentPublicId) {
       departmentStore.loading = true;
@@ -161,7 +167,7 @@ export default class DepartmentComponent extends React.Component<Props> {
           ]}
         >
 
-          {Profile.claims.has("create-department") &&
+          {Profile.claims.has("create-departments") &&
           <Button
             type={ButtonType.Action}
             size={ButtonSize.Medium}
@@ -171,10 +177,7 @@ export default class DepartmentComponent extends React.Component<Props> {
                 : this.createDepartment()
             }
             disabled={
-              departmentStore.departmentName === undefined ||
-              departmentStore.departmentPublicId === undefined ||
-              (departmentStore.departmentParentId === undefined &&
-                departmentStore.departmentId === undefined)
+              (departmentStore.departmentName == null || departmentStore.departmentPublicId == null) || (departmentStore.departmentParentId == null && departmentStore.departmentId == null)
             }
             loading={departmentStore.loading}
           >
@@ -203,7 +206,7 @@ export default class DepartmentComponent extends React.Component<Props> {
               departmentStore.validate &&
               departmentStore.departmentName === undefined
             }
-            readonly={!Profile.claims.has("create-department")}
+            readonly={!Profile.claims.has("create-departments")}
           />
           <Input
             className="c-departments-input"

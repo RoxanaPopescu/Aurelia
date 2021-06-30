@@ -1,3 +1,4 @@
+import { IdentityService } from "app/services/identity";
 import { autoinject } from "aurelia-framework";
 
 /**
@@ -7,6 +8,18 @@ import { autoinject } from "aurelia-framework";
 export class DetailsModule
 {
     protected id: string;
+    protected parentId : string;
+    protected readonly identityService: IdentityService;
+
+    /**
+     * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
+     */
+    public constructor(identityService: IdentityService)
+    {
+        this.identityService = identityService;
+        this.parentId = this.identityService.identity!.outfit.id;
+    }
 
     public activate(params: any): void
     {

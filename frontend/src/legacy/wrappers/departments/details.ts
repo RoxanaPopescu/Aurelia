@@ -21,14 +21,18 @@ export class DetailsCustomElement extends Wrapper
     @bindable
     public id: string;
 
+    @bindable
+    public parentid: string;
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
     public attached(): void
     {
-        super.attached(Component,
+        super.attached(Component, {},
         {
-            id: this.id
+            id: this.id,
+            parentId: this.parentid
         });
     }
 
