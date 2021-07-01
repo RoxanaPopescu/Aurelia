@@ -563,6 +563,15 @@
                         </item>
 
                         <item
+                            model="to-be-express-dispatched"
+                            if.bind="showLegacy"
+                            disabled.bind="['to-be-express-dispatched'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('to-be-express-dispatched')"
+                            translate>
+                            To be express dispatched
+                        </item>
+
+                        <item
                             model="in-progress"
                             disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)"
                             click.trigger="onStatusItemClick('in-progress')"

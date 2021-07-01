@@ -28,8 +28,12 @@ export class ExpressRoute implements IRouteReference
         this.pickupPostalCode = data.pickupPostalCode;
         this.deliveryPostalCode = data.deliveryPostalCode;
         this.timeToDeadline = Duration.fromObject({ seconds: data.timeToDeadline });
-
         this.vehicleType = VehicleType.get(data.vehicleTypeId);
+
+        if (data.owner != null)
+        {
+            this.owner = new Outfit(data.owner);
+        }
 
         if (data.totalWeightRange != null)
         {
@@ -56,6 +60,11 @@ export class ExpressRoute implements IRouteReference
      * The slug identifying the route.
      */
     public readonly slug: string;
+
+    /**
+     * The owner of this route
+     */
+    public readonly owner?: Outfit;
 
     /**
      * The non-unique reference for the route,

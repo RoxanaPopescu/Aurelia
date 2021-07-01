@@ -68,6 +68,12 @@ export class RouteStatus
             name: "Cancelled",
             accent: "negative",
             value: 5
+        },
+        "to-be-express-dispatched":
+        {
+            name: "To be express dispatched",
+            accent: "neutral",
+            value: 6
         }
     };
 }
