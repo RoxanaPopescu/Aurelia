@@ -424,7 +424,7 @@ export class LiveTrackingService {
 
       if (type == "in-progress") {
         statuses = ["in-progress"];
-        from = from.minus(Duration.fromObject({hours: 24}));
+        from = from.minus(Duration.fromObject({hours: 48}));
         to = to.plus(Duration.fromObject({hours: 12}));
       } else if (type == "no-driver") {
         statuses = ["not-started", "not-approved"];
