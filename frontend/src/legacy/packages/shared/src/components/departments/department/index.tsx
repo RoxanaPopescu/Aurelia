@@ -17,19 +17,29 @@ import { Profile } from "shared/src/model/profile";
 const departmentStore = new DepartmentStore();
 
 interface Props {
-  // tslint:disable-next-line:no-any
-  match?: any;
   parentId: string;
+  id: string;
   history?: H.History;
 }
 
 @observer
 export default class DepartmentComponent extends React.Component<Props> {
+  id: string | undefined;
+
   constructor(props: Props) {
     super(props);
 
-    document.title = this.props.match.params.id
-      ? Localization.operationsValue("Departments_Update_Title").replace("{department}", this.props.match.params.id)
+    if (this.props.id == null || this.props.id === "create")
+    {
+      this.id = undefined;
+    }
+    else
+    {
+      this.id = this.props.id;
+    }
+
+    document.title = this.id != null
+      ? Localization.operationsValue("Departments_Update_Title").replace("{department}", this.id)
       : Localization.operationsValue("Departments_Create_Title");
   }
 
@@ -38,15 +48,11 @@ export default class DepartmentComponent extends React.Component<Props> {
   }
   private startUp() {
     departmentStore.reset();
-    departmentStore.departmentPublicId =
-      this.props.match.params.id !== null
-        ? this.props.match.params.id
-        : undefined;
+    departmentStore.departmentPublicId = this.id
 
     if (departmentStore.departmentPublicId == "create")
     {
       departmentStore.departmentPublicId = undefined;
-      // departmentStore.departmentParentId = this.props.parentId;
     }
 
     if (departmentStore.departmentPublicId) {
@@ -63,15 +69,15 @@ export default class DepartmentComponent extends React.Component<Props> {
           departmentStore.error = error.message;
           departmentStore.loading = false;
         });
-    } else {
-      DepartmentsService.list()
-        .then(outfits => {
-          departmentStore.departments = outfits;
-        })
-        .catch(error => {
-          // Do nothing
-        });
     }
+
+    DepartmentsService.list()
+    .then(outfits => {
+      departmentStore.departments = outfits;
+    })
+    .catch(error => {
+      // Do nothing
+    });
   }
 
   private createDepartment() {
@@ -163,7 +169,7 @@ export default class DepartmentComponent extends React.Component<Props> {
           history={this.props.history}
           path={[
             { title: Localization.operationsValue("Menu_Departments"), href: SubPage.path(SubPage.DepartmentsList) },
-            { title: Localization.operationsValue("Departments_Create_Title") }
+            { title: this.id != null ? Localization.operationsValue("Departments_Update_Title").replace("{department}", this.id) : Localization.operationsValue("Departments_Create_Title") }
           ]}
         >
 
@@ -172,7 +178,7 @@ export default class DepartmentComponent extends React.Component<Props> {
             type={ButtonType.Action}
             size={ButtonSize.Medium}
             onClick={() =>
-              departmentStore.departmentId
+              this.id != null
                 ? this.updateDepartment()
                 : this.createDepartment()
             }
@@ -181,7 +187,7 @@ export default class DepartmentComponent extends React.Component<Props> {
             }
             loading={departmentStore.loading}
           >
-            {departmentStore.departmentId
+            {this.id != null
               ? Localization.operationsValue("Departments_Update:Button")
               : Localization.consignorValue(
                   "Departments_Create_CreateDepartment"
@@ -224,7 +230,7 @@ export default class DepartmentComponent extends React.Component<Props> {
               departmentStore.departmentPublicId === undefined
             }
           />
-          {this.props.match.params.id === undefined && (
+          {this.id === undefined && (
             <Select
               size={"medium"}
               headline={Localization.operationsValue(
