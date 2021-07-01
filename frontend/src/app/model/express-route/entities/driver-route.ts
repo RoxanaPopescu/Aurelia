@@ -5,12 +5,12 @@ import { Driver } from "app/model/driver";
 import { Vehicle } from "app/model/vehicle";
 import { DriverRouteStop } from "./driver-route-stop";
 import { DriverRouteStatus } from "./driver-route-status";
-import { RouteCriticality } from "app/model/route";
+import { IRouteReference, RouteCriticality } from "app/model/route";
 
 /**
  * Represents the route a driver should complete within the working day.
  */
-export class DriverRoute
+export class DriverRoute implements IRouteReference
 {
     /**
      * Creates a new instance of the type.
@@ -22,6 +22,7 @@ export class DriverRoute
         this.driverOnline = data.driverOnline;
         this.routeId = data.routeId;
         this.slug = data.slug;
+        this.id = data.id;
         this.legacyId = data.legacyId;
         this.criticality = new RouteCriticality(data.criticality ?? "low");
 
@@ -46,7 +47,7 @@ export class DriverRoute
         }
 
         this.stops = data.stops
-            .map((s, i: number) => new DriverRouteStop(s, i + 1));
+            .map((s, i: number) => new DriverRouteStop(s, i + 1, this));
 
         // The driver is available if all but the last stop is either "completed", "failed" or "cancelled"
         let available = true;
@@ -82,6 +83,11 @@ export class DriverRoute
      * The routeId of the route.
      */
     public routeId: string;
+
+    /**
+     * The id identifying the route.
+     */
+     public readonly id: string;
 
     /**
      * The slug identifying the route.

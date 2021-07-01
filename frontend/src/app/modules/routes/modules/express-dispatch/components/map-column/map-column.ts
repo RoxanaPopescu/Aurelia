@@ -187,30 +187,24 @@ export class MapColumnCustomElement
     {
         if (draggedStop.type.slug === "pickup")
         {
-            for (const orderId of draggedStop.orderIds)
-            {
-                const deliveryStop = this.workspace.newDriverStops!.find(s => s.type.slug === "delivery" && s.orderIds.includes(orderId));
+            const firstDeliveryStop = this.workspace.newDriverStops!.find(s => s.type.slug === "delivery" && s.route.slug == draggedStop.route.slug);
 
-                if (
-                    (deliveryStop != null && targetStop == null) ||
-                    (deliveryStop != null && targetStop != null && this.workspace.newDriverStops!.indexOf(deliveryStop) < this.workspace.newDriverStops!.indexOf(targetStop)))
-                {
-                    return false;
-                }
+            if (
+                (firstDeliveryStop != null && targetStop == null) ||
+                (firstDeliveryStop != null && targetStop != null && this.workspace.newDriverStops!.indexOf(firstDeliveryStop) < this.workspace.newDriverStops!.indexOf(targetStop)))
+            {
+                return false;
             }
         }
         else
         {
-            for (const orderId of draggedStop.orderIds)
-            {
-                const pickupStop = this.workspace.newDriverStops!.find(s => s.type.slug === "pickup" && s.orderIds.includes(orderId));
+            const firstPickupStop = this.workspace.newDriverStops!.find(s => s.type.slug === "pickup" && s.route.slug == draggedStop.route.slug);
 
-                if (
-                    (pickupStop == null) ||
-                    (targetStop != null && this.workspace.newDriverStops!.indexOf(pickupStop) >= this.workspace.newDriverStops!.indexOf(targetStop)))
-                {
-                    return false;
-                }
+            if (
+                (firstPickupStop == null) ||
+                (targetStop != null && this.workspace.newDriverStops!.indexOf(firstPickupStop) >= this.workspace.newDriverStops!.indexOf(targetStop)))
+            {
+                return false;
             }
         }
 

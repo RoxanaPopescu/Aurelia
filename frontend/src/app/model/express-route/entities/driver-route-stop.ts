@@ -1,4 +1,4 @@
-import { RouteStopBase } from "app/model/route";
+import { IRouteReference, RouteStopBase } from "app/model/route";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -9,11 +9,12 @@ export class DriverRouteStop extends RouteStopBase
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, stopNumber: number)
+    public constructor(data: any, stopNumber: number, route: IRouteReference)
     {
         super(data, stopNumber);
 
         this.orderIds = data.orderIds;
+        this.route = route;
     }
 
     /**
@@ -25,6 +26,11 @@ export class DriverRouteStop extends RouteStopBase
      * The number this stop will have on the new route.
      */
     public newStopNumber: number | undefined;
+
+    /**
+     * The route to which this stop belongs.
+     */
+    public route: IRouteReference;
 
     /**
      * True if there is an alert for this route stop, otherwise false.

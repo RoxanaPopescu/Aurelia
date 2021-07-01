@@ -1,4 +1,5 @@
 import { RouteStopBase, RouteCriticality, RouteStopType } from "app/model/route";
+import { ExpressRoute } from "..";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -9,7 +10,7 @@ export class ExpressRouteStop extends RouteStopBase
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, route: any, stopNumber: number, criticality?: RouteCriticality)
+    public constructor(data: any, route: ExpressRoute, stopNumber: number, criticality?: RouteCriticality)
     {
         super(data, stopNumber);
 
@@ -22,7 +23,7 @@ export class ExpressRouteStop extends RouteStopBase
     /**
      * The route to which this stop belongs.
      */
-    public route: any;
+    public route: ExpressRoute;
 
     /**
      * The type of stop.

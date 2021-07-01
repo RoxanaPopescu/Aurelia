@@ -46,7 +46,7 @@ export class ExpressRouteDeliveryArrow extends React.Component<ExpressRouteDeliv
 
     return {
       clickable: this.props.onClick != null,
-      strokeColor: this.props.faded ? "gray" : accentColors[this.props.routeStops[0].route.colorIndex] || "gray",
+      strokeColor: this.props.faded ? "gray" : accentColors[this.props.routeStops[0].route.colorIndex ?? 0] || "gray",
       strokeWeight,
       strokeOpacity: 0,
       zIndex: this.props.faded ? 2 : 102,
