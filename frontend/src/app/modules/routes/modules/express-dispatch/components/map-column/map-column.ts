@@ -187,7 +187,7 @@ export class MapColumnCustomElement
     {
         if (draggedStop.type.slug === "pickup")
         {
-            const firstDeliveryStop = this.workspace.newDriverStops!.find(s => s.type.slug === "delivery" && s.route.slug == draggedStop.route.slug);
+            const firstDeliveryStop = this.workspace.newDriverStops!.find(s => s.type.slug === "delivery" && s.route.slug === draggedStop.route.slug);
 
             if (
                 (firstDeliveryStop != null && targetStop == null) ||
@@ -198,7 +198,7 @@ export class MapColumnCustomElement
         }
         else
         {
-            const firstPickupStop = this.workspace.newDriverStops!.find(s => s.type.slug === "pickup" && s.route.slug == draggedStop.route.slug);
+            const firstPickupStop = this.workspace.newDriverStops!.find(s => s.type.slug === "pickup" && s.route.slug === draggedStop.route.slug);
 
             if (
                 (firstPickupStop == null) ||

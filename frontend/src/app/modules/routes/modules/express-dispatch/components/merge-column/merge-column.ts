@@ -414,7 +414,7 @@ export class MergeColumnCustomElement
     {
         if (this._draggedStop!.stop.type.slug === "pickup")
         {
-            const firstDeliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.route.slug == this._draggedStop!.stop.route.slug);
+            const firstDeliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.route.slug === this._draggedStop!.stop.route.slug);
 
             if (
                 (firstDeliveryStop != null && targetStop == null) ||
@@ -425,7 +425,7 @@ export class MergeColumnCustomElement
         }
         else
         {
-            const firstPickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.route.slug == this._draggedStop!.stop.route.slug);
+            const firstPickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.route.slug === this._draggedStop!.stop.route.slug);
 
             if (
                 (firstPickupStop == null) ||
