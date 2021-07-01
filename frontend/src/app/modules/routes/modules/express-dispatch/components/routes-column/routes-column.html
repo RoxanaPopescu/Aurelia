@@ -83,6 +83,13 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="PickupName" name="pickupName">
+                        <span class="text-truncate" translate>
+                            Pickup name
+                        </span>
+                    </data-table-cell>
+
+
                     <data-table-cell title.translate="Pickup address" name="pickupLocation.address">
                         <span class="text-truncate" translate>
                             Pickup address
@@ -130,7 +137,7 @@
 
                         <data-table-cell title.bind="item.consignor.primaryName">
                             <a href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
-                                ${item.consignor.primaryName}
+                                ${item.owner.primaryName}
                             </a>
                         </data-table-cell>
 
@@ -143,6 +150,12 @@
                         <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg">
                             <span if.bind="item.totalWeightRange != null" class="text-truncate">
                                 ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${item.stops[0].outfit.primaryName}
                             </span>
                         </data-table-cell>
 
