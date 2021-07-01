@@ -418,24 +418,24 @@ export class DetailsModule
     /**
      * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
      */
-     protected get showLegacy(): boolean
-     {
-         if (ENVIRONMENT.name !== "production")
-         {
-             return true;
-         }
+    protected get showLegacy(): boolean
+    {
+        if (ENVIRONMENT.name !== "production")
+        {
+            return true;
+        }
 
-         const identity = this.identityService.identity;
+        const identity = this.identityService.identity;
 
-         if (identity == null)
-         {
-             return false;
-         }
+        if (identity == null)
+        {
+            return false;
+        }
 
-         const legacyOrganizationIds = [moverOrganizationId];
+        const legacyOrganizationIds = [moverOrganizationId];
 
-         return legacyOrganizationIds.includes(identity.outfit.id);
-     }
+        return legacyOrganizationIds.includes(identity.outfit.id);
+    }
 
     /**
      * Fetches the specified route.
