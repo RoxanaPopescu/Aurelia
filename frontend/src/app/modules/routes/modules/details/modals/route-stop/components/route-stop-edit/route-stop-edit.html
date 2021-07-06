@@ -441,6 +441,30 @@
 
         <div class="control-row">
 
+            <check-toggle label="after" value.bind="model.routeStop.actions.identity" class="flex-basis-1-of-2">
+
+                <div slot="heading">
+
+                    <span translate>
+                        Identity
+                    </span>
+
+                    <info-icon position="right">
+
+                        <span slot="heading" translate>
+                            Identity verification
+                        </span>
+
+                        <span slot="body" translate>
+                            Requiring the driver to get the name of the consignee.
+                        </span>
+
+                    </info-icon>
+
+                </div>
+
+            </check-toggle>
+
             <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
 
                 <div slot="heading">

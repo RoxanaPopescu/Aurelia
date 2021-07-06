@@ -6,6 +6,7 @@ import { RouteStopDeviation } from "./route-stop-deviation";
 import { RouteStopActions } from "./route-stop-actions";
 import clone from "clone";
 import { Duration } from "luxon";
+import { RouteStopIdentity } from "./route-stop-identity";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -37,6 +38,11 @@ export class RouteStop extends RouteStopBase
             else
             {
                 this.orderIds = [];
+            }
+
+            if (data.identity != null)
+            {
+                this.identity = new RouteStopIdentity(data.identity);
             }
 
             if (data.signature != null)
@@ -84,6 +90,11 @@ export class RouteStop extends RouteStopBase
      * The selfies captured at the stop to verify the drivers identity and appearance.
      */
     public readonly selfies: Photo[];
+
+    /**
+     * The identity captured to prove that the stop was completed.
+     */
+     public readonly identity?: RouteStopIdentity;
 
     /**
      * The signature captured to prove that the stop was completed.

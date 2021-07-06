@@ -9,6 +9,7 @@ export * from "./entities/route-stop-type";
 export * from "./entities/route-stop-status";
 export * from "./entities/route-stop-authority-to-leave";
 export * from "./entities/route-stop-deviation";
+export * from "./entities/route-stop-identity";
 export * from "./entities/pickup";
 export * from "./entities/delivery";
 export * from "./entities/route";
