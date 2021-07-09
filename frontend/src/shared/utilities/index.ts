@@ -1,4 +1,5 @@
 export * from "./base-64/base-64";
+export * from "./get-property-value/get-property-value";
 export * from "./group-items/group-items";
 export * from "./decorators/once";
 export * from "./event-manager/event-manager";

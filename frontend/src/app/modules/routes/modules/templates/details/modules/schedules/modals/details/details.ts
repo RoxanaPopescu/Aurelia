@@ -219,7 +219,7 @@ export class TemplateScheduleDetailsPanel
         }
         catch (error)
         {
-            Log.error("An error occurred while adding the schedule.\n", error);
+            Log.error("An error occurred while adding the schedule.", error);
         }
         finally
         {

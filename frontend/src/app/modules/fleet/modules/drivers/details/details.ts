@@ -156,10 +156,10 @@ export class DetailsPage
      * Called when the `Send message` button is clicked.
      * Opens a modal for sending a message.
      */
-     protected async onSendMessageClick(): Promise<void>
-     {
-         await this._modalService.open(SendMessagePanel, this.driver).promise;
-     }
+    protected async onSendMessageClick(): Promise<void>
+    {
+        await this._modalService.open(SendMessagePanel, this.driver).promise;
+    }
 
     /**
      * Called when a vehicle is clicked.

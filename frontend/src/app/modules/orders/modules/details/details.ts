@@ -154,7 +154,7 @@ export class DetailsModule
         }
         catch (error)
         {
-            Log.error("An error occurred while loading the list.\n", error);
+            Log.error("An error occurred while loading the list.", error);
         }
     }
 
@@ -171,7 +171,7 @@ export class DetailsModule
         catch (error)
         {
             this.loadingRouteId = false;
-            Log.error("An error occurred while loading the linked route.\n", error);
+            Log.error("An error occurred while loading the linked route.", error);
         }
     }
 }

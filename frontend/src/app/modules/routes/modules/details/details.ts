@@ -464,7 +464,7 @@ export class DetailsModule
                 // Only show error initially
                 if (!(error instanceof AbortError) && this.route == null)
                 {
-                    Log.error("An error occurred while loading this route.\n", error);
+                    Log.error("An error occurred while loading this route.", error);
                 }
             }
             finally

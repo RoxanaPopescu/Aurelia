@@ -597,7 +597,7 @@ export class ListPage
             catch (error)
             {
                 this.failed = true;
-                Log.error("An error occurred while loading the list.\n", error);
+                Log.error("An error occurred while loading the list.", error);
             }
         });
     }

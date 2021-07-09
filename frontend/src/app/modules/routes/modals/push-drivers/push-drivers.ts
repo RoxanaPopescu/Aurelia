@@ -173,7 +173,7 @@ export class PushDriversPanel
             }
             catch (error)
             {
-                Log.error("An error occurred while loading the list.\n", error);
+                Log.error("An error occurred while loading the list.", error);
             }
         });
     }

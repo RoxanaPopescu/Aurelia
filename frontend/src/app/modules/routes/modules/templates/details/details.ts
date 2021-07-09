@@ -93,7 +93,7 @@ export class DetailsPage
                 }
                 catch (error)
                 {
-                    Log.error("An error occurred while loading the details.\n", error);
+                    Log.error("An error occurred while loading the details.", error);
                 }
             });
         }

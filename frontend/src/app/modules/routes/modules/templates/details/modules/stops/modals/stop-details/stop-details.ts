@@ -147,7 +147,7 @@ export class TemplateStopDetailsPanel
         }
         catch (error)
         {
-            Log.error("An error occurred while adding the stop.\n", error);
+            Log.error("An error occurred while adding the stop.", error);
         }
         finally
         {

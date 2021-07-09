@@ -16,6 +16,22 @@ export class SearchModel
     private _json: string | undefined;
 
     /**
+     * Updates the search model to ensure it reflects the current state of the entity.
+     */
+    public update(): void
+    {
+        const objects = new Set<any>();
+
+        objects.add(this._entity);
+
+        this._json = JSON.stringify(this._entity, (key, value) =>
+        {
+            return key && objects.has(value) ? "" : value;
+        },
+        1).toLowerCase();
+    }
+
+    /**
      * Determines whether the search model contains the specified text.
      * @param text The text to search for.
      * @returns True if the model contains the specified text, otherwise false.
@@ -30,17 +46,9 @@ export class SearchModel
 
         // Get a JSON representation of the entity, ignoring circular references.
 
-        const objects = new Set<any>();
-
-        objects.add(this._entity);
-
         if (this._json == null)
         {
-            this._json = JSON.stringify(this._entity, (key, value) =>
-            {
-                return key && objects.has(value) ? "" : value;
-            },
-            1).toLowerCase();
+            this.update();
         }
 
         // Search the JSON representation of the object.
@@ -77,7 +85,7 @@ export class SearchModel
             if (q.length > 0)
             {
                 const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-                const foundSingle = new RegExp(`^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`, "m").test(this._json);
+                const foundSingle = new RegExp(`^\\s*"[^"]+":.*${escapedQ}.*$|^\\s*"[^"]*${escapedQ}[^"]*",?$`, "m").test(this._json!);
 
                 if (minusQuery)
                 {
