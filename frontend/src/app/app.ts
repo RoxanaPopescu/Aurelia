@@ -322,6 +322,23 @@ export class AppModule
                 href: "/users",
                 icon: "users"
             },
+            {
+                name: "organization",
+                route: "organization",
+                moduleId: PLATFORM.moduleName("./modules/organization/organization"),
+                settings:
+                {
+                    outfits: ["fulfiller", "consignor"],
+                    // claims:
+                    // [
+                    //     "view-organization"
+                    // ]
+                },
+                title: routeTitles.organization,
+                nav: true,
+                href: "/organization",
+                icon: "missing"
+            },
 
             ...
             ENVIRONMENT.name !== "production" ?

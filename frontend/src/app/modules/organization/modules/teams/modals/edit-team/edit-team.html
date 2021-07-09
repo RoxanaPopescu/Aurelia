@@ -1,0 +1,151 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="edit-team" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
+
+                <span if.bind="!team.id" translate>
+                    New team
+                </span>
+
+                <span if.bind="team.id" translate>
+                    Edit team
+                </span>
+
+            </h1>
+
+            <h2 class="font-large" translate>
+                Please specify the details of the team.
+            </h2>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input value.bind="team.name" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Team name
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="team.name">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <phone-input value.bind="team.phoneNumber" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Contact number
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="team.phoneNumber">
+                        </required-validator>
+
+                    </div>
+
+                </phone-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <address-input value.bind="team.address" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Address
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="team.address">
+                        </required-validator>
+
+                    </div>
+
+                </address-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <text-input value.bind="team.vatNumber" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        VAT number
+                    </div>
+
+                </text-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <switch-toggle value.bind="team.invoiceDirectly" label="before" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Invoice team directly
+                    </div>
+
+                </switch-toggle>
+
+            </div>
+
+            <div if.bind="team.invoiceDirectly" class="control-row">
+
+                <text-input value.bind="team.invoiceEmail" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Invoice email
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="team.invoiceEmail">
+                        </required-validator>
+
+                    </div>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <button appearance="solid" accent="primary" class="margin-large-top" click.delegate="onSubmitClick()">
+
+            <span translate if.bind="!team.id">
+                Create team
+            </span>
+
+            <span translate if.bind="team.id">
+                Save changes
+            </span>
+
+        </button>
+
+    </modal-panel>
+
+</template>

@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="organization"] page[name="profile"]
+{
+    data-table
+    {
+        --data-table-columns: 1fr;
+    }
+}

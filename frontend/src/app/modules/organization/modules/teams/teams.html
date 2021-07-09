@@ -1,0 +1,191 @@
+<template>
+
+    <require from="./teams.scss"></require>
+
+    <page name="teams">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <span translate>
+                            Organization
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value="teams">
+
+                        <tab name="profile" page-href="path: /organization/profile" translate>
+                            Profile
+                        </tab>
+
+                        <tab name="users" page-href="path: /organization/users" translate>
+                            Users
+                        </tab>
+
+                        <tab name="teams" page-href="path: /organization/teams" translate>
+                            Teams
+                        </tab>
+
+                        <tab name="roles" page-href="path: /organization/roles" translate>
+                            Roles
+                        </tab>
+
+                    </tab-nav>
+
+                    <div class="flex-push-right control-row">
+
+                        <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                New team
+                            </span>
+                        </button>
+
+                    </div>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <toolbar scroll-fade="0.2">
+
+                    <search-input value.bind="textFilter & debounce: 200">
+
+                        <span slot="before" class="opacity-faded font-larger line-height-1">
+                            <icon name="md-search"></icon>
+                        </span>
+
+                        <span slot="placeholder" translate>
+                            Find team…
+                        </span>
+
+                    </search-input>
+
+                </toolbar>
+
+            </page-section>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="operation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell name="name" translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell name="id" translate>
+                            ID
+                        </data-table-cell>
+
+                        <data-table-cell name="phoneNumber" translate>
+                            Contact number
+                        </data-table-cell>
+
+                        <data-table-cell name="address" translate>
+                            Address
+                        </data-table-cell>
+
+                        <data-table-cell name="vatNumber" translate>
+                            VAT number
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="team of orderedAndFilteredTeams">
+
+                        <data-table-row>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${team.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${team.id}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${team.phoneNumber | phone}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${team.address}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${team.vatNumber}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button
+                                        title.translate="Edit team"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onEditTeamClick(team)">
+                                        <icon name="edit-small"></icon>
+                                    </button>
+
+                                    <button
+                                        title.translate="Delete team"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onDeleteTeamClick(team)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="orderedAndFilteredTeams == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="orderedAndFilteredTeams.length == 0" class="margin-largest">
+                    <div slot="heading" translate>
+                        No results
+                    </div>
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

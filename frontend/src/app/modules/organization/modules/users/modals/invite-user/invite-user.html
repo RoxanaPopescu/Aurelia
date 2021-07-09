@@ -1,0 +1,104 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="invite-user" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Invite user
+            </h1>
+
+            <h2 class="font-large" translate>
+                An email will be sent to the user, inviting them<br>
+                to join the organization.
+            </h2>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <div class="control-row margin-large-bottom">
+
+                <email-input value.bind="invite.email" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Email addresse
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="invite.email">
+                        </required-validator>
+
+                    </div>
+
+                </email-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input label="above" none.bind="false" value.bind="selectedRole" display-value.bind="selectedRole.name" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Role
+                    </div>
+
+                    <item repeat.for="role of availableRoles" model.bind="role.id">
+                        ${role.name}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="selectedRole">
+                        </required-validator>
+
+                    </div>
+
+                </select-input>
+
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <select-input label="above" none.bind="false" value.bind="selectedTeam" display-value.bind="selectedTeam.name" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Team
+                    </div>
+
+                    <item repeat.for="team of availableTeams" model.bind="team.id">
+                        ${team.name}
+                    </item>
+
+                </select-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <text-input value.bind="invite.message" label="above" class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Message
+                    </div>
+
+                </text-input>
+
+            </div>
+
+        </modal-section>
+
+        <button appearance="solid" accent="primary" class="margin-large-top" click.delegate="onSubmitClick()" translate>
+            Send invite
+        </button>
+
+    </modal-panel>
+
+</template>

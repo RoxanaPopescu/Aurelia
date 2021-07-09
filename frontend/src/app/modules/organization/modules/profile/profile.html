@@ -1,0 +1,91 @@
+<template>
+
+    <require from="./profile.scss"></require>
+
+    <page name="profile">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <span translate>
+                            Organization
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar>
+
+                    <tab-nav appearance="solid" value="profile">
+
+                        <tab name="profile" page-href="path: /organization/profile" invalid.bind="validation.invalid" translate>
+                            Profile
+                        </tab>
+
+                        <tab name="users" page-href="path: /organization/users" translate>
+                            Users
+                        </tab>
+
+                        <tab name="teams" page-href="path: /organization/teams" translate>
+                            Teams
+                        </tab>
+
+                        <tab name="roles" page-href="path: /organization/roles" translate>
+                            Roles
+                        </tab>
+
+                    </tab-nav>
+
+                    <div class="flex-push-right control-row">
+
+                        <button
+                            appearance="solid"
+                            accent="primary"
+                            click.trigger="onSaveChangesClick()"
+                            disabled.bind="operation.pending"
+                            translate>
+                            Save changes
+                        </button>
+
+                    </div>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <div class="flex-row">
+
+                    <text-input class="flex-basis-1-of-4" label="above" value.bind="profile.name">
+
+                        <div slot="heading" translate>
+                            Name of the organization
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="profile.name">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+
+            </page-section>
+
+            <busy-indicator if.bind="profile == null" class="margin-largest"></busy-indicator>
+
+        </page-content>
+
+    </page>
+
+</template>
