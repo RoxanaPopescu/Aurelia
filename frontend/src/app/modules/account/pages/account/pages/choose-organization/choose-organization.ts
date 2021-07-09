@@ -46,7 +46,9 @@ export class ChooseOrganizationPage
     {
         if (this._identityService.identity == null)
         {
-            return new Redirect(params.url && params.url !== "/" ? `/account/sign-in?url=${params.url}` : "/account/sign-in");
+            return new Redirect(params.url && params.url !== "/"
+                ? `/account/sign-in?url=${encodeURIComponent(params.url)}`
+                : "/account/sign-in");
         }
 
         return true;
