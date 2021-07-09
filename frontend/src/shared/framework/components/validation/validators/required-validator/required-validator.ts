@@ -21,6 +21,42 @@ export class RequiredValidatorCustomElement extends Validator
     public showMessage: boolean;
 
     /**
+     * Called by the framework when the component is attached.
+     * Updates the decoration of the input element, then delegates
+     * to the super implementation.
+     */
+    public async attached(): Promise<void>
+    {
+        this.decorateInput();
+
+        return super.attached();
+    }
+
+    /**
+     * Called by the framework when the component is detached.
+     * Updates the decoration of the input element, then delegates
+     * to the super implementation.
+     */
+    public detached(): void
+    {
+        this.decorateInput();
+
+        super.detached();
+    }
+
+    /**
+     * Called by the framework when the `enabled` property changes.
+     * Updates the decoration of the input element, then delegates
+     * to the super implementation.
+     */
+    protected enabledChanged(): void
+    {
+        this.decorateInput();
+
+        super.enabledChanged();
+    }
+
+    /**
      * Called by the validation when this validator should run.
      * @param reason The reason for the validation run.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
@@ -30,5 +66,15 @@ export class RequiredValidatorCustomElement extends Validator
         this.invalid = this.value === undefined || this.value === "";
 
         return !this.invalid;
+    }
+
+    /**
+     * Decorates the input element, if found, to indicate that a value is required.
+     */
+    private decorateInput(): void
+    {
+        const closestInput = this.element.parentElement?.closest?.(".input");
+
+        closestInput?.classList.toggle("--required", this.enabled);
     }
 }

@@ -522,6 +522,16 @@
             color: var(--input-surface-icon-color--invalid);
         }
     }
+
+    &.--required
+    {
+        > .input-label > .input-heading > [slot]::after
+        {
+            content: " *";
+            color: var(--surface-negative-icon-color);
+            opacity: var(--opacity-faded-more);
+        }
+    }
 }
 
 // Apply basic styling to native controls, so we won't have to repeat this in every component.

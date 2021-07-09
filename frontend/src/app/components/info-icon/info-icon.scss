@@ -24,7 +24,7 @@ info-icon
 
         &:not(:hover) icon
         {
-            opacity: 0.3;
+            opacity: var(--opacity-faded-more);
         }
 
         .info-icon-popover
