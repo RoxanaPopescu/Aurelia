@@ -6,6 +6,7 @@ import { ModalService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationRole } from "app/model/organization";
 import { EditRolePanel } from "./modals/edit-role/edit-role";
+import { ConfirmDeleteRoleDialog } from "./modals/confirm-delete-role/confirm-delete-role";
 
 /**
  * Represents the route parameters for the page.
@@ -217,7 +218,12 @@ export class RolesPage
      */
     protected async onDeleteRoleClick(role: OrganizationRole): Promise<void>
     {
-        // TODO: Ask for confirmation.
+        const confirmed = await this._modalService.open(ConfirmDeleteRoleDialog, role).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
 
         const organizationId = this._identityService.organization!.id;
 

@@ -4,15 +4,16 @@ import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
-import { OrganizationService, OrganizationTeam } from "app/model/organization";
-import { EditTeamPanel } from "./modals/edit-team/edit-team";
-import { ConfirmDeleteTeamDialog } from "./modals/confirm-delete-team/confirm-delete-team";
+import { OrganizationService, OrganizationUser } from "app/model/organization";
+import { AddUserToTeamPanel } from "./modals/add-user-to-team/add-user-to-team";
+import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 
 /**
  * Represents the route parameters for the page.
  */
 interface IRouteParams
 {
+    teamId: string;
     sortProperty?: string;
     sortDirection?: SortingDirection;
     text?: string;
@@ -22,7 +23,7 @@ interface IRouteParams
  * Represents the page.
  */
 @autoinject
-export class TeamsPage
+export class TeamDetailsPage
 {
     /**
      * Creates a new instance of the class.
@@ -43,7 +44,8 @@ export class TeamsPage
     private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
-    private _teams: OrganizationTeam[] | undefined;
+    private _teamId: string;
+    private _users: OrganizationUser[] | undefined;
 
     /**
      * The most recent operation.
@@ -65,18 +67,18 @@ export class TeamsPage
     };
 
     /**
-     * The teams to present in the table.
+     * The users to present in the table.
      */
-    protected get orderedAndFilteredTeams(): OrganizationTeam[] | undefined
+    protected get orderedAndFilteredUsers(): OrganizationUser[] | undefined
     {
-        if (this._teams == null)
+        if (this._users == null)
         {
             return undefined;
         }
 
         const offset = this.sorting.direction === "ascending" ? 1 : -1;
 
-        return this._teams
+        return this._users
 
             // Filtering
             .filter(team => !this.textFilter || team.searchModel.contains(this.textFilter))
@@ -101,6 +103,7 @@ export class TeamsPage
      */
     public activate(params: IRouteParams): void
     {
+        this._teamId = params.teamId;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.textFilter = params.text || this.textFilter;
@@ -138,7 +141,7 @@ export class TeamsPage
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this._teams = await this._organizationService.getTeams(organizationId, signal);
+            this._users = await this._organizationService.getUsersInTeam(organizationId, this._teamId, signal);
 
             // tslint:disable-next-line: no-floating-promises
             this._historyHelper.navigate((state: IHistoryState) =>
@@ -154,50 +157,34 @@ export class TeamsPage
         {
             if (!(error instanceof AbortError))
             {
-                Log.error("Could not get the teams within the organization", error);
+                Log.error("Could not get the users within the team", error);
             }
         });
     }
 
     /**
-     * Called when the `New team` button is clicked.
-     * Opens a modal for creating a new team.
+     * Called when the `Invite user` button is clicked.
+     * Opens a modal for inviting a user.
      */
-    protected async onNewTeamClick(): Promise<void>
+    protected async onInviteUserClick(): Promise<void>
     {
         const organizationId = this._identityService.organization!.id;
-        const newTeam = await this._modalService.open(EditTeamPanel, { organizationId }).promise;
+        const newUser = await this._modalService.open(AddUserToTeamPanel, { organizationId, teamId: this._teamId }).promise;
 
-        if (newTeam != null)
+        if (newUser != null)
         {
-            this._teams!.push(newTeam);
+            this._users!.push(newUser);
         }
     }
 
     /**
-     * Called when the `Edit` icon is clicked on a team.
-     * Opens a modal for editing the team.
-     * @param team The team to edit.
+     * Called when the `Remove` icon is clicked on a user.
+     * Asks for confirmation, then deletes the user.
+     * @param user The user to delete.
      */
-    protected async onEditTeamClick(team: OrganizationTeam): Promise<void>
+    protected async onRemoveUserClick(user: OrganizationUser): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
-        const newTeam = await this._modalService.open(EditTeamPanel, { organizationId, team }).promise;
-
-        if (newTeam != null)
-        {
-            this._teams!.splice(this._teams!.indexOf(team), 1, newTeam);
-        }
-    }
-
-    /**
-     * Called when the `Delete` icon is clicked on a team.
-     * Asks for confirmation, then deletes the team.
-     * @param team The team to delete.
-     */
-    protected async onDeleteTeamClick(team: OrganizationTeam): Promise<void>
-    {
-        const confirmed = await this._modalService.open(ConfirmDeleteTeamDialog, team).promise;
+        const confirmed = await this._modalService.open(ConfirmRemoveUserDialog, user).promise;
 
         if (!confirmed)
         {
@@ -208,13 +195,13 @@ export class TeamsPage
 
         try
         {
-            await this._organizationService.deleteTeam(organizationId, team.id);
+            await this._organizationService.removeUserFromTeam(organizationId, this._teamId, user.id);
 
-            this._teams!.splice(this._teams!.indexOf(team), 1);
+            this._users!.splice(this._users!.indexOf(user), 1);
         }
         catch (error)
         {
-            Log.error("Could not delete the team", error);
+            Log.error("Could not remove the user from the team", error);
         }
     }
 }

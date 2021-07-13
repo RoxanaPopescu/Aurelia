@@ -1,8 +1,8 @@
 <template>
 
-    <require from="./teams.scss"></require>
+    <require from="./team-details.scss"></require>
 
-    <page name="teams">
+    <page name="team-details">
 
         <page-content scroll scroll.ref="scroll">
 
@@ -42,10 +42,10 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
+                        <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
                             <icon name="add" class="font-larger margin-right"></icon>
                             <span translate>
-                                New team
+                                Invite user
                             </span>
                         </button>
 
@@ -57,6 +57,20 @@
 
             <page-section>
 
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <a accent="inherit" page-href="path: /organization/teams" translate>
+                            Teams
+                        </a>
+
+                        <span translate>
+                            ${_teamId} <!-- TODO: FIx -->
+                        </span>
+
+                    </path-nav>
+                </h1>
+
                 <toolbar scroll-fade="0.2">
 
                     <search-input value.bind="textFilter & debounce: 200">
@@ -66,7 +80,7 @@
                         </span>
 
                         <span slot="placeholder" translate>
-                            Find team…
+                            Find user…
                         </span>
 
                     </search-input>
@@ -84,7 +98,7 @@
 
                     <data-table-headers>
 
-                        <data-table-cell name="name" translate>
+                        <data-table-cell name="fullName" translate>
                             Name
                         </data-table-cell>
 
@@ -92,16 +106,20 @@
                             ID
                         </data-table-cell>
 
-                        <data-table-cell name="phoneNumber" translate>
-                            Contact number
+                        <data-table-cell name="email" translate>
+                            Email
                         </data-table-cell>
 
-                        <data-table-cell name="address" translate>
-                            Address
+                        <data-table-cell name="role.name" translate>
+                            Role
                         </data-table-cell>
 
-                        <data-table-cell name="vatNumber" translate>
-                            VAT number
+                        <data-table-cell name="lastOnline" translate>
+                            Last online
+                        </data-table-cell>
+
+                        <data-table-cell name="status.name" translate>
+                            Status
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -110,37 +128,43 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="team of orderedAndFilteredTeams">
+                    <template repeat.for="user of orderedAndFilteredUsers">
 
-                        <data-table-row href="/organization/teams/${team.id}">
+                        <data-table-row>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.name}
+                                    ${user.fullName}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.id}
+                                    ${user.id}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.phoneNumber | phone}
+                                    ${user.email}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.address}
+                                    ${user.role.name}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.vatNumber}
+                                    ${user.lastOnline | dateTime}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${user.status.name}
                                 </span>
                             </data-table-cell>
 
@@ -149,18 +173,10 @@
                                 <div class="icon-row">
 
                                     <button
-                                        title.translate="Edit team"
+                                        title.translate="Remove user"
                                         appearance="none"
                                         accent="primary"
-                                        click.trigger="onEditTeamClick(team)">
-                                        <icon name="edit-small"></icon>
-                                    </button>
-
-                                    <button
-                                        title.translate="Delete team"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onDeleteTeamClick(team)">
+                                        click.trigger="onRemoveUserClick(user)">
                                         <icon name="delete-small"></icon>
                                     </button>
 
@@ -174,9 +190,9 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="orderedAndFilteredTeams == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="orderedAndFilteredUsers == null" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="orderedAndFilteredTeams.length == 0" class="margin-largest">
+                <empty-indicator if.bind="orderedAndFilteredUsers.length == 0" class="margin-largest">
                     <div slot="heading" translate>
                         No results
                     </div>

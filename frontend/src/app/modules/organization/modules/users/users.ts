@@ -2,10 +2,12 @@ import { autoinject } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
-import { ModalService } from "shared/framework";
+import { ModalService, ToastService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationUser } from "app/model/organization";
 import { InviteUserPanel } from "./modals/invite-user/invite-user";
+import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
+import reinviteToastStrings from "./resources/strings/reinvite-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -26,19 +28,22 @@ export class UsersPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
+     * @param toastService The `ToastService` instance.
      * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, toastService: ToastService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
+        this._toastService = toastService;
         this._identityService = identityService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
     private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
@@ -185,6 +190,11 @@ export class UsersPage
         try
         {
             await this._organizationService.resendInvite(organizationId, user.id);
+
+            this._toastService.open("success",
+            {
+                heading: reinviteToastStrings.heading
+            });
         }
         catch (error)
         {
@@ -199,7 +209,12 @@ export class UsersPage
      */
     protected async onRemoveUserClick(user: OrganizationUser): Promise<void>
     {
-        // TODO: Ask for confirmation.
+        const confirmed = await this._modalService.open(ConfirmRemoveUserDialog, user).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
 
         const organizationId = this._identityService.organization!.id;
 

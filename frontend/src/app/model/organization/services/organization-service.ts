@@ -87,16 +87,14 @@ export class OrganizationService
      * @param organizationId The ID of the organization.
      * @param profile The profile to save.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the profile for the organization.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async updateProfile(organizationId: string, profile: OrganizationProfile): Promise<OrganizationProfile>
+    public async updateProfile(organizationId: string, profile: OrganizationProfile): Promise<void>
     {
-        const result = await this._apiClient.post(`organizations/${organizationId}/profile/update`,
+        await this._apiClient.post(`organizations/${organizationId}/profile/update`,
         {
             body: profile
         });
-
-        return new OrganizationProfile(result.data);
     }
 
     /**
@@ -298,5 +296,49 @@ export class OrganizationService
     public async deleteTeam(organizationId: string, teamId: string): Promise<void>
     {
         await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/delete`);
+    }
+
+    /**
+     * Gets the users within the specified organization team.
+     * @param organizationId The ID of the organization.
+     * @param teamId The ID of the team.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the users within the organization team.
+     */
+    public async getUsersInTeam(organizationId: string, teamId: string, signal?: AbortSignal): Promise<OrganizationUser[]>
+    {
+        const result = await this._apiClient.get(`organizations/${organizationId}/teams/${teamId}/users`,
+        {
+            signal
+        });
+
+        return result.data.map(user => new OrganizationUser(user));
+    }
+
+    /**
+     * Adds the specified user to the specified organization team.
+     * @param organizationId The ID of the organization.
+     * @param teamId The ID of the team.
+     * @param userId The ID of the user to add.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async addUserToTeam(organizationId: string, teamId: string, userId: string): Promise<void>
+    {
+        await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/add`,
+        {
+            body: { userId }
+        });
+    }
+
+    /**
+     * Removes the specified user from the specified organization team.
+     * @param organizationId The ID of the organization.
+     * @param teamId The ID of the team.
+     * @param userId The ID of the user to remove.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async removeUserFromTeam(organizationId: string, teamId: string, userId: string): Promise<void>
+    {
+        await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/${userId}/remove`);
     }
 }

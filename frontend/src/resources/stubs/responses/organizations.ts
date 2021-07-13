@@ -218,6 +218,34 @@ export default
       status: 201
     },
 
+    "GET /api/v1/organizations/mover-organization-id/teams/team-1-id/users":
+    {
+      body:
+      [
+        {
+          id: "user-1-id",
+          fullName: "John Doe",
+          preferredName: "John",
+          email: "johndoe@example.com",
+          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+          role: { id: "role-1-id", name: "Role 1" },
+          team: { id: "team-1-id", name: "Team 1" },
+          status: "active",
+          lastOnline: DateTime.utc().toISO()
+        }
+      ]
+    },
+
+    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/users/add":
+    {
+      status: 201
+    },
+
+    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/users/user-1-id/remove":
+    {
+      status: 201
+    },
+
     "GET /api/v1/organizations/mover-organization-id/permissions":
     {
       body:

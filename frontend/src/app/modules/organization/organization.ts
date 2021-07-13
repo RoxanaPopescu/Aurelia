@@ -41,6 +41,12 @@ export class OrganizationModule
                 title: routeTitles.teams
             },
             {
+                name: "team-details",
+                route: "teams/:teamId",
+                moduleId: PLATFORM.moduleName("./modules/team-details/team-details"),
+                title: routeTitles.teamDetails
+            },
+            {
                 name: "roles",
                 route: "roles",
                 moduleId: PLATFORM.moduleName("./modules/roles/roles"),

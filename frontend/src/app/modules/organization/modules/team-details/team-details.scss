@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="organization"] page[name="team-details"]
+{
+    data-table
+    {
+        --data-table-columns: repeat(6, 1fr) min-content;
+    }
+}
