@@ -54,7 +54,10 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     private isConnecting = false;
 
     @observable
-    private showAllDrivers = true;
+    private showAvailableDrivers = true;
+
+    @observable
+    private showAllDrivers = false;
 
     @observable
     private showAllRoutes = true;
@@ -62,6 +65,13 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     public render()
     {
         this.fitBoundsOnLoad();
+        let selectedDriversCount = this.props.driverRoutes?.reduce((prev, current) => {
+            if (current.selected) {
+                return prev + 1;
+            }
+
+            return prev;
+        }, 0) ?? 0;
 
         return (
             <div className="express-route-map">
@@ -80,6 +90,13 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         type={ButtonType.Light}
                         onClick={() => this.showAllRoutes = !this.showAllRoutes}>
                         Show all routes
+                    </Button>}
+
+                    {!this.props.isMerging && <Button
+                        className={this.showAvailableDrivers ? "--active" : ""}
+                        type={ButtonType.Light}
+                        onClick={() => this.showAvailableDrivers = !this.showAvailableDrivers}>
+                        Show available drivers
                     </Button>}
 
                     {!this.props.isMerging && <Button
@@ -112,7 +129,21 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                     }}>
 
                     {!this.props.isMerging && this.props.driverRoutes && this.props.driverRoutes
-                        .filter(route => route.selected || this.showAllDrivers)
+                        .filter(route => {
+                            if (route.selected || this.showAllDrivers) {
+                                return true;
+                            }
+
+                            if (selectedDriversCount > 0) {
+                                return false;
+                            }
+
+                            if (this.showAvailableDrivers && route.available) {
+                                return true;
+                            }
+
+                            return false;
+                        })
                         .map(route =>
                             <DriverRouteLayer
                                 key={`DriverRouteLayer-${route.driver.id}-${route.selected}`}
@@ -174,7 +205,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         <DriverMarker
                             key={`DriverMarker-${this.props.driverRoutes![0].driver.id}`}
                             route={this.props.driverRoutes![0]}
-                            faded={!this.props.driverRoutes![0].selected}
+                            faded={!this.props.driverRoutes![0].available}
                             onClick={() =>
                                 { this.isConnecting = !this.isConnecting; this.props.onConnectedStopClick(null); }}
                         />}

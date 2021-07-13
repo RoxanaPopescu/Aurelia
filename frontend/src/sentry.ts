@@ -42,7 +42,12 @@ if (ENVIRONMENT.integrations.sentry != null)
             "ChunkLoadError:",
             "You have included the Google Maps JavaScript API multiple times",
             "NOT_A_NUMBER",
-            "InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D'"
+            "InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D'",
+            "Cannot read property 'i' of undefined",
+            "Cannot read property 'j' of undefined",
+            "undefined is not an object (evaluating 'h.j')",
+            "InvalidValueError: at index 0: not a LatLng or LatLngLiteral",
+            "InvalidValueError: setPosition: not a LatLng or LatLngLiteral: in property lat: not a number"
         ],
 
         // Process the entry before it is sent.

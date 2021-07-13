@@ -21,7 +21,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
     const position = this.props.route.driverPosition!.toGoogleLatLng();
 
-    const labelText = this.props.route.driver.name.initials;
+    const labelText = (this.props.route.vehicle?.type.name[0] ?? "").toUpperCase();
 
     return (
       <MarkerWithLabel
@@ -119,7 +119,7 @@ export class DriverMarker extends Marker<DriverMarkerProps> {
 
           <div className="c-worldMap-popup-section-row">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
-            <div>{this.props.route.driver!.phone.toString()}</div>
+            <a href={"tel:" + this.props.route.driver!.phone.toString()}>{this.props.route.driver!.phone.toString()}</a>
           </div>
 
         </div>

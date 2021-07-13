@@ -21,7 +21,7 @@ export class VehicleType
         this.slug = data.slug;
         this.maxHeight = data.maxHeight;
         this.maxWidth = data.maxWidth;
-        this.maxWeight = data.maxWeight;
+        this.maxLength = data.maxLength;
         this.name = data.name[localeService.locale.code.substring(0, 2)];
         this.images = data.images;
     }
@@ -70,6 +70,14 @@ export class VehicleType
      * The URLs for the images representing the vehicle type, indexed by size.
      */
     public readonly images: { [type: string]: string };
+
+    /**
+     * Gets max payload dimensions
+     */
+    public get maxPayloadDimensions(): number
+    {
+        return this.maxHeight * this.maxLength * this.maxWidth;
+    }
 
     /**
      * Gets the vehicle type with the specified ID.

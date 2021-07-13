@@ -1,9 +1,8 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { IScroll, ModalService } from "shared/framework";
-import { ISorting, AbortError } from "shared/types";
+import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { ExpressRouteService, DriverRoute } from "app/model/express-route";
-import { Duration, DateTime } from "luxon";
 import { Workspace } from "../../services/workspace";
 import { ConfirmReleaseRouteDialog } from "./modals/confirm-release-route/confirm-release-route";
 import { Log } from "shared/infrastructure";
@@ -47,57 +46,74 @@ export class DriversColumnCustomElement
     protected updateOperation: Operation;
 
     /**
-     * The sorting to use for the table.
-     */
-    protected sorting: ISorting =
-    {
-        property: "completionTime",
-        direction: "ascending"
-    };
-
-    /**
      * The text in the filter text input.
      */
     protected textFilter: string | undefined;
 
-    @computedFrom("workspace.driverRoutes", "textFilter", "sorting")
+    @computedFrom("workspace.driverRoutes", "workspace.selectedExpressRoutes", "textFilter", "sorting")
     protected get orderedAndFilteredItems(): DriverRoute[]
     {
-        if (this.workspace.driverRoutes == null)
+        if (this.workspace == null || this.workspace.driverRoutes == null)
         {
             return [];
         }
-
-        const offset = this.sorting.direction === "ascending" ? 1 : -1;
 
         return this.workspace.driverRoutes
             .filter(r => !this.textFilter || r.searchModel.contains(this.textFilter))
             .sort((a, b) =>
             {
-                let aPropertyValue = a[this.sorting.property];
-                let bPropertyValue = b[this.sorting.property];
+                // If routes are selected first sort by vehicle type
+                if (this.workspace.selectedExpressRoutes.length > 0 && a.vehicle != null && b.vehicle != null)
+                {
+                    const vehicleTypes = this.workspace.selectedExpressRoutes.map(r => r.vehicleType);
 
-                if (aPropertyValue instanceof Duration || aPropertyValue instanceof DateTime)
-                {
-                    aPropertyValue = aPropertyValue.valueOf();
-                }
-                if (typeof aPropertyValue === "object")
-                {
-                    aPropertyValue = aPropertyValue.toString();
+                    // All vehicle types has to be the same if we want to filter
+                    if (vehicleTypes.every((val, _, arr) => val === arr[0]))
+                    {
+                        const vehicleType = this.workspace.selectedExpressRoutes[0].vehicleType;
+                        let allowedTypes = [vehicleType.slug];
+
+                        if (vehicleType.slug === "van")
+                        {
+                            allowedTypes = ["van", "moving-van"];
+                        }
+                        else if (vehicleType.slug === "car")
+                        {
+                            allowedTypes = ["moving-van", "van", "car"];
+                        }
+
+                        const aHasVehicle = allowedTypes.includes(a.vehicle.type.slug);
+                        const bHasVehicle = allowedTypes.includes(b.vehicle.type.slug);
+
+                        if (aHasVehicle > bHasVehicle) { return -1; }
+                        if (aHasVehicle < bHasVehicle) { return 1; }
+                    }
                 }
 
-                if (bPropertyValue instanceof Duration || bPropertyValue instanceof DateTime)
+                // Sort by availabillity
+                if (a.available > b.available) { return -1; }
+                if (a.available < b.available) { return 1; }
+
+                // Sort by payload capacity
+                if (a.vehicle != null && b.vehicle != null)
                 {
-                    bPropertyValue = bPropertyValue.valueOf();
-                }
-                if (typeof bPropertyValue === "object")
-                {
-                    bPropertyValue = bPropertyValue.toString();
+                    if (a.vehicle.type.maxPayloadDimensions > b.vehicle.type.maxPayloadDimensions) { return -1; }
+                    if (a.vehicle.type.maxPayloadDimensions < b.vehicle.type.maxPayloadDimensions) { return 1; }
                 }
 
-                // Sort by selected column and direction.
-                if (aPropertyValue < bPropertyValue) { return -offset; }
-                if (aPropertyValue > bPropertyValue) { return offset; }
+                // Sort by done time
+                if (a.completionTime != null && b.completionTime != null)
+                {
+                    const aCompletion = a.completionTime.valueOf();
+                    const bCompletion = b.completionTime.valueOf();
+
+                    if (aCompletion > bCompletion) { return -1; }
+                    if (aCompletion < bCompletion) { return 1; }
+                }
+
+                // Sort by name
+                if (a.driver.name > b.driver.name) { return -1; }
+                if (a.driver.name < b.driver.name) { return 1; }
 
                 return 0;
             });

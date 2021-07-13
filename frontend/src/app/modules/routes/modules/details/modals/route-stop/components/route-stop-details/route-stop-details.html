@@ -424,6 +424,50 @@
 
     </template>
 
+    <!-- Identity -->
+    <template if.bind="model.routeStop.actions.identity || model.routeStop.identity != null">
+
+        <hr class="hr-line margin-bottom">
+
+        <data-section class="margin-bottom" toggle.bind="true">
+
+            <div slot="header" translate>
+                Identity
+            </div>
+
+            <div if.bind="model.routeStop.actions.identity && !model.routeStop.identity" class="opacity-faded" translate>
+                Identity required, but not yet captured
+            </div>
+
+            <template if.bind="model.routeStop.identity">
+
+                <div class="flex-row margin-large-bottom">
+
+                    <div>
+                        <div class="margin-bottom margin-large-right opacity-faded" translate>
+                            Date
+                        </div>
+                        <div class="margin-large-right opacity-faded" translate>
+                            Name
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="margin-bottom">
+                            ${model.routeStop.identity.date | dateTime: 'narrow' : false}
+                        </div>
+                        <div>
+                            ${model.routeStop.identity.name}
+                        </div>
+                    </div>
+
+                </div>
+            </template>
+
+        </data-section>
+
+    </template>
+
     <!-- Actions -->
     <template if.bind="model.routeStop.collectionPointId || model.routeStop.actions.photo || model.routeStop.actions.signature || model.routeStop.actions.colliCountVerification || model.routeStop.actions.timeFrameVerification || model.routeStop.actions.scanColli || model.routeStop.actions.instructionsAccept">
 

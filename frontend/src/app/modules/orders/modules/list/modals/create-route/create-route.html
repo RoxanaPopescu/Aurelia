@@ -11,7 +11,7 @@
             <h1 class="font-largest flex-row" tabindex="-1" autofocus="visible.bind: false">
 
                 <div translate>
-                    Create a route from orders
+                    Create route from orders
                 </div>
 
             </h1>
@@ -164,8 +164,7 @@
 
                 <template repeat.for="order of model.orders">
 
-                    <data-table-row
-                        href="/orders/details/${order.slug}">
+                    <data-table-row href="/orders/details/${order.slug}" target="_blank">
 
                         <data-table-cell>
                             <span class="text-truncate">
@@ -176,6 +175,7 @@
                         <data-table-cell align="right">
 
                             <button
+                                if.bind="model.orders.length > 1"
                                 title.translate="Remove order"
                                 class="icon-row"
                                 appearance="none"

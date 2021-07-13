@@ -130,4 +130,17 @@ export class UserService
             body: { username }
         });
     }
+
+    /**
+     * Reactivates the specified user.
+     * @param username The username of the user to reactivate.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+     public async reactivate(username: string): Promise<void>
+     {
+         await this._apiClient.post("users/reactivate",
+         {
+             body: { username }
+         });
+     }
 }

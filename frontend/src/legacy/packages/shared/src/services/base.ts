@@ -1,5 +1,4 @@
 import { Profile } from "../model/profile";
-import { Base } from "shared/src/webKit";
 import { GUID } from "shared/src/webKit";
 
 export default class BaseService {
@@ -41,8 +40,8 @@ export default class BaseService {
     return config;
   }
 
-  static url(name: string, items: { [Key: string]: string } = {}): string {
-    var base = BaseService.baseURL() + name;
+  static url(name: string, items: { [Key: string]: string } = {}, version: "v1" | "v2" = "v1"): string {
+    var base = BaseService.baseURL(version) + name;
 
     let index = 0;
     for (var key in items) {
@@ -59,11 +58,7 @@ export default class BaseService {
     return base;
   }
 
-  static baseURL(): string {
-    if (Base.isProduction) {
-      return "https://consignor-bff.mover.dk/";
-    } else {
-      return `${ENVIRONMENT.apiBaseUrl}v1/`;
-    }
+  static baseURL(version: "v1" | "v2"): string {
+    return `api/${version}/`;
   }
 }

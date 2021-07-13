@@ -59,21 +59,15 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Time remaining" name="timeToDeadline">
-                        <span class="text-truncate" translate>
-                            Remaining
-                        </span>
-                    </data-table-cell>
-
                     <data-table-cell title.translate="ID" name="slug">
                         <span class="text-truncate" translate>
                             Id
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Consignor" name="consignor.primaryName">
+                    <data-table-cell title.translate="Owner" name="consignor.primaryName">
                         <span class="text-truncate" translate>
-                            Consignor
+                            Owner
                         </span>
                     </data-table-cell>
 
@@ -89,19 +83,18 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell title.translate="PickupName" name="pickupName">
+                        <span class="text-truncate" translate>
+                            Pickup name
+                        </span>
+                    </data-table-cell>
+
+
                     <data-table-cell title.translate="Pickup address" name="pickupLocation.address">
                         <span class="text-truncate" translate>
                             Pickup address
                         </span>
                     </data-table-cell>
-
-                    <!--
-                    <data-table-cell title.translate="Postal code" name="pickupPostalCode">
-                        <span class="text-truncate" translate>
-                            Postal code
-                        </span>
-                    </data-table-cell>
-                    -->
 
                     <data-table-cell title.translate="From" name="earliestPickupDate">
                         <span class="text-truncate" translate>
@@ -115,29 +108,15 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Delivery address" name="deliveryLocation.address">
+                    <data-table-cell title.translate="Stop count" name="stopsCount">
                         <span class="text-truncate" translate>
-                            Delivery address
+                            Stops
                         </span>
                     </data-table-cell>
 
-                    <!--
-                    <data-table-cell title.translate="Postal code" name="deliveryPostalCode">
+                    <data-table-cell title.translate="Estimate" name="estimatedDuration">
                         <span class="text-truncate" translate>
-                            Postal code
-                        </span>
-                    </data-table-cell>
-                    -->
-
-                    <data-table-cell title.translate="From" name="earliestDeliveryDate">
-                        <span class="text-truncate" translate>
-                            From
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="To" name="latestDeliveryDate">
-                        <span class="text-truncate" translate>
-                            To
+                            Estimated duration
                         </span>
                     </data-table-cell>
 
@@ -150,23 +129,16 @@
                         selected.bind="item.selected"
                         toggle.call="onRowToggle(item, value)">
 
-                        <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
-                            <icon name="md-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
-                            <span class="text-truncate">
-                                ${item.timeToDeadline | duration }
-                            </span>
-                        </data-table-cell>
-
                         <data-table-cell title.bind="item.slug">
-                            <span class="text-truncate">
+                            <a href="/routes/details/${item.slug}" class="text-truncate">
                                 ${item.slug}
-                            </span>
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
-                            <span class="text-truncate">
-                                ${item.consignor.primaryName}
-                            </span>
+                            <a href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
+                                ${item.owner.primaryName}
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.vehicleType.name">
@@ -181,19 +153,17 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${item.stops[0].outfit.primaryName}
+                            </span>
+                        </data-table-cell>
+
                         <data-table-cell title.bind="item.pickupLocation.address">
                             <span class="text-truncate">
                                 ${item.pickupLocation.address}
                             </span>
                         </data-table-cell>
-
-                        <!--
-                        <data-table-cell title.bind="item.pickupPostalCode">
-                            <span class="text-truncate">
-                                ${item.pickupPostalCode}
-                            </span>
-                        </data-table-cell>
-                        -->
 
                         <data-table-cell title.bind="item.earliestPickupDate | time: 'narrow' : false">
                             <span class="text-truncate">
@@ -207,29 +177,15 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.deliveryLocation.address">
+                        <data-table-cell title.bind="item.stopsCount">
                             <span class="text-truncate">
-                                ${item.deliveryLocation.address}
+                                ${item.stops.length} stops
                             </span>
                         </data-table-cell>
 
-                        <!--
-                        <data-table-cell title.bind="item.deliveryPostalCode">
+                        <data-table-cell title="item.estimate">
                             <span class="text-truncate">
-                                ${item.deliveryPostalCode}
-                            </span>
-                        </data-table-cell>
-                        -->
-
-                        <data-table-cell title.bind="item.earliestDeliveryDate | time: 'narrow' : false">
-                            <span class="text-truncate">
-                                ${item.earliestDeliveryDate | time: 'narrow' : false}
-                            </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false">
-                            <span class="text-truncate">
-                                ${item.latestDeliveryDate | time: 'narrow' : false}
+                                ${item.estimatedDuration | duration}
                             </span>
                         </data-table-cell>
 

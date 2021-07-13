@@ -93,7 +93,7 @@ export class RouteListColumn
         },
         "stop-count":
         {
-            name: "Stops count",
+            name: "Stop count",
             columnName: "Stops",
             columnSize: "min-content",
             sortingName: "stop-count",
@@ -178,6 +178,13 @@ export class RouteListColumn
         {
             name: "Planned time",
             columnName: "Planned",
+            columnSize: "min-content",
+            column: "visible"
+        },
+        "planned-start-time-frame":
+        {
+            name: "Planned start time",
+            columnName: "Starttime",
             columnSize: "min-content",
             column: "visible"
         },

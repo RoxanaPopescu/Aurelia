@@ -4,7 +4,7 @@
         "name": "Mover",
         "preview":
         {
-            "primary": "#11253E"
+            "primary": "#11253e"
         }
     },
     {
@@ -29,6 +29,14 @@
         "preview":
         {
             "primary": "#0051ba"
+        }
+    },
+    {
+        "slug": "interflora",
+        "name": "Interflora",
+        "preview":
+        {
+            "primary": "#cbad61"
         }
     },
     {

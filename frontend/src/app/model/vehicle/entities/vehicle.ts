@@ -124,6 +124,7 @@ export class Vehicle
             internalDimensions: this.internalDimensions,
             licensePlate: this.licensePlate,
             type: this.type.id,
+            typeSlug: this.type.slug,
             make: this.make,
             model: this.model,
             productionYear: this.productionYear,

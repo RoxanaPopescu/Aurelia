@@ -19,6 +19,7 @@ export class RouteStopActions
             this.photo = data.photo;
             this.verificationCode = data.verificationCode;
             this.colliCountVerification = data.colliCountVerification;
+            this.identity = data.identity;
         }
         else
         {
@@ -30,6 +31,7 @@ export class RouteStopActions
             this.photo = false;
             this.verificationCode = false;
             this.colliCountVerification = false;
+            this.identity = false;
         }
     }
 
@@ -57,6 +59,11 @@ export class RouteStopActions
      * True if a signature must be captured as proof of delivery, otherwise false.
      */
     public signature: boolean;
+
+    /**
+     * True if a identity must be captured as proof of delivery, otherwise false.
+     */
+     public identity: boolean;
 
     /**
      * True if a photo must be captured as proof of delivery, otherwise false.

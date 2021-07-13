@@ -61,6 +61,11 @@ export class VehicleType {
   public readonly maxLength: number;
 
   /**
+   * The length of the cargo space.
+   */
+   public readonly maxPayloadDimensions: number;
+
+  /**
    * The max weight of the cargo.
    */
   public readonly maxWeight: number;

@@ -51,7 +51,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.owner.companyName}
+                        ${route.owner.primaryName}
                     </div>
 
                 </name-value-pair>
@@ -560,6 +560,15 @@
                             click.trigger="onStatusItemClick('not-approved')"
                             translate>
                             Not approved
+                        </item>
+
+                        <item
+                            model="to-be-express-dispatched"
+                            if.bind="showLegacy"
+                            disabled.bind="['to-be-express-dispatched'].includes(route.status.slug)"
+                            click.trigger="onStatusItemClick('to-be-express-dispatched')"
+                            translate>
+                            To be express dispatched
                         </item>
 
                         <item

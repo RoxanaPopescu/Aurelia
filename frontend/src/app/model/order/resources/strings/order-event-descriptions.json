@@ -36,5 +36,6 @@
     "collectionPointOrderDeleted": "The collo was deleted at the collection point",
     "orderPickupArrived": "The driver has arrived with the collo at the the pick up location",
     "authorityToLeaveGranted": "Authority to leave was granted",
-    "authorityToLeaveRevoked": "Authority to leave was revoked"
+    "authorityToLeaveRevoked": "Authority to leave was revoked",
+    "notificationOrderSmsSent": "An SMS notification was sent to the receiver"
 }

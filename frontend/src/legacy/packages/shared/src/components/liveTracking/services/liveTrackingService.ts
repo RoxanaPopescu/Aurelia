@@ -13,6 +13,7 @@ import { Log } from "shared/infrastructure";
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
 
+const pollIntervalDetailsFocus = 3500;
 const pollIntervalFocus = 7000;
 const pollIntervalOutOfFocus = 120000;
 
@@ -46,6 +47,7 @@ export class LiveTrackingService {
   public toast?: { type: ToastType.Success, content: string };
 
   public pollInterval = pollIntervalFocus;
+  public pollIntervalDetails = pollIntervalDetailsFocus;
 
   @observable
   private routesNotStarted: RouteInfo[] | undefined;
@@ -271,11 +273,9 @@ export class LiveTrackingService {
     if (slug == null) {
       this.stoppedDetails = true;
       this.selectedRoute = undefined;
-      this.setInFocus();
       clearImmediate(this.pollTimeout.selectedRoute);
     } else {
       this.stoppedDetails = false;
-      this.setNotInFocus();
       this.pollDetails();
     }
   }
@@ -313,6 +313,7 @@ export class LiveTrackingService {
     this.poll("in-progress");
     this.poll("no-driver");
     this.poll("not-started");
+    this.pollDetails();
   }
 
   /**
@@ -328,10 +329,12 @@ export class LiveTrackingService {
 
   public setNotInFocus() {
     this.pollInterval = pollIntervalOutOfFocus;
+    this.pollIntervalDetails = pollIntervalOutOfFocus;
   }
 
   public setInFocus() {
     this.pollInterval = pollIntervalFocus;
+    this.pollIntervalDetails = pollIntervalDetailsFocus;
 
     // Force one poll
     this.startPolling();
@@ -373,7 +376,7 @@ export class LiveTrackingService {
         return;
       }
 
-      this.pollTimeout.selectedRoute = setTimeout(() => this.pollDetails(), pollIntervalFocus);
+      this.pollTimeout.selectedRoute = setTimeout(() => this.pollDetails(), this.pollIntervalDetails);
     }
   }
 
@@ -382,11 +385,12 @@ export class LiveTrackingService {
 
     let body = {
       "northEastPosition": { "latitude": northEast.lat(), "longitude": northEast.lng() },
-      "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() }
+      "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() },
+      "vehicleTypes": this.filter.vehicleTypeIds
     };
 
     const response = await fetch(
-      BaseService.url("drivers/onlineInArea"),
+      BaseService.url("drivers/online-in-area", undefined, "v2"),
       BaseService.defaultConfig(body)
     );
 
@@ -420,7 +424,7 @@ export class LiveTrackingService {
 
       if (type == "in-progress") {
         statuses = ["in-progress"];
-        from = from.minus(Duration.fromObject({hours: 24}));
+        from = from.minus(Duration.fromObject({hours: 48}));
         to = to.plus(Duration.fromObject({hours: 12}));
       } else if (type == "no-driver") {
         statuses = ["not-started", "not-approved"];

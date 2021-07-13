@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="flex-push-right text-align-right flex-basis-1-of-2">
                                         <div>
-                                            &nbsp;${stop.stop.orderIds | list: 'short'}
+                                            &nbsp;${stop.stop.reference}
                                         </div>
                                         <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
                                             <div class="flex-row flex-push-right">
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="flex-push-right text-align-right flex-basis-1-of-2">
                                         <div>
-                                            &nbsp;${stop.stop.orderIds | list: 'short'}
+                                            &nbsp;${stop.stop.reference}
                                         </div>
                                         <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
                                             <div class="flex-row flex-push-right">

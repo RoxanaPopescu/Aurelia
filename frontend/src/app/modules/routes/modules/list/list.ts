@@ -80,8 +80,6 @@ export class ListPage
                 }
             }
 
-            console.log(customColumns);
-
             this.customColumns = customColumns;
         }
     }
@@ -555,7 +553,7 @@ export class ListPage
                         criticality: this.columns.map(c => c.slug).includes("criticality"),
                         estimates: this.columns.map(c => c.slug).includes("estimated-time-frame"),
                         delayedStops: this.columns.map(c => c.slug).includes("delayed-stops"),
-                        stops: this.columns.map(c => c.slug).includes("distance")
+                        stops: this.columns.map(c => c.slug).includes("distance") || this.columns.map(c => c.slug).includes("planned-start-time-frame")
                     },
                     this.sorting,
                     this.paging,

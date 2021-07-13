@@ -364,6 +364,9 @@ export class MergeColumnCustomElement
                 this.driverStops.map(s => s.stop.id),
                 addRouteIds);
 
+            this.workspace.selectedDriverRoutes[0].selected = false;
+            this.workspace.selectedDriverRoutes.splice(0, 1);
+
             this.canApply = true;
             this.addingStops = false;
             history.back();
@@ -411,30 +414,24 @@ export class MergeColumnCustomElement
     {
         if (this._draggedStop!.stop.type.slug === "pickup")
         {
-            for (const orderId of this._draggedStop!.stop.orderIds)
-            {
-                const deliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.orderIds.includes(orderId));
+            const firstDeliveryStop = this.driverStops.find(s => s.stop.type.slug === "delivery" && s.stop.route.slug === this._draggedStop!.stop.route.slug);
 
-                if (
-                    (deliveryStop != null && targetStop == null) ||
-                    (deliveryStop != null && targetStop != null && this.driverStops.indexOf(deliveryStop) < this.driverStops.indexOf(targetStop)))
-                {
-                    return false;
-                }
+            if (
+                (firstDeliveryStop != null && targetStop == null) ||
+                (firstDeliveryStop != null && targetStop != null && this.driverStops.indexOf(firstDeliveryStop) < this.driverStops.indexOf(targetStop)))
+            {
+                return false;
             }
         }
         else
         {
-            for (const orderId of this._draggedStop!.stop.orderIds)
-            {
-                const pickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.orderIds.includes(orderId));
+            const firstPickupStop = this.driverStops.find(s => s.stop.type.slug === "pickup" && s.stop.route.slug === this._draggedStop!.stop.route.slug);
 
-                if (
-                    (pickupStop == null) ||
-                    (targetStop != null && this.driverStops.indexOf(pickupStop) >= this.driverStops.indexOf(targetStop)))
-                {
-                    return false;
-                }
+            if (
+                (firstPickupStop == null) ||
+                (targetStop != null && this.driverStops.indexOf(firstPickupStop) >= this.driverStops.indexOf(targetStop)))
+            {
+                return false;
             }
         }
 

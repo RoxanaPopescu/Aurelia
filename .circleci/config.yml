@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  azure-cli: circleci/azure-cli@1.0.3
+  azure-cli: circleci/azure-cli@1.2.0
   sentry-release: adhawk/sentry-release@0.0.3
 
 jobs:
@@ -66,7 +66,8 @@ jobs:
             type="bff"
 
   bff-user-management-build-test:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-azure-command:
@@ -134,7 +135,8 @@ jobs:
           command: az webapp stop -s staging
 
   bff-build-test:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-azure-command:
@@ -202,7 +204,8 @@ jobs:
           command: az webapp stop -s staging
 
   bff-build-prod:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-azure-command:
@@ -310,7 +313,8 @@ jobs:
             type="client"
 
   client-build-test:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-command:
@@ -361,7 +365,8 @@ jobs:
             type="client"
 
   client-user-management-build-test:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-command:
@@ -474,7 +479,8 @@ jobs:
           command: az webapp stop -s staging
 
   client-build-production:
-    executor: azure-cli/azure-docker
+    docker:
+      - image: mcr.microsoft.com/azure-cli:2.25.0
 
     steps:
       - setup-command:

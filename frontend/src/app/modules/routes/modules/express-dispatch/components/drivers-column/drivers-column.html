@@ -66,15 +66,20 @@
 
             <data-table
                 appearance="rows"
-                sorting.bind="sorting"
                 selection="multiple"
                 toggle-all.call="onToogleAll(value)">
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="Deadline" name="status.name">
+                    <data-table-cell title.translate="Vehicle">
                         <span class="text-truncate" translate>
-                            Status
+                            Vehicle
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Online">
+                        <span class="text-truncate" translate>
+                            Available
                         </span>
                     </data-table-cell>
 
@@ -84,33 +89,33 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Id" name="driver.id">
-                        <span class="text-truncate" translate>
-                            Id
-                        </span>
-                    </data-table-cell>
-
-                    <data-table-cell title.translate="Name" name="driver.name">
+                    <data-table-cell title.translate="Name">
                         <span class="text-truncate" translate>
                             Name
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Vehicle" name="vehicle.vehicleType.name">
+                    <data-table-cell title.translate="Name">
                         <span class="text-truncate" translate>
-                            Vehicle
+                            Phone
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Done" name="completionTime">
+                    <data-table-cell title.translate="Done">
                         <span class="text-truncate" translate>
                             Done
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="Last stop address" name="lastStop.location.address">
+                    <data-table-cell title.translate="Next stop">
                         <span class="text-truncate" translate>
-                            Last stop address
+                            Next stop
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Route id">
+                        <span class="text-truncate" translate>
+                            Route id
                         </span>
                     </data-table-cell>
 
@@ -120,10 +125,20 @@
 
                     <data-table-row accent.bind="item.selected ? 'neutral' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
 
-                        <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
-                            <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
+                        <data-table-cell title.bind="item.vehicle.vehicleType.name">
                             <span class="text-truncate">
-                                ${item.status.name}
+                                ${item.vehicle.type.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.available">
+                            <span class="text-truncate">
+                                <template if.bind="item.available" translate>
+                                    Yes
+                                </template>
+                                <template if.bind="!item.available" translate>
+                                    No
+                                </template>
                             </span>
                         </data-table-cell>
 
@@ -139,22 +154,18 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.driver.id">
+                        <data-table-cell title.bind="item.driver.name">
+
                             <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
-                                ${item.driver.id}
+                                ${item.driver.name}
                             </a>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.driver.name">
-                            <span class="text-truncate">
-                                ${item.driver.name}
-                            </span>
-                        </data-table-cell>
+                        <data-table-cell title.bind="item.driver.phone">
 
-                        <data-table-cell title.bind="item.vehicle.vehicleType.name">
-                            <span class="text-truncate">
-                                ${item.vehicle.type.name}
-                            </span>
+                            <a class="text-truncate" href="tel:${item.driver.phone}">
+                                ${item.driver.phone}
+                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.completionTime | time: 'narrow' : false">
@@ -163,11 +174,18 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.lastStop.location.address">
+                        <data-table-cell title.bind="item.nextStop.location.address">
                             <span class="text-truncate">
-                                ${item.lastStop.location.address}
+                                ${item.nextStop.location.address}
                             </span>
                         </data-table-cell>
+
+                        <data-table-cell title.bind="route.slug">
+                            <a href="/routes/details/${item.slug}" class="text-truncate">
+                                ${item.slug}
+                            </a>
+                        </data-table-cell>
+
 
                     </data-table-row>
 

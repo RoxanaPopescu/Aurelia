@@ -61,6 +61,15 @@ export class LiveTrackingFilter {
     public assignedToDriver: boolean | undefined;
 
     /**
+     * The vehicle type ids
+     */
+    @computed
+    public get vehicleTypeIds(): string[] {
+      const all = VehicleType.getAll();
+      return this.vehicleTypes.map(v => all.find(a => a.slug == v)!.id);
+    }
+
+    /**
      * The amount of filters applied
      */
     @computed

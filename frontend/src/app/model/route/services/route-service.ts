@@ -270,11 +270,11 @@ export class RouteService
     }
 
     /**
-     * Adds the specified route stop at the specified index.
+     * Creates a route based on the specified orders.
      * @param orders The orders from which the route is created from.
      * @param routeReference The reference for the route being created.
      * @param vehicleType The type of vehicle used for the route being created.
-     * @returns A promise that will be resolved with a route slug.
+     * @returns A promise that will be resolved with the slug identifying the new route.
      */
     public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<string>
     {
@@ -287,18 +287,19 @@ export class RouteService
     }
 
     /**
-     * Adds the specified route stop at the specified index.
+     * Creates collection points based on the specified orders.
      * @param orders The orders from which the route is created from.
      * @param route The route specific parameters.
-     * @returns A promise that will be resolved with a route slug.
+     * @returns A promise that will be resolved with the slug identifying the new route.
      */
-    public async createCollectionPoints(orderIds: string[], route: {
+    public async createCollectionPoints(orderIds: string[], route:
+    {
         startDateTime: DateTime;
         vehicleType: VehicleType;
         pickupGate?: string;
         reference?: string;
     }): Promise<{ slug: string; collectionPointIds: string[] }>
-{
+    {
         const result = await this._apiClient.post("routes/create/collection-points-from-orders",
         {
             body: {

@@ -8,7 +8,7 @@ import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
-import { IdentityService } from "app/services/identity";
+import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AbortError } from "shared/types";
@@ -413,6 +413,28 @@ export class DetailsModule
     {
         const element = this.dataTableElement.querySelectorAll(".route-details-stop-number")[stop.stopNumber - 2];
         element.scrollIntoView();
+    }
+
+    /**
+     * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
+     */
+    protected get showLegacy(): boolean
+    {
+        if (ENVIRONMENT.name !== "production")
+        {
+            return true;
+        }
+
+        const identity = this.identityService.identity;
+
+        if (identity == null)
+        {
+            return false;
+        }
+
+        const legacyOrganizationIds = [moverOrganizationId];
+
+        return legacyOrganizationIds.includes(identity.outfit.id);
     }
 
     /**
