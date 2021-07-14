@@ -63,7 +63,7 @@ export class AccountService
     }
 
     /**
-     * Changes the password for the current user, or the user identified by the specified recovery token.
+     * Changes the password for the current user, or the user identified by the specified token.
      * @param password The new password chosen by the user.
      * @param token The token specified in the recovery link sent to the user, or undefined if already authenticated.
      * @returns A promise that will be resolved with the identity tokens.
