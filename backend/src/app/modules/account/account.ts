@@ -9,13 +9,15 @@ export class AccountModule extends AppModule
     {
         /**
          * Creates a new user with the specified name, email and password.
-         * Note that the new user will initailly be unconfirmed.
          * @param body.fullName The full name of the user.
          * @param body.preferredName The preferred name of the user.
          * @param body.email The email identifying the user.
          * @param body.password The password specified by the user.
          * @returns
-         * 204: No content.
+         * - 204: No content.
+         *   The client may now authenticate using the email and password.
+         *   An email will be sent to the user, with a link they can use to confirm their email address.
+         *   Note that the email template is selected based on the value of the `x-api-key` header.
          */
         this.router.post("/v1/account/create", async context =>
         {
@@ -31,15 +33,20 @@ export class AccountModule extends AppModule
             });
 
             context.response.status = 204;
+
+            // TODO: Alternatively, we could authenticate automatically and return the tokens.
         });
 
         /**
-         * Confirms the creation of a new user, by verifying the specified token.
-         * @param body.token The token specified in the confirmation link sent to the new user.
+         * Confirms the email address of a user, by verifying the specified token.
+         * @param body.token The token specified in the confirmation link sent to the user.
+         * @returns
+         * - 204: No content.
+         *   The client may now show a sign-in view, if not already authenticated.
          */
-        this.router.post("/v1/account/confirm", async context =>
+        this.router.post("/v1/account/confirm-email", async context =>
         {
-            const result = await this.apiClient.post("account/confirm",
+            await this.apiClient.post("account/confirm-email",
             {
                 body:
                 {
@@ -47,17 +54,16 @@ export class AccountModule extends AppModule
                 }
             });
 
-            context.response.body =
-            {
-                refreshToken: result.data.refreshToken,
-                accessToken: result.data.accessToken
-            };
-
-            context.response.status = 200;
+            context.response.status = 204;
         });
 
         /**
          * Requests password recovery for the user with the specified email.
+         * @param body.email The email address identifying the user.
+         * @returns
+         * - 204: No content.
+         *   An email will be sent to the user, with a link they can use to change their password.
+         *   Note that the email template is selected based on the value of the `x-api-key` header.
          */
         this.router.post("/v1/account/forgot-password", async context =>
         {
@@ -74,6 +80,12 @@ export class AccountModule extends AppModule
 
         /**
          * Changes the password for the current user, or the user identified by the specified token.
+         * @param body.password The new password chosen by the user.
+         * @param body.token The token specified in the recovery link sent to the user, or undefined if already authenticated.
+         * @param body.revokeTokens True to revoke all refresh tokens and access tokens, except the ones associated with this request.
+         * @returns
+         * - 200: The email address of the user for which the password was changed.
+         *   The client may now authenticate using the email and password.
          */
         this.router.post("/v1/account/change-password", async context =>
         {
@@ -83,21 +95,27 @@ export class AccountModule extends AppModule
                 {
                     // accessToken: context.request.headers["authorization"].replace(/^Bearer /, ""), // Not needed, as we forward this header
                     token: context.request.body.token,
-                    password: context.request.body.password
+                    password: context.request.body.password,
+                    revokeTokens: context.request.body.revokeTokens
+                    // TODO: Do we need to specify the refresh token here, or can we look that up based on the access token?
                 }
             });
 
             context.response.body =
             {
-                refreshToken: result.data.refreshToken,
-                accessToken: result.data.accessToken
+                email: result.data.email
             };
 
             context.response.status = 200;
+
+            // TODO: Alternatively, we could authenticate automatically and return the tokens.
         });
 
         /**
          * Deletes the user with the specified email.
+         * @param body.email The email address identifying the user.
+         * @returns
+         * - 204: No content.
          */
         this.router.post("/v1/account/delete", async context =>
         {
