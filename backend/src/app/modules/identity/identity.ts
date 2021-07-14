@@ -8,6 +8,7 @@ export class IdentityModule extends AppModule
     public configure(): void
     {
         // TODO: Do we need this, or should we hardcode the providers and their URLs in the client?
+        // TODO: Do we need to call the backend, or should we just have the list of providers here in the BFF?
         /**
          * Gets the supported OAuth identity providers, including their sign-in URLs.
          * @param body.clientId The ID of the client making the request.
@@ -21,6 +22,7 @@ export class IdentityModule extends AppModule
             {
                 query:
                 {
+                    // TODO: We should probably rely on the `x-api-key` header instead of a client ID.
                     clientId: context.request.body.clientId,
                     redirectUrl: context.request.body.redirectUrl
                 }
@@ -37,6 +39,7 @@ export class IdentityModule extends AppModule
         });
 
         // TODO: Do we need this, or should we hardcode the providers and their URLs in the client?
+        // TODO: Do we need to call the backend, or should we just have the list of providers here in the BFF?
         /**
          * Gets the specified OAuth identity provider, including its sign-in URL.
          * @param params.providerId The ID of the provider to get.
@@ -51,6 +54,7 @@ export class IdentityModule extends AppModule
             {
                 query:
                 {
+                    // TODO: We should probably rely on the `x-api-key` header instead of a client ID.
                     clientId: context.request.body.clientId,
                     redirectUrl: context.request.body.redirectUrl
                 }
@@ -72,6 +76,7 @@ export class IdentityModule extends AppModule
          * @param params.providerId The ID of the provider to use.
          * @param body.clientId The ID of the client making the request.
          * @param body.redirectUrl The redirect URI specified when authenticating with the provider.
+         * @param body.code The code received in the redirect from the identity provider.
          * @returns
          * - 200: A refresh token and an access token that grants permission to create or choose an organization.
          */
@@ -81,6 +86,7 @@ export class IdentityModule extends AppModule
             {
                 body:
                 {
+                    // TODO: Should we rely on the `x-api-key` header instead of a client ID?
                     clientId: context.request.body.clientId,
                     redirectUrl: context.request.body.redirectUrl,
                     code: context.request.body.code

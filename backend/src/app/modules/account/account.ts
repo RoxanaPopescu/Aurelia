@@ -34,7 +34,7 @@ export class AccountModule extends AppModule
 
             context.response.status = 204;
 
-            // TODO: Alternatively, we could authenticate automatically and return the tokens.
+            // TODO: Alternatively, we could authenticate immediately and return the tokens.
         });
 
         /**
@@ -97,7 +97,7 @@ export class AccountModule extends AppModule
                     token: context.request.body.token,
                     password: context.request.body.password,
                     revokeTokens: context.request.body.revokeTokens
-                    // TODO: Do we need to specify the refresh token here, or can we look that up based on the access token?
+                    // TODO: Do we also need to specify the refresh token here, or can we look that up based on the access token?
                 }
             });
 
@@ -108,7 +108,7 @@ export class AccountModule extends AppModule
 
             context.response.status = 200;
 
-            // TODO: Alternatively, we could authenticate automatically and return the tokens.
+            // TODO: Alternatively, we could authenticate immediately and return the tokens.
         });
 
         /**
