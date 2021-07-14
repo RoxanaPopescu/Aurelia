@@ -40,6 +40,26 @@ export class RequestHeadersInterceptor implements IApiInterceptor
             request.headers.set("Mover-CorrelationId", headers.correlationId);
         }
 
+        if (headers.apiKey && !request.headers.has("x-api-key"))
+        {
+            request.headers.set("x-api-key", headers.apiKey);
+        }
+
+        if (headers.visitorId && !request.headers.has("x-visitor"))
+        {
+            request.headers.set("x-visitor", headers.visitorId);
+        }
+
+        if (headers.sessionId && !request.headers.has("x-session"))
+        {
+            request.headers.set("x-session", headers.sessionId);
+        }
+
+        if (headers.instanceId && !request.headers.has("x-instance"))
+        {
+            request.headers.set("x-instance", headers.instanceId);
+        }
+
         if (headers.localeCode && !request.headers.has("x-locale"))
         {
             request.headers.set("x-locale", headers.localeCode);

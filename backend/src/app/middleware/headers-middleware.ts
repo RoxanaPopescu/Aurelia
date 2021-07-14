@@ -22,11 +22,15 @@ export function headersMiddleware(): Middleware
 
             namespace.set("headers-middleware",
             {
+                authorization: context.request.headers["authorization"],
                 correlationId: context.request.headers["x-correlation"] || uuidV4(),
+                apiKey: context.request.headers["x-api-key"],
+                visitorId: context.request.headers["x-visitor"],
+                sessionId: context.request.headers["x-session"],
+                instanceId: context.request.headers["x-instance"],
                 localeCode: context.request.headers["x-locale"],
                 marketCode: context.request.headers["x-market"],
-                currencyCode: context.request.headers["x-currency"],
-                authorization: context.request.headers["authorization"]
+                currencyCode: context.request.headers["x-currency"]
             });
 
             return next().then(resolve).catch(reject);

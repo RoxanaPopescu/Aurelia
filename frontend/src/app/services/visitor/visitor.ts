@@ -1,7 +1,8 @@
-import { autoinject } from "aurelia-framework";
-import { Cookies } from "shared/infrastructure";
-import { Id } from "shared/utilities";
 import { DateTime } from "luxon";
+import { autoinject } from "aurelia-framework";
+import { Id } from "shared/utilities";
+import { Cookies } from "shared/infrastructure";
+import settings from "resources/settings";
 
 /**
  * Represents info about the visitor that loaded the app.
@@ -15,21 +16,30 @@ export class Visitor
      */
     public constructor(cookies: Cookies)
     {
-        let visitorId = cookies.get("visitor");
+        // Get or generate the visitor ID.
 
-        if (!visitorId)
+        this.visitorId = cookies.get("visitor") ?? Id.uuid(1);
+
+        cookies.set("visitor", this.visitorId,
         {
-            visitorId = Id.uuid(1);
+            expires: DateTime.utc().plus({ years: 10 })
+        });
 
-            cookies.set("visitor", visitorId,
-            {
-                expires: DateTime.utc().plus({ years: 10 })
-            });
-        }
+        settings.infrastructure.api.defaults!.headers!["x-visitor"] = this.visitorId;
 
-        this.visitorId = visitorId;
+        // Get or generate the session ID.
 
-        this.sessionId = Id.uuid(1);
+        this.sessionId = sessionStorage.getItem("session") ?? Id.uuid(1);;
+
+        sessionStorage.setItem("session", this.sessionId);
+
+        settings.infrastructure.api.defaults!.headers!["x-session"] = this.sessionId;
+
+        // Get or generate the instance ID.
+
+        this.instanceId = Id.uuid(1);
+
+        settings.infrastructure.api.defaults!.headers!["x-instance"] = this.instanceId;
     }
 
     /**
@@ -38,7 +48,12 @@ export class Visitor
     public readonly visitorId: string;
 
     /**
-     * The ID assigned to the current app session.
+     * The ID assigned to the current browser session.
      */
     public readonly sessionId: string;
+
+    /**
+     * The ID assigned to the current app instance.
+     */
+    public readonly instanceId: string;
 }
