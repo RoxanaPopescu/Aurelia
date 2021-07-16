@@ -96,13 +96,13 @@ export class PageHrefCustomAttribute
         this.navigate ??= this.attribute == null && this.property == null;
 
         // Ensure this attribute, and the specified attribute and property, is set.
-        this.hrefChanged();
+        this.pathChanged();
     }
 
     /**
-     * Called by the framework when the `href` property changes.
+     * Called by the framework when the `page` property changes.
      */
-    protected hrefChanged(): void
+    protected pathChanged(): void
     {
         // Ensure this attribute, and the specified attribute and property, is updated.
 
