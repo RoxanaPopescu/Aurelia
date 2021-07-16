@@ -17,7 +17,7 @@ export class AccountModule extends AppModule
          * - 204: No content.
          *   The client may now authenticate using the email and password.
          *   An email will be sent to the user, with a link they can use to confirm their email address.
-         *   Note that the email template is selected based on the value of the `x-api-key` header.
+         *   Note that the email template will be selected based on the API key specified in the request.
          */
         this.router.post("/v1/account/create", async context =>
         {
@@ -63,7 +63,7 @@ export class AccountModule extends AppModule
          * @returns
          * - 204: No content.
          *   An email will be sent to the user, with a link they can use to change their password.
-         *   Note that the email template is selected based on the value of the `x-api-key` header.
+         *   Note that the email template will be selected based on the API key specified in the request.
          */
         this.router.post("/v1/account/forgot-password", async context =>
         {
