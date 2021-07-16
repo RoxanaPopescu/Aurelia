@@ -1,11 +1,11 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
 
 import "./page-href.scss";
 
 /**
- * Custom attribute used to specify an href for an element.
- * The href may be assigned to an attribute on the element or a property on its view model,
+ * Custom attribute used to specify an `href` for an element.
+ * The `href` may be assigned to an attribute on the element or a property on its view model,
  * or navigation may be triggered when the element is clicked or the `Enter` key is pressed.
  */
 @autoinject
@@ -20,44 +20,7 @@ export class PageHrefCustomAttribute
     {
         this._element = element as any;
         this._historyHelper = historyHelper;
-    }
 
-    private readonly _element: (HTMLElement | SVGElement) & { au?: any };
-    private readonly _historyHelper: HistoryHelper;
-    private _navigate: boolean;
-
-    /**
-     * The URL to set or navigate to when the element is clicked.
-     */
-    @bindable({ primaryProperty: true })
-    public path: string | undefined;
-
-    /**
-     * The name of the attribute to set on the element.
-     * The default is `href` if the attribute is applied to an `a` alement, otherwise undefined.
-     */
-    @bindable
-    public attribute: string | undefined;
-
-    /**
-     * The name of the property to set on the view model of the element, if applied to a custom element.
-     * The default is `href`, if a property with that name is defined on the view model, otherwise undefined.
-     */
-    @bindable
-    public property: string | undefined;
-
-    /**
-     * True to navigate when the element is clicked or the `Enter` key is pressed, otherwise false.
-     * The default is false if the href was assigned to a property, otherwise true.
-     */
-    @bindable
-    public navigate: boolean | undefined;
-
-    /**
-     * Called by the framework when the component is attached.
-     */
-    public attached(): void
-    {
         // Listen for events that should trigger navigation.
 
         this._element.addEventListener("click", (event: MouseEvent) =>
@@ -77,133 +40,246 @@ export class PageHrefCustomAttribute
         });
     }
 
+    private readonly _element: (HTMLElement | SVGElement) & { au?: any };
+    private readonly _historyHelper: HistoryHelper;
+    private _url: string | undefined;
+
     /**
-     * Called by the framework when a property changes.
+     * The URL path to set or navigate to when the element is clicked.
      */
-    protected propertyChanged(): void
+    @bindable({ primaryProperty: true })
+    public path: string | undefined;
+
+    /**
+     * The name of the attribute to set on the element, or null to not set any attribute.
+     * The default is `href` if the attribute is applied to an anchor alement, otherwise null.
+     */
+    @bindable({ defaultBindingMode: bindingMode.oneTime })
+    public attribute: string | null;
+
+    /**
+     * The name of the property to set on the view model of the element, if applied to a custom element, or null to not set any attribute.
+     * The default is `href` if a property with that name is defined on the view model, otherwise null.
+     */
+     @bindable({ defaultBindingMode: bindingMode.oneTime })
+    public property: string | null;
+
+    /**
+     * True to navigate when the element is clicked or the `Enter` key is pressed, otherwise false.
+     * The default is false if the `href` was assigned to an attribute or property, otherwise true.
+     */
+     @bindable({ defaultBindingMode: bindingMode.oneTime })
+    public navigate: boolean;
+
+    /**
+     * True to navigate in a new window, otherwise false.
+     * Note that this option only applies when the `navigate` option is true.
+     */
+    @bindable
+    public open: boolean | undefined;
+
+    /**
+     * Called by the framework when the component is binding.
+     */
+    public bind(): void
     {
-        const assignedToAttribute = this.setAttribute();
-        const assignedToProperty = this.setProperty();
+        // Determine the default value for the `attribute` option.
+        this.attribute ??= this._element instanceof HTMLAnchorElement ? "href" : null;
 
-        // Determine whether navigation should be triggered when the element is clicked or the `Enter` key is pressed.
-        this._navigate = this.path != null && (this.navigate === true || (this.navigate == null && !assignedToProperty));
+        // Get the view model, if the element is a custom element.
+        const viewModel = this._element.au?.controller?.viewModel;
 
-        // Remove the `page-href` attribute if navigation should not be triggered, or if the href was assigned to an attribute.
-        // This is needed, because the element is styled as clickable when the `page-href` attribute is present.
-        if (!this._navigate && !assignedToAttribute)
-        {
-            for (const attributeName of this._element.getAttributeNames())
-            {
-                if (/^page-href(?:\.|$)/.test(attributeName))
-                {
-                    this._element.removeAttribute(attributeName);
-                }
-            }
-        }
+        // Determine the default value for the `property` option.
+        this.property ??= viewModel != null && "href" in viewModel ? "href" : null;
+
+        // Determine the default value for the `navigation` option.
+        this.navigate ??= this.attribute == null && this.property == null;
+
+        // Ensure this attribute, and the specified attribute and property, is set.
+        this.hrefChanged();
+    }
+
+    /**
+     * Called by the framework when the `href` property changes.
+     */
+    protected hrefChanged(): void
+    {
+        // Ensure this attribute, and the specified attribute and property, is updated.
+
+        this._url = this.path != null ? this.path : undefined;
+
+        this.setAttribute();
+        this.setProperty();
+        this.setThisAttribute();
+    }
+
+    /**
+     * Called by the framework when the `open` property changes.
+     */
+    protected openChanged(): void
+    {
+        // Ensure this attribute is updated.
+        this.setThisAttribute();
     }
 
     /**
      * Called when the element is clicked, or enter is pressed while the element has keyboard focus.
-     * Navigates to the specified href.
+     * Navigates to the specified `href`.
      * @param event The mouse or keyboard event.
      */
     private async onElementClickOrEnter(event: MouseEvent | KeyboardEvent): Promise<void>
     {
-        // Don't handle the event if default has been prevented.
-        if (event.defaultPrevented)
+        // Don't handle the event if default has been prevented or it is being repeated.
+        if (event.defaultPrevented || (event instanceof MouseEvent && event.detail > 1) || (event instanceof KeyboardEvent && event.repeat))
         {
             return;
         }
 
-        // Determine whether the target is an anchor with an `href` attribute.
-        const targetIsAnchorWithHref = event.target instanceof HTMLAnchorElement && event.target.hasAttribute("href");
+        // Don't handle the event if it originated from a nested anchor element with an `href` attribute.
+        for (const target of event.composedPath())
+        {
+            // Only consider targets within the current element.
+            if (target === this._element)
+            {
+                break;
+            }
 
-        // Don't handle the event if it originated from a nested element,
-        // and that nested element is an anchor with an `href` attribute.
-        if (targetIsAnchorWithHref && event.target !== this._element)
+            // Determine whether the target is an anchor element with an `href`.
+            if (target instanceof HTMLAnchorElement && target.hasAttribute("href"))
+            {
+                return;
+            }
+        }
+
+        // Don't handle the event if navigation is disabled or no `href` is specified.
+        if (!this.navigate || this.path == null)
         {
             return;
         }
 
-        // Do nothing if no href is specified, or if no navigation should be triggered.
-        if (!this._navigate)
-        {
-            return;
-        }
+        // Prevent default for the event, as it will be handled by this attribute.
+        event.preventDefault();
 
         // Determine whether any modifier key is pressed.
         const modifierKeyPressed = event.metaKey || event.shiftKey || event.ctrlKey || event.altKey;
 
         // Determine whether to navigate in the current window, or open a new window.
-        if (modifierKeyPressed || (targetIsAnchorWithHref && this._element.getAttribute("target") === "_blank"))
+        if (this.open || modifierKeyPressed)
         {
-            // Prevent default for the event, as it will be handled by this attribute.
-            event.preventDefault();
-
-            // Open the URL in a new tab or window.
-            window.open(this.path!, "_blank");
+            // Open the URL in a new window.
+            window.open(this._url, "_blank");
         }
         else
         {
-            // Prevent default for the event, as it will be handled by this attribute.
-            event.preventDefault();
-
             // Navigate to the specified URL.
-            await this._historyHelper.navigate(this.path!);
+            await this._historyHelper.navigate(this.path);
         }
     }
 
     /**
-     * Attempts to set the attribute on the element.
-     * @returns True if the attribute was set, otherwise false.
+     * Attempts to set the specified attribute on the element.
      */
-    private setAttribute(): boolean
+    private setAttribute(): void
     {
-        // Get the name of the property to set, if any.
-        const attribute = this.attribute ?? (this._element instanceof HTMLAnchorElement ? "href" : undefined);
-
-        if (attribute != null)
+        if (this.attribute != null)
         {
-            if (this.path != null)
+            // Set or remove the attribute on the element.
+            if (this._url != null)
             {
-                // Set the attribute.
-                this._element.setAttribute("href", this.path);
+                this._element.setAttribute(this.attribute, this._url);
             }
             else
             {
-                // Remove the attribute.
-                this._element.removeAttribute("href");
+                this._element.removeAttribute(this.attribute);
             }
-
-            return true;
         }
-
-        return false;
     }
 
     /**
-     * Attempts to set the property on the view model of the element.
-     * @returns True if the property was set, otherwise false.
+     * Attempts to set the specified property on the view model of the element.
      */
-    private setProperty(): boolean
+    private setProperty(): void
     {
-        // Get the view model, if the element is a custom element.
-        const viewModel = this._element.au?.controller?.viewModel;
-
-        if (viewModel != null)
+        if (this.property)
         {
-            // Get the name of the property to set, if any.
-            const property = this.property ?? ("href" in viewModel ? "href" : undefined);
+            // Get the view model, if the element is a custom element.
+            const viewModel = this._element.au?.controller?.viewModel;
 
-            if (property != null)
+            if (viewModel == null)
             {
-                // Set the property.
-                viewModel[property] = this.path;
+                throw new Error("The element does not have a view model.");
+            }
 
-                return true;
+            // Set the property on the view model.
+            viewModel[this.property] = this._url;
+        }
+    }
+
+    /**
+     * Set this attribute on the element.
+     */
+    private setThisAttribute(): void
+    {
+        let attributeName: string;
+
+        // Remove all variations of this attribute.
+
+        for (attributeName of this._element.getAttributeNames())
+        {
+            if (/^page-href(?:\.|$)/.test(attributeName))
+            {
+                this._element.removeAttribute(attributeName);
             }
         }
 
-        return false;
+        // Determine whether this attribute is simply used to set the `href` of an anchor element,
+        // with no additional options specified.
+        const isSimpleAnchor =
+            this._element instanceof HTMLAnchorElement &&
+            this.attribute === "href" &&
+            this.property == null &&
+            !this.navigate;
+
+        // If used for more than simply setting the `href` of an anchor element,
+        // set the attribute to enable styling based on the attribute options.
+        if (!isSimpleAnchor)
+        {
+            let attributeValue = "";
+
+            if (this._url)
+            {
+                if (this.attribute != null)
+                {
+                    // Hide the URL to reduce clutter in the DOM.
+                    attributeValue += "path: …";
+                }
+                else
+                {
+                    attributeValue += `path: ${this._url}`;
+                }
+            }
+
+            if (this.attribute != null)
+            {
+                attributeValue += `; attribute: ${this.attribute}`;
+            }
+
+            if (this.property != null)
+            {
+                attributeValue += `; property: ${this.property}`;
+            }
+
+            if (this.navigate)
+            {
+                attributeValue += `; navigate: ${this.navigate}`;
+
+                if (this.open)
+                {
+                    attributeValue += "; open: true";
+                }
+            }
+
+            this._element.setAttribute("page-href", attributeValue);
+        }
     }
 }
