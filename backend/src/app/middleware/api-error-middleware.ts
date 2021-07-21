@@ -35,7 +35,7 @@ export function apiErrorMiddleware(): Middleware
                     context.status = context.state.internal ? 500 : error.response.status;
                     let responseCode = error.response.status;
 
-                    // NOI errors have http status codes as json body. Not possible to use instanceof since prototype has changed
+                    // NOI errors have HTTP status codes as json body. Not possible to use instanceof since prototype has changed
                     if (error.name === "NoiApiOriginError" && error.data?.status != null)
                     {
                         // We can't use NOI invalid status codes, anything below 300
@@ -48,9 +48,8 @@ export function apiErrorMiddleware(): Middleware
                         `Upstream request of type '${error.request.method}' for '${error.request.url}' ` +
                         `failed with status ${responseCode}.\n\n${error.message}`;
 
-                    // When not in the `production` environment, include the upstream
-                    // response body in the response to the client, to ease debugging.
-                    if (environment.name !== "production")
+                    // When debugging is enabled, include the upstream response body in the response to the client, to ease debugging.
+                    if (environment.debug)
                     {
                         const responseBody =
                             error.data != null ? JSON.stringify(error.data, undefined, 2) :
@@ -71,6 +70,7 @@ export function apiErrorMiddleware(): Middleware
             }
             else
             {
+                // Rethrow the error.
                 throw error;
             }
         }

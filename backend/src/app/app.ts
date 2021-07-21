@@ -1,19 +1,20 @@
+import * as Sentry from "@sentry/node";
 import Koa from "koa";
 import koaConditionalGet from "koa-conditional-get";
 import koaEtag from "koa-etag";
 import koaCompress from "koa-compress";
 import koaBodyparser from "koa-bodyparser";
-import settings from "../resources/settings/settings";
 import { environment } from "../env";
 import { inject } from "../shared/infrastructure";
-import { apiErrorMiddleware } from "../app/middleware/api-error-middleware";
-import { headersMiddleware } from "../app/middleware/headers-middleware";
-import { authorizeMiddleware } from "../app/middleware/authorize-middleware";
-import { pagingMiddleware } from "../app/middleware/paging-middleware";
-import { sortingMiddleware } from "../app/middleware/sorting-middleware";
-import * as Sentry from "@sentry/node";
+import settings from "../resources/settings/settings";
 import { AppRouter } from "./app-router";
 import { IAppContext } from "./app-context";
+import { logErrorMiddleware } from "./middleware/log-error-middleware";
+import { apiErrorMiddleware } from "./middleware/api-error-middleware";
+import { headersMiddleware } from "./middleware/headers-middleware";
+import { authorizeMiddleware } from "./middleware/authorize-middleware";
+import { pagingMiddleware } from "./middleware/paging-middleware";
+import { sortingMiddleware } from "./middleware/sorting-middleware";
 
 // Configure sentry
 Sentry.init({
@@ -69,6 +70,7 @@ export class App extends Koa<any, IAppContext>
         this.use(koaBodyparser({enableTypes: ["json"]}));
 
         // Add custom middleware.
+        this.use(logErrorMiddleware());
         this.use(headersMiddleware());
         this.use(apiErrorMiddleware());
         this.use(authorizeMiddleware(settings.middleware.identity.accessToken));

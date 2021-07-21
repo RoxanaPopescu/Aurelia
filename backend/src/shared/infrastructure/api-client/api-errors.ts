@@ -267,7 +267,7 @@ export class NoiApiOriginError extends ApiOriginError
 
         // Required to ensure a correct prototype chain.
         // See: https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
-        Object.setPrototypeOf(this, ApiOriginError.prototype);
+        Object.setPrototypeOf(this, NoiApiOriginError.prototype);
 
         this.name = "NoiApiOriginError";
     }
