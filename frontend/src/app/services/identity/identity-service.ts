@@ -84,7 +84,7 @@ export class IdentityService
     {
         this.setTokens(new IdentityTokens(tokens));
 
-        return this.reauthenticate();
+        return this.reauthorize();
     }
 
     /**
@@ -101,15 +101,15 @@ export class IdentityService
         {
             this.setTokens(undefined);
 
-            const result = await this._apiClient.post("login",
+            const result = await this._apiClient.post("identity/authenticate",
             {
-                body: { username, password, remember },
+                body: { username, password },
                 retry: 3
             });
 
             this.setTokens(new IdentityTokens({ ...result.data, remember }));
 
-            return this.reauthenticate();
+            return this.reauthorize();
         }
         catch (error)
         {
@@ -128,7 +128,7 @@ export class IdentityService
      * Attempts to reauthenticate the user using the authentication cookie stored on the device.
      * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
      */
-    public async reauthenticate(): Promise<boolean>
+    public async reauthorize(): Promise<boolean>
     {
         let tokens = this.getTokens();
 
@@ -150,8 +150,9 @@ export class IdentityService
                 if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
                 {
 
-                    const refreshResult = await this._apiClient.get("refreshtokens",
+                    const refreshResult = await this._apiClient.get("identity/reauthorize",
                     {
+                        body: { refreshToken: tokens.refreshToken },
                         retry: 3
                     });
 
@@ -212,24 +213,17 @@ export class IdentityService
         {
             const remember = this.getTokens()?.remember;
 
-            // TODO: Call the correct endpoint, once supported; until then, we just refresh the tokens.
-
-            const result = await this._apiClient.get("refreshtokens",
+            const result = await this._apiClient.post("identity/authorize",
             {
+                body: { organizationId: organization.id },
                 retry: 3
             });
-
-            // const result = await this._apiClient.post("identity/authorize",
-            // {
-            //     body: { organizationId: organization.id },
-            //     retry: 3
-            // });
 
             this.setTokens(new IdentityTokens({ ...result.data, remember }));
 
             this._organization = organization;
 
-            return this.reauthenticate();
+            return this.reauthorize();
         }
         catch (error)
         {
@@ -260,6 +254,11 @@ export class IdentityService
             await this._changeFunc?.(undefined, this._identity);
 
             this._identity = undefined;
+
+            await this._apiClient.post("identity/unauthorize",
+            {
+                retry: 3
+            });
         }
 
         return true;
@@ -322,7 +321,6 @@ export class IdentityService
         sessionStorage.removeItem("refresh-token");
 
         delete settings.infrastructure.api.defaults!.headers!["authorization"];
-        delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
 
         Profile.reset();
 
@@ -347,12 +345,7 @@ export class IdentityService
 
             if (tokens.refreshToken)
             {
-                settings.infrastructure.api.defaults!.headers!["refresh-token"] = tokens.refreshToken;
                 storage.setItem("refresh-token", tokens.refreshToken);
-            }
-            else
-            {
-                delete settings.infrastructure.api.defaults!.headers!["refresh-token"];
             }
 
             Profile.setTokens(tokens.accessToken, tokens.refreshToken);
@@ -379,7 +372,7 @@ export class IdentityService
 
         if (expires < 0)
         {
-            this.reauthenticate();
+            this.reauthorize();
         }
     }
 }

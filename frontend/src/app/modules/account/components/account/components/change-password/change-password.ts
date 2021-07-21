@@ -133,11 +133,11 @@ export class ChangePasswordCustomElement
         {
             this.model.busy = true;
 
-            const tokens = await this._accountService.changePassword(this.model.password!, this.model.token!);
+            const result = await this._accountService.changePassword(this.model.password!, this.model.token!);
 
             try
             {
-                await this._identityService.authenticated({ ...tokens, remember: !!this.model.remember });
+                await this._identityService.authenticate(result.email, this.model.password!, this.model.remember);
             }
             catch (error)
             {

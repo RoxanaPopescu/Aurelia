@@ -33,8 +33,6 @@ export class AccountModule extends AppModule
             });
 
             context.response.status = 204;
-
-            // TODO: Alternatively, we could authenticate immediately and return the tokens.
         });
 
         /**
@@ -93,7 +91,6 @@ export class AccountModule extends AppModule
             {
                 body:
                 {
-                    // accessToken: context.request.headers["authorization"].replace(/^Bearer /, ""), // Not needed, as we forward this header
                     token: context.request.body.token,
                     password: context.request.body.password,
                     revokeTokens: context.request.body.revokeTokens
@@ -107,8 +104,6 @@ export class AccountModule extends AppModule
             };
 
             context.response.status = 200;
-
-            // TODO: Alternatively, we could authenticate immediately and return the tokens.
         });
 
         /**
@@ -125,7 +120,6 @@ export class AccountModule extends AppModule
             {
                 body:
                 {
-                    // accessToken: context.request.headers["authorization"].replace(/^Bearer /, ""), // Not needed, as we forward this header
                     email: context.request.body.email
                 }
             });

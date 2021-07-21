@@ -119,7 +119,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
                 // Attempt to reauthenticate using a token stored on the device.
                 const identityService = aurelia.container.get(IdentityService);
                 identityService.configure(setIdentity);
-                await identityService.reauthenticate();
+                await identityService.reauthorize();
             }
         ]
         .map(f => f()));

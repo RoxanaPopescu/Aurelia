@@ -9,12 +9,12 @@ export class IdentityModule extends AppModule
     public configure(): void
     {
         /**
-         * Gets the specified OAuth identity provider, including its sign-in URL.
+         * Gets the sign in URL for the specified OAuth identity provider.
          * @param params.providerId The ID of the provider to get.
          * @param body.redirectUrl The URL to redirect to when authentication succeeds.
          * @param body.codeChallenge The code challenge created by hashing the code verifier.
          * @returns
-         * - 200: The specified OAuth identity provider, including its sign-in URL.
+         * - 200: The sign in URL for the specified OAuth identity provider.
          */
         this.router.post("/v1/identity/providers/:providerId/get-url", async context =>
         {

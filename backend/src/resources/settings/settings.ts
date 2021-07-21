@@ -2,7 +2,6 @@ import path from "path";
 import globs from "globs";
 import { environment } from "../../env";
 import { IApiClientSettings } from "../../shared/infrastructure";
-import { Duration } from "luxon";
 
 /**
  * Represents the settings related to infrastructure, framework and environment.
@@ -47,10 +46,8 @@ export default
             accessToken:
             {
                 issuer: "Mover Systems Aps",
-                audience: undefined,
                 header: "authorization",
                 cookie: "access-token",
-                expiresIn: Duration.fromObject({ days: 7 }),
                 secret: "This is my little secret for protecting my resources. Muhahaha!!"
             }
         }
