@@ -36,17 +36,23 @@ export class IdentityTokens
      */
     public constructor(data: IIdentityTokens)
     {
-        this.accessToken = data.accessToken;
         this.refreshToken = data.refreshToken;
+        this.accessToken = data.accessToken;
         this.remember = data.remember;
 
-        const defaultExpires = DateTime.local().plus({ year: 1 });
+        const refreshJwt = this.parseJwt(this.refreshToken);
+
+        if (refreshJwt.exp != null)
+        {
+            this.refreshTokenExpires = DateTime.fromMillis(refreshJwt.exp * 1000);
+        }
 
         const accessJwt = this.parseJwt(this.accessToken);
-        this.accessTokenExpires = accessJwt.exp ? DateTime.fromMillis(accessJwt.exp * 1000) : defaultExpires;
 
-        const refreshJwt = this.parseJwt(this.refreshToken);
-        this.refreshTokenExpires = refreshJwt.exp ? DateTime.fromMillis(refreshJwt.exp * 1000) : defaultExpires;
+        if (accessJwt.exp != null)
+        {
+            this.accessTokenExpires = DateTime.fromMillis(accessJwt.exp * 1000);
+        }
 
         this.claims = new Set<string>(Object.keys(accessJwt)
             .filter(claim => accessJwt[claim] === "true")
@@ -59,21 +65,19 @@ export class IdentityTokens
     public readonly refreshToken: string;
 
     /**
+     * The date and time at which the refresh token expires, or undefined if the token never expires.
+     */
+    public readonly refreshTokenExpires: DateTime | undefined;
+
+    /**
      * The access token, used for authorization.
      */
     public readonly accessToken: string;
 
     /**
-     * The date and time before which the access token must be refreshed,
-     * in order to ensure continuous access.
+     * The date and time at which the access token expires, or undefined if the token never expires.
      */
-    public readonly accessTokenExpires: DateTime;
-
-    /**
-     * The date and time before which the refresh token must be refreshed,
-     * in order to ensure continuous access.
-     */
-    public readonly refreshTokenExpires: DateTime;
+    public readonly accessTokenExpires: DateTime | undefined;
 
     /**
      * The claims assigned to the user.

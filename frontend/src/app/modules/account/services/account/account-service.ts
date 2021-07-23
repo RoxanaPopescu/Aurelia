@@ -1,6 +1,5 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
-import { IIdentityTokens } from "app/services/identity";
 import { IAccountInit } from "./account-init";
 
 /**
@@ -37,16 +36,14 @@ export class AccountService
     /**
      * Confirms the creation of a new user, by verifying the specified token.
      * @param token The token specified in the confirmation link sent to the new user.
-     * @returns A promise that will be resolved with the identity tokens.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async confirmEmail(token: string): Promise<IIdentityTokens>
+    public async confirmEmail(token: string): Promise<void>
     {
-        const result = await this._apiClient.post("user/confirm",
+        await this._apiClient.post("user/confirm",
         {
             body: { token }
         });
-
-        return result.data;
     }
 
     /**

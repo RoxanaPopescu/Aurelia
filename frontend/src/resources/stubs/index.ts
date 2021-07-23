@@ -11,7 +11,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import routePlans from "./responses/route-plans";
 // import communication from "./responses/communication";
 import user from "./responses/user";
-import identity from "./responses/identity";
+//import identity from "./responses/identity";
 import organizations from "./responses/organizations";
 
 /**
@@ -38,6 +38,6 @@ export const stubs: IResponseStubs =
     // ...routesCreate,
     // ...orderEvents,
     ...user,
-    ...identity,
+    //...identity,
     ...organizations
 };

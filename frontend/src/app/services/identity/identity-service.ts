@@ -89,13 +89,13 @@ export class IdentityService
 
     /**
      * Authenticates the specified user.
-     * @param username The username identifying the user.
+     * @param email The email identifying the user.
      * @param password The users password.
      * @param remember True to store the auth tokens on the device, otherwise false.
      * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
      * @throws If the operation fails for any reason, other than invalid credentials.
      */
-    public async authenticate(username: string, password: string, remember = false): Promise<boolean>
+    public async authenticate(email: string, password: string, remember = false): Promise<boolean>
     {
         try
         {
@@ -103,7 +103,7 @@ export class IdentityService
 
             const result = await this._apiClient.post("identity/authenticate",
             {
-                body: { username, password },
+                body: { email, password },
                 retry: 3
             });
 
@@ -125,8 +125,8 @@ export class IdentityService
     }
 
     /**
-     * Attempts to reauthenticate the user using the authentication cookie stored on the device.
-     * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
+     * Attempts to reauthorize the user using the refresh token stored on the device.
+     * @returns A promise that will be resolved with true if reauthorization succeeded, otherwise false.
      */
     public async reauthorize(): Promise<boolean>
     {
@@ -141,15 +141,14 @@ export class IdentityService
         {
             this.setTokens(tokens);
 
-            // Verify if we need to update the tokens.
+            // Refresh the access token, if needed.
+
             const padding = Duration.fromObject({ minutes: 2 });
 
-            if (tokens.accessTokenExpires.diffNow().minus(padding).as("seconds") < 0)
+            if (tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf() < 0)
             {
-                // Allow re-authenticate if refresh token is still valid.
-                if (tokens.refreshTokenExpires.diffNow().as("seconds") > 0)
+                if (tokens.refreshTokenExpires == null || tokens.refreshTokenExpires.diffNow().valueOf() > 0)
                 {
-
                     const refreshResult = await this._apiClient.get("identity/reauthorize",
                     {
                         body: { refreshToken: tokens.refreshToken },
@@ -167,7 +166,8 @@ export class IdentityService
                 }
             }
 
-            // Start session
+            // Start the session.
+
             const result = await this._apiClient.post("session/start",
             {
                 retry: 3
@@ -368,7 +368,7 @@ export class IdentityService
         }
 
         const padding = Duration.fromObject({ minutes: 2 });
-        const expires = tokens.accessTokenExpires.diffNow().minus(padding).as("seconds");
+        const expires = tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf();
 
         if (expires < 0)
         {

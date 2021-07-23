@@ -1,7 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { AccountService } from "app/modules/account/services/account";
-import { IdentityService } from "app/services/identity";
 
 export interface IConfirmEmailModel
 {
@@ -37,16 +36,13 @@ export class ConfirmEmailCustomElement
     /**
      * Creates a new instance of the type.
      * @param accountService The `AccountService` instance.
-     * @param identityService The `IdentityService` instance.
      */
-    public constructor(accountService: AccountService, identityService: IdentityService)
+    public constructor(accountService: AccountService)
     {
         this._accountService = accountService;
-        this._identityService = identityService;
     }
 
     private readonly _accountService: AccountService;
-    private readonly _identityService: IdentityService;
 
     /**
      * The model representing the state of the component.
@@ -80,18 +76,7 @@ export class ConfirmEmailCustomElement
         {
             this.model.busy = true;
 
-            const tokens = await this._accountService.confirmEmail(this.model.token);
-
-            try
-            {
-                await this._identityService.authenticated({ ...tokens });
-            }
-            catch (error)
-            {
-                Log.error("Sign in failed.", error);
-
-                return;
-            }
+            await this._accountService.confirmEmail(this.model.token);
 
             // tslint:disable-next-line: await-promise
             await this.model.onConfirmedEmail?.();

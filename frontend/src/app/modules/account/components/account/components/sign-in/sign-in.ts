@@ -144,7 +144,7 @@ export class SignInCustomElement
             }
             else
             {
-                Log.error("Invalid username or password");
+                Log.error("Invalid email or password");
             }
         }
         catch (error)

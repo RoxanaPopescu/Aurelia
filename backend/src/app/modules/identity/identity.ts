@@ -16,7 +16,7 @@ export class IdentityModule extends AppModule
          * @returns
          * - 200: The sign in URL for the specified OAuth identity provider.
          */
-        this.router.post("/v1/identity/providers/:providerId/get-url", async context =>
+        this.router.post("/v2/identity/providers/:providerId/get-url", async context =>
         {
             // TODO: How do we specify which provider to use?
             // TODO: We should probably rely on the `x-api-key` header instead of a client ID.
@@ -56,7 +56,7 @@ export class IdentityModule extends AppModule
          * @returns
          * - 200: A refresh token and an access token that grants permission to create or choose an organization.
          */
-        this.router.post("/v1/identity/providers/:providerId/authenticate", async context =>
+        this.router.post("/v2/identity/providers/:providerId/authenticate", async context =>
         {
             // TODO: How do we specify which provider was used?
 
@@ -89,7 +89,7 @@ export class IdentityModule extends AppModule
          * @returns
          * - 200: A refresh token and an access token that grants permission to create or choose an organization.
          */
-        this.router.post("/v1/identity/authenticate", async context =>
+        this.router.post("/v2/identity/authenticate", async context =>
         {
             const body = new FormData();
             body.append("client_id", "bff.localUserPassword");
@@ -120,7 +120,7 @@ export class IdentityModule extends AppModule
          * - 200: A refresh token and an access token that grants permission to create or choose an organization,
          *   and additional permissions within the specified organization.
          */
-        this.router.post("/v1/identity/authorize", async context =>
+        this.router.post("/v2/identity/authorize", async context =>
         {
             const result = await this.apiClient.post("identity/tokenExchange",
             {
@@ -146,7 +146,7 @@ export class IdentityModule extends AppModule
          * - 200: A refresh token and an access token that grants permission to create or choose an organization,
          *   and if an access token for an organization was specified, additional permissions within that organization.
          */
-        this.router.post("/v1/identity/reauthorize", async context =>
+        this.router.post("/v2/identity/reauthorize", async context =>
         {
             const body = new FormData();
             body.append("client_id", "bff.localUserPassword");
@@ -173,7 +173,7 @@ export class IdentityModule extends AppModule
          * @returns
          * - 204: No content.
          */
-        this.router.post("/v1/identity/unauthenticate", async context =>
+        this.router.post("/v2/identity/unauthenticate", async context =>
         {
             // TODO: Which value should we use for the authorization header in this request?
 
