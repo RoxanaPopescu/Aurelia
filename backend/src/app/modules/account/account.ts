@@ -21,7 +21,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/create", async context =>
         {
-            await this.apiClient.post("account/create",
+            await this.apiClient.post("identity/signup",
             {
                 body:
                 {
@@ -44,7 +44,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/confirm-email", async context =>
         {
-            await this.apiClient.post("account/confirm-email",
+            await this.apiClient.post("identity/confirmemail",
             {
                 body:
                 {
@@ -65,7 +65,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/forgot-password", async context =>
         {
-            await this.apiClient.post("account/forgot-password",
+            await this.apiClient.post("identity/forgotpassword",
             {
                 body:
                 {
@@ -87,14 +87,13 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/change-password", async context =>
         {
-            const result = await this.apiClient.post("account/change-password",
+            const result = await this.apiClient.post("identity/changepassword",
             {
                 body:
                 {
                     token: context.request.body.token,
                     password: context.request.body.password,
                     revokeTokens: context.request.body.revokeTokens
-                    // TODO: Do we also need to specify the refresh token here, or can we look that up based on the access token?
                 }
             });
 
@@ -116,7 +115,7 @@ export class AccountModule extends AppModule
         {
             context.authorize();
 
-            await this.apiClient.post("account/unauthenticate",
+            await this.apiClient.post("identity/delete",
             {
                 body:
                 {

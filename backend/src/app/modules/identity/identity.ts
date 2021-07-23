@@ -91,23 +91,19 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/authenticate", async context =>
         {
-            const body = new FormData();
-            body.append("client_id", "bff.localUserPassword");
-            body.append("client_secret", "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6");
-            body.append("scope", "openid profile email organization-selection");
-            body.append("grant_type", "password");
-            body.append("username", context.request.body.email);
-            body.append("password", context.request.body.password);
-
-            const result = await this.apiClient.post("identity/connect/token",
+            const result = await this.apiClient.post("identity/authenticate",
             {
-                body
+                body:
+                {
+                    email: context.request.body.email,
+                    password: context.request.body.password
+                }
             });
 
             context.response.body =
             {
-                accessToken: result.data.access_token,
-                refreshToken: result.data.refresh_token
+                accessToken: result.data.accessToken,
+                refreshToken: result.data.refreshToken
             };
 
             context.response.status = 200;
@@ -148,20 +144,18 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/reauthorize", async context =>
         {
-            const body = new FormData();
-            body.append("client_id", "bff.localUserPassword");
-            body.append("grant_type", "refresh_token");
-            body.append("refresh_token", context.request.body.refreshToken);
-
-            const result = await this.apiClient.post("identity/connect/token",
+            const result = await this.apiClient.post("identity/refreshToken",
             {
-                body
+                body:
+                {
+                    refreshToken: context.request.body.refreshToken
+                }
             });
 
             context.response.body =
             {
-                accessToken: result.data.access_token,
-                refreshToken: result.data.refresh_token
+                accessToken: result.data.accessToken,
+                refreshToken: result.data.refreshToken
             };
 
             context.response.status = 200;
@@ -175,20 +169,13 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/unauthenticate", async context =>
         {
-            // TODO: Which value should we use for the authorization header in this request?
-
             context.authorize();
 
-            const body = new FormData();
-            body.append("token", context.request.body.refreshToken);
-            body.append("token_type_hint", "refresh_token");
-
-            await this.apiClient.post("identity/connect/revocation",
+            await this.apiClient.post("identity/unauthenticate",
             {
-                body,
-                headers:
+                body:
                 {
-                    "authorization": "Basic TODO"
+                    refreshToken: context.request.body.refreshToken
                 }
             });
 
