@@ -6,6 +6,8 @@
 
     <require from="./components/order-pickup-completed-params/order-pickup-completed-params"></require>
     <require from="./components/order-delivery-arrived-params/order-delivery-arrived-params"></require>
+    <require from="./components/order-delivery-completed-params/order-delivery-completed-params"></require>
+    <require from="./components/order-delivery-failed-params/order-delivery-failed-params"></require>
     <require from="./components/order-delivery-eta-provided-params/order-delivery-eta-provided-params"></require>
     <require from="./components/order-pickup-eta-provided-params/order-pickup-eta-provided-params"></require>
 
@@ -260,6 +262,16 @@
                         model.bind="model.parameters">
                     </order-delivery-arrived-params>
 
+                    <order-delivery-completed-params
+                        if.bind="model.eventType.slug === 'order-delivery-completed'"
+                        model.bind="model.parameters">
+                    </order-delivery-completed-params>
+
+                    <order-delivery-failed-params
+                        if.bind="model.eventType.slug === 'order-delivery-failed'"
+                        model.bind="model.parameters">
+                    </order-delivery-failed-params>
+
                     <order-delivery-eta-provided-params
                         if.bind="model.eventType.slug === 'order-delivery-eta-provided'"
                         model.bind="model.parameters">
@@ -281,7 +293,7 @@
                             none.bind="false"
                             value.bind="model.recipientType"
                             display-value.bind="model.recipientType.name"
-                            change.trigger="setAvailableOptions(model.eventType, $event.detail.value)"
+                            change.trigger="setAvailableOptions(model.eventType, $event.detail.value, model.messageType)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
@@ -304,6 +316,52 @@
 
                     </div>
 
+                    <div if.bind="model.recipientType.slug === 'custom-email'" class="control-row  margin-large-top">
+
+                        <email-input
+                            label="above"
+                            value.bind="model.to"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Email address of the recipient
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.to">
+                                </required-validator>
+
+                            </div>
+
+                        </email-input>
+
+                    </div>
+
+                    <div if.bind="model.recipientType.slug === 'custom-phone'" class="control-row  margin-large-top">
+
+                        <phone-input
+                            label="above"
+                            value.bind="model.to"
+                            class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Phone number of the recipient
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="model.to">
+                                </required-validator>
+
+                            </div>
+
+                        </phone-input>
+
+                    </div>
+
                 </numbered-section>
 
                 <numbered-section number.bind="4" heading.translate="Choose message type" disabled.bind="model.recipientType.slug == null" class="--line-below">
@@ -315,13 +373,14 @@
                             none.bind="false"
                             value.bind="model.messageType"
                             display-value.bind="model.messageType.name"
+                            change.trigger="setAvailableOptions(model.eventType, model.recipientType, $event.detail.value)"
                             class="flex-basis-1-of-2">
 
                             <div slot="heading" translate>
                                 Send message as
                             </div>
 
-                            <item repeat.for="messageType of options.messageTypes" model.bind="messageType">
+                            <item repeat.for="messageType of filteredMessageTypes" model.bind="messageType">
                                 ${messageType.name}
                             </item>
 
@@ -372,7 +431,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Email of the sender, as seen by the recipient
+                                Email address of the sender, as seen by the recipient
                             </div>
 
                             <div slot="validation">

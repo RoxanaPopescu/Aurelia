@@ -1,0 +1,28 @@
+<template>
+
+    <select-input
+        label="above"
+        none.bind="false"
+        value.bind="model.deliveryMethod"
+        display-value.bind="deliveryMethods[model.deliveryMethod]"
+        class="margin-large-bottom">
+
+        <div slot="heading" translate>
+            Delivery method
+        </div>
+
+        <item repeat.for="slug of deliveryMethods | keys" model.bind="slug">
+            ${deliveryMethods[slug]}
+        </item>
+
+        <div slot="validation">
+
+            <required-validator
+                value.bind="model.deliveryMethod">
+            </required-validator>
+
+        </div>
+
+    </select-input>
+
+</template>

@@ -106,6 +106,7 @@ export function configure(use: FrameworkConfiguration): void
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
         PLATFORM.moduleName("./converters/json/json"),
+        PLATFORM.moduleName("./converters/keys/keys"),
         PLATFORM.moduleName("./converters/map/map"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
         PLATFORM.moduleName("./converters/scale/scale"),
@@ -221,6 +222,7 @@ export * from "./components/validation/validators/required-validator/required-va
 // Converters
 export * from "./converters/filter/filter";
 export * from "./converters/json/json";
+export * from "./converters/keys/keys";
 export * from "./converters/map/map";
 export * from "./converters/reverse/reverse";
 export * from "./converters/scale/scale";

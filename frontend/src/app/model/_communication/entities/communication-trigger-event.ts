@@ -44,6 +44,14 @@ export class CommunicationTriggerEvent
         {
             name: "Order pickup completed"
         },
+        "order-delivery-completed":
+        {
+            name: "Order delivery completed"
+        },
+        "order-delivery-failed":
+        {
+            name: "Order delivery failed"
+        },
         "order-delivery-eta-provided":
         {
             name: "Order delivery before ETA"

@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
@@ -81,6 +81,30 @@ export class DetailsPage
     protected availableCustomers: Outfit[];
 
     /**
+     * Gets the message types, filtered based on the chosen recipient type.
+     */
+    @computedFrom("model.recipientType.slug", "options.messageTypes.length")
+    protected get filteredMessageTypes(): CommunicationMessageType[]
+    {
+        if (this.model.recipientType == null)
+        {
+            return [];
+        }
+
+        if (this.model.recipientType.slug === "custom-email")
+        {
+            return this.options?.messageTypes.filter(mt => mt.slug === "email") ?? [];
+        }
+
+        if (this.model.recipientType.slug === "custom-phone")
+        {
+            return this.options?.messageTypes.filter(mt => mt.slug === "sms") ?? [];
+        }
+
+        return this.options?.messageTypes ?? [];
+    }
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -91,7 +115,7 @@ export class DetailsPage
         {
             this.model = await this._communicationService.get(params.slug);
             this.triggerName = this.model.name;
-            this.setAvailableOptions(this.model.eventType, this.model.recipientType);
+            this.setAvailableOptions(this.model.eventType, this.model.recipientType, this.model.messageType);
         }
         else
         {
@@ -166,7 +190,7 @@ export class DetailsPage
         });
     }
 
-    protected setAvailableOptions(eventType: CommunicationTriggerEvent, recipient: CommunicationRecipient): void
+    protected setAvailableOptions(eventType: CommunicationTriggerEvent, recipientType: CommunicationRecipient, messageType: CommunicationMessageType): void
     {
         const options = this._communicationService.getOptions(eventType.slug);
 
@@ -176,25 +200,50 @@ export class DetailsPage
                 .map(r => new CommunicationRecipient(r)),
 
             messageTypes: options.messageTypes
-                .filter(t => t !== "app-push" || recipient.slug === "driver")
+                .filter(t => t !== "app-push" || recipientType.slug === "driver")
                 .map(r => new CommunicationMessageType(r)),
 
             placeholders: options.placeholders
         };
 
-        if (this.model.recipientType != null && !options.recipientTypes.includes(this.model.recipientType.slug))
+        if (recipientType != null && !options.recipientTypes.includes(recipientType.slug))
         {
             this.model.recipientType = undefined as any;
         }
 
-        if (this.model.messageType != null && !options.messageTypes.includes(this.model.messageType.slug))
+        if (messageType != null && !options.messageTypes.includes(messageType.slug))
         {
             this.model.messageType = undefined as any;
         }
 
-        if (this.model.messageType != null && this.model.messageType.slug === "app-push" && (this.model.recipientType == null || this.model.recipientType.slug !== "driver"))
+        if (messageType != null && messageType.slug === "app-push" && (recipientType == null || recipientType.slug !== "driver"))
         {
             this.model.messageType = undefined as any;
+        }
+
+        if (recipientType != null && messageType != null)
+        {
+            if (recipientType.slug === "custom-email" && messageType.slug !== "email")
+            {
+                this.model.messageType = undefined as any;
+                this.model.to = undefined as any;
+            }
+
+            if (recipientType.slug === "custom-phone" && messageType.slug !== "sms")
+            {
+                this.model.messageType = undefined as any;
+                this.model.to = undefined as any;
+            }
+        }
+
+        if (recipientType != null && recipientType.slug === "custom-email")
+        {
+            this.model.messageType = this.options.messageTypes.find(mt => mt.slug === "email");
+        }
+
+        if (recipientType != null && recipientType.slug === "custom-phone")
+        {
+            this.model.messageType = this.options.messageTypes.find(mt => mt.slug === "sms");
         }
     }
 }

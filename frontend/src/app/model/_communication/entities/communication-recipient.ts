@@ -28,7 +28,7 @@ export class CommunicationRecipient
      */
     public toJSON(): any
     {
-        return this.slug;
+        return this.slug === "custom-email" || "custom-phone" ? undefined : this.slug;
     }
 
     /**
@@ -54,6 +54,16 @@ export class CommunicationRecipient
         "supplier":
         {
             name: "Supplier"
+        },
+
+        "custom-email":
+        {
+            name: "Specific email address"
+        },
+
+        "custom-phone":
+        {
+            name: "Specific phone number"
         }
     };
 }

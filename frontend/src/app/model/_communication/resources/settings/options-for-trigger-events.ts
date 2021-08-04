@@ -6,7 +6,9 @@ export default
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
         ],
         messageTypes:
         [
@@ -30,7 +32,9 @@ export default
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
         ],
         messageTypes:
         [
@@ -47,11 +51,63 @@ export default
             "DriverName"
         ])
     },
+    "order-delivery-completed":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+
+        ])
+    },
+    "order-delivery-failed":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+
+        ])
+    },
     "order-delivery-eta-provided":
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
         ],
         messageTypes:
         [
@@ -74,7 +130,9 @@ export default
     {
         recipientTypes:
         [
-            "pickup-customer"
+            "pickup-customer",
+            "custom-email",
+            "custom-phone"
         ],
         messageTypes:
         [
