@@ -15,6 +15,7 @@ interface IRouteParams
     sortDirection?: SortingDirection;
     eventType?: string;
     messageType?: string;
+    recipient?: string;
     text?: string;
 }
 
@@ -148,6 +149,7 @@ export class ListPage
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.eventTypeFilter = params.eventType ? params.eventType.split(",") as any : this.eventTypeFilter;
         this.messageTypeFilter = params.messageType ? params.messageType.split(",") as any : this.messageTypeFilter;
+        this.recipientFilter = params.recipient ? params.recipient.split(",") as any : this.recipientFilter;
         this.textFilter = params.text || this.textFilter;
 
         this.update();
@@ -203,6 +205,7 @@ export class ListPage
                 state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
                 state.params.eventType = this.eventTypeFilter?.join(",");
                 state.params.messageType = this.messageTypeFilter?.join(",");
+                state.params.recipient = this.recipientFilter?.join(",");
                 state.params.text = this.textFilter || undefined;
             },
             { trigger: false, replace: true });
