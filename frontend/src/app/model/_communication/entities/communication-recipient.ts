@@ -28,6 +28,11 @@ export class CommunicationRecipient
      */
     public toJSON(): any
     {
+        if (this.slug === "custom")
+        {
+            throw new Error("Cannot serialize a recipient of the unspecified custom type.");
+        }
+
         return this.slug === "custom-email" || this.slug === "custom-phone" ? undefined : this.slug;
     }
 
@@ -58,12 +63,21 @@ export class CommunicationRecipient
 
         "custom-email":
         {
-            name: "Specific email address"
+            name: "Email address"
         },
 
         "custom-phone":
         {
-            name: "Specific phone number"
+            name: "Phone number"
+        },
+
+        // HACK: The backend models all custom recipient types as undefined,
+        // and we don't have the `to` value in the models used in the list view,
+        // so we cannot infer the type. As a workaround, this have this unspecified
+        // custom type, which should only be used to support filtering in the list view.
+        "custom":
+        {
+            name: "Email address or phone number"
         }
     };
 }

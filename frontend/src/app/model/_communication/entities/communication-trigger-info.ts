@@ -18,10 +18,18 @@ export class CommunicationTriggerInfo
         this.routeTags = data.routeTags;
         this.stopTags = data.stopTags;
         this.orderTags = data.orderTags;
-        this.recipientType = new CommunicationRecipient(data.recipientType);
         this.eventType = new CommunicationTriggerEvent(data.eventType);
         this.fromName = data.fromName;
         this.messageType = new CommunicationMessageType(data.messageType);
+
+        if (data.recipientType != null)
+        {
+            this.recipientType = new CommunicationRecipient(data.recipientType);
+        }
+        else
+        {
+            this.recipientType = new CommunicationRecipient("custom");
+        }
     }
 
     /**

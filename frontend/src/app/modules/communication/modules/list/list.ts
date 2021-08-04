@@ -97,6 +97,7 @@ export class ListPage
      * The available recipient types.
      */
     protected availableRecipients = Object.keys(CommunicationRecipient.values)
+        .filter(key => !key.startsWith("custom-"))
         .map(key => new CommunicationRecipient(key as any));
 
     /**
