@@ -121,7 +121,7 @@ export class ListPage
             // Filtering
             .filter(t => !this.eventTypeFilter || this.eventTypeFilter.includes(t.eventType.slug))
             .filter(t => !this.messageTypeFilter || this.messageTypeFilter.includes(t.messageType.slug))
-            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipientType.slug))
+            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipientType.slug.replace(/^custom-.*/, "custom") as any))
             .filter(t => !this.textFilter || t.searchModel.contains(this.textFilter))
 
             // Sorting
