@@ -107,7 +107,7 @@ export class ListPage
     protected availableMessageTypes = Object.keys(CommunicationMessageType.values)
         .map(key => new CommunicationMessageType(key as any));
 
-    @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter")
+    @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter", "recipientFilter")
     protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[] | undefined
     {
         if (this.triggers == null)
