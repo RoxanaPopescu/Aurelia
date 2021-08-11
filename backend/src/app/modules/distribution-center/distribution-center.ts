@@ -16,7 +16,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.post("/v2/distribution-center/list", async context =>
         {
-            context.authorize("view-depots");
+            await context.authorize("view-depots");
 
             const result = await this.apiClient.post("logistics/depots/list",
             {
@@ -37,7 +37,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.get("/v2/distribution-center/details/:id", async context =>
         {
-            context.authorize("view-depots");
+            await context.authorize("view-depots");
 
             const result = await this.apiClient.post("logistics/depots/details",
             {

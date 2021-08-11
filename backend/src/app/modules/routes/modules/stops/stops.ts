@@ -16,7 +16,7 @@ export class RoutesStopsModule extends AppModule
          */
         this.router.post("/v2/routes/stops/add", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.outfitId];
@@ -37,7 +37,7 @@ export class RoutesStopsModule extends AppModule
          */
         this.router.post("/v2/routes/stops/update", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.outfitId];
@@ -58,7 +58,7 @@ export class RoutesStopsModule extends AppModule
          */
         this.router.post("/v2/routes/stops/move", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.outfitId];

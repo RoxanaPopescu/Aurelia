@@ -113,7 +113,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/delete", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             await this.apiClient.post("identity/delete",
             {

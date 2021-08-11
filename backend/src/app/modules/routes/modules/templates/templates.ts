@@ -14,7 +14,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/list", async context =>
         {
-            context.authorize("view-route-templates");
+            await context.authorize("view-route-templates");
 
             const result = await this.apiClient.post("routetemplate/List",
             {
@@ -34,7 +34,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/details", async context =>
         {
-            context.authorize("view-route-templates");
+            await context.authorize("view-route-templates");
 
             const routesResult = await this.apiClient.post("routetemplate/details",
             {
@@ -55,7 +55,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/create", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/create",
             {
@@ -77,7 +77,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/update", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/update",
             {
@@ -99,7 +99,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/delete", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             await this.apiClient.post("routetemplate/delete",
             {
@@ -120,7 +120,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/create", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/create",
             {
@@ -142,7 +142,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/stops/add", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/stops/add",
             {
@@ -164,7 +164,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/stops/move", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/stops/move",
             {
@@ -186,7 +186,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/stops/update", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/stops/update",
             {
@@ -208,7 +208,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/stops/delete", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             await this.apiClient.post("routetemplate/stops/delete",
             {
@@ -229,7 +229,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/schedules/add", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/schedules/add",
             {
@@ -251,7 +251,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/schedules/update", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("routetemplate/schedules/update",
             {
@@ -272,7 +272,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/schedules/delete", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             await this.apiClient.post("routetemplate/schedules/delete",
             {

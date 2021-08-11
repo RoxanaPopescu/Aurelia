@@ -13,7 +13,7 @@ export class RouteCreateModule extends AppModule
          */
         this.router.post("/v2/routes/create/collection-points-from-orders", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const routesResult = await this.apiClient.post("routeoptimizationorchestrator/CreateRouteWithCollectionPointsFromOrders",
             {
@@ -35,7 +35,7 @@ export class RouteCreateModule extends AppModule
          */
         this.router.post("/v2/routes/create/from-template", async context =>
         {
-            context.authorize("create-route-template");
+            await context.authorize("create-route-template");
 
             const routesResult = await this.apiClient.post("route-template-orchestrator/create-route",
             {

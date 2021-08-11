@@ -111,7 +111,7 @@ export class FilesModule extends AppModule
         }
         else
         {
-            context.authorize();
+            await context.authorize();
         }
     }
 

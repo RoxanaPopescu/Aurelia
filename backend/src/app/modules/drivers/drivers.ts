@@ -13,7 +13,7 @@ export class DriversModule extends AppModule
          */
         this.router.post("/v2/drivers/send-message", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const body = context.request.body;
             body.executorId = context.user?.outfitId;
@@ -34,7 +34,7 @@ export class DriversModule extends AppModule
          */
         this.router.post("/v2/drivers/online-in-area", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.outfitId];

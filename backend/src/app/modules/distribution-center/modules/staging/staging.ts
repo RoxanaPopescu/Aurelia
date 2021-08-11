@@ -16,7 +16,7 @@ export class DistributionCenterStagingModule extends AppModule
          */
         this.router.post("/v2/distribution-center/staging/collo/validated", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const body = context.request.body;
             await this.addOrderInformation(body);
@@ -39,7 +39,7 @@ export class DistributionCenterStagingModule extends AppModule
          */
         this.router.post("/v2/distribution-center/staging/collo/damaged", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const body = context.request.body;
             await this.addOrderInformation(body);
@@ -62,7 +62,7 @@ export class DistributionCenterStagingModule extends AppModule
          */
         this.router.post("/v2/distribution-center/staging/collo/missing", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const body = context.request.body;
             await this.addOrderInformation(body);

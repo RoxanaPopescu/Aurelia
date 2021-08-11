@@ -16,7 +16,7 @@ export class RoutesListModule extends AppModule
          */
         this.router.post("/v2/routes/list", async context =>
         {
-            context.authorize("view-routes");
+            await context.authorize("view-routes");
 
             const body = context.request.body;
             body.includeTotalCount = false;

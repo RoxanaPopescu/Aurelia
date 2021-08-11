@@ -14,7 +14,7 @@ export class RouteOrdersModule extends AppModule
          */
         this.router.post("/v2/routes/orders/add", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const body = context.request.body;
 

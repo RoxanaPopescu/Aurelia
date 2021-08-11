@@ -18,7 +18,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.get("/v2/linehauls/load/:reference", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             try
             {
@@ -79,7 +79,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.get("/v2/linehauls/unload/:reference", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const result = await this.apiClient.post("linehauls/details",
             {
@@ -102,7 +102,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.get("/v2/linehauls/unload-finalize/:id", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const result = await this.apiClient.post("linehauls/unloadFinalize",
             {
@@ -124,7 +124,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.post("/v2/linehauls/collo/load", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const routesResult = await this.apiClient.post("linehauls/collo/load",
             {
@@ -146,7 +146,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.post("/v2/linehauls/collo/unload", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const routesResult = await this.apiClient.post("linehauls/collo/unload",
             {
@@ -168,7 +168,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.post("/v2/linehauls/collo/damaged", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const routesResult = await this.apiClient.post("linehauls/collo/damaged",
             {
@@ -190,7 +190,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.post("/v2/linehauls/collo/missing", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const routesResult = await this.apiClient.post("linehauls/collo/missing",
             {
@@ -212,7 +212,7 @@ export class LinehaulsModule extends AppModule
          */
         this.router.post("/v2/linehauls/collo/remove", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
             const routesResult = await this.apiClient.post("linehauls/collo/remove",
             {

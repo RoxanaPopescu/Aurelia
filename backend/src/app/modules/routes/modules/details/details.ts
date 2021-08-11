@@ -16,7 +16,7 @@ export class RoutesListModule extends AppModule
          */
         this.router.get("/v2/routes/details", async context =>
         {
-            context.authorize("view-routes");
+            await context.authorize("view-routes");
 
             const body: any =
             {
