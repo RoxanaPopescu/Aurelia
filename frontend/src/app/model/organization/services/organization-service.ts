@@ -41,8 +41,6 @@ export class OrganizationService
 
     /**
      * Gets all organizations visible to the current user.
-     * @param sorting The sorting options to use.
-     * @param paging The paging options to use.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the organizations.
      */

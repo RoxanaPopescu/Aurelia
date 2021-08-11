@@ -141,48 +141,44 @@ export class IdentityService
         {
             this.setTokens(tokens);
 
-            // Refresh the access token, if needed.
+            // Refresh the tokens.
 
-            const padding = Duration.fromObject({ minutes: 2 });
-
-            if (tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf() < 0)
+            try
             {
-                if (tokens.refreshTokenExpires == null || tokens.refreshTokenExpires.diffNow().valueOf() > 0)
+                const refreshResult = await this._apiClient.get("identity/reauthorize",
                 {
-                    const refreshResult = await this._apiClient.get("identity/reauthorize",
-                    {
-                        body: { refreshToken: tokens.refreshToken },
-                        retry: 3
-                    });
+                    body: { refreshToken: tokens.refreshToken },
+                    retry: 3
+                });
 
-                    tokens = new IdentityTokens({ ...refreshResult.data, remember: tokens.remember });
-                    this.setTokens(tokens);
-                }
-                else
-                {
-                    await this.unauthenticate();
+                tokens = new IdentityTokens({ ...refreshResult.data, remember: tokens.remember });
+                this.setTokens(tokens);
 
-                    return false;
-                }
+                const identity = new Identity(refreshResult, tokens);
+
+                await this._changeFunc?.(identity, this._identity);
+
+                this.setTokens(identity.tokens);
+                this._identity = identity;
+            }
+            catch (error)
+            {
+                await this.unauthenticate();
+
+                return false;
             }
 
             // Start the session.
+            // TODO: This really doesn't belong here.
 
-            const result = await this._apiClient.post("session/start",
+            const startSessionResult = await this._apiClient.post("session/start",
             {
                 retry: 3
             });
 
-            const identity = new Identity(result, tokens);
+            VehicleType.setAll(startSessionResult.data.vehicleTypes.map(t => new VehicleType(t)));
 
-            await this._changeFunc?.(identity, this._identity);
-
-            this.setTokens(identity.tokens);
-            this._identity = identity;
-
-            VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
-
-            await Session.start(result);
+            await Session.start(startSessionResult);
 
             return true;
         }

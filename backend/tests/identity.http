@@ -1,6 +1,6 @@
 ###
 
-POST http://127.0.0.1:8008/v1/identity/providers/<provider>/get-url
+POST http://127.0.0.1:8008/v2/identity/providers/<provider>/get-url
 content-type: application/json
 
 {
@@ -10,7 +10,7 @@ content-type: application/json
 
 ###
 
-post http://127.0.0.1:8008/v1/identity/providers/<provider>/authenticate
+post http://127.0.0.1:8008/v2/identity/providers/<provider>/authenticate
 content-type: application/json
 
 {
@@ -21,17 +21,17 @@ content-type: application/json
 
 ###
 
-POST http://127.0.0.1:8008/v1/identity/authenticate
+POST http://127.0.0.1:8008/v2/identity/authenticate
 content-type: application/json
 
 {
-    "email": "testmoversen@mover.dk",
-    "password": "Test1234!"
+    "email": "tda@mover.com",
+    "password": "App1234!"
 }
 
 ###
 
-POST http://127.0.0.1:8008/v1/identity/authorize
+POST http://127.0.0.1:8008/v2/identity/authorize
 content-type: application/json
 authorization: "Bearer <access-token>"
 
@@ -41,7 +41,7 @@ authorization: "Bearer <access-token>"
 
 ###
 
-POST http://127.0.0.1:8008/v1/identity/reauthorize
+POST http://127.0.0.1:8008/v2/identity/reauthorize
 content-type: application/json
 authorization: "Bearer <access-token>"
 
@@ -51,7 +51,7 @@ authorization: "Bearer <access-token>"
 
 ###
 
-POST http://127.0.0.1:8008/v1/identity/unauthenticate
+POST http://127.0.0.1:8008/v2/identity/unauthenticate
 content-type: application/json
 authorization: "Bearer <access-token>"
 

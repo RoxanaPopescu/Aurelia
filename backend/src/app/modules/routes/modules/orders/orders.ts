@@ -128,8 +128,8 @@ export class RouteOrdersModule extends AppModule
             {
                 "user": {
                     "id": context.user?.id,
-                    "preferredName": context.user?.username,
-                    "fullName": context.user?.username,
+                    "preferredName": context.user?.preferredName,
+                    "fullName": context.user?.fullName,
                     "roleName": context.user?.roleName
                 },
                 "organization": {

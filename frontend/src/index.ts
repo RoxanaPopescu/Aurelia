@@ -171,11 +171,11 @@ async function setLocale(newLocale: Locale, oldLocale: Locale): Promise<void>
     }
 
     // Set the default locale to use for the `luxon` package.
-    LuxonSettings.defaultLocale = newLocale.code;
+    LuxonSettings.defaultLocale = newLocale.codeWithUnicodeExtension;
 
     // Set the `locale` header to use for the `ApiClient`.
     // tslint:disable-next-line: no-string-literal
-    settings.infrastructure.api.defaults!.headers!["x-locale"] = newLocale.code;
+    settings.infrastructure.api.defaults!.headers!["x-locale"] = newLocale.codeWithUnicodeExtension;
 }
 
 /**

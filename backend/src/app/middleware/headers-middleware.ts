@@ -1,6 +1,7 @@
 import { Middleware } from "koa";
 import { v4 as uuidV4 } from "uuid";
 import cls from "cls-hooked";
+import { MapObject } from "shared/types";
 
 // The continuation-local storage namespace for this middleware.
 const namespace = cls.createNamespace("headers-middleware");
@@ -42,4 +43,4 @@ export function headersMiddleware(): Middleware
  * Gets the headers for the request currently being handled,
  * or `undefined` if no request is currently being handled.
  */
-export const getRequestHeaders = () => namespace.get("headers-middleware");
+export const getRequestHeaders = () => namespace.get("headers-middleware") as MapObject<string | undefined>;

@@ -1,4 +1,9 @@
-import FormData from "form-data";
+import jwt from "jsonwebtoken";
+import jwksRsa from "jwks-rsa";
+import { ApiResult } from "shared/infrastructure";
+import { environment } from "../../../env";
+import settings from "../../../resources/settings/settings";
+import { Base64 } from "../../../shared/utilities";
 import { AppModule } from "../../app-module";
 
 /**
@@ -6,6 +11,22 @@ import { AppModule } from "../../app-module";
  */
 export class IdentityModule extends AppModule
 {
+    private readonly _verifyOptions: jwt.VerifyOptions =
+    {
+        issuer: settings.middleware.authorize.accessToken.issuer
+    };
+
+    private readonly _jwksRsaClient = jwksRsa(
+    {
+        jwksUri: `https://test-mover.azure-api.net/identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
+    });
+
+    private readonly _getKeyFunc = (header: any, callback: any) =>
+    {
+        this._jwksRsaClient.getSigningKey(header.kid, (error: any, key: any) =>
+            callback(error, key?.publicKey || key?.rsaPublicKey));
+    };
+
     public configure(): void
     {
         /**
@@ -26,6 +47,7 @@ export class IdentityModule extends AppModule
             {
                 query:
                 {
+                    "subscription-key": settings.app.oAuth.subscrioptionKey,
                     "client_id": "bff",
                     "scope": "openid profile email organization-selection",
                     "response_type": "code",
@@ -60,25 +82,20 @@ export class IdentityModule extends AppModule
         {
             // TODO: How do we specify which provider was used?
 
-            const body = new FormData();
-            body.append("client_id", "bff");
-            body.append("client_secret", "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6");
-            body.append("grant_type", "authorization_code");
-            body.append("redirect_uri", context.request.body.redirectUrl);
-            body.append("code_verifier", context.request.body.codeVerifier);
-            body.append("code", context.request.body.code);
+            const body =
+                `client_id=bff&` +
+                `client_secret=${settings.app.oAuth.clientSecret}&` +
+                `grant_type=authorization_code&` +
+                `redirect_uri=${context.request.body.redirectUrl}&` +
+                `code_verifier=${context.request.body.codeVerifier}&` +
+                `code=${context.request.body.code}`;
 
             const result = await this.apiClient.post("identity/connect/token",
             {
                 body
             });
 
-            context.response.body =
-            {
-                accessToken: result.data.access_token,
-                refreshToken: result.data.refresh_token
-            };
-
+            context.response.body = await this.getAuthResponse(result);
             context.response.status = 200;
         });
 
@@ -91,21 +108,24 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/authenticate", async context =>
         {
-            const result = await this.apiClient.post("identity/authenticate",
+            const body =
+                `client_id=bff.localUserPassword&` +
+                `client_secret=${settings.app.oAuth.clientSecret}&` +
+                `scope=openid profile email organization-selection offline_access&` +
+                `grant_type=password&` +
+                `username=${context.request.body.email}&` +
+                `password=${context.request.body.password}`
+
+            const result = await this.apiClient.post("identity/connect/token",
             {
-                body:
+                headers:
                 {
-                    email: context.request.body.email,
-                    password: context.request.body.password
-                }
+                    "content-type": "application/x-www-form-urlencoded"
+                },
+                body
             });
 
-            context.response.body =
-            {
-                accessToken: result.data.accessToken,
-                refreshToken: result.data.refreshToken
-            };
-
+            context.response.body = await this.getAuthResponse(result);
             context.response.status = 200;
         });
 
@@ -126,12 +146,7 @@ export class IdentityModule extends AppModule
                 }
             });
 
-            context.response.body =
-            {
-                accessToken: result.data.accessToken,
-                refreshToken: result.data.refreshToken
-            };
-
+            context.response.body = await this.getAuthResponse(result);
             context.response.status = 200;
         });
 
@@ -144,20 +159,21 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/reauthorize", async context =>
         {
-            const result = await this.apiClient.post("identity/refreshToken",
+            const body =
+                `client_id=bff.localUserPassword&` +
+                `grant_type=refresh_token&` +
+                `refresh_token=${context.request.body.refreshToken}`;
+
+            const result = await this.apiClient.post("identity/connect/token",
             {
-                body:
+                headers:
                 {
-                    refreshToken: context.request.body.refreshToken
-                }
+                    "content-type": "application/x-www-form-urlencoded"
+                },
+                body
             });
 
-            context.response.body =
-            {
-                accessToken: result.data.accessToken,
-                refreshToken: result.data.refreshToken
-            };
-
+            context.response.body = await this.getAuthResponse(result);
             context.response.status = 200;
         });
 
@@ -169,17 +185,69 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/unauthenticate", async context =>
         {
-            context.authorize();
+            await context.authorize();
 
-            await this.apiClient.post("identity/unauthenticate",
+            const body =
+                `token=${context.request.body.refreshToken}&` +
+                `token_type_hint=refresh_token`;
+
+            await this.apiClient.post("identity/connect/revocation",
             {
-                body:
+                headers:
                 {
-                    refreshToken: context.request.body.refreshToken
-                }
+                    "content-type": "application/x-www-form-urlencoded",
+                    "authorization": Base64.encode(`bff.localUserPassword:${settings.app.oAuth.clientSecret}`)
+                },
+                body
             });
 
             context.response.status = 204;
         });
+    }
+
+    private async getAuthResponse(authResult: ApiResult): Promise<any>
+    {
+        const jwtObject = await new Promise<any>((resolve, reject) =>
+        {
+            jwt.verify(authResult.data.access_token, this._getKeyFunc, this._verifyOptions, (error, decoded) =>
+                error ? reject(error) : resolve(decoded));
+        });
+
+        const [result1, result2] = await Promise.all(
+        [
+            this.apiClient.get("identity/connect/userinfo",
+            {
+                headers:
+                {
+                    "authorization": `Bearer ${authResult.data.access_token}`
+                }
+            }),
+            jwtObject.organization == null ? undefined : this.apiClient.get("organizations/GetOrganization",
+            {
+                headers:
+                {
+                    "authorization": `Bearer ${authResult.data.access_token}`
+                },
+                query:
+                {
+                    id: jwtObject.organization
+                }
+            })
+        ]);
+
+        return {
+            accessToken: result1.data.access_token ?? result1.data.accessToken,
+            refreshToken: result1.data.refresh_token ?? result1.data.refreshToken,
+            id: result1.data.id,
+            email: result1.data.email,
+            fullName: result1.data.name,
+            preferredName: result1.data.preferred_username,
+            pictureUrl: result1.data.picture,
+            outfit: result2 == null ? undefined :
+            {
+                id: result2.data.organizationId,
+                companyName: result2.data.name
+            }
+        };
     }
 }

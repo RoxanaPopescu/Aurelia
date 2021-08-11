@@ -25,12 +25,20 @@ export default
         defaultLocaleCode: "en-US",
 
         /**
-         * The base URL to use when fetching public images based on their ID,
-         * including a trailing `/`.
+         * The base URL to use when fetching public images based on their ID, including a trailing `/`.
          */
         publicImageBaseUrl: environment.name === "production"
             ? "https://filestorageprodmover.blob.core.windows.net/public/"
-            : "https://filestoragetestmover.blob.core.windows.net/public/"
+            : "https://filestoragetestmover.blob.core.windows.net/public/",
+
+        /**
+         * Settings related to OAuth.
+         */
+        oAuth:
+        {
+            clientSecret: "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6",
+            subscrioptionKey: "bcf1f656a0844acb9fd5a33d61832afd"
+        }
     },
 
     /**
@@ -39,16 +47,16 @@ export default
     middleware:
     {
         /**
-         * Settings related to identity.
+         * Settings related `authorize-middleware`.
          */
-        identity:
+        authorize:
         {
             accessToken:
             {
-                issuer: "Mover Systems Aps",
+                issuer: "https://identity-v1-test-mover.azurewebsites.net",
                 header: "authorization",
                 cookie: "access-token",
-                secret: "This is my little secret for protecting my resources. Muhahaha!!"
+                secret: "TODO: Remove - This is my little secret for protecting my resources. Muhahaha!!"
             }
         }
     },

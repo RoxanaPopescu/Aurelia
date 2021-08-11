@@ -19,7 +19,7 @@ export class UsersModule extends AppModule
                 body: {
                     ...context.request.body,
                     accessOutfits: [context.user?.outfitId],
-                    updatedBy: context.user?.username
+                    updatedBy: context.user?.email
                 }
             });
 

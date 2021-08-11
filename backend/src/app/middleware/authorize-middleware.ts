@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
+import jwksRsa from "jwks-rsa";
 import { Middleware } from "koa";
+import { environment } from "../../env";
 import { AuthorizationError } from "../../shared/types";
 import { IAppContext } from "../../app/app-context";
 
@@ -25,22 +27,25 @@ export class User
      */
     public constructor(jwtObject: any)
     {
-        // HACK: This is more complex than it should be, as it needs to support the legacy JWT format.
+        this.id = jwtObject["sub"];
 
-        this.id = jwtObject["nameid"];
-
-        this.username = jwtObject["unique_name"];
-
+        // TODO: This does not exist in the JWT.
+        this.email = jwtObject["email"];
+        this.fullName = jwtObject["name"];
+        this.preferredName = jwtObject["preferred_username"];
         this.roleName = jwtObject["role"];
 
         // Add hypens to the GUID.
-        this.outfitId = jwtObject["primary-outfit"]
+        this.outfitId = jwtObject["organization"]
             .replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
 
-        // Convert boolean claims to a permission set.
-        this.permissions = new Set<string>(Object.keys(jwtObject)
-            .filter(key => jwtObject[key] === "true")
-            .map(key => key.toLowerCase().split(/\s+/).join("-")));
+        // Convert claims to a permission set.
+
+        const permissions = jwtObject.organization_permissions instanceof Array
+            ? jwtObject.organization_permissions as string[]
+            : [jwtObject.organization_permissions as string];
+
+        this.permissions = new Set<string>(permissions);
     }
 
     /**
@@ -49,9 +54,19 @@ export class User
     public id: string;
 
     /**
-     * The username of the user.
+     * The email of the user.
      */
-    public username: string;
+    public email: string;
+
+    /**
+     * The full name of the user.
+     */
+    public fullName: string;
+
+    /**
+     * The preferred name of the user.
+     */
+    public preferredName: string;
 
     /**
      * The role of the user.
@@ -77,10 +92,26 @@ export class User
  */
 export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middleware<any, IAppContext>
 {
+    const verifyOptions: jwt.VerifyOptions =
+    {
+        issuer: options.issuer
+    };
+
+    const jwksRsaClient = jwksRsa(
+    {
+        jwksUri: `https://test-mover.azure-api.net/identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
+    });
+
+    const getKeyFunc = (header: any, callback: any) =>
+    {
+        jwksRsaClient.getSigningKey(header.kid, (error: any, key: any) =>
+            callback(error, key?.publicKey || key?.rsaPublicKey));
+    };
+
     return async (context, next) =>
     {
         // Add the `authorize` method to the context.
-        context.authorize = (...permissions: string[]) =>
+        context.authorize = async (...permissions: string[]) =>
         {
             // Try to parse and verify the JWT, if not done already.
             if (context.user === undefined)
@@ -93,12 +124,11 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                 {
                     try
                     {
-                        const verifyOptions: jwt.VerifyOptions =
+                        const jwtObject = await new Promise<any>((resolve, reject) =>
                         {
-                            issuer: options.issuer
-                        };
-
-                        const jwtObject = jwt.verify(jwtString, options.secret, verifyOptions);
+                            jwt.verify(jwtString, getKeyFunc, verifyOptions, (error, decoded) =>
+                                error ? reject(error) : resolve(decoded));
+                        });
 
                         context.user = new User(jwtObject);
                     }
@@ -106,7 +136,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                     {
                         context.user = null;
 
-                        throw new AuthorizationError("The request contained an invalid JWT.");
+                        throw new AuthorizationError("The request contained an invalid JWT, or validation failed.");
                     }
                 }
                 else

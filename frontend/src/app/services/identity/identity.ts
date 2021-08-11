@@ -126,21 +126,21 @@ export class Identity
      */
     public constructor(result: ApiResult, tokens: IIdentityTokens)
     {
-        this.id = result.data.userInfo.userId;
-        this.username = result.data.userInfo.username;
-        this.fullName = `${result.data.userInfo.firstName} ${result.data.userInfo.lastName}`;
-        this.preferredName = result.data.userInfo.firstName;
-        this.pictureUrl = result.data.userInfo.pictureUrl;
+        this.id = result.data.id;
+        this.username = result.data.email;
+        this.fullName = result.data.fullName;
+        this.preferredName = result.data.preferredName;
+        this.pictureUrl = result.data.pictureUrl;
 
         this.outfit = new Outfit(result.data.outfit);
 
         if (this.pictureUrl == null || this.pictureUrl.endsWith("avatar.png"))
         {
-            this.pictureUrl = gravatarUrl(result.data.userInfo.username, { default: this.pictureUrl ?? "404" });
+            this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "404" });
         }
 
-        const accessToken = result.response.headers.get("access-token") || tokens.accessToken;
-        const refreshToken = result.response.headers.get("refresh-token") || tokens.refreshToken;
+        const accessToken = result.data.accessToken || tokens.accessToken;
+        const refreshToken = result.data.refreshToken || tokens.refreshToken;
 
         if (!accessToken || !refreshToken)
         {

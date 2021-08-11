@@ -15,7 +15,7 @@ export interface ILocale
     code: string;
 
     /**
-     * The IETF language tag, including extensions, specifying calendar, numbering system, etc.
+     * The IETF language tag extensions, specifying calendar, numbering system, etc.
      * This value is case sensitive and must consist of the string starting with `u-`.
      */
     unicodeExtension?: string;
