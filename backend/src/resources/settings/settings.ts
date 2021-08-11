@@ -37,7 +37,7 @@ export default
         oAuth:
         {
             clientSecret: "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6",
-            subscrioptionKey: "bcf1f656a0844acb9fd5a33d61832afd"
+            jwksUri: `${environment.apiBaseUrl}identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
         }
     },
 

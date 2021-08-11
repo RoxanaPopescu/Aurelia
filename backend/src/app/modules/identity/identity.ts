@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
 import { ApiResult } from "shared/infrastructure";
-import { environment } from "../../../env";
-import settings from "../../../resources/settings/settings";
 import { Base64 } from "../../../shared/utilities";
 import { AppModule } from "../../app-module";
+import settings from "../../../resources/settings/settings";
 
 /**
  * Represents a module exposing endpoints related to authentication and authorization.
@@ -18,7 +17,7 @@ export class IdentityModule extends AppModule
 
     private readonly _jwksRsaClient = jwksRsa(
     {
-        jwksUri: `https://test-mover.azure-api.net/identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
+        jwksUri: settings.app.oAuth.jwksUri
     });
 
     private readonly _getKeyFunc = (header: any, callback: any) =>
@@ -47,7 +46,6 @@ export class IdentityModule extends AppModule
             {
                 query:
                 {
-                    "subscription-key": settings.app.oAuth.subscrioptionKey,
                     "client_id": "bff",
                     "scope": "openid profile email organization-selection",
                     "response_type": "code",

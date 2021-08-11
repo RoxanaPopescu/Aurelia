@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
 import { Middleware } from "koa";
-import { environment } from "../../env";
 import { AuthorizationError } from "../../shared/types";
 import { IAppContext } from "../../app/app-context";
+import settings from "../../resources/settings/settings";
 
 /**
  * Represents the options to use for the authorize middleware.
@@ -99,7 +99,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
 
     const jwksRsaClient = jwksRsa(
     {
-        jwksUri: `https://test-mover.azure-api.net/identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
+        jwksUri: settings.app.oAuth.jwksUri
     });
 
     const getKeyFunc = (header: any, callback: any) =>
