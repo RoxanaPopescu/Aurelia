@@ -101,6 +101,30 @@ export default
 
         ])
     },
+    "order-delivery-delayed-eta-provided":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "custom-email",
+            "custom-phone"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+        ])
+    },
     "order-delivery-eta-provided":
     {
         recipientTypes:
