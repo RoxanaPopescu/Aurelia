@@ -59,6 +59,10 @@ export class CommunicationTriggerEvent
         "order-pickup-eta-provided":
         {
             name: "Order pickup ETA provided"
+        },
+        "order-delivery-delayed-eta-provided":
+        {
+            name: "Order delivery delayed ETA provided"
         }
     };
 }

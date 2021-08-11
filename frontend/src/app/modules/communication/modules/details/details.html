@@ -9,6 +9,7 @@
     <require from="./components/order-delivery-completed-params/order-delivery-completed-params"></require>
     <require from="./components/order-delivery-failed-params/order-delivery-failed-params"></require>
     <require from="./components/order-delivery-eta-provided-params/order-delivery-eta-provided-params"></require>
+    <require from="./components/order-delivery-delayed-eta-provided-params/order-delivery-delayed-eta-provided-params"></require>
     <require from="./components/order-pickup-eta-provided-params/order-pickup-eta-provided-params"></require>
 
     <require from="./details.scss"></require>
@@ -276,6 +277,11 @@
                         if.bind="model.eventType.slug === 'order-delivery-eta-provided'"
                         model.bind="model.parameters">
                     </order-delivery-eta-provided-params>
+
+                    <order-delivery-delayed-eta-provided-params
+                        if.bind="model.eventType.slug === 'order-delivery-delayed-eta-provided'"
+                        model.bind="model.parameters">
+                    </order-delivery-delayed-eta-provided-params>
 
                     <order-pickup-eta-provided-params
                         if.bind="model.eventType.slug === 'order-pickup-eta-provided'"
