@@ -1,5 +1,6 @@
 import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
+import statusNames from "../resources/strings/collo-status-names.json";
 
 /**
  * Represents the slug identifying a `ColloStatus`.
@@ -40,42 +41,42 @@ export class ColloStatus
     {
         "not-delivered":
         {
-            name: "Missing at delivery",
+            name: statusNames.notDelivered,
             accent: { pickup: "negative", delivery: "negative" }
         },
         "not-picked-up":
         {
-            name: "Missing at pickup",
+            name: statusNames.notPickedUp,
             accent: { pickup: "negative", delivery: "negative" }
         },
         "delivery-not-possible":
         {
-            name: "Delivery not possible",
+            name: statusNames.deliveryNotPossible,
             accent: { pickup: "negative", delivery: "negative" }
         },
         "refused-by-driver":
         {
-            name: "Delivery refused by driver",
+            name: statusNames.refusedByDriver,
             accent: { pickup: "negative", delivery: "negative" }
         },
         "refused-by-customer":
         {
-            name: "Delivery refused by customer",
+            name: statusNames.refusedByCustomer,
             accent: { pickup: "negative", delivery: "negative" }
         },
         "no-action":
         {
-            name: "Awaiting pickup",
+            name: statusNames.noAction,
             accent: { pickup: "neutral", delivery: "neutral" }
         },
         "picked-up":
         {
-            name: "Picked up",
+            name: statusNames.pickedUp,
             accent: { pickup: "positive", delivery: "neutral" }
         },
         "delivered":
         {
-            name: "Delivered",
+            name: statusNames.delivered,
             accent: { pickup: "positive", delivery: "positive" }
         }
     };
