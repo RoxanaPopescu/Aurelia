@@ -1,6 +1,7 @@
-import { Middleware } from "koa";
+import { Middleware, BaseContext } from "koa";
+import { Request, Response } from "node-fetch";
+import { ApiError, NoiApiOriginError } from "../../shared/infrastructure";
 import { environment } from "../../env";
-import { ApiError } from "../../shared/infrastructure";
 
 /**
  * Creates a new middlerware instance, that adds a `internal` method to the
@@ -28,40 +29,27 @@ export function apiErrorMiddleware(): Middleware
             // Was the error caused by an upstream request?
             if (error instanceof ApiError)
             {
-                // Do we have a response for the upstream request,
-                // and should we forward that status downstream?
-                if (error.response)
+                context.body = "Upstream request failed";
+
+                if (environment.debug)
                 {
-                    context.status = context.state.internal ? 500 : error.response.status;
-                    let responseCode = error.response.status;
+                    await appendDebugInfo(context, error);
+                }
 
-                    // NOI errors have HTTP status codes as json body. Not possible to use instanceof since prototype has changed
-                    if (error.name === "NoiApiOriginError" && error.data?.status != null)
+                // Do we have a response, and should we forward its status code downstream?
+                if (error.response != null && !context.state.internal)
+                {
+                    context.status = error.response.status;
+
+                    // TODO: This should be removed, as those may not be HTTP status codes.
+                    // Errors from NOI have status codes in the response body.
+                    if (error instanceof NoiApiOriginError && error.data?.status != null)
                     {
-                        // We can't use NOI invalid status codes, anything below 300
                         context.status = error.data.status > 299 ? error.data.status : 502;
-                        responseCode = error.data.status;
-                    }
-
-                    context.body = `Upstream request failed.\n\n${error.message}`;
-
-                    // When debugging is enabled, include the upstream response body in the response to the client, to ease debugging.
-                    if (environment.debug)
-                    {
-                        const responseBody =
-                            error.data != null ? JSON.stringify(error.data, undefined, 2) :
-                            !error.response.bodyUsed ? await error.response.text() :
-                            undefined;
-
-                        if (responseBody)
-                        {
-                            context.body += `\n\nResponse body:\n${responseBody}`;
-                        }
                     }
                 }
                 else
                 {
-                    context.body = `Upstream request of type '${error.request.method}' for '${error.request.url}' failed:\n\n${error.message}`;
                     context.status = 500;
                 }
             }
@@ -72,4 +60,69 @@ export function apiErrorMiddleware(): Middleware
             }
         }
     };
+}
+
+/**
+ * Appends debug info to the response body sent to the client.
+ * @param context The context for the request currently being handled.
+ * @param error The error currently being handled.
+ * @returns A promise that will be resolved when the operation completes.
+ */
+async function appendDebugInfo(context: BaseContext, error: ApiError): Promise<void>
+{
+    // Include the error message in the response to the client.
+
+    context.body += `\n\n${error.message}`;
+
+    // Include the upstream request body in the response to the client.
+
+    const requestBody = await getFormattedBody(error.request);
+
+    if (requestBody)
+    {
+        context.body += `\n\nRequest body:\n${requestBody}`;
+    }
+
+    // Include the upstream response body in the response to the client, if available.
+
+    if (error.response != null)
+    {
+        const responseBody = await getFormattedBody(error.response);
+
+        if (responseBody)
+        {
+            context.body += `\n\nResponse body:\n${responseBody}`;
+        }
+    }
+}
+
+/**
+ * Gets the formatted body of the specified request or response.
+ * @param requestOrResponse The request or response whose body should be formatted.
+ * @returns A promise that will be resolved with the formatted body of the specified request or response.
+ */
+async function getFormattedBody(requestOrResponse: Request | Response): Promise<string | undefined>
+{
+    let body: string | undefined;
+
+    if (!requestOrResponse.bodyUsed)
+    {
+        // Read the body as text.
+        body = await requestOrResponse.clone().text();
+    }
+
+    if (body)
+    {
+        // Determine whether the body should be parsed as JSON.
+        const contentType = requestOrResponse.headers.get("content-type");
+        const hasJsonBody = contentType != null && /^application\/(.+\+)?json(;|$)/.test(contentType);
+
+        if (hasJsonBody)
+        {
+            // Format the body as JSON.
+            body = JSON.stringify(JSON.parse(body), undefined, 2);
+        }
+    }
+
+    return body;
 }
