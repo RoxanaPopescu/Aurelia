@@ -40,13 +40,6 @@ export class IdentityTokens
         this.accessToken = data.accessToken;
         this.remember = data.remember;
 
-        const refreshJwt = this.parseJwt(this.refreshToken);
-
-        if (refreshJwt.exp != null)
-        {
-            this.refreshTokenExpires = DateTime.fromMillis(refreshJwt.exp * 1000);
-        }
-
         const accessJwt = this.parseJwt(this.accessToken);
 
         if (accessJwt.exp != null)
@@ -63,11 +56,6 @@ export class IdentityTokens
      * The refresh token, used for authentication.
      */
     public readonly refreshToken: string;
-
-    /**
-     * The date and time at which the refresh token expires, or undefined if the token never expires.
-     */
-    public readonly refreshTokenExpires: DateTime | undefined;
 
     /**
      * The access token, used for authorization.

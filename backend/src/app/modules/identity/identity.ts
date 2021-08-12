@@ -291,8 +291,8 @@ export class IdentityModule extends AppModule
         ]);
 
         return {
-            accessToken: result1.data.access_token ?? result1.data.accessToken,
-            refreshToken: result1.data.refresh_token ?? result1.data.refreshToken,
+            accessToken: authResult.data.access_token ?? authResult.data.accessToken,
+            refreshToken: authResult.data.refresh_token ?? authResult.data.refreshToken,
             id: result1.data.id,
             username: result1.data.email,
             fullName: result1.data.name,
