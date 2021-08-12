@@ -130,7 +130,7 @@ export class TeamsPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Abort any existing operation.
         this.operation?.abort();
@@ -165,7 +165,7 @@ export class TeamsPage
      */
     protected async onNewTeamClick(): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newTeam = await this._modalService.open(EditTeamPanel, { organizationId }).promise;
 
         if (newTeam != null)
@@ -181,7 +181,7 @@ export class TeamsPage
      */
     protected async onEditTeamClick(team: OrganizationTeam): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newTeam = await this._modalService.open(EditTeamPanel, { organizationId, team }).promise;
 
         if (newTeam != null)
@@ -204,7 +204,7 @@ export class TeamsPage
             return;
         }
 
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {

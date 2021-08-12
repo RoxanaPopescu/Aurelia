@@ -134,7 +134,7 @@ export class UsersPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Abort any existing operation.
         this.operation?.abort();
@@ -169,7 +169,7 @@ export class UsersPage
      */
     protected async onInviteUserClick(): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newUser = await this._modalService.open(InviteUserPanel, { organizationId }).promise;
 
         if (newUser != null)
@@ -185,7 +185,7 @@ export class UsersPage
      */
     protected async onResendInviteClick(user: OrganizationUser): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {
@@ -216,7 +216,7 @@ export class UsersPage
             return;
         }
 
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {

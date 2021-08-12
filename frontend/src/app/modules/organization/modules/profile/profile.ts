@@ -58,7 +58,7 @@ export class ProfilePage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Abort any existing operation.
         this.operation?.abort();
@@ -87,7 +87,7 @@ export class ProfilePage
      */
     protected onSaveChangesClick(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>

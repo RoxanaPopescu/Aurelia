@@ -130,7 +130,7 @@ export class RolesPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Abort any existing operation.
         this.operation?.abort();
@@ -165,7 +165,7 @@ export class RolesPage
      */
     protected async onNewRoleClick(): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newRole = await this._modalService.open(EditRolePanel, { organizationId }).promise;
 
         if (newRole != null)
@@ -181,7 +181,7 @@ export class RolesPage
      */
     protected async onEditRoleClick(role: OrganizationRole): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newRole = await this._modalService.open(EditRolePanel, { organizationId, role }).promise;
 
         if (newRole != null)
@@ -197,7 +197,7 @@ export class RolesPage
      */
     protected async onDuplicateRoleClick(role: OrganizationRole): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {
@@ -225,7 +225,7 @@ export class RolesPage
             return;
         }
 
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {

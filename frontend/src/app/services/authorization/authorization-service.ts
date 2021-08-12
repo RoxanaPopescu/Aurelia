@@ -44,22 +44,13 @@ export class AuthorizationService
     public isAuthorizedForRoute(routeSettings: (IAuthorizationSettings | undefined)[]): boolean
     {
         const identity = this._identityService.identity;
-        const organization = this._identityService.organization;
+        const organization = this._identityService.identity?.outfit;
 
         for (const settings of routeSettings)
         {
             if (settings == null)
             {
                 continue;
-            }
-
-            if (settings.outfits != null)
-            {
-                if (identity == null || organization == null || !settings.outfits.some(o1 =>
-                    o1 instanceof Array ? o1.every(o2 => identity.outfit.type.slug === o2) : identity.outfit.type.slug === o1))
-                {
-                    return false;
-                }
             }
 
             if (settings.claims != null)

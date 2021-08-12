@@ -44,7 +44,7 @@ export class SignInPage
      */
     public canActivate(params: ISignInPageParams): NavigationCommand | boolean
     {
-        if (this._identityService.identity != null && this._identityService.organization == null)
+        if (this._identityService.identity != null && this._identityService.identity.outfit == null)
         {
             return new Redirect(params.url && params.url !== "/"
                 ? `/account/choose-organization?url=${encodeURIComponent(params.url)}`

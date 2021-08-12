@@ -133,7 +133,7 @@ export class TeamDetailsPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         // Abort any existing operation.
         this.operation?.abort();
@@ -168,7 +168,7 @@ export class TeamDetailsPage
      */
     protected async onInviteUserClick(): Promise<void>
     {
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
         const newUser = await this._modalService.open(AddUserToTeamPanel, { organizationId, teamId: this._teamId }).promise;
 
         if (newUser != null)
@@ -191,7 +191,7 @@ export class TeamDetailsPage
             return;
         }
 
-        const organizationId = this._identityService.organization!.id;
+        const organizationId = this._identityService.identity!.outfit!.id;
 
         try
         {
