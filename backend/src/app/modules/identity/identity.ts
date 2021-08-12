@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
-import { ApiResult } from "shared/infrastructure";
+import { ApiError, ApiResult } from "../../../shared/infrastructure";
 import { Base64 } from "../../../shared/utilities";
 import { AppModule } from "../../app-module";
 import settings from "../../../resources/settings/settings";
@@ -80,21 +80,35 @@ export class IdentityModule extends AppModule
         {
             // TODO: How do we specify which provider was used?
 
-            const body =
-                `client_id=bff&` +
-                `client_secret=${settings.app.oAuth.clientSecret}&` +
-                `grant_type=authorization_code&` +
-                `redirect_uri=${context.request.body.redirectUrl}&` +
-                `code_verifier=${context.request.body.codeVerifier}&` +
-                `code=${context.request.body.code}`;
-
-            const result = await this.apiClient.post("identity/connect/token",
+            try
             {
-                body
-            });
+                const body =
+                    `client_id=bff&` +
+                    `client_secret=${settings.app.oAuth.clientSecret}&` +
+                    `grant_type=authorization_code&` +
+                    `redirect_uri=${context.request.body.redirectUrl}&` +
+                    `code_verifier=${context.request.body.codeVerifier}&` +
+                    `code=${context.request.body.code}`;
 
-            context.response.body = await this.getAuthResponse(result);
-            context.response.status = 200;
+                const result = await this.apiClient.post("identity/connect/token",
+                {
+                    body
+                });
+
+                context.response.body = await this.getAuthResponse(result);
+                context.response.status = 200;
+            }
+            catch (error)
+            {
+                if (error instanceof ApiError && error.data.error === "invalid_grant")
+                {
+                    context.response.status = 401;
+                }
+                else
+                {
+                    throw error;
+                }
+            }
         });
 
         /**
@@ -106,25 +120,40 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/authenticate", async context =>
         {
-            const body =
-                `client_id=bff.localUserPassword&` +
-                `client_secret=${settings.app.oAuth.clientSecret}&` +
-                `scope=openid profile email organization-selection offline_access&` +
-                `grant_type=password&` +
-                `username=${context.request.body.email}&` +
-                `password=${context.request.body.password}`
-
-            const result = await this.apiClient.post("identity/connect/token",
+            try
             {
-                headers:
-                {
-                    "content-type": "application/x-www-form-urlencoded"
-                },
-                body
-            });
+                const body =
+                    `client_id=bff.localUserPassword&` +
+                    `client_secret=${settings.app.oAuth.clientSecret}&` +
+                    `scope=openid profile email organization-selection offline_access&` +
+                    `grant_type=password&` +
+                    `username=${context.request.body.email}&` +
+                    `password=${context.request.body.password}`
 
-            context.response.body = await this.getAuthResponse(result);
-            context.response.status = 200;
+                const result = await this.apiClient.post("identity/connect/token",
+                {
+                    headers:
+                    {
+                        "content-type": "application/x-www-form-urlencoded"
+                    },
+                    body
+                });
+
+                context.response.body = await this.getAuthResponse(result);
+                context.response.status = 200;
+
+            }
+            catch (error)
+            {
+                if (error instanceof ApiError && error.data.error === "invalid_grant")
+                {
+                    context.response.status = 401;
+                }
+                else
+                {
+                    throw error;
+                }
+            }
         });
 
         /**
@@ -136,16 +165,30 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/authorize", async context =>
         {
-            const result = await this.apiClient.post("identity/tokenExchange",
+            try
             {
-                body:
+                const result = await this.apiClient.post("identity/tokenExchange",
                 {
-                    organizationId: context.request.body.organizationId
-                }
-            });
+                    body:
+                    {
+                        organizationId: context.request.body.organizationId
+                    }
+                });
 
-            context.response.body = await this.getAuthResponse(result);
-            context.response.status = 200;
+                context.response.body = await this.getAuthResponse(result);
+                context.response.status = 200;
+            }
+            catch (error)
+            {
+                if (error instanceof ApiError && error.data.error === "invalid_grant")
+                {
+                    context.response.status = 401;
+                }
+                else
+                {
+                    throw error;
+                }
+            }
         });
 
         /**
@@ -157,22 +200,36 @@ export class IdentityModule extends AppModule
          */
         this.router.post("/v2/identity/reauthorize", async context =>
         {
-            const body =
-                `client_id=bff.localUserPassword&` +
-                `grant_type=refresh_token&` +
-                `refresh_token=${context.request.body.refreshToken}`;
-
-            const result = await this.apiClient.post("identity/connect/token",
+            try
             {
-                headers:
-                {
-                    "content-type": "application/x-www-form-urlencoded"
-                },
-                body
-            });
+                const body =
+                    `client_id=bff.localUserPassword&` +
+                    `grant_type=refresh_token&` +
+                    `refresh_token=${context.request.body.refreshToken}`;
 
-            context.response.body = await this.getAuthResponse(result);
-            context.response.status = 200;
+                const result = await this.apiClient.post("identity/connect/token",
+                {
+                    headers:
+                    {
+                        "content-type": "application/x-www-form-urlencoded"
+                    },
+                    body
+                });
+
+                context.response.body = await this.getAuthResponse(result);
+                context.response.status = 200;
+            }
+            catch (error)
+            {
+                if (error instanceof ApiError && error.data.error === "invalid_grant")
+                {
+                    context.response.status = 401;
+                }
+                else
+                {
+                    throw error;
+                }
+            }
         });
 
         /**
