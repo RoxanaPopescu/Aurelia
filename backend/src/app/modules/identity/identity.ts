@@ -167,7 +167,7 @@ export class IdentityModule extends AppModule
         {
             try
             {
-                const result = await this.apiClient.post("identity/tokenExchange",
+                const result = await this.apiClient.post("identity/selectorganisation",
                 {
                     body:
                     {
@@ -180,7 +180,7 @@ export class IdentityModule extends AppModule
             }
             catch (error)
             {
-                if (error instanceof ApiError && error.data.error === "invalid_grant")
+                if (error instanceof ApiError && error.response?.status === 403)
                 {
                     context.response.status = 401;
                 }
