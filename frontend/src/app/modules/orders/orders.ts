@@ -42,7 +42,7 @@ export class OrdersModule
 
         const legacyOutfitIds = [coopOutfitId];
 
-        return legacyOutfitIds.includes(identity.outfit.id);
+        return legacyOutfitIds.includes(identity.outfit!.id);
     }
 
     /**

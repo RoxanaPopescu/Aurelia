@@ -38,7 +38,7 @@ export class DetailsModule
         this._departmentService = departmentService;
         this._historyHelper = historyHelper;
         this._modalService = modalService;
-        this.outfit = identityService.identity!.outfit;
+        this.outfit = identityService.identity!.outfit!;
     }
 
     private readonly _userService: UserService;

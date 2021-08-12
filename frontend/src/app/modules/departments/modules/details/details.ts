@@ -14,7 +14,7 @@ export class DetailsModule
     public constructor(identityService: IdentityService)
     {
         this.identityService = identityService;
-        this.parentId = this.identityService.identity!.outfit.id;
+        this.parentId = this.identityService.identity!.outfit!.id;
     }
 
     protected id: string;

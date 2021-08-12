@@ -119,7 +119,7 @@ export class AssignFulfillerPanel
      */
     protected async onFulfillerClick(fulfiller: Fulfiller): Promise<void>
     {
-        if (this.route.fulfiller.id !== this.identityService.identity?.outfit.id)
+        if (this.route.fulfiller.id !== this.identityService.identity?.outfit!.id)
         {
             const confirmed = await this._modalService.open(ConfirmRemoveFulfillerDialog,
             {

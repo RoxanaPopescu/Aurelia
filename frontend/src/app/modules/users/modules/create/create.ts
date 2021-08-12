@@ -33,7 +33,7 @@ export class CreateModule
         this._roleService = roleService;
         this._departmentService = departmentService;
         this._historyHelper = historyHelper;
-        this.outfit = identityService.identity!.outfit;
+        this.outfit = identityService.identity!.outfit!;
     }
 
     private readonly _userService: UserService;

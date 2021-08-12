@@ -36,7 +36,7 @@ export class RoutePlanningModule
 
         const legacyOrganizationIds = [moverOrganizationId, coopOrganizationId];
 
-        return legacyOrganizationIds.includes(identity.outfit.id);
+        return legacyOrganizationIds.includes(identity.outfit!.id);
     }
 
     /**

@@ -100,7 +100,7 @@ export class RouteService
                 tagsAllMatching: filter?.tagsAllMatching,
                 tagsOneMatching: filter?.tagsOneMatching,
                 include: include ? include : {},
-                organizationType: this._identityService.identity?.outfit.type.slug,
+                organizationType: this._identityService.identity?.outfit!.type.slug,
                 pickupNearby: filter?.pickupNearby,
                 legacyOwnerIds: filter?.legacyOwnerIds
             },
@@ -126,7 +126,7 @@ export class RouteService
             query:
             {
                 slug,
-                organizationType: this._identityService.identity?.outfit.type.slug
+                organizationType: this._identityService.identity?.outfit!.type.slug
             },
             signal
         });
