@@ -43,10 +43,7 @@ export function apiErrorMiddleware(): Middleware
                         responseCode = error.data.status;
                     }
 
-                    context.body =
-                        // tslint:disable-next-line: prefer-template
-                        `Upstream request of type '${error.request.method}' for '${error.request.url}' ` +
-                        `failed with status ${responseCode}.\n\n${error.message}`;
+                    context.body = `Upstream request failed.\n\n${error.message}`;
 
                     // When debugging is enabled, include the upstream response body in the response to the client, to ease debugging.
                     if (environment.debug)

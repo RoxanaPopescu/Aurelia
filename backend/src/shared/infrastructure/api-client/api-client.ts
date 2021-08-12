@@ -522,7 +522,7 @@ export class ApiClient
         if (options.deserialize && hasJsonBody)
         {
             // Await the response body.
-            let text = await fetchResponse.text();
+            let text = await fetchResponse.clone().text();
 
             if (text.length > 0)
             {
