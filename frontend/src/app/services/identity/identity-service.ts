@@ -8,7 +8,6 @@ import settings from "resources/settings";
 
 // Needed to ensure the legacy code still works.
 import { Profile } from "shared/src/model/profile";
-import { Session } from "shared/src/model/session";
 import { OrganizationInfo } from "app/model/organization";
 
 export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
@@ -41,7 +40,6 @@ export class IdentityService
 
     private readonly _apiClient: ApiClient;
     private _identity: Identity | undefined;
-    private _organization: any | undefined;
     private _changeFunc: IdentityChangeFunc | undefined;
 
     /**
@@ -54,15 +52,6 @@ export class IdentityService
     }
 
     /**
-     * The currently selected organization, or undefined if no organization is selected.
-     */
-    @computedFrom("_organization")
-    public get organization(): OrganizationInfo | undefined
-    {
-        return this._organization;
-    }
-
-    /**
      * Configures the instance.
      * @param _changeFunc The function that is invoked before the identity changes.
      */
@@ -72,19 +61,7 @@ export class IdentityService
         this._changeFunc = identityChangeFunc;
 
         // Validate each minute if the tokens are invalid, we have to do it this way since the setTimeout can fail
-        setInterval(() => this.checkReauthentication(), 60 * 1000);
-    }
-
-    /**
-     * Called when authentication is completed as part of account activation or password recovery.
-     * @param tokens The tokens to use.
-     * @returns A promise that will be resolved with true if authentication succeeded, otherwise false.
-     */
-    public async authenticated(tokens: IIdentityTokens): Promise<boolean>
-    {
-        this.setTokens(new IdentityTokens(tokens));
-
-        return this.reauthorize();
+        setInterval(() => this.reauthorizeBeforeExpiry(), 60 * 1000);
     }
 
     /**
@@ -107,93 +84,26 @@ export class IdentityService
                 retry: 3
             });
 
-            this.setTokens(new IdentityTokens({ ...result.data, remember }));
+            const tokens = new IdentityTokens({ remember, ...result.data });
+            const identity = new Identity(result, tokens);
 
-            return this.reauthorize();
+            await this._changeFunc?.(identity, this._identity);
+
+            this.setTokens(tokens);
+            this._identity = identity;
+
+            return true;
         }
         catch (error)
         {
-            await this.unauthenticate();
-
-            if (error.response == null || ![401, 403].includes(error.response.status))
-            {
-                throw error;
-            }
-
-            return false;
-        }
-    }
-
-    /**
-     * Attempts to reauthorize the user using the refresh token stored on the device.
-     * @returns A promise that will be resolved with true if reauthorization succeeded, otherwise false.
-     */
-    public async reauthorize(): Promise<boolean>
-    {
-        let tokens = this.getTokens();
-
-        if (tokens == null)
-        {
-            return false;
-        }
-
-        try
-        {
-            this.setTokens(tokens);
-
-            // Refresh the tokens.
-
-            try
-            {
-                const refreshResult = await this._apiClient.get("identity/reauthorize",
-                {
-                    body: { refreshToken: tokens.refreshToken },
-                    retry: 3
-                });
-
-                tokens = new IdentityTokens({ ...refreshResult.data, remember: tokens.remember });
-                this.setTokens(tokens);
-
-                const identity = new Identity(refreshResult, tokens);
-
-                await this._changeFunc?.(identity, this._identity);
-
-                this.setTokens(identity.tokens);
-                this._identity = identity;
-            }
-            catch (error)
+            if ([401, 403].includes(error.response?.status))
             {
                 await this.unauthenticate();
 
                 return false;
             }
 
-            // Start the session.
-            // TODO: This really doesn't belong here.
-
-            const startSessionResult = await this._apiClient.post("session/start",
-            {
-                retry: 3
-            });
-
-            VehicleType.setAll(startSessionResult.data.vehicleTypes.map(t => new VehicleType(t)));
-
-            await Session.start(startSessionResult);
-
-            return true;
-        }
-        catch (error)
-        {
-            if (error.response != null && ![401, 403].includes(error.response.status))
-            {
-                await this.unauthenticate();
-            }
-            else
-            {
-                await this.unauthenticate();
-            }
-
-            return false;
+            throw error;
         }
     }
 
@@ -207,7 +117,7 @@ export class IdentityService
     {
         try
         {
-            const remember = this.getTokens()?.remember;
+            let tokens = this.getTokens();
 
             const result = await this._apiClient.post("identity/authorize",
             {
@@ -215,19 +125,84 @@ export class IdentityService
                 retry: 3
             });
 
-            this.setTokens(new IdentityTokens({ ...result.data, remember }));
+            tokens = new IdentityTokens({ ...tokens, ...result.data });
+            const identity = new Identity(result, tokens);
 
-            this._organization = organization;
+            await this._changeFunc?.(identity, this._identity);
 
-            return this.reauthorize();
+            this.setTokens(tokens);
+            this._identity = identity;
+
+            await this.startSession();
+
+            return true;
         }
         catch (error)
         {
-            await this.unauthenticate();
-
-            if (error.response == null || ![401, 403].includes(error.response.status))
+            if ([401, 403].includes(error.response?.status))
             {
-                throw error;
+                await this.unauthenticate();
+            }
+
+            throw error;
+        }
+    }
+
+    /**
+     * Attempts to reauthorize the user using the refresh token stored on the device.
+     * @returns A promise that will be resolved with true if reauthorization succeeded, otherwise false.
+     */
+    public async reauthorize(): Promise<boolean>
+    {
+        try
+        {
+            let tokens = this.getTokens();
+
+            if (tokens == null)
+            {
+                return false;
+            }
+
+            this.setTokens(tokens);
+
+            const result = await this._apiClient.get("identity/reauthorize",
+            {
+                body: { refreshToken: tokens.refreshToken },
+                retry: 3
+            });
+
+            tokens = new IdentityTokens({ ...tokens, ...result.data });
+
+            if (this._identity != null)
+            {
+                this.setTokens(tokens);
+            }
+            else
+            {
+                const identity = new Identity(result, tokens);
+
+                await this._changeFunc?.(identity, undefined);
+
+                this.setTokens(tokens);
+                this._identity = identity;
+
+                if (this._identity.outfit != null)
+                {
+                    await this.startSession();
+                }
+            }
+
+            return true;
+        }
+        catch (error)
+        {
+            if ([401, 403].includes(error.response?.status))
+            {
+                await this.unauthenticate();
+            }
+            else
+            {
+                console.error(error);
             }
 
             return false;
@@ -236,28 +211,25 @@ export class IdentityService
 
     /**
      * Unauthenticates the user, removing the authentication token stored on the device.
-     * @returns A promise that will be resolved with true if unauthentication succeeded, otherwise false.
-     * @throws If the request fails for any reason.
+     * @returns A promise that will be resolved when the operation succeeds.
+     * @throws If the operation fails for any reason.
      */
-    public async unauthenticate(): Promise<boolean>
+    public async unauthenticate(): Promise<void>
     {
-        this.setTokens(undefined);
-
-        this._organization = undefined;
-
         if (this._identity != null)
         {
             await this._changeFunc?.(undefined, this._identity);
 
-            this._identity = undefined;
-
             await this._apiClient.post("identity/unauthorize",
             {
+                body: { refreshToken: this._identity.tokens.refreshToken },
                 retry: 3
             });
+
+            this._identity = undefined;
         }
 
-        return true;
+        this.setTokens(undefined);
     }
 
     /**
@@ -303,20 +275,26 @@ export class IdentityService
     }
 
     /**
-     * Sets the tokens to use and schedules a reauthentication before they expire.
+     * Sets the tokens to use.
      * @param tokens The tokens to use, or undefined to clear the tokens.
      */
-    private setTokens(tokens?: IdentityTokens): void
+    private setTokens(tokens: IdentityTokens | undefined): void
     {
         // tslint:disable: no-string-literal no-dynamic-delete
 
         localStorage.removeItem("access-token");
-        sessionStorage.removeItem("access-token");
-
         localStorage.removeItem("refresh-token");
+
+        sessionStorage.removeItem("access-token");
         sessionStorage.removeItem("refresh-token");
 
         delete settings.infrastructure.api.defaults!.headers!["authorization"];
+
+        if (this._identity != null && tokens == null)
+        {
+            // This should never happen, but just to be sure.
+            this._identity.tokens = undefined as any;
+        }
 
         Profile.reset();
 
@@ -351,24 +329,34 @@ export class IdentityService
     }
 
     /**
-     * Schedules a reauthentication before the current tokens expire.
-     * @param tokens The current tokens, for which reauthentication should be scheduled.
+     * Reauthorizes if the access token is about to expire.
      */
-    private checkReauthentication(): void
+    private reauthorizeBeforeExpiry(): void
     {
         const tokens = this.identity?.tokens;
 
-        if (tokens == null)
+        if (tokens != null)
         {
-            return;
+            const padding = Duration.fromObject({ minutes: 2 });
+            const expires = tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf();
+
+            if (expires < 0)
+            {
+                this.reauthorize();
+            }
         }
+    }
 
-        const padding = Duration.fromObject({ minutes: 2 });
-        const expires = tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf();
-
-        if (expires < 0)
+    // TODO: This really doesn't belong here, and the legacy Session.start does not work.
+    private async startSession(): Promise<void>
+    {
+        const result = await this._apiClient.post("session/start",
         {
-            this.reauthorize();
-        }
+            retry: 3
+        });
+
+        VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
+
+        // await Session.start(result);
     }
 }

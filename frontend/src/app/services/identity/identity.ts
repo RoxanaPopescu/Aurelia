@@ -132,11 +132,14 @@ export class Identity
         this.preferredName = result.data.preferredName;
         this.pictureUrl = result.data.pictureUrl;
 
-        this.outfit = new Outfit(result.data.outfit);
-
         if (this.pictureUrl == null || this.pictureUrl.endsWith("avatar.png"))
         {
             this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "404" });
+        }
+
+        if (result.data.outfit != null)
+        {
+            this.outfit = new Outfit(result.data.outfit);
         }
 
         const accessToken = result.data.accessToken || tokens.accessToken;
@@ -183,9 +186,9 @@ export class Identity
     public readonly pictureUrl: string;
 
     /**
-     * The outfit to which the user belongs.
+     * The outfit to which the user belongs, if any.
      */
-    public readonly outfit: Outfit;
+    public readonly outfit: Outfit | undefined;
 
     /**
      * The claims assigned to the user.
