@@ -156,7 +156,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/kpi/kpi"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-kpis"
@@ -173,7 +172,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/orders/orders"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-orders"
@@ -190,7 +188,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/routes/routes"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-routes"
@@ -207,7 +204,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/route-planning/route-planning"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
                     claims:
                     [
                         "view-routeplans",
@@ -225,7 +221,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/distribution-centers/distribution-centers"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
                     claims:
                     [
                         "view-depot"
@@ -242,7 +237,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/fleet/fleet"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
                     claims:
                     [
                         "view-drivers",
@@ -260,7 +254,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/communication/communication"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
                     claims:
                     [
                         "view-communication"
@@ -277,7 +270,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/departments/departments"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-departments"
@@ -294,7 +286,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
                 settings:
                 {
-                    outfits: ["fulfiller"],
                     claims:
                     [
                         "view-agreements"
@@ -311,7 +302,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-users"
@@ -328,11 +318,10 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/organization/organization"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
-                    // claims:
-                    // [
-                    //     "view-organization"
-                    // ]
+                    claims:
+                    [
+                        // "view-organization"
+                    ]
                 },
                 title: routeTitles.organization,
                 nav: true,
