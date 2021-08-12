@@ -1,0 +1,6 @@
+{
+    "allowed": "Allowed",
+    "allowedOnlyAtDeadEnds": "Allowed only at dead-ends",
+    "allowedOnlyAtIntersectionsAndDeadEnds": "Allowed only at intersections and dead-ends",
+    "notAllowed": "Not allowed"
+}
