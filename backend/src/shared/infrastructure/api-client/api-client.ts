@@ -448,7 +448,7 @@ export class ApiClient
             try
             {
                 // Send the request and await the response.
-                fetchResponse = await fetch(fetchRequest);
+                fetchResponse = await fetch(fetchRequest.clone());
 
                 // Does the response represent a transient error?
                 if (transientHttpStatusCodes.includes(fetchResponse.status))
