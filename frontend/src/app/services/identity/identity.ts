@@ -127,7 +127,7 @@ export class Identity
     public constructor(result: ApiResult, tokens: IIdentityTokens)
     {
         this.id = result.data.id;
-        this.username = result.data.email;
+        this.username = result.data.username;
         this.fullName = result.data.fullName;
         this.preferredName = result.data.preferredName;
         this.pictureUrl = result.data.pictureUrl;

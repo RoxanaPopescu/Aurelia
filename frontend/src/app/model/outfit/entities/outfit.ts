@@ -13,7 +13,7 @@ export class Outfit
      */
     public constructor(data?: any)
     {
-        const type = (data.type || data.typeName || "").toLowerCase();
+        const type = (data.type || data.typeName || "unknown").toLowerCase();
         this.type = new OutfitType(type);
 
         this.id = data.id;
@@ -40,10 +40,12 @@ export class Outfit
      */
     public readonly id: string;
 
+    // TODO: Remove asap - only used by department list, I think.
     /**
-     * The slug identifying the outfit.
+     * The slug identifying the outfit,
+     * or undefined if the outfit has no slug.
      */
-    public readonly slug: string;
+    public readonly slug?: string;
 
     /**
      * The name of the company,
