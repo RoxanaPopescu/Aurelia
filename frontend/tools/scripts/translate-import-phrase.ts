@@ -2,28 +2,54 @@
 const rename = require("gulp-rename");
 const gulp = require("gulp");
 const through = require("through2");
-import fs from "fs";
 import path from "path";
 import pkgDir from "pkg-dir";
-import globs from "globs";
-import { Plugin } from "gulp-translate/lib/plugin/plugin";
-import { translateConfig } from "../translate";
 
 const packageFolder = `${pkgDir.sync()}/`;
-const plugin = new Plugin(translateConfig);
 
-const sharedFilePath = resolve(`artifacts/translation/shared.xliff`);
-const appFilePath = resolve(`artifacts/translation/app.xliff`);
+readAndWriteXliff("shared");
+readAndWriteXliff("app");
 
+// Read  the files and convert them
+function readAndWriteXliff(type: "shared" | "app")
+{
+    const currentPath = resolve(type == "shared" ? `artifacts/translation/shared.xliff` : `artifacts/translation/app.xliff`);
+    const taskName = `localize.import-xliff-${type}`;
+
+    gulp.task(taskName, () =>
+    {
+        return gulp
+
+            .src(currentPath)
+            .pipe(through.obj((file: any, encoding: any, callback: any) =>
+            {
+                const json = importXliffToJson(file.contents.toString());
+                file.contents = new Buffer(JSON.stringify(json));
+
+                callback(null, file);
+            }))
+
+            // Rename the destination file.
+            .pipe(rename(
+            {
+                extname: ".json-test"
+            }))
+
+            // Write the destination file.
+            .pipe(gulp.dest(path.posix.dirname(currentPath)));
+    });
+
+    gulp.series(taskName)();
+}
 
 /**
 * Converts the specified XLIFF string, representing a translation import file, to a JSON object.
 * @param xliff The XLIFF string representing the import file.
 * @returns The JSON object representing the import file.
 */
-function importXliffToJson(xliff)
+function importXliffToJson(xliff: any)
 {
-    const json = { "./": {} };
+    const json: any = { "./": {} };
 
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
     const targetRegexp = /<target>([\s\S]*)<\/target>|$/;
@@ -32,7 +58,10 @@ function importXliffToJson(xliff)
 
     while (unitMatch = unitRegexp.exec(xliff))
     {
-        json["./"][decodeXmlEntities(unitMatch[1], true)] = decodeXmlEntities(targetRegexp.exec(unitMatch[2])[1]);
+        const result = targetRegexp.exec(unitMatch[2]);
+        if (result != null && result[1] != null) {
+            json["./"][decodeXmlEntities(unitMatch[1], true)] = decodeXmlEntities(result[1], false);
+        }
     }
 
     return json;
@@ -43,7 +72,7 @@ function importXliffToJson(xliff)
  * @param text The text to decode.
  * @returns The the decoded text.
  */
-function decodeXmlEntities(text, isAttributeContent)
+function decodeXmlEntities(text: any, isAttributeContent: any): any
 {
     text = text
         .replace(/&amp;/g, "&")
@@ -59,3 +88,13 @@ function decodeXmlEntities(text, isAttributeContent)
 
     return text;
 }
+
+/**
+ * Appends the specified path or glob to the absolute package folder path.
+ * @param pathOrGlob The path or glob to append.
+ * @returns The absolute path or glob.
+ */
+ function resolve(pathOrGlob: string): string
+ {
+     return path.join(packageFolder, pathOrGlob);
+ }

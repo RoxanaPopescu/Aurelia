@@ -28,6 +28,7 @@
     "translate-pseudo": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
     "translate-update": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-update\"",
     "translate-export-phrase": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export-phrase\"",
+    "translate-import-phrase": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-import-phrase\"",
     "translate": "npm run translate-export && npm run translate-update && npm run translate-pseudo ",
     "rebuild-cloud": "npm run clean && npm run build && cd \"packages/cloud\" && npm run build && cd \"../..\"",
     "rebuild-desktop": "npm run clean && npm run build -- --platform=desktop --api=http://localhost:8080/api/ && cd \"packages/desktop\" && npm run build && cd \"../..\"",
