@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import messageType from "../resources/strings/communication-message-types.json"
 
 /**
  * Represents the slug identifying a `CommunicationMessageType`.
@@ -38,15 +39,15 @@ export class CommunicationMessageType
     {
         "sms":
         {
-            name: "SMS"
+            name: messageType.sms
         },
         "email":
         {
-            name: "Email"
+            name: messageType.email
         },
         "app-push":
         {
-            name: "Push notification"
+            name: messageType.pushNotifications
         }
     };
 }

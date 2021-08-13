@@ -1,0 +1,9 @@
+{
+    "OrderDeliveryArrived": "Order delivery arrived",
+    "OrderPickupCompleted": "Order pickup completed",
+    "OrderDeliveryCompleted": "Order delivery completed",
+    "OrderDeliveryFailed": "Order delivery failed",
+    "OrderDeliveryBeforeETA": "Order delivery before ETA",
+    "OrderPickupETAProvided": "Order pickup ETA provided",
+    "OrderDeliveryDelayedETALProvided": "Order delivery delayed ETA provided"
+}

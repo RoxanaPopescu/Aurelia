@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import triggerEvents from "../resources/strings/communication-trigger-events.json"
 
 /**
  * Represents the slug identifying a `CommunicationTriggerEvent`.
@@ -38,31 +39,31 @@ export class CommunicationTriggerEvent
     {
         "order-delivery-arrived":
         {
-            name: "Order delivery arrived"
+            name: triggerEvents.OrderDeliveryArrived
         },
         "order-pickup-completed":
         {
-            name: "Order pickup completed"
+            name: triggerEvents.OrderPickupCompleted
         },
         "order-delivery-completed":
         {
-            name: "Order delivery completed"
+            name: triggerEvents.OrderDeliveryCompleted
         },
         "order-delivery-failed":
         {
-            name: "Order delivery failed"
+            name: triggerEvents.OrderDeliveryFailed
         },
         "order-delivery-eta-provided":
         {
-            name: "Order delivery before ETA"
+            name: triggerEvents.OrderDeliveryDelayedETALProvided
         },
         "order-pickup-eta-provided":
         {
-            name: "Order pickup ETA provided"
+            name: triggerEvents.OrderPickupETAProvided
         },
         "order-delivery-delayed-eta-provided":
         {
-            name: "Order delivery delayed ETA provided"
+            name: triggerEvents.OrderDeliveryDelayedETALProvided
         }
     };
 }

@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import recipient from "../resources/strings/communication-recipients.json"
 
 /**
  * Represents the slug identifying a `CommunicationRecipient`.
@@ -43,32 +44,32 @@ export class CommunicationRecipient
     {
         "delivery-customer":
         {
-            name: "Delivery customer"
+            name: recipient.DeliveryCustomer
         },
 
         "pickup-customer":
         {
-            name: "Pickup customer"
+            name: recipient.PickupCustomer
         },
 
         "driver":
         {
-            name: "Driver"
+            name: recipient.Driver
         },
 
         "supplier":
         {
-            name: "Supplier"
+            name: recipient.Supplier
         },
 
         "custom-email":
         {
-            name: "Email address"
+            name: recipient.CustomEmail
         },
 
         "custom-phone":
         {
-            name: "Phone number"
+            name: recipient.CustomPhone
         },
 
         // HACK: The backend models all custom recipient types as undefined,
@@ -77,7 +78,7 @@ export class CommunicationRecipient
         // custom type, which should only be used to support filtering in the list view.
         "custom":
         {
-            name: "Email address or phone number"
+            name: recipient.custom
         }
     };
 }
