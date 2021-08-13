@@ -49,8 +49,8 @@ export class IdentityModule extends AppModule
                     "client_id": "bff",
                     "scope": "openid profile email organization-selection",
                     "response_type": "code",
-                    "redirect_uri": context.request.body.redirectUrl,
-                    "code_challenge": context.request.body.codeChallenge,
+                    "redirect_uri": encodeURIComponent(context.request.body.redirectUrl),
+                    "code_challenge": encodeURIComponent(context.request.body.codeChallenge),
                     "code_challenge_method": "S256",
                     "nonce": "TODO",
                     "state": "TODO"
@@ -84,11 +84,11 @@ export class IdentityModule extends AppModule
             {
                 const body =
                     `client_id=bff&` +
-                    `client_secret=${settings.app.oAuth.clientSecret}&` +
+                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
                     `grant_type=authorization_code&` +
-                    `redirect_uri=${context.request.body.redirectUrl}&` +
-                    `code_verifier=${context.request.body.codeVerifier}&` +
-                    `code=${context.request.body.code}`;
+                    `redirect_uri=${encodeURIComponent(context.request.body.redirectUrl)}&` +
+                    `code_verifier=${encodeURIComponent(context.request.body.codeVerifier)}&` +
+                    `code=${encodeURIComponent(context.request.body.code)}`;
 
                 const result = await this.apiClient.post("identity/connect/token",
                 {
@@ -124,11 +124,11 @@ export class IdentityModule extends AppModule
             {
                 const body =
                     `client_id=bff.localUserPassword&` +
-                    `client_secret=${settings.app.oAuth.clientSecret}&` +
+                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
                     `scope=openid profile email organization-selection offline_access&` +
                     `grant_type=password&` +
-                    `username=${context.request.body.email}&` +
-                    `password=${context.request.body.password}`
+                    `username=${encodeURIComponent(context.request.body.email)}&` +
+                    `password=${encodeURIComponent(context.request.body.password)}`
 
                 const result = await this.apiClient.post("identity/connect/token",
                 {
@@ -205,7 +205,7 @@ export class IdentityModule extends AppModule
                 const body =
                     `client_id=bff.localUserPassword&` +
                     `grant_type=refresh_token&` +
-                    `refresh_token=${context.request.body.refreshToken}`;
+                    `refresh_token=${encodeURIComponent(context.request.body.refreshToken)}`;
 
                 const result = await this.apiClient.post("identity/connect/token",
                 {
@@ -243,7 +243,7 @@ export class IdentityModule extends AppModule
             await context.authorize();
 
             const body =
-                `token=${context.request.body.refreshToken}&` +
+                `token=${encodeURIComponent(context.request.body.refreshToken)}&` +
                 `token_type_hint=refresh_token`;
 
             await this.apiClient.post("identity/connect/revocation",
