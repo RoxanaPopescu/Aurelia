@@ -7,6 +7,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
@@ -33,6 +34,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
@@ -56,6 +58,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
@@ -81,6 +84,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
@@ -106,6 +110,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
@@ -130,6 +135,7 @@ export default
         recipientTypes:
         [
             "delivery-customer",
+            "pickup-customer",
             "custom-email",
             "custom-phone"
         ],
