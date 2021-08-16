@@ -55,7 +55,7 @@ export class CommunicationTriggerEvent
         },
         "order-delivery-eta-provided":
         {
-            name: triggerEvents.OrderDeliveryDelayedETALProvided
+            name: triggerEvents.OrderDeliveryETAProvided
         },
         "order-pickup-eta-provided":
         {
@@ -63,7 +63,7 @@ export class CommunicationTriggerEvent
         },
         "order-delivery-delayed-eta-provided":
         {
-            name: triggerEvents.OrderDeliveryDelayedETALProvided
+            name: triggerEvents.OrderDeliveryDelayedETAProvided
         },
         "order-schedule-triggered":
         {

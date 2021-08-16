@@ -5,6 +5,7 @@
     "OrderDeliveryFailed": "Order delivery failed",
     "OrderDeliveryBeforeETA": "Order delivery before ETA",
     "OrderPickupETAProvided": "Order pickup ETA provided",
-    "OrderDeliveryDelayedETALProvided": "Order delivery delayed ETA provided",
+    "OrderDeliveryDelayedETAProvided": "Order delivery delayed ETA provided",
+    "OrderDeliveryETAProvided": "Order delivery ETA provided",
     "OrderScheduleTriggered": "Order schedule triggered"
 }
