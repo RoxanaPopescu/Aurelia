@@ -14,17 +14,13 @@ export class OrganizationModule extends AppModule
         {
             await context.authorize();
 
-            const result = await this.apiClient.post("organization/organizations/CreateOrganization",
+            const result = await this.apiClient.post("organization/organizations/create",
             {
                 body:
                 {
                     organizationType: context.request.body.type,
                     name: context.request.body.name,
-                    ownerUserId: context.user!.id,
-
-                    // TODO: This does not belong here.
-                    vatNumber: "00000000",
-                    countryCodeTwoLetterISOCode: "DK"
+                    initialOwnerUserId: context.user!.id
                 }
             });
 
@@ -49,13 +45,7 @@ export class OrganizationModule extends AppModule
 
             const organizations = await Promise.all(result1.data.map(async (membership: any) =>
             {
-                const result2 = await this.apiClient.get("organization/organizations/GetOrganization",
-                {
-                    query:
-                    {
-                        id: membership.organizationId
-                    }
-                });
+                const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
 
                 return result2.data;
             }));
@@ -71,13 +61,7 @@ export class OrganizationModule extends AppModule
         {
             await context.authorize();
 
-            const result = await this.apiClient.get("organization/organizations/GetOrganization",
-            {
-                query:
-                {
-                    id: context.params.id
-                }
-            });
+            const result = await this.apiClient.get(`organization/organizations/${context.params.id}`);
 
             context.response.body = result.data;
             context.response.status = 200;

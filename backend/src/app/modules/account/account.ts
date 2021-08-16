@@ -19,7 +19,7 @@ export class AccountModule extends AppModule
          *   An email will be sent to the user, with a link they can use to confirm their email address.
          *   Note that the email template will be selected based on the API key specified in the request.
          */
-        this.router.post("/v1/account/create", async context =>
+        this.router.post("/v2/account/create", async context =>
         {
             await this.apiClient.post("identity/signup",
             {
@@ -42,7 +42,7 @@ export class AccountModule extends AppModule
          * - 204: No content.
          *   The client may now show a sign-in view, if not already authenticated.
          */
-        this.router.post("/v1/account/confirm-email", async context =>
+        this.router.post("/v2/account/confirm-email", async context =>
         {
             await this.apiClient.post("identity/confirmemail",
             {
@@ -63,7 +63,7 @@ export class AccountModule extends AppModule
          *   An email will be sent to the user, with a link they can use to change their password.
          *   Note that the email template will be selected based on the API key specified in the request.
          */
-        this.router.post("/v1/account/forgot-password", async context =>
+        this.router.post("/v2/account/forgot-password", async context =>
         {
             await this.apiClient.post("identity/forgotpassword",
             {
@@ -85,7 +85,7 @@ export class AccountModule extends AppModule
          * - 200: The email address of the user for which the password was changed.
          *   The client may now authenticate using the email and password.
          */
-        this.router.post("/v1/account/change-password", async context =>
+        this.router.post("/v2/account/change-password", async context =>
         {
             const result = await this.apiClient.post("identity/changeruserpassword",
             {
@@ -99,7 +99,7 @@ export class AccountModule extends AppModule
 
             context.response.body =
             {
-                email: result.data.email
+                email: result.data.userEmail
             };
 
             context.response.status = 200;
@@ -112,7 +112,7 @@ export class AccountModule extends AppModule
          * @returns
          * - 204: No content.
          */
-        this.router.post("/v1/account/delete", async context =>
+        this.router.post("/v2/account/delete", async context =>
         {
             await context.authorize();
 

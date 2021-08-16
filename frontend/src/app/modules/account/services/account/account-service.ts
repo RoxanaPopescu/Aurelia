@@ -27,7 +27,7 @@ export class AccountService
      */
     public async create(accountInit: IAccountInit): Promise<void>
     {
-        await this._apiClient.post("user/create",
+        await this._apiClient.post("account/create",
         {
             body: accountInit
         });
@@ -40,7 +40,7 @@ export class AccountService
      */
     public async confirmEmail(token: string): Promise<void>
     {
-        await this._apiClient.post("user/confirm",
+        await this._apiClient.post("account/confirm-email",
         {
             body: { token }
         });
@@ -53,7 +53,7 @@ export class AccountService
      */
     public async forgotPassword(email: string): Promise<void>
     {
-        await this._apiClient.post("user/forgot-password",
+        await this._apiClient.post("account/forgot-password",
         {
             body: { email }
         });
@@ -67,7 +67,7 @@ export class AccountService
      */
     public async changePassword(password: string, token?: string): Promise<{ email: string }>
     {
-        const result = await this._apiClient.post("user/change-password",
+        const result = await this._apiClient.post("account/change-password",
         {
             body: { password, token }
         });
@@ -82,7 +82,7 @@ export class AccountService
      */
     public async delete(email: string): Promise<void>
     {
-        await this._apiClient.post("user/delete",
+        await this._apiClient.post("account/delete",
         {
             body: { email }
         });

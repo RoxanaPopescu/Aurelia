@@ -566,3 +566,52 @@
         opacity: 1;
     }
 }
+
+// Apply autofill styling to native controls, so we won't have to repeat this in every component.
+
+.input > .input-control > .input-control-inner .input-input
+{
+    &:-webkit-autofill
+    {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: var(--input-surface-text-color--autofill, var(--input-surface-text-color));
+
+        &:hover
+        {
+            -webkit-text-fill-color: var(--input-surface-text-color--autofill, var(--input-surface-text-color--hover));
+        }
+
+        &:focus
+        {
+            -webkit-text-fill-color: var(--input-surface-text-color--autofill, var(--input-surface-text-color--focus));
+        }
+    }
+
+    &::-webkit-credentials-auto-fill-button
+    {
+        background-color: var(--input-surface-icon-color);
+
+        &:hover
+        {
+            background-color: var(--input-surface-icon-color--hover);
+        }
+
+        &:focus
+        {
+            background-color: var(--input-surface-icon-color--focus);
+        }
+    }
+}
+
+.input.--invalid > .input-control > .input-control-inner .input-input
+{
+    &:-webkit-autofill
+    {
+        -webkit-text-fill-color: var(--input-surface-text-color--invalid, var(--input-surface-text-color));
+    }
+
+    &::-webkit-credentials-auto-fill-button
+    {
+        background-color: var(--input-surface-icon-color--invalid);
+    }
+}
