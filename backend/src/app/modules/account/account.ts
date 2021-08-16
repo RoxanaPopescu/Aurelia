@@ -69,7 +69,7 @@ export class AccountModule extends AppModule
             {
                 body:
                 {
-                    email: context.request.body.email
+                    userEmail: context.request.body.email
                 }
             });
 
@@ -87,13 +87,13 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v1/account/change-password", async context =>
         {
-            const result = await this.apiClient.post("identity/changepassword",
+            const result = await this.apiClient.post("identity/changeruserpassword",
             {
                 body:
                 {
-                    token: context.request.body.token,
-                    password: context.request.body.password,
-                    revokeTokens: context.request.body.revokeTokens
+                    passwordJwtToken: context.request.body.token,
+                    newPassword: context.request.body.password,
+                    invalidateTokens: context.request.body.revokeTokens
                 }
             });
 
@@ -105,6 +105,7 @@ export class AccountModule extends AppModule
             context.response.status = 200;
         });
 
+        // TODO: Remove if not implemented.
         /**
          * Deletes the user with the specified email.
          * @param body.email The email address identifying the user.
@@ -119,7 +120,7 @@ export class AccountModule extends AppModule
             {
                 body:
                 {
-                    email: context.request.body.email
+                    userEmail: context.request.body.email
                 }
             });
 

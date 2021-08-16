@@ -99,6 +99,8 @@ export default
                 "drivers/online-in-area": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "identity": { version: "2", obfuscate: false },
+                "organizations": { version: "2", obfuscate: false },
+                "user": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

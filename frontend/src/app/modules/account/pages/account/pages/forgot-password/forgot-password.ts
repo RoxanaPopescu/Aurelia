@@ -1,24 +1,19 @@
 import { autoinject } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
-import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
-import { ISignUpModel } from "app/modules/account/components/account/components/sign-up/sign-up";
 
 @autoinject
 export class ForgotPasswordPage
 {
     /**
      * Creates a new instance of the type.
-     * @param identityService The `IdentityService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(identityService: IdentityService, historyHelper: HistoryHelper)
+    public constructor(historyHelper: HistoryHelper)
     {
-        this._identityService = identityService;
         this._historyHelper = historyHelper;
     }
 
-    private readonly _identityService: IdentityService;
     private readonly _historyHelper: HistoryHelper;
 
     /**
@@ -56,10 +51,6 @@ export class ForgotPasswordPage
      */
     private async onSignedUp(url: string): Promise<void>
     {
-        const model = this.model as ISignUpModel;
-
-        await this._identityService.authenticate(model.email!, model.password!);
-
         await this._historyHelper.navigate(url);
     }
 

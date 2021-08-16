@@ -10,9 +10,9 @@ import { IResponseStubs } from "shared/infrastructure";
 // import routePlanningSettings from "./responses/route-planning-settings";
 // import routePlans from "./responses/route-plans";
 // import communication from "./responses/communication";
-import user from "./responses/user";
-//import identity from "./responses/identity";
-import organizations from "./responses/organizations";
+// import user from "./responses/user";
+// import identity from "./responses/identity";
+// import organizations from "./responses/organizations";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -37,7 +37,7 @@ export const stubs: IResponseStubs =
     // ...communication,
     // ...routesCreate,
     // ...orderEvents,
-    ...user,
-    //...identity,
-    ...organizations
+    // ...identity,
+    // ...organizations
+    // ...user
 };

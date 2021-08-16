@@ -8,7 +8,6 @@ import settings from "resources/settings";
 
 // Needed to ensure the legacy code still works.
 import { Profile } from "shared/src/model/profile";
-import { OrganizationInfo } from "app/model/organization";
 
 export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
 export const coopOrganizationId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
@@ -109,11 +108,11 @@ export class IdentityService
 
     /**
      * Authorizes the user to access the specified organization.
-     * @param organization The organization for which the user should be authorized.
+     * @param organization The ID of the organization for which the user should be authorized.
      * @returns A promise that will be resolved with true if authorization succeeded, otherwise false.
      * @throws If the operation fails for any reason.
      */
-    public async authorize(organization: OrganizationInfo): Promise<boolean>
+    public async authorize(organizationId: string): Promise<boolean>
     {
         try
         {
@@ -121,7 +120,7 @@ export class IdentityService
 
             const result = await this._apiClient.post("identity/authorize",
             {
-                body: { organizationId: organization.id },
+                body: { organizationId },
                 retry: 3
             });
 
@@ -165,7 +164,7 @@ export class IdentityService
 
             this.setTokens(tokens);
 
-            const result = await this._apiClient.get("identity/reauthorize",
+            const result = await this._apiClient.post("identity/reauthorize",
             {
                 body: { refreshToken: tokens.refreshToken },
                 retry: 3
@@ -220,7 +219,7 @@ export class IdentityService
         {
             await this._changeFunc?.(undefined, this._identity);
 
-            await this._apiClient.post("identity/unauthorize",
+            await this._apiClient.post("identity/unauthenticate",
             {
                 body: { refreshToken: this._identity.tokens.refreshToken },
                 retry: 3

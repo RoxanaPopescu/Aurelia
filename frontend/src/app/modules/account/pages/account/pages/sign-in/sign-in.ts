@@ -3,7 +3,6 @@ import { NavigationCommand, Redirect } from "aurelia-router";
 import { HistoryHelper } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
-import { ISignUpModel } from "app/modules/account/components/account/components/sign-up/sign-up";
 
 /**
  * Represents the URL parameters expected by the page.
@@ -69,7 +68,7 @@ export class SignInPage
         {
             view: "sign-in",
             onViewChanged: () => this.onViewChanged(),
-            onSignedUp: () => this.onSignedUp("/"),
+            onSignedUp: () => this.onSignedUp(params.url ?? "/"),
             onSignedIn: () => this.onSignedIn(params.url ?? "/")
         };
     }
@@ -90,10 +89,6 @@ export class SignInPage
      */
     private async onSignedUp(url: string): Promise<void>
     {
-        const model = this.model as ISignUpModel;
-
-        await this._identityService.authenticate(model.email!, model.password!);
-
         await this._historyHelper.navigate(url);
     }
 

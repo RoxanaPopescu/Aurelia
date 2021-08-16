@@ -1,8 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
-import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
-import { ISignUpModel } from "app/modules/account/components/account/components/sign-up/sign-up";
 
 /**
  * Represents the URL parameters expected by the page.
@@ -20,16 +18,13 @@ export class ChangePasswordPage
 {
     /**
      * Creates a new instance of the type.
-     * @param identityService The `IdentityService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(identityService: IdentityService, historyHelper: HistoryHelper)
+    public constructor(historyHelper: HistoryHelper)
     {
-        this._identityService = identityService;
         this._historyHelper = historyHelper;
     }
 
-    private readonly _identityService: IdentityService;
     private readonly _historyHelper: HistoryHelper;
 
     /**
@@ -65,15 +60,11 @@ export class ChangePasswordPage
 
     /**
      * Called when the sign up operation completes.
-     * @param url The URL to navigate to after signing up.
+     * @param url The URL to navigate to.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     private async onSignedUp(url: string): Promise<void>
     {
-        const model = this.model as ISignUpModel;
-
-        await this._identityService.authenticate(model.email!, model.password!);
-
         await this._historyHelper.navigate(url);
     }
 

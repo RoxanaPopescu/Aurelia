@@ -94,16 +94,16 @@ export class ChooseOrganizationCustomElement
 
     /**
      * Called when an organization is pressed.
-     * Signs the user in to the organization.
-     * @param organization The organization to sign into.
+     * Authorizes the user to access the organization.
+     * @param organizationId The ID of the organization for which the user should be authorized.
      */
-    protected async onOrganizationClick(organization: any): Promise<void>
+    protected async onOrganizationClick(organizationId: string): Promise<void>
     {
         try
         {
             this.model.busy = true;
 
-            await this._identityService.authorize(organization);
+            await this._identityService.authorize(organizationId);
 
             // tslint:disable-next-line: await-promise
             await this.model.onSignedIn?.();

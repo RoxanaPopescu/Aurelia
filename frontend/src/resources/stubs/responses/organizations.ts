@@ -11,19 +11,19 @@ const organizations =
 // tslint:disable
 export default
 {
-    "POST /api/v1/organizations/create": (method: string, url: URL, options: IApiRequestOptions) =>
+    "POST /api/v2/organizations/create": (method: string, url: URL, options: IApiRequestOptions) =>
     {
       organizations.push(options.body as any);
 
-      return { status: 201 };
+      return { body: options.body };
     },
 
-    "GET /api/v1/organizations":
+    "GET /api/v2/organizations":
     {
       body: organizations
     },
 
-    "GET /api/v1/organizations/mover-organization-id/profile":
+    "GET /api/v2/organizations/mover-organization-id/profile":
     {
       body:
       {
@@ -31,12 +31,12 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/profile/update":
+    "POST /api/v2/organizations/mover-organization-id/profile/update":
     {
       status: 201
     },
 
-    "GET /api/v1/organizations/mover-organization-id/users":
+    "GET /api/v2/organizations/mover-organization-id/users":
     {
       body:
       [
@@ -54,7 +54,7 @@ export default
       ]
     },
 
-    "POST /api/v1/organizations/mover-organization-id/users/invite":
+    "POST /api/v2/organizations/mover-organization-id/users/invite":
     {
       body:
       {
@@ -70,17 +70,17 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/users/user-2-id/reinvite":
+    "POST /api/v2/organizations/mover-organization-id/users/user-2-id/reinvite":
     {
       status: 201
     },
 
-    "POST /api/v1/organizations/mover-organization-id/users/user-1-id/remove":
+    "POST /api/v2/organizations/mover-organization-id/users/user-1-id/remove":
     {
       status: 201
     },
 
-    "GET /api/v1/organizations/mover-organization-id/roles":
+    "GET /api/v2/organizations/mover-organization-id/roles":
     {
       body:
       [
@@ -103,7 +103,7 @@ export default
       ]
     },
 
-    "POST /api/v1/organizations/mover-organization-id/roles/create":
+    "POST /api/v2/organizations/mover-organization-id/roles/create":
     {
       body:
       {
@@ -122,7 +122,7 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/roles/role-1-id/update":
+    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/update":
     {
       body:
       {
@@ -140,7 +140,7 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/roles/role-1-id/dublicate":
+    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/dublicate":
     {
       body:
       {
@@ -161,12 +161,12 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/roles/role-1-id/delete":
+    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/delete":
     {
       status: 201
     },
 
-    "GET /api/v1/organizations/mover-organization-id/teams":
+    "GET /api/v2/organizations/mover-organization-id/teams":
     {
       body:
       [
@@ -183,7 +183,7 @@ export default
       ]
     },
 
-    "POST /api/v1/organizations/mover-organization-id/teams/create":
+    "POST /api/v2/organizations/mover-organization-id/teams/create":
     {
       body:
       {
@@ -198,7 +198,7 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/update":
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/update":
     {
       body:
       {
@@ -213,12 +213,12 @@ export default
       }
     },
 
-    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/delete":
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/delete":
     {
       status: 201
     },
 
-    "GET /api/v1/organizations/mover-organization-id/teams/team-1-id/users":
+    "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
     {
       body:
       [
@@ -236,17 +236,17 @@ export default
       ]
     },
 
-    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/users/add":
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/add":
     {
       status: 201
     },
 
-    "POST /api/v1/organizations/mover-organization-id/teams/team-1-id/users/user-1-id/remove":
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-1-id/remove":
     {
       status: 201
     },
 
-    "GET /api/v1/organizations/mover-organization-id/permissions":
+    "GET /api/v2/organizations/mover-organization-id/permissions":
     {
       body:
       [
@@ -259,7 +259,7 @@ export default
       ]
     },
 
-    "POST /api/v1/organizations/mover-organization-id/delete":
+    "POST /api/v2/organizations/mover-organization-id/delete":
     {
       status: 201
     }

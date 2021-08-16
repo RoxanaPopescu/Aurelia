@@ -28,16 +28,13 @@ export class User
     public constructor(jwtObject: any)
     {
         this.id = jwtObject["sub"];
+        this.outfitId = jwtObject["organization"];
 
         // TODO: This does not exist in the JWT.
         this.email = jwtObject["email"];
         this.fullName = jwtObject["name"];
         this.preferredName = jwtObject["preferred_username"];
         this.roleName = jwtObject["role"];
-
-        // Add hypens to the GUID.
-        this.outfitId = jwtObject["organization"]
-            .replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
 
         // Convert claims to a permission set.
 
@@ -117,7 +114,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             if (context.user === undefined)
             {
                 const jwtString =
-                    context.headers[options.header]?.replace(/^Bearer\s+/, "") ||
+                    (context.headers[options.header] as string)?.replace(/^Bearer\s+/, "") ||
                     context.cookies.get(options.cookie);
 
                 if (jwtString)

@@ -1,6 +1,7 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
+import { IdentityService } from "app/services/identity";
 import { OrganizationService } from "app/model/organization";
 import { AccountService } from "app/modules/account/services/account/account-service";
 import { IAccountInit } from "app/modules/account/services/account/account-init";
@@ -65,15 +66,18 @@ export class SignUpCustomElement
      * Creates a new instance of the type.
      * @param accountService The `AccountService` instance.
      * @param organizationService The `OrganizationService` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(accountService: AccountService, organizationService: OrganizationService)
+    public constructor(accountService: AccountService, organizationService: OrganizationService, identityService: IdentityService)
     {
         this._accountService = accountService;
         this._organizationService = organizationService;
+        this._identityService = identityService;
     }
 
     private readonly _accountService: AccountService;
     private readonly _organizationService: OrganizationService;
+    private readonly _identityService: IdentityService;
 
     /**
      * The model representing the state of the component.
@@ -154,10 +158,14 @@ export class SignUpCustomElement
                 password: this.model.password!
             });
 
-            await this._organizationService.create(
+            const createOrganizationResult = await this._organizationService.create(
             {
+                type: "business",
                 name: this.model.organizationName!
             });
+
+            await this._identityService.authenticate(this.model.email!, this.model.password!);
+            await this._identityService.authorize(createOrganizationResult.id);
 
             // tslint:disable-next-line: await-promise
             await this.model.onSignedUp?.();

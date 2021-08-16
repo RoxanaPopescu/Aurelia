@@ -114,6 +114,7 @@ export class CreateOrganizationCustomElement
 
             await this._organizationService.create(
             {
+                type: "business",
                 name: this.model.organizationName!
             });
 

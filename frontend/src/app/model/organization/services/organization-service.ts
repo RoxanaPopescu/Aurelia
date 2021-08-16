@@ -29,20 +29,22 @@ export class OrganizationService
     /**
      * Creates a new organization.
      * @param organizationInit The data for the new organization.
-     * @returns A promise that will be resolved when the operation succeedes.
+     * @returns A promise that will be resolved with info about the organization.
      */
-    public async create(organizationInit: IOrganizationInit): Promise<void>
+    public async create(organizationInit: IOrganizationInit): Promise<OrganizationInfo>
     {
-        await this._apiClient.post("organizations/create",
+        const result = await this._apiClient.post("organizations/create",
         {
             body: organizationInit
         });
+
+        return new OrganizationInfo(result.data)
     }
 
     /**
      * Gets all organizations visible to the current user.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the organizations.
+     * @returns A promise that will be resolved with info about the organizations.
      */
     public async getAll(signal?: AbortSignal): Promise<OrganizationInfo[]>
     {

@@ -12,32 +12,66 @@ export class OrganizationModule extends AppModule
          */
         this.router.post("/v2/organizations/create", async context =>
         {
-            const result = await this.apiClient.post("organizations/CreateOrganization",
+            await context.authorize();
+
+            const result = await this.apiClient.post("organization/organizations/CreateOrganization",
             {
-                body: context.request.body.redirectUrl
+                body:
+                {
+                    organizationType: context.request.body.type,
+                    name: context.request.body.name,
+                    ownerUserId: context.user!.id,
+
+                    // TODO: This does not belong here.
+                    vatNumber: "00000000",
+                    countryCodeTwoLetterISOCode: "DK"
+                }
             });
 
-            context.response.body = result.data;
+            context.response.body = { id: result.data.organizationId, name: context.request.body.name };
             context.response.status = 200;
         });
 
         /**
          * Gets all organizations visible to the current user.
          */
-        this.router.post("/v2/organizations", async context =>
+        this.router.get("/v2/organizations", async context =>
         {
-            const result = await this.apiClient.get("organizations/TODO");
+            await context.authorize();
 
-            context.response.body = result.data;
+            const result1 = await this.apiClient.get("identity/Membership",
+            {
+                query:
+                {
+                    userId: context.user!.id
+                }
+            });
+
+            const organizations = await Promise.all(result1.data.map(async (membership: any) =>
+            {
+                const result2 = await this.apiClient.get("organization/organizations/GetOrganization",
+                {
+                    query:
+                    {
+                        id: membership.organizationId
+                    }
+                });
+
+                return result2.data;
+            }));
+
+            context.response.body = organizations;
             context.response.status = 200;
         });
 
         /**
          * Gets the specified organization.
          */
-        this.router.post("/v2/organizations/:id", async context =>
+        this.router.get("/v2/organizations/:id", async context =>
         {
-            const result = await this.apiClient.get("organizations/GetOrganization",
+            await context.authorize();
+
+            const result = await this.apiClient.get("organization/organizations/GetOrganization",
             {
                 query:
                 {

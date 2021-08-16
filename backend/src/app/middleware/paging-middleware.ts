@@ -19,8 +19,8 @@ export function pagingMiddleware(): Middleware
 
             context.paging =
             {
-                page: parseInt(context.request.query.page),
-                pageSize: parseInt(context.request.query.pageSize)
+                page: parseInt(context.request.query.page as string),
+                pageSize: parseInt(context.request.query.pageSize as string)
             };
         }
         else if (context.request.body.paging != null)

@@ -6,7 +6,12 @@
 
         <div surface="base">
 
-            <button repeat.for="organization of organizations" class="choose-organization-item margin-top" appearance="solid" accent="primary" click.delegate="onOrganizationClick(organization)">
+            <button
+                repeat.for="organization of organizations"
+                class="choose-organization-item margin-top"
+                appearance="solid"
+                accent="primary"
+                click.delegate="onOrganizationClick(organization.id)">
                 ${organization.name}
             </button>
 

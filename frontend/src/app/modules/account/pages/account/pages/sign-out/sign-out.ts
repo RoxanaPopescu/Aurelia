@@ -3,7 +3,6 @@ import { NavigationCommand, Redirect } from "aurelia-router";
 import { HistoryHelper } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
-import { ISignUpModel } from "app/modules/account/components/account/components/sign-up/sign-up";
 
 /**
  * Represents the URL parameters expected by the page.
@@ -79,15 +78,11 @@ export class SignOutPage
 
     /**
      * Called when the sign up operation completes.
-     * @param url The URL to navigate to after signing up.
+     * @param url The URL to navigate to.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     private async onSignedUp(url: string): Promise<void>
     {
-        const model = this.model as ISignUpModel;
-
-        await this._identityService.authenticate(model.email!, model.password!);
-
         await this._historyHelper.navigate(url);
     }
 
