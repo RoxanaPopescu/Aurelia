@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities";
-import triggerEvents from "../resources/strings/communication-trigger-events.json"
+import triggerEvents from "../resources/strings/communication-trigger-events.json";
 
 /**
  * Represents the slug identifying a `CommunicationTriggerEvent`.

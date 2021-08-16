@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities";
-import recipient from "../resources/strings/communication-recipients.json"
+import recipient from "../resources/strings/communication-recipients.json";
 
 /**
  * Represents the slug identifying a `CommunicationRecipient`.

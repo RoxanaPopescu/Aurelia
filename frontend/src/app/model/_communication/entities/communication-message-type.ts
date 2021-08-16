@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities";
-import messageType from "../resources/strings/communication-message-types.json"
+import messageType from "../resources/strings/communication-message-types.json";
 
 /**
  * Represents the slug identifying a `CommunicationMessageType`.

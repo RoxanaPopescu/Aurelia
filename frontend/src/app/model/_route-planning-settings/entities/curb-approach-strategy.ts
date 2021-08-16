@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities";
-import approachStrategies from "../resources/strings/curb-approach-strategies.json"
+import approachStrategies from "../resources/strings/curb-approach-strategies.json";
 
 /**
  * Represents the slug identifying a `CurbApproachStrategy`.
