@@ -64,6 +64,10 @@ export class CommunicationTriggerEvent
         "order-delivery-delayed-eta-provided":
         {
             name: triggerEvents.OrderDeliveryDelayedETALProvided
+        },
+        "order-schedule-triggered":
+        {
+            name: triggerEvents.OrderScheduleTriggered
         }
     };
 }

@@ -174,6 +174,35 @@ export default
             "DriverPhone",
             "DriverName"
         ])
+    },
+    "order-schedule-triggered":
+    {
+        recipientTypes:
+        [
+            "pickup-customer",
+            "custom-email",
+            "custom-phone"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "TrackingId",
+            "RelationalId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
+            "DeliveryTimeFrame",
+            "DeliveryEtaTime",
+            "DeliveryEtaDate",
+            "DeliveryWeekday",
+            "DeliveryDate"
+        ])
     }
 };
 

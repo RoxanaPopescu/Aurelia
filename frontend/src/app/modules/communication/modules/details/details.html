@@ -11,6 +11,7 @@
     <require from="./components/order-delivery-eta-provided-params/order-delivery-eta-provided-params"></require>
     <require from="./components/order-delivery-delayed-eta-provided-params/order-delivery-delayed-eta-provided-params"></require>
     <require from="./components/order-pickup-eta-provided-params/order-pickup-eta-provided-params"></require>
+    <require from="./components/order-schedule-triggered-params/order-schedule-triggered-params"></require>
 
     <require from="./details.scss"></require>
 
@@ -287,6 +288,11 @@
                         if.bind="model.eventType.slug === 'order-pickup-eta-provided'"
                         model.bind="model.parameters">
                     </order-pickup-eta-provided-params>
+
+                    <order-schedule-triggered-params
+                        if.bind="model.eventType.slug === 'order-schedule-triggered'"
+                        model.bind="model.parameters">
+                    </order-schedule-triggered-params>
 
                 </numbered-section>
 
