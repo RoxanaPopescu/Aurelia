@@ -1,5 +1,6 @@
 import { Container } from "aurelia-framework";
 import { LocaleService } from "shared/localization";
+import vehicleTypes from "../resources/settings/vehicle-types.json";
 
 let supportedVehicleTypes: VehicleType[];
 
@@ -84,6 +85,11 @@ export class VehicleType
      */
     public static get(id: string): VehicleType
     {
+        if (supportedVehicleTypes == null)
+        {
+            VehicleType.configure();
+        }
+
         return supportedVehicleTypes.find(vt => vt.id === id)!;
     }
 
@@ -92,14 +98,19 @@ export class VehicleType
      */
     public static getAll(): VehicleType[]
     {
+        if (supportedVehicleTypes == null)
+        {
+            VehicleType.configure();
+        }
+
         return supportedVehicleTypes;
     }
 
     /**
-     * Sets the supported vehicle types.
+     * Configures the supported vehicle types.
      */
-    public static setAll(vehicleTypes: VehicleType[]): void
+    private static configure(): void
     {
-        supportedVehicleTypes = vehicleTypes;
+        supportedVehicleTypes = vehicleTypes.map(t => new VehicleType(t));
     }
 }

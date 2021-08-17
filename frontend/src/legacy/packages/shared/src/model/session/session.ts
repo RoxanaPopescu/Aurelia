@@ -5,6 +5,8 @@ import { VehicleType } from "../logistics/vehicleType";
 import { Profile } from "../profile";
 import { Fulfiller } from "../logistics/fulfiller";
 import { Consignor } from "../logistics/consignor";
+import { Identity } from "app/services/identity";
+import { Outfit } from "../logistics/outfit";
 
 /**
  * Represents reference data for the session.
@@ -14,7 +16,7 @@ export class _Session {
   /**
    * The outfit for the user.
    */
-  public outfit: Fulfiller | Consignor;
+  public outfit: Fulfiller | Consignor | Outfit;
 
   /**
    * The user of the app.
@@ -32,7 +34,7 @@ export class _Session {
    * @param result The `session/start` result, if already fetched.
    * @returns True if the session was started correctly, otherwise false.
    */
-  public async start(result?: ApiResult): Promise<boolean> {
+  public async startOld(result?: ApiResult): Promise<boolean> {
 
     let data: any;
 
@@ -78,6 +80,38 @@ export class _Session {
     }
 
     return true;
+  }
+
+  /**
+   * Same as `startOld`, but without the API call, so it works with the new authentication.
+   */
+  public startNew(identity: Identity, vehicleTypes: VehicleType[]): void {
+
+    Profile.setTokens(identity.tokens.accessToken, identity.tokens.refreshToken);
+
+    const [firstName, lastName] = identity.fullName.split(" ", 2);
+
+    this.userInfo = new UserInfo({
+      userId: identity.id,
+      username: identity.username,
+      firstName: firstName,
+      lastName: lastName,
+      email: identity.username
+    });
+
+    this.vehicleTypes = vehicleTypes.map(t => new VehicleType(t));
+
+    switch (identity.outfit!.type.slug) {
+      case "fulfiller":
+        this.outfit = new Fulfiller(identity.outfit!);
+        break;
+      case "consignor":
+        this.outfit = new Consignor(identity.outfit!);
+        break;
+      default:
+        // TODO: This probably breaks something, somewhere.
+        this.outfit = new Outfit(identity.outfit!, "Unknown");
+    }
   }
 }
 

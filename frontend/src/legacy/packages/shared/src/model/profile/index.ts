@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { Session } from "../session";
+// import { Session } from "../session";
 import { getUserClaims } from "legacy/helpers/identity-helper";
 
 const enum Path {
@@ -38,12 +38,12 @@ export class _Profile {
   }
 
   public async login(accessToken: string, refreshToken: string): Promise<void> {
-    this.reset();
-    this.setTokens(accessToken, refreshToken);
-
-    if (await Session.start()) {
-      this.isAuthenticated = true;
-    }
+    throw new Error("Method no longer supported.");
+    // this.reset();
+    // this.setTokens(accessToken, refreshToken);
+    // if (await Session.start()) {
+    //   this.isAuthenticated = true;
+    // }
   }
 
   public setTokens(accessToken: string, refreshToken: string) {
@@ -54,11 +54,12 @@ export class _Profile {
   }
 
   public async autoLogin() {
-    if (this.tokens != null) {
-      if (await Session.start()) {
-        this.isAuthenticated = true;
-      }
-    }
+    throw new Error("Method no longer supported.");
+    // if (this.tokens != null) {
+    //   if (await Session.start()) {
+    //     this.isAuthenticated = true;
+    //   }
+    // }
   }
 
   public reset() {
@@ -71,7 +72,8 @@ export class _Profile {
   }
 
   public logout() {
-    this.reset();
+    throw new Error("Method no longer supported.");
+    // this.reset();
   }
 }
 

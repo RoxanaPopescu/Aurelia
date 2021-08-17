@@ -3,7 +3,7 @@ import { Phone } from "../general/phone";
 /**
  * Represents the type of outfit
  */
-export type OutfitType = "Fulfiller" | "Consignor" | "Consignee" | "System";
+export type OutfitType = "Fulfiller" | "Consignor" | "Consignee" | "System" | "Unknown";
 
 /**
  * Represents a base type for entities such as a Consignor, Consignee and Fulfiller.

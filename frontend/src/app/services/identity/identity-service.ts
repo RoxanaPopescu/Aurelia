@@ -8,6 +8,7 @@ import settings from "resources/settings";
 
 // Needed to ensure the legacy code still works.
 import { Profile } from "shared/src/model/profile";
+import { Session } from "shared/src/model/session";
 
 export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
 export const coopOrganizationId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
@@ -132,7 +133,7 @@ export class IdentityService
             this.setTokens(tokens);
             this._identity = identity;
 
-            await this.startSession();
+            this.startLegacySession();
 
             return true;
         }
@@ -187,7 +188,7 @@ export class IdentityService
 
                 if (this._identity.outfit != null)
                 {
-                    await this.startSession();
+                    this.startLegacySession();
                 }
             }
 
@@ -346,16 +347,11 @@ export class IdentityService
         }
     }
 
-    // TODO: This really doesn't belong here, and the legacy Session.start does not work.
-    private async startSession(): Promise<void>
+    /**
+     * Starts the session in the legacy code.
+     */
+    private startLegacySession(): void
     {
-        const result = await this._apiClient.post("session/start",
-        {
-            retry: 3
-        });
-
-        VehicleType.setAll(result.data.vehicleTypes.map(t => new VehicleType(t)));
-
-        // await Session.start(result);
+        Session.startNew(this.identity!, VehicleType.getAll());
     }
 }
