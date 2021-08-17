@@ -69,7 +69,7 @@ export class AccountService
     {
         const result = await this._apiClient.post("account/change-password",
         {
-            body: { password, token }
+            body: { password, token, revokeTokens: true }
         });
 
         return result.data;
