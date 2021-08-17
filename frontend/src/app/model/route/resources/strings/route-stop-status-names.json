@@ -1,0 +1,7 @@
+{
+    "notVisited": "Not visited",
+    "arrived": "Arrived",
+    "failed": "Failed",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+}

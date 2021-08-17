@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import statusNames from "../resources/strings/user-status-names.json";
 
 /**
  * Represents the slug identifying a `UserStatus`.
@@ -41,19 +42,19 @@ export class UserStatus
     {
         "created":
         {
-            name: "Not activated",
+            name: statusNames.created,
             accent: "attention",
             value: 1
         },
         "activated":
         {
-            name: "Activated",
+            name: statusNames.activated,
             accent: "positive",
             value: 2
         },
         "deactivated":
         {
-            name: "Deactivated",
+            name: statusNames.deactivated,
             accent: "neutral",
             value: 666
         },
@@ -61,7 +62,7 @@ export class UserStatus
         // TODO: Needed because I don't know all the possible status values.
         "unknown":
         {
-            name: "Unknown",
+            name: statusNames.unknown,
             accent: "neutral",
             value: undefined
         }

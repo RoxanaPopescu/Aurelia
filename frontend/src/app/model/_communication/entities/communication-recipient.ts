@@ -44,32 +44,32 @@ export class CommunicationRecipient
     {
         "delivery-customer":
         {
-            name: recipient.DeliveryCustomer
+            name: recipient.deliveryCustomer
         },
 
         "pickup-customer":
         {
-            name: recipient.PickupCustomer
+            name: recipient.pickupCustomer
         },
 
         "driver":
         {
-            name: recipient.Driver
+            name: recipient.driver
         },
 
         "supplier":
         {
-            name: recipient.Supplier
+            name: recipient.supplier
         },
 
         "custom-email":
         {
-            name: recipient.CustomEmail
+            name: recipient.customEmail
         },
 
         "custom-phone":
         {
-            name: recipient.CustomPhone
+            name: recipient.customPhone
         },
 
         // HACK: The backend models all custom recipient types as undefined,

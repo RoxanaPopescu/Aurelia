@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import deviationNames from "../resources/strings/route-stop-deviation-names.json";
 
 /**
  * Represents the slug identifying a `RouteStopDeviation`.
@@ -44,51 +45,51 @@ export class RouteStopDeviation
     {
         "nobody-at-address":
         {
-            name: "Nobody at address"
+            name: deviationNames.nobodyAtAddress
         },
         "damaged-colli":
         {
-            name: "Damaged colli"
+            name: deviationNames.damagedColli
         },
         "other":
         {
-            name: "Other problem"
+            name: deviationNames.other
         },
         "refused":
         {
-            name: "Refused"
+            name: deviationNames.refused
         },
         "wrong-address":
         {
-            name: "Wrong address"
+            name: deviationNames.wrongAddress
         },
         "ramp-gate-occupied":
         {
-            name: "Ramp gate occupied"
+            name: deviationNames.rampGateOccupied
         },
         "missing-items":
         {
-            name: "Missing items"
+            name: deviationNames.missingItems
         },
         "incorrectly-packed":
         {
-            name: "Incorrectly packed"
+            name: deviationNames.incorrectlyPacked
         },
         "missing-colli":
         {
-            name: "Missing colli"
+            name: deviationNames.missingColli
         },
         "no-capacity-in-vehicle":
         {
-            name: "No capacity in vehicle"
+            name: deviationNames.noCapacityInVehicle
         },
         "not-possible-to-leave-colli":
         {
-            name: "Not possible to leave colli"
+            name: deviationNames.notPossibleToLeaveColli
         },
         "other-damage":
         {
-            name: "Other damage"
+            name: deviationNames.otherDamage
         }
     };
 }

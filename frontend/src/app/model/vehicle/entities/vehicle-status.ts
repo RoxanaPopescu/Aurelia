@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import statusNames from "../resources/strings/vehicle-status-names.json";
 
 /**
  * Represents the slug identifying a `VehicleStatus`.
@@ -40,17 +41,17 @@ export class VehicleStatus
     {
         "approved":
         {
-            name: "Approved",
+            name: statusNames.approved,
             accent: "positive"
         },
         "not-approved":
         {
-            name: "Not approved",
+            name: statusNames.notApproved,
             accent: "neutral"
         },
         "waiting-for-approval":
         {
-            name: "Waiting for approval",
+            name: statusNames.waitingForApproval,
             accent: "negative"
         }
     };

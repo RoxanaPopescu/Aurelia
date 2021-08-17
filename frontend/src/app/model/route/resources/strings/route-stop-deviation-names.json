@@ -1,0 +1,14 @@
+{
+    "nobodyAtAddress": "Nobody at address",
+    "damagedColli": "Damaged colli",
+    "other": "Other problem",
+    "refused": "Refused",
+    "wrongAddress": "Wrong address",
+    "rampGateOccupied": "Ramp gate occupied",
+    "missingItems": "Missing items",
+    "incorrectlyPacked": "Incorrectly packed",
+    "missingColli": "Missing colli",
+    "noCapacityInVehicle": "No capacity in vehicle",
+    "notPossibleToLeaveColli": "Not possible to leave colli",
+    "otherDamage": "Other damage"
+}

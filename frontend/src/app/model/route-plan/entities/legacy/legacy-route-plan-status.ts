@@ -1,5 +1,6 @@
 import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
+import statusNames from "../../resources/strings/route-plan-status-names.json";
 
 /**
  * Represents the slug identifying a `RoutePlanStatus`.
@@ -41,32 +42,32 @@ export class LegacyRoutePlanStatus
     {
         "processing":
         {
-            name: "Processing",
+            name: statusNames.executing,
             accent: "neutral"
         },
         "waiting-for-approval":
         {
-            name: "Waiting for approval",
+            name: statusNames.waitingForApproval,
             accent: "attention"
         },
         "completed":
         {
-            name: "Completed",
+            name: statusNames.calculationCompleted,
             accent: "positive"
         },
         "failed-externally":
         {
-            name: "Failed externally",
+            name: statusNames.failed,
             accent: "negative"
         },
         "failed-internally":
         {
-            name: "Failed internally",
+            name: statusNames.failed,
             accent: "negative"
         },
         "cancelled":
         {
-            name: "Cancelled",
+            name: statusNames.cancelled,
             accent: "neutral"
         }
     };
