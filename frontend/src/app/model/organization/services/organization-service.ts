@@ -38,7 +38,7 @@ export class OrganizationService
             body: organizationInit
         });
 
-        return new OrganizationInfo(result.data)
+        return new OrganizationInfo(result.data);
     }
 
     /**

@@ -21,7 +21,7 @@ export class OrganizationRole
             this.userCount = data.userCount;
             this.createdDateTime = DateTime.fromISO(data.createdDateTime, { setZone: true });
             this.modifiedDateTime = DateTime.fromISO(data.modifiedDateTime, { setZone: true });
-            this.permissions = data.permissions.map(p => new OrganizationPermission(p))
+            this.permissions = data.permissions.map(p => new OrganizationPermission(p));
         }
     }
 

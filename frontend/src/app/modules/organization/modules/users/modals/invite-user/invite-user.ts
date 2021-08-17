@@ -22,6 +22,7 @@ export class InviteUserPanel
 
     private readonly _organizationService: OrganizationService;
     private readonly _modal: Modal;
+    private _fetchOperation: Operation | undefined;
     private _result: OrganizationUser | undefined;
 
     /**
@@ -67,7 +68,7 @@ export class InviteUserPanel
     {
         this.organizationId = model.organizationId;
 
-        new Operation(async () =>
+        this._fetchOperation = new Operation(async () =>
         {
             this._modal.busy = true;
 
@@ -94,6 +95,8 @@ export class InviteUserPanel
      */
     public async deactivate(): Promise<OrganizationUser | undefined>
     {
+        this._fetchOperation?.abort();
+
         return this._result;
     }
 

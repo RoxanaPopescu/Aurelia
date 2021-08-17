@@ -45,18 +45,6 @@ export class RequiredValidatorCustomElement extends Validator
     }
 
     /**
-     * Called by the framework when the `enabled` property changes.
-     * Updates the decoration of the input element, then delegates
-     * to the super implementation.
-     */
-    protected enabledChanged(): void
-    {
-        this.decorateInput();
-
-        super.enabledChanged();
-    }
-
-    /**
      * Called by the validation when this validator should run.
      * @param reason The reason for the validation run.
      * @returns A promise that will be resolved with true if validation succeeded, otherwise false.
@@ -66,6 +54,18 @@ export class RequiredValidatorCustomElement extends Validator
         this.invalid = this.value === undefined || this.value === "";
 
         return !this.invalid;
+    }
+
+    /**
+     * Called by the framework when the `enabled` property changes.
+     * Updates the decoration of the input element, then delegates
+     * to the super implementation.
+     */
+    protected enabledChanged(): void
+    {
+        this.decorateInput();
+
+        super.enabledChanged();
     }
 
     /**

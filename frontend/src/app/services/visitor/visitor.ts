@@ -29,7 +29,7 @@ export class Visitor
 
         // Get or generate the session ID.
 
-        this.sessionId = sessionStorage.getItem("session") ?? Id.uuid(1);;
+        this.sessionId = sessionStorage.getItem("session") ?? Id.uuid(1);
 
         sessionStorage.setItem("session", this.sessionId);
 

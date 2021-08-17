@@ -12,7 +12,7 @@ const body =
         id: "mover-organization-id",
         companyName: "Mover"
     }
-}
+};
 
 // tslint:disable
 export default

@@ -22,6 +22,7 @@ export class EditRolePanel
 
     private readonly _organizationService: OrganizationService;
     private readonly _modal: Modal;
+    private _fetchOperation: Operation | undefined;
     private _result: OrganizationRole | undefined;
 
     /**
@@ -53,7 +54,7 @@ export class EditRolePanel
         this.organizationId = model.organizationId;
         this.role = model.role?.clone() ?? new OrganizationRole();
 
-        new Operation(async () =>
+        this._fetchOperation = new Operation(async () =>
         {
             this._modal.busy = true;
 
@@ -76,6 +77,8 @@ export class EditRolePanel
      */
     public async deactivate(): Promise<OrganizationRole | undefined>
     {
+        this._fetchOperation?.abort();
+
         return this._result;
     }
 

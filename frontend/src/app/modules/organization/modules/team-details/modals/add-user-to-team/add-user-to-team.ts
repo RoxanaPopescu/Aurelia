@@ -78,7 +78,7 @@ export class AddUserToTeamPanel
             // TODO
             const user = new OrganizationUser({});
 
-            this._organizationService.addUserToTeam(this.organizationId, this.teamId, user.id);
+            await this._organizationService.addUserToTeam(this.organizationId, this.teamId, user.id);
 
             this._result = user;
 

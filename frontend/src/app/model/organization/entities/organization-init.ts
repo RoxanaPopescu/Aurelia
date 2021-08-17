@@ -11,5 +11,5 @@ export interface IOrganizationInit
     /**
      * The type of organization to create.
      */
-    type: "business" | "private"
+    type: "business" | "private";
 }
