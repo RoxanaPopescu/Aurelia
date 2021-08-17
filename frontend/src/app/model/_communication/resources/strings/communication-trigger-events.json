@@ -1,11 +1,11 @@
 {
-    "OrderDeliveryArrived": "Order delivery arrived",
-    "OrderPickupCompleted": "Order pickup completed",
-    "OrderDeliveryCompleted": "Order delivery completed",
-    "OrderDeliveryFailed": "Order delivery failed",
-    "OrderDeliveryBeforeETA": "Order delivery before ETA",
-    "OrderPickupETAProvided": "Order pickup ETA provided",
-    "OrderDeliveryDelayedETAProvided": "Order delivery delayed ETA provided",
-    "OrderDeliveryETAProvided": "Order delivery ETA provided",
-    "OrderScheduleTriggered": "Order schedule triggered"
+    "orderDeliveryArrived": "Order delivery arrived",
+    "orderPickupCompleted": "Order pickup completed",
+    "orderDeliveryCompleted": "Order delivery completed",
+    "orderDeliveryFailed": "Order delivery failed",
+    "orderDeliveryBeforeETA": "Order delivery before ETA",
+    "orderPickupETAProvided": "Order pickup ETA provided",
+    "orderDeliveryDelayedETAProvided": "Order delivery delayed ETA provided",
+    "orderDeliveryETAProvided": "Order delivery ETA provided",
+    "orderScheduleTriggered": "Order schedule triggered"
 }

@@ -39,35 +39,35 @@ export class CommunicationTriggerEvent
     {
         "order-delivery-arrived":
         {
-            name: triggerEvents.OrderDeliveryArrived
+            name: triggerEvents.orderDeliveryArrived
         },
         "order-pickup-completed":
         {
-            name: triggerEvents.OrderPickupCompleted
+            name: triggerEvents.orderPickupCompleted
         },
         "order-delivery-completed":
         {
-            name: triggerEvents.OrderDeliveryCompleted
+            name: triggerEvents.orderDeliveryCompleted
         },
         "order-delivery-failed":
         {
-            name: triggerEvents.OrderDeliveryFailed
+            name: triggerEvents.orderDeliveryFailed
         },
         "order-delivery-eta-provided":
         {
-            name: triggerEvents.OrderDeliveryETAProvided
+            name: triggerEvents.orderDeliveryETAProvided
         },
         "order-pickup-eta-provided":
         {
-            name: triggerEvents.OrderPickupETAProvided
+            name: triggerEvents.orderPickupETAProvided
         },
         "order-delivery-delayed-eta-provided":
         {
-            name: triggerEvents.OrderDeliveryDelayedETAProvided
+            name: triggerEvents.orderDeliveryDelayedETAProvided
         },
         "order-schedule-triggered":
         {
-            name: triggerEvents.OrderScheduleTriggered
+            name: triggerEvents.orderScheduleTriggered
         }
     };
 }
