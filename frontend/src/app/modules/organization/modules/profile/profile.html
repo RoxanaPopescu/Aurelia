@@ -6,9 +6,9 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <page-header scroll-fade>
+            <page-header class="flex-row" scroll-fade>
 
-                <h1 class="font-largest margin-bottom">
+                <h1 class="font-largest">
                     <path-nav>
 
                         <span translate>
@@ -18,40 +18,16 @@
                     </path-nav>
                 </h1>
 
-                <toolbar>
+                <toolbar class="flex-push-right">
 
-                    <tab-nav appearance="solid" value="profile">
-
-                        <tab name="profile" page-href="path: /organization/profile" invalid.bind="validation.invalid" translate>
-                            Profile
-                        </tab>
-
-                        <tab name="users" page-href="path: /organization/users" translate>
-                            Users
-                        </tab>
-
-                        <tab name="teams" page-href="path: /organization/teams" translate>
-                            Teams
-                        </tab>
-
-                        <tab name="roles" page-href="path: /organization/roles" translate>
-                            Roles
-                        </tab>
-
-                    </tab-nav>
-
-                    <div class="flex-push-right control-row">
-
-                        <button
-                            appearance="solid"
-                            accent="primary"
-                            click.trigger="onSaveChangesClick()"
-                            disabled.bind="operation.pending"
-                            translate>
-                            Save changes
-                        </button>
-
-                    </div>
+                    <button
+                        appearance="solid"
+                        accent="primary"
+                        click.trigger="onSaveChangesClick()"
+                        disabled.bind="operation.pending"
+                        translate>
+                        Save changes
+                    </button>
 
                 </toolbar>
 

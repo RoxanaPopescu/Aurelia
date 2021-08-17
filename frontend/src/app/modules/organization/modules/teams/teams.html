@@ -6,50 +6,30 @@
 
         <page-content scroll scroll.ref="scroll">
 
-            <page-header scroll-fade>
+            <page-header class="flex-row" scroll-fade>
 
-                <h1 class="font-largest margin-bottom">
+                <h1 class="font-largest">
                     <path-nav>
 
-                        <span translate>
+                        <a accent="inherit" page-href="path: /organization" translate>
                             Organization
+                        </a>
+
+                        <span translate>
+                            Teams
                         </span>
 
                     </path-nav>
                 </h1>
 
-                <toolbar>
+                <toolbar class="flex-push-right">
 
-                    <tab-nav appearance="solid" value="teams">
-
-                        <tab name="profile" page-href="path: /organization/profile" translate>
-                            Profile
-                        </tab>
-
-                        <tab name="users" page-href="path: /organization/users" translate>
-                            Users
-                        </tab>
-
-                        <tab name="teams" page-href="path: /organization/teams" translate>
-                            Teams
-                        </tab>
-
-                        <tab name="roles" page-href="path: /organization/roles" translate>
-                            Roles
-                        </tab>
-
-                    </tab-nav>
-
-                    <div class="flex-push-right control-row">
-
-                        <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
-                            <icon name="add" class="font-larger margin-right"></icon>
-                            <span translate>
-                                New team
-                            </span>
-                        </button>
-
-                    </div>
+                    <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
+                        <icon name="add" class="font-larger margin-right"></icon>
+                        <span translate>
+                            New team
+                        </span>
+                    </button>
 
                 </toolbar>
 
