@@ -62,7 +62,7 @@ export class _Session {
     let accessToken = result!.response.headers.get("Access-Token");
     let refreshToken = result!.response.headers.get("Refresh-Token");
     if (accessToken && refreshToken) {
-      Profile.setTokens(accessToken, refreshToken);
+      //Profile.setTokens(accessToken, refreshToken);
     }
 
     this.userInfo = new UserInfo(data.userInfo);
@@ -87,7 +87,7 @@ export class _Session {
    */
   public startNew(identity: Identity, vehicleTypes: VehicleType[]): void {
 
-    Profile.setTokens(identity.tokens.accessToken, identity.tokens.refreshToken);
+    Profile.setTokens(identity.tokens.accessToken, identity.tokens.refreshToken, identity.claims);
 
     const [firstName, lastName] = identity.fullName.split(" ", 2);
 

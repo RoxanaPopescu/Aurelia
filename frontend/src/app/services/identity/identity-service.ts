@@ -1,9 +1,10 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
 import { once } from "shared/utilities";
-import { ApiClient } from "shared/infrastructure";
+import { ApiClient, Log } from "shared/infrastructure";
 import { VehicleType } from "app/model/vehicle";
-import { Identity, IdentityTokens, IIdentityTokens } from "./identity";
+import { IdentityTokens, IIdentityTokens } from "./identity-tokens";
+import { Identity } from "./identity";
 import settings from "resources/settings";
 
 // Needed to ensure the legacy code still works.
@@ -220,13 +221,22 @@ export class IdentityService
         {
             await this._changeFunc?.(undefined, this._identity);
 
-            await this._apiClient.post("identity/unauthenticate",
-            {
-                body: { refreshToken: this._identity.tokens.refreshToken },
-                retry: 3
-            });
+            const refreshToken = this._identity.tokens.refreshToken;
 
             this._identity = undefined;
+
+            try
+            {
+                await this._apiClient.post("identity/unauthenticate",
+                {
+                    body: { refreshToken },
+                    retry: 3
+                });
+            }
+            catch (error)
+            {
+                Log.error("Could not revoke access tokens", error);
+            }
         }
 
         this.setTokens(undefined);
@@ -322,7 +332,7 @@ export class IdentityService
                 storage.setItem("refresh-token", tokens.refreshToken);
             }
 
-            Profile.setTokens(tokens.accessToken, tokens.refreshToken);
+            Profile.setTokens(tokens.accessToken, tokens.refreshToken, this._identity?.claims);
         }
 
         // tslint:disable
@@ -333,7 +343,7 @@ export class IdentityService
      */
     private reauthorizeBeforeExpiry(): void
     {
-        const tokens = this.identity?.tokens;
+        const tokens = this._identity?.tokens;
 
         if (tokens != null)
         {
@@ -352,6 +362,6 @@ export class IdentityService
      */
     private startLegacySession(): void
     {
-        Session.startNew(this.identity!, VehicleType.getAll());
+        Session.startNew(this._identity!, VehicleType.getAll());
     }
 }

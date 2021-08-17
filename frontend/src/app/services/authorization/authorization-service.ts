@@ -55,7 +55,7 @@ export class AuthorizationService
 
             if (settings.claims != null)
             {
-                if (identity == null || organization == null || !settings.claims.some(c1 =>
+                if (identity == null || organization == null || settings.claims.length > 0 && !settings.claims.some(c1 =>
                     c1 instanceof Array ? c1.every(c2 => identity.claims.has(c2)) : identity.claims.has(c1)))
                 {
                     return false;

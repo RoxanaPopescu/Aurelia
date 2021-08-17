@@ -1,12 +1,12 @@
 import { observable } from "mobx";
 // import { Session } from "../session";
-import { getUserClaims } from "legacy/helpers/identity-helper";
+// import { getUserClaims } from "legacy/helpers/identity-helper";
 
-const enum Path {
-  AccessToken = "access-token",
-  RefreshToken = "refresh-token",
-  Locale = "locale"
-}
+// const enum Path {
+//   AccessToken = "access-token",
+//   RefreshToken = "refresh-token",
+//   Locale = "locale"
+// }
 
 export interface Tokens {
   access: string;
@@ -15,26 +15,26 @@ export interface Tokens {
 
 // tslint:disable-next-line:class-name
 export class _Profile {
-  @observable claims = new Set<string>();
+  @observable claims = new Set<string>() as ReadonlySet<string>;
   @observable tokens?: Tokens;
   @observable isAuthenticated = false;
 
   constructor() {
-    const accessToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.AccessToken);
-    const refreshToken = sessionStorage.getItem(Path.RefreshToken) || localStorage.getItem(Path.RefreshToken);
+    // const accessToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.AccessToken);
+    // const refreshToken = sessionStorage.getItem(Path.RefreshToken) || localStorage.getItem(Path.RefreshToken);
 
-    if (accessToken && refreshToken) {
-      try
-      {
-        const tokens = { access: accessToken, refresh: refreshToken };
-        this.claims = new Set(getUserClaims(tokens));
-        this.tokens = tokens;
-      }
-      catch (error)
-      {
-        console.log(error);
-      }
-    }
+    // if (accessToken && refreshToken) {
+    //   try
+    //   {
+    //     const tokens = { access: accessToken, refresh: refreshToken };
+    //     this.claims = new Set(getUserClaims(tokens));
+    //     this.tokens = tokens;
+    //   }
+    //   catch (error)
+    //   {
+    //     console.log(error);
+    //   }
+    // }
   }
 
   public async login(accessToken: string, refreshToken: string): Promise<void> {
@@ -46,11 +46,12 @@ export class _Profile {
     // }
   }
 
-  public setTokens(accessToken: string, refreshToken: string) {
+  public setTokens(accessToken: string, refreshToken: string, claims?: ReadonlySet<string>) {
     // localStorage.setItem(Path.RefreshToken, refreshToken);
     // localStorage.setItem(Path.AccessToken, accessToken);
-    this.tokens = { access: accessToken, refresh: refreshToken };
-    this.claims = new Set(getUserClaims(this.tokens));
+    // this.claims = new Set(getUserClaims(this.tokens));
+    this.tokens = { access: "yes, we have a token", refresh: "yes, we have a token" };
+    this.claims = claims ?? new Set<string>();
   }
 
   public async autoLogin() {

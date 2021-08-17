@@ -26,7 +26,7 @@ export class OrganizationModule
                 name: "profile",
                 route: "profile",
                 moduleId: PLATFORM.moduleName("./modules/profile/profile"),
-                title: routeTitles.profile,
+                title: routeTitles.profile
             },
             {
                 name: "users",

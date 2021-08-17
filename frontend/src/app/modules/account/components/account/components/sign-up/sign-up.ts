@@ -158,13 +158,16 @@ export class SignUpCustomElement
                 password: this.model.password!
             });
 
+            await this._identityService.authenticate(this.model.email!, this.model.password!);
+
             const createOrganizationResult = await this._organizationService.create(
             {
                 type: "business",
                 name: this.model.organizationName!
             });
 
-            await this._identityService.authenticate(this.model.email!, this.model.password!);
+            // NOTE: The organization is created asynchronously, so a failed authorize request is expected.
+            // However, due to the retry logic in the `ApiClient`, authorization should eventually succeed.
             await this._identityService.authorize(createOrganizationResult.id);
 
             // tslint:disable-next-line: await-promise
