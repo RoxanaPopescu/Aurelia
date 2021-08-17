@@ -1,0 +1,8 @@
+{
+    "notStarted": "Not started",
+    "InProgress": "In progress",
+    "notApproved": "Not approved",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "toBeExpressDispatched": "To be express dispatched"
+}

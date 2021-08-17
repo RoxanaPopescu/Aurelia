@@ -1,3 +1,4 @@
+import outfitType from "../resources/strings/outfit-types.json"
 /**
  * Represents the slug identifying a `OutfitType`.
  */
@@ -36,23 +37,23 @@ export class OutfitType
     {
         "fulfiller":
         {
-            name: "Fulfiller"
+            name: outfitType.fulfiller
         },
         "consignor":
         {
-            name: "Consignor"
+            name: outfitType.consignor
         },
         "consignee":
         {
-            name: "Consignee"
+            name: outfitType.consignee
         },
         "system":
         {
-            name: "System"
+            name: outfitType.system
         },
         "unknown":
         {
-            name: "Unknown"
+            name: outfitType.unknown
         }
     };
 }

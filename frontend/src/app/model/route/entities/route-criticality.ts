@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import routeCriticality from "../resources/strings/route-criticalities.json"
 
 /**
  * Represents the slug identifying a `RouteCriticality`.
@@ -42,19 +43,19 @@ export class RouteCriticality
     {
         "high":
         {
-            name: "High",
+            name: routeCriticality.high,
             rank: 2,
             accent: "negative"
         },
         "medium":
         {
-            name: "Medium",
+            name: routeCriticality.medium,
             rank: 1,
             accent: "attention"
         },
         "low":
         {
-            name: "Low",
+            name: routeCriticality.low,
             rank: 0,
             accent: "neutral"
         }

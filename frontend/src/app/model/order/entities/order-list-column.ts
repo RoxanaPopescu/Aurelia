@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import listColumn from "../resources/strings/order-list-columns.json"
 
 /**
  * Represents the slug identifying a `OrderListColumn`.
@@ -41,75 +42,75 @@ export class OrderListColumn
     {
         "slug":
         {
-            name: "Id",
+            name: listColumn.id,
             columnSize: "1.2fr",
             sortingName: "slug",
             column: "visible"
         },
         "tags":
         {
-            name: "Tags",
+            name: listColumn.tags,
             columnSize: "1.2fr",
             column: "visible"
         },
         "pickup-date":
         {
-            name: "Pickup date",
+            name: listColumn.pickupDate,
             columnSize: "1fr",
             sortingName: "pickup-date",
             column: "visible"
         },
         "pickup-time":
         {
-            name: "Pickup timeframe",
+            name: listColumn.pickupTimeframe,
             columnSize: "1fr",
             sortingName: "pickup-time",
             column: "visible"
         },
         "pickup-address":
         {
-            name: "Pickup address",
+            name: listColumn.pickupAddress,
             columnSize: "1fr",
             sortingName: "pickup-address",
             column: "visible"
         },
         "delivery-date":
         {
-            name: "Delivery date",
+            name: listColumn.deliveryDate,
             columnSize: "1fr",
             sortingName: "delivery-date",
             column: "visible"
         },
         "delivery-time":
         {
-            name: "Delivery timeframe",
+            name: listColumn.deliveryTimeframe,
             columnSize: "1fr",
             sortingName: "delivery-time",
             column: "visible"
         },
         "delivery-address":
         {
-            name: "Delivery address",
+            name: listColumn.deliveryAddress,
             columnSize: "1fr",
             sortingName: "delivery-address",
             column: "visible"
         },
         "status":
         {
-            name: "Status",
+            name: listColumn.status,
             columnSize: "min-content",
             sortingName: "status",
             column: "visible"
         },
         "relational-id":
         {
-            name: "Relational id",
+            name: listColumn.RelationalId,
             columnSize: "1.2fr",
             column: "visible"
         },
         "colli-count":
         {
-            name: "Colli count",
+            name: listColumn.colliCount,
             columnName: "Colli",
             columnSize: "min-content",
             sortingName: "colli-count",
@@ -117,21 +118,21 @@ export class OrderListColumn
         },
         "colli-total-weight":
         {
-            name: "Colli total weight",
+            name: listColumn.colliTotalWeight,
             columnName: "Total weight",
             columnSize: "1.0fr",
             column: "visible"
         },
         "colli-total-volume":
         {
-            name: "Colli total volume",
+            name: listColumn.colliTotalVolume,
             columnName: "Total volume",
             columnSize: "1.0fr",
             column: "visible"
         },
         "estimated-colli-count":
         {
-            name: "Estimated colli count",
+            name: listColumn.estimatedColliCount,
             columnName: "Est. colli",
             columnSize: "min-content",
             sortingName: "estimated-colli-count",
@@ -139,14 +140,14 @@ export class OrderListColumn
         },
         "estimated-colli-total-weight":
         {
-            name: "Estimated colli total weight",
+            name: listColumn.estimatedColliTotalWeight,
             columnName: "Est. total weight",
             columnSize: "1.0fr",
             column: "visible"
         },
         "estimated-colli-total-volume":
         {
-            name: "Estimated colli total volume",
+            name: listColumn.estimatedColliTotalVolume,
             columnName: "Est. Total volume",
             columnSize: "1.0fr",
             column: "visible"

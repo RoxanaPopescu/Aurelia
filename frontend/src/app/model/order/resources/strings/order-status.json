@@ -1,0 +1,10 @@
+{
+    "placed": "Placed",
+    "validated": "Validated",
+    "ready": "Ready",
+    "deleted": "Deleted",
+    "cancelled": "Cancelled",
+    "routePlanning": "Route planning",
+    "routePlanned": "Route planned",
+    "delivered": "delivered"
+}

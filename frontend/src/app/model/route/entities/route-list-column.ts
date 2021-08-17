@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import listColumn from "../resources/strings/route-list-columns.json"
 
 /**
  * Represents the slug identifying a `RouteStopType`.
@@ -41,59 +42,59 @@ export class RouteListColumn
     {
         "slug":
         {
-            name: "Id",
+            name: listColumn.id,
             columnSize: "1.2fr",
             sortingName: "slug",
             column: "visible"
         },
         "reference":
         {
-            name: "Reference",
+            name: listColumn.reference,
             columnSize: "1.2fr",
             sortingName: "reference",
             column: "visible"
         },
         "owner":
         {
-            name: "Owner",
+            name: listColumn.owner,
             columnSize: "1fr",
             column: "visible"
         },
         "start-date":
         {
-            name: "Start date",
+            name: listColumn.startDate,
             columnSize: "1fr",
             sortingName: "start-date",
             column: "visible"
         },
         "start-address":
         {
-            name: "Start address",
+            name: listColumn.startAddress,
             columnSize: "1.3fr",
             sortingName: "start-address",
             column: "visible"
         },
         "end-date":
         {
-            name: "End date",
+            name: listColumn.endDate,
             columnSize: "1fr",
             column: "visible"
         },
         "end-address":
         {
-            name: "End address",
+            name: listColumn.endAddress,
             columnSize: "1.3fr",
             column: "visible"
         },
         "tags":
         {
-            name: "Tags",
+            name: listColumn.tags,
             columnSize: "1.3fr",
             column: "visible"
         },
         "stop-count":
         {
-            name: "Stop count",
+            name: listColumn.stopCount,
             columnName: "Stops",
             columnSize: "min-content",
             sortingName: "stop-count",
@@ -101,102 +102,102 @@ export class RouteListColumn
         },
         "vehicle-type":
         {
-            name: "Vehicle type",
+            name: listColumn.vehicleType,
             columnSize: "min-content",
             column: "visible"
         },
         "vehicle":
         {
-            name: "Vehicle",
+            name: listColumn.vehicle,
             columnSize: "1fr",
             column: "visible"
         },
         "driver":
         {
-            name: "Driver",
+            name: listColumn.driver,
             columnSize: "1fr",
             column: "visible"
         },
         "driver-id":
         {
-            name: "Driver id",
+            name: listColumn.driverId,
             columnSize: "1fr",
             column: "visible"
         },
         "fulfiller":
         {
-            name: "Executor",
+            name: listColumn.fulfiller,
             columnSize: "1fr",
             column: "visible"
         },
         "complexity":
         {
-            name: "Complexity",
+            name: listColumn.complexity,
             columnSize: "min-content",
             column: "visible"
         },
         "status":
         {
-            name: "Status",
+            name: listColumn.status,
             columnSize: "min-content",
             sortingName: "status",
             column: "visible"
         },
         "legacy-id":
         {
-            name: "Legacy id",
+            name: listColumn.legacyId,
             columnSize: "min-content",
             column: "visible"
         },
         "driving-list":
         {
-            name: "Driving list",
+            name: listColumn.drivingList,
             columnSize: "min-content",
             column: "hidden"
         },
         "delayed-stops":
         {
-            name: "Delayed stops",
+            name: listColumn.delayedStops,
             columnSize: "min-content",
             column: "visible"
         },
         "estimated-time-frame":
         {
-            name: "Estimated time",
+            name: listColumn.estimatedTime,
             columnName: "Estimate",
             columnSize: "min-content",
             column: "visible"
         },
         "original-estimated-time-frame":
         {
-            name: "Original estimated time",
+            name: listColumn.originalEstimatedTime,
             columnName: "Original estimate",
             columnSize: "min-content",
             column: "visible"
         },
         "planned-time-frame":
         {
-            name: "Planned time",
+            name: listColumn.plannedTime,
             columnName: "Planned",
             columnSize: "min-content",
             column: "visible"
         },
         "planned-start-time-frame":
         {
-            name: "Planned start time",
+            name: listColumn.plannedStartTime,
             columnName: "Starttime",
             columnSize: "min-content",
             column: "visible"
         },
         "criticality":
         {
-            name: "Criticality",
+            name: listColumn.criticality,
             columnSize: "min-content",
             column: "not-added"
         },
         "distance":
         {
-            name: "Distance",
+            name: listColumn.distance,
             columnSize: "min-content",
             column: "visible"
         }

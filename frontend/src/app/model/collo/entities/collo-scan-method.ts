@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import scanMethod from "../resources/strings/collo-scan-methods.json"
 
 /**
  * Represents the slug identifying a `ColloScanMethod`.
@@ -38,15 +39,15 @@ export class ColloScanMethod
     {
         "scanned":
         {
-            name: "Scanned"
+            name: scanMethod.scanned
         },
         "selected":
         {
-            name: "Selected"
+            name: scanMethod.selected
         },
         "manually":
         {
-            name: "Manually"
+            name: scanMethod.manually
         }
     };
 }

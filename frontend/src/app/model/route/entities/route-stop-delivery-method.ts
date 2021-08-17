@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import deliveryMethod from "../resources/strings/route-stop-delivery-methods.json"
 
 /**
  * Represents the slug identifying a `RouteStopDeliveryMethod`.
@@ -40,12 +41,12 @@ export class RouteStopDeliveryMethod
     {
         "delivered-to-consumer":
         {
-            name: "Delivered to consumer",
+            name: deliveryMethod.deliveredToConsumer,
             accent: "neutral"
         },
         "left-at-agreed-location":
         {
-            name: "Left at agreed location",
+            name: deliveryMethod.leftAtAgreedLocation,
             accent: "neutral"
         }
     };
