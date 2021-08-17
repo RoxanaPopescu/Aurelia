@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="users"] page[name="roles"]
-{
-    data-table
-    {
-        --data-table-columns: 1fr min-content;
-    }
-}

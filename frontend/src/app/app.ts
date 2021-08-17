@@ -265,22 +265,6 @@ export class AppModule
                 icon: "communication"
             },
             {
-                name: "departments",
-                route: "departments",
-                moduleId: PLATFORM.moduleName("./modules/departments/departments"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-departments"
-                    ]
-                },
-                title: routeTitles.departments,
-                nav: true,
-                href: "/departments",
-                icon: "departments"
-            },
-            {
                 name: "agreements",
                 route: "agreements",
                 moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
@@ -297,22 +281,6 @@ export class AppModule
                 icon: "agreements"
             },
             {
-                name: "users",
-                route: "users",
-                moduleId: PLATFORM.moduleName("./modules/users/users"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-users"
-                    ]
-                },
-                title: routeTitles.users,
-                nav: true,
-                href: "/users",
-                icon: "users"
-            },
-            {
                 name: "organization",
                 route: "organization",
                 moduleId: PLATFORM.moduleName("./modules/organization/organization"),
@@ -320,13 +288,13 @@ export class AppModule
                 {
                     claims:
                     [
-                        // "view-organization"
+                        "view-users"
                     ]
                 },
                 title: routeTitles.organization,
                 nav: true,
                 href: "/organization",
-                icon: "missing"
+                icon: "users"
             },
 
             ...

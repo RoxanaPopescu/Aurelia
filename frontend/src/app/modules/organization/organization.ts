@@ -34,7 +34,7 @@ export class OrganizationModule
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
                 title: routeTitles.users,
                 nav: true,
-                icon: "missing"
+                icon: "users"
             },
             {
                 name: "teams",
@@ -42,7 +42,7 @@ export class OrganizationModule
                 moduleId: PLATFORM.moduleName("./modules/teams/teams"),
                 title: routeTitles.teams,
                 nav: true,
-                icon: "missing"
+                icon: "departments"
             },
             {
                 name: "team-details",
@@ -56,7 +56,7 @@ export class OrganizationModule
                 moduleId: PLATFORM.moduleName("./modules/roles/roles"),
                 title: routeTitles.roles,
                 nav: true,
-                icon: "missing"
+                icon: "roles"
             }
         ]);
     }
