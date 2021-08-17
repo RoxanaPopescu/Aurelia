@@ -35,7 +35,7 @@ export class OrganizationModule extends AppModule
         {
             await context.authorize();
 
-            const result1 = await this.apiClient.get("identity/Membership",
+            const result1 = await this.apiClient.get("identity/memberships",
             {
                 query:
                 {

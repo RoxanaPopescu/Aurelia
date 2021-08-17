@@ -21,7 +21,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v2/account/create", async context =>
         {
-            await this.apiClient.post("identity/signup",
+            await this.apiClient.post("account/signup",
             {
                 body:
                 {
@@ -44,7 +44,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v2/account/confirm-email", async context =>
         {
-            await this.apiClient.post("identity/confirmemail",
+            await this.apiClient.post("account/confirmuseraccount",
             {
                 body:
                 {
@@ -65,7 +65,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v2/account/forgot-password", async context =>
         {
-            await this.apiClient.post("identity/forgotpassword",
+            await this.apiClient.post("account/forgotpassword",
             {
                 body:
                 {
@@ -87,7 +87,7 @@ export class AccountModule extends AppModule
          */
         this.router.post("/v2/account/change-password", async context =>
         {
-            const result = await this.apiClient.post("identity/changeruserpassword",
+            const result = await this.apiClient.post("account/changeruserpassword",
             {
                 body:
                 {
