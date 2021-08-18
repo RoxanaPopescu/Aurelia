@@ -1,6 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
-import routeCriticality from "../resources/strings/route-criticalities.json"
+import routeCriticality from "../resources/strings/route-criticalities.json";
 
 /**
  * Represents the slug identifying a `RouteCriticality`.

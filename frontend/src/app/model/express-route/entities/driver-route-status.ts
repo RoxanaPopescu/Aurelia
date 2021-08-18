@@ -1,6 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
-import routeStatus from "../resources/strings/driver-route.status.json"
+import routeStatus from "../resources/strings/driver-route.status.json";
 
 /**
  * Represents the slug identifying a `DriverRouteStatus`.

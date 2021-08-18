@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities";
-import scanMethod from "../resources/strings/collo-scan-methods.json"
+import scanMethod from "../resources/strings/collo-scan-methods.json";
 
 /**
  * Represents the slug identifying a `ColloScanMethod`.
