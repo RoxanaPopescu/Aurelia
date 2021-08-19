@@ -15,6 +15,7 @@ export class Address
             this.provider = data.provider;
             this.primary = this.sanitize(data.primary);
             this.secondary = data.secondary ? this.sanitize(data.secondary) : undefined;
+            this.zipCode = data.zipCode;
         }
     }
 
@@ -27,6 +28,11 @@ export class Address
      * The name identifying the provider of the address.
      */
     public provider?: string;
+
+    /**
+     * The zip code address information.
+     */
+    public zipCode?: string;
 
     /**
      * The primary address information.
