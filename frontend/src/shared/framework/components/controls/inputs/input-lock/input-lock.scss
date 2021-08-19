@@ -1,0 +1,12 @@
+@import "resources/index";
+
+input-lock
+{
+    display: block;
+    white-space: nowrap;
+
+    > button
+    {
+        padding: var(--input-padding) !important;
+    }
+}

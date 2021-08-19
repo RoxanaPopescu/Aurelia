@@ -1,0 +1,61 @@
+<template validation>
+
+    <require from="./security-pane.scss"></require>
+
+    <modal-section toggle.bind="true">
+
+        <div slot="header" translate>
+            Account security
+        </div>
+
+        <password-input label="above" value.bind="newPassword" readonly.from-view="newPasswordLocked" autocomplete="new-password">
+
+            <div slot="heading" translate>
+                Password
+            </div>
+
+            <div slot="description" translate>
+                This is the password you use to sign in.<br>
+                Please make sure to use a strong password.
+            </div>
+
+            <div slot="after" translate>
+                <input-lock></input-lock>
+            </div>
+
+            <div slot="placeholder">
+                <password-input-placeholder if.bind="newPasswordLocked"></password-input-placeholder>
+            </div>
+
+            <div slot="validation">
+
+                <required-validator
+                    enabled.bind="!newPasswordLocked"
+                    value.bind="newPassword">
+                </required-validator>
+
+                <length-validator
+                    enabled.bind="!newPasswordLocked"
+                    value.bind="newPassword"
+                    min.bind="8">
+                </length-validator>
+
+            </div>
+
+        </password-input>
+
+    </modal-section>
+
+    <modal-section toggle.bind="true" expanded.to-view="false" class="margin-top">
+
+        <div slot="header" translate>
+            Danger zone
+        </div>
+
+        <button appearance="outline" accent="negative" click.trigger="deleteClick()" translate>
+            Delete account
+        </button>
+
+    </modal-section>
+
+</template>

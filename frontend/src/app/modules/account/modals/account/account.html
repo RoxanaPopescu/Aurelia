@@ -2,7 +2,7 @@
 
     <require from="./components/profile-pane/profile-pane"></require>
     <require from="./components/settings-pane/settings-pane"></require>
-    <require from="./components/account-pane/account-pane"></require>
+    <require from="./components/security-pane/security-pane"></require>
 
     <require from="./account.scss"></require>
 
@@ -34,9 +34,9 @@
                     </h2>
                 </tab>
 
-                <tab name="account" invalid.bind="accountValidation.invalid">
+                <tab name="security" invalid.bind="securityValidation.invalid">
                     <h2 translate>
-                        Account
+                        Security
                     </h2>
                 </tab>
 
@@ -61,11 +61,11 @@
             validation.ref="settingsValidation">
         </settings-pane>
 
-        <account-pane
-            show.bind="selectedTab === 'account'"
+        <security-pane
+            show.bind="selectedTab === 'security'"
             delete-click.call="onDeleteClick()"
-            validation.ref="accountValidation">
-        </account-pane>
+            validation.ref="securityValidation">
+        </security-pane>
 
     </modal-panel>
 

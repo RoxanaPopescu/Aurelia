@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Log, HistoryHelper } from "shared/infrastructure";
-import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { Modal, ModalService, ThemeService, ITheme, IValidation } from "shared/framework";
+import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { IdentityService } from "app/services/identity";
 import { ProfileService, Profile } from "app/services/profile";
 import { AccountService } from "../../services/account";
@@ -63,7 +63,17 @@ export class AccountModalPanel
     /**
      * The name of the selected tab.
      */
-    protected selectedTab: "profile" | "settings" | "account" = "profile";
+    protected selectedTab: "profile" | "settings" | "security" = "profile";
+
+    /**
+     * The new password, if specified.
+     */
+    protected newPassword: string | undefined;
+
+    /**
+     * True if the new password input has not been unlocked, otherwise false.
+     */
+    protected newPasswordLocked: boolean;
 
     /**
      * The model representing the profile for the current user.
@@ -242,6 +252,12 @@ export class AccountModalPanel
 
             // Apply changes to the account.
             this._profile.setSettings(this.settingsModel);
+
+            // If a new password was specified, change the users password.
+            if (this.newPassword)
+            {
+                await this._accountService.changePassword(this.newPassword);
+            }
 
             // Reauthenticate to ensure we get the updated identity.
             await this._identityService.reauthorize();

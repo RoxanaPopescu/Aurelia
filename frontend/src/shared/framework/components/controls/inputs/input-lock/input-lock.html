@@ -1,0 +1,17 @@
+<template>
+
+    <require from="./input-lock.scss"></require>
+
+    <button
+        show.bind="locked"
+        appearance="none"
+        accent="primary"
+        click.trigger="onClick()">
+
+        <slot translate>
+            Change
+        </slot>
+
+    </button>
+
+</template>

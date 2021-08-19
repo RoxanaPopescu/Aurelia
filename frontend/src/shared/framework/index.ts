@@ -29,8 +29,10 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/inputs/date-input/date-input"),
         PLATFORM.moduleName("./components/controls/inputs/date-time-input/date-time-input"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
+        PLATFORM.moduleName("./components/controls/inputs/input-lock/input-lock"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
+        PLATFORM.moduleName("./components/controls/inputs/password-input/password-input-placeholder"),
         PLATFORM.moduleName("./components/controls/inputs/phone-input/phone-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
         PLATFORM.moduleName("./components/controls/inputs/select-input/select-input"),
@@ -142,8 +144,10 @@ export * from "./components/controls/inputs/color-input/color-input";
 export * from "./components/controls/inputs/date-input/date-input";
 export * from "./components/controls/inputs/date-time-input/date-time-input";
 export * from "./components/controls/inputs/email-input/email-input";
+export * from "./components/controls/inputs/input-lock/input-lock";
 export * from "./components/controls/inputs/number-input/number-input";
 export * from "./components/controls/inputs/password-input/password-input";
+export * from "./components/controls/inputs/password-input/password-input-placeholder";
 export * from "./components/controls/inputs/phone-input/phone-input";
 export * from "./components/controls/inputs/search-input/search-input";
 export * from "./components/controls/inputs/select-input/select-input";

@@ -37,7 +37,7 @@ export default
             },
             fullName: "John Doe",
             preferredName: "John",
-            pictureUrl: undefined,
+            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4",
         }
     },
 
@@ -54,7 +54,7 @@ export default
             },
             fullName: "John Doe",
             preferredName: "John",
-            pictureUrl: undefined,
+            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4",
         }
     }
 }

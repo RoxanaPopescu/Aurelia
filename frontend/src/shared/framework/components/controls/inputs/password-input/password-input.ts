@@ -106,12 +106,47 @@ export class PasswordInputCustomElement
     }
 
     /**
-     * Called when the `Reveal password` icon is clicked.
-     * Toggles whether the password is revealed or hidden.
+     * Called when a `mousedown` event occurs on the `Reveal password` icon.
+     * @returns False to prevent default.
      */
-    protected onToggleRevealClick(): void
+    protected onToggleRevealMouseDown(): boolean
     {
         this.reveal = !this.reveal;
         this.inputElement.focus();
+
+        return false;
+    }
+
+    /**
+     * Called when a `click` event occurs on the `Reveal password` icon.
+     * @returns False to prevent default.
+     */
+    protected onToggleRevealClick(): boolean
+    {
+        // Needed to prevent form submission, if the input is used within a form.
+        return false;
+    }
+
+    /**
+     * Called when a `keydown` event occurs on the `Reveal password` icon.
+     * @param event The keyboard event.
+     * @returns True to continue, false to prevent default.
+     */
+    protected onToggleRevealKeyDown(event: KeyboardEvent): boolean
+    {
+        if (event.defaultPrevented || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        {
+            return true;
+        }
+
+        if (event.key === "Enter")
+        {
+            this.reveal = !this.reveal;
+            this.inputElement.focus();
+
+            return false;
+        }
+
+        return true;
     }
 }
