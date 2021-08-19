@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities/text";
-import stopType from "../resources/strings/order-stop-types.json"
+import stopType from "../resources/strings/order-stop-types.json";
 
 /**
  * Represents the slug identifying a `RouteStopType`.

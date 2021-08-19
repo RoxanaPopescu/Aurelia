@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities/text";
-import productType from "../resources/strings/product-types.json"
+import productType from "../resources/strings/product-types.json";
 
 /**
  * Represents the slug identifying a `ProductType`.

@@ -1,6 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
-import routeStatus from "../resources/strings/route-status.json"
+import routeStatus from "../resources/strings/route-status.json";
 
 /**
  * Represents the slug identifying a `RouteStatus`.

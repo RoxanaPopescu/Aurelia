@@ -1,6 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
-import deliveryMethod from "../resources/strings/route-stop-delivery-methods.json"
+import deliveryMethod from "../resources/strings/route-stop-delivery-methods.json";
 
 /**
  * Represents the slug identifying a `RouteStopDeliveryMethod`.

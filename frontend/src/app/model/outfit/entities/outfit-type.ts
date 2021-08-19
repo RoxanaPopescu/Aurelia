@@ -1,4 +1,4 @@
-import outfitType from "../resources/strings/outfit-types.json"
+import outfitType from "../resources/strings/outfit-types.json";
 /**
  * Represents the slug identifying a `OutfitType`.
  */

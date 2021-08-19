@@ -1,5 +1,5 @@
 import { textCase } from "shared/utilities/text";
-import listColumn from "../resources/strings/route-list-columns.json"
+import listColumn from "../resources/strings/route-list-columns.json";
 
 /**
  * Represents the slug identifying a `RouteStopType`.

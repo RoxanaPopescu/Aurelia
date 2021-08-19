@@ -1,6 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
-import driverStatus from "../resources/strings/driver-status.json"
+import driverStatus from "../resources/strings/driver-status.json";
 
 /**
  * Represents the slug identifying a `DriverStatus`.

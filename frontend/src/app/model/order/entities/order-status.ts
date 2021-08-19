@@ -1,6 +1,6 @@
 import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
-import orderStatus from "../resources/strings/order-status.json"
+import orderStatus from "../resources/strings/order-status.json";
 
 /**
  * Represents the slug identifying a `OrderStatus`.
