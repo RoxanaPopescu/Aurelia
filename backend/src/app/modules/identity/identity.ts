@@ -201,15 +201,11 @@ export class IdentityModule extends AppModule
                     "authorization": `Bearer ${authResult.data.access_token}`
                 }
             }),
-            jwtObject.organization == null ? undefined : this.apiClient.get("organizations/GetOrganization",
+            jwtObject.organization == null ? undefined : this.apiClient.get(`organizations/${jwtObject.organization}`,
             {
                 headers:
                 {
                     "authorization": `Bearer ${authResult.data.access_token}`
-                },
-                query:
-                {
-                    id: jwtObject.organization
                 }
             })
         ]);

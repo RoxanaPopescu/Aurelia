@@ -58,7 +58,8 @@ export class OrganizationTeam
     public invoiceDirectly: boolean;
 
     /**
-     * The email to which invoices should be sent, if invoiced directly.
+     * The email to which invoices should be sent,
+     * or undefined if not invoiced directly.
      */
     public invoiceEmail: string | undefined;
 

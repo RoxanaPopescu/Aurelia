@@ -35,20 +35,16 @@ export class OrganizationModule extends AppModule
         {
             await context.authorize();
 
-            const result1 = await this.apiClient.get("identity/memberships",
-            {
-                query:
-                {
-                    userId: context.user!.id
-                }
-            });
+            const result1 = await this.apiClient.get(`identity/memberships/users/${context.user!.id}`);
 
-            const organizations = await Promise.all(result1.data.map(async (membership: any) =>
+            const organizations = await Promise.all(result1.data.organizationMemberships.map(async (membership: any) =>
             {
                 const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
 
                 return result2.data;
             }));
+
+            // TODO: We could consider adding invitations here, as they are already in the response.
 
             context.response.body = organizations;
             context.response.status = 200;
