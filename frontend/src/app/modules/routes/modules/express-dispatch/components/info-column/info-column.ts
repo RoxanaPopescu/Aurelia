@@ -17,12 +17,13 @@ export class InfoColumnCustomElement
     }
 
     /**
-     * Called when the `Remove vehicle` icon is clicked on a vehicle.
-     * Asks the user to confirm, then deletes the stop from the route.
-     * @param vehicle The vehicle to remove.
+     * Called when the `Remove ROUTE` icon is clicked on a the info column.
+     * @param route The route to remove.
      */
-     protected async onRemoveRouteClick(route: ExpressRoute): Promise<void>
-     {
-         // FIXME: REMOVE
-     }
+    protected onRemoveRouteClick(route: ExpressRoute): void
+    {
+        this.workspace.selectedExpressRoutes.splice(this.workspace.selectedExpressRoutes.findIndex(r => r.id === route.id), 1);
+        this.workspace.expressRoutes = this.workspace.expressRoutes.slice();
+        this.workspace.selectedExpressRoutes = this.workspace.selectedExpressRoutes.slice();
+    }
 }
