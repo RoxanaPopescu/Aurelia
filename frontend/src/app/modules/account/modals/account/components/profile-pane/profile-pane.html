@@ -1,10 +1,10 @@
 <template validation>
 
-    <require from="./profile-pane.scss"></require>
+    <require from="app/components/identity-picture-input/identity-picture-input"></require>
 
     <modal-section>
 
-        <text-input readonly.bind="true" label="above" value.bind="model.fullName" autocomplete="name">
+        <text-input label="above" value.bind="model.fullName" autocomplete="name">
 
             <div slot="heading" translate>
                 Full name
@@ -15,31 +15,91 @@
                 Make sure this is accurate, so other users know its you.
             </div>
 
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="model.fullName">
+                </required-validator>
+
+            </div>
+
         </text-input>
 
-        <text-input readonly.bind="true" class="margin-double-top" label="above" value.bind="model.outfit.primaryName" autocomplete="text">
+        <text-input class="margin-double-top" label="above" value.bind="model.preferredName" autocomplete="given-name">
 
             <div slot="heading" translate>
-                Organization
+                Preferred name
             </div>
 
             <div slot="description" translate>
-                This is the organization you are associated with.
+                This is the name you would prefer to go by.<br>
+                In most places, this will be shown instead of your full name.
+            </div>
+
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="model.preferredName">
+                </required-validator>
+
             </div>
 
         </text-input>
 
-        <text-input readonly.bind="true" class="margin-double-top" label="above" value.bind="model.username" autocomplete="username">
+        <email-input class="margin-double-top" label="above" value.bind="model.email" autocomplete="email">
 
             <div slot="heading" translate>
-                Username
+                Email
             </div>
 
             <div slot="description" translate>
-                This is the email you use to sign in, and to which account info may be sent.
+                This is the email you use to sign in, and to which account info may be sent.<br>
+                Note that this will be visible to other users.
             </div>
 
-        </text-input>
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="model.email">
+                </required-validator>
+
+            </div>
+
+        </email-input>
+
+        <phone-input class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel">
+
+            <div slot="heading" translate>
+                Phone number
+            </div>
+
+            <div slot="description" translate>
+                This is the phone number on which you can be contacted.
+                Note that this will be visible to other users.
+            </div>
+
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="model.phone">
+                </required-validator>
+
+            </div>
+
+        </phone-input>
+
+        <identity-picture-input class="margin-double-top" label="above" initials.bind="initials" gravatar.bind="model.email" value.bind="model.pictureUrl">
+
+            <div slot="heading" translate>
+                Picture
+            </div>
+
+            <div slot="description" translate>
+                This is the URL for a picture of you.<br>
+                Make sure to use a picture that helps other users recognize you.
+            </div>
+
+        </identity-picture-input>
 
     </modal-section>
 

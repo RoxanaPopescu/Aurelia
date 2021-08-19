@@ -6,6 +6,14 @@ modal-panel[name="account"]
         justify-content: space-between;
     }
 
+    .account-sign-out
+    {
+        position: absolute;
+        top: -6rem;
+        right: 0;
+        min-width: 33.33% !important;
+    }
+
     footer > button,
     section > button
     {

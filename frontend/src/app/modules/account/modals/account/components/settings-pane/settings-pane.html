@@ -7,7 +7,7 @@
         <select-input
             label="above"
             value.bind="locale"
-            display-value.bind="locale.name"
+            display-value="${locale.name} (${locale.code})"
             none.bind="false"
             filter="auto">
 
@@ -17,17 +17,63 @@
 
             <div slot="description" translate>
                 This is the language used for the app - choose the one you prefer.<br>
-                Note that changing this will cause the app to reload.
+                Note that the change will not be visible until you close this panel.
             </div>
 
             <item repeat.for="locale of locales" model.bind="locale">
-                ${locale.name}
+
+                <div class="flex-row">
+
+                    <div>
+                        ${locale.name}
+                    </div>
+
+                    <div class="flex-push-right opacity-faded">
+                        ${locale.code}
+                    </div>
+
+                </div>
+
             </item>
 
         </select-input>
 
         <select-input
-            if-environment="development"
+            label="above"
+            value.bind="currency"
+            display-value="${currency.name} (${currency.code})"
+            none.bind="false"
+            filter="auto"
+            class="margin-double-top">
+
+            <div slot="heading" translate>
+                Currency
+            </div>
+
+            <div slot="description" translate>
+                This is the currency used for the app - choose the one you prefer.<br>
+                Note that the change will not be visible until you close this panel.
+            </div>
+
+            <item repeat.for="currency of currencies" model.bind="currency">
+
+                <div class="flex-row">
+
+                    <div>
+                        ${currency.name}
+                    </div>
+
+                    <div class="flex-push-right opacity-faded">
+                        ${currency.code}
+                    </div>
+
+                </div>
+
+            </item>
+
+        </select-input>
+
+        <select-input
             label="above"
             value.bind="theme"
             display-value.bind="theme.name"
@@ -41,13 +87,14 @@
 
             <div slot="description" translate>
                 This is the theme used for the app - choose the one you prefer.<br>
-                Note that changing this will cause the app to reload.
+                Note that the change will not be visible until you close this panel.
             </div>
 
             <item repeat.for="theme of themes" model.bind="theme" class="theme-item">
 
                 <div class="theme-preview" css="background: ${theme.preview.primary}"></div>
                 <div>${theme.name}</div>
+
             </item>
 
         </select-input>

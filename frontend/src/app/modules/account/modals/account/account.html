@@ -8,29 +8,33 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
-                ${identity.fullName}
+                ${settingsModel.fullName & oneTime}
             </h1>
+
+            <button appearance="solid" accent="negative" class="account-sign-out" page-href="/account/sign-out" translate>
+                Sign out
+            </button>
 
             <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
 
-                <tab name="profile">
+                <tab name="profile" invalid.bind="profileValidation.invalid">
                     <h2 translate>
                         Profile
                     </h2>
                 </tab>
 
-                <tab name="settings">
+                <tab name="settings" invalid.bind="settingsValidation.invalid">
                     <h2 translate>
                         Settings
                     </h2>
                 </tab>
 
-                <tab name="account">
+                <tab name="account" invalid.bind="accountValidation.invalid">
                     <h2 translate>
                         Account
                     </h2>
@@ -40,11 +44,28 @@
 
         </modal-header>
 
-        <profile-pane show.bind="selectedTab === 'profile'" model.bind="identity"></profile-pane>
+        <profile-pane
+            show.bind="selectedTab === 'profile'"
+            model.bind="settingsModel"
+            validation.ref="profileValidation">
+        </profile-pane>
 
-        <settings-pane show.bind="selectedTab === 'settings'"></settings-pane>
+        <settings-pane
+            show.bind="selectedTab === 'settings'"
+            locales.bind="locales"
+            locale.bind="locale"
+            currencies.bind="currencies"
+            currency.bind="currency"
+            themes.bind="themes"
+            theme.bind="theme"
+            validation.ref="settingsValidation">
+        </settings-pane>
 
-        <account-pane show.bind="selectedTab === 'account'"></account-pane>
+        <account-pane
+            show.bind="selectedTab === 'account'"
+            delete-click.call="onDeleteClick()"
+            validation.ref="accountValidation">
+        </account-pane>
 
     </modal-panel>
 

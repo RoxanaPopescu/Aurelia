@@ -1,5 +1,5 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
-import { Identity } from "app/services/identity";
+import { Profile } from "app/services/profile";
 
 /**
  * Represents a tab pane for managing the profile for the current user.
@@ -8,10 +8,10 @@ import { Identity } from "app/services/identity";
 export class ProfilePaneCustomElement
 {
     /**
-     * The model representing the identity for the current user.
+     * The model representing the profile for the current user.
      */
     @bindable
-    public model: Partial<Identity>;
+    public model: Partial<Profile>;
 
     /**
      * The strings from which initials should be generated.

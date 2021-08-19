@@ -1,0 +1,52 @@
+@import "resources/index";
+
+identity-picture-input
+{
+    display: block;
+
+    identity-picture
+    {
+        align-self: center;
+        margin-left: 1rem;
+        font-size: 10rem;
+        width: 36rem;
+        height: 36rem;
+        border-radius: var(--border-radius-medium);
+    }
+
+    .identity-picture-input-choose-picture
+    {
+        display: block;
+        white-space: nowrap;
+        margin: var(--input-padding);
+        margin-left: var(--size-inline-spacing-large);
+        margin-right: var(--size-inline-spacing-large);
+    }
+
+    .identity-picture-input-use-gravatar
+    {
+        display: block;
+        white-space: nowrap;
+        margin: var(--input-padding);
+        margin-left: 0;
+        margin-right: var(--size-inline-spacing-large);
+    }
+
+    .input > .input-control > .input-control-inner .input-input
+    {
+        padding-right: 0;
+
+        // TODO:2: Consider making this reusable, somehow.
+        // Apply a mask to fade out the input value.
+        mask-image: linear-gradient(
+            to left,
+            rgba(#ffffff, 0) 0,
+            rgba(#ffffff, 1) 8rem
+        );
+    }
+
+    &.--uploading .input > .input-control > .input-control-inner .input-input
+    {
+        opacity: var(--opacity-disabled);
+    }
+}

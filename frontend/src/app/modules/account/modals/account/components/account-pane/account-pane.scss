@@ -1,6 +1,6 @@
 modal-panel[name="account"] account-pane
 {
-    button
+    modal-section > button
     {
         width: 100%;
     }

@@ -2,17 +2,5 @@
     {
         "code": "DKK",
         "name": "Danish Krone"
-    },
-    {
-        "code": "EUR",
-        "name": "Euro"
-    },
-    {
-        "code": "GBP",
-        "name": "British Pound"
-    },
-    {
-        "code": "USD",
-        "name": "US Dollar"
     }
 ]
