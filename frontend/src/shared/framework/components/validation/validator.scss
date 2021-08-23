@@ -13,7 +13,7 @@ validation-message
 
     // If the validation is a summary, not attached to a specific input,
     // apply additional spacing above the validation.
-    .input > .input-validation.--summary > validation-message:first-child
+    .input-validation.--summary > &:first-child
     {
         margin-top: var(--font-base-margin-top);
     }

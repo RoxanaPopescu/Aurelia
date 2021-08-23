@@ -220,6 +220,13 @@ export class PageHrefCustomAttribute
      */
     private setThisAttribute(): void
     {
+        // If this attribute is used on a containerless custom element,
+        // the element will be a comment, which do not have attributes.
+        if (this._element.nodeType === 8)
+        {
+            return;
+        }
+
         let attributeName: string;
 
         // Remove all variations of this attribute.

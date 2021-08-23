@@ -22,43 +22,47 @@
 
     </label>
 
-    <url-input
-        repeat.for="i of value.length"
-        class="${$last ? '' : 'margin-bottom'}"
-        value.bind="value[i].url"
-        autocomplete.bind="autocomplete"
-        mozactionhint.bind="enterkey"
-        enterkeyhint.bind="enterkey"
-        maxlength.bind="maxlength || 524288"
-        disabled.bind="disabled"
-        readonly.bind="readonly">
+    <div>
 
-        <div slot="after">
+        <url-input
+            repeat.for="i of value.length"
+            class="${$last ? '' : 'margin-bottom'}"
+            value.bind="value[i].url"
+            autocomplete.bind="autocomplete"
+            mozactionhint.bind="enterkey"
+            enterkeyhint.bind="enterkey"
+            maxlength.bind="maxlength || 524288"
+            disabled.bind="disabled"
+            readonly.bind="readonly">
 
-            <button
-                if.bind="!readonly"
-                disabled.bind="disabled"
-                title.translate="Remove link"
-                appearance="none"
-                click.trigger="onDeleteClick(i)">
-                <icon name="md-remove"></icon>
-            </button>
+            <div slot="after">
 
-            <a
-                if.bind="readonly && value[i].url"
-                href.bind="value[i].url"
-                target="_blank"
-                appearance="none">
-                <icon name="md-open-in-new"></icon>
-            </a>
+                <button
+                    if.bind="!readonly"
+                    disabled.bind="disabled"
+                    title.translate="Remove link"
+                    appearance="none"
+                    click.trigger="onDeleteClick(i)">
+                    <icon name="md-remove"></icon>
+                </button>
 
-        </div>
+                <a
+                    if.bind="readonly && value[i].url"
+                    href.bind="value[i].url"
+                    target="_blank"
+                    appearance="none">
+                    <icon name="md-open-in-new"></icon>
+                </a>
 
-        <div class="input-placeholder">
-            <slot name="placeholder"></slot>
-        </div>
+            </div>
 
-    </url-input>
+            <div class="input-placeholder">
+                <slot name="placeholder"></slot>
+            </div>
+
+        </url-input>
+
+    </div>
 
     <div class="input-validation --summary font-small">
 
