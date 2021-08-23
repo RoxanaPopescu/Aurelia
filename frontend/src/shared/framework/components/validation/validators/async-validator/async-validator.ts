@@ -20,15 +20,17 @@ export class AsyncValidatorCustomElement extends Validator
     protected operation: Operation | undefined;
 
     /**
-     * The function that should be called to validate the value,
-     * or undefined to disable this requirement. This function
-     * should return true if validation succeeded, otherwise false.
-     * @param params.signal The abort signal, which will be triggered if a new validation run starts.
-     * @returns A promise that resolves
+     * The function that should be called to validate the value, or undefined to disable this validator.
+     * @returns A promise that should be resolved with true if validation succeeded, otherwise false.
      */
     @bindable
     public function: AsyncCallbackWithContext<
     {
+        /**
+         * The reason for the validation run.
+         */
+        reason: ValidationReason;
+
         /**
          * The abort signal, which will be triggered if a new validation run starts.
          */
@@ -58,7 +60,7 @@ export class AsyncValidatorCustomElement extends Validator
             {
                 try
                 {
-                    this.invalid = !await this.function({ signal });
+                    this.invalid = !await this.function({ reason, signal });
                 }
                 catch (error)
                 {

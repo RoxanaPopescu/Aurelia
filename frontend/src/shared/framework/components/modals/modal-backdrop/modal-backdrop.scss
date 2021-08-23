@@ -15,6 +15,9 @@ modal-backdrop
     // Apply the background for backdrops.
     background: var(--modal-backdrop-color);
 
+    // Apply the filter for backdrops.
+    backdrop-filter: var(--modal-backdrop-filter, none);
+
     // Prevent clicks from passing through.
     pointer-events: initial;
 }
@@ -55,6 +58,7 @@ modal-backdrop
     100%
     {
         opacity: 1;
+        backdrop-filter: var(--modal-backdrop-filter, none);
     }
 }
 
@@ -63,5 +67,6 @@ modal-backdrop
     100%
     {
         opacity: 0;
+        backdrop-filter: none;
     }
 }

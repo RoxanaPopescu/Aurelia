@@ -1,6 +1,6 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
-import { LabelPosition } from "../../control";
-import { AutocompleteHint } from "../input";
+import { LabelPosition, shouldFocusInput } from "../../control";
+import { AutocompleteHint, EnterKeyHint } from "../input";
 import { DateTime, Zone } from "luxon";
 import { DateFormat } from "shared/localization";
 import { Placement } from "popper.js";
@@ -208,6 +208,13 @@ export class DateInputCustomElement
     public fixed: boolean;
 
     /**
+     * The hint indicating the type of `Enter` key to show on a virtual keyboard
+     * for a single-line text input, or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: undefined })
+    public enterkey: EnterKeyHint | undefined;
+
+    /**
      * Opens the dropdown and optionally focuses the input element.
      * @param focusInput True to focus the input element, otherwise false.
      */
@@ -216,8 +223,9 @@ export class DateInputCustomElement
         this.open = true;
         this.focusedValue = this.isValid ? this.value : null;
 
-        if (focusInput)
+        if (focusInput && shouldFocusInput())
         {
+            this.inputElement.focus();
             setTimeout(() => this.inputElement.focus());
         }
     }
@@ -257,6 +265,7 @@ export class DateInputCustomElement
         if (focusToggle)
         {
             this.toggleElement.focus();
+            setTimeout(() => this.toggleElement.focus());
         }
     }
 

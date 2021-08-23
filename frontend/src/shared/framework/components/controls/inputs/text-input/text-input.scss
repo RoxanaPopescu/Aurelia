@@ -19,7 +19,19 @@ text-input
             height: 100%;
         }
 
-        > .input-control > .input-control-inner .input-autosize
+        > .input-control > .input-control-inner .input-autosize-lines
+        {
+            // Style the content as if it was a textarea.
+            visibility: hidden;
+            padding: var(--input-padding);
+            padding-left: 0;
+            padding-right: 0;
+            overflow: hidden;
+            white-space: pre-wrap;
+            float: left;
+        }
+
+        > .input-control > .input-control-inner .input-autosize-value
         {
             // Style the content as if it was a textarea.
             visibility: hidden;
@@ -27,6 +39,7 @@ text-input
             overflow: hidden;
             overflow-wrap: break-word;
             white-space: pre-wrap;
+            float: left;
         }
     }
 

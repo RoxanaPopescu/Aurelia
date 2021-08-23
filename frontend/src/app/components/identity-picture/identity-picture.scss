@@ -5,6 +5,9 @@ identity-picture
     // Allow content to be positioned relative to this element.
     position: relative;
 
+    // Ensure inner layers are contained within this layer.
+    z-index: 0;
+
     // Prevent shrinking.
     flex-shrink: 0;
 
@@ -14,11 +17,11 @@ identity-picture
     justify-content: center;
 
     // Apply default size.
-    width: 52rem;
-    height: 52rem;
+    width: var(--identity-picture-width, 52rem);
+    height: var(--identity-picture-height, 52rem);
 
     // Apply default border radius.
-    border-radius: var(--border-radius-large);
+    border-radius: var(--identity-picture-border-radius, var(--border-radius-large));
 
     // Apply default font style.
     font-size: var(--font-large-font-size);
@@ -33,6 +36,9 @@ identity-picture
     // Clip the content.
     overflow: hidden;
 
+    // Prevent selection.
+    user-select: none;
+
     .identity-picture-surface
     {
         // This allows the lighten filter to be applied only to the surface,
@@ -46,6 +52,11 @@ identity-picture
 
         // Inherit the background, so it can be modified from the outside.
         background: inherit;
+
+        // HACK: Inherit the border radius.
+        // This is needed because Safari does not seem to respect
+        // `overflow: hidden` when a filter is applied.
+        border-radius: inherit;
     }
 
     .identity-picture-content
@@ -55,6 +66,18 @@ identity-picture
 
         // Ensure the content appears on top of the surface.
         z-index: 1;
+
+        .--unknown-initial::before
+        {
+            content: "·";
+
+            position: relative;
+            display: inline-block;
+            opacity: var(--opacity-faded);
+            width: 1ch;
+            text-align: center;
+            top: calc(-1em / 20);
+        }
     }
 
     .identity-picture-image
@@ -67,7 +90,17 @@ identity-picture
         // Ensure the picture appears on top of the surface and content.
         z-index: 2;
 
-        // Scale the image to cover the component.
+        // Position the image to cover the component.
+        background-position: center;
         background-size: cover;
+        background-repeat: no-repeat;
+
+        // HACK: Inherit the border radius.
+        // This is needed because Safari does not seem to respect
+        // `overflow: hidden` when a filter is applied.
+        border-radius: inherit;
+
+        // Apply an inset shadow, to ensure contrast at the border of the image.
+        box-shadow: inset 0 0 0 var(--identity-picture-border-width, var(--border-width-thin)) var(--identity-picture-border-color, transparent);
     }
 }

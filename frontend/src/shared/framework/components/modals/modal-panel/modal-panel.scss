@@ -7,13 +7,31 @@ modal-panel
     top: 0;
     bottom: 0;
 
-    &.--left
+    &::before
+    {
+        // HACK: The panel has margin, and a click within that margin will close the panel.
+        // This is an unexpected behavior, so to mitigate it, we add a transparent overlay,
+        // which prevents the click from reaching the backdrop. This is not a perfect fix,
+        // as it only covers the min-width of the panel, but it's much better than nothing.
+
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: var(--modal-panel-min-width);
+        z-index: calc(-1);
+        background: transparent;
+    }
+
+    &.--left,
+    &.--left::before
     {
         // Position on the right side of the viewport.
         left: 0;
     }
 
-    &.--right
+    &.--right,
+    &.--right::before
     {
         // Position on the right side of the viewport.
         right: 0;

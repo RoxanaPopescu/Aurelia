@@ -1,4 +1,5 @@
-import { inject, bindable, Optional } from "aurelia-framework";
+import { inject, bindable, Optional, computedFrom } from "aurelia-framework";
+import { IValidation } from "shared/framework";
 import { Modal } from "../../../services/modal";
 
 /**
@@ -20,7 +21,25 @@ export class ModalPanelCustomElement
     {
         this.element = element as HTMLElement;
         this.modal = modal;
+
+        // HACK: Detect attempts to close the modal.
+        if (modal != null)
+        {
+            // tslint:disable-next-line: no-unbound-method
+            const closeFunc = modal.close;
+
+            modal.close = async (...args: any[]) =>
+            {
+                const closed = await closeFunc.apply(modal, args);
+
+                this._refusedToClose = !closed;
+
+                return closed;
+            };
+        }
     }
+
+    private _refusedToClose = false;
 
     /**
      * The element representing the component.
@@ -31,6 +50,11 @@ export class ModalPanelCustomElement
      * The `Modal` instance representing the modal.
      */
     protected readonly modal: Modal | undefined;
+
+    /**
+     * The validation for the component.
+     */
+    protected validation: IValidation;
 
     /**
      * The name of the panel.
@@ -44,6 +68,22 @@ export class ModalPanelCustomElement
      */
     @bindable({ defaultValue: true })
     public closeButton: boolean;
+
+    /**
+     * True if the close button should switch to using `discard-changes` as modal close reason,
+     * if the modal has refused to close and validation errors are present, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public discardChanges: boolean;
+
+    /**
+     * True if the close button should use `discard-changes` as modal close reason, otherwise false.
+     */
+    @computedFrom("_refusedToClose", "discardChanges", "validation")
+    protected get shouldDiscardChanges(): boolean
+    {
+        return this._refusedToClose && this.discardChanges && this.validation.invalid === true;
+    }
 
     /**
      * The position of the panel relative to the viewport.
@@ -65,7 +105,7 @@ export class ModalPanelCustomElement
         if (this.modal != null)
         {
             // tslint:disable-next-line: no-floating-promises
-            this.modal.close();
+            this.modal.close(this._refusedToClose ? "discard-changes" : undefined);
         }
     }
 

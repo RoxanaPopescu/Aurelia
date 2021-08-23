@@ -1,17 +1,9 @@
 select-button
 {
     position: relative;
-    display: block;
-
-    > dropdown
-    {
-        display: flex;
-
-        > item-picker
-        {
-            flex-grow: 1;
-        }
-    }
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
 
     > button
     {
@@ -21,13 +13,13 @@ select-button
         {
             // Push to the right.
             margin-left: auto;
+
+            // Apply opacity to de-emphasize the icon.
+            opacity: var(--opacity-faded);
         }
 
         [slot="label"]
         {
-            // Apply spacing between padding.
-            margin-right: var(--size-inline-spacing-large);
-
             // Center content on the cross axis, if flex layout is applied.
             align-items: center;
         }
@@ -49,6 +41,22 @@ select-button
 
             // Apply opacity to de-emphasize the icon.
             opacity: var(--opacity-faded);
+        }
+
+        [slot="label"]:not(:empty) + [slot="icon"]:not(:empty)
+        {
+            // Apply spacing between the label and icon.
+            margin-left: var(--size-inline-spacing);
+        }
+    }
+
+    > dropdown
+    {
+        display: flex;
+
+        > item-picker
+        {
+            flex-grow: 1;
         }
     }
 }

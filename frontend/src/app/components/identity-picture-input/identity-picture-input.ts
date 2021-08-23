@@ -1,8 +1,8 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
-import { LabelPosition, AutocompleteHint, EnterKeyHint } from "shared/framework";
 import gravatarUrl from "gravatar-url";
-import { pickAndUploadFile, Operation } from "shared/utilities";
+import { Operation } from "shared/utilities";
 import { Log, ApiResult } from "shared/infrastructure";
+import { LabelPosition, AutocompleteHint, EnterKeyHint, pickAndUploadFile } from "shared/framework";
 
 /**
  * Represents an input component for specifying an identity picture.
@@ -28,17 +28,18 @@ export class IdentityPictureInputCustomElement
     public value: string | undefined;
 
     /**
-     * The string or strings from which initials should be generated when no picture is specified.
+     * The string or strings from which initials should be generated when no picture is specified,
+     * or undefined to not show any initials.
      */
     @bindable({ defaultValue: undefined })
-    public initials: (string | string[] | undefined)[];
+    public initials: (string | undefined)[] | string | undefined;
 
     /**
      * The email or identifiers that may be used to generate a Gravatar URL,
-     * or undefined to not show an option to generate a Gravatar URL.
+     * or undefined to not show an option to use Gravatar.
      */
     @bindable({ defaultValue: undefined })
-    public gravatar: string | string[] | undefined;
+    public gravatar: (string | undefined)[] | string | undefined;
 
     /**
      * True if the input is disabled, otherwise false.
@@ -75,16 +76,11 @@ export class IdentityPictureInputCustomElement
      * The initials to show in the identity picture.
      */
     @computedFrom("initials.length")
-    protected get formattedInitials(): string
+    protected get formattedInitials(): (string | undefined)[] | undefined
     {
-        if (this.initials == null || this.initials.length === 0)
-        {
-            return "";
-        }
+        const strings = typeof this.initials === "string" ? [this.initials] : this.initials;
 
-        const strings = this.initials instanceof Array ? this.initials : [this.initials];
-
-        return strings.map(t => t ? t[0] : "·").join("");
+        return strings?.map(s => s?.trim()[0] ?? undefined);
     }
 
     /**

@@ -15,7 +15,7 @@ export interface ITheme
     name: string;
 
     /**
-     * The variant of the theme, if any.
+     * The name of the variant of the theme, if any.
      */
     variant?: string;
 

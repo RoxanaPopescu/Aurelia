@@ -52,9 +52,9 @@ declare interface IClientEnvironment
 
     /**
      * The IETF language tag identifying the locale, excluding any unicode extension.
-     * This value is case sensitive and consists of an ISO 639-1 language code, optionally
-     * followed by an ISO 15924 script code, an ISO 3166-1 Alpha 2 country code, and a
-     * private use subtag, in that order.
+     * This value is case sensitive and consists of a lower-case ISO 639-1 language code,
+     * optionally followed by a lower-case ISO 15924 script code, an upper-case
+     * ISO 3166-1 Alpha 2 country code, and a private use subtag, in that order.
      */
     locale: string;
 
@@ -83,17 +83,18 @@ declare interface IClientEnvironment
     obfuscate: boolean;
 
     /**
-     * The public path for the JavaScript bundles.
-     * When building for the `frontend-cloud` package, this should be the domain-relative path on which the app will be hosted.
-     * When building for any other package, this should be the file system path for the folder representing the copy of the
-     * `build` artifact from the `frontend` package.
+     * The base URL for the files for the app.
+     * When building for the `frontend-cloud` package, this should be the host-relative
+     * path on which the files for the app will be hosted, and must end with a `/`.
+     * When building for the `frontend-desktop` package, this should be `/`.
      */
     publicPath: string;
 
     /**
      * The base URL for the app.
-     * When building for the `frontend-cloud` package, this should be the domain-relative path on which the app will be hosted.
-     * When building for any other package, this should be an empty string.
+     * When building for the `frontend-cloud` package, this should be the host-relative
+     * path on which the app will be hosted, and must end with a `/`.
+     * When building for the `frontend-desktop` package, this should be `/`.
      */
     appBaseUrl: string;
 
@@ -150,6 +151,12 @@ declare interface IClientEnvironment
              * The DSN for the account.
              */
             dsn: string;
+
+            /**
+             * The pattern for the URL of an event, where `{id}` will be replaced with the ID of the event,
+             * or undefined if no event links should be presented.
+             */
+            eventUrlPattern?: string;
         }
     }
 }

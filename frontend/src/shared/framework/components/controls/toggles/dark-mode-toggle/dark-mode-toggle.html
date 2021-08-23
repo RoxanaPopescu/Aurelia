@@ -1,0 +1,48 @@
+<template class="
+    toggle
+    ${disabled || toggleGroup.disabled ? '--disabled' : ''}
+    ${readonly || toggleGroup.readonly ? '--readonly' : ''}
+    ${value === true || value === null ? '--active' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    forward-focus
+    validation
+    validation.ref="validation">
+
+    <require from="../toggle.scss"></require>
+    <require from="./dark-mode-toggle.scss"></require>
+
+    <label class="toggle-label" for="toggle-${id}">
+
+        <div class="toggle-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="toggle-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <div class="toggle-control">
+
+        <input
+            id="toggle-${id}"
+            type="checkbox"
+            disabled.bind="disabled || toggleGroup.disabled"
+            readonly.bind="readonly || toggleGroup.readonly"
+            checked.bind="value"
+            click.trigger="onToggleClick(event)">
+
+        <icon if.bind="value === true" name="dark-mode-toggle-checked" accent.bind="accent & attr"></icon>
+        <icon if.bind="value === false || value === undefined" name="dark-mode-toggle-unchecked" accent.bind="accent & attr"></icon>
+        <icon if.bind="value === null" name="dark-mode-toggle-indeterminate" accent.bind="accent & attr"></icon>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="toggle-validation font-small">
+        <slot name="validation"></slot>
+    </div>
+
+</template>

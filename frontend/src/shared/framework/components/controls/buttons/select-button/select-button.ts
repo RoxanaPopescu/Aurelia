@@ -20,6 +20,12 @@ export class SelectButtonCustomElement
     protected itemPicker: ItemPickerCustomElement;
 
     /**
+     * The value of the item picked by the user, or undefined if no item has been picked.
+     */
+    @bindable({ defaultValue: undefined, defaultBindingMode: bindingMode.toView })
+    public value: any | undefined;
+
+    /**
      * The value of the item that is focused, but not yet picked, or undefined if no item has been focused.
      */
     @bindable({ defaultValue: null, defaultBindingMode: bindingMode.twoWay })
@@ -76,6 +82,7 @@ export class SelectButtonCustomElement
     protected openDropdown(focusButton: boolean): void
     {
         this.open = true;
+        this.focusedValue = this.value;
 
         setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 

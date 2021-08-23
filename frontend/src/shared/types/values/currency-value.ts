@@ -9,7 +9,7 @@ export interface ICurrencyValue
     amount: number;
 
     /**
-     * The ISO 4217 currency code identifying the currency.
+     * The ISO 4217 Alpha currency code identifying the currency.
      */
     currencyCode: string;
 }

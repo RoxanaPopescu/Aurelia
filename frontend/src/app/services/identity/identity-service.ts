@@ -15,14 +15,14 @@ export const moverOrganizationId = "2ab2712b-5f60-4439-80a9-a58379cce885";
 export const coopOrganizationId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
 
 /**
- * Represents a function that will be invoked before the identity changes.
+ * Represents a function that will be called before the identity changes.
  * Use this to prepare the app for the new identity, if any.
  * @param newIdentity The new identity that was authenticated, if any.
  * @param oldIdentity The old identity that was unauthenticated, if any.
+ * @param finish A function that, if called, finishes the change immediately.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new identity.
  */
-// tslint:disable-next-line: invalid-void
-type IdentityChangeFunc = (newIdentity: Identity | undefined, oldIdentity: Identity | undefined) => void | Promise<void>;
+type IdentityChangeFunc = (newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void) => void | Promise<void>;
 
 /**
  * Represents a service that manages the authentication and identity of the user.
@@ -88,10 +88,21 @@ export class IdentityService
             const tokens = new IdentityTokens({ remember, ...result.data });
             const identity = new Identity(result, tokens);
 
-            await this._changeFunc?.(identity, this._identity);
+            let finished = false;
 
-            this.setTokens(tokens);
-            this._identity = identity;
+            const finishFunc = () =>
+            {
+                this.setTokens(tokens);
+                this._identity = identity;
+                finished = true;
+            };
+
+            await this._changeFunc?.(identity, this._identity, finishFunc);
+
+            if (!finished)
+            {
+                finishFunc();
+            }
 
             return true;
         }
@@ -129,12 +140,24 @@ export class IdentityService
             tokens = new IdentityTokens({ ...tokens, ...result.data });
             const identity = new Identity(result, tokens);
 
-            await this._changeFunc?.(identity, this._identity);
+            let finished = false;
 
-            this.setTokens(tokens);
-            this._identity = identity;
+            const finishFunc = () =>
+            {
+                this.setTokens(tokens);
+                this._identity = identity;
 
-            this.startLegacySession();
+                this.startLegacySession();
+
+                finished = true;
+            };
+
+            await this._changeFunc?.(identity, this._identity, finishFunc);
+
+            if (!finished)
+            {
+                finishFunc();
+            }
 
             return true;
         }
@@ -182,14 +205,26 @@ export class IdentityService
             {
                 const identity = new Identity(result, tokens);
 
-                await this._changeFunc?.(identity, undefined);
+                let finished = false;
 
-                this.setTokens(tokens);
-                this._identity = identity;
-
-                if (this._identity.outfit != null)
+                const finishFunc = () =>
                 {
-                    this.startLegacySession();
+                    this.setTokens(tokens);
+                    this._identity = identity;
+
+                    if (this._identity.outfit != null)
+                    {
+                        this.startLegacySession();
+                    }
+
+                    finished = true;
+                };
+
+                await this._changeFunc?.(identity, undefined, finishFunc);
+
+                if (!finished)
+                {
+                    finishFunc();
                 }
             }
 
@@ -219,11 +254,22 @@ export class IdentityService
     {
         if (this._identity != null)
         {
-            await this._changeFunc?.(undefined, this._identity);
-
             const refreshToken = this._identity.tokens.refreshToken;
 
-            this._identity = undefined;
+            let finished = false;
+
+            const finishFunc = () =>
+            {
+                this._identity = undefined;
+                finished = true;
+            };
+
+            await this._changeFunc?.(undefined, this._identity, finishFunc);
+
+            if (!finished)
+            {
+                finishFunc();
+            }
 
             try
             {

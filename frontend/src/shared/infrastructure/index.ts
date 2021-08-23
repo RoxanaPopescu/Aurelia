@@ -1,6 +1,6 @@
 import { FrameworkConfiguration } from "aurelia-framework";
 import { DeviceService } from "./device";
-import { HistoryHelper } from "./history";
+import { HistoryHelper, ScrollHelper } from "./history";
 import { LogNavigation } from "./logging";
 
 /**
@@ -12,6 +12,7 @@ export function configure(use: FrameworkConfiguration): void
     // Instantiate services.
     use.container.get(DeviceService);
     use.container.get(HistoryHelper);
+    use.container.get(ScrollHelper);
     use.container.get(LogNavigation);
 }
 
@@ -21,4 +22,5 @@ export * from "./history";
 export * from "./logging";
 export * from "./prerender";
 export * from "./templating";
+export * from "./web-storage";
 export * from "./workers";

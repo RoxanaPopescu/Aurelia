@@ -14,6 +14,7 @@
         readonly.bind="readonly"
         autocomplete.bind="autocomplete"
         autoselect.bind="autoselect"
+        enterkey.bind="enterkey"
         mousedown.trigger="onInputMouseDown($event)"
         keydown.trigger="onInputKeyDown($event)"
         focusin.trigger="onInputFocusIn($event)"
@@ -93,7 +94,6 @@
                 keyboard.bind="isValid"
                 pick.call="closeDropdown(true, true)"
                 tabindex="-1">
-
             </date-picker>
 
         </dropdown>

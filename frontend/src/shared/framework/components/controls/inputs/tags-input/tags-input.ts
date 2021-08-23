@@ -1,6 +1,6 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
-import { LabelPosition } from "../../control";
-import { AutocompleteHint } from "../input";
+import { LabelPosition, shouldFocusInput } from "../../control";
+import { AutocompleteHint, EnterKeyHint } from "../input";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 
 /**
@@ -139,6 +139,13 @@ export class TagsInputCustomElement
     public autoselect: boolean;
 
     /**
+     * The hint indicating the type of `Enter` key to show on a virtual keyboard,
+     * or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: undefined })
+    public enterkey: EnterKeyHint | undefined;
+
+    /**
      * True to use `fixed` positioning for the dropdown, otherwise false.
      * This may be needed if the dropdown is placed within a container that
      * hides overflowing content, but note that it has a performance cost.
@@ -169,8 +176,8 @@ export class TagsInputCustomElement
         // Dispatch the `input` event to indicate that the comitted value, has changed.
         this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
 
-        // Dispatch the `input` event to indicate that the comitted value, has changed.
-        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+        // Dispatch the `change` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
     }
 
     /**
@@ -182,8 +189,9 @@ export class TagsInputCustomElement
         this.open = true;
         this.focusedValue = undefined;
 
-        if (focusInput)
+        if (focusInput && shouldFocusInput())
         {
+            this.inputElement.focus();
             setTimeout(() => this.inputElement.focus());
         }
     }
@@ -232,6 +240,7 @@ export class TagsInputCustomElement
 
         if (focusToggle && !pick)
         {
+            this.toggleElement.focus();
             setTimeout(() => this.toggleElement.focus());
         }
     }
@@ -319,7 +328,11 @@ export class TagsInputCustomElement
         {
             if (event.composedPath().some((e: HTMLElement) => e.nodeName === "TAG"))
             {
-                setTimeout(() => this.inputElement.focus());
+                if (shouldFocusInput())
+                {
+                    this.inputElement.focus();
+                    setTimeout(() => this.inputElement.focus());
+                }
             }
             else
             {

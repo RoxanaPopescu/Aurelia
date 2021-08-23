@@ -87,6 +87,11 @@ export class Locale
     @computedFrom("code", "_name")
     public get name(): string
     {
+        if (this._name != null)
+        {
+            return this._name;
+        }
+
         if (Intl.DisplayNames != null)
         {
             const [code, privateUseSubtag] = this.code.split(/-x-(.*)/);

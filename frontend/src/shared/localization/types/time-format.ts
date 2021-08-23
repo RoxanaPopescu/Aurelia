@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { escapeRegExp } from "shared/utilities";
 import { LocaleService } from "../services/locale";
-import * as formatTokens from "../resources/strings/format-tokens.json";
+import formatTokens from "../resources/strings/format-tokens.json";
 
 // The date used when resolving format parts.
 const date = DateTime.fromMillis(0);

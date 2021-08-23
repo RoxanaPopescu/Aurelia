@@ -71,13 +71,13 @@ export function createThrottledFunc<TFunc extends Function>(func: TFunc, wait = 
 /**
  * Decorates a class method such that invocation happens at most once every wait period.
  *
- * The method is always invoked with the arguments provided in the most recent call.
+ * The method is always called with the arguments provided in the most recent call.
  * Any throttled calls to the method return the result of the most recent invocation.
  *
  * Additional options may be provided to indicate whether the method should
- * be invoked on the leading and/or trailing edge of the wait periodt.
+ * be called on the leading and/or trailing edge of the wait periodt.
  *
- * Note that if `leading` and `trailing` options are true, the method is invoked on
+ * Note that if `leading` and `trailing` options are true, the method is called on
  * the trailing edge of the wait period, only if the method is called more
  * than once during the wait period. If the wait period is 0 and `leading` is false,
  * method invocation is deferred until the next tick.
@@ -97,13 +97,13 @@ export function throttle<TFunc extends Function>(wait: number, options?: IThrott
  * Creates a throittled function that wraps the specified function, such that invocation
  * happens at most once every wait period.
  *
- * The function is always invoked with the arguments provided in the most recent call.
+ * The function is always called with the arguments provided in the most recent call.
  * Any throttled calls to the function return the result of the most recent invocation.
  *
  * Additional options may be provided to indicate whether the function should
- * be invoked on the leading and/or trailing edge of the wait periodt.
+ * be called on the leading and/or trailing edge of the wait periodt.
  *
- * Note that if `leading` and `trailing` options are true, the function is invoked on
+ * Note that if `leading` and `trailing` options are true, the function is called on
  * the trailing edge of the wait period, only if the function is called more
  * than once during the wait period. If the wait period is 0 and `leading` is false,
  * function invocation is deferred until the next tick.

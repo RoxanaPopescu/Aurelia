@@ -1,7 +1,5 @@
 <template>
 
-    <require from="./error.scss"></require>
-
     <toast name="error" accent="negative" scroll mousedown.capture="cancelScheduledClose()">
 
         <toast-header>
@@ -19,34 +17,46 @@
             </h1>
 
             <div if.bind="!model.message || model.error" translate>
-                The error has been logged, and will be investigated.
+                The error has been logged, and will be investigated asap.
             </div>
 
         </toast-header>
 
-        <toast-section if.bind="model.error || model.context" toggle.bind="true" expanded.one-time="false" class="margin-bottom">
+        <toast-section if.bind="model.error || model.context" toggle.bind="true" expanded.one-time="false">
 
             <div slot="header" translate>
                 Details
             </div>
 
-            <div>
+            <div class="font-small">
 
-                <div if.bind="model.error" class="font-small margin" accent="negative">
-                    <pre class="white-space-pre-wrap">${errorName}: ${errorMessage}</pre>
+                <div if.bind="entry" class="margin-bottom">
+                    <span translate>
+                        Log entry:
+                    </span>
+                    <code>
+                        <a if.bind="entry.url" href.bind="entry.url" target="_blank">${entry.id}</a>
+                        <span else>${entry.id}</a>
+                    </code>
                 </div>
 
-                <div if.bind="errorStack" class="font-small margin" accent="negative">
+                <div if.bind="model.error" accent="negative">
+                    <pre class="white-space-pre-wrap">${errorName ? errorName + ": " : ""}${errorMessage}</pre>
+                </div>
+
+                <div if.bind="errorStack" class="margin-top" accent="negative">
                     <pre>${errorStack}</pre>
                 </div>
 
-                <div if.bind="model.context" class="font-small margin">
+                <div if.bind="model.context" class="${model.error ? 'margin-top' : ''}">
                     <pre>context:<br>${model.context | json}</pre>
                 </div>
 
             </div>
 
         </toast-section>
+
+        <toast-footer></toast-footer>
 
     </toast>
 

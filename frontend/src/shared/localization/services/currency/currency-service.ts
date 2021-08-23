@@ -4,13 +4,14 @@ import { LocaleService } from "../locale";
 import { ICurrency, Currency } from "./currency";
 
 /**
- * Represents a function that will be invoked before the currency changes.
+ * Represents a function that will be called before the currency changes.
  * Use this to prepare the app for the new currency.
  * @param newCurrency The new currency being set.
  * @param oldCurrency The old currency, or undefined if not previously set.
+ * @param finish A function that, if called, finishes the change immediately.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new currency.
  */
-type CurrencyChangeFunc = (newCurrency: Currency, oldCurrency: Currency | undefined) => void | Promise<void>;
+type CurrencyChangeFunc = (newCurrency: Currency, oldCurrency: Currency | undefined, finish: () => void) => void | Promise<void>;
 
 /**
  * Represents a service that manages currencies.
@@ -56,7 +57,7 @@ export class CurrencyService
     /**
      * Configures the instance.
      * @param currencies The currencies supported by the app.
-     * @param changeFunc The function that is invoked before the currency changes.
+     * @param changeFunc The function to call before the currency changes.
      */
     public configure(currencies: ICurrency[], changeFunc?: CurrencyChangeFunc): void
     {
@@ -98,9 +99,20 @@ export class CurrencyService
 
         const currency = this.getCurrency(canonicalCurrencyCode);
 
-        await this._changeFunc(currency, this._currency);
+        let finished = false;
 
-        this._currency = currency;
+        const finishFunc = () =>
+        {
+            this._currency = currency;
+            finished = true;
+        };
+
+        await this._changeFunc(currency, this._currency, finishFunc);
+
+        if (!finished)
+        {
+            finishFunc();
+        }
 
         this._eventAggregator.publish("currency-changed");
 

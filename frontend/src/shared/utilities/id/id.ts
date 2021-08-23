@@ -2,8 +2,6 @@ import { Uuid } from "./uuid";
 import { Sequential } from "./sequential";
 import { AlphaNumeric } from "./random";
 
-// tslint:disable: no-namespace
-
 /**
  * Namespace providing methods for generating RFC4122 compliant UUIDs.
  * Note that the quality of the UUIDs generated depend heavily on the type

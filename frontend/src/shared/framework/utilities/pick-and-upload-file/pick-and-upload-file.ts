@@ -1,7 +1,7 @@
 import { Container } from "aurelia-framework";
-import { ApiClient, ApiResult } from "shared/infrastructure/api-client";
 import { MapObject } from "shared/types";
-import { Operation } from "../operation/operation";
+import { Operation } from "shared/utilities";
+import { ApiClient, ApiResult } from "shared/infrastructure/api-client";
 
 /**
  * Represents a file upload request.

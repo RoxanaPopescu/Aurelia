@@ -28,7 +28,7 @@ export class EventManager
      * @param options The listener options.
      * @returns A disposable, which when disposed removes the listener.
      */
-    public addEventListener(element: Document | Element, eventOrEvents: string | string[], callback: (event: Event) => any, options?: EventListenerOptions): Disposable
+    public addEventListener(element: Document | Element | Window, eventOrEvents: string | string[], callback: (event: Event) => any, options?: EventListenerOptions): Disposable
     {
         const subscriptions: Disposable[] = [];
 

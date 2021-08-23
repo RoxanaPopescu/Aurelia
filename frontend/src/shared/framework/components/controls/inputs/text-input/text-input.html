@@ -38,6 +38,7 @@
                 class="input-input"
                 type="text"
                 value.bind="inputValue"
+                inputmode.bind="inputmode & attr"
                 autocomplete.bind="autocomplete"
                 autocorrect.bind="autocorrect"
                 autocapitalize.bind="autocapitalize"
@@ -58,6 +59,7 @@
                 class="input-input"
                 value.bind="inputValue"
                 rows.bind="lines"
+                inputmode.bind="inputmode & attr"
                 autocomplete.bind="autocomplete"
                 autocorrect.bind="autocorrect"
                 autocapitalize.bind="autocapitalize"
@@ -74,7 +76,8 @@
             </textarea>
 
             <!-- Note: Whitespace matters here. -->
-            <div if.bind="autosize" class="input-autosize">${autosizeValue}<br></div>
+            <div if.bind="autosize" class="input-autosize-lines">${autosizeValue}<br></div>
+            <div if.bind="autosize" class="input-autosize-value">${inputValue}<br></div>
 
             <div class="input-placeholder">
                 <slot name="placeholder"></slot>

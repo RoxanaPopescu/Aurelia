@@ -1,6 +1,7 @@
 import { autoinject, bindable, bindingMode, observable } from "aurelia-framework";
 import { DateTime, Info, Zone } from "luxon";
 import { EventManager } from "shared/utilities";
+import { shouldFocusInput } from "../../control";
 import { DatesModel } from "./model/dates-model";
 import { MonthsModel } from "./model/months-model";
 import { YearsModel } from "./model/years-model";
@@ -122,11 +123,6 @@ export class DatePickerCustomElement
      */
     public bind(): void
     {
-        if (!this.zone)
-        {
-            console.warn("Date picker created with local time zone; this might be an error.");
-        }
-
         this.focusedElement = this.focusedElement || this._element;
         this.today = DateTime.local().setZone(this.zone).startOf("day");
         this.cursor = this.value?.setZone(this.zone).startOf("day") || this.today;
@@ -367,7 +363,10 @@ export class DatePickerCustomElement
      */
     private onFocusIn(): void
     {
-        this.focusedElement.focus();
+        if (shouldFocusInput())
+        {
+            this.focusedElement.focus();
+        }
     }
 
     /**

@@ -4,15 +4,13 @@ import "shared/patches";
 // Load and apply polyfills.
 import "inert-polyfill";
 
-// Configure and start the app.
-
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
 import { Settings as LuxonSettings } from "luxon";
-import { LogAppender, Cookies, ApiClient, ResponseStubInterceptor, Log, setPrerenderStatusCode } from "shared/infrastructure";
-import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
+import { Log, LogAppender, Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
 import { ThemeService, ITheme } from "shared/framework";
+import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { GoogleMapsService } from "shared/google-maps";
-import { Visitor } from "app/services/visitor";
+import { Visitor } from "app/types/visitor";
 import { IdentityService, Identity } from "app/services/identity";
 import settings from "resources/settings";
 
@@ -34,7 +32,7 @@ export async function configure(aurelia: Aurelia): Promise<void>
     // Create the visitor.
     const visitor = aurelia.container.get(Visitor);
 
-    // Attach the visitor info to log entries.
+    // Attach the session and visitor to log entries.
     Log.setTags({ visitor: visitor.visitorId, session: visitor.sessionId });
 
     // Configure the log manager.
@@ -65,14 +63,14 @@ export async function configure(aurelia: Aurelia): Promise<void>
         PLATFORM.moduleName("app/converters/image-info/image-info")
     ]);
 
-    // Add task that will run after all plugins and features have been loaded.
+    // Add a task that will run after all plugins and features are configured.
     aurelia.use.postTask(async () =>
     {
         // Load and use response stubs, if enabled.
         if (ENVIRONMENT.stubs)
         {
             const { stubs } = await import(/* webpackChunkName: "stubs" */"resources/stubs");
-            settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs, 20));
+            settings.infrastructure.api.interceptors.push(new ResponseStubInterceptor(stubs, 50));
         }
 
         // Configure features.
@@ -133,10 +131,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
 
     // Set the root component and compose the app.
     await aurelia.setRoot(PLATFORM.moduleName("app/app"));
-
-    // TODO: The value we set here should depend on whether the page actually rendered successfully.
-    // Set the status code that should be returned to crawlers.
-    setPrerenderStatusCode(200);
 }
 
 /**
@@ -149,13 +143,14 @@ function getLocaleCode(): string
 }
 
 /**
- * Called when the locale changes.
+ * Called before the locale changes.
  * This stores the locale code in a cookie and reloads the app.
  * @param newLocale The new locale being set.
  * @param oldLocale The old locale, or undefined if not previously set.
- * @returns A promise that never resolves, as the page is about to reload.
+ * @param finish A function that, if called, finishes the change immediately.
+ * @returns A promise that will never be resolved, as the page is about to reload.
  */
-async function setLocale(newLocale: Locale, oldLocale: Locale): Promise<void>
+async function setLocale(newLocale: Locale, oldLocale: Locale | undefined, finish: () => void): Promise<void>
 {
     // If this is a user-initiated change, set the `locale` cookie and reload the app.
     if (oldLocale != null)
@@ -164,7 +159,8 @@ async function setLocale(newLocale: Locale, oldLocale: Locale): Promise<void>
 
         cookies.set("locale", newLocale.code);
 
-        location.reload();
+        // Schedule a reload of the app.
+        setTimeout(() => location.reload());
 
         // The app is reloading, so return a promise that will never be resolved.
         return new Promise(() => undefined);
@@ -188,11 +184,11 @@ function getCurrencyCode(): string
     const url = new URL(location.href);
     const cookies = Container.instance.get(Cookies);
 
-    // Try to get the currency from the URL.
+    // Try to get the currency code from a query parameter in the the URL.
     // This is intended as an override to be used for testing.
     let currencyCode = url.searchParams.get("currency") || undefined;
 
-    // Try to get the currency from the cookie.
+    // Try to get the currency code from a cookie.
     // This should be set by the server based on the domain,
     // or by the client if the currency is changed by the user.
     if (!currencyCode)
@@ -200,7 +196,7 @@ function getCurrencyCode(): string
         currencyCode = cookies.get("currency");
     }
 
-    // If a currency was specified, verify that it exists.
+    // If a currency code was specified, verify that it exists.
     if (currencyCode)
     {
         const currencyService = Container.instance.get(CurrencyService);
@@ -211,7 +207,7 @@ function getCurrencyCode(): string
         }
         catch
         {
-            console.warn(`The currency '${currencyCode}' is not supported.`);
+            console.warn(`The currency '${currencyCode}' is not supported`);
             currencyCode = undefined;
         }
     }
@@ -221,12 +217,13 @@ function getCurrencyCode(): string
 }
 
 /**
- * Called when the currency changes.
+ * Called before the currency changes.
  * This stores the currency code in a cookie.
  * @param newCurrency The new currency being set.
  * @param oldCurrency The old currency, or undefined if not previously set.
+ * @param finish A function that, if called, finishes the change immediately.
  */
-function setCurrency(newCurrency: Currency, oldCurrency: Currency): void
+function setCurrency(newCurrency: Currency, oldCurrency: Currency | undefined, finish: () => void): void
 {
     // If this is a user-initiated change, set the `currency` cookie.
     if (oldCurrency != null)
@@ -251,11 +248,11 @@ function getThemeSlug(): string
     const url = new URL(location.href);
     const cookies = Container.instance.get(Cookies);
 
-    // Try to get the theme from the URL.
+    // Try to get the theme slug from a query parameter in the URL.
     // This is intended as an override to be used for testing.
     let themeSlug = url.searchParams.get("theme") || undefined;
 
-    // Try to get the theme from the cookie.
+    // Try to get the theme slug from a cookie.
     // This should be set by the server based on the domain,
     // or by the client if the theme is changed by the user.
     if (!themeSlug)
@@ -263,7 +260,7 @@ function getThemeSlug(): string
         themeSlug = cookies.get("theme");
     }
 
-    // If a theme was specified, verify that it exists.
+    // If a theme slug was specified, verify that it exists.
     if (themeSlug)
     {
         const themeService = Container.instance.get(ThemeService);
@@ -274,7 +271,7 @@ function getThemeSlug(): string
         }
         catch
         {
-            console.warn(`The theme '${themeSlug}' is not supported.`);
+            console.warn(`The theme '${themeSlug}' is not supported`);
             themeSlug = undefined;
         }
     }
@@ -284,13 +281,14 @@ function getThemeSlug(): string
 }
 
 /**
- * Called when the theme changes.
+ * Called before the theme changes.
  * If the theme was changed, this stores the theme slug in a cookie and reloads the app.
  * @param newTheme The new theme being set.
  * @param oldTheme The old theme, or undefined if not previously set.
- * @returns A promise that never resolves, as the page is about to reload.
+ * @param finish A function that, if called, finishes the change immediately.
+ * @returns A promise that will never be resolved, as the page is about to reload.
  */
-async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined): Promise<void>
+async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: () => void): Promise<void>
 {
     // If this is a user-initiated change, set the `theme` cookie and reload the app.
     if (oldTheme != null)
@@ -299,7 +297,8 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined): Promise
 
         cookies.set("theme", newTheme.slug);
 
-        location.reload();
+        // Schedule a reload of the app.
+        setTimeout(() => location.reload());
 
         // The app is reloading, so return a promise that will never be resolved.
         return new Promise(() => undefined);
@@ -307,20 +306,23 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined): Promise
 }
 
 /**
- * Called when the identity changes.
+ * Called before the identity changes.
+ * This prepares the app for the new identity, if any.
  * @param newIdentity The new identity that was authenticated, if any.
  * @param oldIdentity The old identity that was unauthenticated, if any.
+ * @param finish A function that, if called, finishes the change immediately.
+ * @returns A promise that will be resolved when the app is ready for the new identity.
  */
-function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined): void
+async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): Promise<void>
 {
     if (newIdentity != null)
     {
-        // Set the user associated with log entries.
+        // Set the identity associated with log entries.
         Log.setUser(newIdentity);
     }
     else
     {
-        // Reset the user associated with log entries.
+        // Reset the identity associated with log entries.
         Log.setUser(undefined);
     }
 }

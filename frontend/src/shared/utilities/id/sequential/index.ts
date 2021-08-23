@@ -1,7 +1,5 @@
 let nextId = 0;
 
-// tslint:disable: no-namespace
-
 export namespace Sequential
 {
     /**

@@ -28,7 +28,7 @@ export class ToggleCustomElement
     private readonly _element: HTMLElement;
 
     /**
-     * The goggle group to whihc the toggle belongs, if any.
+     * The goggle group to which the toggle belongs, if any.
      */
     protected readonly toggleGroup: ToggleGroupCustomElement | undefined;
 

@@ -4,9 +4,93 @@ input-lock
 {
     display: block;
     white-space: nowrap;
+}
 
-    > button
+.input > .input-control
+{
+    > div[slot="before"],
+    > div[slot="after"]
     {
-        padding: var(--input-padding) !important;
+        > input-lock > button
+        {
+            // Apply the input padding.
+            padding: var(--input-padding);
+
+            // Override the left and right padding.
+            // This should, assuming the action is square, result in a square hit area.
+            padding-left: var(--input-surface-action-padding);
+            padding-right: var(--input-surface-action-padding);
+        }
+    }
+
+    > div[slot="before"]
+    {
+        > input-lock
+        {
+            &:first-child > button
+            {
+                // If the action is the first child, apply left margin, such that the
+                // sum of the padding and margin equals the left input padding.
+                // margin-left: calc(var(--input-surface-action-padding-left) - var(--input-surface-action-padding));
+
+                // If the action is the first child, apply the left padding, which sacrifices the
+                // square hit area in favor of ensuring the padding matches the input padding.
+                padding-left: var(--input-surface-action-padding-left);
+            }
+        }
+    }
+
+    > div[slot="after"]
+    {
+        > input-lock
+        {
+            &:last-child > button
+            {
+                // If the action is the last child, apply right margin, such that the
+                // sum of the padding and margin equals the right input padding.
+                // margin-right: calc(var(--input-surface-action-padding-right) - var(--input-surface-action-padding));
+
+                // If the action is the last child, apply the right padding, which sacrifices the
+                // square hit area in favor of ensuring the padding matches the input padding.
+                padding-right: var(--input-surface-action-padding-right);
+            }
+        }
+    }
+
+    > input-lock
+    {
+        &[slot="before"] > button,
+        &[slot="after"] > button
+        {
+            // Apply the input padding.
+            padding: var(--input-padding);
+
+            // Override the left and right padding.
+            // This should, assuming the action is square, result in a square hit area.
+            padding-left: var(--input-surface-action-padding);
+            padding-right: var(--input-surface-action-padding);
+        }
+
+        &[slot="before"] > button
+        {
+            // If the action is the first child, apply left margin, such that the
+            // sum of the padding and margin equals the left input padding.
+            // margin-left: calc(var(--input-surface-action-padding-left) - var(--input-surface-action-padding));
+
+            // If the action is the first child, apply the left padding, which sacrifices the
+            // square hit area in favor of ensuring the padding matches the input padding.
+            padding-left: var(--input-surface-action-padding-left);
+        }
+
+        &[slot="after"] > button
+        {
+            // If the action is the last child, apply right margin, such that the
+            // sum of the padding and margin equals the right input padding.
+            // margin-right: calc(var(--input-surface-action-padding-right) - var(--input-surface-action-padding));
+
+            // If the action is the last child, apply the right padding, which sacrifices the
+            // square hit area in favor of ensuring the padding matches the input padding.
+            padding-right: var(--input-surface-action-padding-right);
+        }
     }
 }

@@ -351,7 +351,7 @@ export class ValidationCustomAttribute implements IValidation
         // Wait for any pending validation runs to complete, to avoid race conditions.
         while (this._validationPromise != null)
         {
-            await this._validationPromise?.catch();
+            await this._validationPromise?.catch(() => undefined);
         }
 
         // If this validation is computed as disabled, or if the trigger is an event and this

@@ -17,7 +17,16 @@ export class LogNavigation
         eventAggregator.subscribe(RouterEvent.Processing, (event: { instruction: NavigationInstruction }) =>
         {
             const i = event.instruction;
-            console.group(`Navigation to '${i.fragment}${i.queryString ? `?${i.queryString}` : ""}'`);
+            const router = i.router;
+
+            // Capture the navigation direction.
+            const navigationDirection =
+                router.isNavigatingBack ? "Backward" :
+                router.isNavigatingForward ? "Forward" :
+                router.isNavigatingRefresh ? "Refresh" :
+                "New";
+
+            console.group(`Navigation to '${i.fragment}${i.queryString ? `?${i.queryString}` : ""}' (${navigationDirection})`);
         });
 
         eventAggregator.subscribe("router:navigation:idle", (event: { result: PipelineResult }) =>

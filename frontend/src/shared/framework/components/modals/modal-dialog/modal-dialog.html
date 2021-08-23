@@ -3,7 +3,9 @@
     inert.bind="modal != null && modal.busy !== false"
     keydown.trigger="onKeyDown($event)"
     tabindex="-1"
-    trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;">
+    trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;"
+    validation
+    validation.ref="validation">
 
     <require from="./modal-dialog.scss"></require>
 
@@ -13,7 +15,12 @@
 
         <slot name="actions"></slot>
 
-        <button if.bind="closeButton && modal != null" title.translate="Close" appearance="icon" click.trigger="onCloseClick()">
+        <button
+            if.bind="closeButton && modal != null"
+            title.translate="${shouldDiscardChanges ? 'Please correct the errors before closing, or click again to discard the changes' : 'Close'}"
+            appearance="icon"
+            accent.bind="shouldDiscardChanges ? 'negative' : 'neutral' & attr"
+            click.trigger="onCloseClick()">
             <icon name="close"></icon>
         </button>
 

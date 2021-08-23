@@ -1,7 +1,7 @@
 import { Container } from "aurelia-framework";
 import { MapObject, AbortError } from "shared/types";
 
-// TODO: This reference is technically not allowed, as `infrastructure` should reference `framework`.
+// TODO:4: This reference is technically not allowed, as `infrastructure` should not reference `framework`.
 import { ToastService } from "shared/framework/services/toast";
 
 // The global Sentry instance, defined once Sentry has been initialized.
@@ -9,6 +9,15 @@ declare const Sentry: any;
 
 // The object representing the original console, before being wrapped by Sentry.
 const unwrappedConsole = ((window as any)._console || console) as typeof console;
+
+/**
+ * Represents info about a log entry in Sentry.
+ */
+interface ISentryLogEntry
+{
+    id: string;
+    url: string | undefined;
+}
 
 /**
  * Represents the user info to associate with a log entry.
@@ -49,7 +58,21 @@ export namespace Log
     {
         if ("Sentry" in window)
         {
-            Sentry.setUser(user);
+            if (user != null)
+            {
+                // Set the identity, picking only the properties we need,
+                // so sensitive information can't be accidentally leaked.
+                Sentry.setUser(
+                {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email
+                });
+            }
+            else
+            {
+                Sentry.setUser(undefined);
+            }
         }
     }
 
@@ -167,18 +190,20 @@ function log(level: LogLevel, message?: string, error?: Error | string, context?
 {
     logToConsole(level, message, error, context);
 
+    let entry: Promise<ISentryLogEntry | undefined> | undefined;
+
     try
     {
         if (level === "error" && "Sentry" in window)
         {
-            logToSentry(level, message, error, context);
+            entry = logToSentry(level, message, error, context);
         }
     }
     finally
     {
         if (level === "error")
         {
-            showAsToast(level, message, error, context);
+            showAsToast(level, message, error, context, entry);
         }
     }
 }
@@ -204,47 +229,65 @@ function logToConsole(level: LogLevel, message?: string, error?: Error | string,
  * @param message The message to log.
  * @param errors The errors to associate with the log entry.
  * @param context The context associated with the log entry.
+ * @returns A promise that will be resolved with the ID of the log entry, or undefined if not logged.
  */
-function logToSentry(level: LogLevel, message?: string, error?: Error | string, context?: MapObject): void
+async function logToSentry(level: LogLevel, message?: string, error?: Error | string, context?: MapObject): Promise<ISentryLogEntry | undefined>
 {
-    const { tags, ...data } = context || {};
-
-    Sentry.withScope((scope: any) =>
+    return new Promise((resolve, reject) =>
     {
-        // Set the level of the log entry.
-        scope.setLevel(level);
+        const { tags, ...data } = context || {};
 
-        // Attach the tags to the log entry.
-        if (tags != null)
+        Sentry.withScope((scope: any) =>
         {
-            scope.setTags(tags);
-        }
+            // Set the level of the log entry.
+            scope.setLevel(level);
 
-        // Sentry has no way to log a message and an error
-        // together, so attach any error as data instead.
-        if (message && error != null)
-        {
-                scope.setExtra("error", error);
-        }
-
-        // Attach the data to the log entry.
-        if (data != null)
-        {
-            for (const key of Object.keys(data))
+            // Attach the tags to the log entry.
+            if (tags != null)
             {
-                scope.setExtra(key, data[key]);
+                scope.setTags(tags);
             }
-        }
 
-        // Capture the log entry.
-        if (message)
-        {
-            Sentry.captureMessage(message);
-        }
-        else if (error != null)
-        {
-            Sentry.captureException(error);
-        }
+            // Sentry has no way to log a message and an error
+            // together, so attach any error as data instead.
+            if (message && error != null)
+            {
+                    scope.setExtra("error", error);
+            }
+
+            // Attach the data to the log entry.
+            if (data != null)
+            {
+                for (const key of Object.keys(data))
+                {
+                    scope.setExtra(key, data[key]);
+                }
+            }
+
+            let id: string | undefined;
+
+            // Capture the log entry.
+            if (message)
+            {
+                id = Sentry.captureMessage(message);
+            }
+            else if (error != null)
+            {
+                id = Sentry.captureException(error);
+            }
+            else
+            {
+                id = Sentry.captureMessage("An unknown error occurred");
+            }
+
+            if (id)
+            {
+                const url = ENVIRONMENT.integrations.sentry?.eventUrlPattern?.replace("{id}", id);
+                resolve({ id, url });
+            }
+
+            resolve(undefined);
+        });
     });
 }
 
@@ -254,8 +297,9 @@ function logToSentry(level: LogLevel, message?: string, error?: Error | string, 
  * @param message The message that was logged.
  * @param errors The errors associated with the log entry.
  * @param context The context associated with the log entry.
+ * @param entry A promise that will be resolved with the log entry info, if available.
  */
-function showAsToast(level: LogLevel, message?: string, error?: Error | string, context?: MapObject): void
+function showAsToast(level: LogLevel, message?: string, error?: Error | string, context?: MapObject, entry?: Promise<ISentryLogEntry | undefined>): void
 {
     const toastService = Container.instance.get(ToastService);
 
@@ -268,5 +312,5 @@ function showAsToast(level: LogLevel, message?: string, error?: Error | string, 
         // tslint:enable
     }
 
-    toastService.open(level, { message, error, context });
+    toastService.open(level, { message, error, context, entry });
 }

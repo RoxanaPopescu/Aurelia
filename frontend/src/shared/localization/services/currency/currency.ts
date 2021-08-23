@@ -8,7 +8,7 @@ import { LocaleService } from "../locale";
 export interface ICurrency
 {
     /**
-     * The ISO 4217 currency code identifying the currency.
+     * The ISO 4217 Alpha currency code identifying the currency.
      * This value is case sensitive.
      */
     code: string;
@@ -46,7 +46,7 @@ export class Currency
     private readonly _name: string | undefined;
 
     /**
-     * The ISO 4217 currency code identifying the currency.
+     * The ISO 4217 Alpha currency code identifying the currency.
      * This value is case sensitive.
      */
     public readonly code: string;

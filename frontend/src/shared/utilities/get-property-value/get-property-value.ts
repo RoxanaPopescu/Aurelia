@@ -1,5 +1,6 @@
 /**
  * Gets the value at the specified property path, starting from the specified object.
+ * Note that only simple property access is supported, i.e. no array indexes or method calls.
  * @param object The object from which the property access should start.
  * @param propertyPath The property path to access, starting with a property on the specified object.
  */

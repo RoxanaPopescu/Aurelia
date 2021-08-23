@@ -3,13 +3,14 @@ import { EventAggregator } from "aurelia-event-aggregator";
 import { ILocale, Locale } from "./locale";
 
 /**
- * Represents a function that will be invoked before the locale changes.
+ * Represents a function that will be called before the locale changes.
  * Use this to prepare the app for the new locale.
  * @param newLocale The new locale being set.
  * @param oldLocale The old locale, or undefined if not previously set.
+ * @param finish A function that, if called, finishes the change immediately.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new locale.
  */
-type LocaleChangeFunc = (newLocale: Locale, oldLocale: Locale | undefined) => void | Promise<void>;
+type LocaleChangeFunc = (newLocale: Locale, oldLocale: Locale | undefined, finish: () => void) => void | Promise<void>;
 
 /**
  * Represents a service that manages locales.
@@ -52,7 +53,7 @@ export class LocaleService
     /**
      * Configures the instance.
      * @param locales The locales supported by the app.
-     * @param changeFunc The function that is invoked before the locale changes.
+     * @param changeFunc The function to call before the locale changes.
      */
     public configure(locales: ILocale[], changeFunc?: LocaleChangeFunc): void
     {
@@ -94,9 +95,20 @@ export class LocaleService
 
         const locale = this.getLocale(canonicalLocaleCode);
 
-        await this._changeFunc(locale, this._locale);
+        let finished = false;
 
-        this._locale = locale;
+        const finishFunc = () =>
+        {
+            this._locale = locale;
+            finished = true;
+        };
+
+        await this._changeFunc(locale, this._locale, finishFunc);
+
+        if (!finished)
+        {
+            finishFunc();
+        }
 
         this._eventAggregator.publish("locale-changed");
 

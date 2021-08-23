@@ -5,9 +5,13 @@
     // TODO: What about label-related margins?
     // TODO: What about label-related colors or opacity?
 
-    /// The default width of the component.
+    /// The max width of the component.
     /// The default ensures a reasonable width when no width is specified.
-    --input-width: 144rem;
+    --input-max-width: 144rem;
+
+    /// The min width of the component.
+    /// The default ensures the input will expand, up to the its max width.
+    --input-min-width: 100%;
 
     /// The min-height of the component, if resizing is allowed.
     /// The default prevents resizing to less than the height of a single-line input.
@@ -59,6 +63,24 @@
     --input-surface-icon-color--hover: var(--surface-input-surface-icon-color--hover);
     --input-surface-icon-color--focus: var(--surface-input-surface-icon-color--focus);
     --input-surface-icon-color--invalid: var(--surface-input-surface-icon-color--invalid);
+
+    // The opacity of the required indicator.
+    --input-required-indicator-opacity: opacity: var(--opacity-faded-more);
+
+    // The color of the required indicator.
+    --input-required-indicator-color: var(--surface-negative-icon-color);
+
+    // The padding to apply to actions within the before or after slot.
+    // Note: To get square action hit areas, this should be equal to the top and bottom input padding.
+    --input-surface-action-padding: 9rem;
+
+    // The padding to apply to the action at the start of the before slot.
+    // Note: This must be equal to the left input padding.
+    --input-surface-action-padding-right: 12rem;
+
+    // The padding to apply to the action at the end of the after slot.
+    // Note: This must be equal to the right input padding.
+    --input-surface-action-padding-left: 12rem;
 }
 
 .input
@@ -205,8 +227,8 @@
         min-height: var(--input-min-height);
 
         // Set the min-width and max-width.
-        max-width: var(--input-width);
-        min-width: 100%;
+        max-width: var(--input-max-width);
+        min-width: var(--input-min-width);
 
         // Inherit the resize mode.
         resize: inherit;
@@ -230,16 +252,11 @@
             .input
             {
                 // Remove default width if nested within another input.
-                --input-width: auto;
+                --input-max-width: auto;
 
                 // Remove border if nested within another input.
                 --input-border-width: 0;
                 --input-border-radius: 0;
-            }
-
-            > icon.--clickable
-            {
-                cursor: pointer;
             }
         }
 
@@ -253,23 +270,6 @@
             white-space: nowrap;
         }
 
-        > div[slot="before"]
-        {
-            > icon:first-child
-            {
-                // Apply the input padding before the icon.
-                margin: var(--input-padding);
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-
-            > icon
-            {
-                // Apply inline spacing after the icon.
-                margin-right: var(--size-inline-spacing);
-            }
-        }
-
         > span[slot="after"]
         {
             // Apply the input padding, except at the end closest to the input value.
@@ -280,20 +280,58 @@
             white-space: nowrap;
         }
 
+        > div[slot="before"],
         > div[slot="after"]
         {
-            > icon:last-child
+            > icon,
+            > a[appearance="none"],
+            > button[appearance="none"]
             {
-                // Apply the input padding after the icon.
-                margin: var(--input-padding);
-                margin-top: 0;
-                margin-bottom: 0;
-            }
+                // Apply the input padding.
+                padding: var(--input-padding);
 
-            > icon
+                // Override the left and right padding.
+                // This should, assuming the action is square, result in a square hit area.
+                padding-left: var(--input-surface-action-padding);
+                padding-right: var(--input-surface-action-padding);
+            }
+        }
+
+        > div[slot="before"]
+        {
+            > icon,
+            > a[appearance="none"],
+            > button[appearance="none"]
             {
-                // Apply inline spacing before the icon.
-                margin-left: var(--size-inline-spacing);
+                &:first-child
+                {
+                    // If the action is the first child, apply left margin, such that the
+                    // sum of the padding and margin equals the left input padding.
+                    // margin-left: calc(var(--input-surface-action-padding-left) - var(--input-surface-action-padding));
+
+                    // If the action is the first child, apply the left padding, which sacrifices the
+                    // square hit area in favor of ensuring the padding matches the input padding.
+                    padding-left: var(--input-surface-action-padding-left);
+                }
+            }
+        }
+
+        > div[slot="after"]
+        {
+            > icon,
+            > a[appearance="none"],
+            > button[appearance="none"]
+            {
+                &:last-child
+                {
+                    // If the action is the last child, apply right margin, such that the
+                    // sum of the padding and margin equals the right input padding.
+                    // margin-right: calc(var(--input-surface-action-padding-right) - var(--input-surface-action-padding));
+
+                    // If the action is the last child, apply the right padding, which sacrifices the
+                    // square hit area in favor of ensuring the padding matches the input padding.
+                    padding-right: var(--input-surface-action-padding-right);
+                }
             }
         }
 
@@ -304,6 +342,9 @@
 
             // Expand to fill the available width.
             width: 100%;
+
+            // Allow the element to shrink, to make room for the before and after slots.
+            min-width: 0;
 
             // Use horizontal flex layout.
             display: flex;
@@ -453,6 +494,16 @@
         }
     }
 
+    &:not(.--disabled):not(.--readonly).--required
+    {
+        > .input-label > .input-heading > [slot]::after
+        {
+            content: " *";
+            color: var(--input-required-indicator-color);
+            opacity: var(--input-required-indicator-opacity);
+        }
+    }
+
     &:not(.--empty)
     {
         > .input-control > .input-control-inner > .input-placeholder
@@ -490,53 +541,42 @@
     min-width: calc(var(--dropdown-min-width) + 2 * var(--input-border-width));
 }
 
+// Apply basic styling to icons within the input.
+
 .input
 {
-    > .input-control dropdown-icon
+    > .input-control
     {
-        --dropdown-icon-size: var(--input-icon-size);
+        icon
+        {
+            font-size: var(--input-icon-size);
+        }
 
-        color: var(--input-surface-icon-color);
-    }
+        icon,
+        dropdown-icon
+        {
+            color: var(--input-surface-icon-color);
+        }
 
-    &:hover
-    {
-        > .input-control dropdown-icon
+        icon[tabindex]:hover,
+        dropdown-icon:hover,
+        button[appearance="none"]:hover > icon,
         {
             color: var(--input-surface-icon-color--hover);
+            cursor: pointer;
         }
-    }
 
-    &:focus-within
-    {
-        > .input-control dropdown-icon
+        .focus-visible & icon[tabindex]:focus,
+        .focus-visible & dropdown-icon:focus,
+        .focus-visible & button[appearance="none"]:hover > icon,
         {
             color: var(--input-surface-icon-color--focus);
-        }
-    }
-
-    &.--invalid
-    {
-        > .input-control dropdown-icon
-        {
-            color: var(--input-surface-icon-color--invalid);
-        }
-    }
-
-    &.--required
-    {
-        > .input-label > .input-heading > [slot]::after
-        {
-            content: " *";
-            color: var(--surface-negative-icon-color);
-            opacity: var(--opacity-faded-more);
         }
     }
 }
 
 // Apply basic styling to native controls, so we won't have to repeat this in every component.
 
-// stylelint-disable-next-line no-duplicate-selectors
 .input > .input-control > .input-control-inner
 {
     input.input-input,

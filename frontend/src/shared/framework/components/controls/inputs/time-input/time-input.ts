@@ -1,8 +1,8 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { Duration, DateTime, Zone } from "luxon";
 import { TimeValueConverter, TimeFormat } from "shared/localization";
-import { LabelPosition } from "../../control";
-import { AutocompleteHint } from "../input";
+import { LabelPosition, shouldFocusInput } from "../../control";
+import { AutocompleteHint, EnterKeyHint } from "../input";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 
 // The items to choose from in the dropdown.
@@ -319,6 +319,13 @@ export class TimeInputCustomElement
     public autoselect: boolean;
 
     /**
+     * The hint indicating the type of `Enter` key to show on a virtual keyboard,
+     * or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: undefined })
+    public enterkey: EnterKeyHint | undefined;
+
+    /**
      * True to use `fixed` positioning for the dropdown, otherwise false.
      * This may be needed if the dropdown is placed within a container that
      * hides overflowing content, but note that it has a performance cost.
@@ -355,8 +362,9 @@ export class TimeInputCustomElement
 
         setTimeout(() => this.itemPicker?.scrollToFocusedValue());
 
-        if (focusInput)
+        if (focusInput && shouldFocusInput())
         {
+            this.inputElement.focus();
             setTimeout(() => this.inputElement.focus());
         }
     }
@@ -400,6 +408,7 @@ export class TimeInputCustomElement
         if (focusToggle)
         {
             this.toggleElement.focus();
+            setTimeout(() => this.toggleElement.focus());
         }
     }
 

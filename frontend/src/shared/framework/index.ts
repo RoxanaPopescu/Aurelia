@@ -42,6 +42,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/inputs/text-input/text-input"),
         PLATFORM.moduleName("./components/controls/inputs/time-input/time-input"),
         PLATFORM.moduleName("./components/controls/inputs/url-input/url-input"),
+        PLATFORM.moduleName("./components/controls/inputs/urls-input/urls-input"),
         PLATFORM.moduleName("./components/controls/navigation/path-nav/path-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab-nav"),
         PLATFORM.moduleName("./components/controls/navigation/tab-nav/tab"),
@@ -52,6 +53,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/pickers/item-picker/item"),
         PLATFORM.moduleName("./components/controls/toggles/toggle-group/toggle-group"),
         PLATFORM.moduleName("./components/controls/toggles/check-toggle/check-toggle"),
+        PLATFORM.moduleName("./components/controls/toggles/dark-mode-toggle/dark-mode-toggle"),
         PLATFORM.moduleName("./components/controls/toggles/radio-toggle/radio-toggle"),
         PLATFORM.moduleName("./components/controls/toggles/switch-toggle/switch-toggle"),
         PLATFORM.moduleName("./components/controls/toolbar/toolbar"),
@@ -108,6 +110,7 @@ export function configure(use: FrameworkConfiguration): void
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
         PLATFORM.moduleName("./converters/json/json"),
+        PLATFORM.moduleName("./converters/keys/keys"),
         PLATFORM.moduleName("./converters/map/map"),
         PLATFORM.moduleName("./converters/reverse/reverse"),
         PLATFORM.moduleName("./converters/scale/scale"),
@@ -136,7 +139,6 @@ export * from "./components/cards/card-skeleton/card-skeleton";
 export * from "./components/controls/buttons/dropdown-button/dropdown-button";
 export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/control";
-export * from "./components/controls/buttons/select-button/select-button";
 export * from "./components/controls/dropdown/dropdown";
 export * from "./components/controls/dropdown/dropdown-icon";
 export * from "./components/controls/inputs/input";
@@ -157,6 +159,7 @@ export * from "./components/controls/inputs/tags-input/tag";
 export * from "./components/controls/inputs/text-input/text-input";
 export * from "./components/controls/inputs/time-input/time-input";
 export * from "./components/controls/inputs/url-input/url-input";
+export * from "./components/controls/inputs/urls-input/urls-input";
 export * from "./components/controls/navigation/path-nav/path-nav";
 export * from "./components/controls/navigation/tab-nav/tab-nav";
 export * from "./components/controls/navigation/tab-nav/tab";
@@ -168,6 +171,7 @@ export * from "./components/controls/pickers/item-picker/item";
 export * from "./components/controls/toggles/toggle";
 export * from "./components/controls/toggles/toggle-group/toggle-group";
 export * from "./components/controls/toggles/check-toggle/check-toggle";
+export * from "./components/controls/toggles/dark-mode-toggle/dark-mode-toggle";
 export * from "./components/controls/toggles/radio-toggle/radio-toggle";
 export * from "./components/controls/toggles/switch-toggle/switch-toggle";
 export * from "./components/controls/toolbar/toolbar";
@@ -225,6 +229,7 @@ export * from "./components/validation/validators/required-validator/required-va
 // Converters
 export * from "./converters/filter/filter";
 export * from "./converters/json/json";
+export * from "./converters/keys/keys";
 export * from "./converters/map/map";
 export * from "./converters/reverse/reverse";
 export * from "./converters/scale/scale";
@@ -238,3 +243,6 @@ export * from "./services/focus";
 export * from "./services/modal";
 export * from "./services/theme";
 export * from "./services/toast";
+
+// Utilities
+export * from "./utilities/pick-and-upload-file/pick-and-upload-file";

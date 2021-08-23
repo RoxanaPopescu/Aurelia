@@ -31,6 +31,9 @@ tag
     /// Note: This should be customized for each theme surface.
     --tag-surface-icon-color: var(--surface-input-surface-tag-surface-icon-color);
     --tag-surface-icon-color--hover: var(--surface-input-surface-tag-surface-icon-color--hover);
+
+    /// The size of icons on the surface of the component.
+    --tag-surface-icon-size: 1em;
 }
 
 tag
@@ -80,12 +83,13 @@ tag
     icon
     {
         margin-left: var(--size-inline-spacing);
-        color: var(--tag-surface-icon-color);
+        color: var(--tag-surface-icon-color) !important;
+        font-size: var(--tag-surface-icon-size) !important;
         cursor: pointer;
 
         &:hover
         {
-            color: var(--tag-surface-icon-color--hover);
+            color: var(--tag-surface-icon-color--hover) !important;
         }
     }
 }

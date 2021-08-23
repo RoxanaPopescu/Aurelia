@@ -19,9 +19,13 @@ dropdown-icon
     // Set the size of the icon, in proportion to the text.
     font-size: var(--dropdown-icon-size);
 
-    // Apply opacity to de-emphasize the icon.
-    opacity: var(--opacity-faded);
-
     // Use cursor to indicate the element is clickable.
     cursor: pointer;
+
+    icon
+    {
+        // Ensure the icon uses the font size and color specified for the component.
+        font-size: 1em !important;
+        color: inherit !important;
+    }
 }

@@ -1,6 +1,6 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { Id } from "shared/utilities";
-import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, SpellcheckHint } from "../input";
+import { AutocompleteHint, AutocorrectHint, AutocapitalizeHint, EnterKeyHint, SpellcheckHint, InputMode } from "../input";
 
 /**
  * Custom element representing a text input.
@@ -36,22 +36,12 @@ export class TextInputCustomElement
     }
 
     /**
-     * Gets the value of the autosize element.
+     * Gets the value of the autosize element that determines the min height.
      */
-    @computedFrom("inputValue")
+    @computedFrom("lines")
     protected get autosizeValue(): string
     {
-        if (this.lines)
-        {
-            const lines = this.inputValue.split("\n").length;
-
-            if (lines < this.lines)
-            {
-                return this.inputValue + "\n".repeat(this.lines - lines);
-            }
-        }
-
-        return this.inputValue;
+        return this.lines ? "\n".repeat(this.lines - 1) : "";
     }
 
     /**
@@ -71,6 +61,12 @@ export class TextInputCustomElement
      */
     @bindable({ defaultValue: false })
     public readonly: boolean;
+
+    /**
+     * The type of virtual keyboard to use.
+     */
+    @bindable({ defaultValue: "text" })
+    public inputmode: InputMode;
 
     /**
      * The autocomplete mode to use.

@@ -16,17 +16,19 @@
 
         </toast-header>
 
-        <toast-section if.bind="model.details" toggle.bind="true" expanded.one-time="false" class="margin-bottom">
+        <toast-section if.bind="model.details" toggle.bind="true" expanded.one-time="false">
 
             <div slot="header" translate>
                 Details
             </div>
 
-            <div class="font-small margin">
+            <div class="font-small">
                 ${model.details}
             </div>
 
         </toast-section>
+
+        <toast-footer></toast-footer>
 
     </toast>
 

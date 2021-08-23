@@ -8,6 +8,9 @@
  */
 export class TypedWorker<TMessage> extends Worker
 {
+    /**
+     * Creates a new instance of the type.
+     */
     public constructor()
     {
         // Ensure this class is never instantiated.

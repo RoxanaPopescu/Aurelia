@@ -60,7 +60,7 @@ export class ScrollCustomAttribute implements IScroll
      */
     public attached(): void
     {
-        // TODO: Why is this needed? It shouldn't be...
+        // TODO:3: Why is this needed? It shouldn't be...
         this._element.setAttribute("scroll", "");
 
         let fadeTargets: IFadeTarget[] = [];
@@ -123,8 +123,11 @@ export class ScrollCustomAttribute implements IScroll
                     // Fade elements relative to the scroll offset.
                     for (const fadeTarget of fadeTargets)
                     {
-                        fadeTarget.element.style.opacity =
-                            Math.max(0, 1 - (scrollTop / fadeTarget.height) * fadeTarget.fadeFactor).toString();
+                        if (fadeTarget.height > 0)
+                        {
+                            fadeTarget.element.style.opacity =
+                                Math.max(0, 1 - (scrollTop / fadeTarget.height) * fadeTarget.fadeFactor).toString();
+                        }
                     }
 
                     // Schedule the end of the sequernce.

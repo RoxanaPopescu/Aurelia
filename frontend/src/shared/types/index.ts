@@ -12,3 +12,4 @@ export * from "./values/date-time-range";
 export * from "./values/phone-number";
 export * from "./values/time-of-day";
 export * from "./values/time-range";
+export * from "./values/url-info";

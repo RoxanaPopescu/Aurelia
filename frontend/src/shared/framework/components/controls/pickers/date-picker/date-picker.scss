@@ -174,13 +174,13 @@ date-picker
                 &.--outside-range
                 {
                     // Fade items that are outside the range.
-                    opacity: calc(var(--opacity-faded) / 6);
+                    opacity: var(--opacity-faded-more);
                 }
 
                 &.--disabled
                 {
                     // Fade items that are disabled more than items outside the range.
-                    opacity: calc(var(--opacity-disabled) / 6);
+                    opacity: calc(var(--opacity-faded-more) / 3);
 
                     // Add a diagonal line to indicate that the item is unavailable.
                     &::after
@@ -195,6 +195,7 @@ date-picker
                         width: 2rem;
                         background: currentColor;
                         transform: rotate(45deg);
+                        opacity: 0.8;
                     }
                 }
             }

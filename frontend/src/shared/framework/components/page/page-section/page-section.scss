@@ -59,10 +59,10 @@ page-section
 
             // Apply fade effect to the background.
             mask-image: linear-gradient(
-                to bottom,
+                to top,
+                rgba(255, 255, 255, 0.25) 0,
+                rgba(255, 255, 255, 0.98) 3rem,
                 rgba(255, 255, 255, 0.99) 0%,
-                rgba(255, 255, 255, 0.98) 95%,
-                rgba(255, 255, 255, 0.25) 100%
             );
         }
     }

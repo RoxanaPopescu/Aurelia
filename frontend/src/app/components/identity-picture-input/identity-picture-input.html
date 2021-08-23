@@ -24,7 +24,7 @@
         <div slot="before">
 
             <identity-picture src.bind="value & debounce: 300">
-                ${formattedInitials}
+                <span repeat.for="i of formattedInitials" class="${i ? '' : '--unknown-initial'}">${i}</span>
             </identity-picture>
 
             <slot name="before"></slot>

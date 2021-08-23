@@ -47,3 +47,9 @@ export type SpellcheckHint =
  */
 export type EnterKeyHint =
     "enter" | "done" | "go" | "previous" | "next" | "search" | "send";
+
+/**
+ * Represents the type of virtual keyboard to use for an input.
+ */
+export type InputMode =
+    "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";

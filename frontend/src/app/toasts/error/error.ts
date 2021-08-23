@@ -28,6 +28,22 @@ export interface IErrorToastModel
      * null to never hide the toast, or undefined to use the default.
      */
     timeout?: number | null;
+
+    /**
+     * A promise that will be resolved with the log entry info, if available.
+     */
+    entry: Promise<
+    {
+        /**
+         * The ID of the log entry.
+         */
+        id: string;
+
+        /**
+         * The URL of the log entry, if available.
+         */
+        url?: string;
+    }>;
 }
 
 /**
@@ -69,6 +85,27 @@ export class ErrorToast
     protected errorStack: string;
 
     /**
+     * The log entry info, if available.
+     */
+    protected entry: undefined |
+    {
+        /**
+         * The ID of the log entry.
+         */
+        id: string;
+
+        /**
+         * The URL of the log entry, if available.
+         */
+        url?: string;
+    };
+
+    /**
+     * The URL of the log entry, if available.
+     */
+    protected url: string | undefined;
+
+    /**
      * Called by the framework when the toast is activated.
      * @param model The model to use for the toast.
      */
@@ -76,6 +113,9 @@ export class ErrorToast
     {
         // Sets the model for the toast.
         this.model = model;
+
+        // tslint:disable-next-line: no-floating-promises
+        Promise.resolve(this.model.entry).then(entry => this.entry = entry);
 
         if (this.model.error instanceof Error)
         {

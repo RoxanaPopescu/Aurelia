@@ -1,0 +1,100 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${value == null || value.length == 0 ? '--empty' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    forward-focus
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+
+    <label class="input-label" for="input-${id}">
+
+        <div class="input-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="input-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <url-input
+        repeat.for="i of value.length"
+        class="${$last ? '' : 'margin-bottom'}"
+        value.bind="value[i].url"
+        autocomplete.bind="autocomplete"
+        mozactionhint.bind="enterkey"
+        enterkeyhint.bind="enterkey"
+        maxlength.bind="maxlength || 524288"
+        disabled.bind="disabled"
+        readonly.bind="readonly">
+
+        <div slot="after">
+
+            <button
+                if.bind="!readonly"
+                disabled.bind="disabled"
+                title.translate="Remove link"
+                appearance="none"
+                click.trigger="onDeleteClick(i)">
+                <icon name="md-remove"></icon>
+            </button>
+
+            <a
+                if.bind="readonly && value[i].url"
+                href.bind="value[i].url"
+                target="_blank"
+                appearance="none">
+                <icon name="md-open-in-new"></icon>
+            </a>
+
+        </div>
+
+        <div class="input-placeholder">
+            <slot name="placeholder"></slot>
+        </div>
+
+    </url-input>
+
+    <div class="input-validation --summary font-small">
+
+        <async-validator
+            function.call="validateNoEmptyLinks()">
+
+            <template replace-part="invalid" translate>
+                Please remove the empty links.
+            </template>
+
+        </async-validator>
+
+        <async-validator
+            function.call="validateNoDuplicateLinks()">
+
+            <template replace-part="invalid" translate>
+                Please remove the duplicate links.
+            </template>
+
+        </async-validator>
+
+        <slot name="validation"></slot>
+
+    </div>
+
+    <button
+        if.bind="!readonly"
+        disabled.bind="readonly"
+        class="${value.length > 0 ? 'margin-top' : ''}"
+        appearance="none"
+        accent="primary"
+        click.trigger="onAddClick()">
+        <icon name="md-add" class="font-larger"></icon>
+        <span translate>
+            Add link
+        </span>
+    </button>
+
+</template>

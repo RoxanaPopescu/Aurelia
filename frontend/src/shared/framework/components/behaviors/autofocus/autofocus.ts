@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { AppRouter } from "aurelia-router";
 import { IExtendedFocusOptions } from "shared/framework/services/focus";
 
 /**
@@ -10,13 +11,16 @@ export class AutofocusCustomAttribute
     /**
      * Creates a new instance of the type.
      * @param element The element to which this attribute is applied.
+     * @param router The `AppRouter` instance.
      */
-    public constructor(element: Element)
+    public constructor(element: Element, router: AppRouter)
     {
         this._element = element as HTMLElement | SVGElement;
+        this._router = router;
     }
 
     private readonly _element: HTMLElement | SVGElement;
+    private readonly _router: AppRouter;
 
     /**
      * True or an empty string to enable autofocus, otherwise false.
@@ -45,6 +49,12 @@ export class AutofocusCustomAttribute
      */
     public attached(): void
     {
+        // Don't autofocus while navigating back or forward, or while refreshing, as it breaks scroll restoration.
+        if (this._router.isNavigatingBack || this._router.isNavigatingForward || this._router.isNavigatingRefresh)
+        {
+            return;
+        }
+
         // Delay focusing the element, to prevent conflicts with the `trap-focus` attribute,
         // which if applied will also attempt to focus an element after a timeout.
         setTimeout(() => setTimeout(() =>
@@ -68,6 +78,12 @@ export class AutofocusCustomAttribute
      */
     protected enabledChanged(): void
     {
+        // Don't autofocus while navigating back or forward, or while refreshing, as it breaks scroll restoration.
+        if (this._router.isNavigatingBack || this._router.isNavigatingForward || this._router.isNavigatingRefresh)
+        {
+            return;
+        }
+
         if (this.enabled === true)
         {
             const customFocusOptions: IExtendedFocusOptions =

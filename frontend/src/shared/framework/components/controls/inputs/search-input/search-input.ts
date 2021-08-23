@@ -125,4 +125,13 @@ export class SearchInputCustomElement
             this.value = this.value.trim();
         }
     }
+
+    /**
+     * Called when the `Clear` icon is clicked.
+     * Sets the value to undefined.
+     */
+    protected onClearClick(): void
+    {
+        this.value = undefined;
+    }
 }

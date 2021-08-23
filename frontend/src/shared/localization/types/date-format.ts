@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { escapeRegExp } from "shared/utilities";
 import { LocaleService } from "../services/locale";
-import * as formatTokens from "../resources/strings/format-tokens.json";
+import formatTokens from "../resources/strings/format-tokens.json";
 
 // The date used when resolving format parts.
 const date = DateTime.fromMillis(0);
@@ -94,7 +94,7 @@ export class DateFormat
     /**
      * The pattern to use when validating user input while the user is typing.
      * Note that the actual validity of the input should always be determined
-     * based on whether the input was be successfully parsed.
+     * based on whether the input was successfully parsed.
      */
     public readonly inputPattern: RegExp;
 

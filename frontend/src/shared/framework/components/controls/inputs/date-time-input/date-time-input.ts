@@ -1,5 +1,6 @@
 import { autoinject, bindable, bindingMode, observable, computedFrom } from "aurelia-framework";
 import { DateTime, Zone, Duration } from "luxon";
+import { EnterKeyHint } from "../input";
 
 /**
  * Custom element representing an input for picking a date and time.
@@ -180,6 +181,13 @@ export class DateTimeInputCustomElement
      */
     @bindable({ defaultValue: false })
     public autoselect: boolean;
+
+    /**
+     * The hint indicating the type of `Enter` key to show on a virtual keyboard,
+     * or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: undefined })
+    public enterkey: EnterKeyHint | undefined;
 
     /**
      * True to use `fixed` positioning for the dropdown, otherwise false.

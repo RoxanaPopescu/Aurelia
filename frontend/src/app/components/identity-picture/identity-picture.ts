@@ -10,7 +10,7 @@ import { autoinject, bindable } from "aurelia-framework";
 export class IdentityPictureCustomElement
 {
     /**
-     * The URL of the image to show, if available.
+     * The URL of the picture to show, if available.
      */
     @bindable
     public src: string | undefined;

@@ -20,9 +20,6 @@ modal-view
         // Allow clicks to pass through, as the `compose` element is just the presenter.
         pointer-events: none;
 
-        // Hint that animation will be applied.
-        will-change: opacity;
-
         &:not(.--disabled) > *
         {
             // Prevent clicks from passing through the modal at the top.

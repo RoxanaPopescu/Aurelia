@@ -3,13 +3,14 @@ import { ITheme, Theme } from "./theme";
 import { once } from "shared/utilities";
 
 /**
- * Represents a function that will be invoked before the theme changes.
+ * Represents a function that will be called before the theme changes.
  * Use this to prepare the app for the new theme.
  * @param newTheme The new theme being set.
  * @param oldTheme The old theme, or undefined if not previously set.
+ * @param finish A function that, if called, finishes the change immediately.
  * @returns Nothing, or a promise that will be resolved when the app is ready for the new theme.
  */
-type ThemeChangeFunc = (newTheme: Theme, oldTheme: Theme | undefined) => void | Promise<void>;
+type ThemeChangeFunc = (newTheme: Theme, oldTheme: Theme | undefined, finish: () => void) => void | Promise<void>;
 
 /**
  * Represents a service that manages themes.
@@ -43,7 +44,7 @@ export class ThemeService
      * Configures the instance.
      * @param themes The themes supported by the app.
      * @param themeFolderPath The path for the folder containing the themes.
-     * @param changeFunc The function that is invoked before the theme changes.
+     * @param changeFunc The function to call before the theme changes.
      */
     @once
     public configure(themes: ITheme[], changeFunc: ThemeChangeFunc): void
@@ -88,19 +89,31 @@ export class ThemeService
 
         const theme = this.getTheme(resolvedThemeSlug);
 
-        await this._changeFunc(theme, this._theme);
+        let finished = false;
 
-        if (this.theme != null && this.theme.classes.length > 0)
+        const finishFunc = () =>
         {
-            document.documentElement.classList.remove(...this.theme.classes);
-        }
+            if (this.theme != null && this.theme.classes.length > 0)
+            {
+                document.documentElement.classList.remove(...this.theme.classes);
+            }
 
-        if (theme.classes.length > 0)
+            if (theme.classes.length > 0)
+            {
+                document.documentElement.classList.add(...theme.classes);
+            }
+
+            this._theme = theme;
+
+            finished = true;
+        };
+
+        await this._changeFunc(theme, this._theme, finishFunc);
+
+        if (!finished)
         {
-            document.documentElement.classList.add(...theme.classes);
+            finishFunc();
         }
-
-        this._theme = theme;
 
         return this._theme;
     }
