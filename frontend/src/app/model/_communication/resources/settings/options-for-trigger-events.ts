@@ -8,8 +8,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -35,8 +34,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -59,8 +57,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -85,8 +82,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -111,8 +107,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -136,8 +131,7 @@ export default
         [
             "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -161,8 +155,7 @@ export default
         recipientTypes:
         [
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
@@ -185,9 +178,9 @@ export default
     {
         recipientTypes:
         [
+            "delivery-customer",
             "pickup-customer",
-            "custom-email",
-            "custom-phone"
+            "custom-email"
         ],
         messageTypes:
         [
