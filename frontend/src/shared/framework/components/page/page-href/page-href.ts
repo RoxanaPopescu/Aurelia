@@ -96,13 +96,13 @@ export class PageHrefCustomAttribute
         this.navigate ??= this.attribute == null && this.property == null;
 
         // Ensure this attribute, and the specified attribute and property, is set.
-        this.hrefChanged();
+        this.pathChanged();
     }
 
     /**
      * Called by the framework when the `href` property changes.
      */
-    protected hrefChanged(): void
+    protected pathChanged(): void
     {
         // Ensure this attribute, and the specified attribute and property, is updated.
 
@@ -251,11 +251,11 @@ export class PageHrefCustomAttribute
                 if (this.attribute != null)
                 {
                     // Hide the URL to reduce clutter in the DOM.
-                    attributeValue += "href: …";
+                    attributeValue += "path: …";
                 }
                 else
                 {
-                    attributeValue += `href: ${this._url}`;
+                    attributeValue += `path: ${this._url}`;
                 }
             }
 

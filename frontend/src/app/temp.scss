@@ -319,16 +319,26 @@ toolbar
     // Use a small default width for search inputs, and expand them when focused.
     search-input
     {
-        --input-min-width: 0;
+        // Reduce width when empty and not focused.
+        --input-min-width: 10vw;
+        --input-max-width: 100%;
         width: 10vw;
-        transition: width var(--animation-duration-long);
 
-        // Delay transition so it's possible to click the clear icon within the input.
-        transition-delay: 0.1s;
+        // Animate width changes.
+        transition: width 0.3s cubic-bezier(0.15, 1, 0.3, 1) 0s;
+
+        .input-control
+        {
+            // Animate color changes.
+            transition:
+                background-color 0.2s ease-in-out 0s,
+                border-color 0.2s ease-in-out 0s !important;
+        }
 
         &:focus-within,
         &:not(.--empty)
         {
+            // Expand the input when focused or not empty.
             width: 320rem;
         }
     }
