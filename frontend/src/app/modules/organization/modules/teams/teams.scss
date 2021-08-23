@@ -4,6 +4,6 @@ page[name="organization"] page[name="teams"]
 {
     data-table
     {
-        --data-table-columns: repeat(4, 1fr) min-content;
+        --data-table-columns: 1fr 1.5fr 0.85fr 0.75fr 100rem;
     }
 }

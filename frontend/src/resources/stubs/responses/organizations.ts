@@ -38,20 +38,19 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/users":
     {
-      body:
-      [
-        {
-          id: "user-1-id",
-          fullName: "John Doe",
-          preferredName: "John",
-          email: "johndoe@example.com",
-          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-          role: { id: "role-1-id", name: "Role 1" },
-          team: { id: "team-1-id", name: "Team 1" },
-          status: "active",
-          lastOnline: DateTime.utc().toISO()
-        }
-      ]
+      body: Array(5).fill(
+      {
+        id: "user-1-id",
+        fullName: "John Doe",
+        preferredName: "John",
+        email: "johndoe@example.com",
+        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        status: "active",
+        lastOnline: DateTime.utc().toISO()
+      })
     },
 
     "POST /api/v2/organizations/mover-organization-id/users/invite":
@@ -82,25 +81,23 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/roles":
     {
-      body:
-      [
-        {
-          id: "role-1-id",
-          name: "Role 1",
-          userCount: 1,
-          createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
-          modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
-          permissions:
-          [
-            { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-            { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-            { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" },
-            { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
-            { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" },
-            { id: "permission-6-id", name: "Edit routes", area: "Routes", type: "edit" }
-          ]
-        }
-      ]
+      body: Array(5).fill(
+      {
+        id: "role-1-id",
+        name: "Role 1",
+        userCount: 1,
+        createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
+        modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
+        permissions:
+        [
+          { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
+          { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
+          { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" },
+          { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
+          { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" },
+          { id: "permission-6-id", name: "Edit routes", area: "Routes", type: "edit" }
+        ]
+      })
     },
 
     "POST /api/v2/organizations/mover-organization-id/roles/create":
@@ -183,19 +180,17 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/teams":
     {
-      body:
-      [
-        {
-          id: "team-1-id",
-          name: "Team 1",
-          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-          address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
-          vatNumber: "42069",
-          invoiceDirectly: true,
-          invoiceEmail: "team1@example.com",
-          userCount: 1
-        }
-      ]
+      body: Array(5).fill(
+      {
+        id: "team-1-id",
+        name: "Team 1",
+        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+        address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
+        vatNumber: "42069",
+        invoiceDirectly: true,
+        invoiceEmail: "team1@example.com",
+        userCount: 1
+      })
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/create":
@@ -235,20 +230,19 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
     {
-      body:
-      [
-        {
-          id: "user-1-id",
-          fullName: "John Doe",
-          preferredName: "John",
-          email: "johndoe@example.com",
-          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-          role: { id: "role-1-id", name: "Role 1" },
-          team: { id: "team-1-id", name: "Team 1" },
-          status: "active",
-          lastOnline: DateTime.utc().toISO()
-        }
-      ]
+      body: Array(5).fill(
+      {
+        id: "user-1-id",
+        fullName: "John Doe",
+        preferredName: "John",
+        email: "johndoe@example.com",
+        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        status: "active",
+        lastOnline: DateTime.utc().toISO()
+      })
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/add":

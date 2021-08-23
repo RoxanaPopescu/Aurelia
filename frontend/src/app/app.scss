@@ -23,6 +23,17 @@ html[route^="account/"] app-sidebar
     display: none;
 }
 
+.input
+{
+    // The opacity of the required indicator.
+    --input-required-indicator-opacity: var(--opacity-faded) !important;
+    --input-required-indicator-opacity--invalid: var(--opacity-faded) !important;
+
+    // The color of the required indicator.
+    --input-required-indicator-color: inherit !important;
+    --input-required-indicator-color--invalid: var(--surface-negative-text-color) !important;
+}
+
 // Import styles for legacy components.
 @import "../legacy/styles/react-module.scss";
 

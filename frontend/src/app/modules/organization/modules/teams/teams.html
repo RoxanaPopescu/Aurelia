@@ -68,12 +68,12 @@
                             Name
                         </data-table-cell>
 
-                        <data-table-cell name="phoneNumber" translate>
-                            Contact number
-                        </data-table-cell>
-
                         <data-table-cell name="address" translate>
                             Address
+                        </data-table-cell>
+
+                        <data-table-cell name="phoneNumber" translate>
+                            Contact phone
                         </data-table-cell>
 
                         <data-table-cell name="vatNumber" translate>
@@ -98,13 +98,13 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.phoneNumber | phone}
+                                    ${team.address}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${team.address}
+                                    ${team.phoneNumber | phone}
                                 </span>
                             </data-table-cell>
 

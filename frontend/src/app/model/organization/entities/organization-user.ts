@@ -19,6 +19,7 @@ export class OrganizationUser
         this.preferredName = data.preferredName;
         this.email = data.email;
         this.phoneNumber = data.phoneNumber;
+        this.pictureUrl = data.pictureUrl;
         this.role = data.role;
         this.team = data.team;
         this.status = new OrganizationUserStatus(data.status);
@@ -53,6 +54,11 @@ export class OrganizationUser
      * The phone number of the user, if any.
      */
     public phoneNumber: IPhoneNumber | undefined;
+
+    /**
+     * The URL for the user picture.
+     */
+    public pictureUrl: string;
 
     /**
      * The role of the user within the organization.

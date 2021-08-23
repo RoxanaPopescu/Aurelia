@@ -31,13 +31,13 @@ export default
             email: "john-doe@example.com",
             phone:
             {
-                nationalNumber: "22222222",
+                nationalNumber: "42424242",
                 countryCallingCode: "45",
                 countryCode: "DK"
             },
             fullName: "John Doe",
             preferredName: "John",
-            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4",
+            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200"
         }
     },
 
@@ -48,13 +48,13 @@ export default
             email: "john-doe@example.com",
             phone:
             {
-                nationalNumber: "22222222",
+                nationalNumber: "42424242",
                 countryCallingCode: "45",
                 countryCode: "DK"
             },
             fullName: "John Doe",
             preferredName: "John",
-            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4",
+            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200"
         }
     }
 }

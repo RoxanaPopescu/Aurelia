@@ -5,8 +5,8 @@
 .toggle-heading > *,
 .toggle-description > *
 {
-    opacity: 1 !important;
-    color: var(--surface-subtle-color);
+    opacity: 0.9 !important;
+    //color: var(--surface-subtle-color);
 
     info-icon
     {
@@ -152,7 +152,8 @@ modal-panel .modal-panel-content modal-header
 
     .input-description > *
     {
-        margin-bottom: 2rem;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
     }
 }
 

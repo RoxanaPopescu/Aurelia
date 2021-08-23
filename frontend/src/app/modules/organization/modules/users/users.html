@@ -64,16 +64,12 @@
 
                     <data-table-headers>
 
-                        <data-table-cell name="fullName" translate>
-                            Name
-                        </data-table-cell>
-
                         <data-table-cell name="id" translate>
                             ID
                         </data-table-cell>
 
-                        <data-table-cell name="email" translate>
-                            Email
+                        <data-table-cell name="fullName" translate>
+                            Name
                         </data-table-cell>
 
                         <data-table-cell name="role.name" translate>
@@ -84,12 +80,16 @@
                             Team
                         </data-table-cell>
 
-                        <data-table-cell name="lastOnline" translate>
-                            Last online
+                        <data-table-cell name="email" translate>
+                            Email
                         </data-table-cell>
 
                         <data-table-cell name="phoneNumber" translate>
                             Phone number
+                        </data-table-cell>
+
+                        <data-table-cell name="lastOnline" translate>
+                            Last online
                         </data-table-cell>
 
                         <data-table-cell name="status.name" translate>
@@ -108,19 +108,13 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${user.fullName}
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span class="text-truncate">
                                     ${user.id}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${user.email}
+                                    ${user.fullName}
                                 </span>
                             </data-table-cell>
 
@@ -138,13 +132,19 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${user.lastOnline | dateTime}
+                                    ${user.email}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
                                     ${user.phoneNumber | phone}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${user.lastOnline | dateTime}
                                 </span>
                             </data-table-cell>
 

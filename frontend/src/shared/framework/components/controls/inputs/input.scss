@@ -65,10 +65,12 @@
     --input-surface-icon-color--invalid: var(--surface-input-surface-icon-color--invalid);
 
     // The opacity of the required indicator.
-    --input-required-indicator-opacity: opacity: var(--opacity-faded-more);
+    --input-required-indicator-opacity: 0;
+    --input-required-indicator-opacity--invalid: 0;
 
     // The color of the required indicator.
-    --input-required-indicator-color: var(--surface-negative-icon-color);
+    --input-required-indicator-color: inherit;
+    --input-required-indicator-color--invalid: inherit;
 
     // The padding to apply to actions within the before or after slot.
     // Note: To get square action hit areas, this should be equal to the top and bottom input padding.
@@ -473,6 +475,19 @@
         }
     }
 
+    &:not(.--disabled):not(.--readonly).--required
+    {
+        > .input-label > .input-heading > [slot]::after
+        {
+            // If the input is editable and required, append a `*` after the heading.
+            content: " *";
+
+            // Apply the style for the normal state.
+            color: var(--input-required-indicator-color);
+            opacity: var(--input-required-indicator-opacity);
+        }
+    }
+
     &:not(.--disabled).--readonly,
     &:not(.--disabled):not(.--readonly)
     {
@@ -491,16 +506,16 @@
                 // Apply the text color for the invalid state only if the input is not empty.
                 color: var(--input-surface-text-color--invalid);
             }
-        }
-    }
 
-    &:not(.--disabled):not(.--readonly).--required
-    {
-        > .input-label > .input-heading > [slot]::after
-        {
-            content: " *";
-            color: var(--input-required-indicator-color);
-            opacity: var(--input-required-indicator-opacity);
+            &.--required
+            {
+                > .input-label > .input-heading > [slot]::after
+                {
+                    // Apply the style for the invalid state.
+                    color: var(--input-required-indicator-color--invalid);
+                    opacity: var(--input-required-indicator-opacity--invalid);
+                }
+            }
         }
     }
 
