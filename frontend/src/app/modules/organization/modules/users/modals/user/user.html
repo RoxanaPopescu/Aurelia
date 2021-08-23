@@ -1,0 +1,50 @@
+<template>
+
+    <require from="./components/profile-pane/profile-pane"></require>
+    <require from="./components/security-pane/security-pane"></require>
+
+    <require from="./user.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="user" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom user-select-contain">
+                ${user.fullName}
+            </h1>
+
+            <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
+
+                <tab name="profile">
+                    <h2 translate>
+                        Profile
+                    </h2>
+                </tab>
+
+                <tab name="security">
+                    <h2 translate>
+                        Security
+                    </h2>
+                </tab>
+
+            </tab-nav>
+
+        </modal-header>
+
+        <profile-pane
+            show.bind="selectedTab === 'profile'"
+            user.bind="user"
+            validation.ref="profileValidation">
+        </profile-pane>
+
+        <security-pane
+            show.bind="selectedTab === 'security'"
+            user.bind="user"
+            validation.ref="securityValidation">
+        </security-pane>
+
+    </modal-panel>
+
+</template>

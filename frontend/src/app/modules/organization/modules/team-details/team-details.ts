@@ -4,9 +4,10 @@ import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
-import { OrganizationService, OrganizationUser } from "app/model/organization";
+import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
 import { AddUserToTeamPanel } from "./modals/add-user-to-team/add-user-to-team";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
+import { UserModalPanel } from "../users/modals/user/user";
 
 /**
  * Represents the route parameters for the page.
@@ -44,8 +45,12 @@ export class TeamDetailsPage
     private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
-    private _teamId: string;
     private _users: OrganizationUser[] | undefined;
+
+    /**
+     * The team to present.
+     */
+    protected team: OrganizationTeam;
 
     /**
      * The most recent operation.
@@ -103,12 +108,11 @@ export class TeamDetailsPage
      */
     public activate(params: IRouteParams): void
     {
-        this._teamId = params.teamId;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.textFilter = params.text || this.textFilter;
 
-        this.fetch();
+        this.fetch(params.teamId);
     }
 
     /**
@@ -121,17 +125,36 @@ export class TeamDetailsPage
     }
 
     /**
+     * Called by the framework when the `textFilter` property changes.
+     */
+    public textFilterChanged(): void
+    {
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.text = this.textFilter || undefined;
+        },
+        { trigger: false, replace: true });
+    }
+
+    /**
      * Called by the framework when the `sorting` property changes.
      */
     public sortingChanged(): void
     {
-        this.fetch();
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.sortProperty = this.sorting?.property || undefined;
+            state.params.sortDirection = this.sorting?.direction || undefined;
+        },
+        { trigger: false, replace: true });
     }
 
     /**
      * Fetches the latest data.
      */
-    protected fetch(): void
+    protected fetch(teamId: string): void
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
@@ -141,16 +164,8 @@ export class TeamDetailsPage
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this._users = await this._organizationService.getUsersInTeam(organizationId, this._teamId, signal);
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.sortProperty = this.sorting?.property || undefined;
-                state.params.sortDirection = this.sorting?.direction || undefined;
-                state.params.text = this.textFilter || undefined;
-            },
-            { trigger: false, replace: true });
+            this.team = await this._organizationService.getTeam(organizationId, teamId, signal);
+            this._users = await this._organizationService.getUsersInTeam(organizationId, teamId, signal);
         });
 
         this.operation.promise.catch(error =>
@@ -163,13 +178,23 @@ export class TeamDetailsPage
     }
 
     /**
+     * Called when a row in the user table is clicked.
+     * Opens a modal presenting the public profile of the user.
+     * @param user The user that was clicked.
+     */
+    protected async onUserClick(user: OrganizationUser): Promise<void>
+    {
+        await this._modalService.open(UserModalPanel, user).promise;
+    }
+
+    /**
      * Called when the `Invite user` button is clicked.
      * Opens a modal for inviting a user.
      */
     protected async onInviteUserClick(): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
-        const newUser = await this._modalService.open(AddUserToTeamPanel, { organizationId, teamId: this._teamId }).promise;
+        const newUser = await this._modalService.open(AddUserToTeamPanel, { organizationId, teamId: this.team.id }).promise;
 
         if (newUser != null)
         {
@@ -195,7 +220,7 @@ export class TeamDetailsPage
 
         try
         {
-            await this._organizationService.removeUserFromTeam(organizationId, this._teamId, user.id);
+            await this._organizationService.removeUserFromTeam(organizationId, this.team.id, user.id);
 
             this._users!.splice(this._users!.indexOf(user), 1);
         }

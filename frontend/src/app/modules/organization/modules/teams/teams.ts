@@ -118,11 +118,30 @@ export class TeamsPage
     }
 
     /**
+     * Called by the framework when the `textFilter` property changes.
+     */
+    public textFilterChanged(): void
+    {
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.text = this.textFilter || undefined;
+        },
+        { trigger: false, replace: true });
+    }
+
+    /**
      * Called by the framework when the `sorting` property changes.
      */
     public sortingChanged(): void
     {
-        this.fetch();
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.sortProperty = this.sorting?.property || undefined;
+            state.params.sortDirection = this.sorting?.direction || undefined;
+        },
+        { trigger: false, replace: true });
     }
 
     /**
@@ -139,15 +158,6 @@ export class TeamsPage
         this.operation = new Operation(async signal =>
         {
             this._teams = await this._organizationService.getTeams(organizationId, signal);
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.sortProperty = this.sorting?.property || undefined;
-                state.params.sortDirection = this.sorting?.direction || undefined;
-                state.params.text = this.textFilter || undefined;
-            },
-            { trigger: false, replace: true });
         });
 
         this.operation.promise.catch(error =>

@@ -8,6 +8,7 @@ import { OrganizationService, OrganizationUser } from "app/model/organization";
 import { InviteUserPanel } from "./modals/invite-user/invite-user";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 import reinviteToastStrings from "./resources/strings/reinvite-toast.json";
+import { UserModalPanel } from "./modals/user/user";
 
 /**
  * Represents the route parameters for the page.
@@ -122,11 +123,30 @@ export class UsersPage
     }
 
     /**
+     * Called by the framework when the `textFilter` property changes.
+     */
+    public textFilterChanged(): void
+    {
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.text = this.textFilter || undefined;
+        },
+        { trigger: false, replace: true });
+    }
+
+    /**
      * Called by the framework when the `sorting` property changes.
      */
     public sortingChanged(): void
     {
-        this.fetch();
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.sortProperty = this.sorting?.property || undefined;
+            state.params.sortDirection = this.sorting?.direction || undefined;
+        },
+        { trigger: false, replace: true });
     }
 
     /**
@@ -143,15 +163,6 @@ export class UsersPage
         this.operation = new Operation(async signal =>
         {
             this._users = await this._organizationService.getUsers(organizationId, signal);
-
-            // tslint:disable-next-line: no-floating-promises
-            this._historyHelper.navigate((state: IHistoryState) =>
-            {
-                state.params.sortProperty = this.sorting?.property || undefined;
-                state.params.sortDirection = this.sorting?.direction || undefined;
-                state.params.text = this.textFilter || undefined;
-            },
-            { trigger: false, replace: true });
         });
 
         this.operation.promise.catch(error =>
@@ -161,6 +172,16 @@ export class UsersPage
                 Log.error("Could not get the users within the organization", error);
             }
         });
+    }
+
+    /**
+     * Called when a row in the user table is clicked.
+     * Opens a modal presenting the public profile of the user.
+     * @param user The user that was clicked.
+     */
+    protected async onUserClick(user: OrganizationUser): Promise<void>
+    {
+        await this._modalService.open(UserModalPanel, user).promise;
     }
 
     /**

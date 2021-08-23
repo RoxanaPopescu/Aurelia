@@ -68,10 +68,6 @@
                             Name
                         </data-table-cell>
 
-                        <data-table-cell name="id" translate>
-                            ID
-                        </data-table-cell>
-
                         <data-table-cell name="phoneNumber" translate>
                             Contact number
                         </data-table-cell>
@@ -92,17 +88,11 @@
 
                     <template repeat.for="team of orderedAndFilteredTeams">
 
-                        <data-table-row href="/organization/teams/${team.id}">
+                        <data-table-row page-href="path.bind: '/organization/teams/' + team.id">
 
                             <data-table-cell>
                                 <span class="text-truncate">
                                     ${team.name}
-                                </span>
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${team.id}
                                 </span>
                             </data-table-cell>
 

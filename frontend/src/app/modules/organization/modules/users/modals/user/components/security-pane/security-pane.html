@@ -1,0 +1,17 @@
+<template validation>
+
+    <require from="./security-pane.scss"></require>
+
+    <modal-section toggle.bind="true">
+
+        <div slot="header" translate>
+            Account security
+        </div>
+
+        <button appearance="solid" accent="neutral" click.trigger="onResetPasswordClick()" translate>
+            Reset password
+        </button>
+
+    </modal-section>
+
+</template>

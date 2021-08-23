@@ -256,6 +256,23 @@ export class OrganizationService
     }
 
     /**
+     * Gets the specified team within the specified organization.
+     * @param organizationId The ID of the organization.
+     * @param teamId The ID of the team.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the specified team.
+     */
+    public async getTeam(organizationId: string, teamId: string, signal?: AbortSignal): Promise<OrganizationTeam>
+    {
+        const result = await this._apiClient.get(`organizations/${organizationId}/teams/${teamId}`,
+        {
+            signal
+        });
+
+        return new OrganizationTeam(result.data);
+    }
+
+    /**
      * Creates the specified team within the specified organization.
      * @param organizationId The ID of the organization.
      * @param team The team to create.

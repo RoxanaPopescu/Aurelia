@@ -88,7 +88,7 @@
 
                     <template repeat.for="role of orderedAndFilteredRoles">
 
-                        <data-table-row>
+                        <data-table-row click.call="onEditRoleClick(role)">
 
                             <data-table-cell>
                                 <span class="text-truncate">

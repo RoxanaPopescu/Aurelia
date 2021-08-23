@@ -166,6 +166,21 @@ export default
       status: 201
     },
 
+    "GET /api/v2/organizations/mover-organization-id/teams/team-1-id":
+    {
+      body:
+      {
+        id: "team-1-id",
+        name: "Team 1",
+        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+        address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
+        vatNumber: "42069",
+        invoiceDirectly: true,
+        invoiceEmail: "team1@example.com",
+        userCount: 1
+      }
+    },
+
     "GET /api/v2/organizations/mover-organization-id/teams":
     {
       body:
