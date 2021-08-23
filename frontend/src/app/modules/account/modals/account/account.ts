@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Log, HistoryHelper } from "shared/infrastructure";
-import { Modal, ModalService, ThemeService, ITheme, IValidation } from "shared/framework";
+import { Modal, ModalService, ThemeService, ITheme, IValidation, ModalCloseReason } from "shared/framework";
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { IdentityService } from "app/services/identity";
 import { ProfileService, Profile } from "app/services/profile";
@@ -156,14 +156,21 @@ export class AccountModalPanel
 
     /**
      * Called by the framework when the modal is deactivating.
-     * @returns True if the settings were saved or the account was deleted, otherwise false.
+     * @param reason The reason for closing the modal.
+     * @returns A promise that will be resolved with true if the settings were saved
+     * or the account was deleted, otherwise false.
      */
-    public async deactivate(): Promise<boolean>
+    public async deactivate(reason?: ModalCloseReason): Promise<boolean>
     {
         if (this._modal.busy === true)
         {
             // tslint:disable-next-line: no-string-throw
             throw "Cannot close while busy.";
+        }
+
+        if (reason === "discard-changes")
+        {
+            return true;
         }
 
         // Save changes before the modal closes?

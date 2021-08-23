@@ -1,10 +1,23 @@
 <template validation>
 
-    <require from="app/components/identity-picture-input/identity-picture-input"></require>
+    <require from="app/components/identity-picture-picker/identity-picture-picker"></require>
+    <require from="./profile-pane.scss"></require>
 
     <modal-section>
 
-        <text-input label="above" value.bind="model.fullName" autocomplete="name">
+        <identity-picture-picker scroll-fade="0.5" initials.bind="initials" gravatar.bind="model.email" value.bind="model.pictureUrl">
+
+            <div slot="heading" translate>
+                Picture
+            </div>
+
+            <div slot="description" translate>
+                Make sure to use a picture that is professional and helps other users recognize you.
+            </div>
+
+        </identity-picture-picker>
+
+        <text-input class="margin-double-top" label="above" value.bind="model.fullName" autocomplete="name">
 
             <div slot="heading" translate>
                 Full name
@@ -89,19 +102,6 @@
             </div>
 
         </phone-input>
-
-        <identity-picture-input class="margin-double-top" label="above" initials.bind="initials" gravatar.bind="model.email" value.bind="model.pictureUrl">
-
-            <div slot="heading" translate>
-                Picture
-            </div>
-
-            <div slot="description" translate>
-                This is the URL for a picture of you.<br>
-                Make sure to use a picture that helps other users recognize you.
-            </div>
-
-        </identity-picture-input>
 
     </modal-section>
 

@@ -8,7 +8,14 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="account" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+    <modal-panel
+        name="account"
+        close-button.bind="true"
+        close-shortcut.bind="true"
+        discard-changes.bind="true"
+        scroll
+        validation
+        validation.ref="validation">
 
         <modal-header scroll-fade>
 
