@@ -1,7 +1,9 @@
+import { IPermission } from "app/modules/organization/modules/roles/modals/edit-role/components/permissions/permissions";
+
 /**
- * Represents a permnission tht may be assigned to a role within an organization.
+ * Represents a permission tht may be assigned to a role within an organization.
  */
-export class OrganizationPermission
+export class OrganizationPermission implements IPermission
 {
     /**
      * Creates a new instance of the type.
@@ -9,26 +11,16 @@ export class OrganizationPermission
      */
     public constructor(data: any)
     {
-        this.id = data.id;
+        this.slug = data.slug;
         this.name = data.name;
-        this.area = data.area;
+        this.group = data.group;
         this.type = data.type;
     }
 
     /**
-     * The ID of the permission.
+     * The slug identifying the permission.
      */
-    public id: string;
-
-    /**
-     * The name of the permission.
-     */
-    public name: string;
-
-    /**
-     * The name of the product area to which the permission grants access.
-     */
-    public area: string;
+    public slug: string;
 
     /**
      * The type of access granted by the permission.
@@ -36,10 +28,28 @@ export class OrganizationPermission
     public type: "view" | "edit";
 
     /**
+     * The localized name of the permission.
+     */
+    public name: string;
+
+    /**
+     * The name of the group to which the permission belongs.
+     */
+    public group: string;
+
+    /**
      * Gets the string representation of the instance.
      */
     public toString(): any
     {
         return this.name;
+    }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return this.slug;
     }
 }

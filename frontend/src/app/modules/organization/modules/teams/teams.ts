@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
@@ -67,6 +67,7 @@ export class TeamsPage
     /**
      * The teams to present in the table.
      */
+    @computedFrom("_teams.length", "sorting", "textFilter")
     protected get orderedAndFilteredTeams(): OrganizationTeam[] | undefined
     {
         if (this._teams == null)

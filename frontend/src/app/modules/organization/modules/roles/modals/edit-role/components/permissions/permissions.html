@@ -1,0 +1,158 @@
+<template>
+
+    <require from="./permissions.scss"></require>
+
+    <div
+        repeat.for="group of config.groups"
+        class="permissions-group ${group.expanded ? '--expanded' : ''}"
+        surface.bind="group.expanded ? 'neutral' : undefined">
+
+        <div class="permissions-group-header">
+
+            <div class="font-large">
+                ${group.name}
+            </div>
+
+            <switch-toggle
+                value.bind="group.enabled"
+                change.trigger="onPermissionsChanged()">
+            </switch-toggle>
+
+            <button
+                appearance="none"
+                class="margin-left font-larger"
+                click.trigger="group.expanded = !group.expanded">
+                <icon name="md-expand-${group.expanded ? 'less' : 'more'}" inline accent="primary"></icon>
+            </button>
+
+        </div>
+
+        <div if.bind="group.expanded" class="permissions-group-content">
+
+            <div if.bind="group.viewPermissions.length > 0" class="permissions-type">
+
+                <div class="permissions-type-header">
+
+                    <div class="permissions-type-icon">
+                        <icon name="eye"></icon>
+                    </div>
+
+                    <div>
+
+                        <div class="permissions-type-title" translate>
+                            View permissions
+                        </div>
+
+                        <div class="permissions-type-description font-small" translate>
+                            Allows users to view information
+                        </div>
+
+                    </div>
+
+                    <switch-toggle
+                        value.bind="group.viewEnabled"
+                        change.trigger="onPermissionsChanged()">
+                    </switch-toggle>
+
+                    <button
+                        appearance="none"
+                        class="margin-left font-larger"
+                        click.trigger="group.viewExpanded = !group.viewExpanded">
+                        <icon name="md-expand-${group.viewExpanded ? 'less' : 'more'}" inline accent="primary"></icon>
+                    </button>
+
+                </div>
+
+                <div if.bind="group.viewExpanded" class="permissions-type-content">
+
+                    <div repeat.for="permission of group.viewPermissions" class="permissions-permission">
+
+                        <div class="permissions-type-arrow">
+                            └>
+                        </div>
+
+                        <div class="permissions-permission-content">
+
+                            <div>
+                                ${permission.name}
+                            </div>
+
+                            <switch-toggle
+                                value.bind="permission.enabled"
+                                change.trigger="onPermissionsChanged()">
+                            </switch-toggle>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div if.bind="group.editPermissions.length > 0" class="permissions-type">
+
+                <div class="permissions-type-header">
+
+                    <div class="permissions-type-icon">
+                        <icon name="edit"></icon>
+                    </div>
+
+                    <div>
+
+                        <div class="permissions-type-title" translate>
+                            Edit permissions
+                        </div>
+
+                        <div class="permissions-type-description font-small" translate>
+                            Allows users to edit information
+                        </div>
+
+                    </div>
+
+                    <switch-toggle
+                        value.bind="group.editEnabled"
+                        change.trigger="onPermissionsChanged()">
+                    </switch-toggle>
+
+                    <button
+                        appearance="none"
+                        class="margin-left font-larger"
+                        click.trigger="group.editExpanded = !group.editExpanded">
+                        <icon name="md-expand-${group.editExpanded ? 'less' : 'more'}" inline accent="primary"></icon>
+                    </button>
+
+                </div>
+
+                <div if.bind="group.editExpanded" class="permissions-type-content">
+
+                    <div repeat.for="permission of group.editPermissions" class="permissions-permission">
+
+                        <div class="permissions-type-arrow">
+                            └>
+                        </div>
+
+                        <div class="permissions-permission-content">
+
+                            <div>
+                                ${permission.name}
+                            </div>
+
+                            <switch-toggle
+                                value.bind="permission.enabled"
+                                change.trigger="onPermissionsChanged()">
+                            </switch-toggle>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>

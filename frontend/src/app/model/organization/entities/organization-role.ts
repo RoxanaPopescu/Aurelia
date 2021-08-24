@@ -1,7 +1,6 @@
 import clone from "clone";
 import { DateTime } from "luxon";
 import { SearchModel } from "app/model/search-model";
-import { OrganizationPermission } from "./organization-permission";
 
 /**
  * Represents a role within an organization.
@@ -21,7 +20,7 @@ export class OrganizationRole
             this.userCount = data.userCount;
             this.createdDateTime = DateTime.fromISO(data.createdDateTime, { setZone: true });
             this.modifiedDateTime = DateTime.fromISO(data.modifiedDateTime, { setZone: true });
-            this.permissions = data.permissions.map(p => new OrganizationPermission(p));
+            this.permissions = data.permissions;
         }
     }
 
@@ -53,7 +52,7 @@ export class OrganizationRole
     /**
      * The permissions associated with the role.
      */
-    public readonly permissions: OrganizationPermission[];
+    public readonly permissions: string[];
 
     /**
      * The model representing the searchable text in the entity.

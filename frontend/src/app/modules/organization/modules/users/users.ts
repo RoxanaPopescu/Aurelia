@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
@@ -72,6 +72,7 @@ export class UsersPage
     /**
      * The users to present in the table.
      */
+    @computedFrom("_users.length", "sorting", "textFilter")
     protected get orderedAndFilteredUsers(): OrganizationUser[] | undefined
     {
         if (this._users == null)

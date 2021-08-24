@@ -3,6 +3,7 @@ import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
 import { OrganizationService, OrganizationRole } from "app/model/organization";
 import { Operation } from "shared/utilities";
+import { IPermission } from "./components/permissions/permissions";
 
 @autoinject
 export class EditRolePanel
@@ -38,7 +39,7 @@ export class EditRolePanel
     /**
      * The available permissions.
      */
-    protected availablePermissions: any[] | undefined;
+    protected availablePermissions: IPermission[] | undefined;
 
     /**
      * The validation for the modal.

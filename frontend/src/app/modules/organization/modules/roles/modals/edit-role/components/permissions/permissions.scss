@@ -1,0 +1,125 @@
+@import "resources/index";
+
+permissions
+{
+    display: block;
+
+    .permissions-group
+    {
+        padding: 18rem 20rem;
+        background-color: var(--surface-color);
+        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+
+        &:first-child
+        {
+            border-top: var(--border-width-thin) solid var(--surface-separator-color);
+        }
+
+        &.--expanded
+        {
+            padding-bottom: 0;
+        }
+    }
+
+    .permissions-group-header
+    {
+        display: flex;
+        align-items: center;
+
+        > switch-toggle
+        {
+            margin-left: auto;
+        }
+
+        > button
+        {
+            margin-top: -1rem;
+        }
+    }
+
+    .permissions-group-content
+    {
+        padding-top: 1rem;
+        padding-left: 20rem;
+    }
+
+    .permissions-type
+    {
+        padding-top: 24rem;
+
+        &:not(:last-child)
+        {
+            border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        }
+    }
+
+    .permissions-type-header
+    {
+        display: flex;
+        align-items: center;
+        padding-bottom: 24rem;
+
+        > switch-toggle
+        {
+            margin-left: auto;
+        }
+    }
+
+    .permissions-type-icon
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48rem;
+        height: 48rem;
+        background-color: var(--surface-neutral-surface-color);
+        margin-right: 24rem;
+
+        icon
+        {
+            font-size: var(--font-large-font-size);
+            opacity: var(--opacity-faded);
+        }
+    }
+
+    .permissions-type-arrow
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48rem;
+        height: 48rem;
+        margin-right: 24rem;
+        font-size: 32rem;
+        color: var(--surface-neutral-surface-color);
+    }
+
+    .permissions-type-title
+    {
+        font-weight: 500;
+    }
+
+    .permissions-type-description
+    {
+        margin-top: 4rem;
+        opacity: var(--opacity-faded);
+    }
+
+    .permissions-permission
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    .permissions-permission-content
+    {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 18rem;
+        padding-right: 32rem;
+        padding-bottom: 18rem;
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
+    }
+}

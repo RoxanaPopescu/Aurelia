@@ -90,12 +90,16 @@ export default
         modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
         permissions:
         [
-          { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-          { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-          { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" },
-          { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
-          { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" },
-          { id: "permission-6-id", name: "Edit routes", area: "Routes", type: "edit" }
+          "view-orders",
+          "view-order-details",
+          "edit-orders",
+          "edit-order-details",
+          "view-routes",
+          "view-route-details",
+          "edit-routes",
+          "edit-route-details",
+          "view-route-plans",
+          "edit-route-plans"
         ]
       })
     },
@@ -111,10 +115,16 @@ export default
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
         [
-          { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-          { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-          { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
-          { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" }
+          "view-orders",
+          "view-order-details",
+          "edit-orders",
+          "edit-order-details",
+          "view-routes",
+          "view-route-details",
+          "edit-routes",
+          "edit-route-details",
+          "view-route-plans",
+          "edit-route-plans"
         ]
       }
     },
@@ -130,9 +140,13 @@ export default
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
         [
-          { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-          { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-          { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" }
+          "view-orders",
+          "view-order-details",
+          "edit-orders",
+          "edit-order-details",
+          "view-routes",
+          "view-route-details",
+          "edit-routes"
         ]
       }
     },
@@ -148,12 +162,16 @@ export default
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
         [
-          { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-          { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-          { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" },
-          { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
-          { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" },
-          { id: "permission-6-id", name: "Edit routes", area: "Routes", type: "edit" }
+          "view-orders",
+          "view-order-details",
+          "edit-orders",
+          "edit-order-details",
+          "view-routes",
+          "view-route-details",
+          "edit-routes",
+          "edit-route-details",
+          "view-route-plans",
+          "edit-route-plans"
         ]
       }
     },
@@ -259,12 +277,24 @@ export default
     {
       body:
       [
-        { id: "permission-1-id", name: "View orders", area: "Orders", type: "view" },
-        { id: "permission-2-id", name: "View order details", area: "Orders", type: "view" },
-        { id: "permission-3-id", name: "Edit orders", area: "Orders", type: "edit" },
-        { id: "permission-4-id", name: "View routes", area: "Routes", type: "view" },
-        { id: "permission-5-id", name: "View route details", area: "Routes", type: "view" },
-        { id: "permission-6-id", name: "Edit routes", area: "Routes", type: "edit" }
+        { slug: "view-organization",   type: "view", group: "Organization", name: "View organization"  },
+        { slug: "edit-organization",   type: "edit", group: "Organization", name: "Edit organization"  },
+
+        { slug: "view-orders",         type: "view", group: "Orders",       name: "View orders"        },
+        { slug: "view-order-details",  type: "view", group: "Orders",       name: "View order details" },
+        { slug: "edit-orders",         type: "edit", group: "Orders",       name: "Edit orders"        },
+        { slug: "edit-order-details",  type: "edit", group: "Orders",       name: "Edit order details" },
+
+        { slug: "view-routes",         type: "view", group: "Routes",       name: "View routes"        },
+        { slug: "view-route-details",  type: "view", group: "Routes",       name: "View route details" },
+        { slug: "edit-routes",         type: "edit", group: "Routes",       name: "Edit routes"        },
+        { slug: "edit-route-details",  type: "edit", group: "Routes",       name: "Edit route details" },
+
+        { slug: "view-route-plans",    type: "view", group: "Route plans",  name: "View route plans"   },
+        { slug: "edit-route-plans",    type: "edit", group: "Route plans",  name: "Edit route plans"   },
+
+        { slug: "view-kpi",            type: "view", group: "KPI",          name: "View route plans"   },
+        { slug: "edit-route-plans",    type: "edit", group: "KPI",          name: "Edit route plans"   }
       ]
     },
 

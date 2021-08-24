@@ -11,7 +11,7 @@ export class ProfilePaneCustomElement
      * The user to present.
      */
     @bindable
-    public user: Partial<OrganizationUser>;
+    public user: OrganizationUser;
 
     /**
      * The strings from which initials should be generated.

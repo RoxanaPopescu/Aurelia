@@ -1,6 +1,8 @@
 <template>
 
     <require from="app/components/address-input/address-input"></require>
+    <require from="./components/permissions/permissions"></require>
+    <require from="./edit-role.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
 
@@ -21,60 +23,38 @@
             </h1>
 
             <h2 class="font-large" translate>
-                Please specify the name and permissions for the role.
+                Please specify the name and permissions for the role
             </h2>
 
         </modal-header>
 
-        <modal-section class="margin-bottom">
+        <modal-section class="margin-double-bottom">
 
-            <div class="control-row margin-large-bottom">
+            <text-input value.bind="role.name" label="above" class="flex-basis-1-of-1">
 
-                <text-input value.bind="role.name" label="above" class="flex-basis-1-of-1">
+                <div slot="heading" translate>
+                    Role name
+                </div>
 
-                    <div slot="heading" translate>
-                        Role name
-                    </div>
+                <div slot="validation">
 
-                    <div slot="validation">
+                    <required-validator
+                        value.bind="role.name">
+                    </required-validator>
 
-                        <required-validator
-                            value.bind="role.name">
-                        </required-validator>
+                </div>
 
-                    </div>
-
-                </text-input>
-
-            </div>
-
-            <div class="control-row">
-
-                <tags-input label="above" value.bind="role.permissions" class="flex-basis-1-of-1">
-
-                    <div slot="heading" translate>
-                        Permissions
-                    </div>
-
-                    <item repeat.for="permission of availablePermissions" model.bind="permission">
-                        ${permission.name}
-                    </item>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="role.permissions">
-                        </required-validator>
-
-                    </div>
-
-                </tags-input>
-
-            </div>
+            </text-input>
 
         </modal-section>
 
-        <button appearance="solid" accent="primary" class="margin-large-top" click.delegate="onSubmitClick()">
+        <modal-section class="margin-double-bottom">
+
+            <permissions permissions.bind="availablePermissions" value.bind="role.permissions"></permissions>
+
+        </modal-section>
+
+        <button appearance="solid" accent="primary" click.delegate="onSubmitClick()">
 
             <span translate if.bind="!role.id">
                 Create role
