@@ -38,9 +38,9 @@ app-sidebar
 {
     --surface-color: var(--palette-color-neutral-lit) !important;
 
-    app-icon
+    app-logo
     {
-        filter: contrast(0.6);
+        opacity: 0.6;
     }
 }
 
@@ -133,4 +133,9 @@ google-map
     {
         --google-map-control-filter: saturate(0) brightness(0.92) invert(1);
     }
+}
+
+info-icon .info-icon-container:not(:hover) icon
+{
+    opacity: var(--opacity-faded) !important;
 }
