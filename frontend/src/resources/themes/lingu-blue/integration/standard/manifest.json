@@ -3,12 +3,12 @@
     "short_name": "Mover",
     "start_url": "/",
     "display": "minimal-ui",
-    "background_color": "#ffffff",
-    "theme_color": "#11253e",
+    "background_color": "#0747a6",
+    "theme_color": "#0747a6",
     "icons":
     [
         {
-            "src": "/resources/themes/mover/integration/standard/icon.png",
+            "src": "/resources/themes/lingu-blue/integration/standard/icon.png",
             "sizes": "192x192",
             "type": "image/png"
         }

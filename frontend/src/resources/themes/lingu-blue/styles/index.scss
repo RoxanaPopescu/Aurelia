@@ -1,0 +1,31 @@
+////
+/// @group resources/themes/lingu-blue
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+
+// HACK: Override default styles.
+
+button[appearance="outline"]
+{
+    border-color: var(--palette-color-neutral-light) !important;
+}
+
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    background: transparent !important;
+    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
+}

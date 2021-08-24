@@ -3,11 +3,11 @@
 <browserconfig>
     <msapplication>
         <tile>
-            <square70x70logo src="/resources/themes/lingu-light/integration/microsoft/tile-square.png"/>
-            <square150x150logo src="/resources/themes/lingu-light/integration/microsoft/tile-square.png"/>
-            <square310x310logo src="/resources/themes/lingu-light/integration/microsoft/tile-square.png"/>
-            <wide310x150logo src="/resources/themes/lingu-light/integration/microsoft/tile-wide.png"/>
-            <TileColor>#1a6bc6</TileColor>
+            <square70x70logo src="/resources/themes/mover/integration/microsoft/tile-square.png"/>
+            <square150x150logo src="/resources/themes/mover/integration/microsoft/tile-square.png"/>
+            <square310x310logo src="/resources/themes/mover/integration/microsoft/tile-square.png"/>
+            <wide310x150logo src="/resources/themes/mover/integration/microsoft/tile-wide.png"/>
+            <TileColor>#11253e</TileColor>
         </tile>
     </msapplication>
 </browserconfig>

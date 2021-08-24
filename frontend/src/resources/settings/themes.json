@@ -13,7 +13,8 @@
         "preview":
         {
             "primary": "#008dd5"
-        }
+        },
+        "debug": true
     },
     {
         "slug": "coop",
@@ -40,12 +41,22 @@
         }
     },
     {
+        "slug": "lingu-blue",
+        "name": "Lingu (Blue)",
+        "preview":
+        {
+            "primary": "#0646a6"
+        },
+        "debug": true
+    },
+    {
         "slug": "lingu-light",
         "name": "Lingu (Light)",
         "preview":
         {
-            "primary": "#0646a6"
-        }
+            "primary": "#ffffff"
+        },
+        "debug": true
     },
     {
         "slug": "lingu-dark",
