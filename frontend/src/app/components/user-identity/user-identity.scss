@@ -47,11 +47,12 @@ user-identity
         {
             position: relative;
             display: none;
+            flex-grow: 1;
 
             app-sidebar.--expanded &
             {
                 display: block;
-                margin-left: var(--size-inline-spacing-large);
+                padding-left: var(--size-inline-spacing-large);
             }
         }
 

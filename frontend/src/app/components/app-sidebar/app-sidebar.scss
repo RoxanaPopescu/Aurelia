@@ -19,6 +19,14 @@ app-sidebar
     background: var(--surface-color);
     color: var(--surface-text-color);
 
+    .nav-link.app-sidebar-toggle
+    {
+        // HACK: Needed because the hover background inteferes with the scroll bar.
+        color: var(--surface-nav-link-surface-text-color);
+        background-color: var(--surface-nav-link-surface-color);
+        border-color: var(--surface-nav-link-border-color);
+    }
+
     app-logo
     {
         // Size and position the app icon.
@@ -92,12 +100,12 @@ app-sidebar
     {
         // Apply negative vertical margins, so the section overlaps the header and footer.
         // This allows us to apply a gradient fade effect when scrolled.
-        margin-top: -84rem;
-        margin-bottom: -40rem;
+        margin-top: -89rem;
+        margin-bottom: -178rem;
 
         // Apply vertical padding to compensate for the negative margin.
-        padding-top: 94rem;
-        padding-bottom: 50rem;
+        padding-top: 97rem;
+        padding-bottom: 187rem;
 
         // Shrink to allow scrolling.
         flex-shrink: 1;
@@ -107,6 +115,7 @@ app-sidebar
         &::-webkit-scrollbar
         {
             --scrollbar-thickness: 8rem;
+            background: var(--surface-color);
         }
     }
 
@@ -233,6 +242,7 @@ app-sidebar
     {
         display: flex;
         align-items: center;
+        justify-content: center;
         min-height: 44rem;
         z-index: 1;
         margin-top: 1px;
@@ -240,7 +250,7 @@ app-sidebar
         font-size: 9rem;
         line-height: 18rem;
         text-align: center;
-        background-color: var(--surface-nav-link-surface-color--hover);
+        // background-color: var(--surface-nav-link-surface-color--hover);
 
         span
         {
@@ -394,7 +404,7 @@ app-sidebar.--expanded
     app-logo
     {
         // Align horizontally with the links.
-        align-self: flex-start;
+        align-self: stretch;
         margin-left: 28rem;
         margin-right: 26rem;
     }
@@ -402,7 +412,7 @@ app-sidebar.--expanded
     user-identity
     {
         // Align horizontally with the links.
-        align-self: flex-start;
+        align-self: stretch;
         margin-left: 24rem;
         margin-right: 26rem;
     }
@@ -428,10 +438,16 @@ app-sidebar.--expanded
 
     .app-sidebar--powered-by
     {
+        justify-content: flex-start;
         padding-left: 28rem;
         line-height: 26rem;
         font-size: 11rem;
         text-align: left;
         white-space: nowrap;
+
+        br
+        {
+            display: none;
+        }
     }
 }

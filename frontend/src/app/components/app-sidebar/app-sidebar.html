@@ -120,7 +120,7 @@
 
         <user-identity size="icon"></user-identity>
 
-        <a class="nav-link" click.trigger="toggleWidth()">
+        <a class="nav-link app-sidebar-toggle" click.trigger="toggleWidth()">
 
             <icon if.bind="expanded" title.translate="Collapse menu" name="sidebar-collapse"></icon>
             <span if.bind="expanded" translate>
@@ -136,7 +136,7 @@
                 Powered by Mover Systems
             </span>
             <span if.bind="!expanded" translate>
-                Mover Systems
+                Mover<br> Systems
             </span>
         </a>
 
