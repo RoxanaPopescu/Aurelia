@@ -38,66 +38,70 @@
 
         </select-input>
 
-        <select-input
-            label="above"
-            value.bind="currency"
-            display-value="${currency.name} (${currency.code})"
-            none.bind="false"
-            filter="auto"
-            class="margin-double-top">
+        <template if-environment="development, preview">
 
-            <div slot="heading" translate>
-                Currency
-            </div>
+            <select-input
+                label="above"
+                value.bind="currency"
+                display-value="${currency.name} (${currency.code})"
+                none.bind="false"
+                filter="auto"
+                class="margin-double-top">
 
-            <div slot="description" translate>
-                This is the currency used for the app - choose the one you prefer.<br>
-                If you change this, the app will reload when you close this panel.
-            </div>
-
-            <item repeat.for="currency of currencies" model.bind="currency">
-
-                <div class="flex-row">
-
-                    <div>
-                        ${currency.name}
-                    </div>
-
-                    <div class="flex-push-right opacity-faded">
-                        ${currency.code}
-                    </div>
-
+                <div slot="heading" translate>
+                    Currency
                 </div>
 
-            </item>
+                <div slot="description" translate>
+                    This is the currency used for the app - choose the one you prefer.<br>
+                    If you change this, the app will reload when you close this panel.
+                </div>
 
-        </select-input>
+                <item repeat.for="currency of currencies" model.bind="currency">
 
-        <select-input
-            label="above"
-            value.bind="theme"
-            display-value.bind="theme.name"
-            none.bind="false"
-            filter="auto"
-            class="margin-double-top">
+                    <div class="flex-row">
 
-            <div slot="heading" translate>
-                Theme
-            </div>
+                        <div>
+                            ${currency.name}
+                        </div>
 
-            <div slot="description" translate>
-                This is the theme used for the app - choose the one you prefer.<br>
-                If you change this, the app will reload when you close this panel.
-            </div>
+                        <div class="flex-push-right opacity-faded">
+                            ${currency.code}
+                        </div>
 
-            <item repeat.for="theme of themes" model.bind="theme" class="theme-item">
+                    </div>
 
-                <div class="theme-preview" css="background: ${theme.preview.primary}"></div>
-                <div>${theme.name}</div>
+                </item>
 
-            </item>
+            </select-input>
 
-        </select-input>
+            <select-input
+                label="above"
+                value.bind="theme"
+                display-value.bind="theme.name"
+                none.bind="false"
+                filter="auto"
+                class="margin-double-top">
+
+                <div slot="heading" translate>
+                    Theme
+                </div>
+
+                <div slot="description" translate>
+                    This is the theme used for the app - choose the one you prefer.<br>
+                    If you change this, the app will reload when you close this panel.
+                </div>
+
+                <item repeat.for="theme of themes" model.bind="theme" class="theme-item">
+
+                    <div class="theme-preview" css="background: ${theme.preview.primary}"></div>
+                    <div>${theme.name}</div>
+
+                </item>
+
+            </select-input>
+
+        </template>
 
     </modal-section>
 

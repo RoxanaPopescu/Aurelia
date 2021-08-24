@@ -72,16 +72,16 @@
                             Name
                         </data-table-cell>
 
-                        <data-table-cell name="id" translate>
-                            ID
+                        <data-table-cell name="role.name" translate>
+                            Role
                         </data-table-cell>
 
                         <data-table-cell name="email" translate>
                             Email
                         </data-table-cell>
 
-                        <data-table-cell name="role.name" translate>
-                            Role
+                        <data-table-cell name="phoneNumber" translate>
+                            Phone number
                         </data-table-cell>
 
                         <data-table-cell name="lastOnline" translate>
@@ -110,7 +110,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${user.id}
+                                    ${user.role.name}
                                 </span>
                             </data-table-cell>
 
@@ -122,7 +122,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${user.role.name}
+                                    ${user.phoneNumber | phone}
                                 </span>
                             </data-table-cell>
 

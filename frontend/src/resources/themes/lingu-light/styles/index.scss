@@ -45,6 +45,19 @@ $__summary: comment;
     --palette-color-neutral-darker: hsl(210, 6%, 23%) !important;
 }
 
+body page-sidebar page-header, page-sidebar page-section, page-sidebar page-footer
+{
+    margin: 23.5rem 36rem 23rem 36rem;
+}
+
+body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--surface-separator-color) !important;
+    background-color: transparent !important;
+    color: var(--surface-subtle-color) !important;
+}
+
 [surface$="/primary"]
 {
     card-skeleton

@@ -205,6 +205,10 @@
 
         // Only shown if the `label` attribute is specified.
         display: none;
+
+        // Ensure the label, and any info popovers it may contain,
+        // appears above the control itself.
+        z-index: 1;
     }
 
     &.--open:focus-within > .input-label

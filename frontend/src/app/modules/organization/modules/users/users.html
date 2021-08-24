@@ -64,10 +64,6 @@
 
                     <data-table-headers>
 
-                        <data-table-cell name="id" translate>
-                            ID
-                        </data-table-cell>
-
                         <data-table-cell name="fullName" translate>
                             Name
                         </data-table-cell>
@@ -105,12 +101,6 @@
                     <template repeat.for="user of orderedAndFilteredUsers">
 
                         <data-table-row click.call="onUserClick(user)">
-
-                            <data-table-cell>
-                                <span class="text-truncate">
-                                    ${user.id}
-                                </span>
-                            </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
