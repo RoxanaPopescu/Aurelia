@@ -74,6 +74,11 @@ body
      * The width of the border of inputs.
      */
     --input-border-width: var(--border-width-thin);
+
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
 }
 
 dropdown-icon
@@ -102,21 +107,6 @@ page-content page-footer,
 page-content page-header,
 {
     padding: 24rem 28rem !important;
-}
-
-html
-{
-    page-sidebar
-    {
-        .input-heading > *,
-        .input-description > *,
-        .toggle-heading > *,
-        .toggle-description > *
-        {
-            opacity: 0.9 !important;
-            color: inherit !important;
-        }
-    }
 }
 
 html page-sidebar page-section:not(.--header-slot-empty) .page-section-header

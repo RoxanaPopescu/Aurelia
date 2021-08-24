@@ -38,11 +38,12 @@ $__summary: comment;
 {
     --modal-backdrop-color: rgba(0, 0, 0, 0.54);
     --modal-backdrop-filter: none;
-}
-
-:root
-{
     --palette-color-neutral-darker: hsl(210, 6%, 23%) !important;
+
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
 }
 
 body page-sidebar page-header, page-sidebar page-section, page-sidebar page-footer

@@ -69,6 +69,11 @@ body
      * The width of the border of inputs.
      */
     --input-border-width: var(--border-width-thin);
+
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
 }
 
 dropdown-icon

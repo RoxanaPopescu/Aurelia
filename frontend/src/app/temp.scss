@@ -3,10 +3,10 @@
 .input-heading > *,
 .input-description > *,
 .toggle-heading > *,
-.toggle-description > *
+.toggle-description > *,
+.input-heading-like
 {
-    opacity: 0.9 !important;
-    //color: var(--surface-subtle-color);
+    color: var(--temp-label-color, inherit);
 
     info-icon
     {
@@ -147,7 +147,6 @@ modal-panel .modal-panel-content modal-header
     .input-heading > *
     {
         margin-bottom: 2rem;
-        opacity: var(--opacity-faded);
     }
 
     .input-description > *
