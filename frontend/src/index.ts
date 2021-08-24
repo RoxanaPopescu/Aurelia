@@ -311,9 +311,8 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: 
  * @param newIdentity The new identity that was authenticated, if any.
  * @param oldIdentity The old identity that was unauthenticated, if any.
  * @param finish A function that, if called, finishes the change immediately.
- * @returns A promise that will be resolved when the app is ready for the new identity.
  */
-async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): Promise<void>
+function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): void
 {
     if (newIdentity != null)
     {

@@ -39,7 +39,7 @@ export class IdentityPictureInputCustomElement
      * or undefined to not show an option to use Gravatar.
      */
     @bindable({ defaultValue: undefined })
-    public gravatar: (string | undefined)[] | string | undefined;
+    public gravatar: (string | undefined)[] | string | undefined;
 
     /**
      * True if the input is disabled, otherwise false.

@@ -45,7 +45,7 @@ export class SecurityPaneCustomElement
 
         try
         {
-            await this._accountService.forgotPassword(this.user.email!);
+            await this._accountService.forgotPassword(this.user.email);
         }
         catch (error)
         {

@@ -269,7 +269,7 @@ export class PermissionsCustomElement
 
             if (this.value != null)
             {
-                config.setEnabled(this.value)
+                config.setEnabled(this.value);
             }
 
             this.config = config;
