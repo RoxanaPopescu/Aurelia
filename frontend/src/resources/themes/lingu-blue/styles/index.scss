@@ -15,13 +15,31 @@ $__summary: comment;
 
 // Export the settings.
 // Settings define theme specific overrides to the base settings.
+@import "./settings/font-face";
 @import "./settings/font";
 
 // HACK: Override default styles.
 
+:root
+{
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
+}
+
+body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--surface-separator-color) !important;
+    border-bottom: none !important;
+    background-color: transparent !important;
+    color: var(--surface-subtle-color) !important;
+}
+
 button[appearance="outline"]
 {
-    border-color: var(--palette-color-neutral-light) !important;
+    // border-color: var(--palette-color-neutral-light) !important;
 }
 
 html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
@@ -29,3 +47,33 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
     background: transparent !important;
     border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
 }
+
+/* BEGIN: USE DARK BLUE COLOR */
+
+html app-sidebar
+{
+    --surface-nav-link-surface-icon-color: #88929e !important;
+    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%) !important;
+
+    &,
+    header::before,
+    footer::before
+    {
+        background: var(--palette-color-primary-darkest);
+    }
+
+    section
+    {
+        &::-webkit-scrollbar
+        {
+            background: var(--palette-color-primary-darkest);
+        }
+    }
+
+    user-identity a identity-picture
+    {
+        background: var(--surface-nav-child-surface-color);
+    }
+}
+
+/* END: USE DARK BLUE COLOR */

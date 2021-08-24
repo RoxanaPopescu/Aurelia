@@ -91,6 +91,7 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
 {
     padding-top: 16rem;
     border-top: var(--border-width-thin) solid var(--palette-color-neutral-light);
+    border-bottom: none !important;
     background: transparent !important;
     color: var(--palette-color-neutral-lightest) !important;
 }

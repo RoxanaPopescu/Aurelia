@@ -50,6 +50,7 @@ body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
     padding-top: 16rem;
     border-top: var(--border-width-thin) solid var(--surface-separator-color) !important;
+    border-bottom: none !important;
     background-color: transparent !important;
     color: var(--surface-subtle-color) !important;
 }

@@ -1,0 +1,47 @@
+////
+/// @group resources/styles/settings/font-family
+////
+
+/// The base font families.
+$__summary: comment;
+
+
+/* stylelint-disable declaration-colon-space-after, value-list-max-empty-lines */
+
+:root
+{
+    /// The sans-serif font family,
+    /// used for e.g. normal text.
+    /// Note that the font `system-ui` is not used, as it depends on the system language,
+    /// and may represents a font that is not optimized for the Latin script.
+    --font-family-sans-serif:
+
+        -apple-system,
+        BlinkMacSystemFont,
+
+        "Roboto",
+        "Segoe UI",
+        "Helvetica",
+        "Arial",
+
+        sans-serif,
+
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol";
+
+    /// The monospaced font family,
+    /// used for e.g identifiers, code examples, and program input and output.
+    /// Note that the font `SFMono-Regular` is not installed by default, but for users who
+    /// install it manually, it provides the most consistent experience on macOS.
+    --font-family-monospaced:
+
+        "SFMono-Regular",
+
+        "Consolas",
+        "Liberation Mono",
+        "Menlo",
+        "Courier",
+
+        monospace;
+}

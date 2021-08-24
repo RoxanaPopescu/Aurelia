@@ -25,17 +25,38 @@ $__summary: comment;
 /// The primary color and its variations.
 :root
 {
-    --palette-color-primary-lighter: hsl(216, 100%, 97%);
-    --palette-color-primary-light: hsl(218, 47%, 65%);
-    --palette-color-primary: hsl(216, 92%, 34%);
-    --palette-color-primary-dark: hsl(216, 91%, 30%);
-    --palette-color-primary-darker: hsl(217, 86%, 26%);
-    --palette-color-primary-darkest: hsl(218, 54%, 20%);
 
-    --palette-color-primary--hover: #06449a;
-    --palette-color-primary--active: #084091;
-    --palette-color-primary--child: #0a3985;
-    --palette-color-primary--child-hover: #0b3678;
+    /* BEGIN: USE DARK BLUE COLOR */
+
+    --palette-color-primary-lighter: #edf7ff;
+    --palette-color-primary-light: #33a3dd;
+    --palette-color-primary: #2072b7;
+    --palette-color-primary-dark: #2c5d9b;
+    --palette-color-primary-darker: #1c3d66;
+    --palette-color-primary-darkest: #11253e;
+
+    --palette-color-primary--hover: transparent;
+    --palette-color-primary--active: #316db6;
+    --palette-color-primary--child: rgba(48, 108, 181, 0.2);
+    --palette-color-primary--child-hover: transparent;
+
+    /* END: USE DARK BLUE COLOR */
+
+    /* BEGIN: USE LINGU BLUE COLOR */
+
+    // --palette-color-primary-lighter: hsl(216, 100%, 97%);
+    // --palette-color-primary-light: hsl(218, 47%, 65%);
+    // --palette-color-primary: hsl(216, 92%, 34%);
+    // --palette-color-primary-dark: hsl(216, 91%, 30%);
+    // --palette-color-primary-darker: hsl(217, 86%, 26%);
+    // --palette-color-primary-darkest: hsl(218, 54%, 20%);
+
+    // --palette-color-primary--hover: #06449a;
+    // --palette-color-primary--active: #084091;
+    // --palette-color-primary--child: #0a3985;
+    // --palette-color-primary--child-hover: #0b3678;
+
+    /* END: USE LINGU BLUE COLOR */
 }
 
 /// The accent color indicating information.
