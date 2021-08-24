@@ -1,31 +1,298 @@
 ////
-/// @group resources/themes/lingu-dark/settings/font
+/// @group resources/styles/settings/font
 ////
 
-/// Theme specific overrides to the base settings.
+/// The base text settings.
 $__summary: comment;
 
 
+@import "resources/index";
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
 [context="marketing"]
 {
-    /// The font weight of the largest text.
-    --font-largest-font-weight: 500;
+    &
+    {
+        /// The line height of the marketing title text.
+        --font-largest-line-height: 88rem;
 
-    /// The font weight of the larger text.
-    --font-larger-font-weight: 300;
+        /// The font size of the marketing title text.
+        --font-largest-font-size: 76rem;
 
-    /// The font weight of the large text.
-    --font-large-font-weight: 500;
+        /// The margin above the marketing title text.
+        --font-largest-margin-top: 76rem;
+
+        /// The margin below the marketing title text.
+        --font-largest-margin-bottom: 76rem;
+
+        /// The font weight of the marketing title text.
+        --font-largest-font-weight: 600;
+    }
+
+    &
+    {
+        /// The line height of the marketing subtitle text.
+        --font-larger-line-height: 52rem;
+
+        /// The font size of the marketing subtitle text.
+        --font-larger-font-size: 40rem;
+
+        /// The margin above the marketing subtitle text.
+        --font-larger-margin-top: 40rem;
+
+        /// The margin below the marketing subtitle text.
+        --font-larger-margin-bottom: 40rem;
+
+        /// The font weight of the marketing subtitle text.
+        --font-larger-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the marketing base text.
+        --font-large-line-height: 40rem;
+
+        /// The font size of the marketing base text.
+        --font-large-font-size: 28rem;
+
+        /// The margin above the marketing base text.
+        --font-large-margin-top: 28rem;
+
+        /// The margin below the marketing base text.
+        --font-large-margin-bottom: 28rem;
+
+        /// The font weight of the marketing base text.
+        --font-large-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the medium text.
+        --font-medium-line-height: 32rem;
+
+        /// The font size of the medium text.
+        --font-medium-font-size: 22rem;
+
+        /// The margin above the medium text.
+        --font-medium-margin-top: 22rem;
+
+        /// The margin below the medium text.
+        --font-medium-margin-bottom: 22rem;
+
+        /// The font weight of the medium text.
+        --font-medium-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the base text.
+        --font-base-line-height: 28rem;
+
+        /// The font size of the base text.
+        --font-base-font-size: 18rem;
+
+        /// The margin above the base text.
+        --font-base-margin-top: 18rem;
+
+        /// The margin below the base text.
+        --font-base-margin-bottom: 18rem;
+
+        /// The font weight of the base text.
+        --font-base-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the small text.
+        --font-small-line-height: 24rem;
+
+        /// The font size of the small text.
+        --font-small-font-size: 16rem;
+
+        /// The margin above the small text.
+        --font-small-margin-top: 16rem;
+
+        /// The margin below the small text.
+        --font-small-margin-bottom: 16rem;
+
+        /// The font weight of the small text.
+        --font-small-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the smaller text.
+        --font-smaller-line-height: 20rem;
+
+        /// The font size of the smaller text.
+        --font-smaller-font-size: 14rem;
+
+        /// The margin above the smaller text.
+        --font-smaller-margin-top: 14rem;
+
+        /// The margin below the smaller text.
+        --font-smaller-margin-bottom: 14rem;
+
+        /// The font weight of the smaller text.
+        --font-smaller-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the smallest text.
+        --font-smallest-line-height: 16rem;
+
+        /// The font size of the smallest text.
+        --font-smallest-font-size: 12rem;
+
+        /// The margin above the smallest text.
+        --font-smallest-margin-top: 12rem;
+
+        /// The margin below the smallest text.
+        --font-smallest-margin-bottom: 12rem;
+
+        /// The font weight of the smallest text.
+        --font-smallest-font-weight: 400;
+    }
 }
 
 [context="app"]
 {
-    /// The font weight of the largest text.
-    --font-largest-font-weight: 500;
+    &
+    {
+        /// The line height of the title text.
+        --font-title-line-height: 56rem;
 
-    /// The font weight of the larger text.
-    --font-larger-font-weight: 500;
+        /// The font size of the title text.
+        --font-title-font-size: 48rem;
 
-    /// The font weight of the large text.
-    --font-large-font-weight: 500;
+        /// The margin above the title text.
+        --font-title-margin-top: 32rem;
+
+        /// The margin below the title text.
+        --font-title-margin-bottom: 24rem;
+
+        /// The font weight of the title text.
+        --font-title-font-weight: 300;
+    }
+
+    &
+    {
+        /// The line height of the largest text.
+        --font-largest-line-height: 28rem;
+
+        /// The font size of the largest text.
+        --font-largest-font-size: 24rem;
+
+        /// The margin above the largest text.
+        --font-largest-margin-top: 24rem;
+
+        /// The margin below the largest text.
+        --font-largest-margin-bottom: 24rem;
+
+        /// The font weight of the largest text.
+        --font-largest-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the larger text.
+        --font-larger-line-height: 24rem;
+
+        /// The font size of the larger text.
+        --font-larger-font-size: 20rem;
+
+        /// The margin above the larger text.
+        --font-larger-margin-top: 24rem;
+
+        /// The margin below the larger text.
+        --font-larger-margin-bottom: 16rem;
+
+        /// The font weight of the larger text.
+        --font-larger-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the large text.
+        --font-large-line-height: 20rem;
+
+        /// The font size of the large text.
+        --font-large-font-size: 16rem;
+
+        /// The margin above the large text.
+        --font-large-margin-top: 24rem;
+
+        /// The margin below the large text.
+        --font-large-margin-bottom: 16rem;
+
+        /// The font weight of the large text.
+        --font-large-font-weight: 500;
+    }
+
+    &
+    {
+        /// The line height of the medium text.
+        --font-medium-line-height: 20rem;
+
+        /// The font size of the medium text.
+        --font-medium-font-size: 15rem;
+
+        /// The margin above the medium text.
+        --font-medium-margin-top: 12rem;
+
+        /// The margin below the medium text.
+        --font-medium-margin-bottom: 12rem;
+
+        /// The font weight of the medium text.
+        --font-medium-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the base text.
+        --font-base-line-height: 20rem;
+
+        /// The font size of the base text.
+        --font-base-font-size: 14rem;
+
+        /// The margin above the base text.
+        --font-base-margin-top: 12rem;
+
+        /// The margin below the base text.
+        --font-base-margin-bottom: 12rem;
+
+        /// The font weight of the base text.
+        --font-base-font-weight: 400;
+    }
+
+    &
+    {
+        /// The line height of the small text.
+        --font-small-line-height: 16rem;
+
+        /// The font size of the small text.
+        --font-small-font-size: 12rem;
+
+        /// The margin above the small text.
+        --font-small-margin-top: 8rem;
+
+        /// The margin below the small text.
+        --font-small-margin-bottom: 8rem;
+
+        /// The font weight of the small text.
+        --font-small-font-weight: 400;
+    }
+}
+
+:root
+{
+    /// The relative font size of monospaced text, which
+    /// compensates for the larger appearance of the glyphs.
+    --font-monospaced-font-size: 0.92em !important;
+
+    /// The relative letter spacing of monospaced text, which
+    /// compensates for the larger spacing between the glyphs.
+    --font-monospaced-letter-spacing: -0.008em;
 }

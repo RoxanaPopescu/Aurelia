@@ -56,5 +56,16 @@ export default
             preferredName: "John",
             pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200"
         }
+    },
+
+    "POST /api/v2/account/create":
+    {
+        body:
+        {
+            email: "john-doe@example.com",
+            fullName: "John Doe",
+            preferredName: "John",
+            pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200"
+        }
     }
 }

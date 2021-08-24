@@ -14,6 +14,7 @@ $__summary: comment;
 // Export the settings.
 // Settings define theme specific overrides to the base settings.
 @import "./settings/font";
+@import "./settings/font-family";
 
 
 // Export the themes.
@@ -65,15 +66,9 @@ page-tab-nav
     --tab-surface-color--active: var(--palette-color-neutral);
 }
 
-body
-{
-    /// The width of the border of inputs.
-    --input-border-width: var(--border-width-thin);
-}
-
 button[appearance="outline"]
 {
-    border-color: var(--palette-color-neutral) !important;
+    // border-color: var(--palette-color-neutral) !important;
 }
 
 :root
@@ -94,7 +89,8 @@ data-table[appearance="cards"]
 
 html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
-    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--palette-color-neutral-light);
     background: transparent !important;
     color: var(--palette-color-neutral-lightest) !important;
 }
