@@ -11,8 +11,6 @@ export class EditRolePanel
     /**
      * Creates a new instance of the type.
      * @param organizationService The `OrganizationService` instance.
-     * @param modalService The `ModalService` instance.
-     * @param driverService The `DriverService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
     public constructor(organizationService: OrganizationService, modal: Modal)

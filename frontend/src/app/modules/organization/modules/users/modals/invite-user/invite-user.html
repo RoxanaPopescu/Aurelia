@@ -49,7 +49,7 @@
                         Role
                     </div>
 
-                    <item repeat.for="role of availableRoles" model.bind="role.id">
+                    <item repeat.for="role of availableRoles" model.bind="role">
                         ${role.name}
                     </item>
 
@@ -67,13 +67,13 @@
 
             <div class="control-row margin-large-bottom">
 
-                <select-input label="above" none.bind="false" value.bind="selectedTeam" display-value.bind="selectedTeam.name" class="flex-basis-1-of-1">
+                <select-input label="above" value.bind="selectedTeam" display-value.bind="selectedTeam.name" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Team
                     </div>
 
-                    <item repeat.for="team of availableTeams" model.bind="team.id">
+                    <item repeat.for="team of availableTeams" model.bind="team">
                         ${team.name}
                     </item>
 
