@@ -17,7 +17,7 @@
                     ${localeService.locale.name}
                 </span>
 
-                <item repeat.for="locale of locales" click.trigger="localeService.setLocale(locale.code)">
+                <item repeat.for="locale of locales" model.bind="locale.code" click.trigger="localeService.setLocale(locale.code)">
                     ${locale.name}
                 </item>
 

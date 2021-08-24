@@ -305,31 +305,31 @@
                                 Change status
                             </div>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('placed')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('placed')" model="placed" translate>
                                 Placed
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('validated')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('validated')" model="validated" translate>
                                 Validated
                             </item>
 
-                            <item disabled.bind="order.state.status.slug != 'delivered'" click.trigger="onStatusItemClick('ready')" translate>
+                            <item disabled.bind="order.state.status.slug != 'delivered'" click.trigger="onStatusItemClick('ready')" model="ready" translate>
                                 Ready
                             </item>
 
-                            <item disabled.bind="!['placed', 'ready'].includes(order.state.status.slug)" click.trigger="onStatusItemClick('cancelled')" translate>
+                            <item disabled.bind="!['placed', 'ready'].includes(order.state.status.slug)" click.trigger="onStatusItemClick('cancelled')" model="cncelled" translate>
                                 Cancelled
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('in-route-planning')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('in-route-planning')" model="in-route-planning" translate>
                                 In route planning
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('route-planned')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('route-planned')" model="route-planned" translate>
                                 Route planned
                             </item>
 
-                            <item disabled.bind="true" click.trigger="onStatusItemClick('delivered')" translate>
+                            <item disabled.bind="true" click.trigger="onStatusItemClick('delivered')" model="delivered" translate>
                                 Delivered
                             </item>
 

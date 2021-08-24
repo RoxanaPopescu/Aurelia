@@ -188,6 +188,7 @@
                         <item
                             disabled.bind="selectedOrders.length === 0"
                             if-claims="edit-routes"
+                            model="create-route"
                             click.delegate="onCreateRouteClick(selectedOrders)"
                             translate>
 
@@ -199,6 +200,7 @@
                         <item
                             disabled.bind="selectedOrders.length === 0"
                             if-claims="edit-order"
+                            model="change-pickup-address"
                             click.trigger="onChangePickupAddressClick(selectedOrders)"
                             translate>
 
