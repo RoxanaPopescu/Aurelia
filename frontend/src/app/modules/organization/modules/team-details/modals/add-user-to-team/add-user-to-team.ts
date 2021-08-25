@@ -50,7 +50,7 @@ export class AddUserToTeamPanel
     }
 
     /**
-     * Called when the `Create team` or `Save changes` button is clicked.
+     * Called when the `Add user` button is clicked.
      */
     protected async onSubmitClick(): Promise<void>
     {

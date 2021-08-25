@@ -25,6 +25,11 @@ export class ProfilePaneCustomElement
     private readonly _modal: Modal;
 
     /**
+     * True if the invite has been resent, otherwise false.
+     */
+    protected inviteResent = false;
+
+    /**
      * The current fetch operation, if any.
      */
     protected operation: Operation | undefined;
@@ -111,7 +116,7 @@ export class ProfilePaneCustomElement
     }
 
     /**
-     * Called when the `Create team` or `Save changes` button is clicked.
+     * Called when the `Save changes` button is clicked.
      */
     protected async onSubmitClick(): Promise<void>
     {
@@ -155,6 +160,23 @@ export class ProfilePaneCustomElement
         finally
         {
             this._modal.busy = false;
+        }
+    }
+
+    /**
+     * Called when the `Resend invite` button is clicked.
+     */
+    protected async onResendInviteClick(): Promise<void>
+    {
+        try
+        {
+            await this._organizationService.resendInvite(this.user.id);
+
+            this.inviteResent = true;
+        }
+        catch (error)
+        {
+            Log.error("An error occurred while resending the invite.", error);
         }
     }
 }

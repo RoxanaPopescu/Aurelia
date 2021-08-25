@@ -92,7 +92,7 @@ export class InviteUserPanel
     }
 
     /**
-     * Called when the `Create team` or `Save changes` button is clicked.
+     * Called when the `Send invite` button is clicked.
      */
     protected async onSubmitClick(): Promise<void>
     {

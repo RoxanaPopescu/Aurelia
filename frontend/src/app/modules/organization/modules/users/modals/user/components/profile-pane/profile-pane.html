@@ -15,7 +15,7 @@
 
             <div class="user-profile-info">
 
-                <div class="margin-bottom flex-row">
+                <div class="flex-row margin-bottom">
                     <div class="input-heading-like" translate>
                         Status
                     </div>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                <div class="flex-row">
+                <div if.bind="user.status.slug !== 'invited'" class="flex-row">
                     <div class="input-heading-like" translate>
                         Last online
                     </div>
@@ -32,6 +32,21 @@
                         ${user.lastOnline | dateTime}
                     </div>
                 </div>
+
+                <div if.bind="inviteResent">
+                    <div accent="positive" translate>
+                        The invite has been resent
+                    </div>
+                </div>
+
+                <button
+                    if.bind="user.status.slug === 'invited' && !inviteResent"
+                    appearance="none"
+                    accent="primary"
+                    click.delegate="onResendInviteClick()"
+                    translate>
+                    Resend invite
+                </button>
 
             </div>
 

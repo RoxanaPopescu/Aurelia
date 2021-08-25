@@ -2,11 +2,12 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
-import { ModalService } from "shared/framework";
+import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
 import { AddUserToTeamPanel } from "./modals/add-user-to-team/add-user-to-team";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 import { UserModalPanel } from "../users/modals/user/user";
+import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -28,17 +29,20 @@ export class TeamDetailsPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
+     * @param toastService The `ToastService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, toastService: ToastService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
+        this._toastService = toastService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
     private _users: OrganizationUser[] | undefined;
@@ -173,7 +177,7 @@ export class TeamDetailsPage
     }
 
     /**
-     * Called when a row in the user table is clicked.
+     * Called when a user, or its `Edit user` icon, is clicked.
      * Opens a modal presenting the public profile of the user.
      * @param user The user that was clicked.
      */
@@ -193,6 +197,28 @@ export class TeamDetailsPage
         if (newUser != null)
         {
             this._users!.push(newUser);
+        }
+    }
+
+    /**
+     * Called when the `Resend invite` icon is clicked on a user.
+     * Resends the invite.
+     * @param user The user to reinvite.
+     */
+    protected async onResendInviteClick(user: OrganizationUser): Promise<void>
+    {
+        try
+        {
+            await this._organizationService.resendInvite(user.id);
+
+            this._toastService.open("success",
+            {
+                heading: reinviteToastStrings.heading
+            });
+        }
+        catch (error)
+        {
+            Log.error("Could not resend the invite", error);
         }
     }
 

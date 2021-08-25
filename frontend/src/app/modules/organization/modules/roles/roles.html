@@ -65,19 +65,31 @@
                     <data-table-headers>
 
                         <data-table-cell name="name" translate>
-                            Name
+                            <span class="text-truncate">
+                                Name
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="userCount" translate>
-                            Users
+                        <data-table-cell name="userCount" align="right" translate>
+                            <span class="text-truncate">
+                                Users
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <!-- Spacer-->
                         </data-table-cell>
 
                         <data-table-cell name="createdDateTime" translate>
-                            Date created
+                            <span class="text-truncate">
+                                Date created
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="modifiedDateTime" translate>
-                            Date modified
+                            <span class="text-truncate">
+                                Date modified
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -88,7 +100,7 @@
 
                     <template repeat.for="role of orderedAndFilteredRoles">
 
-                        <data-table-row click.call="onEditRoleClick(role)">
+                        <data-table-row click.call="onRoleClick(role)">
 
                             <data-table-cell>
                                 <span class="text-truncate">
@@ -96,10 +108,14 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell>
+                            <data-table-cell align="right">
                                 <span class="text-truncate">
                                     ${role.userCount | number}
                                 </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <!-- Spacer-->
                             </data-table-cell>
 
                             <data-table-cell>
@@ -109,7 +125,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${role.modifiedDateTime | dateTime}
                                 </span>
                             </data-table-cell>
@@ -122,7 +138,7 @@
                                         title.translate="Edit role"
                                         appearance="none"
                                         accent="primary"
-                                        click.trigger="onEditRoleClick(role)">
+                                        click.trigger="onRoleClick(role)">
                                         <icon name="edit-small"></icon>
                                     </button>
 

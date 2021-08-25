@@ -91,6 +91,12 @@ toast
                     rgba(255, 255, 255, 1) 100%
                 );
             }
+
+            + toast-footer[empty="true"]
+            {
+                // If the footer is empty, and directly follows the header, don't show it.
+                height: 0;
+            }
         }
 
         toast-section

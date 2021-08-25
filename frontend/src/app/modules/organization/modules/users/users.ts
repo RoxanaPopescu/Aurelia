@@ -6,8 +6,8 @@ import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationUser } from "app/model/organization";
 import { InviteUserPanel } from "./modals/invite-user/invite-user";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
-import reinviteToastStrings from "./resources/strings/reinvite-toast.json";
 import { UserModalPanel } from "./modals/user/user";
+import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -170,7 +170,7 @@ export class UsersPage
     }
 
     /**
-     * Called when a row in the user table is clicked.
+     * Called when a user, or its `Edit user` icon, is clicked.
      * Opens a modal presenting the public profile of the user.
      * @param user The user that was clicked.
      */
@@ -189,13 +189,13 @@ export class UsersPage
 
         if (newUser != null)
         {
-            this._users!.push(newUser);
+            this._users!.unshift(newUser);
         }
     }
 
     /**
      * Called when the `Resend invite` icon is clicked on a user.
-     * Resends the confirmation email.
+     * Resends the invite.
      * @param user The user to reinvite.
      */
     protected async onResendInviteClick(user: OrganizationUser): Promise<void>

@@ -69,27 +69,39 @@
                     <data-table-headers>
 
                         <data-table-cell name="fullName" translate>
-                            Name
+                            <span class="text-truncate">
+                                Name
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="role.name" translate>
-                            Role
+                            <span class="text-truncate">
+                                Role
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="email" translate>
-                            Email
+                            <span class="text-truncate">
+                                Email
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="phoneNumber" translate>
-                            Phone number
+                            <span class="text-truncate">
+                                Phone number
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="lastOnline" translate>
-                            Last online
+                            <span class="text-truncate">
+                                Last online
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="status.name" translate>
-                            Status
+                            <span class="text-truncate">
+                                Status
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -121,13 +133,13 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${user.phoneNumber | phone}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${user.lastOnline | dateTime}
                                 </span>
                             </data-table-cell>
@@ -141,6 +153,24 @@
                             <data-table-cell align="right">
 
                                 <div class="icon-row">
+
+                                    <button
+                                        if.bind="user.status.slug === 'invited'"
+                                        title.translate="Resend invite"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onResendInviteClick(user)">
+                                        <icon name="md-replay"></icon>
+                                    </button>
+
+                                    <button
+                                        if.bind="user.status.slug !== 'invited'"
+                                        title.translate="Edit user"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onUserClick(user)">
+                                        <icon name="edit-small"></icon>
+                                    </button>
 
                                     <button
                                         title.translate="Remove user"

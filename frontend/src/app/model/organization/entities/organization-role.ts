@@ -17,10 +17,10 @@ export class OrganizationRole
         {
             this.id = data.id;
             this.name = data.name;
-            this.userCount = data.userCount;
             this.createdDateTime = DateTime.fromISO(data.createdDateTime, { setZone: true });
             this.modifiedDateTime = DateTime.fromISO(data.modifiedDateTime, { setZone: true });
             this.permissions = data.permissions;
+            this.userCount = data.userCount;
         }
     }
 
@@ -33,11 +33,6 @@ export class OrganizationRole
      * The name of the role.
      */
     public name: string;
-
-    /**
-     * The number of users associated with the role.
-     */
-    public readonly userCount: string;
 
     /**
      * The date and time at which the role was created.
@@ -53,6 +48,11 @@ export class OrganizationRole
      * The permissions associated with the role.
      */
     public readonly permissions: string[];
+
+    /**
+     * The number of users associated with the role.
+     */
+    public readonly userCount: string;
 
     /**
      * The model representing the searchable text in the entity.

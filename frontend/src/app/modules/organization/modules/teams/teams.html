@@ -65,19 +65,37 @@
                     <data-table-headers>
 
                         <data-table-cell name="name" translate>
-                            Name
+                            <span class="text-truncate">
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell name="users" align="right" translate>
+                            <span class="text-truncate">
+                                Users
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <!-- Spacer-->
                         </data-table-cell>
 
                         <data-table-cell name="address" translate>
-                            Address
+                            <span class="text-truncate">
+                                Address
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="phoneNumber" translate>
-                            Contact phone
+                            <span class="text-truncate">
+                                Contact phone
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell name="vatNumber" translate>
-                            VAT number
+                            <span class="text-truncate">
+                                VAT number
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -96,20 +114,30 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell>
+                            <data-table-cell align="right">
                                 <span class="text-truncate">
+                                    ${team.userCount | number}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <!-- Spacer-->
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" empty-value>
                                     ${team.address}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${team.phoneNumber | phone}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${team.vatNumber}
                                 </span>
                             </data-table-cell>

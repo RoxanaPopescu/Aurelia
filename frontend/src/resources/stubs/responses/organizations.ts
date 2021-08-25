@@ -57,19 +57,24 @@ export default
     {
       body:
       {
-        id: "user-2-id",
-        fullName: "Jane Doe",
-        preferredName: "Jane",
-        email: "janedoe@example.com",
-        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+        id: "invited-user-2-id",
+        fullName: "John Doe",
+        preferredName: "John",
+        email: "johndoe@example.com",
+        phoneNumber: undefined,
         role: { id: "role-1-id", name: "Role 1" },
         team: { id: "team-1-id", name: "Team 1" },
         status: "invited",
-        lastOnline: DateTime.utc().toISO()
+        lastOnline: undefined
       }
     },
 
-    "POST /api/v2/organizations/mover-organization-id/users/user-2-id/reinvite":
+    "POST /api/v2/organizations/mover-organization-id/users/invited-user-1-id/reinvite":
+    {
+      status: 201
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/users/invited-user-2-id/reinvite":
     {
       status: 201
     },
@@ -85,7 +90,6 @@ export default
       {
         id: "role-1-id",
         name: "Role 1",
-        userCount: 1,
         createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
         modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
         permissions:
@@ -100,7 +104,8 @@ export default
           "edit-route-details",
           "view-route-plans",
           "edit-route-plans"
-        ]
+        ],
+        userCount: 1
       })
     },
 
@@ -110,7 +115,6 @@ export default
       {
         id: "role-2-id",
         name: "Role 2",
-        userCount: 0,
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
@@ -125,7 +129,8 @@ export default
           "edit-route-details",
           "view-route-plans",
           "edit-route-plans"
-        ]
+        ],
+        userCount: 0,
       }
     },
 
@@ -157,7 +162,6 @@ export default
       {
         id: "role-3-id",
         name: "Role 1 [dublicate]",
-        userCount: 0,
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
@@ -172,7 +176,8 @@ export default
           "edit-route-details",
           "view-route-plans",
           "edit-route-plans"
-        ]
+        ],
+        userCount: 0
       }
     },
 
@@ -222,7 +227,7 @@ export default
         vatNumber: "69042",
         invoiceDirectly: true,
         invoiceEmail: "team2@example.com",
-        userCount: 1
+        userCount: 0
       }
     },
 
@@ -248,19 +253,34 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
     {
-      body: Array(5).fill(
-      {
-        id: "user-1-id",
-        fullName: "John Doe",
-        preferredName: "John",
-        email: "johndoe@example.com",
-        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
-        role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
-        status: "active",
-        lastOnline: DateTime.utc().toISO()
-      })
+      body:
+      [
+        {
+          id: "invited-user-1-id",
+          fullName: "John Doe",
+          preferredName: "John",
+          email: "johndoe@example.com",
+          phoneNumber: undefined,
+          pictureUrl: undefined,
+          role: { id: "role-1-id", name: "Role 1" },
+          team: { id: "team-1-id", name: "Team 1" },
+          status: "invited",
+          lastOnline: undefined
+        },
+        ...Array(5).fill(
+        {
+          id: "user-1-id",
+          fullName: "John Doe",
+          preferredName: "John",
+          email: "johndoe@example.com",
+          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
+          pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
+          role: { id: "role-1-id", name: "Role 1" },
+          team: { id: "team-1-id", name: "Team 1" },
+          status: "active",
+          lastOnline: DateTime.utc().toISO()
+        })
+      ]
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/add":

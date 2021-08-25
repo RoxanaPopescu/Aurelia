@@ -52,7 +52,7 @@ export class AgreementService
     /**
      * Creates a new agreement and invites the specified fulfiller.
      * @param invite The invite to send.
-     * @returns A promise that will be resolved when the invitation has been sent.
+     * @returns A promise that will be resolved when the invite has been sent.
      */
     public async inviteFulfiller(invite: FulfillerAgreementInvite): Promise<void>
     {
@@ -65,7 +65,7 @@ export class AgreementService
     /**
      * Creates a new agreement and invites the specified consignor.
      * @param invite The invite to send.
-     * @returns A promise that will be resolved when the invitation has been sent.
+     * @returns A promise that will be resolved when the invite has been sent.
      */
     public async inviteConsignor(invite: ConsignorAgreementInvite): Promise<void>
     {

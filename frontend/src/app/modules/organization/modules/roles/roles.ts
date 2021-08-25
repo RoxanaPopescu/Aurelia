@@ -179,11 +179,11 @@ export class RolesPage
     }
 
     /**
-     * Called when the `Edit` icon is clicked on a role.
+     * Called when a role, or its `Edit role` icon, is clicked.
      * Opens a modal for editing the role.
      * @param role The role to edit.
      */
-    protected async onEditRoleClick(role: OrganizationRole): Promise<void>
+    protected async onRoleClick(role: OrganizationRole): Promise<void>
     {
         const newRole = await this._modalService.open(EditRolePanel, { role }).promise;
 
