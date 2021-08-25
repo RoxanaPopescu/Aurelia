@@ -23,9 +23,32 @@
                 ${settingsModel.fullName & oneTime}
             </h1>
 
-            <button appearance="solid" accent="negative" class="account-sign-out" page-href="/account/sign-out" translate>
-                Sign out
-            </button>
+            <div class="account-sign-out ${organizations.length > 1 ? '--show-organization-selector' : ''}">
+
+                <button appearance="solid" accent="negative" page-href="/account/sign-out" translate>
+                    Sign out
+                </button>
+
+                <select-button
+                    if.bind="organizations.length > 1"
+                    appearance="solid"
+                    accent="negative"
+                    placement="bottom-end">
+
+                    <div class="account-sign-out-select-organization-title" translate>
+                        Switch organization
+                    </div>
+
+                    <item
+                        repeat.for="organization of organizations"
+                        model.bind="organization"
+                        click.trigger="onOrganizationSelect(organization)">
+                        ${organization.name}
+                    </item>
+
+                </select-button>
+
+            </div>
 
             <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
 

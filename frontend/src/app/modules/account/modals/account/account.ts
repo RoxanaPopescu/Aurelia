@@ -6,6 +6,8 @@ import { IdentityService } from "app/services/identity";
 import { ProfileService, Profile } from "app/services/profile";
 import { AccountService } from "../../services/account";
 import { AccountDeleteModalDialog } from "./modals/account-delete/account-delete";
+import { Operation } from "shared/utilities";
+import { OrganizationService, OrganizationInfo } from "app/model/organization";
 
 /**
  * Represents the global `account` modal panel.
@@ -22,6 +24,7 @@ export class AccountModalPanel
      * @param identityService The `IdentityService` instance.
      * @param accountService The `AccountService` instance.
      * @param profileService The `ProfileService` instance.
+     * @param organizationService The `OrganizationService` instance.
      * @param localeService The `LocaleService` instance.
      * @param currencyService The `CurrencyService` instance.
      * @param themeService The `ThemeService` instance.
@@ -33,6 +36,7 @@ export class AccountModalPanel
         identityService: IdentityService,
         accountService: AccountService,
         profileService: ProfileService,
+        organizationService: OrganizationService,
         localeService: LocaleService,
         currencyService: CurrencyService,
         themeService: ThemeService)
@@ -43,6 +47,7 @@ export class AccountModalPanel
         this._identityService = identityService;
         this._accountService = accountService;
         this._profileService = profileService;
+        this._organizationService = organizationService;
         this._localeService = localeService;
         this._currencyService = currencyService;
         this._themeService = themeService;
@@ -54,6 +59,7 @@ export class AccountModalPanel
     private readonly _identityService: IdentityService;
     private readonly _accountService: AccountService;
     private readonly _profileService: ProfileService;
+    private readonly _organizationService: OrganizationService;
     private readonly _localeService: LocaleService;
     private readonly _currencyService: CurrencyService;
     private readonly _themeService: ThemeService;
@@ -111,6 +117,11 @@ export class AccountModalPanel
     protected theme: ITheme;
 
     /**
+     * The organizations associated with the user.
+     */
+    protected organizations: OrganizationInfo[];
+
+    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
@@ -152,6 +163,9 @@ export class AccountModalPanel
         // Get the profile for the current user.
         this._profile = await this._profileService.get();
         this.settingsModel = this._profile.getSettings();
+
+        // Get the list of organizations for the current user.
+        new Operation(async () => this.organizations = await this._organizationService.getAll());
     }
 
     /**
@@ -237,8 +251,9 @@ export class AccountModalPanel
 
     /**
      * Saves the changes made to the settings.
+     * @param newOrganizationId The ID of the organization to switch to, once changes have been saved.
      */
-    private async saveChanges(): Promise<void>
+    private async saveChanges(newOrganizationId?: string): Promise<void>
     {
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;
@@ -297,8 +312,11 @@ export class AccountModalPanel
             // Indicate that the operation succeeded.
             this._result = true;
 
-            // Indicate that the modal is ready.
-            this._modal.busy = null;
+            if (newOrganizationId == null)
+            {
+                // Indicate that the modal is ready.
+                this._modal.busy = null;
+            }
         }
         catch (error)
         {
@@ -310,5 +328,29 @@ export class AccountModalPanel
             // Indicate that the modal is ready.
             this._modal.busy = false;
         }
+
+        if (newOrganizationId != null && this._result === true)
+        {
+            // Authorize for the specified organization.
+            const success = await this._identityService.authorize(newOrganizationId);
+
+            if (success)
+            {
+                // Reload the app.
+                location.reload();
+            }
+        }
+    }
+
+    /**
+     * Called when the user select an organization from the `Sign-out` menu.
+     * Signs the user out of the current organization, and in to the specified organization.
+     * @param organization The organization that was selected.
+     */
+    protected async onOrganizationSelect(organization: OrganizationInfo): Promise<void>
+    {
+        // Save any changes made to the profile,
+        // then reload the app with the new organization.
+        this.saveChanges(organization.id);
     }
 }

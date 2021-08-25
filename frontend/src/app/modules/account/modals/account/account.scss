@@ -1,11 +1,64 @@
 modal-panel[name="account"]
 {
+    h1
+    {
+        max-width: calc(66.66% - var(--size-inline-spacing));
+    }
+
     .account-sign-out
     {
+        display: flex;
         position: absolute;
         top: -6rem;
         right: 0;
-        min-width: 33.33% !important;
+        min-width: 33.33%;
+
+        > button
+        {
+            flex-grow: 1;
+            min-width: 0 !important;
+        }
+
+        &.--show-organization-selector
+        {
+            > button
+            {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            > select-button
+            {
+                position: relative;
+
+                button
+                {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+
+                dropdown-icon
+                {
+                    opacity: 1;
+                }
+
+                &::before
+                {
+                    content: "";
+                    height: 100%;
+                    width: var(--border-width-thin);
+                    background: var(--surface-negative-surface-color);
+                    opacity: var(--opacity-faded);
+                }
+            }
+
+            .account-sign-out-select-organization-title
+            {
+                padding: var(--item-picker-surface-item-padding);
+                font-weight: 600;
+                white-space: nowrap;
+            }
+        }
     }
 
     footer > button,
