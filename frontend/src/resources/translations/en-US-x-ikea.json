@@ -1130,6 +1130,7 @@
   "./app/model/route/resources/strings/route-stop-type-names:pickup": "Pickup",
   "./app/model/route/resources/strings/route-stop-type-names:delivery": "Delivery",
   "./app/model/route/resources/strings/route-stop-type-names:return": "Return",
+  "./app/model/route/resources/strings/route-stop-type-names:break": "Break",
   "./app/model/shared/resources/strings/sort-direction-names:ascending": "Ascending",
   "./app/model/shared/resources/strings/sort-direction-names:descending": "Descending",
   "./app/model/shared/resources/strings/task-type-names:photo": "Photo",

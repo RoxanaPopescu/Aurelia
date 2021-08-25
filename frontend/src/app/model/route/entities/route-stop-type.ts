@@ -48,6 +48,10 @@ export class RouteStopType
         "return":
         {
             name: typeNames.return
+        },
+        "break":
+        {
+            name: typeNames.break
         }
     };
 }

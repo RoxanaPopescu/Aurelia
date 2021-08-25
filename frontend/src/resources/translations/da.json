@@ -1130,6 +1130,7 @@
   "./app/model/route/resources/strings/route-stop-type-names:pickup": "Afhentning",
   "./app/model/route/resources/strings/route-stop-type-names:delivery": "Levering",
   "./app/model/route/resources/strings/route-stop-type-names:return": "Retur",
+  "./app/model/route/resources/strings/route-stop-type-names:break": "Pause",
   "./app/model/shared/resources/strings/sort-direction-names:ascending": "Stigende",
   "./app/model/shared/resources/strings/sort-direction-names:descending": "Aftagende",
   "./app/model/shared/resources/strings/task-type-names:photo": "Foto",

@@ -1,5 +1,6 @@
 {
     "pickup": "Pickup",
     "delivery": "Delivery",
-    "return": "Return"
+    "return": "Return",
+    "break": "Break"
 }
