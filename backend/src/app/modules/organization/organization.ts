@@ -1,66 +1,64 @@
 import { AppModule } from "../../app-module";
+import { AppContext } from "../../app-context";
 
 /**
  * Represents a module exposing endpoints related to organizations.
  */
 export class OrganizationModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Creates a new organization.
+     */
+    public "POST /v2/organizations/create" = async (context: AppContext) =>
     {
-        /**
-         * Creates a new organization.
-         */
-        this.router.post("/v2/organizations/create", async context =>
-        {
-            await context.authorize();
+        await context.authorize();
 
-            const result = await this.apiClient.post("organization/organizations/create",
+        const result = await this.apiClient.post("organization/organizations/create",
+        {
+            body:
             {
-                body:
-                {
-                    organizationType: context.request.body.type,
-                    name: context.request.body.name,
-                    initialOwnerUserId: context.user!.id
-                }
-            });
-
-            context.response.body = { id: result.data.organizationId, name: context.request.body.name };
-            context.response.status = 200;
+                organizationType: context.request.body.type,
+                name: context.request.body.name,
+                initialOwnerUserId: context.user!.id
+            }
         });
 
-        /**
-         * Gets all organizations visible to the current user.
-         */
-        this.router.get("/v2/organizations", async context =>
+        context.response.body = { id: result.data.organizationId, name: context.request.body.name };
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets all organizations visible to the current user.
+     */
+    public "GET /v2/organizations" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result1 = await this.apiClient.get(`identity/memberships/users/${context.user!.id}`);
+
+        const organizations = await Promise.all(result1.data.organizationMemberships.map(async (membership: any) =>
         {
-            await context.authorize();
+            const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
 
-            const result1 = await this.apiClient.get(`identity/memberships/users/${context.user!.id}`);
+            return result2.data;
+        }));
 
-            const organizations = await Promise.all(result1.data.organizationMemberships.map(async (membership: any) =>
-            {
-                const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
+        // TODO: We could consider adding invitations here, as they are already in the response.
 
-                return result2.data;
-            }));
+        context.response.body = organizations;
+        context.response.status = 200;
+    }
 
-            // TODO: We could consider adding invitations here, as they are already in the response.
+    /**
+     * Gets the specified organization.
+     */
+    public "GET /v2/organizations/:id" = async (context: AppContext) =>
+    {
+        await context.authorize();
 
-            context.response.body = organizations;
-            context.response.status = 200;
-        });
+        const result = await this.apiClient.get(`organization/organizations/${context.params.id}`);
 
-        /**
-         * Gets the specified organization.
-         */
-        this.router.get("/v2/organizations/:id", async context =>
-        {
-            await context.authorize();
-
-            const result = await this.apiClient.get(`organization/organizations/${context.params.id}`);
-
-            context.response.body = result.data;
-            context.response.status = 200;
-        });
+        context.response.body = result.data;
+        context.response.status = 200;
     }
 }

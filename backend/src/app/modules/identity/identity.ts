@@ -1,167 +1,165 @@
 import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
-import { ApiError, ApiResult } from "../../../shared/infrastructure";
 import { Base64 } from "../../../shared/utilities";
-import { AppModule } from "../../app-module";
+import { ApiError, ApiResult } from "../../../shared/infrastructure";
 import settings from "../../../resources/settings/settings";
+import { AppModule } from "../../app-module";
+import { AppContext } from "../../app-context";
 
 /**
  * Represents a module exposing endpoints related to authentication and authorization.
  */
 export class IdentityModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Authenticates the user, based on the specified email and password.
+     * @param body.email The email address identifying the user.
+     * @param body.password The users password.
+     * @returns
+     * - 200: A refresh token and an access token that grants permission to create or choose an organization.
+     */
+    public "POST /v2/identity/authenticate" = async (context: AppContext) =>
     {
-        /**
-         * Authenticates the user, based on the specified email and password.
-         * @param body.email The email address identifying the user.
-         * @param body.password The users password.
-         * @returns
-         * - 200: A refresh token and an access token that grants permission to create or choose an organization.
-         */
-        this.router.post("/v2/identity/authenticate", async context =>
+        try
         {
-            try
-            {
-                const result = await this.apiClient.post("identity/connect/token",
-                {
-                    headers:
-                    {
-                        "content-type": "application/x-www-form-urlencoded"
-                    },
-                    body:
-                        // tslint:disable: quotemark
-                        `client_id=bff&` +
-                        `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
-                        `scope=openid profile email organization-selection offline_access&` +
-                        `grant_type=password&` +
-                        `username=${encodeURIComponent(context.request.body.email)}&` +
-                        `password=${encodeURIComponent(context.request.body.password)}`
-                        // tslint:enable
-                });
-
-                context.response.body = await this.getAuthResponse(result);
-                context.response.status = 200;
-
-            }
-            catch (error)
-            {
-                if (error instanceof ApiError && error.data.error === "invalid_grant")
-                {
-                    context.response.status = 401;
-                }
-                else
-                {
-                    throw error;
-                }
-            }
-        });
-
-        /**
-         * Authorizes the user, based on the specified access token and organization.
-         * @param body.organizationId The ID of the organization for which to get an access token, if any.
-         * @returns
-         * - 200: A refresh token and an access token that grants permission to create or choose an organization,
-         *   and additional permissions within the specified organization.
-         */
-        this.router.post("/v2/identity/authorize", async context =>
-        {
-            await context.authorize();
-
-            try
-            {
-                const result = await this.apiClient.post("identity/selectorganization",
-                {
-                    body:
-                    {
-                        organizationId: context.request.body.organizationId
-                    }
-                });
-
-                context.response.body = await this.getAuthResponse(result);
-                context.response.status = 200;
-            }
-            catch (error)
-            {
-                if (error instanceof ApiError && error.response?.status === 403)
-                {
-                    context.response.status = 401;
-                }
-                else
-                {
-                    throw error;
-                }
-            }
-        });
-
-        /**
-         * Reauthorizes the user, based on the specified refresh token, and optionbally, access token.
-         * @param body.refreshToken The refresh token for which to get an access token.
-         * @returns
-         * - 200: A refresh token and an access token that grants permission to create or choose an organization,
-         *   and if an access token for an organization was specified, additional permissions within that organization.
-         */
-        this.router.post("/v2/identity/reauthorize", async context =>
-        {
-            try
-            {
-                const result = await this.apiClient.post("identity/connect/token",
-                {
-                    headers:
-                    {
-                        "content-type": "application/x-www-form-urlencoded"
-                    },
-                    body:
-                        // tslint:disable: quotemark
-                        `client_id=bff&` +
-                        `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
-                        `grant_type=refresh_token&` +
-                        `refresh_token=${encodeURIComponent(context.request.body.refreshToken)}`
-                        // tslint:enable
-                });
-
-                context.response.body = await this.getAuthResponse(result);
-                context.response.status = 200;
-            }
-            catch (error)
-            {
-                if (error instanceof ApiError && error.data.error === "invalid_grant")
-                {
-                    context.response.status = 401;
-                }
-                else
-                {
-                    throw error;
-                }
-            }
-        });
-
-        /**
-         * Unauthenticates the user, by revoking the specified refresh token.
-         * @param body.refreshToken The refresh token to revoke.
-         * @returns
-         * - 204: No content.
-         */
-        this.router.post("/v2/identity/unauthenticate", async context =>
-        {
-            await context.authorize();
-
-            await this.apiClient.post("identity/connect/revocation",
+            const result = await this.apiClient.post("identity/connect/token",
             {
                 headers:
                 {
-                    "content-type": "application/x-www-form-urlencoded",
-                    "authorization": `Basic ${Base64.encode(`bff:${settings.app.oAuth.clientSecret}`)}`
+                    "content-type": "application/x-www-form-urlencoded"
                 },
                 body:
                     // tslint:disable: quotemark
-                    `token=${encodeURIComponent(context.request.body.refreshToken)}&` +
-                    `token_type_hint=refresh_token`
+                    `client_id=bff&` +
+                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
+                    `scope=openid profile email organization-selection offline_access&` +
+                    `grant_type=password&` +
+                    `username=${encodeURIComponent(context.request.body.email)}&` +
+                    `password=${encodeURIComponent(context.request.body.password)}`
                     // tslint:enable
             });
 
-            context.response.status = 204;
+            context.response.body = await this.getAuthResponse(result);
+            context.response.status = 200;
+
+        }
+        catch (error)
+        {
+            if (error instanceof ApiError && error.data.error === "invalid_grant")
+            {
+                context.response.status = 401;
+            }
+            else
+            {
+                throw error;
+            }
+        }
+    }
+
+    /**
+     * Authorizes the user, based on the specified access token and organization.
+     * @param body.organizationId The ID of the organization for which to get an access token, if any.
+     * @returns
+     * - 200: A refresh token and an access token that grants permission to create or choose an organization,
+     *   and additional permissions within the specified organization.
+     */
+    public "POST /v2/identity/authorize" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        try
+        {
+            const result = await this.apiClient.post("identity/selectorganization",
+            {
+                body:
+                {
+                    organizationId: context.request.body.organizationId
+                }
+            });
+
+            context.response.body = await this.getAuthResponse(result);
+            context.response.status = 200;
+        }
+        catch (error)
+        {
+            if (error instanceof ApiError && error.response?.status === 403)
+            {
+                context.response.status = 401;
+            }
+            else
+            {
+                throw error;
+            }
+        }
+    }
+
+    /**
+     * Reauthorizes the user, based on the specified refresh token, and optionbally, access token.
+     * @param body.refreshToken The refresh token for which to get an access token.
+     * @returns
+     * - 200: A refresh token and an access token that grants permission to create or choose an organization,
+     *   and if an access token for an organization was specified, additional permissions within that organization.
+     */
+    public "POST /v2/identity/reauthorize" = async (context: AppContext) =>
+    {
+        try
+        {
+            const result = await this.apiClient.post("identity/connect/token",
+            {
+                headers:
+                {
+                    "content-type": "application/x-www-form-urlencoded"
+                },
+                body:
+                    // tslint:disable: quotemark
+                    `client_id=bff&` +
+                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
+                    `grant_type=refresh_token&` +
+                    `refresh_token=${encodeURIComponent(context.request.body.refreshToken)}`
+                    // tslint:enable
+            });
+
+            context.response.body = await this.getAuthResponse(result);
+            context.response.status = 200;
+        }
+        catch (error)
+        {
+            if (error instanceof ApiError && error.data.error === "invalid_grant")
+            {
+                context.response.status = 401;
+            }
+            else
+            {
+                throw error;
+            }
+        }
+    }
+
+    /**
+     * Unauthenticates the user, by revoking the specified refresh token.
+     * @param body.refreshToken The refresh token to revoke.
+     * @returns
+     * - 204: No content.
+     */
+    public "POST /v2/identity/unauthenticate" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        await this.apiClient.post("identity/connect/revocation",
+        {
+            headers:
+            {
+                "content-type": "application/x-www-form-urlencoded",
+                "authorization": `Basic ${Base64.encode(`bff:${settings.app.oAuth.clientSecret}`)}`
+            },
+            body:
+                // tslint:disable: quotemark
+                `token=${encodeURIComponent(context.request.body.refreshToken)}&` +
+                `token_type_hint=refresh_token`
+                // tslint:enable
         });
+
+        context.response.status = 204;
     }
 
     // tslint:disable: member-ordering
