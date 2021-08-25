@@ -25,11 +25,6 @@ export class EditRolePanel
     private _result: OrganizationRole | undefined;
 
     /**
-     * The ID of the organization owning the role.
-     */
-    protected organizationId: string;
-
-    /**
      * The role for the modal.
      */
     protected role: OrganizationRole;
@@ -48,9 +43,8 @@ export class EditRolePanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { organizationId: string; role?: OrganizationRole }): void
+    public activate(model: { role?: OrganizationRole }): void
     {
-        this.organizationId = model.organizationId;
         this.role = model.role?.clone() ?? new OrganizationRole();
 
         this._fetchOperation = new Operation(async () =>
@@ -59,7 +53,7 @@ export class EditRolePanel
 
             try
             {
-                this.availablePermissions = await this._organizationService.getPermissions(this.organizationId);
+                this.availablePermissions = await this._organizationService.getPermissions();
 
                 this._modal.busy = false;
             }
@@ -101,11 +95,11 @@ export class EditRolePanel
 
             if (this.role.id)
             {
-                this._result = await this._organizationService.updateRole(this.organizationId, this.role);
+                this._result = await this._organizationService.updateRole(this.role);
             }
             else
             {
-                this._result = await this._organizationService.createRole(this.organizationId, this.role);
+                this._result = await this._organizationService.createRole(this.role);
             }
 
             await this._modal.close();

@@ -22,11 +22,6 @@ export class EditTeamPanel
     private _result: OrganizationTeam | undefined;
 
     /**
-     * The ID of the organization owning the team.
-     */
-    protected organizationId: string;
-
-    /**
      * The team for the modal.
      */
     protected team: OrganizationTeam;
@@ -40,9 +35,8 @@ export class EditTeamPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { organizationId: string; team?: OrganizationTeam }): void
+    public activate(model: { team?: OrganizationTeam }): void
     {
-        this.organizationId = model.organizationId;
         this.team = model.team?.clone() ?? new OrganizationTeam();
     }
 
@@ -75,11 +69,11 @@ export class EditTeamPanel
 
             if (this.team.id)
             {
-                this._result = await this._organizationService.updateTeam(this.organizationId, this.team);
+                this._result = await this._organizationService.updateTeam(this.team);
             }
             else
             {
-                this._result = await this._organizationService.createTeam(this.organizationId, this.team);
+                this._result = await this._organizationService.createTeam(this.team);
             }
 
             await this._modal.close();

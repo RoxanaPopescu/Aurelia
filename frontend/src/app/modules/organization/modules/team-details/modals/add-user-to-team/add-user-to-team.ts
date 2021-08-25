@@ -22,11 +22,6 @@ export class AddUserToTeamPanel
     private _result: OrganizationUser | undefined;
 
     /**
-     * The ID of the organization owning the team.
-     */
-    protected organizationId: string;
-
-    /**
      * The ID of the team.
      */
     protected teamId: string;
@@ -40,9 +35,8 @@ export class AddUserToTeamPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { organizationId: string; teamId: string }): void
+    public activate(model: { teamId: string }): void
     {
-        this.organizationId = model.organizationId;
         this.teamId = model.teamId;
     }
 
@@ -76,7 +70,7 @@ export class AddUserToTeamPanel
             // TODO
             const user = new OrganizationUser({});
 
-            await this._organizationService.addUserToTeam(this.organizationId, this.teamId, user.id);
+            await this._organizationService.addUserToTeam(this.teamId, user.id);
 
             this._result = user;
 

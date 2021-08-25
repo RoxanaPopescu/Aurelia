@@ -3,7 +3,6 @@ import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
-import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
 import { AddUserToTeamPanel } from "./modals/add-user-to-team/add-user-to-team";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
@@ -29,20 +28,17 @@ export class TeamDetailsPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
-     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
-        this._identityService = identityService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
-    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
     private _users: OrganizationUser[] | undefined;
@@ -157,16 +153,14 @@ export class TeamDetailsPage
      */
     protected fetch(teamId: string): void
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         // Abort any existing operation.
         this.operation?.abort();
 
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this.team = await this._organizationService.getTeam(organizationId, teamId, signal);
-            this._users = await this._organizationService.getUsersInTeam(organizationId, teamId, signal);
+            this.team = await this._organizationService.getTeam(teamId, signal);
+            this._users = await this._organizationService.getUsersInTeam(teamId, signal);
         });
 
         this.operation.promise.catch(error =>
@@ -194,8 +188,7 @@ export class TeamDetailsPage
      */
     protected async onInviteUserClick(): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newUser = await this._modalService.open(AddUserToTeamPanel, { organizationId, teamId: this.team.id }).promise;
+        const newUser = await this._modalService.open(AddUserToTeamPanel, { teamId: this.team.id }).promise;
 
         if (newUser != null)
         {
@@ -217,11 +210,9 @@ export class TeamDetailsPage
             return;
         }
 
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            await this._organizationService.removeUserFromTeam(organizationId, this.team.id, user.id);
+            await this._organizationService.removeUserFromTeam(this.team.id, user.id);
 
             this._users!.splice(this._users!.indexOf(user), 1);
         }

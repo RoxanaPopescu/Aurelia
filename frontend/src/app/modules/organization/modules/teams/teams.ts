@@ -3,7 +3,6 @@ import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
-import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { EditTeamPanel } from "./modals/edit-team/edit-team";
 import { ConfirmDeleteTeamDialog } from "./modals/confirm-delete-team/confirm-delete-team";
@@ -27,20 +26,17 @@ export class TeamsPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
-     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
-        this._identityService = identityService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
-    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
     private _teams: OrganizationTeam[] | undefined;
@@ -150,15 +146,13 @@ export class TeamsPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         // Abort any existing operation.
         this.operation?.abort();
 
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this._teams = await this._organizationService.getTeams(organizationId, signal);
+            this._teams = await this._organizationService.getTeams(signal);
         });
 
         this.operation.promise.catch(error =>
@@ -176,8 +170,7 @@ export class TeamsPage
      */
     protected async onNewTeamClick(): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newTeam = await this._modalService.open(EditTeamPanel, { organizationId }).promise;
+        const newTeam = await this._modalService.open(EditTeamPanel, { }).promise;
 
         if (newTeam != null)
         {
@@ -192,8 +185,7 @@ export class TeamsPage
      */
     protected async onEditTeamClick(team: OrganizationTeam): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newTeam = await this._modalService.open(EditTeamPanel, { organizationId, team }).promise;
+        const newTeam = await this._modalService.open(EditTeamPanel, { team }).promise;
 
         if (newTeam != null)
         {
@@ -215,11 +207,9 @@ export class TeamsPage
             return;
         }
 
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            await this._organizationService.deleteTeam(organizationId, team.id);
+            await this._organizationService.deleteTeam(team.id);
 
             this._teams!.splice(this._teams!.indexOf(team), 1);
         }

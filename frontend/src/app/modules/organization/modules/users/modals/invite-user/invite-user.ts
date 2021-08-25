@@ -24,11 +24,6 @@ export class InviteUserPanel
     private _result: OrganizationUser | undefined;
 
     /**
-     * The ID of the organization owning the team.
-     */
-    protected organizationId: string;
-
-    /**
      * The team for the modal.
      */
     protected invite: IOrganizationUserInvite;
@@ -62,10 +57,8 @@ export class InviteUserPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { organizationId: string }): void
+    public activate(): void
     {
-        this.organizationId = model.organizationId;
-
         this._fetchOperation = new Operation(async () =>
         {
             this._modal.busy = true;
@@ -74,8 +67,8 @@ export class InviteUserPanel
             {
                 [this.availableRoles, this.availableTeams] = await Promise.all(
                 [
-                    await this._organizationService.getRoles(this.organizationId),
-                    await this._organizationService.getTeams(this.organizationId)
+                    await this._organizationService.getRoles(),
+                    await this._organizationService.getTeams()
                 ]);
 
                 this._modal.busy = false;
@@ -119,7 +112,7 @@ export class InviteUserPanel
             this.invite.roleId = this.selectedRole.id;
             this.invite.teamId = this.selectedTeam?.id;
 
-            this._result = await this._organizationService.inviteUser(this.organizationId, this.invite);
+            this._result = await this._organizationService.inviteUser(this.invite);
 
             await this._modal.close();
         }

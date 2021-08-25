@@ -3,7 +3,6 @@ import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
-import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationRole } from "app/model/organization";
 import { EditRolePanel } from "./modals/edit-role/edit-role";
 import { ConfirmDeleteRoleDialog } from "./modals/confirm-delete-role/confirm-delete-role";
@@ -27,20 +26,17 @@ export class RolesPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
-     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
-        this._identityService = identityService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
-    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
     private _roles: OrganizationRole[] | undefined;
@@ -150,15 +146,13 @@ export class RolesPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         // Abort any existing operation.
         this.operation?.abort();
 
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this._roles = await this._organizationService.getRoles(organizationId, signal);
+            this._roles = await this._organizationService.getRoles(signal);
         });
 
         this.operation.promise.catch(error =>
@@ -176,8 +170,7 @@ export class RolesPage
      */
     protected async onNewRoleClick(): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newRole = await this._modalService.open(EditRolePanel, { organizationId }).promise;
+        const newRole = await this._modalService.open(EditRolePanel, {}).promise;
 
         if (newRole != null)
         {
@@ -192,8 +185,7 @@ export class RolesPage
      */
     protected async onEditRoleClick(role: OrganizationRole): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newRole = await this._modalService.open(EditRolePanel, { organizationId, role }).promise;
+        const newRole = await this._modalService.open(EditRolePanel, { role }).promise;
 
         if (newRole != null)
         {
@@ -208,11 +200,9 @@ export class RolesPage
      */
     protected async onDuplicateRoleClick(role: OrganizationRole): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            const newRole = await this._organizationService.duplicateRole(organizationId, role.id);
+            const newRole = await this._organizationService.duplicateRole(role.id);
 
             this._roles!.splice(this._roles!.indexOf(role), 0, newRole);
         }
@@ -236,11 +226,9 @@ export class RolesPage
             return;
         }
 
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            await this._organizationService.deleteRole(organizationId, role.id);
+            await this._organizationService.deleteRole(role.id);
 
             this._roles!.splice(this._roles!.indexOf(role), 1);
         }

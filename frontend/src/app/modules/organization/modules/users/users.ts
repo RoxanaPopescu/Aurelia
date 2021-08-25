@@ -3,7 +3,6 @@ import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService, ToastService } from "shared/framework";
-import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationUser } from "app/model/organization";
 import { InviteUserPanel } from "./modals/invite-user/invite-user";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
@@ -30,22 +29,19 @@ export class UsersPage
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
      * @param toastService The `ToastService` instance.
-     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, toastService: ToastService, identityService: IdentityService, organizationService: OrganizationService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, toastService: ToastService, organizationService: OrganizationService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
         this._toastService = toastService;
-        this._identityService = identityService;
         this._organizationService = organizationService;
         this._historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
     private readonly _toastService: ToastService;
-    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _historyHelper: HistoryHelper;
     private _users: OrganizationUser[] | undefined;
@@ -155,15 +151,13 @@ export class UsersPage
      */
     protected fetch(): void
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         // Abort any existing operation.
         this.operation?.abort();
 
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this._users = await this._organizationService.getUsers(organizationId, signal);
+            this._users = await this._organizationService.getUsers(signal);
         });
 
         this.operation.promise.catch(error =>
@@ -191,8 +185,7 @@ export class UsersPage
      */
     protected async onInviteUserClick(): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-        const newUser = await this._modalService.open(InviteUserPanel, { organizationId }).promise;
+        const newUser = await this._modalService.open(InviteUserPanel).promise;
 
         if (newUser != null)
         {
@@ -207,11 +200,9 @@ export class UsersPage
      */
     protected async onResendInviteClick(user: OrganizationUser): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            await this._organizationService.resendInvite(organizationId, user.id);
+            await this._organizationService.resendInvite(user.id);
 
             this._toastService.open("success",
             {
@@ -238,11 +229,9 @@ export class UsersPage
             return;
         }
 
-        const organizationId = this._identityService.identity!.outfit!.id;
-
         try
         {
-            await this._organizationService.removeUser(organizationId, user.id);
+            await this._organizationService.removeUser(user.id);
 
             this._users!.splice(this._users!.indexOf(user), 1);
         }
