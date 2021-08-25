@@ -94,7 +94,7 @@ export class OrganizationService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async updateProfile(profile: OrganizationProfile): Promise<void>
+    public async saveProfile(profile: OrganizationProfile): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
@@ -143,7 +143,7 @@ export class OrganizationService
      * @param userId The ID of the user to invite.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async resendInvite(userId: string): Promise<void>
+    public async reinviteUser(userId: string): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
@@ -233,7 +233,7 @@ export class OrganizationService
      * @param role The role to save.
      * @returns A promise that will be resolved with the new role.
      */
-    public async updateRole(role: OrganizationRole): Promise<OrganizationRole>
+    public async saveRole(role: OrganizationRole): Promise<OrganizationRole>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
@@ -328,7 +328,7 @@ export class OrganizationService
      * @param team The team to save.
      * @returns A promise that will be resolved with the new team.
      */
-    public async updateTeam(team: OrganizationTeam): Promise<OrganizationTeam>
+    public async saveTeam(team: OrganizationTeam): Promise<OrganizationTeam>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
@@ -373,7 +373,7 @@ export class OrganizationService
     /**
      * Adds the specified user to the current organization team.
      * @param teamId The ID of the team.
-     * @param userId The ID of the user to add.
+     * @param userId The ID of the user to assign to the team.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async addUserToTeam(teamId: string, userId: string): Promise<void>
@@ -389,7 +389,7 @@ export class OrganizationService
     /**
      * Removes the specified user from the current organization team.
      * @param teamId The ID of the team.
-     * @param userId The ID of the user to remove.
+     * @param userId The ID of the user to remove from the team.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async removeUserFromTeam(teamId: string, userId: string): Promise<void>

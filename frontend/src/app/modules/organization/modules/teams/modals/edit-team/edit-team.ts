@@ -69,7 +69,7 @@ export class EditTeamPanel
 
             if (this.team.id)
             {
-                this._result = await this._organizationService.updateTeam(this.team);
+                this._result = await this._organizationService.saveTeam(this.team);
             }
             else
             {

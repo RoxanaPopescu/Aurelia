@@ -95,7 +95,7 @@ export class EditRolePanel
 
             if (this.role.id)
             {
-                this._result = await this._organizationService.updateRole(this.role);
+                this._result = await this._organizationService.saveRole(this.role);
             }
             else
             {

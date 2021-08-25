@@ -81,7 +81,7 @@ export class ProfilePage
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            await this._organizationService.updateProfile(this.profile!);
+            await this._organizationService.saveProfile(this.profile!);
         });
 
         this.operation.promise.catch(error =>

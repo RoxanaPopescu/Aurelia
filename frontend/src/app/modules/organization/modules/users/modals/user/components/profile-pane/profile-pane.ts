@@ -170,7 +170,7 @@ export class ProfilePaneCustomElement
     {
         try
         {
-            await this._organizationService.resendInvite(this.user.id);
+            await this._organizationService.reinviteUser(this.user.id);
 
             this.inviteResent = true;
         }

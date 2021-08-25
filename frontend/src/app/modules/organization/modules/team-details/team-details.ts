@@ -209,7 +209,7 @@ export class TeamDetailsPage
     {
         try
         {
-            await this._organizationService.resendInvite(user.id);
+            await this._organizationService.reinviteUser(user.id);
 
             this._toastService.open("success",
             {
