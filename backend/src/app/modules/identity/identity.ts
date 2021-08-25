@@ -151,7 +151,7 @@ export class IdentityModule extends AppModule
                 headers:
                 {
                     "content-type": "application/x-www-form-urlencoded",
-                    "authorization": Base64.encode(`bff:${settings.app.oAuth.clientSecret}`)
+                    "authorization": `Basic ${Base64.encode(`bff:${settings.app.oAuth.clientSecret}`)}`
                 },
                 body:
                     // tslint:disable: quotemark
