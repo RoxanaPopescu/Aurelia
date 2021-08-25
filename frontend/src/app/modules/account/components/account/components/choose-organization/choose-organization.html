@@ -8,24 +8,28 @@
 
             <button
                 repeat.for="organization of organizations"
-                class="choose-organization-item margin-top"
+                class="choose-organization-item margin-bottom"
                 appearance="solid"
                 accent="primary"
                 click.delegate="onOrganizationClick(organization.id)">
-                ${organization.name}
+                <b>${organization.name}</b>
             </button>
 
-            <div if.bind="organizations.length == 0" class="font-large" translate>
+            <div if.bind="organizations.length == 0" class="choose-organization-none font-large" translate>
                 You are not a member of any organizations
             </div>
 
-            <toolbar class="margin-top">
+            <p else class="margin-top text-align-center opacity-faded-less" translate>or</p>
 
-                <a tabindex="0" click.trigger="onCreateOrganizationClick()" translate>
+            <button
+                class="margin-top"
+                appearance="solid"
+                accent="primary"
+                click.delegate="onCreateOrganizationClick()">
+                <div translate>
                     Create organization
-                </a>
-
-            </toolbar>
+                </div>
+            </button>
 
         </div>
 

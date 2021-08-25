@@ -2,15 +2,14 @@ choose-organization
 {
     display: block;
 
-    .font-large
+    .choose-organization-none
     {
-        margin-top: 9rem;
-        margin-bottom: 23rem;
+        padding-bottom: calc((40rem - var(--font-large-line-height)));
     }
 
     .choose-organization-item
     {
-        padding: 20rem 24rem;
+        padding: 23.5rem 26rem;
         text-align: left;
     }
 }
