@@ -4,7 +4,7 @@
 
     <div
         repeat.for="group of config.groups"
-        class="permissions-group ${group.expanded ? '--expanded' : ''}"
+        class="permissions-group"
         surface.bind="group.expanded ? 'neutral' : undefined">
 
         <div class="permissions-group-header">
@@ -67,8 +67,8 @@
 
                     <div repeat.for="permission of group.viewPermissions" class="permissions-permission">
 
-                        <div class="permissions-type-arrow">
-                            └>
+                        <div class="permissions-arrow">
+                            <div class="permissions-arrow-inner"></div>
                         </div>
 
                         <div class="permissions-permission-content">
@@ -133,8 +133,8 @@
 
                     <div repeat.for="permission of group.editPermissions" class="permissions-permission">
 
-                        <div class="permissions-type-arrow">
-                            └>
+                        <div class="permissions-arrow">
+                            <div class="permissions-arrow-inner"></div>
                         </div>
 
                         <div class="permissions-permission-content">

@@ -8,7 +8,7 @@ permissions
 
     .permissions-group
     {
-        padding: 18rem 20rem;
+        padding: 18rem 20rem 0 20rem;
         background-color: var(--surface-color);
         border-bottom: var(--border-width-thin) solid var(---separator-color);
 
@@ -16,17 +16,13 @@ permissions
         {
             border-top: var(--border-width-thin) solid var(---separator-color);
         }
-
-        &.--expanded
-        {
-            padding-bottom: 0;
-        }
     }
 
     .permissions-group-header
     {
         display: flex;
         align-items: center;
+        padding-bottom: 18rem;
 
         > switch-toggle
         {
@@ -41,8 +37,7 @@ permissions
 
     .permissions-group-content
     {
-        padding-top: 1rem;
-        padding-left: 20rem;
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
     }
 
     .permissions-type
@@ -75,7 +70,7 @@ permissions
         width: 48rem;
         height: 48rem;
         background-color: var(--surface-neutral-surface-color);
-        margin-right: 24rem;
+        margin-right: 20rem;
 
         icon
         {
@@ -84,16 +79,26 @@ permissions
         }
     }
 
-    .permissions-type-arrow
+    .permissions-arrow
     {
+        position: relative;
+        align-self: stretch;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 48rem;
-        height: 48rem;
-        margin-right: 24rem;
-        font-size: 32rem;
-        color: var(--surface-neutral-surface-color);
+        margin-right: 20rem;
+
+        .permissions-arrow-inner
+        {
+            position: absolute;
+            left: calc(50% - var(--border-width-thick) / 2);
+            bottom: calc(50% - var(--border-width-thick) / 2 - var(--border-width-thin));
+            border-left: var( --border-width-thick) solid var(--surface-neutral-surface-color);
+            border-bottom: var( --border-width-thick) solid var(--surface-neutral-surface-color);
+            width: 50%;
+            height: 100%;
+        }
     }
 
     .permissions-type-title
