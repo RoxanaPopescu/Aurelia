@@ -56,7 +56,8 @@
         {
             "primary": "#ffffff"
         },
-        "debug": true
+        "debug": true,
+        "hasAccountLogo": true
     },
     {
         "slug": "lingu-dark",

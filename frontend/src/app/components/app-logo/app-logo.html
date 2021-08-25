@@ -8,9 +8,12 @@
         click.trigger="onClick($event)"
         href.bind="disabled ? undefined : '/'">
 
-        <img if.bind="size == 'icon'" src="/resources/themes/${themeService.theme.slug}/images/logo-icon.svg">
+        <let
+            theme.bind="themeService.theme"
+            logo.bind="account && theme.hasAccountLogo ? `logo-${size}-account` : `logo-${size}`">
+        </let>
 
-        <img if.bind="size == 'wide'" src="/resources/themes/${themeService.theme.slug}/images/logo-wide.svg">
+        <img src="/resources/themes/${theme.slug}/images/${logo}.svg">
 
     </a>
 

@@ -2,12 +2,12 @@
   {
       "code": "en-US",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
-      "name": "American English"
+      "name": "English"
   },
   {
       "code": "en-US-x-pseudo",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
-      "name": "American English [pseudo]",
+      "name": "English [pseudo]",
       "debug": true
   },
   {

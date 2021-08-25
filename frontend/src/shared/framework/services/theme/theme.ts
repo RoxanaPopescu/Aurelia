@@ -38,6 +38,11 @@ export interface ITheme
      * True if the theme should only be available if debugging is enabled, otherwise false.
      */
     debug?: boolean;
+
+    /**
+     * True if the theme has a separate logo for use on the account pages, otherwise false.
+     */
+    hasAccountLogo?: boolean;
 }
 
 /**
@@ -69,6 +74,7 @@ export class Theme
         this.preview = data.preview;
         this.classes = data.classes ?? [];
         this.debug = data.debug ?? false;
+        this.hasAccountLogo = data.debug ?? false;
     }
 
     /**
@@ -106,4 +112,9 @@ export class Theme
      * True if the theme should only be available if debugging is enabled, otherwise false.
      */
     public readonly debug: boolean;
+
+    /**
+     * True if the theme has a separate logo for use on the account pages, otherwise false.
+     */
+    public hasAccountLogo: boolean;
 }

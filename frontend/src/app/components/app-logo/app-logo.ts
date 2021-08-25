@@ -26,6 +26,12 @@ export class AppLogoCustomElement
     protected readonly themeService: ThemeService;
 
     /**
+     * True if the logo is used on the account pages, otherwise false.
+     */
+    @bindable
+    public account: boolean;
+
+    /**
      * The size of the logo to show.
      */
     @bindable({ defaultValue: "icon" })
