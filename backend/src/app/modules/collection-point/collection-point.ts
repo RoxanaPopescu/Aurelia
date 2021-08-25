@@ -1,3 +1,4 @@
+import { AppContext } from "app/app-context";
 import { AppModule } from "../../app-module";
 
 /**
@@ -145,7 +146,7 @@ export class CollectionPointModule extends AppModule
      * @param token The login token of the driver.
      * @returns A promise that will be resolved with the details about the driver if valid login.
      */
-    private async validateDriverLogin(context: any): Promise<any>
+    private async validateDriverLogin(context: AppContext): Promise<any>
     {
         const result = await this.apiClient.get("logistics-platform/drivers/validate-login",
         {

@@ -16,13 +16,6 @@ import { authorizeMiddleware } from "./middleware/authorize-middleware";
 import { pagingMiddleware } from "./middleware/paging-middleware";
 import { sortingMiddleware } from "./middleware/sorting-middleware";
 
-// Configure sentry
-Sentry.init({
-    dsn: environment.sentryDns,
-    environment: environment.name,
-    tracesSampleRate: 0.8
-});
-
 /**
  * Represents the app.
  */
@@ -39,18 +32,13 @@ export class App extends Koa<any, IAppContext>
 
         this._appRouter = appRouter;
 
-        // Send errors to sentry
-        this.on("error", (err, ctx) =>
+        // Send errors to Sentry
+        this.on("error", (error, context) =>
         {
             Sentry.withScope(scope =>
             {
-                scope.addEventProcessor(event =>
-                {
-
-                    return Sentry.Handlers.parseRequest(event, ctx.request);
-                });
-
-                Sentry.captureException(err);
+                scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, context.request));
+                Sentry.captureException(error);
             });
         });
     }

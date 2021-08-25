@@ -1,3 +1,5 @@
+import { ParameterizedContext } from "koa";
+import { IRouterParamContext } from "koa-router";
 import { IPaging, ISorting } from "../shared/types";
 import { User } from "../app/middleware/authorize-middleware";
 
@@ -38,3 +40,8 @@ export interface IAppContext
      */
     internal(): void;
 }
+
+/**
+ * Represents the context passed to the request handler.
+ */
+export type AppContext = ParameterizedContext<any, IAppContext & IRouterParamContext<any, IAppContext>, any>;
