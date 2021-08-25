@@ -5,9 +5,43 @@
 
     <modal-section>
 
-        <identity-picture-picker scroll-fade="0.5" readonly.bind="true" initials.bind="initials" value.bind="user.pictureUrl"></identity-picture-picker>
+        <div class="flex-row" scroll-fade="0.5">
 
-        <text-input readonly.bind="true" class="margin-double-top" label="above" value.bind="user.preferredName">
+            <identity-picture-picker
+                readonly.bind="true"
+                initials.bind="initials"
+                value.bind="user.pictureUrl">
+            </identity-picture-picker>
+
+            <div class="user-profile-info">
+
+                <div class="margin-bottom flex-row">
+                    <div class="input-heading-like" translate>
+                        Status
+                    </div>
+                    <div>
+                        ${user.status.name}
+                    </div>
+                </div>
+
+                <div class="flex-row">
+                    <div class="input-heading-like" translate>
+                        Last online
+                    </div>
+                    <div>
+                        ${user.lastOnline | dateTime}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <text-input
+            readonly.bind="true"
+            class="margin-double-top"
+            label="above"
+            value.bind="user.preferredName">
 
             <div slot="heading" translate>
                 Preferred name
@@ -19,7 +53,12 @@
 
         </text-input>
 
-        <text-input if.bind="user.organizationName" readonly.bind="true" class="margin-double-top" label="above" value.bind="user.organizationName">
+        <text-input
+            if.bind="user.organizationName"
+            readonly.bind="true"
+            class="margin-double-top"
+            label="above"
+            value.bind="user.organizationName">
 
             <div slot="heading" translate>
                 Organization
@@ -31,7 +70,12 @@
 
         </text-input>
 
-        <email-input if.bind="user.email" readonly.bind="true" class="margin-double-top" label="above" value.bind="user.email">
+        <email-input
+            if.bind="user.email"
+            readonly.bind="true"
+            class="margin-double-top"
+            label="above"
+            value.bind="user.email">
 
             <div slot="heading" translate>
                 Email address
@@ -51,7 +95,12 @@
 
         </email-input>
 
-        <phone-input if.bind="user.phoneNumber" readonly.bind="true" class="margin-double-top" label="above" value.bind="user.phoneNumber">
+        <phone-input
+            if.bind="user.phoneNumber"
+            readonly.bind="true"
+            class="margin-double-top"
+            label="above"
+            value.bind="user.phoneNumber">
 
             <div slot="heading" translate>
                 Phone number
@@ -71,6 +120,67 @@
 
         </phone-input>
 
+        <select-input
+            class="margin-double-top"
+            label="above"
+            none.bind="false"
+            value.bind="selectedRole"
+            display-value.bind="selectedRole.name"
+            disabled.bind="operation.pending">
+
+            <div slot="heading" translate>
+                Role
+            </div>
+
+            <div slot="description" translate>
+                This is the role assigned to the user within the current organization.
+            </div>
+
+            <item repeat.for="role of availableRoles" model.bind="role">
+                ${role.name}
+            </item>
+
+            <div slot="validation">
+
+                <required-validator
+                    value.bind="selectedRole">
+                </required-validator>
+
+            </div>
+
+        </select-input>
+
+        <select-input
+            class="margin-double-top"
+            label="above"
+            value.bind="selectedTeam"
+            display-value.bind="selectedTeam.name"
+            disabled.bind="operation.pending">
+
+            <div slot="heading" translate>
+                Team
+            </div>
+
+            <div slot="description" translate>
+                This is the team to which the user is currently assigned.
+            </div>
+
+            <item repeat.for="team of availableTeams" model.bind="team">
+                ${team.name}
+            </item>
+
+        </select-input>
+
     </modal-section>
+
+    <button
+        if.bind="!operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
+        appearance="solid"
+        accent="primary"
+        class="margin-larger-top"
+        click.delegate="onSubmitClick()"
+        translate>
+        Save changes
+    </button>
 
 </template>

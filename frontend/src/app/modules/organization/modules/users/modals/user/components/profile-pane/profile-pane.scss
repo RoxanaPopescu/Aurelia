@@ -4,4 +4,23 @@ modal-panel[name="user"] profile-pane
     --identity-picture-height: 128rem;
     --identity-picture-margin-right: 18rem;
     --identity-picture-border-radius: 50%;
+
+    > button
+    {
+        width: 100%;
+    }
+
+    .user-profile-info
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 24rem;
+
+        > div > div:first-child
+        {
+            width: 115rem;
+            margin-right: var(--size-inline-spacing-large);
+        }
+    }
 }

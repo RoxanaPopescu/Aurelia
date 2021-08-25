@@ -4,15 +4,17 @@ permissions
 {
     display: block;
 
+    ---separator-color: var(--surface-separator-color);
+
     .permissions-group
     {
         padding: 18rem 20rem;
         background-color: var(--surface-color);
-        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        border-bottom: var(--border-width-thin) solid var(---separator-color);
 
         &:first-child
         {
-            border-top: var(--border-width-thin) solid var(--surface-separator-color);
+            border-top: var(--border-width-thin) solid var(---separator-color);
         }
 
         &.--expanded
@@ -116,10 +118,14 @@ permissions
         flex-grow: 1;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         padding-top: 18rem;
-        padding-right: 32rem;
         padding-bottom: 18rem;
         border-top: var(--border-width-thin) solid var(--surface-separator-color);
+
+        icon:empty
+        {
+            display: block;
+            visibility: hidden;
+        }
     }
 }
