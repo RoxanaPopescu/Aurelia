@@ -32,7 +32,7 @@
                     <div class="flex-basis-1-of-2 margin-large-right">
 
                         <div class="margin-large-bottom" translate>
-                            You can generate a route from either a template or directly to a requestId.
+                            You can generate a route from either a template or directly to a request ID.
                         </div>
 
                         <select-input
@@ -75,10 +75,10 @@
                             </span>
                         </separator>
 
-                        <text-input class="margin-large-bottom" label="above" value.bind="requestId">
+                        <text-input label="above" value.bind="requestId">
 
                             <div slot="heading">
-                                Request id
+                                Request ID
                             </div>
 
                             <div if.bind="!template && !requestId" slot="validation">
@@ -98,13 +98,10 @@
             <page-section class="--line-above">
                 <div class="flex-row">
                     <div class="flex-basis-1-of-2 margin-large-right">
-                        <div slot="header" class="margin-large-bottom" translate>
-                            General
-                        </div>
 
                         <div class="flex-row margin-large-bottom">
                             <date-input
-                                class="flex-basis-2-of-3 margin-right"
+                                class="flex-basis-1-of-2 margin-right"
                                 label="above"
                                 value.bind="date">
 
@@ -121,10 +118,10 @@
                                 </div>
 
                             </date-input>
-                            <time-input label="above" value.bind="time" class="flex-basis-1-of-3">
+                            <time-input label="above" value.bind="time" class="flex-basis-1-of-2">
 
                                 <div slot="heading" translate>
-                                    start time
+                                    Start time
                                 </div>
 
                                 <div if.bind="date" slot="validation">
@@ -138,8 +135,8 @@
                             </time-input>
                         </div>
 
-                        <div class="flex-row margin-large-bottom">
-                            <text-input readonly="true" class="flex-basis-1-of-3 margin-right" label="above" value.bind="driver.name">
+                        <div class="flex-row margin-larger-bottom">
+                            <text-input readonly="true" class="flex-basis-1-of-2 margin-right" label="above" value.bind="driver.name">
 
                                 <div slot="heading" translate>
                                     Assign to driver (not required)
@@ -151,26 +148,30 @@
 
                             </text-input>
 
-                            <button class="flex-basis-2-of-3 create-driver-button" disabled.bind="updating" appearance="outline" accent="primary" click.trigger="onSelectDriverClick()" translate>
-                                Select
+                            <button class="flex-basis-1-of-2 create-driver-button" disabled.bind="updating" appearance="outline" accent="primary" click.trigger="onSelectDriverClick()" translate>
+                                Select driver
                             </button>
 
                         </div>
 
-                        <button appearance="solid" accent="primary" click.trigger="onGenerate()" translate>
-                            Generate
-                        </button>
+                        <div class="flex-row">
+                            <button appearance="solid" accent="primary" click.trigger="onGenerate()" class="flex-grow" translate>
+                                Generate
+                            </button>
+                        </div>
+
                     </div>
                 </div>
 
             </page-section>
 
             <page-section class="--line-above">
+
                 <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
                     Results
                 </h1>
 
-                <div if.bind="results.length < 1" class="margin-large-bottom" translate>
+                <div if.bind="results.length < 1" class="margin-large-bottom opacity-faded" translate>
                     No results - when they are created they will show their status here.
                 </div>
 
@@ -198,7 +199,9 @@
                 </div>
 
             </page-section>
+
         </page-content>
+
     </page>
 
 </template>
