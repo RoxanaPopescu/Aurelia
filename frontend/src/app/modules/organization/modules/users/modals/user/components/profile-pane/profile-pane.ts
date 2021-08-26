@@ -142,7 +142,7 @@ export class ProfilePaneCustomElement
             {
                 if (this.user.team != null)
                 {
-                    await this._organizationService.removeUserFromTeam(this.user.team!.id, this.user.id);
+                    await this._organizationService.removeUserFromTeam(this.user.team.id, this.user.id);
                 }
 
                 if (this.selectedTeam != null)

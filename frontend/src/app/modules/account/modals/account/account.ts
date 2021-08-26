@@ -165,6 +165,7 @@ export class AccountModalPanel
         this.settingsModel = this._profile.getSettings();
 
         // Get the list of organizations for the current user.
+        // tslint:disable-next-line: no-unused-expression
         new Operation(async () => this.organizations = await this._organizationService.getAll());
     }
 
@@ -247,6 +248,18 @@ export class AccountModalPanel
         {
             await this._historyHelper.navigate("/account/sign-out");
         }
+    }
+
+    /**
+     * Called when the user select an organization from the `Sign-out` menu.
+     * Signs the user out of the current organization, and in to the specified organization.
+     * @param organization The organization that was selected.
+     */
+    protected async onOrganizationSelect(organization: OrganizationInfo): Promise<void>
+    {
+        // Save any changes made to the profile,
+        // then reload the app with the new organization.
+        await this.saveChanges(organization.id);
     }
 
     /**
@@ -340,17 +353,5 @@ export class AccountModalPanel
                 location.reload();
             }
         }
-    }
-
-    /**
-     * Called when the user select an organization from the `Sign-out` menu.
-     * Signs the user out of the current organization, and in to the specified organization.
-     * @param organization The organization that was selected.
-     */
-    protected async onOrganizationSelect(organization: OrganizationInfo): Promise<void>
-    {
-        // Save any changes made to the profile,
-        // then reload the app with the new organization.
-        this.saveChanges(organization.id);
     }
 }
