@@ -40,7 +40,14 @@ export class OrganizationModule extends AppModule
         {
             const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
 
-            return result2.data;
+            const organization =
+            {
+                id: result2.data.organization.organizationId,
+                name: result2.data.organization.name,
+                type: result2.data.organization.organizationType
+            };
+
+            return organization;
         }));
 
         // TODO: We could consider adding invitations here, as they are already in the response.
