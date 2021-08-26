@@ -46,6 +46,11 @@ $__summary: comment;
     --temp-label-color: #555555;
 }
 
+permissions
+{
+    --surface-separator-color: var(--palette-color-neutral-light);
+}
+
 body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
     padding-top: 16rem;

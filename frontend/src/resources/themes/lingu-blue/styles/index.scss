@@ -20,6 +20,27 @@ $__summary: comment;
 
 // HACK: Override default styles.
 
+[surface="base"],
+[surface$="/base"],
+[surface$="/neutral"],
+{
+    --surface-separator-color: var(--palette-color-neutral);
+}
+
+permissions
+{
+    &,
+    & .permissions-group
+    {
+        --surface-separator-color: var(--palette-color-neutral-light);
+
+        &[surface$="/neutral"]
+        {
+            // --surface-color: var(--palette-color-neutral-lighter);
+        }
+    }
+}
+
 :root
 {
     /**
