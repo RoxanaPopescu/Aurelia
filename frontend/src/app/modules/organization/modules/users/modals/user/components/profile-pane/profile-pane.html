@@ -141,7 +141,7 @@
             none.bind="false"
             value.bind="selectedRole"
             display-value.bind="selectedRole.name"
-            disabled.bind="operation.pending">
+            disabled.bind="operation.pending || user.status.slug !== 'active'">
 
             <div slot="heading" translate>
                 Role
@@ -170,7 +170,7 @@
             label="above"
             value.bind="selectedTeam"
             display-value.bind="selectedTeam.name"
-            disabled.bind="operation.pending">
+            disabled.bind="operation.pending || user.status.slug !== 'active'">
 
             <div slot="heading" translate>
                 Team
@@ -189,7 +189,7 @@
     </modal-section>
 
     <button
-        if.bind="!operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
+        if.bind="user.status.slug === 'active' && !operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
         appearance="solid"
         accent="primary"
         class="margin-larger-top"

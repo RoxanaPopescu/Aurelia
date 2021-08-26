@@ -89,7 +89,7 @@ export class OrganizationService
     }
 
     /**
-     * Updates the profile for the current organization.
+     * Saves the profile for the current organization.
      * @param profile The profile to save.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved when the operation succeedes.
@@ -98,7 +98,7 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        await this._apiClient.post(`organizations/${organizationId}/profile/update`,
+        await this._apiClient.post(`organizations/${organizationId}/profile/save`,
         {
             body: profile
         });
@@ -140,7 +140,7 @@ export class OrganizationService
 
     /**
      * Resends the invite for the specified user to the current organization.
-     * @param userId The ID of the user to invite.
+     * @param userId The ID of the user to reinvite.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async reinviteUser(userId: string): Promise<void>
@@ -152,14 +152,15 @@ export class OrganizationService
 
     /**
      * Changes the role of the specified user in the current organization.
-     * @param userId The ID of the user to invite.
+     * @param userId The ID of the user to whose role should be changed.
+     * @param roleId The ID of the role to assing to the user.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async changeUserRole(userId: string, roleId: string): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        await this._apiClient.post(`organizations/${organizationId}/users/${userId}/changeRole`,
+        await this._apiClient.post(`organizations/${organizationId}/users/${userId}/change-role`,
         {
             body: { roleId }
         });
@@ -182,17 +183,17 @@ export class OrganizationService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the permissions.
      */
-     public async getPermissions(signal?: AbortSignal): Promise<OrganizationPermission[]>
-     {
-         const organizationId = this._identityService.identity!.outfit!.id;
+    public async getPermissions(signal?: AbortSignal): Promise<OrganizationPermission[]>
+    {
+        const organizationId = this._identityService.identity!.outfit!.id;
 
-         const result = await this._apiClient.get(`organizations/${organizationId}/permissions`,
-         {
-             signal
-         });
+        const result = await this._apiClient.get(`organizations/${organizationId}/permissions`,
+        {
+            signal
+        });
 
-         return result.data.map(permission => new OrganizationPermission(permission));
-     }
+        return result.data.map(permission => new OrganizationPermission(permission));
+    }
 
     /**
      * Gets the roles within the current organization.
@@ -229,7 +230,7 @@ export class OrganizationService
     }
 
     /**
-     * Updates the specified role within the current organization.
+     * Saves the specified role within the current organization.
      * @param role The role to save.
      * @returns A promise that will be resolved with the new role.
      */
@@ -237,7 +238,7 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${role.id}/update`,
+        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${role.id}/save`,
         {
             body: role
         });
@@ -324,7 +325,7 @@ export class OrganizationService
     }
 
     /**
-     * Updates the specified team within the current organization.
+     * Saves the specified team within the current organization.
      * @param team The team to save.
      * @returns A promise that will be resolved with the new team.
      */
@@ -332,7 +333,7 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/teams/${team.id}/update`,
+        const result = await this._apiClient.post(`organizations/${organizationId}/teams/${team.id}/save`,
         {
             body: team
         });

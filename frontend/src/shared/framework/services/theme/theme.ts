@@ -74,7 +74,7 @@ export class Theme
         this.preview = data.preview;
         this.classes = data.classes ?? [];
         this.debug = data.debug ?? false;
-        this.hasAccountLogo = data.debug ?? false;
+        this.hasAccountLogo = data.hasAccountLogo ?? false;
     }
 
     /**

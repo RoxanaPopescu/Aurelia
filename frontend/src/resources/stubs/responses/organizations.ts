@@ -23,6 +23,11 @@ export default
       body: organizations
     },
 
+    "POST /api/v2/organizations/mover-organization-id/delete":
+    {
+      status: 201
+    },
+
     "GET /api/v2/organizations/mover-organization-id/profile":
     {
       body:
@@ -31,7 +36,7 @@ export default
       }
     },
 
-    "POST /api/v2/organizations/mover-organization-id/profile/update":
+    "POST /api/v2/organizations/mover-organization-id/profile/save":
     {
       status: 201
     },
@@ -75,6 +80,11 @@ export default
     },
 
     "POST /api/v2/organizations/mover-organization-id/users/invited-user-2-id/reinvite":
+    {
+      status: 201
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/users/user-1-id/change-role":
     {
       status: 201
     },
@@ -134,7 +144,7 @@ export default
       }
     },
 
-    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/update":
+    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/save":
     {
       body:
       {
@@ -231,7 +241,7 @@ export default
       }
     },
 
-    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/update":
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/save":
     {
       body:
       {
@@ -316,10 +326,5 @@ export default
         { slug: "view-kpi",            type: "view", group: "KPI",          name: "View route plans"   },
         { slug: "edit-route-plans",    type: "edit", group: "KPI",          name: "Edit route plans"   }
       ]
-    },
-
-    "POST /api/v2/organizations/mover-organization-id/delete":
-    {
-      status: 201
     }
 }
