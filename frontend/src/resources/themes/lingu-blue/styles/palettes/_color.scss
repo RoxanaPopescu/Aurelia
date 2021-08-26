@@ -36,8 +36,10 @@ $__summary: comment;
     --palette-color-primary-darkest: #11253e;
 
     --palette-color-primary--hover: transparent;
-    --palette-color-primary--active: #2b4a73;
-    --palette-color-primary--child: rgba(48, 108, 181, 0.2);
+    // --palette-color-primary--active: rgba(0, 0, 0, 0.25);
+    // --palette-color-primary--child: rgba(0, 0, 0, 0.5);
+    --palette-color-primary--active: #294970;
+    --palette-color-primary--child: #173454;
     --palette-color-primary--child-hover: transparent;
 
     /* END: USE DARK BLUE COLOR */

@@ -72,6 +72,7 @@ html app-sidebar
 
     user-identity a identity-picture
     {
+        // background: var(--surface-nav-link-surface-color--active);
         background: var(--surface-nav-child-surface-color);
     }
 }
