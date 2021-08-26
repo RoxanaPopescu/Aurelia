@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import driverStatus from "../resources/strings/driver-status.json";
 
 /**
  * Represents the slug identifying a `DriverStatus`.
@@ -40,22 +41,22 @@ export class DriverStatus
     {
         "approved":
         {
-            name: "Approved",
+            name: driverStatus.approved,
             accent: "positive"
         },
         "not-approved":
         {
-            name: "Not approved",
+            name: driverStatus.notApproved,
             accent: "neutral"
         },
         "waiting-for-approval":
         {
-            name: "Waiting for approval",
+            name: driverStatus.waitingForApproval,
             accent: "neutral"
         },
         "banned":
         {
-            name: "Banned",
+            name: driverStatus.banned,
             accent: "negative"
         }
     };

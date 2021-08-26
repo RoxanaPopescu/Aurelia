@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import originNames from "../resources/strings/collo-origin-names.json";
 
 /**
  * Represents the slug identifying a `ColloOrigin`.
@@ -38,11 +39,11 @@ export class ColloOrigin
     {
         "regular":
         {
-            name: ""
+            name: originNames.regular
         },
         "added-by-driver":
         {
-            name: "Added by driver"
+            name: originNames.addedByDriver
         }
     };
 }

@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import directionNames from "../resources/strings/sort-direction-names.json";
 
 /**
  * Represents the slug identifying a `SortingDirection`.
@@ -35,12 +36,12 @@ export class SortingDirection
     {
         "ascending":
         {
-            name: "Ascending",
+            name: directionNames.ascending,
             value: 1
         },
         "descending":
         {
-            name: "Descending",
+            name: directionNames.descending,
             value: 2
         }
     };

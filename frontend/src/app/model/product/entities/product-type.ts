@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import productType from "../resources/strings/product-types.json";
 
 /**
  * Represents the slug identifying a `ProductType`.
@@ -38,15 +39,15 @@ export class ProductType
     {
         "courier-eco":
         {
-            name: "Courier ECO"
+            name: productType.courierECO
         },
         "courier-express":
         {
-            name: "Courier Express"
+            name: productType.courierExpress
         },
         "solution":
         {
-            name: "Solution"
+            name: productType.solution
         }
     };
 }

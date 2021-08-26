@@ -1,0 +1,9 @@
+{
+    "photo": "Photo",
+    "signature": "Signature",
+    "timeframeVerification": "Verify timeframe",
+    "contactCode": "Contact code",
+    "instructionsAccept": "Accept of instructions",
+    "colliCount": "Colli count",
+    "colliScan": "Scan colli"
+}

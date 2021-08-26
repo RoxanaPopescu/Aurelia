@@ -1,5 +1,6 @@
 import { textCase } from "shared/utilities";
 import { Accent } from "app/model/shared";
+import orderStatus from "../resources/strings/order-status.json";
 
 /**
  * Represents the slug identifying a `OrderStatus`.
@@ -41,49 +42,49 @@ export class OrderStatus
     {
         "placed":
         {
-            name: "Placed",
+            name: orderStatus.placed,
             accent: "neutral",
             value: 1
         },
         "validated":
         {
-            name: "Validated",
+            name: orderStatus.validated,
             accent: "neutral",
             value: 2
         },
         "ready":
         {
-            name: "Ready",
+            name: orderStatus.ready,
             accent: "neutral",
             value: 3
         },
         "deleted":
         {
-            name: "Deleted",
+            name: orderStatus.deleted,
             accent: "attention",
             value: 4
         },
         "cancelled":
         {
-            name: "Cancelled",
+            name: orderStatus.cancelled,
             accent: "attention",
             value: 5
         },
         "in-route-planning":
         {
-            name: "Route planning",
+            name: orderStatus.routePlanning,
             accent: "neutral",
             value: 6
         },
         "route-planned":
         {
-            name: "Route planned",
+            name: orderStatus.routePlanned,
             accent: "neutral",
             value: 8
         },
         "delivered":
         {
-            name: "Delivered",
+            name: orderStatus.delivered,
             accent: "positive",
             value: 7
         }

@@ -25,14 +25,23 @@ export class CommunicationTrigger
             this.orderTags = data.orderTags;
             this.eventType = new CommunicationTriggerEvent(data.eventType);
             this.parameters = new CommunicationParameters(data.parameters);
-            this.recipientType = new CommunicationRecipient(data.recipientType);
             this.messageType = new CommunicationMessageType(data.messageType);
 
+            this.to = data.messageTemplate.to;
             this.fromName = data.messageTemplate.fromName;
             this.fromEmail = data.messageTemplate.fromEmail;
             this.messageSubject = data.messageTemplate.messageSubject;
             this.messageContent = data.messageTemplate.messageContent;
             this.ownerOutfitId = data.ownerOutfitId;
+
+            if (data.recipientType != null)
+            {
+                this.recipientType = new CommunicationRecipient(data.recipientType);
+            }
+            else
+            {
+                this.recipientType = new CommunicationRecipient(this.to?.includes("@") ? "custom-email" : "custom-phone");
+            }
         }
         else
         {
@@ -96,6 +105,11 @@ export class CommunicationTrigger
     public recipientType: CommunicationRecipient;
 
     /**
+     * The email or international phone number of the recipient, if the recipient type is `custom-email` or `custom-phone`.
+     */
+    public to: string | undefined;
+
+    /**
      * The name of the sender, as seen by the recipient when the message is received.
      */
     public fromName: string;
@@ -151,6 +165,7 @@ export class CommunicationTrigger
             messageType: this.messageType,
             messageTemplate:
             {
+                to: this.to,
                 fromName: this.fromName,
                 fromEmail: this.fromEmail,
                 messageSubject: this.messageSubject,

@@ -1,0 +1,19 @@
+{
+    "id": "Id",
+    "tags": "Tags",
+    "pickupDate": "Pickup date",
+    "pickupTimeframe": "Pickup timeframe",
+    "pickupAddress": "Pickup address",
+    "deliveryDate": "Delivery date",
+    "deliveryTimeframe": "Delivery timeframe",
+    "deliveryAddress": "Delivery address",
+    "status": "Status",
+    "RelationalId": "Relational id",
+    "colliCount": "Colli count",
+    "colliTotalWeight": "Colli total weight",
+    "colliTotalVolume": "Colli total volume",
+    "estimatedColliCount": "Estimated colli count",
+    "estimatedColliTotalWeight": "Estimated colli total weight",
+    "estimatedColliTotalVolume": "Estimated colli total volume"
+
+}

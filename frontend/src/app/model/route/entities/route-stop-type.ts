@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import typeNames from "../resources/strings/route-stop-type-names.json";
 
 /**
  * Represents the slug identifying a `RouteStopType`.
@@ -38,15 +39,19 @@ export class RouteStopType
     {
         "pickup":
         {
-            name: "Pickup"
+            name: typeNames.pickup
         },
         "delivery":
         {
-            name: "Delivery"
+            name: typeNames.delivery
         },
         "return":
         {
-            name: "Return"
+            name: typeNames.return
+        },
+        "break":
+        {
+            name: typeNames.break
         }
     };
 }

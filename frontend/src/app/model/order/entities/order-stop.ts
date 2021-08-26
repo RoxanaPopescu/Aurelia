@@ -12,7 +12,7 @@ export class OrderStop
     {
         this.location = new Location(data.location);
         this.contactName = data.name;
-        this.contactCompanyName = data.companyName;
+        this.companyName = data.companyName;
         this.contactPhoneNumber = data.phone;
         this.contactEmail = data.email;
         this.appointment = new Appointment(data.appointment);
@@ -26,7 +26,7 @@ export class OrderStop
 
     public type: OrderStopType;
 
-    public contactCompanyName: string;
+    public companyName: string;
 
     public contactPhoneNumber: string;
 
@@ -44,7 +44,7 @@ export class OrderStop
         return {
             location: this.location,
             name: this.contactName,
-            companyName: this.contactCompanyName,
+            companyName: this.companyName,
             phone: this.contactPhoneNumber,
             email: this.contactEmail,
             appointment: this.appointment.toJSON(),

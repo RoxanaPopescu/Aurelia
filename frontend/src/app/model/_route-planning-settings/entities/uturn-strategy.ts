@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import strategyNames from "../resources/strings/uturn-strategies.json";
 
 /**
  * Represents the slug identifying a `UturnStrategy`.
@@ -38,19 +39,19 @@ export class UturnStrategy
     {
         "allowed":
         {
-            name: "Allowed"
+            name: strategyNames.allowed
         },
         "allowed-only-dead-ends":
         {
-            name: "Allowed only at dead-ends"
+            name: strategyNames.allowedOnlyAtDeadEnds
         },
         "allowed-only-intersections-and-dead-ends":
         {
-            name: "Allowed only at intersections and dead-ends"
+            name: strategyNames.allowedOnlyAtIntersectionsAndDeadEnds
         },
         "not-allowed":
         {
-            name: "Not allowed"
+            name: strategyNames.notAllowed
         }
     };
 }

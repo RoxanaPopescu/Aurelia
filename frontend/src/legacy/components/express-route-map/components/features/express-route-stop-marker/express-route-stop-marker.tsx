@@ -275,6 +275,13 @@ export class ExpressRouteStopMarker extends Marker<ExpressRouteStopMarkerProps>
                             </div>
                         </div>
                     )}
+
+                    {this.props.routeStop.outfit?.contactPhone &&
+                        <div className="c-worldMap-popup-section-row">
+                            <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_PhoneNumber")}</div>
+                            <a href={"tel:" + this.props.routeStop.outfit.contactPhone.toString()}>{this.props.routeStop.outfit?.contactPhone.toString()}</a>
+                        </div>
+                    }
                 </div>
 
                 {this.props.routeStop.isDelayed && (

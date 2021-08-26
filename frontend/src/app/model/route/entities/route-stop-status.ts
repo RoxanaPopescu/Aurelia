@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import statusNames from "../resources/strings/route-stop-status-names.json";
 
 /**
  * Represents the slug identifying a `RouteStopStatus`.
@@ -40,27 +41,27 @@ export class RouteStopStatus
     {
         "not-visited":
         {
-            name: "Not visited",
+            name: statusNames.notVisited,
             accent: "neutral"
         },
         "arrived":
         {
-            name: "Arrived",
+            name: statusNames.arrived,
             accent: "neutral"
         },
         "failed":
         {
-            name: "Failed",
+            name: statusNames.failed,
             accent: "negative"
         },
         "completed":
         {
-            name: "Completed",
+            name: statusNames.completed,
             accent: "positive"
         },
         "cancelled":
         {
-            name: "Cancelled",
+            name: statusNames.cancelled,
             accent: "neutral"
         }
     };

@@ -59,9 +59,9 @@
 
                 <data-table-headers>
 
-                    <data-table-cell title.translate="ID" name="slug">
+                    <data-table-cell title.translate="Details" name="slug">
                         <span class="text-truncate" translate>
-                            Id
+                            Details
                         </span>
                     </data-table-cell>
 
@@ -93,6 +93,12 @@
                     <data-table-cell title.translate="Pickup address" name="pickupLocation.address">
                         <span class="text-truncate" translate>
                             Pickup address
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell title.translate="Zip" name="pickupLocation.address.zipCode">
+                        <span class="text-truncate" translate>
+                            Zip
                         </span>
                     </data-table-cell>
 
@@ -130,8 +136,8 @@
                         toggle.call="onRowToggle(item, value)">
 
                         <data-table-cell title.bind="item.slug">
-                            <a href="/routes/details/${item.slug}" class="text-truncate">
-                                ${item.slug}
+                            <a href="/routes/details/${item.slug}" class="text-truncate" translate>
+                                Details
                             </a>
                         </data-table-cell>
 
@@ -162,6 +168,12 @@
                         <data-table-cell title.bind="item.pickupLocation.address">
                             <span class="text-truncate">
                                 ${item.pickupLocation.address}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell title.bind="item.pickupLocation.address.zipCode">
+                            <span class="text-truncate">
+                                ${item.pickupLocation.address.zipCode}
                             </span>
                         </data-table-cell>
 

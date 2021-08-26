@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import stopType from "../resources/strings/order-stop-types.json";
 
 /**
  * Represents the slug identifying a `RouteStopType`.
@@ -38,11 +39,11 @@ export class OrderStopType
     {
         "pickup":
         {
-            name: "Pickup"
+            name: stopType.pickup
         },
         "delivery":
         {
-            name: "Delivery"
+            name: stopType.delivery
         }
     };
 }

@@ -100,7 +100,7 @@ export class PageHrefCustomAttribute
     }
 
     /**
-     * Called by the framework when the `href` property changes.
+     * Called by the framework when the `path` property changes.
      */
     protected pathChanged(): void
     {

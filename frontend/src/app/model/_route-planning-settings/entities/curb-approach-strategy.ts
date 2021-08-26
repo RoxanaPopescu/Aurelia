@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities";
+import approachStrategies from "../resources/strings/curb-approach-strategies.json";
 
 /**
  * Represents the slug identifying a `CurbApproachStrategy`.
@@ -38,19 +39,19 @@ export class CurbApproachStrategy
     {
         "either-side-of-vehicle":
         {
-            name: "Either side of vehicle"
+            name: approachStrategies.eitherSideOfVehicle
         },
         "right-side-of-vehicle":
         {
-            name: "Right side of vehicle"
+            name: approachStrategies.rightSideOfVehicle
         },
         "left-side-of-vehicle":
         {
-            name: "Left side of vehicle"
+            name: approachStrategies.leftSideOfVehicle
         },
         "no-uturn":
         {
-            name: "No U-turn"
+            name: approachStrategies.noUturn
         }
     };
 }

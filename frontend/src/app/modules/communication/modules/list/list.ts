@@ -15,6 +15,7 @@ interface IRouteParams
     sortDirection?: SortingDirection;
     eventType?: string;
     messageType?: string;
+    recipient?: string;
     text?: string;
 }
 
@@ -97,6 +98,7 @@ export class ListPage
      * The available recipient types.
      */
     protected availableRecipients = Object.keys(CommunicationRecipient.values)
+        .filter(key => !key.startsWith("custom-"))
         .map(key => new CommunicationRecipient(key as any));
 
     /**
@@ -105,7 +107,7 @@ export class ListPage
     protected availableMessageTypes = Object.keys(CommunicationMessageType.values)
         .map(key => new CommunicationMessageType(key as any));
 
-    @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter")
+    @computedFrom("triggers", "sorting", "textFilter", "eventTypeFilter", "messageTypeFilter", "recipientFilter")
     protected get orderedAndFilteredTriggers(): CommunicationTriggerInfo[] | undefined
     {
         if (this.triggers == null)
@@ -120,7 +122,7 @@ export class ListPage
             // Filtering
             .filter(t => !this.eventTypeFilter || this.eventTypeFilter.includes(t.eventType.slug))
             .filter(t => !this.messageTypeFilter || this.messageTypeFilter.includes(t.messageType.slug))
-            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipientType.slug))
+            .filter(t => !this.recipientFilter || this.recipientFilter.includes(t.recipientType.slug.replace(/^custom-.*/, "custom") as any))
             .filter(t => !this.textFilter || t.searchModel.contains(this.textFilter))
 
             // Sorting
@@ -147,6 +149,7 @@ export class ListPage
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.eventTypeFilter = params.eventType ? params.eventType.split(",") as any : this.eventTypeFilter;
         this.messageTypeFilter = params.messageType ? params.messageType.split(",") as any : this.messageTypeFilter;
+        this.recipientFilter = params.recipient ? params.recipient.split(",") as any : this.recipientFilter;
         this.textFilter = params.text || this.textFilter;
 
         this.update();
@@ -202,6 +205,7 @@ export class ListPage
                 state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
                 state.params.eventType = this.eventTypeFilter?.join(",");
                 state.params.messageType = this.messageTypeFilter?.join(",");
+                state.params.recipient = this.recipientFilter?.join(",");
                 state.params.text = this.textFilter || undefined;
             },
             { trigger: false, replace: true });

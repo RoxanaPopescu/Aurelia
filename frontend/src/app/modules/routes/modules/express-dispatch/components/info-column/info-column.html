@@ -161,12 +161,6 @@
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="ID">
-                        <span class="text-truncate" translate>
-                            ID
-                        </span>
-                    </data-table-cell>
-
                     <data-table-cell title.translate="Consignor">
                         <span class="text-truncate" translate>
                             Consignor
@@ -191,23 +185,15 @@
                         </span>
                     </data-table-cell>
 
-                    <!--
-                    <data-table-cell title.translate="Postal code">
+                    <data-table-cell>
                         <span class="text-truncate" translate>
-                            Postal code
-                        </span>
-                    </data-table-cell>
-                    -->
-
-                    <data-table-cell title.translate="From">
-                        <span class="text-truncate" translate>
-                            From
+                            Zip
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To">
+                    <data-table-cell>
                         <span class="text-truncate" translate>
-                            To
+                            Timeframe
                         </span>
                     </data-table-cell>
 
@@ -217,25 +203,26 @@
                         </span>
                     </data-table-cell>
 
-                    <!--
-                    <data-table-cell title.translate="Postal code">
+                    <data-table-cell>
                         <span class="text-truncate" translate>
-                            Postal code
-                        </span>
-                    </data-table-cell>
-                    -->
-
-                    <data-table-cell title.translate="From">
-                        <span class="text-truncate" translate>
-                            From
+                            Zip
                         </span>
                     </data-table-cell>
 
-                    <data-table-cell title.translate="To">
+                    <data-table-cell>
                         <span class="text-truncate" translate>
-                            To
+                            Timeframe
                         </span>
                     </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Details
+                        </span>
+                    </data-table-cell>
+
+                    <!--<data-table-cell align="right">
+                    </data-table-cell>-->
 
                 </data-table-headers>
 
@@ -248,12 +235,6 @@
                             <span class="text-truncate">
                                 ${item.timeToDeadline | duration }
                             </span>
-                        </data-table-cell>
-
-                        <data-table-cell title.bind="item.slug">
-                            <a href="/routes/details/${item.slug}" class="text-truncate">
-                                ${item.slug}
-                            </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
@@ -280,23 +261,15 @@
                             </span>
                         </data-table-cell>
 
-                        <!--
-                        <data-table-cell title.bind="item.pickupPostalCode">
+                        <data-table-cell>
                             <span class="text-truncate">
-                                ${item.pickupPostalCode}
-                            </span>
-                        </data-table-cell>
-                        -->
-
-                        <data-table-cell title.bind="item.earliestPickupDate | time: 'narrow' : false">
-                            <span class="text-truncate">
-                                ${item.earliestPickupDate | time: 'narrow' : false}
+                                ${item.stops[0].location.address.zipCode}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestPickupDate | time: 'narrow' : false">
+                        <data-table-cell>
                             <span class="text-truncate">
-                                ${item.latestPickupDate | time: 'narrow' : false}
+                                ${item.stops[0].arrivalTimeFrame | timeRange: false}
                             </span>
                         </data-table-cell>
 
@@ -306,25 +279,35 @@
                             </span>
                         </data-table-cell>
 
-                        <!--
-                        <data-table-cell title.bind="item.deliveryPostalCode">
+                        <data-table-cell>
                             <span class="text-truncate">
-                                ${item.deliveryPostalCode}
-                            </span>
-                        </data-table-cell>
-                        -->
-
-                        <data-table-cell title.bind="item.earliestDeliveryDate | time: 'narrow' : false">
-                            <span class="text-truncate">
-                                ${item.earliestDeliveryDate | time: 'narrow' : false}
+                                ${item.stops[item.stops.length-1].location.address.zipCode}
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.latestDeliveryDate | time: 'narrow' : false">
+                        <data-table-cell>
                             <span class="text-truncate">
-                                ${item.latestDeliveryDate | time: 'narrow' : false}
+                                ${item.stops[item.stops.length-1].arrivalTimeFrame | timeRange: false}
                             </span>
                         </data-table-cell>
+
+                        <data-table-cell title.bind="item.slug">
+                            <a href="/routes/details/${item.slug}" class="text-truncate" translate>
+                                Details
+                            </a>
+                        </data-table-cell>
+
+                        <!--<data-table-cell align="right">
+
+                            <div class="icon-row">
+
+                                <button appearance="none" accent="primary" click.trigger="onRemoveRouteClick(item)">
+                                    <icon name="delete-small"></icon>
+                                </button>
+
+                            </div>
+
+                        </data-table-cell>-->
 
                     </data-table-row>
 

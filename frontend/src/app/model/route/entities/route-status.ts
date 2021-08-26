@@ -1,5 +1,6 @@
 import { Accent } from "app/model/shared";
 import { textCase } from "shared/utilities/text";
+import routeStatus from "../resources/strings/route-status.json";
 
 /**
  * Represents the slug identifying a `RouteStatus`.
@@ -41,37 +42,37 @@ export class RouteStatus
     {
         "not-started":
         {
-            name: "Not started",
+            name: routeStatus.notStarted,
             accent: "neutral",
             value: 1
         },
         "in-progress":
         {
-            name: "In progress",
+            name: routeStatus.InProgress,
             accent: "attention",
             value: 2
         },
         "not-approved":
         {
-            name: "Not approved",
+            name: routeStatus.notApproved,
             accent: "attention",
             value: 3
         },
         "completed":
         {
-            name: "Completed",
+            name: routeStatus.completed,
             accent: "positive",
             value: 4
         },
         "cancelled":
         {
-            name: "Cancelled",
+            name: routeStatus.cancelled,
             accent: "negative",
             value: 5
         },
         "to-be-express-dispatched":
         {
-            name: "To be express dispatched",
+            name: routeStatus.toBeExpressDispatched,
             accent: "neutral",
             value: 6
         }

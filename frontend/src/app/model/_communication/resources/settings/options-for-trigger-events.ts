@@ -6,7 +6,9 @@ export default
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
         ],
         messageTypes:
         [
@@ -30,7 +32,9 @@ export default
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
         ],
         messageTypes:
         [
@@ -47,11 +51,87 @@ export default
             "DriverName"
         ])
     },
+    "order-delivery-completed":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+
+        ])
+    },
+    "order-delivery-failed":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+
+        ])
+    },
+    "order-delivery-delayed-eta-provided":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DriverName",
+            "DriverPhone",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail"
+        ])
+    },
     "order-delivery-eta-provided":
     {
         recipientTypes:
         [
-            "delivery-customer"
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
         ],
         messageTypes:
         [
@@ -74,7 +154,8 @@ export default
     {
         recipientTypes:
         [
-            "pickup-customer"
+            "pickup-customer",
+            "custom-email"
         ],
         messageTypes:
         [
@@ -91,6 +172,35 @@ export default
             "PickupEtaTime",
             "DriverPhone",
             "DriverName"
+        ])
+    },
+    "order-schedule-triggered":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "TrackingId",
+            "RelationalId",
+            "DeliveryCustomerName",
+            "DeliveryLocationAddress",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
+            "DeliveryTimeFrame",
+            "DeliveryEtaTime",
+            "DeliveryEtaDate",
+            "DeliveryWeekday",
+            "DeliveryDate"
         ])
     }
 };
