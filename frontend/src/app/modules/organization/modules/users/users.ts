@@ -231,7 +231,7 @@ export class UsersPage
 
         try
         {
-            await this._organizationService.removeUser(user.id);
+            await this._organizationService.removeUser(user);
 
             this._users!.splice(this._users!.indexOf(user), 1);
         }

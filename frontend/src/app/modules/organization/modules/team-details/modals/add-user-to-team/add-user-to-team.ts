@@ -68,7 +68,7 @@ export class AddUserToTeamPanel
             this._modal.busy = true;
 
             // TODO
-            const user = new OrganizationUser({});
+            const user = new OrganizationUser(false, {});
 
             await this._organizationService.addUserToTeam(this.teamId, user.id);
 

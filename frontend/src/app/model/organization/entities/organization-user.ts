@@ -5,34 +5,46 @@ import { SearchModel } from "app/model/search-model";
 import { OrganizationUserStatus } from "./organization-user-status";
 
 /**
- * Represents a user within an organization.
+ * Represents a user, or user invite, within an organization.
  */
 export class OrganizationUser
 {
     /**
      * Creates a new instance of the type.
+     * @param isInvite True if this user represents an invite, and not a real user, otherwise false.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(isInvite: boolean, data: any)
     {
-        this.id = data.id;
-        this.fullName = data.fullName;
-        this.preferredName = data.preferredName;
-        this.email = data.email;
-        this.phoneNumber = data.phoneNumber;
-        this.pictureUrl = data.pictureUrl;
-        this.role = data.role;
-        this.team = data.team;
-        this.status = new OrganizationUserStatus(data.status);
-
-        if (data.lastOnline != null)
+        if (isInvite)
         {
-            this.lastOnline = DateTime.fromISO(data.lastOnline, { setZone: true });
+            this.id = data.id;
+            this.email = data.email;
+            this.role = data.role;
+            this.team = data.team;
+            this.status = new OrganizationUserStatus("invited");
+        }
+        else
+        {
+            this.id = data.id;
+            this.fullName = data.fullName;
+            this.preferredName = data.preferredName;
+            this.email = data.email;
+            this.phoneNumber = data.phoneNumber;
+            this.pictureUrl = data.pictureUrl;
+            this.role = data.role;
+            this.team = data.team;
+            this.status = new OrganizationUserStatus("active");
+
+            if (data.lastOnline != null)
+            {
+                this.lastOnline = DateTime.fromISO(data.lastOnline, { setZone: true });
+            }
         }
     }
 
     /**
-     * The ID of the user.
+     * The ID of the user, or if the user represents an invite, the ID of the invite.
      */
     public readonly id: string;
 

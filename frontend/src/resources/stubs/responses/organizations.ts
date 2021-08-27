@@ -41,6 +41,40 @@ export default
       status: 201
     },
 
+    "POST /api/v2/organizations/mover-organization-id/invites/send":
+    {
+      body:
+      {
+        id: "invite-2-id",
+        email: "johndoe@example.com",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" }
+      }
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/invites/invite-1-id/resend":
+    {
+      status: 201
+    },
+
+    "GET /api/v2/organizations/mover-organization-id/invites":
+    {
+      body:
+      [
+        {
+          id: "invite-1-id",
+          email: "johndoe@example.com",
+          role: { id: "role-1-id", name: "Role 1" },
+          team: { id: "team-1-id", name: "Team 1" }
+        }
+      ]
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/invites/invite-1-id/revoke":
+    {
+      status: 201
+    },
+
     "GET /api/v2/organizations/mover-organization-id/users":
     {
       body: Array(5).fill(
@@ -53,35 +87,8 @@ export default
         pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
         role: { id: "role-1-id", name: "Role 1" },
         team: { id: "team-1-id", name: "Team 1" },
-        status: "active",
         lastOnline: DateTime.utc().toISO()
       })
-    },
-
-    "POST /api/v2/organizations/mover-organization-id/users/invite":
-    {
-      body:
-      {
-        id: "invited-user-2-id",
-        fullName: "John Doe",
-        preferredName: "John",
-        email: "johndoe@example.com",
-        phoneNumber: undefined,
-        role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
-        status: "invited",
-        lastOnline: undefined
-      }
-    },
-
-    "POST /api/v2/organizations/mover-organization-id/users/invited-user-1-id/reinvite":
-    {
-      status: 201
-    },
-
-    "POST /api/v2/organizations/mover-organization-id/users/invited-user-2-id/reinvite":
-    {
-      status: 201
     },
 
     "POST /api/v2/organizations/mover-organization-id/users/user-1-id/change-role":
@@ -265,18 +272,6 @@ export default
     {
       body:
       [
-        {
-          id: "invited-user-1-id",
-          fullName: "John Doe",
-          preferredName: "John",
-          email: "johndoe@example.com",
-          phoneNumber: undefined,
-          pictureUrl: undefined,
-          role: { id: "role-1-id", name: "Role 1" },
-          team: { id: "team-1-id", name: "Team 1" },
-          status: "invited",
-          lastOnline: undefined
-        },
         ...Array(5).fill(
         {
           id: "user-1-id",
@@ -287,7 +282,6 @@ export default
           pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
           role: { id: "role-1-id", name: "Role 1" },
           team: { id: "team-1-id", name: "Team 1" },
-          status: "active",
           lastOnline: DateTime.utc().toISO()
         })
       ]

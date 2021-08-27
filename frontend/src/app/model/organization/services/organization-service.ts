@@ -113,12 +113,20 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.get(`organizations/${organizationId}/users`,
+        const result1 = await this._apiClient.get(`organizations/${organizationId}/invites`,
         {
             signal
         });
 
-        return result.data.map(user => new OrganizationUser(user));
+        const result2 = await this._apiClient.get(`organizations/${organizationId}/users`,
+        {
+            signal
+        });
+
+        const invites = result1.data.map(invite => new OrganizationUser(true, invite));
+        const users = result2.data.map(user => new OrganizationUser(false, user));
+
+        return [...invites, ...users];
     }
 
     /**
@@ -130,12 +138,12 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/users/invite`,
+        const result = await this._apiClient.post(`organizations/${organizationId}/invites/send`,
         {
             body: invite
         });
 
-        return new OrganizationUser(result.data);
+        return new OrganizationUser(true, result.data);
     }
 
     /**
@@ -147,7 +155,7 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        await this._apiClient.post(`organizations/${organizationId}/users/${userId}/reinvite`);
+        await this._apiClient.post(`organizations/${organizationId}/invites/${userId}/resend`);
     }
 
     /**
@@ -168,14 +176,21 @@ export class OrganizationService
 
     /**
      * Removes the specified user from the current organization.
-     * @param userId The ID of the user to remove.
+     * @param user The user to remove.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async removeUser(userId: string): Promise<void>
+    public async removeUser(user: OrganizationUser): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        await this._apiClient.post(`organizations/${organizationId}/users/${userId}/remove`);
+        if (user.status.slug === "invited")
+        {
+            await this._apiClient.post(`organizations/${organizationId}/invites/${user.id}/revoke`);
+        }
+        else
+        {
+            await this._apiClient.post(`organizations/${organizationId}/users/${user.id}/remove`);
+        }
     }
 
     /**
@@ -368,7 +383,7 @@ export class OrganizationService
             signal
         });
 
-        return result.data.map(user => new OrganizationUser(user));
+        return result.data.map(user => new OrganizationUser(false, user));
     }
 
     /**
