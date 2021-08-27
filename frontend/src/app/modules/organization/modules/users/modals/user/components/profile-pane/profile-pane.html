@@ -9,7 +9,7 @@
 
             <identity-picture-picker
                 readonly.bind="true"
-                initials.bind="initials"
+                initials.bind="user.initials"
                 value.bind="user.pictureUrl">
             </identity-picture-picker>
 
@@ -33,12 +33,6 @@
                     </div>
                 </div>
 
-                <div if.bind="inviteResent">
-                    <div accent="positive" translate>
-                        The invite has been resent
-                    </div>
-                </div>
-
                 <button
                     if.bind="user.status.slug === 'invited' && !inviteResent"
                     appearance="none"
@@ -48,11 +42,18 @@
                     Resend invite
                 </button>
 
+                <div if.bind="inviteResent">
+                    <div accent="positive" translate>
+                        The invite has been resent
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
         <text-input
+            if.bind="user.preferredName"
             readonly.bind="true"
             class="margin-double-top"
             label="above"
@@ -64,23 +65,6 @@
 
             <div slot="description" translate>
                 This is the name the user would prefer to go by.
-            </div>
-
-        </text-input>
-
-        <text-input
-            if.bind="user.organizationName"
-            readonly.bind="true"
-            class="margin-double-top"
-            label="above"
-            value.bind="user.organizationName">
-
-            <div slot="heading" translate>
-                Organization
-            </div>
-
-            <div slot="description" translate>
-                This is the name the organization the user is associated with.
             </div>
 
         </text-input>
@@ -141,7 +125,7 @@
             none.bind="false"
             value.bind="selectedRole"
             display-value.bind="selectedRole.name"
-            disabled.bind="operation.pending || user.status.slug !== 'active'">
+            readonly.bind="operation.pending || user.status.slug === 'invited'">
 
             <div slot="heading" translate>
                 Role
@@ -170,7 +154,7 @@
             label="above"
             value.bind="selectedTeam"
             display-value.bind="selectedTeam.name"
-            disabled.bind="operation.pending || user.status.slug !== 'active'">
+            readonly.bind="operation.pending || user.status.slug === 'invited'">
 
             <div slot="heading" translate>
                 Team
@@ -189,7 +173,7 @@
     </modal-section>
 
     <button
-        if.bind="user.status.slug === 'active' && !operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
+        if.bind="user.status.slug !== 'invited' && !operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
         appearance="solid"
         accent="primary"
         class="margin-larger-top"

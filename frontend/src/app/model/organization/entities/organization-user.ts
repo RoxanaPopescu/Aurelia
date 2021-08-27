@@ -1,3 +1,4 @@
+import { computedFrom } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { IPhoneNumber } from "shared/types";
 import { SearchModel } from "app/model/search-model";
@@ -36,14 +37,14 @@ export class OrganizationUser
     public readonly id: string;
 
     /**
-     * The full name of the user.
+     * The full name of the user, or undefined if the user represents an invite.
      */
-    public fullName: string;
+    public fullName: string | undefined;
 
     /**
-     * The preferred name of the user.
+     * The preferred name of the user, or undefined if the user represents an invite.
      */
-    public preferredName: string;
+    public preferredName: string | undefined;
 
     /**
      * The email of the user.
@@ -56,9 +57,9 @@ export class OrganizationUser
     public phoneNumber: IPhoneNumber | undefined;
 
     /**
-     * The URL for the user picture.
+     * The URL for the user picture, if any.
      */
-    public pictureUrl: string;
+    public pictureUrl: string | undefined;
 
     /**
      * The role of the user within the organization.
@@ -73,7 +74,7 @@ export class OrganizationUser
     /**
      * The status of the user.
      */
-    public status: OrganizationUserStatus;
+    public readonly status: OrganizationUserStatus;
 
     /**
      * The date and time at which the user last signed in.
@@ -84,4 +85,15 @@ export class OrganizationUser
      * The model representing the searchable text in the entity.
      */
     public readonly searchModel = new SearchModel(this);
+
+    /**
+     * The initials to show if no picture is available.
+     */
+    @computedFrom("fullName", "preferredName", "email")
+    public get initials(): string
+    {
+        const name = this.fullName || this.preferredName || this.email;
+
+        return name.split(/\s+/g).map(s => s[0]).join("") ?? undefined;
+    }
 }

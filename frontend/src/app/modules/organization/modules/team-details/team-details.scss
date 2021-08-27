@@ -4,6 +4,16 @@ page[name="organization"] page[name="team-details"]
 {
     data-table
     {
-        --data-table-columns: 1fr 1fr 2.5fr 1fr 1fr 0.65fr 100rem;
+        --data-table-columns: 76rem 1fr 1fr 2.5fr 1fr 1fr 0.65fr 100rem;
+    }
+
+    identity-picture
+    {
+        --identity-picture-border-radius: 50%;
+        --identity-picture-width: 36rem;
+        --identity-picture-height: 36rem;
+
+        margin: -8rem 0;
+        font-size: inherit;
     }
 }

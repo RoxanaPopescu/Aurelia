@@ -11,11 +11,16 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest margin-bottom user-select-contain">
-                ${user.fullName}
+            <h1 class="font-largest user-select-contain">
+                <template if.bind="user.status.slug === 'invited'" translate>
+                    Invite
+                </template>
+                <template else translate>
+                    ${user.fullName}
+                </template>
             </h1>
 
-            <tab-nav appearance="tabs" class="font-large" value.bind="selectedTab">
+            <tab-nav if.bind="user.status.slug !== 'invited'" appearance="tabs" class="margin-top font-large" value.bind="selectedTab">
 
                 <tab name="profile">
                     <h2 translate>
@@ -23,7 +28,7 @@
                     </h2>
                 </tab>
 
-                <tab if.bind="user.status.slug === 'active'" name="security">
+                <tab name="security">
                     <h2 translate>
                         Security
                     </h2>

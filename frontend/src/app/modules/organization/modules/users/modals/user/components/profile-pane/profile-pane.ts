@@ -1,4 +1,4 @@
-import { autoinject, bindable, computedFrom } from "aurelia-framework";
+import { autoinject, bindable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
@@ -58,15 +58,6 @@ export class ProfilePaneCustomElement
      * The validation for the modal.
      */
     protected validation: IValidation;
-
-    /**
-     * The strings from which initials should be generated.
-     */
-    @computedFrom("user.preferredName")
-    protected get initials(): (string | undefined)[]
-    {
-        return [this.user.preferredName];
-    }
 
     /**
      * The user to present.

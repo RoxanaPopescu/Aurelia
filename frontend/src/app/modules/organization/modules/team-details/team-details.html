@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/identity-picture/identity-picture"></require>
     <require from="./team-details.scss"></require>
 
     <page name="team-details">
@@ -68,6 +69,10 @@
 
                     <data-table-headers>
 
+                        <data-table-cell>
+                            <!-- Picture -->
+                        </data-table-cell>
+
                         <data-table-cell name="fullName" translate>
                             <span class="text-truncate">
                                 Name
@@ -113,6 +118,12 @@
                     <template repeat.for="user of orderedAndFilteredUsers">
 
                         <data-table-row click.call="onUserClick(user)">
+
+                            <data-table-cell>
+                                <identity-picture src.bind="user.pictureUrl">
+                                    ${user.initials}
+                                </identity-picture>
+                            </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">

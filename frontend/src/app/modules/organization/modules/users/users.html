@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/identity-picture/identity-picture"></require>
     <require from="./users.scss"></require>
 
     <page name="users">
@@ -64,6 +65,10 @@
 
                     <data-table-headers>
 
+                        <data-table-cell>
+                            <!-- Picture -->
+                        </data-table-cell>
+
                         <data-table-cell name="fullName" translate>
                             <span class="text-truncate">
                                 Name
@@ -117,7 +122,13 @@
                         <data-table-row click.call="onUserClick(user)">
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <identity-picture src.bind="user.pictureUrl">
+                                    ${user.initials}
+                                </identity-picture>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" empty-value>
                                     ${user.fullName}
                                 </span>
                             </data-table-cell>
