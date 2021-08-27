@@ -42,7 +42,7 @@ export class EditTeamPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
+     * @returns The new or edited team, or undefined if cancelled.
      */
     public async deactivate(): Promise<OrganizationTeam | undefined>
     {

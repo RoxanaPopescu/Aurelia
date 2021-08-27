@@ -87,7 +87,7 @@ export class VehicleGroupPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
+     * @returns The new or edited vehicle group, or undefined if cancelled.
      */
     public async deactivate(): Promise<VehicleGroup | undefined>
     {

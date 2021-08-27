@@ -60,7 +60,6 @@ export class CreateRoutePanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
      */
     public async deactivate(): Promise<void>
     {

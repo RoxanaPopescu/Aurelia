@@ -24,7 +24,7 @@ export class InviteUserPanel
     private _result: OrganizationUser | undefined;
 
     /**
-     * The team for the modal.
+     * The new invite.
      */
     protected invite: IOrganizationUserInvite;
 
@@ -82,7 +82,7 @@ export class InviteUserPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
+     * @returns The invited user, or undefined if cancelled.
      */
     public async deactivate(): Promise<OrganizationUser | undefined>
     {

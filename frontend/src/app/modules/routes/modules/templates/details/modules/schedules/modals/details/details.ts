@@ -103,7 +103,7 @@ export class TemplateScheduleDetailsPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
+     * @returns The edited route template schedule, or undefined if cancelled.
      */
     public async deactivate(): Promise<RouteTemplateSchedule | undefined>
     {
