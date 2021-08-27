@@ -218,8 +218,8 @@ export class IdentityModule extends AppModule
             pictureUrl: result1.data.picture,
             outfit: result2 == null ? undefined :
             {
-                id: result2.data.organizationId,
-                companyName: result2.data.name
+                id: result2.data.organization.organizationId,
+                companyName: result2.data.organization.name
             }
         };
     }

@@ -288,7 +288,6 @@ export class AppModule
                 {
                     claims:
                     [
-                        "view-users"
                     ]
                 },
                 title: routeTitles.organization,
@@ -349,14 +348,17 @@ class AuthorizePipelineStep implements PipelineStep
 {
     /**
      * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
      * @param authorizationService The `AuthorizationService` instance.
      */
-    public constructor(authorizationService: AuthorizationService)
+    public constructor(identityService: IdentityService, authorizationService: AuthorizationService)
     {
+        this._identityService = identityService;
         this._authorizationService = authorizationService;
     }
 
     private readonly _authorizationService: AuthorizationService;
+    private readonly _identityService: IdentityService;
 
     /**
      * Called by the router when this step should execute.
@@ -373,8 +375,14 @@ class AuthorizePipelineStep implements PipelineStep
         {
             const url = location.pathname + location.search + location.hash;
             const encodedUrl = url !== "/" ? encodeURIComponent(url) : undefined;
+            const accountPage = this._identityService.identity != null ? "sign-out" : "sign-in";
 
-            return next.cancel(new Redirect(`account/sign-in${encodedUrl ? `?url=${encodedUrl}` : ""}`));
+            if (this._identityService.identity != null)
+            {
+                console.error("Navigation aborted due to insufficient permissions.");
+            }
+
+            return next.cancel(new Redirect(`account/${accountPage}${encodedUrl ? `?url=${encodedUrl}` : ""}`));
         }
 
         return next();

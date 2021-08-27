@@ -59,13 +59,13 @@ export class OrganizationModule extends AppModule
     /**
      * Gets the specified organization.
      */
-    public "GET /v2/organizations/:id" = async (context: AppContext) =>
+    public "GET /v2/organizations/:id/profile" = async (context: AppContext) =>
     {
         await context.authorize();
 
         const result = await this.apiClient.get(`organization/organizations/${context.params.id}`);
 
-        context.response.body = result.data;
+        context.response.body = result.data.organization;
         context.response.status = 200;
     }
 }

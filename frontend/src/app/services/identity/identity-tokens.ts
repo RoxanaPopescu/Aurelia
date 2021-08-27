@@ -46,11 +46,12 @@ export class IdentityTokens
 
         // Convert claims to a permission set.
 
-        const permissions = accessJwt.organization_permissions instanceof Array
-            ? accessJwt.organization_permissions as string[]
-            : [accessJwt.organization_permissions as string];
+        const permissions = accessJwt.organization_permissions == null ? [] :
+            accessJwt.organization_permissions instanceof Array
+                ? accessJwt.organization_permissions as string[]
+                : [accessJwt.organization_permissions as string];
 
-        this.claims = new Set<string>(permissions);
+        this.claims = new Set<string>(permissions.map(p => p.toLowerCase().replace(/\s/g, "-")));
     }
 
     /**
