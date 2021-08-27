@@ -27,6 +27,12 @@ body
     --page-sidebar-max-width: 380rem;
 }
 
+body identity-picture
+{
+    background: var(--surface-neutral-surface-color);
+    color: var(--surface-neutral-surface-text-color);
+}
+
 .--button-position-right
 {
     position: absolute;

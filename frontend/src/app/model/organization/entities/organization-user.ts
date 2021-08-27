@@ -104,8 +104,6 @@ export class OrganizationUser
     @computedFrom("fullName", "preferredName", "email")
     public get initials(): string
     {
-        const name = this.fullName || this.preferredName || this.email;
-
-        return name.split(/\s+/g).map(s => s[0]).join("") ?? undefined;
+        return (this.fullName || this.preferredName || this.email).trim()[0];
     }
 }
