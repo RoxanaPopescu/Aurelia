@@ -21,9 +21,9 @@ export class Identity
         this.preferredName = result.data.preferredName;
         this.pictureUrl = result.data.pictureUrl;
 
-        if (this.pictureUrl == null || this.pictureUrl.endsWith("avatar.png"))
+        if (this.pictureUrl == null)
         {
-            this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "404" });
+            this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "blank" });
         }
 
         if (result.data.outfit != null)

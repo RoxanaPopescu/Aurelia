@@ -130,6 +130,7 @@ export class AccountModule extends AppModule
         context.response.status = 204;
     }
 
+    // TODO:BACKEND: Frontend requires phone to be undefined if not set; also, the partial object causes validation to fail when saving
     /**
      * Gets the profile for the current user.
      * @returns

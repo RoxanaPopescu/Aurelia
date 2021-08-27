@@ -290,9 +290,6 @@ export class AccountModalPanel
             // Saves the users profile.
             await this._profileService.save(this.settingsModel);
 
-            // Apply changes to the account.
-            this._profile.setSettings(this.settingsModel);
-
             // If a new password was specified, change the users password.
             if (this.newPassword)
             {

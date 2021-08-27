@@ -41,7 +41,7 @@ export default
         }
     },
 
-    "PUT /api/v2/account/profile":
+    "POST /api/v2/account/profile/save":
     {
         body:
         {

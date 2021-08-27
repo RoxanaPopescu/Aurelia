@@ -210,6 +210,7 @@ export class OrganizationModule extends AppModule
         //     }
         // ]
 
+        context.response.body = [];
         context.response.status = 200;
     }
 
@@ -422,7 +423,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.get(`organization/organizations/${context.params.organizationId}/roles`);
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/roles`);
 
         context.response.body = result.data.organizationRoles.map((r: any) =>
         ({
