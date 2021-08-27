@@ -1,3 +1,5 @@
+import { IPhoneNumber } from "shared/types";
+
 /**
  * Represents the profile for a user.
  */
@@ -24,7 +26,7 @@ export class Profile
     /**
      * The phone number of the user.
      */
-    public phone: string;
+    public phone: IPhoneNumber;
 
     /**
      * The full name of the user.
@@ -42,6 +44,27 @@ export class Profile
     public pictureUrl: string;
 
     /**
+     * The settings for the project.
+     */
+    public settings:
+    {
+        /**
+         * The code identifying the preferred locale.
+         */
+        localeCode: string;
+
+        /**
+         * The code identifying the preferred currency.
+         */
+        currencyCode: string;
+
+        /**
+         * The slug identifying the preferred theme.
+         */
+        themeSlug: string;
+    };
+
+    /**
      * Gets an object representing the settings for this instance.
      * @returns An object representing the settings for this instance.
      */
@@ -49,10 +72,11 @@ export class Profile
     {
         return {
             email: this.email,
-            phone: this.phone,
+            phone: this.phone ? { ...this.phone } : undefined,
             fullName: this.fullName,
             preferredName: this.preferredName,
-            pictureUrl: this.pictureUrl
+            pictureUrl: this.pictureUrl,
+            settings: { ...this.settings }
         };
     }
 

@@ -282,6 +282,11 @@ export class AccountModalPanel
             // Indicate that the modal is busy.
             this._modal.busy = true;
 
+            // Store the current locale code, currency code and theme slug in the profile.
+            this.settingsModel.settings!.localeCode = this.locale.code;
+            this.settingsModel.settings!.currencyCode = this.currency.code;
+            this.settingsModel.settings!.themeSlug = this.theme.slug;
+
             // Saves the users profile.
             await this._profileService.save(this.settingsModel);
 

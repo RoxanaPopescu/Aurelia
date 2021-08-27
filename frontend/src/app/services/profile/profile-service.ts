@@ -37,7 +37,7 @@ export class ProfileService
      */
     public async save(profile: Partial<Profile>): Promise<Profile>
     {
-        const result = await this._apiClient.put("account/profile",
+        const result = await this._apiClient.post("account/profile/save",
         {
             body: profile
         });

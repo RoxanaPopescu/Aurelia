@@ -105,6 +105,23 @@ export class OrganizationService
     }
 
     /**
+     * Sends the specified invite.
+     * @param invite The invite to send.
+     * @returns A promise that will be resolved with the new user.
+     */
+    public async inviteUser(invite: IOrganizationUserInvite): Promise<OrganizationUser>
+    {
+        const organizationId = this._identityService.identity!.outfit!.id;
+
+        const result = await this._apiClient.post(`organizations/${organizationId}/invites/send`,
+        {
+            body: invite
+        });
+
+        return new OrganizationUser(true, result.data);
+    }
+
+    /**
      * Gets the users within the current organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the users within the organization.
@@ -130,32 +147,15 @@ export class OrganizationService
     }
 
     /**
-     * Invites the specified user to the current organization.
-     * @param invite The invite to send.
-     * @returns A promise that will be resolved with the new user.
-     */
-    public async inviteUser(invite: IOrganizationUserInvite): Promise<OrganizationUser>
-    {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
-        const result = await this._apiClient.post(`organizations/${organizationId}/invites/send`,
-        {
-            body: invite
-        });
-
-        return new OrganizationUser(true, result.data);
-    }
-
-    /**
-     * Resends the invite for the specified user to the current organization.
-     * @param userId The ID of the user to reinvite.
+     * Resends the specified invite.
+     * @param inviteId The ID of the invite to resend.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async reinviteUser(userId: string): Promise<void>
+    public async reinviteUser(inviteId: string): Promise<void>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        await this._apiClient.post(`organizations/${organizationId}/invites/${userId}/resend`);
+        await this._apiClient.post(`organizations/${organizationId}/invites/${inviteId}/resend`);
     }
 
     /**
@@ -211,6 +211,23 @@ export class OrganizationService
     }
 
     /**
+     * Creates the specified role within the current organization.
+     * @param role The role to create.
+     * @returns A promise that will be resolved with the new role.
+     */
+    public async createRole(role: OrganizationRole): Promise<OrganizationRole>
+    {
+        const organizationId = this._identityService.identity!.outfit!.id;
+
+        const result = await this._apiClient.post(`organizations/${organizationId}/roles/create`,
+        {
+            body: role
+        });
+
+        return new OrganizationRole(result.data);
+    }
+
+    /**
      * Gets the roles within the current organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the roles within the organization.
@@ -228,18 +245,15 @@ export class OrganizationService
     }
 
     /**
-     * Creates the specified role within the current organization.
-     * @param role The role to create.
+     * Creates a new role as a duplicate of the specified role.
+     * @param roleId The ID of the role to duplicate.
      * @returns A promise that will be resolved with the new role.
      */
-    public async createRole(role: OrganizationRole): Promise<OrganizationRole>
+    public async duplicateRole(roleId: string): Promise<OrganizationRole>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/roles/create`,
-        {
-            body: role
-        });
+        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/duplicate`);
 
         return new OrganizationRole(result.data);
     }
@@ -274,17 +288,20 @@ export class OrganizationService
     }
 
     /**
-     * Creates a new role as a duplicate of the specified role.
-     * @param roleId The ID of the role to duplicate.
-     * @returns A promise that will be resolved with the new role.
+     * Creates the specified team within the current organization.
+     * @param team The team to create.
+     * @returns A promise that will be resolved with the new team.
      */
-    public async duplicateRole(roleId: string): Promise<OrganizationRole>
+    public async createTeam(team: OrganizationTeam): Promise<OrganizationTeam>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/duplicate`);
+        const result = await this._apiClient.post(`organizations/${organizationId}/teams/create`,
+        {
+            body: team
+        });
 
-        return new OrganizationRole(result.data);
+        return new OrganizationTeam(result.data);
     }
 
     /**
@@ -323,26 +340,9 @@ export class OrganizationService
     }
 
     /**
-     * Creates the specified team within the current organization.
-     * @param team The team to create.
-     * @returns A promise that will be resolved with the new team.
-     */
-    public async createTeam(team: OrganizationTeam): Promise<OrganizationTeam>
-    {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
-        const result = await this._apiClient.post(`organizations/${organizationId}/teams/create`,
-        {
-            body: team
-        });
-
-        return new OrganizationTeam(result.data);
-    }
-
-    /**
      * Saves the specified team within the current organization.
      * @param team The team to save.
-     * @returns A promise that will be resolved with the new team.
+     * @returns A promise that will be resolved with the updated team.
      */
     public async saveTeam(team: OrganizationTeam): Promise<OrganizationTeam>
     {
@@ -369,6 +369,22 @@ export class OrganizationService
     }
 
     /**
+     * Adds the specified user to the current organization team.
+     * @param teamId The ID of the team.
+     * @param userId The ID of the user to assign to the team.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async addUserToTeam(teamId: string, userId: string): Promise<void>
+    {
+        const organizationId = this._identityService.identity!.outfit!.id;
+
+        await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/add`,
+        {
+            body: { userId }
+        });
+    }
+
+    /**
      * Gets the users within the current organization team.
      * @param teamId The ID of the team.
      * @param signal The abort signal to use, or undefined to use no abort signal.
@@ -384,22 +400,6 @@ export class OrganizationService
         });
 
         return result.data.map(user => new OrganizationUser(false, user));
-    }
-
-    /**
-     * Adds the specified user to the current organization team.
-     * @param teamId The ID of the team.
-     * @param userId The ID of the user to assign to the team.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async addUserToTeam(teamId: string, userId: string): Promise<void>
-    {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
-        await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/add`,
-        {
-            body: { userId }
-        });
     }
 
     /**

@@ -13,8 +13,8 @@ export class IdentityModule extends AppModule
 {
     /**
      * Authenticates the user, based on the specified email and password.
-     * @param body.email The email address identifying the user.
-     * @param body.password The users password.
+     * @param context.body.email The email address identifying the user.
+     * @param context.body.password The users password.
      * @returns
      * - 200: A refresh token and an access token that grants permission to create or choose an organization.
      */
@@ -58,7 +58,7 @@ export class IdentityModule extends AppModule
 
     /**
      * Authorizes the user, based on the specified access token and organization.
-     * @param body.organizationId The ID of the organization for which to get an access token, if any.
+     * @param context.body.organizationId The ID of the organization for which to get an access token, if any.
      * @returns
      * - 200: A refresh token and an access token that grants permission to create or choose an organization,
      *   and additional permissions within the specified organization.
@@ -95,7 +95,7 @@ export class IdentityModule extends AppModule
 
     /**
      * Reauthorizes the user, based on the specified refresh token, and optionbally, access token.
-     * @param body.refreshToken The refresh token for which to get an access token.
+     * @param context.body.refreshToken The refresh token for which to get an access token.
      * @returns
      * - 200: A refresh token and an access token that grants permission to create or choose an organization,
      *   and if an access token for an organization was specified, additional permissions within that organization.
@@ -137,7 +137,7 @@ export class IdentityModule extends AppModule
 
     /**
      * Unauthenticates the user, by revoking the specified refresh token.
-     * @param body.refreshToken The refresh token to revoke.
+     * @param context.body.refreshToken The refresh token to revoke.
      * @returns
      * - 204: No content.
      */
