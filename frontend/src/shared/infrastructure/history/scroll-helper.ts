@@ -43,7 +43,7 @@ export class ScrollHelper
             // Try to store the page height associated with the history state from which the app is navigating.
             this.tryStorePageHeight();
 
-            // Ensure the historic page heights are stored in session storage, so they are available if the windown is dublicated.
+            // Ensure the historic page heights are stored in session storage, so they are available if the window is duplicate.
             this.saveHistoricPageHeights();
 
             // Get the navigation ID assigned to the new history state by the router.

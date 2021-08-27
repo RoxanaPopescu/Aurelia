@@ -274,15 +274,15 @@ export class OrganizationService
     }
 
     /**
-     * Creates a new role as a dublicate of the specified role.
-     * @param roleId The ID of the role to dublicate.
+     * Creates a new role as a duplicate of the specified role.
+     * @param roleId The ID of the role to duplicate.
      * @returns A promise that will be resolved with the new role.
      */
     public async duplicateRole(roleId: string): Promise<OrganizationRole>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/dublicate`);
+        const result = await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/duplicate`);
 
         return new OrganizationRole(result.data);
     }

@@ -194,9 +194,9 @@ export class RolesPage
     }
 
     /**
-     * Called when the `Dublicate` icon is clicked on a role.
-     * Dublicates the role.
-     * @param role The role to dublicate.
+     * Called when the `Duplicate` icon is clicked on a role.
+     * Duplicates the role.
+     * @param role The role to duplicate.
      */
     protected async onDuplicateRoleClick(role: OrganizationRole): Promise<void>
     {

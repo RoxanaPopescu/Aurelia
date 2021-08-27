@@ -173,12 +173,12 @@ export default
       }
     },
 
-    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/dublicate":
+    "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/duplicate":
     {
       body:
       {
         id: "role-3-id",
-        name: "Role 1 [dublicate]",
+        name: "Role 1 [duplicate]",
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
