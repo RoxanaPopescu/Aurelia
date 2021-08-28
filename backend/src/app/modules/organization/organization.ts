@@ -1,5 +1,7 @@
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
+import { getStrings } from "../../../shared/localization";
+import permissions from "./resources/settings/permissions.json";
 
 // TODO: Add permission checks
 
@@ -355,7 +357,7 @@ export class OrganizationModule extends AppModule
     }
 
     // TODO:BACKEND: Endpoint missing
-    // TODO:FRONTEND: Hardcode in BFF as temporary workaround
+    // TODO:FRONTEND: Hardcode in BFF as a workaround, but some claims are missing
     /**
      * Gets the permissions available within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -373,6 +375,16 @@ export class OrganizationModule extends AppModule
         // [
         //     { slug: "view-organization", type: "view", group: "Organization", name: "View organization" }
         // ]
+
+        const permissionNames = getStrings("./resources/strings/permissions.json");
+        const permissionGroupNames = getStrings("./resources/strings/permission-groups.json");
+
+        context.response.body = (permissions as any[]).map(permission =>
+        ({
+            ...permission,
+            group: permissionGroupNames[permission.group],
+            name: permissionNames[permission.slug]
+        }));
 
         context.response.status = 200;
     }

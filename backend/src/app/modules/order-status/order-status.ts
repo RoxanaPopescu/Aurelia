@@ -18,7 +18,6 @@ export class OrderStatusModule extends AppModule
          */
         this.router.get("/v2/order-status/:id", async context =>
         {
-            // tslint:disable-next-line: no-require-imports
             const eventTitles = getStrings("./resources/strings/order-status-event-titles.json");
 
             const trackingId = context.params.id.toLowerCase();
