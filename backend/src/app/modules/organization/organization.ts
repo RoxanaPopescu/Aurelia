@@ -4,6 +4,7 @@ import { getStrings } from "../../../shared/localization";
 import permissions from "./resources/settings/permissions.json";
 
 // TODO: Add permission checks
+// TODO: Add missing permissions and slug<->name mappings
 
 /**
  * Represents a module exposing endpoints related to roles within an organization.
@@ -407,7 +408,7 @@ export class OrganizationModule extends AppModule
             {
                 organizationId: context.params.organizationId,
                 roleName: context.request.body.name,
-                permissions: context.request.body.permissions
+                permissions: this.mapPermissionsToLegacy(context.request.body.permissions)
             }
         });
 
@@ -417,7 +418,7 @@ export class OrganizationModule extends AppModule
             name: context.request.body.name, // TODO: can get this from request, but doesn't make sense
             createdDateTime: result.data.createdAt, // TODO: missing
             modifiedDateTime: result.data.lastChanged, // TODO: missing
-            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense
+            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense - remember mapping if changed!
             userCount: 0
         };
 
@@ -443,7 +444,7 @@ export class OrganizationModule extends AppModule
             name: r.name,
             createdDateTime: r.createdAt,
             modifiedDateTime: r.lastUpdate,
-            permissions: r.permissions.map((p: any) => p.name), // TODO: verify name really is the slug
+            permissions: this.mapPermissionsFromLegacy(r.permissions.map((p: any) => p.name)),
             userCount: undefined // TODO: how do we get this?
         }));
 
@@ -471,7 +472,7 @@ export class OrganizationModule extends AppModule
             name: result.data.roleName,
             createdDateTime: result.data.createdAt, // TODO: missing
             modifiedDateTime: result.data.lastChanged, // TODO: missing
-            permissions: result.data.permissions,
+            permissions: this.mapPermissionsFromLegacy(result.data.permissions),
             userCount: 0
         };
 
@@ -496,7 +497,7 @@ export class OrganizationModule extends AppModule
             body:
             {
                 name: context.request.body.name,
-                permissions: context.request.body.permissions
+                permissions: this.mapPermissionsToLegacy(context.request.body.permissions)
             }
         });
 
@@ -506,7 +507,7 @@ export class OrganizationModule extends AppModule
             name: context.request.body.name, // TODO: can get this from request, but doesn't make sense
             createdDateTime: result.data.createdAt, // TODO: missing
             modifiedDateTime: result.data.lastChanged, // TODO: missing
-            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense
+            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense - remember mapping if changed!
             userCount: NaN // TODO: how do we get this?
         };
 
@@ -749,5 +750,28 @@ export class OrganizationModule extends AppModule
         // context.params.userId
 
         context.response.status = 204;
+    }
+
+    /**
+     * Maps slugs identifying permissions in the frontend, to their corresponding names in the backend.
+     * @param slugs The slugs identifying the permissions.
+     * @returns The names of the permissions in the backend.
+     */
+    private mapPermissionsToLegacy(slugs: string[]): string[]
+    {
+        // HACK: Transform permission slugs to names.
+        return slugs.map((slug: string) => permissions.find(p => p.slug === slug)?.nameInBackend || slug)
+    }
+
+    /**
+     * Maps names identifying permissions in the backend, to their corresponding slugs in the frontend.
+     * @param names The names of the permissions in the backend.
+     * @returns The slugs identifying the permissions.
+     */
+    private mapPermissionsFromLegacy(names: string[]): string[]
+    {
+        // HACK: Transform permission names to slugs.
+        //return names.map(p => p.toLowerCase().replace(/ /g, "-"));
+        return names.map((name: string) => permissions.find(p => p.nameInBackend === name || p.slug === name)?.slug || name)
     }
 }

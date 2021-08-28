@@ -2,17 +2,20 @@
     {
         "slug": "create-agreement",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create Agreement"
     },
     {
         "slug": "edit-communication",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Edit Communication"
     },
     {
         "slug": "create-depot",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create Depot"
     },
     {
         "slug": "create-vehicle",
@@ -32,7 +35,8 @@
     {
         "slug": "create-order",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create order"
     },
     {
         "slug": "edit-routes",
@@ -42,7 +46,8 @@
     {
         "slug": "create-routeplan-settings",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create routeplan settings"
     },
     {
         "slug": "edit-order-group",
@@ -62,12 +67,14 @@
     {
         "slug": "assign-executor-route",
         "type": "assign",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Assign Executor Route"
     },
     {
         "slug": "assign-driver-route",
         "type": "assign",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Assign Driver Route"
     },
     {
         "slug": "create-route-template",
@@ -77,12 +84,14 @@
     {
         "slug": "view-kpis",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View KPIs"
     },
     {
         "slug": "view-orders",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View orders"
     },
     {
         "slug": "view-routes",
@@ -97,12 +106,14 @@
     {
         "slug": "view-routeplan-settings",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View routeplan settings"
     },
     {
         "slug": "view-depot",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View Depot"
     },
     {
         "slug": "view-drivers",
@@ -117,12 +128,14 @@
     {
         "slug": "view-communication",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View Communication"
     },
     {
         "slug": "view-agreements",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View agreements"
     },
     {
         "slug": "view-forecast",
@@ -137,12 +150,14 @@
     {
         "slug": "create-prebooking",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create Prebooking"
     },
     {
         "slug": "view-order-groups",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View Order Groups"
     },
     {
         "slug": "view-routeplan-simulations",
@@ -152,16 +167,19 @@
     {
         "slug": "create-routeplan-simulation",
         "type": "edit",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "Create Routeplan Simulation"
     },
     {
         "slug": "view-fulfiller-dispatch",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View Fulfiller Dispatch"
     },
     {
         "slug": "view-route-templates",
         "type": "view",
-        "group": "todo"
+        "group": "todo",
+        "nameInBackend": "View Route Templates"
     }
 ]

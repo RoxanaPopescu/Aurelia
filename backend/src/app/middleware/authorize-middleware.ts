@@ -42,7 +42,8 @@ export class User
             ? jwtObject.organization_permissions as string[]
             : [jwtObject.organization_permissions as string];
 
-        this.permissions = new Set<string>(permissions);
+        // HACK: Transform permission names to slugs.
+        this.permissions = new Set<string>(permissions.map(p => p.toLowerCase().replace(/ /g, "-")));
     }
 
     /**
