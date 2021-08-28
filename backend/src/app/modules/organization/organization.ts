@@ -760,7 +760,7 @@ export class OrganizationModule extends AppModule
     private mapPermissionsToLegacy(slugs: string[]): string[]
     {
         // HACK: Transform permission slugs to names.
-        return slugs.map((slug: string) => permissions.find(p => p.slug === slug)?.nameInBackend || slug)
+        return slugs.map((slug: string) => permissions.find(p => p.slug === slug)?.nameInBackend || slug);
     }
 
     /**
@@ -771,7 +771,7 @@ export class OrganizationModule extends AppModule
     private mapPermissionsFromLegacy(names: string[]): string[]
     {
         // HACK: Transform permission names to slugs.
-        //return names.map(p => p.toLowerCase().replace(/ /g, "-"));
-        return names.map((name: string) => permissions.find(p => p.nameInBackend === name || p.slug === name)?.slug || name)
+        // return names.map(p => p.toLowerCase().replace(/ /g, "-"));
+        return names.map((name: string) => permissions.find(p => p.nameInBackend === name || p.slug === name)?.slug || name);
     }
 }
