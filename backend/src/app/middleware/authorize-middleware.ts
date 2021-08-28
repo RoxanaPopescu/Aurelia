@@ -38,9 +38,9 @@ export class User
 
         // Convert claims to a permission set.
 
-        const permissions = jwtObject.organization_permissions instanceof Array
-            ? jwtObject.organization_permissions as string[]
-            : [jwtObject.organization_permissions as string];
+        const permissions = typeof jwtObject.organization_permissions === "string"
+            ? [jwtObject.organization_permissions as string]
+            : jwtObject.organization_permissions as string[] ?? [];
 
         // HACK: Transform permission names to slugs.
         this.permissions = new Set<string>(permissions.map(p => p.toLowerCase().replace(/ /g, "-")));
