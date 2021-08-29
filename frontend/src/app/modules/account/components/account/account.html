@@ -120,13 +120,17 @@
         <div if.bind="!model.busy" class="font-largest flex-row margin-bottom">
 
             <span translate>
-                Sign up
+                Confirm email
             </span>
 
             <span class="opacity-faded-more margin-left margin-right">—</span>
 
-            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+            <a if.bind="identityService.identity == null" tabindex="0" click.trigger="setView('sign-in')" translate>
                 Sign in
+            </a>
+
+            <a if.bind="identityService.identity != null" tabindex="0" click.trigger="setView('sign-out')" translate>
+                Sign out
             </a>
 
         </div>
@@ -165,8 +169,12 @@
 
             <span class="opacity-faded-more margin-left margin-right">—</span>
 
-            <a tabindex="0" click.trigger="setView('sign-in')" translate>
+            <a if.bind="identityService.identity == null" tabindex="0" click.trigger="setView('sign-in')" translate>
                 Sign in
+            </a>
+
+            <a if.bind="identityService.identity != null" tabindex="0" click.trigger="setView('sign-out')" translate>
+                Sign out
             </a>
 
         </div>

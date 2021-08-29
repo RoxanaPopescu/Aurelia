@@ -7,6 +7,14 @@ account
         width: 100%;
     }
 
+    .account-button-grid
+    {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: var(--font-current-margin-top);
+        column-gap: var(--font-current-margin-top);
+    }
+
     busy-indicator
     {
         opacity: 1;

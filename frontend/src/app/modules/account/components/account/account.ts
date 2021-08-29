@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { IdentityService } from "app/services/identity";
 import { ISignUpModel } from "./components/sign-up/sign-up";
 import { ISignInModel } from "./components/sign-in/sign-in";
 import { ISignOutModel } from "./components/sign-out/sign-out";
@@ -8,21 +9,19 @@ import { IChangePasswordModel } from "./components/change-password/change-passwo
 import { IChooseOrganizationModel } from "./components/choose-organization/choose-organization";
 import { ICreateOrganizationModel } from "./components/create-organization/create-organization";
 
-type AccountCallbacks = Pick<ISignUpModel, "onSignedUp"> & Pick<ISignInModel, "onSignedIn">;
-
 /**
  * Represents the model for the `account` component.
  */
 export type AccountModel =
 (
-    ISignUpModel & AccountCallbacks |
-    IConfirmEmailModel & AccountCallbacks |
-    ISignInModel & AccountCallbacks |
-    IForgotPasswordModel & AccountCallbacks |
-    IChangePasswordModel & AccountCallbacks |
-    ISignOutModel & AccountCallbacks |
-    IChooseOrganizationModel & AccountCallbacks |
-    ICreateOrganizationModel & AccountCallbacks
+    ISignUpModel |
+    IConfirmEmailModel |
+    ISignInModel |
+    IForgotPasswordModel |
+    IChangePasswordModel |
+    ISignOutModel |
+    IChooseOrganizationModel |
+    ICreateOrganizationModel
 ) &
 {
     /**
@@ -42,6 +41,20 @@ export type AccountView = AccountModel["view"];
 @autoinject
 export class AccountCustomElement
 {
+    /**
+     * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
+     */
+    public constructor(identityService: IdentityService)
+    {
+        this.identityService = identityService;
+    }
+
+    /**
+     * The `IdentityService` instance.
+     */
+    protected readonly identityService: IdentityService;
+
     /**
      * The model representing the state of the component.
      */

@@ -61,7 +61,7 @@ export class ConfirmEmailCustomElement
     }
 
     /**
-     * Called when the component is attached.
+     * Called by the framework when the component is attached.
      */
     public async attached(): Promise<void>
     {
@@ -85,7 +85,7 @@ export class ConfirmEmailCustomElement
         }
         catch (error)
         {
-            Log.error("Could not confirm the account.", error);
+            Log.error("Failed to confirm the account.", error);
         }
         finally
         {

@@ -34,9 +34,9 @@ export class AccountService
     }
 
     /**
-     * Confirms the creation of a new user, by verifying the specified token.
-     * @param token The token specified in the confirmation link sent to the new user.
-     * @returns A promise that will be resolved when the operation succeedes.
+     * Confirms the validity of the email identified by the specified token.
+     * @param token The token specified in the confirmation link sent to the user.
+     * @returns A promise that will be resolved when the operation succeeds.
      */
     public async confirmEmail(token: string): Promise<void>
     {

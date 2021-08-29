@@ -13,7 +13,7 @@ export interface IChooseOrganizationModel
     /**
      * The function to call when the operation completes.
      */
-    onSignedIn?: () => unknown | Promise<unknown>;
+    onChooseOrganization?: () => unknown | Promise<unknown>;
 
     /**
      * The function to call when the view is changed.
@@ -106,7 +106,7 @@ export class ChooseOrganizationCustomElement
             await this._identityService.authorize(organizationId);
 
             // tslint:disable-next-line: await-promise
-            await this.model.onSignedIn?.();
+            await this.model.onChooseOrganization?.();
 
             this.model.done = true;
         }

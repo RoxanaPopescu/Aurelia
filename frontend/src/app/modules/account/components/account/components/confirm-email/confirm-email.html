@@ -2,20 +2,20 @@
 
     <require from="./confirm-email.scss"></require>
 
-    <template if.bind="model.busy && !model.done">
+    <div if.bind="model.busy && !model.done">
 
-        <busy-indicator class="font-largest animation-fade-in-medium au-enter-active" translate>
+        <busy-indicator class="font-largest" translate>
             Confirming email…
         </busy-indicator>
 
-    </template>
+    </div>
 
-    <template if.bind="!model.busy && model.done">
+    <div if.bind="!model.busy && model.done">
 
         <div class="font-large" translate>
             Email confirmed
         </div>
 
-    </template>
+    </div>
 
 </template>

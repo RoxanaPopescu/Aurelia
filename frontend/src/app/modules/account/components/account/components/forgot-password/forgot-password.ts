@@ -87,7 +87,6 @@ export class ForgotPasswordCustomElement
 
     /**
      * Called when the `Request new password` button is pressed.
-     * Submits the form.
      */
     protected async onRequestNewPasswordClick(): Promise<void>
     {

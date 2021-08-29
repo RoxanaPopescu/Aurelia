@@ -2,11 +2,11 @@
 
     <require from="./sign-in.scss"></require>
 
-    <template if.bind="!model.busy && !model.done">
+    <div if.bind="!model.busy && !model.done">
 
         <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
 
-            <email-input value.bind="model.email" autocomplete="email">
+            <email-input value.bind="model.email" autocomplete="email" autofocus>
 
                 <span slot="placeholder" translate>
                     Email address
@@ -64,36 +64,38 @@
 
         </div>
 
-        <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
+        <div class="margin-top text-align-center opacity-faded-less" translate>
+            or
+        </div>
 
-        <div surface="base">
+        <div class="account-button-grid margin-top" surface="base">
 
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signInWithGoogle()" translate>
+            <button appearance="solid" accent="primary" click.delegate="signInWithGoogle()" translate>
                 Sign in with <b>Google</b>
             </button>
 
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signInWithMicrosoft()" translate>
+            <button appearance="solid" accent="primary" click.delegate="signInWithMicrosoft()" translate>
                 Sign in with <b>Microsoft</b>
             </button>
 
         </div>
 
-    </template>
+    </div>
 
-    <template if.bind="model.busy && !model.done">
+    <div if.bind="model.busy && !model.done">
 
-        <busy-indicator class="font-largest animation-fade-in-medium au-enter-active" translate>
+        <busy-indicator class="font-largest" translate>
             Signing in…
         </busy-indicator>
 
-    </template>
+    </div>
 
-    <template if.bind="!model.busy && model.done">
+    <div if.bind="!model.busy && model.done">
 
         <div class="font-large" translate>
             Signed in
         </div>
 
-    </template>
+    </div>
 
 </template>

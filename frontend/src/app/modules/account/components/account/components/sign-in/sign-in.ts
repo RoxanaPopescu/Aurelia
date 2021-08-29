@@ -78,7 +78,7 @@ export class SignInCustomElement
     public bind(): void
     {
         this.model.busy = false;
-        this.model.done = false;
+        this.model.done = this._identityService.identity != null;
     }
 
     /**
@@ -116,7 +116,6 @@ export class SignInCustomElement
 
     /**
      * Called when the `Sign up` button is pressed.
-     * Submits the form.
      */
     protected async onSignInClick(): Promise<void>
     {

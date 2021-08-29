@@ -1,9 +1,9 @@
 {
-    "sighUp": "Sign up",
+    "signUp": "Sign up",
     "signIn": "Sign in",
+    "signOut": "Sign out",
     "chooseOrganization": "Choose organization",
     "createOrganization": "Create organization",
-    "sighOut": "Sign out",
     "confirmEmail": "Confirm email",
     "forgotPassword": "Forgot password",
     "changePassword": "Change password"

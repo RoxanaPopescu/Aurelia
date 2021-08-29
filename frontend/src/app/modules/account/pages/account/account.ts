@@ -53,7 +53,7 @@ export class AccountPage
                 name: "sign-up",
                 route: "sign-up",
                 moduleId: PLATFORM.moduleName("./pages/sign-up/sign-up"),
-                title: routeTitles.sighUp
+                title: routeTitles.signUp
             },
             {
                 name: "confirm-email",
@@ -95,7 +95,7 @@ export class AccountPage
                 name: "sign-out",
                 route: "sign-out",
                 moduleId: PLATFORM.moduleName("./pages/sign-out/sign-out"),
-                title: routeTitles.sighOut
+                title: routeTitles.signOut
             }
         ]);
     }

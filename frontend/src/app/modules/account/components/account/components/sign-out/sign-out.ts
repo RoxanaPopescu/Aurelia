@@ -56,7 +56,7 @@ export class SignOutCustomElement
     }
 
     /**
-     * Called when the component is attached.
+     * Called by the framework when the component is attached.
      */
     public async attached(): Promise<void>
     {

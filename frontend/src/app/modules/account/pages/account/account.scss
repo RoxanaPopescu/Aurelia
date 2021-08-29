@@ -1,5 +1,11 @@
 @import "resources/index";
 
+html[route^="account/"] app-sidebar
+{
+    // Don't show the sidebar on account pages.
+    display: none;
+}
+
 page[name="account"]
 {
     --account-header-height: 80rem;

@@ -2,7 +2,7 @@
 
     <require from="./sign-up.scss"></require>
 
-    <template if.bind="!model.busy && !model.done">
+    <div if.bind="!model.busy && !model.done">
 
         <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
 
@@ -122,41 +122,43 @@
 
         </div>
 
-        <p class="margin-top text-align-center opacity-faded-less" translate>or</p>
+        <div class="margin-top text-align-center opacity-faded-less" translate>
+            or
+        </div>
 
-        <div surface="base">
+        <div class="account-button-grid margin-top" surface="base">
 
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
+            <button appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
                 Sign up with <b>Google</b>
             </button>
 
-            <button class="margin-top" appearance="solid" accent="primary" click.delegate="signUpWithMicrosoft()" translate>
+            <button appearance="solid" accent="primary" click.delegate="signUpWithMicrosoft()" translate>
                 Sign up with <b>Microsoft</b>
             </button>
 
         </div>
 
-    </template>
+    </div>
 
-    <template if.bind="model.busy && !model.done">
+    <div if.bind="model.busy && !model.done">
 
         <busy-indicator class="font-largest" translate>
             Signing up…
         </busy-indicator>
 
-    </template>
+    </div>
 
-    <template if.bind="!model.busy && model.done">
+    <div if.bind="!model.busy && model.done">
 
-        <div class="font-large" translate>
+        <div class="font-large margin-bottom" translate>
             Please check your email
         </div>
 
-        <p class="opacity-faded-less" translate>
+        <div class="opacity-faded-less" translate>
             We just sent you an email with a link to confirm your signup.
             If you don't see the email, make sure to check your junk folder.
-        </p>
+        </div>
 
-    </template>
+    </div>
 
 </template>

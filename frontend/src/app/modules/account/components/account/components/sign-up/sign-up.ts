@@ -2,9 +2,8 @@ import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
+import { AccountService, IAccountInit } from "app/modules/account/services/account";
 import { OrganizationService } from "app/model/organization";
-import { AccountService } from "app/modules/account/services/account/account-service";
-import { IAccountInit } from "app/modules/account/services/account/account-init";
 
 export interface ISignUpModel extends Partial<IAccountInit>
 {
@@ -64,20 +63,20 @@ export class SignUpCustomElement
 {
     /**
      * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
      * @param accountService The `AccountService` instance.
      * @param organizationService The `OrganizationService` instance.
-     * @param identityService The `IdentityService` instance.
      */
-    public constructor(accountService: AccountService, organizationService: OrganizationService, identityService: IdentityService)
+    public constructor(identityService: IdentityService, accountService: AccountService, organizationService: OrganizationService)
     {
+        this._identityService = identityService;
         this._accountService = accountService;
         this._organizationService = organizationService;
-        this._identityService = identityService;
     }
 
+    private readonly _identityService: IdentityService;
     private readonly _accountService: AccountService;
     private readonly _organizationService: OrganizationService;
-    private readonly _identityService: IdentityService;
 
     /**
      * The model representing the state of the component.
@@ -97,11 +96,11 @@ export class SignUpCustomElement
     public bind(): void
     {
         this.model.busy = false;
-        this.model.done = false;
+        this.model.done = this._identityService.identity != null;
     }
 
     /**
-     * The suggested preferred name, based on teh full name.
+     * The suggested preferred name, based on the full name.
      */
     @computedFrom("model.fullName")
     protected get preferredNameSuggestion(): string | undefined
@@ -135,7 +134,6 @@ export class SignUpCustomElement
 
     /**
      * Called when the `Sign up` button is pressed.
-     * Submits the form.
      */
     protected async onSignUpClick(): Promise<void>
     {
@@ -166,7 +164,8 @@ export class SignUpCustomElement
                 name: this.model.organizationName!
             });
 
-            // NOTE: The organization is created asynchronously, so a failed authorize request is expected.
+            // NOTE:
+            // The organization is created asynchronously, so failed API requests are to be expected.
             // However, due to the retry logic in the `ApiClient`, authorization should eventually succeed.
             await this._identityService.authorize(createOrganizationResult.id);
 

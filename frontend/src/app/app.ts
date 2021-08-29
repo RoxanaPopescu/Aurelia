@@ -125,21 +125,6 @@ export class AppModule
     {
         const routeConfigs =
         [
-
-            // TODO: Remove once the email template is updated to reference the correct route.
-            {
-                name: "activation",
-                route: "activation",
-                redirect: "account/activate"
-            },
-
-            // TODO: Remove once the email template is updated to reference the correct route.
-            {
-                name: "reset-password",
-                route: "reset-password",
-                redirect: "account/change-password"
-            },
-
             {
                 name: "default",
                 route: ["", "index.html"],

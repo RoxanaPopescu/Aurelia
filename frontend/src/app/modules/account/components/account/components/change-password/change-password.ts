@@ -1,8 +1,8 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
-import { AccountService } from "app/modules/account/services/account";
 import { IdentityService } from "app/services/identity";
+import { AccountService } from "app/modules/account/services/account";
 
 export interface IChangePasswordModel
 {
@@ -23,14 +23,14 @@ export interface IChangePasswordModel
     password?: string;
 
     /**
-     * True to store the auth tokens on the device, otherwise false.
+     * True to store an authentication cookie on the device, otherwise false.
      */
     remember?: boolean;
 
     /**
      * The function to call when the operation completes.
      */
-    onPasswordChanged?: () => unknown | Promise<unknown>;
+    onChangedPassword?: () => unknown | Promise<unknown>;
 
     /**
      * True if the operation is pending, otherwise false.
@@ -48,10 +48,10 @@ export class ChangePasswordCustomElement
 {
     /**
      * Creates a new instance of the type.
-     * @param accountService The `AccountService` instance.
      * @param identityService The `IdentityService` instance.
+     * @param accountService The `AccountService` instance.
      */
-    public constructor(accountService: AccountService, identityService: IdentityService)
+    public constructor(identityService: IdentityService, accountService: AccountService)
     {
         this._accountService = accountService;
         this._identityService = identityService;
@@ -82,7 +82,7 @@ export class ChangePasswordCustomElement
     }
 
     /**
-     * Called when the component is attached.
+     * Called by the framework when the component is attached.
      */
     public attached(): void
     {
@@ -118,7 +118,6 @@ export class ChangePasswordCustomElement
 
     /**
      * Called when the `Request new password` button is pressed.
-     * Submits the form.
      */
     protected async onChangePasswordClick(): Promise<void>
     {
@@ -147,7 +146,7 @@ export class ChangePasswordCustomElement
             }
 
             // tslint:disable-next-line: await-promise
-            await this.model.onPasswordChanged?.();
+            await this.model.onChangedPassword?.();
 
             this.model.done = true;
         }
