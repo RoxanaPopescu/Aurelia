@@ -106,7 +106,7 @@ export class PageHrefCustomAttribute
     {
         // Ensure this attribute, and the specified attribute and property, is updated.
 
-        this._url = this.path != null ? this.path : undefined;
+        this._url = this.path != null ? this._historyHelper.getRouteUrl(this.path) : undefined;
 
         this.setAttribute();
         this.setProperty();

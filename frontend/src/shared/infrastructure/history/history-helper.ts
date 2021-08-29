@@ -4,6 +4,13 @@ import { AppRouter, NavigationInstruction, PipelineResult } from "aurelia-router
 import { EventAggregator } from "aurelia-event-aggregator";
 import { MapObject } from "shared/types";
 
+/**
+ * The navigation direction, where `new` represents a navigation to a new history state in the current app instance,
+ * `forward` and `backward` represents a navigation to an existing history state in the current app instance,
+ * and `refresh` represents a navigation to an existing history state in a new app instance.
+ */
+export type NavigationDirection = "new" | "forward" | "backward" | "refresh";
+
 // The separator used between segments of a route name.
 export const routeNameSeparator = "/";
 
@@ -69,9 +76,18 @@ export class HistoryHelper
 
         let isNavigatingNew = false;
 
+        // Resolve the initial navigation direction immediately, without waiting for the `processing` event.
+        this._navigating = this._history.getState("NavigationTracker") != null ? "refresh" : "new";
+
         this._eventAggregator.subscribe("router:navigation:processing", () =>
         {
-            this._navigating = true;
+            // Indicate that the app is navigating.
+            this._navigating =
+                router.isNavigatingBack ? "backward" :
+                router.isNavigatingForward ? "forward" :
+                router.isNavigatingRefresh ? "refresh" :
+                "new";
+
             isNavigatingNew = router.isNavigatingNew;
         });
 
@@ -94,7 +110,9 @@ export class HistoryHelper
         this._eventAggregator.subscribe("router:navigation:complete", (event: any) =>
         {
             isNavigatingNew = false;
-            this._navigating = false;
+
+            // Indicate that the app is done navigating.
+            this._navigating = undefined;
 
             this._eventAggregator.publish("router:navigation:idle", event);
         });
@@ -104,7 +122,7 @@ export class HistoryHelper
     private readonly _router: AppRouter;
     private readonly _eventAggregator: EventAggregator;
     private _state: IHistoryState;
-    private _navigating = true;
+    private _navigating: NavigationDirection | undefined;
 
     /**
      * The current history state.
@@ -117,12 +135,24 @@ export class HistoryHelper
     }
 
     /**
-     * True if the router is navigating, otherwise false.
+     * The direction of the current navigation, or undefined if the app is not currently navigating.
      */
     @computedFrom("_navigating")
-    public get navigating(): boolean
+    public get navigating(): NavigationDirection | undefined
     {
         return this._navigating;
+    }
+
+    /**
+     * HACK: This methods currently returns the URL as-is, but is needed to ensure compatibility when this class is eventually updated to the latest version.
+     * Resolves the specified URL, prepending the base URL and base path if it starts with a single `/`.
+     * @param url The URL to resolve.
+     * @param basePath The base path to use, with a leading and trailing `/`, or undefined to use the current base path.
+     * @returns The resolved URL.
+     */
+    public getRouteUrl(url: string, basePath?: string): string
+    {
+        return url;
     }
 
     /**
