@@ -67,8 +67,8 @@ export class TeamDetailsPage
      */
     protected sorting: ISorting =
     {
-        property: "name",
-        direction: "descending"
+        property: "fullName",
+        direction: "ascending"
     };
 
     /**

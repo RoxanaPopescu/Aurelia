@@ -122,6 +122,11 @@ export class AccountModalPanel
     protected organizations: OrganizationInfo[];
 
     /**
+     * The selected organization.
+     */
+    protected organization: OrganizationInfo;
+
+    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
@@ -166,7 +171,11 @@ export class AccountModalPanel
 
         // Get the list of organizations for the current user.
         // tslint:disable-next-line: no-unused-expression
-        new Operation(async () => this.organizations = await this._organizationService.getAll());
+        new Operation(async () =>
+        {
+            this.organizations = await this._organizationService.getAll();
+            this.organization = this.organizations.find(o => o.id === this._identityService.identity!.outfit!.id)!;
+        });
     }
 
     /**

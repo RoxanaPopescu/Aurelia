@@ -62,7 +62,7 @@ export class UsersPage
     protected sorting: ISorting =
     {
         property: "fullName",
-        direction: "descending"
+        direction: "ascending"
     };
 
     /**

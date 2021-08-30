@@ -57,7 +57,7 @@ export class RolesPage
     protected sorting: ISorting =
     {
         property: "name",
-        direction: "descending"
+        direction: "ascending"
     };
 
     /**

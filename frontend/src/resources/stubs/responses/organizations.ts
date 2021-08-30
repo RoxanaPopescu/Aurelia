@@ -46,7 +46,7 @@ export default
       body:
       {
         id: "invite-2-id",
-        email: "johndoe@example.com",
+        email: "james-doe@example.com",
         role: { id: "role-1-id", name: "Role 1" },
         team: { id: "team-1-id", name: "Team 1" }
       }
@@ -63,7 +63,7 @@ export default
       [
         {
           id: "invite-1-id",
-          email: "johndoe@example.com",
+          email: "jane-doe@example.com",
           role: { id: "role-1-id", name: "Role 1" },
           team: { id: "team-1-id", name: "Team 1" }
         }
@@ -77,18 +77,14 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/users":
     {
-      body: Array(5).fill(
-      {
-        id: "user-1-id",
-        fullName: "John Doe",
-        preferredName: "John",
-        email: "johndoe@example.com",
-        phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
-        role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
-        lastOnline: DateTime.utc().toISO()
-      })
+      body: getUsers(
+        "user-1-id",
+        "user-2-id",
+        "user-3-id",
+        "user-4-id",
+        "user-5-id",
+        "user-6-id"
+      )
     },
 
     "POST /api/v2/organizations/mover-organization-id/users/user-1-id/change-role":
@@ -103,10 +99,10 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/roles":
     {
-      body: Array(5).fill(
-      {
-        id: "role-1-id",
-        name: "Role 1",
+      body: [1, 2, 3, 4, 5, 6].map(i =>
+      ({
+        id: `role-${i}-id`,
+        name: `Role ${i}`,
         createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
         modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
         permissions:
@@ -123,15 +119,15 @@ export default
           "edit-route-plans"
         ],
         userCount: 1
-      })
+      }))
     },
 
     "POST /api/v2/organizations/mover-organization-id/roles/create":
     {
       body:
       {
-        id: "role-2-id",
-        name: "Role 2",
+        id: "new-role-id",
+        name: "New role",
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
@@ -177,7 +173,7 @@ export default
     {
       body:
       {
-        id: "role-3-id",
+        id: "role-1-duplicate-id",
         name: "Role 1 [duplicate]",
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
@@ -220,30 +216,30 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/teams":
     {
-      body: Array(5).fill(
-      {
-        id: "team-1-id",
-        name: "Team 1",
+      body: [1, 2, 3, 4, 5, 6].map(i =>
+      ({
+        id: `team-${i}-id`,
+        name: `Team ${i}`,
         phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
         address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
         vatNumber: "42069",
         invoiceDirectly: true,
-        invoiceEmail: "team1@example.com",
+        invoiceEmail: `team-${i}@example.com`,
         userCount: 1
-      })
+      }))
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/create":
     {
       body:
       {
-        id: "team-2-id",
-        name: "Team 2",
+        id: "new-team-id",
+        name: "New team",
         phoneNumber: { countryCallingCode: "45", nationalNumber: "69696969" },
         address: { primary: "Bar Street 42", secondary: "1337 Denmark" },
         vatNumber: "69042",
         invoiceDirectly: true,
-        invoiceEmail: "team2@example.com",
+        invoiceEmail: "new-team@example.com",
         userCount: 0
       }
     },
@@ -258,7 +254,7 @@ export default
         address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
         vatNumber: "42069",
         invoiceDirectly: true,
-        invoiceEmail: "team1@example.com",
+        invoiceEmail: "team-1@example.com",
         userCount: 1
       }
     },
@@ -270,21 +266,14 @@ export default
 
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
     {
-      body:
-      [
-        ...Array(5).fill(
-        {
-          id: "user-1-id",
-          fullName: "John Doe",
-          preferredName: "John",
-          email: "johndoe@example.com",
-          phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-          pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
-          role: { id: "role-1-id", name: "Role 1" },
-          team: { id: "team-1-id", name: "Team 1" },
-          lastOnline: DateTime.utc().toISO()
-        })
-      ]
+      body: getUsers(
+        "user-1-id",
+        "user-2-id",
+        "user-3-id",
+        "user-4-id",
+        "user-5-id",
+        "user-6-id"
+      )
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/add":
@@ -321,4 +310,82 @@ export default
         { slug: "edit-route-plans",    type: "edit", group: "KPI",          name: "Edit route plans"   }
       ]
     }
+}
+
+export function getUsers(...ids: string[]): any[]
+{
+  return [
+    {
+      id: "user-1-id",
+      email: "jogn-doe@example.com",
+      fullName: "John Doe",
+      preferredName: "John",
+      phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+      pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
+      role: { id: "role-1-id", name: "Role 1" },
+      team: { id: "team-1-id", name: "Team 1" },
+      lastOnline: DateTime.utc().toISO()
+    },
+    {
+        id: "user-2-id",
+        email: "jessica-richards@example.com",
+        fullName: "Jessica Richards",
+        preferredName: "Jessica",
+        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://randomuser.me/api/portraits/women/82.jpg",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        lastOnline: DateTime.utc().toISO()
+    },
+    {
+        id: "user-3-id",
+        email: "annie-freeman@example.com",
+        fullName: "Annie Freeman",
+        preferredName: "Annie",
+        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://randomuser.me/api/portraits/women/63.jpg",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        lastOnline: DateTime.utc().toISO()
+    },
+    {
+        id: "user-4-id",
+        email: "monica-bennett@example.com",
+        fullName: "Monica Bennett",
+        preferredName: "Monica",
+        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://randomuser.me/api/portraits/women/54.jpg",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        lastOnline: DateTime.utc().toISO()
+    },
+    {
+        id: "user-5-id",
+        email: "mark-riley@example.com",
+        fullName: "Mark Riley",
+        preferredName: "Mark",
+        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        lastOnline: DateTime.utc().toISO()
+    },
+    {
+        id: "user-6-id",
+        email: "andrew-wilson@example.com",
+        fullName: "Andrew Wilson",
+        preferredName: "Andrew",
+        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        pictureUrl: "https://randomuser.me/api/portraits/men/86.jpg",
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" },
+        lastOnline: DateTime.utc().toISO()
+    }
+  ]
+  .filter(u => ids.includes(u.id));
+}
+
+export function getUser(id: string): any
+{
+    return getUsers(id)[0];
 }
