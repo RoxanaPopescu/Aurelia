@@ -90,6 +90,19 @@ export class RouteStopComponent extends React.Component<RoutesLayerProps> {
               <div>{this.props.routeStop.location.address.secondary}</div>
             </div>
 
+            { this.props.routeStop.type.slug === "break" &&
+              <div className="c-liveTracking-panel-section-row">
+                <div>
+                  {Localization.sharedValue(
+                    "RouteDetails_Map_RouteStopMarker_Break"
+                  )}
+                </div>
+                <div>
+                  { this.props.routeStop.breakTime?.as("minutes") } min
+                </div>
+              </div>
+            }
+
             { this.props.routeStop.outfit &&
               <div className="c-liveTracking-panel-section-row">
                 <div>
