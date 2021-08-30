@@ -231,7 +231,7 @@
             <text-input label="above" value.bind="model.routeStop.port" class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
-                    Port
+                    Gate
                 </div>
 
             </text-input>
@@ -512,6 +512,52 @@
                     </div>
 
                 </div>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section class="margin-bottom --line-above" if.bind="model.routeStop.type.slug === 'break'">
+
+            <div slot="header" translate>
+                Break
+            </div>
+
+
+            <div class="control-row margin-large-bottom">
+
+                <duration-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="model.routeStop.breakTime"
+                    class="flex-basis-1-of-2"
+                    min.bind="0">
+
+                    <div slot="heading">
+                        <span translate>
+                            Break time
+                        </span>
+                    </div>
+
+                    <span slot="after" class="opacity-faded">
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.routeStop.breakTime">
+                        </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.routeStop.breakTime"
+                            min.bind="0">
+                        </range-validator>
+
+                    </div>
+
+                </duration-input>
 
             </div>
 

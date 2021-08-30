@@ -255,7 +255,8 @@ export class RouteStop extends RouteStopBase
             actions: this.actions,
             arrivedTime: this.arrivedTime,
             completedTime: this.completedTime,
-            tags: this.tags
+            tags: this.tags,
+            breakTime: this.breakTime?.as("seconds")
         };
     }
 }

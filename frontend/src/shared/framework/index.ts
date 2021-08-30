@@ -30,6 +30,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/inputs/date-time-input/date-time-input"),
         PLATFORM.moduleName("./components/controls/inputs/email-input/email-input"),
         PLATFORM.moduleName("./components/controls/inputs/number-input/number-input"),
+        PLATFORM.moduleName("./components/controls/inputs/duration-input/duration-input"),
         PLATFORM.moduleName("./components/controls/inputs/password-input/password-input"),
         PLATFORM.moduleName("./components/controls/inputs/phone-input/phone-input"),
         PLATFORM.moduleName("./components/controls/inputs/search-input/search-input"),
