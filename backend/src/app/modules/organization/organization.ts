@@ -34,9 +34,9 @@ export class OrganizationModule extends AppModule
 
         context.response.body =
         {
-            id: result.data.organization.organizationId,
-            name: result.data.organization.name,
-            type: result.data.organization.organizationType
+            id: result.data.organizationId,
+            name: context.request.body.name,
+            type: context.request.body.type
         };
 
         context.response.status = 200;

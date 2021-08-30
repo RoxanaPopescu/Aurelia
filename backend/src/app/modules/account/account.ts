@@ -20,7 +20,7 @@ export class AccountModule extends AppModule
      */
     public "POST /v2/account/create" = async (context: AppContext) =>
     {
-        await this.apiClient.post("account/signup",
+        await this.apiClient.post("identity/account/signup",
         {
             body:
             {
@@ -43,7 +43,7 @@ export class AccountModule extends AppModule
      */
     public "POST /v2/account/confirm-email" = async (context: AppContext) =>
     {
-        await this.apiClient.post("account/confirmuseraccount",
+        await this.apiClient.post("identity/account/confirmuseraccount",
         {
             body:
             {
@@ -64,7 +64,7 @@ export class AccountModule extends AppModule
      */
     public "POST /v2/account/forgot-password" = async (context: AppContext) =>
     {
-        await this.apiClient.post("account/forgotpassword",
+        await this.apiClient.post("identity/account/forgotpassword",
         {
             body:
             {
@@ -91,7 +91,7 @@ export class AccountModule extends AppModule
             await context.authorize();
         }
 
-        const result = await this.apiClient.post("account/changeruserpassword",
+        const result = await this.apiClient.post("identity/account/changeruserpassword",
         {
             body:
             {
@@ -119,7 +119,7 @@ export class AccountModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.post("account/delete",
+        await this.apiClient.post("identity/account/delete",
         {
             body:
             {

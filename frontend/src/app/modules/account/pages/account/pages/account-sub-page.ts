@@ -43,9 +43,12 @@ export abstract class AccountSubPage
     {
         this.model =
         {
+            // TODO: Choose default url based on which permissions the user has?
             onViewChanged: () => this.onViewChanged(),
             onSignedUp: () => this.onSignedUp(url ?? "/"),
-            onSignedIn: () => this.onSignedIn(url ?? "/account/choose-organization"),
+            onSignedIn: () => this.onSignedIn(url && url !== "/"
+                ? this.historyHelper.getRouteUrl(`/account/choose-organization?url=${encodeURIComponent(url)}`)
+                : this.historyHelper.getRouteUrl("/account/choose-organization")),
             onSignedOut: () => this.onSignedOut(url ?? "/account/sign-in"),
             onConfirmedEmail: () => this.onConfirmedEmail(url),
             onChangedPassword: () => this.onChangedPassword(url ?? "/"),

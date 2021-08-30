@@ -1,4 +1,5 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
+import { AsyncCallback } from "shared/types";
 
 /**
  * Represents a button that, when placed in the `before` or `after` slot of an input,
@@ -33,6 +34,13 @@ export class InputLockCustomElement
     }
 
     /**
+     * The function to call when the user attempts to unlock.
+     * @returns A promise that will be resolved with true to allow the unlocking, otherwise false.
+     */
+    @bindable
+    public unlock: AsyncCallback<boolean>;
+
+    /**
      * Called by the framework when the component is attached.
      */
     public attached(): void
@@ -55,12 +63,15 @@ export class InputLockCustomElement
     /**
      * Called when the button is clicked.
      */
-    protected onClick(): void
+    protected async onClick(): Promise<void>
     {
-        // Sets the value of the `readonly` property of the input view model to false.
-        this._inputElement.au.controller.viewModel.readonly = false;
+        if (this.unlock == null || await this.unlock())
+        {
+            // Sets the value of the `readonly` property of the input view model to false.
+            this._inputElement.au.controller.viewModel.readonly = false;
 
-        // Focus the input.
-        setTimeout(() => this._inputElement.focus(), 50);
+            // Focus the input.
+            setTimeout(() => this._inputElement.focus(), 50);
+        }
     }
 }
