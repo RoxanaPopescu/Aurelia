@@ -289,6 +289,34 @@ export class IdentityService
     }
 
     /**
+     * Verifies that the specified password matches the password for the current user.
+     * @param password The users password.
+     * @returns A promise that will be resolved with true if the password is valid, otherwise false.
+     */
+    public async verifyPassword(password: string): Promise<boolean>
+    {
+        try
+        {
+            await this._apiClient.post("identity/verify-password",
+            {
+                body: { password },
+                retry: 3
+            });
+
+            return true;
+        }
+        catch (error)
+        {
+            if ([401, 403].includes(error.response?.status))
+            {
+                return false;
+            }
+
+            throw error;
+        }
+    }
+
+    /**
      * Gets the tokens to use.
      * @returns The tokens to use.
      */

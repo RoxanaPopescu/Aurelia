@@ -162,6 +162,30 @@ export class IdentityModule extends AppModule
         context.response.status = 204;
     }
 
+    // TODO:BACKEND: Endpoint missing
+    /**
+     * Unauthenticates the user, by revoking the specified refresh token.
+     * @param context.body.refreshToken The refresh token to revoke.
+     * @returns
+     * - 204: No content.
+     */
+    public "POST /v2/identity/verify-password" = async (context: AppContext) =>
+    {
+        // await context.authorize();
+
+        // await this.apiClient.post("identity/verifypassword",
+        // {
+        //     body:
+        //     {
+        //         password: context.request.body.password
+        //     }
+        // });
+
+        // return status 401 if verification fails
+
+        context.response.status = 204;
+    }
+
     // tslint:disable: member-ordering
 
     private readonly _verifyOptions: jwt.VerifyOptions =

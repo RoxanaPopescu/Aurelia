@@ -19,8 +19,10 @@
                 Please make sure to use a strong password.
             </div>
 
-            <div slot="after" translate>
-                <input-lock></input-lock>
+            <div slot="after">
+                <input-lock unlock.call="onInputUnlock()">
+                    <icon name="${model.currentPassword ? 'md-edit' : 'md-lock-open'}"></icon>
+                </input-lock>
             </div>
 
             <div slot="placeholder">

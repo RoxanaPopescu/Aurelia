@@ -109,6 +109,10 @@ export class AppModule
             {
                 name: "account",
                 moduleId: PLATFORM.moduleName("app/modules/account/modals/account/account")
+            },
+            {
+                name: "verify-password",
+                moduleId: PLATFORM.moduleName("app/modals/dialogs/verify-password/verify-password")
             }
         ];
 

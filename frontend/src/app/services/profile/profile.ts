@@ -44,6 +44,12 @@ export class Profile
     public pictureUrl: string;
 
     /**
+     * The users current password, if the email, phone number,
+     * or password is changed, otherwise undefined.
+     */
+    public currentPassword: string | undefined;
+
+    /**
      * The settings for the project.
      */
     public settings:

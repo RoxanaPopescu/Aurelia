@@ -60,7 +60,7 @@
 
         </text-input>
 
-        <email-input class="margin-double-top" label="above" value.bind="model.email" autocomplete="email">
+        <email-input class="margin-double-top" label="above" value.bind="model.email" autocomplete="email" readonly.bind="model.currentPassword == null">
 
             <div slot="heading" translate>
                 Email
@@ -71,7 +71,11 @@
                 Note that this will be visible to other users.
             </div>
 
-            <input-lock slot="after"></input-lock>
+            <div slot="after">
+                <input-lock unlock.call="onInputUnlock()">
+                    <icon name="md-lock-open"></icon>
+                </input-lock>
+            </div>
 
             <div slot="validation">
 
@@ -83,7 +87,7 @@
 
         </email-input>
 
-        <phone-input class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel">
+        <phone-input class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel" readonly.bind="model.currentPassword == null">
 
             <div slot="heading" translate>
                 Phone number
@@ -94,7 +98,11 @@
                 Note that this will be visible to other users.
             </div>
 
-            <input-lock slot="after"></input-lock>
+            <div slot="after">
+                <input-lock unlock.call="onInputUnlock()">
+                    <icon name="md-lock-open"></icon>
+                </input-lock>
+            </div>
 
             <div slot="validation">
 

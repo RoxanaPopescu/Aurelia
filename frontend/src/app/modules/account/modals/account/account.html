@@ -93,6 +93,7 @@
 
         <security-pane
             show.bind="selectedTab === 'security'"
+            model.bind="settingsModel"
             delete-click.call="onDeleteClick()"
             validation.ref="securityValidation">
         </security-pane>
