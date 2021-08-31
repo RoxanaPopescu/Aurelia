@@ -73,7 +73,6 @@ export class DurationInputCustomElement
     {
         // Store the value entered by the user.
         this.enteredValue = value;
-        console.log(value)
 
         // Parse the value of the input element.
         if (value)
