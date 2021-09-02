@@ -923,6 +923,7 @@
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupCustomerName": "Fornavn på modtager",
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupLocationAddress": "Adressen for afhentning",
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupTimeFrame": "Tidspunkt for afhentning, fx. 14:00-16:00",
+  "./app/model/_communication/resources/strings/message-placeholder-descriptions:deliveryCompanyName": "Leveringsfirma navn",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:eitherSideOfVehicle": "Begge sider af køretøjet ",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:rightSideOfVehicle": "Køretøjets højre side",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:leftSideOfVehicle": "Køretøjets venstre side ",

@@ -923,6 +923,7 @@
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupCustomerName": "First name of the sender",
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupLocationAddress": "Pickup address",
   "./app/model/_communication/resources/strings/message-placeholder-descriptions:pickupTimeFrame": "Pickup time, e.g. 14:00-16:00",
+  "./app/model/_communication/resources/strings/message-placeholder-descriptions:deliveryCompanyName": "Delivery company name",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:eitherSideOfVehicle": "Either side of vehicle",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:rightSideOfVehicle": "Right side of vehicle",
   "./app/model/_route-planning-settings/resources/strings/curb-approach-strategies:leftSideOfVehicle": "Left side of vehicle",

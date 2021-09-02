@@ -68,6 +68,7 @@ export default
         [
             "OrderId",
             "DeliveryCustomerName",
+            "DeliveryCompanyName",
             "DeliveryLocationAddress",
             "DriverName",
             "DriverPhone",
