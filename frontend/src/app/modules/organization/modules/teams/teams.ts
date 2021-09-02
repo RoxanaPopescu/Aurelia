@@ -185,7 +185,7 @@ export class TeamsPage
      */
     protected async onEditTeamClick(team: OrganizationTeam): Promise<void>
     {
-        const newTeam = await this._modalService.open(EditTeamPanel, { team }).promise;
+        const newTeam = await this._modalService.open(EditTeamPanel, { team, teams: this._teams }).promise;
 
         if (newTeam != null)
         {

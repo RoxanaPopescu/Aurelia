@@ -25,9 +25,19 @@ export class EditRolePanel
     private _result: OrganizationRole | undefined;
 
     /**
+     * The name of the role, before editing.
+     */
+    protected roleName: string | undefined;
+
+    /**
      * The role for the modal.
      */
     protected role: OrganizationRole;
+
+    /**
+     * The roles within the organization, used to verify uniqueness of the role name.
+     */
+    protected roles: OrganizationRole[];
 
     /**
      * The available permissions.
@@ -43,9 +53,11 @@ export class EditRolePanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { role?: OrganizationRole }): void
+    public activate(model: { role?: OrganizationRole, roles?: OrganizationRole[] }): void
     {
         this.role = model.role?.clone() ?? new OrganizationRole();
+        this.roleName = this.role.name;
+        this.roles = model.roles ?? [];
 
         this._fetchOperation = new Operation(async () =>
         {

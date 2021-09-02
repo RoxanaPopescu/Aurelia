@@ -22,9 +22,19 @@ export class EditTeamPanel
     private _result: OrganizationTeam | undefined;
 
     /**
+     * The name of the team, before editing.
+     */
+    protected teamName: string | undefined;
+
+    /**
      * The team for the modal.
      */
     protected team: OrganizationTeam;
+
+    /**
+     * The teams within the organization, used to verify uniqueness of the team name.
+     */
+    protected teams: OrganizationTeam[];
 
     /**
      * The validation for the modal.
@@ -35,9 +45,11 @@ export class EditTeamPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { team?: OrganizationTeam }): void
+    public activate(model: { team?: OrganizationTeam, teams?: OrganizationTeam[] }): void
     {
         this.team = model.team?.clone() ?? new OrganizationTeam();
+        this.teamName = this.team.name;
+        this.teams = model.teams ?? [] as any;
     }
 
     /**

@@ -185,7 +185,7 @@ export class RolesPage
      */
     protected async onRoleClick(role: OrganizationRole): Promise<void>
     {
-        const newRole = await this._modalService.open(EditRolePanel, { role }).promise;
+        const newRole = await this._modalService.open(EditRolePanel, { role, roles: this._roles }).promise;
 
         if (newRole != null)
         {
