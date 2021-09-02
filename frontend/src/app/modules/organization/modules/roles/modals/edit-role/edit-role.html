@@ -60,7 +60,7 @@
 
         </modal-section>
 
-        <button appearance="solid" accent="primary" click.delegate="onSubmitClick()">
+        <button if.bind="availablePermissions != null" appearance="solid" accent="primary" click.delegate="onSubmitClick()">
 
             <span translate if.bind="!role.id">
                 Create role
