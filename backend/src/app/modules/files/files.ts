@@ -20,7 +20,7 @@ export class FilesModule extends AppModule
             const body = await this.readStream(context.req);
             await this.validateLogin(context);
 
-            const routesResult = await this.apiClient.post("file/uploadpublic",
+            const result = await this.apiClient.post("file/uploadpublic",
             {
                 headers:
                 {
@@ -30,7 +30,7 @@ export class FilesModule extends AppModule
                 body: body
             });
 
-            context.response.body = routesResult.data;
+            context.response.body = result.data;
             context.response.status = 200;
         });
 
@@ -42,7 +42,7 @@ export class FilesModule extends AppModule
             const body = await this.readStream(context.req);
             await this.validateLogin(context);
 
-            const routesResult = await this.apiClient.post("file/uploadsensitive",
+            const result = await this.apiClient.post("file/uploadsensitive",
             {
                 headers:
                 {
@@ -52,7 +52,7 @@ export class FilesModule extends AppModule
                 body: body
             });
 
-            context.response.body = routesResult.data;
+            context.response.body = result.data;
             context.response.status = 200;
         });
 

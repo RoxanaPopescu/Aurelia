@@ -150,7 +150,7 @@ export class IdentityPictureInputCustomElement
     {
         this.uploadOperation?.abort();
 
-        const fileUploadRequest = await pickAndUploadFile("post", "pictures", undefined, ".jpg,.png");
+        const fileUploadRequest = await pickAndUploadFile("post", "files/upload/public", undefined, ".jpg,.png");
 
         if (fileUploadRequest == null)
         {

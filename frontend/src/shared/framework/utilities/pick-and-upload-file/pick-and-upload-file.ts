@@ -33,28 +33,29 @@ export async function pickAndUploadFile<TResult = any>(method: string, path: str
 
     return new Promise((resolve, reject) =>
     {
-        const form = document.createElement("form");
-        form.setAttribute("enctype", "multipart/form-data");
-        form.setAttribute("style", "display: none");
-
         const input = document.createElement("input");
         input.setAttribute("type", "file");
-        input.setAttribute("name", "file");
         input.setAttribute("accept", accept);
-
-        form.appendChild(input);
+        input.setAttribute("style", "display: none");
 
         input.addEventListener("change", () =>
         {
+            const file = input.files?.[0];
+
+            if (file == null)
+            {
+                return;
+            }
+
             const operation = new Operation(async signal =>
             {
                 return apiClient[method](path,
                 {
                     headers:
                     {
-                        "content-type": "multipart/form-data"
+                        "content-type": file.type
                     },
-                    body: new FormData(form),
+                    body: await file.arrayBuffer(),
                     query,
                     signal
                 });
@@ -62,13 +63,13 @@ export async function pickAndUploadFile<TResult = any>(method: string, path: str
 
             resolve({ operation, file: input.files![0] });
 
-            document.documentElement.removeChild(form);
+            document.documentElement.removeChild(input);
             done = true;
         });
 
         let done = false;
-        document.documentElement.appendChild(form);
-        setTimeout(() => done || document.documentElement.removeChild(form), 10 * 60 * 1000);
+        document.documentElement.appendChild(input);
+        setTimeout(() => done || document.documentElement.removeChild(input), 10 * 60 * 1000);
 
         input.click();
     });

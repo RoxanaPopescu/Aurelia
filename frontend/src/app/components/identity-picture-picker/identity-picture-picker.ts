@@ -175,7 +175,7 @@ export class IdentityPicturePickerCustomElement
      */
     protected async onUploadPictureClick(): Promise<void>
     {
-        const fileUploadRequest = await pickAndUploadFile("post", "pictures", undefined, ".jpg,.png");
+        const fileUploadRequest = await pickAndUploadFile("post", "files/upload/public", undefined, ".jpg,.png");
 
         if (fileUploadRequest == null)
         {
