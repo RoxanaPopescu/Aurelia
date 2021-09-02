@@ -106,6 +106,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/validation/validators/pattern-validator/pattern-validator"),
         PLATFORM.moduleName("./components/validation/validators/range-validator/range-validator"),
         PLATFORM.moduleName("./components/validation/validators/required-validator/required-validator"),
+        PLATFORM.moduleName("./components/validation/validators/unique-validator/unique-validator"),
 
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
@@ -225,6 +226,7 @@ export * from "./components/validation/validators/input-validator/input-validato
 export * from "./components/validation/validators/pattern-validator/pattern-validator";
 export * from "./components/validation/validators/range-validator/range-validator";
 export * from "./components/validation/validators/required-validator/required-validator";
+export * from "./components/validation/validators/unique-validator/unique-validator";
 
 // Converters
 export * from "./converters/filter/filter";
