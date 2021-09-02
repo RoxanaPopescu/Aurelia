@@ -45,7 +45,7 @@ export class EditTeamPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { team?: OrganizationTeam, teams?: OrganizationTeam[] }): void
+    public activate(model: { team?: OrganizationTeam; teams?: OrganizationTeam[] }): void
     {
         this.team = model.team?.clone() ?? new OrganizationTeam();
         this.teamName = this.team.name;

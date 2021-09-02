@@ -53,7 +53,7 @@ export class EditRolePanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { role?: OrganizationRole, roles?: OrganizationRole[] }): void
+    public activate(model: { role?: OrganizationRole; roles?: OrganizationRole[] }): void
     {
         this.role = model.role?.clone() ?? new OrganizationRole();
         this.roleName = this.role.name;

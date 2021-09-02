@@ -13,20 +13,20 @@ export class UniqueValidatorCustomElement extends Validator
      * The new value to validate.
      */
     @bindable
-    public newValue: any | undefined;
+    public newValue: any | undefined;
 
     /**
      * The old value, used to avoid a self-collision.
      */
     @bindable
-    public oldValue: any | undefined;
+    public oldValue: any | undefined;
 
     /**
      * The existing values that the new value must not collide with,
      * except for the case where the new value equals the old value.
      */
     @bindable
-    public allValues: any[] | undefined;
+    public allValues: any[] | undefined;
 
     /**
      * Called by the validation when this validator should run.
@@ -35,6 +35,7 @@ export class UniqueValidatorCustomElement extends Validator
      */
     public async validate(reason: ValidationReason): Promise<boolean>
     {
+        // tslint:disable-next-line: triple-equals
         if (this.newValue == this.oldValue)
         {
             this.invalid = false;
@@ -44,6 +45,7 @@ export class UniqueValidatorCustomElement extends Validator
             const newPrimitiveValue = this.newValue.valueOf();
             const oldPrimitiveValue = this.newValue.valueOf();
 
+            // tslint:disable-next-line: triple-equals
             if (newPrimitiveValue == oldPrimitiveValue)
             {
                 this.invalid = false;
@@ -51,6 +53,7 @@ export class UniqueValidatorCustomElement extends Validator
 
             if (this.allValues != null)
             {
+                // tslint:disable-next-line: triple-equals
                 this.invalid = this.allValues.some(value => value == this.newValue || value.valueOf() === newPrimitiveValue);
             }
         }
