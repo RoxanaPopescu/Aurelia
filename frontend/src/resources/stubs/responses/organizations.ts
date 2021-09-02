@@ -317,7 +317,7 @@ export function getUsers(...ids: string[]): any[]
   return [
     {
       id: "user-1-id",
-      email: "jogn-doe@example.com",
+      email: "john-doe@example.com",
       fullName: "John Doe",
       preferredName: "John",
       phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
