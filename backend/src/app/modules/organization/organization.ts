@@ -1,6 +1,5 @@
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
-import { getStrings } from "../../../shared/localization";
 import permissions from "./resources/settings/permissions.json";
 
 // TODO: Add permission checks
@@ -113,7 +112,7 @@ export class OrganizationModule extends AppModule
     }
 
     // TODO:BACKEND: Endpoint missing
-    // TODO:BACKEND: Consider returning the model, if we at some point need lastChanged, etc.
+    // TODO:BACKEND: Consider returning the model, if we at some point need lastChange, etc.
     /**
      * Saves the profile for the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -132,7 +131,7 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Properties missing in request model
+    // TODO:BACKEND: Properties missing in request model (team)
     /**
      * Sends the specified invite.
      * @param context.params.organizationId The ID of the organization.
@@ -151,7 +150,7 @@ export class OrganizationModule extends AppModule
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
                 teamId: context.request.body.teamId, // TODO: missing
-                message: context.request.body.message // TODO: missing
+                messageToUser: context.request.body.message
             }
         });
 
@@ -227,7 +226,7 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Missing properties in response
+    // TODO:BACKEND: Missing properties in response (team, lastOnline)
     /**
      * Gets the users within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -306,8 +305,10 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Endpoint missing
-    // TODO:FRONTEND: Hardcoded in BFF as a workaround, but list is incomplete
+    // TODO:BACKEND: Fix casing in group names
+    // TODO:BACKEND: Permission type MUST be lower-case
+    // TODO:BACKEND: Permission slug MUST be lower-kebab-case, both here and in roles
+    // TODO:FRONTEND: Hardcoded in BFF as a workaround; remove when backend works
     /**
      * Gets the permissions available within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -318,23 +319,27 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/permissions`);
 
-        // Response:
-        // [
-        //     { slug: "view-organization", type: "view", group: "Organization", name: "View organization" }
-        // ]
-
-        const permissionNames = getStrings("./resources/strings/permissions.json");
-        const permissionGroupNames = getStrings("./resources/strings/permission-groups.json");
-
-        context.response.body = (permissions as any[]).map(permission =>
+        context.response.body = result.data.permissions.map((permission: any) =>
         ({
-            ...permission,
-            group: permissionGroupNames[permission.group],
-            name: permissionNames[permission.slug]
+            slug: permission.slug,
+            type: permission.type.toLowerCase(),
+            group: permission.group,
+            name: permission.name ?? permission.slug
         }));
+
+        // TODO: Remove once backend endpoint works.
+
+        // const permissionNames = getStrings("./resources/strings/permissions.json");
+        // const permissionGroupNames = getStrings("./resources/strings/permission-groups.json");
+
+        // context.response.body = (permissions as any[]).map(permission =>
+        // ({
+        //     ...permission,
+        //     group: permissionGroupNames[permission.group],
+        //     name: permissionNames[permission.slug]
+        // }));
 
         context.response.status = 200;
     }
