@@ -68,15 +68,6 @@ export class VehiclePanel
     }
 
     /**
-     * Called when the "Cancel" button is clicked.
-     * Discards changes and closes the modal.
-     */
-    protected async onCancel(): Promise<void>
-    {
-        await this._modal.close();
-    }
-
-    /**
      * Called when the "Save" or "Create" button is clicked.
      * Saves or creates the vehicle, then closes the modal.
      */

@@ -6,6 +6,18 @@
 
     <modal-panel name="edit-team" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="team.id"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSubmitClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
@@ -124,16 +136,8 @@
 
         </modal-section>
 
-        <button appearance="solid" accent="primary" class="margin-large-top" click.delegate="onSubmitClick()">
-
-            <span translate if.bind="!team.id">
-                Create team
-            </span>
-
-            <span translate if.bind="team.id">
-                Save changes
-            </span>
-
+        <button if.bind="!team.id" appearance="solid" accent="primary" class="margin-large-top" click.delegate="onSubmitClick()" translate>
+            Create team
         </button>
 
     </modal-panel>

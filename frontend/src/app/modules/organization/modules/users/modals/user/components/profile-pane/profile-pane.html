@@ -172,14 +172,4 @@
 
     </modal-section>
 
-    <button
-        if.bind="user.status.slug !== 'invited' && !operation.pending && (selectedRole.id !== user.role.id || selectedTeam.id !== user.team.id)"
-        appearance="solid"
-        accent="primary"
-        class="margin-larger-top"
-        click.delegate="onSubmitClick()"
-        translate>
-        Save changes
-    </button>
-
 </template>

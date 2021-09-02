@@ -8,6 +8,18 @@
 
     <modal-panel name="edit-role" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="role.id"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSubmitClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false">
@@ -60,16 +72,8 @@
 
         </modal-section>
 
-        <button if.bind="availablePermissions != null" appearance="solid" accent="primary" click.delegate="onSubmitClick()">
-
-            <span translate if.bind="!role.id">
-                Create role
-            </span>
-
-            <span translate if.bind="role.id">
-                Save changes
-            </span>
-
+        <button if.bind="!role.id && availablePermissions != null" appearance="solid" accent="primary" click.delegate="onSubmitClick()" translate>
+            Create role
         </button>
 
     </modal-panel>

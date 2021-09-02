@@ -6,6 +6,18 @@
 
     <modal-panel name="vehicle" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
 
+        <div slot="actions">
+
+            <button
+                if.bind="vehicle.id != null"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveOrCreateClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
         <modal-header scroll-fade>
 
             <h1 class="font-largest">
@@ -334,21 +346,15 @@
 
         </modal-section>
 
-        <div class="button-container margin-large-top">
-
-            <button appearance="outline" accent="primary" click.trigger="onCancel()" translate>
-                Cancel
-            </button>
-
-            <button if.bind="vehicle.id == null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
-                Create vehicle
-            </button>
-
-            <button if.bind="vehicle.id != null" appearance="solid" accent="primary" click.trigger="onSaveOrCreateClick()" translate>
-                Save changes
-            </button>
-
-        </div>
+        <button
+            if.bind="vehicle.id == null"
+            class="margin-large-top"
+            appearance="solid"
+            accent="primary"
+            click.trigger="onSaveOrCreateClick()"
+            translate>
+            Create vehicle
+        </button>
 
     </modal-panel>
 

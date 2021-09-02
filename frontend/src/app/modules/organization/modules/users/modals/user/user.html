@@ -7,7 +7,20 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="user" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel name="user" position="right" close-button.bind="true" close-shortcut.bind="true" validation validation.ref="validation" scroll>
+
+        <div slot="actions">
+
+            <button
+                if.bind="user.status.slug !== 'invited'"
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSubmitClick()"
+                disabled.bind="selectedRole.id === user.role.id && selectedTeam.id === user.team.id">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
 
         <modal-header scroll-fade>
 
@@ -41,6 +54,10 @@
         <profile-pane
             show.bind="selectedTab === 'profile'"
             user.bind="user"
+            available-teams.bind="availableTeams"
+            selected-team.bind="selectedTeam"
+            available-roles.bind="availableRoles"
+            selected-role.bind="selectedRole"
             validation.ref="profileValidation">
         </profile-pane>
 
