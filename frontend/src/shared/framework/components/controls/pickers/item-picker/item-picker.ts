@@ -379,6 +379,7 @@ export class ItemPickerCustomElement
      */
     private equals(value1: any, value2: any): boolean
     {
-        return (value1?.valueOf() ?? value1) === (value2?.valueOf() ?? value2);
+        // tslint:disable-next-line: triple-equals
+        return value1 == value2 || value1?.valueOf() == value2?.valueOf();
     }
 }
