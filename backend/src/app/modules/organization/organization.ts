@@ -11,7 +11,6 @@ import permissions from "./resources/settings/permissions.json";
  */
 export class OrganizationModule extends AppModule
 {
-    // DONE
     /**
      * Creates a new organization.
      * @param context.body The data for the new organization.
@@ -42,11 +41,10 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // DONE
+    // WORKS, BUT...
     // TODO:BACKEND: WTF is up with Swagger? the description correctly claims we get both users and invites, but the response example indicates otherwise
-    // TODO:BACKEND: WTF is up with this endpoint? path makes no sense, and neither does invitations being included
+    // TODO:BACKEND: WTF is up with this endpoint? path makes no sense
     // TODO:BACKEND: Return full objects to avoid N+1 problem
-    // TODO:BACKEND: Endpoint path should follow REST conventions
     /**
      * Gets all organizations visible to the current user.
      * @returns
@@ -92,8 +90,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // DONE
-    // TODO:BACKEND: Endpoint path should end with /profile
     /**
      * Gets the profile for the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -117,7 +113,7 @@ export class OrganizationModule extends AppModule
     }
 
     // TODO:BACKEND: Endpoint missing
-    // TODO:BACKEND: Consider returning full model, if we at some point need lastChanged, etc.
+    // TODO:BACKEND: Consider returning the model, if we at some point need lastChanged, etc.
     /**
      * Saves the profile for the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -136,9 +132,7 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Add missing properties in request model.
-    // TODO:BACKEND: Return the full invite model
-    // TODO:BACKEND: Endpoint path should follow REST conventions
+    // TODO:BACKEND: Properties missing in request model
     /**
      * Sends the specified invite.
      * @param context.params.organizationId The ID of the organization.
@@ -150,23 +144,6 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.request.body.email
-        // context.request.body.roleId
-        // context.request.body.teamId
-        // context.request.body.message
-
-        // Response:
-        // {
-        //     id: "invite-id",
-        //     email: "johndoe@example.com",
-        //     role: { id: "role-id", name: "Role 1" },
-        //     team: { id: "team-id", name: "Team 1" }
-        // }
-
-        // WIP:
-
         const result = await this.apiClient.post("identity/memberships/invitation",
         {
             body:
@@ -174,22 +151,21 @@ export class OrganizationModule extends AppModule
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
                 teamId: context.request.body.teamId, // TODO: missing
-                message: context.request.body.message // TODO // TODO: missing
+                message: context.request.body.message // TODO: missing
             }
         });
 
         context.response.body =
         {
-            id: result.data.id, // TODO: could get from request, but doesn't make sense
-            email: result.data.username, // TODO: could get from request, but doesn't make sense
-            role: result.data.role, // TODO: we only get id, need full object
-            team: result.data.team // TODO: we only get id, need full object
+            id: result.data.id,
+            email: result.data.email,
+            role: result.data.role,
+            team: result.data.team
         };
 
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Endpoint missing
     /**
      * Gets the pending invites within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -200,24 +176,25 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
+        const result = await this.apiClient.get("identity/memberships/invitation",
+        {
+            query:
+            {
+                organizationId: context.params.organizationId
+            }
+        });
 
-        // Response:
-        // [
-        //     {
-        //         id: "invite-id",
-        //         email: "johndoe@example.com",
-        //         role: { id: "role-id", name: "Role 1" },
-        //         team: { id: "team-id", name: "Team 1" },
-        //     }
-        // ]
+        context.response.body = result.data.invitations.map((invite: any) =>
+        ({
+            id: invite.id,
+            email: invite.invitedEmailAddress,
+            role: invite.role,
+            team: invite.team
+        }));
 
-        context.response.body = [];
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Endpoint missing
     /**
      * Resends the specified invite.
      * @param context.params.organizationId The ID of the organization.
@@ -229,15 +206,11 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.inviteId
+        await this.apiClient.post(`identity/memberships/invitation/${context.params.inviteId}/resend`);
 
         context.response.status = 204;
     }
 
-    // DONE
-    // TODO:BACKEND: Endpoint path should follow REST conventions
     /**
      * Revokes the specified invite.
      * @param context.params.organizationId The ID of the organization.
@@ -254,8 +227,7 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Return full user objects
-    // TODO:BACKEND: Endpoint path should follow REST conventions
+    // TODO:BACKEND: Missing properties in response
     /**
      * Gets the users within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -266,26 +238,6 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-
-        // Response:
-        // [
-        //     {
-        //         id: "user-id",
-        //         fullName: "John Doe",
-        //         preferredName: "John",
-        //         email: "johndoe@example.com",
-        //         phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        //         pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
-        //         role: { id: "role-id", name: "Role 1" },
-        //         team: { id: "team-id", name: "Team 1" },
-        //         lastOnline: undefined
-        //     }
-        // ]
-
-        // WIP:
-
         const result = await this.apiClient.get("identity/users",
         {
             query:
@@ -294,17 +246,16 @@ export class OrganizationModule extends AppModule
             }
         });
 
-        context.response.body = result.data.listOrganizationUsers.map((user: any) =>
+        context.response.body = result.data.users.map((user: any) =>
         ({
             id: user.id,
-            fullName: user.fullName, // TODO: missing
-            preferredName: user.preferredName, // TODO: missing
-            email: user.userName, // TODO: why not email?
-            phoneNumber: user.phoneNumber, // TODO: missing
-            pictureUrl: user.pictureUrl, // TODO: missing
-            role: user.role, // TODO: missing
+            fullName: user.fullName,
+            preferredName: user.preferredName,
+            email: user.email,
+            phoneNumber: user.phone,
+            pictureUrl: user.pictureUrl,
+            role: user.role,
             team: user.team, // TODO: missing
-            status: user.status, // TODO: missing
             lastOnline: user.lastOnline // TODO: missing
         }));
 
@@ -332,8 +283,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // DONE
-    // TODO:BACKEND: Endpoint path should follow REST conventions
     /**
      * Removes the specified user from the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -358,7 +307,7 @@ export class OrganizationModule extends AppModule
     }
 
     // TODO:BACKEND: Endpoint missing
-    // TODO:FRONTEND: Hardcode in BFF as a workaround, but some claims are missing
+    // TODO:FRONTEND: Hardcoded in BFF as a workaround, but list is incomplete
     /**
      * Gets the permissions available within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -390,7 +339,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Return full object.
     /**
      * Creates the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -402,7 +350,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.post("organization/roles",
+        const result = await this.apiClient.post("identity/roles",
         {
             body:
             {
@@ -415,17 +363,16 @@ export class OrganizationModule extends AppModule
         context.response.body =
         {
             id: result.data.roleId,
-            name: context.request.body.name, // TODO: can get this from request, but doesn't make sense
-            createdDateTime: result.data.createdAt, // TODO: missing
-            modifiedDateTime: result.data.lastChanged, // TODO: missing
-            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense - remember mapping if changed!
-            userCount: 0
+            name: result.data.name,
+            createdDateTime: result.data.createdAt,
+            modifiedDateTime: result.data.lastUpdate,
+            permissions: this.mapPermissionsFromLegacy(result.data.permissions),
+            userCount: result.data.userCount
         };
 
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: How do we get userCount?
     /**
      * Gets the roles within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -444,15 +391,13 @@ export class OrganizationModule extends AppModule
             name: r.name,
             createdDateTime: r.createdAt,
             modifiedDateTime: r.lastUpdate,
-            permissions: this.mapPermissionsFromLegacy(r.permissions.map((p: any) => p.name)),
-            userCount: undefined // TODO: how do we get this?
+            permissions: this.mapPermissionsFromLegacy(r.permissions),
+            userCount: r.userCount
         }));
 
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Return full object.
-    // TODO:BACKEND: Fix spelling of "duplicate" in endpoint path
     /**
      * Creates a new role as a duplicate of the specified role.
      * @param context.params.organizationId The ID of the organization.
@@ -464,14 +409,14 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.post(`organization/roles/${context.params.roleId}/duplicate`);
+        const result = await this.apiClient.post(`identity/roles/${context.params.roleId}/duplicate`);
 
         context.response.body =
         {
-            id: result.data.roleId,
-            name: result.data.roleName,
-            createdDateTime: result.data.createdAt, // TODO: missing
-            modifiedDateTime: result.data.lastChanged, // TODO: missing
+            id: result.data.id,
+            name: result.data.name,
+            createdDateTime: result.data.createdAt,
+            modifiedDateTime: result.data.lastUpdate,
             permissions: this.mapPermissionsFromLegacy(result.data.permissions),
             userCount: 0
         };
@@ -479,7 +424,7 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Return full object.
+    // TODO:BACKEND: Return role object
     /**
      * Saves the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -492,7 +437,8 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.put(`organization/roles/${context.params.roleId}`,
+        //const result =
+        await this.apiClient.put(`identity/roles/${context.params.roleId}`,
         {
             body:
             {
@@ -503,19 +449,27 @@ export class OrganizationModule extends AppModule
 
         context.response.body =
         {
-            id: context.params.roleId, // TODO: can get this from request, but doesn't make sense
-            name: context.request.body.name, // TODO: can get this from request, but doesn't make sense
-            createdDateTime: result.data.createdAt, // TODO: missing
-            modifiedDateTime: result.data.lastChanged, // TODO: missing
-            permissions: context.request.body.permissions, // TODO: can get this from request, but doesn't make sense - remember mapping if changed!
-            userCount: NaN // TODO: how do we get this?
+            id: context.params.roleId,
+            name: context.request.body.name,
+            createdDateTime: undefined,
+            modifiedDateTime: undefined,
+            permissions: context.request.body.permissions,
+            userCount: undefined
         };
+
+        // context.response.body =
+        // {
+        //     id: result.data.id,
+        //     name: result.data.name,
+        //     createdDateTime: result.data.createdAt,
+        //     modifiedDateTime: result.data.lastUpdate,
+        //     permissions: this.mapPermissionsFromLegacy(result.data.permissions),
+        //     userCount: result.data.userCount
+        // };
 
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: roleName? WTF?!
-    // TODO:BACKEND: Endpoint path should follow REST conventions
     /**
      * Deletes the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -527,14 +481,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.delete("organization/roles",
-        {
-            body:
-            {
-                organizationId: context.params.organizationId
-                // TODO: roleName? WTF, should be roleId
-            }
-        });
+        await this.apiClient.delete(`identity/roles/${context.params.roleId}`);
 
         context.response.status = 204;
     }
@@ -599,6 +546,7 @@ export class OrganizationModule extends AppModule
         //     userCount: 1
         // })
 
+        context.response.body = [];
         context.response.status = 200;
     }
 

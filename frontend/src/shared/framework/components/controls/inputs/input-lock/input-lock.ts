@@ -70,8 +70,11 @@ export class InputLockCustomElement
             // Sets the value of the `readonly` property of the input view model to false.
             this._inputElement.au.controller.viewModel.readonly = false;
 
+            // HACK: We need to delay this, as e.g. a password dialog needs time to close.
             // Focus the input.
             setTimeout(() => this._inputElement.focus(), 50);
+            setTimeout(() => this._inputElement.focus(), 500);
+            setTimeout(() => this._inputElement.focus(), 1000);
         }
     }
 }

@@ -52,6 +52,30 @@ export class VerifyPasswordDialog
     }
 
     /**
+     * Called when a key is pressed.
+     * Submits the form if the `Enter` key is pressed.
+     * @param event The keyboard event.
+     * @returns True to continue, false to prevent default.
+     */
+    protected onKeyDown(event: KeyboardEvent): boolean
+    {
+        if (event.defaultPrevented || event.altKey || event.metaKey || event.shiftKey || event.ctrlKey)
+        {
+            return true;
+        }
+
+        if (event.key === "Enter")
+        {
+            // tslint:disable-next-line: no-floating-promises
+            this.onButtonClick(true);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Called when one of the buttons are clicked.
      */
     protected async onButtonClick(result: boolean): Promise<void>

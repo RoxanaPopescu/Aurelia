@@ -132,7 +132,7 @@ export class ChangePasswordCustomElement
         {
             this.model.busy = true;
 
-            const result = await this._accountService.changePassword(this.model.password!, this.model.token!);
+            const result = await this._accountService.changePasswordUsingToken(this.model.token!, this.model.password!);
 
             try
             {

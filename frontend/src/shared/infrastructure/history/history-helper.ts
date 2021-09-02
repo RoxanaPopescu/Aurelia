@@ -144,7 +144,9 @@ export class HistoryHelper
     }
 
     /**
-     * HACK: This methods currently returns the URL as-is, but is needed to ensure compatibility when this class is eventually updated to the latest version.
+     * HACK: This methods currently returns the URL as-is, but is needed to ensure
+     * compatibility when this class is eventually updated to the latest version.
+     *
      * Resolves the specified URL, prepending the base URL and base path if it starts with a single `/`.
      * @param url The URL to resolve.
      * @param basePath The base path to use, with a leading and trailing `/`, or undefined to use the current base path.
@@ -153,6 +155,18 @@ export class HistoryHelper
     public getRouteUrl(url: string, basePath?: string): string
     {
         return url;
+    }
+
+    /**
+     * HACK: This methods currently returns the path, query and hash as-is, but is needed to ensure
+     * compatibility when this class is eventually updated to the latest version.
+     *
+     * Gets the current URL, without the base URL and base path.
+     * @returns The current URL, without the base URL and base path.
+     */
+    public getCurrentRouteUrl(): string
+    {
+        return location.pathname + location.search + location.hash;;
     }
 
     /**

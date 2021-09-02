@@ -33,15 +33,13 @@ export class ProfileService
     /**
      * Saves the profile for the current user.
      * @param profile The profile to save.
-     * @returns A promise that will be resolved with the updated profile.
+     * @returns A promise that will be resolved when the operation succeeds.
      */
-    public async save(profile: Partial<Profile>): Promise<Profile>
+    public async save(profile: Partial<Profile>): Promise<void>
     {
-        const result = await this._apiClient.post("account/profile/save",
+        await this._apiClient.post("account/profile/save",
         {
             body: profile
         });
-
-        return new Profile(result.data);
     }
 }

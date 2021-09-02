@@ -1,0 +1,47 @@
+@import "resources/index";
+
+page[name="unauthorized"]
+{
+    // Apply padding.
+    padding: 32rem 128rem 32rem 128rem;
+
+    // Ensure the element fills the viewport.
+    min-height: 100%;
+
+    // Apply surface colors.
+    color: var(--surface-text-color);
+    background: var(--surface-color);
+
+    @media ($media-smallest-max)
+    {
+        // Apply padding.
+        padding: 100rem 52rem 40rem 52rem;
+
+        .br-hint
+        {
+            display: none;
+        }
+    }
+
+    page-content
+    {
+        align-self: center;
+    }
+
+    page-section
+    {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .unauthorized-links
+    {
+        display: flex;
+        flex-direction: column;
+
+        a
+        {
+            margin-top: 12rem;
+        }
+    }
+}

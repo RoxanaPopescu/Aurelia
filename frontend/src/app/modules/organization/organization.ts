@@ -56,7 +56,7 @@ export class OrganizationModule
                 moduleId: PLATFORM.moduleName("./modules/roles/roles"),
                 title: routeTitles.roles,
                 nav: true,
-                icon: "roles"
+                icon: "md-rules"
             }
         ]);
     }

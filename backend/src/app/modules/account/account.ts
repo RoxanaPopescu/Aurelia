@@ -13,7 +13,7 @@ export class AccountModule extends AppModule
      * @param context.body.email The email identifying the user.
      * @param context.body.password The password specified by the user.
      * @returns
-     * - 204: No content.
+     * - 204: No content
      *   The client may now authenticate using the email and password.
      *   An email will be sent to the user, with a link they can use to confirm their email address.
      *   Note that the email template will be selected based on the API key specified in the request.
@@ -38,7 +38,7 @@ export class AccountModule extends AppModule
      * Confirms the email address of a user, by verifying the specified token.
      * @param context.body.token The token specified in the confirmation link sent to the user.
      * @returns
-     * - 204: No content.
+     * - 204: No content
      *   The client may now show a sign-in view, if not already authenticated.
      */
     public "POST /v2/account/confirm-email" = async (context: AppContext) =>
@@ -58,7 +58,7 @@ export class AccountModule extends AppModule
      * Requests password recovery for the user with the specified email.
      * @param context.body.email The email address identifying the user.
      * @returns
-     * - 204: No content.
+     * - 204: No content
      *   An email will be sent to the user, with a link they can use to change their password.
      *   Note that the email template will be selected based on the API key specified in the request.
      */
@@ -76,28 +76,22 @@ export class AccountModule extends AppModule
     }
 
     /**
-     * Changes the password for the current user, or the user identified by the specified token.
+     * Changes the password for the user identified by the specified token.
      * @param context.body.password The new password chosen by the user.
-     * @param context.body.token The token specified in the recovery link sent to the user, or undefined if already authenticated.
-     * @param context.body.revokeTokens True to revoke all refresh tokens and access tokens, except the ones associated with this request.
+     * @param context.body.token The token specified in the recovery link sent to the user.
      * @returns
      * - 200: The email address of the user for which the password was changed.
      *   The client may now authenticate using the email and password.
      */
-    public "POST /v2/account/change-password" = async (context: AppContext) =>
+    public "POST /v2/account/forgot-password/change-password" = async (context: AppContext) =>
     {
-        if (context.request.body.token == null)
-        {
-            await context.authorize();
-        }
-
-        const result = await this.apiClient.post("identity/account/changeruserpassword",
+        const result = await this.apiClient.post("identity/account/changeuserpassword",
         {
             body:
             {
                 passwordJwtToken: context.request.body.token,
-                newPassword: context.request.body.password,
-                invalidateTokens: context.request.body.revokeTokens
+                newPassword: context.request.body.newPassword,
+                invalidateTokens: true
             }
         });
 
@@ -109,11 +103,34 @@ export class AccountModule extends AppModule
         context.response.status = 200;
     }
 
+    /**
+     * Changes the password for the current user, or the user identified by the specified token.
+     * @param context.body.currentPassword The new password chosen by the user.
+     * @param context.body.newPassword The token specified in the recovery link sent to the user, or undefined if already authenticated.
+     * @returns
+     * - 200: No content
+     */
+    public "POST /v2/account/change-password" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        await this.apiClient.put("identity/account/profile/password",
+        {
+            body:
+            {
+                currentPassword: context.request.body.currentPassword,
+                newPassword: context.request.body.newPassword
+            }
+        });
+
+        context.response.status = 204;
+    }
+
     // TODO:BACKEND: Endpoint missing
     /**
      * Deletes the current user.
      * @returns
-     * - 204: No content.
+     * - 204: No content
      */
     public "POST /v2/account/delete" = async (context: AppContext) =>
     {
@@ -130,7 +147,6 @@ export class AccountModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Frontend requires phone to be undefined if not set; also, the partial object causes validation to fail when saving
     /**
      * Gets the profile for the current user.
      * @returns
@@ -148,7 +164,13 @@ export class AccountModule extends AppModule
             phone: result.data.phone,
             fullName: result.data.fullName,
             preferredName: result.data.preferredName,
-            pictureUrl: result.data.pictureUrl
+            pictureUrl: result.data.pictureUrl,
+            settings:
+            {
+                localeCode: result.data.settings.locale,
+                currencyCode: result.data.settings.currency,
+                themeSlug: result.data.settings.themeSlug
+            }
         };
 
         context.response.status = 200;
@@ -172,7 +194,13 @@ export class AccountModule extends AppModule
                 phone: context.request.body.phone,
                 fullName: context.request.body.fullName,
                 preferredName: context.request.body.preferredName,
-                pictureUrl: context.request.body.pictureUrl
+                pictureUrl: context.request.body.pictureUrl,
+                settings:
+                {
+                    locale: context.request.body.settings.localeCode,
+                    currency: context.request.body.settings.currencyCode,
+                    themeSlug: context.request.body.settings.themeSlug
+                }
             }
         });
 

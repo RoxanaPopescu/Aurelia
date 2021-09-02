@@ -139,7 +139,7 @@ export class IdentityModule extends AppModule
      * Unauthenticates the user, by revoking the specified refresh token.
      * @param context.body.refreshToken The refresh token to revoke.
      * @returns
-     * - 204: No content.
+     * - 204: No content
      */
     public "POST /v2/identity/unauthenticate" = async (context: AppContext) =>
     {
@@ -162,26 +162,27 @@ export class IdentityModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Endpoint missing
+    // DONE?
     /**
      * Unauthenticates the user, by revoking the specified refresh token.
      * @param context.body.refreshToken The refresh token to revoke.
      * @returns
-     * - 204: No content.
+     * - 204: No content
+     *   The password matched the currently authenticated user.
+     * - 401: Unauthorized
+     *   The password did not match the currently authenticated user.
      */
     public "POST /v2/identity/verify-password" = async (context: AppContext) =>
     {
-        // await context.authorize();
+        await context.authorize();
 
-        // await this.apiClient.post("identity/verifypassword",
-        // {
-        //     body:
-        //     {
-        //         password: context.request.body.password
-        //     }
-        // });
-
-        // return status 401 if verification fails
+        await this.apiClient.post("identity/account/profile/password/verify",
+        {
+            body:
+            {
+                password: context.request.body.password
+            }
+        });
 
         context.response.status = 204;
     }

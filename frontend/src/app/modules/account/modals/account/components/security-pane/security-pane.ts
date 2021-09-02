@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { AsyncCallback } from "shared/types";
 import { ModalService } from "shared/framework";
 import { Profile } from "app/services/profile";
@@ -28,7 +28,7 @@ export class SecurityPaneCustomElement
     /**
      * The new password, if specified.
      */
-    @bindable
+    @bindable({ defaultBindingMode: bindingMode.fromView })
     public newPassword: string | undefined;
 
     /**

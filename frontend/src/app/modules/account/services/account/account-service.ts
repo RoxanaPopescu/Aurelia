@@ -60,16 +60,32 @@ export class AccountService
     }
 
     /**
-     * Changes the password for the current user, or the user identified by the specified token.
-     * @param password The new password chosen by the user.
-     * @param token The token specified in the recovery link sent to the user, or undefined if already authenticated.
+     * Changes the password for the user identified by the specified token.
+     * @param token The token specified in the recovery link sent to the user.
+     * @param newPassword The new password chosen by the user.
      * @returns A promise that will be resolved with the email of the user.
      */
-    public async changePassword(password: string, token?: string): Promise<{ email: string }>
+    public async changePasswordUsingToken(token: string, newPassword: string): Promise<{ email: string }>
     {
         const result = await this._apiClient.post("account/change-password",
         {
-            body: { password, token, revokeTokens: true }
+            body: { newPassword, token }
+        });
+
+        return result.data;
+    }
+
+    /**
+     * Changes the password for the current user.
+     * @param currentPassword The current password for the user.
+     * @param newPassword The new password chosen by the user.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async changePasswordUsingCurrentPassword(currentPassword: string, newPassword: string): Promise<{ email: string }>
+    {
+        const result = await this._apiClient.post("account/change-password",
+        {
+            body: { currentPassword, newPassword }
         });
 
         return result.data;

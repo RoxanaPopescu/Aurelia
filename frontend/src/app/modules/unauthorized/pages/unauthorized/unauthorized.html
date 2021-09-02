@@ -1,0 +1,67 @@
+<template>
+
+    <require from="./unauthorized.scss"></require>
+
+    <page name="unauthorized" surface="website" context="marketing" scroll>
+
+        <div class="unauthorized-background"></div>
+
+        <page-content>
+
+            <page-section>
+
+                <h1 class="font-largest margin-bottom" translate>
+                    Oops!
+                </h1>
+
+                <h2 class="font-medium margin-bottom" translate>
+                    You don't have the permissions<br class="br-hint">
+                    needed to access this page
+                </h2>
+
+                <div class="flex-row font-medium margin-double-bottom opacity-faded">
+
+                    <span translate>
+                        Error code:
+                    </span>
+
+                    <span class="margin-left">
+                        401
+                    </span>
+
+                </div>
+
+            </page-section>
+
+            <!--
+            <page-section>
+
+                <div translate>
+                    Here are some links you<br class="br-hint">
+                    may find helpful
+                </div>
+
+                <nav class="unauthorized-links margin-top">
+
+                    <a if.bind="identityService.identity != null" click.trigger="onSignOutClick()" translate>
+                        Sign out
+                    </a>
+
+                    <a if.bind="identityService.identity == null" page-href="/account/sign-in" translate>
+                        Sign in
+                    </a>
+
+                    <a if.bind="identityService.identity == null" page-href="/account/sign-up" translate>
+                        Sign up
+                    </a>
+
+                </nav>
+
+            </page-section>
+            -->
+
+        </page-content>
+
+    </page>
+
+</template>

@@ -29,7 +29,8 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles":
       [
-        "<node_internals>/**"
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/cls-hooked/**"
       ]
     },
 
@@ -43,7 +44,8 @@
       "processId": "${command:PickProcess}",
       "skipFiles":
       [
-        "<node_internals>/**"
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/cls-hooked/**"
       ]
     }
   ]

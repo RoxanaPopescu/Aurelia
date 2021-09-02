@@ -77,11 +77,6 @@ export class AccountModalPanel
     protected newPassword: string | undefined;
 
     /**
-     * True if the new password input has not been unlocked, otherwise false.
-     */
-    protected newPasswordLocked: boolean;
-
-    /**
      * The model representing the profile for the current user.
      */
     protected settingsModel: Partial<Profile>;
@@ -302,7 +297,7 @@ export class AccountModalPanel
             // If a new password was specified, change the users password.
             if (this.newPassword)
             {
-                await this._accountService.changePassword(this.newPassword);
+                await this._accountService.changePasswordUsingCurrentPassword(this.settingsModel.currentPassword!, this.newPassword);
             }
 
             // Reauthenticate to ensure we get the updated identity.
