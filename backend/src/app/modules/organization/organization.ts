@@ -437,7 +437,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        //const result =
+        // const result =
         await this.apiClient.put(`identity/roles/${context.params.roleId}`,
         {
             body:

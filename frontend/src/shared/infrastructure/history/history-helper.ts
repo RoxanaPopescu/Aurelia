@@ -166,7 +166,7 @@ export class HistoryHelper
      */
     public getCurrentRouteUrl(): string
     {
-        return location.pathname + location.search + location.hash;;
+        return location.pathname + location.search + location.hash;
     }
 
     /**

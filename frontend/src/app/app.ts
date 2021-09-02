@@ -396,9 +396,11 @@ class AuthorizePipelineStep implements PipelineStep
             {
                 // Get the URL for the `unauthorized` page.
 
-                const currentUrl = location.href;
-
                 redirectUrl = this._historyHelper.getRouteUrl("/unauthorized");
+
+                // HACK: Restore the current URL after the redirect completes.
+
+                const currentUrl = location.href;
 
                 setTimeout(() => history.replaceState(history.state, "", currentUrl));
             }
