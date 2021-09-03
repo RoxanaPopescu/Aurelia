@@ -42,7 +42,6 @@ export class Overview
                 }));
             });
 
-
         return pickedUpColliCount;
         */
 
@@ -174,7 +173,7 @@ export class Overview
 
         */
 
-        return 0
+        return 0;
     }
 
     /**

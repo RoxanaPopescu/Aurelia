@@ -79,11 +79,11 @@ export class DetailsModule
     }
 
     /**
-     * Called when a route stop is clicked.
-     * Opens a modal showing the details of the stop.
-     * @param stop The stop to edit.
+     * Called when a collection point order is clicked.
+     * Opens a modal showing the details of the order.
+     * @param order The order to edit.
      */
-    protected onOrderClick(order: Order)
+    protected onOrderClick(_order: Order)
     {
         // FIXME: SHOW IT
         /*
