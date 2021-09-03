@@ -1,0 +1,195 @@
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
+import { Log } from "shared/infrastructure";
+import { ModalService } from "shared/framework";
+import { RouteStop, RouteStopStatus, RouteService, RouteStopStatusSlug, Route } from "app/model/route";
+import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
+import { ImageDialog } from "app/modals/dialogs/image/image";
+
+@autoinject
+export class RouteStopDetailsCustomElement
+{
+    /**
+     * Creates a new instance of the class.
+     * @param routeService The `RouteService` instance.
+     * @param modalService The `ModalService` instance.
+     */
+    public constructor(routeService: RouteService, modalService: ModalService)
+    {
+        this._routeService = routeService;
+        this._modalService = modalService;
+    }
+
+    private readonly _routeService: RouteService;
+    private readonly _modalService: ModalService;
+
+    /**
+     * The available stop status values.
+     */
+    protected stopStatusValues = Object.keys(RouteStopStatus.values).map(slug => new RouteStopStatus(slug as any));
+
+    /**
+     * The available collo status values.
+     */
+    protected colloStatusValues = Object.keys(ColloStatus.values).map(slug => new ColloStatus(slug as any));
+
+    /**
+     * The model for the modal.
+     */
+    @bindable
+    public model: { route: Route; routeStop: RouteStop; isNew: boolean };
+
+    /**
+     * True if one or more pickup colli has a negative status, otherwise false.
+     */
+    @computedFrom("model.routeStop.pickups.length")
+    protected get hasPickupProblems(): boolean
+    {
+        for (const pickup of this.model.routeStop.pickups)
+        {
+            if (pickup.colli.some(c => c.status.accent.pickup === "negative"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * True if one or more delivery colli has a negative status, otherwise false.
+     */
+    @computedFrom("model.routeStop.deliveries.length")
+    protected get hasDeliveryProblems(): boolean
+    {
+        for (const delivery of this.model.routeStop.deliveries)
+        {
+            if (delivery.colli.some(c => c.status.accent.delivery === "negative"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * The number of colli with each unique combination of colli tags,
+     * aggregated across all pickups.
+     */
+    @computedFrom("model.routeStop.pickups.length")
+    protected get pickupColliTagSets(): { tags: string[]; count: number }[]
+    {
+        const tagSets = new Map<string, { tags: string[]; count: number }>();
+
+        for (const pickup of this.model.routeStop.pickups)
+        {
+            for (const collo of pickup.colli)
+            {
+                if (collo.tags != null && collo.tags.length > 0)
+                {
+                    const key = collo.tags.map(t => t.toLowerCase()).sort().join(",");
+                    let tagSet = tagSets.get(key);
+
+                    if (tagSet != null)
+                    {
+                        tagSet.count++;
+                    }
+                    else
+                    {
+                        tagSet = { tags: collo.tags, count: 1 };
+                        tagSets.set(key, tagSet);
+                    }
+                }
+            }
+        }
+
+        return Array.from(tagSets.values());
+    }
+
+    /**
+     * The number of colli with each unique combination of colli tags,
+     * aggregated across all deliveries.
+     */
+    @computedFrom("model.routeStop.deliveries.length")
+    protected get deliveryColliTagSets(): { tags: string[]; count: number }[]
+    {
+        const tagSets = new Map<string, { tags: string[]; count: number }>();
+
+        for (const delivery of this.model.routeStop.deliveries)
+        {
+            for (const collo of delivery.colli)
+            {
+                if (collo.tags != null && collo.tags.length > 0)
+                {
+                    const key = collo.tags.map(t => t.toLowerCase()).sort().join(",");
+                    let tagSet = tagSets.get(key);
+
+                    if (tagSet != null)
+                    {
+                        tagSet.count++;
+                    }
+                    else
+                    {
+                        tagSet = { tags: collo.tags, count: 1 };
+                        tagSets.set(key, tagSet);
+                    }
+                }
+            }
+        }
+
+        return Array.from(tagSets.values());
+    }
+
+    /**
+     * Called when the user clicks the signature.
+     */
+    protected async onSignatureClick(): Promise<void>
+    {
+        await this._modalService.open(ImageDialog, { imageUrl: this.model.routeStop.signature!.imageUrl }).promise;
+    }
+
+    /**
+     * Called when the user changes the status of the stop.
+     * Sets the new status.
+     * @param status The new status value.
+     */
+    protected async onStopStatusChange(status: RouteStopStatusSlug): Promise<void>
+    {
+        if (status === this.model.routeStop.status.slug)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeService.setRouteStopStatus(this.model.route, this.model.routeStop, status);
+        }
+        catch (error)
+        {
+            Log.error("Can't load signature image", error);
+        }
+    }
+
+    /**
+     * Called when the user changes the status of a collo.
+     * Sets the new status.
+     * @param collo The collo for which the status is being changed.
+     * @param status The new status value.
+     */
+    protected async onColloStatusChange(collo: Collo, status: ColloStatusSlug): Promise<void>
+    {
+        if (status === collo.status.slug)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeService.setColloStatus(collo, status);
+        }
+        catch (error)
+        {
+            Log.error("Could not change collo status", error);
+        }
+    }
+}

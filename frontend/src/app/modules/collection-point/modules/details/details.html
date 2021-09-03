@@ -1,0 +1,214 @@
+<template>
+
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
+    <require from="./components/route-overview/route-overview"></require>
+    <require from="./details.scss"></require>
+
+    <page name="details">
+
+        <page-content scroll>
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/routes" translate>
+                            Collection point
+                        </a>
+
+                        <span class="user-select-text">
+                            ${id}
+                        </span>
+                    </path-nav>
+                </h1>
+
+            </page-header>
+
+            <route-overview route.bind="route"></route-overview>
+
+            <page-section>
+
+                <div slot="header" class="flex-row">
+
+                    <div translate>
+                        Collection point orders
+                    </div>
+
+                </div>
+
+                <data-table
+                    appearance="rows"
+                    move.call="onMoveStop(source, target)"
+                    class="${!showMap ? '--reduce-header-whitespace' : ''}"
+                    element.ref="dataTableElement"
+                    appendable.bind="route != null"
+                    append.call="onAddStopClick()">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Stop
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Address
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Reference
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Type
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <span class="text-truncate" translate>
+                                Colli
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Arrival time
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Time frame
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <span class="text-truncate" translate>
+                                Task time
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="stop of route.stops">
+
+                        <data-table-row
+                            model.bind="stop"
+                            accent.bind="stop.status.accent"
+                            click.call="onStopClick(stop, false)"
+                            clickable.bind="!stop.hidden"
+                            insert.call="onAddStopClick($index)"
+                            movable.bind="!stop.hidden"
+                            class="${(stop.status.slug == 'cancelled' || stop.hidden) ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
+
+                            <data-table-cell>
+                                <div class="route-details-stop-number text-truncate accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
+                                    ${stop.stopNumber}
+                                    <icon if.bind="stop.hasAlert" name="warning" accent="negative"></icon>
+                                </div>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.location.address}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.reference}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.type.name}
+                                    <span if.bind="stop.type.slug === 'break'">(${stop.breakTime | duration: 'narrow'})</span>
+                                </span>
+
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined & attr">
+                                    ${stop.scannedColliCount | number}/${stop.totalColliCount | number}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined & attr">
+                                    ${stop.arrivedTime || stop.estimates.arrivalTime | time: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${stop.arrivalTimeFrame | timeRange : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${stop.taskTime || stop.estimates.taskTime | duration: 'narrow'}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if.bind="!stop.hidden" if-claims="edit-routes" class="icon-row">
+
+                                    <button
+                                        title.translate="Edit stop"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onStopClick(stop, true)">
+
+                                        <icon name="edit-small"></icon>
+
+                                    </button>
+
+                                    <button
+                                        title.translate="Cancel stop"
+                                        class="icon-row"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onRemoveStopClick(stop)">
+
+                                        <icon name="delete-small"></icon>
+
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <empty-indicator if.bind="collectionPoint.orders.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No orders</div>
+                </empty-indicator>
+
+                <busy-indicator if.bind="collectionPoint == null" class="margin-largest"></busy-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

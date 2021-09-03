@@ -202,6 +202,21 @@ export class AppModule
                 icon: "routes"
             },
             {
+                name: "collection-point",
+                route: "collection-point",
+                moduleId: PLATFORM.moduleName("./modules/collection-point/collection-point"),
+                settings:
+                {
+                    outfits: ["fulfiller", "consignor"],
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                nav: false,
+                href: "/collection-point"
+            },
+            {
                 name: "route-planning",
                 route: "route-planning",
                 moduleId: PLATFORM.moduleName("./modules/route-planning/route-planning"),

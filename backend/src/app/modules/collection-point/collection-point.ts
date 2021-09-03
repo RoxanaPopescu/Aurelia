@@ -14,14 +14,24 @@ export class CollectionPointModule extends AppModule
          */
         this.router.get("/v2/collection-point/details/:id", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            let outfitId: string;
+
+            // Allow legacy token authorization
+            if (context.request.headers["token"] != null)
+            {
+                const driver = await this.validateDriverLogin(context);
+                outfitId = driver.outfitId;
+            } else {
+                context.authorize("view-routes");
+                outfitId = context.user!.outfitId;
+            }
 
             const result = await this.apiClient.post("collection-point/details",
             {
                 body:
                 {
                     id: context.params.id,
-                    outfitId: driver.outfitId
+                    outfitId: outfitId
                 }
             });
 

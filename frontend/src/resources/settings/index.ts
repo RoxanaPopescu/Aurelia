@@ -97,6 +97,7 @@ export default
                 "users/reactivate": { version: "2", obfuscate: false },
                 "drivers/send-message": { version: "2", obfuscate: false },
                 "drivers/online-in-area": { version: "2", obfuscate: false },
+                "collection-point": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },

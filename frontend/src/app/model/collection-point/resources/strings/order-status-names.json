@@ -1,0 +1,8 @@
+{
+    "readyForCollection": "Ready for collection",
+    "collected": "Collected",
+    "missing": "Missing",
+    "damaged": "Damaged",
+    "not-collected": "Not Collected",
+    "rejected": "Rejected"
+}
