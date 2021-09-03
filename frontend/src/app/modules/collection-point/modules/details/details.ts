@@ -3,7 +3,7 @@ import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { AbortError } from "shared/types";
-import { CollectionPoint, CollectionPointService } from "app/model/collection-point";
+import { CollectionPoint, CollectionPointService, Order } from "app/model/collection-point";
 
 /**
  * Represents the route parameters for the page.
@@ -76,6 +76,26 @@ export class DetailsModule
         }
 
         clearTimeout(this._pollTimeout);
+    }
+
+    /**
+     * Called when a route stop is clicked.
+     * Opens a modal showing the details of the stop.
+     * @param stop The stop to edit.
+     */
+    protected async onOrderClick(order: Order): Promise<void>
+    {
+        // FIXME: SHOW IT
+        /*
+        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit }).promise;
+
+        if (savedStop != null)
+        {
+            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
+
+            this.fetchRoute();
+        }
+        */
     }
 
     /**

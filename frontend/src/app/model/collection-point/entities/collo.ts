@@ -39,7 +39,7 @@ export class Collo
    */
   public verificationMethod?: ColloScanMethod;
 
-  accent(): Accent
+  public accent(): Accent
   {
     if (this.verificationMethod == null)
     {

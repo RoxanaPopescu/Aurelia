@@ -5,18 +5,22 @@ import { Collo, OrderStatus } from "..";
 /**
  * Represents order of a collection point
  */
-export class Order {
+export class Order
+{
   /**
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  public constructor(data: any) {
+  public constructor(data: any)
+  {
     this.id = data.id;
+    this.tags = data.tags;
     this.status = new OrderStatus(data.status ?? "ready-for-collection");
     this.creatorOrderId = data.creatorOrderId ?? data.externalId ?? "";
     this.relationalId = data.relationalId;
-    this.pickupTimeFrame = new DateTimeRange(data.pickupTimeFrame, {
-      setZone: true,
+    this.pickupTimeFrame = new DateTimeRange(data.pickupTimeFrame,
+    {
+      setZone: true
     });
 
     this.contact = {
@@ -24,7 +28,7 @@ export class Order {
       phone:
         data.contact.phone != null
           ? new PhoneNumber(data.contact.phone)
-          : undefined,
+          : undefined
     };
 
     this.colli = data.colli.map((c: any) => new Collo(c));
@@ -49,6 +53,11 @@ export class Order {
    * The status of the order
    */
   public status: OrderStatus;
+
+  /**
+   * The status of the order
+   */
+  public tags: string[];
 
   /**
    * The pickup timeframe this order has to be picked up within

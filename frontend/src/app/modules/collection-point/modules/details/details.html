@@ -68,7 +68,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell align="right">
+                        <data-table-cell>
                             <span class="text-truncate" translate>
                                 Contact person
                             </span>
@@ -76,7 +76,7 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
-                                Contact name
+                                Contact phone
                             </span>
                         </data-table-cell>
 
@@ -110,13 +110,13 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    tag1, tag2
+                                    ${order.tags | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${order.contact.name}
+                                    ${order.contact.fullName}
                                 </span>
                             </data-table-cell>
 
