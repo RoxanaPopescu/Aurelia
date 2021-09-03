@@ -1,0 +1,85 @@
+<template class="
+    input
+    ${disabled ? '--disabled' : ''}
+    ${readonly ? '--readonly' : ''}
+    ${!inputValue && inputElement.placeholderShown !== false ? '--empty' : ''}
+    ${validation.invalid ? '--invalid' : ''}"
+    forward-focus
+    validation
+    validation.ref="validation">
+
+    <require from="../input.scss"></require>
+    <require from="./duration-input.scss"></require>
+
+    <label class="input-label" for="input-${id}">
+
+        <div class="input-heading">
+            <slot name="heading"></slot>
+        </div>
+
+        <div class="input-description font-small opacity-faded">
+            <slot name="description"></slot>
+        </div>
+
+    </label>
+
+    <div class="input-control">
+
+        <slot name="before"></slot>
+
+        <div class="input-control-inner">
+
+            <div class="input-value user-select-contain">
+                ${value.as("minutes") | number: 0 : null : useGrouping}
+            </div>
+
+            <input
+                ref="inputElement"
+                id="input-${id}"
+                class="input-input --hide-when-unfocused"
+                type="text"
+                inputmode.bind="inputmode"
+                value.bind="inputValue"
+                autocomplete.bind="autocomplete"
+                autocorrect="off"
+                autocapitalize="off"
+                mozactionhint.bind="enterkey"
+                enterkeyhint.bind="enterkey"
+                disabled.bind="disabled"
+                readonly.bind="readonly"
+                focus.trigger="onFocus()"
+                blur.trigger="onBlur()"
+                keydown.trigger="onKeyDown($event)"
+                placeholder=" ">
+
+            <div class="input-placeholder">
+                <slot name="placeholder"></slot>
+            </div>
+
+        </div>
+
+        <slot name="after"></slot>
+
+        <slot></slot>
+
+    </div>
+
+    <div class="input-validation font-small">
+
+        <custom-validator
+            if.bind="!readonly && !disabled && validate"
+            active.bind="true"
+            valid.bind="!invalid"
+            trigger="input">
+
+            <template replace-part="invalid" translate>
+                Please provide a numeric value.
+            </template>
+
+        </custom-validator>
+
+        <slot name="validation"></slot>
+
+    </div>
+
+</template>

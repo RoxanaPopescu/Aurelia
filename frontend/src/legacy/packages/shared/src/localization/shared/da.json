@@ -338,6 +338,7 @@
   "RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel": "Mærke og model",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_Type": "Type",
   "RouteDetails_Map_RouteStopMarker_ArrivedTime": "Ankommet tid",
+  "RouteDetails_Map_RouteStopMarker_Break": "Pause",
   "RouteDetails_Map_RouteStopMarker_Customer": "Kunde",
   "RouteDetails_Map_RouteStopMarker_Delayed": "Forsinket",
   "RouteDetails_Map_RouteStopMarker_DriverInstructions": "Instruktioner",

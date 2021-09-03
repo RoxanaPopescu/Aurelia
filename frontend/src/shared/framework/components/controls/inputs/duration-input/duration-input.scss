@@ -1,0 +1,22 @@
+duration-input
+{
+    > .input-control > .input-control-inner
+    {
+        .input-input,
+        .input-value
+        {
+            text-align: right;
+        }
+
+        .input-input
+        {
+            &::-webkit-inner-spin-button,
+            &::-webkit-outer-spin-button
+            {
+                // Remove spin buttons.
+                appearance: none;
+                margin: 0;
+            }
+        }
+    }
+}

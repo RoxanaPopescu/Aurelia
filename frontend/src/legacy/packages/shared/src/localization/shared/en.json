@@ -338,6 +338,7 @@
   "RouteDetails_Map_RouteDriverMarker_Vehicle_MakeAndModel": "Make and model",
   "RouteDetails_Map_RouteDriverMarker_Vehicle_Type": "Type",
   "RouteDetails_Map_RouteStopMarker_ArrivedTime": "Arrived time",
+  "RouteDetails_Map_RouteStopMarker_Break": "Break",
   "RouteDetails_Map_RouteStopMarker_Customer": "Customer",
   "RouteDetails_Map_RouteStopMarker_Delayed": "Delayed",
   "RouteDetails_Map_RouteStopMarker_DriverInstructions": "Instructions",

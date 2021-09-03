@@ -14,5 +14,6 @@
     "deliveryTimeFrame": "Delivery fime, e.g. 14:00-16:00",
     "pickupCustomerName": "First name of the sender",
     "pickupLocationAddress": "Pickup address",
-    "pickupTimeFrame": "Pickup time, e.g. 14:00-16:00"
+    "pickupTimeFrame": "Pickup time, e.g. 14:00-16:00",
+    "deliveryCompanyName": "Delivery company name"
 }

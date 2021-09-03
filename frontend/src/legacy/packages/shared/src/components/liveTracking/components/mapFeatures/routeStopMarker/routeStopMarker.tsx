@@ -151,6 +151,17 @@ export class RouteStopMarker extends Marker<RouteStopMarkerProps> {
           <div className="c-worldMap-popup-section-row">
             <div>
               {Localization.sharedValue(
+                "RouteDetails_Map_RouteStopMarker_Break"
+              )}
+            </div>
+            <div>
+              { this.props.routeStop.breakTime?.as("minutes") } min
+            </div>
+          </div>
+
+          <div className="c-worldMap-popup-section-row">
+            <div>
+              {Localization.sharedValue(
                 "RouteDetails_Map_RouteStopMarker_Status"
               )}
             </div>
