@@ -1,6 +1,6 @@
 <template>
 
-    <require from="./route-overview.scss"></require>
+    <require from="./overview.scss"></require>
     <require from="app/components/linear-meter/linear-meter"></require>
     <require from="app/components/circular-meter/circular-meter"></require>
 
@@ -12,12 +12,12 @@
             <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
                 <div class="font-small opacity-faded" translate>
-                    Completed stops
+                    Delivered orders
                 </div>
 
                 <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / notCancelledStops">
 
-                    <div if.bind="route.status.slug !== 'cancelled'">
+                    <div>
 
                         <div class="font-largest">
                             <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
@@ -25,16 +25,6 @@
 
                         <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top" translate>
                             ${failedCancelledStops.length} issues
-                        </div>
-
-                    </div>
-
-                    <div class="route-cancelled-warning" accent="negative" if.bind="route.status.slug === 'cancelled'">
-
-                        <icon name="warning"></icon>
-
-                        <div class="font-small margin-top" translate>
-                            The route is cancelled
                         </div>
 
                     </div>
@@ -52,7 +42,7 @@
                     <div class="font-small opacity-faded">
 
                         <span if.bind="route.status.slug !== 'completed' && route.status.slug !== 'in-progress'" translate>
-                            Total colli count
+                            Total orders count
                         </span>
 
                         <span if.bind="route.status.slug === 'completed' || route.status.slug === 'in-progress'" translate>

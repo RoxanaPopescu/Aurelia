@@ -2,7 +2,7 @@
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
-    <require from="./components/route-overview/route-overview"></require>
+    <require from="./components/overview/overview"></require>
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -26,14 +26,14 @@
 
             </page-header>
 
-            <route-overview route.bind="route"></route-overview>
+            <overview collectionPoint.bind="collectionPoint"></overview>
 
             <page-section>
 
                 <div slot="header" class="flex-row">
 
                     <div translate>
-                        Collection point orders
+                        Orders
                     </div>
 
                 </div>
@@ -88,7 +88,7 @@
                             model.bind="order"
                             accent.bind="order.status.accent"
                             click.call="onOrderClick(order)"
-                            class="${(order.status.slug == 'cancelled') ? '--cancelled' : order.status.accent == 'negative' ? '--failed' : ''}">
+                            class="${(order.status.slug == 'rejected') ? '--cancelled' : order.status.accent.includes('damaged', 'missing') ? '--failed' : ''}">
 
                             <data-table-cell>
                                 <span class="text-truncate">

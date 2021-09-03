@@ -1,19 +1,18 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
-import { Route, RouteStop } from "app/model/route";
 import { Duration } from "luxon";
-import { Collo } from "app/model/collo";
+import { CollectionPoint } from "app/model/collection-point";
 
 /**
  * Represents the module.
  */
 @autoinject
-export class RouteOverview
+export class Overview
 {
     /**
      * The route to present.
      */
     @bindable
-    public route: Route | undefined;
+    public collectionPoint: CollectionPoint | undefined;
 
     /**
      * Counts the number of picked up colli on the route
@@ -21,31 +20,33 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get pickedUpColliCount(): number | undefined
     {
-        if (this.route == null)
+        if (this.collectionPoint == null)
         {
             return undefined;
         }
 
+        /*
         let pickedUpColliCount = 0;
 
-        if (this.route != null)
-        {
-            this.route.stops
-                .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status.slug === "completed")
-                .forEach((s: RouteStop) =>
+        this.route.stops
+            .filter(s => s instanceof RouteStop)
+            .filter((s: RouteStop) => s.status.slug === "completed")
+            .forEach((s: RouteStop) =>
+            {
+                s.pickups.forEach(p => p.colli.forEach(c =>
                 {
-                    s.pickups.forEach(p => p.colli.forEach(c =>
+                    if (c.status.slug !== "no-action" && c.status.slug !== "not-picked-up")
                     {
-                        if (c.status.slug !== "no-action" && c.status.slug !== "not-picked-up")
-                        {
-                            pickedUpColliCount++;
-                        }
-                    }));
-                });
-        }
+                        pickedUpColliCount++;
+                    }
+                }));
+            });
+
 
         return pickedUpColliCount;
+        */
+
+        return 0;
     }
 
     /**
@@ -54,6 +55,7 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get deliveredColliCount(): number | undefined
     {
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -79,6 +81,9 @@ export class RouteOverview
         }
 
         return deliveredColliCount;
+        */
+
+        return 0;
     }
 
     /**
@@ -87,6 +92,7 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get totalColliCount(): number | undefined
     {
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -105,6 +111,9 @@ export class RouteOverview
         }
 
         return totalColliCount;
+        */
+
+        return 0;
     }
 
     /**
@@ -113,6 +122,8 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get completedColliCount(): number | undefined
     {
+
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -132,6 +143,10 @@ export class RouteOverview
         }
 
         return totalColliCount;
+
+        */
+
+        return 0;
     }
 
     /**
@@ -140,6 +155,7 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get notCancelledStops(): number | undefined
     {
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -155,6 +171,10 @@ export class RouteOverview
         }
 
         return stopsCount;
+
+        */
+
+        return 0
     }
 
     /**
@@ -163,6 +183,7 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get completedStops(): number | undefined
     {
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -178,6 +199,9 @@ export class RouteOverview
         }
 
         return completedStops;
+        */
+
+        return 0;
     }
 
     /**
@@ -186,6 +210,8 @@ export class RouteOverview
     @computedFrom("route.stops.length", "route.completedTime")
     public get routeDuration(): Duration | undefined
     {
+
+        /*
         if (this.route == null)
         {
             return undefined;
@@ -213,11 +239,16 @@ export class RouteOverview
         }
 
         return duration.get("seconds") > 0 ? duration : undefined;
+
+        */
+
+        return undefined;
     }
 
     @computedFrom("route.stops.length", "route.estimates.completionTime")
     public get routeDelay(): Duration | undefined
     {
+        /*
         if (this.route == null || this.route.estimates == null)
         {
             return undefined;
@@ -233,6 +264,7 @@ export class RouteOverview
         {
             return lastStop.arrivalTimeFrame.to.diff(completionTime);
         }
+        */
 
         return undefined;
     }
@@ -240,10 +272,12 @@ export class RouteOverview
     @computedFrom("route.stops.driverOnline")
     public get driverOnline(): boolean | undefined
     {
+        /*
         if (this.route != null)
         {
             return this.route.driverOnline;
         }
+        */
 
         return undefined;
     }
@@ -251,6 +285,8 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get totalLoadingDuration(): Duration
     {
+
+        /*
         const totalLoadingDuration = Duration.fromMillis(0);
 
         if (this.route != null)
@@ -267,6 +303,10 @@ export class RouteOverview
         }
 
         return totalLoadingDuration;
+
+        */
+
+        return Duration.fromMillis(0);
     }
 
     /**
@@ -275,6 +315,7 @@ export class RouteOverview
     @computedFrom("route.status")
     public get earlyStart(): Duration | undefined
     {
+        /*
         if (this.route != null && this.route.stops[0] instanceof RouteStop)
         {
             if (this.route.stops[0].arrivedTime != null)
@@ -291,6 +332,7 @@ export class RouteOverview
                 }
             }
         }
+        */
 
         return undefined;
     }
@@ -298,6 +340,7 @@ export class RouteOverview
     @computedFrom("route.stops.length")
     public get routeStopsOkay(): boolean
     {
+        /*
         if (this.route != null)
         {
             return this.route.stops.filter(s =>
@@ -305,101 +348,7 @@ export class RouteOverview
                 s.status.slug === "failed").length === 0;
         }
 
+        */
         return false;
-    }
-
-    /**
-     * The colli that failed to be picked up on stops that have been completed.
-     */
-    @computedFrom("route.stops.length")
-    public get notPickedUpColli(): Collo[]
-    {
-        const notPickedUpColli: Collo[] = [];
-
-        if (this.route != null)
-        {
-            const completedPickupStops = this.route.stops
-                .filter(s => s.type.slug === "pickup" && s.status.slug === "completed" && s instanceof RouteStop);
-
-            completedPickupStops.forEach((s: RouteStop) =>
-            {
-                s.pickups.forEach(p =>
-                {
-                    p.colli.forEach(c =>
-                    {
-                        if (c.status.slug === "no-action" || c.status.slug === "not-picked-up")
-                        {
-                            notPickedUpColli.push(c);
-                        }
-                    });
-                });
-            });
-        }
-
-        return notPickedUpColli;
-    }
-
-    /**
-     * The colli that failed to be delivered on stops that have been visited.
-     */
-    @computedFrom("route.stops.length")
-    public get notDeliveredColli(): Collo[]
-    {
-        const notPickedUpColli = this.notPickedUpColli;
-        const notDeliveredColli: Collo[] = [];
-
-        if (this.route != null)
-        {
-            const stopsToConsider = this.route.stops
-                .filter(s => s.type.slug === "delivery" && (s.status.slug !== "not-visited" && s.status.slug !== "arrived") && s instanceof RouteStop);
-
-            stopsToConsider.forEach((s: RouteStop) =>
-            {
-                s.pickups.forEach(p =>
-                {
-                    p.colli.forEach(c =>
-                    {
-                        if (c.status.slug !== "delivered" && !notPickedUpColli.includes(c))
-                        {
-                            notDeliveredColli.push(c);
-                        }
-                    });
-                });
-            });
-        }
-
-        return notDeliveredColli;
-    }
-
-    /**
-     * Calculates the amount failed stops
-     */
-    @computedFrom("route.stops.length")
-    public get failedStops(): RouteStop[]
-    {
-        if (this.route != null)
-        {
-            return this.route.stops
-                .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status.slug === "failed") as RouteStop[];
-        }
-
-        return [];
-    }
-
-    /**
-     * Calculates the amount failed stops
-     */
-    @computedFrom("route.stops.length")
-    public get failedCancelledStops(): RouteStop[]
-    {
-        if (this.route != null)
-        {
-            return this.route.stops
-                .filter(s => s instanceof RouteStop)
-                .filter((s: RouteStop) => s.status.slug === "failed" || s.status.slug === "cancelled") as RouteStop[];
-        }
-
-        return [];
     }
 }

@@ -83,7 +83,7 @@ export class DetailsModule
      * Opens a modal showing the details of the stop.
      * @param stop The stop to edit.
      */
-    protected async onOrderClick(order: Order): Promise<void>
+    protected onOrderClick(order: Order)
     {
         // FIXME: SHOW IT
         /*
