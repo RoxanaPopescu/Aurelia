@@ -17,6 +17,7 @@ export class OrganizationRole
         {
             this.id = data.id;
             this.name = data.name;
+            this.readonly = data.readonly;
             this.createdDateTime = DateTime.fromISO(data.createdDateTime, { setZone: true });
             this.modifiedDateTime = DateTime.fromISO(data.modifiedDateTime, { setZone: true });
             this.permissions = data.permissions;
@@ -33,6 +34,11 @@ export class OrganizationRole
      * The name of the role.
      */
     public name: string;
+
+    /**
+     * True if the role is readonly, otherwise false.
+     */
+    public readonly: boolean;
 
     /**
      * The date and time at which the role was created.

@@ -11,7 +11,7 @@
         <div slot="actions">
 
             <button
-                if.bind="role.id"
+                if.bind="!role.readonly && role.id"
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSubmitClick()">
@@ -42,7 +42,7 @@
 
         <modal-section class="margin-double-bottom">
 
-            <text-input value.bind="role.name" label="above" class="flex-basis-1-of-1">
+            <text-input value.bind="role.name" label="above" class="flex-basis-1-of-1" readonly.bind="role.readonly">
 
                 <div slot="heading" translate>
                     Role name
@@ -68,7 +68,7 @@
 
         <modal-section class="margin-double-bottom">
 
-            <permissions permissions.bind="availablePermissions" value.bind="role.permissions"></permissions>
+            <permissions permissions.bind="availablePermissions" value.bind="role.permissions" readonly.bind="role.readonly"></permissions>
 
         </modal-section>
 

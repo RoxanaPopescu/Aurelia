@@ -15,7 +15,8 @@
 
             <switch-toggle
                 value.bind="group.enabled"
-                change.trigger="onPermissionsChanged()">
+                change.trigger="onPermissionsChanged()"
+                readonly.bind="readonly">
             </switch-toggle>
 
             <button
@@ -51,7 +52,8 @@
 
                     <switch-toggle
                         value.bind="group.viewEnabled"
-                        change.trigger="onPermissionsChanged()">
+                        change.trigger="onPermissionsChanged()"
+                        readonly.bind="readonly">
                     </switch-toggle>
 
                     <button
@@ -80,7 +82,8 @@
                             <switch-toggle
                                 class="flex-push-right"
                                 value.bind="permission.enabled"
-                                change.trigger="onPermissionsChanged()">
+                                change.trigger="onPermissionsChanged()"
+                                readonly.bind="readonly">
                             </switch-toggle>
 
                             <div class="margin-left font-larger">
@@ -117,7 +120,8 @@
 
                     <switch-toggle
                         value.bind="group.editEnabled"
-                        change.trigger="onPermissionsChanged()">
+                        change.trigger="onPermissionsChanged()"
+                        readonly.bind="readonly">
                     </switch-toggle>
 
                     <button
@@ -146,7 +150,8 @@
                             <switch-toggle
                                 class="flex-push-right"
                                 value.bind="permission.enabled"
-                                change.trigger="onPermissionsChanged()">
+                                change.trigger="onPermissionsChanged()"
+                                readonly.bind="readonly">
                             </switch-toggle>
 
                             <div class="margin-left font-larger">

@@ -103,6 +103,7 @@ export default
       ({
         id: `role-${i}-id`,
         name: `Role ${i}`,
+        readonly: i > 3,
         createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
         modifiedDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
         permissions:
@@ -118,7 +119,7 @@ export default
           "view-route-plans",
           "edit-route-plans"
         ],
-        userCount: 1
+        userCount: i === 1 ? 1 : 0
       }))
     },
 
@@ -128,6 +129,7 @@ export default
       {
         id: "new-role-id",
         name: "New role",
+        readonly: false,
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
@@ -154,6 +156,7 @@ export default
         id: "role-1-id",
         name: "Role 1 [updated]",
         userCount: 1,
+        readonly: false,
         createdDateTime: DateTime.utc().minus({ month: 1 }).toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:
@@ -175,6 +178,7 @@ export default
       {
         id: "role-1-duplicate-id",
         name: "Role 1 [duplicate]",
+        readonly: false,
         createdDateTime: DateTime.utc().toISO(),
         modifiedDateTime: DateTime.utc().toISO(),
         permissions:

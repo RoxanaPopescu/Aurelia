@@ -245,6 +245,12 @@ export class PermissionsCustomElement
     public permissions: IPermission[] | undefined;
 
     /**
+     * True if the component is readonly, otherwise false.
+     */
+    @bindable({ defaultValue: false })
+    public readonly: boolean;
+
+    /**
      * Called by the framework when the `value` property changes.
      * Sets the enabled permissions in the current permission configuration.
      */

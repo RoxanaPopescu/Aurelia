@@ -135,6 +135,7 @@
                                 <div class="icon-row">
 
                                     <button
+                                        disabled.bind="role.readonly"
                                         title.translate="Edit role"
                                         appearance="none"
                                         accent="primary"
@@ -151,6 +152,7 @@
                                     </button>
 
                                     <button
+                                        disabled.bind="role.readonly || role.userCount > 0"
                                         title.translate="Delete role"
                                         appearance="none"
                                         accent="primary"
