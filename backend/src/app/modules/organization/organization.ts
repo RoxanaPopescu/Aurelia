@@ -424,13 +424,12 @@ export class OrganizationModule extends AppModule
             createdDateTime: result.data.createdAt,
             modifiedDateTime: result.data.lastUpdate,
             permissions: result.data.permissions,
-            userCount: 0
+            userCount: result.data.userCount
         };
 
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Return role object
     /**
      * Saves the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -443,8 +442,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // const result =
-        await this.apiClient.put(`identity/roles/${context.params.roleId}`,
+        const result = await this.apiClient.put(`identity/roles/${context.params.roleId}`,
         {
             body:
             {
@@ -455,25 +453,14 @@ export class OrganizationModule extends AppModule
 
         context.response.body =
         {
-            id: context.params.id,
-            name: context.request.body.name,
-            readonly: undefined,
-            createdDateTime: undefined,
-            modifiedDateTime: undefined,
-            permissions: context.request.body.permissions,
-            userCount: undefined
+            id: result.data.id,
+            name: result.data.name,
+            readonly: result.data.readonly,
+            createdDateTime: result.data.createdAt,
+            modifiedDateTime: result.data.lastUpdate,
+            permissions: result.data.permissions,
+            userCount: result.data.userCount
         };
-
-        // context.response.body =
-        // {
-        //     id: result.data.id,
-        //     name: result.data.name,
-        //     readonly: result.data.readonly,
-        //     createdDateTime: result.data.createdAt,
-        //     modifiedDateTime: result.data.lastUpdate,
-        //     permissions: result.data.permissions,
-        //     userCount: result.data.userCount
-        // };
 
         context.response.status = 200;
     }
