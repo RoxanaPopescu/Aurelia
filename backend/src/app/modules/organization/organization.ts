@@ -1,11 +1,8 @@
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
-import permissions from "./resources/settings/permissions.json";
 
 // TODO: Add permission checks
-// TODO: Add missing permissions and slug<->name mappings
 // TODO: Change old BFF to understand new tokens
-// TODO: Change permission checks in BFFs to match new slugs?
 
 /**
  * Represents a module exposing endpoints related to roles within an organization.
@@ -363,7 +360,7 @@ export class OrganizationModule extends AppModule
             {
                 organizationId: context.params.organizationId,
                 roleName: context.request.body.name,
-                permissions: this.mapPermissionsToLegacy(context.request.body.permissions)
+                permissions: context.request.body.permissions
             }
         });
 
@@ -374,7 +371,7 @@ export class OrganizationModule extends AppModule
             readonly: result.data.readonly,
             createdDateTime: result.data.createdAt,
             modifiedDateTime: result.data.lastUpdate,
-            permissions: this.mapPermissionsFromLegacy(result.data.permissions),
+            permissions: result.data.permissions,
             userCount: result.data.userCount
         };
 
@@ -399,7 +396,7 @@ export class OrganizationModule extends AppModule
             name: r.name,
             createdDateTime: r.createdAt,
             modifiedDateTime: r.lastUpdate,
-            permissions: this.mapPermissionsFromLegacy(r.permissions),
+            permissions: r.permissions,
             userCount: r.userCount
         }));
 
@@ -426,7 +423,7 @@ export class OrganizationModule extends AppModule
             readonly: result.data.readonly,
             createdDateTime: result.data.createdAt,
             modifiedDateTime: result.data.lastUpdate,
-            permissions: this.mapPermissionsFromLegacy(result.data.permissions),
+            permissions: result.data.permissions,
             userCount: 0
         };
 
@@ -452,7 +449,7 @@ export class OrganizationModule extends AppModule
             body:
             {
                 name: context.request.body.name,
-                permissions: this.mapPermissionsToLegacy(context.request.body.permissions)
+                permissions: context.request.body.permissions
             }
         });
 
@@ -474,7 +471,7 @@ export class OrganizationModule extends AppModule
         //     readonly: result.data.readonly,
         //     createdDateTime: result.data.createdAt,
         //     modifiedDateTime: result.data.lastUpdate,
-        //     permissions: this.mapPermissionsFromLegacy(result.data.permissions),
+        //     permissions: result.data.permissions,
         //     userCount: result.data.userCount
         // };
 
@@ -709,28 +706,5 @@ export class OrganizationModule extends AppModule
         // context.params.userId
 
         context.response.status = 204;
-    }
-
-    /**
-     * Maps slugs identifying permissions in the frontend, to their corresponding names in the backend.
-     * @param slugs The slugs identifying the permissions.
-     * @returns The names of the permissions in the backend.
-     */
-    private mapPermissionsToLegacy(slugs: string[]): string[]
-    {
-        // HACK: Transform permission slugs to names.
-        return slugs.map((slug: string) => permissions.find(p => p.slug === slug)?.nameInBackend || slug);
-    }
-
-    /**
-     * Maps names identifying permissions in the backend, to their corresponding slugs in the frontend.
-     * @param names The names of the permissions in the backend.
-     * @returns The slugs identifying the permissions.
-     */
-    private mapPermissionsFromLegacy(names: string[]): string[]
-    {
-        // HACK: Transform permission names to slugs.
-        // return names.map(p => p.toLowerCase().replace(/ /g, "-"));
-        return names.map((name: string) => permissions.find(p => p.nameInBackend === name || p.slug === name)?.slug || name);
     }
 }
