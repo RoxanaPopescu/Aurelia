@@ -83,7 +83,7 @@ export class DetailsModule
      * Opens a modal showing the details of the order.
      * @param order The order to edit.
      */
-    protected onOrderClick(_order: Order)
+    protected onOrderClick(_order: Order): void
     {
         // FIXME: SHOW IT
         /*

@@ -21,7 +21,9 @@ export class CollectionPointModule extends AppModule
             {
                 const driver = await this.validateDriverLogin(context);
                 outfitId = driver.outfitId;
-            } else {
+            }
+            else
+            {
                 context.authorize("view-routes");
                 outfitId = context.user!.outfitId;
             }

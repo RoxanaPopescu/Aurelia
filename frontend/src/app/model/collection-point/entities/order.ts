@@ -23,11 +23,7 @@ export class Order
       setZone: true
     });
 
-    this.contact = {
-      fullName: data.contact.fullName,
-      phone: data.contact.phone != null ? new PhoneNumber(data.contact.phone) : undefined
-    };
-
+    this.contact = { fullName: data.contact.fullName, phone: data.contact.phone != null ? new PhoneNumber(data.contact.phone) : undefined };
     this.colli = data.colli.map((c: any) => new Collo(c));
   }
 
