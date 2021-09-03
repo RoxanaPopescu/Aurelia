@@ -3,18 +3,19 @@ import { DeviationType } from "..";
 /**
  * Represents a image on a deviation
  */
-export class DeviationImage {
-  data: string;
-  fileName?: string;
-
+export class DeviationImage
+{
   /**
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  constructor(data: string)
+  public constructor(data: string)
   {
     this.data = data;
   }
+
+  public data: string;
+  public fileName?: string;
 }
 
 /**
@@ -23,26 +24,27 @@ export class DeviationImage {
 export class Deviation
 {
   /**
+   * Creates a new instance of the type.
+   * @param data The response data from which the instance should be created.
+   */
+  public constructor(data: any)
+  {
+    // FIXME: Construct it
+    this.type = new DeviationType(data.type);
+  }
+
+  /**
    * The type of deviation
    */
-  type: DeviationType;
+  public type: DeviationType;
 
   /**
    * The description by the driver
    */
-  description?: string;
+  public description?: string;
 
   /**
    * The images taken by the driver of the deviation
    */
-  images: DeviationImage[] = [];
-
-  /**
-   * Creates a new instance of the type.
-   * @param data The response data from which the instance should be created.
-   */
-  constructor(data: any) {
-    // FIXME: Construct it
-    this.type = new DeviationType(data.type);
-  }
+  public images: DeviationImage[] = [];
 }

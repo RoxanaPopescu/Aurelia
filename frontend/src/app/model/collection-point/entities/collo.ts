@@ -4,32 +4,13 @@ import { Accent, Dimensions } from "app/model/shared";
 /**
  * Represents a collo on a collection point order
  */
-export class Collo {
-  /**
-   * Barcode of the collo
-   */
-  barcode: string;
-
-  /**
-   * The weight of the collo in kg
-   */
-  weight?: number;
-
-  /**
-   * The Dimensions of the collo
-   */
-  dimensions?: Dimensions;
-
-  /**
-   * How the collo was verified by the driver
-   */
-  verificationMethod?: ColloScanMethod;
-
+export class Collo
+{
   /**
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  constructor(json: any)
+  public constructor(json: any)
   {
     this.barcode = json.barcode;
     this.weight = json.weight;
@@ -38,20 +19,38 @@ export class Collo {
       : undefined;
   }
 
+  /**
+   * Barcode of the collo
+   */
+  public barcode: string;
+
+  /**
+   * The weight of the collo in kg
+   */
+  public weight?: number;
+
+  /**
+   * The Dimensions of the collo
+   */
+  public dimensions?: Dimensions;
+
+  /**
+   * How the collo was verified by the driver
+   */
+  public verificationMethod?: ColloScanMethod;
+
   accent(): Accent
   {
     if (this.verificationMethod == null)
     {
-      return 'neutral';
+      return "neutral";
     }
 
-    if (this.verificationMethod.slug == 'scanned')
+    if (this.verificationMethod.slug === "scanned")
     {
-      return 'positive';
+      return "positive";
     }
-    else
-    {
-      return 'attention';
-    }
+
+    return "attention";
   }
 }
