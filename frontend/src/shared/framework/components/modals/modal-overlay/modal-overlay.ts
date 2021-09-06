@@ -39,12 +39,6 @@ export class ModalOverlayCustomElement
     protected validation: IValidation;
 
     /**
-     * True until after the component has been attached.
-     * This prevents animation conflicts while the modal animates in.
-     */
-    protected preventBusyAnimationDelay = true;
-
-    /**
      * The name of the overlay.
      * Note that this should be unique among the overlays in the app.
      */
@@ -77,15 +71,6 @@ export class ModalOverlayCustomElement
     protected get shouldDiscardChanges(): boolean
     {
         return !!this.modal?.refusedToClose && this.discardChanges && this.validation.invalid === true;
-    }
-
-    /**
-     * Called by the framework when the component is attached.
-     */
-    protected attached(): void
-    {
-        // Allow the busy overlay to initially appear without delay, then remove the delay override.
-        setTimeout(() => this.preventBusyAnimationDelay = false, 1000);
     }
 
     /**

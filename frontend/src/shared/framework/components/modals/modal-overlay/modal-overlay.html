@@ -12,8 +12,8 @@
     <busy-overlay
         if.bind="modal != null && modal.busy !== false"
         opaque.bind="modal.busyOpaque"
-        animate.bind="!preventBusyAnimationDelay && modal.busyAnimate"
-        delay.bind="!preventBusyAnimationDelay && modal.busyDelay">
+        animate.bind="modal.busyAnimate"
+        delay.bind="modal.busyDelay">
     </busy-overlay>
 
     <div class="modal-overlay-content">
