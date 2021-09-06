@@ -103,6 +103,9 @@ export class ChooseOrganizationCustomElement
         {
             this.model.busy = true;
 
+            // NOTE:
+            // The organization is created asynchronously, so failed API requests are to be expected.
+            // However, due to the retry logic in the `ApiClient`, authorization should eventually succeed.
             await this._identityService.authorize(organizationId);
 
             // tslint:disable-next-line: await-promise
