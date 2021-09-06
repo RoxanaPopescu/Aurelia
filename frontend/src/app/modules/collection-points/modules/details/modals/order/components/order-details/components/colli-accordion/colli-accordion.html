@@ -1,31 +1,13 @@
 <template class="${expanded ? '--expanded' : ''}">
 
     <require from="app/components/accordion/accordion"></require>
-    <require from="./order-accordion.scss"></require>
+    <require from="./colli-accordion.scss"></require>
 
     <accordion expandable.bind="model.colli.length > 0" expanded.bind="expanded">
 
         <div slot="header">
 
-            <div class="flex-row">
-                <icon if.bind="hasProblems" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
-                <a href="/orders/details/${model.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
-                    ${model.orderSlug}
-                </a>
-            </div>
-            <div class="text-align-right opacity-faded text-truncate">
-                <template if.bind="model.totalWeight">
-                    ${model.totalWeight | number} kg
-                </template>
-            </div>
-
-            <div class="text-align-right opacity-faded text-truncate">
-                <template if.bind="model.totalVolume">
-                    ${model.totalVolume | number} m³
-                </template>
-            </div>
-
-            <div class="text-align-right">
+            <div class="text-align-left">
                 ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
             </div>
 
@@ -43,19 +25,19 @@
 
                 <data-table-cell>
                     <span class="opacity-faded text-truncate" translate>
-                        Scan method
+                        Weight
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="opacity-faded text-truncate" translate>
-                        Picture
+                        Length
                     </span>
                 </data-table-cell>
 
                 <data-table-cell>
                     <span class="opacity-faded text-truncate" translate>
-                        Status
+                        Tags
                     </span>
                 </data-table-cell>
 
@@ -66,35 +48,26 @@
                 <data-table-row model.bind="collo" clickable.bind="false">
 
                     <data-table-cell>
-                        <icon if.bind="collo.status.accent == 'negative'" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
                         <div>
-                            <a
-                                class="text-truncate"
-                                title="${collo.barcode}"
-                                href="/orders/details/${model.orderSlug}?collo=${collo.barcode}" target="_blank">
-                                ${collo.barcode}
-                            </a>
-                            <div if.bind="collo.origin.slug != 'regular'" class="margin-top opacity-faded collo-origin">
-                                ${collo.origin.name}
-                            </div>
+                            ${collo.barcode}
                         </div>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${collo.scanMethod.name}
+                            ${collo.weight | number} kg
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
-                            <icon name="picture-small" accent="primary" class="font-larger"></icon>
-                        </a>
+                        <span class="text-truncate">
+                            ${collo.dimensions.height | number}m x ${collo.dimensions.length | number}m x ${collo.dimensions.width | number}m
+                        </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${collo.status.name}
+                            ${collo.tags | list: 'short' : 'unit'}
                         </span>
                     </data-table-cell>
 

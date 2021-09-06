@@ -4,6 +4,8 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { AbortError } from "shared/types";
 import { CollectionPoint, CollectionPointService, Order } from "app/model/collection-point";
+import { ModalService } from "shared/framework";
+import { CollectionPointOrderPanel } from "./modals/order/order";
 
 /**
  * Represents the route parameters for the page.
@@ -26,15 +28,19 @@ export class DetailsModule
      * Creates a new instance of the class.
      * @param collectionPointService The `CollectionPointService` instance.
      * @param router The `Router` instance.
+     * @param modalService The `ModalService` instance.
      */
     public constructor(
         collectionPointService: CollectionPointService,
-        router: Router)
+        router: Router,
+        modalService: ModalService)
     {
         this.collectionPointService = collectionPointService;
         this._router = router;
+        this._modalService = modalService;
     }
 
+    private readonly _modalService: ModalService;
     private readonly _router: Router;
     private _pollTimeout: any;
     protected readonly collectionPointService: CollectionPointService;
@@ -83,19 +89,9 @@ export class DetailsModule
      * Opens a modal showing the details of the order.
      * @param order The order to edit.
      */
-    protected onOrderClick(_order: Order): void
+    protected async onOrderClick(order: Order): Promise<void>
     {
-        // FIXME: SHOW IT
-        /*
-        const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit }).promise;
-
-        if (savedStop != null)
-        {
-            this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
-
-            this.fetchRoute();
-        }
-        */
+        await this._modalService.open(CollectionPointOrderPanel, order).promise;
     }
 
     /**

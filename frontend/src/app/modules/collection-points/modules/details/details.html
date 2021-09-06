@@ -2,7 +2,7 @@
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
-    <require from="./components/overview/overview"></require>
+    <require from="./components/collection-point-overview/collection-point-overview"></require>
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -14,19 +14,20 @@
                 <h1 class="font-largest">
                     <path-nav>
 
-                        <a accent="inherit" href="/routes" translate>
+                        <div accent="inherit" translate>
                             Collection point
-                        </a>
+                        </div>
 
                         <span class="user-select-text">
                             ${id}
                         </span>
+
                     </path-nav>
                 </h1>
 
             </page-header>
 
-            <overview collectionPoint.bind="collectionPoint"></overview>
+            <collection-point-overview entry.bind="collectionPoint"></collection-point-overview>
 
             <page-section>
 

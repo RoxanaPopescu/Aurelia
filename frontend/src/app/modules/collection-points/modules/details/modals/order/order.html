@@ -1,0 +1,14 @@
+<template>
+
+    <require from="app/components/address-input/address-input"></require>
+    <require from="./components/order-details/order-details"></require>
+    <require from="./order.scss"></require>
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="collection-point-order" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <order-details model.bind="model"></order-details>
+
+    </modal-panel>
+
+</template>
