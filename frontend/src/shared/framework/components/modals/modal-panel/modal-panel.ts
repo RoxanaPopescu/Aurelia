@@ -39,6 +39,12 @@ export class ModalPanelCustomElement
     protected validation: IValidation;
 
     /**
+     * True until after the component has been attached.
+     * This prevents animation conflicts while the modal animates in.
+     */
+    protected preventBusyAnimationDelay = true;
+
+    /**
      * The name of the panel.
      * Note that this should be unique among the panels in the app.
      */
@@ -78,6 +84,15 @@ export class ModalPanelCustomElement
      */
     @bindable({ defaultValue: true })
     public closeShortcut: boolean;
+
+    /**
+     * Called by the framework when the component is attached.
+     */
+    protected attached(): void
+    {
+        // Allow the busy overlay to initially appear without delay, then remove the delay override.
+        setTimeout(() => this.preventBusyAnimationDelay = false, 1000);
+    }
 
     /**
      * Called when the close button is clicked.
