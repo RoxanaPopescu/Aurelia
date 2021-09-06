@@ -21,25 +21,7 @@ export class ModalOverlayCustomElement
     {
         this.element = element as HTMLElement;
         this.modal = modal;
-
-        // HACK: Detect attempts to close the modal.
-        if (modal != null)
-        {
-            // tslint:disable-next-line: no-unbound-method
-            const closeFunc = modal.close;
-
-            modal.close = async (...args: any[]) =>
-            {
-                const closed = await closeFunc.apply(modal, args);
-
-                this._refusedToClose = !closed;
-
-                return closed;
-            };
-        }
     }
-
-    private _refusedToClose = false;
 
     /**
      * The element representing the component.
@@ -85,10 +67,10 @@ export class ModalOverlayCustomElement
     /**
      * True if the close button should use `discard-changes` as modal close reason, otherwise false.
      */
-    @computedFrom("_refusedToClose", "discardChanges", "validation")
+    @computedFrom("modal.refusedToClose", "discardChanges", "validation")
     protected get shouldDiscardChanges(): boolean
     {
-        return this._refusedToClose && this.discardChanges && this.validation.invalid === true;
+        return !!this.modal?.refusedToClose && this.discardChanges && this.validation.invalid === true;
     }
 
     /**
@@ -99,7 +81,7 @@ export class ModalOverlayCustomElement
         if (this.modal != null)
         {
             // tslint:disable-next-line: no-floating-promises
-            this.modal.close(this._refusedToClose ? "discard-changes" : undefined);
+            this.modal.close(this.modal.refusedToClose ? "discard-changes" : undefined);
         }
     }
 

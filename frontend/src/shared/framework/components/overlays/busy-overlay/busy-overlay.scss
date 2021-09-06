@@ -15,6 +15,9 @@ busy-overlay
     // Apply the z-index for backdrops.
     z-index: var(--z-index-backdrop);
 
+    // Apply the fade-in animation.
+    animation: fade-in ease-in both;
+
     &::before
     {
         content: "";
@@ -31,10 +34,10 @@ busy-overlay
         background: var(--busy-overlay-color);
     }
 
-    &.--animate
+    &:not(.--animate)
     {
-        // Apply the fade-in animation, if enabled.
-        animation: fade-in ease-in both;
+        animation-duration: 0s;
+        animation-delay: 0s;
     }
 
     &.--animate:not(.--delay)

@@ -256,7 +256,7 @@ modal-panel
 
 // Animate the content of the panel.
 
-modal-panel > *
+modal-panel > :not(busy-overlay)
 {
     // Hint that animation will be applied.
     will-change: opacity;

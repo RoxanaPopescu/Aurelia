@@ -1,4 +1,4 @@
-import { Container, BindingEngine } from "aurelia-framework";
+import { Container, BindingEngine, computedFrom } from "aurelia-framework";
 import { Compose } from "aurelia-templating-resources";
 import { Type } from "shared/types";
 import { PromiseController } from "shared/utilities";
@@ -34,6 +34,7 @@ export class Modal<TModel = any, TResult = any>
     private readonly _promiseController = new PromiseController<any>();
     private readonly _modals: Modal[];
     private _closed = false;
+    private _refusedToClose: boolean | undefined;
 
     /**
      * The type of the component to present, or its module ID.
@@ -53,14 +54,52 @@ export class Modal<TModel = any, TResult = any>
     /**
      * True if the modal is busy, false if the modal is not busy, or null
      * if the modal is technically not busy, but should still appear as busy, e.g.
-     * because it is in the process of closing.
+     * because it is in the process of opening or closing.
      * Note that all interaction with the modal is blocked when this is not false.
      */
     public busy: boolean | null  = false;
 
     /**
+     * True to use an opaque busy overlay that hides the contents of the modal,
+     * false to use a semi-transparent overlay that allows the content to shine through.
+     */
+    public busyOpaque = false;
+
+    /**
+     * True to apply a fade-in animation to the busy overlay, otherwise false.
+     * This can help mitigate flashing if the overlay is quickly removed.
+     */
+    public busyAnimate = true;
+
+    /**
+     * True to apply delay before fading in the busy overlay, otherwise false.
+     * This can help mitigate flashing if the overlay is quickly removed.
+     */
+    public busyDelay = true;
+
+    /**
+     * True if the modal has been closed, otherwise false.
+     */
+    @computedFrom("_closed")
+    public get closed(): boolean
+    {
+        return this._closed;
+    }
+
+    /**
+     * True if the modal has refused to close, otherwise false,
+     * or undefined if closing has not yet been attempted.
+     */
+    @computedFrom("_refusedToClose")
+    public get refusedToClose(): boolean | undefined
+    {
+        return this._refusedToClose;
+    }
+
+    /**
      * The promise that will be resolved when the modal is closed.
      */
+    @computedFrom("_promiseController.promise")
     public get promise(): Promise<TResult>
     {
         return this._promiseController.promise;
@@ -131,6 +170,8 @@ export class Modal<TModel = any, TResult = any>
                     throw reason;
                 }
 
+                this._refusedToClose = true;
+
                 console.warn("Modal refused to close", { modal: this, reason });
 
                 return false;
@@ -145,6 +186,8 @@ export class Modal<TModel = any, TResult = any>
         this._modals.splice(index, 1);
 
         this._closed = true;
+
+        this._refusedToClose = false;
 
         console.info("Modal closed", { modal: this, result });
 

@@ -170,7 +170,7 @@ app-sidebar
 
 // Animate the content of the overlay.
 
-modal-overlay > *
+modal-overlay > :not(busy-overlay)
 {
     // Hint that animation will be applied.
     will-change: opacity;
