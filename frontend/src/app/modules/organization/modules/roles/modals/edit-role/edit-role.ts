@@ -58,15 +58,12 @@ export class EditRolePanel
         this.role = model.role?.clone() ?? new OrganizationRole();
         this.roleName = this.role.name;
         this.roles = model.roles ?? [];
-        this._modal.busy = true;
 
         this._fetchOperation = new Operation(async () =>
         {
             try
             {
                 this.availablePermissions = await this._organizationService.getPermissions();
-
-                this._modal.busy = false;
             }
             catch (error)
             {

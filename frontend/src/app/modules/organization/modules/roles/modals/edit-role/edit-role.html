@@ -12,6 +12,7 @@
 
             <button
                 if.bind="!role.readonly && role.id"
+                disabled.bind="availablePermissions == null"
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSubmitClick()">
@@ -69,6 +70,8 @@
         <modal-section class="margin-double-bottom">
 
             <permissions permissions.bind="availablePermissions" value.bind="role.permissions" readonly.bind="role.readonly"></permissions>
+
+            <busy-indicator if.bind="availablePermissions == null" animate.bind="false"></busy-indicator>
 
         </modal-section>
 
