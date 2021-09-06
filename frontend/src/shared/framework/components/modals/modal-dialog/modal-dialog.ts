@@ -81,7 +81,7 @@ export class ModalDialogCustomElement
     /**
      * True if the close button should use `discard-changes` as modal close reason, otherwise false.
      */
-    @computedFrom("modal.refusedToClose", "discardChanges", "validation")
+    @computedFrom("modal.refusedToClose", "discardChanges", "validation.invalid")
     protected get shouldDiscardChanges(): boolean
     {
         return !!this.modal?.refusedToClose && this.discardChanges && this.validation.invalid === true;

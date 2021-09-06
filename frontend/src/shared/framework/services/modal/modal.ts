@@ -57,7 +57,7 @@ export class Modal<TModel = any, TResult = any>
      * because it is in the process of opening or closing.
      * Note that all interaction with the modal is blocked when this is not false.
      */
-    public busy: boolean | null  = false;
+    public busy: boolean | null = false;
 
     /**
      * True to use an opaque busy overlay that hides the contents of the modal,
