@@ -32,6 +32,7 @@ export class CollectionPointOrderPanel
      */
     public async deactivate(): Promise<Order | undefined>
     {
+        this._result = this.model;
         return this._result;
     }
 }
