@@ -29,7 +29,7 @@ app-sidebar
 
     app-logo
     {
-        // Size and position the app icon.
+        // Size and position the app logo.
         margin: 36rem 0 24rem 0;
         height: 28rem;
 
@@ -40,7 +40,7 @@ app-sidebar
         modal-view & a:hover
         {
             // Prevent the hover effect from repeating when the dashboard
-            // appears as a result of a click on the app-icon.
+            // appears as a result of a click on the app-logo.
             transition: none;
         }
     }
@@ -269,7 +269,7 @@ app-sidebar
     z-index: 1;
 
     // Size and space other icons.
-    padding: 12rem 28rem;
+    padding: 12rem 26rem;
 
     // Animate the hover effect.
     transition: color var(--animation-duration-short);
@@ -339,7 +339,7 @@ app-sidebar
 {
     display: flex;
     align-items: center;
-    padding: 7rem 0 7rem 32rem;
+    padding: 7rem 0 7rem 30rem;
     border-radius: var(--border-radius-small);
 
     opacity: 0.7;
@@ -428,7 +428,7 @@ app-sidebar.--expanded
 
     .sidebar-child-link-container
     {
-        padding: 20rem 20rem;
+        padding: 20rem 18rem;
     }
 
     .sidebar-child-link
@@ -439,7 +439,7 @@ app-sidebar.--expanded
     .app-sidebar--powered-by
     {
         justify-content: flex-start;
-        padding-left: 28rem;
+        padding-left: 27rem;
         line-height: 26rem;
         font-size: 11rem;
         text-align: left;

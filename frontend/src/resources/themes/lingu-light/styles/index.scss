@@ -95,13 +95,6 @@ app-sidebar
         color: var(--palette-color-primary) !important;
     }
 
-    app-icon,
-    app-icon:hover,
-    app-icon.--highlight,
-    {
-        filter: saturate(0) contrast(1.5) brightness(1.1) !important;
-    }
-
     icon:hover
     {
         color: var(--palette-color-primary) !important;
