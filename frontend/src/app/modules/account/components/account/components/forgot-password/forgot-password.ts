@@ -107,7 +107,7 @@ export class ForgotPasswordCustomElement
         }
         catch (error)
         {
-            Log.error("Password recovery failed.", error);
+            Log.error("An error occurred while requesting password recovery.", error);
         }
         finally
         {

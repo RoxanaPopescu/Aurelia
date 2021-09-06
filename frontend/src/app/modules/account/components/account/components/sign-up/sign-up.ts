@@ -3,7 +3,7 @@ import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { AccountService, IAccountInit } from "app/modules/account/services/account";
-import { OrganizationService } from "app/model/organization";
+import { OrganizationInfo, OrganizationService } from "app/model/organization";
 
 export interface ISignUpModel extends Partial<IAccountInit>
 {
@@ -144,39 +144,73 @@ export class SignUpCustomElement
             return;
         }
 
+        this.model.busy = true;
+
         try
         {
-            this.model.busy = true;
-
-            await this._accountService.create(
+            try
             {
-                fullName: this.model.fullName!,
-                preferredName: this.model.preferredName!,
-                email: this.model.email!,
-                password: this.model.password!
-            });
-
-            await this._identityService.authenticate(this.model.email!, this.model.password!);
-
-            const createOrganizationResult = await this._organizationService.create(
+                await this._accountService.create(
+                {
+                    fullName: this.model.fullName!,
+                    preferredName: this.model.preferredName!,
+                    email: this.model.email!,
+                    password: this.model.password!
+                });
+            }
+            catch (error)
             {
-                type: "business",
-                name: this.model.organizationName!
-            });
+                Log.error("An error occurred while signing up.", error);
 
-            // NOTE:
-            // The organization is created asynchronously, so failed API requests are to be expected.
-            // However, due to the retry logic in the `ApiClient`, authorization should eventually succeed.
-            await this._identityService.authorize(createOrganizationResult.id);
+                return;
+            }
+
+            try
+            {
+                await this._identityService.authenticate(this.model.email!, this.model.password!);
+            }
+            catch (error)
+            {
+                Log.error("An error occurred while signing in.", error);
+
+                return;
+            }
+
+            let organization: OrganizationInfo;
+
+            try
+            {
+                organization = await this._organizationService.create(
+                {
+                    type: "business",
+                    name: this.model.organizationName!
+                });
+            }
+            catch (error)
+            {
+                Log.error("An error occurred while creating the organization.", error);
+
+                return;
+            }
+
+            try
+            {
+                // NOTE:
+                // The organization is created asynchronously, so failed API requests are to be expected.
+                // However, due to the retry logic, authorization should eventually succeed.
+                await this._identityService.authorize(organization.id, true);
+            }
+            catch (error)
+            {
+                Log.error("An error occurred while signing in to the organization.", error);
+
+                return;
+            }
 
             // tslint:disable-next-line: await-promise
             await this.model.onSignedUp?.();
 
             this.model.done = true;
-        }
-        catch (error)
-        {
-            Log.error("Sign up failed.", error);
         }
         finally
         {

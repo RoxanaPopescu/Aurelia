@@ -2,7 +2,6 @@ import { autoinject } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
-import { ISignUpModel } from "app/modules/account/components/account/components/sign-up/sign-up";
 
 @autoinject
 export abstract class AccountSubPage
@@ -75,10 +74,6 @@ export abstract class AccountSubPage
      */
     protected async onSignedUp(url?: string): Promise<void>
     {
-        const model = this.model as ISignUpModel;
-
-        await this.identityService.authenticate(model.email!, model.password!);
-
         if (url)
         {
             await this.historyHelper.navigate(url);

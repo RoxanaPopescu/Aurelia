@@ -148,7 +148,7 @@ export class SignInCustomElement
         }
         catch (error)
         {
-            Log.error("Sign in failed.", error);
+            Log.error("An error occurred while signing in.", error);
         }
         finally
         {

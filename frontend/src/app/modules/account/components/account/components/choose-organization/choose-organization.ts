@@ -105,8 +105,8 @@ export class ChooseOrganizationCustomElement
 
             // NOTE:
             // The organization is created asynchronously, so failed API requests are to be expected.
-            // However, due to the retry logic in the `ApiClient`, authorization should eventually succeed.
-            await this._identityService.authorize(organizationId);
+            // However, due to the retry logic, authorization should eventually succeed.
+            await this._identityService.authorize(organizationId, true);
 
             // tslint:disable-next-line: await-promise
             await this.model.onChooseOrganization?.();
@@ -115,7 +115,7 @@ export class ChooseOrganizationCustomElement
         }
         catch (error)
         {
-            Log.error("Sign in failed.", error);
+            Log.error("An error occurred while signing in to the organization.", error);
         }
         finally
         {

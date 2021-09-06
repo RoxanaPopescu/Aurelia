@@ -73,7 +73,7 @@ export class SignOutCustomElement
         }
         catch (error)
         {
-            Log.error("Sign out failed.", error);
+            Log.error("An error occurred while signing out.", error);
         }
         finally
         {

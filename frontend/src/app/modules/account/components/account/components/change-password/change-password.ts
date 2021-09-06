@@ -140,7 +140,7 @@ export class ChangePasswordCustomElement
             }
             catch (error)
             {
-                Log.error("Sign in failed.", error);
+                Log.error("An error occurred while signing in.", error);
 
                 return;
             }
@@ -152,7 +152,7 @@ export class ChangePasswordCustomElement
         }
         catch (error)
         {
-            Log.error("Password change failed.", error);
+            Log.error("An error occurred while changing the password.", error);
         }
         finally
         {

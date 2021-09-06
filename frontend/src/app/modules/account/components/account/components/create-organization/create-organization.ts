@@ -125,7 +125,7 @@ export class CreateOrganizationCustomElement
         }
         catch (error)
         {
-            Log.error("Sign up failed.", error);
+            Log.error("An error occurred while creating the organization.", error);
         }
         finally
         {

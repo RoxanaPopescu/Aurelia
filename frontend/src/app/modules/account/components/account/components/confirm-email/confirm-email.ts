@@ -85,7 +85,7 @@ export class ConfirmEmailCustomElement
         }
         catch (error)
         {
-            Log.error("Failed to confirm the account.", error);
+            Log.error("An error occurred while confirming the email address.", error);
         }
         finally
         {

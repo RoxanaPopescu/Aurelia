@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Duration } from "luxon";
-import { once } from "shared/utilities";
-import { ApiClient, Log } from "shared/infrastructure";
+import { delay, once } from "shared/utilities";
+import { ApiClient, ApiResult, Log } from "shared/infrastructure";
 import { VehicleType } from "app/model/vehicle";
 import { IdentityTokens, IIdentityTokens } from "./identity-tokens";
 import { Identity } from "./identity";
@@ -122,20 +122,41 @@ export class IdentityService
     /**
      * Authorizes the user to access the specified organization.
      * @param organization The ID of the organization for which the user should be authorized.
+     * @param retry True to keep retrying for a while, even if authorization is denied.
+     * Use this when authorizing immediately after requesting the creation of an organization.
      * @returns A promise that will be resolved with true if authorization succeeded, otherwise false.
      * @throws If the operation fails for any reason.
      */
-    public async authorize(organizationId: string): Promise<boolean>
+    public async authorize(organizationId: string, retry = false): Promise<boolean>
     {
         try
         {
             let tokens = this.getTokens();
 
-            const result = await this._apiClient.post("identity/authorize",
+            let result: ApiResult = undefined as any;
+
+            for (let attempt = 0; attempt < 30; attempt++)
             {
-                body: { organizationId },
-                retry: 3
-            });
+                try
+                {
+                    result = await this._apiClient.post("identity/authorize",
+                    {
+                        body: { organizationId },
+                        retry: 3
+                    });
+
+                    break;
+                }
+                catch (error)
+                {
+                    if (!retry || error.response?.status !== 401)
+                    {
+                        throw error;
+                    }
+
+                    await delay(1000);
+                }
+            }
 
             tokens = new IdentityTokens({ ...tokens, ...result.data });
             const identity = new Identity(result, tokens);
