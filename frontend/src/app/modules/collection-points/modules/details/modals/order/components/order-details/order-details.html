@@ -1,7 +1,6 @@
 <template>
 
     <require from="app/components/data-section/data-section"></require>
-    <require from="./components/deviation-accordion/deviation-accordion"></require>
     <require from="./components/colli-accordion/colli-accordion"></require>
     <require from="./order-details.scss"></require>
 
@@ -111,22 +110,6 @@
 
     </data-section>
 
-    <!-- Deviations -->
-    <template if.bind="model.routeStop.deviations.length > 0">
-
-        <hr class="hr-line margin-bottom">
-
-        <data-section class="margin-bottom" toggle.bind="true" invalid.bind="model.routeStop.deviations.length > 0">
-
-            <div slot="header" class="flex-row" translate>
-                Deviations
-            </div>
-
-            <deviation-accordion repeat.for="deviation of model.routeStop.deviations"model.bind="deviation"></deviation-accordion>
-
-        </data-section>
-
-    </template>
 
     <hr class="hr-line margin-bottom">
 
