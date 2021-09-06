@@ -202,9 +202,9 @@ export class AppModule
                 icon: "routes"
             },
             {
-                name: "collection-point",
-                route: "collection-point",
-                moduleId: PLATFORM.moduleName("./modules/collection-point/collection-point"),
+                name: "collection-points",
+                route: "collection-points",
+                moduleId: PLATFORM.moduleName("./modules/collection-points/collection-points"),
                 settings:
                 {
                     outfits: ["fulfiller", "consignor"],

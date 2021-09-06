@@ -1,6 +1,6 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
 import { Duration } from "luxon";
-import { CollectionPoint } from "app/model/collection-point";
+import { CollectionPoint, Order } from "app/model/collection-point";
 
 /**
  * Represents the module.
@@ -13,6 +13,38 @@ export class Overview
      */
     @bindable
     public collectionPoint: CollectionPoint | undefined;
+
+    /**
+     * Counts the number of orders with deviations
+     */
+    @computedFrom("collectionPoint.orders.length")
+    public get deviatedOrdersCount(): number | undefined
+    {
+        if (this.collectionPoint == null)
+        {
+            return undefined;
+        }
+
+        const result = this.collectionPoint.orders.filter((s: Order) => ["missing", "damaged", "not-collected", "rejected"].includes(s.status.slug));
+
+        return result.length;
+    }
+
+    /**
+     * Counts the number of orders with completed
+     */
+    @computedFrom("collectionPoint.orders.length")
+    public get completedOrdersCount(): number | undefined
+    {
+        if (this.collectionPoint == null)
+        {
+            return undefined;
+        }
+
+        const result = this.collectionPoint.orders.filter((s: Order) => ["collected"].includes(s.status.slug));
+
+        return result.length;
+    }
 
     /**
      * Counts the number of picked up colli on the route

@@ -46,6 +46,12 @@
 
                         <data-table-cell>
                             <span class="text-truncate" translate>
+                                Id
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
                                 Timeframe
                             </span>
                         </data-table-cell>
@@ -89,6 +95,12 @@
                             accent.bind="order.status.accent"
                             click.call="onOrderClick(order)"
                             class="${(order.status.slug == 'rejected') ? '--cancelled' : order.status.accent.includes('damaged', 'missing') ? '--failed' : ''}">
+
+                            <data-table-cell>
+                                <a href="/orders/details/${order.creatorOrderId}" class="text-truncate">
+                                    ${order.creatorOrderId}
+                                </a>
+                            </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate">
