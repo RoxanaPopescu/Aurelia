@@ -253,7 +253,7 @@ export class RouteStop extends RouteStopBase
      */
     public toJSON(): any
     {
-        const json = {
+        return {
             id: this.id,
             reference: this.reference,
             location: this.location,
@@ -271,7 +271,5 @@ export class RouteStop extends RouteStopBase
             allColliStatus: this.allColliStatus?.slug,
             allColliScanMethod: this.allColliScanMethod?.slug
         };
-
-        return json;
     }
 }

@@ -99,7 +99,7 @@ export class RouteStopEditCustomElement
      */
     protected setColliStatus(status: RouteStopStatus, type: RouteStopType): void
     {
-        if (status.slug != "completed")
+        if (status.slug !== "completed")
         {
             this.model.routeStop.allColliStatus = undefined;
             this.model.routeStop.allColliScanMethod = undefined;
