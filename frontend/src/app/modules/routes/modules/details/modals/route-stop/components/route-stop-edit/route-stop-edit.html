@@ -2,7 +2,6 @@
 
     <require from="app/components/address-input/address-input"></require>
     <require from="app/components/info-icon/info-icon"></require>
-    <require from="../order-accordion/order-accordion"></require>
     <require from="./route-stop-edit.scss"></require>
 
     <modal-header scroll-fade>
@@ -53,7 +52,13 @@
 
             </text-input>
 
-            <select-input label="above" none.bind="false" value.bind="model.routeStop.status" display-value.bind="model.routeStop.status.name" class="flex-basis-1-of-2">
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="model.routeStop.status"
+                display-value.bind="model.routeStop.status.name"
+                change.trigger="setColliStatus($event.detail.value, model.routeStop.type)"
+                class="flex-basis-1-of-2">
 
                 <div slot="heading" translate>
                     Status
@@ -82,6 +87,7 @@
                 none.bind="false"
                 value.bind="model.routeStop.type"
                 display-value.bind="model.routeStop.type.name"
+                change.trigger="setColliStatus(model.routeStop.status, $event.detail.value)"
                 class="flex-basis-1-of-3">
 
                 <div slot="heading" translate>
@@ -156,6 +162,68 @@
                 </time-input>
 
             </div>
+
+        </div>
+
+    </modal-section>
+
+    <modal-section class="margin-bottom --line-above" if.bind="model.routeStop.allColliStatus">
+
+        <div slot="header" translate>
+            Colli
+        </div>
+
+        <div class="control-row margin-large-bottom">
+
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="model.routeStop.allColliStatus"
+                display-value.bind="model.routeStop.allColliStatus.name"
+                class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Status
+                </div>
+
+                <item repeat.for="status of colliStatuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.allColliStatus">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="model.routeStop.allColliScanMethod"
+                display-value.bind="model.routeStop.allColliScanMethod.name"
+                class="flex-basis-1-of-2">
+
+                <div slot="heading" translate>
+                    Scan method
+                </div>
+
+                <item repeat.for="status of colliScanMethods" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.routeStop.allColliScanMethod">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
 
         </div>
 

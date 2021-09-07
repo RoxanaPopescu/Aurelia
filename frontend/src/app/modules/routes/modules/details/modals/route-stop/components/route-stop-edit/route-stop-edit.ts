@@ -1,10 +1,10 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStop, Route, RouteStopStatus } from "app/model/route";
-import { RouteStopType } from "../../../../../../../../model/route/entities/route-stop-type";
+import { RouteStop, Route, RouteStopStatus, RouteStopType } from "app/model/route";
 import { Duration, DateTime } from "luxon";
 import { observable } from "aurelia-binding";
 import { DateTimeRange } from "shared/types";
+import { ColloScanMethod, ColloStatus } from "app/model/collo";
 
 @autoinject
 export class RouteStopEditCustomElement
@@ -18,6 +18,16 @@ export class RouteStopEditCustomElement
      * The available statuses.
      */
     protected statuses = Object.keys(RouteStopStatus.values).map(slug => new RouteStopStatus(slug as any));
+
+    /**
+     * The colli statuses.
+     */
+    protected colliStatuses = Object.keys(ColloStatus.values).map(slug => new ColloStatus(slug as any));
+
+    /**
+     * The colli statuses.
+     */
+    protected colliScanMethods = Object.keys(ColloScanMethod.values).map(slug => new ColloScanMethod(slug as any));
 
     /**
      * The available stop types.
@@ -81,6 +91,24 @@ export class RouteStopEditCustomElement
                 this.date = this.model.route.stops[0].arrivalTimeFrame.from?.startOf("day");
             }
         }
+    }
+
+    /**
+     * Called when the status is changed.
+     * If we are completing a stop we default the colli statues dependent on the stop type.
+     */
+    protected setColliStatus(status: RouteStopStatus, type: RouteStopType): void
+    {
+        if (status.slug != "completed")
+        {
+            this.model.routeStop.allColliStatus = undefined;
+            this.model.routeStop.allColliScanMethod = undefined;
+
+            return;
+        }
+
+        this.model.routeStop.allColliStatus = new ColloStatus(type.slug === "pickup" ? "picked-up" : "delivered");
+        this.model.routeStop.allColliScanMethod = new ColloScanMethod("manually");
     }
 
     /**
