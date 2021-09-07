@@ -110,7 +110,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Endpoint missing
     // TODO:BACKEND: Consider returning the model, if we at some point need lastChange, etc.
     /**
      * Saves the profile for the specified organization.
@@ -123,9 +122,14 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.request.body.name
+        await this.apiClient.post("organization/organizations/update",
+        {
+            body:
+            {
+                organizationId: context.params.organizationId,
+                name: context.request.body.name
+            }
+        });
 
         context.response.status = 204;
     }
@@ -149,7 +153,7 @@ export class OrganizationModule extends AppModule
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
                 teamId: context.request.body.teamId, // TODO: missing
-                messageToUser: context.request.body.message
+                message: context.request.body.message
             }
         });
 
@@ -260,7 +264,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Endpoint missing
     /**
      * Resends the invite for the specified user to the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -273,10 +276,18 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.userId
-        // context.body.roleId
+        await this.apiClient.put("identity/memberships",
+        {
+            query:
+            {
+                organizationId: context.params.organizationId,
+                userId: context.params.userId
+            },
+            body:
+            {
+                newRoleId: context.body.roleId
+            }
+        });
 
         context.response.status = 204;
     }
@@ -307,7 +318,6 @@ export class OrganizationModule extends AppModule
     // TODO:BACKEND: Fix casing in group names
     // TODO:BACKEND: Permission type MUST be lower-case
     // TODO:BACKEND: Permission slug MUST be lower-kebab-case, both here and in roles
-    // TODO:FRONTEND: Hardcoded in BFF as a workaround; remove when backend works
     /**
      * Gets the permissions available within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -327,18 +337,6 @@ export class OrganizationModule extends AppModule
             group: permission.group,
             name: permission.name ?? permission.slug
         }));
-
-        // TODO: Remove once backend endpoint works.
-
-        // const permissionNames = getStrings("./resources/strings/permissions.json");
-        // const permissionGroupNames = getStrings("./resources/strings/permission-groups.json");
-
-        // context.response.body = (permissions as any[]).map(permission =>
-        // ({
-        //     ...permission,
-        //     group: permissionGroupNames[permission.group],
-        //     name: permissionNames[permission.slug]
-        // }));
 
         context.response.status = 200;
     }
