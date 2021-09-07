@@ -298,7 +298,7 @@
                     <div>
 
                         <template repeat.for="imageId of model.event.data.deviation.imageIds">
-                            <let image-info.bind="imageId | imageInfo: true"></let>
+                            <let image-info.bind="imageId | imageInfo: false"></let>
                             <a
                                 modal-href="modal: image; model.bind: { imageUrl: imageInfo.url };"
                                 class="margin-right-large">

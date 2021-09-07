@@ -1,0 +1,94 @@
+<template class="${expanded ? '--expanded' : ''}">
+
+    <require from="app/components/accordion/accordion"></require>
+    <require from="./colli-accordion.scss"></require>
+
+    <accordion expandable.bind="model.colli.length > 0" expanded.bind="expanded">
+
+        <div slot="header">
+
+            <div class="text-align-left">
+                ${model.colli.length | number} ${model.colli.length | plural: "collo" : "colli"}
+            </div>
+
+        </div>
+
+        <data-table appearance="rows" class="font-small ${showAllColli ? '--expanded' : ''}">
+
+            <data-table-headers>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate" translate>
+                        Collo barcode
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate" translate>
+                        Weight
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate" translate>
+                        Length
+                    </span>
+                </data-table-cell>
+
+                <data-table-cell>
+                    <span class="opacity-faded text-truncate" translate>
+                        Tags
+                    </span>
+                </data-table-cell>
+
+            </data-table-headers>
+
+            <template repeat.for="collo of model.colli">
+
+                <data-table-row model.bind="collo" clickable.bind="false">
+
+                    <data-table-cell>
+                        <div>
+                            ${collo.barcode}
+                        </div>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${collo.weight | number} kg
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${collo.dimensions.height | number}m x ${collo.dimensions.length | number}m x ${collo.dimensions.width | number}m
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${collo.tags | list: 'short' : 'unit'}
+                        </span>
+                    </data-table-cell>
+
+                </data-table-row>
+
+            </template>
+
+        </data-table>
+
+        <a if.bind="model.colli.length > 3" class="order-accordion-show-all-toggle font-small" click.trigger="onShowAllColliToggle()" surface="card">
+
+            <template if.bind="showAllColli" translate>
+                Show less
+            </template>
+
+            <template if.bind="!showAllColli" translate>
+                Show all
+            </template>
+
+        </a>
+
+    </accordion>
+
+</template>

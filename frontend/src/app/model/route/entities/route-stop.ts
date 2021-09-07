@@ -7,6 +7,7 @@ import { RouteStopActions } from "./route-stop-actions";
 import clone from "clone";
 import { Duration } from "luxon";
 import { RouteStopIdentity } from "./route-stop-identity";
+import { ColloScanMethod, ColloStatus } from "app/model/collo";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -120,6 +121,16 @@ export class RouteStop extends RouteStopBase
      * The order ids associated with the stop.
      */
     public readonly orderIds: string[];
+
+    /**
+     * The status of all the collo.
+     */
+    public allColliStatus: ColloStatus | undefined;
+
+     /**
+      * The status scan method of all the collo.
+      */
+    public allColliScanMethod: ColloScanMethod | undefined;
 
     /**
      * True if there is an alert for this route stop, otherwise false.
@@ -256,7 +267,9 @@ export class RouteStop extends RouteStopBase
             arrivedTime: this.arrivedTime,
             completedTime: this.completedTime,
             tags: this.tags,
-            breakTime: this.breakTime?.as("seconds")
+            breakTime: this.breakTime?.as("seconds"),
+            allColliStatus: this.allColliStatus?.slug,
+            allColliScanMethod: this.allColliScanMethod?.slug
         };
     }
 }

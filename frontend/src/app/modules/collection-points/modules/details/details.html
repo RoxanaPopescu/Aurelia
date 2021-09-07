@@ -1,0 +1,160 @@
+<template>
+
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
+    <require from="./components/collection-point-overview/collection-point-overview"></require>
+    <require from="./details.scss"></require>
+
+    <page name="details">
+
+        <page-content scroll>
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <div accent="inherit" translate>
+                            Collection point
+                        </div>
+
+                        <span class="user-select-text">
+                            ${id}
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+            </page-header>
+
+            <collection-point-overview entry.bind="collectionPoint"></collection-point-overview>
+
+            <page-section>
+
+                <div slot="header" class="flex-row">
+
+                    <div translate>
+                        Orders
+                    </div>
+
+                </div>
+
+                <data-table
+                    appearance="rows"
+                    appendable.bind="collectionPoint != null">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Id
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Timeframe
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Colli count
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Tags
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Contact person
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Contact phone
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="order of collectionPoint.orders">
+
+                        <data-table-row
+                            model.bind="order"
+                            accent.bind="order.status.accent"
+                            click.call="onOrderClick(order)"
+                            class="${(order.status.slug == 'rejected') ? '--cancelled' : order.status.accent.includes('damaged', 'missing') ? '--failed' : ''}">
+
+                            <data-table-cell>
+                                <a href="/orders/details/${order.creatorOrderId}" class="text-truncate">
+                                    ${order.creatorOrderId}
+                                </a>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.pickupTimeFrame | timeRange : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.status.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.colli.length}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.tags | list: 'short' : 'unit'}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.contact.fullName}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${order.contact.phone}
+                                </span>
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <empty-indicator if.bind="collectionPoint.orders.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No orders</div>
+                </empty-indicator>
+
+                <busy-indicator if.bind="collectionPoint == null" class="margin-largest"></busy-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>
