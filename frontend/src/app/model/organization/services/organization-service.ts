@@ -159,6 +159,18 @@ export class OrganizationService
     }
 
     /**
+     * Accepts the specified invite.
+     * @param inviteId The ID of the invite to accept.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async acceptInvite(inviteId: string): Promise<void>
+    {
+        const organizationId = this._identityService.identity!.outfit!.id;
+
+        await this._apiClient.post(`organizations/${organizationId}/invites/${inviteId}/accept`);
+    }
+
+    /**
      * Changes the role of the specified user in the current organization.
      * @param userId The ID of the user to whose role should be changed.
      * @param roleId The ID of the role to assing to the user.

@@ -36,14 +36,13 @@ export abstract class AccountSubPage
      * Called by the framework when the page is activating.
      * @param view The slug identifying the view to present in the account component.
      * @param url The value of the `url` query parameter, if relevant.
-     * @param token The value of the `token` query parameter, if relevant.
      */
     public configure(accountModel?: Partial<AccountModel>, url?: string): void
     {
         this.model =
         {
             // TODO: Choose default url based on which permissions the user has?
-            onViewChanged: () => this.onViewChanged(),
+            onViewChanged: () => this.onViewChanged(url),
             onSignedUp: () => this.onSignedUp(url ?? "/"),
             onSignedIn: () => this.onSignedIn(url && url !== "/"
                 ? this.historyHelper.getRouteUrl(`/account/choose-organization?url=${encodeURIComponent(url)}`)
@@ -61,10 +60,18 @@ export abstract class AccountSubPage
 
     /**
      * Called when the account view has changed.
+     * @param urlParam The value of the `url` query parameter, if relevant.
      */
-    protected async onViewChanged(): Promise<void>
+    protected async onViewChanged(urlParam?: string): Promise<void>
     {
-        await this.historyHelper.navigate(`/account/${this.model.view}`);
+        let url = `/account/${this.model.view}`;
+
+        if (urlParam && ["sign-in", "sign-up", "forgot-password"].includes(this.model.view))
+        {
+            url += `?url=${encodeURIComponent(urlParam)}`;
+        }
+
+        await this.historyHelper.navigate(url);
     }
 
     /**

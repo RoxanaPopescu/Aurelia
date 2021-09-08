@@ -122,21 +122,25 @@
 
         </div>
 
-        <div class="margin-top text-align-center opacity-faded-less" translate>
-            or
-        </div>
+        <template if-environment="development">
 
-        <div class="account-button-grid margin-top" surface="base">
+            <div class="margin-top text-align-center opacity-faded-less" translate>
+                or
+            </div>
 
-            <button appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
-                Sign up with <b>Google</b>
-            </button>
+            <div class="account-button-grid margin-top" surface="base">
 
-            <button appearance="solid" accent="primary" click.delegate="signUpWithMicrosoft()" translate>
-                Sign up with <b>Microsoft</b>
-            </button>
+                <button appearance="solid" accent="primary" click.delegate="signUpWithGoogle()" translate>
+                    Sign up with <b>Google</b>
+                </button>
 
-        </div>
+                <button appearance="solid" accent="primary" click.delegate="signUpWithMicrosoft()" translate>
+                    Sign up with <b>Microsoft</b>
+                </button>
+
+            </div>
+
+        </template>
 
     </div>
 
