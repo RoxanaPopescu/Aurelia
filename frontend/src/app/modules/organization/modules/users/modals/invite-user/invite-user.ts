@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
-import { OrganizationService, OrganizationUser, IOrganizationUserInvite, OrganizationTeam, OrganizationRole } from "app/model/organization";
+import { OrganizationService, OrganizationUser, IOrganizationUserInviteInit, OrganizationTeam, OrganizationRole } from "app/model/organization";
 import { Operation } from "shared/utilities";
 
 @autoinject
@@ -26,7 +26,7 @@ export class InviteUserPanel
     /**
      * The new invite.
      */
-    protected invite: IOrganizationUserInvite;
+    protected invite: IOrganizationUserInviteInit;
 
     /**
      * The available teams.

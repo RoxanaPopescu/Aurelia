@@ -6,19 +6,11 @@
 
         <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
 
-            <text-input value.bind="model.organizationName" autocomplete="organization" autofocus>
+            <text-input if.bind="!model.inviteId" value.bind="model.organizationName" autocomplete="organization" autofocus>
 
                 <span slot="placeholder" translate>
                     Organization name
                 </span>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="model.organizationName">
-                    </required-validator>
-
-                </div>
 
             </text-input>
 

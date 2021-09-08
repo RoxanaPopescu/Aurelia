@@ -1,25 +1,37 @@
 /**
- * Represents an invite to join an organization.
+ * Represents info about an invite to join an organization.
  */
-export interface IOrganizationUserInvite
+export class OrganizationUserInvite
 {
     /**
-     * The email of the user to invite.
+     * Creates a new instance of the type.
+     * @param data The response data from which the instance should be created.
      */
-    email: string;
+    public constructor(data: any)
+    {
+        this.id = data.id;
+        this.organization = data.organization;
+        this.role = data.role;
+        this.team = data.team;
+    }
 
     /**
-     * The ID of the role to assign to the user.
+     * The ID of the invite.
      */
-    roleId: string;
+    public readonly id: string;
 
     /**
-     * The ID of the team to which the user should be assigned, if any.
+     * The the organization that sent the invite.
      */
-    teamId: string | undefined;
+    public readonly organization: { id: string; name: string };
 
     /**
-     * The message to include in the invite email.
+     * The role that would be assign to the user.
      */
-    message: string;
+    public readonly role: { id: string; name: string };
+
+    /**
+     * The team to which the user would be assigned, if any.
+     */
+    public readonly team: { id: string; name: string } | undefined;
 }

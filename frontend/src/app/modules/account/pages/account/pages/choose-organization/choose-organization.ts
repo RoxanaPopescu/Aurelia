@@ -11,6 +11,11 @@ interface IChooseOrganizationPageParams
      * The URL to navigate to after signing in, or undefiend to not navigate.
      */
     url?: string;
+
+    /**
+     * The ID of the invite to present, if any.
+     */
+    invite: string | undefined;
 }
 
 @autoinject
@@ -24,9 +29,9 @@ export class ChooseOrganizationPage extends AccountSubPage
     {
         if (this.identityService.identity == null)
         {
-            return new Redirect(params.url && params.url !== "/"
-                ? this.historyHelper.getRouteUrl(`/account/sign-in?url=${encodeURIComponent(params.url)}`)
-                : this.historyHelper.getRouteUrl("/account/sign-in"));
+            const url = this.getUrlWithQuery("/account/sign-in", { url: params.url, invite: params.invite });
+
+            return new Redirect(this.historyHelper.getRouteUrl(url));
         }
 
         return true;
@@ -38,6 +43,6 @@ export class ChooseOrganizationPage extends AccountSubPage
      */
     public activate(params: IChooseOrganizationPageParams): void
     {
-        this.configure({ view: "choose-organization" }, params.url);
+        this.configure({ view: "choose-organization", inviteId: params.invite }, params.url, params.invite);
     }
 }

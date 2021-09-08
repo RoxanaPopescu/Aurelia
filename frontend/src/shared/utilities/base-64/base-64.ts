@@ -7,28 +7,70 @@
 export namespace Base64
 {
     /**
-     * Encodes a unicode string to a Base64 string.
-     * @param text The string to encode.
-     * @param unicode True to use URL encoding to handle Unicode characters, otherwise false.
+     * Encodes a string using Base64.
+     * @param string The string to encode.
+     * @param unicode True if the string may contain Unicode characters, otherwise false.
+     * @param url True to use the URL-safe alphabet, otherwise false.
+     * @param padded True to use padding, otherwise false.
      * @returns The encoded string.
      */
-    export function encode(text: string, unicode = false): string
+    export function encode(string: string, unicode = false, url = false, padded = true): string
     {
-        return unicode ?
-            btoa(encodeURIComponent(text).replace(/%([0-9A-F]{2})/g, ($0, $1)  => String.fromCharCode(`0x${$1}` as any))) :
-            btoa(text);
+        let result = unicode ?
+            btoa(encodeURIComponent(string).replace(/%([0-9A-F]{2})/g, ($0, $1) => String.fromCharCode(`0x${$1}` as any))) :
+            btoa(string);
+
+        if (url)
+        {
+            result = result.replace(/\+/g, "-").replace(/\//g, "_");
+        }
+
+        if (!padded)
+        {
+            result = result.replace(/=/g, "");
+        }
+
+        return result;
     }
 
     /**
-     * Decodes a Base64 string to a unicode string.
-     * @param text The string to decode.
-     * @param unicode True to use URL decoding to handle Unicode characters, otherwise false.
+     * Decodes a string using Base64.
+     * @param string The string to decode.
+     * @param unicode True if the string may contain Unicode characters, otherwise false.
+     * @param url True to use the URL-safe alphabet, otherwise false.
+     * @param padded True if padding is used, otherwise false.
      * @returns The decoded string.
      */
-    export function decode(text: string, unicode = false): string
+    export function decode(string: string, unicode = false, url = false, padded = true): string
     {
+        if (url)
+        {
+            // tslint:disable: no-parameter-reassignment
+
+            string = string.replace(/-/g, "+").replace(/_/g, "/");
+        }
+
+        if (!padded)
+        {
+            switch (string.length % 4)
+            {
+                case 0:
+                    break;
+                case 2:
+                    string += "==";
+                    break;
+                case 3:
+                    string += "=";
+                    break;
+                default:
+                    throw new Error("Invalid Base64URL string");
+            }
+
+            // tslint:enable
+        }
+
         return unicode ?
-            decodeURIComponent(atob(text).split("").map(c => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`).join("")) :
-            atob(text);
+            decodeURIComponent(atob(string).split("").map(c => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`).join("")) :
+            atob(string);
     }
 }

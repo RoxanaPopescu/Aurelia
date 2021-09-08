@@ -3,6 +3,7 @@ export * from "./entities/organization-info";
 export * from "./entities/organization-role";
 export * from "./entities/organization-team";
 export * from "./entities/organization-user";
+export * from "./entities/organization-user-invite-init";
 export * from "./entities/organization-user-invite";
 export * from "./entities/organization-user-status";
 export * from "./entities/organization-profile";

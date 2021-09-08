@@ -13,6 +13,11 @@ export interface ISignUpModel extends Partial<IAccountInit>
     view: "sign-up";
 
     /**
+     * The ID of the invite to present, if any.
+     */
+    inviteId: string | undefined;
+
+    /**
      * The name of the organization.
      */
     organizationName?: string;
@@ -176,35 +181,37 @@ export class SignUpCustomElement
                 return;
             }
 
-            let organization: OrganizationInfo;
+            let organization: OrganizationInfo | undefined;
 
-            try
+            if (this.model.organizationName != null)
             {
-                organization = await this._organizationService.create(
+                try
                 {
-                    type: "business",
-                    name: this.model.organizationName!
-                });
+                    organization = await this._organizationService.create(
+                    {
+                        type: "business",
+                        name: this.model.organizationName
+                    });
+                }
+                catch (error)
+                {
+                    Log.error("An error occurred while creating the organization.", error);
+                }
             }
-            catch (error)
-            {
-                Log.error("An error occurred while creating the organization.", error);
 
-                return;
-            }
-
-            try
+            if (organization != null)
             {
-                // NOTE:
-                // The organization is created asynchronously, so failed API requests are to be expected.
-                // However, due to the retry logic, authorization should eventually succeed.
-                await this._identityService.authorize(organization.id, true);
-            }
-            catch (error)
-            {
-                Log.error("An error occurred while signing in to the organization.", error);
-
-                return;
+                try
+                {
+                    // NOTE:
+                    // The organization is created asynchronously, so failed API requests are to be expected.
+                    // However, due to the retry logic, authorization should eventually succeed.
+                    await this._identityService.authorize(organization.id, true);
+                }
+                catch (error)
+                {
+                    Log.error("An error occurred while signing in to the organization.", error);
+                }
             }
 
             // tslint:disable-next-line: await-promise

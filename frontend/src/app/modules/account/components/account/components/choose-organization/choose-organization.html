@@ -7,6 +7,18 @@
         <div surface="base">
 
             <button
+                if.bind="invite != null"
+                class="choose-organization-item margin-bottom"
+                appearance="solid"
+                accent="primary"
+                click.delegate="onInviteClick(invite.id)">
+                <b>${invite.organization.name}</b>
+                <span class="flex-push-right opacity-faded" translate>
+                    Invite
+                </span>
+            </button>
+
+            <button
                 repeat.for="organization of organizations"
                 class="choose-organization-item margin-bottom"
                 appearance="solid"
@@ -15,7 +27,7 @@
                 <b>${organization.name}</b>
             </button>
 
-            <div if.bind="organizations.length == 0" class="choose-organization-none font-large" translate>
+            <div if.bind="invite == null && organizations.length == 0" class="choose-organization-none font-large" translate>
                 You are not a member of any organizations
             </div>
 

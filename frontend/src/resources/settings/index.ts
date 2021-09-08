@@ -101,6 +101,7 @@ export default
                 "files": { version: "2", obfuscate: false },
                 "identity": { version: "2", obfuscate: false },
                 "organizations": { version: "2", obfuscate: false },
+                "invites": { version: "2", obfuscate: false },
                 "account": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },

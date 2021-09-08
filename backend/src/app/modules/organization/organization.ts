@@ -198,13 +198,36 @@ export class OrganizationModule extends AppModule
     }
 
     /**
+     * Gets the specified invite.
+     * @param context.params.inviteId The ID of the invite.
+     * @returns
+     * - 200: An object representing the specified invite.
+     */
+    public "GET /v2/invites/:inviteId" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.get(`identity/memberships/invitation/${context.params.inviteId}/resend`);
+
+        context.response.body =
+        {
+            id: result.data.id,
+            email: result.data.invitedEmailAddress,
+            organization: result.data.organization,
+            role: result.data.role,
+            team: result.data.team
+        };
+
+        context.response.status = 200;
+    }
+
+    /**
      * Resends the specified invite.
-     * @param context.params.organizationId The ID of the organization.
      * @param context.params.inviteId The ID of the invite to resend.
      * @returns
      * - 204: No content
      */
-    public "POST /v2/organizations/:organizationId/invites/:inviteId/resend" = async (context: AppContext) =>
+    public "POST /v2/invites/:inviteId/resend" = async (context: AppContext) =>
     {
         await context.authorize();
 
@@ -214,13 +237,27 @@ export class OrganizationModule extends AppModule
     }
 
     /**
+     * Accepts the specified invite.
+     * @param context.params.inviteId The ID of the invite to resend.
+     * @returns
+     * - 204: No content
+     */
+    public "POST /v2/invites/:inviteId/accept" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        await this.apiClient.post(`identity/memberships/invitation/${context.params.inviteId}/accept`);
+
+        context.response.status = 204;
+    }
+
+    /**
      * Revokes the specified invite.
-     * @param context.params.organizationId The ID of the organization.
      * @param context.params.inviteId The ID of the invite to revoke.
      * @returns
      * - 204: No content
      */
-    public "POST /v2/organizations/:organizationId/invites/:inviteId/revoke" = async (context: AppContext) =>
+    public "POST /v2/invites/:inviteId/revoke" = async (context: AppContext) =>
     {
         await context.authorize();
 

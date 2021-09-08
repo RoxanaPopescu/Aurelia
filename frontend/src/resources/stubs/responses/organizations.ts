@@ -25,7 +25,7 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/delete":
     {
-      status: 201
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/profile":
@@ -38,7 +38,7 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/profile/save":
     {
-      status: 201
+      status: 204
     },
 
     "POST /api/v2/organizations/mover-organization-id/invites/send":
@@ -50,11 +50,6 @@ export default
         role: { id: "role-1-id", name: "Role 1" },
         team: { id: "team-1-id", name: "Team 1" }
       }
-    },
-
-    "POST /api/v2/organizations/mover-organization-id/invites/invite-1-id/resend":
-    {
-      status: 201
     },
 
     "GET /api/v2/organizations/mover-organization-id/invites":
@@ -70,9 +65,31 @@ export default
       ]
     },
 
-    "POST /api/v2/organizations/mover-organization-id/invites/invite-1-id/revoke":
+    "GET /api/v2/invites/invite-1-id":
     {
-      status: 201
+      body:
+      {
+        id: "invite-1-id",
+        email: "jane-doe@example.com",
+        organization: { id: "mover-organization-id", name: "Mover"},
+        role: { id: "role-1-id", name: "Role 1" },
+        team: { id: "team-1-id", name: "Team 1" }
+      }
+    },
+
+    "POST /api/v2/invites/invite-1-id/resend":
+    {
+      status: 204
+    },
+
+    "POST /api/v2/invites/invite-1-id/accept":
+    {
+      status: 204
+    },
+
+    "POST /api/v2/invites/invite-1-id/revoke":
+    {
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/users":
@@ -89,12 +106,12 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/users/user-1-id/change-role":
     {
-      status: 201
+      status: 204
     },
 
     "POST /api/v2/organizations/mover-organization-id/users/user-1-id/remove":
     {
-      status: 201
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/roles":
@@ -200,7 +217,7 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/roles/role-1-id/delete":
     {
-      status: 201
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id":
@@ -265,7 +282,7 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/delete":
     {
-      status: 201
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
@@ -282,12 +299,12 @@ export default
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/add":
     {
-      status: 201
+      status: 204
     },
 
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-1-id/remove":
     {
-      status: 201
+      status: 204
     },
 
     "GET /api/v2/organizations/mover-organization-id/permissions":

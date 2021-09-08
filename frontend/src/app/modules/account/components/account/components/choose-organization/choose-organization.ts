@@ -1,7 +1,7 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
-import { OrganizationService, OrganizationInfo } from "app/model/organization";
+import { OrganizationService, OrganizationInfo, OrganizationUserInvite } from "app/model/organization";
 
 export interface IChooseOrganizationModel
 {
@@ -9,6 +9,11 @@ export interface IChooseOrganizationModel
      * The slug identifying the current view presented by the component.
      */
     view: "choose-organization";
+
+    /**
+     * The ID of the invite to present, if any.
+     */
+    inviteId: string | undefined;
 
     /**
      * The function to call when the operation completes.
@@ -60,6 +65,11 @@ export class ChooseOrganizationCustomElement
     protected organizations: OrganizationInfo[];
 
     /**
+     * The pending invite, if an invite ID was specified.
+     */
+    protected invite: OrganizationUserInvite | undefined;
+
+    /**
      * Called by the framework when the component is binding.
      * Resets the `done` state of the component.
      */
@@ -71,7 +81,17 @@ export class ChooseOrganizationCustomElement
         {
             this.model.busy = true;
 
-            this.organizations = await this._organizationService.getAll();
+            const promises: Promise<any>[] =
+            [
+                this._organizationService.getAll()
+            ];
+
+            if (this.model.inviteId != null)
+            {
+                promises.push(this._organizationService.getInvite(this.model.inviteId));
+            }
+
+            [this.organizations, this.invite] = await Promise.all(promises);
         }
         catch (error)
         {
@@ -93,9 +113,9 @@ export class ChooseOrganizationCustomElement
     }
 
     /**
-     * Called when an organization is pressed.
+     * Called when an organization is clicked.
      * Authorizes the user to access the organization.
-     * @param organizationId The ID of the organization for which the user should be authorized.
+     * @param organizationId The ID of the organization that was clicked.
      */
     protected async onOrganizationClick(organizationId: string): Promise<void>
     {
@@ -116,6 +136,53 @@ export class ChooseOrganizationCustomElement
         catch (error)
         {
             Log.error("An error occurred while signing in to the organization.", error);
+        }
+        finally
+        {
+            this.model.busy = false;
+        }
+    }
+
+    /**
+     * Called when an invite is clicked.
+     * Accepts the invite and authorizes the user to access the organization.
+     * @param inviteId The ID of the invite that was clicked.
+     */
+    protected async onInviteClick(inviteId: string): Promise<void>
+    {
+        this.model.busy = true;
+
+        try
+        {
+            try
+            {
+                await this._organizationService.acceptInvite(inviteId);
+            }
+            catch (error)
+            {
+                Log.error("An error occurred while accepting the invite.", error);
+
+                return;
+            }
+
+            try
+            {
+                // NOTE:
+                // The invite is created asynchronously, so failed API requests are to be expected.
+                // However, due to the retry logic, authorization should eventually succeed.
+                await this._identityService.authorize(inviteId, true);
+            }
+            catch (error)
+            {
+                Log.error("An error occurred while signing in to the organization.", error);
+
+                return;
+            }
+
+            // tslint:disable-next-line: await-promise
+            await this.model.onChooseOrganization?.();
+
+            this.model.done = true;
         }
         finally
         {

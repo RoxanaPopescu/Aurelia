@@ -11,6 +11,11 @@ interface ISignInPageParams
      * The URL to navigate to after signing in.
      */
     url?: string;
+
+    /**
+     * The ID of the invite to present, if any.
+     */
+    invite: string | undefined;
 }
 
 @autoinject
@@ -24,7 +29,9 @@ export class SignInPage extends AccountSubPage
     {
         if (this.identityService.identity != null)
         {
-            return new Redirect(this.historyHelper.getRouteUrl(params.url ?? "/"));
+            const url = this.getUrlWithQuery("/account/choose-organization", { url: params.url, invite: params.invite });
+
+            return new Redirect(this.historyHelper.getRouteUrl(url));
         }
 
         return true;
@@ -36,6 +43,6 @@ export class SignInPage extends AccountSubPage
      */
     public activate(params: ISignInPageParams): void
     {
-        this.configure({ view: "sign-in" }, params.url);
+        this.configure({ view: "sign-in" }, params.url, params.invite);
     }
 }

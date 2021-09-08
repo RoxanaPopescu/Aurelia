@@ -2,6 +2,10 @@ import { autoinject } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { AccountModel } from "app/modules/account/components/account/account";
+import { MapObject } from "shared/types";
+
+// TODO: Choose default url based on which permissions the user has?
+const defaultUrl = "/";
 
 @autoinject
 export abstract class AccountSubPage
@@ -36,39 +40,40 @@ export abstract class AccountSubPage
      * Called by the framework when the page is activating.
      * @param view The slug identifying the view to present in the account component.
      * @param url The value of the `url` query parameter, if relevant.
+     * @param inviteId The value of the `inviteId` query parameter, if relevant.
      */
-    public configure(accountModel?: Partial<AccountModel>, url?: string): void
+    public configure(accountModel?: Partial<AccountModel>, url?: string, inviteId?: string): void
     {
         this.model =
         {
-            // TODO: Choose default url based on which permissions the user has?
-            onViewChanged: () => this.onViewChanged(url),
-            onSignedUp: () => this.onSignedUp(url ?? "/"),
-            onSignedIn: () => this.onSignedIn(url && url !== "/"
-                ? this.historyHelper.getRouteUrl(`/account/choose-organization?url=${encodeURIComponent(url)}`)
-                : this.historyHelper.getRouteUrl("/account/choose-organization")),
-            onSignedOut: () => this.onSignedOut(url ?? "/account/sign-in"),
+            onViewChanged: () => this.onViewChanged(url, inviteId),
+            onSignedUp: () => this.onSignedUp(url, inviteId),
+            onSignedIn: () => this.onSignedIn(url, inviteId),
+            onSignedOut: () => this.onSignedOut(url),
+            onOrganizationCreated: () => this.onOrganizationCreated(url, inviteId),
             onConfirmedEmail: () => this.onConfirmedEmail(url),
-            onChangedPassword: () => this.onChangedPassword(url ?? "/"),
-            onOrganizationCreated: () => this.onOrganizationCreated(url ?? "/account/choose-organization"),
-            onChooseOrganization: () => this.onChooseOrganization(url ?? "/"),
+            onChangedPassword: () => this.onChangedPassword(url),
+            onChooseOrganization: () => this.onChooseOrganization(url),
 
             ...accountModel
 
         } as any;
+
+        this.historyHelper.setTitle();
     }
 
     /**
      * Called when the account view has changed.
      * @param urlParam The value of the `url` query parameter, if relevant.
+     * @param inviteId The value of the `inviteId` query parameter, if relevant.
      */
-    protected async onViewChanged(urlParam?: string): Promise<void>
+    protected async onViewChanged(urlParam?: string, inviteId?: string): Promise<void>
     {
         let url = `/account/${this.model.view}`;
 
-        if (urlParam && ["sign-in", "sign-up", "forgot-password"].includes(this.model.view))
+        if (["sign-in", "sign-up", "forgot-password", "choose-organization", "create-organization"].includes(this.model.view))
         {
-            url += `?url=${encodeURIComponent(urlParam)}`;
+            url = this.getUrlWithQuery(url, { url: urlParam, invite: inviteId });
         }
 
         await this.historyHelper.navigate(url);
@@ -76,86 +81,112 @@ export abstract class AccountSubPage
 
     /**
      * Called when the sign up operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
+     * @param inviteId The value of the `inviteId` query parameter, if relevant.
      * @returns A promise that will be resolved when the operation succeeds.
      */
-    protected async onSignedUp(url?: string): Promise<void>
+    protected async onSignedUp(urlParam?: string, inviteId?: string): Promise<void>
     {
-        if (url)
+        let url: string;
+
+        if (urlParam)
         {
-            await this.historyHelper.navigate(url);
+            url = this.getUrlWithQuery(urlParam, { url: urlParam, invite: inviteId });
         }
+        else if (this.identityService.identity?.outfit == null)
+        {
+            url = this.getUrlWithQuery("/account/choose-organization", { url: urlParam, invite: inviteId });
+        }
+        else
+        {
+            url = defaultUrl;
+        }
+
+        await this.historyHelper.navigate(url);
     }
 
     /**
      * Called when the sign in operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
+     * @param inviteId The value of the `inviteId` query parameter, if relevant.
      */
-    protected async onSignedIn(url?: string): Promise<void>
+    protected async onSignedIn(urlParam?: string, inviteId?: string): Promise<void>
     {
-        if (url)
-        {
-            await this.historyHelper.navigate(url);
-        }
+        const url = this.getUrlWithQuery("/account/choose-organization", { url: urlParam, invite: inviteId });
+
+        await this.historyHelper.navigate(url);
     }
 
     /**
      * Called when the sign in operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
      */
-    protected async onSignedOut(url?: string): Promise<void>
+    protected async onSignedOut(urlParam?: string): Promise<void>
     {
-        if (url)
-        {
-            await this.historyHelper.navigate(url, { replace: true });
-        }
+        await this.historyHelper.navigate(urlParam ?? "/account/sign-in", { replace: true });
     }
 
     /**
      * Called when the change password operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
      */
-    protected async onChangedPassword(url?: string): Promise<void>
+    protected async onChangedPassword(urlParam?: string): Promise<void>
     {
-        if (url)
-        {
-            await this.historyHelper.navigate(url);
-        }
+        await this.historyHelper.navigate(urlParam ?? defaultUrl);
     }
 
     /**
      * Called when the confirm email operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
      */
-    protected async onConfirmedEmail(url?: string): Promise<void>
+    protected async onConfirmedEmail(urlParam?: string): Promise<void>
     {
-        if (url)
+        if (urlParam)
         {
-            await this.historyHelper.navigate(url, { replace: true });
+            await this.historyHelper.navigate(urlParam, { replace: true });
         }
     }
 
     /**
      * Called when the create organization operation completes.
-     * @param url The URL to navigate to, if any.
+     * @param urlParam The value of the `url` query parameter, if relevant.
+     * @param inviteId The value of the `inviteId` query parameter, if relevant.
      */
-    private async onOrganizationCreated(url?: string): Promise<void>
+    protected async onOrganizationCreated(urlParam?: string, inviteId?: string): Promise<void>
     {
-        if (url)
-        {
-            await this.historyHelper.navigate(url);
-        }
+        const url = this.getUrlWithQuery("/account/choose-organization", { url: urlParam, invite: inviteId });
+
+        await this.historyHelper.navigate(url);
     }
 
     /**
      * Called when the choose organization operation completes.
-     * @param url The URL to navigate to.
+     * @param urlParam The value of the `url` query parameter, if relevant.
      */
-    private async onChooseOrganization(url: string): Promise<void>
+    protected async onChooseOrganization(urlParam?: string): Promise<void>
     {
-        if (url)
+        await this.historyHelper.navigate(urlParam ?? defaultUrl);
+    }
+
+    protected getUrlWithQuery(url: string, query: MapObject<string | undefined>): string
+    {
+        const params: string[] = [];
+
+        for (const key of Object.keys(query))
         {
-            await this.historyHelper.navigate(url);
+            if (query[key])
+            {
+                params.push(`${key}=${encodeURIComponent(query[key]!)}`);
+            }
         }
+
+        if (params.length > 0)
+        {
+            const parts = url.split("#", 2);
+
+            return `${parts[0]}${parts[0].includes("?") ? "&" : "?"}${params.join("&")}${parts[1] ?? ""}`;
+        }
+
+        return url;
     }
 }

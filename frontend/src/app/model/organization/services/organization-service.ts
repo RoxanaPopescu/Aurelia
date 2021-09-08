@@ -7,7 +7,8 @@ import { OrganizationProfile } from "../entities/organization-profile";
 import { OrganizationUser } from "../entities/organization-user";
 import { OrganizationRole } from "../entities/organization-role";
 import { OrganizationTeam } from "../entities/organization-team";
-import { IOrganizationUserInvite } from "../entities/organization-user-invite";
+import { IOrganizationUserInviteInit } from "../entities/organization-user-invite-init";
+import { OrganizationUserInvite } from "../entities/organization-user-invite";
 import { OrganizationPermission } from "../entities/organization-permission";
 
 /**
@@ -109,16 +110,54 @@ export class OrganizationService
      * @param invite The invite to send.
      * @returns A promise that will be resolved with the new user.
      */
-    public async inviteUser(invite: IOrganizationUserInvite): Promise<OrganizationUser>
+    public async inviteUser(invite: IOrganizationUserInviteInit): Promise<OrganizationUser>
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/invites/send`,
         {
-            body: invite
+            body:
+            {
+                ...invite,
+
+                // TODO: This should take into account the baseUrl.
+                acceptUrl: `${location.protocol}//${location.host}/account/sign-up?invite={inviteId}`
+            }
         });
 
         return new OrganizationUser(true, result.data);
+    }
+
+    /**
+     * Resends the specified invite.
+     * @param inviteId The ID of the invite to resend.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async reinviteUser(inviteId: string): Promise<void>
+    {
+        await this._apiClient.post(`invites/${inviteId}/resend`);
+    }
+
+    /**
+     * Gets the specified invite.
+     * @param inviteId The ID of the invite to get.
+     * @returns A promise that will be resolved with the specified invite.
+     */
+    public async getInvite(inviteId: string): Promise<OrganizationUserInvite>
+    {
+        const result = await this._apiClient.get(`invites/${inviteId}`);
+
+        return new OrganizationUserInvite(result.data);
+    }
+
+    /**
+     * Accepts the specified invite.
+     * @param inviteId The ID of the invite to accept.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async acceptInvite(inviteId: string): Promise<void>
+    {
+        await this._apiClient.post(`invites/${inviteId}/accept`);
     }
 
     /**
@@ -144,30 +183,6 @@ export class OrganizationService
         const users = result2.data.map(user => new OrganizationUser(false, user));
 
         return [...invites, ...users];
-    }
-
-    /**
-     * Resends the specified invite.
-     * @param inviteId The ID of the invite to resend.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async reinviteUser(inviteId: string): Promise<void>
-    {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
-        await this._apiClient.post(`organizations/${organizationId}/invites/${inviteId}/resend`);
-    }
-
-    /**
-     * Accepts the specified invite.
-     * @param inviteId The ID of the invite to accept.
-     * @returns A promise that will be resolved when the operation succeedes.
-     */
-    public async acceptInvite(inviteId: string): Promise<void>
-    {
-        const organizationId = this._identityService.identity!.outfit!.id;
-
-        await this._apiClient.post(`organizations/${organizationId}/invites/${inviteId}/accept`);
     }
 
     /**
@@ -197,7 +212,7 @@ export class OrganizationService
 
         if (user.status.slug === "invited")
         {
-            await this._apiClient.post(`organizations/${organizationId}/invites/${user.id}/revoke`);
+            await this._apiClient.post(`invites/${user.id}/revoke`);
         }
         else
         {
