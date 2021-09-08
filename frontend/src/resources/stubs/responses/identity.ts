@@ -19,7 +19,7 @@ export default
 {
     "POST /api/v2/identity/authenticate":
     {
-        body
+        body: { ...body, outfit: undefined }
     },
 
     "POST /api/v2/identity/authorize":
