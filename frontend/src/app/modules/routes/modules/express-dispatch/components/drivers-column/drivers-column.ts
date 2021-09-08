@@ -1,11 +1,13 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
-import { IScroll, ModalService } from "shared/framework";
+import { IScroll, ModalService, ToastService } from "shared/framework";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { ExpressRouteService, DriverRoute } from "app/model/express-route";
 import { Workspace } from "../../services/workspace";
 import { ConfirmReleaseRouteDialog } from "./modals/confirm-release-route/confirm-release-route";
 import { Log } from "shared/infrastructure";
+import { ConfirmAutomaticDispatchDialog } from "./modals/confirm-automatic-dispatch/confirm-automatic-dispatch";
+import startedAutomaticDispatchToast from "./resources/strings/started-automatic-dispatch-toast.json";
 
 /**
  * The time between each update of the list.
@@ -19,15 +21,18 @@ export class DriversColumnCustomElement
      * Creates a new instance of the class.
      * @param routeService The `ExpressRouteService` instance.
      * @param modalService The `ModalService` instance.
+     * @param toastService The `ToastService` instance.
      */
-    public constructor(modalService: ModalService, routeService: ExpressRouteService)
+    public constructor(modalService: ModalService, routeService: ExpressRouteService, toastService: ToastService)
     {
         this._modalService = modalService;
         this._expressRouteService = routeService;
+        this.toastService = toastService;
     }
 
     private readonly _modalService: ModalService;
     private readonly _expressRouteService: ExpressRouteService;
+    protected readonly toastService: ToastService;
     private _updateTimeoutHandle: any;
 
     /**
@@ -250,6 +255,33 @@ export class DriversColumnCustomElement
         this.workspace.tab = "info";
 
         history.pushState({ view: "express-dispatch-merge" }, "", location.href);
+    }
+
+    protected async onStartAutomaticDispatch(): Promise<void>
+    {
+        if (!await this._modalService.open(ConfirmAutomaticDispatchDialog).promise)
+        {
+            return;
+        }
+
+        try
+        {
+            const toastModel =
+                {
+                    heading: startedAutomaticDispatchToast.heading,
+                    body: startedAutomaticDispatchToast.body,
+                    url: "/routes/automatic-dispatch"
+                };
+
+            this.toastService.open("success", toastModel);
+
+            // FIXME: Call correct endpoint
+            // await this._expressRouteService.releaseExpressRoutes(this.workspace.selectedExpressRoutes.map(r => r.id));
+        }
+        catch (error)
+        {
+            Log.error("Could not start automatic dispatch", error);
+        }
     }
 
     protected async onReleaseClick(): Promise<void>
