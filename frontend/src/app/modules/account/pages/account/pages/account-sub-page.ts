@@ -93,7 +93,7 @@ export abstract class AccountSubPage
         {
             url = this.getUrlWithQuery(urlParam, { url: urlParam, invite: inviteId });
         }
-        else if (this.identityService.identity?.outfit == null)
+        else if (inviteId != null)
         {
             url = this.getUrlWithQuery("/account/choose-organization", { url: urlParam, invite: inviteId });
         }
