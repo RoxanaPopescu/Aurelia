@@ -207,7 +207,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.get(`identity/memberships/invitation/${context.params.inviteId}/resend`);
+        const result = await this.apiClient.get(`identity/memberships/invitation/${context.params.inviteId}`);
 
         context.response.body =
         {
