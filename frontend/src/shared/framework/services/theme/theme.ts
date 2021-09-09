@@ -35,9 +35,10 @@ export interface ITheme
     classes?: string[];
 
     /**
-     * True if the theme should only be available if debugging is enabled, otherwise false.
+     * The names identifying the environments in which the theme should only be available,
+     * or undefined if the theme should be available in all environments.
      */
-    debug?: boolean;
+    environments?: string[];
 
     /**
      * True if the theme has a separate logo for use on the account pages, otherwise false.
@@ -73,7 +74,7 @@ export class Theme
         this.description = data.description;
         this.preview = data.preview;
         this.classes = data.classes ?? [];
-        this.debug = data.debug ?? false;
+        this.environments = data.environments;
         this.hasAccountLogo = data.hasAccountLogo ?? false;
     }
 
@@ -109,9 +110,10 @@ export class Theme
     public readonly classes: string[];
 
     /**
-     * True if the theme should only be available if debugging is enabled, otherwise false.
+     * The names identifying the environments in which the theme should only be available,
+     * or undefined if the theme should be available in all environments.
      */
-    public readonly debug: boolean;
+    public readonly environments: string[] | undefined;
 
     /**
      * True if the theme has a separate logo for use on the account pages, otherwise false.

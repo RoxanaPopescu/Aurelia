@@ -57,7 +57,10 @@ export class LocaleService
      */
     public configure(locales: ILocale[], changeFunc?: LocaleChangeFunc): void
     {
-        this._locales = locales.filter(l => ENVIRONMENT.debug || !l.debug).map(l => new Locale(l));
+        this._locales = locales
+            .filter(l => l.environments == null || l.environments.includes(ENVIRONMENT.name))
+            .map(l => new Locale(l));
+
         this._changeFunc = changeFunc || (() => undefined);
     }
 

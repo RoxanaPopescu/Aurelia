@@ -61,7 +61,10 @@ export class CurrencyService
      */
     public configure(currencies: ICurrency[], changeFunc?: CurrencyChangeFunc): void
     {
-        this._currencies = currencies.filter(c => ENVIRONMENT.debug || !c.debug).map(c => new Currency(c, this._localeService));
+        this._currencies = currencies
+            .filter(c => c.environments == null || c.environments.includes(ENVIRONMENT.name))
+            .map(c => new Currency(c, this._localeService));
+
         this._changeFunc = changeFunc || (() => undefined);
     }
 

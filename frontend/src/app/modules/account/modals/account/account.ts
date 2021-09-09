@@ -137,25 +137,19 @@ export class AccountModalPanel
         }
 
         // Get the available locales.
-        this.locales = ENVIRONMENT.debug
-            ? this._localeService.locales
-            : this._localeService.locales.filter(l => !l.debug);
+        this.locales = this._localeService.locales;
 
         // Get the selected locale.
         this.locale = this._localeService.locale;
 
         // Get the available currencies.
-        this.currencies = ENVIRONMENT.debug
-            ? this._currencyService.currencies
-            : this._currencyService.currencies.filter(c => !c.debug);
+        this.currencies = this._currencyService.currencies;
 
         // Get the selected currency.
         this.currency = this._currencyService.currency;
 
         // Get the available themes.
-        this.themes = ENVIRONMENT.debug
-            ? this._themeService.themes
-            : this._themeService.themes.filter(t => !t.debug);
+        this.themes = this._themeService.themes;
 
         // Get the selected theme.
         this.theme = this._themeService.theme;

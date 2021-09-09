@@ -8,7 +8,7 @@
       "code": "en-US-x-pseudo",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "English [pseudo]",
-      "debug": true
+      "environments": ["development"]
   },
   {
       "code": "en-US-x-ikea",

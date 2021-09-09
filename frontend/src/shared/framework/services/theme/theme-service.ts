@@ -49,7 +49,9 @@ export class ThemeService
     @once
     public configure(themes: ITheme[], changeFunc: ThemeChangeFunc): void
     {
-        this._themes = themes.filter(t => ENVIRONMENT.debug || !t.debug).map(t => new Theme(t));
+        this._themes = themes
+            .filter(t => t.environments == null || t.environments.includes(ENVIRONMENT.name))
+            .map(t => new Theme(t));
 
         this._changeFunc = changeFunc;
     }

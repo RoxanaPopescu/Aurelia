@@ -26,9 +26,10 @@ export interface ILocale
     name?: string;
 
     /**
-     * True if the locale should only be available if debugging is enabled, otherwise false.
+     * The names identifying the environments in which the locale should only be available,
+     * or undefined if the locale should be available in all environments.
      */
-    debug?: boolean;
+    environments?: string[];
 }
 
 /**
@@ -44,7 +45,7 @@ export class Locale
     {
         this._name = data.name;
         this.code = data.code;
-        this.debug = data.debug ?? false;
+        this.environments = data.environments;
 
         if (data.unicodeExtension)
         {
@@ -77,9 +78,10 @@ export class Locale
     public readonly codeWithUnicodeExtension: string;
 
     /**
-     * True if the locale should only be available if debugging is enabled, otherwise false.
+     * The names identifying the environments in which the locale should only be available,
+     * or undefined if the locale should be available in all environments.
      */
-    public readonly debug: boolean;
+    public readonly environments: string[] | undefined;
 
     /**
      * The name of the locale, which may be localized.

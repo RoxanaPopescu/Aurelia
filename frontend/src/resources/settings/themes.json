@@ -14,7 +14,7 @@
         {
             "primary": "#008dd5"
         },
-        "debug": true
+        "environments": ["development", "preview"]
     },
     {
         "slug": "coop",
@@ -47,7 +47,7 @@
         {
             "primary": "#11253e"
         },
-        "debug": true
+        "environments": ["development", "preview"]
     },
     {
         "slug": "lingu-light",
@@ -56,7 +56,7 @@
         {
             "primary": "#ffffff"
         },
-        "debug": true,
+        "environments": ["development", "preview"],
         "hasAccountLogo": true
     },
     {
@@ -66,6 +66,6 @@
         {
             "primary": "#252526"
         },
-        "debug": true
+        "environments": ["development", "preview"]
     }
 ]
