@@ -153,7 +153,8 @@ export class OrganizationModule extends AppModule
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
                 teamId: context.request.body.teamId, // TODO: missing
-                message: context.request.body.message
+                message: context.request.body.message,
+                acceptUrl: context.request.body.acceptUrl
             }
         });
 
@@ -432,6 +433,7 @@ export class OrganizationModule extends AppModule
             createdDateTime: r.createdAt,
             modifiedDateTime: r.lastUpdate,
             permissions: r.permissions,
+            readonly: r.readOnly,
             userCount: r.userCount
         }));
 
