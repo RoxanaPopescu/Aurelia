@@ -2,6 +2,7 @@ import { autoinject, bindable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { OrganizationService } from "app/model/organization";
+import { delay } from "shared/utilities";
 
 export interface ICreateOrganizationModel
 {
@@ -117,6 +118,10 @@ export class CreateOrganizationCustomElement
                 type: "business",
                 name: this.model.organizationName!
             });
+
+            // HACK: The organization and its roles are created asynchronously,
+            // and there is no way to determine when it is done - so we wait.
+            await delay(5000);
 
             // tslint:disable-next-line: await-promise
             await this.model.onOrganizationCreated?.();

@@ -84,18 +84,28 @@ export class ChooseOrganizationCustomElement
             const promises: Promise<any>[] =
             [
                 this._organizationService.getAll()
+                    .then(list => this.organizations = list)
+                    .catch(error =>
+                    {
+                        Log.error("Could not get the organizations associated with the user.", error);
+
+                        throw error;
+                    })
             ];
 
             if (this.model.inviteId != null)
             {
-                promises.push(this._organizationService.getInvite(this.model.inviteId));
+                promises.push(this._organizationService.getInvite(this.model.inviteId)
+                    .then(invite => this.invite = invite)
+                    .catch(error =>
+                    {
+                        Log.error("Could not get the invite.", error);
+
+                        throw error;
+                    }));
             }
 
-            [this.organizations, this.invite] = await Promise.all(promises);
-        }
-        catch (error)
-        {
-            Log.error("Could not get the organizations associated with the user.", error);
+            await Promise.all(promises);
         }
         finally
         {
