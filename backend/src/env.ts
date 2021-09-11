@@ -27,7 +27,7 @@ export class ServerEnvironment
             ? "https://test-mover.azure-api.net/"
             : "https://prod-mover.azure-api.net/";
         this.noiApiBaseUrl = this.name === "development"
-            ? "https://noi.mover.dev/api/"
+            ? "https://mover-test-dev.azurewebsites.net/api/"
             : "https://api.mover.dk/api/";
         this.subscriptionKey = this.name === "development"
             ? "bcf1f656a0844acb9fd5a33d61832afd"
