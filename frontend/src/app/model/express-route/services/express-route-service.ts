@@ -117,7 +117,7 @@ export class ExpressRouteService
      */
     public async startManual(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post(`automatic-dispatch/jobs/start-manual`,
+        await this._apiClient.post("automatic-dispatch/jobs/start-manual",
         {
             body: { activeRouteIds, addRouteIds },
             signal

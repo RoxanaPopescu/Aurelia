@@ -76,7 +76,7 @@ export class AutomaticDispatchModule extends AppModule
                 }
             });
 
-            const linkDictionary: { [name: string]: { originalStopId: string, originalRequestId: string }} = linkResult.data;
+            const linkDictionary: { [name: string]: { originalStopId: string; originalRequestId: string }} = linkResult.data;
 
             // 4. Restructure the model
             const request: any = {};
@@ -96,11 +96,12 @@ export class AutomaticDispatchModule extends AppModule
                         pickupStop = stop;
                     }
 
-                    if (stop.type !== "Delivery" || pickupStop == null) {
+                    if (stop.type !== "Delivery" || pickupStop == null)
+                    {
                         continue;
                     }
 
-                    const shipment = {
+                    shipments.push({
                         id: route.id,
                         pickup: {
                             id: pickupStop.id,
@@ -112,9 +113,7 @@ export class AutomaticDispatchModule extends AppModule
                             arrivalTimeFrame: stop.arrivalTimeFrame,
                             location: stop.location
                         }
-                    };
-
-                    shipments.push(shipment);
+                    });
                 }
             }
 
@@ -153,7 +152,7 @@ export class AutomaticDispatchModule extends AppModule
                 });
             }
 
-            request.name = `${context.user?.username} - ${DateTime.local()}`;
+            request.name = `${context.user?.username} - ${DateTime.local().toString()}`;
             request.routes = routes;
             request.shipments = shipments;
 
