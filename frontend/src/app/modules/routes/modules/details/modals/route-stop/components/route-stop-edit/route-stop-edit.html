@@ -200,31 +200,6 @@
 
             </select-input>
 
-            <select-input
-                label="above"
-                none.bind="false"
-                value.bind="model.routeStop.allColliScanMethod"
-                display-value.bind="model.routeStop.allColliScanMethod.name"
-                class="flex-basis-1-of-2">
-
-                <div slot="heading" translate>
-                    Scan method
-                </div>
-
-                <item repeat.for="status of colliScanMethods" model.bind="status">
-                    ${status.name}
-                </item>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="model.routeStop.allColliScanMethod">
-                    </required-validator>
-
-                </div>
-
-            </select-input>
-
         </div>
 
     </modal-section>
