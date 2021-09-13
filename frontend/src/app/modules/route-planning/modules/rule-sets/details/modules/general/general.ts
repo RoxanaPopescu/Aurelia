@@ -77,6 +77,7 @@ export class General
         {
             this.routeNameTempleteInputElement.focus();
             document.execCommand("insertText", false, placeholder);
-        });
+        },
+        150000);
     }
 }
