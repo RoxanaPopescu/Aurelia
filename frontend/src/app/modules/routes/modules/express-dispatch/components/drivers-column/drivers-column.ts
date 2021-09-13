@@ -32,8 +32,8 @@ export class DriversColumnCustomElement
 
     private readonly _modalService: ModalService;
     private readonly _expressRouteService: ExpressRouteService;
-    protected readonly toastService: ToastService;
     private _updateTimeoutHandle: any;
+    protected readonly toastService: ToastService;
 
     /**
      * True during the initial load, then false.
@@ -275,8 +275,7 @@ export class DriversColumnCustomElement
 
             this.toastService.open("success", toastModel);
 
-            // FIXME: Call correct endpoint
-            // await this._expressRouteService.releaseExpressRoutes(this.workspace.selectedExpressRoutes.map(r => r.id));
+            await this._expressRouteService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
         }
         catch (error)
         {

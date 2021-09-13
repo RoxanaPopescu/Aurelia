@@ -108,4 +108,19 @@ export class ExpressRouteService
             signal
         });
     }
+
+    /**
+     * Starts a manual automatic dispatch.
+     * @param activeRouteIds The ids identifying the routes the drivers is active on.
+     * @param addRouteIds The ids identifying the routes to be added to the active driver routes.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async startManual(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<void>
+    {
+        await this._apiClient.post("automatic-dispatch/jobs/start-manual",
+        {
+            body: { activeRouteIds, addRouteIds },
+            signal
+        });
+    }
 }
