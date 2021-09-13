@@ -30,10 +30,10 @@ export class DriversColumnCustomElement
         this.toastService = toastService;
     }
 
-    protected readonly toastService: ToastService;
     private readonly _modalService: ModalService;
     private readonly _expressRouteService: ExpressRouteService;
     private _updateTimeoutHandle: any;
+    protected readonly toastService: ToastService;
 
     /**
      * True during the initial load, then false.
