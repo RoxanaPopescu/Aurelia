@@ -21,7 +21,7 @@ export class OrganizationUser
             this.id = data.id;
             this.email = data.email;
             this.role = data.role;
-            this.team = data.team;
+            this.teams = data.teams;
             this.status = new OrganizationUserStatus("invited");
         }
         else
@@ -33,7 +33,7 @@ export class OrganizationUser
             this.phoneNumber = data.phoneNumber;
             this.pictureUrl = data.pictureUrl;
             this.role = data.role;
-            this.team = data.team;
+            this.teams = data.teams;
             this.status = new OrganizationUserStatus("active");
 
             if (data.lastOnline != null)
@@ -81,7 +81,7 @@ export class OrganizationUser
     /**
      * The team with which the user is associated, if any.
      */
-    public team: { id: string; name: string } | undefined;
+    public teams: { id: string; name: string }[] | undefined;
 
     /**
      * The status of the user.

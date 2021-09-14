@@ -16,7 +16,7 @@
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSubmitClick()"
-                disabled.bind="selectedRole.id === user.role.id && selectedTeam.id === user.team.id">
+                disabled.bind="!hasChanges">
                 <icon name="save"></icon>
             </button>
 
@@ -55,7 +55,7 @@
             show.bind="selectedTab === 'profile'"
             user.bind="user"
             available-teams.bind="availableTeams"
-            selected-team.bind="selectedTeam"
+            selected-teams.bind="selectedTeams"
             available-roles.bind="availableRoles"
             selected-role.bind="selectedRole"
             validation.ref="profileValidation">

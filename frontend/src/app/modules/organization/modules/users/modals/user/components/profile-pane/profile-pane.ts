@@ -43,10 +43,10 @@ export class ProfilePaneCustomElement
     public availableTeams: OrganizationTeam[] | undefined;
 
     /**
-     * The selected team, if any.
+     * The selected teams, if any.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public selectedTeam: OrganizationTeam | undefined;
+    public selectedTeams: OrganizationTeam[] | undefined;
 
     /**
      * The available roles.

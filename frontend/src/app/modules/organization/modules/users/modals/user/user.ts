@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { IValidation, Modal } from "shared/framework";
@@ -45,9 +45,9 @@ export class UserModalPanel
     protected availableTeams: OrganizationTeam[] | undefined;
 
     /**
-     * The selected team, if any.
+     * The selected teams, if any.
      */
-    protected selectedTeam: OrganizationTeam | undefined;
+    protected selectedTeams: OrganizationTeam[] | undefined;
 
     /**
      * The available roles.
@@ -57,12 +57,31 @@ export class UserModalPanel
     /**
      * The selected role.
      */
-    protected selectedRole: OrganizationRole;
+    protected selectedRole: OrganizationRole | undefined;
 
     /**
      * The validation for the modal.
      */
     protected validation: IValidation;
+
+    /**
+     * True if the modal has unsaved changes, otherwise false.
+     */
+    @computedFrom("selectedRole", "user.role", "selectedTeams.length", "user.teams.length")
+    protected get hasChanges(): boolean
+    {
+        if (this.selectedRole?.id !== this.user.role.id)
+        {
+            return true;
+        }
+
+        if (this.selectedTeams?.map(t => t.id).sort().join(" ") !== this.user.teams?.map(t => t.id).sort().join(" "))
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Called by the framework when the modal is activating.
@@ -86,9 +105,9 @@ export class UserModalPanel
 
                 this.selectedRole = this.availableRoles.find(r => r.id === this.user.role.id)!;
 
-                if (this.user.team != null)
+                if (this.user.teams != null)
                 {
-                    this.selectedTeam = this.availableTeams.find(t => t.id === this.user.team!.id)!;
+                    this.selectedTeams = this.availableTeams.filter(t1 => this.user.teams!.some(t2 => t2.id === t1.id));
                 }
 
                 this._modal.busy = false;
@@ -126,23 +145,24 @@ export class UserModalPanel
 
             this._modal.busy = true;
 
-            if (this.selectedRole.id !== this.user.role.id)
+            const promises: Promise<any>[] = [];
+
+            if (this.selectedRole!.id !== this.user.role.id)
             {
-                await this._organizationService.changeUserRole(this.user.id, this.selectedRole.id);
+                promises.push(this._organizationService.changeUserRole(this.user.id, this.selectedRole!.id));
             }
 
-            if (this.selectedTeam?.id !== this.user.team?.id)
+            for (const team of this.selectedTeams?.filter(t1 => !this.user.teams?.some(t2 => t2.id === t1.id)) ?? [])
             {
-                if (this.user.team != null)
-                {
-                    await this._organizationService.removeUserFromTeam(this.user.team.id, this.user.id);
-                }
-
-                if (this.selectedTeam != null)
-                {
-                    await this._organizationService.addUserToTeam(this.user.team!.id, this.user.id);
-                }
+                promises.push(this._organizationService.addUserToTeam(team.id, this.user.id));
             }
+
+            for (const team of this.user.teams?.filter(t1 => !this.selectedTeams?.some(t2 => t2.id === t1.id)) ?? [])
+            {
+                promises.push(this._organizationService.removeUserFromTeam(team.id, this.user.id));
+            }
+
+            await Promise.all(promises);
 
             await this._modal.close();
         }

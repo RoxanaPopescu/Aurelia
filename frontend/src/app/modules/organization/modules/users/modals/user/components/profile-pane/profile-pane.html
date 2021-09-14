@@ -132,7 +132,7 @@
             </div>
 
             <div slot="description" translate>
-                This is the role assigned to the user within the current organization.
+                This is the role assigned to the user within the organization.
             </div>
 
             <item repeat.for="role of availableRoles" model.bind="role">
@@ -149,26 +149,31 @@
 
         </select-input>
 
-        <select-input
+        <tags-input
             class="margin-double-top"
             label="above"
-            value.bind="selectedTeam"
-            display-value.bind="selectedTeam.name"
+            value.bind="selectedTeams"
             readonly.bind="operation.pending || user.status.slug === 'invited'">
 
             <div slot="heading" translate>
-                Team
+                Teams
             </div>
 
             <div slot="description" translate>
-                This is the team to which the user is currently assigned.
+                Those are the teams to which the user is assigned.
+            </div>
+
+            <div slot="value">
+                <tag repeat.for="team of selectedTeams" model.bind="team">
+                    ${team.name}
+                </tag>
             </div>
 
             <item repeat.for="team of availableTeams" model.bind="team">
                 ${team.name}
             </item>
 
-        </select-input>
+        </tags-input>
 
     </modal-section>
 

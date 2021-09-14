@@ -48,7 +48,7 @@ export default
         id: "invite-2-id",
         email: "james-doe@example.com",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" }
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }]
       }
     },
 
@@ -60,7 +60,7 @@ export default
           id: "invite-1-id",
           email: "jane-doe@example.com",
           role: { id: "role-1-id", name: "Role 1" },
-          team: { id: "team-1-id", name: "Team 1" }
+          teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }]
         }
       ]
     },
@@ -73,7 +73,7 @@ export default
         email: "jane-doe@example.com",
         organization: { id: "mover-organization-id", name: "Mover"},
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" }
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }]
       }
     },
 
@@ -344,7 +344,7 @@ export function getUsers(...ids: string[]): any[]
       phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
       pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
       role: { id: "role-1-id", name: "Role 1" },
-      team: { id: "team-1-id", name: "Team 1" },
+      teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
       lastOnline: DateTime.utc().toISO()
     },
     {
@@ -355,7 +355,7 @@ export function getUsers(...ids: string[]): any[]
         phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/82.jpg",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
         lastOnline: DateTime.utc().toISO()
     },
     {
@@ -366,7 +366,7 @@ export function getUsers(...ids: string[]): any[]
         phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/63.jpg",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
         lastOnline: DateTime.utc().toISO()
     },
     {
@@ -377,7 +377,7 @@ export function getUsers(...ids: string[]): any[]
         phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/54.jpg",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
         lastOnline: DateTime.utc().toISO()
     },
     {
@@ -388,7 +388,7 @@ export function getUsers(...ids: string[]): any[]
         phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/men/32.jpg",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
         lastOnline: DateTime.utc().toISO()
     },
     {
@@ -399,7 +399,7 @@ export function getUsers(...ids: string[]): any[]
         phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/men/86.jpg",
         role: { id: "role-1-id", name: "Role 1" },
-        team: { id: "team-1-id", name: "Team 1" },
+        teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
         lastOnline: DateTime.utc().toISO()
     }
   ]

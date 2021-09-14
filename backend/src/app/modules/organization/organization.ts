@@ -2,7 +2,6 @@ import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
 
 // TODO: Add permission checks
-// TODO: Change old BFF to understand new tokens
 
 /**
  * Represents a module exposing endpoints related to roles within an organization.
@@ -40,8 +39,7 @@ export class OrganizationModule extends AppModule
     }
 
     // WORKS, BUT...
-    // TODO:BACKEND: WTF is up with Swagger? the description correctly claims we get both users and invites, but the response example indicates otherwise
-    // TODO:BACKEND: WTF is up with this endpoint? path makes no sense
+    // TODO:BACKEND: Don't include pending invites in teh response, due to security risk
     // TODO:BACKEND: Return full objects to avoid N+1 problem
     /**
      * Gets all organizations visible to the current user.
@@ -163,7 +161,7 @@ export class OrganizationModule extends AppModule
             id: result.data.id,
             email: result.data.email,
             role: result.data.role,
-            team: result.data.team
+            teams: result.data.teams // TODO: missing
         };
 
         context.response.status = 200;
@@ -192,7 +190,7 @@ export class OrganizationModule extends AppModule
             id: invite.id,
             email: invite.invitedEmailAddress,
             role: invite.role,
-            team: invite.team
+            teams: invite.teams // TODO: missing
         }));
 
         context.response.status = 200;
@@ -216,7 +214,7 @@ export class OrganizationModule extends AppModule
             email: result.data.invitedEmailAddress,
             organization: result.data.organization,
             role: result.data.role,
-            team: result.data.team
+            teams: result.data.teams // TODO: missing
         };
 
         context.response.status = 200;
@@ -295,7 +293,7 @@ export class OrganizationModule extends AppModule
             phoneNumber: user.phone,
             pictureUrl: user.pictureUrl,
             role: user.role,
-            team: user.team, // TODO: missing
+            teams: user.teams, // TODO: missing
             lastOnline: user.lastOnline // TODO: missing
         }));
 
@@ -529,27 +527,12 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.body.name
-        // context.body.phoneNumber
-        // context.body.address
-        // context.body.vatNumber: string
-        // context.body.invoiceDirectly
-        // context.body.invoiceEmail
+        const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams`,
+        {
+            body: context.body
+        });
 
-        // Response:
-        // {
-        //     id: "team-id",
-        //     name: "Team 2",
-        //     phoneNumber: { countryCallingCode: "45", nationalNumber: "69696969" },
-        //     address: { primary: "Bar Street 42", secondary: "1337 Denmark" },
-        //     vatNumber: "69042",
-        //     invoiceDirectly: true,
-        //     invoiceEmail: "team2@example.com",
-        //     userCount: 0
-        // }
-
+        context.response.body = result.data;
         context.response.status = 200;
     }
 
@@ -563,22 +546,9 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams`);
 
-        // Response Array(5).fill(
-        // {
-        //     id: "team-id",
-        //     name: "Team 1",
-        //     phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        //     address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
-        //     vatNumber: "42069",
-        //     invoiceDirectly: true,
-        //     invoiceEmail: "team1@example.com",
-        //     userCount: 1
-        // })
-
-        context.response.body = [];
+        context.response.body = result.data.teams;
         context.response.status = 200;
     }
 
@@ -593,29 +563,16 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.teamId
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`);
 
-        // Response:
-        // {
-        //     id: "team-id",
-        //     name: "Team 1",
-        //     phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        //     address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
-        //     vatNumber: "42069",
-        //     invoiceDirectly: true,
-        //     invoiceEmail: "team1@example.com",
-        //     userCount: 1
-        // }
-
+        context.response.body = result.data;
         context.response.status = 200;
     }
 
     /**
      * Updates the specified team within the specified organization.
      * @param context.params.organizationId The ID of the organization.
-     * @param team The team to save.
+     * @param context.body The team to save.
      * @returns
      * - 200: An object representing the updated team.
      */
@@ -623,21 +580,12 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
+        const result = await this.apiClient.put(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`,
+        {
+            body: context.body
+        });
 
-        // Response:
-        // {
-        //     id: "team-id",
-        //     name: "Team 1 [updated]",
-        //     phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        //     address: { primary: "Foo Street 42", secondary: "1337 Denmark" },
-        //     vatNumber: "42069",
-        //     invoiceDirectly: true,
-        //     invoiceEmail: "team1@example.com",
-        //     userCount: 1
-        // }
-
+        context.response.body = result.data;
         context.response.status = 200;
     }
 
@@ -652,9 +600,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.teamId
+        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`);
 
         context.response.status = 204;
     }
@@ -671,10 +617,10 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.teamId
-        // context.body.userId
+        await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users`,
+        {
+            body: context.body
+        });
 
         context.response.status = 204;
     }
@@ -690,25 +636,9 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.teamId
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users`);
 
-        // Response:
-        // [
-        //     {
-        //         id: "user-id",
-        //         fullName: "John Doe",
-        //         preferredName: "John",
-        //         email: "johndoe@example.com",
-        //         phoneNumber: { countryCallingCode: "45", nationalNumber: "42424242" },
-        //         pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
-        //         role: { id: "role-id", name: "Role 1" },
-        //         team: { id: "team-id", name: "Team 1" },
-        //         lastOnline: DateTime.utc().toISO()
-        //     }
-        // ]
-
+        context.response.body = result.data.users;
         context.response.status = 200;
     }
 
@@ -724,10 +654,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        // Request:
-        // context.params.organizationId
-        // context.params.teamId
-        // context.params.userId
+        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users/${context.params.userId}`);
 
         context.response.status = 204;
     }

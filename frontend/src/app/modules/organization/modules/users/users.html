@@ -83,7 +83,7 @@
 
                         <data-table-cell name="team.name" translate>
                             <span class="text-truncate">
-                                Team
+                                Teams
                             </span>
                         </data-table-cell>
 
@@ -141,7 +141,7 @@
 
                             <data-table-cell>
                                 <span class="text-truncate" empty-value>
-                                    ${user.team.name}
+                                    ${user.teams | map: 'name' | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 

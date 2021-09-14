@@ -12,7 +12,7 @@ export class OrganizationUserInvite
         this.id = data.id;
         this.organization = data.organization;
         this.role = data.role;
-        this.team = data.team;
+        this.teams = data.teams;
     }
 
     /**
@@ -33,5 +33,5 @@ export class OrganizationUserInvite
     /**
      * The team to which the user would be assigned, if any.
      */
-    public readonly team: { id: string; name: string } | undefined;
+    public readonly teams: { id: string; name: string }[] | undefined;
 }
