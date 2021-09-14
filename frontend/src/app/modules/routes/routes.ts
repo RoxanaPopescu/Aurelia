@@ -60,9 +60,9 @@ export class RoutesModule
                 icon: "route-tracking"
             },
             {
-                name: "auto-dispatch",
-                route: "auto-dispatch",
-                moduleId: PLATFORM.moduleName("./modules/auto-dispatch/auto-dispatch"),
+                name: "auto-contractor-assignment",
+                route: "auto-contractor-assignment",
+                moduleId: PLATFORM.moduleName("./modules/auto-contractor-assignment/auto-contractor-assignment"),
                 settings:
                 {
                     claims:
@@ -70,7 +70,7 @@ export class RoutesModule
                         "view-fulfiller-dispatch"
                     ]
                 },
-                title: routeTitles.autoDispatch,
+                title: routeTitles.autoContractorAssignment,
                 nav: true,
                 icon: "auto-dispatch"
             },
@@ -89,10 +89,25 @@ export class RoutesModule
                 nav: true,
                 icon: "express-dispatch"
             },
-
+            {
+                name: "automatic-dispatch",
+                route: "automatic-dispatch",
+                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-list/automatic-dispatch-list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                title: routeTitles.automaticDispatch,
+                nav: ENVIRONMENT.name !== "production",
+                icon: "auto-dispatch"
+            },
             ...
             ENVIRONMENT.name !== "production" ?
             [
+
                 {
                     name: "templates-list",
                     route: "templates",

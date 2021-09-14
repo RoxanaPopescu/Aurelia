@@ -7,5 +7,7 @@
     "newTemplate": "New template",
     "templateDetails": "Details — Templates",
     "autoDispatch": "Auto dispatch",
+    "autoContractorAssignment": "Auto contractor assignment",
+    "automaticDispatch": "Automatic dispatch",
     "dispatch": "Express dispatch"
 }

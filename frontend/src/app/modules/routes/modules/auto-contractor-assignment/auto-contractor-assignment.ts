@@ -4,6 +4,6 @@ import { autoinject } from "aurelia-framework";
  * Represents the module.
  */
 @autoinject
-export class AutoDispatchModule
+export class autoContractorAssignmentModule
 {
 }
