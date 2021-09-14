@@ -187,10 +187,10 @@ export class TeamDetailsPage
     }
 
     /**
-     * Called when the `Invite user` button is clicked.
-     * Opens a modal for inviting a user.
+     * Called when the `Add user` button is clicked.
+     * Opens a modal for adding a user to the team.
      */
-    protected async onInviteUserClick(): Promise<void>
+    protected async onAddUserClick(): Promise<void>
     {
         const newUser = await this._modalService.open(AddUserToTeamPanel, { teamId: this.team.id }).promise;
 

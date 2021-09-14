@@ -29,10 +29,10 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
+                    <button appearance="outline" accent="primary" click.trigger="onAddUserClick()" class="flex-row">
                         <icon name="add" class="font-larger margin-right"></icon>
                         <span translate>
-                            Invite user
+                            Add user
                         </span>
                     </button>
 
@@ -126,7 +126,7 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${user.fullName}
                                 </span>
                             </data-table-cell>
