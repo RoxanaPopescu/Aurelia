@@ -27,9 +27,9 @@ export class AutomaticDispatchModule extends AppModule
         });
 
         /**
-         * Gets the automatic dispatch by ID.
-         * @param context.params.id The ID of the automatic dispatch to receive.
-         * @returns The automatic dispatch of the specified ID.
+         * Gets the automatic dispatch job by ID.
+         * @param context.params.id The ID of the automatic dispatch job to receive.
+         * @returns The automatic dispatch job of the specified ID.
          */
         this.router.get("/v2/automatic-dispatch/jobs/:id", async context =>
         {
