@@ -9,21 +9,35 @@ export class AutomaticDispatchModule extends AppModule
     public configure(): void
     {
         /**
+         * Gets the jobs for automatic dispatch
+         * @returns The a list of jobs.
+         */
+        this.router.get("/v2/automatic-dispatch/jobs", async context =>
+        {
+            context.authorize("view-routes");
+
+            const result = await this.apiClient.get("automatic-dispatch/jobs",
+            {
+                headers: { "owner": context.user?.outfitId },
+                query: context.query
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Gets the automatic dispatch by ID.
          * @param context.params.id The ID of the automatic dispatch to receive.
          * @returns The automatic dispatch of the specified ID.
          */
-        this.router.get("/v2/automatic-dispatch/:id", async context =>
+        this.router.get("/v2/automatic-dispatch/jobs/:id", async context =>
         {
             context.authorize("view-routes");
 
-            const result = await this.apiClient.get("automatic-dispatch/jobs/:id",
+            const result = await this.apiClient.get(`automatic-dispatch/jobs/${context.params.id}`,
             {
-                body:
-                {
-                    id: context.params.id,
-                    outfitId: context.user!.outfitId
-                }
+                headers: { "owner": context.user?.outfitId }
             });
 
             context.response.body = result.data;

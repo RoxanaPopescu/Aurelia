@@ -8,6 +8,7 @@ import { ConfirmReleaseRouteDialog } from "./modals/confirm-release-route/confir
 import { Log } from "shared/infrastructure";
 import { ConfirmAutomaticDispatchDialog } from "./modals/confirm-automatic-dispatch/confirm-automatic-dispatch";
 import startedAutomaticDispatchToast from "./resources/strings/started-automatic-dispatch-toast.json";
+import { AutomaticDispatchService } from "app/model/automatic-dispatch";
 
 /**
  * The time between each update of the list.
@@ -20,18 +21,21 @@ export class DriversColumnCustomElement
     /**
      * Creates a new instance of the class.
      * @param routeService The `ExpressRouteService` instance.
+     * @param automaticDispatchService The `AutomaticDispatchService` instance.
      * @param modalService The `ModalService` instance.
      * @param toastService The `ToastService` instance.
      */
-    public constructor(modalService: ModalService, routeService: ExpressRouteService, toastService: ToastService)
+    public constructor(modalService: ModalService, routeService: ExpressRouteService, automaticDispatchService: AutomaticDispatchService, toastService: ToastService)
     {
         this._modalService = modalService;
         this._expressRouteService = routeService;
+        this._automaticDispatchService = automaticDispatchService;
         this.toastService = toastService;
     }
 
     private readonly _modalService: ModalService;
     private readonly _expressRouteService: ExpressRouteService;
+    private readonly _automaticDispatchService: AutomaticDispatchService;
     private _updateTimeoutHandle: any;
     protected readonly toastService: ToastService;
 
@@ -275,7 +279,7 @@ export class DriversColumnCustomElement
 
             this.toastService.open("success", toastModel);
 
-            await this._expressRouteService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
+            await this._automaticDispatchService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
         }
         catch (error)
         {

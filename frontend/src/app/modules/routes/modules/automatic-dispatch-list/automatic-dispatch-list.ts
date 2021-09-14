@@ -1,10 +1,10 @@
 import { autoinject, observable } from "aurelia-framework";
-import { ISorting, IPaging, SortingDirection } from "shared/types";
+import { IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { RoutePlanService, RoutePlanInfo, RoutePlanStatusSlug } from "app/model/route-plan";
 import { DateTime } from "luxon";
+import { AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchService } from "app/model/automatic-dispatch";
 
 /**
  * Represents the route parameters for the page.
@@ -13,8 +13,6 @@ interface IRouteParams
 {
     page?: number;
     pageSize?: number;
-    sortProperty?: string;
-    sortDirection?: SortingDirection;
 }
 
 /**
@@ -25,17 +23,17 @@ export class AutomaticDispatchListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param routePlanService The `RoutePlanService` instance.
+     * @param automaticDispatchService The `AutomaticDispatchService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(routePlanService: RoutePlanService, historyHelper: HistoryHelper)
+    public constructor(automaticDispatchService: AutomaticDispatchService, historyHelper: HistoryHelper)
     {
-        this._routePlanService = routePlanService;
+        this._automaticDispatchService = automaticDispatchService;
         this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
-    private readonly _routePlanService: RoutePlanService;
+    private readonly _automaticDispatchService: AutomaticDispatchService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
@@ -48,16 +46,6 @@ export class AutomaticDispatchListPage
      * The most recent update operation.
      */
     protected updateOperation: Operation;
-
-    /**
-     * The sorting to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected sorting: ISorting =
-    {
-        property: "created",
-        direction: "descending"
-    };
 
     /**
      * The min date for which created from plans should be shown.
@@ -75,13 +63,7 @@ export class AutomaticDispatchListPage
      * The name identifying the selected status tab.
      */
     @observable({ changeHandler: "update" })
-    protected statusFilter: RoutePlanStatusSlug[] | undefined;
-
-    /**
-     * The text in the filter text input.
-     */
-    @observable({ changeHandler: "update" })
-    protected textFilter: string | undefined;
+    protected statusFilter: AutomaticDispatchJobStatusSlug[] | undefined;
 
     /**
      * The paging to use for the table.
@@ -101,7 +83,7 @@ export class AutomaticDispatchListPage
     /**
      * The items to present in the table.
      */
-    protected results: RoutePlanInfo[];
+    protected results: AutomaticDispatchRoutePlanInfo[];
 
     /**
      * Called by the framework when the module is activated.
@@ -111,21 +93,19 @@ export class AutomaticDispatchListPage
     {
         this.paging.page = Number(params.page || this.paging.page);
         this.paging.pageSize = Number(params.pageSize || this.paging.pageSize);
-        this.sorting.property = params.sortProperty || this.sorting.property;
-        this.sorting.direction = params.sortDirection || this.sorting.direction;
 
         this.update();
     }
 
     /**
-     * Called by the list when looping through the plans
+     * Called by the list when looping through the dispatches
      * @returns The details link if not cancelled or failed.
      */
-    public detailsLink(plan: RoutePlanInfo): string | undefined
+    public detailsLink(plan: AutomaticDispatchRoutePlanInfo): string | undefined
     {
         if (plan.status.slug === "succeeded")
         {
-            return `/route-planning/plans/details/${plan.slug}`;
+            return `/routes/automatic-dispatch/details/${plan.id}`;
         }
 
         return undefined;
@@ -194,18 +174,17 @@ export class AutomaticDispatchListPage
                 this.failed = false;
 
                 // Fetch the data.
-                const result = await this._routePlanService.getAll(
+                const result = await this._automaticDispatchService.getAll(
                     {
                         createdDateFrom: this.createdDateFromFilter,
                         createdDateTo: this.createdDateToFilter?.endOf("day"),
                         statuses: this.statusFilter
                     },
-                    this.sorting,
                     this.paging,
                     signal);
 
                 // Update the state.
-                this.results = result.plans;
+                this.results = result;
 
                 // Reset page.
                 if (propertyName !== "paging")
@@ -221,9 +200,6 @@ export class AutomaticDispatchListPage
                 {
                     state.params.page = this.paging.page;
                     state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting.property;
-                    state.params.sortDirection = this.sorting.direction;
-                    state.params.textFilter = this.textFilter;
                 },
                 { trigger: false, replace: true });
             }
