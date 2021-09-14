@@ -233,10 +233,7 @@ export class TagsInputCustomElement
             this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
         }
 
-        if (!keepOpen || isNewValue)
-        {
-            this.focusedValue = undefined;
-        }
+        this.focusedValue = undefined;
 
         if (focusToggle && !pick)
         {
