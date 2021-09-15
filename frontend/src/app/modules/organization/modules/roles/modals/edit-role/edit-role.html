@@ -46,7 +46,7 @@
             <text-input value.bind="role.name" label="above" class="flex-basis-1-of-1" readonly.bind="role.readonly">
 
                 <div slot="heading" translate>
-                    Role name
+                    Name
                 </div>
 
                 <div slot="validation">
@@ -65,9 +65,13 @@
 
             </text-input>
 
-        </modal-section>
-
-        <modal-section class="margin-double-bottom">
+            <div class="input margin-large-top margin-bottom" label="above">
+                <label class="input-label">
+                    <div class="input-heading" translate>
+                        Permissions
+                    </div>
+                </label>
+            </div>
 
             <permissions permissions.bind="availablePermissions" value.bind="role.permissions" readonly.bind="role.readonly"></permissions>
 

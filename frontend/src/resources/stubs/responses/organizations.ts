@@ -288,8 +288,6 @@ export default
     "GET /api/v2/organizations/mover-organization-id/teams/team-1-id/users":
     {
       body: getUsers(
-        "user-1-id",
-        "user-2-id",
         "user-3-id",
         "user-4-id",
         "user-5-id",
