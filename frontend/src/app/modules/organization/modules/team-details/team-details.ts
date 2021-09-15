@@ -4,7 +4,7 @@ import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
-import { AddUserToTeamPanel } from "./modals/add-user-to-team/add-user-to-team";
+import { ManageTeamUsersPanel } from "./modals/manage-team-users/manage-team-users";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 import { UserModalPanel } from "../users/modals/user/user";
 import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
@@ -187,17 +187,12 @@ export class TeamDetailsPage
     }
 
     /**
-     * Called when the `Add user` button is clicked.
-     * Opens a modal for adding a user to the team.
+     * Called when the `Add users` button is clicked.
+     * Opens a modal for adding users to, or removing users from, the team.
      */
-    protected async onAddUserClick(): Promise<void>
+    protected async onManageUsersClick(): Promise<void>
     {
-        const newUser = await this._modalService.open(AddUserToTeamPanel, { teamId: this.team.id }).promise;
-
-        if (newUser != null)
-        {
-            this._users!.push(newUser);
-        }
+        await this._modalService.open(ManageTeamUsersPanel, { teamId: this.team.id, users: this._users! }).promise;
     }
 
     /**

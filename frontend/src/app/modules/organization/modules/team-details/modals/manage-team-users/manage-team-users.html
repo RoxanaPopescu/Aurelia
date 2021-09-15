@@ -1,0 +1,139 @@
+<template>
+
+    <require from="app/components/identity-picture/identity-picture"></require>
+    <require from="./manage-team-users.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="manage-team-users" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                Add users
+            </h1>
+
+            <search-input value.bind="textFilter" autofocus>
+
+                <span slot="before" class="opacity-faded">
+                    <icon name="md-search" class="font-larger"></icon>
+                </span>
+
+                <span slot="placeholder" translate>
+                    Type to filter…
+                </span>
+
+            </search-input>
+
+        </modal-header>
+
+        <modal-section>
+
+            <data-table
+                appearance="rows"
+                sorting.bind="sorting"
+                busy.bind="operation.pending">
+
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <!-- Picture -->
+                    </data-table-cell>
+
+                    <data-table-cell name="fullName" translate>
+                        <span class="text-truncate">
+                            Name
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell name="role.name" translate>
+                        <span class="text-truncate">
+                            Role
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell name="email" translate>
+                        <span class="text-truncate">
+                            Email
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell align="right">
+                        <!-- Icons -->
+                    </data-table-cell>
+
+                </data-table-headers>
+
+                <template repeat.for="user of orderedAndFilteredUsers">
+
+                    <data-table-row click.call="onUserClick(user)">
+
+                        <data-table-cell>
+                            <identity-picture src.bind="user.pictureUrl">
+                                ${user.initials}
+                            </identity-picture>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" empty-value>
+                                ${user.fullName}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${user.role.name}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${user.email}
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+
+                            <div class="icon-row">
+
+                                <button
+                                    if.bind="!user.__added"
+                                    title.translate="Add user to team"
+                                    appearance="none"
+                                    accent="primary"
+                                    click.trigger="onAddUserClick(user)">
+                                    <icon name="plus-small"></icon>
+                                </button>
+
+                                <button
+                                    if.bind="user.__added"
+                                    title.translate="Remove user from team"
+                                    appearance="none"
+                                    accent="primary"
+                                    click.trigger="onRemoveUserClick(user)">
+                                    <icon name="delete-small"></icon>
+                                </button>
+
+                            </div>
+
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </template>
+
+            </data-table>
+
+            <busy-indicator if.bind="orderedAndFilteredUsers == null" class="margin-largest"></busy-indicator>
+
+            <empty-indicator if.bind="orderedAndFilteredUsers.length == 0" class="margin-largest">
+                <div slot="heading" translate>
+                    No results
+                </div>
+            </empty-indicator>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>

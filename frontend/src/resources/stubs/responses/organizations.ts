@@ -306,6 +306,26 @@ export default
     {
       status: 204
     },
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-2-id/remove":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-3-id/remove":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-4-id/remove":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-5-id/remove":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-6-id/remove":
+    {
+      status: 204
+    },
 
     "GET /api/v2/organizations/mover-organization-id/permissions":
     {
