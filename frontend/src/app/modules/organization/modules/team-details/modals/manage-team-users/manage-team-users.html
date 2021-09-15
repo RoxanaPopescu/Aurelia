@@ -13,6 +13,11 @@
                 Add users
             </h1>
 
+            <h2 class="font-large margin-larger-bottom" translate>
+                Find the user you want to add to the team, then click <icon name="plus-small" accent="primary" inline></icon>,<br>
+                or to remove the user from the team, click <icon name="delete-small" accent="primary" inline></icon>.
+            </h2>
+
             <search-input value.bind="textFilter" autofocus>
 
                 <span slot="before" class="opacity-faded">
@@ -52,11 +57,13 @@
                         </span>
                     </data-table-cell>
 
+                    <!--
                     <data-table-cell name="email" translate>
                         <span class="text-truncate">
                             Email
                         </span>
                     </data-table-cell>
+                    -->
 
                     <data-table-cell align="right">
                         <!-- Icons -->
@@ -86,11 +93,13 @@
                             </span>
                         </data-table-cell>
 
+                        <!--
                         <data-table-cell>
                             <span class="text-truncate">
                                 ${user.email}
                             </span>
                         </data-table-cell>
+                        -->
 
                         <data-table-cell align="right">
 

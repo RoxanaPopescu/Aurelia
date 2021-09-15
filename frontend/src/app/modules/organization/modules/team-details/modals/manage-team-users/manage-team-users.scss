@@ -2,11 +2,11 @@
 
 modal-panel[name="manage-team-users"]
 {
-    --modal-panel-min-width: 840rem;
+    //--modal-panel-min-width: 840rem;
 
     data-table
     {
-        --data-table-columns: 76rem 1fr 0.75fr 1.25fr 50rem;
+        --data-table-columns: 76rem 1fr 0.75fr /*1.25fr*/ 50rem;
     }
 
     identity-picture
