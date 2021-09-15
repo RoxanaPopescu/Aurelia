@@ -57,7 +57,7 @@ export class Order
   /**
    * The description for the deviation - status has to be a deviation
    */
-  public deviationDescription: string;
+  public deviationDescription: string | undefined;
 
   /**
    * The status of the order

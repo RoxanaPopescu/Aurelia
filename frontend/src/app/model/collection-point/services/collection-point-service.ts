@@ -62,14 +62,14 @@ export class CollectionPointService
      */
     public async orderCollected(order: Order): Promise<void>
     {
-        await this._apiClient.post(`collection-point/orders/collected`,
+        await this._apiClient.post("collection-point/orders/collected",
         {
             body:
             {
                 orderId: order.id,
                 collectionPointId: order.collectionPoint.id,
                 description: order.deviationDescription,
-                colli: [],
+                colli: order.colli,
                 location: order.collectionPoint.location,
                 externalOrderId: order.creatorOrderId
             }
