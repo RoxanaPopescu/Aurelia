@@ -184,7 +184,7 @@ export class TeamDetailsPage
      */
     protected async onUserClick(user: OrganizationUser): Promise<void>
     {
-        await this._modalService.open(UserModalPanel, user).promise;
+        await this._modalService.open(UserModalPanel, { user, readonly: false }).promise;
     }
 
     /**

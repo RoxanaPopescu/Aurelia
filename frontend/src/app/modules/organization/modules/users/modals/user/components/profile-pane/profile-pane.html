@@ -125,7 +125,7 @@
             none.bind="false"
             value.bind="selectedRole"
             display-value.bind="selectedRole.name"
-            readonly.bind="operation.pending || user.status.slug === 'invited'">
+            readonly.bind="readonly || operation.pending || user.status.slug === 'invited'">
 
             <div slot="heading" translate>
                 Role
@@ -153,7 +153,7 @@
             class="margin-double-top"
             label="above"
             value.bind="selectedTeams"
-            readonly.bind="operation.pending || user.status.slug === 'invited'">
+            readonly.bind="readonly || operation.pending || user.status.slug === 'invited'">
 
             <div slot="heading" translate>
                 Teams

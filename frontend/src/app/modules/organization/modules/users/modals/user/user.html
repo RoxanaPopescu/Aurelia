@@ -12,7 +12,7 @@
         <div slot="actions">
 
             <button
-                if.bind="user.status.slug !== 'invited'"
+                if.bind="!readonly && user.status.slug !== 'invited'"
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSubmitClick()"
@@ -33,7 +33,7 @@
                 </template>
             </h1>
 
-            <tab-nav if.bind="user.status.slug !== 'invited'" appearance="tabs" class="margin-top font-large" value.bind="selectedTab">
+            <tab-nav if.bind="!readonly && user.status.slug !== 'invited'" appearance="tabs" class="margin-top font-large" value.bind="selectedTab">
 
                 <tab name="profile">
                     <h2 translate>
@@ -58,6 +58,7 @@
             selected-teams.bind="selectedTeams"
             available-roles.bind="availableRoles"
             selected-role.bind="selectedRole"
+            readonly.bind="readonly"
             validation.ref="profileValidation">
         </profile-pane>
 

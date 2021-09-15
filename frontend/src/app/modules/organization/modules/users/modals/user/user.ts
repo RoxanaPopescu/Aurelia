@@ -35,6 +35,11 @@ export class UserModalPanel
     protected operation: Operation | undefined;
 
     /**
+     * True if the modal is readonly, otherwise false.
+     */
+    protected readonly: boolean;
+
+    /**
      * The user to present.
      */
     protected user: OrganizationUser;
@@ -87,9 +92,10 @@ export class UserModalPanel
      * Called by the framework when the modal is activating.
      * @param user The user to present.
      */
-    public activate(user: OrganizationUser): void
+    public activate(model: { readonly: boolean; user: OrganizationUser }): void
     {
-        this.user = user;
+        this.user = model.user;
+        this.readonly = model.readonly ?? false;
 
         this.operation = new Operation(async () =>
         {

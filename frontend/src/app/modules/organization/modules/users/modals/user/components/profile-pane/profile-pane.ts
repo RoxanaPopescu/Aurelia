@@ -37,6 +37,12 @@ export class ProfilePaneCustomElement
     public user: OrganizationUser;
 
     /**
+     * True if the modal is readonly, otherwise false.
+     */
+    @bindable
+    public readonly: boolean;
+
+    /**
      * The available teams.
      */
     @bindable
