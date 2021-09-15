@@ -87,6 +87,10 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="order of collectionPoint.orders">
@@ -95,7 +99,7 @@
                             model.bind="order"
                             accent.bind="order.status.accent"
                             click.call="onOrderClick(order)"
-                            class="${(order.status.slug == 'rejected') ? '--cancelled' : order.status.accent.includes('damaged', 'missing') ? '--failed' : ''}">
+                            class="${['damaged', 'missing', 'rejected'].includes(order.status.slug) ? '--failed' : ''}">
 
                             <data-table-cell>
                                 <a href="/orders/details/${order.creatorOrderId}" class="text-truncate">
@@ -137,6 +141,24 @@
                                 <span class="text-truncate">
                                     ${order.contact.phone}
                                 </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if-claims="edit-order" class="icon-row">
+
+                                    <button
+                                        title.translate="Edit order"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onOrderClick(order, true)">
+
+                                        <icon name="edit-small"></icon>
+
+                                    </button>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>

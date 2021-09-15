@@ -87,11 +87,12 @@ export class DetailsModule
     /**
      * Called when a collection point order is clicked.
      * Opens a modal showing the details of the order.
-     * @param order The order to edit.
+     * @param order The order to show.
+     * @param edit If the order should be edited.
      */
-    protected async onOrderClick(order: Order): Promise<void>
+    protected async onOrderClick(order: Order, edit: boolean = false): Promise<void>
     {
-        await this._modalService.open(CollectionPointOrderPanel, order).promise;
+        await this._modalService.open(CollectionPointOrderPanel, { order: order, edit }).promise;
     }
 
     /**

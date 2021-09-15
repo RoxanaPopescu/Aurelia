@@ -1,6 +1,7 @@
 import { PhoneNumber } from "app/model/shared";
 import { DateTimeRange } from "shared/types";
-import { Collo, OrderStatus } from "..";
+import { CollectionPoint, Collo, OrderStatus } from "..";
+import clone from "clone";
 
 /**
  * Represents order of a collection point
@@ -11,8 +12,9 @@ export class Order
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  public constructor(data: any)
+  public constructor(data: any, collectionPoint: CollectionPoint)
   {
+    this.collectionPoint = collectionPoint;
     this.id = data.id;
     this.tags = data.tags;
     this.status = new OrderStatus(data.status ?? "ready-for-collection");
@@ -33,6 +35,11 @@ export class Order
   public id: string;
 
   /**
+   * The collection point this order belongs to
+   */
+  public collectionPoint: CollectionPoint;
+
+  /**
    * The id of the organization that created the order
    */
   public creatorOrderId: string;
@@ -46,6 +53,11 @@ export class Order
    * The status of the order
    */
   public status: OrderStatus;
+
+  /**
+   * The description for the deviation - status has to be a deviation
+   */
+  public deviationDescription: string;
 
   /**
    * The status of the order
@@ -66,4 +78,12 @@ export class Order
    * The colli in the order, has to be 1...x
    */
   public colli: Collo[];
+
+  /**
+   * Gets a clone of this instance, suitable for editing.
+   */
+  public clone(): any
+  {
+      return clone(this);
+  }
 }

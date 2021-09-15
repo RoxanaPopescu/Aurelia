@@ -1,0 +1,74 @@
+<template>
+
+    <require from="./order-details-edit.scss"></require>
+
+    <modal-header scroll-fade>
+
+        <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
+
+            <path-nav>
+
+                <a accent="inherit" click.trigger="onCancel()" translate>
+                    Order ${model.creatorOrderId}
+                </a>
+
+                <div translate>
+                    Edit
+                </div>
+
+            </path-nav>
+
+        </h1>
+
+    </modal-header>
+
+    <modal-section class="margin-bottom">
+
+        <div class="control-row margin-large-bottom">
+
+            <select-input
+                label="above"
+                none.bind="false"
+                value.bind="model.status"
+                display-value.bind="model.status.name"
+                class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    Status
+                </div>
+
+                <item repeat.for="status of statuses" model.bind="status">
+                    ${status.name}
+                </item>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="model.status">
+                    </required-validator>
+
+                </div>
+
+            </select-input>
+
+        </div>
+
+        <div class="control-row" if.bind="['missing', 'damaged', 'rejected'].includes(model.status.slug)">
+
+            <text-input label="above" lines.bind="3" value.bind="model.deviatonInstructions" class="flex-basis-1-of-1">
+
+                <div slot="heading" translate>
+                    Description
+                </div>
+
+                <span slot="placeholder" translate>
+                    Type why the problem occoured
+                </span>
+
+            </text-input>
+
+        </div>
+
+    </modal-section>
+
+</template>
