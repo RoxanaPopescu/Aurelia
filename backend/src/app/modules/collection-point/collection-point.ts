@@ -145,7 +145,7 @@ export class CollectionPointModule extends AppModule
      * @param token The login token of the driver.
      * @returns A promise that will be resolved with the details about the driver if valid login.
      */
-    private async validateLogin(context: any, permission: string): Promise<{ outfitId: string, userId: string }>
+    private async validateLogin(context: any, permission: string): Promise<{ outfitId: string; userId: string }>
     {
         let outfitId: string;
         let userId: string;
@@ -160,8 +160,8 @@ export class CollectionPointModule extends AppModule
         else
         {
             context.authorize(permission);
-            outfitId = context.user!.outfitId;
-            userId = context.user!.id;
+            outfitId = context.user.outfitId;
+            userId = context.user.id;
         }
 
         return { outfitId: outfitId, userId: userId };
