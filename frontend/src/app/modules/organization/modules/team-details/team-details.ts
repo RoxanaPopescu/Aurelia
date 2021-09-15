@@ -6,9 +6,10 @@ import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
 import { ManageTeamUsersPanel } from "./modals/manage-team-users/manage-team-users";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
+import { ConfirmCancelInviteDialog } from "../users/modals/confirm-cancel-invite/confirm-cancel-invite";
+import { InviteUserPanel } from "../users/modals/invite-user/invite-user";
 import { UserModalPanel } from "../users/modals/user/user";
 import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
-import { InviteUserPanel } from "../users/modals/invite-user/invite-user";
 
 /**
  * Represents the route parameters for the page.
@@ -234,7 +235,8 @@ export class TeamDetailsPage
      */
     protected async onRemoveUserClick(user: OrganizationUser): Promise<void>
     {
-        const confirmed = await this._modalService.open(ConfirmRemoveUserDialog, user).promise;
+        const modalType = user.status.slug === "invited" ? ConfirmCancelInviteDialog : ConfirmRemoveUserDialog;
+        const confirmed = await this._modalService.open(modalType as any, user).promise;
 
         if (!confirmed)
         {
@@ -243,7 +245,14 @@ export class TeamDetailsPage
 
         try
         {
-            await this._organizationService.removeUserFromTeam(this.team.id, user.id);
+            if (user.status.slug === "invited")
+            {
+                await this._organizationService.removeUser(user);
+            }
+            else
+            {
+                await this._organizationService.removeUserFromTeam(this.team.id, user.id);
+            }
 
             this._users!.splice(this._users!.indexOf(user), 1);
         }

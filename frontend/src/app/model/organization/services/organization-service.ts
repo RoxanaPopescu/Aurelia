@@ -169,15 +169,17 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result1 = await this._apiClient.get(`organizations/${organizationId}/invites`,
-        {
-            signal
-        });
-
-        const result2 = await this._apiClient.get(`organizations/${organizationId}/users`,
-        {
-            signal
-        });
+        const [result1, result2] = await Promise.all(
+        [
+            this._apiClient.get(`organizations/${organizationId}/invites`,
+            {
+                signal
+            }),
+            this._apiClient.get(`organizations/${organizationId}/users`,
+            {
+                signal
+            })
+        ]);
 
         const invites = result1.data.map(invite => new OrganizationUser(true, invite));
         const users = result2.data.map(user => new OrganizationUser(false, user));
@@ -421,12 +423,22 @@ export class OrganizationService
     {
         const organizationId = this._identityService.identity!.outfit!.id;
 
-        const result = await this._apiClient.get(`organizations/${organizationId}/teams/${teamId}/users`,
-        {
-            signal
-        });
+        const [result1, result2] = await Promise.all(
+        [
+            this._apiClient.get(`organizations/${organizationId}/invites`,
+            {
+                signal
+            }),
+            this._apiClient.get(`organizations/${organizationId}/teams/${teamId}/users`,
+            {
+                signal
+            })
+        ]);
 
-        return result.data.map(user => new OrganizationUser(false, user));
+        const invites = result1.data.filter(u => u.teams?.some(t => t.id === teamId)).map(invite => new OrganizationUser(true, invite));
+        const users = result2.data.map(user => new OrganizationUser(false, user));
+
+        return [...invites, ...users];
     }
 
     /**

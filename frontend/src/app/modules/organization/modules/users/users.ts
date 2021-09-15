@@ -6,6 +6,7 @@ import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationUser } from "app/model/organization";
 import { InviteUserPanel } from "./modals/invite-user/invite-user";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
+import { ConfirmCancelInviteDialog } from "./modals/confirm-cancel-invite/confirm-cancel-invite";
 import { UserModalPanel } from "./modals/user/user";
 import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
 
@@ -222,7 +223,8 @@ export class UsersPage
      */
     protected async onRemoveUserClick(user: OrganizationUser): Promise<void>
     {
-        const confirmed = await this._modalService.open(ConfirmRemoveUserDialog, user).promise;
+        const modalType = user.status.slug === "invited" ? ConfirmCancelInviteDialog : ConfirmRemoveUserDialog;
+        const confirmed = await this._modalService.open(modalType as any, user).promise;
 
         if (!confirmed)
         {
