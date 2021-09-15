@@ -155,17 +155,20 @@ export class UserModalPanel
 
             if (this.selectedRole!.id !== this.user.role.id)
             {
-                promises.push(this._organizationService.changeUserRole(this.user.id, this.selectedRole!.id));
+                promises.push(this._organizationService.changeUserRole(this.user.id, this.selectedRole!.id)
+                    .then(() => this.user.role = this.selectedRole!));
             }
 
             for (const team of this.selectedTeams?.filter(t1 => !this.user.teams?.some(t2 => t2.id === t1.id)) ?? [])
             {
-                promises.push(this._organizationService.addUserToTeam(team.id, this.user.id));
+                promises.push(this._organizationService.addUserToTeam(team.id, this.user.id)
+                    .then(() => this.user.teams?.push(team)));
             }
 
             for (const team of this.user.teams?.filter(t1 => !this.selectedTeams?.some(t2 => t2.id === t1.id)) ?? [])
             {
-                promises.push(this._organizationService.removeUserFromTeam(team.id, this.user.id));
+                promises.push(this._organizationService.removeUserFromTeam(team.id, this.user.id)
+                    .then(() => this.user.teams?.splice(this.user.teams.findIndex(t => t.id === team.id), 1)));
             }
 
             await Promise.all(promises);

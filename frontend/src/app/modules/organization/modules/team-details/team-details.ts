@@ -186,6 +186,11 @@ export class TeamDetailsPage
     protected async onUserClick(user: OrganizationUser): Promise<void>
     {
         await this._modalService.open(UserModalPanel, { user, readonly: false }).promise;
+
+        if (!user.teams?.some(t => t.id === this.team.id))
+        {
+            this._users!.splice(this._users!.indexOf(user), 1);
+        }
     }
 
     /**
@@ -203,7 +208,12 @@ export class TeamDetailsPage
      */
     protected async onInviteUserClick(): Promise<void>
     {
-        await this._modalService.open(InviteUserPanel, { teamIds: [this.team.id] }).promise;
+        const newUser = await this._modalService.open(InviteUserPanel, { teamIds: [this.team.id] }).promise;
+
+        if (newUser?.teams?.some(t => t.id === this.team.id))
+        {
+            this._users!.unshift(newUser);
+        }
     }
 
     /**
