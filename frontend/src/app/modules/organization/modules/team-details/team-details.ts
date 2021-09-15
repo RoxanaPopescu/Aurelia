@@ -8,6 +8,7 @@ import { ManageTeamUsersPanel } from "./modals/manage-team-users/manage-team-use
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 import { UserModalPanel } from "../users/modals/user/user";
 import reinviteToastStrings from "../../resources/strings/reinvite-toast.json";
+import { InviteUserPanel } from "../users/modals/invite-user/invite-user";
 
 /**
  * Represents the route parameters for the page.
@@ -193,6 +194,15 @@ export class TeamDetailsPage
     protected async onManageUsersClick(): Promise<void>
     {
         await this._modalService.open(ManageTeamUsersPanel, { teamId: this.team.id, users: this._users! }).promise;
+    }
+
+    /**
+     * Called when the `Invite user` button is clicked.
+     * Opens a modal for inviting a user to the organization and team.
+     */
+    protected async onInviteUserClick(): Promise<void>
+    {
+        await this._modalService.open(InviteUserPanel, { teamIds: [this.team.id] }).promise;
     }
 
     /**

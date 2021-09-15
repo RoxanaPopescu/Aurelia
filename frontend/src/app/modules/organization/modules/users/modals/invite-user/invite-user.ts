@@ -36,7 +36,7 @@ export class InviteUserPanel
     /**
      * The selected team, if any.
      */
-    protected selectedTeam: OrganizationTeam | undefined;
+    protected selectedTeams: OrganizationTeam[] | undefined;
 
     /**
      * The available roles.
@@ -46,7 +46,7 @@ export class InviteUserPanel
     /**
      * The selected role.
      */
-    protected selectedRole: OrganizationRole;
+    protected selectedRole: OrganizationRole | undefined;
 
     /**
      * The validation for the modal.
@@ -57,8 +57,10 @@ export class InviteUserPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(): void
+    public activate(model?: Partial<IOrganizationUserInviteInit>): void
     {
+        this.invite = model ?? {} as any;
+
         this._fetchOperation = new Operation(async () =>
         {
             this._modal.busy = true;
@@ -70,6 +72,21 @@ export class InviteUserPanel
                     await this._organizationService.getRoles(),
                     await this._organizationService.getTeams()
                 ]);
+
+                if (this.invite.roleId)
+                {
+                    this.selectedRole = this.availableRoles.find(r => r.id === this.invite.roleId)!;
+                }
+
+                if (this.invite.teamIds)
+                {
+                    this.selectedTeams = this.availableTeams.filter(t => this.invite.teamIds!.includes(t.id));
+
+                    if (this.selectedTeams.length === 0)
+                    {
+                        this.selectedTeams = undefined;
+                    }
+                }
 
                 this._modal.busy = false;
             }
@@ -109,8 +126,8 @@ export class InviteUserPanel
 
             this._modal.busy = true;
 
-            this.invite.roleId = this.selectedRole.id;
-            this.invite.teamId = this.selectedTeam?.id;
+            this.invite.roleId = this.selectedRole!.id;
+            this.invite.teamIds = this.selectedTeams?.map(t => t.id);
 
             this._result = await this._organizationService.inviteUser(this.invite);
 

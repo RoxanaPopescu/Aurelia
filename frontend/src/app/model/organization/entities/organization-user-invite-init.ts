@@ -14,9 +14,9 @@ export interface IOrganizationUserInviteInit
     roleId: string;
 
     /**
-     * The ID of the team to which the user should be assigned, if any.
+     * The IDs of the teams to which the user should be assigned, if any.
      */
-    teamId: string | undefined;
+    teamIds: string[] | undefined;
 
     /**
      * The message to include in the invite email.
