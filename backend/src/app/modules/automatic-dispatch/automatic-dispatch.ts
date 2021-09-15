@@ -18,7 +18,7 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.get("automatic-dispatch/jobs",
             {
-                headers: { "owner": context.user?.outfitId },
+                headers: { "ownerId": context.user?.outfitId },
                 query: context.query
             });
 
@@ -37,7 +37,7 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.get(`automatic-dispatch/jobs/${context.params.id}`,
             {
-                headers: { "owner": context.user?.outfitId }
+                headers: { "ownerId": context.user?.outfitId }
             });
 
             context.response.body = result.data;
@@ -157,7 +157,7 @@ export class AutomaticDispatchModule extends AppModule
                 }
 
                 routes.push({
-                    driverId: route.driver.id,
+                    driverId: String(route.driver.id),
                     id: route.id,
                     vehicleType: route.vehicleType,
                     availability: route.plannedTimeFrame,
@@ -174,7 +174,7 @@ export class AutomaticDispatchModule extends AppModule
             const result = await this.apiClient.post("automatic-dispatch/jobs",
             {
                 body: request,
-                headers: { "owner": context.user?.outfitId }
+                headers: { "ownerId": context.user?.outfitId }
             });
 
             context.response.body = result.data;
