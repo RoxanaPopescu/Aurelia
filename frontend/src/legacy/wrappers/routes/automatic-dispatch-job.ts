@@ -3,7 +3,8 @@ import { Router } from "aurelia-router";
 import { Wrapper } from "../wrapper";
 
 // Import the component that should be wrapped.
-import Component from "fulfiller/src/components/routePlanning/details-v2/index";
+import Component from "fulfiller/src/components/routes/automaticDispatchDetails/index";
+import { AutomaticDispatchService } from "app/model/automatic-dispatch";
 
 @noView
 @autoinject
@@ -21,6 +22,9 @@ export class AutomaticDispatchJobCustomElement extends Wrapper
     @bindable
     public id: string;
 
+    @bindable
+    public service: AutomaticDispatchService;
+
     /**
      * Called by the framework when the component is attached to the DOM.
      */
@@ -28,15 +32,8 @@ export class AutomaticDispatchJobCustomElement extends Wrapper
     {
         super.attached(Component,
         {
-            id: this.id
+            id: this.id,
+            automaticDispatchService: this.service
         });
-    }
-
-    /**
-     * Called by the framework when a bindable property changes.
-     */
-    protected propertyChanged(): void
-    {
-        this.attached();
     }
 }

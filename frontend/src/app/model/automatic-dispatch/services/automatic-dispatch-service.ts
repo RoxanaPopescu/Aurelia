@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { DateTime } from "luxon";
 import { IPaging } from "shared/types";
-import { AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo } from "..";
+import { AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo } from "..";
 
 /**
  * Represents a service that manages dispatching of express routes.
@@ -52,6 +52,22 @@ export class AutomaticDispatchService
         });
 
         return result.data.map((data: any) => new AutomaticDispatchRoutePlanInfo(data));
+    }
+
+    /**
+     * Gets the specified route.
+     * @param id The id identifying the automatic dispatch job.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the automatic dispatch job.
+     */
+    public async get(id: string, signal?: AbortSignal): Promise<AutomaticDispatchJob>
+    {
+        const result = await this._apiClient.get(`automatic-dispatch/jobs/${id}`,
+        {
+            signal
+        });
+
+        return new AutomaticDispatchJob(result.data);
     }
 
     /**
