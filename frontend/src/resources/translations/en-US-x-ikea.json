@@ -1260,6 +1260,7 @@
   "./app/modules/routes/resources/strings/route-titles:autoDispatch": "Auto dispatch",
   "./app/modules/routes/resources/strings/route-titles:autoContractorAssignment": "Auto contractor assignment",
   "./app/modules/routes/resources/strings/route-titles:automaticDispatch": "Automatic dispatch",
+  "./app/modules/routes/resources/strings/route-titles:automaticDispatchJob": "Automatic dispatch job",
   "./app/modules/routes/resources/strings/route-titles:dispatch": "Express dispatch",
   "./app/modules/users/resources/strings/route-titles:list": "List",
   "./app/modules/users/resources/strings/route-titles:roles": "Roles",
