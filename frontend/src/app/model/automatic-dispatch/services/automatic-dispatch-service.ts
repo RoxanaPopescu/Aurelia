@@ -51,7 +51,7 @@ export class AutomaticDispatchService
             signal
         });
 
-        return result.data.results.map((data: any) => new AutomaticDispatchRoutePlanInfo(data));
+        return result.data.map((data: any) => new AutomaticDispatchRoutePlanInfo(data));
     }
 
     /**

@@ -15,7 +15,7 @@ export class AutomaticDispatchRoutePlanInfo
         this.id = data.id;
         this.name = data.name;
         this.status = new AutomaticDispatchJobStatus(data.status);
-        this.timeCreated = DateTime.fromISO(data.timeCreated, { setZone: true });
+        this.created = DateTime.fromISO(data.created, { setZone: true });
 
         if (data.routesCount != null)
         {
@@ -46,7 +46,7 @@ export class AutomaticDispatchRoutePlanInfo
     /**
      * The date and time at which the route plan was created.
      */
-    public readonly timeCreated: DateTime;
+    public readonly created: DateTime;
 
     /**
      * The number of routes in the route plan.
