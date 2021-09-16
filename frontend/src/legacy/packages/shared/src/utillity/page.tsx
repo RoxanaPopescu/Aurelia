@@ -20,7 +20,7 @@ import UserComponent from "../components/users/user";
 import UserManagementComponent from "../components/users/management";
 import CreateUserComponent from "../components/users/create";
 import { Fulfiller } from "../model/logistics/fulfiller";
-import AutoDispatchComponent from "fulfiller/src/components/routes/autoDispatch";
+import AutoDispatchComponent from "fulfiller/src/components/routes/autoContractor";
 import DepartmentComponent from "../components/departments/department";
 
 export type PageType =

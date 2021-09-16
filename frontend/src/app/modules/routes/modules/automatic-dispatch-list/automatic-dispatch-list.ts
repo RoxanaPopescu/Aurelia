@@ -105,7 +105,7 @@ export class AutomaticDispatchListPage
     {
         if (plan.status.slug === "succeeded")
         {
-            return `/routes/automatic-dispatch/details/${plan.id}`;
+            return `/routes/automatic-dispatch/${plan.id}`;
         }
 
         return undefined;

@@ -9,5 +9,6 @@
     "autoDispatch": "Auto dispatch",
     "autoContractorAssignment": "Auto contractor assignment",
     "automaticDispatch": "Automatic dispatch",
+    "automaticDispatchJob": "Automatic dispatch job",
     "dispatch": "Express dispatch"
 }

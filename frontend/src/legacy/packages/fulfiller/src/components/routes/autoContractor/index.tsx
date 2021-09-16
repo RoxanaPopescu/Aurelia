@@ -28,7 +28,7 @@ import { Log } from "shared/infrastructure";
 import { Profile } from "shared/src/model/profile";
 
 @observer
-export default class AutoDispatchComponent extends React.Component {
+export default class AutoContractorComponent extends React.Component {
   // tslint:disable-next-line:no-any
   public constructor(props: any) {
     super(props);

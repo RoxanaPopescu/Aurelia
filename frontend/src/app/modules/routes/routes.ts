@@ -104,6 +104,19 @@ export class RoutesModule
                 nav: ENVIRONMENT.name !== "production",
                 icon: "auto-dispatch"
             },
+            {
+                name: "automatic-dispatch-details",
+                route: "automatic-dispatch/:id",
+                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-job/automatic-dispatch-job"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                title: routeTitles.automaticDispatchJob
+            },
             ...
             ENVIRONMENT.name !== "production" ?
             [
