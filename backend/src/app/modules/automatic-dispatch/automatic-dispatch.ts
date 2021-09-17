@@ -167,7 +167,7 @@ export class AutomaticDispatchModule extends AppModule
                 });
             }
 
-            request.name = `${context.user?.username} - ${DateTime.local().toString()}`;
+            request.name = `${context.user?.username} - ${DateTime.local().toHTTP()}`;
             request.routes = routes;
             request.shipments = shipments;
 
