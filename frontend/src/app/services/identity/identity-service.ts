@@ -443,9 +443,9 @@ export class IdentityService
         if (tokens != null)
         {
             const padding = Duration.fromObject({ minutes: 2 });
-            const expires = tokens.accessTokenExpires != null && tokens.accessTokenExpires.diffNow().minus(padding).valueOf();
+            const expires = tokens.accessTokenExpires?.diffNow().minus(padding).valueOf();
 
-            if (expires < 0)
+            if (expires && expires < 0)
             {
                 this.reauthorize();
             }

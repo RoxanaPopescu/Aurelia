@@ -10,7 +10,7 @@ export class OrganizationModule extends AppModule
 {
     /**
      * Creates a new organization.
-     * @param context.body The data for the new organization.
+     * @param context.request.body The data for the new organization.
      * @returns
      * - 200: An object representing info about the organization.
      */
@@ -112,7 +112,7 @@ export class OrganizationModule extends AppModule
     /**
      * Saves the profile for the specified organization.
      * @param context.params.organizationId The ID of the organization.
-     * @param context.body The profile to save.
+     * @param context.request.body The profile to save.
      * @returns
      * - 204: No content
      */
@@ -136,7 +136,7 @@ export class OrganizationModule extends AppModule
     /**
      * Sends the specified invite.
      * @param context.params.organizationId The ID of the organization.
-     * @param context.body The invite to send.
+     * @param context.request.body The invite to send.
      * @returns
      * - 200: An object representing the new user.
      */
@@ -304,7 +304,7 @@ export class OrganizationModule extends AppModule
      * Resends the invite for the specified user to the specified organization.
      * @param context.params.organizationId The ID of the organization.
      * @param context.params.userId The ID of the user whose role should be changed..
-     * @param context.body.roleId The ID of the role to assign to the user.
+     * @param context.request.body.roleId The ID of the role to assign to the user.
      * @returns
      * - 204: No content
      */
@@ -321,7 +321,7 @@ export class OrganizationModule extends AppModule
             },
             body:
             {
-                newRoleId: context.body.roleId
+                newRoleId: context.request.body.roleId
             }
         });
 
@@ -380,7 +380,7 @@ export class OrganizationModule extends AppModule
     /**
      * Creates the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
-     * @param context.body The role to create.
+     * @param context.request.body The role to create.
      * @returns
      * - 200: An object representing the new role.
      */
@@ -469,7 +469,7 @@ export class OrganizationModule extends AppModule
      * Saves the specified role within the specified organization.
      * @param context.params.organizationId The ID of the organization.
      * @param context.params.roleId The ID of the role.
-     * @param context.body The role to save.
+     * @param context.request.body The role to save.
      * @returns
      * - 200: An object representing the updated role.
      */
@@ -519,7 +519,7 @@ export class OrganizationModule extends AppModule
     /**
      * Creates the specified team within the specified organization.
      * @param context.params.organizationId The ID of the organization.
-     * @param context.body The team to create.
+     * @param context.request.body The team to create.
      * @returns
      * - 200: An object representing the new team.
      */
@@ -529,7 +529,7 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams`,
         {
-            body: context.body
+            body: context.request.body
         });
 
         context.response.body = result.data;
@@ -572,7 +572,7 @@ export class OrganizationModule extends AppModule
     /**
      * Updates the specified team within the specified organization.
      * @param context.params.organizationId The ID of the organization.
-     * @param context.body The team to save.
+     * @param context.request.body The team to save.
      * @returns
      * - 200: An object representing the updated team.
      */
@@ -582,7 +582,7 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.put(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`,
         {
-            body: context.body
+            body: context.request.body
         });
 
         context.response.body = result.data;
@@ -609,7 +609,7 @@ export class OrganizationModule extends AppModule
      * Adds the specified user to the specified organization team.
      * @param context.params.organizationId The ID of the organization.
      * @param context.params.teamId The ID of the team.
-     * @param context.body.userId The ID of the user to assign to the team.
+     * @param context.request.body.userId The ID of the user to assign to the team.
      * @returns
      * - 204: No content
      */
@@ -619,7 +619,7 @@ export class OrganizationModule extends AppModule
 
         await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users`,
         {
-            body: context.body
+            body: context.request.body
         });
 
         context.response.status = 204;
