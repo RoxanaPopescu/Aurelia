@@ -7,7 +7,7 @@
         class="permissions-group"
         surface.bind="group.expanded ? 'neutral' : undefined">
 
-        <div class="permissions-group-header">
+        <div class="permissions-group-header" click.trigger="onGroupHeaderClick($event, group)">
 
             <div class="font-large">
                 ${group.name}
@@ -22,7 +22,7 @@
             <button
                 appearance="none"
                 class="margin-left font-larger"
-                click.trigger="group.expanded = !group.expanded">
+                click.trigger="onGroupHeaderClick($event, group)">
                 <icon name="md-expand-${group.expanded ? 'less' : 'more'}" inline accent="primary"></icon>
             </button>
 
@@ -32,7 +32,7 @@
 
             <div if.bind="group.viewPermissions.length > 0" class="permissions-type">
 
-                <div class="permissions-type-header">
+                <div class="permissions-type-header" click.trigger="onViewGroupHeaderClick($event, group)">
 
                     <div class="permissions-type-icon">
                         <icon name="eye"></icon>
@@ -59,7 +59,7 @@
                     <button
                         appearance="none"
                         class="margin-left font-larger"
-                        click.trigger="group.viewExpanded = !group.viewExpanded">
+                        click.trigger="onViewGroupHeaderClick($event, group)">
                         <icon name="md-expand-${group.viewExpanded ? 'less' : 'more'}" inline accent="primary"></icon>
                     </button>
 
@@ -100,7 +100,7 @@
 
             <div if.bind="group.editPermissions.length > 0" class="permissions-type">
 
-                <div class="permissions-type-header">
+                <div class="permissions-type-header" click.trigger="onEditGroupHeaderClick($event, group)">
 
                     <div class="permissions-type-icon">
                         <icon name="edit"></icon>
@@ -127,7 +127,7 @@
                     <button
                         appearance="none"
                         class="margin-left font-larger"
-                        click.trigger="group.editExpanded = !group.editExpanded">
+                        click.trigger="onEditGroupHeaderClick($event, group)">
                         <icon name="md-expand-${group.editExpanded ? 'less' : 'more'}" inline accent="primary"></icon>
                     </button>
 

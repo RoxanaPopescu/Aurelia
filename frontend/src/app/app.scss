@@ -17,12 +17,6 @@ router-view
     height: 100%;
 }
 
-html[route^="account/"] app-sidebar
-{
-    // Hide the sidebar when presenting an account page.
-    display: none;
-}
-
 .input
 {
     // The opacity of the required indicator.

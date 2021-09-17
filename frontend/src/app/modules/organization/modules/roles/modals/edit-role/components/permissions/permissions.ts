@@ -291,4 +291,52 @@ export class PermissionsCustomElement
         // Replace the component value.
         setTimeout(() => this.value = this.config!.getEnabled());
     }
+
+    /**
+     * Called when a group, or its expand/collapse icon, is clicked.
+     * @param event The mouse event.
+     * @param group The group to expand or collapse.
+     * @returns False to prevent default.
+     */
+    protected onGroupHeaderClick(event: MouseEvent, group: PermissionGroup): boolean
+    {
+        if (!event.defaultPrevented)
+        {
+            group.expanded = !group.expanded;
+        }
+
+        return false;
+    }
+
+    /**
+     * Called when a view group, or its expand/collapse icon, is clicked.
+     * @param event The mouse event.
+     * @param group The group to expand or collapse.
+     * @returns False to prevent default.
+     */
+    protected onViewGroupHeaderClick(event: MouseEvent, group: PermissionGroup): boolean
+    {
+        if (!event.defaultPrevented)
+        {
+            group.viewExpanded = !group.viewExpanded;
+        }
+
+        return false;
+    }
+
+    /**
+     * Called when an edit group, or its expand/collapse icon, is clicked.
+     * @param event The mouse event.
+     * @param group The group to expand or collapse.
+     * @returns False to prevent default.
+     */
+    protected onEditGroupHeaderClick(event: MouseEvent, group: PermissionGroup): boolean
+    {
+        if (!event.defaultPrevented)
+        {
+            group.editExpanded = !group.editExpanded;
+        }
+
+        return false;
+    }
 }
