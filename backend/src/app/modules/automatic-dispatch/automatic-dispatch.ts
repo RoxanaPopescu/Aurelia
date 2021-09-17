@@ -149,6 +149,7 @@ export class AutomaticDispatchModule extends AppModule
                     stops.push({
                         id: stop.id,
                         type: stop.type.toLowerCase(),
+                        estimates: stop.estimates,
                         location: stop.location,
                         arrivalTimeFrame: stop.arrivalTimeFrame,
                         taskTime: stop.initialEstimates.taskTime,
