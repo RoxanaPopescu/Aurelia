@@ -98,6 +98,7 @@ export default
                 "drivers/send-message": { version: "2", obfuscate: false },
                 "drivers/online-in-area": { version: "2", obfuscate: false },
                 "collection-point": { version: "2", obfuscate: false },
+                "automatic-dispatch": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
                 "identity": { version: "2", obfuscate: false },
                 "organizations": { version: "2", obfuscate: false },

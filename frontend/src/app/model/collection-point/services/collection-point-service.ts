@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
-import { CollectionPoint } from "..";
+import { CollectionPoint, Order } from "..";
 
 /**
  * Represents a service that manages collection points.
@@ -33,5 +33,46 @@ export class CollectionPointService
         });
 
         return new CollectionPoint(result.data);
+    }
+
+    /**
+     * Saves a deviation event for the specific order
+     * @param order The order from the collection point.
+     * @returns A promise that will be resolved when the event is on the queue.
+     */
+    public async saveDeviation(order: Order): Promise<void>
+    {
+        await this._apiClient.post(`collection-point/orders/${order.status.slug}`,
+        {
+            body:
+            {
+                orderId: order.id,
+                collectionPointId: order.collectionPoint.id,
+                description: order.deviationDescription,
+                images: [],
+                location: order.collectionPoint.location
+            }
+        });
+    }
+
+    /**
+     * Saves a the order collected event
+     * @param order The order from the collection point.
+     * @returns A promise that will be resolved when the event is on the queue.
+     */
+    public async orderCollected(order: Order): Promise<void>
+    {
+        await this._apiClient.post("collection-point/orders/collected",
+        {
+            body:
+            {
+                orderId: order.id,
+                collectionPointId: order.collectionPoint.id,
+                description: order.deviationDescription,
+                colli: order.colli,
+                location: order.collectionPoint.location,
+                externalOrderId: order.creatorOrderId
+            }
+        });
     }
 }

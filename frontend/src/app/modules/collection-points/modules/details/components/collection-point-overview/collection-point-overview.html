@@ -15,12 +15,12 @@
                     Delivered orders
                 </div>
 
-                <circular-meter accent.bind="deviatedOrdersCount > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedOrdersCount * 100 / ordersNoDeviationsCount">
+                <circular-meter accent.bind="deviatedOrdersCount > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedOrdersCount * 100 / entry.orders.length">
 
                     <div>
 
                         <div class="font-largest">
-                            <span empty-value>${completedOrdersCount}</span>/<span empty-value>${ordersNoDeviationsCount}</span>
+                            <span empty-value>${completedOrdersCount}</span>/<span empty-value>${entry.orders.length}</span>
                         </div>
 
                         <div if.bind="deviatedOrdersCount > 0" accent="neutral" class="font-small margin-top" translate>

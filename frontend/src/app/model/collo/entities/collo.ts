@@ -12,7 +12,7 @@ export class Collo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any, orderId: string)
+    public constructor(data: any, orderId?: string)
     {
         this.id = data.id;
         this.orderId = orderId;
@@ -44,7 +44,7 @@ export class Collo
     /**
      * The ID of the order to which the collo belongs.
      */
-    public readonly orderId: string;
+    public readonly orderId?: string;
 
     /**
      * The slug identifying the order related to this collo.

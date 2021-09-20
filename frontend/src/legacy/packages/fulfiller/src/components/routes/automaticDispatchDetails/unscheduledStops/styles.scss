@@ -1,0 +1,16 @@
+.c-routePlanning-routes-unscheduledTasksBar {
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+.c-routePlanning-routes-unscheduledTasksBar-title {
+  color: #abbec7;
+  font-weight: 500;
+  padding: 0 17px 0 40px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

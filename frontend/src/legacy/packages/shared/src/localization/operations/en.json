@@ -314,6 +314,7 @@
   "RoutePlanning_Settings_List_TotalCount": "Settings {count}",
   "RoutePlanning_Simulations_List_TotalCount": "{count} simulations",
   "RoutePlanning_Title": "Route planning",
+  "Routes_AutoContractorAssignment_Title": "Auto contractor assignment",
   "Routes_AutoDispatch_AddRule": "Add rule",
   "Routes_AutoDispatch_EditRule_EditTitle": "Edit assignment rule",
   "Routes_AutoDispatch_EditRule_NewTitle": "New assignment rule",

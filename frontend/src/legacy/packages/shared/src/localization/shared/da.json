@@ -65,6 +65,7 @@
   "Error_LoginIncorrect": "Forkert login",
   "Error_LoginIncorrectType": "Dit login er af type \"{login_type}\" og kan ikke bruges på denne \"{type}\"-side.",
   "Error_NoResults": "Ingen resultater",
+  "Error_ResourceNotFound": "Ressource ikke fundet",
   "Error_RouteNotFound": "Ruten findes ikke.",
   "Error_WrongCurrentPassword": "Forkert kodeord",
   "EstimatedTime_Arrival": "Estimeret ankomst",

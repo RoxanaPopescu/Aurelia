@@ -386,7 +386,7 @@ export class DetailsModule
             stopNumber = this.route!.stops.length + 1;
         }
 
-        const newStop = new RouteStop(undefined, stopNumber);
+        const newStop = new RouteStop(undefined, stopNumber, this.route!);
         const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: newStop, edit: true }).promise;
 
         if (savedStop != null)

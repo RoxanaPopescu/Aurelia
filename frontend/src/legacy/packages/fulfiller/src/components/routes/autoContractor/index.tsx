@@ -28,7 +28,7 @@ import { Log } from "shared/infrastructure";
 import { Profile } from "shared/src/model/profile";
 
 @observer
-export default class AutoDispatchComponent extends React.Component {
+export default class AutoContractorComponent extends React.Component {
   // tslint:disable-next-line:no-any
   public constructor(props: any) {
     super(props);
@@ -73,7 +73,7 @@ export default class AutoDispatchComponent extends React.Component {
         <PageHeaderComponent
           path={[
             { title: "Ruter" },
-            { title: Localization.operationsValue("Routes_AutoDispatch_Title") }
+            { title: Localization.operationsValue("Routes_AutoContractorAssignment_Title") }
           ]}
         />
 

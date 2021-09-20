@@ -32,6 +32,16 @@
                         Release selected routes to all drivers
                     </button>
 
+                    <button
+                        appearance="outline"
+                        accent="primary"
+                        if-environment="development,preview"
+                        disabled.bind="workspace.selectedExpressRoutes.length == 0 || workspace.selectedDriverRoutes.length == 0"
+                        click.trigger="onStartAutomaticDispatch()"
+                        translate>
+                        Start automatic dispatch
+                    </button>
+
                 </toolbar>
 
                 <h1 class="font-largest">

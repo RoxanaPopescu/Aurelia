@@ -16,5 +16,10 @@ export class Route extends RouteBase<RouteStop>
             .map((s, i: number) => s.hidden ? new RouteStopInfo(s, i) : new RouteStop(s, i + 1));
 
         super(data, stops);
+
+        for (const stop of stops)
+        {
+            stop.route = this;
+        }
     }
 }

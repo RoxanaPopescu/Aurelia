@@ -12,7 +12,7 @@ export class ExpressRouteStop extends RouteStopBase
      */
     public constructor(data: any, route: ExpressRoute, stopNumber: number, criticality?: RouteCriticality)
     {
-        super(data, stopNumber);
+        super(data, stopNumber, route);
 
         this.route = route;
         this.type = new RouteStopType(data.type);

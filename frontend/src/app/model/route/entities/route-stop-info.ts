@@ -1,4 +1,5 @@
 import { Location } from "app/model/shared";
+import { IRouteReference } from "..";
 import { RouteStopDeliveryMethod } from "./route-stop-delivery-method";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopType } from "./route-stop-type";
@@ -13,8 +14,13 @@ export class RouteStopInfo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data?: any, stopNumber?: number)
+    public constructor(data?: any, stopNumber?: number, route?: IRouteReference)
     {
+        if (route != null)
+        {
+            this.route = route;
+        }
+
         if (data != null)
         {
             this.hidden = data.hidden;
@@ -40,6 +46,11 @@ export class RouteStopInfo
      * The ID of the route stop.
      */
     public readonly id: string;
+
+    /**
+     * The route this stop belongs to.
+     */
+    public readonly route: IRouteReference;
 
     /**
      * The ID of the route stop.

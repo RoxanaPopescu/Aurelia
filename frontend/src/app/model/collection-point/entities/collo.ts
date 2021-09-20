@@ -10,13 +10,14 @@ export class Collo
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  public constructor(json: any)
+  public constructor(data: any)
   {
-    this.barcode = json.barcode;
-    this.weight = json.weight;
-    this.dimensions = json.dimensions
-      ? new Dimensions(json.dimensions)
+    this.barcode = data.barcode;
+    this.weight = data.weight;
+    this.dimensions = data.dimensions
+      ? new Dimensions(data.dimensions)
       : undefined;
+    this.verificationMethod = new ColloScanMethod(data.verificationMethod ? data.verificationMethod : "selected");
   }
 
   /**
@@ -37,7 +38,7 @@ export class Collo
   /**
    * How the collo was verified by the driver
    */
-  public verificationMethod?: ColloScanMethod;
+  public verificationMethod: ColloScanMethod;
 
   public accent(): Accent
   {
@@ -52,5 +53,16 @@ export class Collo
     }
 
     return "attention";
+  }
+
+  /**
+   * Gets the data representing this instance.
+   */
+  public toJSON(): any
+  {
+    return {
+        barcode: this.barcode,
+        verificationMethod: this.verificationMethod.slug
+    };
   }
 }

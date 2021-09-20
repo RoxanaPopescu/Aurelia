@@ -10,6 +10,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import routePlanningSettings from "./responses/route-planning-settings";
 // import routePlans from "./responses/route-plans";
 // import communication from "./responses/communication";
+// import automaticDispatch from "./responses/automatic-dispatch";
 import identity from "./responses/identity";
 import organizations from "./responses/organizations";
 import account from "./responses/account";

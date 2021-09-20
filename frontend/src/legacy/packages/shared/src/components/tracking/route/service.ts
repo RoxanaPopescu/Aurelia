@@ -107,7 +107,7 @@ export default class DriverLocationHistoryServices {
     if (Base.isProduction) {
       return "https://api.mover.dk/api/v3/";
     } else {
-      return "https://noi.mover.dev/api/v3/";
+      return "https://mover-test-dev.azurewebsites.net/api/v3/";
     }
   }
 }

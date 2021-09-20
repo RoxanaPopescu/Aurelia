@@ -15,7 +15,7 @@ export class CollectionPoint
   public constructor(data: any)
   {
     this.id = data.id;
-    this.orders = data.orders.map((o: any) => new Order(o));
+    this.orders = data.orders.map((o: any) => new Order(o, this));
     this.location = new Location(data.location);
   }
 

@@ -1,0 +1,44 @@
+@import "shared/src/webKit/constants.scss";
+
+.c-routePlanning-unscheduledStop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px 4px;
+  align-items: left;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #ddd;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.c-routePlanning-unscheduledStop-item {
+  margin: 0 0;
+  display: flex;
+  flex-direction: row;
+
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.c-routePlanning-unscheduledStop-itemTitle {
+  color: #abbec7;
+  font-weight: 500;
+  white-space: nowrap;
+  text-transform: uppercase;
+  margin-right: 5px;
+}
+
+.c-routePlanning-unscheduledStop-itemDescription {
+  color: black;
+  white-space: nowrap;
+  text-transform: uppercase;
+}

@@ -1,0 +1,7 @@
+{
+    "processing": "Processing",
+    "succeeded": "Succeeded",
+    "failed": "Failed",
+    "cancelled": "Cancelled",
+    "waitingForApproval": "Waiting for approval"
+}

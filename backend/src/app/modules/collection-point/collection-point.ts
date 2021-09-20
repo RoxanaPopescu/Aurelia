@@ -15,26 +15,14 @@ export class CollectionPointModule extends AppModule
          */
         this.router.get("/v2/collection-point/details/:id", async context =>
         {
-            let outfitId: string;
-
-            // Allow legacy token authorization
-            if (context.request.headers["token"] != null)
-            {
-                const driver = await this.validateDriverLogin(context);
-                outfitId = driver.outfitId;
-            }
-            else
-            {
-                context.authorize("view-routes");
-                outfitId = context.user!.outfitId;
-            }
+            const validationResult = await this.validateLogin(context, "view-routes");
 
             const result = await this.apiClient.post("collection-point/details",
             {
                 body:
                 {
                     id: context.params.id,
-                    outfitId: outfitId
+                    outfitId: validationResult.outfitId
                 }
             });
 
@@ -48,15 +36,15 @@ export class CollectionPointModule extends AppModule
          */
         this.router.post("/v2/collection-point/orders/collected", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            const validationResult = await this.validateLogin(context, "edit-routes");
 
             const result = await this.apiClient.post("collection-point/orders/collected",
             {
                 body:
                 {
                     ...context.request.body,
-                    outfitId: driver.outfitId,
-                    actionById: this.stringToGuid(driver.id)
+                    outfitId: validationResult.outfitId,
+                    actionById: validationResult.userId
                 }
             });
 
@@ -70,15 +58,15 @@ export class CollectionPointModule extends AppModule
          */
         this.router.post("/v2/collection-point/orders/missing", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            const validationResult = await this.validateLogin(context, "edit-routes");
 
             const result = await this.apiClient.post("collection-point/orders/missing",
             {
                 body:
                 {
                     ...context.request.body,
-                    outfitId: driver.outfitId,
-                    actionById: this.stringToGuid(driver.id)
+                    outfitId: validationResult.outfitId,
+                    actionById: validationResult.userId
                 }
             });
 
@@ -92,15 +80,15 @@ export class CollectionPointModule extends AppModule
          */
         this.router.post("/v2/collection-point/orders/damaged", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            const validationResult = await this.validateLogin(context, "edit-routes");
 
             const result = await this.apiClient.post("collection-point/orders/damaged",
             {
                 body:
                 {
                     ...context.request.body,
-                    outfitId: driver.outfitId,
-                    actionById: this.stringToGuid(driver.id)
+                    outfitId: validationResult.outfitId,
+                    actionById: validationResult.userId
                 }
             });
 
@@ -114,15 +102,15 @@ export class CollectionPointModule extends AppModule
          */
         this.router.post("/v2/collection-point/orders/rejected", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            const validationResult = await this.validateLogin(context, "edit-routes");
 
             const result = await this.apiClient.post("collection-point/orders/rejected",
             {
                 body:
                 {
                     ...context.request.body,
-                    outfitId: driver.outfitId,
-                    actionById: this.stringToGuid(driver.id)
+                    outfitId: validationResult.outfitId,
+                    actionById: validationResult.userId
                 }
             });
 
@@ -136,21 +124,48 @@ export class CollectionPointModule extends AppModule
          */
         this.router.post("/v2/collection-point/orders/not-collected", async context =>
         {
-            const driver = await this.validateDriverLogin(context);
+            const validationResult = await this.validateLogin(context, "edit-routes");
 
             const result = await this.apiClient.post("collection-point/orders/NotCollected",
             {
                 body:
                 {
                     ...context.request.body,
-                    outfitId: driver.outfitId,
-                    actionById: this.stringToGuid(driver.id)
+                    outfitId: validationResult.outfitId,
+                    actionById: validationResult.userId
                 }
             });
 
             context.response.body = result.data;
             context.response.status = 200;
         });
+    }
+
+    /**
+     * Validates the current driver login with NOI.
+     * @param token The login token of the driver.
+     * @returns A promise that will be resolved with the details about the driver if valid login.
+     */
+    private async validateLogin(context: any, permission: string): Promise<{ outfitId: string; userId: string }>
+    {
+        let outfitId: string;
+        let userId: string;
+
+        // Allow legacy token authorization
+        if (context.request.headers["token"] != null)
+        {
+            const driver = await this.validateDriverLogin(context);
+            outfitId = driver.outfitId;
+            userId = this.stringToGuid(driver.id);
+        }
+        else
+        {
+            context.authorize(permission);
+            outfitId = context.user.outfitId;
+            userId = context.user.id;
+        }
+
+        return { outfitId: outfitId, userId: userId };
     }
 
     /**

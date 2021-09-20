@@ -11,10 +11,9 @@ export class DriverRouteStop extends RouteStopBase
      */
     public constructor(data: any, stopNumber: number, route: IRouteReference)
     {
-        super(data, stopNumber);
+        super(data, stopNumber, route);
 
         this.orderIds = data.orderIds;
-        this.route = route;
     }
 
     /**
@@ -26,11 +25,6 @@ export class DriverRouteStop extends RouteStopBase
      * The number this stop will have on the new route.
      */
     public newStopNumber: number | undefined;
-
-    /**
-     * The route to which this stop belongs.
-     */
-    public route: IRouteReference;
 
     /**
      * True if there is an alert for this route stop, otherwise false.

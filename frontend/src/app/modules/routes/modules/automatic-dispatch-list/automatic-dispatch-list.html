@@ -1,0 +1,212 @@
+<template>
+
+    <require from="./automatic-dispatch-list.scss"></require>
+
+    <page name="automatic-dispatch-list">
+
+        <page-sidebar scroll>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Status
+                </div>
+
+                <toggle-group class="flex-column" value.bind="statusFilter">
+
+                    <check-toggle label="after" model="succeeded" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Succeeded
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="waiting-for-approval" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Waiting for approval
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="processing" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Processing
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="failed" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Failed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled" value.one-time="false">
+
+                        <div slot="heading" translate>
+                            Cancelled
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Created date
+                </div>
+
+                <div class="control-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdDateFromFilter" change.trigger="onCreatedDateFromChanged()" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                    </date-input>
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdDateToFilter" change.trigger="onCreatedDateToChanged()" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                    </date-input>
+
+                </div>
+
+            </page-section>
+
+        </page-sidebar>
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Automatic dispatch jobs
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell DISABLED-name="name" translate>
+                            <span class="text-truncate">
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="status">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="created" translate>
+                            <span class="text-truncate">
+                                Created
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="routes">
+                            <span class="text-truncate" translate>
+                                Route count
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="unscheduled-shipments" align="right">
+                            <span class="text-truncate" translate>
+                                Unscheduled shipments
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="result of results">
+
+                        <data-table-row
+                            accent.bind="result.status.accent"
+                            href.bind="detailsLink(result)">
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.status.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.created | dateTime: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${result.routesCount}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+                                <span class="text-truncate">
+                                    ${result.unscheduledShipmentCount}
+                                </span>
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="results"
+                        class="flex-push-right margin-top"
+                        value.bind="paging">
+                    </data-table-pager>
+
+                </div>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>
