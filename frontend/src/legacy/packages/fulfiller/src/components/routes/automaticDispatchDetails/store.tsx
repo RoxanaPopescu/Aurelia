@@ -134,7 +134,7 @@ export class RoutePlanningStore {
           }
         }
 
-        this.timeFrame = new DateTimeRange({from: minimumDate, maximumDate});
+        this.timeFrame = new DateTimeRange({from: minimumDate, to: maximumDate});
 
         this.plan = job.result;
         this.minuteToPixel = 6;
